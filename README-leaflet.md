@@ -25,14 +25,14 @@ L'extension Géoportail pour Leaflet propose les fonctionnalités suivantes à u
 
 Vous pouvez récupérer l'extension Géoportail pour Leaflet ici [GpLeaflet.zip](#TODO). Elle contient l'arborescence suivante :
 
-leaflet/
+```
+ leaflet/
     GpPluginLeaflet.js         (version minifiée du code javascript pour une utilisation en production)
     GpPluginLeaflet.css        (version minifiée des css pour une utilisation en production)
     GpPluginLeaflet-src.js     (version non minifiée du code javascript pour une utilisation en développement)
     GpPluginLeaflet-src.css    (version non minifiée des css pour une utilisation en développement)
-    img/
-        (resources images utilisées par les fichiers CSS)
-
+    img/                       (resources images utilisées par les fichiers CSS)
+```
 
 ### Intégration dans une page web
 
@@ -58,7 +58,7 @@ L'extension Géoportail pour Leaflet exploite les services web exposés par la p
 
 Une fois la clef obtenue, vous pouvez paramétrer l'utilisation de l'extension avec cette clef de deux manières possibles :
 
-1. Au chargement de l'extension en utilisant l'attribut "data-key" de la balise **script** de chargement de l'extension :
+* Au chargement de l'extension en utilisant l'attribut "data-key" de la balise **script** de chargement de l'extension :
 
 ``` html
 <script data-key="VOTRE-CLEF" src="chemin/vers/GpPluginLeaflet.js"></script>
@@ -86,7 +86,7 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
 </html>
 ```
 
-2. A la fin du chargement de la page en utilisant la fonction [Gp.Services.GetConfig()](https://github.com/IGNF/geoportal-access-lib#getConfig) et en conditionnant alors l'utilisation de l'extension à l'exécution de la fonction de rappel onSuccess passée en paramètres de Gp.Services.getConfig() comme sur l'exemple suivant :
+* A la fin du chargement de la page en utilisant la fonction [Gp.Services.GetConfig()](https://github.com/IGNF/geoportal-access-lib#getConfig) et en conditionnant alors l'utilisation de l'extension à l'exécution de la fonction de rappel onSuccess passée en paramètres de Gp.Services.getConfig() comme sur l'exemple suivant :
 
 ``` html
 <html>
@@ -175,7 +175,7 @@ L.geoportalCRS.EPSG2154
 
 ### Affichage des couche WMTS Géoportail
 
-L'affichage des couches WMTS Géoportail se fait à l'aide de la fonction [L.geoportalLayer.WMTS()](http://depot.ign.fr/geoportail/extensions/leaflet/develop/doc/module-Layers.html#~WMTS), utilisée de la manière suivante :
+L'affichage des couches WMTS Géoportail se fait à l'aide de la fonction [L.geoportalLayer.WMTS()](http://depot.ign.fr/geoportail/extensions/leaflet/develop/doc/module-Layers.html#.WMTS), utilisée de la manière suivante :
 
 
 ``` javascript
@@ -242,7 +242,7 @@ NB : D'autres systèmes de coordonnées peuvent être définis : [plus d'informa
 
 ### Affichage des couche WMS Géoportail
 
-L'affichage des couches WMS Géoportail se fait à l'aide de la fonction [L.geoportalLayer.WMS()](http://depot.ign.fr/geoportail/extensions/leaflet/develop/doc/module-Layers.html#~WMS), utilisée de la manière suivante :
+L'affichage des couches WMS Géoportail se fait à l'aide de la fonction [L.geoportalLayer.WMS()](http://depot.ign.fr/geoportail/extensions/leaflet/develop/doc/module-Layers.html#.WMS), utilisée de la manière suivante :
 
 ``` javascript
 L.geoportalLayer.WMS(options[,leafletParams]);
@@ -278,7 +278,7 @@ L.geoportalLayer.WMS({
 
 Ce widget permet à l'utilisateur de gérer l'empilement des couches composant la carte L.Map et, pour chacune d'elle, d'agir sur la visibilité, l'opacité et d'afficher des informations qui lui sont associées (titre, description, métadonnées, légende).
 
-Son utilisation se fait par la création d'un nouveau contrôle à l'aide de la fonction [L.geoportalControl.LayerSwitcher()](http://depot.ign.fr/geoportail/extensions/leaflet/develop/doc/module-Controls.html#~LayerSwitcher), que l'on peut ensuite ajouter à la carte comme [les autres contrôles Leaflet](http://leafletjs.com/reference.html#map-stuff-methods), par exemple de la manière suivante :
+Son utilisation se fait par la création d'un nouveau contrôle à l'aide de la fonction [L.geoportalControl.LayerSwitcher()](http://depot.ign.fr/geoportail/extensions/leaflet/develop/doc/module-Controls.html#.LayerSwitcher), que l'on peut ensuite ajouter à la carte comme [les autres contrôles Leaflet](http://leafletjs.com/reference.html#map-stuff-methods), par exemple de la manière suivante :
 
 ``` javascript
 var layerSwitcher = L.geoportalControl.LayerSwitcher(opts);
@@ -358,7 +358,7 @@ La barre de recherche permet de positionner la carte à partir de la saisie d'un
 
 La saisie de localisants peut s'accompagner d'un mode d'autocomplétion s'appuyant sur le service d'autocomplétion de la plateforme Géoportail.
 
-Son utilisation se fait par la création d'un nouveau contrôle à l'aide de la fonction [L.geoportalControl.SearchEngine()](http://depot.ign.fr/geoportail/extensions/leaflet/develop/doc/module-Controls.html#~SearchEngine), que l'on peut ensuite ajouter à la carte comme [les autres contrôles Leaflet](http://leafletjs.com/reference.html#map-stuff-methods), par exemple de la manière suivante :
+Son utilisation se fait par la création d'un nouveau contrôle à l'aide de la fonction [L.geoportalControl.SearchEngine()](http://depot.ign.fr/geoportail/extensions/leaflet/develop/doc/module-Controls.html#.SearchEngine), que l'on peut ensuite ajouter à la carte comme [les autres contrôles Leaflet](http://leafletjs.com/reference.html#map-stuff-methods), par exemple de la manière suivante :
 
 ``` javascript
 var search = L.geoportalControl.SearchEngine(opts);
@@ -395,7 +395,7 @@ map.addControl(searchCtrl);
 
 Ce widget permet d'obtenir un ensemble de localisants Géographiques (adresses, toponymes ou parcelles cadastrales) en un point ou une zone (cercle ou emprise rectangulaire) saisie interactivement par l'internaute sur une carte Leaflet.
 
-Son utilisation se fait par la création d'un nouveau contrôle à l'aide de la fonction [L.geoportalControl.ReverseGeocode()](http://depot.ign.fr/geoportail/extensions/leaflet/develop/doc/module-Controls.html#~ReverseGeocode), que l'on peut ensuite ajouter à la carte comme [les autres contrôles Leaflet](http://leafletjs.com/reference.html#map-stuff-methods), par exemple de la manière suivante :
+Son utilisation se fait par la création d'un nouveau contrôle à l'aide de la fonction [L.geoportalControl.ReverseGeocode()](http://depot.ign.fr/geoportail/extensions/leaflet/develop/doc/module-Controls.html#.ReverseGeocode), que l'on peut ensuite ajouter à la carte comme [les autres contrôles Leaflet](http://leafletjs.com/reference.html#map-stuff-methods), par exemple de la manière suivante :
 
 ``` javascript
 var revSearch = L.geoportalControl.ReverseGeocode(opts);
@@ -432,7 +432,7 @@ map.addControl(revCtrl);
 
 Le widget de calcul d'itinéraires permet d'intéragir avec une carte Leaflet pour effectuer des calculs d'itinéraires utilisant le service dédié de la plateforme Géoportail.
 
-Son utilisation se fait par la création d'un nouveau contrôle à l'aide de la fonction [L.geoportalControl.Route()](http://depot.ign.fr/geoportail/extensions/leaflet/develop/doc/module-Controls.html#~Route), que l'on peut ensuite ajouter à la carte comme [les autres contrôles Leaflet](http://leafletjs.com/reference.html#map-stuff-methods), par exemple de la manière suivante :
+Son utilisation se fait par la création d'un nouveau contrôle à l'aide de la fonction [L.geoportalControl.Route()](http://depot.ign.fr/geoportail/extensions/leaflet/develop/doc/module-Controls.html#.Route), que l'on peut ensuite ajouter à la carte comme [les autres contrôles Leaflet](http://leafletjs.com/reference.html#map-stuff-methods), par exemple de la manière suivante :
 
 ``` javascript
 var route = L.geoportalControl.Route(opts);
@@ -469,7 +469,7 @@ map.addControl(routeCtrl);
 
 Ce widget permet d'intéragir avec une carte Leaflet pour effectuer des calculs d'isochrones / isodistances utilisant le service dédié de la plateforme Géoportail.
 
-Son utilisation se fait par la création d'un nouveau contrôle à l'aide de la fonction [L.geoportalControl.Isocurve()](http://depot.ign.fr/geoportail/extensions/leaflet/develop/doc/module-Controls.html#~Isocurve), que l'on peut ensuite ajouter à la carte comme [les autres contrôles Leaflet](http://leafletjs.com/reference.html#map-stuff-methods), par exemple de la manière suivante :
+Son utilisation se fait par la création d'un nouveau contrôle à l'aide de la fonction [L.geoportalControl.Isocurve()](http://depot.ign.fr/geoportail/extensions/leaflet/develop/doc/module-Controls.html#.Isocurve), que l'on peut ensuite ajouter à la carte comme [les autres contrôles Leaflet](http://leafletjs.com/reference.html#map-stuff-methods), par exemple de la manière suivante :
 
 ``` javascript
 var iso = L.geoportalControl.Isocurve(opts);
@@ -506,7 +506,7 @@ map.addControl(isoCtrl);
 
 Ce widget permet d'afficher les coordonnées d'un point choisi par l'internaute sur une carte Leaflet dans un ou plusieurs systèmes de coordonnées. Ces coordonnées peuvent comprendre l'altitude obtenue à l'aide du service d'altimétrie de la plateforme Géoportail.
 
-Son utilisation se fait par la création d'un nouveau contrôle à l'aide de la fonction [L.geoportalControl.MousePosition()](http://depot.ign.fr/geoportail/extensions/leaflet/develop/doc/module-Controls.html#~MousePosition), que l'on peut ensuite ajouter à la carte comme [les autres contrôles Leaflet](http://leafletjs.com/reference.html#map-stuff-methods), par exemple de la manière suivante :
+Son utilisation se fait par la création d'un nouveau contrôle à l'aide de la fonction [L.geoportalControl.MousePosition()](http://depot.ign.fr/geoportail/extensions/leaflet/develop/doc/module-Controls.html#.MousePosition), que l'on peut ensuite ajouter à la carte comme [les autres contrôles Leaflet](http://leafletjs.com/reference.html#map-stuff-methods), par exemple de la manière suivante :
 
 ``` javascript
 var mp = L.geoportalControl.MousePosition(opts);
