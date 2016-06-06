@@ -31,7 +31,7 @@ Vous pouvez récupérer l'extension Géoportail pour OpenLayers 3 ici : [GpOpenL
 ol3/
     GpPluginOl3.js         (version minifiée du code javascript pour une utilisation en production)
     GpPluginOl3.css        (version minifiée des css pour une utilisation en production)
-    GpPluginOl3-src.js     (version non minifiée du code javascript pour une utilisation en développement) 
+    GpPluginOl3-src.js     (version non minifiée du code javascript pour une utilisation en développement)
     GpPluginOl3-src.css    (version non minifiée des css pour une utilisation en développement)
     img/
         (resources images utilisées par les fichiers CSS)
@@ -123,7 +123,7 @@ Partie à écrire...
 
 ## Compatibilités
 
-### Version de OpenLayers 3 supportées
+### Versions de OpenLayers 3 supportées
 
 L'extension Géoportail pour OpenLayers 3 peut s'utiliser avec les **versions 3.x et supérieures** d'OpenLayers 3 (dernière version testée : 3.14).
 
