@@ -460,6 +460,10 @@ define([
                     var layer = e.layer;
                     var type  = e.layerType;
                     // console.log("draw:created");
+
+                    // TODO comment mettre en place un icone dynamiquement ?
+                    if (type === "marker") {}
+
                     self._setFeaturePosition(layer, type);
 
                     self._currentIdLayer = L.Util.stamp(layer);
@@ -490,6 +494,7 @@ define([
                     this._activateCircleInteraction(map);
                     break;
                 case "extent" :
+
                     this._activateBoxInteraction(map);
                     break;
                 default :
@@ -540,8 +545,12 @@ define([
                 this._currentFeature.disable();
             }
 
-            // TODO styles
+            // on modifie le tooltip du marker
+            L.drawLocal.draw.handlers.marker.tooltip.start = "click map to place search point";
+
+            // TODO styles des icones
             var markerOptions = {
+                // icon : par defaut...
                 repeatMode : true
             };
 
