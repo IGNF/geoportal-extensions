@@ -206,7 +206,7 @@ var lyr = L.geoportalLayer.WMTS({
 lyr.addTo(map); // ou map.addLayer(lyr);
 ```
 
-**Exemple d'utilisation** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/saye4oaz/embedded/result,js,html,css/)
+**Exemple d'utilisation** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/nqz6xmpa/embedded/result,js,html,css/)
 
 #### Affichage en Lambert 93 (EPSG:2154)
 
