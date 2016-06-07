@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+     <meta charset="utf-8">
+    <title>Mocha Spec Runner</title>
+
+    <link rel="stylesheet" href="../node_modules/mocha/mocha.css">
+
+    <script type="text/javascript" src="../node_modules/sinon/lib/sinon.js"></script>
+    <script type="text/javascript" src="../node_modules/chai/chai.js"></script>
+    <script type="text/javascript" src="../node_modules/mocha/mocha.js"></script>
+
+  </head>
+
+  <body>
+    <!-- content -->
+    <div id="workboard"></div>
+    <div id="mocha"></div>
+
+    <!-- tests -->
+
+    <script type="text/javascript" src="../node_modules/requirejs/require.js"></script>
+    <script type="text/javascript" src="../node_modules/easy-amdtest/dist/easy-amdtest.js"></script>
+
+    <script>
+
+      var testSuite = new EasyAMDTest({
+        baseUrl: '../src/',
+        urlArgs: 'bust=' + (new Date()).getTime(),
+        paths: {
+            'sinon'    : '../node_modules/sinon/lib/sinon',
+            'mocha'    : '../node_modules/mocha/mocha',
+            'chai'     : '../node_modules/chai/chai',
+            'gp'       : '../lib/gp/GpServices-src',
+            'woodman'  : '../lib/woodman/woodman-amd',
+            'leaflet'  : '../lib/leaflet/leaflet-src',
+            "leaflet-draw" : "../lib/leaflet/plugins/leaflet-draw/leaflet.draw-src",
+            "proj4"    : "../lib/proj4/proj4-src",
+            "proj4leaflet-0.7.x" : "../lib/proj4leaflet/proj4leaflet-src",
+            "proj4leaflet-1.0.x" : "../lib/proj4leaflet/1.0.0-beta.2/proj4leaflet-src",
+            'sortable' : "../lib/sortable/Sortable"
+        }
+      }).run({
+        name: 'mocha',
+        tests: [
+          // leaflet
+          "spec/leaflet/test-GpPlugin.js",
+          "spec/leaflet/test-Control-LayerSwitcher.js",
+          "spec/leaflet/test-Control-SearchEngine.js",
+          "spec/leaflet/test-Control-MousePosition.js",
+          "spec/leaflet/test-Control-Route.js",
+          "spec/leaflet/test-Control-Utils-PositionFormater.js"
+          // TODO Test User Interface, on ecarte ces tests du mode console :
+          // "spec/leaflet/ui/test-Layer-WMS.js"
+          // "spec/leaflet/ui/test-Layer-WMTS.js",
+          // "spec/leaflet/ui/test-Control-LayerSwitcher.js",
+          // "spec/leaflet/ui/test-Control-SearchEngine.js",
+          // "spec/leaflet/ui/test-Control-MousePosition.js",
+
+        ]
+      });
+    </script>
+  </body>
+</html>

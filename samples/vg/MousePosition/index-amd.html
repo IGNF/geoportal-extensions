@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+ <html>
+ <head>
+     <meta content="IE=edge,chrome=1; charset=UTF-8" http-equiv="X-UA-Compatible">
+          <title>sample vg MousePosition</title>
+      <!-- Library OpenLayers 3 -->
+      <link rel="stylesheet" href="../../../lib/vg/css/vgeo.css" />
+      <!-- <script src="../../../lib/ol3/ol-debug.js"></script> -->
+
+     <!-- Plugin OpenLayers 3 IGN -->
+     <link rel="stylesheet" href="../../../dist/vg/GpPluginVg-src.css" />
+     <!-- <script src="../../../dist/ol3/GpPluginOl3.js" data-url="./../resources/AutoConf.js"></script> -->
+
+     <!-- requirejs -->
+     <script src="../../../lib/require.js"></script>
+
+     <!-- load geoportail-waiting image -->
+     <style>
+     div#map {
+         background-image:url(../resources/geoportail-waiting.gif);
+         background-position:center center;
+         background-repeat:no-repeat;
+         max-width: 800px;
+         height: 500px;
+         margin: 0px;
+         z-index: 0;
+         position: relative;
+     }
+     </style>
+ </head>
+ <body>
+     <h1>
+         <a href="http://openlayers.org/"><img src="../../resources/logo-ol3.png" alt="OpenLayers3" width="100" /></a>
+         <a href="http://www.ign.fr"><img src="../../resources/logo-ign.jpg" alt="IGN" width="100" /></a>
+     </h1>
+     <h3>
+         OpenLayers3 - A high-performance, feature-packed library for all your mapping needs.
+     </h3>
+
+     <div>
+         <p>Ajout d'un contrôle d'affichage des coordonnées de la souris : MousePosition</p>
+
+         <script>
+         var map;
+/* global requirejs */
+requirejs.config({
+             baseUrl : "../../../src/",
+             paths : {
+                 // lib external
+                 vg : "../lib/vg/js/VirtualGeoWeb-1.1.min",
+                 proj4 : "../lib/proj4/proj4",
+                 gp : "../lib/gp/GpServices-src",
+                 sortable : "../lib/sortable/Sortable",
+                 woodman : "../lib/woodman/woodman-amd"
+             }
+         });
+ requirejs(
+             ["gp", "Vg/Controls/MousePosition", "Vg/Layers/Layers"],
+             function (Gp, MousePosition, GeoportalLayers) {
+                 /**
+                 * Creation de la map
+                 */
+                 var createMap = function () {
+                     map = new VirtualGeo.Map("map", { // The first parameter is the ID of the map
+                         licenseKey : "aTwfAPmTTw5PElAOuHaGBupJO3f6zCMClLnHDxgajDfbcuF2JmJivYNZEnLOQrvfzOa3z63Vzo98xjC6Rr54O7gJ",
+                         /**
+                         * Actions à mener lorsque le globe est créé
+                         */
+                         whenLoaded : function (pMap) {
+                             var IGN_ORTHO = GeoportalLayers.WMS({
+                                 layer : "ORTHOIMAGERY.ORTHOPHOTOS.BDORTHO",
+                                 apiKey : "jhyvi0fgmnuxvfv0zjzorvdn"
+                             });
+
+                             pMap.addImageryLayer(IGN_ORTHO);
+
+                             var IGNDEM = {
+                                 protocol : "wmts",
+                                 id : "IGNDEM",
+                                 url : "http://wxs.ign.fr/j2bfkv9whnqpq04zpzlfz2ge/geoportail/wmts",
+                                 noDataValue : "-99999",
+                                 wmtsOptions : {
+                                     name : "ELEVATION.ELEVATIONGRIDCOVERAGE",
+                                     tileMatrixSet : "WGS84G",
+                                     tileMatrixSetLimits : {
+                                         2 : {
+                                             minTileRow : "0",
+                                             maxTileRow : "2",
+                                             minTileCol : "2",
+                                             maxTileCol : "7"
+                                         },
+                                         3 : {
+                                             minTileRow : "1",
+                                             maxTileRow : "5",
+                                             minTileCol : "5",
+                                             maxTileCol : "15"
+                                         },
+                                         4 : {
+                                             minTileRow : "3",
+                                             maxTileRow : "10",
+                                             minTileCol : "10",
+                                             maxTileCol : "30"
+                                         },
+                                         5 : {
+                                             minTileRow : "6",
+                                             maxTileRow : "20",
+                                             minTileCol : "20",
+                                             maxTileCol : "61"
+                                         },
+                                         6 : {
+                                             minTileRow : "13",
+                                             maxTileRow : "40",
+                                             minTileCol : "41",
+                                             maxTileCol : "123"
+                                         },
+                                         7 : {
+                                             minTileRow : "27",
+                                             maxTileRow : "80",
+                                             minTileCol : "82",
+                                             maxTileCol : "247"
+                                         },
+                                         8 : {
+                                             minTileRow : "54",
+                                             maxTileRow : "160",
+                                             minTileCol : "164",
+                                             maxTileCol : "494"
+                                         },
+                                         9 : {
+                                             minTileRow : "108",
+                                             maxTileRow : "321",
+                                             minTileCol : "329",
+                                             maxTileCol : "989"
+                                         },
+                                         10 : {
+                                             minTileRow : "216",
+                                             maxTileRow : "642",
+                                             minTileCol : "659",
+                                             maxTileCol : "1979"
+                                         },
+                                         11 : {
+                                             minTileRow : "432",
+                                             maxTileRow : "1285",
+                                             minTileCol : "1319",
+                                             maxTileCol : "3959"
+                                         }
+                                     }
+                                 }
+                             };
+
+                             map.addImageryLayer({
+                                 protocol :   "wmts",
+                                 id : "IGNPO_HIGH",
+                                 url :        "http://wxs.ign.fr/j2bfkv9whnqpq04zpzlfz2ge/geoportail/wmts",
+                                 processingOptions : {
+                                     mode : "threshold",
+                                     factor : 0.1,
+                                     color : "white"
+                                 },
+                                 wmtsOptions : {
+                                     name : "ORTHOIMAGERY.ORTHOPHOTOS.CRS84",
+                                     mimeType : "image/jpeg",
+                                     tileMatrixSet : "WGS84G",
+                                     tileMatrixSetLimits : {
+                                         13 : {
+                                             minTileRow : "1770",
+                                             maxTileRow : "5069",
+                                             minTileCol : "82",
+                                             maxTileCol : "10733"
+                                         },
+                                         14 : {
+                                             minTileRow : "3541",
+                                             maxTileRow : "10139",
+                                             minTileCol : "165",
+                                             maxTileCol : "21467"
+                                         },
+                                         15 : {
+                                             minTileRow : "7082",
+                                             maxTileRow : "20279",
+                                             minTileCol : "330",
+                                             maxTileCol : "42934"
+                                         },
+                                         16 : {
+                                             minTileRow : "14165",
+                                             maxTileRow : "40559",
+                                             minTileCol : "660",
+                                             maxTileCol : "85868"
+                                         },
+                                         17 : {
+                                             minTileRow : "28330",
+                                             maxTileRow : "81118",
+                                             minTileCol : "1320",
+                                             maxTileCol : "171736"
+                                         }
+                                     }
+                                 }
+                             });
+
+                             pMap.addElevationLayer(IGNDEM);
+
+                             var mp = new MousePosition();
+                             map.addControl(mp);
+                         }
+                     });
+                 };
+
+                 /**
+                 * Ajout de plusieurs couches différentes.
+                 */
+                 var loadLayers = function (map) {
+
+                 };
+
+                 Gp.Services.getConfig({
+                     apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
+                     timeOut : 20000,
+                     onSuccess : createMap
+                 });
+
+             });
+
+             </script>
+
+             <!-- map -->
+             <div id="map">
+             </div>
+
+     </body>
+     </html>

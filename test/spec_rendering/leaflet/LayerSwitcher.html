@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <meta charset="UTF-8">
+  <!-- Library Leaflet -->
+  <link rel="stylesheet" href="../../../lib/leaflet/leaflet.css" />
+  <script src="../../../lib/leaflet/leaflet.js"></script>
+
+  <!-- Plugin leaflet IGN -->
+  <link rel="stylesheet" href="../../../dist/leaflet/GpPluginLeaflet.css" />
+  <script src="../../../dist/leaflet/GpPluginLeaflet-src.js" data-key="jhyvi0fgmnuxvfv0zjzorvdn"></script>
+
+</head>
+<body>
+    <!-- code -->
+    <script>
+
+          window.onload = function () {
+
+
+              var wms = L.geoportalLayer.WMTS({
+                layer : "ORTHOIMAGERY.ORTHOPHOTOS",
+              },
+              {
+                attribution : "layer IGN",
+                opacity : 0.3
+              });
+
+              var wmts = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                  attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+                  opacity : 0.5
+              });
+
+              var map  = L.map('map', {
+                zoom : 6,
+                center : L.latLng(48, 2),
+                layers : [wmts, wms]
+                // minZoom : 3,
+                // maxZoom : 18,
+                // cf. http://leafletjs.com/reference.html#map-usage
+                // bounceAtZoomLimits
+                // fadeAnimation,
+                // zoomAnimation,
+                // zoomAnimationThreshold,
+                // markerZoomAnimation,
+              });
+
+              map.addLayer(wmts);
+              map.addLayer(wms);
+
+              var layers = [
+                {
+                  layer : wmts,
+                  display : true,
+                  config : {
+                     title : "Layer OSM",
+                     description : "OpenStreetMap",
+                     visibility : true,
+                     legends : [{
+                       minScaleDenominator: 1067,
+                       url: "http://localhost/"
+                     }],
+                     quicklookUrl : "http://localhost/"
+                  }
+                }
+              ];
+
+              var layerSwitcher = L.geoportalControl.LayerSwitcher({layers : layers, collapsed : false});
+              map.addControl(layerSwitcher);
+        }
+    </script>
+
+    <!-- map -->
+    <div id="map" style="height: 400px;"></div>
+
+</body>
+</html>

@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+        <!-- Library VirtualGeo -->
+        <script src="../../../lib/vg/js/VirtualGeoWeb-1.1.min.js"></script>
+
+        <!-- Plugin OpenLayers 3 IGN -->
+        <link rel="stylesheet" href="../../../dist/vg/GpPluginVg-src.css" />
+        <script src="../../../dist/vg/GpPluginVg-src.js"></script>
+
+        <!-- load geoportail-waiting image -->
+        <style>
+            div#map {
+                background-image:url(../../resources/geoportail-waiting.gif);
+                background-position:center center;
+                background-repeat:no-repeat;
+                position: relative;
+            }
+        </style>
+    </head>
+    <body>
+        <h3>
+            VirtualGeo
+        </h3>
+        <div>
+            <!-- Faire une bréve description du plugin -->
+            <p>Ajout d'un contrôle de gestionnaire de couches : LayerSwitcher</p>
+
+            <!-- Mettre le code source de l'exemple -->
+            <script>
+                var map;
+                /**
+                * Quand la page est chargée, on crée le globe
+                */
+                window.onload = function () {
+                    map = new VirtualGeo.Map("map", { // The first parameter is the ID of the map
+                        licenseKey : "aTwfAPmTTw5PElAOuHaGBupJO3f6zCMClLnHDxgajDfbcuF2JmJivYNZEnLOQrvfzOa3z63Vzo98xjC6Rr54O7gJ",
+                        /**
+                        * Actions à mener lorsque le globe est créé
+                        */
+                        whenLoaded : function (pMap) {
+                            // Ajout du tileMatrixSet PseudoMercator (pour la couche MAPS)
+                            pMap.addTileMatrixSet({
+                                id : "PM",
+                                projection :  "EPSG:3857",
+                                tileMatrices : [
+                                    {
+                                        matrixId :  "0", tileWidth : 256, tileHeight : 256, matrixWidth : 1, matrixHeight : 1, scaleDenominator : 559082264.0287178958533332,topLeftCorner : [-20037508,20037508]
+                                    },
+                                    {
+                                        matrixId : "1", tileWidth : 256, tileHeight : 256, matrixWidth : 2, matrixHeight : 2, scaleDenominator : 279541132.0143588959472254,topLeftCorner : [-20037508,20037508]
+                                    },
+                                    {
+                                        matrixId : "2", tileWidth : 256, tileHeight : 256, matrixWidth : 4, matrixHeight : 4, scaleDenominator : 139770566.0071793960087234,topLeftCorner : [-20037508,20037508]
+                                    },
+                                    {
+                                        matrixId : "3", tileWidth : 256, tileHeight : 256, matrixWidth : 8, matrixHeight : 8, scaleDenominator : 69885283.0035897239868063,topLeftCorner : [-20037508,20037508]
+                                    },
+                                    {
+                                        matrixId : "4", tileWidth : 256, tileHeight : 256, matrixWidth : 16, matrixHeight : 16, scaleDenominator : 34942641.5017948619934032,topLeftCorner : [-20037508,20037508]
+                                    },
+                                    {
+                                        matrixId : "5", tileWidth : 256, tileHeight : 256, matrixWidth : 32, matrixHeight : 32, scaleDenominator : 17471320.7508974309967016,topLeftCorner : [-20037508,20037508]
+                                    },
+                                    {
+                                        matrixId : "6", tileWidth : 256, tileHeight : 256, matrixWidth : 64, matrixHeight : 64, scaleDenominator : 8735660.3754487154983508,topLeftCorner : [-20037508,20037508]
+                                    },
+                                    {
+                                        matrixId : "7", tileWidth : 256, tileHeight : 256, matrixWidth : 128, matrixHeight : 128, scaleDenominator : 4367830.1877243577491754,topLeftCorner : [-20037508,20037508]
+                                    },
+                                    {
+                                        matrixId : "8", tileWidth : 256, tileHeight : 256, matrixWidth : 256, matrixHeight : 256, scaleDenominator : 2183915.0938621788745877,topLeftCorner : [-20037508,20037508]
+                                    },
+                                    {
+                                        matrixId : "9", tileWidth : 256, tileHeight : 256, matrixWidth : 512, matrixHeight : 512, scaleDenominator : 1091957.5469310886252288,topLeftCorner : [-20037508,20037508]
+                                    },
+                                    {
+                                        matrixId : "10", tileWidth : 256, tileHeight : 256, matrixWidth : 1024, matrixHeight : 1024, scaleDenominator : 545978.7734655447186469,topLeftCorner : [-20037508,20037508]
+                                    },
+                                    {
+                                        matrixId : "11", tileWidth : 256, tileHeight : 256, matrixWidth : 2048, matrixHeight : 2048, scaleDenominator : 272989.3867327723085907,topLeftCorner : [-20037508,20037508]
+                                    },
+                                    {
+                                        matrixId : "12", tileWidth : 256, tileHeight : 256, matrixWidth : 4096, matrixHeight : 4096, scaleDenominator : 136494.6933663861796617,topLeftCorner : [-20037508,20037508]
+                                    },
+                                    {
+                                        matrixId : "13", tileWidth : 256, tileHeight : 256, matrixWidth : 8192, matrixHeight : 8192, scaleDenominator : 68247.3466831930771477,topLeftCorner : [-20037508,20037508]
+                                    },
+                                    {
+                                        matrixId : "14", tileWidth : 256, tileHeight : 256, matrixWidth : 16384, matrixHeight : 16384, scaleDenominator : 34123.6733415965449154,topLeftCorner : [-20037508,20037508]
+                                    },
+                                    {
+                                        matrixId : "15", tileWidth : 256, tileHeight : 256, matrixWidth : 32768, matrixHeight : 32768, scaleDenominator : 17061.8366707982724577,topLeftCorner : [-20037508,20037508]
+                                    },
+                                    {
+                                        matrixId : "16", tileWidth : 256, tileHeight : 256, matrixWidth : 65536, matrixHeight : 65536, scaleDenominator : 8530.9183353991362289,topLeftCorner : [-20037508,20037508]
+                                    },
+                                    {
+                                        matrixId : "17", tileWidth : 256, tileHeight : 256, matrixWidth : 131072, matrixHeight : 131072, scaleDenominator : 4265.4591676995681144,topLeftCorner : [-20037508,20037508]
+                                    },
+                                    {
+                                        matrixId : "18", tileWidth : 256, tileHeight : 256, matrixWidth : 262144, matrixHeight : 262144, scaleDenominator : 2132.7295838497840572,topLeftCorner : [-20037508,20037508]
+                                    },
+                                    {
+                                        matrixId : "19", tileWidth : 256, tileHeight : 256, matrixWidth : 524288, matrixHeight : 524288, scaleDenominator : 1066.3647919248918304,topLeftCorner : [-20037508,20037508]
+                                    },
+                                    {
+                                        matrixId : "20", tileWidth : 256, tileHeight : 256, matrixWidth : 1048576, matrixHeight : 1048576, scaleDenominator : 533.1823959624461134,topLeftCorner : [-20037508,20037508]
+                                    },
+                                    {
+                                        matrixId : "21", tileWidth : 256, tileHeight : 256, matrixWidth : 2097152, matrixHeight : 2097152, scaleDenominator : 266.5911979812228585,topLeftCorner : [-20037508,20037508]
+                                    }
+                                ]
+                            });
+
+                            map.addImageryLayer({
+                                protocol :   "wmts",
+                                id : "IGNPO_HIGH",
+                                url :        "http://wxs.ign.fr/j2bfkv9whnqpq04zpzlfz2ge/geoportail/wmts",
+                                processingOptions : {
+                                    mode : "threshold",
+                                    factor : 0.1,
+                                    color : "white"
+                                },
+                                wmtsOptions : {
+                                    name : "ORTHOIMAGERY.ORTHOPHOTOS.CRS84",
+                                    mimeType : "image/jpeg",
+                                    tileMatrixSet : "WGS84G",
+                                    tileMatrixSetLimits : {
+                                        13 : {
+                                            minTileRow : "1770",
+                                            maxTileRow : "5069",
+                                            minTileCol : "82",
+                                            maxTileCol : "10733"
+                                        },
+                                        14 : {
+                                            minTileRow : "3541",
+                                            maxTileRow : "10139",
+                                            minTileCol : "165",
+                                            maxTileCol : "21467"
+                                        },
+                                        15 : {
+                                            minTileRow : "7082",
+                                            maxTileRow : "20279",
+                                            minTileCol : "330",
+                                            maxTileCol : "42934"
+                                        },
+                                        16 : {
+                                            minTileRow : "14165",
+                                            maxTileRow : "40559",
+                                            minTileCol : "660",
+                                            maxTileCol : "85868"
+                                        },
+                                        17 : {
+                                            minTileRow : "28330",
+                                            maxTileRow : "81118",
+                                            minTileCol : "1320",
+                                            maxTileCol : "171736"
+                                        }
+                                    }
+                                }
+                            });
+
+                            pMap.addImageryLayer({
+                                protocol :   "wmts",
+                                id :         "IGNMAPS",
+                                url :        "http://wxs.ign.fr/j2bfkv9whnqpq04zpzlfz2ge/geoportail/wmts",
+                                wmtsOptions : {
+                                    name : "GEOGRAPHICALGRIDSYSTEMS.MAPS",
+                                    tileMatrixSet : "PM",
+                                    mimeType : "image/jpeg",
+                                    tileMatrixSetLimits : {
+                                        0 : {
+                                            minTileRow : "0",
+                                            maxTileRow : "0",
+                                            minTileCol : "0",
+                                            maxTileCol : "1"
+                                        },
+                                        1 : {
+                                            minTileRow : "0",
+                                            maxTileRow : "1",
+                                            minTileCol : "0",
+                                            maxTileCol : "2"
+                                        },
+                                        2 : {
+                                            minTileRow : "0",
+                                            maxTileRow : "2",
+                                            minTileCol : "0",
+                                            maxTileCol : "4"
+                                        },
+                                        3 : {
+                                            minTileRow : "0",
+                                            maxTileRow : "5",
+                                            minTileCol : "0",
+                                            maxTileCol : "8"
+                                        },
+                                        4 : {
+                                            minTileRow : "1",
+                                            maxTileRow : "11",
+                                            minTileCol : "0",
+                                            maxTileCol : "16"
+                                        },
+                                        5 : {
+                                            minTileRow : "3",
+                                            maxTileRow : "22",
+                                            minTileCol : "0",
+                                            maxTileCol : "32"
+                                        },
+                                        6 : {
+                                            minTileRow : "7",
+                                            maxTileRow : "45",
+                                            minTileCol : "0",
+                                            maxTileCol : "64"
+                                        },
+                                        7 : {
+                                            minTileRow : "42",
+                                            maxTileRow : "97",
+                                            minTileCol : "0",
+                                            maxTileCol : "115"
+                                        },
+                                        8 : {
+                                            minTileRow : "84",
+                                            maxTileRow : "195",
+                                            minTileCol : "1",
+                                            maxTileCol : "247"
+                                        },
+                                        9 : {
+                                            minTileRow : "170",
+                                            maxTileRow : "390",
+                                            minTileCol : "2",
+                                            maxTileCol : "495"
+                                        },
+                                        10 : {
+                                            minTileRow : "340",
+                                            maxTileRow : "780",
+                                            minTileCol : "5",
+                                            maxTileCol : "990"
+                                        },
+                                        11 : {
+                                            minTileRow : "681",
+                                            maxTileRow : "1544",
+                                            minTileCol : "10",
+                                            maxTileCol : "1981"
+                                        },
+                                        12 : {
+                                            minTileRow : "1363",
+                                            maxTileRow : "3088",
+                                            minTileCol : "20",
+                                            maxTileCol : "3962"
+                                        },
+                                        13 : {
+                                            minTileRow : "2726",
+                                            maxTileRow : "6177",
+                                            minTileCol : "40",
+                                            maxTileCol : "7924"
+                                        },
+                                        14 : {
+                                            minTileRow : "5452",
+                                            maxTileRow : "12355",
+                                            minTileCol : "81",
+                                            maxTileCol : "15847"
+                                        },
+                                        15 : {
+                                            minTileRow : "10944",
+                                            maxTileRow : "21176",
+                                            minTileCol : "163",
+                                            maxTileCol : "31695"
+                                        },
+                                        16 : {
+                                            minTileRow : "21889",
+                                            maxTileRow : "42353",
+                                            minTileCol : "326",
+                                            maxTileCol : "63382"
+                                        },
+                                        17 : {
+                                            minTileRow : "43776",
+                                            maxTileRow : "73526",
+                                            minTileCol : "42528",
+                                            maxTileCol : "85869"
+                                        },
+                                        18 : {
+                                            minTileRow : "87557",
+                                            maxTileRow : "147052",
+                                            minTileCol : "85058",
+                                            maxTileCol : "171738"
+                                        }
+                                    }
+                                }
+                            });
+
+                            var IGNPO = {
+                                protocol  :   "wmts",
+                                id :         "IGNPO",
+                                description : "une couche IGN de photos",
+                                url :        "http://wxs.ign.fr/j2bfkv9whnqpq04zpzlfz2ge/geoportail/wmts",
+                                wmtsOptions : {
+                                    name :       "ORTHOIMAGERY.ORTHOPHOTOS.LOW_RES.CRS84",
+                                    mimeType : "image/jpeg",
+                                    tileMatrixSet : "WGS84G",
+                                    tileMatrixSetLimits : {
+                                        2 : {
+                                            minTileRow : "0",
+                                            maxTileRow : "3",
+                                            minTileCol : "0",
+                                            maxTileCol : "8"
+                                        },
+                                        3 : {
+                                            minTileRow : "0",
+                                            maxTileRow : "7",
+                                            minTileCol : "0",
+                                            maxTileCol : "16"
+                                        },
+                                        4 : {
+                                            minTileRow : "0",
+                                            maxTileRow : "15",
+                                            minTileCol : "0",
+                                            maxTileCol : "32"
+                                        },
+                                        5 : {
+                                            minTileRow : "1",
+                                            maxTileRow : "31",
+                                            minTileCol : "0",
+                                            maxTileCol : "64"
+                                        },
+                                        6 : {
+                                            minTileRow : "2",
+                                            maxTileRow : "62",
+                                            minTileCol : "0",
+                                            maxTileCol : "128"
+                                        },
+                                        7 : {
+                                            minTileRow : "4",
+                                            maxTileRow : "125",
+                                            minTileCol : "0",
+                                            maxTileCol : "256"
+                                        },
+                                        8 : {
+                                            minTileRow : "8",
+                                            maxTileRow : "250",
+                                            minTileCol : "0",
+                                            maxTileCol : "512"
+                                        },
+                                        9 : {
+                                            minTileRow : "17",
+                                            maxTileRow : "500",
+                                            minTileCol : "0",
+                                            maxTileCol : "1024"
+                                        },
+                                        10 : {
+                                            minTileRow : "34",
+                                            maxTileRow : "1001",
+                                            minTileCol : "0",
+                                            maxTileCol : "2048"
+                                        },
+                                        11 : {
+                                            minTileRow : "68",
+                                            maxTileRow : "2002",
+                                            minTileCol : "0",
+                                            maxTileCol : "4096"
+                                        },
+                                        12 : {
+                                            minTileRow : "136",
+                                            maxTileRow : "4004",
+                                            minTileCol : "0",
+                                            maxTileCol : "8192"
+                                        }
+                                    }
+                                }
+                            };
+
+                            pMap.addImageryLayer(IGNPO);
+
+                            var IGNDEM = {
+                                protocol : "wmts",
+                                id : "IGNDEM",
+                                url : "http://wxs.ign.fr/j2bfkv9whnqpq04zpzlfz2ge/geoportail/wmts",
+                                noDataValue : "-99999",
+                                wmtsOptions : {
+                                    name : "ELEVATION.ELEVATIONGRIDCOVERAGE",
+                                    tileMatrixSet : "WGS84G",
+                                    tileMatrixSetLimits : {
+                                        2 : {
+                                            minTileRow : "0",
+                                            maxTileRow : "2",
+                                            minTileCol : "2",
+                                            maxTileCol : "7"
+                                        },
+                                        3 : {
+                                            minTileRow : "1",
+                                            maxTileRow : "5",
+                                            minTileCol : "5",
+                                            maxTileCol : "15"
+                                        },
+                                        4 : {
+                                            minTileRow : "3",
+                                            maxTileRow : "10",
+                                            minTileCol : "10",
+                                            maxTileCol : "30"
+                                        },
+                                        5 : {
+                                            minTileRow : "6",
+                                            maxTileRow : "20",
+                                            minTileCol : "20",
+                                            maxTileCol : "61"
+                                        },
+                                        6 : {
+                                            minTileRow : "13",
+                                            maxTileRow : "40",
+                                            minTileCol : "41",
+                                            maxTileCol : "123"
+                                        },
+                                        7 : {
+                                            minTileRow : "27",
+                                            maxTileRow : "80",
+                                            minTileCol : "82",
+                                            maxTileCol : "247"
+                                        },
+                                        8 : {
+                                            minTileRow : "54",
+                                            maxTileRow : "160",
+                                            minTileCol : "164",
+                                            maxTileCol : "494"
+                                        },
+                                        9 : {
+                                            minTileRow : "108",
+                                            maxTileRow : "321",
+                                            minTileCol : "329",
+                                            maxTileCol : "989"
+                                        },
+                                        10 : {
+                                            minTileRow : "216",
+                                            maxTileRow : "642",
+                                            minTileCol : "659",
+                                            maxTileCol : "1979"
+                                        },
+                                        11 : {
+                                            minTileRow : "432",
+                                            maxTileRow : "1285",
+                                            minTileCol : "1319",
+                                            maxTileCol : "3959"
+                                        }
+                                    }
+                                }
+                            };
+
+                            pMap.addElevationLayer(IGNDEM);
+
+                            // Ajout du contrôle de gestion de l'empilement des couches (layerSwitcher)
+                            var layerSwitcher = new VirtualGeo.LayerSwitcher({
+                                layers : [
+                                    {
+                                    layer : IGNPO,
+                                    config : {
+                                        title : "Couche de Photos IGNPO",
+                                        description : "Description de ma couche",
+                                        quicklookUrl : "lien/Vers/UnApercuRapide.png",
+                                        legends : [
+                                            {
+                                                url : "lien/Vers/UneLegende.png"
+                                            }
+                                        ],
+                                        metadata : [
+                                            {
+                                                url : "lien/Vers/Une/MetaDonnee.xml"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                            });
+                            // var layerSwitcher = new LayerSwitcher();
+                            map.addControl(layerSwitcher);
+                        }
+                    });
+
+                };
+            </script>
+
+            <!-- map -->
+            <div id="map" style="height: 500px; width: 800px;"></div>
+
+        </div>
+    </body>
+</html>

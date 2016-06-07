@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Library Leaflet -->
+  <link rel="stylesheet" href="../../../lib/leaflet/leaflet.css" />
+
+  <!-- Plugin leaflet IGN -->
+  <link rel="stylesheet" href="../../../dist/leaflet/GpPluginLeaflet-src.css" />
+
+  <!-- requirejs -->
+  <script src="../../../lib/require.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+       body {
+           padding: 0;
+           margin: 0;
+       }
+       html, body, #map {
+           height: 100%;
+           width: 100%;
+       }
+   </style>
+
+</head>
+<body>
+  <!-- Mettre le code source de l'exemple -->
+  <script>
+      /* global requirejs */
+      requirejs.config({
+          'baseUrl' : "../../../src/",
+          'paths': {
+              // lib external
+              "leaflet" : "../lib/leaflet/leaflet-src",
+              "gp"      : "../lib/gp/GpServices-src",
+              "proj4" : "../lib/proj4/proj4-src",
+              "proj4leaflet-0.7.x" : "../lib/proj4leaflet/proj4leaflet-src",
+              "proj4leaflet-1.0.x" : "../lib/proj4leaflet/1.0.0-beta.2/proj4leaflet-src",
+              "woodman" : "../lib/woodman/woodman-amd",
+              "sortable": "../lib/sortable/Sortable"
+          }
+      });
+
+      requirejs(['gp', 'Leaflet/Layers/Layers', 'Leaflet/Controls/Isocurve', 'Leaflet/Controls/LayerSwitcher'],
+      function (Gp, Layers, Isocurve, LayerSwitcher) {
+
+        Gp.Services.getConfig({
+          // serverUrl : "../../resources/autoconf/callback-autoconf-xml-light-more",
+          apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
+          timeOut : 20000,
+          onSuccess : function () {
+
+            var wms = Layers.WMS({
+              layer : "ORTHOIMAGERY.ORTHOPHOTOS",
+            });
+
+            var map  = L.map('map', {
+              zoom : 2,
+              center : L.latLng(48, 2)
+            });
+
+            wms.addTo(map);
+
+            var switcher = new LayerSwitcher();
+            map.addControl(switcher);
+
+            var iso = new Isocurve();
+
+            map.addControl(iso);
+
+        }
+      })
+    });
+  </script>
+
+    <!-- map -->
+    <div id="map"></div>
+
+</body>
+</html>

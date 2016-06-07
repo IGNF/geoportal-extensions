@@ -1,0 +1,10 @@
+Visualisation du rendu (CSS) des extensions leaflet.
+
+> npm install
+> firefox leaflet/index.html
+
+Limitations
+
+https://github.com/cburgmer/rasterizeHTML.js/wiki/Limitations#webkit-origin
+https://github.com/cburgmer/rasterizeHTML.js/issues/73
+https://github.com/cburgmer/rasterizeHTML.js/issues/120

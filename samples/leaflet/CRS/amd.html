@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Library Leaflet -->
+  <link rel="stylesheet" href="../../../lib/leaflet/leaflet.css" />
+
+  <!-- requirejs -->
+  <script src="../../../lib/require.js"></script>
+
+</head>
+<body>
+  <h1>
+    <a href="http://leafletjs.com"><img src="../../resources/logo-leaflet.png" alt="Leaflet" width="300" /></a>
+    <a href="http://www.ign.fr"><img src="../../resources/logo-ign.jpg" alt="IGN" width="100" /></a>
+  </h1>
+  <h3>
+    Leaflet - une bibliothèque JavaScript open-source pour des cartes interactives mobile-friendly
+  </h3>
+  <div>
+    <!-- Faire une bréve description du plugin -->
+    <p>DESCRIPTION DU PLUGIN</p>
+    <p>A partir du simple nom de la couche (par exemple : ORTHOIMAGERY.ORTHOPHOTOS) et de votre clef API (prise sur professionnels.ign.fr ),
+      vous pouvez créer une carte Leaflet utilisant la couche Géoportail de votre choix comme fond de carte.</p>
+
+    <!-- Mettre le code source de l'exemple -->
+    <script>
+        /* global requirejs */
+        requirejs.config({
+            'baseUrl' : "../../../src/",
+            'paths': {
+                // lib external
+                "leaflet" : "../lib/leaflet/leaflet-src",
+                "proj4" : "../lib/proj4/proj4-amd",
+                "proj4leaflet-0.7.x" : "../lib/proj4leaflet/proj4leaflet-src",
+                "proj4leaflet-1.0.x" : "../lib/proj4leaflet/1.0.0-beta.2/proj4leaflet-src",
+                "gp"      : "../lib/gp/GpServices",
+                "woodman" : "../lib/woodman/woodman-amd"
+            }
+        });
+
+        requirejs(['gp', 'Leaflet/Layers/Layers', "proj4", "proj4leaflet"],
+        function (Gp, Layers) {
+
+          Gp.Services.getConfig({
+            apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
+            timeOut : 20000,
+            onSuccess : function () {
+
+              var crs = new L.Proj.CRS("EPSG:2154",
+                  "+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs",
+                  {
+                      // FIXME issue de l'autoconf cf. nativeResolutions
+                      resolutions : [
+                          104579.22454989408,
+                          52277.53235379051,
+                          26135.487078595408,
+                          13066.891381800004,
+                          6533.228604113456,
+                          3266.5595244626675,
+                          1633.2660045974187,
+                          816.6295549860224,
+                          408.31391467683596,
+                          204.15674151090204,
+                          102.07831678324082,
+                          51.0391448966112,
+                          25.519569074269395,
+                          12.759783693647506,
+                          6.379891635966491,
+                          3.18994576530532,
+                          1.5949728694977277,
+                          0.7974864315474559,
+                          0.398743214900604,
+                          0.19937160727567999,
+                          0.099685803696052,
+                          0.049842901818919996
+                      ],
+                      origin : [0, 12000000]
+                  });
+
+              var map = L.map('map', {
+                crs : crs, // ou L.geoportalCRS.EPSG2154 !
+                continuousWorld: true,
+                worldCopyJump: false,
+                // minZoom : 6, FIXME interaction avec les niveaux du layer !
+                // maxZoom : 18,
+                attributionControl : true} // active/desactive le mecanisme d'ajout des attributions !
+              ).setView([48, 2], 6);
+
+              console.log(map);
+
+              var wms = Layers.WMS({
+                layer : "ORTHOIMAGERY.ORTHOPHOTOS"
+              }, {
+                crs : crs
+              });
+
+              console.log(wms);
+              wms.addTo(map);
+
+
+              var marker = L.marker([48, 2]);
+              marker.addTo(map);
+              marker.bindPopup('A pretty CSS3 popup.<br> Easily customizable.').openPopup();
+
+              var canvasTiles = L.tileLayer.canvas();
+              canvasTiles.drawTile = function(canvas, tilePoint, zoom) {
+                   var latLon  = map.layerPointToLatLng(tilePoint);
+                   var ctx = canvas.getContext('2d');
+                   ctx.strokeStyle = ctx.fillStyle = "red";
+                   ctx.rect(0,0, 256,256);
+                   ctx.stroke();
+                   ctx.fillText('(' + tilePoint.x + ', ' + tilePoint.y + ')',5,10);
+                   ctx.fillText('(' + latLon.lng + ', ' + latLon.lat + ')',5,20);
+               };
+
+          		var overlays = {
+                "Canavas" : canvasTiles,
+          			"Marker": marker
+
+          		};
+
+              var baseLayers = {
+          			"IGN - WMS": wms
+          		};
+
+              L.control.layers(baseLayers, overlays).addTo(map);
+              L.control.scale().addTo(map);
+            }
+          });
+        });
+    </script>
+
+    <!-- map -->
+    <div id="map" style="height: 400px;"></div>
+
+    <!-- Comment utiliser le plugin avec un exemple -->
+    <p>EXEMPLE D'UTILISATION DU PLUGIN</p>
+    <pre>
+      <code>
+        var map = L.map('viewerDiv').setView([48.845, 2.424], 15);
+        var ortho = new Gp.L.WMS({
+            map : map,
+            layer:"ORTHOIMAGERY.ORTHOPHOTOS.BDORTHO",
+            apiKey:"wqxljfvklsdhvlfkjqfmlq"
+        });
+      </code>
+    </pre>
+
+    <!-- Toutes les informations utiles sur Leaflet -->
+    <p>
+      <ul>
+        <li>En savoir plus avec le <a href="http://leafletjs.com/examples/quick-start.html">quick start guide</a>,</li>
+        <li>d'autres informations avec <a href="http://leafletjs.com/examples.html">les exemples</a>,</li>
+        <li>ou aller directement à l'<a href="http://leafletjs.com/reference.html">API documentation</a>.</li>
+      </ul>
+      Si vous avez des questions, jetez un oeil à la
+      <a href="https://github.com/Leaflet/Leaflet/blob/master/FAQ.md">FAQ</a>.
+    </p>
+  </div>
+</body>
+</html>

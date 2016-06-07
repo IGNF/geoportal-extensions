@@ -1,0 +1,56 @@
+/* Location */
+
+/*#GPlocation {
+   left: 10px;
+   top: 0;
+}*/
+
+.GPlocationStageFlexInput {
+  margin-bottom: 5px; /*overwritten*/
+}
+
+/* Showing/hiding Location panel */
+
+/*#GPshowLocationOpen {
+  background-image: url("img/GPlocationOpen.png");
+}*/
+
+/* General panels */
+
+/*#GPlocationPanel {
+  left: 10px;
+}
+
+#GPlocationPanelClose {
+  background-image: url("img/GPlocationOpen.png");
+}*/
+
+/* Location form */
+
+.GPlocationOriginPointerImg,
+.GPlocationStageRemove,
+#GPlocationStageAdd,
+.GPlocationTransportImg {
+  background-image: url("img/GPlocationOptions.png");
+}
+
+/*.GPlocationExclusionsOption {
+  background-image: url("img/GPlocationCheck.png");
+}*/
+
+/* Results panel */
+
+/*#GPlocationResultsValueDist,
+#GPlocationResultsValueTime {
+  color: #C77A04;
+}
+
+#GPlocationResultsNew {
+  background-color: #C77A04;
+  background-image: url("img/GPlocationOptions.png");
+}
+
+#GPlocationResultsShowDetails + label:hover,
+#GPlocationResultsShowDetails + label + label:hover {
+  color: #C77A04;
+}*/

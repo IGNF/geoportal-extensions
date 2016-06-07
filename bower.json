@@ -1,0 +1,33 @@
+{
+  "name": "api-v3-plugin",
+  "version": "0.0.0",
+  "authors": [
+    "division-api@ign.fr"
+  ],
+  "description": "L'extension Géoportail pour Leaflet ou OpenLayers3 définit des classes et composants à utiliser avec Leaflet ou OpenLayers3 permettant de faciliter l'accès aux ressources délivrées par le Géoportail avec cette bibliothèque.",
+  "main": [
+    "dist/leaflet/GpPluginLeaflet.js",
+    "dist/leaflet/GpPluginLeaflet.css",
+    "dist/ol3/GpPluginOL3.js",
+    "dist/ol3/GpPluginOL3.css"
+  ],
+  "private": true,
+  "moduleType": [
+    "amd"
+  ],
+  "keywords": [
+    "API",
+    "OpenLayer3",
+    "Leaflet",
+    "Plugin",
+    "JS"
+  ],
+  "license": "BSD-2-Clause",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

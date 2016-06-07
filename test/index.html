@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+     <meta charset="utf-8">
+    <title>Mocha Spec Runner</title>
+
+
+    <link rel="stylesheet" href="../node_modules/mocha/mocha.css">
+
+    <script type="text/javascript" src="../node_modules/sinon/lib/sinon.js"></script>
+    <script type="text/javascript" src="../node_modules/chai/chai.js"></script>
+    <script type="text/javascript" src="../node_modules/mocha/mocha.js"></script>
+
+  </head>
+
+  <body>
+    <div id="map"></div>
+
+    <!-- content -->
+    <div id="workboard"></div>
+    <div id="mocha"></div>
+
+
+    <!-- tests -->
+
+    <script type="text/javascript" src="../node_modules/requirejs/require.js"></script>
+    <script type="text/javascript" src="../node_modules/easy-amdtest/dist/easy-amdtest.js"></script>
+
+    <script>
+
+      var testSuite = new EasyAMDTest({
+        baseUrl: '../src',
+        // urlArgs: 'bust=' + (new Date()).getTime(),
+        paths: {
+            'sinon'    : '../node_modules/sinon/lib/sinon',
+            'mocha'    : '../node_modules/mocha/mocha',
+            'chai'     : '../node_modules/chai/chai',
+            'leaflet'  : '../lib/leaflet/leaflet',
+            'gp'       : '../lib/gp/GpServices',
+            "woodman" : "../lib/woodman/woodman-amd"
+        }
+      }).run({
+        name: 'mocha',
+        tests: [
+          // common
+          "spec/common/test-common-utils-config.js",
+          "spec/common/test-common-utils-layer.js",
+          "spec/common/test-common-checkrightmanagement.js",
+          "spec/common/test-common-utils-idtag.js"
+        ]
+      });
+    </script>
+  </body>
+</html>

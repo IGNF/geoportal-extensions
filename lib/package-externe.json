@@ -1,0 +1,58 @@
+{
+  "requirejs" : {
+    "desc" : "JavaScript file and module loader",
+    "url" : "http://requirejs.org/",
+    "version" : "2.1.18"
+  },
+  "leaflet" : {
+    "desc" : "An open-source JavaScript library for mobile-friendly interactive maps",
+    "url" : "https://github.com/Leaflet/Leaflet/",
+    "version" : "0.7.7"
+  },
+  "leaflet-draw" : {
+    "version": "0.3.0",
+    "desc": "Vector drawing plugin for Leaflet",
+    "url" : "https://github.com/Leaflet/Leaflet.draw/"
+  },
+  "leaflet-1.0.0" : {
+    "desc" : "An open-source JavaScript library for mobile-friendly interactive maps",
+    "url" : "https://github.com/Leaflet/Leaflet/",
+    "version" : "1.0.0-rc1"
+  },
+  "proj4leaflet-0.7.x" : {
+    "desc" : "Full Projection and CRS support in Leaflet",
+    "url" : "https://github.com/kartena/Proj4Leaflet",
+    "version" : "0.7.2"
+  },
+  "proj4leaflet-1.0.x" : {
+    "desc" : "Full Projection and CRS support in Leaflet",
+    "url" : "https://github.com/kartena/Proj4Leaflet",
+    "version" : "1.0.0-beta.2"
+  },
+  "proj4" : {
+    "desc" : "Proj4js is a JavaScript library to transform point coordinates from one coordinate system to another, including datum transformations.",
+    "url" : "https://github.com/proj4js/proj4js",
+    "version" : "2.2.1"
+  },
+  "openlayers" : {
+    "desc" : "OpenLayers 3 is a high-performance, feature-packed library for creating interactive maps on the web.",
+    "url" : "https://github.com/openlayers/ol3/",
+    "version" : "3.14.2"
+  },
+  "gp" : {
+    "date" : "2016-05-18",
+    "desc" : "API Geoportail Services",
+    "url" : "https://github.com/IGNF/geoportal-access-lib",
+    "version" : "master 1.0.0-beta2 - commit 7dcec5da0c9ba02d04e8291620b1d03f7a5057d1 (master)"
+  },
+  "woodman" : {
+    "desc" : "Flexible JavaScript logger utility based on log4j. Runs client-side and server-side.",
+    "url" : "https://github.com/joshfire/woodman",
+    "version" : "1.1.0"
+  },
+  "sortable" : {
+    "desc" : "Sortable is a minimalist JavaScript library for reorderable drag-and-drop lists on modern browsers and touch devices. No jQuery. ",
+    "url" : "http://rubaxa.github.io/Sortable/",
+    "version" : "1.4.2"
+  }
+}

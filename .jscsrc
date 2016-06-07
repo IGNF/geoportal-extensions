@@ -1,0 +1,828 @@
+/*
+ * JSCS Configuration File
+ *
+ * Documentation comes from : http://jscs.info/rules.html
+ */
+{
+	"excludeFiles": [],
+
+
+                /*
+                 * Requires that a function expression be named.
+                 */
+        // "disallowAnonymousFunctions": true,
+
+                /*
+                 * Requires the first alphabetical character of a comment to be lowercase.
+                 */
+        // "disallowCapitalizedComments": true,
+
+                /*
+                 * Disallows commas as last token on a line in lists.
+                 */
+        // "disallowCommaBeforeLineBreak": true,
+
+                /*
+                 * Disallows curly braces after statements.
+                 * Values: Array of quoted keywords or true to disallow curly braces after the following keywords
+                 */
+        // "disallowCurlyBraces": true,
+
+                /*
+                 * Disallows identifiers that start or end in _. Some popular identifiers are automatically listed as exceptions:
+                 *      __proto__ (javascript)
+                 *      _ (underscore.js)
+                 *      __filename (node.js global)
+                 *      __dirname (node.js global)
+                 *      super_ (node.js, used by util.inherits)
+                 * Values:
+                 *      true
+                 *      Object:
+                 *              allExcept : array of quoted identifiers
+                 */
+        // "disallowDanglingUnderscores": true,
+
+                /*
+                 * Disallows empty blocks (except for catch blocks).
+                 */
+        "disallowEmptyBlocks": true,
+
+                /*
+                 * Disallows function declarations.
+                 */
+        // "disallowFunctionDeclarations": true,
+
+                /*
+                 * Disallows a specified set of identifier names.
+                 * Values: Array of strings, which should be disallowed as identifier names
+                 */
+        // "disallowIdentifierNames": [],
+
+                /*
+                 * Disallows implicit type conversion.
+                 * Values: Array of quoted types
+                 */
+        // "disallowImplicitTypeConversion": [],
+
+                /*
+                 * Disallows keywords in your comments, such as TODO or FIXME
+                 * Values:
+                 *    true
+                 *    '\b(word1|word2)\b'
+                 *    ['word1', 'word2']
+                 */
+        // "disallowKeywordsInComments": [],
+
+                /*
+                 * Disallows placing keywords on a new line.
+                 * Values: Array of quoted keywords
+                 */
+        "disallowKeywordsOnNewLine": ["else"],
+
+                /*
+                 * Disallows usage of specified keywords.
+                 */
+	// "disallowKeywords": [],
+
+                /*
+                 * Requires lines to not contain both spaces and tabs consecutively, or spaces after tabs only for alignment if "smart"
+                 * Values: true or "smart"
+                 */
+        "disallowMixedSpacesAndTabs": true,
+
+                /*
+                 * Disallows multiple blank lines in a row.
+                 */
+	"disallowMultipleLineBreaks": true,
+
+                /*
+                 * Disallows strings that span multiple lines without using concatenation.
+                 */
+        "disallowMultipleLineStrings": true,
+
+                /*
+                 * Disallows multiple indentation characters (tabs or spaces) between identifiers, keywords, and any other token
+                 */
+        // "disallowMultipleSpaces": true,
+
+                /*
+                 * Disallows multiple var declaration (except for-loop).
+                 */
+        "disallowMultipleVarDecl": true,
+
+                /*
+                 * Disallows unassigned functions to be named inline
+                 */
+        "disallowNamedUnassignedFunctions": true,
+
+                /*
+                 * Disallows newline before opening curly brace of all block statements.
+                 */
+        "disallowNewlineBeforeBlockStatements": true,
+
+                /*
+                 * Disallows the not, not equals, and strict not equals operators in conditionals.
+                 */
+        // "disallowNotOperatorsInConditionals": true,
+
+                /*
+                 * Requires putting certain operators on the next line rather than on the current line before a line break.
+                 * Values: Array of operators to apply to or true
+                 */
+        "disallowOperatorBeforeLineBreak": ["."],
+
+                /*
+                 * Disallow a newline after blocks
+                 */
+        // "disallowPaddingNewLinesAfterBlocks": true,
+
+                /*
+                 * Disallow a blank line after 'use strict'; statements
+                 */
+        // "disallowPaddingNewLinesAfterUseStrict": true,
+
+                /*
+                 * Disallows newline before module.exports
+                 */
+        // "disallowPaddingNewLinesBeforeExport": true,
+
+                /*
+                 * Disallow an empty line above the specified keywords.
+                 * Values: Array of quoted types or true to disallow padding new lines after all of the keywords below.
+                 * (do, for, if, else, switch, case, try, catch, void, while, with, return, typeof, function, ...)
+                 */
+        "disallowPaddingNewlinesBeforeKeywords": [],
+
+                /*
+                 * Disallows newline before line comments
+                 */
+        // "disallowPaddingNewLinesBeforeLineComments": true,
+
+                /*
+                 * Disallows blocks from beginning or ending with 2 newlines.
+                 */
+        // "disallowPaddingNewlinesInBlocks": true,
+
+                /*
+                 * Disallows newline inside curly braces of all objects.
+                 */
+        // "disallowPaddingNewLinesInObjects": true,
+
+                /*
+                 * Disallows quoted keys in object if possible.
+                 */
+        "disallowQuotedKeysInObjects": true,
+
+                /*
+                 * Disallows lines from ending in a semicolon.
+                 */
+        // "disallowSemicolons": true,
+
+                /*
+                 * Requires sticking binary operators to the right.
+                 * Values: Array of quoted operators or true to disallow space after all possible binary operators
+                 */
+        // "disallowSpaceAfterBinaryOperators": true,
+
+                /*
+                 * Disallows space after keyword.
+                 * Values: Array of quoted keywords or true to disallow spaces after all possible keywords.
+                 */
+        // "disallowSpaceAfterKeywords": [],
+
+                /*
+                 * Requires that a line comment (//) not be followed by a space.
+                 */
+        // "disallowSpaceAfterLineComment": true,
+
+                /*
+                 * Disallows space after object keys.
+                 */
+        // "disallowSpaceAfterObjectKeys": "ignoreMultiLine",
+
+                /*
+                 * Requires sticking unary operators to the right.
+                 * Values: Array of quoted operators or true to disallow space after prefix for all unary operators
+                 */
+        "disallowSpaceAfterPrefixUnaryOperators": [],
+
+                /*
+                 * Requires sticking binary operators to the left.
+                 * Values: Array of quoted operators or true to disallow space before all possible binary operators
+                 */
+        // "disallowSpaceBeforeBinaryOperators": [] ,
+
+                /*
+                 * Disallows space before block statements (for loops, control structures).
+                 */
+        // "disallowSpaceBeforeBlockStatements": true,
+
+                /*
+                 * Disallows space before keyword.
+                 * Values: Array of quoted keywords or true to disallow spaces before all possible keywords.
+                 */
+        // "disallowSpaceBeforeKeywords": [],
+
+                /*
+                 * Disallows space after object keys.
+                 */
+        // "disallowSpaceBeforeObjectValues": true,
+
+                /*
+                 * Requires sticking unary operators to the left.
+                 * Values: Array of quoted operators or true to disallow space before postfix for all unary operators (i.e. increment/decrement operators)
+                 */
+        "disallowSpaceBeforePostfixUnaryOperators": [],
+
+                /*
+                 * Ensure there are no spaces after argument separators in call expressions.
+                 */
+        // "disallowSpaceBetweenArguments": true,
+
+                /*
+                 * Disallows space before () or {} in anonymous function expressions.
+                 * Values: "beforeOpeningRoundBrace" and "beforeOpeningCurlyBrace" as child properties. Child properties must be set to true.
+                 */
+        /*
+        "disallowSpacesInAnonymousFunctionExpression": {
+                "beforeOpeningRoundBrace": true
+                //"beforeOpeningCurlyBrace": false
+        },
+        */
+
+                /*
+                 * Disallows space before () in call expressions.
+                 */
+        "disallowSpacesInCallExpression": true,
+
+                /*
+                 * Disallows space before and/or after ? or : in conditional expressions.
+                 * Values: "afterTest", "beforeConsequent", "afterConsequent", "beforeAlternate" as child properties, or true to set all properties to true. Child properties must be set to true.
+                 */
+/*
+        "disallowSpacesInConditionalExpression": {
+                "afterTest": false,
+                "beforeConsequent": false,
+                "afterConsequent": false,
+                "beforeAlternate": false
+        },
+*/
+                /*
+                 * Disallow spaces in between for statement.
+                 */
+        // "disallowSpacesInForStatement": true,
+
+                /*
+                 * Disallows space before () or {} in function declarations.
+                 * Values: "beforeOpeningRoundBrace" and "beforeOpeningCurlyBrace" as child properties. Child properties must be set to true.
+                 */
+        /*
+        "disallowSpacesInFunctionDeclaration": {
+                "beforeOpeningRoundBrace": true
+                //"beforeOpeningCurlyBrace": false
+        },
+        */
+
+                /*
+                 * Disallows space before () or {} in function expressions (both named and anonymous).
+                 * Values: "beforeOpeningRoundBrace" and "beforeOpeningCurlyBrace" as child properties. Child properties must be set to true.
+                 */
+        /*
+        "disallowSpacesInFunctionExpression": {
+                "beforeOpeningRoundBrace": true
+                //"beforeOpeningCurlyBrace": false
+        },
+        */
+
+                /*
+                 * Disallows space before () or {} in function expressions (both named and anonymous) and function declarations.
+                 */
+        /*
+        "disallowSpacesInFunction": {
+                "beforeOpeningRoundBrace": true
+                //"beforeOpeningCurlyBrace": false
+        },
+        */
+
+                /*
+                 * Disallows space before () or {} in named function expressions.
+                 * Values: "beforeOpeningRoundBrace" and "beforeOpeningCurlyBrace" as child properties. Child properties must be set to true.
+                 */
+        /*
+        "disallowSpacesInNamedFunctionExpression": {
+                "beforeOpeningRoundBrace": true
+                //"beforeOpeningCurlyBrace": false
+        },
+        */
+
+                /*
+                 * Disallows space after opening array square bracket and before closing.
+                 * Values: "all" or true for strict mode, "nested" (deprecated use "allExcept": [ "[", "]" ]) ignores closing brackets in a row.
+                 */
+        // "disallowSpacesInsideArrayBrackets": true,
+
+                /*
+                 * Disallows space after opening square bracket and before closing.
+                 * Values: true for strict mode, or "allExcept": [ "[", "]" ] ignores closing brackets in a row.
+                 */
+        // "disallowSpacesInsideBrackets": true
+
+                /*
+                 * Disallows space after opening object curly brace and before closing.
+                 * Values: "all" or true for strict mode, "nested" (deprecated use "allExcept": ['}']) ignores closing brackets in a row.
+                 */
+        // "disallowSpacesInsideObjectBrackets": true,
+
+                /*
+                 * Disallows space after opening round bracket and before closing.
+                 * Values: Either true or Object with "only" property as an array of tokens
+                 */
+        // "disallowSpacesInsideParentheses": true,
+
+                /*
+                 * Disallows an extra comma following the final element of an array or object literal.
+                 */
+        "disallowTrailingComma": true,
+
+                /*
+                 * Requires all lines to end on a non-whitespace character
+                 * Values:
+                 *    true
+                 *    "ignoreEmptyLines": (default: false) allow whitespace on empty lines
+                 */
+        // "disallowTrailingWhitespace": true,
+
+                /*
+                 * Requires the variable to be the left hand operator when doing a boolean comparison
+                 */
+        // "disallowYodaConditions": true,
+
+
+                /*
+                 * Requires all lines to be at most the number of characters specified
+                 */
+        // "maximumLineLength": 200,
+
+                /*
+                 * Requires the file to be at most the number of lines specified
+                 */
+        // "maximumNumberOfLines": 100,
+
+
+
+                /*
+                 * Requires proper alignment in object literals.
+                 * Values:
+                 *    "all" for strict mode,
+                 *    "ignoreFunction" ignores objects if one of the property values is a function expression,
+                 *    "ignoreLineBreak" ignores objects if there are line breaks between properties
+                 */
+        // "requireAlignedObjectValues": "all",
+
+                /*
+                 * Requires that a function expression be anonymous.
+                 */
+        // "requireAnonymousFunctions": true,
+
+                /*
+                 * Requires blocks to begin and end with a newline
+                 * Values: true validates all non-empty blocks, Integer specifies a minimum number of statements in the block before validating.
+                 */
+        "requireBlocksOnNewline": true,
+
+                /*
+                 * Requires identifiers to be camelCased or UPPERCASE_WITH_UNDERSCORES
+                 * Value :
+                 *      true
+                 *      "ignoreProperties" allows an exception for object property names.
+                 */
+        "requireCamelCaseOrUpperCaseIdentifiers": "ignoreProperties",
+
+                /*
+                 * Requires the first alphabetical character of a comment to be uppercase, unless it is part of a multi-line textblock.
+                 * Value :
+                 *      true
+                 *      Object: allExcept: array of quoted exceptions
+                 */
+        // "requireCapitalizedComments": true,
+
+                /*
+                 * Requires constructors to be capitalized (except for this)
+                 * Values: true or Object with allExcept Array of quoted identifiers which are exempted
+                 */
+        "requireCapitalizedConstructors": true,
+
+                /*
+                 * Requires commas as last token on a line in lists.
+                 */
+        "requireCommaBeforeLineBreak": true,
+
+                /*
+                 * Requires curly braces after statements.
+                 * Values: Array of quoted keywords or true to require curly braces after the following keywords:
+                 */
+        "requireCurlyBraces": ["if", "else", "for", "while", "do", "try", "catch"],
+
+                /*
+                 * Require a $ before variable names that are jquery assignments.
+                 * Values: true or "ignoreProperties"
+                 */
+        // "requireDollarBeforejQueryAssignment": true,
+
+                /*
+                 * Requires member expressions to use dot notation when possible
+                 * Values: true or "except_snake_case" to allow quoted snake cased identifiers
+                 */
+        // "requireDotNotation": true,
+
+                /*
+                 * Requires function declarations by disallowing assignment of functions expressions to variables. Function expressions are allowed in all other contexts, including when passed as function arguments or immediately invoked.
+                 */
+        // "requireFunctionDeclarations": true,
+
+                /*
+                 * Requires placing keywords on a new line.
+                 * Values: Array of quoted keywords
+                 */
+        // "requireKeywordsOnNewLine": [],
+
+                /*
+                 * Requires placing line feed after assigning a variable.
+                 */
+        "requireLineBreakAfterVariableAssignment": true,
+
+                /*
+                 * Requires placing line feed at file end.
+                 */
+        // "requireLineFeedAtFileEnd": true,
+
+                /*
+                 * Requires multiple var declaration.
+                 */
+        // "requireMultipleVarDecl": true,
+
+                /*
+                 * Require unassigned functions to be named inline
+                 * Values: true or object: allExcept: array of quoted identifiers
+                 */
+        // "requireNamedUnassignedFunctions": true,
+
+                /*
+                 * Requires newline before opening curly brace of all block statements.
+                 */
+        // "requireNewlineBeforeBlockStatements": true,
+
+                /*
+                 * Requires operators to appear before line breaks and not after.
+                 * Values: Array of quoted operators or true to require all possible binary operators to appear before line breaks
+                 */
+        // "requireOperatorBeforeLineBreak": [],
+
+                /*
+                 * Requires an extra blank newline after var declarations, as long as it is not the last expression in the current block.
+                 */
+        // "requirePaddingNewLineAfterVariableDeclaration": true,
+
+                /*
+                 * Requires newline after blocks
+                 * Values:
+                 *      true: always require a newline after blocks
+                 *      Object:
+                 *              "allExcept": Array
+                 *              "inCallExpressions" Blocks don't need a line of padding in argument lists
+                 *              "inArrayExpressions" Blocks don't need a line of padding in arrays
+                 *              "inProperties" Blocks don't need a line of padding as object properties
+                 */
+        // "requirePaddingNewLinesAfterBlocks": true,
+
+                /*
+                 * Requires a blank line after 'use strict'; statements
+                 */
+        "requirePaddingNewLinesAfterUseStrict": true,
+
+                /*
+                 * Requires newline before module.exports
+                 */
+        "requirePaddingNewLinesBeforeExport": true,
+
+                /*
+                 * Requires an empty line above the specified keywords unless the keyword is the first expression in a block.
+                 * Values: Array of quoted types or true to require padding new lines before all of the keywords below.
+                 */
+        // "requirePaddingNewlinesBeforeKeywords": [],
+
+                /*
+                 * Requires newline before line comments
+                 * Values:
+                 *
+                 *    true: always require a newline before line comments
+                 *    Object:
+                 *        "allExcept": "firstAfterCurly" Comments may be first line of block without extra padding
+                 */
+        // "requirePaddingNewLinesBeforeLineComments": true,
+
+                /*
+                 * Requires blocks to begin and end with 2 newlines
+                 * Values: true validates all non-empty blocks, Integer specifies a minimum number of statements in the block before validating.
+                 */
+        // "requirePaddingNewlinesInBlocks": true,
+
+                /*
+                 * Requires newline inside curly braces of all objects.
+                 */
+        "requirePaddingNewLinesInObjects": true,
+
+                /*
+                 * Requires parentheses around immediately invoked function expressions.
+                 */
+        "requireParenthesesAroundIIFE": true,
+
+                /*
+                 * Requires quoted keys in objects.
+                 */
+        // "requireQuotedKeysInObjects": true,
+
+                /*
+                 * Requires semicolon after: var declaration, expression statement, return, throw, break, continue, do-while
+                 */
+        "requireSemicolons": true,
+
+                /*
+                 * Disallows sticking binary operators to the right.
+                 * Values: Array of quoted operators or true to require space after all possible binary operators
+                 */
+        "requireSpaceAfterBinaryOperators": true,
+
+                /*
+                 * Requires space after keyword.*
+                 * Values: Array of quoted keywords or true to require all of the keywords below to have a space afterward.
+                 */
+        "requireSpaceAfterKeywords": ["if", "else", "for", "while", "do", "switch", "return", "try", "catch"],
+
+                /*
+                 * Requires that a line comment (//) be followed by a space.
+                 * Values:
+                 *    true
+                 *    "allowSlash" (deprecated use "allExcept": ["/"]) allows /// format
+                 *    Object:
+                 *        allExcept: array of allowed strings before space //(here)
+                 */
+        "requireSpaceAfterLineComment": true,
+
+                /*
+                 * Requires space after object keys.
+                 */
+        "requireSpaceAfterObjectKeys": true,
+
+                /*
+                 * Disallows sticking unary operators to the right.
+                 * Values: Array of quoted operators or true to require space after prefix for all unary operators
+                 */
+        // "requireSpaceAfterPrefixUnaryOperators": true,
+
+                /*
+                 * Disallows sticking binary operators to the left.
+                 * Values: Array of quoted operators or true to require space before all possible binary operators without comma operator, since it's rarely used with this rule
+                 */
+        "requireSpaceBeforeBinaryOperators": true,
+
+                /*
+                 * Requires space(s) before block statements (for loops, control structures).
+                 * Values:
+                 *    true require a single space
+                 *    Integer require at least specified number of spaces
+                 */
+        "requireSpaceBeforeBlockStatements": true,
+
+                /*
+                 * Requires space before keyword.
+                 * Values: Array of quoted keywords or true to require all possible keywords to have a preceding space.
+                 */
+        "requireSpaceBeforeKeywords": true,
+
+                /*
+                 * Requires space after object keys.
+                 */
+        "requireSpaceBeforeObjectValues": true,
+
+                /*
+                 * Disallows sticking unary operators to the left.
+                 * Values: Array of quoted operators or true to require space before postfix for all unary operators (i.e. increment/decrement operators).
+                 */
+        // "requireSpaceBeforePostfixUnaryOperators": true,
+
+                /*
+                 * Ensure there are spaces after argument separators in call expressions.
+                 */
+        // "requireSpaceBetweenArguments": true,
+
+                /*
+                 * Requires space before () or {} in anonymous function expressions.
+                 * Values: "beforeOpeningRoundBrace" and "beforeOpeningCurlyBrace" as child properties. Child properties must be set to true.
+                 */
+        "requireSpacesInAnonymousFunctionExpression": {
+                "beforeOpeningRoundBrace": true
+                //"beforeOpeningCurlyBrace": false
+        },
+
+                /*
+                 * Requires space before () in call expressions.
+                 */
+        //"requireSpacesInCallExpression": true,
+
+                /*
+                 * Requires space before and/or after ? or : in conditional expressions.
+                 * Values: "afterTest", "beforeConsequent", "afterConsequent", "beforeAlternate" as child properties, or true to set all properties to true. Child properties must be set to true.
+                 */
+        "requireSpacesInConditionalExpression": {
+                "afterTest": true,
+                "beforeConsequent": true,
+                "afterConsequent": true,
+                "beforeAlternate": true
+        },
+
+                /*
+                 * Requires spaces inbetween for statement.
+                 */
+        // "requireSpacesInForStatement": true,
+
+                /*
+                 * Requires space before () or {} in function declarations.
+                 * Values: "beforeOpeningRoundBrace" and "beforeOpeningCurlyBrace" as child properties. Child properties must be set to true.
+                 */
+        "requireSpacesInFunctionDeclaration": {
+                "beforeOpeningRoundBrace": true
+                //"beforeOpeningCurlyBrace": false
+        },
+
+                /*
+                 * Requires space before () or {} in function expressions (both named and anonymous).
+                 * Values: "beforeOpeningRoundBrace" and "beforeOpeningCurlyBrace" as child properties. Child properties must be set to true.
+                 */
+        "requireSpacesInFunctionExpression": {
+                "beforeOpeningCurlyBrace": true
+        },
+
+                /*
+                 * Requires space before () or {} in function expressions (both named and anonymous) and function declarations.
+                 */
+        "requireSpacesInFunction": {
+                "beforeOpeningRoundBrace": true
+                //"beforeOpeningCurlyBrace": false
+        },
+
+                /*
+                 * Requires space before () or {} in named function expressions.
+                 */
+        "requireSpacesInNamedFunctionExpression": {
+                "beforeOpeningRoundBrace": true
+                //"beforeOpeningCurlyBrace": false
+        },
+
+                /*
+                 * Requires space after opening array square bracket and before closing.
+                 * Values: "all" for strict mode, "allButNested" (deprecated use "allExcept": [ "[", "]"]) ignores closing brackets in a row.
+                 */
+        //"requireSpacesInsideArrayBrackets": "all",
+
+                /*
+                 * Requires space after opening square bracket and before closing.
+                 * Values: true for strict mode, or "allExcept": [ "[", "]"] ignores closing brackets in a row.
+                 */
+        // "requireSpacesInsideBrackets": true,
+
+                /*
+                 * Requires space after opening object curly brace and before closing.
+                 * Values: "all" for strict mode, "allButNested" (deprecated use "allExcept": ['}']) ignores closing brackets in a row.
+                 */
+        // "requireSpacesInsideObjectBrackets": "all",
+
+                /*
+                 * Requires space after opening round bracket and before closing.
+                 * Values: "all" for strict mode, "allButNested" (deprecated use "except": ['(', ')']) ignores nested brackets in a row, you could also specify token exceptions.
+                 */
+        // "requireSpacesInsideParentheses": "all",
+
+                /*
+                 * Requires an extra comma following the final element of an array or object literal.
+                 * Values:
+                 *     true : validates all arrays and objects
+                 *     Object:
+                 *          ignoreSingleValue: allows single property objects and single element arrays to not require a trailing comma
+                 *          ignoreSingleLine: allows objects and arrays on a single line to not require a trailing comma
+                 */
+        // "requireTrailingComma": true,
+
+                /*
+                 * Requires the variable to be the right hand operator when doing a boolean comparison
+                 */
+        // "requireYodaConditions": true,
+
+                /*
+                 * Option to check var that = this expressions
+                 * Values: String value used for context local declaration
+                 */
+        // "safeContextKeyword": ["that"],
+
+                /*
+                 * Validates proper alignment of function parameters.
+                 * Values: "lineBreakAfterOpeningBraces", "lineBreakBeforeClosingBraces" as child properties or true.
+                 */
+       /*
+        "validateAlignedFunctionParameters": {
+                "lineBreakAfterOpeningBraces": true,
+                "lineBreakBeforeClosingBraces": true
+        },
+       */
+
+                /*
+                 * Validates indentation for switch statements and block statements
+                 * Values:
+                 *    Integer: A positive number of spaces
+                 *    String: "\t" for tab indentation
+                 *    Object:
+                 *        value: (required) the same effect as the non-object values
+                 *        includeEmptyLines: (default: false) require empty lines to be indented
+                 */
+        // "validateIndentation": 4,
+
+                /*
+                 * Option to check line break characters
+                 * Values: "CR", "LF", "CRLF"
+                 */
+        // FIXME : trouver un moyen de pretraiter les fichiers avant commit sous
+        //         Windows. Sinon, desactiver cette option.
+        "validateLineBreaks": {
+            "character" : "LF",
+            "reportOncePerFile" : true
+        },
+
+                /*
+                 * Requires each element in array on a single line when array length is more than passed maximum number or array fills more than one line. Set ignoreBrackets to true to allow elements on the same line with brackets.
+                 * Values: true or Object ({maximum: Number, ignoreBrackets: Boolean})
+                 */
+        "validateNewlineAfterArrayElements": true,
+
+                /*
+                 * Enable validation of separators between function parameters. Will ignore newlines.
+                 * Values:
+                 *    ",": function parameters are immediately followed by a comma
+                 *    ", ": function parameters are immediately followed by a comma and then a space
+                 *    " ,": function parameters are immediately followed by a space and then a comma
+                 *    " , ": function parameters are immediately followed by a space, a comma, and then a space
+                 */
+        // "validateParameterSeparator": ", ",
+
+                /*
+                 * Requires all quote marks to be either the supplied value, or consistent if true
+                 * Values:
+                 *    "\"": all strings require double quotes
+                 *    "'": all strings require single quotes
+                 *    true: all strings require the quote mark first encountered in the source code
+                 *    Object:
+                 *        escape: allow the "other" quote mark to be used, but only to avoid having to escape
+                 *        mark: the same effect as the non-object values
+                 */
+        "validateQuoteMarks": "\"",
+
+
+
+        /*
+         * ?? undocumented ??
+         */
+        // "disallowLeftStickedOperators": ["?", "+", "-", "/", "*", "=", "==", "===", "!=", "!==", ">", ">=", "<", "<="],
+
+        /*
+         * ?? undocumented ??
+         */
+        // "disallowRightStickedOperators": ["?", "+", "/", "*", ":", "=", "==", "===", "!=", "!==", ">", ">=", "<", "<="],
+
+        /*
+         * ?? undocumented ??
+         */
+        // "requireLeftStickedOperators": [","],
+
+        /*
+         * ?? undocumented ??
+         */
+        // "requireRightStickedOperators": ["!"],
+
+        /*
+         * jsDoc
+         * Validate jsdoc comments
+         */
+	"jsDoc": {
+            "checkAnnotations" : {
+                "preset" : "jsdoc3"
+            },
+            "checkParamNames" : true,
+            "requireParamTypes" : true,
+            "checkRedundantParams" : true,
+            "checkRedundantReturns" : true,
+            "requireHyphenBeforeDescription" : true,
+            "requireNewlineAfterDescription" : true,
+            "requireParamDescription" : true,
+            "checkTypes": "capitalizedNativeCase",
+            "enforceExistence": "exceptExports"
+	}
+}

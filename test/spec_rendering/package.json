@@ -1,0 +1,18 @@
+{
+  "name": "RenderWithCssCritic",
+  "version": "1.0.0",
+  "description": "Visual/CSS regression testing with FrameWork CssCritic",
+  "private": true,
+  "main": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "geoportal-api-dev",
+  "license": "CECILL-B",
+  "dependencies": {
+    "ayepromise": "^1.1.2",
+    "csscritic": "^1.3.1",
+    "imagediff": "^1.0.8",
+    "rasterizehtml": "^1.2.2"
+  }
+}
