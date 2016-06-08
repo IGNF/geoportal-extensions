@@ -58,13 +58,13 @@ L'extension Géoportail pour Leaflet exploite les services web exposés par la p
 
 Une fois la clef obtenue, vous pouvez paramétrer l'utilisation de l'extension avec cette clef de deux manières possibles :
 
-* Au chargement de l'extension en utilisant l'attribut "data-key" de la balise **script** de chargement de l'extension :
+1. Au chargement de l'extension en utilisant l'attribut "data-key" de la balise **script** de chargement de l'extension :
 
 ``` html
 <script data-key="VOTRE-CLEF" src="chemin/vers/GpPluginLeaflet.js"></script>
 ```
 
-Votre utilisation des fonctionnalités de l'extension Géoportail sera alors simplement conditionnée à la réception de l'événemment onload de la page web, comme sur l'exemple suivant :
+Votre utilisation des fonctionnalités de l'extension Géoportail sera alors simplement conditionnée à la réception de l'événement onload de la page web, comme sur l'exemple suivant :
 
 ``` html
 <html>
@@ -86,7 +86,7 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
 </html>
 ```
 
-* A la fin du chargement de la page en utilisant la fonction [Gp.Services.GetConfig()](https://github.com/IGNF/geoportal-access-lib#getConfig) et en conditionnant alors l'utilisation de l'extension à l'exécution de la fonction de rappel onSuccess passée en paramètres de Gp.Services.getConfig() comme sur l'exemple suivant :
+2. A la fin du chargement de la page en utilisant la fonction [Gp.Services.GetConfig()](https://github.com/IGNF/geoportal-access-lib#getConfig) et en conditionnant alors l'utilisation de l'extension à l'exécution de la fonction de rappel onSuccess passée en paramètres de Gp.Services.getConfig() comme sur l'exemple suivant :
 
 ``` html
 <html>
@@ -113,10 +113,11 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
 </html>
 ```
 
+<!--
 #### Optimisation du chargement : configuration locale
 
 Partie à écrire...
-
+-->
 
 ## Compatibilités
 
