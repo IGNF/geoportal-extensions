@@ -55,7 +55,7 @@ Intégrez l'extension géoportail pour ol3 dans votre page web classiquement à 
 
 <!-- Extension Géoportail pour OpenLayers 3 -->
 <script src="chemin/vers/GpPluginOl3.js"></script>
-<link rel="stylesheet" href="chemin/vers/GpOl3.css" />
+<link rel="stylesheet" href="chemin/vers/GpPluginOl3.css" />
 ```
 
 <a id="config"/>
