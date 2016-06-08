@@ -153,7 +153,7 @@ Safari     | Versions récentes (6.1+)
 
 ### Systèmes de coordonnées
 
-OpenLayers 3 n'utilise par défaut que les systèmes de coordonnées mondiaux "standards" : EPSG:4326 (coordonnées géographiques) et EPSG:3857 (Projection Web Mercator utilisée par Google, Bings, OSM ... et le Géoprotail) comme expliqué [ici](http://openlayers.org/en/latest/apidoc/ol.proj.html).
+OpenLayers 3 n'utilise par défaut que les systèmes de coordonnées mondiaux "standards" : EPSG:4326 (coordonnées géographiques) et EPSG:3857 (Projection Web Mercator utilisée par Google, Bings, OSM ... et le Géoportail) comme expliqué [ici](http://openlayers.org/en/latest/apidoc/ol.proj.html).
 
 La définition d'autres systèmes de coordonnées est cependant possible par l'adjonction de la bibliothèque [Proj4js](https://github.com/proj4js/proj4js) permettant de définir des systèmes de coordonnées et d'effectuer des transformations de coordonnées entre systèmes. Cette bibliothèque est directement compatible avec OpenLayers 3.
 
