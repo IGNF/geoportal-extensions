@@ -26,18 +26,18 @@ L'extension Géoportail pour OpenLayers 3 propose les fonctionnalités suivantes
 
 ### Téléchargement
 
-Vous pouvez récupérer l'extension Géoportail pour OpenLayers 3 ici : [GpOpenLayers3.zip](#TODO). Elle contient l'arborescence suivante :
+Vous pouvez récupérer l'extension Géoportail pour OpenLayers 3 ici : <a href="https://github.com/IGNF/geoportal-extensions/releases/download/ol3-0.10.0/GpOpenLayers3.zip" target="_blank">GpOpenLayers3.zip</a>. Elle contient l'arborescence suivante :
 
 
-    ol3/  
+    ol3/
         GpPluginOl3.js
-            (version minifiée du code javascript pour une utilisation en production)  
+            (version minifiée du code javascript pour une utilisation en production)
         GpPluginOl3.css
-            (version minifiée des css pour une utilisation en production)  
+            (version minifiée des css pour une utilisation en production)
         GpPluginOl3-src.js
-            (version non minifiée du code javascript pour une utilisation en développement)  
+            (version non minifiée du code javascript pour une utilisation en développement)
         GpPluginOl3-src.css
-            (version non minifiée des css pour une utilisation en développement)  
+            (version non minifiée des css pour une utilisation en développement)
         img/
             (resources images utilisées par les fichiers CSS)
 

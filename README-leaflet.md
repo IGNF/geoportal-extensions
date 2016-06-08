@@ -23,7 +23,7 @@ L'extension Géoportail pour Leaflet propose les fonctionnalités suivantes à u
 
 ### Téléchargement
 
-Vous pouvez récupérer l'extension Géoportail pour Leaflet ici [GpLeaflet.zip](#TODO). Elle contient l'arborescence suivante :
+Vous pouvez récupérer l'extension Géoportail pour Leaflet ici <a href="https://github.com/IGNF/geoportal-extensions/releases/download/leaflet-0.8.0/GpLeaflet.zip" target="_blank">GpLeaflet.zip</a>. Elle contient l'arborescence suivante :
 
 ```
  leaflet/
