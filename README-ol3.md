@@ -72,7 +72,7 @@ Une fois la clef obtenue, vous pouvez paramétrer l'utilisation de l'extension a
 <script data-key="VOTRE-CLEF" src="chemin/vers/GpPluginOl3.js"></script>
 ```
 
-Votre utilisation des fonctionnalités de l'extension Géoportail sera alors simplement conditionnée à la réception de l'événemment onload de la page web, comme sur l'exemple suivant :
+Votre utilisation des fonctionnalités de l'extension Géoportail sera alors simplement conditionnée à la réception de l'événement onload de la page web, comme sur l'exemple suivant :
 
 ``` html
 <html>
@@ -121,10 +121,11 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
 </html>
 ```
 
+<!--
 #### Optimisation du chargement : configuration locale
 
 Partie à écrire...
-
+-->
 
 ## Compatibilités
 
