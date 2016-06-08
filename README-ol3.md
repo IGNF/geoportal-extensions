@@ -131,7 +131,8 @@ Partie à écrire...
 
 ### Versions de OpenLayers 3 supportées
 
-L'extension Géoportail pour OpenLayers 3 peut s'utiliser avec les **versions 3.x et supérieures** d'OpenLayers 3 (dernière version testée : 3.14).
+L'extension Géoportail pour OpenLayers 3 peut s'utiliser avec les **versions 3.14 et supérieures** d'OpenLayers 3. 
+Le support des versions antérieures d'OpenLayers 3 n'a pas été complètement testé.
 
 
 ### Navigateurs supportés
