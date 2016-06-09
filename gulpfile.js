@@ -245,7 +245,7 @@
             vg : "empty:",
             proj4 : "../../../../lib/proj4/proj4" + modeExt,
             gp : "../../../../lib/gp/GpServices" + modeExt,
-            sortable : "../../../../lib/sortable/Sortable"
+            sortable : "../../../../lib/sortable/Sortable-src" // + modeExt
         };
 
         if (isExecuteOl3) {

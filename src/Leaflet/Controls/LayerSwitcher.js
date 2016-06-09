@@ -720,24 +720,45 @@ define([
         // ################################################################### //
 
         /**
-        * Adding a layer to be displayed by the control.
-        *
-        * @param {Object} layer - L.TileLayer or L.TileLayer.WMS
-        */
-        addLayer : function (layer) {
-            layer.setZIndex(this._lastZIndex++);
-            this.addOverlay(layer);
-        },
-
-        /**
         * Adding layer configuration to be displayed by the control
         *
-        * @param {Object} layerConfig - See {@link module:Controls.LayerSwitcher L.geoportalControl.LayerSwitcher()} for layer display config object definition.
+        * @param {Object} layer - layer to add to layer switcher
+        * @param {Object} config - See {@link module:Controls.LayerSwitcher L.geoportalControl.LayerSwitcher()} for layer display config object definition.
         */
-        addLayerConfig : function (layerConfig) {
-            this._layersConfig.push(layerConfig);
-            layerConfig.layer.setZIndex(this._lastZIndex++);
-            this.addOverlay(layerConfig.layer);
+        addLayer : function (layer, config) {
+            var map = this._map;
+            var cfg = this._layersConfig;
+
+            if (!layer) {
+                console.log("[ERROR] LayerSwitcher:addLayer - missing layer parameter !");
+                return;
+            }
+
+            if (! map.hasLayer(layer)) {
+                console.log("[WARN] LayerSwitcher:addLayer - layer has not been added on map !");
+            }
+
+            var id = L.stamp(layer);
+            for (var i in cfg) {
+                if (cfg.hasOwnProperty(i)) {
+                    // layer already added !
+                    if (id === L.stamp(cfg[i].layer)) {
+                        delete cfg[i];
+                        break;
+                    }
+                }
+            }
+
+            var _config = config || {};
+            L.Util.extend(_config, {
+                layer : layer
+            });
+
+            cfg.push(_config);
+            layer.setZIndex(this._lastZIndex++);
+            this.addOverlay(layer);
+
+            this._update();
         }
 
     });
