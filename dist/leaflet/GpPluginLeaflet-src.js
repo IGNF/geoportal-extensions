@@ -9,8 +9,8 @@
  * copyright CeCILL-B
  * copyright IGN
  * @author IGN
- * @version 0.8.0
- * @date 2016-06-09
+ * @version 0.8.1
+ * @date 2016-06-10
  *
  */
 /*!
@@ -23673,8 +23673,8 @@ LeafletLayersLayers = function (L, woodman, LayerConfig, WMS, WMTS) {
     return Layers;
 }(leaflet, {}, LeafletLayersLayerConfig, LeafletLayersWMS, LeafletLayersWMTS);
 LeafletGpPluginLeaflet = function (L, P, Gp, Controls, Layers, CRS) {
-    Gp.leafletExtVersion = '0.8.0';
-    Gp.leafletExtDate = '2016-06-09';
+    Gp.leafletExtVersion = '0.8.1';
+    Gp.leafletExtDate = '2016-06-10';
     L.geoportalLayer = Layers;
     L.geoportalControl = Controls;
     L.geoportalCRS = CRS;
