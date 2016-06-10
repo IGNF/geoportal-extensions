@@ -10,7 +10,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <!-- !meta IGN -->
 
-    <title>Tutorial: leaflet-MousePosition</title>
+    <title>Tutorial: leaflet-LayerSwitcher</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -275,8 +275,6 @@
             
                 <div class="l3 itemMembers" data-name="L.geoportalControl.LayerSwitcher#addLayer"> <a href="L.geoportalControl.LayerSwitcher.html#addLayer">addLayer</a> </div>
             
-                <div class="l3 itemMembers" data-name="L.geoportalControl.LayerSwitcher#addLayerConfig"> <a href="L.geoportalControl.LayerSwitcher.html#addLayerConfig">addLayerConfig</a> </div>
-            
 
 <!--
             <ul class="methods itemMembers">
@@ -284,8 +282,6 @@
             <span class="subtitle">Methods</span>
             
                 <li data-name="addLayer"><a href="L.geoportalControl.LayerSwitcher.html#addLayer">addLayer</a></li>
-            
-                <li data-name="addLayerConfig"><a href="L.geoportalControl.LayerSwitcher.html#addLayerConfig">addLayerConfig</a></li>
             
             </ul>
 -->
@@ -671,13 +667,13 @@
 
     <section class="content">
         <label class="openLeftMenu" for="showLeftMenu" title="Ouvrir le menu latéral"></label>
-        <h1 class="page-title" data-filename="tutorial-leaflet-MousePosition.html">Tutorial: leaflet-MousePosition</h1>
+        <h1 class="page-title" data-filename="tutorial-leaflet-LayerSwitcher.html">Tutorial: leaflet-LayerSwitcher</h1>
         <section>
     
 <header>
     
 
-    <h2>leaflet-MousePosition</h2>
+    <h2>leaflet-LayerSwitcher</h2>
 </header>  
 
 <article>
@@ -688,8 +684,8 @@
 &lt;link rel=&quot;stylesheet&quot; href=&quot;src/leaflet/GpPluginLeaflet-src.css&quot; />
 &lt;script src=&quot;src/leaflet/GpPluginLeaflet-src.js&quot;>&lt;/script></code></pre><p>And create a map in the 'viewer' div, add it to map :</p>
 <pre class="prettyprint source lang-javascript"><code>var map = L.map('viewer').setView([48.845, 2.424], 15);
-var mousePoistion = L.geoportalControl.MousePosition(opts);
-map.addControl(mousePoistion);</code></pre><h1>Options</h1><p>The control inherits options from <a href="http://leafletjs.com/reference.html#control">Leaflet Controls</a>.</p>
+var layerSwitcher = L.geoportalControl.LayerSwitcher(opts);
+map.addControl(layerSwitcher);</code></pre><h1>Options</h1><p>The control inherits options from <a href="http://leafletjs.com/reference.html#control">Leaflet Controls</a>.</p>
 <table>
 <thead>
 <tr>
@@ -712,146 +708,123 @@ map.addControl(mousePoistion);</code></pre><h1>Options</h1><p>The control inheri
 <td>position</td>
 <td>String</td>
 <td>Optional</td>
-<td>'bottomleft'</td>
-<td>Position of the control on the map (<a href="http://leafletjs.com/reference.html#control-positions">see leaflet options</a>)</td>
+<td>'topleft'</td>
+<td>Position of component into the map (<a href="http://leafletjs.com/reference.html#control-positions">see leaflet options</a>)</td>
 </tr>
 <tr>
-<td>apiKey</td>
+<td></td>
 <td>String</td>
 <td>Optional</td>
 <td>null</td>
-<td>Key API for the use of services</td>
+<td></td>
 </tr>
 <tr>
-<td>systems</td>
-<td>Array</td>
-<td>Optional</td>
-<td>[...]</td>
-<td>list of projection systems, by default, all systems</td>
-</tr>
-<tr>
-<td>units</td>
-<td>Array</td>
-<td>Optional</td>
-<td>[...]</td>
-<td>list of units, by default, all units</td>
-</tr>
-<tr>
-<td>displayAltitude</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>true</td>
-<td>Desactivate/activate the altitude panel, if desactivate, so have just the coordinate panel</td>
-</tr>
-<tr>
-<td>displayCoordinate</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>true</td>
-<td>Desactivate/activate the coordinate panel, if desactivate, so have just the altitude panel</td>
-</tr>
-<tr>
-<td>altitude</td>
+<td></td>
 <td>Object</td>
 <td>Optional</td>
 <td>{}</td>
-<td>Options elevation calculation service</td>
-</tr>
-</tbody>
-</table>
-<h2>Configuration of elevation calculation service</h2><table>
-<thead>
-<tr>
-<th>Option</th>
-<th>Type</th>
-<th>Opt.</th>
-<th>Default</th>
-<th>Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>triggerDelay</td>
-<td>Number</td>
-<td>Optional</td>
-<td>500</td>
-<td>latency for altitude request</td>
+<td></td>
 </tr>
 <tr>
-<td>responseDelay</td>
-<td>Number</td>
-<td>Optional</td>
-<td>200</td>
-<td>immobilisation time of movement on the map to trigger the elevation calculation</td>
-</tr>
-<tr>
-<td>serviceOptions</td>
+<td></td>
 <td>Object</td>
 <td>Optional</td>
 <td>{}</td>
-<td>options of elevation service</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Object</td>
+<td>Optional</td>
+<td>{}</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Boolean</td>
+<td>Optional</td>
+<td>false</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Array</td>
+<td>Optional</td>
+<td>[]</td>
+<td></td>
 </tr>
 </tbody>
 </table>
-<p>The elevation calculation service can be configured :</p>
-<pre class="prettyprint source lang-javascript"><code>altitude : {
-    responseDelay : 200,
-    triggerDelay : 500,
-    serviceOptions : {
-      protocol : XHR,
-      httpMethod : &quot;GET&quot;,
-      apiKey : &quot;fjfz8rg7r89t45t4er8t7g84er56g486t&quot;,
-      api : 'REST'
-    }
-}</code></pre><p>For details, see the description page :</p>
-<ul>
-<li><a href="./../bibacces/dd_services_altimetrie.html">altitude</a></li>
-</ul>
-<p>The control retrieves an altitude.<br>So by default, the 'zonly is always configured.</p>
-<p>We can see that the property 'apiKey' is also at the level of service options.<br>You should know that the key service always overload the control.<br>It's the same with autoload service.</p>
-<h2>Configuration of systems</h2><p>...</p>
-<h1>Examples</h1><h2>simple</h2><p>The autoload service is loaded.<br>Verification of resource rights is done.</p>
-<p>It changes the position of control, expanded.</p>
-<pre class="prettyprint source lang-javascript"><code>var mousePoistion  = L.geoportalControl.MousePosition({
-    position : 'bottomright',
-    collapsed : true
-});</code></pre><h2>advanced</h2><p>The autoload service is not loaded!<br>No verification of rights is possible.<br>It's the responsibility of the user to manage his rights over the resource.</p>
-<p>An API key is added in control :</p>
-<pre class="prettyprint source lang-javascript"><code>var mousePoistion = L.geoportalControl.MousePosition({
-    apiKey : &quot;far4ze5t4z56t4z65t4ert465zr6z&quot;
-});</code></pre><p>It is also possible to enter the API key via the configuration of services.</p>
-<pre class="prettyprint source lang-javascript"><code>var mousePoistion = L.geoportalControl.MousePosition({
-    altitudeOptions : {
-        apiKey : &quot;far4ze5t4z56t4z65t4ert465zr6z&quot;
-    }
-});</code></pre><h2>advanced with units and systems</h2><p>...</p>
+<h2>Configuration of services</h2><p>...</p>
+<h1>Examples</h1><h2>simple</h2><p>...</p>
+<h2>advanced</h2><p>...</p>
 <h1>Requirements</h1><p>Leaflet v7.x and tested on version 1.0.0-RC</p>
 <h1>Demo</h1><!-- Library Leaflet -->
 <p><link rel="stylesheet" href="../lib/leaflet/leaflet.css" /></p>
 <script src="../lib/leaflet/leaflet.js"></script>
 
 <!-- Plugin leaflet IGN -->
-<p><link rel="stylesheet" href="../dist/leaflet/GpPluginLeaflet-src.css" /></p>
-<script src="../dist/leaflet/GpPluginLeaflet-src.js" data-key="jhyvi0fgmnuxvfv0zjzorvdn"></script>
+<p><link rel="stylesheet" href="../dist/leaflet/GpPluginLeaflet.css" /></p>
+<script src="../dist/leaflet/GpPluginLeaflet.js" data-key="jhyvi0fgmnuxvfv0zjzorvdn"></script>
 
 <!-- code -->
 <script>
 window.onload = function () {
 
-  var layer = L.geoportalLayer.WMS({
-    layer : "ORTHOIMAGERY.ORTHOPHOTOS"
+  var wmts1 = L.geoportalLayer.WMTS({
+    layer : "CADASTRALPARCELS.PARCELS",
+  },
+  {
+    attribution : "layer1",
+    opacity : 0.3
+  });
+
+  var wms = L.geoportalLayer.WMS({
+    layer : "ORTHOIMAGERY.ORTHOPHOTOS",
+  },
+  {
+    attribution : "layer2",
+    opacity : 0.3
+  });
+
+  var wmts2 = L.geoportalLayer.WMTS({
+    layer : "GEOGRAPHICALGRIDSYSTEMS.MAPS",
+  },
+  {
+    attribution : "layer3",
+    opacity : 0.3
+  });
+
+  var wmts3 = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+      opacity : 0.5
   });
 
   var map  = L.map('map', {
     zoom : 2,
-    center : L.latLng(48, 2)
+    center : L.latLng(48, 2),
+    layers : [wmts1, wms, wmts2, wmts3]
   });
 
-  layer.addTo(map);
+  var layers = [
+    {
+      layer : wmts3,
+      display : true,
+      config : {
+         title : "Layer OSM WMTS",
+         description : "OpenStreetMap",
+         visibility : true,
+         legends : [{
+           minScaleDenominator: 1067,
+           url: "http://localhost/"
+         }],
+         quicklookUrl : "http://localhost/"
+      }
+    }
+  ];
 
-  var mouse = L.geoportalControl.MousePosition();
-
-  map.addControl(mouse);
+  var layerSwitcher = L.geoportalControl.LayerSwitcher({layers : layers, collapsed : true, position : 'topright'});
+  map.addControl(layerSwitcher);
 }
 </script>
 
@@ -869,7 +842,7 @@ window.onload = function () {
     <footer>
         Copyright (c) IGN, released under the CECILL-B license
         </br>
-        Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Tue Jun 07 2016 16:37:02 GMT+0200 (CEST)
+        Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Jun 10 2016 12:17:42 GMT+0200 (CEST)
     </footer>
 
 

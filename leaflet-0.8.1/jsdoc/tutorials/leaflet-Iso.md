@@ -17,8 +17,8 @@ Include js and css files located in the /dist/leaflet folder in your page :
 And create a map in the 'viewer' div, add it to map :
 ``` javascript
 var map = L.map('viewer').setView([48.845, 2.424], 15);
-var route = L.geoportalControl.Route(opts);
-map.addControl(route);
+var iso = L.geoportalControl.Isocurve(opts);
+map.addControl(iso);
 ```
 
 # Options
@@ -30,10 +30,12 @@ Option      |  Type   |    Opt.   | Default    | Value
 collapsed   | Boolean | Optional | false     | Allows to control to expand the control
 position    | String  | Optional | 'topleft' | Position of component into the map ([see leaflet options](http://leafletjs.com/reference.html#control-positions))
 apiKey      | String  | Optional | null      | Key API for the use of services
-graphs       | Array   | Optional | [Pieton, Voiture] | List of resources, by default : ["Voiture", "Pieton"], and the first element is selected.
+graphs      | Array   | Optional | [Pieton, Voiture] | List of resources, by default : ["Voiture", "Pieton"], and the first element is selected.
 exclusions  | Object  | Optional | {}        | List of exclusions with status
+methods     | Array   | Optional | ["time", "distance"] | List of methods, by default : ["time", "distance"], and the first element is selected.
+directions  | Array   | Optional | ["departure", "arrival"] | List ofdirections , by default : ["departure", "arrival"], and the first element is selected.
 disableReverse | Boolean | Optional | false  | Allows to disable the reverse geocoding
-routeOptions | Object | Optional | {}        | Options of route service
+isocurveOptions     | Object | Optional | {} | Options of isocurve service
 autocompleteOptions | Object | Optional | {} | Options of autocomplete service
 
 ## Configuration of services
@@ -46,47 +48,65 @@ autocompleteOptions | Object | Optional | {} | Options of autocomplete service
 ## option control
 
 ``` javascript
-var route = L.geoportalControl.Route({
+var iso = L.geoportalControl.Isocurve({
   position : "topright",
   collapsed : false
 });
-map.addControl(route);
+map.addControl(iso);
 ```
 
 ## option graphs
 
 ``` javascript
-var route = L.geoportalControl.Route({
+var iso = L.geoportalControl.Isocurve({
   graphs : ["Voiture"]
 });
-map.addControl(route);
+map.addControl(iso);
+```
+
+## option directions
+
+``` javascript
+var iso = L.geoportalControl.Isocurve({
+  directions : ["departure"]
+});
+map.addControl(iso);
+```
+
+## option methods
+
+``` javascript
+var iso = L.geoportalControl.Isocurve({
+  methods : ["distance"]
+});
+map.addControl(iso);
 ```
 
 ## option exclusions
 
 ``` javascript
-var route = L.geoportalControl.Route({
+var iso = L.geoportalControl.Isocurve({
   exclusions = {
     tunnel : false,
     toll : false,
     bridge : false
   }
 });
-map.addControl(route);
+map.addControl(iso);
 ```
 
 ## option services
 
 ``` javascript
-var route = L.geoportalControl.Route({
-  routeOptions = {
-    // options de Gp.Services.route()
+var iso = L.geoportalControl.Isocurve({
+  isoCurveOptions = {
+    // options de Gp.Services.isocurve()
   },
   autocompleteOptions = {
     // options de Gp.Services.autocomplete()
   }
 });
-map.addControl(route);
+map.addControl(iso);
 ```
 
 # Requirements
@@ -100,8 +120,8 @@ Leaflet v7.x and tested on version 1.0.0-RC
 <script src="../lib/leaflet/leaflet.js"></script>
 
 <!-- Plugin leaflet IGN -->
-<link rel="stylesheet" href="../dist/leaflet/GpPluginLeaflet-src.css" />
-<script src="../dist/leaflet/GpPluginLeaflet-src.js" data-key="jhyvi0fgmnuxvfv0zjzorvdn"></script>
+<link rel="stylesheet" href="../dist/leaflet/GpPluginLeaflet.css" />
+<script src="../dist/leaflet/GpPluginLeaflet.js" data-key="jhyvi0fgmnuxvfv0zjzorvdn"></script>
 
 <!-- code -->
 <script>
@@ -118,9 +138,9 @@ window.onload = function () {
 
   layer.addTo(map);
 
-  var route = L.geoportalControl.Route();
+  var iso = L.geoportalControl.Isocurve();
 
-  map.addControl(route);
+  map.addControl(iso);
 }
 </script>
 

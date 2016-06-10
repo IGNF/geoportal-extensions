@@ -10,7 +10,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <!-- !meta IGN -->
 
-    <title>Tutorial: leaflet-Route</title>
+    <title>Module: Layers</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -275,8 +275,6 @@
             
                 <div class="l3 itemMembers" data-name="L.geoportalControl.LayerSwitcher#addLayer"> <a href="L.geoportalControl.LayerSwitcher.html#addLayer">addLayer</a> </div>
             
-                <div class="l3 itemMembers" data-name="L.geoportalControl.LayerSwitcher#addLayerConfig"> <a href="L.geoportalControl.LayerSwitcher.html#addLayerConfig">addLayerConfig</a> </div>
-            
 
 <!--
             <ul class="methods itemMembers">
@@ -284,8 +282,6 @@
             <span class="subtitle">Methods</span>
             
                 <li data-name="addLayer"><a href="L.geoportalControl.LayerSwitcher.html#addLayer">addLayer</a></li>
-            
-                <li data-name="addLayerConfig"><a href="L.geoportalControl.LayerSwitcher.html#addLayerConfig">addLayerConfig</a></li>
             
             </ul>
 -->
@@ -671,151 +667,622 @@
 
     <section class="content">
         <label class="openLeftMenu" for="showLeftMenu" title="Ouvrir le menu latéral"></label>
-        <h1 class="page-title" data-filename="tutorial-leaflet-Route.html">Tutorial: leaflet-Route</h1>
-        <section>
-    
-<header>
-    
+        <h1 class="page-title" data-filename="module-Layers.html">Module: Layers</h1>
+        
 
-    <h2>leaflet-Route</h2>
+
+
+<section>
+ 
+<!--   
+<header>
+-->
+    <h1>
+    <span class="main-title" data-classname=L.geoportalLayer> L.geoportalLayer </span>
+    </h1>
+    
+    
+<!--
 </header>  
+-->
 
 <article>
-    <h1>Usage</h1><p>Include js and css files located in the /dist/leaflet folder in your page :</p>
-<pre class="prettyprint source lang-javascript"><code>&lt;!-- Production -->
-&lt;link rel=&quot;stylesheet&quot; href=&quot;dist/leaflet/GpPluginLeaflet.css&quot; />
-&lt;script src=&quot;dist/leaflet/GpPluginLeaflet.js&quot;>&lt;/script></code></pre><pre class="prettyprint source lang-javascript"><code>&lt;!-- Development -->
-&lt;link rel=&quot;stylesheet&quot; href=&quot;src/leaflet/GpPluginLeaflet-src.css&quot; />
-&lt;script src=&quot;src/leaflet/GpPluginLeaflet-src.js&quot;>&lt;/script></code></pre><p>And create a map in the 'viewer' div, add it to map :</p>
-<pre class="prettyprint source lang-javascript"><code>var map = L.map('viewer').setView([48.845, 2.424], 15);
-var route = L.geoportalControl.Route(opts);
-map.addControl(route);</code></pre><h1>Options</h1><p>The control inherits options from <a href="http://leafletjs.com/reference.html#control">Leaflet Controls</a>.</p>
-<table>
-<thead>
-<tr>
-<th>Option</th>
-<th>Type</th>
-<th>Opt.</th>
-<th>Default</th>
-<th>Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>collapsed</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>false</td>
-<td>Allows to control to expand the control</td>
-</tr>
-<tr>
-<td>position</td>
-<td>String</td>
-<td>Optional</td>
-<td>'topleft'</td>
-<td>Position of component into the map (<a href="http://leafletjs.com/reference.html#control-positions">see leaflet options</a>)</td>
-</tr>
-<tr>
-<td>apiKey</td>
-<td>String</td>
-<td>Optional</td>
-<td>null</td>
-<td>Key API for the use of services</td>
-</tr>
-<tr>
-<td>graphs</td>
-<td>Array</td>
-<td>Optional</td>
-<td>[Pieton, Voiture]</td>
-<td>List of resources, by default : [&quot;Voiture&quot;, &quot;Pieton&quot;], and the first element is selected.</td>
-</tr>
-<tr>
-<td>exclusions</td>
-<td>Object</td>
-<td>Optional</td>
-<td>{}</td>
-<td>List of exclusions with status</td>
-</tr>
-<tr>
-<td>disableReverse</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>false</td>
-<td>Allows to disable the reverse geocoding</td>
-</tr>
-<tr>
-<td>routeOptions</td>
-<td>Object</td>
-<td>Optional</td>
-<td>{}</td>
-<td>Options of route service</td>
-</tr>
-<tr>
-<td>autocompleteOptions</td>
-<td>Object</td>
-<td>Optional</td>
-<td>{}</td>
-<td>Options of autocomplete service</td>
-</tr>
-</tbody>
+    <div class="container-overview">
+    
+    
+    
+        
+            <div class="description"><p>Geoportal Layers Factory to be used together with Leaflet Maps.</p></div>
+        
+        
+        
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+        
+        
+            <h3>Example</h3>
+            
+
+    
+    <pre class="prettyprint"><code>var map = L.Map(...) ;
+var layer = L.geoportalLayer.WMTS({
+     layer : "ORTHOIMAGERY.ORTHOPHOTOS",
+}).addTo(map) ;</code></pre>
+    
+
+        
+    
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        <h3 class="subsection-title">Methods</h3>
+        
+        <dl>
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".WMS">
+            
+            <span class="type-signature static">static</span>WMS<span class="signature">(options, <span class="optional">settings</span>)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="L.geoportalLayer.WMS.html">L.geoportalLayer.WMS</a>}</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            Leaflet/Layers/Layers.js, line 90
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Factory function for Geoportal or INSPIRE WMS Layers creation.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name">options</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                    
+                        
+                    
+                
+                <p>options for function call.</p>
+                
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name">layer</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                    
+                        
+                    
+                
+                <p>layer name (e.g. &quot;ORTHOIMAGERY.ORTHOPHOTOS&quot;)</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name">apiKey</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                
+                <p>access key to Geoportal platform, obtained <a href="http://professionnels.ign.fr/geoservices-ign">here</a>.</p></td>
+        </tr>
+	
+	
+	</tbody>
 </table>
-<h2>Configuration of services</h2><p>...</p>
-<h1>Examples</h1><h2>option control</h2><pre class="prettyprint source lang-javascript"><code>var route = L.geoportalControl.Route({
-  position : &quot;topright&quot;,
-  collapsed : false
-});
-map.addControl(route);</code></pre><h2>option graphs</h2><pre class="prettyprint source lang-javascript"><code>var route = L.geoportalControl.Route({
-  graphs : [&quot;Voiture&quot;]
-});
-map.addControl(route);</code></pre><h2>option exclusions</h2><pre class="prettyprint source lang-javascript"><code>var route = L.geoportalControl.Route({
-  exclusions = {
-    tunnel : false,
-    toll : false,
-    bridge : false
-  }
-});
-map.addControl(route);</code></pre><h2>option services</h2><pre class="prettyprint source lang-javascript"><code>var route = L.geoportalControl.Route({
-  routeOptions = {
-    // options de Gp.Services.route()
-  },
-  autocompleteOptions = {
-    // options de Gp.Services.autocomplete()
-  }
-});
-map.addControl(route);</code></pre><h1>Requirements</h1><p>Leaflet v7.x and tested on version 1.0.0-RC</p>
-<h1>Demo</h1><!-- Library Leaflet -->
-<p><link rel="stylesheet" href="../lib/leaflet/leaflet.css" /></p>
-<script src="../lib/leaflet/leaflet.js"></script>
 
-<!-- Plugin leaflet IGN -->
-<p><link rel="stylesheet" href="../dist/leaflet/GpPluginLeaflet-src.css" /></p>
-<script src="../dist/leaflet/GpPluginLeaflet-src.js" data-key="jhyvi0fgmnuxvfv0zjzorvdn"></script>
+            </td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name">settings</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
 
-<!-- code -->
-<script>
-window.onload = function () {
 
-  var layer = L.geoportalLayer.WMS({
-    layer : "ORTHOIMAGERY.ORTHOPHOTOS"
-  });
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                
+                <p>other options for L.TileLayer.WMS function (see <a href="http://leafletjs.com/reference.html#tilelayer-wms-options">http://leafletjs.com/reference.html#tilelayer-wms-options</a>)</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
 
-  var map  = L.map('map', {
-    zoom : 2,
-    center : L.latLng(48, 2)
-  });
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
 
-  layer.addTo(map);
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
 
-  var route = L.geoportalControl.Route();
+    
+    
 
-  map.addControl(route);
-}
-</script>
+    
 
-<div id="map" style="height: 400px;"></div>
+    
+    
+    
+    
+    
+    
+    
+
+
+
+    
+    
+    
+        <h5>Example</h5>
+        
+
+    
+    <pre class="prettyprint"><code>var map = L.Map('divmap').setView();
+ var lyr = L.geoportalLayer.WMS(
+   {
+     layer : "OI.OrthoimageCoverage"
+   },
+   {
+     opacity : 1,
+     transparent : true,
+     minZoom : 1,
+     maxZoom : 21
+     ...
+   });
+
+ lyr.addTo(map); // ou map.addLayer(lyr);</code></pre>
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".WMTS">
+            
+            <span class="type-signature static">static</span>WMTS<span class="signature">(options, <span class="optional">settings</span>)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="L.geoportalLayer.WMTS.html">L.geoportalLayer.WMTS</a>}</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            Leaflet/Layers/Layers.js, line 184
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Factory function for Geoportal WMTS Layers creation.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name">options</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                    
+                        
+                    
+                
+                <p>options for function call.</p>
+                
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name">layer</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                    
+                        
+                    
+                
+                <p>layer name (e.g. &quot;ORTHOIMAGERY.ORTHOPHOTOS&quot;)</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name">apiKey</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                
+                <p>access key to Geoportal platform, obtained <a href="http://professionnels.ign.fr/geoservices-ign">here</a>.</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+
+            </td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name">settings</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                
+                <p>other options for L.TileLayer function (see <a href="http://leafletjs.com/reference.html#tilelayer-options">http://leafletjs.com/reference.html#tilelayer-options</a>)</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+
+
+
+    
+    
+    
+        <h5>Example</h5>
+        
+
+    
+    <pre class="prettyprint"><code>var map = L.Map('divmap').setView();
+ var lyr = L.geoportalLayer.WMTS(
+   {
+     layer : "ORTHOIMAGERY.ORTHOPHOTOS"
+   },
+   {
+     opacity : 1,
+     transparent : true,
+     minZoom : 1,
+     maxZoom : 21
+     ...
+   });
+
+ lyr.addTo(map); // ou map.addLayer(lyr);</code></pre>
+    
+
+    
+</dd>
+
+        </dl>
+    
+    
+    
+    
+    
 </article>
 
 </section>  
+
+
+
 
 
         
@@ -826,7 +1293,7 @@ window.onload = function () {
     <footer>
         Copyright (c) IGN, released under the CECILL-B license
         </br>
-        Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Tue Jun 07 2016 16:37:02 GMT+0200 (CEST)
+        Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Jun 10 2016 12:17:42 GMT+0200 (CEST)
     </footer>
 
 

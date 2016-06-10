@@ -10,7 +10,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <!-- !meta IGN -->
 
-    <title>Namespace: LayerSwitcher</title>
+    <title>Namespace: MousePosition</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -275,8 +275,6 @@
             
                 <div class="l3 itemMembers" data-name="L.geoportalControl.LayerSwitcher#addLayer"> <a href="L.geoportalControl.LayerSwitcher.html#addLayer">addLayer</a> </div>
             
-                <div class="l3 itemMembers" data-name="L.geoportalControl.LayerSwitcher#addLayerConfig"> <a href="L.geoportalControl.LayerSwitcher.html#addLayerConfig">addLayerConfig</a> </div>
-            
 
 <!--
             <ul class="methods itemMembers">
@@ -284,8 +282,6 @@
             <span class="subtitle">Methods</span>
             
                 <li data-name="addLayer"><a href="L.geoportalControl.LayerSwitcher.html#addLayer">addLayer</a></li>
-            
-                <li data-name="addLayerConfig"><a href="L.geoportalControl.LayerSwitcher.html#addLayerConfig">addLayerConfig</a></li>
             
             </ul>
 -->
@@ -671,7 +667,7 @@
 
     <section class="content">
         <label class="openLeftMenu" for="showLeftMenu" title="Ouvrir le menu latéral"></label>
-        <h1 class="page-title" data-filename="L.geoportalControl.LayerSwitcher.html">Namespace: LayerSwitcher</h1>
+        <h1 class="page-title" data-filename="L.geoportalControl.MousePosition.html">Namespace: MousePosition</h1>
         
 
 
@@ -682,13 +678,13 @@
 <header>
 -->
     <h1>
-    <span class="main-title" data-classname=L.geoportalControl.LayerSwitcher> L.geoportalControl.LayerSwitcher </span>
+    <span class="main-title" data-classname=L.geoportalControl.MousePosition> L.geoportalControl.MousePosition </span>
     </h1>
     
     
-        <div class="description"><p>Leaflet Control Class to manage map layers : their order, visibility and opacity, and display their informations (title, description, legends, metadata...)</p>
-<p>Use <a href="module-Controls.html#.LayerSwitcher">L.geoportalControl.LayerSwitcher()</a> factory to create instances of that class.</p>
-<p><strong>Extends</strong> Leaflet <a href="http://leafletjs.com/reference.html#control-layers" target="_blank">L.Control.Layers</a> native class.</p></div>
+        <div class="description"><p>Leaflet Control Class to display Mouse position in various CRS and altitude using the <a href="http://api.ign.fr/tech-docs-js/developpeur/alti.html" target="_blank">altimetric web service of the Geoportal Platform</a>.</p>
+<p>Use <a href="module-Controls.html#.MousePosition">L.geoportalControl.MousePosition()</a> factory to create instances of that class.</p>
+<p><strong>Extends</strong> Leaflet <a href="http://leafletjs.com/reference.html#control" target="_blank">L.Control</a> native class.</p></div>
     
 <!--
 </header>  
@@ -744,244 +740,6 @@
     
     
     
-        <h3 class="subsection-title">Methods</h3>
-        
-        <dl>
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="addLayer">
-            
-            addLayer<span class="signature">(layer)</span>
-        </h4>
-    
-        
-        <div class="tag-source">
-            Leaflet/Controls/LayerSwitcher.js, line 727
-        </div>
-        
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>Adding a layer to be displayed by the control.</p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name">layer</td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-            
-            
-            
-            <td class="description last">
-                
-                <p>L.TileLayer or L.TileLayer.WMS</p></td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="addLayerConfig">
-            
-            addLayerConfig<span class="signature">(layerConfig)</span>
-        </h4>
-    
-        
-        <div class="tag-source">
-            Leaflet/Controls/LayerSwitcher.js, line 737
-        </div>
-        
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>Adding layer configuration to be displayed by the control</p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name">layerConfig</td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-            
-            
-            
-            <td class="description last">
-                
-                <p>See <a href="module-Controls.html#.LayerSwitcher">L.geoportalControl.LayerSwitcher()</a> for layer display config object definition.</p></td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        </dl>
-    
     
     
     
@@ -1002,7 +760,7 @@
     <footer>
         Copyright (c) IGN, released under the CECILL-B license
         </br>
-        Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Tue Jun 07 2016 16:37:02 GMT+0200 (CEST)
+        Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Jun 10 2016 12:17:41 GMT+0200 (CEST)
     </footer>
 
 

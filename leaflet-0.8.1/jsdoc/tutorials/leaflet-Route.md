@@ -17,8 +17,8 @@ Include js and css files located in the /dist/leaflet folder in your page :
 And create a map in the 'viewer' div, add it to map :
 ``` javascript
 var map = L.map('viewer').setView([48.845, 2.424], 15);
-var searchEngine = L.geoportalControl.SearchEngine(opts);
-map.addControl(searchEngine);
+var route = L.geoportalControl.Route(opts);
+map.addControl(route);
 ```
 
 # Options
@@ -30,25 +30,64 @@ Option      |  Type   |    Opt.   | Default    | Value
 collapsed   | Boolean | Optional | false     | Allows to control to expand the control
 position    | String  | Optional | 'topleft' | Position of component into the map ([see leaflet options](http://leafletjs.com/reference.html#control-positions))
 apiKey      | String  | Optional | null      | Key API for the use of services
-advancedSearch | Object | Optional | {}      | Advanced search for geocoding (filters)
-geocodeOptions | Object | Optional | {}      | Options of geocode service
+graphs       | Array   | Optional | [Pieton, Voiture] | List of resources, by default : ["Voiture", "Pieton"], and the first element is selected.
+exclusions  | Object  | Optional | {}        | List of exclusions with status
+disableReverse | Boolean | Optional | false  | Allows to disable the reverse geocoding
+routeOptions | Object | Optional | {}        | Options of route service
 autocompleteOptions | Object | Optional | {} | Options of autocomplete service
-displayInfo | Boolean | Optional | false     | Get informations on popup marker
-resources | Array  | Optional | []           | Resources geocoding
 
 ## Configuration of services
 
 ...
 
+
 # Examples
 
-## simple
+## option control
 
-...
+``` javascript
+var route = L.geoportalControl.Route({
+  position : "topright",
+  collapsed : false
+});
+map.addControl(route);
+```
 
-## advanced
+## option graphs
 
-...
+``` javascript
+var route = L.geoportalControl.Route({
+  graphs : ["Voiture"]
+});
+map.addControl(route);
+```
+
+## option exclusions
+
+``` javascript
+var route = L.geoportalControl.Route({
+  exclusions = {
+    tunnel : false,
+    toll : false,
+    bridge : false
+  }
+});
+map.addControl(route);
+```
+
+## option services
+
+``` javascript
+var route = L.geoportalControl.Route({
+  routeOptions = {
+    // options de Gp.Services.route()
+  },
+  autocompleteOptions = {
+    // options de Gp.Services.autocomplete()
+  }
+});
+map.addControl(route);
+```
 
 # Requirements
 
@@ -61,8 +100,8 @@ Leaflet v7.x and tested on version 1.0.0-RC
 <script src="../lib/leaflet/leaflet.js"></script>
 
 <!-- Plugin leaflet IGN -->
-<link rel="stylesheet" href="../dist/leaflet/GpPluginLeaflet-src.css" />
-<script src="../dist/leaflet/GpPluginLeaflet-src.js" data-key="jhyvi0fgmnuxvfv0zjzorvdn"></script>
+<link rel="stylesheet" href="../dist/leaflet/GpPluginLeaflet.css" />
+<script src="../dist/leaflet/GpPluginLeaflet.js" data-key="jhyvi0fgmnuxvfv0zjzorvdn"></script>
 
 <!-- code -->
 <script>
@@ -79,9 +118,9 @@ window.onload = function () {
 
   layer.addTo(map);
 
-  var search = L.geoportalControl.SearchEngine();
+  var route = L.geoportalControl.Route();
 
-  map.addControl(search);
+  map.addControl(route);
 }
 </script>
 

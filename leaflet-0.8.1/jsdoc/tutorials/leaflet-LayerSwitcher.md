@@ -61,8 +61,8 @@ Leaflet v7.x and tested on version 1.0.0-RC
 <script src="../lib/leaflet/leaflet.js"></script>
 
 <!-- Plugin leaflet IGN -->
-<link rel="stylesheet" href="../dist/leaflet/GpPluginLeaflet-src.css" />
-<script src="../dist/leaflet/GpPluginLeaflet-src.js" data-key="jhyvi0fgmnuxvfv0zjzorvdn"></script>
+<link rel="stylesheet" href="../dist/leaflet/GpPluginLeaflet.css" />
+<script src="../dist/leaflet/GpPluginLeaflet.js" data-key="jhyvi0fgmnuxvfv0zjzorvdn"></script>
 
 <!-- code -->
 <script>

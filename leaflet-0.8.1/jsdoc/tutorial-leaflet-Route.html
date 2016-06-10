@@ -10,7 +10,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <!-- !meta IGN -->
 
-    <title>Namespace: Isocurve</title>
+    <title>Tutorial: leaflet-Route</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -275,8 +275,6 @@
             
                 <div class="l3 itemMembers" data-name="L.geoportalControl.LayerSwitcher#addLayer"> <a href="L.geoportalControl.LayerSwitcher.html#addLayer">addLayer</a> </div>
             
-                <div class="l3 itemMembers" data-name="L.geoportalControl.LayerSwitcher#addLayerConfig"> <a href="L.geoportalControl.LayerSwitcher.html#addLayerConfig">addLayerConfig</a> </div>
-            
 
 <!--
             <ul class="methods itemMembers">
@@ -284,8 +282,6 @@
             <span class="subtitle">Methods</span>
             
                 <li data-name="addLayer"><a href="L.geoportalControl.LayerSwitcher.html#addLayer">addLayer</a></li>
-            
-                <li data-name="addLayerConfig"><a href="L.geoportalControl.LayerSwitcher.html#addLayerConfig">addLayerConfig</a></li>
             
             </ul>
 -->
@@ -671,89 +667,151 @@
 
     <section class="content">
         <label class="openLeftMenu" for="showLeftMenu" title="Ouvrir le menu latéral"></label>
-        <h1 class="page-title" data-filename="L.geoportalControl.Isocurve.html">Namespace: Isocurve</h1>
-        
-
-
-
-<section>
- 
-<!--   
+        <h1 class="page-title" data-filename="tutorial-leaflet-Route.html">Tutorial: leaflet-Route</h1>
+        <section>
+    
 <header>
--->
-    <h1>
-    <span class="main-title" data-classname=L.geoportalControl.Isocurve> L.geoportalControl.Isocurve </span>
-    </h1>
     
-    
-        <div class="description"><p>Leaflet Control Class to compute and display Isochrone or isodistances curves.</p>
-<p>Use <a href="module-Controls.html#.Isocurve">L.geoportalControl.Isocurve()</a> factory to create instances of that class.</p>
-<p><strong>Extends</strong> Leaflet <a href="http://leafletjs.com/reference.html#control" target="_blank">L.Control</a> native class.</p></div>
-    
-<!--
+
+    <h2>leaflet-Route</h2>
 </header>  
--->
 
 <article>
-    <div class="container-overview">
-    
-    
-    
-        
-        
-        
-<dl class="details">
-    
-        
-    
-    
-    
+    <h1>Usage</h1><p>Include js and css files located in the /dist/leaflet folder in your page :</p>
+<pre class="prettyprint source lang-javascript"><code>&lt;!-- Production -->
+&lt;link rel=&quot;stylesheet&quot; href=&quot;dist/leaflet/GpPluginLeaflet.css&quot; />
+&lt;script src=&quot;dist/leaflet/GpPluginLeaflet.js&quot;>&lt;/script></code></pre><pre class="prettyprint source lang-javascript"><code>&lt;!-- Development -->
+&lt;link rel=&quot;stylesheet&quot; href=&quot;src/leaflet/GpPluginLeaflet-src.css&quot; />
+&lt;script src=&quot;src/leaflet/GpPluginLeaflet-src.js&quot;>&lt;/script></code></pre><p>And create a map in the 'viewer' div, add it to map :</p>
+<pre class="prettyprint source lang-javascript"><code>var map = L.map('viewer').setView([48.845, 2.424], 15);
+var route = L.geoportalControl.Route(opts);
+map.addControl(route);</code></pre><h1>Options</h1><p>The control inherits options from <a href="http://leafletjs.com/reference.html#control">Leaflet Controls</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Type</th>
+<th>Opt.</th>
+<th>Default</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>collapsed</td>
+<td>Boolean</td>
+<td>Optional</td>
+<td>false</td>
+<td>Allows to control to expand the control</td>
+</tr>
+<tr>
+<td>position</td>
+<td>String</td>
+<td>Optional</td>
+<td>'topleft'</td>
+<td>Position of component into the map (<a href="http://leafletjs.com/reference.html#control-positions">see leaflet options</a>)</td>
+</tr>
+<tr>
+<td>apiKey</td>
+<td>String</td>
+<td>Optional</td>
+<td>null</td>
+<td>Key API for the use of services</td>
+</tr>
+<tr>
+<td>graphs</td>
+<td>Array</td>
+<td>Optional</td>
+<td>[Pieton, Voiture]</td>
+<td>List of resources, by default : [&quot;Voiture&quot;, &quot;Pieton&quot;], and the first element is selected.</td>
+</tr>
+<tr>
+<td>exclusions</td>
+<td>Object</td>
+<td>Optional</td>
+<td>{}</td>
+<td>List of exclusions with status</td>
+</tr>
+<tr>
+<td>disableReverse</td>
+<td>Boolean</td>
+<td>Optional</td>
+<td>false</td>
+<td>Allows to disable the reverse geocoding</td>
+</tr>
+<tr>
+<td>routeOptions</td>
+<td>Object</td>
+<td>Optional</td>
+<td>{}</td>
+<td>Options of route service</td>
+</tr>
+<tr>
+<td>autocompleteOptions</td>
+<td>Object</td>
+<td>Optional</td>
+<td>{}</td>
+<td>Options of autocomplete service</td>
+</tr>
+</tbody>
+</table>
+<h2>Configuration of services</h2><p>...</p>
+<h1>Examples</h1><h2>option control</h2><pre class="prettyprint source lang-javascript"><code>var route = L.geoportalControl.Route({
+  position : &quot;topright&quot;,
+  collapsed : false
+});
+map.addControl(route);</code></pre><h2>option graphs</h2><pre class="prettyprint source lang-javascript"><code>var route = L.geoportalControl.Route({
+  graphs : [&quot;Voiture&quot;]
+});
+map.addControl(route);</code></pre><h2>option exclusions</h2><pre class="prettyprint source lang-javascript"><code>var route = L.geoportalControl.Route({
+  exclusions = {
+    tunnel : false,
+    toll : false,
+    bridge : false
+  }
+});
+map.addControl(route);</code></pre><h2>option services</h2><pre class="prettyprint source lang-javascript"><code>var route = L.geoportalControl.Route({
+  routeOptions = {
+    // options de Gp.Services.route()
+  },
+  autocompleteOptions = {
+    // options de Gp.Services.autocomplete()
+  }
+});
+map.addControl(route);</code></pre><h1>Requirements</h1><p>Leaflet v7.x and tested on version 1.0.0-RC</p>
+<h1>Demo</h1><!-- Library Leaflet -->
+<p><link rel="stylesheet" href="../lib/leaflet/leaflet.css" /></p>
+<script src="../lib/leaflet/leaflet.js"></script>
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
+<!-- Plugin leaflet IGN -->
+<p><link rel="stylesheet" href="../dist/leaflet/GpPluginLeaflet.css" /></p>
+<script src="../dist/leaflet/GpPluginLeaflet.js" data-key="jhyvi0fgmnuxvfv0zjzorvdn"></script>
 
-        
-        
-    
-    </div>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+<!-- code -->
+<script>
+window.onload = function () {
+
+  var layer = L.geoportalLayer.WMS({
+    layer : "ORTHOIMAGERY.ORTHOPHOTOS"
+  });
+
+  var map  = L.map('map', {
+    zoom : 2,
+    center : L.latLng(48, 2)
+  });
+
+  layer.addTo(map);
+
+  var route = L.geoportalControl.Route();
+
+  map.addControl(route);
+}
+</script>
+
+<div id="map" style="height: 400px;"></div>
 </article>
 
 </section>  
-
-
-
 
 
         
@@ -764,7 +822,7 @@
     <footer>
         Copyright (c) IGN, released under the CECILL-B license
         </br>
-        Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Tue Jun 07 2016 16:37:02 GMT+0200 (CEST)
+        Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Jun 10 2016 12:17:42 GMT+0200 (CEST)
     </footer>
 
 
