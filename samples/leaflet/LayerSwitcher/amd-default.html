@@ -127,7 +127,7 @@
                 layers : [wms0, wmts1, wmts2, wmts3, wms1, wms2, wms3]
               });
 
-              var layerSwitcher = new LayerSwitcher();
+              var layerSwitcher = new LayerSwitcher({collapsed : true});
 
               map.on('overlayadd', function (e) {
                 console.log(e);

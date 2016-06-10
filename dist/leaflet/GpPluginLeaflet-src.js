@@ -9,8 +9,8 @@
  * copyright CeCILL-B
  * copyright IGN
  * @author IGN
- * @version 0.8.0
- * @date 2016-06-07
+ * @version 0.8.1
+ * @date 2016-06-10
  *
  */
 /*!
@@ -11235,14 +11235,31 @@ LeafletControlsLayerSwitcher = function (L, woodman, LayerSwitcherDOM) {
                 }
             }
         },
-        addLayer: function (layer) {
+        addLayer: function (layer, config) {
+            var map = this._map;
+            var cfg = this._layersConfig;
+            if (!layer) {
+                console.log('[ERROR] LayerSwitcher:addLayer - missing layer parameter !');
+                return;
+            }
+            if (!map.hasLayer(layer)) {
+                console.log('[WARN] LayerSwitcher:addLayer - layer has not been added on map !');
+            }
+            var id = L.stamp(layer);
+            for (var i in cfg) {
+                if (cfg.hasOwnProperty(i)) {
+                    if (id === L.stamp(cfg[i].layer)) {
+                        delete cfg[i];
+                        break;
+                    }
+                }
+            }
+            var _config = config || {};
+            L.Util.extend(_config, { layer: layer });
+            cfg.push(_config);
             layer.setZIndex(this._lastZIndex++);
             this.addOverlay(layer);
-        },
-        addLayerConfig: function (layerConfig) {
-            this._layersConfig.push(layerConfig);
-            layerConfig.layer.setZIndex(this._lastZIndex++);
-            this.addOverlay(layerConfig.layer);
+            this._update();
         }
     });
     return LayerSwitcher;
@@ -20177,6 +20194,8 @@ LeafletControlsReverseGeocoding = function (L, P, woodman, Gp, RightManagement, 
                 map.on('draw:created', function (e) {
                     var layer = e.layer;
                     var type = e.layerType;
+                    if (type === 'marker') {
+                    }
                     self._setFeaturePosition(layer, type);
                     self._currentIdLayer = L.Util.stamp(layer);
                     self._setFeatureLayer(layer);
@@ -20223,6 +20242,7 @@ LeafletControlsReverseGeocoding = function (L, P, woodman, Gp, RightManagement, 
             if (this._currentFeature) {
                 this._currentFeature.disable();
             }
+            L.drawLocal.draw.handlers.marker.tooltip.start = 'click map to place search point';
             var markerOptions = { repeatMode: true };
             this._currentFeature = new L.Draw.Marker(map, markerOptions);
             this._currentFeature.enable();
@@ -23653,8 +23673,8 @@ LeafletLayersLayers = function (L, woodman, LayerConfig, WMS, WMTS) {
     return Layers;
 }(leaflet, {}, LeafletLayersLayerConfig, LeafletLayersWMS, LeafletLayersWMTS);
 LeafletGpPluginLeaflet = function (L, P, Gp, Controls, Layers, CRS) {
-    Gp.leafletExtVersion = '0.8.0';
-    Gp.leafletExtDate = '2016-06-07';
+    Gp.leafletExtVersion = '0.8.1';
+    Gp.leafletExtDate = '2016-06-10';
     L.geoportalLayer = Layers;
     L.geoportalControl = Controls;
     L.geoportalCRS = CRS;

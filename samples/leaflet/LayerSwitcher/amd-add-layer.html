@@ -82,13 +82,7 @@
                   opacity : 0.5
               });
 
-              var wmts2 = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-                  attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-                  opacity : 1
-              });
-
-              var wmts3 = Layers.WMTS({
-                // layer : "World_Topo_Map" // apiKey : "w6lxse7rpnhirxhsk2qzbafu",
+              var wmts2 = Layers.WMTS({
                 layer : "ORTHOIMAGERY.ORTHOPHOTOS"
               },
               {
@@ -117,39 +111,52 @@
               // cas n°4, les méthodes sur l'ajout/suppression des couches sur le controle
 
               var map  = L.map('map', {
-                zoom : 0,
-                center : L.latLng(48, 2),
-                layers : [wms, wms1, wms2, wms3]
+                zoom : 10,
+                center : L.latLng(48, 2)
               });
 
               // OK : cas sans aucune surcharge !
-              var layers = [];
+              var layers = [
+                { layer : wms },
+                { layer : wms1 }, // attention, pas de droit sur cette couche !
+                { layer : wms2 },
+                { layer : wms3 }  // attention, pas de droit sur cette couche !
+              ];
 
               // liste des options par defaut
-              var layerSwitcher = new LayerSwitcher({layers : layers, collapsed : true, position : 'topright', autoZIndex : true});
+              var layerSwitcher = new LayerSwitcher({layers : layers, collapsed : false, position : 'topright', autoZIndex : true});
 
               map.addControl(layerSwitcher);
 
               // ajout d'un layer IGN dans le controle
-              map.addLayer(wmts3);
-              layerSwitcher.addLayer(wmts3);
-
-              // ajout d'un layer non-IGN dans le controle
               map.addLayer(wmts2);
               layerSwitcher.addLayer(wmts2);
 
-              // ajout d'une configuration d'un layer non-IGN dans le controle
+              // ajout d'un layer non-IGN dans le controle
               map.addLayer(wmts1);
-              layerSwitcher.addLayerConfig({
-                layer : wmts1,
+              layerSwitcher.addLayer(wmts1, {
+                 config : {
+                   title : "Layer Name OSM WMTS"
+                 }
+              });
+
+              // ajout d'un layer qui existe déjà dans le controle
+              layerSwitcher.addLayer(wms, {
                 config : {
-                  title : "Layer Name OSM WMTS"
+                  title : "Nexrad",
+                  description : "Nexrad",
+                  attributions : "Weather data © 2012 IEM Nexrad"
                 }
               });
 
+              // ajout d'un layer qui n'existe pas sur la carte
+              // attention, pas de droit sur cette couche !
+              layerSwitcher.removeLayer(wms3);
+
               // suppression d'un layer du controle
-              map.removeLayer(wms);
-              layerSwitcher.removeLayer(wms);
+              // attention, pas de droit sur cette couche !
+              map.removeLayer(wms1);
+              layerSwitcher.removeLayer(wms1);
 
             }
           });
