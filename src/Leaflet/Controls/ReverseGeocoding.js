@@ -461,8 +461,9 @@ define([
                     var type  = e.layerType;
                     // console.log("draw:created");
 
-                    // TODO comment mettre en place un icone dynamiquement ?
-                    if (type === "marker") {}
+                    // TODO
+                    // comment mettre en place un icone dynamiquement ?
+                    // if (type === "marker") {}
 
                     self._setFeaturePosition(layer, type);
 

@@ -813,10 +813,19 @@
     //'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     gulp.task("publish", function () {
 
-        var srcdir = (isExecuteOl3) ? path.join(_build, "Ol3", "dist", "**") :
-                        (isExecuteLeaflet) ? path.join(_build, "Leaflet", "dist", "**") :
-                            (isExecuteVg) ? path.join(_build, "Vg", "dist", "**") :
-                                $.util.log("Exception !");
+        var srcdir = [];
+
+        if (isExecuteOl3) {
+            srcdir.push(path.join(_build, "Ol3", "dist", "**"));
+        }
+
+        if (isExecuteLeaflet) {
+            srcdir.push(path.join(_build, "Leaflet", "dist", "**"));
+        }
+
+        if (isExecuteVg)  {
+            srcdir.push(path.join(_build, "Vg", "dist", "**"));
+        }
 
         return gulp.src(srcdir)
                 .pipe(gulp.dest(_dir.dist))
