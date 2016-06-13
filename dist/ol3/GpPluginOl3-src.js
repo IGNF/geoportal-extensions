@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.10.0
- * @date 2016-06-07
+ * @date 2016-06-13
  *
  */
 /*!
@@ -15197,7 +15197,7 @@ CommonControlsSearchEngineUtils = function () {
                 },
                 {
                     name: 'department',
-                    title: 'Departement'
+                    title: 'Département'
                 }
             ],
             StreetAddress: [
@@ -15215,13 +15215,13 @@ CommonControlsSearchEngineUtils = function () {
                 },
                 {
                     name: 'department',
-                    title: 'Departement'
+                    title: 'Département'
                 }
             ],
             CadastralParcel: [
                 {
                     name: 'department',
-                    title: 'Departement',
+                    title: 'Département',
                     description: 'Numéro du département (ex: 01, 94)'
                 },
                 {
@@ -15241,22 +15241,22 @@ CommonControlsSearchEngineUtils = function () {
                 },
                 {
                     name: 'number',
-                    title: 'Numero',
+                    title: 'Numéro',
                     description: 'Numéro de la parcelle : 4 chiffres (ex: 0041, 0250)'
                 }
             ],
             Administratif: [
                 {
                     name: 'prefecture',
-                    title: 'Prefecture'
+                    title: 'Préfecture'
                 },
                 {
                     name: 'inseeRegion',
-                    title: 'Code region (INSEE)'
+                    title: 'Code région (INSEE)'
                 },
                 {
                     name: 'inseeDepartment',
-                    title: 'Code departement (INSEE)'
+                    title: 'Code département (INSEE)'
                 },
                 {
                     name: 'municipality',
@@ -23134,7 +23134,7 @@ Ol3ControlsGeoportalAttribution = function (ol, LayerUtils) {
 }(ol, CommonUtilsLayerUtils);
 Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, GeoportalAttribution) {
     Gp.ol3extVersion = '0.10.0';
-    Gp.ol3extDate = '2016-06-07';
+    Gp.ol3extDate = '2016-06-13';
     Gp.LayerUtils = LayerUtils;
     CRS.runDefault();
     ol.source.GeoportalWMTS = SourceWMTS;

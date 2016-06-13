@@ -469,7 +469,7 @@ define([
                     },
                     {
                         name : "department",
-                        title : "Departement",
+                        title : "Département",
                         filter : true
                     }
                 ],
@@ -478,7 +478,7 @@ define([
                     // ce ne sont pas des filtres mais une location dite structurée !
                     {
                         name : "number",
-                        title : "Numero",
+                        title : "Numéro",
                         filter : false,
                         sep : true
                     },
@@ -518,7 +518,7 @@ define([
                     },
                     {
                         name : "department",
-                        title : "Departement",
+                        title : "Département",
                         filter : true
                     }
                 ],
@@ -528,7 +528,7 @@ define([
                     // ex 94 067 000 0D 0041
                     {
                         name : "department",
-                        title : "Departement",
+                        title : "Département",
                         filter : false,
                         sep : false
                     },
@@ -558,7 +558,7 @@ define([
                     // },
                     {
                         name : "number",
-                        title : "Numero",
+                        title : "Numéro",
                         filter : false,
                         sep : false
                     }
@@ -579,17 +579,17 @@ define([
                 Administratif : [
                     {
                         name : "prefecture",
-                        title : "Prefecture",
+                        title : "Préfecture",
                         filter : true
                     },
                     {
                         name : "inseeRegion",
-                        title : "Code region (INSEE)",
+                        title : "Code région (INSEE)",
                         filter : true
                     },
                     {
                         name : "inseeDepartment",
-                        title : "Code departement (INSEE)",
+                        title : "Code département (INSEE)",
                         filter : true
                     },
                     {

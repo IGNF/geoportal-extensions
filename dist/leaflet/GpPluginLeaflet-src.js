@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.8.1
- * @date 2016-06-10
+ * @date 2016-06-13
  *
  */
 /*!
@@ -20194,8 +20194,6 @@ LeafletControlsReverseGeocoding = function (L, P, woodman, Gp, RightManagement, 
                 map.on('draw:created', function (e) {
                     var layer = e.layer;
                     var type = e.layerType;
-                    if (type === 'marker') {
-                    }
                     self._setFeaturePosition(layer, type);
                     self._currentIdLayer = L.Util.stamp(layer);
                     self._setFeatureLayer(layer);
@@ -22625,14 +22623,14 @@ LeafletControlsSearchEngine = function (L, woodman, Gp, RightManagement, ID, Sea
                     },
                     {
                         name: 'department',
-                        title: 'Departement',
+                        title: 'Département',
                         filter: true
                     }
                 ],
                 StreetAddress: [
                     {
                         name: 'number',
-                        title: 'Numero',
+                        title: 'Numéro',
                         filter: false,
                         sep: true
                     },
@@ -22666,14 +22664,14 @@ LeafletControlsSearchEngine = function (L, woodman, Gp, RightManagement, ID, Sea
                     },
                     {
                         name: 'department',
-                        title: 'Departement',
+                        title: 'Département',
                         filter: true
                     }
                 ],
                 CadastralParcel: [
                     {
                         name: 'department',
-                        title: 'Departement',
+                        title: 'Département',
                         filter: false,
                         sep: false
                     },
@@ -22697,7 +22695,7 @@ LeafletControlsSearchEngine = function (L, woodman, Gp, RightManagement, ID, Sea
                     },
                     {
                         name: 'number',
-                        title: 'Numero',
+                        title: 'Numéro',
                         filter: false,
                         sep: false
                     }
@@ -22705,17 +22703,17 @@ LeafletControlsSearchEngine = function (L, woodman, Gp, RightManagement, ID, Sea
                 Administratif: [
                     {
                         name: 'prefecture',
-                        title: 'Prefecture',
+                        title: 'Préfecture',
                         filter: true
                     },
                     {
                         name: 'inseeRegion',
-                        title: 'Code region (INSEE)',
+                        title: 'Code région (INSEE)',
                         filter: true
                     },
                     {
                         name: 'inseeDepartment',
-                        title: 'Code departement (INSEE)',
+                        title: 'Code département (INSEE)',
                         filter: true
                     },
                     {
@@ -23674,7 +23672,7 @@ LeafletLayersLayers = function (L, woodman, LayerConfig, WMS, WMTS) {
 }(leaflet, {}, LeafletLayersLayerConfig, LeafletLayersWMS, LeafletLayersWMTS);
 LeafletGpPluginLeaflet = function (L, P, Gp, Controls, Layers, CRS) {
     Gp.leafletExtVersion = '0.8.1';
-    Gp.leafletExtDate = '2016-06-10';
+    Gp.leafletExtDate = '2016-06-13';
     L.geoportalLayer = Layers;
     L.geoportalControl = Controls;
     L.geoportalCRS = CRS;
