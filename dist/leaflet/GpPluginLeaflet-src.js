@@ -9,8 +9,8 @@
  * copyright CeCILL-B
  * copyright IGN
  * @author IGN
- * @version 0.8.0
- * @date 2016-06-07
+ * @version 0.8.1
+ * @date 2016-06-13
  *
  */
 /*!
@@ -761,15 +761,18 @@ var gp, CommonUtilsAutoLoadConfig, leafletDraw, sortable, CommonControlsLayerSwi
                 options.data = settings.data ? settings.data : null;
                 options.method = settings.method;
                 options.timeOut = settings.timeOut || 0;
+                options.scope = settings.scope || this;
                 switch (settings.method) {
+                case 'DELETE':
                 case 'GET':
                     break;
+                case 'PUT':
                 case 'POST':
                     options.content = settings.content ? settings.content : 'application/x-www-form-urlencoded';
                     options.headers = settings.headers ? settings.headers : { referer: 'http://localhost' };
                     break;
-                case 'DELETE':
-                case 'PUT':
+                case 'HEAD':
+                case 'OPTIONS':
                     throw new Error('HTTP method not yet supported !');
                 default:
                     throw new Error('HTTP method unknown !');
@@ -802,7 +805,8 @@ var gp, CommonUtilsAutoLoadConfig, leafletDraw, sortable, CommonControlsLayerSwi
             },
             __call: function (options) {
                 var promise = new Promise(function (resolve, reject) {
-                    if (options.data && options.method == 'GET') {
+                    var corps = options.method === 'POST' || options.method === 'PUT' ? true : false;
+                    if (options.data && !corps) {
                         options.url = Helper.normalyzeUrl(options.url, options.data);
                     }
                     var hXHR = null;
@@ -813,7 +817,7 @@ var gp, CommonUtilsAutoLoadConfig, leafletDraw, sortable, CommonControlsLayerSwi
                         if (options.timeOut > 0) {
                             hXHR.timeout = options.timeout;
                         }
-                        if (options.method !== 'GET') {
+                        if (corps) {
                             hXHR.setRequestHeader('Content-type', options.content);
                         }
                         hXHR.onerror = function () {
@@ -834,7 +838,7 @@ var gp, CommonUtilsAutoLoadConfig, leafletDraw, sortable, CommonControlsLayerSwi
                                 });
                             }
                         };
-                        var data4xdr = options.data && options.method == 'POST' ? options.data : null;
+                        var data4xdr = options.data && corps ? options.data : null;
                         hXHR.send(data4xdr);
                     } else if (window.XMLHttpRequest) {
                         hXHR = new XMLHttpRequest();
@@ -850,7 +854,7 @@ var gp, CommonUtilsAutoLoadConfig, leafletDraw, sortable, CommonControlsLayerSwi
                                 });
                             }, options.timeOut);
                         }
-                        if (options.method !== 'GET') {
+                        if (corps) {
                             hXHR.setRequestHeader('Content-type', options.content);
                         }
                         hXHR.onerror = function (e) {
@@ -875,7 +879,7 @@ var gp, CommonUtilsAutoLoadConfig, leafletDraw, sortable, CommonControlsLayerSwi
                                 }
                             }
                         };
-                        var data4xhr = options.data && options.method == 'POST' ? options.data : null;
+                        var data4xhr = options.data && corps ? options.data : null;
                         hXHR.send(data4xhr);
                     } else {
                         throw new Error('CORS not supported');
@@ -1139,7 +1143,7 @@ var gp, CommonUtilsAutoLoadConfig, leafletDraw, sortable, CommonControlsLayerSwi
         return Protocol;
     }(UtilsHelper, ProtocolsXHR, ProtocolsJSONP);
     ServicesDefaultUrlService = function () {
-        var protocol = 'http://';
+        var protocol = location && location.protocol && location.protocol.indexOf('https:') === 0 ? 'https://' : 'http://';
         var hostname = 'wxs.ign.fr';
         var keyname = '%KEY%';
         var url = protocol + hostname.concat('/', keyname);
@@ -7377,8 +7381,8 @@ var gp, CommonUtilsAutoLoadConfig, leafletDraw, sortable, CommonControlsLayerSwi
     Gp = function (XHR, Services, AltiResponse, Elevation, AutoCompleteResponse, SuggestedLocation, GetConfigResponse, Constraint, Format, Layer, Legend, Metadata, Originator, Service, Style, Territory, Thematic, TM, TMLimit, TMS, GeocodeResponse, GeocodedLocation, DirectGeocodedLocation, ReverseGeocodedLocation, IsoCurveResponse, RouteResponse, RouteInstruction, Error) {
         var scope = typeof window !== 'undefined' ? window : {};
         var Gp = scope.Gp || {
-            servicesVersion: '1.0.0-beta2',
-            servicesDate: '2016-05-31',
+            servicesVersion: '1.0.0-beta3',
+            servicesDate: '2016-06-13',
             extend: function (strNS, value) {
                 var parts = strNS.split('.');
                 var parent = this;
@@ -11235,14 +11239,31 @@ LeafletControlsLayerSwitcher = function (L, woodman, LayerSwitcherDOM) {
                 }
             }
         },
-        addLayer: function (layer) {
+        addLayer: function (layer, config) {
+            var map = this._map;
+            var cfg = this._layersConfig;
+            if (!layer) {
+                console.log('[ERROR] LayerSwitcher:addLayer - missing layer parameter !');
+                return;
+            }
+            if (!map.hasLayer(layer)) {
+                console.log('[WARN] LayerSwitcher:addLayer - layer has not been added on map !');
+            }
+            var id = L.stamp(layer);
+            for (var i in cfg) {
+                if (cfg.hasOwnProperty(i)) {
+                    if (id === L.stamp(cfg[i].layer)) {
+                        delete cfg[i];
+                        break;
+                    }
+                }
+            }
+            var _config = config || {};
+            L.Util.extend(_config, { layer: layer });
+            cfg.push(_config);
             layer.setZIndex(this._lastZIndex++);
             this.addOverlay(layer);
-        },
-        addLayerConfig: function (layerConfig) {
-            this._layersConfig.push(layerConfig);
-            layerConfig.layer.setZIndex(this._lastZIndex++);
-            this.addOverlay(layerConfig.layer);
+            this._update();
         }
     });
     return LayerSwitcher;
@@ -20223,6 +20244,7 @@ LeafletControlsReverseGeocoding = function (L, P, woodman, Gp, RightManagement, 
             if (this._currentFeature) {
                 this._currentFeature.disable();
             }
+            L.drawLocal.draw.handlers.marker.tooltip.start = 'click map to place search point';
             var markerOptions = { repeatMode: true };
             this._currentFeature = new L.Draw.Marker(map, markerOptions);
             this._currentFeature.enable();
@@ -22605,14 +22627,14 @@ LeafletControlsSearchEngine = function (L, woodman, Gp, RightManagement, ID, Sea
                     },
                     {
                         name: 'department',
-                        title: 'Departement',
+                        title: 'Département',
                         filter: true
                     }
                 ],
                 StreetAddress: [
                     {
                         name: 'number',
-                        title: 'Numero',
+                        title: 'Numéro',
                         filter: false,
                         sep: true
                     },
@@ -22646,14 +22668,14 @@ LeafletControlsSearchEngine = function (L, woodman, Gp, RightManagement, ID, Sea
                     },
                     {
                         name: 'department',
-                        title: 'Departement',
+                        title: 'Département',
                         filter: true
                     }
                 ],
                 CadastralParcel: [
                     {
                         name: 'department',
-                        title: 'Departement',
+                        title: 'Département',
                         filter: false,
                         sep: false
                     },
@@ -22677,7 +22699,7 @@ LeafletControlsSearchEngine = function (L, woodman, Gp, RightManagement, ID, Sea
                     },
                     {
                         name: 'number',
-                        title: 'Numero',
+                        title: 'Numéro',
                         filter: false,
                         sep: false
                     }
@@ -22685,17 +22707,17 @@ LeafletControlsSearchEngine = function (L, woodman, Gp, RightManagement, ID, Sea
                 Administratif: [
                     {
                         name: 'prefecture',
-                        title: 'Prefecture',
+                        title: 'Préfecture',
                         filter: true
                     },
                     {
                         name: 'inseeRegion',
-                        title: 'Code region (INSEE)',
+                        title: 'Code région (INSEE)',
                         filter: true
                     },
                     {
                         name: 'inseeDepartment',
-                        title: 'Code departement (INSEE)',
+                        title: 'Code département (INSEE)',
                         filter: true
                     },
                     {
@@ -23653,8 +23675,8 @@ LeafletLayersLayers = function (L, woodman, LayerConfig, WMS, WMTS) {
     return Layers;
 }(leaflet, {}, LeafletLayersLayerConfig, LeafletLayersWMS, LeafletLayersWMTS);
 LeafletGpPluginLeaflet = function (L, P, Gp, Controls, Layers, CRS) {
-    Gp.leafletExtVersion = '0.8.0';
-    Gp.leafletExtDate = '2016-06-07';
+    Gp.leafletExtVersion = '0.8.1';
+    Gp.leafletExtDate = '2016-06-13';
     L.geoportalLayer = Layers;
     L.geoportalControl = Controls;
     L.geoportalCRS = CRS;

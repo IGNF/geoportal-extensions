@@ -47,8 +47,7 @@
               });
 
               map.addLayer(wmts);
-              layerSwitcher.addLayerConfig({
-                  layer : wmts,
+              layerSwitcher.addLayer(wmts, {
                   display : true,
                   config : {
                     title : "Layer OSM WMTS" ,
