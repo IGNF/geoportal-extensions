@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.8.1
- * @date 2016-06-13
+ * @date 2016-06-14
  *
  */
 /*!
@@ -20702,8 +20702,10 @@ CommonControlsRouteDOM = function (ID) {
                         resultStage.appendChild(resultStageLabel);
                         var resultStageValue = document.createElement('div');
                         resultStageValue.className = 'GProuteResultStageValue';
-                        var stageCoords = document.getElementById(self._addUID('GPlocationOriginCoords_' + id)).value;
-                        if (stageCoords != null && stageCoords != '') {
+                        var elementCoords = document.getElementById(self._addUID('GPlocationOriginCoords_' + id));
+                        var stageCoords = elementCoords.value;
+                        var visible = elementCoords.className === 'GPlocationOriginVisible' ? true : false;
+                        if (stageCoords != null && stageCoords != '' && visible) {
                             resultStageValue.innerHTML = stageCoords;
                         } else {
                             resultStageValue.innerHTML = document.getElementById(self._addUID('GPlocationOrigin_' + id)).value;
@@ -20846,11 +20848,13 @@ CommonControlsRouteDOM = function (ID) {
             labelDistance.innerHTML = 'Distance :';
             containerDistance.appendChild(labelDistance);
             var distanceLabel = 0;
-            var distanceKm = parseInt(distance / 1000, 10);
-            if (!distanceKm) {
-                distanceLabel = distance + ' m';
+            var isKm = parseInt(distance / 1000, 10);
+            if (!isKm) {
+                distanceLabel = Math.round(distance) + ' m';
             } else {
-                distanceLabel = distanceKm + ' km';
+                var distanceArrondi = Math.round(distance);
+                distanceArrondi = distanceArrondi / 1000;
+                distanceLabel = distanceArrondi + ' km';
             }
             var divDistance = document.createElement('div');
             divDistance.id = this._addUID('GProuteResultsValueDist');
@@ -20901,11 +20905,13 @@ CommonControlsRouteDOM = function (ID) {
                 durationCumul += parseFloat(o.duration);
                 distanceCumul += parseFloat(o.distance);
                 var distance = 0;
-                var distanceCumulKm = parseInt(distanceCumul / 1000, 10);
-                if (!distanceCumulKm) {
-                    distance = parseInt(distanceCumul, 10) + ' m';
+                var isCumulKm = parseInt(distanceCumul / 1000, 10);
+                if (!isCumulKm) {
+                    distance = Math.round(distanceCumul) + ' m';
                 } else {
-                    distance = distanceCumulKm + ' km';
+                    var distanceArrondi = Math.round(distanceCumul);
+                    distanceArrondi = distanceArrondi / 1000;
+                    distance = distanceArrondi + ' km';
                 }
                 var divIns = document.createElement('div');
                 divIns.className = 'GProuteResultsDetailsInstruction';
@@ -21868,15 +21874,18 @@ LeafletControlsRoute = function (L, woodman, Gp, RightManagement, ID, LocationSe
                 var o = instructions[i];
                 var id = i + 1;
                 _geometry.features.push({
+                    id: id,
                     type: 'Feature',
                     geometry: o.geometry,
-                    properties: { popupContent: '(' + id + ') distance : ' + this._convertDistance(o.distance) + ' / temps : ' + this._convertSecondsToTime(o.duration) },
-                    id: id
+                    properties: { popupContent: '(' + id + ') distance : ' + this._convertDistance(o.distance) + ' / temps : ' + this._convertSecondsToTime(o.duration) }
                 });
             }
             var self = this;
             function resetHighlight(e) {
-                self._geojsonSections.resetStyle(e.target);
+                var layer = e.target;
+                self._geojsonSections.resetStyle(layer);
+                var div = L.DomUtil.get('GProuteResultsDetailsInstruction_' + layer.options.id + '-' + self._uid);
+                L.DomUtil.removeClass(div, 'GProuteResultsDetailsHighlight');
             }
             function highlightFeature(e) {
                 var layer = e.target;
@@ -21885,10 +21894,13 @@ LeafletControlsRoute = function (L, woodman, Gp, RightManagement, ID, LocationSe
                     color: '#0F9DE8',
                     opacity: 0.5
                 });
+                var div = L.DomUtil.get('GProuteResultsDetailsInstruction_' + layer.options.id + '-' + self._uid);
+                L.DomUtil.addClass(div, 'GProuteResultsDetailsHighlight');
             }
             this._geojsonSections = L.geoJson(_geometry, {
                 style: _style,
                 onEachFeature: function (feature, layer) {
+                    layer.options.id = feature.id;
                     layer.on({
                         mouseover: highlightFeature,
                         mouseout: resetHighlight
@@ -21944,6 +21956,9 @@ LeafletControlsRoute = function (L, woodman, Gp, RightManagement, ID, LocationSe
         _simplifiedInstructions: function (instructions) {
             var newInstructions = [];
             var current = instructions[0];
+            if (instructions.length === 1) {
+                newInstructions.push(current);
+            }
             for (var i = 1; i < instructions.length; i++) {
                 var o = instructions[i];
                 if (o.instruction === current.instruction) {
@@ -23676,7 +23691,7 @@ LeafletLayersLayers = function (L, woodman, LayerConfig, WMS, WMTS) {
 }(leaflet, {}, LeafletLayersLayerConfig, LeafletLayersWMS, LeafletLayersWMTS);
 LeafletGpPluginLeaflet = function (L, P, Gp, Controls, Layers, CRS) {
     Gp.leafletExtVersion = '0.8.1';
-    Gp.leafletExtDate = '2016-06-13';
+    Gp.leafletExtDate = '2016-06-14';
     L.geoportalLayer = Layers;
     L.geoportalControl = Controls;
     L.geoportalCRS = CRS;

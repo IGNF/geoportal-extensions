@@ -197,8 +197,10 @@ define(["Common/Utils/SelectorID"], function (ID) {
                         resultStage.appendChild(resultStageLabel);
                         var resultStageValue = document.createElement("div");
                         resultStageValue.className  = "GProuteResultStageValue";
-                        var stageCoords = document.getElementById(self._addUID("GPlocationOriginCoords_" + id)).value;
-                        if (stageCoords != null && stageCoords != "") {
+                        var elementCoords = document.getElementById(self._addUID("GPlocationOriginCoords_" + id));
+                        var stageCoords = elementCoords.value;
+                        var visible = (elementCoords.className === "GPlocationOriginVisible") ? true : false;
+                        if (stageCoords != null && stageCoords != "" && visible) {
                             resultStageValue.innerHTML = stageCoords;
                         } else {
                             resultStageValue.innerHTML = document.getElementById(self._addUID("GPlocationOrigin_" + id)).value;
@@ -429,11 +431,14 @@ define(["Common/Utils/SelectorID"], function (ID) {
             containerDistance.appendChild(labelDistance);
 
             var distanceLabel = 0;
-            var distanceKm = parseInt(distance / 1000, 10);
-            if (! distanceKm) {
-                distanceLabel = distance + " m";
+            var isKm = parseInt(distance / 1000, 10);
+
+            if (! isKm) {
+                distanceLabel = Math.round(distance) + " m";
             } else {
-                distanceLabel = distanceKm + " km";
+                var distanceArrondi = Math.round(distance);
+                distanceArrondi = distanceArrondi / 1000;
+                distanceLabel = distanceArrondi + " km";
             }
 
             var divDistance = document.createElement("div");
@@ -524,11 +529,13 @@ define(["Common/Utils/SelectorID"], function (ID) {
                 distanceCumul += parseFloat(o.distance);
 
                 var distance = 0;
-                var distanceCumulKm = parseInt(distanceCumul / 1000, 10);
-                if (! distanceCumulKm) {
-                    distance = parseInt(distanceCumul, 10) + " m"; // arrondi !
+                var isCumulKm = parseInt(distanceCumul / 1000, 10);
+                if (! isCumulKm) {
+                    distance = Math.round(distanceCumul) + " m";
                 } else {
-                    distance = distanceCumulKm + " km";
+                    var distanceArrondi = Math.round(distanceCumul);
+                    distanceArrondi = distanceArrondi / 1000;
+                    distance = distanceArrondi + " km";
                 }
 
                 var divIns = document.createElement("div");
