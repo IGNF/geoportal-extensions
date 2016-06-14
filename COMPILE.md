@@ -8,6 +8,7 @@
 
 ### compilation du projet
 
+```
 > gulp [--production] [--leaflet] [--ol3]
 > gulp publish
 > tree dist/
@@ -36,6 +37,7 @@ dist/
         ├── GPopacitySlider.png
         ├── GPshowLayersList.png
         └── ...
+```
 
 ### 'target' principales de compilation du projet
 
@@ -56,6 +58,7 @@ ou
 
 #### pour une execution séparée :
 
+```
 > gulp test
 > gulp check
 > gulp src
@@ -63,6 +66,7 @@ ou
 > gulp licence
 puis
 > gulp publish
+```
 
 Attention, par defaut, sans options, c'est la librarie 'Leaflet' qui est compilée.
 'gulp test' est identique à 'gulp test --leaflet'
@@ -70,15 +74,17 @@ Attention, par defaut, sans options, c'est la librarie 'Leaflet' qui est compil�
 #### résumé :
 
 les targets sont :
-
-        build | doc | publish | help
+```
+        build | dist | doc | sample | publish | help
           |
         clean
          _|_
 build-ol3  build-leaflet
-    |          |
-   test       test
-   check      check
-   src        src
-   res        res
-   licence    licence
+    |            |
+   test         test
+   check        check
+   build-dist   build-dist
+   build-doc    build-doc
+   lib          lib
+   build-sample build-sample
+```
