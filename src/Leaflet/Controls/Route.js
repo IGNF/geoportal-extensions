@@ -1107,20 +1107,23 @@ define([
                 var id = i + 1;
 
                 _geometry.features.push({
+                    id : id,
                     type : "Feature",
                     geometry : o.geometry,
                     properties : {
                         popupContent : "(" + id + ") distance : " + this._convertDistance(o.distance) +
                          " / temps : " + this._convertSecondsToTime(o.duration)
-                    },
-                    id : id
+                    }
                 });
             }
 
             var self = this;
             /** ... */
             function resetHighlight (e) {
-                self._geojsonSections.resetStyle(e.target);
+                var layer = e.target;
+                self._geojsonSections.resetStyle(layer);
+                var div = L.DomUtil.get("GProuteResultsDetailsInstruction_" + layer.options.id + "-" + self._uid);
+                L.DomUtil.removeClass(div, "GProuteResultsDetailsHighlight");
             }
 
             /** ... */
@@ -1132,12 +1135,15 @@ define([
                     color : "#0F9DE8",
                     opacity : 0.5
                 });
+                var div = L.DomUtil.get("GProuteResultsDetailsInstruction_" + layer.options.id + "-" + self._uid);
+                L.DomUtil.addClass(div, "GProuteResultsDetailsHighlight");
             }
 
             this._geojsonSections = L.geoJson(_geometry, {
                 style : _style,
                 /** Function that will be called on each created feature layer. */
                 onEachFeature : function (feature, layer) {
+                    layer.options.id = feature.id;
                     layer.on({
                         mouseover : highlightFeature,
                         mouseout : resetHighlight
@@ -1252,6 +1258,11 @@ define([
             var newInstructions = [];
 
             var current = instructions[0];
+            // cas où...
+            if (instructions.length === 1) {
+                newInstructions.push(current);
+            }
+
             for (var i = 1; i < instructions.length; i++) {
                 var o  = instructions[i];
                 if (o.instruction === current.instruction) {
