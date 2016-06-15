@@ -1122,7 +1122,7 @@ define([
             function resetHighlight (e) {
                 var layer = e.target;
                 self._geojsonSections.resetStyle(layer);
-                var div = L.DomUtil.get("GProuteResultsDetailsInstruction_" + layer.options.id + "-" + self._uid);
+                var div = L.DomUtil.get("GProuteResultsDetailsInstruction_" + layer.feature.id + "-" + self._uid);
                 L.DomUtil.removeClass(div, "GProuteResultsDetailsHighlight");
             }
 
@@ -1135,7 +1135,7 @@ define([
                     color : "#0F9DE8",
                     opacity : 0.5
                 });
-                var div = L.DomUtil.get("GProuteResultsDetailsInstruction_" + layer.options.id + "-" + self._uid);
+                var div = L.DomUtil.get("GProuteResultsDetailsInstruction_" + layer.feature.id + "-" + self._uid);
                 L.DomUtil.addClass(div, "GProuteResultsDetailsHighlight");
             }
 
@@ -1143,7 +1143,6 @@ define([
                 style : _style,
                 /** Function that will be called on each created feature layer. */
                 onEachFeature : function (feature, layer) {
-                    layer.options.id = feature.id;
                     layer.on({
                         mouseover : highlightFeature,
                         mouseout : resetHighlight
@@ -1270,6 +1269,11 @@ define([
                     current.duration = (parseFloat(o.duration) + parseFloat(current.duration)).toString();
                     for (var j = 1; j < o.geometry.coordinates.length; j++) {
                         current.geometry.coordinates.push(o.geometry.coordinates[j]);
+                    }
+                    // last
+                    if (i === instructions.length - 1) {
+                        newInstructions.push(current);
+                        current = null;
                     }
                 } else {
                     newInstructions.push(current);

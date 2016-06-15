@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.8.2
- * @date 2016-06-14
+ * @date 2016-06-15
  *
  */
 /*!
@@ -21884,7 +21884,7 @@ LeafletControlsRoute = function (L, woodman, Gp, RightManagement, ID, LocationSe
             function resetHighlight(e) {
                 var layer = e.target;
                 self._geojsonSections.resetStyle(layer);
-                var div = L.DomUtil.get('GProuteResultsDetailsInstruction_' + layer.options.id + '-' + self._uid);
+                var div = L.DomUtil.get('GProuteResultsDetailsInstruction_' + layer.feature.id + '-' + self._uid);
                 L.DomUtil.removeClass(div, 'GProuteResultsDetailsHighlight');
             }
             function highlightFeature(e) {
@@ -21894,13 +21894,12 @@ LeafletControlsRoute = function (L, woodman, Gp, RightManagement, ID, LocationSe
                     color: '#0F9DE8',
                     opacity: 0.5
                 });
-                var div = L.DomUtil.get('GProuteResultsDetailsInstruction_' + layer.options.id + '-' + self._uid);
+                var div = L.DomUtil.get('GProuteResultsDetailsInstruction_' + layer.feature.id + '-' + self._uid);
                 L.DomUtil.addClass(div, 'GProuteResultsDetailsHighlight');
             }
             this._geojsonSections = L.geoJson(_geometry, {
                 style: _style,
                 onEachFeature: function (feature, layer) {
-                    layer.options.id = feature.id;
                     layer.on({
                         mouseover: highlightFeature,
                         mouseout: resetHighlight
@@ -21966,6 +21965,10 @@ LeafletControlsRoute = function (L, woodman, Gp, RightManagement, ID, LocationSe
                     current.duration = (parseFloat(o.duration) + parseFloat(current.duration)).toString();
                     for (var j = 1; j < o.geometry.coordinates.length; j++) {
                         current.geometry.coordinates.push(o.geometry.coordinates[j]);
+                    }
+                    if (i === instructions.length - 1) {
+                        newInstructions.push(current);
+                        current = null;
                     }
                 } else {
                     newInstructions.push(current);
@@ -23691,7 +23694,7 @@ LeafletLayersLayers = function (L, woodman, LayerConfig, WMS, WMTS) {
 }(leaflet, {}, LeafletLayersLayerConfig, LeafletLayersWMS, LeafletLayersWMTS);
 LeafletGpPluginLeaflet = function (L, P, Gp, Controls, Layers, CRS) {
     Gp.leafletExtVersion = '0.8.2';
-    Gp.leafletExtDate = '2016-06-14';
+    Gp.leafletExtDate = '2016-06-15';
     L.geoportalLayer = Layers;
     L.geoportalControl = Controls;
     L.geoportalCRS = CRS;

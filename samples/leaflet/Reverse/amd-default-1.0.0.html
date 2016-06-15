@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!-- Library Leaflet -->
+  <!-- Library Leaflet-->
   <link rel="stylesheet" href="../../../lib/leaflet/1.0.0-rc1/leaflet.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0-beta.2.rc.2/leaflet.css" />
 
   <!-- Plugin leaflet IGN -->
   <link rel="stylesheet" href="../../../dist/leaflet/GpPluginLeaflet-src.css" />
@@ -28,20 +29,22 @@
         /* global requirejs */
         requirejs.config({
             'baseUrl' : "../../../src/",
-            'paths': {
+            'paths' : {
                 // lib external
                 "leaflet" : "../lib/leaflet/1.0.0-rc1/leaflet-src",
-                "gp"      : "../lib/gp/GpServices-src",
-                "proj4" : "../lib/proj4/proj4-src",
-                "proj4leaflet-0.7.x" : "../lib/proj4leaflet/proj4leaflet-src",
-                "proj4leaflet-1.0.x" : "../lib/proj4leaflet/1.0.0-beta.2/proj4leaflet-src",
+                // FIXME "leaflet" : "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0-beta.2.rc.2/leaflet",
+                "leaflet-draw" : "../lib/leaflet/plugins/leaflet-draw/leaflet.draw-src",
+                "gp"      : "../lib/gp/GpServices-debug",
                 "woodman" : "../lib/woodman/woodman-amd",
                 "sortable": "../lib/sortable/Sortable"
+            },
+            shim : {
+              "leaflet-draw" : ["leaflet"]
             }
         });
 
-        requirejs(['gp', 'Leaflet/Layers/Layers', 'Leaflet/Controls/Route', 'Leaflet/Controls/SearchEngine'],
-        function (Gp, Layers, Route, SearchEngine) {
+        requirejs(['gp', 'Leaflet/Layers/Layers', 'Leaflet/Controls/ReverseGeocoding'],
+        function (Gp, Layers, ReverseGeocoding) {
 
           Gp.Services.getConfig({
             // serverUrl : "../../resources/autoconf/callback-autoconf-xml-light-more",
@@ -54,16 +57,39 @@
               });
 
               var map  = L.map('map', {
-                zoom : 2,
-                center : L.latLng(48, 2)
+                zoom : 17,
+                center : L.latLng(48.844, 2.433)
               });
 
               wms.addTo(map);
 
-              var route  = new Route();
-              var search = new SearchEngine();
-              map.addControl(route);
-              map.addControl(search);
+              // OK
+              // avec les options par defaut
+              // autoconf chargée,
+              // sans clef API sur le controle,
+              // sans ressources renseignées
+              var rev = new ReverseGeocoding();
+
+              // OK
+              // avec les options par defaut
+              // autoconf chargée,
+              // avec clef API sur le controle,
+              // sans ressources renseignées
+              // var search = new ReverseGeocoding({
+              //   apiKey : "jhyvi0fgmnuxvfv0zjzorvdn"
+              // });
+
+              // OK
+              // avec les options par defaut
+              // autoconf chargée,
+              // avec ou sans clef API sur le controle (fake),
+              // avec ressources renseignées
+              // var search = new ReverseGeocoding({
+              //    apiKey : "FAKE",
+              //    resources : ["PositionOfInterest", "StreetAddress"]
+              // });
+
+              map.addControl(rev);
 
           }
         })
@@ -71,7 +97,7 @@
     </script>
 
     <!-- map -->
-    <div id="map" style="height: 500px;"></div>
+    <div id="map" style="height: 400px;"></div>
 
     <!-- Comment utiliser le plugin avec un exemple -->
     <p>TODO : EXEMPLE D'UTILISATION DU PLUGIN</p>
