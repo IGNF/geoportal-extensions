@@ -14,6 +14,7 @@ define([
     "Ol3/Controls/Route",
     "Ol3/Controls/Isocurve",
     "Ol3/Controls/ReverseGeocode",
+    "Ol3/Controls/LayerImport",
     "Ol3/Controls/GeoportalAttribution"
 ], function (
     ol,
@@ -31,6 +32,7 @@ define([
     Route,
     Isocurve,
     ReverseGeocode,
+    LayerImport,
     GeoportalAttribution
 ) {
 
@@ -57,6 +59,7 @@ define([
     ol.control.GeoportalMousePosition = MousePosition;
     ol.control.Drawing = Drawing;
     ol.control.ReverseGeocode = ReverseGeocode;
+    ol.control.LayerImport = LayerImport;
 
     // FIXME : parce qu'il faut bien retourner quelque chose
     return Gp;
