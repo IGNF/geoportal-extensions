@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.10.1
- * @date 2016-06-13
+ * @date 2016-06-15
  *
  */
 /*!
@@ -90,7 +90,7 @@
   }
 }(this, function(ol) {
 
-var gp, CommonUtilsAutoLoadConfig, CommonUtilsLayerUtils, proj4, Ol3CRSEPSG2154, Ol3CRSEPSG27572, Ol3CRSCRS, Ol3Utils, CommonUtilsConfig, Ol3LayersSourceWMTS, Ol3LayersSourceWMS, Ol3LayersLayerWMTS, Ol3LayersLayerWMS, sortable, CommonControlsLayerSwitcherDOM, Ol3ControlsLayerSwitcher, Ol3ControlsUtilsMarkers, CommonUtilsCheckRightManagement, CommonUtilsSelectorID, CommonControlsSearchEngineDOM, CommonControlsSearchEngineUtils, Ol3ControlsSearchEngine, CommonControlsMousePositionDOM, Ol3ControlsMousePosition, CommonControlsDrawingDOM, Ol3ControlsDrawing, CommonControlsLocationSelectorDOM, Ol3ControlsLocationSelector, CommonControlsRouteDOM, Ol3ControlsRoute, CommonControlsIsoDOM, Ol3ControlsIsocurve, CommonControlsReverseGeocodingDOM, Ol3ControlsReverseGeocode, Ol3ControlsGeoportalAttribution, Ol3GpPluginOl3;
+var gp, CommonUtilsAutoLoadConfig, CommonUtilsLayerUtils, proj4, Ol3CRSEPSG2154, Ol3CRSEPSG27572, Ol3CRSCRS, Ol3Utils, CommonUtilsConfig, Ol3LayersSourceWMTS, Ol3LayersSourceWMS, Ol3LayersLayerWMTS, Ol3LayersLayerWMS, sortable, CommonControlsLayerSwitcherDOM, Ol3ControlsLayerSwitcher, Ol3ControlsUtilsMarkers, CommonUtilsCheckRightManagement, CommonUtilsSelectorID, CommonControlsSearchEngineDOM, CommonControlsSearchEngineUtils, Ol3ControlsSearchEngine, CommonControlsMousePositionDOM, Ol3ControlsMousePosition, CommonControlsDrawingDOM, Ol3ControlsDrawing, CommonControlsLocationSelectorDOM, Ol3ControlsLocationSelector, CommonControlsRouteDOM, Ol3ControlsRoute, CommonControlsIsoDOM, Ol3ControlsIsocurve, CommonControlsReverseGeocodingDOM, Ol3ControlsReverseGeocode, CommonControlsLayerImportDOM, Ol3ControlsLayerImport, Ol3ControlsGeoportalAttribution, Ol3GpPluginOl3;
 (function (root, factory) {
     if (true) {
         gp = function () {
@@ -19051,8 +19051,10 @@ CommonControlsRouteDOM = function (ID) {
                         resultStage.appendChild(resultStageLabel);
                         var resultStageValue = document.createElement('div');
                         resultStageValue.className = 'GProuteResultStageValue';
-                        var stageCoords = document.getElementById(self._addUID('GPlocationOriginCoords_' + id)).value;
-                        if (stageCoords != null && stageCoords != '') {
+                        var elementCoords = document.getElementById(self._addUID('GPlocationOriginCoords_' + id));
+                        var stageCoords = elementCoords.value;
+                        var visible = elementCoords.className === 'GPlocationOriginVisible' ? true : false;
+                        if (stageCoords != null && stageCoords != '' && visible) {
                             resultStageValue.innerHTML = stageCoords;
                         } else {
                             resultStageValue.innerHTML = document.getElementById(self._addUID('GPlocationOrigin_' + id)).value;
@@ -19195,11 +19197,13 @@ CommonControlsRouteDOM = function (ID) {
             labelDistance.innerHTML = 'Distance :';
             containerDistance.appendChild(labelDistance);
             var distanceLabel = 0;
-            var distanceKm = parseInt(distance / 1000, 10);
-            if (!distanceKm) {
-                distanceLabel = distance + ' m';
+            var isKm = parseInt(distance / 1000, 10);
+            if (!isKm) {
+                distanceLabel = Math.round(distance) + ' m';
             } else {
-                distanceLabel = distanceKm + ' km';
+                var distanceArrondi = Math.round(distance);
+                distanceArrondi = distanceArrondi / 1000;
+                distanceLabel = distanceArrondi + ' km';
             }
             var divDistance = document.createElement('div');
             divDistance.id = this._addUID('GProuteResultsValueDist');
@@ -19250,11 +19254,13 @@ CommonControlsRouteDOM = function (ID) {
                 durationCumul += parseFloat(o.duration);
                 distanceCumul += parseFloat(o.distance);
                 var distance = 0;
-                var distanceCumulKm = parseInt(distanceCumul / 1000, 10);
-                if (!distanceCumulKm) {
-                    distance = parseInt(distanceCumul, 10) + ' m';
+                var isCumulKm = parseInt(distanceCumul / 1000, 10);
+                if (!isCumulKm) {
+                    distance = Math.round(distanceCumul) + ' m';
                 } else {
-                    distance = distanceCumulKm + ' km';
+                    var distanceArrondi = Math.round(distanceCumul);
+                    distanceArrondi = distanceArrondi / 1000;
+                    distance = distanceArrondi + ' km';
                 }
                 var divIns = document.createElement('div');
                 divIns.className = 'GProuteResultsDetailsInstruction';
@@ -23072,6 +23078,962 @@ Ol3ControlsReverseGeocode = function (woodman, ol, Gp, Utils, Markers, LayerSwit
     };
     return ReverseGeocode;
 }({}, ol, gp, Ol3Utils, Ol3ControlsUtilsMarkers, Ol3ControlsLayerSwitcher, CommonUtilsCheckRightManagement, CommonUtilsSelectorID, CommonControlsReverseGeocodingDOM);
+CommonControlsLayerImportDOM = function () {
+    var LayerImportDOM = {
+        _addUID: function (id) {
+            return id + '-' + this._uid;
+        },
+        _createMainContainerElement: function () {
+            var container = document.createElement('div');
+            container.id = this._addUID('GPimport');
+            container.className = 'GPwidget';
+            return container;
+        },
+        _createShowImportElement: function () {
+            var input = document.createElement('input');
+            input.id = this._addUID('GPshowImport');
+            input.type = 'checkbox';
+            return input;
+        },
+        _createShowImportPictoElement: function () {
+            var self = this;
+            var label = document.createElement('label');
+            label.id = this._addUID('GPshowImportPicto');
+            label.className = 'GPshowAdvancedToolPicto';
+            label.htmlFor = this._addUID('GPshowImport');
+            label.title = 'Ouvrir l\'import de couches';
+            if (label.addEventListener) {
+                label.addEventListener('click', function () {
+                    self._onShowImportClick();
+                });
+            } else if (label.attachEvent) {
+                label.attachEvent('onclick', function () {
+                    self._onShowImportClick();
+                });
+            }
+            var spanOpen = document.createElement('span');
+            spanOpen.id = this._addUID('GPshowImportOpen');
+            spanOpen.className = 'GPshowAdvancedToolOpen';
+            label.appendChild(spanOpen);
+            return label;
+        },
+        _createImportPanelElement: function () {
+            var div = document.createElement('div');
+            div.id = this._addUID('GPimportPanel');
+            div.className = 'GPpanel';
+            return div;
+        },
+        _createImportPanelHeaderElement: function () {
+            var container = document.createElement('div');
+            container.className = 'GPpanelHeader';
+            var panelTitle = this._createImportPanelTitleElement();
+            container.appendChild(panelTitle);
+            var closeDiv = this._createImportPanelCloseElement();
+            container.appendChild(closeDiv);
+            return container;
+        },
+        _createImportPanelTitleElement: function () {
+            var div = document.createElement('div');
+            div.className = 'GPpanelTitle';
+            div.innerHTML = 'Import de données';
+            return div;
+        },
+        _createImportPanelCloseElement: function () {
+            var self = this;
+            var divClose = document.createElement('div');
+            divClose.id = this._addUID('GPimportPanelClose');
+            divClose.className = 'GPpanelClose';
+            divClose.title = 'Fermer le panneau';
+            if (divClose.addEventListener) {
+                divClose.addEventListener('click', function () {
+                    document.getElementById(self._addUID('GPshowImportPicto')).click();
+                }, false);
+            } else if (divClose.attachEvent) {
+                divClose.attachEvent('onclick', function () {
+                    document.getElementById(self._addUID('GPshowImportPicto')).click();
+                });
+            }
+            return divClose;
+        },
+        _createImportPanelFormElement: function () {
+            var self = this;
+            var form = document.createElement('form');
+            form.id = this._addUID('GPimportForm');
+            form.className = 'map-tool-box';
+            if (form.addEventListener) {
+                form.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    self._onImportSubmit();
+                });
+            } else if (form.attachEvent) {
+                form.attachEvent('onsubmit', function (e) {
+                    e.preventDefault();
+                    self._onImportSubmit();
+                });
+            }
+            return form;
+        },
+        _createImportTypeLineElement: function (importTypes) {
+            var context = this;
+            var div = document.createElement('div');
+            div.id = this._addUID('GPimportTypeLine');
+            div.className = 'GPimportInputLine';
+            var label = document.createElement('label');
+            label.htmlFor = this._addUID('GPimportType');
+            label.className = 'GPimportLabel';
+            label.innerHTML = 'Type de donnée';
+            label.title = 'Type de donnée';
+            div.appendChild(label);
+            var select = document.createElement('select');
+            select.className = 'GPimportSelect';
+            if (select.addEventListener) {
+                select.addEventListener('change', function (e) {
+                    if (this.value === 'KML' || this.value === 'GPX') {
+                        document.getElementById(context._addUID('GPimportStaticParams')).className = 'GPimportVisibleParams';
+                        document.getElementById(context._addUID('GPimportServiceParams')).className = 'GPimportHiddenParams';
+                    } else if (this.value === 'WMS' || this.value === 'WMTS' || this.value === 'WFS') {
+                        document.getElementById(context._addUID('GPimportServiceParams')).className = 'GPimportVisibleParams';
+                        document.getElementById(context._addUID('GPimportStaticParams')).className = 'GPimportHiddenParams';
+                    }
+                    context._onImportTypeChange(e);
+                });
+            } else if (select.attachEvent) {
+                select.attachEvent('onchange', function () {
+                    if (this.value === 'KML' || this.value === 'GPX') {
+                        document.getElementById(context._addUID('GPimportStaticParams')).className = 'GPimportVisibleParams';
+                        document.getElementById(context._addUID('GPimportServiceParams')).className = 'GPimportHiddenParams';
+                    } else if (this.value === 'WMS' || this.value === 'WMTS' || this.value === 'WFS') {
+                        document.getElementById(context._addUID('GPimportServiceParams')).className = 'GPimportVisibleParams';
+                        document.getElementById(context._addUID('GPimportStaticParams')).className = 'GPimportHiddenParams';
+                    }
+                    context._onImportTypeChange();
+                });
+            }
+            select.id = this._addUID('GPimportType');
+            if (!importTypes || !Array.isArray(importTypes)) {
+                importTypes = [
+                    'KML',
+                    'GPX',
+                    'WMS',
+                    'WMTS',
+                    'WFS'
+                ];
+            }
+            var option;
+            for (var i = 0; i < importTypes.length; i++) {
+                option = document.createElement('option');
+                option.value = importTypes[i];
+                option.text = importTypes[i];
+                select.appendChild(option);
+            }
+            div.appendChild(select);
+            return div;
+        },
+        _createImportStaticParamsContainer: function (currentType) {
+            var div = document.createElement('div');
+            div.id = this._addUID('GPimportStaticParams');
+            if (currentType === 'KML' || currentType === 'GPX') {
+                div.className = 'GPimportVisibleParams';
+            } else {
+                div.className = 'GPimportHiddenParams';
+            }
+            return div;
+        },
+        _createStaticNameLabel: function () {
+            var div = document.createElement('div');
+            div.className = 'GPimportInputLine';
+            var label = document.createElement('label');
+            label.className = 'GPimportLabel';
+            label.htmlFor = this._addUID('GPimportName');
+            label.innerHTML = 'Nom';
+            label.title = 'Nom';
+            div.appendChild(label);
+            var input = document.createElement('input');
+            input.type = 'text';
+            input.id = this._addUID('GPimportName');
+            input.className = 'GPimportInput';
+            div.appendChild(input);
+            return div;
+        },
+        _createStaticModeChoiceDiv: function () {
+            var div = document.createElement('div');
+            div.id = this._addUID('GPimportChoice');
+            return div;
+        },
+        _createStaticLocalChoiceDiv: function () {
+            var context = this;
+            var div = document.createElement('div');
+            div.className = 'GPimportChoiceAlt';
+            var input = document.createElement('input');
+            input.type = 'radio';
+            if (input.addEventListener) {
+                input.addEventListener('change', function (e) {
+                    document.getElementById(context._addUID('GPimportValueLocal')).className = 'GPimportInputLine';
+                    document.getElementById(context._addUID('GPimportValueUrl')).className = 'GPimportValueHidden';
+                    context._onStaticImportTypeChange(e);
+                });
+            } else if (input.appendChild) {
+                input.appendChild('onchange', function () {
+                    document.getElementById(context._addUID('GPimportValueLocal')).className = 'GPimportInputLine';
+                    document.getElementById(context._addUID('GPimportValueUrl')).className = 'GPimportValueHidden';
+                    context._onStaticImportTypeChange();
+                });
+            }
+            input.name = 'GPimportChoiceMode';
+            input.value = 'local';
+            input.checked = true;
+            input.id = this._addUID('GPimportChoiceAltLocal');
+            div.appendChild(input);
+            var label = document.createElement('label');
+            label.className = 'GPimportChoiceAltTxt';
+            label.htmlFor = this._addUID('GPimportChoiceAltLocal');
+            label.innerHTML = 'par fichier local';
+            label.title = 'par fichier local';
+            div.appendChild(label);
+            return div;
+        },
+        _createStaticUrlChoiceDiv: function () {
+            var context = this;
+            var div = document.createElement('div');
+            div.className = 'GPimportChoiceAlt';
+            var input = document.createElement('input');
+            input.type = 'radio';
+            if (input.addEventListener) {
+                input.addEventListener('change', function (e) {
+                    document.getElementById(context._addUID('GPimportValueUrl')).className = 'GPimportInputLine';
+                    document.getElementById(context._addUID('GPimportValueLocal')).className = 'GPimportValueHidden';
+                    context._onStaticImportTypeChange(e);
+                });
+            } else if (input.appendChild) {
+                input.appendChild('onchange', function () {
+                    document.getElementById(context._addUID('GPimportValueUrl')).className = 'GPimportInputLine';
+                    document.getElementById(context._addUID('GPimportValueLocal')).className = 'GPimportValueHidden';
+                    context._onStaticImportTypeChange();
+                });
+            }
+            input.id = this._addUID('GPimportChoiceAltUrl');
+            input.name = 'GPimportChoiceMode';
+            input.value = 'url';
+            input.checked = false;
+            div.appendChild(input);
+            var label = document.createElement('label');
+            label.className = 'GPimportChoiceAltTxt';
+            label.htmlFor = this._addUID('GPimportChoiceAltUrl');
+            label.innerHTML = 'par URL';
+            label.title = 'par URL';
+            div.appendChild(label);
+            return div;
+        },
+        _createStaticLocalInputDiv: function () {
+            var div = document.createElement('div');
+            div.id = this._addUID('GPimportValueLocal');
+            div.className = 'GPimportInputLine';
+            return div;
+        },
+        _createStaticLocalInputLabel: function () {
+            var label = document.createElement('label');
+            label.className = 'GPimportLabel';
+            label.htmlFor = this._addUID('GPimportFile');
+            label.innerHTML = 'Fichier local';
+            label.title = 'Fichier local';
+            return label;
+        },
+        _createStaticLocalInput: function () {
+            var input = document.createElement('input');
+            input.type = 'file';
+            input.id = this._addUID('GPimportFile');
+            input.className = 'GPimportInputFile';
+            return input;
+        },
+        _createStaticUrlInputDiv: function () {
+            var div = document.createElement('div');
+            div.id = this._addUID('GPimportValueUrl');
+            div.className = 'GPimportValueHidden';
+            return div;
+        },
+        _createStaticUrlInputLabel: function () {
+            var label = document.createElement('label');
+            label.className = 'GPimportLabel';
+            label.htmlFor = this._addUID('GPimportUrl');
+            label.innerHTML = 'URL';
+            label.title = 'URL';
+            return label;
+        },
+        _createStaticUrlInput: function () {
+            var input = document.createElement('input');
+            input.type = 'text';
+            input.id = this._addUID('GPimportUrl');
+            input.className = 'GPimportInput';
+            return input;
+        },
+        _createServiceParamsContainer: function (currentType) {
+            var div = document.createElement('div');
+            div.id = this._addUID('GPimportServiceParams');
+            if (currentType === 'WMS' || currentType === 'WMTS' || currentType === 'WFS') {
+                div.className = 'GPimportVisibleParams';
+            } else {
+                div.className = 'GPimportHiddenParams';
+            }
+            return div;
+        },
+        _createServiceUrlDiv: function () {
+            var div = document.createElement('div');
+            div.className = 'GPimportInputLine';
+            return div;
+        },
+        _createServiceUrlInputLabel: function () {
+            var label = document.createElement('label');
+            label.className = 'GPimportLabel';
+            label.htmlFor = this._addUID('GPimportServiceUrl');
+            label.innerHTML = 'URL du service';
+            label.title = 'URL du service';
+            return label;
+        },
+        _createServiceUrlInput: function () {
+            var input = document.createElement('input');
+            input.type = 'text';
+            input.id = this._addUID('GPimportServiceUrl');
+            input.name = 'GPimportInput';
+            return input;
+        },
+        _createImportSubmitFormElement: function () {
+            var input = document.createElement('input');
+            input.id = this._addUID('GPimportSubmit');
+            input.className = 'GPinputSubmit tool-form-submit';
+            input.type = 'submit';
+            input.value = 'Importer';
+            return input;
+        },
+        _createImportGetCapPanelElement: function () {
+            var div = document.createElement('div');
+            div.id = this._addUID('GPimportGetCapPanel');
+            div.className = 'GPpanel';
+            return div;
+        },
+        _createImportGetCapPanelHeaderElement: function () {
+            var context = this;
+            var container = document.createElement('div');
+            container.className = 'GPpanelHeader';
+            var panelTitle = document.createElement('div');
+            panelTitle.className = 'GPpanelTitle';
+            panelTitle.innerHTML = 'Couches accessibles';
+            panelTitle.title = 'Couches accessibles';
+            container.appendChild(panelTitle);
+            var closeDiv = document.createElement('div');
+            if (closeDiv.addEventListener) {
+                closeDiv.addEventListener('click', function () {
+                    document.getElementById(context._addUID('GPimportGetCapPanel')).style.display = 'none';
+                    document.getElementById(context._addUID('GPimportPanel')).style.display = '';
+                    context._onGetCapPanelClose();
+                });
+            } else if (closeDiv.attachEvent) {
+                closeDiv.attachEvent('click', function () {
+                    document.getElementById(context._addUID('GPimportGetCapPanel')).style.display = 'none';
+                    document.getElementById(context._addUID('GPimportPanel')).style.display = '';
+                    context._onGetCapPanelClose();
+                });
+            }
+            closeDiv.className = 'GPpanelClose';
+            closeDiv.title = 'Fermer le panneau';
+            closeDiv.id = this._addUID('GPimportGetCapPanelClose');
+            container.appendChild(closeDiv);
+            return container;
+        },
+        _createImportGetCapResultsListElement: function () {
+            var container = document.createElement('div');
+            container.id = this._addUID('GPimportGetCapResults');
+            return container;
+        },
+        _createImportGetCapResultElement: function (layerDescription, id) {
+            var div = document.createElement('div');
+            div.className = 'GPimportGetCapProposal';
+            div.innerHTML = layerDescription;
+            div.title = layerDescription;
+            var context = this;
+            if (div.addEventListener) {
+                div.addEventListener('click', function (e) {
+                    context._onGetCapResponseLayerClick(e);
+                });
+            } else if (div.attachEvent) {
+                div.attachEvent('onclick', function () {
+                    context._onGetCapResponseLayerClick();
+                });
+            }
+            div.id = 'GPimportGetCapProposal_' + id;
+            return div;
+        }
+    };
+    return LayerImportDOM;
+}();
+Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, SelectorID) {
+    function LayerImport(options) {
+        options = options || {};
+        if (!(this instanceof LayerImport)) {
+            throw new TypeError('ERROR CLASS_CONSTRUCTOR');
+        }
+        this._initialize(options);
+        var container = this._initContainer(options);
+        ol.control.Control.call(this, {
+            element: container,
+            target: options.target,
+            render: options.render
+        });
+    }
+    ol.inherits(LayerImport, ol.control.Control);
+    LayerImport.prototype = Object.create(ol.control.Control.prototype, {});
+    Utils.assign(LayerImport.prototype, LayerImportDOM);
+    LayerImport.prototype.constructor = LayerImport;
+    LayerImport.prototype.getCollapsed = function () {
+        return this.collapsed;
+    };
+    LayerImport.prototype.setCollapsed = function (collapsed) {
+        if (collapsed === undefined) {
+            console.log('[ERROR] LayerImport:setCollapsed - missing collapsed parameter');
+            return;
+        }
+        if (collapsed && this.collapsed || !collapsed && !this.collapsed) {
+            return;
+        }
+        if (collapsed) {
+            document.getElementById('GPimportPanelClose-' + this._uid).click();
+        } else {
+            document.getElementById('GPshowImport-' + this._uid).click();
+        }
+        this.collapsed = collapsed;
+    };
+    LayerImport.prototype._initialize = function (options) {
+        this._checkInputOptions(options);
+        this.options = {
+            collapsed: true,
+            layerTypes: [
+                'KML',
+                'GPX',
+                'WMS',
+                'WMTS'
+            ],
+            webServicesOptions: {}
+        };
+        Utils.assign(this.options, options);
+        this.collapsed = this.options.collapsed;
+        this._uid = SelectorID.generate();
+        this._currentImportType = 'KML';
+        this._isCurrentImportTypeStatic = true;
+        this._currentStaticImportType = 'local';
+        this._showImportInput = null;
+        this._importPanel = null;
+        this._formContainer = null;
+        this._staticLocalImportInput = null;
+        this._staticUrlImportInput = null;
+        this._serviceUrlImportInput = null;
+        this._getCapPanel = null;
+        this._getCapResultsListContainer = null;
+        this._getCapRequestUrl = null;
+        this._getCapResponseWMS = null;
+        this._getCapResponseWMSLayers = [];
+        this._getCapResponseWMTS = null;
+        this._getCapResponseWMTSLayers = [];
+    };
+    LayerImport.prototype._checkInputOptions = function (options) {
+        if (options.layerTypes) {
+            var layerTypes = options.layerTypes;
+            if (!Array.isArray(layerTypes)) {
+                console.log('[ol.control.LayerImport] \'options.layerTypes\' parameter should be an array');
+                layerTypes = null;
+            }
+            var typesList = [
+                'KML',
+                'GPX',
+                'WMS',
+                'WMTS',
+                'WFS'
+            ];
+            var wrongTypesIndexes = [];
+            for (var i = 0; i < layerTypes.length; i++) {
+                if (typesList.indexOf(layerTypes[i]) === -1) {
+                    wrongTypesIndexes.push(i);
+                    console.log('[ol.control.LayerImport] options.layerTypes : ' + layerTypes[i] + ' is not a supported type');
+                }
+            }
+            if (wrongTypesIndexes.length !== 0) {
+                for (var j = wrongTypesIndexes.length - 1; j >= 0; j--) {
+                    layerTypes.splice(wrongTypesIndexes[j], 1);
+                }
+            }
+        }
+    };
+    LayerImport.prototype._initContainer = function () {
+        var container = this._createMainContainerElement();
+        var inputShow = this._showImportInput = this._createShowImportElement();
+        container.appendChild(inputShow);
+        if (!this.collapsed) {
+            inputShow.checked = true;
+        }
+        var picto = this._createShowImportPictoElement();
+        container.appendChild(picto);
+        var importPanel = this._importPanel = this._createImportPanelElement();
+        var panelHeader = this._createImportPanelHeaderElement();
+        importPanel.appendChild(panelHeader);
+        var importForm = this._formContainer = this._initInputFormElement();
+        importPanel.appendChild(importForm);
+        container.appendChild(importPanel);
+        var getCapPanel = this._getCapPanel = this._createImportGetCapPanelElement();
+        getCapPanel.appendChild(this._createImportGetCapPanelHeaderElement());
+        var importGetCapResultsList = this._getCapResultsListContainer = this._createImportGetCapResultsListElement();
+        getCapPanel.appendChild(importGetCapResultsList);
+        container.appendChild(getCapPanel);
+        return container;
+    };
+    LayerImport.prototype._initInputFormElement = function () {
+        var importForm = this._createImportPanelFormElement();
+        var importTypeChoiceDiv = this._createImportTypeLineElement(this.options.layerTypes);
+        importForm.appendChild(importTypeChoiceDiv);
+        var importStaticParamsContainer = this._createImportStaticParamsContainer(this.options.layerTypes[0]);
+        var staticNameLabel = this._createStaticNameLabel();
+        importStaticParamsContainer.appendChild(staticNameLabel);
+        var staticImportChoice = this._createStaticModeChoiceDiv();
+        var staticLocalImportChoice = this._createStaticLocalChoiceDiv();
+        staticImportChoice.appendChild(staticLocalImportChoice);
+        var staticUrlImportChoice = this._createStaticUrlChoiceDiv();
+        staticImportChoice.appendChild(staticUrlImportChoice);
+        importStaticParamsContainer.appendChild(staticImportChoice);
+        var staticLocalInputDiv = this._createStaticLocalInputDiv();
+        staticLocalInputDiv.appendChild(this._createStaticLocalInputLabel());
+        this._staticLocalImportInput = this._createStaticLocalInput();
+        staticLocalInputDiv.appendChild(this._staticLocalImportInput);
+        importStaticParamsContainer.appendChild(staticLocalInputDiv);
+        var staticUrlInputDiv = this._createStaticUrlInputDiv();
+        staticUrlInputDiv.appendChild(this._createStaticUrlInputLabel());
+        this._staticUrlImportInput = this._createStaticUrlInput();
+        staticUrlInputDiv.appendChild(this._staticUrlImportInput);
+        importStaticParamsContainer.appendChild(staticUrlInputDiv);
+        importForm.appendChild(importStaticParamsContainer);
+        var importServiceParamsContainer = this._createServiceParamsContainer(this.options.layerTypes[0]);
+        var importServiceUrlDiv = this._createServiceUrlDiv();
+        importServiceUrlDiv.appendChild(this._createServiceUrlInputLabel());
+        this._serviceUrlImportInput = this._createServiceUrlInput();
+        importServiceUrlDiv.appendChild(this._serviceUrlImportInput);
+        importServiceParamsContainer.appendChild(importServiceUrlDiv);
+        importForm.appendChild(importServiceParamsContainer);
+        var submit = this._createImportSubmitFormElement();
+        importForm.appendChild(submit);
+        return importForm;
+    };
+    LayerImport.prototype._onShowImportClick = function () {
+        this.collapsed = this._showImportInput.checked;
+        this.dispatchEvent('change:collapsed');
+    };
+    LayerImport.prototype._onImportTypeChange = function (e) {
+        this._currentImportType = e.target.value;
+        if (this._currentImportType === 'KML' || this._currentImportType === 'GPX') {
+            this._isCurrentImportTypeStatic = true;
+        } else if (this._currentImportType === 'WMS' || this._currentImportType === 'WMTS' || this._currentImportType === 'WFS') {
+            this._isCurrentImportTypeStatic = false;
+        }
+    };
+    LayerImport.prototype._onStaticImportTypeChange = function (e) {
+        this._currentStaticImportType = e.target.value;
+    };
+    LayerImport.prototype._onGetCapPanelClose = function () {
+        this._clearGetCapParams();
+        this._emptyGetCapResultsList();
+    };
+    LayerImport.prototype._onImportSubmit = function () {
+        if (this._isCurrentImportTypeStatic) {
+            this._importStaticLayer();
+        } else {
+            this._importServiceLayers();
+        }
+    };
+    LayerImport.prototype._importStaticLayer = function () {
+        var layerName;
+        var staticImportNameInput = document.getElementById(this._addUID('GPimportName'));
+        if (staticImportNameInput) {
+            layerName = staticImportNameInput.value;
+        }
+        if (this._currentStaticImportType === 'local') {
+            this._importStaticLayerFromLocalFile(layerName);
+        } else if (this._currentStaticImportType === 'url') {
+            this._importStaticLayerFromUrl(layerName);
+        }
+    };
+    LayerImport.prototype._importStaticLayerFromUrl = function (layerName) {
+        layerName = layerName || '';
+        var url = this._staticUrlImportInput.value;
+        var format;
+        if (this._currentImportType === 'KML') {
+            format = new ol.format.KML();
+        } else if (this._currentImportType === 'GPX') {
+            format = new ol.format.GPX();
+        }
+        var vectorSource = new ol.source.Vector({
+            url: url,
+            format: format
+        });
+        if (layerName) {
+            vectorSource._title = vectorSource._description = layerName;
+        } else {
+            vectorSource._title = vectorSource._description = 'Import ' + this._currentImportType;
+        }
+        var vectorLayer = new ol.layer.Vector({ source: vectorSource });
+        var map = this.getMap();
+        if (!map) {
+            return;
+        }
+        vectorLayer.gpResultLayerId = 'layerimport:' + this._currentImportType;
+        map.addLayer(vectorLayer);
+        if (map.getView() && map.getSize() && vectorSource.getExtent) {
+            var sourceExtent = vectorSource.getExtent();
+            if (sourceExtent && sourceExtent[0] !== Infinity) {
+                map.getView().fit(vectorSource.getExtent(), map.getSize());
+            }
+        }
+    };
+    LayerImport.prototype._importStaticLayerFromLocalFile = function (layerName) {
+        var file = this._staticLocalImportInput.files[0];
+        if (!file) {
+            console.log('missing file');
+            return;
+        }
+        var format;
+        var fReader = new FileReader();
+        var context = this;
+        fReader.onerror = function (e) {
+            console.log('error fileReader : ', e);
+        };
+        fReader.onprogress = function () {
+            console.log('onprogress');
+        };
+        fReader.onloadstart = function () {
+            console.log('onloadstart');
+        };
+        fReader.onabort = function () {
+            console.log('onabort');
+        };
+        fReader.onloadend = function (e) {
+            console.log('onloadend : ', e);
+        };
+        fReader.onload = function (e) {
+            var fileContent = e.target.result;
+            var map = context.getMap();
+            if (!map || !fileContent) {
+                return;
+            }
+            if (context._currentImportType === 'KML') {
+                format = new ol.format.KML();
+            } else if (context._currentImportType === 'GPX') {
+                format = new ol.format.GPX();
+            }
+            var fileProj = format.readProjection(fileContent);
+            var mapProj = map.getView().getProjection().getCode();
+            var features = format.readFeatures(fileContent, {
+                dataProjection: fileProj,
+                featureProjection: mapProj
+            });
+            var vectorSource = new ol.source.Vector({ features: features });
+            if (layerName) {
+                vectorSource._title = vectorSource._description = layerName;
+            } else {
+                if (format.readName && format.readName(fileContent)) {
+                    vectorSource._title = vectorSource._description = format.readName(fileContent);
+                } else {
+                    vectorSource._title = vectorSource._description = 'Import ' + context._currentImportType;
+                }
+            }
+            var vectorLayer = new ol.layer.Vector({ source: vectorSource });
+            vectorLayer.gpResultLayerId = 'layerimport:' + context._currentImportType;
+            map.addLayer(vectorLayer);
+            if (map.getView() && map.getSize() && vectorSource.getExtent) {
+                var sourceExtent = vectorSource.getExtent();
+                if (sourceExtent && sourceExtent[0] !== Infinity) {
+                    map.getView().fit(vectorSource.getExtent(), map.getSize());
+                }
+            }
+        };
+        fReader.readAsText(file);
+    };
+    LayerImport.prototype._importServiceLayers = function () {
+        if (this._currentImportType === 'WFS') {
+            console.log('[ol.control.LayerImport] WFS layer import is not implemented yet');
+            return;
+        }
+        var url = this._getCapRequestUrl = this._serviceUrlImportInput.value;
+        if (!url) {
+            console.log('[ol.control.LayerImport] url parameter is mandatory');
+            return;
+        }
+        var questionMarkIndex = url.indexOf('?');
+        if (questionMarkIndex < 0) {
+            url += '?SERVICE=' + this._currentImportType + '&REQUEST=GetCapabilities';
+        } else if (questionMarkIndex === url.length - 1) {
+            url += 'SERVICE=' + this._currentImportType + '&REQUEST=GetCapabilities';
+        }
+        if (!this.options.webServicesOptions || !this.options.webServicesOptions.proxyUrl && !this.options.webServicesOptions.noProxyDomains) {
+            console.log('[ol.control.LayerImport] options.webServicesOptions.proxyUrl parameter is mandatory to request web service layers (getcapabilities request)');
+            return;
+        }
+        var proxyUrl = this.options.webServicesOptions.proxyUrl;
+        var noProxyDomains = this.options.webServicesOptions.noProxyDomains;
+        var bfound = false;
+        if (noProxyDomains && Array.isArray(noProxyDomains) && noProxyDomains.length > 0) {
+            for (var i in noProxyDomains) {
+                if (url.indexOf(noProxyDomains[i]) !== -1) {
+                    bfound = true;
+                }
+            }
+        }
+        if (bfound === false) {
+            url = proxyUrl + encodeURI(url);
+        }
+        var context = this;
+        Gp.Protocols.XHR.call({
+            url: url,
+            method: 'GET',
+            onResponse: function (response) {
+                context._displayGetCapResponseLayers.call(context, response);
+            },
+            onFailure: function (error) {
+                console.log('[ol.control.LayerImport] getCapabilities request failed : ', error);
+            }
+        });
+    };
+    LayerImport.prototype._displayGetCapResponseLayers = function (xmlResponse) {
+        var parser;
+        var layers;
+        var layerDescription;
+        if (this._currentImportType === 'WMS') {
+            parser = new ol.format.WMSCapabilities();
+            if (!parser) {
+                return;
+            }
+            var getCapResponseWMS = this._getCapResponseWMS = parser.read(xmlResponse);
+            if (getCapResponseWMS && getCapResponseWMS.Capability && getCapResponseWMS.Capability.Layer && getCapResponseWMS.Capability.Layer.Layer) {
+                layers = getCapResponseWMS.Capability.Layer.Layer;
+                if (Array.isArray(layers)) {
+                    this._getCapResponseWMSLayers = layers;
+                    for (var i = 0; i < layers.length; i++) {
+                        layerDescription = layers[i].Title;
+                        if (this._getCapResultsListContainer) {
+                            this._getCapResultsListContainer.appendChild(this._createImportGetCapResultElement(layerDescription, i));
+                        }
+                    }
+                    this._importPanel.style.display = 'none';
+                    this._getCapPanel.style.display = 'block';
+                }
+            }
+        } else if (this._currentImportType === 'WMTS') {
+            parser = new ol.format.WMTSCapabilities();
+            if (!parser) {
+                return;
+            }
+            var getCapResponseWMTS = this._getCapResponseWMTS = parser.read(xmlResponse);
+            console.log(getCapResponseWMTS);
+            if (getCapResponseWMTS && getCapResponseWMTS.Contents && getCapResponseWMTS.Contents.Layer) {
+                layers = getCapResponseWMTS.Contents.Layer;
+                if (Array.isArray(layers)) {
+                    this._getCapResponseWMTSLayers = layers;
+                    for (var j = 0; j < layers.length; j++) {
+                        layerDescription = layers[j].Title;
+                        if (this._getCapResultsListContainer) {
+                            this._getCapResultsListContainer.appendChild(this._createImportGetCapResultElement(layerDescription, j));
+                        }
+                    }
+                    this._importPanel.style.display = 'none';
+                    this._getCapPanel.style.display = 'block';
+                }
+            }
+        }
+    };
+    LayerImport.prototype._onGetCapResponseLayerClick = function (e) {
+        if (e.target && e.target.id) {
+            var proposalId = parseInt(e.target.id.substr(23), 10);
+            if (proposalId == null) {
+                return;
+            }
+            var layerInfo;
+            if (this._currentImportType === 'WMS') {
+                layerInfo = this._getCapResponseWMSLayers[proposalId];
+                this._addGetCapWMSLayer(layerInfo);
+            } else if (this._currentImportType === 'WMTS') {
+                layerInfo = this._getCapResponseWMTSLayers[proposalId];
+                this._addGetCapWMTSLayer(layerInfo);
+            }
+        }
+    };
+    LayerImport.prototype._addGetCapWMSLayer = function (layerInfo) {
+        var map = this.getMap();
+        if (!map) {
+            return;
+        }
+        var wmsSource = new ol.source.TileWMS({
+            url: this._getCapRequestUrl,
+            params: {
+                LAYERS: layerInfo.Name,
+                SERVICE: 'WMS'
+            }
+        });
+        if (layerInfo.Title) {
+            wmsSource._title = layerInfo.Title;
+            wmsSource._description = layerInfo.Abstract ? layerInfo.Abstract : layerInfo.Title;
+        } else {
+            wmsSource._title = layerInfo.Name;
+            wmsSource._description = layerInfo.Abstract ? layerInfo.Abstract : layerInfo.Name;
+        }
+        var wmsLayer = new ol.layer.Tile({ source: wmsSource });
+        wmsLayer.gpResultLayerId = 'layerimport:WMS';
+        map.addLayer(wmsLayer);
+    };
+    LayerImport.prototype._addGetCapWMTSLayer = function (layerInfo) {
+        if (!layerInfo || !layerInfo.Identifier) {
+            console.log('[ol.control.LayerImport] layer information not found in getCapabilities response for layer ');
+            return;
+        }
+        var map = this.getMap();
+        if (!map) {
+            return;
+        }
+        var wmtsSourceOptions = {};
+        wmtsSourceOptions.layer = layerInfo.Identifier;
+        wmtsSourceOptions.version = this._getCapResponseWMTS.version;
+        var questionMarkIndex = this._getCapRequestUrl.indexOf('?');
+        if (questionMarkIndex !== -1) {
+            wmtsSourceOptions.url = this._getCapRequestUrl.substring(0, questionMarkIndex);
+        } else {
+            wmtsSourceOptions.url = this._getCapRequestUrl;
+        }
+        var tmsOptions = this._getTMSParams(layerInfo);
+        wmtsSourceOptions.matrixSet = tmsOptions.tms;
+        wmtsSourceOptions.projection = tmsOptions.projCode;
+        wmtsSourceOptions.tileGrid = new ol.tilegrid.WMTS({
+            resolutions: tmsOptions.resolutions,
+            matrixIds: tmsOptions.matrixIds,
+            origin: tmsOptions.origin
+        });
+        var defaultStyle;
+        if (layerInfo.Style && Array.isArray(layerInfo.Style)) {
+            var style;
+            for (var s = 0; s < layerInfo.Style.length; s++) {
+                style = layerInfo.Style[s];
+                defaultStyle = style.Identifier;
+                if (style.isDefault) {
+                    break;
+                }
+            }
+        }
+        if (defaultStyle == null) {
+            console.log('[ol.control.LayerImport] style information not found in getCapabilities response for layer ' + layerInfo.Identifier);
+        }
+        wmtsSourceOptions.style = defaultStyle;
+        var format;
+        if (layerInfo.Format && Array.isArray(layerInfo.Format)) {
+            format = layerInfo.Format[0];
+        }
+        if (format == null) {
+            console.log('[ol.control.LayerImport] format information not found in getCapabilities response for layer ' + layerInfo.Identifier);
+        }
+        wmtsSourceOptions.format = format;
+        var wmtsSource = new ol.source.WMTS(wmtsSourceOptions);
+        if (layerInfo.Title) {
+            wmtsSource._title = layerInfo.Title;
+            wmtsSource._description = layerInfo.Abstract ? layerInfo.Abstract : layerInfo.Title;
+        } else {
+            wmtsSource._title = layerInfo.Identifier;
+            wmtsSource._description = layerInfo.Abstract ? layerInfo.Abstract : layerInfo.Identifier;
+        }
+        var wmtsLayer = new ol.layer.Tile({ source: wmtsSource });
+        wmtsLayer.gpResultLayerId = 'layerimport:WMTS';
+        map.addLayer(wmtsLayer);
+    };
+    LayerImport.prototype._getTMSParams = function (layerInfo) {
+        var tmsOptions = {};
+        var matrixIds = [];
+        var resolutions = [];
+        var origin = [];
+        var tms;
+        var projCode;
+        var projection;
+        var map = this.getMap();
+        if (!map) {
+            return;
+        }
+        if (layerInfo.TileMatrixSetLink && Array.isArray(layerInfo.TileMatrixSetLink)) {
+            tms = layerInfo.TileMatrixSetLink[0].TileMatrixSet;
+            if (this._getCapResponseWMTS.Contents && Array.isArray(this._getCapResponseWMTS.Contents.TileMatrixSet)) {
+                var tileMatrixSets = this._getCapResponseWMTS.Contents.TileMatrixSet;
+                for (var i = 0; i < tileMatrixSets.length; i++) {
+                    if (tileMatrixSets[i].Identifier === tms && tileMatrixSets[i].TileMatrix) {
+                        var tileMatrixSet = tileMatrixSets[i];
+                        var tilematrix;
+                        var id;
+                        var scaledenominator;
+                        var resolution;
+                        var units;
+                        if (tileMatrixSet.SupportedCRS) {
+                            projCode = tileMatrixSet.SupportedCRS;
+                            projection = ol.proj.get(projCode);
+                        }
+                        if (projection && projection.getUnits) {
+                            units = projection.getUnits();
+                        }
+                        if (Array.isArray(tileMatrixSet.TileMatrix)) {
+                            for (var j = 0; j < tileMatrixSet.TileMatrix.length; j++) {
+                                tilematrix = tileMatrixSet.TileMatrix[j];
+                                if (tilematrix.Identifier != null) {
+                                    id = parseInt(tilematrix.Identifier, 10);
+                                    matrixIds.push(id);
+                                }
+                                scaledenominator = tilematrix.ScaleDenominator;
+                                if (units === 'degrees') {
+                                    resolution = scaledenominator * 0.00028 * 180 / (Math.PI * 6378137);
+                                } else {
+                                    resolution = scaledenominator * 0.00028;
+                                }
+                                resolutions.push(resolution);
+                                origin = tilematrix.TopLeftCorner;
+                            }
+                        }
+                        if (Array.isArray(resolutions) && resolutions.sort !== undefined) {
+                            resolutions.sort(function (x, y) {
+                                return y - x;
+                            });
+                        }
+                        console.log(resolutions);
+                        if (Array.isArray(matrixIds) && matrixIds.sort !== undefined) {
+                            matrixIds.sort(function (x, y) {
+                                return x - y;
+                            });
+                        }
+                        console.log(matrixIds);
+                    }
+                }
+            } else {
+                console.log('[ol.control.LayerImport] TileMatrixSet data not found in getCapabilities response for layer ' + layerInfo.Identifier);
+            }
+        } else {
+            return;
+        }
+        tmsOptions.tms = tms;
+        tmsOptions.projCode = projCode;
+        tmsOptions.matrixIds = matrixIds;
+        tmsOptions.resolutions = resolutions;
+        tmsOptions.origin = origin;
+        return tmsOptions;
+    };
+    LayerImport.prototype._clearGetCapParams = function () {
+        this._getCapRequestUrl = null;
+        this._getCapResponseWMS = null;
+        this._getCapResponseWMTS = null;
+        this._getCapResponseWMSLayers = null;
+        this._getCapResponseWMTSLayers = null;
+    };
+    LayerImport.prototype._emptyGetCapResultsList = function () {
+        if (this._getCapResultsListContainer) {
+            while (this._getCapResultsListContainer.firstChild) {
+                this._getCapResultsListContainer.removeChild(this._getCapResultsListContainer.firstChild);
+            }
+        }
+    };
+    return LayerImport;
+}(ol, gp, {}, Ol3Utils, CommonControlsLayerImportDOM, CommonUtilsSelectorID);
 Ol3ControlsGeoportalAttribution = function (ol, LayerUtils) {
     function GeoportalAttribution(options) {
         if (!(this instanceof GeoportalAttribution)) {
@@ -23136,9 +24098,9 @@ Ol3ControlsGeoportalAttribution = function (ol, LayerUtils) {
     };
     return GeoportalAttribution;
 }(ol, CommonUtilsLayerUtils);
-Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, GeoportalAttribution) {
+Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution) {
     Gp.ol3extVersion = '0.10.1';
-    Gp.ol3extDate = '2016-06-13';
+    Gp.ol3extDate = '2016-06-15';
     Gp.LayerUtils = LayerUtils;
     CRS.runDefault();
     ol.source.GeoportalWMTS = SourceWMTS;
@@ -23153,8 +24115,9 @@ Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, CRS, SourceWMTS, SourceWMS, Layer
     ol.control.GeoportalMousePosition = MousePosition;
     ol.control.Drawing = Drawing;
     ol.control.ReverseGeocode = ReverseGeocode;
+    ol.control.LayerImport = LayerImport;
     return Gp;
-}(ol, gp, CommonUtilsLayerUtils, Ol3CRSCRS, Ol3LayersSourceWMTS, Ol3LayersSourceWMS, Ol3LayersLayerWMTS, Ol3LayersLayerWMS, Ol3ControlsLayerSwitcher, Ol3ControlsSearchEngine, Ol3ControlsMousePosition, Ol3ControlsDrawing, Ol3ControlsRoute, Ol3ControlsIsocurve, Ol3ControlsReverseGeocode, Ol3ControlsGeoportalAttribution);
+}(ol, gp, CommonUtilsLayerUtils, Ol3CRSCRS, Ol3LayersSourceWMTS, Ol3LayersSourceWMS, Ol3LayersLayerWMTS, Ol3LayersLayerWMS, Ol3ControlsLayerSwitcher, Ol3ControlsSearchEngine, Ol3ControlsMousePosition, Ol3ControlsDrawing, Ol3ControlsRoute, Ol3ControlsIsocurve, Ol3ControlsReverseGeocode, Ol3ControlsLayerImport, Ol3ControlsGeoportalAttribution);
 window.proj4 = proj4;
 
 return Gp;

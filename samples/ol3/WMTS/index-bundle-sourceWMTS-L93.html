@@ -40,6 +40,7 @@
 
             <!-- Mettre le code source de l'exemple -->
             <script>
+                var map;
                 window.onload = function () {
                     document.getElementById('map').style.backgroundImage = 'none';
 
@@ -49,12 +50,18 @@
                         })
                     });
 
-                    var map = new ol.Map({
+                    map = new ol.Map({
                         layers: [gpLayer],
                         target: 'map',
                         view: new ol.View({
+                            // EPSG:2154 (Lambert 93)
                             projection : "EPSG:2154",
                             center: [600000, 6750000],
+                            // // EPSG:3857 (Pseudo Mercator)
+                            // center: [288074.8449901076, 6247982.515792289],
+                            // // EPSG:4326 (geographical WGS84)
+                            // center: [-0, 48],
+                            // projection : "EPSG:4326",
                             zoom: 6
                         })
                     });
