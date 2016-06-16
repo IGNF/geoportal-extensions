@@ -161,7 +161,7 @@ var utm20 = new L.Proj.CRS('EPSG:4559',
 
 ```
 
-NB : Le site [spatialreference.org](http://spatialreference.org/) recense un grand nombre de registres de systèmes de coordonnées avec leurs définitions.
+NB : Le site [epsg.io](http://epsg.io/) recense un grand nombre de registres de systèmes de coordonnées avec leurs définitions.
 
 
 L'extension Géoportail pour Leaflet définit par défaut la projection légale Lambert 93 (EPSG:2154) qu'elle expose sous la variable globale suivante.

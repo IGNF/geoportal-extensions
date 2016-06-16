@@ -179,7 +179,7 @@ L'extension Géoportail pour OpenLayers 3 définit par défaut la projection lé
 
 NB :
 
-* Le site [spatialreference.org](http://spatialreference.org/) recense un grand nombre de registres de systèmes de coordonnées avec leurs définitions.
+* Le site [epsg.io](http://epsg.io/) recense un grand nombre de registres de systèmes de coordonnées avec leurs définitions.
 
 * Les définitions des systèmes de coordonnées du registre IGNF peuvent être trouvées [ici](https://github.com/OSGeo/proj.4/blob/master/nad/IGNF).
 
