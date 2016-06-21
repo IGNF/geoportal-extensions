@@ -63,54 +63,9 @@ define([
             throw new Error("ERROR WRONG_TYPE : options should be an object");
         }
 
-        // {Object} control layers list. Each key is a layer id, and its value is an object of layers options (layer, id, opacity, visibility, title, description...)
-        this._layers = {};
-        // [Array] array of ordered control layers
-        this._layersOrder = [];
-        // {Number} layers max z index, to order layers using their z index
-        this._lastZIndex = 0;
-        // {Number} layers max id, incremented when a new layer is added
-        this._layerId = 0;
-        /** {Boolean} true if widget is collapsed, false otherwise */
-        this.collapsed = (options.collapsed !== undefined) ? options.collapsed : true;
+        this._initialize(options, layers);
 
         var container = this._initContainer(options);
-
-        // add options layers to layerlist.
-        // (seulement les couches configurées dans les options du layerSwitcher par l'utilisateur),
-        // les autres couches de la carte seront ajoutées dans la méthode setMap
-        for ( var i = 0; i < layers.length; i++ ) {
-            // recup la layer, son id,
-            var layer = layers[i].layer;
-            if ( layer ) {
-                var id;
-                // si elles ont déjà un identifiant (gpLayerId), on le récupère, sinon on en crée un nouveau, en incrémentant this_layerId.
-                if ( !layer.hasOwnProperty("gpLayerId") ) {
-                    id = this._layerId;
-                    layer.gpLayerId = id;
-                    this._layerId ++;
-                } else {
-                    id = layer.gpLayerId;
-                }
-
-                // et les infos de la conf si elles existent (title, description, legends, quicklook, metadata)
-                var conf = layers[i].config || {};
-                var opacity = layer.getOpacity();
-                var visibility = layer.getVisible();
-                var layerOptions = {
-                    layer : layer, // la couche ol.layer concernée
-                    id : id,
-                    opacity : opacity != null ? opacity : 1,
-                    visibility : visibility != null ? visibility : true,
-                    title : conf.title != null ? conf.title : id,
-                    description : conf.description || null,
-                    legends : conf.legends || [],
-                    metadata : conf.metadata || [],
-                    quicklookUrl : conf.quicklookUrl || null
-                };
-                this._layers[id] = layerOptions;
-            }
-        }
 
         // call ol.control.Control constructor
         ol.control.Control.call(this,
@@ -139,6 +94,10 @@ define([
      * @private
      */
     LayerSwitcher.prototype.constructor = LayerSwitcher;
+
+    // ################################################################### //
+    // ############## public methods (getters, setters) ################## //
+    // ################################################################### //
 
     /**
      * Overload setMap function, that enables to catch map events, such as movend events.
@@ -289,11 +248,21 @@ define([
                 "change:visible",
                 this._updateLayerVisibility
             );
+            var context = this;
+            this._layers[id].onZIndexChangeEvent = layer.on(
+                "change:zIndex",
+                function (e) {
+                    context._updateLayersIndex.call(context, e);
+                }
+            );
 
             // 2. add layer div to control main container
             // Récupération de l'élément contenant les différentes couches.
             var elementLayersList = document.getElementById("GPlayersList");
-            elementLayersList.insertBefore(this._createLayerDiv(layerOptions), elementLayersList.firstChild);
+            var layerDiv = this._createLayerDiv(layerOptions);
+            elementLayersList.insertBefore(layerDiv, elementLayersList.firstChild);
+            // on stocke la div dans les options de la couche, pour une éventuelle réorganisation (setZIndex par ex)
+            this._layers[id].div = layerDiv;
 
         // user may also add a new configuration for an already added layer
         } else if ( this._layers[id] && config ) {
@@ -425,9 +394,75 @@ define([
         }
     };
 
+    // ################################################################### //
+    // ##################### init component ############################## //
+    // ################################################################### //
+
     /**
-     * Create control main container
+     * Initialize LayerSwitcher control (called by constructor)
      *
+     * @param {Object} options - ol.control.Control options (see {@link http://openlayers.org/en/v3.13.0/apidoc/ol.control.Control.html})
+     * @param {Array} layers - list of layers to be configured. Each array element is an object, with following properties :
+     * @private
+     */
+    LayerSwitcher.prototype._initialize = function (options, layers) {
+
+        // {Object} control layers list. Each key is a layer id, and its value is an object of layers options (layer, id, opacity, visibility, title, description...)
+        this._layers = {};
+        // [Array] array of ordered control layers
+        this._layersOrder = [];
+        // [Object] associative array of layers ordered by zindex (keys are zindex values, and corresponding values are arrays of layers at this zindex)
+        this._layersIndex = {};
+        // {Number} layers max z index, to order layers using their z index
+        this._lastZIndex = 0;
+        // {Number} layers max id, incremented when a new layer is added
+        this._layerId = 0;
+        /** {Boolean} true if widget is collapsed, false otherwise */
+        this.collapsed = (options.collapsed !== undefined) ? options.collapsed : true;
+        // div qui contiendra les div des listes.
+        this._layerListContainer = null;
+
+        // add options layers to layerlist.
+        // (seulement les couches configurées dans les options du layerSwitcher par l'utilisateur),
+        // les autres couches de la carte seront ajoutées dans la méthode setMap
+        for ( var i = 0; i < layers.length; i++ ) {
+            // recup la layer, son id,
+            var layer = layers[i].layer;
+            if ( layer ) {
+                var id;
+                // si elles ont déjà un identifiant (gpLayerId), on le récupère, sinon on en crée un nouveau, en incrémentant this_layerId.
+                if ( !layer.hasOwnProperty("gpLayerId") ) {
+                    id = this._layerId;
+                    layer.gpLayerId = id;
+                    this._layerId ++;
+                } else {
+                    id = layer.gpLayerId;
+                }
+
+                // et les infos de la conf si elles existent (title, description, legends, quicklook, metadata)
+                var conf = layers[i].config || {};
+                var opacity = layer.getOpacity();
+                var visibility = layer.getVisible();
+                var layerOptions = {
+                    layer : layer, // la couche ol.layer concernée
+                    id : id,
+                    opacity : opacity != null ? opacity : 1,
+                    visibility : visibility != null ? visibility : true,
+                    title : conf.title != null ? conf.title : id,
+                    description : conf.description || null,
+                    legends : conf.legends || [],
+                    metadata : conf.metadata || [],
+                    quicklookUrl : conf.quicklookUrl || null
+                };
+                this._layers[id] = layerOptions;
+            }
+        }
+    };
+
+    /**
+     * Create control main container (called by constructor)
+     *
+     * @returns {DOMElement} container - control container
      * @private
      */
     LayerSwitcher.prototype._initContainer = function () {
@@ -464,7 +499,7 @@ define([
         );
 
         // ajout dans le container principal de la liste des layers
-        var divL = this._createMainLayersElement();
+        var divL = this._layerListContainer = this._createMainLayersElement();
         container.appendChild(divL);
 
         // creation du mode draggable
@@ -489,16 +524,9 @@ define([
      */
     LayerSwitcher.prototype._addMapLayers = function (map) {
 
-        // Récupération de l'élément contenant les différentes couches.
-        var elementLayersList;
-        var childNodes = this.element.childNodes;
-        for ( var i = 0; i < childNodes.length; i ++ ) {
-            if ( childNodes[i].id === "GPlayersList" ) {
-                elementLayersList = childNodes[i];
-            }
-        }
+        this._layersIndex = {};
+        var context = this;
 
-        var layersIndex = {};
         // on parcourt toutes les couches de la carte, pour les ajouter à la liste du controle si ce n'est pas déjà le cas.
         // idée : le layerSwitcher doit représenter l'ensemble des couches de la carte.
         map.getLayers().forEach(
@@ -555,26 +583,31 @@ define([
                 var layerIndex = null;
                 if ( layer.getZIndex !== undefined ) {
                     layerIndex = layer.getZIndex();
-                    if ( !layersIndex[layerIndex] || !Array.isArray(layersIndex[layerIndex]) ) {
-                        layersIndex[layerIndex] = [];
+                    if ( !this._layersIndex[layerIndex] || !Array.isArray(this._layersIndex[layerIndex]) ) {
+                        this._layersIndex[layerIndex] = [];
                     }
-                    layersIndex[layerIndex].push(this._layers[id]);
-                    layer.setZIndex(0);
+                    this._layersIndex[layerIndex].push(this._layers[id]);
                 };
             },
             this
         );
 
         // on récupère l'ordre d'affichage des couches entre elles dans la carte, à partir de zindex.
-        for ( var zindex in layersIndex ) {
-            if ( layersIndex.hasOwnProperty(zindex) ) {
-                var layers = layersIndex[zindex];
+        for ( var zindex in this._layersIndex ) {
+            if ( this._layersIndex.hasOwnProperty(zindex) ) {
+                var layers = this._layersIndex[zindex];
                 for ( var l = 0; l < layers.length; l++ ) { // à ce stade layers[l] est une couche de this._layers.
                     // on conserve l'ordre des couches : la première est celle qui se situe tout en haut, et la dernière est le "fond de carte"
                     this._layersOrder.unshift(layers[l]);
                     // et on réordonne les couches avec des zindex, uniques.
                     this._lastZIndex++;
                     layers[l].layer.setZIndex(this._lastZIndex);
+                    this._layers[layers[l].layer.gpLayerId].onZIndexChangeEvent = layers[l].layer.on(
+                        "change:zIndex",
+                        function (e) {
+                            context._updateLayersIndex.call(context, e);
+                        }
+                    );
                 }
             }
         }
@@ -582,7 +615,10 @@ define([
         // on ajoute les div correspondantes aux différentes couches (dans l'ordre inverse d'affichage) dans le controle.
         for ( var j = 0; j < this._layersOrder.length; j++ ) {
             var layerOptions = this._layersOrder[j];
-            elementLayersList.appendChild(this._createLayerDiv(layerOptions));
+            var layerDiv = this._createLayerDiv(layerOptions);
+            this._layerListContainer.appendChild(layerDiv);
+            // on stocke la div dans les options de la couche, pour une éventuelle réorganisation (setZIndex par ex)
+            this._layers[layerOptions.id].div = layerDiv;
         }
     };
 
@@ -610,6 +646,10 @@ define([
 
         return layerDiv;
     };
+
+    // ################################################################### //
+    // ######################### DOM events ############################## //
+    // ################################################################### //
 
     /**
      * Change layer opacity on layer opacity picto click
@@ -675,6 +715,89 @@ define([
         var id = e.target.gpLayerId;
         var layerVisibilityInput = document.getElementById("GPvisibility_ID" + id);
         layerVisibilityInput.checked = visible;
+    };
+
+    /**
+     * Change layer order in layerswitcher (control container) on a layer index change (on map)
+     *
+     * @param {Object} e - event
+     * @private
+     */
+    LayerSwitcher.prototype._updateLayersIndex = function (e) {
+
+        // info :
+        // 1. on récupère les zindex et les couches associées dans un tableau associatif (objet)
+        // 2. on réordonne les couche selon leur index : on leur attribue de nouveaux zindex uniques
+        // 3. on vide le container des layers, et rajoute les div des couches dans l'ordre décroissant des zindex
+
+        var map = this.getMap();
+        if ( !map ) {
+            return;
+        }
+        this._layersIndex = {};
+        var layerIndex;
+        var id;
+
+        // on parcourt toutes les couches pour récupérer leur ordre :
+        // on stocke les couches dans un tableau associatif ou les clés sont les zindex, et les valeurs sont des tableaux des couches à ce zindex.
+        map.getLayers().forEach(
+            function ( layer ) {
+                id = layer.gpLayerId;
+
+                // on commence par désactiver temporairement l'écouteur d'événements sur le changement de zindex.
+                ol.Observable.unByKey(this._layers[id].onZIndexChangeEvent);
+                this._layers[id].onZIndexChangeEvent = null;
+
+                // on ajoute la couche dans le tableau (de l'objet this._layersIndex) correspondant à son zindex
+                layerIndex = null;
+                if ( layer.getZIndex !== undefined ) {
+                    layerIndex = layer.getZIndex();
+                    if ( !this._layersIndex[layerIndex] || !Array.isArray(this._layersIndex[layerIndex]) ) {
+                        this._layersIndex[layerIndex] = [];
+                    }
+                    this._layersIndex[layerIndex].push(this._layers[id]);
+                };
+            }, this
+        );
+
+        // on réordonne les couches entre elles dans la carte, à partir des zindex stockés ci-dessus.
+        var lastZIndex = 0;
+        var context = this;
+        this._layersOrder = [];
+        for ( var zindex in this._layersIndex ) {
+            if ( this._layersIndex.hasOwnProperty(zindex) ) {
+                var layers = this._layersIndex[zindex];
+                for ( var l = 0; l < layers.length; l++ ) { // à ce stade layers[l] est une couche de this._layers.
+                    // on conserve l'ordre des couches : la première est celle qui se situe tout en haut, et la dernière est le "fond de carte"
+                    this._layersOrder.unshift(layers[l]);
+                    // et on réordonne les couches avec des zindex, uniques.
+                    lastZIndex++;
+                    // layers[l].layer.setZIndex(lastZIndex);
+                    // et on réactive l'écouteur d'événement sur les zindex
+                    this._layers[layers[l].layer.gpLayerId].onZIndexChangeEvent = layers[l].layer.on(
+                        "change:zIndex",
+                        function (e) {
+                            context._updateLayersIndex.call(context, e);
+                        }
+                    );
+                }
+            }
+        }
+
+        if ( this._layerListContainer ) {
+            // on vide le container précédent
+            while ( this._layerListContainer.firstChild ) {
+                this._layerListContainer.removeChild(this._layerListContainer.firstChild);
+            }
+            // et on rajoute les div correspondantes aux différentes couches, dans l'ordre décroissant des zindex
+            for ( var j = 0; j < this._layersOrder.length; j++ ) {
+                var layerOptions = this._layersOrder[j];
+                this._layerListContainer.appendChild(layerOptions.div);
+            }
+        } else {
+            console.log("[ol.control.LayerSwitcher] _updateLayersIndex : layer list container not found to update layers order ?!")
+        }
+
     };
 
     /**
@@ -771,13 +894,15 @@ define([
     };
 
     /**
-     * change layers order on drag and drop
+     * change layers order (on map) on drag and drop (on control container)
      *
      * @private
      */
     LayerSwitcher.prototype._onDragAndDropLayerClick = function () {
         // INFO : e.oldIndex et e.newIndex marchent en mode AMD mais pas Bundle.
         var map = this.getMap();
+        var listeners;
+        var context = this;
 
         // on récupère l'ordre des div dans le contrôle pour réordonner les couches (avec zindex)
         var matchesLayers = document.querySelectorAll("div.GPlayerSwitcher_layer");
@@ -788,10 +913,24 @@ define([
             var id  = tag.substring(tag.indexOf("_") + 3);
             var layer = this._layers[id].layer;
 
+            // on commence par désactiver temporairement l'écouteur d'événements sur le changement de zindex.
+            ol.Observable.unByKey(this._layers[id].onZIndexChangeEvent);
+            this._layers[id].onZIndexChangeEvent = null;
+
             if ( layer.setZIndex ) {
-                maxZIndex--;
+                // maxZIndex--;
                 layer.setZIndex(maxZIndex);
+                maxZIndex--;
             }
+
+            // et on réactive l'écouteur d'événement sur les zindex
+            this._layers[id].onZIndexChangeEvent = layer.on(
+                "change:zIndex",
+                function (e) {
+                    context._updateLayersIndex.call(context, e);
+                }
+            );
+
         }
 
         // mise à jour de la visu
@@ -829,6 +968,10 @@ define([
             this
         );
     };
+
+    // ################################################################### //
+    // ############################ Utils ################################ //
+    // ################################################################### //
 
     /**
      * Returns Layer Container Id associated with given olLayer

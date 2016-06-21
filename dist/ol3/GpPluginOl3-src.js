@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.10.1
- * @date 2016-06-15
+ * @date 2016-06-21
  *
  */
 /*!
@@ -14145,40 +14145,8 @@ Ol3ControlsLayerSwitcher = function (ol, Utils, LayerSwitcherDOM) {
         if (options && typeof options !== 'object') {
             throw new Error('ERROR WRONG_TYPE : options should be an object');
         }
-        this._layers = {};
-        this._layersOrder = [];
-        this._lastZIndex = 0;
-        this._layerId = 0;
-        this.collapsed = options.collapsed !== undefined ? options.collapsed : true;
+        this._initialize(options, layers);
         var container = this._initContainer(options);
-        for (var i = 0; i < layers.length; i++) {
-            var layer = layers[i].layer;
-            if (layer) {
-                var id;
-                if (!layer.hasOwnProperty('gpLayerId')) {
-                    id = this._layerId;
-                    layer.gpLayerId = id;
-                    this._layerId++;
-                } else {
-                    id = layer.gpLayerId;
-                }
-                var conf = layers[i].config || {};
-                var opacity = layer.getOpacity();
-                var visibility = layer.getVisible();
-                var layerOptions = {
-                    layer: layer,
-                    id: id,
-                    opacity: opacity != null ? opacity : 1,
-                    visibility: visibility != null ? visibility : true,
-                    title: conf.title != null ? conf.title : id,
-                    description: conf.description || null,
-                    legends: conf.legends || [],
-                    metadata: conf.metadata || [],
-                    quicklookUrl: conf.quicklookUrl || null
-                };
-                this._layers[id] = layerOptions;
-            }
-        }
         ol.control.Control.call(this, {
             element: container,
             target: options.target,
@@ -14264,8 +14232,14 @@ Ol3ControlsLayerSwitcher = function (ol, Utils, LayerSwitcherDOM) {
             layer.setZIndex(this._lastZIndex);
             layer.on('change:opacity', this._updateLayerOpacity);
             layer.on('change:visible', this._updateLayerVisibility);
+            var context = this;
+            this._layers[id].onZIndexChangeEvent = layer.on('change:zIndex', function (e) {
+                context._updateLayersIndex.call(context, e);
+            });
             var elementLayersList = document.getElementById('GPlayersList');
-            elementLayersList.insertBefore(this._createLayerDiv(layerOptions), elementLayersList.firstChild);
+            var layerDiv = this._createLayerDiv(layerOptions);
+            elementLayersList.insertBefore(layerDiv, elementLayersList.firstChild);
+            this._layers[id].div = layerDiv;
         } else if (this._layers[id] && config) {
             for (var prop in config) {
                 if (config.hasOwnProperty(prop)) {
@@ -14352,6 +14326,43 @@ Ol3ControlsLayerSwitcher = function (ol, Utils, LayerSwitcherDOM) {
             }
         }
     };
+    LayerSwitcher.prototype._initialize = function (options, layers) {
+        this._layers = {};
+        this._layersOrder = [];
+        this._layersIndex = {};
+        this._lastZIndex = 0;
+        this._layerId = 0;
+        this.collapsed = options.collapsed !== undefined ? options.collapsed : true;
+        this._layerListContainer = null;
+        for (var i = 0; i < layers.length; i++) {
+            var layer = layers[i].layer;
+            if (layer) {
+                var id;
+                if (!layer.hasOwnProperty('gpLayerId')) {
+                    id = this._layerId;
+                    layer.gpLayerId = id;
+                    this._layerId++;
+                } else {
+                    id = layer.gpLayerId;
+                }
+                var conf = layers[i].config || {};
+                var opacity = layer.getOpacity();
+                var visibility = layer.getVisible();
+                var layerOptions = {
+                    layer: layer,
+                    id: id,
+                    opacity: opacity != null ? opacity : 1,
+                    visibility: visibility != null ? visibility : true,
+                    title: conf.title != null ? conf.title : id,
+                    description: conf.description || null,
+                    legends: conf.legends || [],
+                    metadata: conf.metadata || [],
+                    quicklookUrl: conf.quicklookUrl || null
+                };
+                this._layers[id] = layerOptions;
+            }
+        }
+    };
     LayerSwitcher.prototype._initContainer = function () {
         var container = this._createMainContainerElement();
         var input = this._createMainLayersShowElement();
@@ -14370,7 +14381,7 @@ Ol3ControlsLayerSwitcher = function (ol, Utils, LayerSwitcherDOM) {
         input.addEventListener('click', function (e) {
             changeCollapsed.call(context, e);
         });
-        var divL = this._createMainLayersElement();
+        var divL = this._layerListContainer = this._createMainLayersElement();
         container.appendChild(divL);
         this._createDraggableElement(divL, this);
         var picto = this._createMainPictoElement();
@@ -14380,14 +14391,8 @@ Ol3ControlsLayerSwitcher = function (ol, Utils, LayerSwitcherDOM) {
         return container;
     };
     LayerSwitcher.prototype._addMapLayers = function (map) {
-        var elementLayersList;
-        var childNodes = this.element.childNodes;
-        for (var i = 0; i < childNodes.length; i++) {
-            if (childNodes[i].id === 'GPlayersList') {
-                elementLayersList = childNodes[i];
-            }
-        }
-        var layersIndex = {};
+        this._layersIndex = {};
+        var context = this;
         map.getLayers().forEach(function (layer) {
             var id;
             if (!layer.hasOwnProperty('gpLayerId')) {
@@ -14425,26 +14430,30 @@ Ol3ControlsLayerSwitcher = function (ol, Utils, LayerSwitcherDOM) {
             var layerIndex = null;
             if (layer.getZIndex !== undefined) {
                 layerIndex = layer.getZIndex();
-                if (!layersIndex[layerIndex] || !Array.isArray(layersIndex[layerIndex])) {
-                    layersIndex[layerIndex] = [];
+                if (!this._layersIndex[layerIndex] || !Array.isArray(this._layersIndex[layerIndex])) {
+                    this._layersIndex[layerIndex] = [];
                 }
-                layersIndex[layerIndex].push(this._layers[id]);
-                layer.setZIndex(0);
+                this._layersIndex[layerIndex].push(this._layers[id]);
             }
         }, this);
-        for (var zindex in layersIndex) {
-            if (layersIndex.hasOwnProperty(zindex)) {
-                var layers = layersIndex[zindex];
+        for (var zindex in this._layersIndex) {
+            if (this._layersIndex.hasOwnProperty(zindex)) {
+                var layers = this._layersIndex[zindex];
                 for (var l = 0; l < layers.length; l++) {
                     this._layersOrder.unshift(layers[l]);
                     this._lastZIndex++;
                     layers[l].layer.setZIndex(this._lastZIndex);
+                    this._layers[layers[l].layer.gpLayerId].onZIndexChangeEvent = layers[l].layer.on('change:zIndex', function (e) {
+                        context._updateLayersIndex.call(context, e);
+                    });
                 }
             }
         }
         for (var j = 0; j < this._layersOrder.length; j++) {
             var layerOptions = this._layersOrder[j];
-            elementLayersList.appendChild(this._createLayerDiv(layerOptions));
+            var layerDiv = this._createLayerDiv(layerOptions);
+            this._layerListContainer.appendChild(layerDiv);
+            this._layers[layerOptions.id].div = layerDiv;
         }
     };
     LayerSwitcher.prototype._createLayerDiv = function (layerOptions) {
@@ -14494,6 +14503,54 @@ Ol3ControlsLayerSwitcher = function (ol, Utils, LayerSwitcherDOM) {
         var id = e.target.gpLayerId;
         var layerVisibilityInput = document.getElementById('GPvisibility_ID' + id);
         layerVisibilityInput.checked = visible;
+    };
+    LayerSwitcher.prototype._updateLayersIndex = function (e) {
+        var map = this.getMap();
+        if (!map) {
+            return;
+        }
+        this._layersIndex = {};
+        var layerIndex;
+        var id;
+        map.getLayers().forEach(function (layer) {
+            id = layer.gpLayerId;
+            ol.Observable.unByKey(this._layers[id].onZIndexChangeEvent);
+            this._layers[id].onZIndexChangeEvent = null;
+            layerIndex = null;
+            if (layer.getZIndex !== undefined) {
+                layerIndex = layer.getZIndex();
+                if (!this._layersIndex[layerIndex] || !Array.isArray(this._layersIndex[layerIndex])) {
+                    this._layersIndex[layerIndex] = [];
+                }
+                this._layersIndex[layerIndex].push(this._layers[id]);
+            }
+        }, this);
+        var lastZIndex = 0;
+        var context = this;
+        this._layersOrder = [];
+        for (var zindex in this._layersIndex) {
+            if (this._layersIndex.hasOwnProperty(zindex)) {
+                var layers = this._layersIndex[zindex];
+                for (var l = 0; l < layers.length; l++) {
+                    this._layersOrder.unshift(layers[l]);
+                    lastZIndex++;
+                    this._layers[layers[l].layer.gpLayerId].onZIndexChangeEvent = layers[l].layer.on('change:zIndex', function (e) {
+                        context._updateLayersIndex.call(context, e);
+                    });
+                }
+            }
+        }
+        if (this._layerListContainer) {
+            while (this._layerListContainer.firstChild) {
+                this._layerListContainer.removeChild(this._layerListContainer.firstChild);
+            }
+            for (var j = 0; j < this._layersOrder.length; j++) {
+                var layerOptions = this._layersOrder[j];
+                this._layerListContainer.appendChild(layerOptions.div);
+            }
+        } else {
+            console.log('[ol.control.LayerSwitcher] _updateLayersIndex : layer list container not found to update layers order ?!');
+        }
     };
     LayerSwitcher.prototype._onOpenLayerInfoClick = function (e) {
         var divId = e.target.id;
@@ -14559,16 +14616,23 @@ Ol3ControlsLayerSwitcher = function (ol, Utils, LayerSwitcherDOM) {
     };
     LayerSwitcher.prototype._onDragAndDropLayerClick = function () {
         var map = this.getMap();
+        var listeners;
+        var context = this;
         var matchesLayers = document.querySelectorAll('div.GPlayerSwitcher_layer');
         var maxZIndex = matchesLayers.length;
         for (var i = 0; i < matchesLayers.length; i++) {
             var tag = matchesLayers[i].id;
             var id = tag.substring(tag.indexOf('_') + 3);
             var layer = this._layers[id].layer;
+            ol.Observable.unByKey(this._layers[id].onZIndexChangeEvent);
+            this._layers[id].onZIndexChangeEvent = null;
             if (layer.setZIndex) {
-                maxZIndex--;
                 layer.setZIndex(maxZIndex);
+                maxZIndex--;
             }
+            this._layers[id].onZIndexChangeEvent = layer.on('change:zIndex', function (e) {
+                context._updateLayersIndex.call(context, e);
+            });
         }
         map.updateSize();
     };
@@ -24100,7 +24164,7 @@ Ol3ControlsGeoportalAttribution = function (ol, LayerUtils) {
 }(ol, CommonUtilsLayerUtils);
 Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution) {
     Gp.ol3extVersion = '0.10.1';
-    Gp.ol3extDate = '2016-06-15';
+    Gp.ol3extDate = '2016-06-21';
     Gp.LayerUtils = LayerUtils;
     CRS.runDefault();
     ol.source.GeoportalWMTS = SourceWMTS;
