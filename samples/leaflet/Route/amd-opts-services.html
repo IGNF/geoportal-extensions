@@ -67,14 +67,16 @@
                 collapsed : false,
                 position : "bottomleft",
                 // TODO
-                // routeOptions : {
-                //   routePreference : "fastest",
-                //   graph : "Pieton",
-                //   exclusions : ["toll", "bridge", "tunnel"],
-                //   provideGeometry : false, // FIXME surcharge non acceptée pour les besoins du composant !
-                //   distanceUnit : "km"
-                //
-                // },
+                routeOptions : {
+                  protocol : "XHR",
+                  // outputFormat : "xml",
+                  // routePreference : "fastest",
+                  // graph : "Pieton",
+                  // exclusions : ["toll", "bridge", "tunnel"],
+                  // provideGeometry : true, // FIXME surcharge non acceptée pour les besoins du composant !
+                  // distanceUnit : "km"
+
+                },
                 autocompleteOptions : {
                   maximumResponses : 1,
                   filterOptions : {
