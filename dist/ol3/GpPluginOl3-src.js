@@ -9,8 +9,8 @@
  * copyright CeCILL-B
  * copyright IGN
  * @author IGN
- * @version 0.10.1
- * @date 2016-06-21
+ * @version 0.11.0
+ * @date 2016-06-22
  *
  */
 /*!
@@ -14436,6 +14436,9 @@ Ol3ControlsLayerSwitcher = function (ol, Utils, LayerSwitcherDOM) {
                 this._layersIndex[layerIndex].push(this._layers[id]);
             }
         }, this);
+        var updateLayerIndex = function (e) {
+            context._updateLayersIndex.call(context, e);
+        };
         for (var zindex in this._layersIndex) {
             if (this._layersIndex.hasOwnProperty(zindex)) {
                 var layers = this._layersIndex[zindex];
@@ -14443,9 +14446,7 @@ Ol3ControlsLayerSwitcher = function (ol, Utils, LayerSwitcherDOM) {
                     this._layersOrder.unshift(layers[l]);
                     this._lastZIndex++;
                     layers[l].layer.setZIndex(this._lastZIndex);
-                    this._layers[layers[l].layer.gpLayerId].onZIndexChangeEvent = layers[l].layer.on('change:zIndex', function (e) {
-                        context._updateLayersIndex.call(context, e);
-                    });
+                    this._layers[layers[l].layer.gpLayerId].onZIndexChangeEvent = layers[l].layer.on('change:zIndex', updateLayerIndex);
                 }
             }
         }
@@ -14504,7 +14505,7 @@ Ol3ControlsLayerSwitcher = function (ol, Utils, LayerSwitcherDOM) {
         var layerVisibilityInput = document.getElementById('GPvisibility_ID' + id);
         layerVisibilityInput.checked = visible;
     };
-    LayerSwitcher.prototype._updateLayersIndex = function (e) {
+    LayerSwitcher.prototype._updateLayersIndex = function () {
         var map = this.getMap();
         if (!map) {
             return;
@@ -14527,6 +14528,9 @@ Ol3ControlsLayerSwitcher = function (ol, Utils, LayerSwitcherDOM) {
         }, this);
         var lastZIndex = 0;
         var context = this;
+        var updateLayerIndex = function (e) {
+            context._updateLayersIndex.call(context, e);
+        };
         this._layersOrder = [];
         for (var zindex in this._layersIndex) {
             if (this._layersIndex.hasOwnProperty(zindex)) {
@@ -14534,9 +14538,7 @@ Ol3ControlsLayerSwitcher = function (ol, Utils, LayerSwitcherDOM) {
                 for (var l = 0; l < layers.length; l++) {
                     this._layersOrder.unshift(layers[l]);
                     lastZIndex++;
-                    this._layers[layers[l].layer.gpLayerId].onZIndexChangeEvent = layers[l].layer.on('change:zIndex', function (e) {
-                        context._updateLayersIndex.call(context, e);
-                    });
+                    this._layers[layers[l].layer.gpLayerId].onZIndexChangeEvent = layers[l].layer.on('change:zIndex', updateLayerIndex);
                 }
             }
         }
@@ -14616,8 +14618,10 @@ Ol3ControlsLayerSwitcher = function (ol, Utils, LayerSwitcherDOM) {
     };
     LayerSwitcher.prototype._onDragAndDropLayerClick = function () {
         var map = this.getMap();
-        var listeners;
         var context = this;
+        var updateLayerIndex = function (e) {
+            context._updateLayersIndex.call(context, e);
+        };
         var matchesLayers = document.querySelectorAll('div.GPlayerSwitcher_layer');
         var maxZIndex = matchesLayers.length;
         for (var i = 0; i < matchesLayers.length; i++) {
@@ -14630,9 +14634,7 @@ Ol3ControlsLayerSwitcher = function (ol, Utils, LayerSwitcherDOM) {
                 layer.setZIndex(maxZIndex);
                 maxZIndex--;
             }
-            this._layers[id].onZIndexChangeEvent = layer.on('change:zIndex', function (e) {
-                context._updateLayersIndex.call(context, e);
-            });
+            this._layers[id].onZIndexChangeEvent = layer.on('change:zIndex', updateLayerIndex);
         }
         map.updateSize();
     };
@@ -24163,8 +24165,8 @@ Ol3ControlsGeoportalAttribution = function (ol, LayerUtils) {
     return GeoportalAttribution;
 }(ol, CommonUtilsLayerUtils);
 Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution) {
-    Gp.ol3extVersion = '0.10.1';
-    Gp.ol3extDate = '2016-06-21';
+    Gp.ol3extVersion = '0.11.0';
+    Gp.ol3extDate = '2016-06-22';
     Gp.LayerUtils = LayerUtils;
     CRS.runDefault();
     ol.source.GeoportalWMTS = SourceWMTS;

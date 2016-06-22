@@ -593,6 +593,10 @@ define([
         );
 
         // on récupère l'ordre d'affichage des couches entre elles dans la carte, à partir de zindex.
+        /** fonction de callback appelée au changement de zindex d'une couche  */
+        var updateLayerIndex = function (e) {
+            context._updateLayersIndex.call(context, e);
+        };
         for ( var zindex in this._layersIndex ) {
             if ( this._layersIndex.hasOwnProperty(zindex) ) {
                 var layers = this._layersIndex[zindex];
@@ -604,9 +608,7 @@ define([
                     layers[l].layer.setZIndex(this._lastZIndex);
                     this._layers[layers[l].layer.gpLayerId].onZIndexChangeEvent = layers[l].layer.on(
                         "change:zIndex",
-                        function (e) {
-                            context._updateLayersIndex.call(context, e);
-                        }
+                        updateLayerIndex
                     );
                 }
             }
@@ -720,10 +722,9 @@ define([
     /**
      * Change layer order in layerswitcher (control container) on a layer index change (on map)
      *
-     * @param {Object} e - event
      * @private
      */
-    LayerSwitcher.prototype._updateLayersIndex = function (e) {
+    LayerSwitcher.prototype._updateLayersIndex = function () {
 
         // info :
         // 1. on récupère les zindex et les couches associées dans un tableau associatif (objet)
@@ -763,6 +764,10 @@ define([
         // on réordonne les couches entre elles dans la carte, à partir des zindex stockés ci-dessus.
         var lastZIndex = 0;
         var context = this;
+        /** fonction de callback appelée au changement de zindex d'une couche  */
+        var updateLayerIndex = function (e) {
+            context._updateLayersIndex.call(context, e);
+        };
         this._layersOrder = [];
         for ( var zindex in this._layersIndex ) {
             if ( this._layersIndex.hasOwnProperty(zindex) ) {
@@ -776,9 +781,7 @@ define([
                     // et on réactive l'écouteur d'événement sur les zindex
                     this._layers[layers[l].layer.gpLayerId].onZIndexChangeEvent = layers[l].layer.on(
                         "change:zIndex",
-                        function (e) {
-                            context._updateLayersIndex.call(context, e);
-                        }
+                        updateLayerIndex
                     );
                 }
             }
@@ -795,7 +798,7 @@ define([
                 this._layerListContainer.appendChild(layerOptions.div);
             }
         } else {
-            console.log("[ol.control.LayerSwitcher] _updateLayersIndex : layer list container not found to update layers order ?!")
+            console.log("[ol.control.LayerSwitcher] _updateLayersIndex : layer list container not found to update layers order ?!");
         }
 
     };
@@ -901,8 +904,11 @@ define([
     LayerSwitcher.prototype._onDragAndDropLayerClick = function () {
         // INFO : e.oldIndex et e.newIndex marchent en mode AMD mais pas Bundle.
         var map = this.getMap();
-        var listeners;
         var context = this;
+        /** fonction de callback appelée au changement de zindex d'une couche  */
+        var updateLayerIndex = function (e) {
+            context._updateLayersIndex.call(context, e);
+        };
 
         // on récupère l'ordre des div dans le contrôle pour réordonner les couches (avec zindex)
         var matchesLayers = document.querySelectorAll("div.GPlayerSwitcher_layer");
@@ -926,9 +932,7 @@ define([
             // et on réactive l'écouteur d'événement sur les zindex
             this._layers[id].onZIndexChangeEvent = layer.on(
                 "change:zIndex",
-                function (e) {
-                    context._updateLayersIndex.call(context, e);
-                }
+                updateLayerIndex
             );
 
         }
