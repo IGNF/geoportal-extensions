@@ -13,7 +13,7 @@
 
         <!-- Plugin OpenLayers 3 IGN -->
         <link rel="stylesheet" href="../../../dist/ol3/GpPluginOl3.css" />
-        <script src="../../../dist/ol3/GpPluginOl3-src.js" data-url="./../resources/AutoConf2.js"></script>
+        <script src="../../../dist/ol3/GpPluginOl3-src.js" data-url="./../resources/AutoConf.js"></script>
 
         <!-- load geoportail-waiting image -->
         <style>
@@ -96,16 +96,16 @@
                         var stamenConf = {
                             title : "Images Stamen",
                             description : "Images Stamen",
-                            quicklookUrl : "http://www.mapquest.com/",
+                            quicklookUrl : "monurl",
                             legends : [
                                 {
-                                    url : "http://www.mapquest.com/"
+                                    url : "monurl"
                                 }
                             ]
                             ,
                             metadata : [
                                 {
-                                    url : "http://www.mapquest.com/"
+                                    url : "monurl"
                                 }
                             ]
                         };
@@ -140,19 +140,68 @@
             <pre>
                 <code>
                     window.onload = function () {
-                        var gpLayer = new ol.layer.Tile({
-                            source: Gp.ol.source.GeoportalWMTS({
-                                layer: "ORTHOIMAGERY.ORTHOPHOTOS"
-                            })
-                        });
                         var map = new ol.Map({
-                            layers: [gpLayer],
+                            layers: [
+                                new ol.layer.Tile({
+                                    source : new ol.source.GeoportalWMTS({
+                                        layer: "ORTHOIMAGERY.ORTHOPHOTOS"
+                                    }),
+                                    opacity : 0.8
+                                }),
+                                new ol.layer.Tile({
+                                    source : new ol.source.GeoportalWMTS({
+                                        layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+                                    })
+                                })
+                            ],
                             target: 'map',
                             view: new ol.View({
                                 center: [288074.8449901076, 6247982.515792289],
                                 zoom: 5
                             })
                         });
+
+                        // ajout d'une autre couche
+                        var olStamen = new ol.layer.Tile({
+                            source : new ol.source.Stamen({
+                                layer : "watercolor"
+                            }),
+                            opacity : 0.5
+                        });
+                        map.addLayer(olStamen);
+
+                        // ajout du layerSwitcher avec une description pour la couche Stamen
+                        layerSwitcher = new ol.control.LayerSwitcher({
+                            layers : [{
+                                layer : olStamen,
+                                config : {
+                                    title : "titre initial Stamen",
+                                    description : "description initiale Stamen"
+                                }
+                            }],
+                            options : {
+                                collapsed: collapsed
+                            }
+                        });
+                        map.addControl(layerSwitcher);
+
+                        // ajout d'une nouvelle configuration pour la couche Stamen
+                        var stamenConf = {
+                            title : "Images Stamen",
+                            description : "Images Stamen",
+                            quicklookUrl : "monurl",
+                            legends : [
+                                {
+                                    url : "monurl"
+                                }
+                            ],
+                            metadata : [
+                                {
+                                    url : "monurl"
+                                }
+                            ]
+                        };
+                        layerSwitcher.addLayer(olStamen, stamenConf);
                     }
                 </code>
             </pre>
