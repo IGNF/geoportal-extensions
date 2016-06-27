@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-06-22
+ * @date 2016-06-24
  *
  */
 /* MOUSE POSITION */
@@ -2620,10 +2620,10 @@ div[id^=GPisochronReset] {
   background-image: url("img/GPisochronOptions.png");
 }
 
-/* ISOCHRON */
+/* Layer Import */
 
 div[id^="GPimport-"] {
-  top: 140px;
+  top: 220px;
   left: 10px;
 }
 
@@ -2678,6 +2678,35 @@ div[id^="GPimportGetCapPanelClose-"] {
 
 div[id^="GPimportGetCapPanel-"] {
   display: none;
+}
+
+/* Import waiting */
+
+.GPimportWaitingContainerVisible,
+.GPimportWaitingContainerHidden {
+  position: absolute;
+  top: 32px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(255,255,255,0.9);
+  font-size: 1.5em;
+  font-weight: bold;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.GPimportWaitingContainerVisible {
+  display: -webkit-flex;
+  display: flex;
+}
+
+.GPimportWaitingContainerHidden {
+  display: none;
+}
+
+.GPimportWaiting {
+  margin: auto;
 }
 
 /* Import form */

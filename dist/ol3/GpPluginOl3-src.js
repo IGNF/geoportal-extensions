@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-06-22
+ * @date 2016-06-24
  *
  */
 /*!
@@ -23295,6 +23295,16 @@ CommonControlsLayerImportDOM = function () {
             div.appendChild(select);
             return div;
         },
+        _createImportWaitingElement: function () {
+            var div = document.createElement('div');
+            div.id = this._addUID('GPimportWaitingContainer');
+            div.className = 'GPimportWaitingContainerHidden';
+            var p = document.createElement('p');
+            p.className = 'GPimportWaiting';
+            p.innerHTML = 'Recherche en cours...';
+            div.appendChild(p);
+            return div;
+        },
         _createImportStaticParamsContainer: function (currentType) {
             var div = document.createElement('div');
             div.id = this._addUID('GPimportStaticParams');
@@ -23459,7 +23469,7 @@ CommonControlsLayerImportDOM = function () {
             var input = document.createElement('input');
             input.type = 'text';
             input.id = this._addUID('GPimportServiceUrl');
-            input.name = 'GPimportInput';
+            input.className = 'GPimportInput';
             return input;
         },
         _createImportSubmitFormElement: function () {
@@ -23593,6 +23603,7 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
         this._serviceUrlImportInput = null;
         this._getCapPanel = null;
         this._getCapResultsListContainer = null;
+        this._waitingContainer = null;
         this._getCapRequestUrl = null;
         this._getCapResponseWMS = null;
         this._getCapResponseWMSLayers = [];
@@ -23615,9 +23626,15 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
             ];
             var wrongTypesIndexes = [];
             for (var i = 0; i < layerTypes.length; i++) {
-                if (typesList.indexOf(layerTypes[i]) === -1) {
+                if (typeof layerTypes[i] !== 'string') {
                     wrongTypesIndexes.push(i);
-                    console.log('[ol.control.LayerImport] options.layerTypes : ' + layerTypes[i] + ' is not a supported type');
+                    console.log('[ol.control.LayerImport] \'options.layerTypes\' elements should be of type string (' + layerTypes[i] + ')');
+                } else {
+                    layerTypes[i] = layerTypes[i].toUpperCase();
+                    if (typesList.indexOf(layerTypes[i]) === -1) {
+                        wrongTypesIndexes.push(i);
+                        console.log('[ol.control.LayerImport] options.layerTypes : ' + layerTypes[i] + ' is not a supported type');
+                    }
                 }
             }
             if (wrongTypesIndexes.length !== 0) {
@@ -23647,6 +23664,8 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
         var importGetCapResultsList = this._getCapResultsListContainer = this._createImportGetCapResultsListElement();
         getCapPanel.appendChild(importGetCapResultsList);
         container.appendChild(getCapPanel);
+        var waiting = this._waitingContainer = this._createImportWaitingElement();
+        container.appendChild(waiting);
         return container;
     };
     LayerImport.prototype._initInputFormElement = function () {
@@ -23764,21 +23783,25 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
         var fReader = new FileReader();
         var context = this;
         fReader.onerror = function (e) {
+            context._waitingContainer.className = 'GPimportWaitingContainerHidden';
             console.log('error fileReader : ', e);
         };
         fReader.onprogress = function () {
-            console.log('onprogress');
         };
         fReader.onloadstart = function () {
+            context._waitingContainer.className = 'GPimportWaitingContainerVisible';
+            context._waiting = true;
             console.log('onloadstart');
         };
         fReader.onabort = function () {
+            context._waitingContainer.className = 'GPimportWaitingContainerHidden';
             console.log('onabort');
         };
         fReader.onloadend = function (e) {
             console.log('onloadend : ', e);
         };
         fReader.onload = function (e) {
+            context._waitingContainer.className = 'GPimportWaitingContainerHidden';
             var fileContent = e.target.result;
             var map = context.getMap();
             if (!map || !fileContent) {
@@ -23790,7 +23813,7 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
                 format = new ol.format.GPX();
             }
             var fileProj = format.readProjection(fileContent);
-            var mapProj = map.getView().getProjection().getCode();
+            var mapProj = context._getMapProjectionCode();
             var features = format.readFeatures(fileContent, {
                 dataProjection: fileProj,
                 featureProjection: mapProj
@@ -23822,6 +23845,7 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
             console.log('[ol.control.LayerImport] WFS layer import is not implemented yet');
             return;
         }
+        this._emptyGetCapResultsList();
         var url = this._getCapRequestUrl = this._serviceUrlImportInput.value;
         if (!url) {
             console.log('[ol.control.LayerImport] url parameter is mandatory');
@@ -23850,14 +23874,18 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
         if (bfound === false) {
             url = proxyUrl + encodeURI(url);
         }
+        this._waitingContainer.className = 'GPimportWaitingContainerVisible';
+        this._waiting = true;
         var context = this;
         Gp.Protocols.XHR.call({
             url: url,
             method: 'GET',
             onResponse: function (response) {
+                context._waitingContainer.className = 'GPimportWaitingContainerHidden';
                 context._displayGetCapResponseLayers.call(context, response);
             },
             onFailure: function (error) {
+                context._waitingContainer.className = 'GPimportWaitingContainerHidden';
                 console.log('[ol.control.LayerImport] getCapabilities request failed : ', error);
             }
         });
@@ -23866,6 +23894,10 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
         var parser;
         var layers;
         var layerDescription;
+        var projection;
+        this._importPanel.style.display = 'none';
+        this._getCapPanel.style.display = 'block';
+        var mapProjCode = this._getMapProjectionCode();
         if (this._currentImportType === 'WMS') {
             parser = new ol.format.WMSCapabilities();
             if (!parser) {
@@ -23877,13 +23909,18 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
                 if (Array.isArray(layers)) {
                     this._getCapResponseWMSLayers = layers;
                     for (var i = 0; i < layers.length; i++) {
-                        layerDescription = layers[i].Title;
-                        if (this._getCapResultsListContainer) {
-                            this._getCapResultsListContainer.appendChild(this._createImportGetCapResultElement(layerDescription, i));
+                        projection = this._getWMSLayerProjection(layers[i], mapProjCode);
+                        if (!projection) {
+                            console.log('[ol.control.LayerImport] wms layer cannot be added to map : unknown projection', layers[i]);
+                            continue;
+                        } else {
+                            layers[i]._projection = projection;
+                            layerDescription = layers[i].Title;
+                            if (this._getCapResultsListContainer) {
+                                this._getCapResultsListContainer.appendChild(this._createImportGetCapResultElement(layerDescription, i));
+                            }
                         }
                     }
-                    this._importPanel.style.display = 'none';
-                    this._getCapPanel.style.display = 'block';
                 }
             }
         } else if (this._currentImportType === 'WMTS') {
@@ -23892,19 +23929,22 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
                 return;
             }
             var getCapResponseWMTS = this._getCapResponseWMTS = parser.read(xmlResponse);
-            console.log(getCapResponseWMTS);
             if (getCapResponseWMTS && getCapResponseWMTS.Contents && getCapResponseWMTS.Contents.Layer) {
                 layers = getCapResponseWMTS.Contents.Layer;
                 if (Array.isArray(layers)) {
                     this._getCapResponseWMTSLayers = layers;
                     for (var j = 0; j < layers.length; j++) {
-                        layerDescription = layers[j].Title;
-                        if (this._getCapResultsListContainer) {
-                            this._getCapResultsListContainer.appendChild(this._createImportGetCapResultElement(layerDescription, j));
+                        projection = this._getWMTSLayerProjection(layers[j], getCapResponseWMTS);
+                        if (!projection || !ol.proj.get(projection)) {
+                            console.log('[ol.control.LayerImport] wmts layer cannot be added to map : unknown projection', layers[j]);
+                            continue;
+                        } else {
+                            layerDescription = layers[j].Title;
+                            if (this._getCapResultsListContainer) {
+                                this._getCapResultsListContainer.appendChild(this._createImportGetCapResultElement(layerDescription, j));
+                            }
                         }
                     }
-                    this._importPanel.style.display = 'none';
-                    this._getCapPanel.style.display = 'block';
                 }
             }
         }
@@ -23926,17 +23966,121 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
         }
     };
     LayerImport.prototype._addGetCapWMSLayer = function (layerInfo) {
-        var map = this.getMap();
-        if (!map) {
+        var mapProjCode = this._getMapProjectionCode();
+        var wmsSourceOptions = {};
+        var getMapUrl = this._getWMSLayerGetMapUrl();
+        if (getMapUrl) {
+            wmsSourceOptions.url = getMapUrl;
+        } else {
+            var questionMarkIndex = this._getCapRequestUrl.indexOf('?');
+            if (questionMarkIndex !== -1) {
+                wmsSourceOptions.url = this._getCapRequestUrl.substring(0, questionMarkIndex);
+            } else {
+                wmsSourceOptions.url = this._getCapRequestUrl;
+            }
+        }
+        wmsSourceOptions.params = {};
+        if (layerInfo.Name) {
+            wmsSourceOptions.params['LAYERS'] = layerInfo.Name;
+        } else {
+            console.log('[ol.control.LayerImport] unable to add wms layer : mandatory layer \'name\' parameter cannot be found', layerInfo);
             return;
         }
-        var wmsSource = new ol.source.TileWMS({
-            url: this._getCapRequestUrl,
-            params: {
-                LAYERS: layerInfo.Name,
-                SERVICE: 'WMS'
+        wmsSourceOptions.params['SERVICE'] = 'WMS';
+        if (this._getCapResponseWMS.version) {
+            wmsSourceOptions.params['VERSION'] = this._getCapResponseWMS.version;
+        }
+        var projection = layerInfo._projection;
+        if (!projection) {
+            console.log('[ol.control.LayerImport] wms layer cannot be added to map : unknown projection');
+            return;
+        } else if (projection !== mapProjCode) {
+            wmsSourceOptions.projection = projection;
+        }
+        var legend;
+        if (layerInfo.Style && Array.isArray(layerInfo.Style)) {
+            var style = layerInfo.Style[0];
+            wmsSourceOptions.params['STYLES'] = style.Name;
+            if (style.LegendURL && Array.isArray(style.LegendURL) && style.LegendURL.length !== 0) {
+                legend = style.LegendURL[0].OnlineResource;
             }
-        });
+        }
+        var wmsSource = new ol.source.TileWMS(wmsSourceOptions);
+        this._getWMSLayerInfoForLayerSwitcher(layerInfo, legend, wmsSource);
+        var layerTileOptions = {};
+        layerTileOptions['source'] = wmsSource;
+        this._getWMSLayerMinMaxResolution(layerInfo, mapProjCode, layerTileOptions);
+        this._getWMSLayerExtent(layerInfo, mapProjCode, layerTileOptions);
+        var wmsLayer = new ol.layer.Tile(layerTileOptions);
+        wmsLayer.gpResultLayerId = 'layerimport:WMS';
+        map.addLayer(wmsLayer);
+    };
+    LayerImport.prototype._getWMSLayerGetMapUrl = function () {
+        var getmapurl;
+        if (this._getCapResponseWMS && this._getCapResponseWMS.Capability && this._getCapResponseWMS.Capability.Request && this._getCapResponseWMS.Capability.Request.GetMap) {
+            var getmap = this._getCapResponseWMS.Capability.Request.GetMap;
+            if (getmap.DCPType && Array.isArray(getmap.DCPType) && getmap.DCPType.length !== 0) {
+                var url = getmap.DCPType[0];
+                if (url && url.HTTP && url.HTTP.Get) {
+                    getmapurl = url.HTTP.Get.OnlineResource;
+                }
+            }
+        }
+        return getmapurl;
+    };
+    LayerImport.prototype._getWMSLayerProjection = function (layerInfo, mapProjCode) {
+        var projection;
+        if (!layerInfo || typeof layerInfo !== 'object') {
+            return;
+        }
+        var CRSList = layerInfo.CRS;
+        if (Array.isArray(CRSList)) {
+            for (var i = 0; i < CRSList.length; i++) {
+                var layerCRS = CRSList[i];
+                if (layerCRS === mapProjCode || ol.proj.get(layerCRS)) {
+                    projection = layerCRS;
+                    break;
+                }
+            }
+        }
+        return projection;
+    };
+    LayerImport.prototype._getWMSLayerMinMaxResolution = function (layerInfo, mapProjCode, layerTileOptions) {
+        var mapUnits = ol.proj.get(mapProjCode).getUnits();
+        if (mapUnits === 'm') {
+            if (layerInfo.MinScaleDenominator) {
+                layerTileOptions.minResolution = layerInfo.MinScaleDenominator * 0.00028;
+            }
+            if (layerInfo.MaxScaleDenominator) {
+                layerTileOptions.maxResolution = layerInfo.MaxScaleDenominator * 0.00028;
+            }
+        } else if (mapUnits === 'degrees') {
+            var cste = 0.00028 * 180 / (Math.PI * 6378137);
+            if (layerInfo.MinScaleDenominator) {
+                layerTileOptions.minResolution = layerInfo.MinScaleDenominator * cste;
+            }
+            if (layerInfo.MaxScaleDenominator) {
+                layerTileOptions.maxResolution = layerInfo.MaxScaleDenominator * cste;
+            }
+        }
+    };
+    LayerImport.prototype._getWMSLayerExtent = function (layerInfo, mapProjCode, layerTileOptions) {
+        if (layerInfo.BoundingBox && Array.isArray(layerInfo.BoundingBox)) {
+            for (var i = 0; i < layerInfo.BoundingBox.length; i++) {
+                var crs = layerInfo.BoundingBox[i].crs;
+                if (crs) {
+                    if (crs === mapProjCode) {
+                        layerTileOptions.extent = layerInfo.BoundingBox[i].extent;
+                        break;
+                    } else if (ol.proj.get(crs)) {
+                        layerTileOptions.extent = ol.proj.transformExtent(layerInfo.BoundingBox[i].extent, crs, mapProjCode);
+                        break;
+                    }
+                }
+            }
+        }
+    };
+    LayerImport.prototype._getWMSLayerInfoForLayerSwitcher = function (layerInfo, legend, wmsSource) {
         if (layerInfo.Title) {
             wmsSource._title = layerInfo.Title;
             wmsSource._description = layerInfo.Abstract ? layerInfo.Abstract : layerInfo.Title;
@@ -23944,9 +24088,31 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
             wmsSource._title = layerInfo.Name;
             wmsSource._description = layerInfo.Abstract ? layerInfo.Abstract : layerInfo.Name;
         }
-        var wmsLayer = new ol.layer.Tile({ source: wmsSource });
-        wmsLayer.gpResultLayerId = 'layerimport:WMS';
-        map.addLayer(wmsLayer);
+        if (legend) {
+            wmsSource._legends = [{ url: legend }];
+        }
+        if (layerInfo.MetadataURL && Array.isArray(layerInfo.MetadataURL)) {
+            wmsSource._metadata = [];
+            for (var i = 0; i < layerInfo.MetadataURL.length; i++) {
+                var metadata = layerInfo.MetadataURL[i].OnlineResource;
+                if (metadata) {
+                    wmsSource._metadata.push({ url: metadata });
+                }
+            }
+        }
+        if (layerInfo.Attribution) {
+            var attribution = layerInfo.Attribution;
+            wmsSource._originators = {};
+            if (attribution.OnlineResource) {
+                wmsSource._originators.url = attribution.OnlineResource;
+            }
+            if (attribution.Title) {
+                wmsSource._originators.name = wmsSource._originators.attribution = attribution.Title;
+            }
+            if (attribution.LogoURL && attribution.LogoURL.OnlineResource) {
+                wmsSource._originators.logo = attribution.LogoURL.OnlineResource;
+            }
+        }
     };
     LayerImport.prototype._addGetCapWMTSLayer = function (layerInfo) {
         if (!layerInfo || !layerInfo.Identifier) {
@@ -23959,12 +24125,19 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
         }
         var wmtsSourceOptions = {};
         wmtsSourceOptions.layer = layerInfo.Identifier;
-        wmtsSourceOptions.version = this._getCapResponseWMTS.version;
-        var questionMarkIndex = this._getCapRequestUrl.indexOf('?');
-        if (questionMarkIndex !== -1) {
-            wmtsSourceOptions.url = this._getCapRequestUrl.substring(0, questionMarkIndex);
+        if (this._getCapResponseWMTS.version) {
+            wmtsSourceOptions.version = this._getCapResponseWMTS.version;
+        }
+        var getMapUrl = this._getWMTSLayerGetTileUrl();
+        if (getMapUrl) {
+            wmtsSourceOptions.url = getMapUrl;
         } else {
-            wmtsSourceOptions.url = this._getCapRequestUrl;
+            var questionMarkIndex = this._getCapRequestUrl.indexOf('?');
+            if (questionMarkIndex !== -1) {
+                wmtsSourceOptions.url = this._getCapRequestUrl.substring(0, questionMarkIndex);
+            } else {
+                wmtsSourceOptions.url = this._getCapRequestUrl;
+            }
         }
         var tmsOptions = this._getTMSParams(layerInfo);
         wmtsSourceOptions.matrixSet = tmsOptions.tms;
@@ -23975,6 +24148,7 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
             origin: tmsOptions.origin
         });
         var defaultStyle;
+        var legend;
         if (layerInfo.Style && Array.isArray(layerInfo.Style)) {
             var style;
             for (var s = 0; s < layerInfo.Style.length; s++) {
@@ -23982,6 +24156,9 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
                 defaultStyle = style.Identifier;
                 if (style.isDefault) {
                     break;
+                }
+                if (style.LegendURL && Array.isArray(style.LegendURL) && style.LegendURL.length !== 0) {
+                    legend = style.LegendURL[0].href;
                 }
             }
         }
@@ -24005,9 +24182,55 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
             wmtsSource._title = layerInfo.Identifier;
             wmtsSource._description = layerInfo.Abstract ? layerInfo.Abstract : layerInfo.Identifier;
         }
-        var wmtsLayer = new ol.layer.Tile({ source: wmtsSource });
+        if (legend) {
+            wmtsSource._legends = [{ url: legend }];
+        }
+        var layerTileOptions = {};
+        layerTileOptions.source = wmtsSource;
+        layerTileOptions.extent = this._getWMTSLayerExtent(layerInfo);
+        try {
+            var wmtsLayer = new ol.layer.Tile(layerTileOptions);
+        } catch (e) {
+            console.log('[ol.control.LayerImport] an error occured while trying to create ol.layer.Tile from getCapabilities information. error : ', e);
+            return;
+        }
         wmtsLayer.gpResultLayerId = 'layerimport:WMTS';
         map.addLayer(wmtsLayer);
+    };
+    LayerImport.prototype._getWMTSLayerGetTileUrl = function () {
+        var gettileurl;
+        if (this._getCapResponseWMTS && this._getCapResponseWMTS.OperationsMetadata && this._getCapResponseWMTS.OperationsMetadata.GetTile) {
+            var gettile = this._getCapResponseWMTS.OperationsMetadata.GetTile;
+            if (gettile.DCP && gettile.DCP.HTTP && gettile.DCP.HTTP.Get && Array.isArray(gettile.DCP.HTTP.Get) && gettile.DCP.HTTP.Get.length !== 0) {
+                gettileurl = gettile.DCP.HTTP.Get[0].href;
+            }
+        }
+        return gettileurl;
+    };
+    LayerImport.prototype._getWMTSLayerProjection = function (layerInfo, getCapResponseWMTS) {
+        var projection;
+        if (!layerInfo || typeof layerInfo !== 'object') {
+            return;
+        }
+        if (!getCapResponseWMTS || typeof getCapResponseWMTS !== 'object') {
+            return;
+        }
+        if (layerInfo.TileMatrixSetLink && Array.isArray(layerInfo.TileMatrixSetLink)) {
+            var tms = layerInfo.TileMatrixSetLink[0].TileMatrixSet;
+            if (getCapResponseWMTS.Contents && Array.isArray(getCapResponseWMTS.Contents.TileMatrixSet)) {
+                var tileMatrixSets = getCapResponseWMTS.Contents.TileMatrixSet;
+                for (var i = 0; i < tileMatrixSets.length; i++) {
+                    if (tileMatrixSets[i].Identifier === tms && tileMatrixSets[i].TileMatrix) {
+                        var tileMatrixSet = tileMatrixSets[i];
+                        if (tileMatrixSet.SupportedCRS && ol.proj.get(tileMatrixSet.SupportedCRS)) {
+                            projection = tileMatrixSet.SupportedCRS;
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+        return projection;
     };
     LayerImport.prototype._getTMSParams = function (layerInfo) {
         var tmsOptions = {};
@@ -24062,13 +24285,11 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
                                 return y - x;
                             });
                         }
-                        console.log(resolutions);
                         if (Array.isArray(matrixIds) && matrixIds.sort !== undefined) {
                             matrixIds.sort(function (x, y) {
                                 return x - y;
                             });
                         }
-                        console.log(matrixIds);
                     }
                 }
             } else {
@@ -24083,6 +24304,22 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
         tmsOptions.resolutions = resolutions;
         tmsOptions.origin = origin;
         return tmsOptions;
+    };
+    LayerImport.prototype._getWMTSLayerExtent = function (layerInfo) {
+        var extent;
+        var mapProjCode = this._getMapProjectionCode();
+        if (layerInfo.WGS84BoundingBox && Array.isArray(layerInfo.WGS84BoundingBox)) {
+            extent = ol.proj.transformExtent(layerInfo.WGS84BoundingBox, 'EPSG:4326', mapProjCode);
+        }
+        return extent;
+    };
+    LayerImport.prototype._getMapProjectionCode = function () {
+        var map = this.getMap();
+        if (!map || !map.getView || !map.getView().getProjection) {
+            return;
+        }
+        var mapProjCode = map.getView().getProjection().getCode();
+        return mapProjCode;
     };
     LayerImport.prototype._clearGetCapParams = function () {
         this._getCapRequestUrl = null;
@@ -24166,7 +24403,7 @@ Ol3ControlsGeoportalAttribution = function (ol, LayerUtils) {
 }(ol, CommonUtilsLayerUtils);
 Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution) {
     Gp.ol3extVersion = '0.11.0';
-    Gp.ol3extDate = '2016-06-22';
+    Gp.ol3extDate = '2016-06-24';
     Gp.LayerUtils = LayerUtils;
     CRS.runDefault();
     ol.source.GeoportalWMTS = SourceWMTS;

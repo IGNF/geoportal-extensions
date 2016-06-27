@@ -256,6 +256,25 @@ define([], function () {
             return div;
         },
 
+        /**
+        * Create Waiting Panel
+        *
+        * @returns {DOMElement} DOM element
+        */
+        _createImportWaitingElement : function () {
+            var div  = document.createElement("div");
+            div.id   = this._addUID("GPimportWaitingContainer");
+            div.className = "GPimportWaitingContainerHidden";
+
+            var p = document.createElement("p");
+            p.className = "GPimportWaiting";
+            p.innerHTML = "Recherche en cours...";
+
+            div.appendChild(p);
+
+            return div;
+        },
+
         // ################################################################### //
         // ############### Params for static import (KML / GPX) ############## //
         // ################################################################### //
@@ -534,7 +553,7 @@ define([], function () {
             var input = document.createElement("input");
             input.type = "text";
             input.id = this._addUID("GPimportServiceUrl");
-            input.name = "GPimportInput";
+            input.className = "GPimportInput";
             return input;
         },
 
