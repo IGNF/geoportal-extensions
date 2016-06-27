@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-06-24
+ * @date 2016-06-27
  *
  */
 /*!
@@ -23966,6 +23966,10 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
         }
     };
     LayerImport.prototype._addGetCapWMSLayer = function (layerInfo) {
+        var map = this.getMap();
+        if (!map) {
+            return;
+        }
         var mapProjCode = this._getMapProjectionCode();
         var wmsSourceOptions = {};
         var getMapUrl = this._getWMSLayerGetMapUrl();
@@ -24188,8 +24192,9 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
         var layerTileOptions = {};
         layerTileOptions.source = wmtsSource;
         layerTileOptions.extent = this._getWMTSLayerExtent(layerInfo);
+        var wmtsLayer;
         try {
-            var wmtsLayer = new ol.layer.Tile(layerTileOptions);
+            wmtsLayer = new ol.layer.Tile(layerTileOptions);
         } catch (e) {
             console.log('[ol.control.LayerImport] an error occured while trying to create ol.layer.Tile from getCapabilities information. error : ', e);
             return;
@@ -24403,7 +24408,7 @@ Ol3ControlsGeoportalAttribution = function (ol, LayerUtils) {
 }(ol, CommonUtilsLayerUtils);
 Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution) {
     Gp.ol3extVersion = '0.11.0';
-    Gp.ol3extDate = '2016-06-24';
+    Gp.ol3extDate = '2016-06-27';
     Gp.LayerUtils = LayerUtils;
     CRS.runDefault();
     ol.source.GeoportalWMTS = SourceWMTS;

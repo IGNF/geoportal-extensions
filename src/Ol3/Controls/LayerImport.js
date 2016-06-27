@@ -873,6 +873,10 @@ define([
      * @private
      */
     LayerImport.prototype._addGetCapWMSLayer = function (layerInfo) {
+        var map = this.getMap();
+        if ( !map ) {
+            return;
+        }
         // récupération de la projection de la carte
         var mapProjCode = this._getMapProjectionCode();
 
@@ -1226,8 +1230,9 @@ define([
         layerTileOptions.source = wmtsSource;
         // récupération de l'étendue (bbox)
         layerTileOptions.extent = this._getWMTSLayerExtent(layerInfo);
+        var wmtsLayer;
         try {
-            var wmtsLayer = new ol.layer.Tile(layerTileOptions);
+            wmtsLayer = new ol.layer.Tile(layerTileOptions);
         } catch (e) {
             console.log("[ol.control.LayerImport] an error occured while trying to create ol.layer.Tile from getCapabilities information. error : ", e);
             return;
