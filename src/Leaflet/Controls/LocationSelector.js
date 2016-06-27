@@ -99,6 +99,7 @@ define([
 
             /** mode drag&drop */
             this._activeDragAndDrop = false;
+            this._pressedKeyOnDragAndDrop = false;
 
             /** container map */
             this._map = null;
@@ -458,6 +459,7 @@ define([
             // on supprime le marker, ainsi que les events
             // sur le drag&drop
             if (this._marker != null) {
+                this._marker.off("mousedown", this.onMouseDownMarker, this);
                 this._marker.off("dragstart", this.onStartDragMarker, this);
                 this._marker.off("drag",      this.onDragMarker, this);
                 this._marker.off("dragend",   this.onEndDragMarker, this);
@@ -478,9 +480,13 @@ define([
                 // FIXME on veut du lat/lon sur Leaflet donc on inverse !
                 this._marker = L.marker(L.latLng(position.y, position.x), options);
 
+                this._marker.on("mousedown", this.onMouseDownMarker, this);
                 this._marker.on("dragstart", this.onStartDragMarker, this);
                 this._marker.on("drag",      this.onDragMarker, this);
                 this._marker.on("dragend",   this.onEndDragMarker, this);
+                // this._marker.on("movestart", this.onStartMoveMarker, this);
+                // this._marker.on("move",      this.onMoveMarker, this);
+                // this._marker.on("moveend",   this.onEndMoveMarker, this);
 
                 this._marker.addTo(map);
 
@@ -932,7 +938,6 @@ define([
         * @private
         */
         onActivateMapPointClick : function (e) {
-            logger.log("onActivateMapPointClick", e);
 
             var map = this._map;
 
@@ -1100,6 +1105,7 @@ define([
             // on transmet les coordonnées au panneau
             var oLatLng = this._marker.getLatLng();
             this._setCoordinate(oLatLng);
+
         },
 
         /**
@@ -1111,19 +1117,46 @@ define([
         */
         onEndDragMarker : function () {
 
-            // FIXME gestion du geocodage inverse sur le drag&drop ?
+            if (! this._marker) {
+                return;
+            }
+
+            this._inputShowPointerContainer.checked = true;
+
+            var oLatLng = this._marker.getLatLng();
+
+            if (this._pressedKeyOnDragAndDrop) {
+                // on transmet les coordonnées au panneau
+                this._setCoordinate(oLatLng);
+            } else {
+                logger.log("No key pressed, so autocomplete solution !");
+                this.onMouseMapClick({
+                    latlng : oLatLng
+                });
+            }
+
+            // init
+            this._activeDragAndDrop = false;
+            this._pressedKeyOnDragAndDrop = false;
+        },
+
+        /**
+        * this method is called by event 'mousedown' on marker..
+        * this event gets the pressed key code.
+        *
+        * @param {Object} e - HTMLElement
+        *
+        * @private
+        */
+        onMouseDownMarker : function (e) {
 
             if (! this._marker) {
                 return;
             }
 
-            this._activeDragAndDrop = false;
-            this._inputShowPointerContainer.checked = true;
-
-            // on transmet les coordonnées au panneau
-            var oLatLng = this._marker.getLatLng();
-            this._setCoordinate(oLatLng);
+            this._pressedKeyOnDragAndDrop = e.originalEvent.ctrlKey;
         }
+
     });
 
     return LocationSelector;

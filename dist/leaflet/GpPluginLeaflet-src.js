@@ -11955,6 +11955,7 @@ LeafletControlsLocationSelector = function (L, woodman, Gp, RightManagement, ID,
             L.Util.setOptions(this, options);
             this._uid = this.options.tag.unique || null;
             this._activeDragAndDrop = false;
+            this._pressedKeyOnDragAndDrop = false;
             this._map = null;
             this._inputsContainer = null;
             this._inputLabelContainer = null;
@@ -12115,6 +12116,7 @@ LeafletControlsLocationSelector = function (L, woodman, Gp, RightManagement, ID,
             }
             var map = this._map;
             if (this._marker != null) {
+                this._marker.off('mousedown', this.onMouseDownMarker, this);
                 this._marker.off('dragstart', this.onStartDragMarker, this);
                 this._marker.off('drag', this.onDragMarker, this);
                 this._marker.off('dragend', this.onEndDragMarker, this);
@@ -12129,6 +12131,7 @@ LeafletControlsLocationSelector = function (L, woodman, Gp, RightManagement, ID,
                     zIndexOffset: 1000
                 };
                 this._marker = L.marker(L.latLng(position.y, position.x), options);
+                this._marker.on('mousedown', this.onMouseDownMarker, this);
                 this._marker.on('dragstart', this.onStartDragMarker, this);
                 this._marker.on('drag', this.onDragMarker, this);
                 this._marker.on('dragend', this.onEndDragMarker, this);
@@ -12400,10 +12403,21 @@ LeafletControlsLocationSelector = function (L, woodman, Gp, RightManagement, ID,
             if (!this._marker) {
                 return;
             }
-            this._activeDragAndDrop = false;
             this._inputShowPointerContainer.checked = true;
             var oLatLng = this._marker.getLatLng();
-            this._setCoordinate(oLatLng);
+            if (this._pressedKeyOnDragAndDrop) {
+                this._setCoordinate(oLatLng);
+            } else {
+                this.onMouseMapClick({ latlng: oLatLng });
+            }
+            this._activeDragAndDrop = false;
+            this._pressedKeyOnDragAndDrop = false;
+        },
+        onMouseDownMarker: function (e) {
+            if (!this._marker) {
+                return;
+            }
+            this._pressedKeyOnDragAndDrop = e.originalEvent.ctrlKey;
         }
     });
     return LocationSelector;
