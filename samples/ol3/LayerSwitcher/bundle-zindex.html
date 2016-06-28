@@ -139,6 +139,46 @@
                             }
                         );
                     };
+                    document.getElementById("addBaseLayer").onclick = function(e) {
+                        var olStamen = new ol.layer.Tile({
+                            source : new ol.source.Stamen({
+                                layer : "watercolor"
+                            }),
+                            zIndex : 0
+                        });
+                        map.addLayer(olStamen);
+                        var stamenOption = addOption("Image Stamen (fond de carte)", olStamen.gpLayerId);
+                        document.getElementById("selectLayer").appendChild(stamenOption);
+                        layerSwitcher.addLayer(
+                            olStamen,
+                            {
+                                title : "Images Stamen (fond de carte)",
+                                description : "Images Stamen (fond de carte)"
+                            }
+                        );
+                    };
+                    document.getElementById("addLayerToIndex").onclick = function(e) {
+                        var index = parseInt(document.getElementById("zindexlayervalue").value, 10);
+                        if ( index == null ) {
+                            index = 2
+                        }
+                        var olStamen = new ol.layer.Tile({
+                            source : new ol.source.Stamen({
+                                layer : "watercolor"
+                            }),
+                            zIndex : index
+                        });
+                        map.addLayer(olStamen);
+                        var stamenOption = addOption("Stamen (index initial =" + index +")", olStamen.gpLayerId);
+                        document.getElementById("selectLayer").appendChild(stamenOption);
+                        layerSwitcher.addLayer(
+                            olStamen,
+                            {
+                                title : "Stamen (index initial =" + index +")",
+                                description : "Images Stamen (fond de carte)"
+                            }
+                        );
+                    };
                     document.getElementById("removeLayerElevation").onclick = function(e) {
                         var layers = map.getLayers();
                         var nblayers = layers.getLength();
@@ -168,6 +208,8 @@
 
             </div>
             <button type="button" id="addLayerElevation">Ajouter une couche.</button>
+            <button type="button" id="addBaseLayer">Ajouter un "fond de carte"</button>
+            <button type="button" id="addLayerToIndex">Ajouter une couche à l'index : </button> <input type="number" step="any" min="0" value="2" id="zindexlayervalue"></input>
             <button type="button" id="removeLayerElevation">Supprimer la dernière couche.</button>
             <div>
                 Déplacer la couche :

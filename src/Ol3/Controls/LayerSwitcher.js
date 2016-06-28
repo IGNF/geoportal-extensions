@@ -235,11 +235,26 @@ define([
                 quicklookUrl : config.quicklookUrl || layerInfos._quicklookUrl || null
             };
             this._layers[id] = layerOptions;
-            this._layersOrder.unshift(layerOptions);
-            this._lastZIndex++;
-            layer.setZIndex(this._lastZIndex);
 
-            // Add listeners for opacity and visibility changes
+            // 2. create layer div (to be added to control main container)
+            // Création de la div correspondante à cette couche
+            var layerDiv = this._createLayerDiv(layerOptions);
+            // on stocke la div dans les options de la couche, pour une éventuelle réorganisation (setZIndex par ex)
+            this._layers[id].div = layerDiv;
+
+            // 3. réorganisation des couches si un zIndex est spécifié
+            if ( layer.getZIndex && layer.getZIndex() !== 0 ) {
+                // réorganisation des couches si un zIndex est spécifié
+                this._updateLayersOrder(map);
+            } else {
+                // sinon on ajoute la couche au dessus des autres
+                this._layersOrder.unshift(layerOptions);
+                this._lastZIndex++;
+                layer.setZIndex(this._lastZIndex);
+                this._layerListContainer.insertBefore(layerDiv, this._layerListContainer.firstChild);
+            }
+
+            // 3. Add listeners for opacity and visibility changes
             layer.on(
                 "change:opacity",
                 this._updateLayerOpacity
@@ -248,21 +263,6 @@ define([
                 "change:visible",
                 this._updateLayerVisibility
             );
-            var context = this;
-            this._layers[id].onZIndexChangeEvent = layer.on(
-                "change:zIndex",
-                function (e) {
-                    context._updateLayersIndex.call(context, e);
-                }
-            );
-
-            // 2. add layer div to control main container
-            // Récupération de l'élément contenant les différentes couches.
-            var elementLayersList = document.getElementById("GPlayersList");
-            var layerDiv = this._createLayerDiv(layerOptions);
-            elementLayersList.insertBefore(layerDiv, elementLayersList.firstChild);
-            // on stocke la div dans les options de la couche, pour une éventuelle réorganisation (setZIndex par ex)
-            this._layers[id].div = layerDiv;
 
         // user may also add a new configuration for an already added layer
         } else if ( this._layers[id] && config ) {
@@ -594,8 +594,8 @@ define([
 
         // on récupère l'ordre d'affichage des couches entre elles dans la carte, à partir de zindex.
         /** fonction de callback appelée au changement de zindex d'une couche  */
-        var updateLayerIndex = function (e) {
-            context._updateLayersIndex.call(context, e);
+        var updateLayersOrder = function (e) {
+            context._updateLayersOrder.call(context, e);
         };
         for ( var zindex in this._layersIndex ) {
             if ( this._layersIndex.hasOwnProperty(zindex) ) {
@@ -608,7 +608,7 @@ define([
                     layers[l].layer.setZIndex(this._lastZIndex);
                     this._layers[layers[l].layer.gpLayerId].onZIndexChangeEvent = layers[l].layer.on(
                         "change:zIndex",
-                        updateLayerIndex
+                        updateLayersOrder
                     );
                 }
             }
@@ -720,11 +720,11 @@ define([
     };
 
     /**
-     * Change layer order in layerswitcher (control container) on a layer index change (on map)
+     * Change layers order in layerswitcher (control container) on a layer index change (on map) or when a layer is added to a specific zindex
      *
      * @private
      */
-    LayerSwitcher.prototype._updateLayersIndex = function () {
+    LayerSwitcher.prototype._updateLayersOrder = function () {
 
         // info :
         // 1. on récupère les zindex et les couches associées dans un tableau associatif (objet)
@@ -765,8 +765,8 @@ define([
         var lastZIndex = 0;
         var context = this;
         /** fonction de callback appelée au changement de zindex d'une couche  */
-        var updateLayerIndex = function (e) {
-            context._updateLayersIndex.call(context, e);
+        var updateLayersOrder = function (e) {
+            context._updateLayersOrder.call(context, e);
         };
         this._layersOrder = [];
         for ( var zindex in this._layersIndex ) {
@@ -781,7 +781,7 @@ define([
                     // et on réactive l'écouteur d'événement sur les zindex
                     this._layers[layers[l].layer.gpLayerId].onZIndexChangeEvent = layers[l].layer.on(
                         "change:zIndex",
-                        updateLayerIndex
+                        updateLayersOrder
                     );
                 }
             }
@@ -798,7 +798,7 @@ define([
                 this._layerListContainer.appendChild(layerOptions.div);
             }
         } else {
-            console.log("[ol.control.LayerSwitcher] _updateLayersIndex : layer list container not found to update layers order ?!");
+            console.log("[ol.control.LayerSwitcher] _updateLayersOrder : layer list container not found to update layers order ?!");
         }
 
     };
@@ -906,8 +906,8 @@ define([
         var map = this.getMap();
         var context = this;
         /** fonction de callback appelée au changement de zindex d'une couche  */
-        var updateLayerIndex = function (e) {
-            context._updateLayersIndex.call(context, e);
+        var updateLayersOrder = function (e) {
+            context._updateLayersOrder.call(context, e);
         };
 
         // on récupère l'ordre des div dans le contrôle pour réordonner les couches (avec zindex)
@@ -932,7 +932,7 @@ define([
             // et on réactive l'écouteur d'événement sur les zindex
             this._layers[id].onZIndexChangeEvent = layer.on(
                 "change:zIndex",
-                updateLayerIndex
+                updateLayersOrder
             );
 
         }

@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-06-27
+ * @date 2016-06-28
  *
  */
 /*!
@@ -14227,19 +14227,18 @@ Ol3ControlsLayerSwitcher = function (ol, Utils, LayerSwitcherDOM) {
                 quicklookUrl: config.quicklookUrl || layerInfos._quicklookUrl || null
             };
             this._layers[id] = layerOptions;
-            this._layersOrder.unshift(layerOptions);
-            this._lastZIndex++;
-            layer.setZIndex(this._lastZIndex);
+            var layerDiv = this._createLayerDiv(layerOptions);
+            this._layers[id].div = layerDiv;
+            if (layer.getZIndex && layer.getZIndex() !== 0) {
+                this._updateLayersOrder(map);
+            } else {
+                this._layersOrder.unshift(layerOptions);
+                this._lastZIndex++;
+                layer.setZIndex(this._lastZIndex);
+                this._layerListContainer.insertBefore(layerDiv, this._layerListContainer.firstChild);
+            }
             layer.on('change:opacity', this._updateLayerOpacity);
             layer.on('change:visible', this._updateLayerVisibility);
-            var context = this;
-            this._layers[id].onZIndexChangeEvent = layer.on('change:zIndex', function (e) {
-                context._updateLayersIndex.call(context, e);
-            });
-            var elementLayersList = document.getElementById('GPlayersList');
-            var layerDiv = this._createLayerDiv(layerOptions);
-            elementLayersList.insertBefore(layerDiv, elementLayersList.firstChild);
-            this._layers[id].div = layerDiv;
         } else if (this._layers[id] && config) {
             for (var prop in config) {
                 if (config.hasOwnProperty(prop)) {
@@ -14436,8 +14435,8 @@ Ol3ControlsLayerSwitcher = function (ol, Utils, LayerSwitcherDOM) {
                 this._layersIndex[layerIndex].push(this._layers[id]);
             }
         }, this);
-        var updateLayerIndex = function (e) {
-            context._updateLayersIndex.call(context, e);
+        var updateLayersOrder = function (e) {
+            context._updateLayersOrder.call(context, e);
         };
         for (var zindex in this._layersIndex) {
             if (this._layersIndex.hasOwnProperty(zindex)) {
@@ -14446,7 +14445,7 @@ Ol3ControlsLayerSwitcher = function (ol, Utils, LayerSwitcherDOM) {
                     this._layersOrder.unshift(layers[l]);
                     this._lastZIndex++;
                     layers[l].layer.setZIndex(this._lastZIndex);
-                    this._layers[layers[l].layer.gpLayerId].onZIndexChangeEvent = layers[l].layer.on('change:zIndex', updateLayerIndex);
+                    this._layers[layers[l].layer.gpLayerId].onZIndexChangeEvent = layers[l].layer.on('change:zIndex', updateLayersOrder);
                 }
             }
         }
@@ -14505,7 +14504,7 @@ Ol3ControlsLayerSwitcher = function (ol, Utils, LayerSwitcherDOM) {
         var layerVisibilityInput = document.getElementById('GPvisibility_ID' + id);
         layerVisibilityInput.checked = visible;
     };
-    LayerSwitcher.prototype._updateLayersIndex = function () {
+    LayerSwitcher.prototype._updateLayersOrder = function () {
         var map = this.getMap();
         if (!map) {
             return;
@@ -14528,8 +14527,8 @@ Ol3ControlsLayerSwitcher = function (ol, Utils, LayerSwitcherDOM) {
         }, this);
         var lastZIndex = 0;
         var context = this;
-        var updateLayerIndex = function (e) {
-            context._updateLayersIndex.call(context, e);
+        var updateLayersOrder = function (e) {
+            context._updateLayersOrder.call(context, e);
         };
         this._layersOrder = [];
         for (var zindex in this._layersIndex) {
@@ -14538,7 +14537,7 @@ Ol3ControlsLayerSwitcher = function (ol, Utils, LayerSwitcherDOM) {
                 for (var l = 0; l < layers.length; l++) {
                     this._layersOrder.unshift(layers[l]);
                     lastZIndex++;
-                    this._layers[layers[l].layer.gpLayerId].onZIndexChangeEvent = layers[l].layer.on('change:zIndex', updateLayerIndex);
+                    this._layers[layers[l].layer.gpLayerId].onZIndexChangeEvent = layers[l].layer.on('change:zIndex', updateLayersOrder);
                 }
             }
         }
@@ -14551,7 +14550,7 @@ Ol3ControlsLayerSwitcher = function (ol, Utils, LayerSwitcherDOM) {
                 this._layerListContainer.appendChild(layerOptions.div);
             }
         } else {
-            console.log('[ol.control.LayerSwitcher] _updateLayersIndex : layer list container not found to update layers order ?!');
+            console.log('[ol.control.LayerSwitcher] _updateLayersOrder : layer list container not found to update layers order ?!');
         }
     };
     LayerSwitcher.prototype._onOpenLayerInfoClick = function (e) {
@@ -14619,8 +14618,8 @@ Ol3ControlsLayerSwitcher = function (ol, Utils, LayerSwitcherDOM) {
     LayerSwitcher.prototype._onDragAndDropLayerClick = function () {
         var map = this.getMap();
         var context = this;
-        var updateLayerIndex = function (e) {
-            context._updateLayersIndex.call(context, e);
+        var updateLayersOrder = function (e) {
+            context._updateLayersOrder.call(context, e);
         };
         var matchesLayers = document.querySelectorAll('div.GPlayerSwitcher_layer');
         var maxZIndex = matchesLayers.length;
@@ -14634,7 +14633,7 @@ Ol3ControlsLayerSwitcher = function (ol, Utils, LayerSwitcherDOM) {
                 layer.setZIndex(maxZIndex);
                 maxZIndex--;
             }
-            this._layers[id].onZIndexChangeEvent = layer.on('change:zIndex', updateLayerIndex);
+            this._layers[id].onZIndexChangeEvent = layer.on('change:zIndex', updateLayersOrder);
         }
         map.updateSize();
     };
@@ -24408,7 +24407,7 @@ Ol3ControlsGeoportalAttribution = function (ol, LayerUtils) {
 }(ol, CommonUtilsLayerUtils);
 Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution) {
     Gp.ol3extVersion = '0.11.0';
-    Gp.ol3extDate = '2016-06-27';
+    Gp.ol3extDate = '2016-06-28';
     Gp.LayerUtils = LayerUtils;
     CRS.runDefault();
     ol.source.GeoportalWMTS = SourceWMTS;
