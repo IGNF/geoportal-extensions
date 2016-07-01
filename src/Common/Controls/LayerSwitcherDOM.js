@@ -332,10 +332,11 @@ define(["sortable"], function (Sortable) {
             if (obj.title && obj.description) {
                 container.appendChild(this._createAdvancedToolInformationElement(obj));
             }
-
-            var array = this._createAdvancedToolOpacityElement(obj);
-            for (var i = 0; i < array.length; i++) {
-                container.appendChild(array[i]);
+            if (obj.type !== "feature") {
+                var array = this._createAdvancedToolOpacityElement(obj);
+                for (var i = 0; i < array.length; i++) {
+                    container.appendChild(array[i]);
+                }
             }
 
             return container;

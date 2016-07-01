@@ -5,7 +5,7 @@
     <title>sample vg LayerSwitcher</title>
 
     <!-- Library VirtualGeo -->
-    <script src="../../../lib/vg/js/VirtualGeoWeb-1.1.min.js"></script>
+    <script src="../../../lib/vg/js/VirtualGeoWeb-5.0.2.min.js"></script>
     <!-- <script src="../../../lib/ol3/ol-debug.js"></script> -->
 
     <!-- Plugin VirtualGeo IGN -->
@@ -58,8 +58,10 @@ requirejs(
                 * Creation de la map
                 */
                 var createMap = function () {
-                    map = new VirtualGeo.Map("map", { // The first parameter is the ID of the map
-                        licenseKey : "aTwfAPmTTw5PElAOuHaGBupJO3f6zCMClLnHDxgajDfbcuF2JmJivYNZEnLOQrvfzOa3z63Vzo98xjC6Rr54O7gJ",
+                    map = new VirtualGeo.Map({
+                        target : "map",
+                        // The first parameter is the ID of the map
+                        licenseKey : "aYiISRmYJscMAt2dfooROdTl7iktDWFGKHIc5qMYA89PNpr8lURHGtKA7GlACI6kSZN2QXLZTMoOXAOrCZHQ067K",
                         /**
                         * Actions à mener lorsque le globe est créé
                         */

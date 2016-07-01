@@ -106,7 +106,11 @@ define([
          *
          */
         this._setMap = function (map, mapDiv, f) {
-            if ( map ) { // dans le cas de l'ajout du contrôle à la map
+            if ( map ) {
+                if (!map.mapDiv) {
+                    map.mapDiv = mapDiv;
+                }
+                // dans le cas de l'ajout du contrôle à la map
                 var center = this._createMapCenter();
                 mapDiv.appendChild(center);
                 if (!this.options.target) {

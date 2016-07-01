@@ -1,9 +1,11 @@
 define([
     // "vg",
-    "Common/Controls/LayerSwitcherDOM"
+    "Common/Controls/LayerSwitcherDOM",
+    "Common/Utils/LayerUtils"
 ], function (
     // VirtualGeo, // FIXME Global for browser only !
-    LayerSwitcherDOM
+    LayerSwitcherDOM,
+    LayerUtils
 ) {
 
     "use strict";
@@ -69,12 +71,11 @@ define([
         this._container = container;
         this._initLayers = layers;
         this._callbacks = {};
-
+        this._options = options;
         // call VirtualGeo.Control constructor
         VirtualGeo.Control.call(this, container);
 
         // Surcharge de la méthode _setMap
-        // FIXME
         var VGsetMap = this._setMap;
 
         /**
@@ -90,6 +91,9 @@ define([
         this._setMap = function (map, mapDiv, f) {
             // add layers to layerlist.
             if (map) {
+                if (!map.mapDiv) {
+                    map.mapDiv = mapDiv;
+                }
                 for ( var i = 0; i < this._initLayers.length; i++ ) {
                     // recup la layer, son id,
                     var layer = map.getLayer(layers[i].layer.id);
@@ -167,21 +171,52 @@ define([
                 map.addEventListener("layerremoved", this._callbacks.onRemovedLayerCallBack, self);
 
                 /**
-                * ajout du callback onlayerchanged
+                * ajout du callback onlayerchanged:opacity
                 */
-                this._callbacks.onChangedLayerCallBack = function (changedLayer) {
+                this._callbacks.onOpacityLayerCallBack = function (changedLayer) {
                     if (changedLayer.type !== "elevation") {
                         // Si l'opacité a changé
-                        if (changedLayer.opacity !== self._layers[changedLayer.id].opacity) {
-                            self._updateLayerOpacity(changedLayer);
-                        }
-                        // Si la visibilité a changé
-                        if (changedLayer.visible !== self._layers[changedLayer.id].visible) {
-                            self._updateLayerVisibility(changedLayer);
-                        }
+                        self._updateLayerOpacity(changedLayer);
                     }
                 };
-                map.addEventListener("layerchanged", this._callbacks.onChangedLayerCallBack, self);
+                map.addEventListener("layerchanged:opacity", this._callbacks.onOpacityLayerCallBack, self);
+
+                /**
+                * ajout du callback onlayerchanged:visible
+                */
+                this._callbacks.onVisibilityLayerCallBack = function (changedLayer) {
+                    if (changedLayer.type !== "elevation") {
+                        // Si la visibilité a changé
+                        self._updateLayerVisibility(changedLayer);
+                    }
+                };
+                map.addEventListener("layerchanged:visible", this._callbacks.onVisibilityLayerCallBack, self);
+
+                /**
+                * ajout du callback onlayerchanged:index
+                */
+                this._callbacks.onIndexLayerCallBack = function () {
+                    // if (changedLayer.type !== "elevation") {
+                        if ( self._layerListContainer ) {
+                            // on vide le container précédent
+                            while ( self._layerListContainer.firstChild ) {
+                                self._layerListContainer.removeChild(self._layerListContainer.firstChild);
+                            }
+                            // on réordonne les couches dans l'ordre d'empilement (map.getLayers renvoie un tableau ordonné dans le sens inverse)
+                            self._layersOrder = getOrderedLayers(map);
+                            // et on rajoute les div correspondantes aux différentes couches, dans l'ordre décroissant des zindex
+                            for ( var j = 0; j < self._layersOrder.length; j++ ) {
+                                var layerOptions = self._layersOrder[j];
+                                // récupération de la div de la couche, stockée dans le tableau _layers
+                                var layerDiv = self._layers[self._layersOrder[j].id].div;
+                                self._layerListContainer.appendChild(layerDiv);
+                            }
+                        } else {
+                            console.log("[VG.control.LayerSwitcher] _updateLayersOrder : layer list container not found to update layers order ?!");
+                        }
+                    // }
+                };
+                map.addEventListener("layerchanged:index", this._callbacks.onIndexLayerCallBack, self);
 
                 // On associe la map au LayerSwitcher control ajouté
                 this._map = map;
@@ -193,7 +228,9 @@ define([
                     this._map.removeEventListener("centerchanged", this._callbacks.onChangedCenterCallBack);
                     this._map.removeEventListener("layeradded", this._callbacks.onAddedLayerCallBack);
                     this._map.removeEventListener("layerremoved", this._callbacks.onRemovedLayerCallBack);
-                    this._map.removeEventListener("layerchanged", this._callbacks.onChangedLayerCallBack);
+                    this._map.removeEventListener("layerchanged:opacity", this._callbacks.onOpacityLayerCallBack);
+                    this._map.removeEventListener("layerchanged:visible", this._callbacks.onVisibilityLayerCallBack);
+                    this._map.removeEventListener("layerchanged:index", this._callbacks.onIndexLayerCallBack);
                     return ;
                 }
                 // A l'initialisationdu globe, l'évenement centerchanged n'est pas déclenché
@@ -287,6 +324,7 @@ define([
                 id : id,
                 ipr : layer.ipr || null,
                 type : layer.type || null,
+                inRange : isInRange(layer, map) || true,
                 opacity : layer.opacity || 1,
                 visibility : layer.visible || true,
                 title : config.title || layerInfos._title || id,
@@ -296,8 +334,9 @@ define([
                 quicklookUrl : config.quicklookUrl || layerInfos._quicklookUrl || null
             };
             this._layers[id] = layerOptions;
-            // ajout de la couche au début du tableau des couches ordonnées
-            this._layersOrder.unshift(layerOptions);
+
+            var layerDiv = this._createLayerDiv(layerOptions);
+            this._layers[id].div = layerDiv;
 
             map.moveLayerToIndex({
                 id : layer.id,
@@ -307,7 +346,10 @@ define([
             // 2. add layer div to control main container
             // Récupération de l'élément contenant les différentes couches.
             var elementLayersList = document.getElementById("GPlayersList");
-            elementLayersList.insertBefore(this._createLayerDiv(layerOptions), elementLayersList.firstChild);
+
+            // ajout de la couche au début du tableau des couches ordonnées
+            this._layersOrder.unshift(layerOptions);
+            elementLayersList.insertBefore(layerDiv, elementLayersList.firstChild);
 
         // user may also add a new configuration for an already added layer
         } else if ( this._layers[id] && config ) {
@@ -385,7 +427,7 @@ define([
             input.checked = "checked";
         }
         // ajout dans le container principal de la liste des layers
-        var divL = this._createMainLayersElement();
+        var divL = this._layerListContainer = this._createMainLayersElement();
         container.appendChild(divL);
 
         // creation du mode draggable
@@ -430,12 +472,15 @@ define([
                     id = layer.id;
                     var layerInfos = getLayerInfo(layer) || {};
                     if ( !this._layers[id] ) {
+
                         // si la couche n'est pas encore dans la liste des layers (this._layers), on l'ajoute
                         var layerOptions = {
                             id : layer.id,
+                            ipr : layer.ipr || null,
                             opacity : layer.opacity || 1,
-                            visibility : layer.visible,
-                            // inRange : isInRange(layer, map) || true,
+                            visibility : layer.visible || true,
+                            type : layer.type || null,
+                            inRange : isInRange(layer, map) || true,
                             title : layerInfos._title || id,
                             description : layerInfos._description || null,
                             legends : layerInfos._legends || [],
@@ -447,7 +492,7 @@ define([
                         // update layer informations (visibility, opacity, inRange)
                         this._layers[id].opacity = layer.opacity;
                         this._layers[id].visibility = layer.visible;
-                        // this._layers[id].inRange = isInRange(layer, map);
+                        this._layers[id].inRange = isInRange(layer, map);
                     }
                     this._lastZIndex++;
                 }
@@ -457,7 +502,9 @@ define([
         // on ajoute les couches au layerSwitcher dans le bon ordre
         for ( var i in this._layersOrder ) {
             if (this._layersOrder[i].type !== "elevation") {
-                elementLayersList.appendChild(this._createLayerDiv(this._layers[this._layersOrder[i].id]));
+                var layerDiv = this._createLayerDiv(this._layers[this._layersOrder[i].id]);
+                this._layers[this._layersOrder[i].id].div = layerDiv;
+                elementLayersList.appendChild(layerDiv);
             }
         }
     };
@@ -670,9 +717,10 @@ define([
         }
         // mise à jour du tableau des couches ordonneés
         this._layersOrder = getOrderedLayers(map);
-
-        // mise à jour de la visu
-        // map.updateSize();
+        // on appelle le callback sur le changement d'index manuellement
+        // pour forcer la reconstruction des div du layerSwitcher au cas où
+        // le nouvcel index est le même que le précédent
+        this._callbacks.onIndexLayerCallBack();
     };
 
     /**
@@ -688,15 +736,15 @@ define([
                     var layerOptions = this._layers[id];
                     // Check if layer is out of range.
                     var layerDiv;
-                    // if ( isInRange(layer, map) && !layerOptions.inRange ) {
-                    layerOptions.inRange = true;
-                    layerDiv = document.getElementById("GPlayerSwitcher_ID" + id);
-                    layerDiv.classList.remove("outOfRange");
-                    /* } else if ( !isInRange(layer, map) && layerOptions.inRange ) {
+                    if ( isInRange(layer, map) && !layerOptions.inRange ) {
+                        layerOptions.inRange = true;
+                        layerDiv = document.getElementById("GPlayerSwitcher_ID" + id);
+                        layerDiv.classList.remove("outOfRange");
+                    } else if ( !isInRange(layer, map) && layerOptions.inRange ) {
                         layerOptions.inRange = false;
                         layerDiv = document.getElementById("GPlayerSwitcher_ID" + id);
                         layerDiv.classList.add("outOfRange");
-                    } */
+                    }
                 }
             },
             this
@@ -718,19 +766,66 @@ define([
             return;
         }
         // check if map zoom is in layer zoom range
-        var mapResolution = map.getView().getResolution();
-        if ( mapResolution > layer.getMaxResolution() || mapResolution < layer.getMinResolution ) {
+        var mapResolution = map.getZoomScale();
+
+        if ( (layer.maxScaleDenominator !== 0 || layer.minScaleDenominator !== 0) && (mapResolution > layer.maxScaleDenominator || mapResolution < layer.minScaleDenominator) ) {
             return false;
         }
 
+        var viewExtent = getViewExtent(map);
+        // To get the same format of bbox array
+        var layerExtent = [layer.bbox[3], layer.bbox[0], layer.bbox[1], layer.bbox[2]];
+        if (!LayerUtils.intersects(viewExtent, layerExtent)) {
+            return false;
+        }
+
+        /*
         // check if map extent intersects layer extent (if defined)
         var mapExtent = map.getView().calculateExtent(map.getSize());
         var layerExtent = layer.getExtent();
         if ( layerExtent && !ol.extent.intersects(mapExtent, layerExtent) ) {
             return false;
-        }
+        }*/
 
         return true;
+    }
+
+    /**
+    * Returns the extent of the current view
+    *
+    * @private
+    * @memberof LayerSwitcher
+    * @method getViewExtent
+    * @param {object} map - the map object
+    * @returns {Array} extent - the extent of the view
+    */
+    function getViewExtent(map) {
+        var topleft = {};
+        var bottomRight = {};
+        var mapDiv = map.mapDiv;
+        // on teste le pick sur l'axe des y au cas où la vue est inclinée
+        for (var x = 0; x <= mapDiv.offsetHeight; x = x + mapDiv.offsetHeight / 10) {
+            // on pick en haut à gauche de la fenêtre puis on descend d'un dixième de la hauteur de la fenêtre
+            // à chaque itération jusqu'à ne plus picker dans le ciel
+            topLeft = map.pickPosition(0, x);
+            // Si l'un des deux coordonnées n'est plus différent de 0, on ne pick plus dans le ciel
+            if (topLeft.lon !== 0 || topLeft.lat !== 0) {
+                break;
+            }
+        }
+        // On pick en bas à droite
+        bottomRight = map.pickPosition(mapDiv.offsetWidth, mapDiv.offsetHeight);
+        // Si l'un des deux picks est toujours dans le ciel malgré les précédents tests,
+        // c'est que la vue est si éloignée qu'on voit le globe complet :
+        // On renvoie donc comme extent [90, -180, -90, 180]
+        if ((topLeft.lon === 0 && topLeft.lat === 0) || (bottomRight.lon === 0 && bottomRight.lat === 0)) {
+            topLeft.lat = 90;
+            topLeft.lon = -180;
+            bottomRight.lat = -90;
+            bottomRight.lon = 180;
+        }
+        var extent = [topLeft.lat, topLeft.lon, bottomRight.lat, bottomRight.lon];
+        return extent;
     }
 
     /**
@@ -764,12 +859,24 @@ define([
      */
     function getOrderedLayers (map) {
         var orderedLayers = [];
+        /*
         // on réordonne les couches dans l'ordre d'empilement (map.getLayers renvoie un tableau ordonné dans le sens inverse)
         var allLayers = map.getLayers().reverse();
         for ( var i = 0; i < allLayers.length; i++) {
             if (allLayers[i].type !== "elevation") {
                 orderedLayers.push(allLayers[i]);
             }
+        }
+        */
+        // FIXME attendre correction sur le map.getLayers() pour qu'il renvoie les couches vraiment ordonnées
+        // et alors le code ci-dessus sera fonctionnel pour bloquer les feature layers en haut dans le LS
+        var featureLayers = map.getLayers({type : "feature"}).reverse();
+        for ( var i = 0; i < featureLayers.length; i++) {
+            orderedLayers.push(featureLayers[i]);
+        }
+        var rasterLayers = map.getLayers({type : "raster"}).reverse();
+        for ( var i = 0; i < rasterLayers.length; i++) {
+            orderedLayers.push(rasterLayers[i]);
         }
         return orderedLayers;
     };

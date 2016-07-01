@@ -4,7 +4,7 @@
         <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
 
         <!-- Library VirtualGeo -->
-        <script src="../../../lib/vg/js/VirtualGeoWeb-1.1.min.js"></script>
+        <script src="../../../lib/vg/js/VirtualGeoWeb-5.0.2.min.js"></script>
 
         <!-- Plugin OpenLayers 3 IGN -->
         <link rel="stylesheet" href="../../../dist/vg/GpPluginVg-src.css" />
@@ -39,8 +39,10 @@
                 * Quand la page est chargée, on crée le globe
                 */
                 window.onload = function () {
-                    map = new VirtualGeo.Map("map", { // The first parameter is the ID of the map
-                        licenseKey : "aTwfAPmTTw5PElAOuHaGBupJO3f6zCMClLnHDxgajDfbcuF2JmJivYNZEnLOQrvfzOa3z63Vzo98xjC6Rr54O7gJ",
+                    map = new VirtualGeo.Map({
+                        target : "map",
+                        // The first parameter is the ID of the map
+                        licenseKey : "aYiISRmYJscMAt2dfooROdTl7iktDWFGKHIc5qMYA89PNpr8lURHGtKA7GlACI6kSZN2QXLZTMoOXAOrCZHQ067K",
                         /**
                         * Actions à mener lorsque le globe est créé
                         */
