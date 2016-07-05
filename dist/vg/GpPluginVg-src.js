@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 5.0.0
- * @date 2016-07-01
+ * @date 2016-07-05
  *
  */
 /*!
@@ -90,7 +90,7 @@
   }
 }(this, function() {
 
-var gp, CommonUtilsAutoLoadConfig, sortable, CommonControlsLayerSwitcherDOM, CommonUtilsLayerUtils, VgControlsLayerSwitcher, proj4, CommonUtilsConfig, CommonUtilsCheckRightManagement, CommonControlsMousePositionDOM, VgControlsUtilsPositionFormater, VgCRSCRS, VgControlsMousePosition, VgGpPluginVg;
+var gp, CommonUtilsAutoLoadConfig, CommonUtilsLayerUtils, sortable, CommonControlsLayerSwitcherDOM, VgControlsLayerSwitcher, proj4, CommonUtilsConfig, CommonUtilsCheckRightManagement, CommonControlsMousePositionDOM, VgControlsUtilsPositionFormater, VgCRSCRS, VgControlsMousePosition, VgGpPluginVg;
 (function (root, factory) {
     if (true) {
         gp = function () {
@@ -7430,6 +7430,167 @@ CommonUtilsAutoLoadConfig = function (Gp) {
         }
     }());
 }(gp);
+CommonUtilsLayerUtils = function () {
+    var LayerUtils = {
+        getZoomLevelFromScaleDenominator: function (scaleDenominator, crs) {
+            var resolutionsNatives = {};
+            switch (crs) {
+            case 'EPSG:2154':
+                resolutionsNatives = {
+                    0: 104579.224549894,
+                    1: 52277.5323537905,
+                    2: 26135.4870785954,
+                    3: 13066.8913818,
+                    4: 6533.2286041135,
+                    5: 3266.5595244627,
+                    6: 1633.2660045974,
+                    7: 816.629554986,
+                    8: 408.3139146768,
+                    9: 204.1567415109,
+                    10: 102.0783167832,
+                    11: 51.0391448966,
+                    12: 25.5195690743,
+                    13: 12.7597836936,
+                    14: 6.379891636,
+                    15: 3.1899457653,
+                    16: 1.5949728695,
+                    17: 0.7974864315,
+                    18: 0.3987432149,
+                    19: 0.1993716073,
+                    20: 0.0996858037,
+                    21: 0.0498429018
+                };
+                break;
+            default:
+                resolutionsNatives = {
+                    0: 156543.033928041,
+                    1: 78271.51696402048,
+                    2: 39135.758482010235,
+                    3: 19567.87924100512,
+                    4: 9783.93962050256,
+                    5: 4891.96981025128,
+                    6: 2445.98490512564,
+                    7: 1222.99245256282,
+                    8: 611.49622628141,
+                    9: 305.7481131407048,
+                    10: 152.8740565703525,
+                    11: 76.43702828517624,
+                    12: 38.21851414258813,
+                    13: 19.10925707129406,
+                    14: 9.554628535647032,
+                    15: 4.777314267823516,
+                    16: 2.388657133911758,
+                    17: 1.194328566955879,
+                    18: 0.5971642834779395,
+                    19: 0.2985821417389697,
+                    20: 0.1492910708694849,
+                    21: 0.0746455354347424
+                };
+                break;
+            }
+            var resolution = scaleDenominator * 0.00028;
+            for (var index in resolutionsNatives) {
+                if (resolutionsNatives.hasOwnProperty(index)) {
+                    if (resolutionsNatives[index] <= resolution) {
+                        return index;
+                    }
+                }
+            }
+            return 0;
+        },
+        getAttributions: function (params) {
+            var zoom = params.zoom;
+            var attributions = [];
+            if (params.originators != null && params.visibility) {
+                var drawLogo;
+                for (var j = 0, jl = params.originators.length; j < jl; j++) {
+                    drawLogo = true;
+                    var originator = params.originators[j];
+                    var constraints = params.originators[j].constraints || [];
+                    for (var k = 0, kl = constraints.length; k < kl; k++) {
+                        var constraint = constraints[k];
+                        drawLogo = true;
+                        var minZoomLevel = this.getZoomLevelFromScaleDenominator(constraint.maxScaleDenominator, params.crs);
+                        var maxZoomLevel = this.getZoomLevelFromScaleDenominator(constraint.minScaleDenominator, params.crs);
+                        if (minZoomLevel && minZoomLevel > zoom) {
+                            drawLogo = false;
+                        }
+                        if (drawLogo && maxZoomLevel && maxZoomLevel < zoom) {
+                            drawLogo = false;
+                        }
+                        var bbox = constraint.bbox;
+                        if (drawLogo && bbox) {
+                            drawLogo = false;
+                            var viewExtent = params.extent;
+                            if (viewExtent) {
+                                var bounds = [
+                                    bbox.top,
+                                    bbox.left,
+                                    bbox.bottom,
+                                    bbox.right
+                                ];
+                                if (this.intersects(viewExtent, bounds)) {
+                                    drawLogo = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (drawLogo) {
+                        var logo = originator.logo;
+                        var url = originator.url;
+                        var name = originator.name ? originator.name : '';
+                        var text = originator.attribution;
+                        var container = document.createElement('div');
+                        container.className = 'gp-control-attribution';
+                        var link = null;
+                        link = document.createElement('a');
+                        link.className = 'gp-control-attribution-link';
+                        link.target = '_blank';
+                        container.appendChild(link);
+                        if (url) {
+                            link.href = url;
+                        }
+                        var bImage = logo ? true : false;
+                        var image = null;
+                        if (bImage) {
+                            image = document.createElement('img');
+                            if (link) {
+                                image.className = 'gp-control-attribution-image';
+                                link.appendChild(image);
+                            } else {
+                                image.className = '';
+                                container.appendChild(image);
+                            }
+                            image.src = logo;
+                            image.title = text || name;
+                            image.style.height = '30px';
+                            image.style.width = '30px';
+                        } else {
+                            if (name) {
+                                link.text = name;
+                            } else if (text) {
+                                link.text = text;
+                            } else if (url) {
+                                link.text = url;
+                            } else {
+                                link.text = '';
+                            }
+                        }
+                        attributions.push(container.innerHTML + ' ');
+                    }
+                }
+            }
+            return attributions;
+        },
+        intersects: function (extent1, extent2) {
+            var intersectsX = extent1[1] <= extent2[3] && extent2[1] <= extent1[3];
+            var intersectsY = extent1[2] <= extent2[0] && extent2[2] <= extent1[0];
+            return intersectsX && intersectsY;
+        }
+    };
+    return LayerUtils;
+}();
 (function (factory) {
     'use strict';
     if (true) {
@@ -8516,167 +8677,6 @@ CommonControlsLayerSwitcherDOM = function (Sortable) {
     };
     return LayerSwitcherDOM;
 }(sortable);
-CommonUtilsLayerUtils = function () {
-    var LayerUtils = {
-        getZoomLevelFromScaleDenominator: function (scaleDenominator, crs) {
-            var resolutionsNatives = {};
-            switch (crs) {
-            case 'EPSG:2154':
-                resolutionsNatives = {
-                    0: 104579.224549894,
-                    1: 52277.5323537905,
-                    2: 26135.4870785954,
-                    3: 13066.8913818,
-                    4: 6533.2286041135,
-                    5: 3266.5595244627,
-                    6: 1633.2660045974,
-                    7: 816.629554986,
-                    8: 408.3139146768,
-                    9: 204.1567415109,
-                    10: 102.0783167832,
-                    11: 51.0391448966,
-                    12: 25.5195690743,
-                    13: 12.7597836936,
-                    14: 6.379891636,
-                    15: 3.1899457653,
-                    16: 1.5949728695,
-                    17: 0.7974864315,
-                    18: 0.3987432149,
-                    19: 0.1993716073,
-                    20: 0.0996858037,
-                    21: 0.0498429018
-                };
-                break;
-            default:
-                resolutionsNatives = {
-                    0: 156543.033928041,
-                    1: 78271.51696402048,
-                    2: 39135.758482010235,
-                    3: 19567.87924100512,
-                    4: 9783.93962050256,
-                    5: 4891.96981025128,
-                    6: 2445.98490512564,
-                    7: 1222.99245256282,
-                    8: 611.49622628141,
-                    9: 305.7481131407048,
-                    10: 152.8740565703525,
-                    11: 76.43702828517624,
-                    12: 38.21851414258813,
-                    13: 19.10925707129406,
-                    14: 9.554628535647032,
-                    15: 4.777314267823516,
-                    16: 2.388657133911758,
-                    17: 1.194328566955879,
-                    18: 0.5971642834779395,
-                    19: 0.2985821417389697,
-                    20: 0.1492910708694849,
-                    21: 0.0746455354347424
-                };
-                break;
-            }
-            var resolution = scaleDenominator * 0.00028;
-            for (var index in resolutionsNatives) {
-                if (resolutionsNatives.hasOwnProperty(index)) {
-                    if (resolutionsNatives[index] <= resolution) {
-                        return index;
-                    }
-                }
-            }
-            return 0;
-        },
-        getAttributions: function (params) {
-            var zoom = params.zoom;
-            var attributions = [];
-            if (params.originators != null && params.visibility) {
-                var drawLogo;
-                for (var j = 0, jl = params.originators.length; j < jl; j++) {
-                    drawLogo = true;
-                    var originator = params.originators[j];
-                    var constraints = params.originators[j].constraints || [];
-                    for (var k = 0, kl = constraints.length; k < kl; k++) {
-                        var constraint = constraints[k];
-                        drawLogo = true;
-                        var minZoomLevel = this.getZoomLevelFromScaleDenominator(constraint.maxScaleDenominator, params.crs);
-                        var maxZoomLevel = this.getZoomLevelFromScaleDenominator(constraint.minScaleDenominator, params.crs);
-                        if (minZoomLevel && minZoomLevel > zoom) {
-                            drawLogo = false;
-                        }
-                        if (drawLogo && maxZoomLevel && maxZoomLevel < zoom) {
-                            drawLogo = false;
-                        }
-                        var bbox = constraint.bbox;
-                        if (drawLogo && bbox) {
-                            drawLogo = false;
-                            var viewExtent = params.extent;
-                            if (viewExtent) {
-                                var bounds = [
-                                    bbox.top,
-                                    bbox.left,
-                                    bbox.bottom,
-                                    bbox.right
-                                ];
-                                if (this.intersects(viewExtent, bounds)) {
-                                    drawLogo = true;
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    if (drawLogo) {
-                        var logo = originator.logo;
-                        var url = originator.url;
-                        var name = originator.name ? originator.name : '';
-                        var text = originator.attribution;
-                        var container = document.createElement('div');
-                        container.className = 'gp-control-attribution';
-                        var link = null;
-                        link = document.createElement('a');
-                        link.className = 'gp-control-attribution-link';
-                        link.target = '_blank';
-                        container.appendChild(link);
-                        if (url) {
-                            link.href = url;
-                        }
-                        var bImage = logo ? true : false;
-                        var image = null;
-                        if (bImage) {
-                            image = document.createElement('img');
-                            if (link) {
-                                image.className = 'gp-control-attribution-image';
-                                link.appendChild(image);
-                            } else {
-                                image.className = '';
-                                container.appendChild(image);
-                            }
-                            image.src = logo;
-                            image.title = text || name;
-                            image.style.height = '30px';
-                            image.style.width = '30px';
-                        } else {
-                            if (name) {
-                                link.text = name;
-                            } else if (text) {
-                                link.text = text;
-                            } else if (url) {
-                                link.text = url;
-                            } else {
-                                link.text = '';
-                            }
-                        }
-                        attributions.push(container.innerHTML + ' ');
-                    }
-                }
-            }
-            return attributions;
-        },
-        intersects: function (extent1, extent2) {
-            var intersectsX = extent1[1] <= extent2[3] && extent2[1] <= extent1[3];
-            var intersectsY = extent1[2] <= extent2[0] && extent2[2] <= extent1[0];
-            return intersectsX && intersectsY;
-        }
-    };
-    return LayerUtils;
-}();
 VgControlsLayerSwitcher = function (LayerSwitcherDOM, LayerUtils) {
     function LayerSwitcher(lsOptions) {
         lsOptions = lsOptions || {};
@@ -15251,11 +15251,12 @@ VgControlsMousePosition = function (proj4, woodman, Gp, Config, RightManagement,
     };
     return MousePosition;
 }(proj4, {}, gp, CommonUtilsConfig, CommonUtilsCheckRightManagement, CommonControlsMousePositionDOM, VgControlsUtilsPositionFormater, VgCRSCRS);
-VgGpPluginVg = function (Gp, LayerSwitcher, MousePosition) {
+VgGpPluginVg = function (Gp, LayerUtils, LayerSwitcher, MousePosition) {
+    Gp.LayerUtils = LayerUtils;
     VirtualGeo.LayerSwitcher = LayerSwitcher;
     VirtualGeo.MousePosition = MousePosition;
     return Gp;
-}(gp, VgControlsLayerSwitcher, VgControlsMousePosition);
+}(gp, CommonUtilsLayerUtils, VgControlsLayerSwitcher, VgControlsMousePosition);
 window.proj4 = proj4;
 
 return Gp;
