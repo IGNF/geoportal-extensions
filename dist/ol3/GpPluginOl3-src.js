@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-06-28
+ * @date 2016-07-08
  *
  */
 /*!
@@ -4324,7 +4324,7 @@ var gp, CommonUtilsAutoLoadConfig, CommonUtilsLayerUtils, proj4, Ol3CRSEPSG2154,
         Preference.prototype.toString = function () {
             var Preferences = [];
             var tmplPreference = '';
-            for (var idx in this.type) {
+            for (var idx = 0; idx < this.type.length; idx++) {
                 tmplPreference = this.template;
                 tmplPreference = tmplPreference.replace(/__TYPE__/g, this.type[idx]);
                 Preferences.push(tmplPreference);
@@ -7336,7 +7336,7 @@ var gp, CommonUtilsAutoLoadConfig, CommonUtilsLayerUtils, proj4, Ol3CRSEPSG2154,
         var scope = typeof window !== 'undefined' ? window : {};
         var Gp = scope.Gp || {
             servicesVersion: '1.0.0-beta3',
-            servicesDate: '2016-06-13',
+            servicesDate: '2016-07-08',
             extend: function (strNS, value) {
                 var parts = strNS.split('.');
                 var parent = this;
@@ -13945,9 +13945,11 @@ CommonControlsLayerSwitcherDOM = function (Sortable) {
             if (obj.title && obj.description) {
                 container.appendChild(this._createAdvancedToolInformationElement(obj));
             }
-            var array = this._createAdvancedToolOpacityElement(obj);
-            for (var i = 0; i < array.length; i++) {
-                container.appendChild(array[i]);
+            if (obj.type !== 'feature') {
+                var array = this._createAdvancedToolOpacityElement(obj);
+                for (var i = 0; i < array.length; i++) {
+                    container.appendChild(array[i]);
+                }
             }
             return container;
         },
@@ -24407,7 +24409,7 @@ Ol3ControlsGeoportalAttribution = function (ol, LayerUtils) {
 }(ol, CommonUtilsLayerUtils);
 Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution) {
     Gp.ol3extVersion = '0.11.0';
-    Gp.ol3extDate = '2016-06-28';
+    Gp.ol3extDate = '2016-07-08';
     Gp.LayerUtils = LayerUtils;
     CRS.runDefault();
     ol.source.GeoportalWMTS = SourceWMTS;

@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.8.1
- * @date 2016-06-24
+ * @date 2016-07-08
  *
  */
 /*!
@@ -4370,7 +4370,7 @@ var gp, CommonUtilsAutoLoadConfig, leafletDraw, sortable, CommonControlsLayerSwi
         Preference.prototype.toString = function () {
             var Preferences = [];
             var tmplPreference = '';
-            for (var idx in this.type) {
+            for (var idx = 0; idx < this.type.length; idx++) {
                 tmplPreference = this.template;
                 tmplPreference = tmplPreference.replace(/__TYPE__/g, this.type[idx]);
                 Preferences.push(tmplPreference);
@@ -7382,7 +7382,7 @@ var gp, CommonUtilsAutoLoadConfig, leafletDraw, sortable, CommonControlsLayerSwi
         var scope = typeof window !== 'undefined' ? window : {};
         var Gp = scope.Gp || {
             servicesVersion: '1.0.0-beta3',
-            servicesDate: '2016-06-13',
+            servicesDate: '2016-07-08',
             extend: function (strNS, value) {
                 var parts = strNS.split('.');
                 var parent = this;
@@ -10739,9 +10739,11 @@ CommonControlsLayerSwitcherDOM = function (Sortable) {
             if (obj.title && obj.description) {
                 container.appendChild(this._createAdvancedToolInformationElement(obj));
             }
-            var array = this._createAdvancedToolOpacityElement(obj);
-            for (var i = 0; i < array.length; i++) {
-                container.appendChild(array[i]);
+            if (obj.type !== 'feature') {
+                var array = this._createAdvancedToolOpacityElement(obj);
+                for (var i = 0; i < array.length; i++) {
+                    container.appendChild(array[i]);
+                }
             }
             return container;
         },
@@ -23708,7 +23710,7 @@ LeafletLayersLayers = function (L, woodman, LayerConfig, WMS, WMTS) {
 }(leaflet, {}, LeafletLayersLayerConfig, LeafletLayersWMS, LeafletLayersWMTS);
 LeafletGpPluginLeaflet = function (L, P, Gp, Controls, Layers, CRS) {
     Gp.leafletExtVersion = '0.8.1';
-    Gp.leafletExtDate = '2016-06-24';
+    Gp.leafletExtDate = '2016-07-08';
     L.geoportalLayer = Layers;
     L.geoportalControl = Controls;
     L.geoportalCRS = CRS;
