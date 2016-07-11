@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-07-08
+ * @date 2016-07-11
  *
  */
 /*!
@@ -23777,7 +23777,7 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
     LayerImport.prototype._importStaticLayerFromLocalFile = function (layerName) {
         var file = this._staticLocalImportInput.files[0];
         if (!file) {
-            console.log('missing file');
+            console.log('[ol.control.LayerImport] missing file');
             return;
         }
         var format;
@@ -23785,21 +23785,17 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
         var context = this;
         fReader.onerror = function (e) {
             context._waitingContainer.className = 'GPimportWaitingContainerHidden';
-            console.log('error fileReader : ', e);
         };
         fReader.onprogress = function () {
         };
         fReader.onloadstart = function () {
             context._waitingContainer.className = 'GPimportWaitingContainerVisible';
             context._waiting = true;
-            console.log('onloadstart');
         };
         fReader.onabort = function () {
             context._waitingContainer.className = 'GPimportWaitingContainerHidden';
-            console.log('onabort');
         };
         fReader.onloadend = function (e) {
-            console.log('onloadend : ', e);
         };
         fReader.onload = function (e) {
             context._waitingContainer.className = 'GPimportWaitingContainerHidden';
@@ -24409,7 +24405,7 @@ Ol3ControlsGeoportalAttribution = function (ol, LayerUtils) {
 }(ol, CommonUtilsLayerUtils);
 Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution) {
     Gp.ol3extVersion = '0.11.0';
-    Gp.ol3extDate = '2016-07-08';
+    Gp.ol3extDate = '2016-07-11';
     Gp.LayerUtils = LayerUtils;
     CRS.runDefault();
     ol.source.GeoportalWMTS = SourceWMTS;

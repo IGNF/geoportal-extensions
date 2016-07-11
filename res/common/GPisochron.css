@@ -49,6 +49,8 @@ div[id^=GPisochronPanel-] {
 
 .GPisochronCalcWaitingContainerVisible {
   display: -webkit-flex;
+  display: -ms-flexbox;
+  display: -webkit-box;
   display: flex;
 }
 
@@ -106,10 +108,14 @@ input[id^=GPisochronSubmit] {
 
 div[id^=GPisochronChoice] {
   display: -webkit-flex;
+  display: -ms-flexbox;
+  display: -webkit-box;
   display: flex;
   width: 160px;
   -webkit-justify-content: space-between;
-  justify-content: space-between;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   margin: auto;
   margin-top: 15px;
   margin-bottom: 5px;
@@ -163,9 +169,13 @@ div[id^=GPisochronValueDist] {
 
 div[id^=GPisochronModeChoice] {
   display: -webkit-flex;
+  display: -ms-flexbox;
+  display: -webkit-box;
   display: flex;
   -webkit-justify-content: space-between;
-  justify-content: space-between;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   margin: 15px 0;
 }
 
@@ -253,9 +263,12 @@ div[id^=GPisoExclusions] {
 
 .GPisoExclusionsOptions {
   display: -webkit-flex;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   -webkit-justify-content: space-around;
-  justify-content: space-around;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
 }
 
 .GPisoExclusionsOption {

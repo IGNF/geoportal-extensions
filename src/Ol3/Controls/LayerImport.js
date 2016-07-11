@@ -530,7 +530,7 @@ define([
     LayerImport.prototype._importStaticLayerFromLocalFile = function (layerName) {
         var file = this._staticLocalImportInput.files[0];
         if ( !file ) {
-            console.log("missing file");
+            console.log("[ol.control.LayerImport] missing file");
             return;
         }
 
@@ -546,7 +546,7 @@ define([
         fReader.onerror = function (e) {
             // en cas d'erreur, on revient au panel initial et on cache la patience
             context._waitingContainer.className = "GPimportWaitingContainerHidden";
-            console.log("error fileReader : ",e);
+            logger.log("error fileReader : ",e);
         };
         /** on readAsText progress */
         fReader.onprogress = function () {
@@ -557,20 +557,20 @@ define([
             // affichage d'une patience le temps du chargement
             context._waitingContainer.className = "GPimportWaitingContainerVisible";
             context._waiting = true;
-            console.log("onloadstart");
+            logger.log("onloadstart");
         };
         /** on readAsText abort */
         fReader.onabort = function () {
             // en cas d'erreur, on revient au panel initial et on cache la patience
             context._waitingContainer.className = "GPimportWaitingContainerHidden";
-            console.log("onabort");
+            logger.log("onabort");
         };
         /** on readAsText loadend */
         fReader.onloadend = function (e) {
             // fReader = null ?
             // TODO : cacher la patience
             // TODO : replier le formulaire ?
-            console.log("onloadend : ", e);
+            logger.log("onloadend : ", e);
         };
         /** on readAsText load */
         fReader.onload = function (e) {
