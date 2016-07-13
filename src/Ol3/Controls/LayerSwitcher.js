@@ -263,6 +263,16 @@ define([
                 "change:visible",
                 this._updateLayerVisibility
             );
+            // listener for zIndex change
+            var context = this;
+            /** fonction de callback appelée au changement de zindex d'une couche  */
+            var updateLayersOrder = function (e) {
+                context._updateLayersOrder.call(context, e);
+            };
+            this._layers[id].onZIndexChangeEvent = layer.on(
+                "change:zIndex",
+                updateLayersOrder
+            );
 
         // user may also add a new configuration for an already added layer
         } else if ( this._layers[id] && config ) {
