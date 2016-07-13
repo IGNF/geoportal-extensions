@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-07-08
+ * @date 2016-07-13
  *
  */
 /*!
@@ -14241,6 +14241,11 @@ Ol3ControlsLayerSwitcher = function (ol, Utils, LayerSwitcherDOM) {
             }
             layer.on('change:opacity', this._updateLayerOpacity);
             layer.on('change:visible', this._updateLayerVisibility);
+            var context = this;
+            var updateLayersOrder = function (e) {
+                context._updateLayersOrder.call(context, e);
+            };
+            this._layers[id].onZIndexChangeEvent = layer.on('change:zIndex', updateLayersOrder);
         } else if (this._layers[id] && config) {
             for (var prop in config) {
                 if (config.hasOwnProperty(prop)) {
@@ -24409,7 +24414,7 @@ Ol3ControlsGeoportalAttribution = function (ol, LayerUtils) {
 }(ol, CommonUtilsLayerUtils);
 Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution) {
     Gp.ol3extVersion = '0.11.0';
-    Gp.ol3extDate = '2016-07-08';
+    Gp.ol3extDate = '2016-07-13';
     Gp.LayerUtils = LayerUtils;
     CRS.runDefault();
     ol.source.GeoportalWMTS = SourceWMTS;
