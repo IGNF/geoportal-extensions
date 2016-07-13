@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 5.0.0
- * @date 2016-07-05
+ * @date 2016-07-13
  *
  */
 /*!
@@ -8815,6 +8815,7 @@ VgControlsLayerSwitcher = function (LayerSwitcherDOM, LayerUtils) {
     LayerSwitcher.prototype.constructor = LayerSwitcher;
     LayerSwitcher.prototype.addLayer = function (layer, config) {
         config = config || {};
+        var map = this.getMap();
         if (!layer) {
             console.log('[ERROR] LayerSwitcher:addLayer - missing layer parameter');
             return;

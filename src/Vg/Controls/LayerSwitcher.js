@@ -292,6 +292,7 @@ define([
     LayerSwitcher.prototype.addLayer = function (layer, config) {
 
         config = config || {};
+        var map = this.getMap();
 
         if ( !layer ) {
             console.log("[ERROR] LayerSwitcher:addLayer - missing layer parameter");
