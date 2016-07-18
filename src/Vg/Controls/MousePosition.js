@@ -78,6 +78,7 @@ define([
     function MousePosition (options) {
 
         options = options || {};
+        var MPoptions = options.options || {};
 
         if (!(this instanceof MousePosition)) {
             throw new TypeError("ERROR CLASS_CONSTRUCTOR");
@@ -89,9 +90,10 @@ define([
         var container = this._initContainer(options);
 
         this._callbacks = {};
-
+        // FIXME problème avec doc VirtualGeo
+        var MPtarget = document.getElementById(MPoptions.div);
         // call VirtualGeo.Control constructor
-        VirtualGeo.Control.call(this, container);
+        VirtualGeo.Control.call(this, container, MPtarget);
 
         // Surcharge de la méthode _setMap qu'on stocker dans une variable
         // FIXME

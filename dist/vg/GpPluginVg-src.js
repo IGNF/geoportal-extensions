@@ -14659,13 +14659,15 @@ VgCRSCRS = function (proj4) {
 VgControlsMousePosition = function (proj4, woodman, Gp, Config, RightManagement, MousePositionDOM, PositionFormater, CRS) {
     function MousePosition(options) {
         options = options || {};
+        var MPoptions = options.options || {};
         if (!(this instanceof MousePosition)) {
             throw new TypeError('ERROR CLASS_CONSTRUCTOR');
         }
         this._initialize(options);
         var container = this._initContainer(options);
         this._callbacks = {};
-        VirtualGeo.Control.call(this, container);
+        var MPtarget = document.getElementById(MPoptions.div);
+        VirtualGeo.Control.call(this, container, MPtarget);
         var VGsetMap = this._setMap;
         this._setMap = function (map, mapDiv, f) {
             if (map) {

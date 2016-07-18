@@ -217,12 +217,6 @@ requirejs(
                                 apiKey : "j2bfkv9whnqpq04zpzlfz2ge"
                             });
 
-
-                            var IGN_MAPS = GeoportalLayers.WMTS({
-                                layer : "GEOGRAPHICALGRIDSYSTEMS.MAPS",
-                                apiKey : "j2bfkv9whnqpq04zpzlfz2ge"
-                            });
-
                             var ELEV_SLOPES = GeoportalLayers.WMTS({
                                 layer : "ELEVATION.SLOPES",
                                 apiKey : "j2bfkv9whnqpq04zpzlfz2ge"
@@ -238,7 +232,6 @@ requirejs(
                             map.addImageryLayer(IGNPO_HIGH);
                             map.addImageryLayer(IGNPO);
                             map.addImageryLayer(FOURRIERE_WMS);
-                            // map.addImageryLayer(IGN_MAPS);
                             map.addImageryLayer(ELEV_SLOPES);
 
                             // Ajout des MNTs
@@ -334,9 +327,7 @@ requirejs(
 
                             // Ajout du contrôle de gestion de l'empilement des couches (layerSwitcher)
                             var layerSwitcher = new LayerSwitcher({
-                                options : {
-                                    div: "maDivTest"
-                                },
+                                div: "maDivTest",
                                 layers : [
                                     {
                                         layer : IGNPO,
