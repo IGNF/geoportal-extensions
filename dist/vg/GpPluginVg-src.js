@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 5.0.0
- * @date 2016-07-13
+ * @date 2016-07-18
  *
  */
 /*!
@@ -4324,7 +4324,7 @@ var gp, CommonUtilsAutoLoadConfig, CommonUtilsLayerUtils, sortable, CommonContro
         Preference.prototype.toString = function () {
             var Preferences = [];
             var tmplPreference = '';
-            for (var idx in this.type) {
+            for (var idx = 0; idx < this.type.length; idx++) {
                 tmplPreference = this.template;
                 tmplPreference = tmplPreference.replace(/__TYPE__/g, this.type[idx]);
                 Preferences.push(tmplPreference);
@@ -7336,7 +7336,7 @@ var gp, CommonUtilsAutoLoadConfig, CommonUtilsLayerUtils, sortable, CommonContro
         var scope = typeof window !== 'undefined' ? window : {};
         var Gp = scope.Gp || {
             servicesVersion: '1.0.0-beta3',
-            servicesDate: '2016-06-13',
+            servicesDate: '2016-07-08',
             extend: function (strNS, value) {
                 var parts = strNS.split('.');
                 var parent = this;
@@ -8700,7 +8700,8 @@ VgControlsLayerSwitcher = function (LayerSwitcherDOM, LayerUtils) {
         this._initLayers = layers;
         this._callbacks = {};
         this._options = options;
-        VirtualGeo.Control.call(this, container);
+        var LStarget = document.getElementById(options.div);
+        VirtualGeo.Control.call(this, container, LStarget);
         var VGsetMap = this._setMap;
         this._setMap = function (map, mapDiv, f) {
             if (map) {
@@ -9122,7 +9123,7 @@ VgControlsLayerSwitcher = function (LayerSwitcherDOM, LayerUtils) {
         return true;
     }
     function getViewExtent(map) {
-        var topleft = {};
+        var topLeft = {};
         var bottomRight = {};
         var mapDiv = map.mapDiv;
         for (var x = 0; x <= mapDiv.offsetHeight; x = x + mapDiv.offsetHeight / 10) {

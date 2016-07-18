@@ -72,8 +72,10 @@ define([
         this._initLayers = layers;
         this._callbacks = {};
         this._options = options;
+        // FIXME problème avec doc VirtualGeo
+        var LStarget = document.getElementById(options.div);
         // call VirtualGeo.Control constructor
-        VirtualGeo.Control.call(this, container);
+        VirtualGeo.Control.call(this, container, LStarget);
 
         // Surcharge de la méthode _setMap
         var VGsetMap = this._setMap;
@@ -801,7 +803,7 @@ define([
     * @returns {Array} extent - the extent of the view
     */
     function getViewExtent(map) {
-        var topleft = {};
+        var topLeft = {};
         var bottomRight = {};
         var mapDiv = map.mapDiv;
         // on teste le pick sur l'axe des y au cas où la vue est inclinée
