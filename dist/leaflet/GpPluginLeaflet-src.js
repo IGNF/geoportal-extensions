@@ -20348,7 +20348,6 @@ LeafletControlsReverseGeocoding = function (L, P, woodman, Gp, RightManagement, 
                 apiKey: this.options.apiKey,
                 srs: 'EPSG:4326',
                 returnFreeForm: false,
-                maximumResponses: 25,
                 timeOut: 30000,
                 protocol: 'XHR'
             });
@@ -20460,6 +20459,7 @@ LeafletControlsReverseGeocoding = function (L, P, woodman, Gp, RightManagement, 
                 layer.setIcon(new IconDefault('red'));
                 var div = L.DomUtil.get('ReverseGeocodedLocation_' + layer.options.id + '-' + self._uid);
                 L.DomUtil.addClass(div, 'GPreverseGeocodedLocationHighlight');
+                div.scrollIntoView(false);
             }
             function _resetHighLight(e) {
                 var layer = e.target;
