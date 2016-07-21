@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.8.1
- * @date 2016-07-13
+ * @date 2016-07-21
  *
  */
 /*!
@@ -22634,7 +22634,7 @@ LeafletControlsSearchEngine = function (L, woodman, Gp, RightManagement, ID, Sea
             var advancedSearchFiltersByDefault = {
                 PositionOfInterest: [
                     {
-                        name: 'municipality',
+                        name: 'city',
                         title: 'Ville',
                         filter: false,
                         sep: true
@@ -22685,7 +22685,7 @@ LeafletControlsSearchEngine = function (L, woodman, Gp, RightManagement, ID, Sea
                         sep: true
                     },
                     {
-                        name: 'municipality',
+                        name: 'city',
                         title: 'Ville',
                         filter: false,
                         sep: true
@@ -22711,31 +22711,36 @@ LeafletControlsSearchEngine = function (L, woodman, Gp, RightManagement, ID, Sea
                         name: 'department',
                         title: 'Département',
                         filter: false,
-                        sep: false
+                        sep: false,
+                        value: '__'
                     },
                     {
                         name: 'commune',
                         title: 'Commune',
                         filter: false,
-                        sep: false
+                        sep: false,
+                        value: '___'
                     },
                     {
                         name: 'absorbedCity',
                         title: 'Commune absorbée',
                         filter: false,
-                        sep: false
+                        sep: false,
+                        value: '___'
                     },
                     {
                         name: 'section',
                         title: 'Section',
                         filter: false,
-                        sep: false
+                        sep: false,
+                        value: '__'
                     },
                     {
                         name: 'number',
                         title: 'Numéro',
                         filter: false,
-                        sep: false
+                        sep: false,
+                        value: '____'
                     }
                 ],
                 Administratif: [
@@ -22755,7 +22760,7 @@ LeafletControlsSearchEngine = function (L, woodman, Gp, RightManagement, ID, Sea
                         filter: true
                     },
                     {
-                        name: 'municipality',
+                        name: 'city',
                         title: 'Ville',
                         filter: false,
                         sep: true
@@ -23094,9 +23099,12 @@ LeafletControlsSearchEngine = function (L, woodman, Gp, RightManagement, ID, Sea
             if (!data || data.length === 0) {
                 return;
             }
-            var _location = this._currentGeocodingLocation || '';
             var _filterOptions = {};
-            _filterOptions.type = [this._currentGeocodingCode];
+            _filterOptions['type'] = [this._currentGeocodingCode];
+            var _location = this._currentGeocodingLocation || '';
+            if (this._currentGeocodingCode === 'CadastralParcel') {
+                _location = '';
+            }
             for (var i = 0; i < data.length; i++) {
                 var filter = data[i];
                 if (!filter.value) {
@@ -23109,8 +23117,25 @@ LeafletControlsSearchEngine = function (L, woodman, Gp, RightManagement, ID, Sea
                         if (o.filter) {
                             _filterOptions[filter.key] = filter.value;
                         } else {
-                            var sep = o.sep ? ' ' : '';
-                            _location += sep + filter.value;
+                            if (o.value) {
+                                var cur = filter.value.length;
+                                var max = o.value.length;
+                                if (max !== cur) {
+                                    var masked = max - cur;
+                                    var filler = o.value.charAt(0);
+                                    while (filler.length < masked) {
+                                        filler += filler;
+                                    }
+                                    var fillerSlice = filler.slice(0, masked);
+                                    filter.value = filter.value + fillerSlice;
+                                }
+                                _location += filter.value;
+                            } else {
+                                if (typeof _location === 'string') {
+                                    _location = {};
+                                }
+                                _location[filter.key] = filter.value;
+                            }
                         }
                     }
                 }
@@ -23710,7 +23735,7 @@ LeafletLayersLayers = function (L, woodman, LayerConfig, WMS, WMTS) {
 }(leaflet, {}, LeafletLayersLayerConfig, LeafletLayersWMS, LeafletLayersWMTS);
 LeafletGpPluginLeaflet = function (L, P, Gp, Controls, Layers, CRS) {
     Gp.leafletExtVersion = '0.8.1';
-    Gp.leafletExtDate = '2016-07-13';
+    Gp.leafletExtDate = '2016-07-21';
     L.geoportalLayer = Layers;
     L.geoportalControl = Controls;
     L.geoportalCRS = CRS;
