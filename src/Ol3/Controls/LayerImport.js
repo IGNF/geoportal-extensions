@@ -478,6 +478,10 @@ define([
         // 1. Récupération de l'url
         var url = this._staticUrlImportInput.value;
         logger.log("url : ", url);
+        if ( url.length === 0 ) {
+            console.log("[ol.control.LayerImport] url parameter is mandatory");
+            return;
+        }
 
         // 2. Récupération du format
         var format;
@@ -498,6 +502,7 @@ define([
             vectorSource._title = vectorSource._description = layerName;
         } else {
             vectorSource._title = vectorSource._description = "Import " + this._currentImportType;
+            logger.log("[ol.control.LayerImport] set default name \"Import " + this._currentImportType + "\"");
         }
 
         var vectorLayer = new ol.layer.Vector({
@@ -530,7 +535,7 @@ define([
     LayerImport.prototype._importStaticLayerFromLocalFile = function (layerName) {
         var file = this._staticLocalImportInput.files[0];
         if ( !file ) {
-            console.log("missing file");
+            console.log("[ol.control.LayerImport] missing file");
             return;
         }
 
@@ -546,7 +551,7 @@ define([
         fReader.onerror = function (e) {
             // en cas d'erreur, on revient au panel initial et on cache la patience
             context._waitingContainer.className = "GPimportWaitingContainerHidden";
-            console.log("error fileReader : ",e);
+            logger.log("error fileReader : ",e);
         };
         /** on readAsText progress */
         fReader.onprogress = function () {
@@ -557,20 +562,20 @@ define([
             // affichage d'une patience le temps du chargement
             context._waitingContainer.className = "GPimportWaitingContainerVisible";
             context._waiting = true;
-            console.log("onloadstart");
+            logger.log("onloadstart");
         };
         /** on readAsText abort */
         fReader.onabort = function () {
             // en cas d'erreur, on revient au panel initial et on cache la patience
             context._waitingContainer.className = "GPimportWaitingContainerHidden";
-            console.log("onabort");
+            logger.log("onabort");
         };
         /** on readAsText loadend */
         fReader.onloadend = function (e) {
             // fReader = null ?
             // TODO : cacher la patience
             // TODO : replier le formulaire ?
-            console.log("onloadend : ", e);
+            logger.log("onloadend : ", e);
         };
         /** on readAsText load */
         fReader.onload = function (e) {
@@ -621,6 +626,7 @@ define([
                     vectorSource._title = vectorSource._description = format.readName(fileContent);
                 } else {
                     vectorSource._title = vectorSource._description = "Import " + context._currentImportType;
+                    logger.log("[ol.control.LayerImport] set default name \"Import " + context._currentImportType + "\"");
                 }
             }
 
@@ -704,7 +710,7 @@ define([
         }
         // si on n'est pas dans un domaine sans proxy, on ajoute le proxy (+ encodage)
         if ( bfound === false ) {
-            url = proxyUrl + encodeURI(url);
+            url = proxyUrl + encodeURIComponent(url);
         }
 
         // 3. affichage d'une patience le temps de la requête
