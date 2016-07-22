@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-07-21
+ * @date 2016-07-22
  *
  */
 /*!
@@ -24402,8 +24402,10 @@ Ol3ControlsGeoportalAttribution = function (ol, LayerUtils) {
                                 mapAttributions[attributionj] = true;
                             }
                         }
-                        var olAttribution = new ol.Attribution({ html: srcAttributionHtml });
-                        src.setAttributions([olAttribution]);
+                        if (srcAttributionHtml.length !== 0) {
+                            var olAttribution = new ol.Attribution({ html: srcAttributionHtml });
+                            src.setAttributions([olAttribution]);
+                        }
                     }
                 }
             }, this);
@@ -24414,7 +24416,7 @@ Ol3ControlsGeoportalAttribution = function (ol, LayerUtils) {
 }(ol, CommonUtilsLayerUtils);
 Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution) {
     Gp.ol3extVersion = '0.11.0';
-    Gp.ol3extDate = '2016-07-21';
+    Gp.ol3extDate = '2016-07-22';
     Gp.LayerUtils = LayerUtils;
     CRS.runDefault();
     ol.source.GeoportalWMTS = SourceWMTS;
