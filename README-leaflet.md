@@ -23,7 +23,9 @@ L'extension Géoportail pour Leaflet propose les fonctionnalités suivantes à u
 
 ### Téléchargement
 
-Vous pouvez récupérer l'extension Géoportail pour Leaflet ici <a href="https://github.com/IGNF/geoportal-extensions/releases/download/leaflet-0.8.0/GpLeaflet.zip" target="_blank">GpLeaflet.zip</a>. Elle contient l'arborescence suivante :
+Vous pouvez récupérer l'extension Géoportail pour Leaflet [ici](https://github.com/IGNF/geoportal-extensions/releases/download/leaflet-0.8.0/GpLeaflet.zip).
+
+Elle contient l'arborescence suivante :
 
 ```
  leaflet/
@@ -123,7 +125,7 @@ Partie à écrire...
 
 ### Versions de Leaflet supportées
 
-L'extension Géoportail pour Leaflet peut s'utiliser avec la [version 0.7](http://leafletjs.com/reference.html) de Leaflet et la [version 1.0 release candidate](http://leafletjs.com/reference-1.0.0.html) le support de cette dernière version non encore définitive est expérimental.
+L'extension Géoportail pour Leaflet peut s'utiliser avec la [version 0.7](http://leafletjs.com/reference.html) de Leaflet ainsi qu'avec les [versions 1.0.0 en release candidate RC1 et RC2] (http://leafletjs.com/reference-1.0.0.html) dont le support de ces dernières versions, non encore définitives, sont encore expérimentales.
 
 La compatibilité avec les versions antérieures n'a pas été testée.
 
@@ -155,7 +157,7 @@ L'extension Géoportail pour Leaflet **intègre nativement ces deux bibliothèqu
 Exemple :
 
 ``` javascript
-// Définition de la Projection UTM 20N 
+// Définition de la Projection UTM 20N
 var utm20 = new L.Proj.CRS('EPSG:4559',
     '+proj=utm +zone=20 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs');
 

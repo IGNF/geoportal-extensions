@@ -4,14 +4,16 @@ define([
     "gp",
     "Leaflet/Controls/Controls",
     "Leaflet/Layers/Layers",
-    "Leaflet/CRS/CRS"
+    "Leaflet/CRS/CRS",
+    "Common/Utils/Register"
 ], function (
     L,
     P,
     Gp,
     Controls,
     Layers,
-    CRS
+    CRS,
+    Register
 ) {
 
     "use strict";
@@ -26,6 +28,9 @@ define([
     Gp.leafletExtVersion = "__GPLEAFLETEXTVERSION__" ;
     Gp.leafletExtDate = "__GPDATE__";
 
+    // Classes utilitaires
+    Gp.Register = Register;
+    
     // creation du namespace pour les extensions leaflet
     L.geoportalLayer   = Layers;   // WMS et WMTS
     L.geoportalControl = Controls; // IsoChrone, SearchEngine, ...
@@ -33,6 +38,7 @@ define([
     L.geoportalCRS.EPSG2154  = CRS.EPSG2154(); // lambert 93
     L.geoportalCRS.EPSG27572 = CRS.EPSG27572();// lambert 2 étendu
     L.geoportalCRS.EPSG4326  = CRS.EPSG4326();
+
     // on sauvegarde la variable dans l'env.
     // scope.L = L;
 

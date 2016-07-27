@@ -1,10 +1,12 @@
 define([
     "Common/Utils/Config",
+    "Common/Utils/Register",
     "leaflet"
     // "proj4",
     // "proj4leaflet"
 ], function (
     Config,
+    Register,
     L
     // proj4,
     // proj4leaflet
@@ -67,7 +69,7 @@ define([
             // singleton
             if (!this.instance) {
                 var crs = new L.Proj.CRS("EPSG:4326",
-                "+title=WGS 84 (long/lat) +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +units=degrees",
+                Register.get("EPSG:4326"),
                 {
                     resolutions : this._getResolutions(),
                     origin : [-180, 90] // ???
