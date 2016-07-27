@@ -10,21 +10,6 @@ define(["Common/Utils/SelectorID"], function (ID) {
         },
 
         /**
-         * flex css property support detection (for old browser support)
-         */
-        _detectFlexSupport : function () {
-            var isFlexSupported;
-            var el = document.createElement("div");
-            el.style.cssText = "display: -webkit-flex; display: flex;";
-            isFlexSupported = !!el.style.length;
-            var displayFlexValue = "flex";
-            if (!isFlexSupported) {
-                displayFlexValue = "-webkit-flex";
-            }
-            return displayFlexValue;
-        },
-
-        /**
         * Main container (DOM)
         *
         * @returns {DOMElement} DOM element
@@ -50,7 +35,7 @@ define(["Common/Utils/SelectorID"], function (ID) {
             var div  = document.createElement("div");
             div.id = this._addUID("GPlocationPoint_" + id);
             div.className = (display) ? "GPflexInput GPlocationStageFlexInput" : "GPflexInput GPlocationStageFlexInputHidden";
-            div.style.display = this._detectFlexSupport();
+            div.style.cssText = "";
 
             return div;
         },
@@ -79,11 +64,11 @@ define(["Common/Utils/SelectorID"], function (ID) {
                 for (var j = 0; j < points.length; j++) {
                     var tag = points[j].childNodes[0].id;
                     var id  = ID.index(tag);
-                    document.getElementById(self._addUID("GPlocationPoint_" + id)).style.display = self._detectFlexSupport();
+                    document.getElementById(self._addUID("GPlocationPoint_" + id)).style.cssText = "";
                 }
                 document.getElementById(self._addUID("GPlocationOriginCoords_" + i)).value = "";
                 document.getElementById(self._addUID("GPlocationOrigin_" + i)).value = "";
-                document.getElementById(self._addUID("GPlocationPoint_" + i)).style.display = self._detectFlexSupport();
+                document.getElementById(self._addUID("GPlocationPoint_" + i)).style.cssText = "";
                 document.getElementById(self._addUID("GPlocationOriginPointer_" + i)).checked = false;
                 document.getElementById(self._addUID("GPlocationOrigin_" + i)).className = "GPlocationOriginVisible";
                 document.getElementById(self._addUID("GPlocationOriginCoords_" + i)).className = "GPlocationOriginHidden";
@@ -283,7 +268,7 @@ define(["Common/Utils/SelectorID"], function (ID) {
                     for (j = 0; j < points.length; j++) {
                         tag = points[j].childNodes[0].id;
                         id = ID.index(tag);
-                        document.getElementById(self._addUID("GPlocationPoint_" + id)).style.display = self._detectFlexSupport();
+                        document.getElementById(self._addUID("GPlocationPoint_" + id)).style.cssText = "";
                     }
                     if (document.getElementById(self._addUID("GPlocationStageRemove_" + i))) {
                         document.getElementById(self._addUID("GPlocationStageRemove_" + i)).className = "GPlocationStageRemove";
@@ -300,7 +285,7 @@ define(["Common/Utils/SelectorID"], function (ID) {
                         tag = points[j].childNodes[0].id;
                         id = ID.index(tag);
                         if (i == id) {
-                            document.getElementById(self._addUID("GPlocationPoint_" + id)).style.display = self._detectFlexSupport();
+                            document.getElementById(self._addUID("GPlocationPoint_" + id)).style.cssText = "";
                         } else {
                             document.getElementById(self._addUID("GPlocationPoint_" + id)).style.display = "none";
                         }
@@ -486,7 +471,7 @@ define(["Common/Utils/SelectorID"], function (ID) {
                     for (var j = 0; j < points.length; j++) {
                         tag = points[j].childNodes[0].id;
                         var id2 = ID.index(tag);
-                        document.getElementById(this._addUID("GPlocationPoint_" + id2)).style.display = this._detectFlexSupport();
+                        document.getElementById(this._addUID("GPlocationPoint_" + id2)).style.cssText = "";
                         if (document.getElementById(this._addUID("GPlocationStageRemove_" + id2))) {
                             document.getElementById(this._addUID("GPlocationStageRemove_" + id2)).className = "GPlocationStageRemove";
                         }

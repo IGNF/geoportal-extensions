@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-07-11
+ * @date 2016-07-27
  *
  */
 /*!
@@ -18356,17 +18356,6 @@ CommonControlsLocationSelectorDOM = function (ID) {
         _addUID: function (id) {
             return id + '-' + this._uid;
         },
-        _detectFlexSupport: function () {
-            var isFlexSupported;
-            var el = document.createElement('div');
-            el.style.cssText = 'display: -webkit-flex; display: flex;';
-            isFlexSupported = !!el.style.length;
-            var displayFlexValue = 'flex';
-            if (!isFlexSupported) {
-                displayFlexValue = '-webkit-flex';
-            }
-            return displayFlexValue;
-        },
         _createMainContainerElement: function () {
             var container = document.createElement('div');
             container.className = this._addUID('GPlocationPoint');
@@ -18377,7 +18366,7 @@ CommonControlsLocationSelectorDOM = function (ID) {
             var div = document.createElement('div');
             div.id = this._addUID('GPlocationPoint_' + id);
             div.className = display ? 'GPflexInput GPlocationStageFlexInput' : 'GPflexInput GPlocationStageFlexInputHidden';
-            div.style.display = this._detectFlexSupport();
+            div.style.cssText = '';
             return div;
         },
         _createLocationPointLabelElement: function (id, text) {
@@ -18392,11 +18381,11 @@ CommonControlsLocationSelectorDOM = function (ID) {
                 for (var j = 0; j < points.length; j++) {
                     var tag = points[j].childNodes[0].id;
                     var id = ID.index(tag);
-                    document.getElementById(self._addUID('GPlocationPoint_' + id)).style.display = self._detectFlexSupport();
+                    document.getElementById(self._addUID('GPlocationPoint_' + id)).style.cssText = '';
                 }
                 document.getElementById(self._addUID('GPlocationOriginCoords_' + i)).value = '';
                 document.getElementById(self._addUID('GPlocationOrigin_' + i)).value = '';
-                document.getElementById(self._addUID('GPlocationPoint_' + i)).style.display = self._detectFlexSupport();
+                document.getElementById(self._addUID('GPlocationPoint_' + i)).style.cssText = '';
                 document.getElementById(self._addUID('GPlocationOriginPointer_' + i)).checked = false;
                 document.getElementById(self._addUID('GPlocationOrigin_' + i)).className = 'GPlocationOriginVisible';
                 document.getElementById(self._addUID('GPlocationOriginCoords_' + i)).className = 'GPlocationOriginHidden';
@@ -18537,7 +18526,7 @@ CommonControlsLocationSelectorDOM = function (ID) {
                     for (j = 0; j < points.length; j++) {
                         tag = points[j].childNodes[0].id;
                         id = ID.index(tag);
-                        document.getElementById(self._addUID('GPlocationPoint_' + id)).style.display = self._detectFlexSupport();
+                        document.getElementById(self._addUID('GPlocationPoint_' + id)).style.cssText = '';
                     }
                     if (document.getElementById(self._addUID('GPlocationStageRemove_' + i))) {
                         document.getElementById(self._addUID('GPlocationStageRemove_' + i)).className = 'GPlocationStageRemove';
@@ -18554,7 +18543,7 @@ CommonControlsLocationSelectorDOM = function (ID) {
                         tag = points[j].childNodes[0].id;
                         id = ID.index(tag);
                         if (i == id) {
-                            document.getElementById(self._addUID('GPlocationPoint_' + id)).style.display = self._detectFlexSupport();
+                            document.getElementById(self._addUID('GPlocationPoint_' + id)).style.cssText = '';
                         } else {
                             document.getElementById(self._addUID('GPlocationPoint_' + id)).style.display = 'none';
                         }
@@ -18669,7 +18658,7 @@ CommonControlsLocationSelectorDOM = function (ID) {
                     for (var j = 0; j < points.length; j++) {
                         tag = points[j].childNodes[0].id;
                         var id2 = ID.index(tag);
-                        document.getElementById(this._addUID('GPlocationPoint_' + id2)).style.display = this._detectFlexSupport();
+                        document.getElementById(this._addUID('GPlocationPoint_' + id2)).style.cssText = '';
                         if (document.getElementById(this._addUID('GPlocationStageRemove_' + id2))) {
                             document.getElementById(this._addUID('GPlocationStageRemove_' + id2)).className = 'GPlocationStageRemove';
                         }
@@ -24405,7 +24394,7 @@ Ol3ControlsGeoportalAttribution = function (ol, LayerUtils) {
 }(ol, CommonUtilsLayerUtils);
 Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution) {
     Gp.ol3extVersion = '0.11.0';
-    Gp.ol3extDate = '2016-07-11';
+    Gp.ol3extDate = '2016-07-27';
     Gp.LayerUtils = LayerUtils;
     CRS.runDefault();
     ol.source.GeoportalWMTS = SourceWMTS;
