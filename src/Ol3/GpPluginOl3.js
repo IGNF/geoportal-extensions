@@ -2,6 +2,7 @@ define([
     "ol",
     "gp",
     "Common/Utils/LayerUtils",
+    "Common/Utils/Register",
     "Ol3/CRS/CRS",
     "Ol3/Layers/SourceWMTS",
     "Ol3/Layers/SourceWMS",
@@ -20,6 +21,7 @@ define([
     ol,
     Gp,
     LayerUtils,
+    Register,
     CRS,
     SourceWMTS,
     SourceWMS,
@@ -41,10 +43,12 @@ define([
     // Rajout des propriétés de l'extension dans le namespace Gp
     Gp.ol3extVersion = "__GPOL3EXTVERSION__" ;
     Gp.ol3extDate = "__GPDATE__";
-    Gp.LayerUtils = LayerUtils ;
 
-    // Ajout de CRS par défaut
-    CRS.runDefault();
+    // Classes utilitaires
+    Gp.LayerUtils = LayerUtils;
+
+    // Surcharge sur les functions ol/proj4 par défaut
+    CRS.overload();
 
     // Rajout des propriétés ol3 dans le namespace ol
     ol.source.GeoportalWMTS = SourceWMTS;

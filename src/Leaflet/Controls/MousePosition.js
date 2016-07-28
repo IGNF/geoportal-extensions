@@ -728,10 +728,12 @@ define([
 
             // FIXME reprojeter du geographique en geographique cause qq problemes
             // Ex. LatLng en EPSG4326 !
+            // FIXME probleme d'inversion d'axe sur les projections geographiques
+            // Ex. EPSG:4326 -> lat/lon
+            //     IGNF:RGF93G -> lon/lat
             if (this._currentProjectionType === "Geographical") {
-                // pas terrible, mais on ajoute les coordonnées en latlng...
-                oPoint.lat = oPoint.x;
-                oPoint.lng = oPoint.y;
+                oPoint.lat = oPoint.y;
+                oPoint.lng = oPoint.x;
             }
 
             if (! oPoint || Object.keys(oPoint).length === 0) {

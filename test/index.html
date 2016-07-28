@@ -35,9 +35,10 @@
             'sinon'    : '../node_modules/sinon/lib/sinon',
             'mocha'    : '../node_modules/mocha/mocha',
             'chai'     : '../node_modules/chai/chai',
-            'leaflet'  : '../lib/leaflet/leaflet',
+            'ol'       : '../lib/ol3/ol-debug',
+            "proj4"    : "../lib/proj4/proj4-src",
             'gp'       : '../lib/gp/GpServices',
-            "woodman" : "../lib/woodman/woodman-amd"
+            "woodman"  : "../lib/woodman/woodman-amd"
         }
       }).run({
         name: 'mocha',
@@ -46,7 +47,8 @@
           "spec/common/test-common-utils-config.js",
           "spec/common/test-common-utils-layer.js",
           "spec/common/test-common-checkrightmanagement.js",
-          "spec/common/test-common-utils-idtag.js"
+          "spec/common/test-common-utils-idtag.js",
+          "spec/common/test-common-utils-register.js"
         ]
       });
     </script>

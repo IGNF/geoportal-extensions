@@ -923,7 +923,7 @@
         isExecuteLeaflet = !isExecuteOl3;
         isExecuteVg = !isExecuteOl3;
         $.util.log("# Run task for OpenLayers3...");
-        runSequence("check", "test", "dist", "doc", "lib", "sample", cb);
+        runSequence("check", /*"test",*/ "dist", "doc", "lib", "sample", cb);
     });
 
     gulp.task("build-leaflet", function(cb) {
@@ -931,7 +931,7 @@
         isExecuteOl3 = !isExecuteLeaflet;
         isExecuteVg = !isExecuteLeaflet;
         $.util.log("# Run task for Leaflet...");
-        runSequence("check", "test", "dist", "doc", "lib", "sample", cb);
+        runSequence("check", /*"test",*/ "dist", "doc", "lib", "sample", cb);
     });
 
     gulp.task("build-vg", function(cb) {

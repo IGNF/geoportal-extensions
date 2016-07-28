@@ -31,8 +31,12 @@
             'baseUrl' : "../../../src/",
             'paths' : {
                 // lib external
-                "leaflet" : "../lib/leaflet/1.0.0-rc1/leaflet-src",
-                // FIXME "leaflet" : "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0-beta.2.rc.2/leaflet",
+                "leaflet" : "../lib/leaflet/leaflet-src",
+                // cf. issues #17
+                // OK  => "leaflet" : "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0-rc.1/leaflet"
+                // OK  => "leaflet" : "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0-rc.2/leaflet",
+                // NOK => "leaflet" : "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0-beta.1/leaflet",
+                // NOK => "leaflet" : "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0-beta.2.rc/leaflet",
                 "leaflet-draw" : "../lib/leaflet/plugins/leaflet-draw/leaflet.draw-src",
                 "gp"      : "../lib/gp/GpServices-debug",
                 "woodman" : "../lib/woodman/woodman-amd",

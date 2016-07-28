@@ -69,7 +69,7 @@
                 // apiKey : "FAKE",        // FIXME on n'en veut plus !
                 collapsed : false,
                 displayAltitude : true,
-                displayCoordinate : false,
+                displayCoordinate : true,
                 altitude : {
                   triggerDelay : 200,
                   responseDelay : 500,
@@ -80,30 +80,60 @@
                 },
                 systems : [
                     {
-                      crs : CRS.EPSG4326, // L.CRS.EPSG4326
-                      label : "Géographiques bis",
-                      type : "Geographical"
-                    },
-                    {
                       crs : L.CRS.EPSG3395,
-                      label : "Mercator",
+                      label : "Mercator (internal)",
                       type : "Metric"
                     },
                     {
-                      crs : L.CRS.Simple,
-                      label : "Géographiques",
+                      crs : new L.Proj.CRS("EPSG:3395"),
+                      label : "Mercator (EPSG)",
+                      type : "Metric"
+                    },
+                    {
+                      crs : L.CRS.EPSG4326,
+                      label : "Géographiques (internal)",
+                      type : "Geographical"
+                    },
+                    {
+                      crs : CRS.EPSG4326, // L.CRS.EPSG4326
+                      label : "Géographiques (overload)",
+                      type : "Geographical"
+                    },
+                    {
+                      crs : new L.Proj.CRS("IGNF:RGF93G"),
+                      label : "Géographiques (IGNF)",
+                      type : "Geographical"
+                    },
+                    {
+                      crs : new L.Proj.CRS("EPSG:4326"),
+                      label : "Géographiques (EPSG)",
                       type : "Geographical"
                     },
                     {
                       code : "LAMB93",
                       crs : CRS.EPSG2154,
-                      label : "Lambert 93",
+                      label : "Lambert 93 (overload)",
+                      type : "Metric"
+                    },
+                    {
+                      crs : new L.Proj.CRS("IGNF:LAMB93"),
+                      label : "Lambert 93 (IGNF)",
                       type : "Metric"
                     },
                     {
                       crs : CRS.EPSG27572,
-                      label : "Lambert 2 étendu",
+                      label : "Lambert 2 étendu (overload)",
                       type : "Metric"
+                    },
+                    {
+                      crs : new L.Proj.CRS("IGNF:LAMB2C"),
+                      label : "Lambert 2 étendu (IGNF)",
+                      type : "Metric"
+                    },
+                    {
+                      crs : new L.Proj.CRS("CRS:84"),
+                      label : "Géographiques (CRS)",
+                      type : "Geographical"
                     }
                 ],
                 units : ["DEC", "DMS"]
