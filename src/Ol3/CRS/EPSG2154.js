@@ -14,6 +14,7 @@ define([
      *
      * Projection Lambert 93 (EPSG:2154)
      *
+     * @deprecated
      * @private
      * @returns {ol.proj.ProjectionLike}
      */

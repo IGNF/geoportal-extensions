@@ -1,4 +1,4 @@
-define([], function () {
+define(["proj4"], function (proj4) {
 
     "use strict";
 
@@ -11,6 +11,13 @@ define([], function () {
     *   // same as Gp.Register.IGNF.AMST63
     */
     var Register = {
+
+        /**
+        * instance already loaded into proj4
+        *
+        * @private
+        */
+        isLoaded : false,
 
         /**
         * get the definition for a code
@@ -40,6 +47,27 @@ define([], function () {
             }
 
             return this[register][code];
+        },
+
+        /**
+        * load all defs to proj4
+        */
+        load : function () {
+            if (!this.isLoaded) {
+
+                var registers = ["IGNF", "EPSG", "CRS"];
+                for (var i = 0; i < registers.length; i++) {
+                    var register = registers[i];
+                    var codes    = this[register];
+                    for (var code in codes) {
+                        if (codes.hasOwnProperty(code)) {
+                            var name = register + ":" + code;
+                            proj4.defs(name, this.get(name));
+                        }
+                    }
+                }
+                this.isLoaded = true;
+            }
         },
 
         // definitions

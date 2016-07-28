@@ -45,11 +45,10 @@ define([
     Gp.ol3extDate = "__GPDATE__";
 
     // Classes utilitaires
-    Gp.LayerUtils = LayerUtils ;
-    Gp.Register = Register;
+    Gp.LayerUtils = LayerUtils;
 
-    // Ajout de CRS par défaut
-    CRS.runDefault();
+    // Surcharge sur les functions ol/proj4 par défaut
+    CRS.overload();
 
     // Rajout des propriétés ol3 dans le namespace ol
     ol.source.GeoportalWMTS = SourceWMTS;

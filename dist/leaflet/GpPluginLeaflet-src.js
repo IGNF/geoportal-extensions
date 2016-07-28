@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.8.1
- * @date 2016-07-27
+ * @date 2016-07-28
  *
  */
 /*!
@@ -19064,8 +19064,9 @@ LeafletCRSProj4Leaflet = function (require, L, proj4) {
         }
     };
 }({}, leaflet, proj4);
-CommonUtilsRegister = function () {
+CommonUtilsRegister = function (proj4) {
     var Register = {
+        isLoaded: false,
         get: function (name) {
             if (name === '' || name === null || typeof name === 'undefined') {
                 return;
@@ -19083,6 +19084,26 @@ CommonUtilsRegister = function () {
                 return;
             }
             return this[register][code];
+        },
+        load: function () {
+            if (!this.isLoaded) {
+                var registers = [
+                    'IGNF',
+                    'EPSG',
+                    'CRS'
+                ];
+                for (var i = 0; i < registers.length; i++) {
+                    var register = registers[i];
+                    var codes = this[register];
+                    for (var code in codes) {
+                        if (codes.hasOwnProperty(code)) {
+                            var name = register + ':' + code;
+                            proj4.defs(name, this.get(name));
+                        }
+                    }
+                }
+                this.isLoaded = true;
+            }
         },
         EPSG: {
             4149: '+title=CH1903 +proj=longlat +ellps=bessel +towgs84=674.374,15.056,405.346,0,0,0,0 +no_defs ',
@@ -19513,7 +19534,7 @@ CommonUtilsRegister = function () {
         }
     };
     return Register;
-}();
+}(proj4);
 LeafletCRSEPSG2154 = function (Config, Register, L) {
     var EPSG2154 = {
         instance: null,
@@ -19683,9 +19704,10 @@ LeafletCRSEPSG4326 = function (Config, Register, L) {
     };
     return EPSG4326;
 }(CommonUtilsConfig, CommonUtilsRegister, leaflet);
-LeafletCRSCRS = function (Proj4Leaflet, Epsg2154, Epsg27572, Epsg4326) {
+LeafletCRSCRS = function (Proj4, Register, Epsg2154, Epsg27572, Epsg4326) {
     (function () {
-        Proj4Leaflet.load();
+        Proj4.load();
+        Register.load();
     }());
     var CRS = {
         EPSG2154: function () {
@@ -19699,7 +19721,7 @@ LeafletCRSCRS = function (Proj4Leaflet, Epsg2154, Epsg27572, Epsg4326) {
         }
     };
     return CRS;
-}(LeafletCRSProj4Leaflet, LeafletCRSEPSG2154, LeafletCRSEPSG27572, LeafletCRSEPSG4326);
+}(LeafletCRSProj4Leaflet, CommonUtilsRegister, LeafletCRSEPSG2154, LeafletCRSEPSG27572, LeafletCRSEPSG4326);
 LeafletControlsMousePosition = function (L, woodman, Gp, RightManagement, MousePositionDOM, PositionFormater, CRS) {
     var MousePosition = L.Control.extend({
         includes: MousePositionDOM,
@@ -20020,8 +20042,8 @@ LeafletControlsMousePosition = function (L, woodman, Gp, RightManagement, MouseP
             }
             var oPoint = crs.projection.project(oLatLng);
             if (this._currentProjectionType === 'Geographical') {
-                oPoint.lat = oPoint.x;
-                oPoint.lng = oPoint.y;
+                oPoint.lat = oPoint.y;
+                oPoint.lng = oPoint.x;
             }
             if (!oPoint || Object.keys(oPoint).length === 0) {
             }
@@ -24186,7 +24208,7 @@ LeafletLayersLayers = function (L, woodman, LayerConfig, WMS, WMTS) {
 }(leaflet, {}, LeafletLayersLayerConfig, LeafletLayersWMS, LeafletLayersWMTS);
 LeafletGpPluginLeaflet = function (L, P, Gp, Controls, Layers, CRS, Register) {
     Gp.leafletExtVersion = '0.8.1';
-    Gp.leafletExtDate = '2016-07-27';
+    Gp.leafletExtDate = '2016-07-28';
     Gp.Register = Register;
     L.geoportalLayer = Layers;
     L.geoportalControl = Controls;

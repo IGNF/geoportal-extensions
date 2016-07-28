@@ -1,43 +1,35 @@
 define([
     "proj4",
     "ol",
-    "Ol3/CRS/EPSG2154",
-    "Ol3/CRS/EPSG27572"
+    "Common/Utils/Register"
 ], function (
     proj4,
     ol,
-    EPSG2154,
-    EPSG27572
+    Register
 ) {
 
     "use strict";
 
+    /**
+    * Autoload function that loads all defs into proj4
+    * and adds proj4 defs into ol.
+    */
+    (function () {
+        // load all defs into proj4
+        Register.load();
+        // overload proj4 into ol
+        if ( !ol.proj.proj4_ && ol.proj.setProj4 ) {
+            ol.proj.setProj4(proj4);
+        } else {
+            console.log("WARNING : OpenLayers library should manage proj4 dependency in order to add custom projections (Lambert 93 for instance)");
+        }
+    })();
+
     var CRS = {
 
         /**
-        * CRS : Lambert 93
-        *
-        * @method EPSG2154
-        * @returns {Epsg2154}
-        * @private
-        */
-        EPSG2154 : function () {
-            return EPSG2154.build();
-        },
-
-        /**
-        * CRS : Lambert 2 extended
-        *
-        * @method EPSG27572
-        * @returns {Epsg27572}
-        * @private
-        */
-        EPSG27572 : function () {
-            return EPSG27572.build();
-        },
-
-        /**
-         * Overload OpenLayers ol.proj.transformExtent function, to manage EPSG:2154 extent restriction
+         * Overload OpenLayers ol.proj.transformExtent function,
+         * to manage EPSG:2154 extent restriction
          */
         overloadTransformExtent : function () {
             /**
@@ -76,11 +68,9 @@ define([
         },
 
         /**
-         * Add default CRS to project
+         * Load all overload function
          */
-        runDefault : function () {
-            this.EPSG2154();
-            this.EPSG27572();
+        overload : function () {
             this.overloadTransformExtent();
         }
     };

@@ -6,7 +6,7 @@ define([
     "Ol3/Utils",
     "Common/Utils/CheckRightManagement",
     "Common/Controls/MousePositionDOM",
-    "Ol3/CRS/CRS"
+    "Ol3/CRS/CRS" // call autoload function !
 ], function (
     ol,
     proj4,
@@ -14,8 +14,7 @@ define([
     Gp,
     Utils,
     RightManagement,
-    MousePositionDOM,
-    CRS
+    MousePositionDOM
 ) {
 
     "use strict";
@@ -496,13 +495,13 @@ define([
             {
                 code : "EPSG:2154",
                 label : "Lambert 93",
-                crs : ol.proj.get("EPSG:2154") ? ol.proj.get("EPSG:2154").getCode() : CRS.EPSG2154().getCode(),
+                crs : ol.proj.get("EPSG:2154").getCode(),
                 type : "Metric"
             },
             {
                 code : "EPSG:27572",
                 label : "Lambert II étendu",
-                crs : ol.proj.get("EPSG:27572") ? ol.proj.get("EPSG:27572").getCode() : CRS.EPSG27572().getCode(),
+                crs : ol.proj.get("EPSG:27572"),
                 type : "Metric"
             }
         ];
