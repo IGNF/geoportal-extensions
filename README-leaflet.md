@@ -148,7 +148,18 @@ Safari     | Versions récentes (6.1+)
 
 ### Systèmes de coordonnées
 
-Leaflet n'utilise par défaut que les systèmes de coordonnées mondiaux "standards" dont on peut trouver la liste [ici](http://leafletjs.com/reference.html#icrs).
+Leaflet utilise par défaut les systèmes de coordonnées mondiaux "standards" dont on peut trouver la liste [ici](http://leafletjs.com/reference.html#icrs).
+
+L'extension Géoportail pour Leaflet embarque de nombreuses projections en *EPSG*, *CRS* ainsi que sous le registre *IGNF*.
+Il est possible d'appeler ces projections avec le mécanisme de Leaflet.
+
+Exemple :
+
+``` javascript
+// Appel de la Projection Lambert 93
+var LAMB93 = new L.Proj.CRS('IGNF:LAMB93');
+
+```
 
 La définition d'autres systèmes de coordonnées est cependant possible par l'adjonction de deux bibliothèques [Proj4js](http://proj4js.org/) et [Proj4Leaflet](http://kartena.github.io/Proj4Leaflet/). La première permettant de définir des systèmes de coordonnées et d'effectuer des transformations de coordonnées entre systèmes ; la seconde permettant d'utiliser la première dans Leaflet.
 
@@ -163,6 +174,7 @@ var utm20 = new L.Proj.CRS('EPSG:4559',
 
 ```
 
+
 NB : Le site [spatialreference.org](http://spatialreference.org/) recense un grand nombre de registres de systèmes de coordonnées avec leurs définitions.
 
 
@@ -171,7 +183,6 @@ L'extension Géoportail pour Leaflet définit par défaut la projection légale 
 ``` javascript
 L.geoportalCRS.EPSG2154
 ```
-
 
 
 <a id="WMTS"/>
@@ -541,3 +552,5 @@ map.addControl(mpCtrl);
 **Exemple d'utilisation avec affichage unique de l'altitude** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/cenwojqe/embedded/result,js,html,css/)
 
 **Exemple d'utilisation avec paramétrage des systèmes de coordonnées** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/oy601s3c/embedded/result,js,html,css/)
+
+**Exemple d'utilisation avec appel d'un système de coordonnées défini** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/ggx4u7n8/embedded/result,js,html,css/)

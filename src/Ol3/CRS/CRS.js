@@ -71,6 +71,7 @@ define([
          * Load all overload function
          */
         overload : function () {
+            // TODO ajouter les fonctions à surcharger...
             this.overloadTransformExtent();
         }
     };
