@@ -2840,24 +2840,6 @@ div[id^="GPimportGetCapResults-"] {
   background-color: #CEDBEF
 }
 
-/* Location */
-
-.GPlocationOriginPointerImg,
-.GPlocationStageRemove,
-div[id^=GPlocationStageAdd],
-.GPlocationTransportImg {
-  background-image: url("img/GPlocationOptions.png");
-}
-
-/* All div elements whose class attribute value begins with "GPlocationPoint" */
-div[class*="GPlocationPoint"] {
-    position: relative;
-}
-
-.GPlocationStageFlexInput {
-    margin-bottom: 5px;
-}
-
 /* LAYER SWITCHER OL3 */
 
 #GPlayerSwitcher {
@@ -2950,6 +2932,24 @@ div[class*="GPlocationPoint"] {
   background-image: url("img/GPlayerInfo.png");
 }
 
+/* Location */
+
+.GPlocationOriginPointerImg,
+.GPlocationStageRemove,
+div[id^=GPlocationStageAdd],
+.GPlocationTransportImg {
+  background-image: url("img/GPlocationOptions.png");
+}
+
+/* All div elements whose class attribute value begins with "GPlocationPoint" */
+div[class*="GPlocationPoint"] {
+    position: relative;
+}
+
+.GPlocationStageFlexInput {
+    margin-bottom: 5px;
+}
+
 /* MOUSE POSITION */
 
 #GPmousePosition {
@@ -3017,6 +3017,62 @@ div[id^=GPreverseGeocodingReturnPicto-] {
 .GPreverseGeocodedLocationHighlight {
     background-color: rgba(255,200,0,0.25);
     color: #222;
+}
+
+/* SEARCH ENGINE */
+
+[id^="GPsearchEngine-"] {
+  top: 8px;
+  left: 46px;
+}
+
+/* Showing/hiding search engine input */
+
+[id^="GPshowSearchEngineOpen"] {
+  background-image: url("img/GPsearchEngineOpen.png");
+  transition: border-radius 0.5s ease-out 0s;
+}
+
+/* Simple search input */
+
+[id^="GPsearchInput"] {
+  height: 32px;
+}
+
+[id^="GPsearchInputReset"] {
+  background-image: url("img/GPsearchEngineClose.png");
+}
+
+/* General panels */
+
+[id^="GPgeocodeResultsClose"] {
+  background-image: url("img/GPsearchEngineClose.png");
+}
+
+[id^="GPadvancedSearchClose"] {
+  background-image: url("img/GPsearchEngineOpen.png");
+  background-position: -50px 3px;
+}
+
+/* Advanced search picto */
+
+[id^="GPshowAdvancedSearchOpen"] {
+  background-image: url("img/GPsearchEngineOpen.png");
+  background-position: -26px 0;
+  transition: border-radius 0.5s ease-out 0s;
+}
+
+/* Autocomplete list / geocode results */
+
+[id^="GPautoCompleteList"],
+[id^="GPgeocodeResultsList"] {
+  margin-left: 33px;
+  box-shadow: 0 0 6px #000;
+}
+
+[id^="GPgeocodeResultsList"] {
+  top: 40px;
+  border-radius: 4px;
 }
 
 /* ROUTE */
@@ -3096,60 +3152,4 @@ input[id^=GProuteResultsShowDetails] + label + label:hover {
 
 .gp-features-content-div {
   min-width: 230px;
-}
-
-/* SEARCH ENGINE */
-
-[id^="GPsearchEngine-"] {
-  top: 8px;
-  left: 46px;
-}
-
-/* Showing/hiding search engine input */
-
-[id^="GPshowSearchEngineOpen"] {
-  background-image: url("img/GPsearchEngineOpen.png");
-  transition: border-radius 0.5s ease-out 0s;
-}
-
-/* Simple search input */
-
-[id^="GPsearchInput"] {
-  height: 32px;
-}
-
-[id^="GPsearchInputReset"] {
-  background-image: url("img/GPsearchEngineClose.png");
-}
-
-/* General panels */
-
-[id^="GPgeocodeResultsClose"] {
-  background-image: url("img/GPsearchEngineClose.png");
-}
-
-[id^="GPadvancedSearchClose"] {
-  background-image: url("img/GPsearchEngineOpen.png");
-  background-position: -50px 3px;
-}
-
-/* Advanced search picto */
-
-[id^="GPshowAdvancedSearchOpen"] {
-  background-image: url("img/GPsearchEngineOpen.png");
-  background-position: -26px 0;
-  transition: border-radius 0.5s ease-out 0s;
-}
-
-/* Autocomplete list / geocode results */
-
-[id^="GPautoCompleteList"],
-[id^="GPgeocodeResultsList"] {
-  margin-left: 33px;
-  box-shadow: 0 0 6px #000;
-}
-
-[id^="GPgeocodeResultsList"] {
-  top: 40px;
-  border-radius: 4px;
 }
