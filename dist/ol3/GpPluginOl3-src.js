@@ -764,37 +764,7 @@ var gp, CommonUtilsAutoLoadConfig, CommonUtilsLayerUtils, proj4, CommonUtilsRegi
                         options.url = Helper.normalyzeUrl(options.url, options.data);
                     }
                     var hXHR = null;
-                    if (window.XDomainRequest) {
-                        hXHR = new XDomainRequest();
-                        hXHR.open(options.method, options.url);
-                        hXHR.overrideMimeType = options.content;
-                        if (options.timeOut > 0) {
-                            hXHR.timeout = options.timeout;
-                        }
-                        if (corps) {
-                            hXHR.setRequestHeader('Content-type', options.content);
-                        }
-                        hXHR.onerror = function () {
-                            reject(new Error('Errors Occured on Http Request with XMLHttpRequest !'));
-                        };
-                        hXHR.ontimeout = function () {
-                            reject(new Error('TimeOut Occured on Http Request with XMLHttpRequest !'));
-                        };
-                        hXHR.onload = function () {
-                            if (hXHR.status == 200) {
-                                resolve(hXHR.response);
-                            } else {
-                                var message = 'Errors Occured on Http Request (status : \'' + hXHR.status + '\' | response : \'' + hXHR.response + '\')';
-                                var status = hXHR.status;
-                                reject({
-                                    message: message,
-                                    status: status
-                                });
-                            }
-                        };
-                        var data4xdr = options.data && corps ? options.data : null;
-                        hXHR.send(data4xdr);
-                    } else if (window.XMLHttpRequest) {
+                    if (window.XMLHttpRequest) {
                         hXHR = new XMLHttpRequest();
                         hXHR.open(options.method, options.url, true);
                         hXHR.overrideMimeType = options.content;
@@ -835,6 +805,36 @@ var gp, CommonUtilsAutoLoadConfig, CommonUtilsLayerUtils, proj4, CommonUtilsRegi
                         };
                         var data4xhr = options.data && corps ? options.data : null;
                         hXHR.send(data4xhr);
+                    } else if (window.XDomainRequest) {
+                        hXHR = new XDomainRequest();
+                        hXHR.open(options.method, options.url);
+                        hXHR.overrideMimeType = options.content;
+                        if (options.timeOut > 0) {
+                            hXHR.timeout = options.timeout;
+                        }
+                        if (corps) {
+                            hXHR.setRequestHeader('Content-type', options.content);
+                        }
+                        hXHR.onerror = function () {
+                            reject(new Error('Errors Occured on Http Request with XMLHttpRequest !'));
+                        };
+                        hXHR.ontimeout = function () {
+                            reject(new Error('TimeOut Occured on Http Request with XMLHttpRequest !'));
+                        };
+                        hXHR.onload = function () {
+                            if (hXHR.status == 200) {
+                                resolve(hXHR.responseText);
+                            } else {
+                                var message = 'Errors Occured on Http Request (status : \'' + hXHR.status + '\' | response : \'' + hXHR.responseText + '\')';
+                                var status = hXHR.status;
+                                reject({
+                                    message: message,
+                                    status: status
+                                });
+                            }
+                        };
+                        var data4xdr = options.data && corps ? options.data : null;
+                        hXHR.send(data4xdr);
                     } else {
                         throw new Error('CORS not supported');
                     }
@@ -7336,7 +7336,7 @@ var gp, CommonUtilsAutoLoadConfig, CommonUtilsLayerUtils, proj4, CommonUtilsRegi
         var scope = typeof window !== 'undefined' ? window : {};
         var Gp = scope.Gp || {
             servicesVersion: '1.0.0-beta3',
-            servicesDate: '2016-07-08',
+            servicesDate: '2016-07-29',
             extend: function (strNS, value) {
                 var parts = strNS.split('.');
                 var parent = this;
@@ -18792,17 +18792,6 @@ CommonControlsLocationSelectorDOM = function (ID) {
         _addUID: function (id) {
             return id + '-' + this._uid;
         },
-        _detectFlexSupport: function () {
-            var isFlexSupported;
-            var el = document.createElement('div');
-            el.style.cssText = 'display: -webkit-flex; display: flex;';
-            isFlexSupported = !!el.style.length;
-            var displayFlexValue = 'flex';
-            if (!isFlexSupported) {
-                displayFlexValue = '-webkit-flex';
-            }
-            return displayFlexValue;
-        },
         _createMainContainerElement: function () {
             var container = document.createElement('div');
             container.className = this._addUID('GPlocationPoint');
@@ -18813,7 +18802,7 @@ CommonControlsLocationSelectorDOM = function (ID) {
             var div = document.createElement('div');
             div.id = this._addUID('GPlocationPoint_' + id);
             div.className = display ? 'GPflexInput GPlocationStageFlexInput' : 'GPflexInput GPlocationStageFlexInputHidden';
-            div.style.display = this._detectFlexSupport();
+            div.style.cssText = '';
             return div;
         },
         _createLocationPointLabelElement: function (id, text) {
@@ -18828,11 +18817,11 @@ CommonControlsLocationSelectorDOM = function (ID) {
                 for (var j = 0; j < points.length; j++) {
                     var tag = points[j].childNodes[0].id;
                     var id = ID.index(tag);
-                    document.getElementById(self._addUID('GPlocationPoint_' + id)).style.display = self._detectFlexSupport();
+                    document.getElementById(self._addUID('GPlocationPoint_' + id)).style.cssText = '';
                 }
                 document.getElementById(self._addUID('GPlocationOriginCoords_' + i)).value = '';
                 document.getElementById(self._addUID('GPlocationOrigin_' + i)).value = '';
-                document.getElementById(self._addUID('GPlocationPoint_' + i)).style.display = self._detectFlexSupport();
+                document.getElementById(self._addUID('GPlocationPoint_' + i)).style.cssText = '';
                 document.getElementById(self._addUID('GPlocationOriginPointer_' + i)).checked = false;
                 document.getElementById(self._addUID('GPlocationOrigin_' + i)).className = 'GPlocationOriginVisible';
                 document.getElementById(self._addUID('GPlocationOriginCoords_' + i)).className = 'GPlocationOriginHidden';
@@ -18973,7 +18962,7 @@ CommonControlsLocationSelectorDOM = function (ID) {
                     for (j = 0; j < points.length; j++) {
                         tag = points[j].childNodes[0].id;
                         id = ID.index(tag);
-                        document.getElementById(self._addUID('GPlocationPoint_' + id)).style.display = self._detectFlexSupport();
+                        document.getElementById(self._addUID('GPlocationPoint_' + id)).style.cssText = '';
                     }
                     if (document.getElementById(self._addUID('GPlocationStageRemove_' + i))) {
                         document.getElementById(self._addUID('GPlocationStageRemove_' + i)).className = 'GPlocationStageRemove';
@@ -18990,7 +18979,7 @@ CommonControlsLocationSelectorDOM = function (ID) {
                         tag = points[j].childNodes[0].id;
                         id = ID.index(tag);
                         if (i == id) {
-                            document.getElementById(self._addUID('GPlocationPoint_' + id)).style.display = self._detectFlexSupport();
+                            document.getElementById(self._addUID('GPlocationPoint_' + id)).style.cssText = '';
                         } else {
                             document.getElementById(self._addUID('GPlocationPoint_' + id)).style.display = 'none';
                         }
@@ -19105,7 +19094,7 @@ CommonControlsLocationSelectorDOM = function (ID) {
                     for (var j = 0; j < points.length; j++) {
                         tag = points[j].childNodes[0].id;
                         var id2 = ID.index(tag);
-                        document.getElementById(this._addUID('GPlocationPoint_' + id2)).style.display = this._detectFlexSupport();
+                        document.getElementById(this._addUID('GPlocationPoint_' + id2)).style.cssText = '';
                         if (document.getElementById(this._addUID('GPlocationStageRemove_' + id2))) {
                             document.getElementById(this._addUID('GPlocationStageRemove_' + id2)).className = 'GPlocationStageRemove';
                         }
@@ -20280,6 +20269,7 @@ Ol3ControlsRoute = function (ol, Gp, Utils, woodman, RightManagement, SelectorID
         this._currentExclusions = [];
         this._initExclusions();
         this._waiting = false;
+        this._timer = null;
         this._geojsonRoute = null;
         this._geojsonSections = null;
         this._popupContent = null;
@@ -20651,8 +20641,7 @@ Ol3ControlsRoute = function (ol, Gp, Utils, woodman, RightManagement, SelectorID
                 }
             },
             onFailure: function (error) {
-                context._waitingContainer.className = 'GProuteCalcWaitingContainerHidden';
-                this._waiting = false;
+                context._hideWaitingContainer();
                 context._clearRouteResultsDetails();
             }
         });
@@ -20807,8 +20796,7 @@ Ol3ControlsRoute = function (ol, Gp, Utils, woodman, RightManagement, SelectorID
             return;
         }
         options.apiKey = this.options.routeOptions.apiKey || this.options.apiKey || key;
-        this._waitingContainer.className = 'GProuteCalcWaitingContainerVisible';
-        this._waiting = true;
+        this._displayWaitingContainer();
         Gp.Services.route(options);
     };
     Route.prototype._fillRouteResultsDetails = function (results) {
@@ -20842,8 +20830,7 @@ Ol3ControlsRoute = function (ol, Gp, Utils, woodman, RightManagement, SelectorID
         }
         this._currentRouteInformations = results;
         this._formRouteContainer.className = 'GProuteComponentHidden';
-        this._waitingContainer.className = 'GProuteCalcWaitingContainerHidden';
-        this._waiting = false;
+        this._hideWaitingContainer();
         this._resultsRouteContainer.className = '';
     };
     Route.prototype._fillRouteResultsDetailsContainer = function (distance, duration, instructions) {
@@ -21099,6 +21086,32 @@ Ol3ControlsRoute = function (ol, Gp, Utils, woodman, RightManagement, SelectorID
             for (var i = 0; i < this._currentPoints.length; i++) {
                 this._currentPoints[i]._hideSuggestedLocation();
             }
+        }
+    };
+    Route.prototype._displayWaitingContainer = function () {
+        this._waitingContainer.className = 'GProuteCalcWaitingContainerVisible';
+        this._waiting = true;
+        if (this._timer) {
+            clearTimeout(this._timer);
+            this._timer = null;
+        }
+        var context = this;
+        this._timer = setTimeout(function () {
+            if (context._waiting === true) {
+                context._hideWaitingContainer();
+            } else {
+                if (context._timer) {
+                    clearTimeout(context._timer);
+                }
+            }
+        }, 16000);
+    };
+    Route.prototype._hideWaitingContainer = function () {
+        if (this._waiting) {
+            this._waitingContainer.className = 'GProuteCalcWaitingContainerHidden';
+            this._waiting = false;
+            clearTimeout(this._timer);
+            this._timer = null;
         }
     };
     Route.prototype._simplifiedInstructions = function (instructions) {
@@ -21744,6 +21757,7 @@ Ol3ControlsIsocurve = function (ol, Gp, Utils, woodman, RightManagement, Selecto
         this._currentIsoResults = null;
         this._geojsonLayer;
         this._waiting = false;
+        this._timer = null;
         this._defaultFeatureStyle = new ol.style.Style({ fill: new ol.style.Fill({ color: 'rgba(0, 183, 152, 0.7)' }) });
         this._resources = {};
         this._noRightManagement = false;
@@ -22102,8 +22116,7 @@ Ol3ControlsIsocurve = function (ol, Gp, Utils, woodman, RightManagement, Selecto
                 }
             },
             onFailure: function (error) {
-                context._waitingContainer.className = 'GPisochronCalcWaitingContainerHidden';
-                this._waiting = false;
+                context._hideWaitingContainer();
             }
         };
         if (this._currentDirection.toLowerCase() === 'arrival' || options.reverse) {
@@ -22205,14 +22218,12 @@ Ol3ControlsIsocurve = function (ol, Gp, Utils, woodman, RightManagement, Selecto
         var key = this._resources['Isocurve']['key'];
         options.apiKey = this.options.isocurveOptions.apiKey || this.options.apiKey || key;
         this._clearGeojsonLayer();
-        this._waitingContainer.className = 'GPisochronCalcWaitingContainerVisible';
-        this._waiting = true;
+        this._displayWaitingContainer();
         Gp.Services.isoCurve(options);
     };
     Isocurve.prototype._drawIsoResults = function (results) {
         this._currentIsoResults = results;
-        this._waitingContainer.className = 'GPisochronCalcWaitingContainerHidden';
-        this._waiting = false;
+        this._hideWaitingContainer();
         if (!results.geometry) {
             return;
         }
@@ -22368,6 +22379,32 @@ Ol3ControlsIsocurve = function (ol, Gp, Utils, woodman, RightManagement, Selecto
             return;
         } else {
             this._originPoint._hideSuggestedLocation();
+        }
+    };
+    Isocurve.prototype._displayWaitingContainer = function () {
+        this._waitingContainer.className = 'GPisochronCalcWaitingContainerVisible';
+        this._waiting = true;
+        if (this._timer) {
+            clearTimeout(this._timer);
+            this._timer = null;
+        }
+        var context = this;
+        this._timer = setTimeout(function () {
+            if (context._waiting === true) {
+                context._hideWaitingContainer();
+            } else {
+                if (context._timer) {
+                    clearTimeout(context._timer);
+                }
+            }
+        }, 16000);
+    };
+    Isocurve.prototype._hideWaitingContainer = function () {
+        if (this._waiting) {
+            this._waitingContainer.className = 'GPisochronCalcWaitingContainerHidden';
+            this._waiting = false;
+            clearTimeout(this._timer);
+            this._timer = null;
         }
     };
     return Isocurve;
@@ -22759,6 +22796,7 @@ Ol3ControlsReverseGeocode = function (woodman, ol, Gp, Utils, Markers, LayerSwit
         this._requestCircleFilter = null;
         this._requestBboxFilter = null;
         this._waiting = false;
+        this._timer = null;
         this._reverseGeocodingLocations = [];
         this._reverseGeocodingLocationsMarkers = [];
         this._resultsDefaultStyle = new ol.style.Style({
@@ -23212,8 +23250,7 @@ Ol3ControlsReverseGeocode = function (woodman, ol, Gp, Utils, Markers, LayerSwit
         var map = this.getMap();
         this._requestOptions = this._getReverseGeocodingRequestOptions();
         this._removeMapInteraction(map);
-        this._waitingContainer.className = 'GProuteCalcWaitingContainerVisible';
-        this._waiting = true;
+        this._displayWaitingContainer();
         Gp.Services.reverseGeocode(this._requestOptions);
     };
     ReverseGeocode.prototype._getReverseGeocodingRequestOptions = function () {
@@ -23235,8 +23272,7 @@ Ol3ControlsReverseGeocode = function (woodman, ol, Gp, Utils, Markers, LayerSwit
                 }
             },
             onFailure: function (error) {
-                context._waitingContainer.className = 'GProuteCalcWaitingContainerHidden';
-                context._waiting = false;
+                context._hideWaitingContainer();
                 context._clearResults();
                 context._clearInputFeatures();
                 context._activateMapInteraction(map);
@@ -23258,8 +23294,7 @@ Ol3ControlsReverseGeocode = function (woodman, ol, Gp, Utils, Markers, LayerSwit
         this._clearResults();
         this._reverseGeocodingLocations = locations;
         this._formContainer.className = 'GPreverseGeocodingComponentHidden';
-        this._waitingContainer.className = 'GProuteCalcWaitingContainerHidden';
-        this._waiting = false;
+        this._hideWaitingContainer();
         this._panelTitleContainer.innerHTML = 'Résultats de la recherche';
         this._returnPictoContainer.className = '';
         this._resultsContainer.className = 'GPpanel';
@@ -23578,6 +23613,32 @@ Ol3ControlsReverseGeocode = function (woodman, ol, Gp, Utils, Markers, LayerSwit
         this._requestPosition = null;
         this._requestCircleFilter = null;
         this._requestBboxFilter = null;
+    };
+    ReverseGeocode.prototype._displayWaitingContainer = function () {
+        this._waitingContainer.className = 'GProuteCalcWaitingContainerVisible';
+        this._waiting = true;
+        if (this._timer) {
+            clearTimeout(this._timer);
+            this._timer = null;
+        }
+        var context = this;
+        this._timer = setTimeout(function () {
+            if (context._waiting === true) {
+                context._hideWaitingContainer();
+            } else {
+                if (context._timer) {
+                    clearTimeout(context._timer);
+                }
+            }
+        }, 16000);
+    };
+    ReverseGeocode.prototype._hideWaitingContainer = function () {
+        if (this._waiting) {
+            this._waitingContainer.className = 'GProuteCalcWaitingContainerHidden';
+            this._waiting = false;
+            clearTimeout(this._timer);
+            this._timer = null;
+        }
     };
     return ReverseGeocode;
 }({}, ol, gp, Ol3Utils, Ol3ControlsUtilsMarkers, Ol3ControlsLayerSwitcher, CommonUtilsCheckRightManagement, CommonUtilsSelectorID, CommonControlsReverseGeocodingDOM);
@@ -24029,6 +24090,8 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
         Utils.assign(this.options, options);
         this.collapsed = this.options.collapsed;
         this._uid = SelectorID.generate();
+        this._waiting = false;
+        this._timer = null;
         this._currentImportType = 'KML';
         this._isCurrentImportTypeStatic = true;
         this._currentStaticImportType = 'local';
@@ -24238,7 +24301,7 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
         fReader.onloadend = function (e) {
         };
         fReader.onload = function (e) {
-            context._waitingContainer.className = 'GPimportWaitingContainerHidden';
+            context._hideWaitingContainer();
             var fileContent = e.target.result;
             var map = context.getMap();
             if (!map || !fileContent) {
@@ -24311,18 +24374,18 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
         if (bfound === false) {
             url = proxyUrl + encodeURIComponent(url);
         }
-        this._waitingContainer.className = 'GPimportWaitingContainerVisible';
-        this._waiting = true;
+        this._displayWaitingContainer();
         var context = this;
         Gp.Protocols.XHR.call({
             url: url,
             method: 'GET',
+            timeOut: 15000,
             onResponse: function (response) {
-                context._waitingContainer.className = 'GPimportWaitingContainerHidden';
+                context._hideWaitingContainer();
                 context._displayGetCapResponseLayers.call(context, response);
             },
             onFailure: function (error) {
-                context._waitingContainer.className = 'GPimportWaitingContainerHidden';
+                context._hideWaitingContainer();
                 console.log('[ol.control.LayerImport] getCapabilities request failed : ', error);
             }
         });
@@ -24762,6 +24825,32 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
         }
         var mapProjCode = map.getView().getProjection().getCode();
         return mapProjCode;
+    };
+    LayerImport.prototype._displayWaitingContainer = function () {
+        this._waitingContainer.className = 'GPimportWaitingContainerVisible';
+        this._waiting = true;
+        if (this._timer) {
+            clearTimeout(this._timer);
+            this._timer = null;
+        }
+        var context = this;
+        this._timer = setTimeout(function () {
+            if (context._waiting === true) {
+                context._hideWaitingContainer();
+            } else {
+                if (context._timer) {
+                    clearTimeout(context._timer);
+                }
+            }
+        }, 16000);
+    };
+    LayerImport.prototype._hideWaitingContainer = function () {
+        if (this._waiting) {
+            this._waitingContainer.className = 'GPimportWaitingContainerHidden';
+            this._waiting = false;
+            clearTimeout(this._timer);
+            this._timer = null;
+        }
     };
     LayerImport.prototype._clearGetCapParams = function () {
         this._getCapRequestUrl = null;

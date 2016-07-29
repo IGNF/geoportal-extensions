@@ -120,6 +120,11 @@ define([
             /** la geometrie des troncons */
             this._geojsonSections = null;
 
+            /** si un calcul est en cours ou non */
+            this._waiting = false;
+            /** timer pour cacher la patience après un certain temps */
+            this._timer = null;
+
             /**
             * reponse du service
             * Ex. {
@@ -715,7 +720,7 @@ define([
             this._currentExclusions = options.exclusions;
 
             // mise en place de la patience
-            this._waitingContainer.className = "GProuteCalcWaitingContainerVisible";
+            this._displayWaitingContainer();
 
             // on met en place l'affichage des resultats dans la fenetre de resultats.
             var context = this;
@@ -738,7 +743,7 @@ define([
                 /** callback onFailure */
                 onFailure : function (error) {
                     // FIXME mise à jour du controle mais le service ne repond pas en 200 !?
-                    context._waitingContainer.className = "GProuteCalcWaitingContainerHidden";
+                    context._hideWaitingContainer();
 
                     context._clearRouteResultsDetails();
                     logger.log(error.message);
@@ -1032,7 +1037,7 @@ define([
 
             // mise à jour du controle !
             this._formRouteContainer.className = "GProuteComponentHidden";
-            this._waitingContainer.className = "GProuteCalcWaitingContainerHidden";
+            this._hideWaitingContainer();
             this._resultsRouteContainer.className = "";
         },
 
@@ -1240,6 +1245,52 @@ define([
             if (this._geojsonSections != null) {
                 map.removeLayer(this._geojsonSections);
                 this._geojsonSections = null;
+            }
+        },
+
+        // ################################################################### //
+        // ############################ Patience ############################# //
+        // ################################################################### //
+
+        /**
+         * this method displays waiting container and sets a timeout
+         *
+         * @private
+         */
+        _displayWaitingContainer : function () {
+
+            this._waitingContainer.className = "GProuteCalcWaitingContainerVisible";
+            this._waiting = true;
+
+            // mise en place d'un timeout pour réinitialiser le panel (cacher la patience)
+            // si on est toujours en attente (si la requête est bloquée par exemple)
+            if ( this._timer ) {
+                clearTimeout(this._timer);
+                this._timer = null;
+            }
+            var context = this;
+            this._timer = setTimeout( function () {
+                if ( context._waiting === true ) {
+                    context._hideWaitingContainer();
+                } else {
+                    if ( context._timer ) {
+                        clearTimeout(context._timer);
+                    }
+                }
+            }, 16000);
+        },
+
+        /**
+         * this method hides waiting container and clears timeout
+         *
+         * @private
+         */
+        _hideWaitingContainer : function () {
+            if ( this._waiting ) {
+                this._waitingContainer.className = "GProuteCalcWaitingContainerHidden";
+                this._waiting = false;
+                clearTimeout(this._timer);
+                this._timer = null;
             }
         },
 

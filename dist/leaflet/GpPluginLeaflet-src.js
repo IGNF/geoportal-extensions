@@ -24,10 +24,10 @@
  * Sortable -- minimalist JavaScript library for reorderable drag-and-drop lists
  *
  * Released under MIT LICENSE
- * 
+ *
  * Copyright 2013-2016 Lebedev Konstantin <ibnRubaXa@gmail.com>
  * http://rubaxa.github.io/Sortable/
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
  * "Software"), to deal in the Software without restriction, including
@@ -35,10 +35,10 @@
  * distribute, sublicense, and/or sell copies of the Software, and to
  * permit persons to whom the Software is furnished to do so, subject to
  * the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -48,29 +48,29 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 /*!
- * Proj4js - Javascript reprojection library. 
- * 
+ * Proj4js - Javascript reprojection library.
+ *
  * Authors:
- * 
+ *
  * - Mike Adair madairATdmsolutions.ca
  * - Richard Greenwood richATgreenwoodmap.com
  * - Didier Richard didier.richardATign.fr
  * - Stephen Irons stephen.ironsATclear.net.nz
  * - Olivier Terral oterralATgmail.com
  * - Calvin Metcalf cmetcalfATappgeo.com
- * 
+ *
  * Copyright (c) 2014, Mike Adair, Richard Greenwood, Didier Richard, Stephen Irons, Olivier Terral and Calvin Metcalf
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
  *  to deal in the Software without restriction, including without limitation
  *  the rights to use, copy, modify, merge, publish, distribute, sublicense,
  *  and/or sell copies of the Software, and to permit persons to whom the
  *  Software is furnished to do so, subject to the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be included
  *  in all copies or substantial portions of the Software.
- * 
+ *
  *  _THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
  *  OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
@@ -78,7 +78,7 @@
  *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE._
- * 
+ *
  */
 /*!
  * Copyright 2012-2016 Jacob Toye and Leaflet
@@ -102,19 +102,19 @@
  */
 /*!
  * Proj4Leaflet --  Smooth Proj4js integration with Leaflet
- * 
+ *
  * Copyright (c) 2012, Kartena AB
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -810,37 +810,7 @@ var gp, CommonUtilsAutoLoadConfig, leafletDraw, sortable, CommonControlsLayerSwi
                         options.url = Helper.normalyzeUrl(options.url, options.data);
                     }
                     var hXHR = null;
-                    if (window.XDomainRequest) {
-                        hXHR = new XDomainRequest();
-                        hXHR.open(options.method, options.url);
-                        hXHR.overrideMimeType = options.content;
-                        if (options.timeOut > 0) {
-                            hXHR.timeout = options.timeout;
-                        }
-                        if (corps) {
-                            hXHR.setRequestHeader('Content-type', options.content);
-                        }
-                        hXHR.onerror = function () {
-                            reject(new Error('Errors Occured on Http Request with XMLHttpRequest !'));
-                        };
-                        hXHR.ontimeout = function () {
-                            reject(new Error('TimeOut Occured on Http Request with XMLHttpRequest !'));
-                        };
-                        hXHR.onload = function () {
-                            if (hXHR.status == 200) {
-                                resolve(hXHR.response);
-                            } else {
-                                var message = 'Errors Occured on Http Request (status : \'' + hXHR.status + '\' | response : \'' + hXHR.response + '\')';
-                                var status = hXHR.status;
-                                reject({
-                                    message: message,
-                                    status: status
-                                });
-                            }
-                        };
-                        var data4xdr = options.data && corps ? options.data : null;
-                        hXHR.send(data4xdr);
-                    } else if (window.XMLHttpRequest) {
+                    if (window.XMLHttpRequest) {
                         hXHR = new XMLHttpRequest();
                         hXHR.open(options.method, options.url, true);
                         hXHR.overrideMimeType = options.content;
@@ -881,6 +851,36 @@ var gp, CommonUtilsAutoLoadConfig, leafletDraw, sortable, CommonControlsLayerSwi
                         };
                         var data4xhr = options.data && corps ? options.data : null;
                         hXHR.send(data4xhr);
+                    } else if (window.XDomainRequest) {
+                        hXHR = new XDomainRequest();
+                        hXHR.open(options.method, options.url);
+                        hXHR.overrideMimeType = options.content;
+                        if (options.timeOut > 0) {
+                            hXHR.timeout = options.timeout;
+                        }
+                        if (corps) {
+                            hXHR.setRequestHeader('Content-type', options.content);
+                        }
+                        hXHR.onerror = function () {
+                            reject(new Error('Errors Occured on Http Request with XMLHttpRequest !'));
+                        };
+                        hXHR.ontimeout = function () {
+                            reject(new Error('TimeOut Occured on Http Request with XMLHttpRequest !'));
+                        };
+                        hXHR.onload = function () {
+                            if (hXHR.status == 200) {
+                                resolve(hXHR.responseText);
+                            } else {
+                                var message = 'Errors Occured on Http Request (status : \'' + hXHR.status + '\' | response : \'' + hXHR.responseText + '\')';
+                                var status = hXHR.status;
+                                reject({
+                                    message: message,
+                                    status: status
+                                });
+                            }
+                        };
+                        var data4xdr = options.data && corps ? options.data : null;
+                        hXHR.send(data4xdr);
                     } else {
                         throw new Error('CORS not supported');
                     }
@@ -7382,7 +7382,7 @@ var gp, CommonUtilsAutoLoadConfig, leafletDraw, sortable, CommonControlsLayerSwi
         var scope = typeof window !== 'undefined' ? window : {};
         var Gp = scope.Gp || {
             servicesVersion: '1.0.0-beta3',
-            servicesDate: '2016-07-08',
+            servicesDate: '2016-07-29',
             extend: function (strNS, value) {
                 var parts = strNS.split('.');
                 var parent = this;
@@ -11518,17 +11518,6 @@ CommonControlsLocationSelectorDOM = function (ID) {
         _addUID: function (id) {
             return id + '-' + this._uid;
         },
-        _detectFlexSupport: function () {
-            var isFlexSupported;
-            var el = document.createElement('div');
-            el.style.cssText = 'display: -webkit-flex; display: flex;';
-            isFlexSupported = !!el.style.length;
-            var displayFlexValue = 'flex';
-            if (!isFlexSupported) {
-                displayFlexValue = '-webkit-flex';
-            }
-            return displayFlexValue;
-        },
         _createMainContainerElement: function () {
             var container = document.createElement('div');
             container.className = this._addUID('GPlocationPoint');
@@ -11539,7 +11528,7 @@ CommonControlsLocationSelectorDOM = function (ID) {
             var div = document.createElement('div');
             div.id = this._addUID('GPlocationPoint_' + id);
             div.className = display ? 'GPflexInput GPlocationStageFlexInput' : 'GPflexInput GPlocationStageFlexInputHidden';
-            div.style.display = this._detectFlexSupport();
+            div.style.cssText = '';
             return div;
         },
         _createLocationPointLabelElement: function (id, text) {
@@ -11554,11 +11543,11 @@ CommonControlsLocationSelectorDOM = function (ID) {
                 for (var j = 0; j < points.length; j++) {
                     var tag = points[j].childNodes[0].id;
                     var id = ID.index(tag);
-                    document.getElementById(self._addUID('GPlocationPoint_' + id)).style.display = self._detectFlexSupport();
+                    document.getElementById(self._addUID('GPlocationPoint_' + id)).style.cssText = '';
                 }
                 document.getElementById(self._addUID('GPlocationOriginCoords_' + i)).value = '';
                 document.getElementById(self._addUID('GPlocationOrigin_' + i)).value = '';
-                document.getElementById(self._addUID('GPlocationPoint_' + i)).style.display = self._detectFlexSupport();
+                document.getElementById(self._addUID('GPlocationPoint_' + i)).style.cssText = '';
                 document.getElementById(self._addUID('GPlocationOriginPointer_' + i)).checked = false;
                 document.getElementById(self._addUID('GPlocationOrigin_' + i)).className = 'GPlocationOriginVisible';
                 document.getElementById(self._addUID('GPlocationOriginCoords_' + i)).className = 'GPlocationOriginHidden';
@@ -11699,7 +11688,7 @@ CommonControlsLocationSelectorDOM = function (ID) {
                     for (j = 0; j < points.length; j++) {
                         tag = points[j].childNodes[0].id;
                         id = ID.index(tag);
-                        document.getElementById(self._addUID('GPlocationPoint_' + id)).style.display = self._detectFlexSupport();
+                        document.getElementById(self._addUID('GPlocationPoint_' + id)).style.cssText = '';
                     }
                     if (document.getElementById(self._addUID('GPlocationStageRemove_' + i))) {
                         document.getElementById(self._addUID('GPlocationStageRemove_' + i)).className = 'GPlocationStageRemove';
@@ -11716,7 +11705,7 @@ CommonControlsLocationSelectorDOM = function (ID) {
                         tag = points[j].childNodes[0].id;
                         id = ID.index(tag);
                         if (i == id) {
-                            document.getElementById(self._addUID('GPlocationPoint_' + id)).style.display = self._detectFlexSupport();
+                            document.getElementById(self._addUID('GPlocationPoint_' + id)).style.cssText = '';
                         } else {
                             document.getElementById(self._addUID('GPlocationPoint_' + id)).style.display = 'none';
                         }
@@ -11831,7 +11820,7 @@ CommonControlsLocationSelectorDOM = function (ID) {
                     for (var j = 0; j < points.length; j++) {
                         tag = points[j].childNodes[0].id;
                         var id2 = ID.index(tag);
-                        document.getElementById(this._addUID('GPlocationPoint_' + id2)).style.display = this._detectFlexSupport();
+                        document.getElementById(this._addUID('GPlocationPoint_' + id2)).style.cssText = '';
                         if (document.getElementById(this._addUID('GPlocationStageRemove_' + id2))) {
                             document.getElementById(this._addUID('GPlocationStageRemove_' + id2)).className = 'GPlocationStageRemove';
                         }
@@ -12977,6 +12966,8 @@ LeafletControlsIsocurve = function (L, woodman, Gp, RightManagement, ID, Locatio
             this._initExclusions();
             this._currentPoint = null;
             this._geojsonIso = null;
+            this._waiting = false;
+            this._timer = null;
             this._currentIsoResults = null;
             this._resources = {};
             this._noRightManagement = false;
@@ -13303,7 +13294,7 @@ LeafletControlsIsocurve = function (L, woodman, Gp, RightManagement, ID, Locatio
             if (this._noRightManagement) {
                 return;
             }
-            this._waitingContainer.className = 'GProuteCalcWaitingContainerVisible';
+            this._displayWaitingContainer();
             var self = this;
             this._requestIsoCurve({
                 position: self._currentPoint.getCoordinate(),
@@ -13322,7 +13313,7 @@ LeafletControlsIsocurve = function (L, woodman, Gp, RightManagement, ID, Locatio
                     }
                 },
                 onFailure: function (error) {
-                    self._waitingContainer.className = 'GPisochronCalcWaitingContainerHidden';
+                    self._hideWaitingContainer();
                     self._clearIsoResultsGeometry();
                 }
             });
@@ -13366,7 +13357,7 @@ LeafletControlsIsocurve = function (L, woodman, Gp, RightManagement, ID, Locatio
             this._clearIsoResultsGeometry();
             this._currentIsoResults = results;
             if (!results.geometry) {
-                this._waitingContainer.className = 'GPisochronCalcWaitingContainerHidden';
+                this._hideWaitingContainer();
                 return;
             }
             var map = this._map;
@@ -13377,7 +13368,7 @@ LeafletControlsIsocurve = function (L, woodman, Gp, RightManagement, ID, Locatio
                 opacity: 0.65
             };
             this._geojsonIso = L.geoJson(_geometry, { style: _style }).addTo(map);
-            this._waitingContainer.className = 'GPisochronCalcWaitingContainerHidden';
+            this._hideWaitingContainer();
             this._formContainer.className = 'GPisochroComponentHidden';
         },
         _clear: function () {
@@ -13403,6 +13394,32 @@ LeafletControlsIsocurve = function (L, woodman, Gp, RightManagement, ID, Locatio
             if (this._geojsonIso != null) {
                 map.removeLayer(this._geojsonIso);
                 this._geojsonIso = null;
+            }
+        },
+        _displayWaitingContainer: function () {
+            this._waitingContainer.className = 'GPisochronCalcWaitingContainerVisible';
+            this._waiting = true;
+            if (this._timer) {
+                clearTimeout(this._timer);
+                this._timer = null;
+            }
+            var context = this;
+            this._timer = setTimeout(function () {
+                if (context._waiting === true) {
+                    context._hideWaitingContainer();
+                } else {
+                    if (context._timer) {
+                        clearTimeout(context._timer);
+                    }
+                }
+            }, 16000);
+        },
+        _hideWaitingContainer: function () {
+            if (this._waiting) {
+                this._waitingContainer.className = 'GPisochronCalcWaitingContainerHidden';
+                this._waiting = false;
+                clearTimeout(this._timer);
+                this._timer = null;
             }
         }
     });
@@ -20513,6 +20530,7 @@ LeafletControlsReverseGeocoding = function (L, P, woodman, Gp, RightManagement, 
             this._requestCircleFilter = null;
             this._requestBboxFilter = null;
             this._waiting = false;
+            this._timer = null;
             this._reverseGeocodingLocations = [];
         },
         onAdd: function (map) {
@@ -20844,8 +20862,7 @@ LeafletControlsReverseGeocoding = function (L, P, woodman, Gp, RightManagement, 
                     }
                 });
             }
-            this._waitingContainer.className = 'GPreverseGeocodingCalcWaitingContainerVisible';
-            this._waiting = true;
+            this._displayWaitingContainer();
             Gp.Services.reverseGeocode(options);
         },
         _displayGeocodedLocations: function (locations) {
@@ -20857,8 +20874,7 @@ LeafletControlsReverseGeocoding = function (L, P, woodman, Gp, RightManagement, 
                 return;
             }
             this._formContainer.className = 'GPreverseGeocodingComponentHidden';
-            this._waitingContainer.className = 'GPreverseGeocodingCalcWaitingContainerHidden';
-            this._waiting = false;
+            this._hideWaitingContainer();
             this._panelTitleContainer.innerHTML = 'Résultats de la recherche';
             this._returnPictoContainer.className = '';
             this._resultsContainer.className = 'GPpanel';
@@ -21026,13 +21042,11 @@ LeafletControlsReverseGeocoding = function (L, P, woodman, Gp, RightManagement, 
                     if (results) {
                         var locations = results.locations;
                         self._displayGeocodedLocations(locations);
-                        self._waitingContainer.className = 'GPreverseGeocodingCalcWaitingContainerHidden';
-                        self._waiting = false;
+                        this._hideWaitingContainer();
                     }
                 },
                 onFailure: function (error) {
-                    self._waitingContainer.className = 'GPreverseGeocodingCalcWaitingContainerHidden';
-                    self._waiting = false;
+                    this._hideWaitingContainer();
                     self._clearLocations();
                     self._clearLocationsFeature();
                     self._clearInputRequest();
@@ -21088,6 +21102,32 @@ LeafletControlsReverseGeocoding = function (L, P, woodman, Gp, RightManagement, 
             this._requestPosition = null;
             this._requestCircleFilter = null;
             this._requestBboxFilter = null;
+        },
+        _displayWaitingContainer: function () {
+            this._waitingContainer.className = 'GPreverseGeocodingCalcWaitingContainerVisible';
+            this._waiting = true;
+            if (this._timer) {
+                clearTimeout(this._timer);
+                this._timer = null;
+            }
+            var context = this;
+            this._timer = setTimeout(function () {
+                if (context._waiting === true) {
+                    context._hideWaitingContainer();
+                } else {
+                    if (context._timer) {
+                        clearTimeout(context._timer);
+                    }
+                }
+            }, 16000);
+        },
+        _hideWaitingContainer: function () {
+            if (this._waiting) {
+                this._waitingContainer.className = 'GPreverseGeocodingCalcWaitingContainerHidden';
+                this._waiting = false;
+                clearTimeout(this._timer);
+                this._timer = null;
+            }
         }
     });
     return ReverseGeocoding;
@@ -21871,6 +21911,8 @@ LeafletControlsRoute = function (L, woodman, Gp, RightManagement, ID, LocationSe
             this._currentExclusions = [];
             this._geojsonRoute = null;
             this._geojsonSections = null;
+            this._waiting = false;
+            this._timer = null;
             this._currentRouteInformations = null;
             this._resources = {};
             this._noRightManagement = false;
@@ -22155,7 +22197,7 @@ LeafletControlsRoute = function (L, woodman, Gp, RightManagement, ID, LocationSe
             this._currentTransport = options.transport;
             this._currentComputation = options.computation;
             this._currentExclusions = options.exclusions;
-            this._waitingContainer.className = 'GProuteCalcWaitingContainerVisible';
+            this._displayWaitingContainer();
             var context = this;
             this._requestRouting({
                 startPoint: start,
@@ -22172,7 +22214,7 @@ LeafletControlsRoute = function (L, woodman, Gp, RightManagement, ID, LocationSe
                     }
                 },
                 onFailure: function (error) {
-                    context._waitingContainer.className = 'GProuteCalcWaitingContainerHidden';
+                    context._hideWaitingContainer();
                     context._clearRouteResultsDetails();
                 }
             });
@@ -22330,7 +22372,7 @@ LeafletControlsRoute = function (L, woodman, Gp, RightManagement, ID, LocationSe
             }
             this._currentRouteInformations = results;
             this._formRouteContainer.className = 'GProuteComponentHidden';
-            this._waitingContainer.className = 'GProuteCalcWaitingContainerHidden';
+            this._hideWaitingContainer();
             this._resultsRouteContainer.className = '';
         },
         _fillRouteResultsDetailsContainer: function (distance, duration, instructions) {
@@ -22439,6 +22481,32 @@ LeafletControlsRoute = function (L, woodman, Gp, RightManagement, ID, LocationSe
             if (this._geojsonSections != null) {
                 map.removeLayer(this._geojsonSections);
                 this._geojsonSections = null;
+            }
+        },
+        _displayWaitingContainer: function () {
+            this._waitingContainer.className = 'GProuteCalcWaitingContainerVisible';
+            this._waiting = true;
+            if (this._timer) {
+                clearTimeout(this._timer);
+                this._timer = null;
+            }
+            var context = this;
+            this._timer = setTimeout(function () {
+                if (context._waiting === true) {
+                    context._hideWaitingContainer();
+                } else {
+                    if (context._timer) {
+                        clearTimeout(context._timer);
+                    }
+                }
+            }, 16000);
+        },
+        _hideWaitingContainer: function () {
+            if (this._waiting) {
+                this._waitingContainer.className = 'GProuteCalcWaitingContainerHidden';
+                this._waiting = false;
+                clearTimeout(this._timer);
+                this._timer = null;
             }
         },
         _simplifiedInstructions: function (instructions) {

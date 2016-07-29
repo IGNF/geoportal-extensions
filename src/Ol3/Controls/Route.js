@@ -219,6 +219,8 @@ define([
 
         // si un calcul est en cours ou non
         this._waiting = false;
+        // timer pour cacher la patience après un certain temps
+        this._timer = null;
 
         // la geometrie du parcours
         this._geojsonRoute = null;
@@ -837,8 +839,7 @@ define([
             /** callback onFailure */
             onFailure : function (error) {
                 // FIXME mise à jour du controle mais le service ne repond pas en 200 !?
-                context._waitingContainer.className = "GProuteCalcWaitingContainerHidden";
-                this._waiting = false;
+                context._hideWaitingContainer();
                 context._clearRouteResultsDetails();
                 logger.log(error.message);
             }
@@ -1191,9 +1192,9 @@ define([
         logger.log(options);
 
         // mise en place de la patience
-        this._waitingContainer.className = "GProuteCalcWaitingContainerVisible";
-        this._waiting = true;
+        this._displayWaitingContainer();
 
+        // appel du service de calcul d'itinéraires
         Gp.Services.route(options);
     };
 
@@ -1247,8 +1248,7 @@ define([
 
         // mise à jour du controle !
         this._formRouteContainer.className = "GProuteComponentHidden";
-        this._waitingContainer.className = "GProuteCalcWaitingContainerHidden";
-        this._waiting = false;
+        this._hideWaitingContainer();
         this._resultsRouteContainer.className = "";
     };
 
@@ -1708,6 +1708,48 @@ define([
             for ( var i = 0; i < this._currentPoints.length; i++ ) {
                 this._currentPoints[i]._hideSuggestedLocation();
             }
+        }
+    };
+
+    /**
+     * this method displays waiting container and sets a timeout
+     *
+     * @private
+     */
+    Route.prototype._displayWaitingContainer = function () {
+
+        this._waitingContainer.className = "GProuteCalcWaitingContainerVisible";
+        this._waiting = true;
+
+        // mise en place d'un timeout pour réinitialiser le panel (cacher la patience)
+        // si on est toujours en attente (si la requête est bloquée par exemple)
+        if ( this._timer ) {
+            clearTimeout(this._timer);
+            this._timer = null;
+        }
+        var context = this;
+        this._timer = setTimeout( function () {
+            if ( context._waiting === true ) {
+                context._hideWaitingContainer();
+            } else {
+                if ( context._timer ) {
+                    clearTimeout(context._timer);
+                }
+            }
+        }, 16000);
+    };
+
+    /**
+     * this method hides waiting container and clears timeout
+     *
+     * @private
+     */
+    Route.prototype._hideWaitingContainer = function () {
+        if ( this._waiting ) {
+            this._waitingContainer.className = "GProuteCalcWaitingContainerHidden";
+            this._waiting = false;
+            clearTimeout(this._timer);
+            this._timer = null;
         }
     };
 

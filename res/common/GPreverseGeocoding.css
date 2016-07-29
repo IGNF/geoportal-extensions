@@ -75,6 +75,8 @@ div[id^="GPreverseGeocodingReturnPicto-"] {
 
 .GPreverseGeocodingCalcWaitingContainerVisible {
   display: -webkit-flex;
+  display: -ms-flexbox;
+  display: -webkit-box;
   display: flex;
 }
 
@@ -137,6 +139,8 @@ input[id^="GPreverseGeocodingSubmit-"] {
 
 .GPreverseGeocodingCalcWaitingContainerVisible {
   display: -webkit-flex;
+  display: -ms-flexbox;
+  display: -webkit-box;
   display: flex;
 }
 

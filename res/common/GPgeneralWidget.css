@@ -80,6 +80,8 @@
 
 .GPflexInput {
   display: -webkit-flex;
+  display: -ms-flexbox;
+  display: -webkit-box;
   display: flex;
   transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
 }
@@ -112,14 +114,18 @@
 
 .GPflexInput > input {
   -webkit-flex: 1;
-  flex: 1;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
   padding: 0 5px;
   min-width: 0;
 }
 
 .GPflexInput > select {
   -webkit-flex: 1;
-  flex: 1;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
   padding-right: 7px;
 }
 

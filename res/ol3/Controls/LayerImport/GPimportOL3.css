@@ -76,6 +76,8 @@ div[id^="GPimportGetCapPanel-"] {
 
 .GPimportWaitingContainerVisible {
   display: -webkit-flex;
+  display: -ms-flexbox;
+  display: -webkit-box;
   display: flex;
 }
 
@@ -110,9 +112,12 @@ div[id^="GPimportTypeLine-"] {
 
 div[id^="GPimportChoice-"] {
   display: -webkit-flex;
+  display: -ms-flexbox;
+  display: -webkit-box;
   display: flex;
   -webkit-justify-content: space-around;
-  justify-content: space-around;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
   margin-top: 5px;
   margin-bottom: 5px;
 }
@@ -141,6 +146,8 @@ input[id^="GPimportSubmit-"] {
 
 .GPimportInputLine {
   display: -webkit-flex;
+  display: -ms-flexbox;
+  display: -webkit-box;
   display: flex;
   margin-bottom: 10px;
 }
@@ -173,14 +180,18 @@ input[id^="GPimportSubmit-"] {
 
 .GPimportInputLine > input {
   -webkit-flex: 1;
-  flex: 1;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
   padding: 0 5px;
   min-width: 0;
 }
 
 .GPimportInputLine > select {
   -webkit-flex: 1;
-  flex: 1;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
   padding-right: 7px;
 }
 

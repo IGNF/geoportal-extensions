@@ -157,6 +157,8 @@ input.marker-input-radio:checked + label {
 
 .GPflexInput {
   display: -webkit-flex;
+  display: -ms-flexbox;
+  display: -webkit-box;
   display: flex;
   transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
 }
@@ -189,14 +191,18 @@ input.marker-input-radio:checked + label {
 
 .GPflexInput > input {
   -webkit-flex: 1;
-  flex: 1;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
   padding: 0 5px;
   min-width: 0;
 }
 
 .GPflexInput > select {
   -webkit-flex: 1;
-  flex: 1;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
   padding-right: 7px;
 }
 
@@ -346,6 +352,8 @@ div[id^=GPisochronPanel-] {
 
 .GPisochronCalcWaitingContainerVisible {
   display: -webkit-flex;
+  display: -ms-flexbox;
+  display: -webkit-box;
   display: flex;
 }
 
@@ -403,10 +411,14 @@ input[id^=GPisochronSubmit] {
 
 div[id^=GPisochronChoice] {
   display: -webkit-flex;
+  display: -ms-flexbox;
+  display: -webkit-box;
   display: flex;
   width: 160px;
   -webkit-justify-content: space-between;
-  justify-content: space-between;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   margin: auto;
   margin-top: 15px;
   margin-bottom: 5px;
@@ -460,9 +472,13 @@ div[id^=GPisochronValueDist] {
 
 div[id^=GPisochronModeChoice] {
   display: -webkit-flex;
+  display: -ms-flexbox;
+  display: -webkit-box;
   display: flex;
   -webkit-justify-content: space-between;
-  justify-content: space-between;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   margin: 15px 0;
 }
 
@@ -550,9 +566,12 @@ div[id^=GPisoExclusions] {
 
 .GPisoExclusionsOptions {
   display: -webkit-flex;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   -webkit-justify-content: space-around;
-  justify-content: space-around;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
 }
 
 .GPisoExclusionsOption {
@@ -1230,6 +1249,8 @@ div[id^="GPreverseGeocodingReturnPicto-"] {
 
 .GPreverseGeocodingCalcWaitingContainerVisible {
   display: -webkit-flex;
+  display: -ms-flexbox;
+  display: -webkit-box;
   display: flex;
 }
 
@@ -1292,6 +1313,8 @@ input[id^="GPreverseGeocodingSubmit-"] {
 
 .GPreverseGeocodingCalcWaitingContainerVisible {
   display: -webkit-flex;
+  display: -ms-flexbox;
+  display: -webkit-box;
   display: flex;
 }
 
@@ -1366,6 +1389,8 @@ div[id^=GProutePanel-] {
 
 .GProuteCalcWaitingContainerVisible {
   display: -webkit-flex;
+  display: -ms-flexbox;
+  display: -webkit-box;
   display: flex;
 }
 
@@ -1460,9 +1485,12 @@ div[id^=GProuteStageAdd] {
 
 div[id^=GProuteModeChoice] {
   display: -webkit-flex;
+  display: -ms-flexbox;
+  display: -webkit-box;
   display: flex;
   -webkit-justify-content: space-around;
-  justify-content: space-around;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
   margin: 15px 0;
 }
 
@@ -1550,9 +1578,12 @@ div[id^=GProuteExclusions] {
 
 .GProuteExclusionsOptions {
   display: -webkit-flex;
+  display: -ms-flexbox;
+  display: -webkit-box;
   display: flex;
   -webkit-justify-content: space-around;
-  justify-content: space-around;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
 }
 
 .GProuteExclusionsOption {
@@ -1599,6 +1630,8 @@ div[id^=GProuteResultsPanel] {
 
 .GProuteResultStage {
   display: -webkit-flex;
+  display: -ms-flexbox;
+  display: -webkit-box;
   display: flex;
 }
 
@@ -1630,7 +1663,9 @@ div[id^=GProuteResultsValueTime] {
 
 .GProuteResultStageValue {
   -webkit-flex: 1;
-  flex: 1;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
   overflow-x: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -1644,11 +1679,17 @@ div[id^=GProuteResultsValueTime] {
 
 div[id^=GProuteResults-] {
   display: -webkit-flex;
+  display: -ms-flexbox;
+  display: -webkit-box;
   display: flex;
   -webkit-justify-content: space-between;
-  justify-content: space-between;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   -webkit-align-items: center;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   margin-bottom: 10px;
 }
 
