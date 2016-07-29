@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.8.1
- * @date 2016-07-11
+ * @date 2016-07-29
  *
  */
 /*!
@@ -810,37 +810,7 @@ var gp, CommonUtilsAutoLoadConfig, leafletDraw, sortable, CommonControlsLayerSwi
                         options.url = Helper.normalyzeUrl(options.url, options.data);
                     }
                     var hXHR = null;
-                    if (window.XDomainRequest) {
-                        hXHR = new XDomainRequest();
-                        hXHR.open(options.method, options.url);
-                        hXHR.overrideMimeType = options.content;
-                        if (options.timeOut > 0) {
-                            hXHR.timeout = options.timeout;
-                        }
-                        if (corps) {
-                            hXHR.setRequestHeader('Content-type', options.content);
-                        }
-                        hXHR.onerror = function () {
-                            reject(new Error('Errors Occured on Http Request with XMLHttpRequest !'));
-                        };
-                        hXHR.ontimeout = function () {
-                            reject(new Error('TimeOut Occured on Http Request with XMLHttpRequest !'));
-                        };
-                        hXHR.onload = function () {
-                            if (hXHR.status == 200) {
-                                resolve(hXHR.response);
-                            } else {
-                                var message = 'Errors Occured on Http Request (status : \'' + hXHR.status + '\' | response : \'' + hXHR.response + '\')';
-                                var status = hXHR.status;
-                                reject({
-                                    message: message,
-                                    status: status
-                                });
-                            }
-                        };
-                        var data4xdr = options.data && corps ? options.data : null;
-                        hXHR.send(data4xdr);
-                    } else if (window.XMLHttpRequest) {
+                    if (window.XMLHttpRequest) {
                         hXHR = new XMLHttpRequest();
                         hXHR.open(options.method, options.url, true);
                         hXHR.overrideMimeType = options.content;
@@ -881,6 +851,36 @@ var gp, CommonUtilsAutoLoadConfig, leafletDraw, sortable, CommonControlsLayerSwi
                         };
                         var data4xhr = options.data && corps ? options.data : null;
                         hXHR.send(data4xhr);
+                    } else if (window.XDomainRequest) {
+                        hXHR = new XDomainRequest();
+                        hXHR.open(options.method, options.url);
+                        hXHR.overrideMimeType = options.content;
+                        if (options.timeOut > 0) {
+                            hXHR.timeout = options.timeout;
+                        }
+                        if (corps) {
+                            hXHR.setRequestHeader('Content-type', options.content);
+                        }
+                        hXHR.onerror = function () {
+                            reject(new Error('Errors Occured on Http Request with XMLHttpRequest !'));
+                        };
+                        hXHR.ontimeout = function () {
+                            reject(new Error('TimeOut Occured on Http Request with XMLHttpRequest !'));
+                        };
+                        hXHR.onload = function () {
+                            if (hXHR.status == 200) {
+                                resolve(hXHR.responseText);
+                            } else {
+                                var message = 'Errors Occured on Http Request (status : \'' + hXHR.status + '\' | response : \'' + hXHR.responseText + '\')';
+                                var status = hXHR.status;
+                                reject({
+                                    message: message,
+                                    status: status
+                                });
+                            }
+                        };
+                        var data4xdr = options.data && corps ? options.data : null;
+                        hXHR.send(data4xdr);
                     } else {
                         throw new Error('CORS not supported');
                     }
@@ -7382,7 +7382,7 @@ var gp, CommonUtilsAutoLoadConfig, leafletDraw, sortable, CommonControlsLayerSwi
         var scope = typeof window !== 'undefined' ? window : {};
         var Gp = scope.Gp || {
             servicesVersion: '1.0.0-beta3',
-            servicesDate: '2016-07-08',
+            servicesDate: '2016-07-29',
             extend: function (strNS, value) {
                 var parts = strNS.split('.');
                 var parent = this;
@@ -11518,17 +11518,6 @@ CommonControlsLocationSelectorDOM = function (ID) {
         _addUID: function (id) {
             return id + '-' + this._uid;
         },
-        _detectFlexSupport: function () {
-            var isFlexSupported;
-            var el = document.createElement('div');
-            el.style.cssText = 'display: -webkit-flex; display: flex;';
-            isFlexSupported = !!el.style.length;
-            var displayFlexValue = 'flex';
-            if (!isFlexSupported) {
-                displayFlexValue = '-webkit-flex';
-            }
-            return displayFlexValue;
-        },
         _createMainContainerElement: function () {
             var container = document.createElement('div');
             container.className = this._addUID('GPlocationPoint');
@@ -11539,7 +11528,7 @@ CommonControlsLocationSelectorDOM = function (ID) {
             var div = document.createElement('div');
             div.id = this._addUID('GPlocationPoint_' + id);
             div.className = display ? 'GPflexInput GPlocationStageFlexInput' : 'GPflexInput GPlocationStageFlexInputHidden';
-            div.style.display = this._detectFlexSupport();
+            div.style.cssText = '';
             return div;
         },
         _createLocationPointLabelElement: function (id, text) {
@@ -11554,11 +11543,11 @@ CommonControlsLocationSelectorDOM = function (ID) {
                 for (var j = 0; j < points.length; j++) {
                     var tag = points[j].childNodes[0].id;
                     var id = ID.index(tag);
-                    document.getElementById(self._addUID('GPlocationPoint_' + id)).style.display = self._detectFlexSupport();
+                    document.getElementById(self._addUID('GPlocationPoint_' + id)).style.cssText = '';
                 }
                 document.getElementById(self._addUID('GPlocationOriginCoords_' + i)).value = '';
                 document.getElementById(self._addUID('GPlocationOrigin_' + i)).value = '';
-                document.getElementById(self._addUID('GPlocationPoint_' + i)).style.display = self._detectFlexSupport();
+                document.getElementById(self._addUID('GPlocationPoint_' + i)).style.cssText = '';
                 document.getElementById(self._addUID('GPlocationOriginPointer_' + i)).checked = false;
                 document.getElementById(self._addUID('GPlocationOrigin_' + i)).className = 'GPlocationOriginVisible';
                 document.getElementById(self._addUID('GPlocationOriginCoords_' + i)).className = 'GPlocationOriginHidden';
@@ -11699,7 +11688,7 @@ CommonControlsLocationSelectorDOM = function (ID) {
                     for (j = 0; j < points.length; j++) {
                         tag = points[j].childNodes[0].id;
                         id = ID.index(tag);
-                        document.getElementById(self._addUID('GPlocationPoint_' + id)).style.display = self._detectFlexSupport();
+                        document.getElementById(self._addUID('GPlocationPoint_' + id)).style.cssText = '';
                     }
                     if (document.getElementById(self._addUID('GPlocationStageRemove_' + i))) {
                         document.getElementById(self._addUID('GPlocationStageRemove_' + i)).className = 'GPlocationStageRemove';
@@ -11716,7 +11705,7 @@ CommonControlsLocationSelectorDOM = function (ID) {
                         tag = points[j].childNodes[0].id;
                         id = ID.index(tag);
                         if (i == id) {
-                            document.getElementById(self._addUID('GPlocationPoint_' + id)).style.display = self._detectFlexSupport();
+                            document.getElementById(self._addUID('GPlocationPoint_' + id)).style.cssText = '';
                         } else {
                             document.getElementById(self._addUID('GPlocationPoint_' + id)).style.display = 'none';
                         }
@@ -11831,7 +11820,7 @@ CommonControlsLocationSelectorDOM = function (ID) {
                     for (var j = 0; j < points.length; j++) {
                         tag = points[j].childNodes[0].id;
                         var id2 = ID.index(tag);
-                        document.getElementById(this._addUID('GPlocationPoint_' + id2)).style.display = this._detectFlexSupport();
+                        document.getElementById(this._addUID('GPlocationPoint_' + id2)).style.cssText = '';
                         if (document.getElementById(this._addUID('GPlocationStageRemove_' + id2))) {
                             document.getElementById(this._addUID('GPlocationStageRemove_' + id2)).className = 'GPlocationStageRemove';
                         }
@@ -23710,7 +23699,7 @@ LeafletLayersLayers = function (L, woodman, LayerConfig, WMS, WMTS) {
 }(leaflet, {}, LeafletLayersLayerConfig, LeafletLayersWMS, LeafletLayersWMTS);
 LeafletGpPluginLeaflet = function (L, P, Gp, Controls, Layers, CRS) {
     Gp.leafletExtVersion = '0.8.1';
-    Gp.leafletExtDate = '2016-07-11';
+    Gp.leafletExtDate = '2016-07-29';
     L.geoportalLayer = Layers;
     L.geoportalControl = Controls;
     L.geoportalCRS = CRS;

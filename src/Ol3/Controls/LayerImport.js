@@ -154,6 +154,11 @@ define([
         // identifiant du contrôle : utile pour suffixer les identifiants CSS (pour gérer le cas où il y en a plusieurs dans la même page)
         this._uid = SelectorID.generate();
 
+        // si une requête est en cours ou non
+        this._waiting = false;
+        // timer pour cacher la patience après un certain temps
+        this._timer = null;
+
         // #################################################################### //
         // ############### initialisation des types d'import ################## //
 
@@ -545,7 +550,7 @@ define([
         /** on readAsText error */
         fReader.onerror = function (e) {
             // en cas d'erreur, on revient au panel initial et on cache la patience
-            context._waitingContainer.className = "GPimportWaitingContainerHidden";
+            context._hideWaitingContainer();
             logger.log("error fileReader : ",e);
         };
         /** on readAsText progress */
@@ -555,20 +560,20 @@ define([
         /** on load start */
         fReader.onloadstart = function () {
             // affichage d'une patience le temps du chargement
-            context._waitingContainer.className = "GPimportWaitingContainerVisible";
-            context._waiting = true;
+            context._displayWaitingContainer();
             logger.log("onloadstart");
         };
         /** on readAsText abort */
         fReader.onabort = function () {
             // en cas d'erreur, on revient au panel initial et on cache la patience
-            context._waitingContainer.className = "GPimportWaitingContainerHidden";
+            context._hideWaitingContainer();
             logger.log("onabort");
         };
         /** on readAsText loadend */
         fReader.onloadend = function (e) {
             // fReader = null ?
-            // TODO : cacher la patience
+            // en cas d'erreur, on revient au panel initial et on cache la patience
+            // context._hideWaitingContainer();
             // TODO : replier le formulaire ?
             logger.log("onloadend : ", e);
         };
@@ -577,7 +582,7 @@ define([
             logger.log("fileReader onload - file content : ", e.target.result);
 
             // on cache la patience
-            context._waitingContainer.className = "GPimportWaitingContainerHidden";
+            context._hideWaitingContainer();
 
             // récupération du contenu du fichier
             var fileContent = e.target.result;
@@ -708,23 +713,23 @@ define([
         }
 
         // 3. affichage d'une patience le temps de la requête
-        this._waitingContainer.className = "GPimportWaitingContainerVisible";
-        this._waiting = true;
+        this._displayWaitingContainer();
 
         // 4. send getcapabilities request (XHR protocol => proxy Url is needed)
         var context = this;
         Gp.Protocols.XHR.call({
             url : url,
             method : "GET",
+            timeOut : 15000,
             /** on success callback : display results in container */
             onResponse : function (response) {
-                context._waitingContainer.className = "GPimportWaitingContainerHidden";
+                context._hideWaitingContainer();
                 context._displayGetCapResponseLayers.call(context, response);
             },
             /** on error callback : log error */
             onFailure : function (error) {
                 // en cas d'erreur, on revient au panel initial et on cache la patience
-                context._waitingContainer.className = "GPimportWaitingContainerHidden";
+                context._hideWaitingContainer();
                 console.log("[ol.control.LayerImport] getCapabilities request failed : ", error);
             }
         });
@@ -1457,6 +1462,48 @@ define([
     // ################################################################### //
     // ################################ clean ############################ //
     // ################################################################### //
+
+    /**
+     * this method displays waiting container and sets a timeout
+     *
+     * @private
+     */
+    LayerImport.prototype._displayWaitingContainer = function () {
+
+        this._waitingContainer.className = "GPimportWaitingContainerVisible";
+        this._waiting = true;
+
+        // mise en place d'un timeout pour réinitialiser le panel (cacher la patience)
+        // si on est toujours en attente (si la requête est bloquée par exemple)
+        if ( this._timer ) {
+            clearTimeout(this._timer);
+            this._timer = null;
+        }
+        var context = this;
+        this._timer = setTimeout( function () {
+            if ( context._waiting === true ) {
+                context._hideWaitingContainer();
+            } else {
+                if ( context._timer ) {
+                    clearTimeout(context._timer);
+                }
+            }
+        }, 16000);
+    };
+
+    /**
+     * this method hides waiting container and clears timeout
+     *
+     * @private
+     */
+    LayerImport.prototype._hideWaitingContainer = function () {
+        if ( this._waiting ) {
+            this._waitingContainer.className = "GPimportWaitingContainerHidden";
+            this._waiting = false;
+            clearTimeout(this._timer);
+            this._timer = null;
+        }
+    };
 
     /**
      * this method clears previous getCap request url or response information

@@ -246,6 +246,8 @@ define([
         this._requestBboxFilter = null;
         // pour savoir si un calcul est en cours ou non
         this._waiting = false;
+        // timer pour cacher la patience après un certain temps
+        this._timer = null;
 
         // #################################################################### //
         // #################### informations des résultats #################### //
@@ -985,8 +987,7 @@ define([
         // retrait de l'interaction sur la map pendant l'attente (et l'affichage des résultats)
         this._removeMapInteraction(map);
         // affichage d'une patience pendant l'attente
-        this._waitingContainer.className = "GProuteCalcWaitingContainerVisible";
-        this._waiting = true;
+        this._displayWaitingContainer();
 
         // envoi de la requête
         Gp.Services.reverseGeocode(this._requestOptions);
@@ -1031,8 +1032,7 @@ define([
                 // FIXME mise à jour du controle mais le service ne repond pas en 200 !?
 
                 // on cache la patience
-                context._waitingContainer.className = "GProuteCalcWaitingContainerHidden";
-                context._waiting = false;
+                context._hideWaitingContainer();
 
                 // suppression d'éventuels résultats précédents
                 context._clearResults();
@@ -1077,8 +1077,7 @@ define([
 
         // 2. cache de la patience et du formulaire
         this._formContainer.className = "GPreverseGeocodingComponentHidden";
-        this._waitingContainer.className = "GProuteCalcWaitingContainerHidden";
-        this._waiting = false;
+        this._hideWaitingContainer();
         // affichage de la div des résultats (et changement du titre)
         this._panelTitleContainer.innerHTML = "Résultats de la recherche";
         this._returnPictoContainer.className = "";
@@ -1708,6 +1707,48 @@ define([
         this._requestPosition = null;
         this._requestCircleFilter = null;
         this._requestBboxFilter = null;
+    };
+
+    /**
+     * this method displays waiting container and sets a timeout
+     *
+     * @private
+     */
+    ReverseGeocode.prototype._displayWaitingContainer = function () {
+
+        this._waitingContainer.className = "GProuteCalcWaitingContainerVisible";
+        this._waiting = true;
+
+        // mise en place d'un timeout pour réinitialiser le panel (cacher la patience)
+        // si on est toujours en attente (si la requête est bloquée par exemple)
+        if ( this._timer ) {
+            clearTimeout(this._timer);
+            this._timer = null;
+        }
+        var context = this;
+        this._timer = setTimeout( function () {
+            if ( context._waiting === true ) {
+                context._hideWaitingContainer();
+            } else {
+                if ( context._timer ) {
+                    clearTimeout(context._timer);
+                }
+            }
+        }, 16000);
+    };
+
+    /**
+     * this method hides waiting container and clears timeout
+     *
+     * @private
+     */
+    ReverseGeocode.prototype._hideWaitingContainer = function () {
+        if ( this._waiting ) {
+            this._waitingContainer.className = "GProuteCalcWaitingContainerHidden";
+            this._waiting = false;
+            clearTimeout(this._timer);
+            this._timer = null;
+        }
     };
 
     return ReverseGeocode;
