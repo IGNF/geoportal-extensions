@@ -134,6 +134,11 @@ define([
             /** la geometrie de l'isochrone */
             this._geojsonIso = null;
 
+            /** si un calcul est en cours ou non */
+            this._waiting = false;
+            /** timer pour cacher la patience après un certain temps */
+            this._timer = null;
+
             /**
             * reponse du service
             * Ex. {
@@ -819,7 +824,7 @@ define([
             }
 
             // mise en place de la patience
-            this._waitingContainer.className = "GProuteCalcWaitingContainerVisible";
+            this._displayWaitingContainer();
 
             var self = this;
 
@@ -846,7 +851,7 @@ define([
                 /** callback onFailure */
                 onFailure : function (error) {
                     // FIXME mise à jour du controle mais le service ne repond pas en 200 !?
-                    self._waitingContainer.className = "GPisochronCalcWaitingContainerHidden";
+                    self._hideWaitingContainer();
 
                     self._clearIsoResultsGeometry();
                     logger.log(error.message);
@@ -942,7 +947,7 @@ define([
 
             if (!results.geometry ) {
                 // cache la patience
-                this._waitingContainer.className = "GPisochronCalcWaitingContainerHidden";
+                this._hideWaitingContainer();
                 return;
             }
 
@@ -961,7 +966,7 @@ define([
             }).addTo(map);
 
             // cache la patience
-            this._waitingContainer.className = "GPisochronCalcWaitingContainerHidden";
+            this._hideWaitingContainer();
             this._formContainer.className = "GPisochroComponentHidden";
         },
 
@@ -1016,6 +1021,52 @@ define([
             if (this._geojsonIso != null) {
                 map.removeLayer(this._geojsonIso);
                 this._geojsonIso = null;
+            }
+        },
+
+        // ################################################################### //
+        // ############################ Patience ############################# //
+        // ################################################################### //
+
+        /**
+         * this method displays waiting container and sets a timeout
+         *
+         * @private
+         */
+        _displayWaitingContainer : function () {
+
+            this._waitingContainer.className = "GPisochronCalcWaitingContainerVisible";
+            this._waiting = true;
+
+            // mise en place d'un timeout pour réinitialiser le panel (cacher la patience)
+            // si on est toujours en attente (si la requête est bloquée par exemple)
+            if ( this._timer ) {
+                clearTimeout(this._timer);
+                this._timer = null;
+            }
+            var context = this;
+            this._timer = setTimeout( function () {
+                if ( context._waiting === true ) {
+                    context._hideWaitingContainer();
+                } else {
+                    if ( context._timer ) {
+                        clearTimeout(context._timer);
+                    }
+                }
+            }, 16000);
+        },
+
+        /**
+         * this method hides waiting container and clears timeout
+         *
+         * @private
+         */
+        _hideWaitingContainer : function () {
+            if ( this._waiting ) {
+                this._waitingContainer.className = "GPisochronCalcWaitingContainerHidden";
+                this._waiting = false;
+                clearTimeout(this._timer);
+                this._timer = null;
             }
         }
 

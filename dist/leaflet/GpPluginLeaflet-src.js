@@ -12966,6 +12966,8 @@ LeafletControlsIsocurve = function (L, woodman, Gp, RightManagement, ID, Locatio
             this._initExclusions();
             this._currentPoint = null;
             this._geojsonIso = null;
+            this._waiting = false;
+            this._timer = null;
             this._currentIsoResults = null;
             this._resources = {};
             this._noRightManagement = false;
@@ -13292,7 +13294,7 @@ LeafletControlsIsocurve = function (L, woodman, Gp, RightManagement, ID, Locatio
             if (this._noRightManagement) {
                 return;
             }
-            this._waitingContainer.className = 'GProuteCalcWaitingContainerVisible';
+            this._displayWaitingContainer();
             var self = this;
             this._requestIsoCurve({
                 position: self._currentPoint.getCoordinate(),
@@ -13311,7 +13313,7 @@ LeafletControlsIsocurve = function (L, woodman, Gp, RightManagement, ID, Locatio
                     }
                 },
                 onFailure: function (error) {
-                    self._waitingContainer.className = 'GPisochronCalcWaitingContainerHidden';
+                    self._hideWaitingContainer();
                     self._clearIsoResultsGeometry();
                 }
             });
@@ -13355,7 +13357,7 @@ LeafletControlsIsocurve = function (L, woodman, Gp, RightManagement, ID, Locatio
             this._clearIsoResultsGeometry();
             this._currentIsoResults = results;
             if (!results.geometry) {
-                this._waitingContainer.className = 'GPisochronCalcWaitingContainerHidden';
+                this._hideWaitingContainer();
                 return;
             }
             var map = this._map;
@@ -13366,7 +13368,7 @@ LeafletControlsIsocurve = function (L, woodman, Gp, RightManagement, ID, Locatio
                 opacity: 0.65
             };
             this._geojsonIso = L.geoJson(_geometry, { style: _style }).addTo(map);
-            this._waitingContainer.className = 'GPisochronCalcWaitingContainerHidden';
+            this._hideWaitingContainer();
             this._formContainer.className = 'GPisochroComponentHidden';
         },
         _clear: function () {
@@ -13392,6 +13394,32 @@ LeafletControlsIsocurve = function (L, woodman, Gp, RightManagement, ID, Locatio
             if (this._geojsonIso != null) {
                 map.removeLayer(this._geojsonIso);
                 this._geojsonIso = null;
+            }
+        },
+        _displayWaitingContainer: function () {
+            this._waitingContainer.className = 'GPisochronCalcWaitingContainerVisible';
+            this._waiting = true;
+            if (this._timer) {
+                clearTimeout(this._timer);
+                this._timer = null;
+            }
+            var context = this;
+            this._timer = setTimeout(function () {
+                if (context._waiting === true) {
+                    context._hideWaitingContainer();
+                } else {
+                    if (context._timer) {
+                        clearTimeout(context._timer);
+                    }
+                }
+            }, 16000);
+        },
+        _hideWaitingContainer: function () {
+            if (this._waiting) {
+                this._waitingContainer.className = 'GPisochronCalcWaitingContainerHidden';
+                this._waiting = false;
+                clearTimeout(this._timer);
+                this._timer = null;
             }
         }
     });
@@ -20029,6 +20057,7 @@ LeafletControlsReverseGeocoding = function (L, P, woodman, Gp, RightManagement, 
             this._requestCircleFilter = null;
             this._requestBboxFilter = null;
             this._waiting = false;
+            this._timer = null;
             this._reverseGeocodingLocations = [];
         },
         onAdd: function (map) {
@@ -20361,8 +20390,7 @@ LeafletControlsReverseGeocoding = function (L, P, woodman, Gp, RightManagement, 
                     }
                 });
             }
-            this._waitingContainer.className = 'GPreverseGeocodingCalcWaitingContainerVisible';
-            this._waiting = true;
+            this._displayWaitingContainer();
             Gp.Services.reverseGeocode(options);
         },
         _displayGeocodedLocations: function (locations) {
@@ -20374,8 +20402,7 @@ LeafletControlsReverseGeocoding = function (L, P, woodman, Gp, RightManagement, 
                 return;
             }
             this._formContainer.className = 'GPreverseGeocodingComponentHidden';
-            this._waitingContainer.className = 'GPreverseGeocodingCalcWaitingContainerHidden';
-            this._waiting = false;
+            this._hideWaitingContainer();
             this._panelTitleContainer.innerHTML = 'Résultats de la recherche';
             this._returnPictoContainer.className = '';
             this._resultsContainer.className = 'GPpanel';
@@ -20542,13 +20569,11 @@ LeafletControlsReverseGeocoding = function (L, P, woodman, Gp, RightManagement, 
                     if (results) {
                         var locations = results.locations;
                         self._displayGeocodedLocations(locations);
-                        self._waitingContainer.className = 'GPreverseGeocodingCalcWaitingContainerHidden';
-                        self._waiting = false;
+                        this._hideWaitingContainer();
                     }
                 },
                 onFailure: function (error) {
-                    self._waitingContainer.className = 'GPreverseGeocodingCalcWaitingContainerHidden';
-                    self._waiting = false;
+                    this._hideWaitingContainer();
                     self._clearLocations();
                     self._clearLocationsFeature();
                     self._clearInputRequest();
@@ -20604,6 +20629,32 @@ LeafletControlsReverseGeocoding = function (L, P, woodman, Gp, RightManagement, 
             this._requestPosition = null;
             this._requestCircleFilter = null;
             this._requestBboxFilter = null;
+        },
+        _displayWaitingContainer: function () {
+            this._waitingContainer.className = 'GPreverseGeocodingCalcWaitingContainerVisible';
+            this._waiting = true;
+            if (this._timer) {
+                clearTimeout(this._timer);
+                this._timer = null;
+            }
+            var context = this;
+            this._timer = setTimeout(function () {
+                if (context._waiting === true) {
+                    context._hideWaitingContainer();
+                } else {
+                    if (context._timer) {
+                        clearTimeout(context._timer);
+                    }
+                }
+            }, 16000);
+        },
+        _hideWaitingContainer: function () {
+            if (this._waiting) {
+                this._waitingContainer.className = 'GPreverseGeocodingCalcWaitingContainerHidden';
+                this._waiting = false;
+                clearTimeout(this._timer);
+                this._timer = null;
+            }
         }
     });
     return ReverseGeocoding;
@@ -21387,6 +21438,8 @@ LeafletControlsRoute = function (L, woodman, Gp, RightManagement, ID, LocationSe
             this._currentExclusions = [];
             this._geojsonRoute = null;
             this._geojsonSections = null;
+            this._waiting = false;
+            this._timer = null;
             this._currentRouteInformations = null;
             this._resources = {};
             this._noRightManagement = false;
@@ -21671,7 +21724,7 @@ LeafletControlsRoute = function (L, woodman, Gp, RightManagement, ID, LocationSe
             this._currentTransport = options.transport;
             this._currentComputation = options.computation;
             this._currentExclusions = options.exclusions;
-            this._waitingContainer.className = 'GProuteCalcWaitingContainerVisible';
+            this._displayWaitingContainer();
             var context = this;
             this._requestRouting({
                 startPoint: start,
@@ -21688,7 +21741,7 @@ LeafletControlsRoute = function (L, woodman, Gp, RightManagement, ID, LocationSe
                     }
                 },
                 onFailure: function (error) {
-                    context._waitingContainer.className = 'GProuteCalcWaitingContainerHidden';
+                    context._hideWaitingContainer();
                     context._clearRouteResultsDetails();
                 }
             });
@@ -21846,7 +21899,7 @@ LeafletControlsRoute = function (L, woodman, Gp, RightManagement, ID, LocationSe
             }
             this._currentRouteInformations = results;
             this._formRouteContainer.className = 'GProuteComponentHidden';
-            this._waitingContainer.className = 'GProuteCalcWaitingContainerHidden';
+            this._hideWaitingContainer();
             this._resultsRouteContainer.className = '';
         },
         _fillRouteResultsDetailsContainer: function (distance, duration, instructions) {
@@ -21955,6 +22008,32 @@ LeafletControlsRoute = function (L, woodman, Gp, RightManagement, ID, LocationSe
             if (this._geojsonSections != null) {
                 map.removeLayer(this._geojsonSections);
                 this._geojsonSections = null;
+            }
+        },
+        _displayWaitingContainer: function () {
+            this._waitingContainer.className = 'GProuteCalcWaitingContainerVisible';
+            this._waiting = true;
+            if (this._timer) {
+                clearTimeout(this._timer);
+                this._timer = null;
+            }
+            var context = this;
+            this._timer = setTimeout(function () {
+                if (context._waiting === true) {
+                    context._hideWaitingContainer();
+                } else {
+                    if (context._timer) {
+                        clearTimeout(context._timer);
+                    }
+                }
+            }, 16000);
+        },
+        _hideWaitingContainer: function () {
+            if (this._waiting) {
+                this._waitingContainer.className = 'GProuteCalcWaitingContainerHidden';
+                this._waiting = false;
+                clearTimeout(this._timer);
+                this._timer = null;
             }
         },
         _simplifiedInstructions: function (instructions) {
