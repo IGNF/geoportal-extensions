@@ -1,10 +1,12 @@
 define([
     "Common/Utils/Config",
+    "Common/Utils/Register",
     "leaflet"
     // "proj4",
     // "proj4leaflet"
 ], function (
     Config,
+    Register,
     L
     // proj4,
     // proj4leaflet
@@ -49,11 +51,11 @@ define([
             if (!this.instance) {
 
                 var crs = new L.Proj.CRS("EPSG:2154",
-                    "+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs",
+                    Register.get("EPSG:2154"),
                     {
                         // FIXME issue de l'autoconf cf. nativeResolutions
                         resolutions : this._getResolutions(),
-                        origin : [0, 12000000]
+                        origin : this._getOrigin()
                     });
                 this.instance = crs;
             }
@@ -111,7 +113,9 @@ define([
          *
          * @private
          */
-        _getOrigin : function () {}
+        _getOrigin : function () {
+            return [0, 12000000];
+        }
     };
 
     return EPSG2154;

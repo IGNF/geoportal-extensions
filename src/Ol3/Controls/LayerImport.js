@@ -483,6 +483,10 @@ define([
         // 1. Récupération de l'url
         var url = this._staticUrlImportInput.value;
         logger.log("url : ", url);
+        if ( url.length === 0 ) {
+            console.log("[ol.control.LayerImport] url parameter is mandatory");
+            return;
+        }
 
         // 2. Récupération du format
         var format;
@@ -503,6 +507,7 @@ define([
             vectorSource._title = vectorSource._description = layerName;
         } else {
             vectorSource._title = vectorSource._description = "Import " + this._currentImportType;
+            logger.log("[ol.control.LayerImport] set default name \"Import " + this._currentImportType + "\"");
         }
 
         var vectorLayer = new ol.layer.Vector({
@@ -626,6 +631,7 @@ define([
                     vectorSource._title = vectorSource._description = format.readName(fileContent);
                 } else {
                     vectorSource._title = vectorSource._description = "Import " + context._currentImportType;
+                    logger.log("[ol.control.LayerImport] set default name \"Import " + context._currentImportType + "\"");
                 }
             }
 
@@ -709,7 +715,7 @@ define([
         }
         // si on n'est pas dans un domaine sans proxy, on ajoute le proxy (+ encodage)
         if ( bfound === false ) {
-            url = proxyUrl + encodeURI(url);
+            url = proxyUrl + encodeURIComponent(url);
         }
 
         // 3. affichage d'une patience le temps de la requête

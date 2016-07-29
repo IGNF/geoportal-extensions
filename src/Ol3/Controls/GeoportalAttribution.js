@@ -120,10 +120,12 @@ define(["ol", "Common/Utils/LayerUtils"], function (ol, LayerUtils) {
                             };
 
                             // update source attribution
-                            var olAttribution = new ol.Attribution({
-                                html : srcAttributionHtml
-                            });
-                            src.setAttributions([olAttribution]);
+                            if ( srcAttributionHtml.length !== 0 ) {
+                                var olAttribution = new ol.Attribution({
+                                    html : srcAttributionHtml
+                                });
+                                src.setAttributions([olAttribution]);
+                            }
                         }
                     }
                 },

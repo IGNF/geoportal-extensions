@@ -442,7 +442,7 @@ define([
             var advancedSearchFiltersByDefault = {
                 PositionOfInterest : [
                     {
-                        name : "municipality",
+                        name : "city", // municipality !?
                         title : "Ville",
                         filter : false,
                         sep : true
@@ -495,13 +495,13 @@ define([
                         sep : true
                     },
                     {
-                        name : "municipality",
+                        name : "city", // municipality !?
                         title : "Ville",
                         filter : false,
                         sep : true
                     },
                     // {
-                    //     name : "commune",
+                    //     name : "municipality", // commune !?
                     //     title : "Commune",
                     //     filter : true,
                     //     sep : true
@@ -530,25 +530,29 @@ define([
                         name : "department",
                         title : "Département",
                         filter : false,
-                        sep : false
+                        sep : false,
+                        value : "__"
                     },
                     {
                         name : "commune",
                         title : "Commune",
                         filter : false,
-                        sep : false
+                        sep : false,
+                        value : "___"
                     },
                     {
                         name : "absorbedCity",
                         title : "Commune absorbée",
                         filter : false,
-                        sep : false
+                        sep : false,
+                        value : "___"
                     },
                     {
                         name : "section",
                         title : "Section",
                         filter : false,
-                        sep : false
+                        sep : false,
+                        value : "__"
                     },
                     // {
                     //     name : "sheet",
@@ -560,7 +564,8 @@ define([
                         name : "number",
                         title : "Numéro",
                         filter : false,
-                        sep : false
+                        sep : false,
+                        value : "____"
                     }
                     // {
                     //     name : "insee",
@@ -593,7 +598,7 @@ define([
                         filter : true
                     },
                     {
-                        name : "municipality",
+                        name : "city", // municipality !?
                         title : "Ville",
                         filter : false,
                         sep : true
@@ -1372,12 +1377,14 @@ define([
 
             // recuperation des parametres des filtres pour les transmettre
             // à la requête, ainsi que le type de table de ressources de geocodage,
-            // et le localisant (freeform)
+            // et le localisant
+            var _filterOptions = {};
+                _filterOptions["type"] = [this._currentGeocodingCode];
 
             var _location = this._currentGeocodingLocation || "";
-
-            var _filterOptions = {};
-            _filterOptions.type = [this._currentGeocodingCode];
+            if (this._currentGeocodingCode === "CadastralParcel") {
+                _location = ""; // on ne souhaite plus la saisie libre...
+            }
 
             for (var i = 0; i < data.length; i++) {
                 var filter = data[i];
@@ -1394,8 +1401,33 @@ define([
                         if (o.filter) {
                             _filterOptions[filter.key] = filter.value;
                         } else {
-                            var sep = (o.sep) ? " " : "";
-                            _location += sep + filter.value;
+                            // on concatene tous les valeurs des champs de recherche,
+                            // et on complete au besoin avec les valeur par defaut
+                            // (ex. '_')
+                            if (o.value) {
+                                var cur = filter.value.length;
+                                var max = o.value.length;
+                                if (max !== cur) {
+                                    var masked = max - cur;
+                                    var filler = o.value.charAt(0);
+                                    while (filler.length < masked) {
+                                        filler += filler;
+                                    }
+                                    var fillerSlice = filler.slice(0, masked);
+                                    filter.value = filter.value + fillerSlice;
+
+                                }
+                                // la location est de type concaténée dite "freeform"
+                                _location += filter.value;
+                            } else {
+                                // on est dans le cas où l'utilisateur utilise
+                                // la location structurée de la recherche avancée,
+                                // donc on ne tient plus compte de la saisie libre...
+                                if ( typeof _location === "string" ) {
+                                    _location = {};
+                                }
+                                _location[filter.key] = filter.value;
+                            }
                         }
                     }
 

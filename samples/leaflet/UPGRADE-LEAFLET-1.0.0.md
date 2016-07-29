@@ -1,4 +1,4 @@
-# TEST DE COMPATIBILITE DES EXTENSIONS LEAFLET EN VERSION 1.0.0-rc1
+# TEST DE COMPATIBILITE DES EXTENSIONS LEAFLET EN VERSION 1.0.0-rc1 et 1.0.0-rc2
 
 Les tests sont effectués en mode AMD uniquement.
 Les exemples sont suffixés de la version de leaflet :

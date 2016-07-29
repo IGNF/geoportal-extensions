@@ -1,11 +1,13 @@
 define([
     "Leaflet/CRS/Proj4Leaflet",
+    "Common/Utils/Register",
     "Leaflet/CRS/EPSG2154",
     "Leaflet/CRS/EPSG27572",
     "Leaflet/CRS/EPSG4326"
 ],
 function (
-    Proj4Leaflet,
+    Proj4,
+    Register,
     Epsg2154,
     Epsg27572,
     Epsg4326
@@ -15,11 +17,12 @@ function (
 
     /** autoload function */
     (function () {
-        // detecte et charge la lib. proj4leaflet en fonction de la version de
-        // Leaflet :
+        // detect and load the lib. proj4leaflet depending on the version of Leaflet :
         // * leaflet 0.7.x -> proj4leaflet >= 0.7.2
         // * leaflet 1.0.x -> proj4leaflet >= 1.0.0
-        Proj4Leaflet.load();
+        Proj4.load();
+        // load all defs into proj4
+        Register.load();
     })();
 
     /**

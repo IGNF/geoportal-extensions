@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 5.0.0
- * @date 2016-07-05
+ * @date 2016-07-18
  *
  */
 /*!
@@ -4324,7 +4324,7 @@ var gp, CommonUtilsAutoLoadConfig, CommonUtilsLayerUtils, sortable, CommonContro
         Preference.prototype.toString = function () {
             var Preferences = [];
             var tmplPreference = '';
-            for (var idx in this.type) {
+            for (var idx = 0; idx < this.type.length; idx++) {
                 tmplPreference = this.template;
                 tmplPreference = tmplPreference.replace(/__TYPE__/g, this.type[idx]);
                 Preferences.push(tmplPreference);
@@ -7336,7 +7336,7 @@ var gp, CommonUtilsAutoLoadConfig, CommonUtilsLayerUtils, sortable, CommonContro
         var scope = typeof window !== 'undefined' ? window : {};
         var Gp = scope.Gp || {
             servicesVersion: '1.0.0-beta3',
-            servicesDate: '2016-06-13',
+            servicesDate: '2016-07-08',
             extend: function (strNS, value) {
                 var parts = strNS.split('.');
                 var parent = this;
@@ -8700,7 +8700,8 @@ VgControlsLayerSwitcher = function (LayerSwitcherDOM, LayerUtils) {
         this._initLayers = layers;
         this._callbacks = {};
         this._options = options;
-        VirtualGeo.Control.call(this, container);
+        var LStarget = document.getElementById(options.div);
+        VirtualGeo.Control.call(this, container, LStarget);
         var VGsetMap = this._setMap;
         this._setMap = function (map, mapDiv, f) {
             if (map) {
@@ -8815,6 +8816,7 @@ VgControlsLayerSwitcher = function (LayerSwitcherDOM, LayerUtils) {
     LayerSwitcher.prototype.constructor = LayerSwitcher;
     LayerSwitcher.prototype.addLayer = function (layer, config) {
         config = config || {};
+        var map = this.getMap();
         if (!layer) {
             console.log('[ERROR] LayerSwitcher:addLayer - missing layer parameter');
             return;
@@ -9121,7 +9123,7 @@ VgControlsLayerSwitcher = function (LayerSwitcherDOM, LayerUtils) {
         return true;
     }
     function getViewExtent(map) {
-        var topleft = {};
+        var topLeft = {};
         var bottomRight = {};
         var mapDiv = map.mapDiv;
         for (var x = 0; x <= mapDiv.offsetHeight; x = x + mapDiv.offsetHeight / 10) {
@@ -14657,13 +14659,15 @@ VgCRSCRS = function (proj4) {
 VgControlsMousePosition = function (proj4, woodman, Gp, Config, RightManagement, MousePositionDOM, PositionFormater, CRS) {
     function MousePosition(options) {
         options = options || {};
+        var MPoptions = options.options || {};
         if (!(this instanceof MousePosition)) {
             throw new TypeError('ERROR CLASS_CONSTRUCTOR');
         }
         this._initialize(options);
         var container = this._initContainer(options);
         this._callbacks = {};
-        VirtualGeo.Control.call(this, container);
+        var MPtarget = document.getElementById(MPoptions.div);
+        VirtualGeo.Control.call(this, container, MPtarget);
         var VGsetMap = this._setMap;
         this._setMap = function (map, mapDiv, f) {
             if (map) {

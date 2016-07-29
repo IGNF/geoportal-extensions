@@ -66,7 +66,10 @@
               // autoconf chargée,
               // sans clef API sur le controle,
               // sans ressources renseignées
-              var rev = new ReverseGeocoding();
+              var rev = new ReverseGeocoding({
+                reverseGeocodeOptions : {
+                  maximumResponses : 50
+                }});
 
               // OK
               // avec les options par defaut

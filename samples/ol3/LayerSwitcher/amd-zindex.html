@@ -160,10 +160,12 @@
                             var olStamen = new ol.layer.Tile({
                                 source : new ol.source.Stamen({
                                     layer : "watercolor"
-                                }),
-                                zIndex : 0
+                                })
+                                // ,
+                                // zIndex : 0
                             });
                             map.addLayer(olStamen);
+                            olStamen.setZIndex(0);
                             var stamenOption = addOption("Image Stamen (fond de carte)", olStamen.gpLayerId);
                             document.getElementById("selectLayer").appendChild(stamenOption);
                             layerSwitcher.addLayer(
