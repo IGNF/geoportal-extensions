@@ -1088,7 +1088,6 @@ define([
                                 description : method + " basé sur un graphe " + graph
                             }
                         );
-                        control.setRemovable(this._geojsonLayer, false);
                     }
                 }
             },

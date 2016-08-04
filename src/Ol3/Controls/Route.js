@@ -1419,7 +1419,6 @@ define([
                                 description : " Itinéraire basé sur un graphe " + graph
                             }
                         );
-                        control.setRemovable(this._geojsonSections, false);
                     }
                 }
             },
@@ -1545,6 +1544,8 @@ define([
         for (var i = 0; i < this._currentPoints.length; i++) {
             this._currentPoints[i].clear();
         }
+        // suppression des points intermédiaires
+        this._removeRouteStepLocations();
     };
 
     /**
@@ -1605,6 +1606,33 @@ define([
                 bridgeInput.checked = false;
             } else {
                 bridgeInput.checked = true;
+            }
+        }
+    };
+
+    /**
+     * this method is called by this._clear()
+     * and it removes step location inputs (excepted departure and arrival)
+     *
+     * @private
+     */
+    Route.prototype._removeRouteStepLocations = function () {
+        var points = document.querySelectorAll('div[id^="GPlocationPoint"]')
+        var stepPoints = 0;
+        if ( points.length !== 0 ) {
+            // on boucle sur les points intermédiaires
+            for ( var i = 1; i < (points.length - 1); i ++ ) {
+                // on va regarder les classes associées
+                var classList = points[i].classList ;
+                if ( classList.length !== 0 ) {
+                    for ( var j = 0; j < classList.length; j++ ) {
+                        if ( classList[j] === "GPlocationStageFlexInput" ) {
+                            // si l'élément est visible, on le supprime en simulant un clic sur la croix (x)
+                            document.getElementById(this._addUID("GPlocationStageRemove_"+(i+1))).click();
+                            stepPoints += 1;
+                        }
+                    }
+                }
             }
         }
     };
