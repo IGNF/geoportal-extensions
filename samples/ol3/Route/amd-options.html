@@ -57,8 +57,8 @@
                     }
                 });
                 requirejs(
-                    ["ol", "gp", "Ol3/Layers/LayerWMTS", "Ol3/Controls/Route"],
-                    function (ol, Gp, LayerWMTS, Route) {
+                    ["ol", "gp", "Ol3/Layers/LayerWMTS", "Ol3/Controls/Route", "Ol3/Controls/Utils/Markers"],
+                    function (ol, Gp, LayerWMTS, Route, Markers) {
                     // var map;
 
                     var createMap = function () {
@@ -92,6 +92,20 @@
                             exclusions : { // ok
                                 "tunnel" : true,
                                 "toll" : false
+                            },
+                            markersOpts : { // ok
+                                departure : {
+                                    url : Markers["lightOrange"],
+                                    offset : [-25.5, -38]
+                                },
+                                stages : {
+                                    url : Markers["turquoiseBlue"],
+                                    offset : [-25.5, -38]
+                                },
+                                arrival : {
+                                    url : Markers["darkOrange"],
+                                    offset : [-25.5, -38]
+                                }
                             },
                             // graphs : ["Voiture", "Pieton"] // ok
                             graphs : ["Pieton", "Voiture"] // ok
