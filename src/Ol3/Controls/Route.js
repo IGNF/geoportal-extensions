@@ -40,8 +40,8 @@ define([
      * @param {Object}  [options.exclusions = {toll : false, tunnel : false, bridge : false}] - list of exclusions with status (true = checked). By default : no exclusions checked.
      * @param {Array}   [options.graphs = ["Voiture", "Pieton"]] - list of resources, by default : ["Voiture", "Pieton"]. The first element is selected.
      * @param {Object} [options.markersOpts] - options to use your own markers. Object properties can be "departure", "stages" or "arrival". Corresponding value is an object with following properties :
-     * @param {String} [options.markerOpts[property].url] - marker base64 encoded url (ex "data:image/png;base64,...""). Mandatory for a custom marker
-     * @param {Array} [options.markerOpts[property].offset] - Offsets in pixels used when positioning the overlay. The first element in the array is the horizontal offset. A positive value shifts the overlay right. The second element in the array is the vertical offset. A positive value shifts the overlay down. Default is [0, 0]. (see http://openlayers.org/en/latest/apidoc/ol.Overlay.html)
+     * @param {String} [options.markersOpts[property].url] - marker base64 encoded url (ex "data:image/png;base64,...""). Mandatory for a custom marker
+     * @param {Array} [options.markersOpts[property].offset] - Offsets in pixels used when positioning the overlay. The first element in the array is the horizontal offset. A positive value shifts the overlay right. The second element in the array is the vertical offset. A positive value shifts the overlay down. Default is [0, 0]. (see http://openlayers.org/en/latest/apidoc/ol.Overlay.html)
      * @param {Object} [options.routeOptions = {}] - route service options. see {@link http://depot.ign.fr/geoportail/bibacces/develop/doc/module-Services.html#~route} to know all route options.
      * @param {Object} [options.autocompleteOptions = {}] - autocomplete service options. see {@link http://depot.ign.fr/geoportail/bibacces/develop/doc/module-Services.html#~autoComplete} to know all autocomplete options
      * @example
@@ -1654,7 +1654,7 @@ define([
      * @private
      */
     Route.prototype._removeRouteStepLocations = function () {
-        var points = document.querySelectorAll('div[id^="GPlocationPoint"]')
+        var points = document.querySelectorAll('div[id^="GPlocationPoint"]');
         var stepPoints = 0;
         if ( points.length !== 0 ) {
             // on boucle sur les points intermédiaires

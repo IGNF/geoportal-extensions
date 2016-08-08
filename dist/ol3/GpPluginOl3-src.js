@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-07-29
+ * @date 2016-08-08
  *
  */
 /*!
@@ -15136,7 +15136,11 @@ Ol3ControlsUtilsMarkers = function () {
         lightOrange: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAmCAYAAABpuqMCAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAARDSURBVFiF3ZndaxxVGMZ/Z/YjX00Nadpo1qrFBgu56D9QbAtiLoRC7ywSNK1NURRREBKRFlSwFBW0gnSrJXY1CmISgyjFiyYSFC9ajE3MmpjdjWlMUtNos9lN9mteLzbRuCbZmTMTBB+Yi51znvd5n3nPnjnnjBIR/i/wuh4xpCpI0ojiENAA1AE1wCzwKzCE0EM5l2iShJvSyrXKnFVb8dOK4hmg3AIjifAmaU7ztMy7kYI7Zs6rQwjvka+AXcyiOMZx6XGahuE0AEHVitCFnhGAGoQugqrVaSrOKpNP4FWnSaxCGy1yWpesbyY/tLpwo7p/w0RxWHfI6Zk5q7ZSwhj6Q2sjzJLiXp1JQe+p+mllc4wA1CzHtw37lQmpCha5gbXpVxdJythh9z1kvzJJGrFixPBmOXixl+Z4mONmguZ4mIMXezG8WQsq5cs6tmDfTP7NXiSqN0vTzBD1TQfwbdmDUhX4tuyhvukATTNDlgxZ0SmUtUsgv0TZGPsv9FNSvXfNtpLqvey/0O+KTgF0zNQV7XHP4dsdtVvVKYCOmeqiPbwVOx21W9UpgI6ZWNEe2cSEo3arOgWwb0YYLp5G17Sjdqs6BdCZzYqL9B3dR2puYM221NwAfUf3uaJTAB0zaye5GmbWS6i2gdFQL5mFMCIJMgthRkO9hGobMLPFN4VWdAoptlcAQeUDRoG77YrZwDhQT4tk7JDsV6ZFMggv2+bZwyt2jYDuQnOa94GIFrc4IkzRrkPUM3NKsijatLjF0copsbJ++xec7TTPqw6EI/oB/glT+PC+13Y/aSQNv/Is+tNer09lMn7DMHwAYppp8fvTIpISkVQsFrslqww4M9OuqkgzANzl1MhCyrjZGAycm573pK1yFCyi5FoWvo/FYlPOT2fOqftRXMbB9lkEs+3zbe2f/FD5i3YMj2p3vn8/IV8DZ5yE+Gqkot+JEQCPada5dRhxEriiQ5ya90w+272916F+KpnJDLhjpkUy5HgESNqhZU2Vfr5ne+dSFtOBeso06J6cnEy6d0z0hPwEPGeH8sGVykvfjpfe1NZUci2+mHg7Go2G8z/d/goQVJ9B8S1veMYffujduo/thl+ZwUzDuBqJRGZWt7n/FcDH46lFNVLilar1uiTTxsJTnTssH/QpJVlMNQa5wbGJiWERya3Vz30zzfLb3OveY3dU5j5dp4e80Xdbd3TOu/H/yyAtpjnqgeGS8crRQRks+v5xf5gtY/KM/6NAVebhwvv90bLvHu2o/XId2pJSMmIaxo/RaHRMxN6yZtPM0K5K/7hl/FxVZgZWbs0mPDceeKcuGE95/kpSKUmaImHDNIfHrl+PiIj2zOb+MFvBY7IUOVl2ZG9g6bJH4ckJuRe/2NYZT3myKIkrGM4pNRyLjY+LW09URDb1+uaF0pfm3zJ+7zhRGdq1c9eDuwOBOzdLa/OG2X+APwE8DU64Y/5gfAAAAABJRU5ErkJggg==',
         darkOrange: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAmCAYAAABpuqMCAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAQ+SURBVFiF3ZlLaFxlGIaf/5zJpJNpaoxpYieoCxULEYK7Lqp0IWQhFLooKNKEtNIULxWlQoJgQQWLFMEg0lQMuXgD0dRSkNJFgoy0IrYNSTpj08xMmoxNYhLUyUwyt/O5mFbjmGTOLS58d3O+y/u95/vnvx0lIvxf4HE9Y7PyU0ETwl6gAQgANcA88AswhuIsKc7TJ0k3qZVrnTmqtpGhHeFloMJERArF+3g5Qaf84UYJ7og5rPai+JhCB6xiHuEQp+Ws0zI0pwloU+0oBrAnBKAGxQBtqt1pKc46UyjgHadFrEIHXXLCbrB9MYWhNYAb3f0bBsI+u0POnpijahtpJrA/tDbCPOU8aGdSsPdWM7SzOUIAam7ntwzrnWlWfnzMYW76tYsUy9RaXYesd6aCJswI0Tw5WvuG6EyEOWUk6UyEae0bQvPkTLEUeCzBupjCyl4iqyfHydkxdh3YQ/nWnSjlp3zrTnYd2MPJ2TFTgszwFNNaDaCwRdkYLd1B/NWNa9r81Y20dAdd4SmCHTGBkh6P7bvXkd0sTxHsiKku6eH13+fIbpanCHbExEp6ZJJTjuxmeYpgXYwiVNLnysCMI7tZniLYmc1Kk/Qe3E1ycXhNW3JxmN6Du13hKYIdMWsXuRpGzsOxugYu9Q+RXgojkiS9FOZS/xDH6howcqUPhWZ4imB9B9CmyoBx4AGrZBYwCTxMl2StBFnvTJdkUbxlOc4a3rYqBOxuNHfQC0RsxZZGhAA9dgLtiTkuOYQOW7Gl0c5xMbN/+xecnTQPq89QPGM/wT9hCJ8+MvjQ81pK8yp92ZvxeMpUNuvVNK0MQAwjI15vRkTSIpKOxWK/yyoBzsS0qiq8DAP3OxWylNMWmoL1XTMresZsjIJllIzk4GosFrvl/HbmiHoCYRAHx2cBo2Pknp4v45U3befQVY/z8/sp+Q5410mKC7P+oBMhALphBNy6jHgDxU92Am+t6PFXhrcPOeRPp7LZYXfEdEkWjWeBlJWwnKEyr41s/3rFwHDAnjY0zsTj8ZR710Qfys/Aq1ZCPrlZef7iwpYF25xKRhLLyQ+i0Wi48NPtrwBt6hsofeQNJ7zhp74PfGE1/Z0ZzNC0y5FIZHa1zf2vAFmeS2vqerkuVeu5pPLa0otXa01f9CklOQw1AfnRiampkIjk1/JzX0y3/LrY7Dm0w5f/ah0Pee/GXWeiSc/G/y+NjBjGuA6h8snK8VEZLbn+uD/MbiPe7P283pd9uvh5cMH3Q8uPdd+uE7ailFw3NO1aNBqdELG2rdk0MbSqLb8p7UZVmVF/59F8Wp97Mhg4ncjqfxWplKQMkbBmGKGJ6emIiNie2TZPDHB5v+/xxrtXBnWFnhfyL1yp/ejCXMUMShIKQnmlQrFYbFJcKmJTxQBc3O9789FtmZfOzfjPvT5S068bmWvj09PTm8G16WL+S/wJLybNu1V6htkAAAAASUVORK5CYII=',
         red: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAmCAYAAABpuqMCAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAQxSURBVFiF3ZldaBxVFMd/d2ayTRtjQpo2mlilWBEMshoj+FAERZIHIdA3iw+V1icRREFIQAKNgsUHQfBFwZI2WgWxqYUiVTDBBj9ILC5Nu2tjdjemsR+mSZNNNvsxO8eHTTRuk+zMnQmCf9iHnXvO+Z//nDvn3rmjRIT/C6zAI4ZVFRbtKDpQNCM0AvXANIo/EC4inMbmLBFZDJJaBVaZJ9Sd2HQCrwDbXHikgfewOMKPMh9ECsGIeVx1IHxEsQJeMY3iEMNy2m8aht8AtKpOhH70hADUI/TTqjr9puKvMsUE3vabxCp0MSJHdJ31xRSnVj9BVPcfOCj26U45PTHFh30c/am1EaaxuF+nKejd1WLX2gwhAPXL8T3De2XCqooKbuCu/eoiTZ6dXtch75WxaMeNENOyOXx8kHOpGMPOIudSMQ4fH8S0bBcs25Z5PMF7ZVpVL3BgQxvTsvn6+kVq6sK3jc3NRGhraKZgl9t9HGNEXvCSmvfKKJrL2nQfHVpTCEBNXZjuo0OB8JTAu5jiXmtjPL3vLl/jbnlKoNPN6spaVFbt8jXulqcEOmKSZS0yi5O+xt3ylEBHTLSsxbf913yNu+UpgU4DKE/Sc3AvczORNcfmZiL0HNwbCE8JvItxWDvJ1SjYFm0NzZzpG2RpIYbIIksLMc70Dbpsy+54SqCzzlQAY8B9Xsk8YAJ4gBHJe3HyXpkRyaN407OfN7zlVQjobjTv4BgQ1/ItjzjV9Oo46okZEBuhS8u3PDoZEDf7t9vg903zBLBfP8C/4cAnD87teclIGyFlLoVyllWh8vmQYRgVAOI4OQmFciKSFZFsMpmck1UC/Il5VNViEgHu9StkQYyb7bNNH1wrmDm3PgqWUHLBhl+SyeRV/6czLepJDAbw8fos4HTNb+/9PFv9u3YMU/X6f38/L98B7/gJ8U2uasiPEADTcRqDOozoBn7WcbzqmFOvpnYM+uTPpvP5SDBiimvP8xRPKV3DFpV7fX7HyYyD44M96xicmpqaSgd3TDQsv6J4zYvLx5nqsz/kK29qcyq5kFpafD+RSMSKf4P+CvCY+hJFRzmzmB2KPTvb+JnX8CsdzDGM8/F4/PrqseC/AggvZlGXtyipXc8kLcbCy6mdrg/6lBIbR41DYXR8cjIqIoW17IIXc17+nHnEOnS3VfhiHQt5d7HmVMK2Nn6+DHLiOGMmRLdMVI+NymjZ9Sf4abaMqZbQp01G/rnS60P5rT8duNXw1TpuGaXksmMYlxKJxLiIt23NponhKVV5a874rdZwmlYuTTvmjWdmGj9Mifl3kkpJ2hGJGY4THb9yJS4i2p0t+Gm2ggHJxMNb94eNzIAJZgEKbyxsP5kS00ZJSkG0oFQ0mZyYkKDuqIhs6u/7hyt75luM2RMPVfft3rW7bU9T0z2bxbV50+w/wF8f81R5OpwBhwAAAABJRU5ErkJggg==',
-        turquoiseBlue: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAmCAYAAABpuqMCAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAASxSURBVFiF3ZhdbBRVGIafc2Z2210hbeWnpcQVUC8kwBUJXJBIgwkgBEPEC1GMxhgE4gUJJsYERMWI3orYaiqgrYSWH/mvMaQLciE1RAKUkrLbbhMobQ20/LT7N3OOF0CC0O7szGwv9L3c73u/93vnnD3zzYH/EUTBKx6sHUvQWgR6GTAdmASMA26A6AYuofUhQnYTVevuFlK6cGaObC9DGh8i9PtAKA/GEIKvSRZtZfnbA4VooTBmjlWvQFADPOmBfRN4l8Xv7ffbhvTF1lpwrHoTgga8GeE+by9NNRvR2tfDNfyQmVv5MYJP8L/CAqgidtai/sgpP0W84d7WavBV43Eo0CtYvOaAF7K3Rg7sKKU4Hcf71sqFfmz1DEvX9rslevvPFKc/YnSMAJRhyA+8EN2vzMHasQSzveR3/HrFEMV2udv3kOlaJmgtIg8jYcMcqpu1oGXJhMi0oJQVGaV6Dvd1day62DwnaWWd+GHSciGwz01rHraZXuaUETbMoe6qVR3Ly6fMD0oZAYJBKSOvVEyd3z3/jVjIDCSddYSjzqPwYEY875RRN2tBS4kZnDFcrNQMztw144UzjjKa6W4787IylU4ZSyZEpuWKv1w+dWohdB6Fl9NsnFNCUMqKnHGRO34PYnz+Ld2DFzN3nBIySvXkjGt1PQ+d23l3dB9ezPQ6JRzu6+rIFT/Q25lwVNHkfCDDwYuZFqeEVReb5wxYmQvDxfqz6QtvnW+e69yZcNR5jOKWgKbZKSVpZUOV0bpnG3vi0YxWXUAmo1XXnp54tLL5p+dSyi52FlJRt625nwCavxlDyrgKlLjm5o9byPBkFr456IbkfmWq1t1FsMM1zx1q3RoBr4OmpT4F+jxxndGHrbZ4IXozs3RtP0Ks98R1ghDrvYz/4PfD6ti39Qix0leNh6H07siaL9ZJKYuKtA6lhSgKaC0sWwYATENlLSmVECIZTKcHZ167NtAI9gO6PzO/1ZRg6XPAFF91AJnKDES21NaYN26l8uVoLWyhSZhS/345kUj4/+Q9XjMPdBR/9wl6Qn3TjyWnzyW88i3Y5e92BmDx6tPAV35KjDnXftqHEQBhKDXZvxmA4p5NCJzH+mFg3rxzvXzn0ZN+5BUoW8p4YcxUbbZQ4nXyGEIfhrDt7MS6o/tEOm07Z48ArTPCMPYnEomewpgBeGl1HMQGN5SSk381hdsSNzwqag1tRbZdHY/HL8JoXJwfr24AXnVKK7rae/mpz3fs8aCQ1FqfxzTPxuPxf7243V9oOMESa4XOvqgDZtlIKTKVHpz4w6Ej+ZbUWlgIHdNStkYikbZoNGoNl1f4lQGM3V8us0tLfhmhvh6/98Tu0hN/XslVQ2uRlahOIWWrMozLsVgs7aQ7KmYAAnVb67PjSh+bDsKtHX9Ubmv4dQRaEiE6JLQHwuG21tbWjBvNwm+z+8hmU+/Iu8l5akwo8uA34/bg3+W1B088nKdhCK2vmFJemjV7dqyxsdHzyTZqKwMQ2r55bmpK+SktRABb2ZO+2//9E+djvcAthIgZ0P5aZ+eVzaAKoTeqZgCKt238LP10xYaxZy7tq/j5+E5Ms629vb0b0KOt/Z/GP4jqqfL5oxVsAAAAAElFTkSuQmCC'
+        turquoiseBlue: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAmCAYAAABpuqMCAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAASxSURBVFiF3ZhdbBRVGIafc2Z2210hbeWnpcQVUC8kwBUJXJBIgwkgBEPEC1GMxhgE4gUJJsYERMWI3orYaiqgrYSWH/mvMaQLciE1RAKUkrLbbhMobQ20/LT7N3OOF0CC0O7szGwv9L3c73u/93vnnD3zzYH/EUTBKx6sHUvQWgR6GTAdmASMA26A6AYuofUhQnYTVevuFlK6cGaObC9DGh8i9PtAKA/GEIKvSRZtZfnbA4VooTBmjlWvQFADPOmBfRN4l8Xv7ffbhvTF1lpwrHoTgga8GeE+by9NNRvR2tfDNfyQmVv5MYJP8L/CAqgidtai/sgpP0W84d7WavBV43Eo0CtYvOaAF7K3Rg7sKKU4Hcf71sqFfmz1DEvX9rslevvPFKc/YnSMAJRhyA+8EN2vzMHasQSzveR3/HrFEMV2udv3kOlaJmgtIg8jYcMcqpu1oGXJhMi0oJQVGaV6Dvd1day62DwnaWWd+GHSciGwz01rHraZXuaUETbMoe6qVR3Ly6fMD0oZAYJBKSOvVEyd3z3/jVjIDCSddYSjzqPwYEY875RRN2tBS4kZnDFcrNQMztw144UzjjKa6W4787IylU4ZSyZEpuWKv1w+dWohdB6Fl9NsnFNCUMqKnHGRO34PYnz+Ld2DFzN3nBIySvXkjGt1PQ+d23l3dB9ezPQ6JRzu6+rIFT/Q25lwVNHkfCDDwYuZFqeEVReb5wxYmQvDxfqz6QtvnW+e69yZcNR5jOKWgKbZKSVpZUOV0bpnG3vi0YxWXUAmo1XXnp54tLL5p+dSyi52FlJRt625nwCavxlDyrgKlLjm5o9byPBkFr456IbkfmWq1t1FsMM1zx1q3RoBr4OmpT4F+jxxndGHrbZ4IXozs3RtP0Ks98R1ghDrvYz/4PfD6ti39Qix0leNh6H07siaL9ZJKYuKtA6lhSgKaC0sWwYATENlLSmVECIZTKcHZ167NtAI9gO6PzO/1ZRg6XPAFF91AJnKDES21NaYN26l8uVoLWyhSZhS/345kUj4/+Q9XjMPdBR/9wl6Qn3TjyWnzyW88i3Y5e92BmDx6tPAV35KjDnXftqHEQBhKDXZvxmA4p5NCJzH+mFg3rxzvXzn0ZN+5BUoW8p4YcxUbbZQ4nXyGEIfhrDt7MS6o/tEOm07Z48ArTPCMPYnEomewpgBeGl1HMQGN5SSk381hdsSNzwqag1tRbZdHY/HL8JoXJwfr24AXnVKK7rae/mpz3fs8aCQ1FqfxzTPxuPxf7243V9oOMESa4XOvqgDZtlIKTKVHpz4w6Ej+ZbUWlgIHdNStkYikbZoNGoNl1f4lQGM3V8us0tLfhmhvh6/98Tu0hN/XslVQ2uRlahOIWWrMozLsVgs7aQ7KmYAAnVb67PjSh+bDsKtHX9Ubmv4dQRaEiE6JLQHwuG21tbWjBvNwm+z+8hmU+/Iu8l5akwo8uA34/bg3+W1B088nKdhCK2vmFJemjV7dqyxsdHzyTZqKwMQ2r55bmpK+SktRABb2ZO+2//9E+djvcAthIgZ0P5aZ+eVzaAKoTeqZgCKt238LP10xYaxZy7tq/j5+E5Ms629vb0b0KOt/Z/GP4jqqfL5oxVsAAAAAElFTkSuQmCC',
+        defaultOffset: [
+            -25.5,
+            -38
+        ]
     };
     return Marker;
 }();
@@ -19110,7 +19114,7 @@ CommonControlsLocationSelectorDOM = function (ID) {
     };
     return LocationSelectorDOM;
 }(CommonUtilsSelectorID);
-Ol3ControlsLocationSelector = function (ol, Utils, woodman, Gp, RightManagement, SelectorID, LocationSelectorDOM) {
+Ol3ControlsLocationSelector = function (ol, Utils, woodman, Gp, RightManagement, SelectorID, LocationSelectorDOM, Markers) {
     function LocationSelector(options) {
         options = options || {};
         if (!(this instanceof LocationSelector)) {
@@ -19138,7 +19142,6 @@ Ol3ControlsLocationSelector = function (ol, Utils, woodman, Gp, RightManagement,
                 id: 1,
                 groupId: null,
                 label: '>',
-                type: 'inter',
                 display: true,
                 addOption: false,
                 removeOption: false
@@ -19161,17 +19164,32 @@ Ol3ControlsLocationSelector = function (ol, Utils, woodman, Gp, RightManagement,
         this._suggestedContainer = null;
         this._suggestedLocations = [];
         this._currentLocation = null;
-        this._marker = null;
-        if (this.options.tag.type === 'inter') {
-            this._markerUrl = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAmCAYAAABpuqMCAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAARDSURBVFiF3ZndaxxVGMZ/Z/YjX00Nadpo1qrFBgu56D9QbAtiLoRC7ywSNK1NURRREBKRFlSwFBW0gnSrJXY1CmISgyjFiyYSFC9ajE3MmpjdjWlMUtNos9lN9mteLzbRuCbZmTMTBB+Yi51znvd5n3nPnjnnjBIR/i/wuh4xpCpI0ojiENAA1AE1wCzwKzCE0EM5l2iShJvSyrXKnFVb8dOK4hmg3AIjifAmaU7ztMy7kYI7Zs6rQwjvka+AXcyiOMZx6XGahuE0AEHVitCFnhGAGoQugqrVaSrOKpNP4FWnSaxCGy1yWpesbyY/tLpwo7p/w0RxWHfI6Zk5q7ZSwhj6Q2sjzJLiXp1JQe+p+mllc4wA1CzHtw37lQmpCha5gbXpVxdJythh9z1kvzJJGrFixPBmOXixl+Z4mONmguZ4mIMXezG8WQsq5cs6tmDfTP7NXiSqN0vTzBD1TQfwbdmDUhX4tuyhvukATTNDlgxZ0SmUtUsgv0TZGPsv9FNSvXfNtpLqvey/0O+KTgF0zNQV7XHP4dsdtVvVKYCOmeqiPbwVOx21W9UpgI6ZWNEe2cSEo3arOgWwb0YYLp5G17Sjdqs6BdCZzYqL9B3dR2puYM221NwAfUf3uaJTAB0zaye5GmbWS6i2gdFQL5mFMCIJMgthRkO9hGobMLPFN4VWdAoptlcAQeUDRoG77YrZwDhQT4tk7JDsV6ZFMggv2+bZwyt2jYDuQnOa94GIFrc4IkzRrkPUM3NKsijatLjF0copsbJ++xec7TTPqw6EI/oB/glT+PC+13Y/aSQNv/Is+tNer09lMn7DMHwAYppp8fvTIpISkVQsFrslqww4M9OuqkgzANzl1MhCyrjZGAycm573pK1yFCyi5FoWvo/FYlPOT2fOqftRXMbB9lkEs+3zbe2f/FD5i3YMj2p3vn8/IV8DZ5yE+Gqkot+JEQCPada5dRhxEriiQ5ya90w+272916F+KpnJDLhjpkUy5HgESNqhZU2Vfr5ne+dSFtOBeso06J6cnEy6d0z0hPwEPGeH8sGVykvfjpfe1NZUci2+mHg7Go2G8z/d/goQVJ9B8S1veMYffujduo/thl+ZwUzDuBqJRGZWt7n/FcDH46lFNVLilar1uiTTxsJTnTssH/QpJVlMNQa5wbGJiWERya3Vz30zzfLb3OveY3dU5j5dp4e80Xdbd3TOu/H/yyAtpjnqgeGS8crRQRks+v5xf5gtY/KM/6NAVebhwvv90bLvHu2o/XId2pJSMmIaxo/RaHRMxN6yZtPM0K5K/7hl/FxVZgZWbs0mPDceeKcuGE95/kpSKUmaImHDNIfHrl+PiIj2zOb+MFvBY7IUOVl2ZG9g6bJH4ckJuRe/2NYZT3myKIkrGM4pNRyLjY+LW09URDb1+uaF0pfm3zJ+7zhRGdq1c9eDuwOBOzdLa/OG2X+APwE8DU64Y/5gfAAAAABJRU5ErkJggg==';
-        } else if (this.options.tag.type === 'arrival') {
-            this._markerUrl = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAmCAYAAABpuqMCAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAQxSURBVFiF3ZldaBxVFMd/d2ayTRtjQpo2mlilWBEMshoj+FAERZIHIdA3iw+V1icRREFIQAKNgsUHQfBFwZI2WgWxqYUiVTDBBj9ILC5Nu2tjdjemsR+mSZNNNvsxO8eHTTRuk+zMnQmCf9iHnXvO+Z//nDvn3rmjRIT/C6zAI4ZVFRbtKDpQNCM0AvXANIo/EC4inMbmLBFZDJJaBVaZJ9Sd2HQCrwDbXHikgfewOMKPMh9ECsGIeVx1IHxEsQJeMY3iEMNy2m8aht8AtKpOhH70hADUI/TTqjr9puKvMsUE3vabxCp0MSJHdJ31xRSnVj9BVPcfOCj26U45PTHFh30c/am1EaaxuF+nKejd1WLX2gwhAPXL8T3De2XCqooKbuCu/eoiTZ6dXtch75WxaMeNENOyOXx8kHOpGMPOIudSMQ4fH8S0bBcs25Z5PMF7ZVpVL3BgQxvTsvn6+kVq6sK3jc3NRGhraKZgl9t9HGNEXvCSmvfKKJrL2nQfHVpTCEBNXZjuo0OB8JTAu5jiXmtjPL3vLl/jbnlKoNPN6spaVFbt8jXulqcEOmKSZS0yi5O+xt3ylEBHTLSsxbf913yNu+UpgU4DKE/Sc3AvczORNcfmZiL0HNwbCE8JvItxWDvJ1SjYFm0NzZzpG2RpIYbIIksLMc70Dbpsy+54SqCzzlQAY8B9Xsk8YAJ4gBHJe3HyXpkRyaN407OfN7zlVQjobjTv4BgQ1/ItjzjV9Oo46okZEBuhS8u3PDoZEDf7t9vg903zBLBfP8C/4cAnD87teclIGyFlLoVyllWh8vmQYRgVAOI4OQmFciKSFZFsMpmck1UC/Il5VNViEgHu9StkQYyb7bNNH1wrmDm3PgqWUHLBhl+SyeRV/6czLepJDAbw8fos4HTNb+/9PFv9u3YMU/X6f38/L98B7/gJ8U2uasiPEADTcRqDOozoBn7WcbzqmFOvpnYM+uTPpvP5SDBiimvP8xRPKV3DFpV7fX7HyYyD44M96xicmpqaSgd3TDQsv6J4zYvLx5nqsz/kK29qcyq5kFpafD+RSMSKf4P+CvCY+hJFRzmzmB2KPTvb+JnX8CsdzDGM8/F4/PrqseC/AggvZlGXtyipXc8kLcbCy6mdrg/6lBIbR41DYXR8cjIqIoW17IIXc17+nHnEOnS3VfhiHQt5d7HmVMK2Nn6+DHLiOGMmRLdMVI+NymjZ9Sf4abaMqZbQp01G/rnS60P5rT8duNXw1TpuGaXksmMYlxKJxLiIt23NponhKVV5a874rdZwmlYuTTvmjWdmGj9Mifl3kkpJ2hGJGY4THb9yJS4i2p0t+Gm2ggHJxMNb94eNzIAJZgEKbyxsP5kS00ZJSkG0oFQ0mZyYkKDuqIhs6u/7hyt75luM2RMPVfft3rW7bU9T0z2bxbV50+w/wF8f81R5OpwBhwAAAABJRU5ErkJggg==';
-        } else {
-            this._markerUrl = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAmCAYAAABpuqMCAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAQ+SURBVFiF3ZlLaFxlGIaf/5zJpJNpaoxpYieoCxULEYK7Lqp0IWQhFLooKNKEtNIULxWlQoJgQQWLFMEg0lQMuXgD0dRSkNJFgoy0IrYNSTpj08xMmoxNYhLUyUwyt/O5mFbjmGTOLS58d3O+y/u95/vnvx0lIvxf4HE9Y7PyU0ETwl6gAQgANcA88AswhuIsKc7TJ0k3qZVrnTmqtpGhHeFloMJERArF+3g5Qaf84UYJ7og5rPai+JhCB6xiHuEQp+Ws0zI0pwloU+0oBrAnBKAGxQBtqt1pKc46UyjgHadFrEIHXXLCbrB9MYWhNYAb3f0bBsI+u0POnpijahtpJrA/tDbCPOU8aGdSsPdWM7SzOUIAam7ntwzrnWlWfnzMYW76tYsUy9RaXYesd6aCJswI0Tw5WvuG6EyEOWUk6UyEae0bQvPkTLEUeCzBupjCyl4iqyfHydkxdh3YQ/nWnSjlp3zrTnYd2MPJ2TFTgszwFNNaDaCwRdkYLd1B/NWNa9r81Y20dAdd4SmCHTGBkh6P7bvXkd0sTxHsiKku6eH13+fIbpanCHbExEp6ZJJTjuxmeYpgXYwiVNLnysCMI7tZniLYmc1Kk/Qe3E1ycXhNW3JxmN6Du13hKYIdMWsXuRpGzsOxugYu9Q+RXgojkiS9FOZS/xDH6howcqUPhWZ4imB9B9CmyoBx4AGrZBYwCTxMl2StBFnvTJdkUbxlOc4a3rYqBOxuNHfQC0RsxZZGhAA9dgLtiTkuOYQOW7Gl0c5xMbN/+xecnTQPq89QPGM/wT9hCJ8+MvjQ81pK8yp92ZvxeMpUNuvVNK0MQAwjI15vRkTSIpKOxWK/yyoBzsS0qiq8DAP3OxWylNMWmoL1XTMresZsjIJllIzk4GosFrvl/HbmiHoCYRAHx2cBo2Pknp4v45U3befQVY/z8/sp+Q5410mKC7P+oBMhALphBNy6jHgDxU92Am+t6PFXhrcPOeRPp7LZYXfEdEkWjWeBlJWwnKEyr41s/3rFwHDAnjY0zsTj8ZR710Qfys/Aq1ZCPrlZef7iwpYF25xKRhLLyQ+i0Wi48NPtrwBt6hsofeQNJ7zhp74PfGE1/Z0ZzNC0y5FIZHa1zf2vAFmeS2vqerkuVeu5pPLa0otXa01f9CklOQw1AfnRiampkIjk1/JzX0y3/LrY7Dm0w5f/ah0Pee/GXWeiSc/G/y+NjBjGuA6h8snK8VEZLbn+uD/MbiPe7P283pd9uvh5cMH3Q8uPdd+uE7ailFw3NO1aNBqdELG2rdk0MbSqLb8p7UZVmVF/59F8Wp97Mhg4ncjqfxWplKQMkbBmGKGJ6emIiNie2TZPDHB5v+/xxrtXBnWFnhfyL1yp/ejCXMUMShIKQnmlQrFYbFJcKmJTxQBc3O9789FtmZfOzfjPvT5S068bmWvj09PTm8G16WL+S/wJLybNu1V6htkAAAAASUVORK5CYII=';
-        }
+        this._initMarker();
         this._resources = {};
         this._noRightManagement = false;
         this._checkRightsManagement();
+    };
+    LocationSelector.prototype._initMarker = function () {
+        this._marker = null;
+        this._markerUrl = '';
+        this._markerOffset = [
+            0,
+            0
+        ];
+        if (this.options.tag.markerOpts && this.options.tag.markerOpts.url) {
+            this._markerUrl = this.options.tag.markerOpts.url;
+            var offset = this.options.tag.markerOpts.offset;
+            if (offset) {
+                if (Array.isArray(offset) && offset.length === 2) {
+                    this._markerOffset = offset;
+                } else {
+                    console.log('markerOpts.offset should be an array. e.g. : [0,0]');
+                }
+            }
+        } else {
+            this._markerUrl = Markers['lightOrange'];
+            this._markerOffset = Markers.defaultOffset;
+        }
     };
     LocationSelector.prototype.getCoordinate = function () {
         return this._coordinate;
@@ -19368,10 +19386,7 @@ Ol3ControlsLocationSelector = function (ol, Utils, woodman, Gp, RightManagement,
             markerDiv.src = this._markerUrl;
             this._marker = new ol.Overlay({
                 position: position,
-                offset: [
-                    -25.5,
-                    -38
-                ],
+                offset: this._markerOffset,
                 element: markerDiv,
                 stopEvent: false
             });
@@ -19443,7 +19458,7 @@ Ol3ControlsLocationSelector = function (ol, Utils, woodman, Gp, RightManagement,
         this._suggestedLocations = locations;
     };
     return LocationSelector;
-}(ol, Ol3Utils, {}, gp, CommonUtilsCheckRightManagement, CommonUtilsSelectorID, CommonControlsLocationSelectorDOM);
+}(ol, Ol3Utils, {}, gp, CommonUtilsCheckRightManagement, CommonUtilsSelectorID, CommonControlsLocationSelectorDOM, Ol3ControlsUtilsMarkers);
 CommonControlsRouteDOM = function (ID) {
     var RouteDOM = {
         _addUID: function (id) {
@@ -20188,7 +20203,7 @@ CommonControlsRouteDOM = function (ID) {
     };
     return RouteDOM;
 }(CommonUtilsSelectorID);
-Ol3ControlsRoute = function (ol, Gp, Utils, woodman, RightManagement, SelectorID, LocationSelector, LayerSwitcher, RouteDOM) {
+Ol3ControlsRoute = function (ol, Gp, Utils, woodman, RightManagement, SelectorID, LocationSelector, LayerSwitcher, Markers, RouteDOM) {
     function Route(options) {
         options = options || {};
         if (!(this instanceof Route)) {
@@ -20255,6 +20270,21 @@ Ol3ControlsRoute = function (ol, Gp, Utils, woodman, RightManagement, SelectorID
             autocompleteOptions: {}
         };
         Utils.assign(this.options, options);
+        var defaultMarkersOpts = {
+            departure: {
+                url: Markers['red'],
+                offset: Markers.defaultOffset
+            },
+            stages: {
+                url: Markers['lightOrange'],
+                offset: Markers.defaultOffset
+            },
+            arrival: {
+                url: Markers['darkOrange'],
+                offset: Markers.defaultOffset
+            }
+        };
+        this.options.markersOpts = Utils.assign(defaultMarkersOpts, options.markersOpts);
         this.collapsed = this.options.collapsed;
         this._uid = SelectorID.generate();
         this._waitingContainer = null;
@@ -20493,7 +20523,7 @@ Ol3ControlsRoute = function (ol, Gp, Utils, woodman, RightManagement, SelectorID
             tag: {
                 id: count,
                 groupId: this._uid,
-                type: 'departure',
+                markerOpts: this.options.markersOpts['departure'],
                 label: 'Départ',
                 display: true
             },
@@ -20510,7 +20540,7 @@ Ol3ControlsRoute = function (ol, Gp, Utils, woodman, RightManagement, SelectorID
                     id: count,
                     groupId: this._uid,
                     label: 'Etape',
-                    type: 'inter',
+                    markerOpts: this.options.markersOpts['stages'],
                     display: false,
                     removeOption: true
                 },
@@ -20526,7 +20556,7 @@ Ol3ControlsRoute = function (ol, Gp, Utils, woodman, RightManagement, SelectorID
             tag: {
                 id: count,
                 groupId: this._uid,
-                type: 'arrival',
+                markerOpts: this.options.markersOpts['arrival'],
                 label: 'Arrivée',
                 display: true,
                 addOption: true
@@ -20918,7 +20948,6 @@ Ol3ControlsRoute = function (ol, Gp, Utils, woodman, RightManagement, SelectorID
                         title: ' Itinéraire ' + graph,
                         description: ' Itinéraire basé sur un graphe ' + graph
                     });
-                    control.setRemovable(this._geojsonSections, false);
                 }
             }
         }, this);
@@ -20983,6 +21012,7 @@ Ol3ControlsRoute = function (ol, Gp, Utils, woodman, RightManagement, SelectorID
         for (var i = 0; i < this._currentPoints.length; i++) {
             this._currentPoints[i].clear();
         }
+        this._removeRouteStepLocations();
     };
     Route.prototype._clearRouteInputOptions = function () {
         this._initTransport();
@@ -21026,6 +21056,23 @@ Ol3ControlsRoute = function (ol, Gp, Utils, woodman, RightManagement, SelectorID
                 bridgeInput.checked = false;
             } else {
                 bridgeInput.checked = true;
+            }
+        }
+    };
+    Route.prototype._removeRouteStepLocations = function () {
+        var points = document.querySelectorAll('div[id^="GPlocationPoint"]');
+        var stepPoints = 0;
+        if (points.length !== 0) {
+            for (var i = 1; i < points.length - 1; i++) {
+                var classList = points[i].classList;
+                if (classList.length !== 0) {
+                    for (var j = 0; j < classList.length; j++) {
+                        if (classList[j] === 'GPlocationStageFlexInput') {
+                            document.getElementById(this._addUID('GPlocationStageRemove_' + (i + 1))).click();
+                            stepPoints += 1;
+                        }
+                    }
+                }
             }
         }
     };
@@ -21159,7 +21206,7 @@ Ol3ControlsRoute = function (ol, Gp, Utils, woodman, RightManagement, SelectorID
         return d;
     };
     return Route;
-}(ol, gp, Ol3Utils, {}, CommonUtilsCheckRightManagement, CommonUtilsSelectorID, Ol3ControlsLocationSelector, Ol3ControlsLayerSwitcher, CommonControlsRouteDOM);
+}(ol, gp, Ol3Utils, {}, CommonUtilsCheckRightManagement, CommonUtilsSelectorID, Ol3ControlsLocationSelector, Ol3ControlsLayerSwitcher, Ol3ControlsUtilsMarkers, CommonControlsRouteDOM);
 CommonControlsIsoDOM = function () {
     var IsoDOM = {
         _addUID: function (id) {
@@ -21665,7 +21712,7 @@ CommonControlsIsoDOM = function () {
     };
     return IsoDOM;
 }();
-Ol3ControlsIsocurve = function (ol, Gp, Utils, woodman, RightManagement, SelectorID, LocationSelector, LayerSwitcher, IsoDOM) {
+Ol3ControlsIsocurve = function (ol, Gp, Utils, woodman, RightManagement, SelectorID, LocationSelector, LayerSwitcher, Markers, IsoDOM) {
     function Isocurve(options) {
         options = options || {};
         if (!(this instanceof Isocurve)) {
@@ -21736,6 +21783,10 @@ Ol3ControlsIsocurve = function (ol, Gp, Utils, woodman, RightManagement, Selecto
                 'departure',
                 'arrival'
             ],
+            markerOpts: {
+                url: Markers['lightOrange'],
+                offset: Markers.defaultOffset
+            },
             isocurveOptions: {},
             autocompleteOptions: {}
         };
@@ -22028,7 +22079,7 @@ Ol3ControlsIsocurve = function (ol, Gp, Utils, woodman, RightManagement, Selecto
             tag: {
                 id: 1,
                 groupId: this._uid,
-                type: 'arrival',
+                markerOpts: this.options.markerOpts,
                 label: 'Départ',
                 display: true
             },
@@ -22269,7 +22320,6 @@ Ol3ControlsIsocurve = function (ol, Gp, Utils, woodman, RightManagement, Selecto
                         title: method + ' ' + graph,
                         description: method + ' basé sur un graphe ' + graph
                     });
-                    control.setRemovable(this._geojsonLayer, false);
                 }
             }
         }, this);
@@ -22408,7 +22458,7 @@ Ol3ControlsIsocurve = function (ol, Gp, Utils, woodman, RightManagement, Selecto
         }
     };
     return Isocurve;
-}(ol, gp, Ol3Utils, {}, CommonUtilsCheckRightManagement, CommonUtilsSelectorID, Ol3ControlsLocationSelector, Ol3ControlsLayerSwitcher, CommonControlsIsoDOM);
+}(ol, gp, Ol3Utils, {}, CommonUtilsCheckRightManagement, CommonUtilsSelectorID, Ol3ControlsLocationSelector, Ol3ControlsLayerSwitcher, Ol3ControlsUtilsMarkers, CommonControlsIsoDOM);
 CommonControlsReverseGeocodingDOM = function () {
     var ReverseGeocodingDOM = {
         _addUID: function (id) {
@@ -24935,7 +24985,7 @@ Ol3ControlsGeoportalAttribution = function (ol, LayerUtils) {
 }(ol, CommonUtilsLayerUtils);
 Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution) {
     Gp.ol3extVersion = '0.11.0';
-    Gp.ol3extDate = '2016-07-29';
+    Gp.ol3extDate = '2016-08-08';
     Gp.LayerUtils = LayerUtils;
     CRS.overload();
     ol.source.GeoportalWMTS = SourceWMTS;
