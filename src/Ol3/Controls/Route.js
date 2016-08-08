@@ -7,6 +7,7 @@ define([
     "Common/Utils/SelectorID",
     "Ol3/Controls/LocationSelector",
     "Ol3/Controls/LayerSwitcher",
+    "Ol3/Controls/Utils/Markers",
     "Common/Controls/RouteDOM"
 ], function (
     ol,
@@ -17,6 +18,7 @@ define([
     SelectorID,
     LocationSelector,
     LayerSwitcher,
+    Markers,
     RouteDOM
 ) {
     "use strict";
@@ -33,10 +35,13 @@ define([
      * @alias ol.control.Route
      * @extends {ol.control.Control}
      * @param {Object} options - route control options
-     * @param {Sting}   [options.apiKey] - API key for services call (route and autocomplete services), mandatory if autoconf service has not been charged in advance
+     * @param {String}   [options.apiKey] - API key for services call (route and autocomplete services), mandatory if autoconf service has not been charged in advance
      * @param {Boolean} [options.collapsed = true] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
      * @param {Object}  [options.exclusions = {toll : false, tunnel : false, bridge : false}] - list of exclusions with status (true = checked). By default : no exclusions checked.
      * @param {Array}   [options.graphs = ["Voiture", "Pieton"]] - list of resources, by default : ["Voiture", "Pieton"]. The first element is selected.
+     * @param {Object} [options.markersOpts] - options to use your own markers. Object properties can be "departure", "stages" or "arrival". Corresponding value is an object with following properties :
+     * @param {String} [options.markerOpts[property].url] - marker base64 encoded url (ex "data:image/png;base64,...""). Mandatory for a custom marker
+     * @param {Array} [options.markerOpts[property].offset] - Offsets in pixels used when positioning the overlay. The first element in the array is the horizontal offset. A positive value shifts the overlay right. The second element in the array is the vertical offset. A positive value shifts the overlay down. Default is [0, 0]. (see http://openlayers.org/en/latest/apidoc/ol.Overlay.html)
      * @param {Object} [options.routeOptions = {}] - route service options. see {@link http://depot.ign.fr/geoportail/bibacces/develop/doc/module-Services.html#~route} to know all route options.
      * @param {Object} [options.autocompleteOptions = {}] - autocomplete service options. see {@link http://depot.ign.fr/geoportail/bibacces/develop/doc/module-Services.html#~autoComplete} to know all autocomplete options
      * @example
@@ -48,6 +53,20 @@ define([
      *         "tunnel" : true
      *      },
      *      graphs : ['Pieton', 'Voiture'],
+     *      markersOpts : {
+     *          departure : {
+     *              url : "...",
+     *              offset : [0,0]
+     *          },
+     *          stages : {
+     *              url : "...",
+     *              offset : [0,0]
+     *          },
+     *          arrival : {
+     *              url : "...",
+     *              offset : [0,0]
+     *          }
+     *      }
      *      autocompleteOptions : {},
      *      routeOptions : {}
      *  });
@@ -190,6 +209,24 @@ define([
 
         // merge with user options
         Utils.assign(this.options, options);
+
+        // cas particulier des markers par défaut
+        var defaultMarkersOpts = {
+            departure :  {
+                url : Markers["red"],
+                offset : Markers.defaultOffset
+            },
+            stages :  {
+                url : Markers["lightOrange"],
+                offset : Markers.defaultOffset
+            },
+            arrival :  {
+                url : Markers["darkOrange"],
+                offset : Markers.defaultOffset
+            }
+        };
+        // on récupère les options de chaque type de marker si spécifié
+        this.options.markersOpts = Utils.assign(defaultMarkersOpts, options.markersOpts);
 
         /** {Boolean} specify if Route control is collapsed (true) or not (false) */
         this.collapsed = this.options.collapsed;
@@ -603,7 +640,7 @@ define([
             tag : {
                 id : count,
                 groupId : this._uid,
-                type : "departure",
+                markerOpts : this.options.markersOpts["departure"],
                 label : "Départ",
                 display : true
             },
@@ -624,7 +661,7 @@ define([
                     id : count,
                     groupId : this._uid,
                     label : "Etape",
-                    type : "inter",
+                    markerOpts : this.options.markersOpts["stages"],
                     display : false,
                     removeOption : true
                 },
@@ -642,7 +679,7 @@ define([
             tag : {
                 id : count,
                 groupId : this._uid,
-                type : "arrival",
+                markerOpts : this.options.markersOpts["arrival"],
                 label : "Arrivée",
                 display : true,
                 addOption : true
@@ -1419,7 +1456,6 @@ define([
                                 description : " Itinéraire basé sur un graphe " + graph
                             }
                         );
-                        control.setRemovable(this._geojsonSections, false);
                     }
                 }
             },
@@ -1545,6 +1581,8 @@ define([
         for (var i = 0; i < this._currentPoints.length; i++) {
             this._currentPoints[i].clear();
         }
+        // suppression des points intermédiaires
+        this._removeRouteStepLocations();
     };
 
     /**
@@ -1605,6 +1643,33 @@ define([
                 bridgeInput.checked = false;
             } else {
                 bridgeInput.checked = true;
+            }
+        }
+    };
+
+    /**
+     * this method is called by this._clear()
+     * and it removes step location inputs (excepted departure and arrival)
+     *
+     * @private
+     */
+    Route.prototype._removeRouteStepLocations = function () {
+        var points = document.querySelectorAll('div[id^="GPlocationPoint"]')
+        var stepPoints = 0;
+        if ( points.length !== 0 ) {
+            // on boucle sur les points intermédiaires
+            for ( var i = 1; i < (points.length - 1); i ++ ) {
+                // on va regarder les classes associées
+                var classList = points[i].classList ;
+                if ( classList.length !== 0 ) {
+                    for ( var j = 0; j < classList.length; j++ ) {
+                        if ( classList[j] === "GPlocationStageFlexInput" ) {
+                            // si l'élément est visible, on le supprime en simulant un clic sur la croix (x)
+                            document.getElementById(this._addUID("GPlocationStageRemove_"+(i+1))).click();
+                            stepPoints += 1;
+                        }
+                    }
+                }
             }
         }
     };

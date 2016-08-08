@@ -7,6 +7,7 @@ define([
     "Common/Utils/SelectorID",
     "Ol3/Controls/LocationSelector",
     "Ol3/Controls/LayerSwitcher",
+    "Ol3/Controls/Utils/Markers",
     "Common/Controls/IsoDOM"
 ], function (
     ol,
@@ -17,6 +18,7 @@ define([
     SelectorID,
     LocationSelector,
     LayerSwitcher,
+    Markers,
     IsoDOM
 ) {
     "use strict";
@@ -40,6 +42,9 @@ define([
      * @param {Array}   [options.methods = ["time", "distance"]] - list of methods, by default : ["time", "distance"]. Possible values are "time" and "distance". The first element is selected by default.
      * @param {Array}   [options.directions = ["departure", "arrival"]] - list of directions to be displayed, by default : ["departure", "arrival"]. The first element is selected by default. Possible values are "departure" and "arrival".
      *      Directions enable to specify if input location point will be used as a departure point ("departure") or as an arrival point ("arrival")
+     * @param {Object} [options.markerOpts] - options to use your own marker. Default is a lightOrange marker.
+     * @param {String} [options.markerOpts.url] - marker base64 encoded url (ex "data:image/png;base64,...""). Mandatory for a custom marker
+     * @param {Array} [options.markerOpts.offset] - Offsets in pixels used when positioning the overlay. The first element in the array is the horizontal offset. A positive value shifts the overlay right. The second element in the array is the vertical offset. A positive value shifts the overlay down. Default is [0, 0]. (see http://openlayers.org/en/latest/apidoc/ol.Overlay.html)
      * @param {Object} [options.isocurveOptions = {}] - isocurve service options. see {@link http://depot.ign.fr/geoportail/bibacces/develop/doc/module-Services.html#~isoCurve} to know all isocurve options.
      * @param {Object} [options.autocompleteOptions = {}] - autocomplete service options. see {@link http://depot.ign.fr/geoportail/bibacces/develop/doc/module-Services.html#~autoComplete} to know all autocomplete options
      * @example
@@ -52,6 +57,10 @@ define([
      *         tunnel : true
      *      },
      *      graphs : ["Pieton", "Voiture"],
+     *      markerOpts : {
+     *          url : "...",
+     *          offset : [0,0]
+     *      }
      *      isocurveOptions : {},
      *      autocompleteOptions : {}
      *  });
@@ -191,6 +200,10 @@ define([
                 bridge : false
             },
             directions : ["departure", "arrival"],
+            markerOpts : {
+                url : Markers["lightOrange"],
+                offset : Markers.defaultOffset
+            },
             isocurveOptions : {},
             autocompleteOptions : {}
         };
@@ -661,7 +674,7 @@ define([
             tag : {
                 id : 1,
                 groupId : this._uid,
-                type : "arrival",
+                markerOpts : this.options.markerOpts,
                 label : "Départ",
                 display : true
             },
@@ -1088,7 +1101,6 @@ define([
                                 description : method + " basé sur un graphe " + graph
                             }
                         );
-                        control.setRemovable(this._geojsonLayer, false);
                     }
                 }
             },

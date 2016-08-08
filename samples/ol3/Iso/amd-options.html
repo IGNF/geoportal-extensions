@@ -51,8 +51,8 @@
                     }
                 });
                 requirejs(
-                    ["ol", "gp", "Ol3/Layers/LayerWMTS", "Ol3/Controls/Isocurve"],
-                    function (ol, Gp, LayerWMTS, Isocurve) {
+                    ["ol", "gp", "Ol3/Layers/LayerWMTS", "Ol3/Controls/Isocurve", "Ol3/Controls/Utils/Markers"],
+                    function (ol, Gp, LayerWMTS, Isocurve, Markers) {
 
                     var createMap = function () {
                         // on cache l'image de chargement du Géoportail.
@@ -88,7 +88,11 @@
                             methods : ["distance"],
                             graphs : ["pieton", "Voiture"],
                             // graphs : ["Voiture", "Pieton"],
-                            directions : []
+                            directions : [],
+                            markerOpts : {
+                                url : Markers["turquoiseBlue"],
+                                offset : Markers.defaultOffset
+                            }
                         });
                         map.addControl(iso);
 
