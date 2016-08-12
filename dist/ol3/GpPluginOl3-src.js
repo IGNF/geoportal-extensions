@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-08-08
+ * @date 2016-08-12
  *
  */
 /*!
@@ -24935,57 +24935,68 @@ Ol3ControlsGeoportalAttribution = function (ol, LayerUtils) {
                     this.remove(element);
                 }
             }, ctrls);
+            this._updateAttributions(map);
+            var context = this;
             map.on('moveend', function () {
-                var visibility;
-                var originators;
-                var mapAttributions = {};
-                var view = map.getView();
-                var extent = view.calculateExtent(map.getSize());
-                var mapProjection = view.getProjection().getCode();
-                var geoExtent = ol.proj.transformExtent(extent, mapProjection, 'EPSG:4326');
-                var standardExtent = [
-                    geoExtent[3],
-                    geoExtent[0],
-                    geoExtent[1],
-                    geoExtent[2]
-                ];
-                var zoom = view.getZoom();
-                var layers = map.getLayers().getArray();
-                for (var i = 0; i < layers.length; i++) {
-                    var src = layers[i].getSource();
-                    var srcAttributionHtml = '';
-                    visibility = layers[i].getVisible();
-                    originators = src._originators;
-                    if (originators && visibility) {
-                        var layerAttributions = LayerUtils.getAttributions({
-                            extent: standardExtent,
-                            crs: mapProjection,
-                            zoom: zoom,
-                            visibility: visibility,
-                            originators: originators
-                        });
-                        for (var j = 0; j < layerAttributions.length; j++) {
-                            var attributionj = layerAttributions[j];
-                            if (!mapAttributions || !mapAttributions[attributionj]) {
-                                srcAttributionHtml += attributionj;
-                                mapAttributions[attributionj] = true;
-                            }
-                        }
-                        if (srcAttributionHtml.length !== 0) {
-                            var olAttribution = new ol.Attribution({ html: srcAttributionHtml });
-                            src.setAttributions([olAttribution]);
-                        }
-                    }
-                }
+                context._updateAttributions(map);
+            }, this);
+            map.getLayers().on('add', function () {
+                context._updateAttributions(map);
+            }, this);
+            map.getLayers().on('remove', function () {
+                context._updateAttributions(map);
             }, this);
         }
         ol.control.Attribution.prototype.setMap.call(this, map);
+    };
+    GeoportalAttribution.prototype._updateAttributions = function (map) {
+        var visibility;
+        var originators;
+        var mapAttributions = {};
+        var view = map.getView();
+        var extent = view.calculateExtent(map.getSize());
+        var mapProjection = view.getProjection().getCode();
+        var geoExtent = ol.proj.transformExtent(extent, mapProjection, 'EPSG:4326');
+        var standardExtent = [
+            geoExtent[3],
+            geoExtent[0],
+            geoExtent[1],
+            geoExtent[2]
+        ];
+        var zoom = view.getZoom();
+        var layers = map.getLayers().getArray();
+        for (var i = 0; i < layers.length; i++) {
+            var src = layers[i].getSource();
+            var srcAttributionHtml = '';
+            visibility = layers[i].getVisible();
+            originators = src._originators;
+            if (originators && visibility) {
+                var layerAttributions = LayerUtils.getAttributions({
+                    extent: standardExtent,
+                    crs: mapProjection,
+                    zoom: zoom,
+                    visibility: visibility,
+                    originators: originators
+                });
+                for (var j = 0; j < layerAttributions.length; j++) {
+                    var attributionj = layerAttributions[j];
+                    if (!mapAttributions || !mapAttributions[attributionj]) {
+                        srcAttributionHtml += attributionj;
+                        mapAttributions[attributionj] = true;
+                    }
+                }
+                if (srcAttributionHtml.length !== 0) {
+                    var olAttribution = new ol.Attribution({ html: srcAttributionHtml });
+                    src.setAttributions([olAttribution]);
+                }
+            }
+        }
     };
     return GeoportalAttribution;
 }(ol, CommonUtilsLayerUtils);
 Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution) {
     Gp.ol3extVersion = '0.11.0';
-    Gp.ol3extDate = '2016-08-08';
+    Gp.ol3extDate = '2016-08-12';
     Gp.LayerUtils = LayerUtils;
     CRS.overload();
     ol.source.GeoportalWMTS = SourceWMTS;

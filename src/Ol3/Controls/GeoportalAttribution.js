@@ -62,72 +62,30 @@ define(["ol", "Common/Utils/LayerUtils"], function (ol, LayerUtils) {
                 ctrls
             );
 
+            // on récupère les attributions des couches déjà ajoutées à la carte.
+            this._updateAttributions(map);
+
             // At every map movement, layers attributions have to be updated,
             // according to map and originators zoom and extent.
+            var context = this;
             map.on(
                 "moveend",
                 function () {
-
-                    // get map parameters
-                    var visibility;
-                    var originators;
-                    var mapAttributions = {};
-
-                    var view = map.getView();
-                    // extent, then convert to geographical coordinates
-                    var extent = view.calculateExtent(map.getSize());
-                    var mapProjection = view.getProjection().getCode();
-                    var geoExtent = ol.proj.transformExtent(extent, mapProjection, "EPSG:4326");
-                    // transform extent from [minx, miny, maxx, maxy] to [maxy, minx, miny, maxx]
-                    var standardExtent = [geoExtent[3], geoExtent[0], geoExtent[1], geoExtent[2]];
-                    // zoom
-                    var zoom = view.getZoom();
-                    // layers
-                    var layers = map.getLayers().getArray();
-
-                    // loop on layers to get their originators, if there is at least one originator, and if layer is visible.
-                    for (var i = 0; i < layers.length; i++ ) {
-
-                        var src = layers[i].getSource();
-
-                        // srcAttributionHtml : html, composed of all layer's attributions html
-                        var srcAttributionHtml = "";
-
-                        visibility = layers[i].getVisible();
-                        originators = src._originators;
-
-                        if ( originators && visibility ) {
-
-                            // get layer's attributions array
-                            var layerAttributions = LayerUtils.getAttributions({
-                                extent : standardExtent,
-                                crs : mapProjection,
-                                zoom : zoom,
-                                visibility : visibility,
-                                originators : originators
-                            });
-
-                            for ( var j = 0; j < layerAttributions.length; j++ ) {
-                                var attributionj = layerAttributions[j];
-                                // check that this attribution hasn't been added yet for another layer
-                                if ( !mapAttributions || !mapAttributions[attributionj] ) {
-                                    // add attribution html to source attributions html
-                                    srcAttributionHtml += attributionj;
-
-                                    // add attribution to mapAttributions, to manage all layers attributions
-                                    mapAttributions[attributionj] = true;
-                                }
-                            };
-
-                            // update source attribution
-                            if ( srcAttributionHtml.length !== 0 ) {
-                                var olAttribution = new ol.Attribution({
-                                    html : srcAttributionHtml
-                                });
-                                src.setAttributions([olAttribution]);
-                            }
-                        }
-                    }
+                    context._updateAttributions(map);
+                },
+                this
+            );
+            map.getLayers().on(
+                "add",
+                function() {
+                    context._updateAttributions(map);
+                },
+                this
+            );
+            map.getLayers().on(
+                "remove",
+                function() {
+                    context._updateAttributions(map);
                 },
                 this
             );
@@ -135,6 +93,74 @@ define(["ol", "Common/Utils/LayerUtils"], function (ol, LayerUtils) {
 
         ol.control.Attribution.prototype.setMap.call(this, map);
 
+    };
+
+    /**
+     * Overload setMap function, that enables to catch map events, such as movend events.
+     *
+     * @param {ol.Map} map - Map.
+     */
+    GeoportalAttribution.prototype._updateAttributions = function (map) {
+        // get map parameters
+        var visibility;
+        var originators;
+        var mapAttributions = {};
+
+        var view = map.getView();
+        // extent, then convert to geographical coordinates
+        var extent = view.calculateExtent(map.getSize());
+        var mapProjection = view.getProjection().getCode();
+        var geoExtent = ol.proj.transformExtent(extent, mapProjection, "EPSG:4326");
+        // transform extent from [minx, miny, maxx, maxy] to [maxy, minx, miny, maxx]
+        var standardExtent = [geoExtent[3], geoExtent[0], geoExtent[1], geoExtent[2]];
+        // zoom
+        var zoom = view.getZoom();
+        // layers
+        var layers = map.getLayers().getArray();
+
+        // loop on layers to get their originators, if there is at least one originator, and if layer is visible.
+        for (var i = 0; i < layers.length; i++ ) {
+
+            var src = layers[i].getSource();
+
+            // srcAttributionHtml : html, composed of all layer's attributions html
+            var srcAttributionHtml = "";
+
+            visibility = layers[i].getVisible();
+            originators = src._originators;
+
+            if ( originators && visibility ) {
+
+                // get layer's attributions array
+                var layerAttributions = LayerUtils.getAttributions({
+                    extent : standardExtent,
+                    crs : mapProjection,
+                    zoom : zoom,
+                    visibility : visibility,
+                    originators : originators
+                });
+
+                for ( var j = 0; j < layerAttributions.length; j++ ) {
+                    var attributionj = layerAttributions[j];
+                    // check that this attribution hasn't been added yet for another layer
+                    if ( !mapAttributions || !mapAttributions[attributionj] ) {
+                        // add attribution html to source attributions html
+                        srcAttributionHtml += attributionj;
+
+                        // add attribution to mapAttributions, to manage all layers attributions
+                        mapAttributions[attributionj] = true;
+                    }
+                };
+
+                // update source attribution
+                if ( srcAttributionHtml.length !== 0 ) {
+                    var olAttribution = new ol.Attribution({
+                        html : srcAttributionHtml
+                    });
+                    src.setAttributions([olAttribution]);
+                }
+            }
+        }
     };
 
     return GeoportalAttribution;
