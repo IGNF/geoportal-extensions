@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 5.0.0
- * @date 2016-07-18
+ * @date 2016-08-18
  *
  */
 /*!
@@ -764,37 +764,7 @@ var gp, CommonUtilsAutoLoadConfig, CommonUtilsLayerUtils, sortable, CommonContro
                         options.url = Helper.normalyzeUrl(options.url, options.data);
                     }
                     var hXHR = null;
-                    if (window.XDomainRequest) {
-                        hXHR = new XDomainRequest();
-                        hXHR.open(options.method, options.url);
-                        hXHR.overrideMimeType = options.content;
-                        if (options.timeOut > 0) {
-                            hXHR.timeout = options.timeout;
-                        }
-                        if (corps) {
-                            hXHR.setRequestHeader('Content-type', options.content);
-                        }
-                        hXHR.onerror = function () {
-                            reject(new Error('Errors Occured on Http Request with XMLHttpRequest !'));
-                        };
-                        hXHR.ontimeout = function () {
-                            reject(new Error('TimeOut Occured on Http Request with XMLHttpRequest !'));
-                        };
-                        hXHR.onload = function () {
-                            if (hXHR.status == 200) {
-                                resolve(hXHR.response);
-                            } else {
-                                var message = 'Errors Occured on Http Request (status : \'' + hXHR.status + '\' | response : \'' + hXHR.response + '\')';
-                                var status = hXHR.status;
-                                reject({
-                                    message: message,
-                                    status: status
-                                });
-                            }
-                        };
-                        var data4xdr = options.data && corps ? options.data : null;
-                        hXHR.send(data4xdr);
-                    } else if (window.XMLHttpRequest) {
+                    if (window.XMLHttpRequest) {
                         hXHR = new XMLHttpRequest();
                         hXHR.open(options.method, options.url, true);
                         hXHR.overrideMimeType = options.content;
@@ -835,6 +805,36 @@ var gp, CommonUtilsAutoLoadConfig, CommonUtilsLayerUtils, sortable, CommonContro
                         };
                         var data4xhr = options.data && corps ? options.data : null;
                         hXHR.send(data4xhr);
+                    } else if (window.XDomainRequest) {
+                        hXHR = new XDomainRequest();
+                        hXHR.open(options.method, options.url);
+                        hXHR.overrideMimeType = options.content;
+                        if (options.timeOut > 0) {
+                            hXHR.timeout = options.timeout;
+                        }
+                        if (corps) {
+                            hXHR.setRequestHeader('Content-type', options.content);
+                        }
+                        hXHR.onerror = function () {
+                            reject(new Error('Errors Occured on Http Request with XMLHttpRequest !'));
+                        };
+                        hXHR.ontimeout = function () {
+                            reject(new Error('TimeOut Occured on Http Request with XMLHttpRequest !'));
+                        };
+                        hXHR.onload = function () {
+                            if (hXHR.status == 200) {
+                                resolve(hXHR.responseText);
+                            } else {
+                                var message = 'Errors Occured on Http Request (status : \'' + hXHR.status + '\' | response : \'' + hXHR.responseText + '\')';
+                                var status = hXHR.status;
+                                reject({
+                                    message: message,
+                                    status: status
+                                });
+                            }
+                        };
+                        var data4xdr = options.data && corps ? options.data : null;
+                        hXHR.send(data4xdr);
                     } else {
                         throw new Error('CORS not supported');
                     }
@@ -7336,7 +7336,7 @@ var gp, CommonUtilsAutoLoadConfig, CommonUtilsLayerUtils, sortable, CommonContro
         var scope = typeof window !== 'undefined' ? window : {};
         var Gp = scope.Gp || {
             servicesVersion: '1.0.0-beta3',
-            servicesDate: '2016-07-08',
+            servicesDate: '2016-07-29',
             extend: function (strNS, value) {
                 var parts = strNS.split('.');
                 var parent = this;
@@ -8694,7 +8694,8 @@ VgControlsLayerSwitcher = function (LayerSwitcherDOM, LayerUtils) {
         var container = this._initContainer(options);
         this._layers = {};
         this._layersOrder = [];
-        this._lastZIndex = 0;
+        this._lastZIndexRaster = -1;
+        this._lastZIndexFeature = -1;
         this._layerId = 0;
         this._container = container;
         this._initLayers = layers;
@@ -8738,7 +8739,6 @@ VgControlsLayerSwitcher = function (LayerSwitcherDOM, LayerUtils) {
                         var layer = addedLayer;
                         var id = layer.id;
                         if (self && !self._layers[id]) {
-                            self._lastZIndex++;
                             self.addLayer(layer);
                         }
                     }
@@ -8754,8 +8754,12 @@ VgControlsLayerSwitcher = function (LayerSwitcherDOM, LayerUtils) {
                             }
                         }
                         if (self && self._layers[id]) {
-                            self._lastZIndex--;
                             self.removeLayer(layer);
+                            if (layer.type === 'feature') {
+                                self._lastZIndexFeature--;
+                            } else if (layer.type === 'raster') {
+                                self._lastZIndexRaster--;
+                            }
                         }
                     }
                 };
@@ -8801,6 +8805,7 @@ VgControlsLayerSwitcher = function (LayerSwitcherDOM, LayerUtils) {
                 return;
             }
             this._onMapMoveEnd(map);
+            this._updateLayersIndex();
         };
     }
     VirtualGeo.Utils.inherits(LayerSwitcher, VirtualGeo.Control);
@@ -8852,13 +8857,19 @@ VgControlsLayerSwitcher = function (LayerSwitcherDOM, LayerUtils) {
             this._layers[id] = layerOptions;
             var layerDiv = this._createLayerDiv(layerOptions);
             this._layers[id].div = layerDiv;
-            map.moveLayerToIndex({
-                id: layer.id,
-                index: this._lastZIndex
-            });
-            var elementLayersList = document.getElementById('GPlayersList');
-            this._layersOrder.unshift(layerOptions);
-            elementLayersList.insertBefore(layerDiv, elementLayersList.firstChild);
+            if (layer.type === 'feature') {
+                this._lastZIndexFeature++;
+                map.moveLayerToIndex({
+                    id: layer.id,
+                    index: this._lastZIndexFeature
+                });
+            } else if (layer.type === 'raster') {
+                this._lastZIndexRaster++;
+                map.moveLayerToIndex({
+                    id: layer.id,
+                    index: this._lastZIndexRaster
+                });
+            }
         } else if (this._layers[id] && config) {
             for (var prop in config) {
                 if (config.hasOwnProperty(prop)) {
@@ -8946,7 +8957,11 @@ VgControlsLayerSwitcher = function (LayerSwitcherDOM, LayerUtils) {
                     this._layers[id].visibility = layer.visible;
                     this._layers[id].inRange = isInRange(layer, map);
                 }
-                this._lastZIndex++;
+                if (layer.type === 'feature') {
+                    this._lastZIndexFeature++;
+                } else if (layer.type === 'raster') {
+                    this._lastZIndexRaster++;
+                }
             }
         }, this);
         for (var i in this._layersOrder) {
@@ -9066,23 +9081,37 @@ VgControlsLayerSwitcher = function (LayerSwitcherDOM, LayerUtils) {
         var divId = e.target.id;
         var layerID = divId.substring(divId.indexOf('_') + 3);
         map.removeLayer({ id: layerID });
+        this._updateLayersIndex();
     };
     LayerSwitcher.prototype._onDragAndDropLayerClick = function () {
+        this._updateLayersIndex();
         var map = this.getMap();
+        this._layersOrder = getOrderedLayers(map);
+        this._callbacks.onIndexLayerCallBack();
+    };
+    LayerSwitcher.prototype._updateLayersIndex = function () {
+        var map = this.getMap();
+        var rasterLayerCount = map.getLayers({ type: 'raster' }).length;
+        var featureLayerCount = map.getLayers({ type: 'feature' }).length;
         var matchesLayers = document.querySelectorAll('div.GPlayerSwitcher_layer');
-        var maxZIndex = matchesLayers.length;
         var newIndex;
         for (var i = 0; i < matchesLayers.length; i++) {
-            newIndex = maxZIndex - i;
             var tag = matchesLayers[i].id;
             var id = tag.substring(tag.indexOf('_') + 3);
+            var layer = map.getLayer(id);
+            if (layer.type === 'raster') {
+                rasterLayerCount = rasterLayerCount - 1;
+                newIndex = rasterLayerCount;
+            }
+            if (layer.type === 'feature') {
+                featureLayerCount = featureLayerCount - 1;
+                newIndex = featureLayerCount;
+            }
             map.moveLayerToIndex({
                 id: id,
                 index: newIndex
             });
         }
-        this._layersOrder = getOrderedLayers(map);
-        this._callbacks.onIndexLayerCallBack();
     };
     LayerSwitcher.prototype._onMapMoveEnd = function (map) {
         map.getLayers().forEach(function (layer) {

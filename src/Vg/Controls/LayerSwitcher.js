@@ -66,7 +66,8 @@ define([
 
         this._layers = {};
         this._layersOrder = [];
-        this._lastZIndex = 0;
+        this._lastZIndexRaster = -1;
+        this._lastZIndexFeature = -1;
         this._layerId = 0;
         this._container = container;
         this._initLayers = layers;
@@ -142,7 +143,6 @@ define([
                         var layer = addedLayer;
                         var id = layer.id;
                         if ( self && !self._layers[id] ) {
-                            self._lastZIndex++;
                             self.addLayer(layer);
                         }
                     }
@@ -165,8 +165,12 @@ define([
                         }
                         // On met à jour l'index max et on retire la couche du layerSwitcher
                         if ( self && self._layers[id] ) {
-                            self._lastZIndex--;
                             self.removeLayer(layer);
+                            if (layer.type === "feature") {
+                                self._lastZIndexFeature--;
+                            } else if (layer.type === "raster") {
+                                self._lastZIndexRaster--;
+                            }
                         }
                     }
                 };
@@ -238,7 +242,8 @@ define([
                 // A l'initialisationdu globe, l'évenement centerchanged n'est pas déclenché
                 // on lance le callback associé à la main
                 this._onMapMoveEnd(map);
-
+                // A l'initialisation, toutes les couches ont comme index 0 : on les ordonne
+                this._updateLayersIndex();
         };
 
     }
@@ -340,19 +345,21 @@ define([
 
             var layerDiv = this._createLayerDiv(layerOptions);
             this._layers[id].div = layerDiv;
-
-            map.moveLayerToIndex({
-                id : layer.id,
-                index : this._lastZIndex
-            });
-
-            // 2. add layer div to control main container
-            // Récupération de l'élément contenant les différentes couches.
-            var elementLayersList = document.getElementById("GPlayersList");
-
-            // ajout de la couche au début du tableau des couches ordonnées
-            this._layersOrder.unshift(layerOptions);
-            elementLayersList.insertBefore(layerDiv, elementLayersList.firstChild);
+            if (layer.type === "feature") {
+                // update the lastZIndex
+                this._lastZIndexFeature++;
+                map.moveLayerToIndex({
+                    id : layer.id,
+                    index : this._lastZIndexFeature
+                });
+            } else if (layer.type === "raster") {
+                // update the lastZIndex
+                this._lastZIndexRaster++;
+                map.moveLayerToIndex({
+                    id : layer.id,
+                    index : this._lastZIndexRaster
+                });
+            }
 
         // user may also add a new configuration for an already added layer
         } else if ( this._layers[id] && config ) {
@@ -497,7 +504,11 @@ define([
                         this._layers[id].visibility = layer.visible;
                         this._layers[id].inRange = isInRange(layer, map);
                     }
-                    this._lastZIndex++;
+                    if (layer.type === "feature") {
+                        this._lastZIndexFeature++;
+                    } else if (layer.type === "raster") {
+                        this._lastZIndexRaster++
+                    }
                 }
             },
             this
@@ -667,15 +678,7 @@ define([
             metadata : layerOptions.metadata,
             legends : layerOptions.legends
         };
-        // get layer max scale denominator
-        /*
-        var maxResolution = layerOptions.layer.getMaxResolution();
-        if ( maxResolution === Infinity ) {
-            obj._maxScaleDenominator = 560000000;
-        } else {
-            obj._maxScaleDenominator = Math.round(maxResolution / 0.00028);
-        }
-        */
+
         var infoLayer = this._createContainerLayerInfoElement(obj);
         panel.appendChild(infoLayer);
     };
@@ -694,6 +697,7 @@ define([
         map.removeLayer({
             id : layerID
         });
+        this._updateLayersIndex();
 
     };
 
@@ -701,31 +705,49 @@ define([
      * change layers order on drag and drop
      */
     LayerSwitcher.prototype._onDragAndDropLayerClick = function () {
+        this._updateLayersIndex();
         var map = this.getMap();
+        // mise à jour du tableau des couches ordonneés
+        this._layersOrder = getOrderedLayers(map);
+        // on appelle le callback sur le changement d'index manuellement
+        // pour forcer la reconstruction des div du layerSwitcher au cas où
+        // le nouvel index est le même que le précédent et pour forcer les
+        // couches vectorielles en haut du LS
+        this._callbacks.onIndexLayerCallBack();
+    };
+
+    /**
+    * Method which update the index of the layers after a layer is moved, added, or removed
+    */
+    LayerSwitcher.prototype._updateLayersIndex = function () {
+        var map = this.getMap();
+        var rasterLayerCount = map.getLayers({type: "raster"}).length;
+        var featureLayerCount = map.getLayers({type: "feature"}).length;
         // on récupère l'ordre des div dans le contrôle pour réordonner les couches (avec zindex)
         var matchesLayers = document.querySelectorAll("div.GPlayerSwitcher_layer");
-        var maxZIndex = matchesLayers.length;
+        // var maxZIndex = matchesLayers.length;
         var newIndex;
 
         for (var i = 0; i < matchesLayers.length; i++) {
-            newIndex = maxZIndex - i;
+            // newIndex = maxZIndex - i;
             var tag = matchesLayers[i].id;
             var id  = tag.substring(tag.indexOf("_") + 3);
-
+            var layer = map.getLayer(id);
+            if (layer.type === "raster") {
+                rasterLayerCount = rasterLayerCount - 1;
+                newIndex = rasterLayerCount;
+            }
+            if (layer.type === "feature") {
+                featureLayerCount = featureLayerCount - 1;
+                newIndex = featureLayerCount;
+            }
             map.moveLayerToIndex({
                 id : id,
                 index : newIndex
             });
 
         }
-        // mise à jour du tableau des couches ordonneés
-        this._layersOrder = getOrderedLayers(map);
-        // on appelle le callback sur le changement d'index manuellement
-        // pour forcer la reconstruction des div du layerSwitcher au cas où
-        // le nouvcel index est le même que le précédent
-        this._callbacks.onIndexLayerCallBack();
-    };
-
+    }
     /**
      * check layers range on map movement
      *
