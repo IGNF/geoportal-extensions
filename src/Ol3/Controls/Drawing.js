@@ -720,8 +720,9 @@ define([
         var setAttValue = function (value,save) {
             context.getMap().removeOverlay(popupOvl) ;
             if (save && value && value.trim().length > 0) {
+                var formated = value.replace(/\n/g, "<br>");
                 feature.setProperties({
-                    description : value
+                    description : formated
                 }) ;
             }
         } ;
@@ -1053,8 +1054,9 @@ define([
                     feature.setStyle(style) ;
                     return ;
                 }
+                var formated = value.replace(/\n/g, "<br>");
                 feature.setProperties({
-                    description : value
+                    description : formated
                 }) ;
             } ;
             var popupDiv = this._createLabelDiv({

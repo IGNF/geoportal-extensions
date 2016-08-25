@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-08-18
+ * @date 2016-08-25
  *
  */
 /*!
@@ -18340,7 +18340,8 @@ Ol3ControlsDrawing = function (woodman, ol, Gp, SelectorID, DrawingDOM, Utils) {
         var setAttValue = function (value, save) {
             context.getMap().removeOverlay(popupOvl);
             if (save && value && value.trim().length > 0) {
-                feature.setProperties({ description: value });
+                var formated = value.replace(/\n/g, '<br>');
+                feature.setProperties({ description: formated });
             }
         };
         var popup = this._createLabelDiv({
@@ -18593,7 +18594,8 @@ Ol3ControlsDrawing = function (woodman, ol, Gp, SelectorID, DrawingDOM, Utils) {
                     feature.setStyle(style);
                     return;
                 }
-                feature.setProperties({ description: value });
+                var formated = value.replace(/\n/g, '<br>');
+                feature.setProperties({ description: formated });
             };
             var popupDiv = this._createLabelDiv({
                 applyFunc: setTextValue,
@@ -24996,7 +24998,7 @@ Ol3ControlsGeoportalAttribution = function (ol, LayerUtils) {
 }(ol, CommonUtilsLayerUtils);
 Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution) {
     Gp.ol3extVersion = '0.11.0';
-    Gp.ol3extDate = '2016-08-18';
+    Gp.ol3extDate = '2016-08-25';
     Gp.LayerUtils = LayerUtils;
     CRS.overload();
     ol.source.GeoportalWMTS = SourceWMTS;

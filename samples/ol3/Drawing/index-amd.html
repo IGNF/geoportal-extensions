@@ -26,6 +26,7 @@
                 margin: 10px;
             }
         </style>
+
     </head>
     <body>
         <h1>
@@ -64,7 +65,8 @@
                       Drawing) {
 
                   var createMap = function () {
-                    //Création de la map
+
+                    // Création de la map
                     map = new ol.Map({
                         target : "map",
                         layers : [new LayerWMTS({
@@ -76,9 +78,9 @@
                         })
                     });
 
-                    var mp = new MousePosition({
-                    });
+                    var mp = new MousePosition({});
 
+                    // creation du controle
                     var drawing = new Drawing({
                         collapsed : false,
                         /*markersList : [{
@@ -112,7 +114,9 @@
                     });
                     map.addControl(drawing);
                     map.addControl(mp);
-                  }
+
+                  };
+
                   Gp.Services.getConfig({
                       serverUrl : "./../resources/AutoConf.js",
                       callbackSuffix : "",
