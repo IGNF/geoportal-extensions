@@ -4,14 +4,16 @@ define([
     "woodman",
     "Ol3/Utils",
     "Common/Controls/LayerImportDOM",
-    "Common/Utils/SelectorID"
+    "Common/Utils/SelectorID",
+    "Ol3/Formats/KML"
 ], function (
     ol,
     Gp,
     woodman,
     Utils,
     LayerImportDOM,
-    SelectorID
+    SelectorID,
+    KML
 ) {
 
     "use strict";
@@ -598,7 +600,9 @@ define([
 
             if ( context._currentImportType === "KML" ) {
                 // lecture du fichier KML : création d'un format ol.format.KML, qui possède une méthode readFeatures (et readProjection)
-                format = new ol.format.KML();
+                format = new KML({
+                    showPointNames : false
+                });
             } else if ( context._currentImportType === "GPX" ) {
                 // lecture du fichier GPX : création d'un format ol.format.GPX, qui possède une méthode readFeatures (et readProjection)
                 format = new ol.format.GPX();
@@ -610,7 +614,7 @@ define([
             var mapProj = context._getMapProjectionCode();
 
             // récupération des entités avec reprojection éventuelle des géométries
-            var features = format.readFeatures(
+            var features = format.readExtendStylesFeatures(
                 fileContent,
                 {
                     dataProjection : fileProj,
