@@ -601,7 +601,7 @@ define([
             if ( context._currentImportType === "KML" ) {
                 // lecture du fichier KML : création d'un format ol.format.KML, qui possède une méthode readFeatures (et readProjection)
                 format = new KML({
-                    showPointNames : false
+                    showPointNames : false // FIXME !
                 });
             } else if ( context._currentImportType === "GPX" ) {
                 // lecture du fichier GPX : création d'un format ol.format.GPX, qui possède une méthode readFeatures (et readProjection)

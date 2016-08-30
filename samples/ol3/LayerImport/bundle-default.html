@@ -77,7 +77,7 @@
 
                           var coord = feature.getGeometry().getCoordinates();
                           var props = feature.getProperties();
-                          var content = props["description"];
+                          var content = props["description"] || props["name"];
                           // Offset the popup so it points at the middle of the marker not the tip
                           popup.setOffset([0, -22]);
                           popup.show(coord, content);
