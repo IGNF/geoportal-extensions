@@ -485,7 +485,7 @@ define([
 
             /**
             * Gestion des styles étendus sur le Label
-            * - TODO ajout d'un icone par defaut (1x1p transparent) sur les labels
+            * - ajout d'un icone par defaut (1x1p transparent) sur les labels
             * s'il n'existe pas !
             * - lecture des styles étendus des labels
             */
@@ -501,11 +501,18 @@ define([
                     color = color + data.substr(6,2);
                     color = color + data.substr(4,2);
                     color = color + data.substr(2,2);
-                    return "#" + parseInt(color,16).toString(16);
+                    var hex = parseInt(color,16).toString(16);
+                    var comp = "";
+                    var len = hex.length || 0;
+                    for (var i = 0; i < (6 - len); i++) {
+                        comp += "0";
+                    }
+                    hex = "#" + comp + hex;
+                    return hex.toString(16);
                 }
 
                 var _text  = feature.getProperties().name || "---";
-                var _color = "#000000";
+                var _color = __convertKMLColorsToRGB("ff000000"); // "#000000"
                 var _colorHalo  = "#FFFFFF";
                 var _radiusHalo = 4;
                 var _font = "Sans"; // TODO
@@ -551,8 +558,17 @@ define([
 
                 // On reconstruit le style !
                 feature.setStyle(new ol.style.Style({
+                    image : new ol.style.Icon({
+                        src : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNiYAAAAAkAAxkR2eQAAAAASUVORK5CYII=",
+                        size : [51, 38],
+                        anchor : [25.5 , 38],
+                        anchorOrigin : "top-left",
+                        anchorXUnits : "pixels",
+                        anchorYUnits : "pixels"
+                    }),
                     text : new ol.style.Text({
                         font : _fontSize + " " + _font,
+                        textAlign : "left",
                         text : _text,
                         fill : new ol.style.Fill({
                             color : _color

@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-08-30
+ * @date 2016-08-31
  *
  */
 /*!
@@ -18146,10 +18146,17 @@ Ol3FormatsKML = function (woodman, ol) {
                     color = color + data.substr(6, 2);
                     color = color + data.substr(4, 2);
                     color = color + data.substr(2, 2);
-                    return '#' + parseInt(color, 16).toString(16);
+                    var hex = parseInt(color, 16).toString(16);
+                    var comp = '';
+                    var len = hex.length || 0;
+                    for (var i = 0; i < 6 - len; i++) {
+                        comp += '0';
+                    }
+                    hex = '#' + comp + hex;
+                    return hex.toString(16);
                 }
                 var _text = feature.getProperties().name || '---';
-                var _color = '#000000';
+                var _color = __convertKMLColorsToRGB('ff000000');
                 var _colorHalo = '#FFFFFF';
                 var _radiusHalo = 4;
                 var _font = 'Sans';
@@ -18186,8 +18193,23 @@ Ol3FormatsKML = function (woodman, ol) {
                     }
                 }
                 feature.setStyle(new ol.style.Style({
+                    image: new ol.style.Icon({
+                        src: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNiYAAAAAkAAxkR2eQAAAAASUVORK5CYII=',
+                        size: [
+                            51,
+                            38
+                        ],
+                        anchor: [
+                            25.5,
+                            38
+                        ],
+                        anchorOrigin: 'top-left',
+                        anchorXUnits: 'pixels',
+                        anchorYUnits: 'pixels'
+                    }),
                     text: new ol.style.Text({
                         font: _fontSize + ' ' + _font,
+                        textAlign: 'left',
                         text: _text,
                         fill: new ol.style.Fill({ color: _color }),
                         stroke: new ol.style.Stroke({
@@ -25376,7 +25398,7 @@ Ol3ControlsGeoportalAttribution = function (ol, LayerUtils) {
 }(ol, CommonUtilsLayerUtils);
 Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution) {
     Gp.ol3extVersion = '0.11.0';
-    Gp.ol3extDate = '2016-08-30';
+    Gp.ol3extDate = '2016-08-31';
     Gp.LayerUtils = LayerUtils;
     CRS.overload();
     ol.source.GeoportalWMTS = SourceWMTS;
