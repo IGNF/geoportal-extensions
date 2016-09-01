@@ -18072,8 +18072,8 @@ Ol3FormatsKML = function (woodman, ol) {
             var _haloOpacity = '1';
             var _font = 'Sans';
             var fTextStyle = feature.getStyle().getText().getStroke();
-            _haloColor = __convertRGBColorsToKML(fTextStyle.color_);
-            _haloRadius = fTextStyle.width_;
+            _haloColor = __convertRGBColorsToKML(fTextStyle.getColor());
+            _haloRadius = fTextStyle.getWidth();
             if (style && style.getElementsByTagName('LabelStyleSimpleExtensionGroup').length === 0) {
                 var labelextend = kmlDoc.createElement('LabelStyleSimpleExtensionGroup');
                 labelextend.setAttribute('fontFamily', _font);
@@ -18087,15 +18087,13 @@ Ol3FormatsKML = function (woodman, ol) {
             if (!feature) {
                 return;
             }
-            var x = 0.5;
-            var y = 1;
-            var xunits = 'fraction';
-            var yunits = 'faction';
+            var x = 0;
+            var y = 0;
+            var xunits = 'pixels';
+            var yunits = 'pixels';
             var fImageStyle = feature.getStyle().getImage();
-            xunits = fImageStyle.anchorXUnits_;
-            yunits = fImageStyle.anchorYUnits_;
             var size = fImageStyle.getSize();
-            var anchor = fImageStyle.anchor_;
+            var anchor = fImageStyle.getAnchor();
             if (anchor.length) {
                 x = anchor[0];
                 y = anchor[1];

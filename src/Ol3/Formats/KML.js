@@ -367,8 +367,8 @@ define([
             var _font = "Sans"; // TODO
 
             var fTextStyle = feature.getStyle().getText().getStroke();
-            _haloColor  = __convertRGBColorsToKML(fTextStyle.color_);
-            _haloRadius = fTextStyle.width_;
+            _haloColor  = __convertRGBColorsToKML(fTextStyle.getColor());
+            _haloRadius = fTextStyle.getWidth();
 
             if (style && style.getElementsByTagName("LabelStyleSimpleExtensionGroup").length === 0) {
                 var labelextend = kmlDoc.createElement("LabelStyleSimpleExtensionGroup");
@@ -384,7 +384,7 @@ define([
         * C'est un marker !
         * On va donc ajouter la balise hotspot :
         *  Traiter le cas où les unités sont de type
-        *   - FRACTION
+        *   - FRACTION (TODO)
         *   - PIXELS
         *  Insertion du correctif dans le noeud : PlaceMark>Style>IconStyle
         *
@@ -405,17 +405,16 @@ define([
                 return;
             }
 
-            var x = 0.5;
-            var y = 1; // cf. fixme !
-            var xunits = "fraction";
-            var yunits = "faction";
+            var x = 0;
+            var y = 0;
+            var xunits = "pixels";
+            var yunits = "pixels";
 
             var fImageStyle = feature.getStyle().getImage();
-            xunits = fImageStyle.anchorXUnits_;
-            yunits = fImageStyle.anchorYUnits_;
 
             var size   = fImageStyle.getSize();
-            var anchor = fImageStyle.anchor_;
+            var anchor = fImageStyle.getAnchor(); // pixels ! but anchor_ in the current unit !
+
             if (anchor.length) {
                 x = anchor[0];
                 y = anchor[1];
