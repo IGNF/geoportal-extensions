@@ -24,7 +24,13 @@ define([
     * cf. https://developers.google.com/kml/forum/advanced
     *
     * ISSUES
-    * cf. https://github.com/openlayers/ol3/issues/4829
+    * cf. https://github.com/openlayers/ol3/issues/4829 :
+    *    I confirm that there's a problem with the positioning of the marker in OpenLayers 3.
+    *    If no tag '_hotspot_' is present in the KML, the marker is centered by default ...
+    *    On the other side, if we put in place this tag (_hotspot_), vertical positioning is drawn to the wrong place...
+    *    [jsfiddle - read kml] (http://jsfiddle.net/lowzonenose/1dnrn1hu/embedded/result,js,html,css/)
+    *    [jsfiddle - write kml] (http://jsfiddle.net/lowzonenose/yh4stufb/embedded/result,js,html,css/)
+    *
     * cf. https://github.com/openlayers/ol3/issues/4460
     * cf. https://github.com/openlayers/ol3/pull/5590
     * cf. https://github.com/openlayers/ol3/issues/5229
@@ -616,7 +622,9 @@ define([
                     return;
                 }
 
-                var _fname = feature.getProperties().name;
+                // Dans le cas où le noeud "ExtendedData" est vide,
+                // on ne prend pas en compte la valeur du tag "name" !
+                var _fname = /* feature.getProperties().name || */ "";
                 var _fdescription = feature.getProperties().description || "";
                 var _ftitle = null;
                 for (var i = 0; i < extend.length; i++) {
