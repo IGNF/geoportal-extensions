@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-08-25
+ * @date 2016-09-01
  *
  */
 /*!
@@ -90,7 +90,7 @@
   }
 }(this, function(ol) {
 
-var gp, CommonUtilsAutoLoadConfig, CommonUtilsLayerUtils, proj4, CommonUtilsRegister, Ol3CRSCRS, Ol3Utils, CommonUtilsConfig, Ol3LayersSourceWMTS, Ol3LayersSourceWMS, Ol3LayersLayerWMTS, Ol3LayersLayerWMS, sortable, CommonControlsLayerSwitcherDOM, Ol3ControlsLayerSwitcher, Ol3ControlsUtilsMarkers, CommonUtilsCheckRightManagement, CommonUtilsSelectorID, CommonControlsSearchEngineDOM, CommonControlsSearchEngineUtils, Ol3ControlsSearchEngine, CommonControlsMousePositionDOM, Ol3ControlsMousePosition, CommonControlsDrawingDOM, Ol3ControlsDrawing, CommonControlsLocationSelectorDOM, Ol3ControlsLocationSelector, CommonControlsRouteDOM, Ol3ControlsRoute, CommonControlsIsoDOM, Ol3ControlsIsocurve, CommonControlsReverseGeocodingDOM, Ol3ControlsReverseGeocode, CommonControlsLayerImportDOM, Ol3ControlsLayerImport, Ol3ControlsGeoportalAttribution, Ol3GpPluginOl3;
+var gp, CommonUtilsAutoLoadConfig, CommonUtilsLayerUtils, proj4, CommonUtilsRegister, Ol3CRSCRS, Ol3Utils, CommonUtilsConfig, Ol3LayersSourceWMTS, Ol3LayersSourceWMS, Ol3LayersLayerWMTS, Ol3LayersLayerWMS, sortable, CommonControlsLayerSwitcherDOM, Ol3ControlsLayerSwitcher, Ol3ControlsUtilsMarkers, CommonUtilsCheckRightManagement, CommonUtilsSelectorID, CommonControlsSearchEngineDOM, CommonControlsSearchEngineUtils, Ol3ControlsSearchEngine, CommonControlsMousePositionDOM, Ol3ControlsMousePosition, CommonControlsDrawingDOM, Ol3FormatsKML, Ol3ControlsDrawing, CommonControlsLocationSelectorDOM, Ol3ControlsLocationSelector, CommonControlsRouteDOM, Ol3ControlsRoute, CommonControlsIsoDOM, Ol3ControlsIsocurve, CommonControlsReverseGeocodingDOM, Ol3ControlsReverseGeocode, CommonControlsLayerImportDOM, Ol3ControlsLayerImport, Ol3ControlsGeoportalAttribution, Ol3GpPluginOl3;
 (function (root, factory) {
     if (true) {
         gp = function () {
@@ -17876,7 +17876,397 @@ CommonControlsDrawingDOM = function () {
     };
     return DrawingDOM;
 }();
-Ol3ControlsDrawing = function (woodman, ol, Gp, SelectorID, DrawingDOM, Utils) {
+Ol3FormatsKML = function (woodman, ol) {
+    function KML(options) {
+        if (!(this instanceof KML)) {
+            throw new TypeError('ERROR CLASS_CONSTRUCTOR');
+        }
+        ol.format.KML.call(this, options);
+    }
+    ol.inherits(KML, ol.format.KML);
+    KML.prototype = Object.create(ol.format.KML.prototype, {});
+    KML.prototype.constructor = KML;
+    function _kmlFormattedToString(xml) {
+        var reg = /(>)\s*(<)(\/*)/g;
+        var wsexp = / *(.*) +\n/g;
+        var contexp = /(<.+>)(.+\n)/g;
+        xml = xml.replace(reg, '$1\n$2$3').replace(wsexp, '$1\n').replace(contexp, '$1\n$2');
+        var pad = 0;
+        var formatted = '';
+        var lines = xml.split('\n');
+        var indent = 0;
+        var lastType = 'other';
+        var transitions = {
+            'single->single': 0,
+            'single->closing': -1,
+            'single->opening': 0,
+            'single->other': 0,
+            'closing->single': 0,
+            'closing->closing': -1,
+            'closing->opening': 0,
+            'closing->other': 0,
+            'opening->single': 1,
+            'opening->closing': 0,
+            'opening->opening': 1,
+            'opening->other': 1,
+            'other->single': 0,
+            'other->closing': -1,
+            'other->opening': 0,
+            'other->other': 0
+        };
+        for (var i = 0; i < lines.length; i++) {
+            var ln = lines[i];
+            var single = Boolean(ln.match(/<.+\/>/));
+            var closing = Boolean(ln.match(/<\/.+>/));
+            var opening = Boolean(ln.match(/<[^!].*>/));
+            var type = single ? 'single' : closing ? 'closing' : opening ? 'opening' : 'other';
+            var fromTo = lastType + '->' + type;
+            lastType = type;
+            var padding = '';
+            indent += transitions[fromTo];
+            for (var j = 0; j < indent; j++) {
+                padding += '\t';
+            }
+            if (fromTo == 'opening->closing') {
+                formatted = formatted.substr(0, formatted.length - 1) + ln + '\n';
+            } else {
+                formatted += padding + ln + '\n';
+            }
+        }
+        return formatted;
+    }
+    function _kmlParse(kmlString) {
+        var kmlDoc = null;
+        var parser = null;
+        var scope = typeof window !== 'undefined' ? window : null;
+        if (typeof exports === 'object' && window === null) {
+            var DOMParser = xmldom.DOMParser;
+            parser = new DOMParser();
+            kmlDoc = parser.parseFromString(kmlString, 'text/xml');
+        } else if (scope.DOMParser) {
+            parser = new scope.DOMParser();
+            kmlDoc = parser.parseFromString(kmlString, 'text/xml');
+        } else if (scope.ActiveXObject) {
+            kmlDoc = new scope.ActiveXObject('Microsoft.XMLDOM');
+            kmlDoc.async = false;
+            kmlDoc.loadXML(kmlString);
+        } else {
+            console.log('Incompatible environment for DOM Parser !');
+        }
+        return kmlDoc;
+    }
+    function _kmlToString(kmlDoc) {
+        var oSerializer = new XMLSerializer();
+        var kmlStringExtended = oSerializer.serializeToString(kmlDoc);
+        return kmlStringExtended;
+    }
+    function _kmlRead(kmlDoc, features, process) {
+        var root = kmlDoc.documentElement;
+        var firstNodeLevel = root.childNodes;
+        var nodes = firstNodeLevel;
+        if (firstNodeLevel.length === 1 && firstNodeLevel[0].nodeName === 'Document') {
+            nodes = firstNodeLevel[0].childNodes;
+        }
+        var stylesUrl = {};
+        var index = -1;
+        for (var i = 0; i < nodes.length; i++) {
+            var node = nodes[i];
+            switch (node.nodeName) {
+            case 'Style':
+                var id = node.attributes[0];
+                if (id.nodeName === 'id') {
+                    var _k = id.nodeValue;
+                    var _v = node;
+                    stylesUrl[_k] = _v;
+                }
+                break;
+            case 'Placemark':
+                index++;
+                var types = node.childNodes;
+                var point = false;
+                var styles = null;
+                var extend = null;
+                for (var j = 0; j < types.length; j++) {
+                    switch (types[j].nodeName) {
+                    case 'Point':
+                        point = true;
+                        break;
+                    case 'Style':
+                        styles = types[j].childNodes;
+                        break;
+                    case 'styleUrl':
+                        var _idStyle = types[j].textContent.slice(1);
+                        styles = stylesUrl[_idStyle].childNodes;
+                        break;
+                    case 'ExtendedData':
+                        extend = types[j].childNodes;
+                        break;
+                    default:
+                    }
+                }
+                if (extend) {
+                    var fctExtend = process.extendedData;
+                    if (fctExtend && typeof fctExtend === 'function') {
+                        fctExtend(features[index], extend);
+                    }
+                }
+                if (point && styles) {
+                    if (styles.length) {
+                        var labelStyle = null;
+                        var iconStyle = null;
+                        for (var k = 0; k < styles.length; k++) {
+                            switch (styles[k].nodeName) {
+                            case 'LabelStyle':
+                                labelStyle = styles[k];
+                                break;
+                            case 'IconStyle':
+                                iconStyle = styles[k];
+                                break;
+                            default:
+                            }
+                        }
+                        if (labelStyle) {
+                            var fctLabel = process.labelStyle;
+                            if (fctLabel && typeof fctLabel === 'function') {
+                                fctLabel(features[index], labelStyle);
+                            }
+                        } else if (iconStyle) {
+                            var fctIcon = process.iconStyle;
+                            if (fctIcon && typeof fctIcon === 'function') {
+                                fctIcon(features[index], iconStyle);
+                            }
+                        }
+                    }
+                }
+                break;
+            default:
+            }
+        }
+    }
+    KML.prototype.writeExtendStylesFeatures = function (features, options) {
+        var kmlString = ol.format.KML.prototype.writeFeatures.call(this, features, options);
+        var kmlDoc = _kmlParse(kmlString);
+        if (kmlDoc === null) {
+            return kmlString;
+        }
+        var __createExtensionStyleLabel = function (feature, style) {
+            if (!feature) {
+                return;
+            }
+            function __convertRGBColorsToKML(data) {
+                var strColor = data.toString(16);
+                if (strColor.charAt(0) === '#') {
+                    strColor = strColor.slice(1);
+                }
+                var opacity = 1;
+                opacity = parseInt(opacity * 255, 10);
+                opacity = opacity.toString(16);
+                var color = opacity;
+                color = color + strColor.substr(4, 2);
+                color = color + strColor.substr(2, 2);
+                color = color + strColor.substr(0, 2);
+                return color;
+            }
+            var _haloColor = __convertRGBColorsToKML('#FFFFFF');
+            var _haloRadius = '3';
+            var _haloOpacity = '1';
+            var _font = 'Sans';
+            var fTextStyle = feature.getStyle().getText().getStroke();
+            _haloColor = __convertRGBColorsToKML(fTextStyle.color_);
+            _haloRadius = fTextStyle.width_;
+            if (style && style.getElementsByTagName('LabelStyleSimpleExtensionGroup').length === 0) {
+                var labelextend = kmlDoc.createElement('LabelStyleSimpleExtensionGroup');
+                labelextend.setAttribute('fontFamily', _font);
+                labelextend.setAttribute('haloColor', _haloColor);
+                labelextend.setAttribute('haloRadius', _haloRadius);
+                labelextend.setAttribute('haloOpacity', _haloOpacity);
+                style.appendChild(labelextend);
+            }
+        };
+        var __createHotSpotStyleIcon = function (feature, style) {
+            if (!feature) {
+                return;
+            }
+            var x = 0.5;
+            var y = 1;
+            var xunits = 'fraction';
+            var yunits = 'faction';
+            var fImageStyle = feature.getStyle().getImage();
+            xunits = fImageStyle.anchorXUnits_;
+            yunits = fImageStyle.anchorYUnits_;
+            var size = fImageStyle.getSize();
+            var anchor = fImageStyle.anchor_;
+            if (anchor.length) {
+                x = anchor[0];
+                y = anchor[1];
+                if (yunits === 'fraction') {
+                    y = anchor[1] === 1 ? 0 : 1 - anchor[1];
+                } else {
+                    y = yunits === 'pixels' && anchor[1] === size[1] ? 0 : size[1] - anchor[1];
+                }
+            }
+            if (style && style.getElementsByTagName('hotSpot').length === 0) {
+                var hotspot = kmlDoc.createElement('hotSpot');
+                hotspot.setAttribute('x', x);
+                hotspot.setAttribute('y', y);
+                hotspot.setAttribute('xunits', xunits);
+                hotspot.setAttribute('yunits', yunits);
+                style.appendChild(hotspot);
+            }
+        };
+        _kmlRead(kmlDoc, features, {
+            labelStyle: __createExtensionStyleLabel,
+            iconStyle: __createHotSpotStyleIcon
+        });
+        var kmlStringExtended = _kmlToString(kmlDoc);
+        if (kmlStringExtended === null) {
+            kmlStringExtended = kmlString;
+        }
+        var kmlStringFormatted = _kmlFormattedToString(kmlStringExtended);
+        if (kmlStringFormatted === null) {
+            kmlStringFormatted = kmlString;
+        }
+        return kmlStringFormatted;
+    };
+    KML.prototype.readExtendStylesFeatures = function (source, options) {
+        var features = ol.format.KML.prototype.readFeatures.call(this, source, options);
+        if (typeof source === 'string') {
+            source = source.replace(/\n/g, '');
+            source = source.replace(/(>)\s*(<)/g, '$1$2');
+            var kmlDoc = _kmlParse(source);
+            if (kmlDoc === null) {
+                return features;
+            }
+            var __getExtensionStyleToFeatureLabel = function (feature, style) {
+                if (!feature) {
+                    return;
+                }
+                function __convertKMLColorsToRGB(data) {
+                    var color = '';
+                    color = color + data.substr(6, 2);
+                    color = color + data.substr(4, 2);
+                    color = color + data.substr(2, 2);
+                    var hex = parseInt(color, 16).toString(16);
+                    var comp = '';
+                    var len = hex.length || 0;
+                    for (var i = 0; i < 6 - len; i++) {
+                        comp += '0';
+                    }
+                    hex = '#' + comp + hex;
+                    return hex.toString(16);
+                }
+                var _text = feature.getProperties().name || '---';
+                var _color = __convertKMLColorsToRGB('ff000000');
+                var _colorHalo = '#FFFFFF';
+                var _radiusHalo = 4;
+                var _font = 'Sans';
+                var _fontSize = '16px';
+                var styles = style.childNodes;
+                for (var k = 0; k < styles.length; k++) {
+                    switch (styles[k].nodeName) {
+                    case 'scale':
+                        break;
+                    case 'colorMode':
+                        break;
+                    case 'color':
+                        _color = __convertKMLColorsToRGB(styles[k].textContent);
+                        break;
+                    case 'LabelStyleSimpleExtensionGroup':
+                        var attributs = styles[k].attributes;
+                        for (var l = 0; l < attributs.length; l++) {
+                            switch (attributs[l].nodeName) {
+                            case 'fontFamily':
+                                break;
+                            case 'haloColor':
+                                _colorHalo = __convertKMLColorsToRGB(attributs[l].nodeValue);
+                                break;
+                            case 'haloRadius':
+                                _radiusHalo = parseInt(attributs[l].nodeValue, 10);
+                                break;
+                            case 'haloOpacity':
+                                break;
+                            default:
+                            }
+                        }
+                        break;
+                    default:
+                    }
+                }
+                feature.setStyle(new ol.style.Style({
+                    image: new ol.style.Icon({
+                        src: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNiYAAAAAkAAxkR2eQAAAAASUVORK5CYII=',
+                        size: [
+                            51,
+                            38
+                        ],
+                        anchor: [
+                            25.5,
+                            38
+                        ],
+                        anchorOrigin: 'top-left',
+                        anchorXUnits: 'pixels',
+                        anchorYUnits: 'pixels'
+                    }),
+                    text: new ol.style.Text({
+                        font: _fontSize + ' ' + _font,
+                        textAlign: 'left',
+                        text: _text,
+                        fill: new ol.style.Fill({ color: _color }),
+                        stroke: new ol.style.Stroke({
+                            color: _colorHalo,
+                            width: _radiusHalo
+                        })
+                    })
+                }));
+            };
+            var __getHotSpotStyleToFeatureIcon = function (feature, style) {
+            };
+            var __getExtendedData = function (feature, extend) {
+                if (!feature) {
+                    return;
+                }
+                var _fname = '';
+                var _fdescription = feature.getProperties().description || '';
+                var _ftitle = null;
+                for (var i = 0; i < extend.length; i++) {
+                    var data = extend[i];
+                    var name = data.attributes[0];
+                    if (name.nodeName === 'name') {
+                        switch (name.nodeValue) {
+                        case 'label':
+                            _fname = data.textContent;
+                            break;
+                        case 'attributetitle':
+                            var nodes = data.childNodes;
+                            for (var j = 0; j < nodes.length; j++) {
+                                if (nodes[j].nodeName === 'value') {
+                                    _ftitle = nodes[j].textContent;
+                                }
+                            }
+                            break;
+                        default:
+                        }
+                    }
+                }
+                if (_ftitle) {
+                    _fdescription = _fdescription ? _ftitle + ' : ' + _fdescription : _ftitle;
+                }
+                feature.setProperties({
+                    name: _fname,
+                    description: _fdescription
+                });
+            };
+            _kmlRead(kmlDoc, features, {
+                labelStyle: __getExtensionStyleToFeatureLabel,
+                iconStyle: __getHotSpotStyleToFeatureIcon,
+                extendedData: __getExtendedData
+            });
+        }
+        return features;
+    };
+    return KML;
+}({}, ol);
+Ol3ControlsDrawing = function (woodman, ol, Gp, SelectorID, DrawingDOM, Utils, KML) {
     function Drawing(options) {
         options = options || {};
         if (!(this instanceof Drawing)) {
@@ -17927,6 +18317,13 @@ Ol3ControlsDrawing = function (woodman, ol, Gp, SelectorID, DrawingDOM, Utils) {
     Drawing.DefaultStyles = {
         textFillColor: '#000000',
         textStrokeColor: '#FFFFFF',
+        textIcon1x1: {
+            src: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNiYAAAAAkAAxkR2eQAAAAASUVORK5CYII=',
+            anchor: [
+                0,
+                0
+            ]
+        },
         polyFillColor: '#ffffff',
         polyFillOpacity: 0.4,
         polyStrokeColor: '#ffcc33',
@@ -17991,8 +18388,8 @@ Ol3ControlsDrawing = function (woodman, ol, Gp, SelectorID, DrawingDOM, Utils) {
         }
         var featProj = this.layer.getSource().getProjection();
         featProj = featProj || this.getMap().getView().getProjection();
-        var kmlFormat = new ol.format.KML({ writeStyles: true });
-        result = kmlFormat.writeFeatures(this.layer.getSource().getFeatures(), {
+        var kmlFormat = new KML({ writeStyles: true });
+        result = kmlFormat.writeExtendStylesFeatures(this.layer.getSource().getFeatures(), {
             dataProjection: 'EPSG:4326',
             featureProjection: featProj
         });
@@ -18024,6 +18421,7 @@ Ol3ControlsDrawing = function (woodman, ol, Gp, SelectorID, DrawingDOM, Utils) {
         Object.keys(markerElement).forEach(function (key) {
             switch (key) {
             case 'src':
+            case 'size':
             case 'anchor':
             case 'anchorOrigin':
             case 'anchorXUnits':
@@ -18388,14 +18786,7 @@ Ol3ControlsDrawing = function (woodman, ol, Gp, SelectorID, DrawingDOM, Utils) {
             var geomType = null;
             var initValues = {};
             if (seEv.selected[0].getGeometry() instanceof ol.geom.Point) {
-                if (seEv.selected[0].getStyle() && seEv.selected[0].getStyle().getImage()) {
-                    geomType = 'Point';
-                    if (seEv.selected[0].getStyle().getImage().getSrc()) {
-                        initValues.markerSrc = seEv.selected[0].getStyle().getImage().getSrc();
-                    } else {
-                        initValues.markerSrc = this.options.markersList[0].src;
-                    }
-                } else if (seEv.selected[0].getStyle().getText()) {
+                if (seEv.selected[0].getStyle().getText()) {
                     geomType = 'Text';
                     if (seEv.selected[0].getStyle().getText().getStroke() && seEv.selected[0].getStyle().getText().getStroke().getColor()) {
                         initValues.strokeColor = seEv.selected[0].getStyle().getText().getStroke().getColor();
@@ -18405,6 +18796,13 @@ Ol3ControlsDrawing = function (woodman, ol, Gp, SelectorID, DrawingDOM, Utils) {
                     }
                     initValues.strokeColor = initValues.hasOwnProperty('strokeColor') ? initValues.strokeColor : this.options.defaultStyles.textStrokeColor;
                     initValues.fillColor = initValues.hasOwnProperty('fillColor') ? initValues.fillColor : this.options.defaultStyles.textFillColor;
+                } else if (seEv.selected[0].getStyle() && seEv.selected[0].getStyle().getImage()) {
+                    geomType = 'Point';
+                    if (seEv.selected[0].getStyle().getImage().getSrc()) {
+                        initValues.markerSrc = seEv.selected[0].getStyle().getImage().getSrc();
+                    } else {
+                        initValues.markerSrc = this.options.markersList[0].src;
+                    }
                 }
             } else if (seEv.selected[0].getGeometry() instanceof ol.geom.LineString) {
                 geomType = 'Line';
@@ -18559,10 +18957,10 @@ Ol3ControlsDrawing = function (woodman, ol, Gp, SelectorID, DrawingDOM, Utils) {
             var geomType = null;
             var textValue = null;
             if (seEv.selected[0].getGeometry() instanceof ol.geom.Point) {
-                if (seEv.selected[0].getStyle() && seEv.selected[0].getStyle().getImage()) {
-                    geomType = 'Point';
-                } else if (seEv.selected[0].getStyle().getText()) {
+                if (seEv.selected[0].getStyle().getText()) {
                     geomType = 'Text';
+                } else if (seEv.selected[0].getStyle() && seEv.selected[0].getStyle().getImage()) {
+                    geomType = 'Point';
                 }
             } else if (seEv.selected[0].getGeometry() instanceof ol.geom.LineString) {
                 geomType = 'Line';
@@ -18719,7 +19117,9 @@ Ol3ControlsDrawing = function (woodman, ol, Gp, SelectorID, DrawingDOM, Utils) {
                             return;
                         }
                         deEv.feature.setStyle(new ol.style.Style({
+                            image: new ol.style.Icon(context._getIconStyleOptions(context.options.defaultStyles.textIcon1x1)),
                             text: new ol.style.Text({
+                                textAlign: 'left',
                                 font: '16px sans',
                                 text: value,
                                 fill: new ol.style.Fill({ color: context.options.defaultStyles.textFillColor }),
@@ -18792,7 +19192,7 @@ Ol3ControlsDrawing = function (woodman, ol, Gp, SelectorID, DrawingDOM, Utils) {
         this.dispatchEvent('change:collapsed');
     };
     return Drawing;
-}({}, ol, gp, CommonUtilsSelectorID, CommonControlsDrawingDOM, Ol3Utils);
+}({}, ol, gp, CommonUtilsSelectorID, CommonControlsDrawingDOM, Ol3Utils, Ol3FormatsKML);
 CommonControlsLocationSelectorDOM = function (ID) {
     var LocationSelectorDOM = {
         _addUID: function (id) {
@@ -24091,7 +24491,7 @@ CommonControlsLayerImportDOM = function () {
     };
     return LayerImportDOM;
 }();
-Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, SelectorID) {
+Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, SelectorID, KML) {
     function LayerImport(options) {
         options = options || {};
         if (!(this instanceof LayerImport)) {
@@ -24359,13 +24759,13 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
                 return;
             }
             if (context._currentImportType === 'KML') {
-                format = new ol.format.KML();
+                format = new KML({ showPointNames: false });
             } else if (context._currentImportType === 'GPX') {
                 format = new ol.format.GPX();
             }
             var fileProj = format.readProjection(fileContent);
             var mapProj = context._getMapProjectionCode();
-            var features = format.readFeatures(fileContent, {
+            var features = format.readExtendStylesFeatures(fileContent, {
                 dataProjection: fileProj,
                 featureProjection: mapProj
             });
@@ -24918,7 +25318,7 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
         }
     };
     return LayerImport;
-}(ol, gp, {}, Ol3Utils, CommonControlsLayerImportDOM, CommonUtilsSelectorID);
+}(ol, gp, {}, Ol3Utils, CommonControlsLayerImportDOM, CommonUtilsSelectorID, Ol3FormatsKML);
 Ol3ControlsGeoportalAttribution = function (ol, LayerUtils) {
     function GeoportalAttribution(options) {
         if (!(this instanceof GeoportalAttribution)) {
@@ -24998,7 +25398,7 @@ Ol3ControlsGeoportalAttribution = function (ol, LayerUtils) {
 }(ol, CommonUtilsLayerUtils);
 Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution) {
     Gp.ol3extVersion = '0.11.0';
-    Gp.ol3extDate = '2016-08-25';
+    Gp.ol3extDate = '2016-09-01';
     Gp.LayerUtils = LayerUtils;
     CRS.overload();
     ol.source.GeoportalWMTS = SourceWMTS;

@@ -4,14 +4,16 @@ define([
     "gp",
     "Common/Utils/SelectorID",
     "Common/Controls/DrawingDOM",
-    "Ol3/Utils"
+    "Ol3/Utils",
+    "Ol3/Formats/KML"
 ], function (
     woodman,
     ol,
     Gp,
     SelectorID,
     DrawingDOM,
-    Utils
+    Utils,
+    KML
 ) {
 
     "use strict";
@@ -153,6 +155,11 @@ define([
     Drawing.DefaultStyles = {
         textFillColor : "#000000",
         textStrokeColor : "#FFFFFF",
+        // INFO : cette option n'est pas surchargeable via les options du constructeur !
+        textIcon1x1 : {
+            src : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNiYAAAAAkAAxkR2eQAAAAASUVORK5CYII=",
+            anchor : [0, 0]
+        },
         polyFillColor : "#ffffff",
         polyFillOpacity : 0.4,
         polyStrokeColor : "#ffcc33",
@@ -280,15 +287,19 @@ define([
         }
         var featProj = this.layer.getSource().getProjection() ;
         featProj = featProj || this.getMap().getView().getProjection() ;
-        var kmlFormat = new ol.format.KML({
+
+        var kmlFormat = new KML({
             writeStyles : true
         }) ;
-        result = kmlFormat.writeFeatures(this.layer.getSource().getFeatures(), {
+
+        result = kmlFormat.writeExtendStylesFeatures(this.layer.getSource().getFeatures(), {
             dataProjection : "EPSG:4326",
             featureProjection : featProj
         }) ;
+
         return result ;
     };
+
     // ################################################################### //
     // #################### user interface methods ####################### //
     // ################################################################### //
@@ -345,6 +356,7 @@ define([
         Object.keys(markerElement).forEach(function (key) {
             switch (key) {
                 case "src" :
+                case "size" :
                 case "anchor" :
                 case "anchorOrigin" :
                 case "anchorXUnits" :
@@ -407,6 +419,13 @@ define([
             {
                 src : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAmCAYAAABpuqMCAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAARfSURBVFiF3ZhfbBRVGMV/d2Z3212tbSkCbuNaqzaRiL6QyAMPjSFoYqgx4oOiRmMFUzQG479o2lQ0QXk1EhYFgmlD2mIRkYhRwqLEaA2GiKWV7rZLQ0sLwbZId7t/Zq4PFK1125m5s/vCedz7nXO+M9/N3jsD1xFEvgXlTkrI8hBQBywFbgEqgEvAMHAayZcYHBYbuZJP77yFkdsoR+ct4GXAb4OSQPARXj4QzzGejx7yEkZuZy2CMLBAgf4nkhfEi3S67UNzQ5YSIXfQhKAdtSAACxDsk2EapXT3cF2FYQdNSN7F/YQFsJkw77gVUcL01mp3o5EDJoK1Yj37VchKjcjdlJEmhvrWmg9jGNwhGhhzSlTbZmnepjBBAMrReF2F6Hgy0+fIKPb+flWRIMtip+eQ88lcPRCtg3gCCVZ3RqhPDbJepqlPDbJ6XwSvP2nDJYCXB522prLN6iwrPIEETw33U/VoLZovBPjQfCGqHqtl3XDUZiBrn1lQCXO3ZcUDLV34Su/JueYrW0btnp8tNSRLnTamEiZoWRF6uHre9dseuT0vPrOgEqbCWtW3xNX6VSy02c+/sk4JwF+WFWZ6xGL9vA2fyzb7+QcqYUYtKwYP9s+7PrA/bsNn/geSA87DSLosa44+fT/p8VM511Jjp4g8u8KGk7XPLKhM5qhlRSbppzV4JwMdEcz0WSCNmT5LrC1CS/AujKliSw1BxGljzm8AH3MjHs4BpU65DjCBn0rxDJNOSI4nM33F2O2U58yEnU6DgOpF02AzcEGJa40LZHlfhagUZvp6vkmFawObVK7/4PLFSoZpBZ50ozEThsne6i2hjZqmFRVJ6U8JUeSVUmQNzQvg0c1MVtNMIUTSl0pNLhsaGu8A4xrfbZhS4CRQ5SoFcCWtja/5NBg+N+GZsu0vhSEkcY8mf+iNx+OuX3llmJVABNCVNUA2fl3xWdvJkriqRBb2uPugAYgNHEey1Y3Gt3/ccNxFEAChm2al6zAAjNAEWF/rc1Ev6+ffOLTwmBt7E0xD02J5CSOayQLrsHMJnYGMITJvHrr588mUMKyr54CUaaHrnfF4fCQ/kwHEBmLAa044rb+WHP4xXnxJ0VJK6CkyjO2xWOx3KMSH8zDtwONWdb2jvt41u4JtChZJKeVveDwnYrHYfw5uj4KYFRpSWbGqyCPL5ypIpMTkKwcWfWVXUEqRRcio1LTuUCjUE4lEsrnq8j4ZgKEP9bpgmfHFHPpyy3fle3f9Uto3n4aUIqNhDghN6zZ1vTcajaasfAsSBmBwq7f11tLM/24Hx2L+n+rbF38zBy2JEP0anPEGAj3d3d1pJ56F2GYAGInM82M+bWW53wxd++3ipH7x1QMLj8ysk5BAyj6Ppp2+d/nyaEdHh/I/W8EmA3Ci2b/iviVT3+tCerMmxkudiz450hcYBSYQIqrDmScGBvqawSxkH3lDV2Pxe6ltItnWcFNLTXX1qpqamkoK/BCvC/wNB+l5MdQKNHsAAAAASUVORK5CYII=",
                 anchor : [0.5 , 1]
+                // FIXME l'impl. sur le KML connait qq souci dont la gestion de
+                // la balise hotspot du format KML
+                // size : [51, 38],
+                // anchor : [25.5 , 38],
+                // anchorOrigin : "top-left",
+                // anchorXUnits : "pixels",
+                // anchorYUnits : "pixels"
             },
             {
                 src : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAmCAYAAABpuqMCAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAS7SURBVFiF3VhNTFxVFP7OfTNvOjMtM9AoJSSYEEVMCv6kJi5NoCa1TRqNxDTaFhcWNSmxaaxNQ0w3mqgLdGeRhKFYXVC7qDU2BhVt/YdqEQRhRgYTKD8VZqAMzM+7xwVCcIR58+6b2fRb3nO+853v3fvuu+8CtxEo1wX5pTu2IpasBfEeSFSCUAygCMAsgEkAQyD6DClXF3VMLeZSO2dmuN7vB+MYiBsAbDEn8BIIZ6BrzdQyF81FDzkxw8/594P5HQCFCvQ5QDRSYO4Tu30IO2QGiA/5XgVzAGpGsMKTZ/mw7wTbfLi2yFzvOwngpJ0aaXidAtG3VcnKZv5dWgE7Nf5fFBJCHqK2hUsqdKVG+EihDwn5K9SXViZEAHqAApGIVaLaO5Pg48iPEQDwg2WjCtHyzKx8RxJBZLP9qoJ5CdJ9t9XvkPWZiSVrkY0R3b2MxnM9aJ2Ooi3iRut0FEc/6IHuiZtyidwQ8RqrrVk3Q7zHNEd3L6N5eAYP7q2BppcB0KHpZXhoXw2aB6eyM8SPW23NuhnGvaY5L7T2w7Nt54Yxj68KDS19WSiZ66RBZQPYYZpRvfuejPH7H8scX0FJlv2sQcVMkWmGpmc2bBbPVicNKsvslmmOkZg0id/IQmkhy47WoLABYNo05/rnIxnjv1wOmtbgLHTSoDIz10xzzhypQiz624axWLQPLQ3V5kLUa7U1la35G9OcRMyFY/cV49qlLhiJMQAJGIkx9FzswsuVO5BccpnryKuWW7NK4IPFXmjLgwAKrHItYB66t5JaJmJWSJZnhjqmFiFxzirPIjqsGgFUD5qC3gRjRolrBsYMQEr/NEpmKBCJgHBKhWteHKdUjv8rVBvgw773QaizU2M9DMb58q98rwghXC5md5zI5WSmlCGcAODQZDIlhCSiJT0eX6waH490AsYq356ZZ4oK4DSuAihT4UuGYIaQILGQ4vknen2BibhYzlqfySBG2CH4ylA4HLb9y8v1BY8A9CkAzVwcZDA0BgkG0+oFBjP49Ij3o48n9b9U20gB7bZuZwCAAvM/gPndTDmSIZKS9CRDNwCHBIv1NzFdfzu/t2EEAEiTstS2GQDA2PwbAHrSh9ebSDewihtxMdn0h/dbO/ISkIYQoZyYoW6kYOD59YdQg8mRYjgleFONpKRk07D34qJBxmY5pmBOkKZdCIfDk7mZGQDUER0FUROwaoQdZpd6H07oXT/OOWYVJZmBQZdhvBcKhfqBfFyc1xcEEpKeNjMytOgYfqp32wUFiSVm7oPD0RsKhf5zsnYoFMsMyccTUtvtFHL7ZimxFC2eGPJezrYkM6VAHGQhBsrKyga7u7tTG+XlfGYAIFxXuLfEzZ288fvCb4U858+Ou0KZajBTUkCOkhADUtOGgsGg6SVIXswAQKiuqK3UbRxIH78yq//8Yr/3i01oSyD6UwDDTo9ncGBgIGFFM29mRh/FFm+J/3qBk+9aHbsZFzf39WwN3DK0tWXCQAzMIw4hfq/etSvY2dmpvLPlzQwA/PTk9od3eowvhWCnZEodHfC2fz3rnAEQBVFQA4YPjI6OnAZkPvvIGb7bX/Ta/LP+SEftne0V5eW1FRUVpcjzQ7wt8A+9at5zXMB2DQAAAABJRU5ErkJggg==",
@@ -797,15 +816,7 @@ define([
             var initValues = {} ;
             if (seEv.selected[0].getGeometry() instanceof ol.geom.Point) {
                 // on determine si c'est un marker ou un label.
-                if (seEv.selected[0].getStyle() &&
-                    seEv.selected[0].getStyle().getImage()) {
-                    geomType = "Point" ;
-                    if ( seEv.selected[0].getStyle().getImage().getSrc() ) {
-                        initValues.markerSrc = seEv.selected[0].getStyle().getImage().getSrc() ;
-                    } else {
-                        initValues.markerSrc = this.options.markersList[0].src ;
-                    }
-                } else if (seEv.selected[0].getStyle().getText()) {
+                if (seEv.selected[0].getStyle().getText()) {
                     geomType = "Text" ;
                     if ( seEv.selected[0].getStyle().getText().getStroke() &&
                          seEv.selected[0].getStyle().getText().getStroke().getColor()) {
@@ -817,6 +828,14 @@ define([
                     }
                     initValues.strokeColor = initValues.hasOwnProperty("strokeColor") ? initValues.strokeColor : this.options.defaultStyles.textStrokeColor ;
                     initValues.fillColor = initValues.hasOwnProperty("fillColor") ? initValues.fillColor : this.options.defaultStyles.textFillColor ;
+                } else if (seEv.selected[0].getStyle() &&
+                    seEv.selected[0].getStyle().getImage()) {
+                    geomType = "Point" ;
+                    if ( seEv.selected[0].getStyle().getImage().getSrc() ) {
+                        initValues.markerSrc = seEv.selected[0].getStyle().getImage().getSrc() ;
+                    } else {
+                        initValues.markerSrc = this.options.markersList[0].src ;
+                    }
                 }
 
             } else if (seEv.selected[0].getGeometry() instanceof ol.geom.LineString) {
@@ -1010,11 +1029,11 @@ define([
             var textValue = null ;
             if (seEv.selected[0].getGeometry() instanceof ol.geom.Point) {
                 // on determine si c'est un marker ou un label.
-                if (seEv.selected[0].getStyle() &&
+                if (seEv.selected[0].getStyle().getText()) {
+                    geomType = "Text" ;
+                } else if (seEv.selected[0].getStyle() &&
                     seEv.selected[0].getStyle().getImage()) {
                     geomType = "Point" ;
-                } else if (seEv.selected[0].getStyle().getText()) {
-                    geomType = "Text" ;
                 }
             } else if (seEv.selected[0].getGeometry() instanceof ol.geom.LineString) {
                 geomType = "Line" ;
@@ -1225,7 +1244,9 @@ define([
                                 return ;
                             }
                             deEv.feature.setStyle(new ol.style.Style({
+                                image : new ol.style.Icon(context._getIconStyleOptions(context.options.defaultStyles.textIcon1x1)),
                                 text : new ol.style.Text({
+                                    textAlign : "left",
                                     font : "16px sans",
                                     text : value,
                                     fill : new ol.style.Fill({
@@ -1247,7 +1268,7 @@ define([
                         popupOvl = new ol.Overlay({
                             element : popup,
                             // FIXME : autres valeurs.
-                            positioning : "top-center"
+                            positioning : "top-center" // par defaut, top-left...
                             // stopEvent : false
                         }) ;
                         context.getMap().addOverlay(popupOvl) ;

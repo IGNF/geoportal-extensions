@@ -5,7 +5,9 @@
         <title>sample ol3 LayerImport default</title>
         <!-- Library OpenLayers 3 -->
         <link rel="stylesheet" href="../../../lib/ol3/ol.css" />
+        <link rel="stylesheet" href="https://rawgit.com/walkermatt/ol3-popup/master/src/ol3-popup.css" />
         <script src="../../../lib/ol3/ol-debug.js"></script>
+        <script src="https://rawgit.com/walkermatt/ol3-popup/master/src/ol3-popup.js"></script>
         <!-- Plugin OpenLayers 3 IGN -->
         <link rel="stylesheet" href="../../../dist/ol3/GpPluginOl3-src.css" />
         <script src="../../../dist/ol3/GpPluginOl3-src.js" data-url="./../resources/AutoConf.js"></script>
@@ -56,6 +58,32 @@
                             collapsed : false
                         }
                     }));
+
+                    var popup = new ol.Overlay.Popup();
+                    map.addOverlay(popup);
+
+                    // cf. http://astuntechnology.github.io/osgis-ol3-leaflet/ol3/03-GEOJSON-INFO.html
+                    map.on("click", function(evt) {
+
+                      popup.hide();
+                      popup.setOffset([0, 0]);
+
+                      // Attempt to find a feature in one of the visible vector layers
+                      var feature = map.forEachFeatureAtPixel(evt.pixel, function(feature, layer) {
+                          return feature;
+                      });
+
+                      if (feature) {
+
+                          var coord = feature.getGeometry().getCoordinates();
+                          var props = feature.getProperties();
+                          var content = props["description"] || props["name"];
+                          // Offset the popup so it points at the middle of the marker not the tip
+                          popup.setOffset([0, -22]);
+                          popup.show(coord, content);
+
+                      }
+                    });
 
                 };
             </script>
