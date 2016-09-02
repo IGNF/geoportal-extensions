@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-09-01
+ * @date 2016-09-02
  *
  */
 /*!
@@ -24698,6 +24698,23 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
             console.log('[ol.control.LayerImport] url parameter is mandatory');
             return;
         }
+        if (!this.options.webServicesOptions || !this.options.webServicesOptions.proxyUrl && !this.options.webServicesOptions.noProxyDomains) {
+            console.log('[ol.control.LayerImport] options.webServicesOptions.proxyUrl parameter is mandatory to request resources on another domain (cross-domain)');
+            return;
+        }
+        var proxyUrl = this.options.webServicesOptions.proxyUrl;
+        var noProxyDomains = this.options.webServicesOptions.noProxyDomains;
+        var bfound = false;
+        if (noProxyDomains && Array.isArray(noProxyDomains) && noProxyDomains.length > 0) {
+            for (var i in noProxyDomains) {
+                if (url.indexOf(noProxyDomains[i]) !== -1) {
+                    bfound = true;
+                }
+            }
+        }
+        if (bfound === false) {
+            url = proxyUrl + encodeURIComponent(url);
+        }
         var format;
         if (this._currentImportType === 'KML') {
             format = new ol.format.KML();
@@ -25396,7 +25413,7 @@ Ol3ControlsGeoportalAttribution = function (ol, LayerUtils) {
 }(ol, CommonUtilsLayerUtils);
 Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution) {
     Gp.ol3extVersion = '0.11.0';
-    Gp.ol3extDate = '2016-09-01';
+    Gp.ol3extDate = '2016-09-02';
     Gp.LayerUtils = LayerUtils;
     CRS.overload();
     ol.source.GeoportalWMTS = SourceWMTS;

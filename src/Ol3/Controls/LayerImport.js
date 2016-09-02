@@ -490,7 +490,30 @@ define([
             return;
         }
 
-        // 2. Récupération du format
+        // 2. récupération proxy
+        if ( !this.options.webServicesOptions || ( !this.options.webServicesOptions.proxyUrl && !this.options.webServicesOptions.noProxyDomains ) ) {
+            console.log("[ol.control.LayerImport] options.webServicesOptions.proxyUrl parameter is mandatory to request resources on another domain (cross-domain)");
+            return;
+        };
+        var proxyUrl = this.options.webServicesOptions.proxyUrl;
+        var noProxyDomains = this.options.webServicesOptions.noProxyDomains;
+        // on regarde si l'url nest pas dans les domaines sans proxy
+        var bfound = false;
+        if ( noProxyDomains && Array.isArray(noProxyDomains) && noProxyDomains.length > 0 ) {
+            for (var i in noProxyDomains) {
+                logger.log("analyzing " + noProxyDomains[i]);
+                if ( url.indexOf(noProxyDomains[i]) !== -1 ) {
+                    logger.log(url + " found in noProxyDomains list (" + noProxyDomains[i] + ").") ;
+                    bfound = true;
+                }
+            }
+        }
+        // si on n'est pas dans un domaine sans proxy, on ajoute le proxy (+ encodage)
+        if ( bfound === false ) {
+            url = proxyUrl + encodeURIComponent(url);
+        }
+
+        // 3. Récupération du format
         var format;
         if ( this._currentImportType === "KML" ) {
             format = new ol.format.KML();
