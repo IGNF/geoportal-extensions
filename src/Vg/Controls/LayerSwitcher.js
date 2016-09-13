@@ -71,6 +71,7 @@ define([
         this._layerId = 0;
         this._container = container;
         this._initLayers = layers;
+        this._addedLayerConf = {};
         this._callbacks = {};
         this._options = options;
         // FIXME problème avec doc VirtualGeo
@@ -142,8 +143,13 @@ define([
                     if (addedLayer.type !== "elevation") {
                         var layer = addedLayer;
                         var id = layer.id;
-                        if ( self && !self._layers[id] ) {
-                            self.addLayer(layer);
+                        if (self) {
+                            if (self._addedLayerConf[id]) {
+                                var conf = self._addedLayerConf[id];
+                                self.addLayer(layer, conf);
+                            } else {
+                                self.addLayer(layer);
+                            }
                         }
                     }
                 };
