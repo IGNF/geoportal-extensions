@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 5.0.0
- * @date 2016-09-08
+ * @date 2016-09-13
  *
  */
 /*!
@@ -8699,6 +8699,7 @@ VgControlsLayerSwitcher = function (LayerSwitcherDOM, LayerUtils) {
         this._layerId = 0;
         this._container = container;
         this._initLayers = layers;
+        this._addedLayerConf = {};
         this._callbacks = {};
         this._options = options;
         var LStarget = document.getElementById(options.div);
@@ -8738,8 +8739,13 @@ VgControlsLayerSwitcher = function (LayerSwitcherDOM, LayerUtils) {
                     if (addedLayer.type !== 'elevation') {
                         var layer = addedLayer;
                         var id = layer.id;
-                        if (self && !self._layers[id]) {
-                            self.addLayer(layer);
+                        if (self) {
+                            if (self._addedLayerConf[id]) {
+                                var conf = self._addedLayerConf[id];
+                                self.addLayer(layer, conf);
+                            } else {
+                                self.addLayer(layer);
+                            }
                         }
                     }
                 };

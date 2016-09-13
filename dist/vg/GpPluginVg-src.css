@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 5.0.0
- * @date 2016-09-08
+ * @date 2016-09-13
  *
  */
 /* MOUSE POSITION */
@@ -2034,39 +2034,6 @@ input.GPinputSubmit {
   max-width: inherit;
   vertical-align: middle;
 }
-/* ISOCHRON */
-
-#GPisochron {
-  left: 10px;
-}
-
-/* Showing/hiding isochron panel */
-
-#GPshowIsochronOpen {
-  background-image: url("img/GPisochronOpen.png");
-}
-
-/* General panels */
-
-#GPisochronPanel {
-  left: 8px;
-}
-
-#GPisochronPanelClose {
-  background-image: url("img/GPisochronOpen.png");
-}
-
-/* Isochron form */
-
-.GPisochronChoiceAlt input:checked + label + span {
-  color: #366291;
-}
-
-.GPisochronOriginPointerImg,
-.GPisochronChoiceAltImg,
-.GPisochronTransportImg {
-  background-image: url("img/GPisochronOptions.png");
-}
 /* LAYER SWITCHER OL3 */
 
 #GPlayerSwitcher {
@@ -2159,6 +2126,60 @@ input.GPinputSubmit {
   background-image: url("img/GPlayerInfo.png");
 }
 
+/* ISOCHRON */
+
+#GPisochron {
+  left: 10px;
+}
+
+/* Showing/hiding isochron panel */
+
+#GPshowIsochronOpen {
+  background-image: url("img/GPisochronOpen.png");
+}
+
+/* General panels */
+
+#GPisochronPanel {
+  left: 8px;
+}
+
+#GPisochronPanelClose {
+  background-image: url("img/GPisochronOpen.png");
+}
+
+/* Isochron form */
+
+.GPisochronChoiceAlt input:checked + label + span {
+  color: #366291;
+}
+
+.GPisochronOriginPointerImg,
+.GPisochronChoiceAltImg,
+.GPisochronTransportImg {
+  background-image: url("img/GPisochronOptions.png");
+}
+/* REVERSE GEOCODING */
+
+#GPreverseGeocoding {
+  left: 10px;
+}
+
+/* Showing/hiding reverse geocoding panel */
+
+#GPshowReverseGeocodingOpen {
+  background-image: url("img/GPreverseGeocodingOpen.png");
+}
+
+/* General panels */
+
+#GPreverseGeocodingPanel {
+  left: 8px;
+}
+
+#GPreverseGeocodingPanelClose {
+  background-image: url("img/GPreverseGeocodingOpen.png");
+}
 /* MOUSE POSITION */
 
 #GPmousePosition {
@@ -2182,27 +2203,6 @@ input.GPinputSubmit {
 
 #GPmapCenter {
   background-image: url("img/GPmapCenter.png");
-}
-/* REVERSE GEOCODING */
-
-#GPreverseGeocoding {
-  left: 10px;
-}
-
-/* Showing/hiding reverse geocoding panel */
-
-#GPshowReverseGeocodingOpen {
-  background-image: url("img/GPreverseGeocodingOpen.png");
-}
-
-/* General panels */
-
-#GPreverseGeocodingPanel {
-  left: 8px;
-}
-
-#GPreverseGeocodingPanelClose {
-  background-image: url("img/GPreverseGeocodingOpen.png");
 }
 /* ROUTE */
 
