@@ -174,14 +174,14 @@ define([
      * @param {Object} [config.metadata] - layer metadata (default is an empty array)
      * @param {Object} [config.quicklookUrl] - layer quicklookUrl (default is null)
      * @example
-     *   layerSwitcher.addLayer({
-     *       layer : gpParcels,
-     *       config : {
+     *   layerSwitcher.addLayer(
+     *       gpParcels,
+     *       {
      *           title : "Parcelles cadastrales",
      *           description : "description de la couche",
      *           quicklookUrl : "http://quicklookUrl.fr"
      *       }
-     *   })
+     *   )
      */
     LayerSwitcher.prototype.addLayer = function (layer, config) {
 

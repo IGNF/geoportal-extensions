@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-09-02
+ * @date 2016-09-14
  *
  */
 /*!
@@ -15061,6 +15061,7 @@ Ol3ControlsLayerSwitcher = function (ol, Utils, LayerSwitcherDOM) {
         };
         var matchesLayers = document.querySelectorAll('div.GPlayerSwitcher_layer');
         var maxZIndex = matchesLayers.length;
+        this._layersOrder = [];
         for (var i = 0; i < matchesLayers.length; i++) {
             var tag = matchesLayers[i].id;
             var id = tag.substring(tag.indexOf('_') + 3);
@@ -15069,6 +15070,7 @@ Ol3ControlsLayerSwitcher = function (ol, Utils, LayerSwitcherDOM) {
             this._layers[id].onZIndexChangeEvent = null;
             if (layer.setZIndex) {
                 layer.setZIndex(maxZIndex);
+                this._layersOrder.push(this._layers[id]);
                 maxZIndex--;
             }
             this._layers[id].onZIndexChangeEvent = layer.on('change:zIndex', updateLayersOrder);
@@ -25413,7 +25415,7 @@ Ol3ControlsGeoportalAttribution = function (ol, LayerUtils) {
 }(ol, CommonUtilsLayerUtils);
 Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution) {
     Gp.ol3extVersion = '0.11.0';
-    Gp.ol3extDate = '2016-09-02';
+    Gp.ol3extDate = '2016-09-14';
     Gp.LayerUtils = LayerUtils;
     CRS.overload();
     ol.source.GeoportalWMTS = SourceWMTS;
