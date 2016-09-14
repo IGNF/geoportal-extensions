@@ -923,6 +923,8 @@ define([
         // on récupère l'ordre des div dans le contrôle pour réordonner les couches (avec zindex)
         var matchesLayers = document.querySelectorAll("div.GPlayerSwitcher_layer");
         var maxZIndex = matchesLayers.length;
+        // on vide la liste ordonnée avant de la remplir avec l'ordre des couches selon les div.
+        this._layersOrder = [];
         for (var i = 0; i < matchesLayers.length; i++) {
 
             var tag = matchesLayers[i].id;
@@ -936,6 +938,7 @@ define([
             if ( layer.setZIndex ) {
                 // maxZIndex--;
                 layer.setZIndex(maxZIndex);
+                this._layersOrder.push(this._layers[id]);
                 maxZIndex--;
             }
 
