@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-09-14
+ * @date 2016-09-19
  *
  */
 /* MOUSE POSITION */
@@ -2984,6 +2984,24 @@ div[id^="GPimportGetCapResults-"] {
   background-image: url("img/GPlayerInfo.png");
 }
 
+/* Location */
+
+.GPlocationOriginPointerImg,
+.GPlocationStageRemove,
+div[id^=GPlocationStageAdd],
+.GPlocationTransportImg {
+  background-image: url("img/GPlocationOptions.png");
+}
+
+/* All div elements whose class attribute value begins with "GPlocationPoint" */
+div[class*="GPlocationPoint"] {
+    position: relative;
+}
+
+.GPlocationStageFlexInput {
+    margin-bottom: 5px;
+}
+
 /* MOUSE POSITION */
 
 #GPmousePosition {
@@ -3008,24 +3026,6 @@ div[id^="GPimportGetCapResults-"] {
 #GPmapCenter {
   background-image: url("img/GPmapCenter.png");
 }
-/* Location */
-
-.GPlocationOriginPointerImg,
-.GPlocationStageRemove,
-div[id^=GPlocationStageAdd],
-.GPlocationTransportImg {
-  background-image: url("img/GPlocationOptions.png");
-}
-
-/* All div elements whose class attribute value begins with "GPlocationPoint" */
-div[class*="GPlocationPoint"] {
-    position: relative;
-}
-
-.GPlocationStageFlexInput {
-    margin-bottom: 5px;
-}
-
 /* REVERSE GEOCODING */
 
 [id^="GPreverseGeocoding-"] {

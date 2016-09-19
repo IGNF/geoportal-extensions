@@ -313,7 +313,7 @@
                              "adjustMultilineComment" :true
                            }
                          }
-                       }
+                     }
                 }));
             }
         }, function () {

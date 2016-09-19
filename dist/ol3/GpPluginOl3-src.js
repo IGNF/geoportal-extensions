@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-09-14
+ * @date 2016-09-19
  *
  */
 /*!
@@ -17893,7 +17893,6 @@ Ol3FormatsKML = function (woodman, ol) {
         var wsexp = / *(.*) +\n/g;
         var contexp = /(<.+>)(.+\n)/g;
         xml = xml.replace(reg, '$1\n$2$3').replace(wsexp, '$1\n').replace(contexp, '$1\n$2');
-        var pad = 0;
         var formatted = '';
         var lines = xml.split('\n');
         var indent = 0;
@@ -24717,34 +24716,20 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
         if (bfound === false) {
             url = proxyUrl + encodeURIComponent(url);
         }
-        var format;
-        if (this._currentImportType === 'KML') {
-            format = new ol.format.KML();
-        } else if (this._currentImportType === 'GPX') {
-            format = new ol.format.GPX();
-        }
-        var vectorSource = new ol.source.Vector({
+        var context = this;
+        Gp.Protocols.XHR.call({
             url: url,
-            format: format
-        });
-        if (layerName) {
-            vectorSource._title = vectorSource._description = layerName;
-        } else {
-            vectorSource._title = vectorSource._description = 'Import ' + this._currentImportType;
-        }
-        var vectorLayer = new ol.layer.Vector({ source: vectorSource });
-        var map = this.getMap();
-        if (!map) {
-            return;
-        }
-        vectorLayer.gpResultLayerId = 'layerimport:' + this._currentImportType;
-        map.addLayer(vectorLayer);
-        if (map.getView() && map.getSize() && vectorSource.getExtent) {
-            var sourceExtent = vectorSource.getExtent();
-            if (sourceExtent && sourceExtent[0] !== Infinity) {
-                map.getView().fit(vectorSource.getExtent(), map.getSize());
+            method: 'GET',
+            timeOut: 15000,
+            onResponse: function (response) {
+                context._hideWaitingContainer();
+                context._addFeaturesFromImportStaticLayer(response, layerName);
+            },
+            onFailure: function (error) {
+                context._hideWaitingContainer();
+                console.log('[ol.control.LayerImport] Kml/Gpx request failed : ', error);
             }
-        }
+        });
     };
     LayerImport.prototype._importStaticLayerFromLocalFile = function (layerName) {
         var file = this._staticLocalImportInput.files[0];
@@ -24752,7 +24737,6 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
             console.log('[ol.control.LayerImport] missing file');
             return;
         }
-        var format;
         var fReader = new FileReader();
         var context = this;
         fReader.onerror = function (e) {
@@ -24770,43 +24754,54 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
         };
         fReader.onload = function (e) {
             context._hideWaitingContainer();
-            var fileContent = e.target.result;
-            var map = context.getMap();
-            if (!map || !fileContent) {
-                return;
-            }
-            if (context._currentImportType === 'KML') {
-                format = new KML({ showPointNames: false });
-            } else if (context._currentImportType === 'GPX') {
-                format = new ol.format.GPX();
-            }
-            var fileProj = format.readProjection(fileContent);
-            var mapProj = context._getMapProjectionCode();
-            var features = format.readExtendStylesFeatures(fileContent, {
+            context._addFeaturesFromImportStaticLayer(e.target.result, layerName);
+        };
+        fReader.readAsText(file);
+    };
+    LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent, layerName) {
+        var map = this.getMap();
+        if (!map || !fileContent) {
+            return;
+        }
+        var format;
+        if (this._currentImportType === 'KML') {
+            format = new KML({ showPointNames: false });
+        } else if (this._currentImportType === 'GPX') {
+            format = new ol.format.GPX();
+        }
+        var fileProj = format.readProjection(fileContent);
+        var mapProj = this._getMapProjectionCode();
+        var features = null;
+        if (this._currentImportType === 'KML') {
+            features = format.readExtendStylesFeatures(fileContent, {
                 dataProjection: fileProj,
                 featureProjection: mapProj
             });
-            var vectorSource = new ol.source.Vector({ features: features });
-            if (layerName) {
-                vectorSource._title = vectorSource._description = layerName;
+        } else {
+            features = format.readFeatures(fileContent, {
+                dataProjection: fileProj,
+                featureProjection: mapProj
+            });
+        }
+        var vectorSource = new ol.source.Vector({ features: features });
+        if (layerName) {
+            vectorSource._title = vectorSource._description = layerName;
+        } else {
+            if (format.readName && format.readName(fileContent)) {
+                vectorSource._title = vectorSource._description = format.readName(fileContent);
             } else {
-                if (format.readName && format.readName(fileContent)) {
-                    vectorSource._title = vectorSource._description = format.readName(fileContent);
-                } else {
-                    vectorSource._title = vectorSource._description = 'Import ' + context._currentImportType;
-                }
+                vectorSource._title = vectorSource._description = 'Import ' + this._currentImportType;
             }
-            var vectorLayer = new ol.layer.Vector({ source: vectorSource });
-            vectorLayer.gpResultLayerId = 'layerimport:' + context._currentImportType;
-            map.addLayer(vectorLayer);
-            if (map.getView() && map.getSize() && vectorSource.getExtent) {
-                var sourceExtent = vectorSource.getExtent();
-                if (sourceExtent && sourceExtent[0] !== Infinity) {
-                    map.getView().fit(vectorSource.getExtent(), map.getSize());
-                }
+        }
+        var vectorLayer = new ol.layer.Vector({ source: vectorSource });
+        vectorLayer.gpResultLayerId = 'layerimport:' + this._currentImportType;
+        map.addLayer(vectorLayer);
+        if (map.getView() && map.getSize() && vectorSource.getExtent) {
+            var sourceExtent = vectorSource.getExtent();
+            if (sourceExtent && sourceExtent[0] !== Infinity) {
+                map.getView().fit(vectorSource.getExtent(), map.getSize());
             }
-        };
-        fReader.readAsText(file);
+        }
     };
     LayerImport.prototype._importServiceLayers = function () {
         if (this._currentImportType === 'WFS') {
@@ -25415,7 +25410,7 @@ Ol3ControlsGeoportalAttribution = function (ol, LayerUtils) {
 }(ol, CommonUtilsLayerUtils);
 Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution) {
     Gp.ol3extVersion = '0.11.0';
-    Gp.ol3extDate = '2016-09-14';
+    Gp.ol3extDate = '2016-09-19';
     Gp.LayerUtils = LayerUtils;
     CRS.overload();
     ol.source.GeoportalWMTS = SourceWMTS;

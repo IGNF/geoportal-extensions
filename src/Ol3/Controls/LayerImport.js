@@ -513,46 +513,25 @@ define([
             url = proxyUrl + encodeURIComponent(url);
         }
 
-        // 3. Récupération du format
-        var format;
-        if ( this._currentImportType === "KML" ) {
-            format = new ol.format.KML();
-        } else if ( this._currentImportType === "GPX" ) {
-            format = new ol.format.GPX();
-        }
-
-        // TODO : créer une seule fonction addLayerToMap(source) (avec zoom to extent)
-        // 3. Création de la couche vectorielle
-        var vectorSource = new ol.source.Vector({
+        var context = this;
+        Gp.Protocols.XHR.call({
             url : url,
-            format : format
-        });
-        // ajout des informations pour le layerSwitcher (titre, description)
-        if ( layerName ) {
-            vectorSource._title = vectorSource._description = layerName;
-        } else {
-            vectorSource._title = vectorSource._description = "Import " + this._currentImportType;
-            logger.log("[ol.control.LayerImport] set default name \"Import " + this._currentImportType + "\"");
-        }
+            method : "GET",
+            timeOut : 15000,
+            /** on success callback : display results in container */
+            onResponse : function (response) {
 
-        var vectorLayer = new ol.layer.Vector({
-            source : vectorSource
-        });
-        var map = this.getMap();
-        if ( !map ) {
-            return;
-        }
-        // on rajoute le champ gpResultLayerId permettant d'identifier une couche crée par le composant. (pour layerSwitcher par ex)
-        vectorLayer.gpResultLayerId = "layerimport:" + this._currentImportType;
-        map.addLayer(vectorLayer);
+                context._hideWaitingContainer();
+                context._addFeaturesFromImportStaticLayer(response, layerName);
 
-        // zoom sur l'étendue des entités récupérées (si possible)
-        if ( map.getView() && map.getSize() && vectorSource.getExtent ) {
-            var sourceExtent = vectorSource.getExtent();
-            if ( sourceExtent && sourceExtent[0] !== Infinity ) {
-                map.getView().fit(vectorSource.getExtent(), map.getSize());
+            },
+            /** on error callback : log error */
+            onFailure : function (error) {
+                // en cas d'erreur, on revient au panel initial et on cache la patience
+                context._hideWaitingContainer();
+                console.log("[ol.control.LayerImport] Kml/Gpx request failed : ", error);
             }
-        }
+        });
     };
 
     /**
@@ -568,8 +547,6 @@ define([
             console.log("[ol.control.LayerImport] missing file");
             return;
         }
-
-        var format;
 
         // Création d'un objet FileReader qui permet de lire le contenu du fichier chargé
         var fReader = new FileReader();
@@ -613,74 +590,101 @@ define([
 
             // on cache la patience
             context._hideWaitingContainer();
+            context._addFeaturesFromImportStaticLayer(e.target.result, layerName);
+        };
 
-            // récupération du contenu du fichier
-            var fileContent = e.target.result;
-            var map = context.getMap();
-            if ( !map || !fileContent ) {
-                return;
-            }
+        // Lecture du fichier chargé à l'aide de fileReader
+        fReader.readAsText(file);
+    };
 
-            if ( context._currentImportType === "KML" ) {
-                // lecture du fichier KML : création d'un format ol.format.KML, qui possède une méthode readFeatures (et readProjection)
-                format = new KML({
-                    showPointNames : false // FIXME !
-                });
-            } else if ( context._currentImportType === "GPX" ) {
-                // lecture du fichier GPX : création d'un format ol.format.GPX, qui possède une méthode readFeatures (et readProjection)
-                format = new ol.format.GPX();
-            }
+    /**
+     * this method is called by _importStaticLayerFom* method
+     * and add features to the map
+     *
+     * @param {String} fileContent - content file
+     * @param {String} layerName - imported layer name
+     * @private
+     */
+    LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent, layerName) {
 
-            // lecture de la géométrie des entités à partir du fichier, pour éventuelle reprojection.
-            var fileProj = format.readProjection(fileContent);
-            // récupération de la projection de la carte pour reprojection des géométries
-            var mapProj = context._getMapProjectionCode();
+        // récupération du contenu du fichier
+        var map = this.getMap();
+        if ( !map || !fileContent ) {
+            return;
+        }
 
-            // récupération des entités avec reprojection éventuelle des géométries
-            var features = format.readExtendStylesFeatures(
+        var format;
+        if ( this._currentImportType === "KML" ) {
+            // lecture du fichier KML : création d'un format ol.format.KML, qui possède une méthode readFeatures (et readProjection)
+            format = new KML({
+                showPointNames : false // FIXME !
+            });
+        } else if ( this._currentImportType === "GPX" ) {
+            // lecture du fichier GPX : création d'un format ol.format.GPX, qui possède une méthode readFeatures (et readProjection)
+            format = new ol.format.GPX();
+        }
+
+        // lecture de la géométrie des entités à partir du fichier, pour éventuelle reprojection.
+        var fileProj = format.readProjection(fileContent);
+        // récupération de la projection de la carte pour reprojection des géométries
+        var mapProj = this._getMapProjectionCode();
+
+        // récupération des entités avec reprojection éventuelle des géométries
+        var features = null;
+
+        if ( this._currentImportType === "KML" ) {
+            // surcharge KML
+            features = format.readExtendStylesFeatures(
                 fileContent,
                 {
                     dataProjection : fileProj,
                     featureProjection : mapProj
                 }
             );
-            logger.log("loaded features : ", features);
+        } else {
+            features = format.readFeatures(
+                fileContent,
+                {
+                    dataProjection : fileProj,
+                    featureProjection : mapProj
+                }
+            );
+        }
+        logger.log("loaded features : ", features);
 
-            // création d'une couche vectorielle à partir de ces features
-            var vectorSource = new ol.source.Vector({
-                features : features
-            });
-            // ajout des informations pour le layerSwitcher (titre, description)
-            if ( layerName ) {
-                vectorSource._title = vectorSource._description = layerName;
+        // création d'une couche vectorielle à partir de ces features
+        var vectorSource = new ol.source.Vector({
+            features : features
+        });
+
+        // ajout des informations pour le layerSwitcher (titre, description)
+        if ( layerName ) {
+            vectorSource._title = vectorSource._description = layerName;
+        } else {
+            if ( format.readName && format.readName(fileContent) ) {
+                vectorSource._title = vectorSource._description = format.readName(fileContent);
             } else {
-                if ( format.readName && format.readName(fileContent) ) {
-                    vectorSource._title = vectorSource._description = format.readName(fileContent);
-                } else {
-                    vectorSource._title = vectorSource._description = "Import " + context._currentImportType;
-                    logger.log("[ol.control.LayerImport] set default name \"Import " + context._currentImportType + "\"");
-                }
+                vectorSource._title = vectorSource._description = "Import " + this._currentImportType;
+                logger.log("[ol.control.LayerImport] set default name \"Import " + this._currentImportType + "\"");
             }
+        }
 
-            var vectorLayer = new ol.layer.Vector({
-                source : vectorSource
-            });
-            // on rajoute le champ gpResultLayerId permettant d'identifier une couche crée par le composant. (pour layerSwitcher par ex)
-            vectorLayer.gpResultLayerId = "layerimport:" + context._currentImportType;
-            map.addLayer(vectorLayer);
+        var vectorLayer = new ol.layer.Vector({
+            source : vectorSource
+        });
 
-            // TODO : appeler fonction commune
-            // zoom sur l'étendue des entités récupérées (si possible)
-            if ( map.getView() && map.getSize() && vectorSource.getExtent ) {
-                var sourceExtent = vectorSource.getExtent();
-                if ( sourceExtent && sourceExtent[0] !== Infinity ) {
-                    map.getView().fit(vectorSource.getExtent(), map.getSize());
-                }
+        // on rajoute le champ gpResultLayerId permettant d'identifier une couche crée par le composant. (pour layerSwitcher par ex)
+        vectorLayer.gpResultLayerId = "layerimport:" + this._currentImportType;
+        map.addLayer(vectorLayer);
+
+        // TODO : appeler fonction commune
+        // zoom sur l'étendue des entités récupérées (si possible)
+        if ( map.getView() && map.getSize() && vectorSource.getExtent ) {
+            var sourceExtent = vectorSource.getExtent();
+            if ( sourceExtent && sourceExtent[0] !== Infinity ) {
+                map.getView().fit(vectorSource.getExtent(), map.getSize());
             }
-        };
-
-        // Lecture du fichier chargé à l'aide de fileReader
-        fReader.readAsText(file);
+        }
     };
 
     // ################################################################### //

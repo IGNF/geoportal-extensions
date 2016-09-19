@@ -17,6 +17,12 @@
 
         <!-- load geoportail-waiting image -->
         <style>
+            div#context-menu {
+                display: none;
+                background: yellow;
+                border: 1px solid black;
+                padding: 10px;
+            }
             div#map {
                 background-image:url(../resources/geoportail-waiting.gif);
                 background-position:center center;
@@ -64,6 +70,7 @@
                       MousePosition,
                       Drawing) {
 
+                  var map = null;
                   var createMap = function () {
 
                     // var osm = new ol.layer.Tile({
@@ -131,11 +138,15 @@
                       timeOut : 20000,
                       onSuccess : createMap
                   });
+
                 });
             </script>
 
             <!-- map -->
             <div id="map">
+            </div>
+            <!-- context menu -->
+            <div id="context-menu">
             </div>
 
             <!-- Comment utiliser le plugin avec un exemple -->
@@ -171,5 +182,38 @@
                 <a href="http://stackoverflow.com/questions/tagged/openlayers-3">FAQ</a>.
             </p>
         </div>
+        <script>
+
+          var _map = document.getElementById('map');
+
+          _map.addEventListener('contextmenu', function(e) {
+              console.log("[Event contextmenu] - Annule le comportement par defaut du menu systeme !");
+              e.preventDefault();
+              // return false;
+          },true);
+
+          _map.addEventListener('click', function(e) {
+              console.log("[Event clic] - Hide custom contextmenu");
+              var x = document.getElementById("context-menu");
+              x.style.display = "none";
+          },false);
+
+          _map.addEventListener('contextmenu',function(e) {
+              console.log("[Event contextmenu] - Creation du comportement du menu !");
+              // e.stopImmediatePropagation();
+              if (e.which === 3) {
+                displayContextualMenu();
+              }
+
+          },false);
+
+          function displayContextualMenu () {
+            console.log("Show custom contextmenu");
+            var x = document.getElementById("context-menu");
+            x.innerHTML = "You right-clicked inside map!";
+            x.style.fontSize = "30px";
+            x.style.display = "block";
+          }
+        </script>
     </body>
 </html>
