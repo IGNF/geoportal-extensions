@@ -13,7 +13,7 @@ define([
     Utils,
     LayerImportDOM,
     SelectorID,
-    KML
+    KMLExtended
 ) {
 
     "use strict";
@@ -513,6 +513,10 @@ define([
             url = proxyUrl + encodeURIComponent(url);
         }
 
+        // FIXME pb de surcharge en mode UMD !? ça ne marche pas...
+        // this._hideWaitingContainer();
+        // this._addFeaturesFromImportStaticLayerUrl(url, layerName);
+
         var context = this;
         Gp.Protocols.XHR.call({
             url : url,
@@ -616,7 +620,7 @@ define([
         var format;
         if ( this._currentImportType === "KML" ) {
             // lecture du fichier KML : création d'un format ol.format.KML, qui possède une méthode readFeatures (et readProjection)
-            format = new KML({
+            format = new KMLExtended({
                 showPointNames : false // FIXME !
             });
         } else if ( this._currentImportType === "GPX" ) {
@@ -631,17 +635,6 @@ define([
 
         // récupération des entités avec reprojection éventuelle des géométries
         var features = null;
-
-        if ( this._currentImportType === "KML" ) {
-            // surcharge KML
-            features = format.readExtendStylesFeatures(
-                fileContent,
-                {
-                    dataProjection : fileProj,
-                    featureProjection : mapProj
-                }
-            );
-        } else {
             features = format.readFeatures(
                 fileContent,
                 {
@@ -649,7 +642,7 @@ define([
                     featureProjection : mapProj
                 }
             );
-        }
+
         logger.log("loaded features : ", features);
 
         // création d'une couche vectorielle à partir de ces features
@@ -667,6 +660,64 @@ define([
                 vectorSource._title = vectorSource._description = "Import " + this._currentImportType;
                 logger.log("[ol.control.LayerImport] set default name \"Import " + this._currentImportType + "\"");
             }
+        }
+
+        var vectorLayer = new ol.layer.Vector({
+            source : vectorSource
+        });
+
+        // on rajoute le champ gpResultLayerId permettant d'identifier une couche crée par le composant. (pour layerSwitcher par ex)
+        vectorLayer.gpResultLayerId = "layerimport:" + this._currentImportType;
+        map.addLayer(vectorLayer);
+
+        // TODO : appeler fonction commune
+        // zoom sur l'étendue des entités récupérées (si possible)
+        if ( map.getView() && map.getSize() && vectorSource.getExtent ) {
+            var sourceExtent = vectorSource.getExtent();
+            if ( sourceExtent && sourceExtent[0] !== Infinity ) {
+                map.getView().fit(vectorSource.getExtent(), map.getSize());
+            }
+        }
+    };
+
+    /**
+     * NOT USE : this method is called by _importStaticLayerFom* method
+     * and add features to the map
+     *
+     * @param {String} url - url
+     * @param {String} layerName - imported layer name
+     * @private
+     */
+    LayerImport.prototype._addFeaturesFromImportStaticLayerUrl = function (url, layerName) {
+
+        // récupération du contenu du fichier
+        var map = this.getMap();
+        if ( !map || !url ) {
+            return;
+        }
+
+        var format;
+        if ( this._currentImportType === "KML" ) {
+            // lecture du fichier KML : création d'un format ol.format.KML, qui possède une méthode readFeatures (et readProjection)
+            format = new KMLExtended({
+                showPointNames : false // FIXME !
+            });
+        } else if ( this._currentImportType === "GPX" ) {
+            // lecture du fichier GPX : création d'un format ol.format.GPX, qui possède une méthode readFeatures (et readProjection)
+            format = new ol.format.GPX();
+        }
+
+        // création d'une couche vectorielle à partir de ces features
+        var vectorSource = new ol.source.Vector({
+            url : url,
+            format : format
+        });
+
+        // ajout des informations pour le layerSwitcher (titre, description)
+        if ( layerName ) {
+            vectorSource._title = vectorSource._description = layerName;
+        } else {
+            vectorSource._title = vectorSource._description = "Import " + this._currentImportType;
         }
 
         var vectorLayer = new ol.layer.Vector({

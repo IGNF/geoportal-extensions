@@ -3,6 +3,7 @@ define([
     "gp",
     "Common/Utils/LayerUtils",
     "Common/Utils/Register",
+    "Ol3/Formats/KML",
     "Ol3/CRS/CRS",
     "Ol3/Layers/SourceWMTS",
     "Ol3/Layers/SourceWMS",
@@ -22,6 +23,7 @@ define([
     Gp,
     LayerUtils,
     Register,
+    KML,
     CRS,
     SourceWMTS,
     SourceWMS,
@@ -46,6 +48,9 @@ define([
 
     // Classes utilitaires
     Gp.LayerUtils = LayerUtils;
+
+    // FIXME overload or not ? name Gp.format.kml ?
+    ol.format.KMLExtended = KML;
 
     // Surcharge sur les functions ol/proj4 par défaut
     CRS.overload();

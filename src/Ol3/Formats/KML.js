@@ -312,8 +312,13 @@ define([
     * @param {Object} options - Options.
     * @return {String} Result.
     */
-    KML.prototype.writeExtendStylesFeatures = function (features, options) {
+    // KML.prototype._parentWriteFeatures = ol.format.KML.prototype.writeFeatures;
+    KML.prototype.writeFeatures = function (features, options) {
         logger.log("overload : ol.format.KML.writeFeatures");
+        var kmlString = this._writeExtendStylesFeatures(features, options);
+        return kmlString;
+    };
+    KML.prototype._writeExtendStylesFeatures = function (features, options) {
 
         var kmlString = ol.format.KML.prototype.writeFeatures.call(this, features, options);
 
@@ -468,204 +473,215 @@ define([
     * @param {olx.format.ReadOptions=} options - options.
     * @return {Array.<ol.Feature>} Features.
     */
-    KML.prototype.readExtendStylesFeatures = function (source, options) {
+
+    // KML.prototype._parentReadFeatures = ol.format.KML.prototype.readFeatures;
+    KML.prototype.readFeatures = function (source, options) {
         logger.log("overload : ol.format.KML.readFeatures");
+        var features = this._readExtendStylesFeatures(source, options);
+        return features;
+    };
+    KML.prototype._readExtendStylesFeatures = function (source, options) {
         var features = ol.format.KML.prototype.readFeatures.call(this, source, options);
 
-        // FIXME On traite le cas où le KML est une string (pour le moment...)
+        var kmlDoc = null;
+        var kmlString = "";
+
         if ( typeof source === "string" ) {
+            kmlString = source;
 
-            // On 'deformatte' le KML afin d'eviter des pb de parsing...
-            source = source.replace(/\n/g, "");
-            source = source.replace(/(>)\s*(<)/g, "$1$2");
+        } else {
+            kmlString = source.documentElement.outerHTML;
+        }
 
-            // On met en place un Parser sur le KML
-            var kmlDoc = _kmlParse(source);
+        // On 'deformatte' le KML afin d'eviter des pb de parsing...
+        kmlString = kmlString.replace(/\n/g, "");
+        kmlString = kmlString.replace(/(>)\s*(<)/g, "$1$2");
 
-            if (kmlDoc === null) {
-                // au cas où...
-                return features;
+        // On met en place un Parser sur le KML
+        kmlDoc = _kmlParse(kmlString);
+
+        if (kmlDoc === null) {
+            // au cas où...
+            return features;
+        }
+
+        /**
+        * Gestion des styles étendus sur le Label
+        * - ajout d'un icone par defaut (1x1p transparent) sur les labels
+        * s'il n'existe pas !
+        * - lecture des styles étendus des labels
+        */
+        var __getExtensionStyleToFeatureLabel = function (feature, style) {
+
+            if (!feature) {
+                return;
             }
 
-            /**
-            * Gestion des styles étendus sur le Label
-            * - ajout d'un icone par defaut (1x1p transparent) sur les labels
-            * s'il n'existe pas !
-            * - lecture des styles étendus des labels
-            */
-            var __getExtensionStyleToFeatureLabel = function (feature, style) {
-
-                if (!feature) {
-                    return;
+            /** KML Colors (AABBGGRR) To RGB Colors (RRGGBB) */
+            function __convertKMLColorsToRGB (data) {
+                var color = "";
+                color = color + data.substr(6,2);
+                color = color + data.substr(4,2);
+                color = color + data.substr(2,2);
+                var hex = parseInt(color,16).toString(16);
+                var comp = "";
+                var len = hex.length || 0;
+                for (var i = 0; i < (6 - len); i++) {
+                    comp += "0";
                 }
+                hex = "#" + comp + hex;
+                return hex.toString(16);
+            }
 
-                /** KML Colors (AABBGGRR) To RGB Colors (RRGGBB) */
-                function __convertKMLColorsToRGB (data) {
-                    var color = "";
-                    color = color + data.substr(6,2);
-                    color = color + data.substr(4,2);
-                    color = color + data.substr(2,2);
-                    var hex = parseInt(color,16).toString(16);
-                    var comp = "";
-                    var len = hex.length || 0;
-                    for (var i = 0; i < (6 - len); i++) {
-                        comp += "0";
-                    }
-                    hex = "#" + comp + hex;
-                    return hex.toString(16);
+            var _text  = feature.getProperties().name || "---";
+            var _color = __convertKMLColorsToRGB("ff000000"); // "#000000"
+            var _colorHalo  = "#FFFFFF";
+            var _radiusHalo = 4;
+            var _font = "Sans"; // TODO
+            var _fontSize = "16px"; // TODO
+
+            // On recherche les balises du Style
+            var styles = style.childNodes;
+            for (var k = 0; k < styles.length; k++) {
+                switch (styles[k].nodeName) {
+                    case "scale":
+                        // TODO
+                        break;
+                    case "colorMode":
+                        // TODO
+                        break;
+                    case "color":
+                        _color = __convertKMLColorsToRGB(styles[k].textContent);
+                        break;
+                    case "LabelStyleSimpleExtensionGroup":
+                        var attributs = styles[k].attributes;
+                        for (var l = 0; l < attributs.length; l++) {
+                            switch (attributs[l].nodeName) {
+                                case "fontFamily":
+                                    // TODO
+                                    break;
+                                case "haloColor":
+                                    _colorHalo = __convertKMLColorsToRGB(attributs[l].nodeValue);
+                                    break;
+                                case "haloRadius":
+                                    _radiusHalo = parseInt(attributs[l].nodeValue, 10);
+                                    break;
+                                case "haloOpacity":
+                                    // TODO
+                                    break;
+                                default:
+                            }
+                        }
+                        break;
+                    default:
+                    // on ne traite pas les autres informations ...
                 }
+            }
 
-                var _text  = feature.getProperties().name || "---";
-                var _color = __convertKMLColorsToRGB("ff000000"); // "#000000"
-                var _colorHalo  = "#FFFFFF";
-                var _radiusHalo = 4;
-                var _font = "Sans"; // TODO
-                var _fontSize = "16px"; // TODO
+            // On reconstruit le style !
+            feature.setStyle(new ol.style.Style({
+                image : new ol.style.Icon({
+                    src : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNiYAAAAAkAAxkR2eQAAAAASUVORK5CYII=",
+                    size : [51, 38],
+                    anchor : [25.5 , 38],
+                    anchorOrigin : "top-left",
+                    anchorXUnits : "pixels",
+                    anchorYUnits : "pixels"
+                }),
+                text : new ol.style.Text({
+                    font : _fontSize + " " + _font,
+                    textAlign : "left",
+                    text : _text,
+                    fill : new ol.style.Fill({
+                        color : _color
+                    }),
+                    stroke : new ol.style.Stroke({
+                        color : _colorHalo,
+                        width : _radiusHalo
+                    })
+                })
+            }));
 
-                // On recherche les balises du Style
-                var styles = style.childNodes;
-                for (var k = 0; k < styles.length; k++) {
-                    switch (styles[k].nodeName) {
-                        case "scale":
-                            // TODO
+        };
+
+        /**
+        * TODO Gestion de la balise kml:hostSpot sur les styles d'un Marker
+        * - problème avec 'hotspot y === 0' (?)
+        */
+        var __getHotSpotStyleToFeatureIcon  = function (feature, style) {};
+
+        /**
+        * Gestion de la balise kml:ExtendedData
+        *
+        * @example
+        * //--> Marker (Point), LineString, Polygon
+        * <ExtendedData>
+        *    <Data name="attributetitle">
+        *        <displayName>title</displayName>
+        *        <value>Titre à concatener avec la valeur de la balise "kml:description"</value>
+        *    </Data>
+        * </ExtendedData>
+        * //--> Label
+        * <ExtendedData>
+        *    <Data name="label">
+        *        <value>PARIS</value> // valeur à remplacer dans "kml:name"
+        *    </Data>
+        *    <Data name="attributetitle">
+        *        <displayName>title</displayName>
+        *        <value>Titre à concatener avec la valeur de la balise "kml:description"</value>
+        *    </Data>
+        * </ExtendedData>
+        */
+        var __getExtendedData = function (feature, extend) {
+
+            if (!feature) {
+                return;
+            }
+
+            // Dans le cas où le noeud "ExtendedData" est vide,
+            // on ne prend pas en compte la valeur du tag "name" !
+            var _fname = /* feature.getProperties().name || */ "";
+            var _fdescription = feature.getProperties().description || "";
+            var _ftitle = null;
+            for (var i = 0; i < extend.length; i++) {
+                var data = extend[i];
+                var name = data.attributes[0]; // 1 seul attribut !
+                if (name.nodeName === "name") {
+                    switch (name.nodeValue) {
+                        case "label":
+                            _fname = data.textContent;
                             break;
-                        case "colorMode":
-                            // TODO
-                            break;
-                        case "color":
-                            _color = __convertKMLColorsToRGB(styles[k].textContent);
-                            break;
-                        case "LabelStyleSimpleExtensionGroup":
-                            var attributs = styles[k].attributes;
-                            for (var l = 0; l < attributs.length; l++) {
-                                switch (attributs[l].nodeName) {
-                                    case "fontFamily":
-                                        // TODO
-                                        break;
-                                    case "haloColor":
-                                        _colorHalo = __convertKMLColorsToRGB(attributs[l].nodeValue);
-                                        break;
-                                    case "haloRadius":
-                                        _radiusHalo = parseInt(attributs[l].nodeValue, 10);
-                                        break;
-                                    case "haloOpacity":
-                                        // TODO
-                                        break;
-                                    default:
+                        case "attributetitle":
+                            var nodes = data.childNodes;
+                            for (var j = 0; j < nodes.length; j++) {
+                                if (nodes[j].nodeName === "value") {
+                                    _ftitle = nodes[j].textContent;
                                 }
                             }
                             break;
                         default:
-                        // on ne traite pas les autres informations ...
+                            // ...
                     }
                 }
+            }
 
-                // On reconstruit le style !
-                feature.setStyle(new ol.style.Style({
-                    image : new ol.style.Icon({
-                        src : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNiYAAAAAkAAxkR2eQAAAAASUVORK5CYII=",
-                        size : [51, 38],
-                        anchor : [25.5 , 38],
-                        anchorOrigin : "top-left",
-                        anchorXUnits : "pixels",
-                        anchorYUnits : "pixels"
-                    }),
-                    text : new ol.style.Text({
-                        font : _fontSize + " " + _font,
-                        textAlign : "left",
-                        text : _text,
-                        fill : new ol.style.Fill({
-                            color : _color
-                        }),
-                        stroke : new ol.style.Stroke({
-                            color : _colorHalo,
-                            width : _radiusHalo
-                        })
-                    })
-                }));
+            // Modification des properties "name" et "description"
+            if (_ftitle) {
+                _fdescription = (_fdescription) ? _ftitle + " : " + _fdescription : _ftitle;
+            }
 
-            };
-
-            /**
-            * TODO Gestion de la balise kml:hostSpot sur les styles d'un Marker
-            * - problème avec 'hotspot y === 0' (?)
-            */
-            var __getHotSpotStyleToFeatureIcon  = function (feature, style) {};
-
-            /**
-            * Gestion de la balise kml:ExtendedData
-            *
-            * @example
-            * //--> Marker (Point), LineString, Polygon
-            * <ExtendedData>
-            *    <Data name="attributetitle">
-            *        <displayName>title</displayName>
-            *        <value>Titre à concatener avec la valeur de la balise "kml:description"</value>
-            *    </Data>
-            * </ExtendedData>
-            * //--> Label
-            * <ExtendedData>
-            *    <Data name="label">
-            *        <value>PARIS</value> // valeur à remplacer dans "kml:name"
-            *    </Data>
-            *    <Data name="attributetitle">
-            *        <displayName>title</displayName>
-            *        <value>Titre à concatener avec la valeur de la balise "kml:description"</value>
-            *    </Data>
-            * </ExtendedData>
-            */
-            var __getExtendedData = function (feature, extend) {
-
-                if (!feature) {
-                    return;
-                }
-
-                // Dans le cas où le noeud "ExtendedData" est vide,
-                // on ne prend pas en compte la valeur du tag "name" !
-                var _fname = /* feature.getProperties().name || */ "";
-                var _fdescription = feature.getProperties().description || "";
-                var _ftitle = null;
-                for (var i = 0; i < extend.length; i++) {
-                    var data = extend[i];
-                    var name = data.attributes[0]; // 1 seul attribut !
-                    if (name.nodeName === "name") {
-                        switch (name.nodeValue) {
-                            case "label":
-                                _fname = data.textContent;
-                                break;
-                            case "attributetitle":
-                                var nodes = data.childNodes;
-                                for (var j = 0; j < nodes.length; j++) {
-                                    if (nodes[j].nodeName === "value") {
-                                        _ftitle = nodes[j].textContent;
-                                    }
-                                }
-                                break;
-                            default:
-
-                        }
-                    }
-                }
-
-                // Modification des properties "name" et "description"
-                if (_ftitle) {
-                    _fdescription = (_fdescription) ? _ftitle + " : " + _fdescription : _ftitle;
-                }
-
-                feature.setProperties({
-                    name : _fname,
-                    description : _fdescription
-                });
-            };
-
-            // On lit les styles étendus et on les ajoute aux features
-            _kmlRead(kmlDoc, features, {
-                labelStyle : __getExtensionStyleToFeatureLabel,
-                iconStyle : __getHotSpotStyleToFeatureIcon,
-                extendedData : __getExtendedData
+            feature.setProperties({
+                name : _fname,
+                description : _fdescription
             });
+        };
 
-        }
+        // On lit les styles étendus et on les ajoute aux features
+        _kmlRead(kmlDoc, features, {
+            labelStyle : __getExtensionStyleToFeatureLabel,
+            iconStyle : __getHotSpotStyleToFeatureIcon,
+            extendedData : __getExtendedData
+        });
 
         return features;
     };

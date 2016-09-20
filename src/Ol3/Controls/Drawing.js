@@ -13,7 +13,7 @@ define([
     SelectorID,
     DrawingDOM,
     Utils,
-    KML
+    KMLExtended
 ) {
 
     "use strict";
@@ -288,11 +288,11 @@ define([
         var featProj = this.layer.getSource().getProjection() ;
         featProj = featProj || this.getMap().getView().getProjection() ;
 
-        var kmlFormat = new KML({
+        var kmlFormat = new KMLExtended({
             writeStyles : true
         }) ;
 
-        result = kmlFormat.writeExtendStylesFeatures(this.layer.getSource().getFeatures(), {
+        result = kmlFormat.writeFeatures(this.layer.getSource().getFeatures(), {
             dataProjection : "EPSG:4326",
             featureProjection : featProj
         }) ;
