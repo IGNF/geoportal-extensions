@@ -3,6 +3,7 @@
 ## [ol3-0.11.0-dev](https://github.com/IGNF/geoportal-extensions/tree/ol3-0.11.0-dev) (2016-09-02)
 [Full Changelog](https://github.com/IGNF/geoportal-extensions/compare/leaflet-0.8.1-dev...ol3-0.11.0-dev)
 
+- fix \#50 : ol.control.GeoportalAttribution : affichage attributions de type text sous Safari 
 - fix \#53 : correction titre des outils d'edition
 - fix \#51 : try ol.proj.get\(crs.toUpperCase\(\)\) \(e.g. if crs="epsg:3857"\) [\#54](https://github.com/IGNF/geoportal-extensions/pull/54)
 - Suppression de codes EPSG en doublons [\#38](https://github.com/IGNF/geoportal-extensions/pull/38)

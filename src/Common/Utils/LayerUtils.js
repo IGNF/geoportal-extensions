@@ -269,13 +269,13 @@ define([], function () {
                         } else {
                             // sinon, on affiche le nom de l'originator, ou sa description ou l'url.
                             if ( name ) {
-                                link.text = name;
+                                link.textContent = name;
                             } else if ( text ) {
-                                link.text = text;
+                                link.textContent = text;
                             } else if ( url ) {
-                                link.text = url;
+                                link.textContent = url;
                             } else {
-                                link.text = "";
+                                link.textContent = "";
                             }
                         }
 

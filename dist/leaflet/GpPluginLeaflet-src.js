@@ -23911,13 +23911,13 @@ CommonUtilsLayerUtils = function () {
                             image.style.width = '30px';
                         } else {
                             if (name) {
-                                link.text = name;
+                                link.textContent = name;
                             } else if (text) {
-                                link.text = text;
+                                link.textContent = text;
                             } else if (url) {
-                                link.text = url;
+                                link.textContent = url;
                             } else {
-                                link.text = '';
+                                link.textContent = '';
                             }
                         }
                         attributions.push(container.innerHTML + ' ');
