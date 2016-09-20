@@ -18311,7 +18311,7 @@ Ol3ControlsDrawing = function (woodman, ol, Gp, SelectorID, DrawingDOM, Utils, K
         lines: 'Dessiner des lignes',
         polygons: 'Dessiner des polygones',
         text: 'Ecrire sur la carte',
-        editingTools: 'Outils d\'éditon',
+        editingTools: 'Outils d\'édition',
         edit: 'Editer les tracés',
         display: 'Modifier l\'apparence des objets',
         tooltip: 'Modifier les textes / infos-bulles',
@@ -24934,13 +24934,15 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
                     this._getCapResponseWMTSLayers = layers;
                     for (var j = 0; j < layers.length; j++) {
                         projection = this._getWMTSLayerProjection(layers[j], getCapResponseWMTS);
-                        if (!projection || !ol.proj.get(projection)) {
-                            console.log('[ol.control.LayerImport] wmts layer cannot be added to map : unknown projection', layers[j]);
-                            continue;
-                        } else {
-                            layerDescription = layers[j].Title;
-                            if (this._getCapResultsListContainer) {
-                                this._getCapResultsListContainer.appendChild(this._createImportGetCapResultElement(layerDescription, j));
+                        if (projection && typeof projection === 'string') {
+                            if (ol.proj.get(projection) || ol.proj.get(projection.toUpperCase())) {
+                                layerDescription = layers[j].Title;
+                                if (this._getCapResultsListContainer) {
+                                    this._getCapResultsListContainer.appendChild(this._createImportGetCapResultElement(layerDescription, j));
+                                }
+                            } else {
+                                console.log('[ol.control.LayerImport] wmts layer cannot be added to map : unknown projection', layers[j]);
+                                continue;
                             }
                         }
                     }
@@ -25040,9 +25042,16 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
         if (Array.isArray(CRSList)) {
             for (var i = 0; i < CRSList.length; i++) {
                 var layerCRS = CRSList[i];
-                if (layerCRS === mapProjCode || ol.proj.get(layerCRS)) {
+                if (layerCRS === mapProjCode) {
                     projection = layerCRS;
                     break;
+                } else {
+                    if (layerCRS && typeof layerCRS === 'string') {
+                        if (ol.proj.get(layerCRS) || ol.proj.get(layerCRS.toUpperCase())) {
+                            projection = layerCRS;
+                            break;
+                        }
+                    }
                 }
             }
         }
@@ -25075,9 +25084,13 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
                     if (crs === mapProjCode) {
                         layerTileOptions.extent = layerInfo.BoundingBox[i].extent;
                         break;
-                    } else if (ol.proj.get(crs)) {
-                        layerTileOptions.extent = ol.proj.transformExtent(layerInfo.BoundingBox[i].extent, crs, mapProjCode);
-                        break;
+                    } else {
+                        if (crs && typeof crs === 'string') {
+                            if (ol.proj.get(crs) || ol.proj.get(crs.toUpperCase())) {
+                                layerTileOptions.extent = ol.proj.transformExtent(layerInfo.BoundingBox[i].extent, crs, mapProjCode);
+                                break;
+                            }
+                        }
                     }
                 }
             }
@@ -25221,13 +25234,17 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
         }
         if (layerInfo.TileMatrixSetLink && Array.isArray(layerInfo.TileMatrixSetLink)) {
             var tms = layerInfo.TileMatrixSetLink[0].TileMatrixSet;
+            var crs;
             if (getCapResponseWMTS.Contents && Array.isArray(getCapResponseWMTS.Contents.TileMatrixSet)) {
                 var tileMatrixSets = getCapResponseWMTS.Contents.TileMatrixSet;
                 for (var i = 0; i < tileMatrixSets.length; i++) {
                     if (tileMatrixSets[i].Identifier === tms && tileMatrixSets[i].TileMatrix) {
                         var tileMatrixSet = tileMatrixSets[i];
-                        if (tileMatrixSet.SupportedCRS && ol.proj.get(tileMatrixSet.SupportedCRS)) {
-                            projection = tileMatrixSet.SupportedCRS;
+                        crs = tileMatrixSet.SupportedCRS;
+                        if (crs && typeof crs === 'string') {
+                            if (ol.proj.get(crs) || ol.proj.get(crs.toUpperCase())) {
+                                projection = crs;
+                            }
                         }
                         break;
                     }

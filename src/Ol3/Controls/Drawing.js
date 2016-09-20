@@ -131,7 +131,7 @@ define([
         lines : "Dessiner des lignes",
         polygons : "Dessiner des polygones",
         text : "Ecrire sur la carte",
-        editingTools : "Outils d'éditon",
+        editingTools : "Outils d'édition",
         edit : "Editer les tracés",
         display : "Modifier l'apparence des objets",
         tooltip : "Modifier les textes / infos-bulles",
