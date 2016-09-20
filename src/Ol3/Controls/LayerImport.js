@@ -903,16 +903,19 @@ define([
                         // on vérifie que la projection de la couche WMTS est compatible avec celle de la carte
                         // (ie elle doit être connue par ol.proj)
                         projection = this._getWMTSLayerProjection(layers[j], getCapResponseWMTS);
-                        if ( !projection || !ol.proj.get(projection) ) {
-                            // si la projection de la couche n'est pas connue par ol.proj,
-                            // on n'affiche pas la couche dans le panel des résultats
-                            console.log("[ol.control.LayerImport] wmts layer cannot be added to map : unknown projection", layers[j]);
-                            continue;
-                        } else {
-                            // on ajoute chaque couche de la réponse dans la liste des couches accessibles
-                            layerDescription = layers[j].Title;
-                            if ( this._getCapResultsListContainer ) {
-                                this._getCapResultsListContainer.appendChild(this._createImportGetCapResultElement(layerDescription, j));
+                        if ( projection && typeof projection === "string" ) {
+                            if ( ol.proj.get(projection) || ol.proj.get(projection.toUpperCase()) ) {
+                                // si la projection de la couche est connue par ol.proj,
+                                // on ajoute chaque couche de la réponse dans la liste des couches accessibles
+                                layerDescription = layers[j].Title;
+                                if ( this._getCapResultsListContainer ) {
+                                    this._getCapResultsListContainer.appendChild(this._createImportGetCapResultElement(layerDescription, j));
+                                }
+                            } else {
+                                // si la projection de la couche n'est pas connue par ol.proj,
+                                // on n'affiche pas la couche dans le panel des résultats
+                                console.log("[ol.control.LayerImport] wmts layer cannot be added to map : unknown projection", layers[j]);
+                                continue;
                             }
                         }
                     }
@@ -1086,14 +1089,21 @@ define([
 
         // on va parcourir la liste des CRS disponibles pour la couche
         // si on trouve la projection de la carte : c'est parfait
-        // si on trouve une projection qui est connue par ol.prog : OL3 gère la reprojection
+        // si on trouve une projection qui est connue par ol.proj : OL3 gère la reprojection
         var CRSList = layerInfo.CRS;
         if ( Array.isArray(CRSList) ) {
             for ( var i = 0; i < CRSList.length; i ++ ) {
                 var layerCRS = CRSList[i];
-                if ( layerCRS === mapProjCode || ol.proj.get(layerCRS) ) {
+                if ( layerCRS === mapProjCode ) {
                     projection = layerCRS;
                     break;
+                } else {
+                    if ( layerCRS && typeof layerCRS === "string" ) {
+                        if ( ol.proj.get(layerCRS) || ol.proj.get(layerCRS.toUpperCase()) ) {
+                            projection = layerCRS;
+                            break;
+                        }
+                    }
                 }
             }
         }
@@ -1151,10 +1161,14 @@ define([
                         // si la bbox est dans la projection de la carte, on la passe telle quelle
                         layerTileOptions.extent = layerInfo.BoundingBox[i].extent;
                         break;
-                    } else if ( ol.proj.get(crs) ) {
-                        // si la bbox est dans une projection connue, on la reprojette
-                        layerTileOptions.extent = ol.proj.transformExtent(layerInfo.BoundingBox[i].extent, crs, mapProjCode);
-                        break;
+                    } else {
+                        if ( crs && typeof crs === "string" ) {
+                            if ( ol.proj.get(crs) || ol.proj.get(crs.toUpperCase()) ) {
+                                // si la bbox est dans une projection connue, on la reprojette
+                                layerTileOptions.extent = ol.proj.transformExtent(layerInfo.BoundingBox[i].extent, crs, mapProjCode);
+                                break;
+                            }
+                        }
                     }
                 }
             }
@@ -1378,14 +1392,18 @@ define([
 
         if ( layerInfo.TileMatrixSetLink && Array.isArray(layerInfo.TileMatrixSetLink) ) {
             var tms = layerInfo.TileMatrixSetLink[0].TileMatrixSet;
+            var crs;
             if ( getCapResponseWMTS.Contents && Array.isArray(getCapResponseWMTS.Contents.TileMatrixSet) ) {
                 var tileMatrixSets = getCapResponseWMTS.Contents.TileMatrixSet;
                 for ( var i = 0; i < tileMatrixSets.length; i ++ ) {
                     if ( tileMatrixSets[i].Identifier === tms && tileMatrixSets[i].TileMatrix ) {
                         // on a trouvé le TMS correspondant
                         var tileMatrixSet = tileMatrixSets[i];
-                        if ( tileMatrixSet.SupportedCRS && ol.proj.get(tileMatrixSet.SupportedCRS) ) {
-                            projection = tileMatrixSet.SupportedCRS;
+                        crs = tileMatrixSet.SupportedCRS;
+                        if ( crs && typeof crs === "string" ) {
+                            if ( ol.proj.get(crs) || ol.proj.get(crs.toUpperCase()) ) {
+                                projection = crs;
+                            }
                         }
                         break;
                     }
