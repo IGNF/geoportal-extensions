@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-09-20
+ * @date 2016-09-21
  *
  */
 /*!
@@ -15091,7 +15091,7 @@ Ol3ControlsLayerSwitcher = function (ol, Utils, LayerSwitcherDOM) {
                 }
             }
             var infodiv = document.getElementById('GPinfo_ID' + id);
-            if (!document.getElementById('GPinfo_ID' + id) && config.description && (config.legends || config.metadata || config.quicklookUrl)) {
+            if (!document.getElementById('GPinfo_ID' + id) && config.description) {
                 var advancedTools = document.getElementById('GPadvancedTools_ID' + id);
                 if (advancedTools) {
                     advancedTools.appendChild(this._createAdvancedToolInformationElement({ id: id }));
@@ -25463,7 +25463,7 @@ Ol3ControlsGeoportalAttribution = function (ol, LayerUtils) {
 }(ol, CommonUtilsLayerUtils);
 Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, KML, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution) {
     Gp.ol3extVersion = '0.11.0';
-    Gp.ol3extDate = '2016-09-20';
+    Gp.ol3extDate = '2016-09-21';
     Gp.LayerUtils = LayerUtils;
     ol.format.KMLExtended = KML;
     CRS.overload();
