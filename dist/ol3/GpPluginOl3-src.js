@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-09-21
+ * @date 2016-09-23
  *
  */
 /*!
@@ -24539,6 +24539,12 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
         }
         this.collapsed = collapsed;
     };
+    LayerImport.prototype.getStaticImportContent = function () {
+        return this.contentStatic;
+    };
+    LayerImport.prototype.getServiceImportContent = function () {
+        return this.contentService;
+    };
     LayerImport.prototype._initialize = function (options) {
         this._checkInputOptions(options);
         this.options = {
@@ -24687,6 +24693,8 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
         this._emptyGetCapResultsList();
     };
     LayerImport.prototype._onImportSubmit = function () {
+        this.contentStatic = null;
+        this.contentService = null;
         if (this._isCurrentImportTypeStatic) {
             this._importStaticLayer();
         } else {
@@ -24776,6 +24784,7 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
         if (!map || !fileContent) {
             return;
         }
+        this.contentStatic = fileContent;
         var format;
         if (this._currentImportType === 'KML') {
             format = new KMLExtended({ showPointNames: false });
@@ -24894,6 +24903,7 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
         var layers;
         var layerDescription;
         var projection;
+        this.contentService = xmlResponse;
         this._importPanel.style.display = 'none';
         this._getCapPanel.style.display = 'block';
         var mapProjCode = this._getMapProjectionCode();
@@ -25463,7 +25473,7 @@ Ol3ControlsGeoportalAttribution = function (ol, LayerUtils) {
 }(ol, CommonUtilsLayerUtils);
 Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, KML, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution) {
     Gp.ol3extVersion = '0.11.0';
-    Gp.ol3extDate = '2016-09-21';
+    Gp.ol3extDate = '2016-09-23';
     Gp.LayerUtils = LayerUtils;
     ol.format.KMLExtended = KML;
     CRS.overload();

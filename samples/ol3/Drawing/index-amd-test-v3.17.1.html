@@ -48,6 +48,7 @@
 
             <script>
                 var map;
+                var drawing;
                 /* global requirejs */
                 requirejs.config({
                     "baseUrl" : "../../../src/",
@@ -95,7 +96,7 @@
                     var mp = new MousePosition({});
 
                     // creation du controle
-                    var drawing = new Drawing({
+                    drawing = new Drawing({
                         collapsed : false,
                         /*markersList : [{
                             src : "http://api.ign.fr/api/images/api/markers/marker_01.png",

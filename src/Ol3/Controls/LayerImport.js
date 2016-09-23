@@ -121,6 +121,25 @@ define([
         this.collapsed = collapsed;
     };
 
+
+    /**
+     * Returns content of a static import (KML or GPX)
+     *
+     * @returns {String} contentStatic  - content static
+     */
+    LayerImport.prototype.getStaticImportContent = function () {
+        return this.contentStatic;
+    };
+
+    /**
+     * Returns content of a service import (GetCapabilities)
+     *
+     * @returns {String} contentService  - content service
+     */
+    LayerImport.prototype.getServiceImportContent = function () {
+        return this.contentService;
+    };
+
     // ################################################################### //
     // ##################### init component ############################## //
     // ################################################################### //
@@ -435,6 +454,12 @@ define([
 
         logger.log("import d'une couche de type : " + this._currentImportType);
 
+        // reinitialisation du contenu d'un import de type
+        // - static (KML ou GPX)
+        this.contentStatic = null;
+        // - service (WMS, ...)
+        this.contentService = null;
+
         if ( this._isCurrentImportTypeStatic ) {
             this._importStaticLayer();
         } else {
@@ -616,6 +641,9 @@ define([
         if ( !map || !fileContent ) {
             return;
         }
+
+        // sauvegarde du content KML/GPX
+        this.contentStatic = fileContent;
 
         var format;
         if ( this._currentImportType === "KML" ) {
@@ -836,6 +864,9 @@ define([
         var layers;
         var layerDescription;
         var projection;
+
+        // sauvegarde du content d'un GetCapabilities
+        this.contentService = xmlResponse;
 
         // Affichage du panel des couches accessibles
         this._importPanel.style.display = "none";
