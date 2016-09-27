@@ -51,6 +51,9 @@ define([
             throw new TypeError("ERROR CLASS_CONSTRUCTOR");
         }
 
+        /** Nom de la classe (heritage) */
+        this.CLASSNAME = "MeasureArea";
+
         /** uuid */
         this._uid = ID.generate();
 

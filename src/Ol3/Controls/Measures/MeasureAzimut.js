@@ -49,6 +49,9 @@ define([
             throw new TypeError("ERROR CLASS_CONSTRUCTOR");
         }
 
+        /** Nom de la classe (heritage) */
+        this.CLASSNAME = "MeasureAzimut";
+
         /** uuid */
         this._uid = ID.generate();
 
