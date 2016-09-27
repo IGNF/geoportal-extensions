@@ -1,0 +1,21 @@
+/* Showing/hiding drawing panel */
+
+label[id^=GPshowMeasureAzimutPicto-] {
+  display: inline-block;
+}
+
+input[id^=GPshowMeasureAzimut-] + label {
+  display: block;
+}
+
+input[id^=GPshowMeasureAzimut-]:checked + label {
+  display: block;
+}
+
+input[id^=GPshowMeasureAzimut-] + label + div {
+  display: block;
+}
+
+input[id^=GPshowMeasureAzimut-]:checked + label + div {
+  display: block;
+}
