@@ -1,0 +1,21 @@
+/* Showing/hiding drawing panel */
+
+label[id^=GPshowMeasureAreaPicto-] {
+  display: inline-block;
+}
+
+input[id^=GPshowMeasureArea-] + label {
+  display: block;
+}
+
+input[id^=GPshowMeasureArea-]:checked + label {
+  display: block;
+}
+
+input[id^=GPshowMeasureArea-] + label + div {
+  display: block;
+}
+
+input[id^=GPshowMeasureArea-]:checked + label + div {
+  display: block;
+}

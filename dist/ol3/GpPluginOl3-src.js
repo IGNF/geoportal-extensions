@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-09-23
+ * @date 2016-09-27
  *
  */
 /*!
@@ -90,7 +90,7 @@
   }
 }(this, function(ol) {
 
-var gp, CommonUtilsAutoLoadConfig, CommonUtilsLayerUtils, proj4, CommonUtilsRegister, Ol3FormatsKML, Ol3CRSCRS, Ol3Utils, CommonUtilsConfig, Ol3LayersSourceWMTS, Ol3LayersSourceWMS, Ol3LayersLayerWMTS, Ol3LayersLayerWMS, sortable, CommonControlsLayerSwitcherDOM, Ol3ControlsLayerSwitcher, Ol3ControlsUtilsMarkers, CommonUtilsCheckRightManagement, CommonUtilsSelectorID, CommonControlsSearchEngineDOM, CommonControlsSearchEngineUtils, Ol3ControlsSearchEngine, CommonControlsMousePositionDOM, Ol3ControlsMousePosition, CommonControlsDrawingDOM, Ol3ControlsDrawing, CommonControlsLocationSelectorDOM, Ol3ControlsLocationSelector, CommonControlsRouteDOM, Ol3ControlsRoute, CommonControlsIsoDOM, Ol3ControlsIsocurve, CommonControlsReverseGeocodingDOM, Ol3ControlsReverseGeocode, CommonControlsLayerImportDOM, Ol3ControlsLayerImport, Ol3ControlsGeoportalAttribution, Ol3GpPluginOl3;
+var gp, CommonUtilsAutoLoadConfig, CommonUtilsLayerUtils, proj4, CommonUtilsRegister, Ol3FormatsKML, Ol3CRSCRS, Ol3Utils, CommonUtilsConfig, Ol3LayersSourceWMTS, Ol3LayersSourceWMS, Ol3LayersLayerWMTS, Ol3LayersLayerWMS, sortable, CommonControlsLayerSwitcherDOM, Ol3ControlsLayerSwitcher, Ol3ControlsUtilsMarkers, CommonUtilsCheckRightManagement, CommonUtilsSelectorID, CommonControlsSearchEngineDOM, CommonControlsSearchEngineUtils, Ol3ControlsSearchEngine, CommonControlsMousePositionDOM, Ol3ControlsMousePosition, CommonControlsDrawingDOM, Ol3ControlsDrawing, CommonControlsLocationSelectorDOM, Ol3ControlsLocationSelector, CommonControlsRouteDOM, Ol3ControlsRoute, CommonControlsIsoDOM, Ol3ControlsIsocurve, CommonControlsReverseGeocodingDOM, Ol3ControlsReverseGeocode, CommonControlsLayerImportDOM, Ol3ControlsLayerImport, Ol3ControlsGeoportalAttribution, Ol3ControlsMeasuresMeasures, CommonControlsMeasureLengthDOM, Ol3ControlsMeasuresMeasureLength, CommonControlsMeasureAreaDOM, Ol3ControlsMeasuresMeasureArea, CommonControlsMeasureAzimutDOM, Ol3ControlsMeasuresMeasureAzimut, Ol3GpPluginOl3;
 (function (root, factory) {
     if (true) {
         gp = function () {
@@ -25471,9 +25471,565 @@ Ol3ControlsGeoportalAttribution = function (ol, LayerUtils) {
     };
     return GeoportalAttribution;
 }(ol, CommonUtilsLayerUtils);
-Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, KML, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution) {
+Ol3ControlsMeasuresMeasures = function (ol, woodman) {
+    var Measures = {
+        tools: {
+            MeasureLength: {
+                container: null,
+                draw: null,
+                layer: null,
+                active: false
+            },
+            MeasureArea: {
+                container: null,
+                draw: null,
+                layer: null,
+                active: false
+            },
+            MeasureAzimut: {
+                container: null,
+                draw: null,
+                layer: null,
+                active: false
+            }
+        },
+        measureDraw: null,
+        measureSource: null,
+        measureVector: null,
+        sketch: null,
+        measureTooltipElement: null,
+        measureTooltip: null,
+        measureStyle: new ol.style.Style({
+            fill: new ol.style.Fill({ color: 'rgba(0, 183, 152, 0.2)' }),
+            stroke: new ol.style.Stroke({
+                color: '#002A50',
+                lineDash: [
+                    10,
+                    10
+                ],
+                width: 2
+            }),
+            image: new ol.style.Circle({
+                radius: 5,
+                stroke: new ol.style.Stroke({
+                    color: '#002A50',
+                    width: 2
+                }),
+                fill: new ol.style.Fill({ color: 'rgba(255, 155, 0, 0.7)' })
+            })
+        }),
+        measureFinalStyle: new ol.style.Style({
+            fill: new ol.style.Fill({ color: 'rgba(0, 183, 152, 0.3)' }),
+            stroke: new ol.style.Stroke({
+                color: '#002A50',
+                width: 3
+            }),
+            image: new ol.style.Icon({
+                src: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAsCAYAAAAATWqyAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAABTtJREFUeNq8WGtsFUUU/rb3gtdCAykFG9AUDTQUKimhxUewEusrJYoBo4FfEgoqotHERH6oP9TGmJhIrIlWAf9hjAaEiME2pgFfVVpFii8sWqIQLLSx3EJLW7p+Z2Z2b2l7d/b23vZLTmZ2duacb2fmnDk7DlKA67rXs1hJKacsohRQppjXFygnKT9TDlH2O47zFzIFGnco91EOuqnjoBnr2Ow4FhIlLN6m3DykFTh3BGj/Doj/CfSe082xPCDnBmDWTUBeyXDVjZTHOUNHUiZCEs+weI0ySTV0/w0c2wa07gIungn+vOx8YN46oPhpYOp1Xms/5TmSeSMUERKImFnYqBoGuPRNL5LEW8BgX2rrmjWZZLYApS8BUW8r4T0zO5eTEjFr+S6lSjV0HgPqVwNdf6S30abNB+7aDeQWey3bKZtIxvU5DxvyrE/izJfAvuXpkxCIDtElOjWqjK2RM8LZWMbiG0oEnUc5kB7a14WMYvI04H56du5ieZKluZWz8r0/IyQh5TuKRH8cqFuTeRIC0Sm6xYbYok1j21+ahyhLVO3wC8D5VowbRLfY0FhibOulIavDLEoRZyD8sJDeMWBXKG5ZsIobsdDsg+OMq3u1m1u9KQo8zP45EqjRxOUpk6i50IRl4FuGjpZtwUoiMYa314GFj/EzIsN8n8v+C1e4kfvwcm+wnhsZY27xQ8oiWZpKrWRQB6tAElfxpKnjsCdGklDzG9HvpI/0DYLYEpsalVnmAAM6fgR62oMHl70C5N9mn3rpI32DILbEpkZ5ljlFgbPNFtebzij5VPhNKX1lTBASNtXSzPZ3cxCuvVOH7FTCu4yxeZDGbCES0z5+PniQ3uGpwTYmYTOWCPGTpgYP6u9OnYhtzBCbQkSH0NiM4EEdP6VOxDYmYbNLiJxQ1elFwYPaG3XQCn3QHddjgpCweUKI6K2bvzw4YROf//rJob6fZl/H2FRoFiINfqo3qyzYwD8MVIeYLw32J+8j76SP9A2C2BKbGg1CZL+EF/W4YKP9a3/fCeyhkrY9DOOXEu1SlzZ5J31sSNjqURm/OfQkY9qgvkYOvXhbuH0g505Oga7HT9rPF9+t5+pDL0ulwzt46FV5ROax+JUSRRtP0LoHMK64+xNg7iqVEVOKSKRVxRGpsKhRnaRD4SPjR0J0axKCGmP7ilQxm4X8d8xXmfvHJZlPkCR3WfODl9FLMlxCIhevSJ5Nwzo1XdKxYpe3hpmB6BKdmoS43VqPxIgsni+aWOg8biZ3f+nLmSMiuvKWek/P01az7QdLyNVT7lC/l59WAKcb0iMxhzpW1nvmvpDtSiKD1l9OkpnDgv8UyMWFU9wvTP8vdY6NhJwnD1JVtso2OiiLSeL0iJUbNfg6zikVVwRTyOn2HWOfjfLtHgnBhtFIJCViyNDZUatdmnGlaFPqJIoe1WM1aqlz71ivJbLNobgAA9zgu7nZ/vstHAk5WVdzaPRqmGC5lER6kjpV4OWJdq+1kkshSk4VH9izcy/bV66qSPQZV+0J9G7rTY6+XNmqHmYwyJVV24kse1X31dhKHdasygkzy+a64oC4nWr47F4e858nSbLv4V/KAe9JKpVDrx/SImLIXMOiRUKdujESl+49O8xVZxpXzVc/C/I/RxL/hgq8YYkYhev9q6kVO4d9B+sr3vdICNaHJTHWW8Ya/87wqy2uWwstUk/gTYw3aCRGOarMDfS67kfFWqSuIe9imAjQEC272nJHixYNaSvGRIIGN49ywbsZEw1zI11N6TZSHeaGORn+F2AAJtRIMx4t+hUAAAAASUVORK5CYII=',
+                size: [
+                    34,
+                    44
+                ],
+                anchor: [
+                    0.5,
+                    1
+                ],
+                anchorOrigin: 'bottom-left',
+                anchorYUnits: 'pixels',
+                snapToPixel: true
+            })
+        }),
+        onPointerMoveHandler: function (e) {
+            if (e.dragging) {
+                return;
+            }
+            var tooltipCoord = e.coordinate;
+            if (this.sketch) {
+                var output;
+                var geom = this.sketch.getGeometry();
+                output = this.format(geom);
+                if (geom.getType() === 'LineString') {
+                    tooltipCoord = geom.getLastCoordinate();
+                } else if (geom.getType() === 'Polygon') {
+                    tooltipCoord = geom.getInteriorPoint().getCoordinates();
+                } else {
+                    return;
+                }
+                this.measureTooltipElement.innerHTML = output;
+                this.measureTooltip.setPosition(tooltipCoord);
+            }
+        },
+        onShowMeasureClick: function (e, type) {
+            var map = this.getMap();
+            var self = this.constructor.name;
+            for (var instance in this.tools) {
+                if (this.tools.hasOwnProperty(instance)) {
+                    if (this.tools[instance].active && instance !== self) {
+                        this.clearMeasureToolTip();
+                        map.removeLayer(this.tools[instance].layer);
+                        map.removeInteraction(this.tools[instance].draw);
+                        this.tools[instance].active = false;
+                        this.tools[instance].container.checked = true;
+                        this.tools[instance].draw = null;
+                        this.tools[instance].layer = null;
+                    }
+                }
+            }
+            if (this._showContainer.checked) {
+                this.initMeasureInteraction();
+                this.addMeasureInteraction(type);
+                this.tools[self].active = true;
+                this.tools[self].container = this._showContainer;
+                this.tools[self].draw = this.measureDraw;
+                this.tools[self].layer = this.measureVector;
+            } else {
+                this.clearMeasure();
+                this.tools[self].active = false;
+                this.tools[self].container = this._showContainer;
+                this.tools[self].draw = null;
+                this.tools[self].layer = null;
+            }
+        },
+        clearMeasureToolTip: function () {
+            var nodes = document.querySelector('.ol-overlaycontainer-stopevent');
+            if (nodes) {
+                var len = nodes.children.length;
+                var nodesToRemove = [];
+                for (var i = 0; i < len; i++) {
+                    var node = nodes.children[i];
+                    var child = node.children[0];
+                    if (child.className === 'tooltip tooltip-static' || child.className === 'tooltip tooltip-measure') {
+                        nodesToRemove.push(node);
+                    }
+                }
+                for (var j = 0; j < nodesToRemove.length; j++) {
+                    nodes.removeChild(nodesToRemove[j]);
+                }
+            }
+        },
+        clearMeasure: function () {
+            var map = this.getMap();
+            this.clearMeasureToolTip();
+            if (this.measureTooltip) {
+                map.removeOverlay(this.measureTooltip);
+            }
+            if (this.measureVector) {
+                map.removeLayer(this.measureVector);
+            }
+            if (this.measureDraw) {
+                map.removeInteraction(this.measureDraw);
+            }
+        },
+        createMeasureTooltip: function (map) {
+            if (this.measureTooltipElement) {
+                this.measureTooltipElement.parentNode.removeChild(this.measureTooltipElement);
+            }
+            this.measureTooltipElement = document.createElement('div');
+            this.measureTooltipElement.className = 'tooltip tooltip-measure';
+            this.measureTooltip = new ol.Overlay({
+                element: this.measureTooltipElement,
+                offset: [
+                    0,
+                    -15
+                ],
+                positioning: 'bottom-center'
+            });
+            map.addOverlay(this.measureTooltip);
+        },
+        addMeasureInteraction: function (type) {
+            var map = this.getMap();
+            this.measureDraw = new ol.interaction.Draw({
+                source: this.measureSource,
+                type: type,
+                style: this.measureStyle
+            });
+            map.addInteraction(this.measureDraw);
+            this.createMeasureTooltip(map);
+            var self = this;
+            this.measureDraw.on('drawstart', function (evt) {
+                self.sketch = evt.feature;
+            }, this);
+            this.measureDraw.on('drawend', function () {
+                self.measureTooltipElement.className = 'tooltip tooltip-static';
+                self.measureTooltip.setOffset([
+                    0,
+                    -7
+                ]);
+                self.sketch = null;
+                self.measureTooltipElement = null;
+                self.createMeasureTooltip(map);
+            }, this);
+        },
+        initMeasureInteraction: function () {
+            var map = this.getMap();
+            this.measureSource = new ol.source.Vector();
+            this.measureVector = new ol.layer.Vector({
+                source: this.measureSource,
+                style: this.measureFinalStyle
+            });
+            map.addLayer(this.measureVector);
+        }
+    };
+    return Measures;
+}(ol, {});
+CommonControlsMeasureLengthDOM = function () {
+    var MeasureLengthDOM = {
+        _addUID: function (id) {
+            return id + '-' + this._uid;
+        },
+        _createMainContainerElement: function () {
+            var container = document.createElement('div');
+            container.id = this._addUID('GPmeasureLength');
+            container.className = 'GPwidget';
+            return container;
+        },
+        _createShowMeasureLengthElement: function () {
+            var input = document.createElement('input');
+            input.id = this._addUID('GPshowMeasureLength');
+            input.type = 'checkbox';
+            return input;
+        },
+        _createShowMeasureLengthPictoElement: function () {
+            var context = this;
+            var label = document.createElement('label');
+            label.id = this._addUID('GPshowMeasureLengthPicto');
+            label.className = 'GPshowAdvancedToolPicto';
+            label.htmlFor = this._addUID('GPshowMeasureLength');
+            label.title = 'Calculer une distance';
+            if (label.addEventListener) {
+                label.addEventListener('click', function (e) {
+                    context.onShowMeasureLengthClick(e);
+                });
+            } else if (label.attachEvent) {
+                label.attachEvent('onclick', function (e) {
+                    context.onShowMeasureLengthClick(e);
+                });
+            }
+            var spanOpen = document.createElement('span');
+            spanOpen.id = this._addUID('GPshowMeasureLengthOpen');
+            spanOpen.className = 'GPshowAdvancedToolOpen';
+            label.appendChild(spanOpen);
+            return label;
+        }
+    };
+    return MeasureLengthDOM;
+}();
+Ol3ControlsMeasuresMeasureLength = function (ol, woodman, Utils, Measures, MeasureLengthDOM, ID) {
+    function MeasureLength(options) {
+        options = options || {};
+        if (!(this instanceof MeasureLength)) {
+            throw new TypeError('ERROR CLASS_CONSTRUCTOR');
+        }
+        this._uid = ID.generate();
+        this._showContainer = null;
+        this._initialize(options);
+        var container = options.element ? options.element : this._initializeContainer();
+        ol.control.Control.call(this, {
+            element: container,
+            target: options.target,
+            render: options.render
+        });
+    }
+    ol.inherits(MeasureLength, ol.control.Control);
+    MeasureLength.prototype = Object.create(ol.control.Control.prototype, {});
+    Utils.assign(MeasureLength.prototype, Measures);
+    Utils.assign(MeasureLength.prototype, MeasureLengthDOM);
+    MeasureLength.prototype.constructor = MeasureLength;
+    MeasureLength.prototype.setMap = function (map) {
+        if (map) {
+            var self = this;
+            map.on('pointermove', function (e) {
+                self.onPointerMoveHandler(e);
+            });
+            map.on('click', function (e) {
+                self.onPointerMoveHandler(e);
+            });
+        }
+        ol.control.Control.prototype.setMap.call(this, map);
+    };
+    MeasureLength.prototype._initialize = function (options) {
+        this.options = options || {};
+        this.options.geodesic = options.geodesic === null ? true : options.geodesic;
+    };
+    MeasureLength.prototype._initializeContainer = function () {
+        var container = this._createMainContainerElement();
+        var show = this._showContainer = this._createShowMeasureLengthElement();
+        container.appendChild(show);
+        this._showContainer.checked = true;
+        var picto = this._createShowMeasureLengthPictoElement();
+        container.appendChild(picto);
+        return container;
+    };
+    MeasureLength.prototype.format = function (line) {
+        var map = this.getMap();
+        var measure;
+        if (this.options.geodesic) {
+            var wgs84Sphere = new ol.Sphere(6378137);
+            var coordinates = line.getCoordinates();
+            measure = 0;
+            var sourceProj = map.getView().getProjection();
+            for (var i = 0, ii = coordinates.length - 1; i < ii; ++i) {
+                var c1 = ol.proj.transform(coordinates[i], sourceProj, 'EPSG:4326');
+                var c2 = ol.proj.transform(coordinates[i + 1], sourceProj, 'EPSG:4326');
+                measure += wgs84Sphere.haversineDistance(c1, c2);
+            }
+        } else {
+            measure = Math.round(line.getLength() * 100) / 100;
+        }
+        var output;
+        if (measure > 1000) {
+            output = Math.round(measure / 1000 * 100) / 100 + ' ' + 'km';
+        } else {
+            output = Math.round(measure * 100) / 100 + ' ' + 'm';
+        }
+        return output;
+    };
+    MeasureLength.prototype.onShowMeasureLengthClick = function (e) {
+        this.onShowMeasureClick(e, 'LineString');
+    };
+    return MeasureLength;
+}(ol, {}, Ol3Utils, Ol3ControlsMeasuresMeasures, CommonControlsMeasureLengthDOM, CommonUtilsSelectorID);
+CommonControlsMeasureAreaDOM = function () {
+    var MeasureAreaDOM = {
+        _addUID: function (id) {
+            return id + '-' + this._uid;
+        },
+        _createMainContainerElement: function () {
+            var container = document.createElement('div');
+            container.id = this._addUID('GPmeasureArea');
+            container.className = 'GPwidget';
+            return container;
+        },
+        _createShowMeasureAreaElement: function () {
+            var input = document.createElement('input');
+            input.id = this._addUID('GPshowMeasureArea');
+            input.type = 'checkbox';
+            return input;
+        },
+        _createShowMeasureAreaPictoElement: function () {
+            var context = this;
+            var label = document.createElement('label');
+            label.id = this._addUID('GPshowMeasureAreaPicto');
+            label.className = 'GPshowAdvancedToolPicto';
+            label.htmlFor = this._addUID('GPshowMeasureArea');
+            label.title = 'Calculer une surface';
+            if (label.addEventListener) {
+                label.addEventListener('click', function (e) {
+                    context.onShowMeasureAreaClick(e);
+                });
+            } else if (label.attachEvent) {
+                label.attachEvent('onclick', function (e) {
+                    context.onShowMeasureAreaClick(e);
+                });
+            }
+            var spanOpen = document.createElement('span');
+            spanOpen.id = this._addUID('GPshowMeasureAreaOpen');
+            spanOpen.className = 'GPshowAdvancedToolOpen';
+            label.appendChild(spanOpen);
+            return label;
+        }
+    };
+    return MeasureAreaDOM;
+}();
+Ol3ControlsMeasuresMeasureArea = function (ol, woodman, Utils, Measures, MeasureAreaDOM, ID) {
+    function MeasureArea(options) {
+        options = options || {};
+        if (!(this instanceof MeasureArea)) {
+            throw new TypeError('ERROR CLASS_CONSTRUCTOR');
+        }
+        this._uid = ID.generate();
+        this._showContainer = null;
+        this._initialize(options);
+        var container = options.element ? options.element : this._initializeContainer();
+        ol.control.Control.call(this, {
+            element: container,
+            target: options.target,
+            render: options.render
+        });
+    }
+    ol.inherits(MeasureArea, ol.control.Control);
+    MeasureArea.prototype = Object.create(ol.control.Control.prototype, {});
+    Utils.assign(MeasureArea.prototype, Measures);
+    Utils.assign(MeasureArea.prototype, MeasureAreaDOM);
+    MeasureArea.prototype.constructor = MeasureArea;
+    MeasureArea.prototype.setMap = function (map) {
+        if (map) {
+            var self = this;
+            map.on('pointermove', function (e) {
+                self.onPointerMoveHandler(e);
+            });
+            map.on('click', function (e) {
+                self.onPointerMoveHandler(e);
+            });
+        }
+        ol.control.Control.prototype.setMap.call(this, map);
+    };
+    MeasureArea.prototype._initialize = function (options) {
+        this.options = options || {};
+        this.options.geodesic = options.geodesic === null ? true : options.geodesic;
+    };
+    MeasureArea.prototype._initializeContainer = function () {
+        var container = this._createMainContainerElement();
+        var show = this._showContainer = this._createShowMeasureAreaElement();
+        container.appendChild(show);
+        this._showContainer.checked = true;
+        var picto = this._createShowMeasureAreaPictoElement();
+        container.appendChild(picto);
+        return container;
+    };
+    MeasureArea.prototype.format = function (polygon) {
+        var map = this.getMap();
+        var measure;
+        if (this.options.geodesic) {
+            var wgs84Sphere = new ol.Sphere(6378137);
+            var sourceProj = map.getView().getProjection();
+            var geom = polygon.clone().transform(sourceProj, 'EPSG:4326');
+            var coordinates = geom.getLinearRing(0).getCoordinates();
+            measure = Math.abs(wgs84Sphere.geodesicArea(coordinates));
+        } else {
+            measure = polygon.getArea();
+        }
+        var output;
+        if (measure > 1000000) {
+            output = Math.round(measure / 1000000 * 100) / 100 + ' ' + 'km<sup>2</sup>';
+        } else if (measure > 100000) {
+            output = Math.round(measure / 1000000 * 1000) / 1000 + ' ' + 'km<sup>2</sup>';
+        } else if (measure > 1000) {
+            output = Math.round(measure / 10) * 10 + ' ' + 'm<sup>2</sup>';
+        } else {
+            output = Math.round(measure * 100) / 100 + ' ' + 'm<sup>2</sup>';
+        }
+        return output;
+    };
+    MeasureArea.prototype.onShowMeasureAreaClick = function (e) {
+        this.onShowMeasureClick(e, 'Polygon');
+    };
+    return MeasureArea;
+}(ol, {}, Ol3Utils, Ol3ControlsMeasuresMeasures, CommonControlsMeasureAreaDOM, CommonUtilsSelectorID);
+CommonControlsMeasureAzimutDOM = function () {
+    var MeasureAzimutDOM = {
+        _addUID: function (id) {
+            return id + '-' + this._uid;
+        },
+        _createMainContainerElement: function () {
+            var container = document.createElement('div');
+            container.id = this._addUID('GPmeasureAzimut');
+            container.className = 'GPwidget';
+            return container;
+        },
+        _createShowMeasureAzimutElement: function () {
+            var input = document.createElement('input');
+            input.id = this._addUID('GPshowMeasureAzimut');
+            input.type = 'checkbox';
+            return input;
+        },
+        _createShowMeasureAzimutPictoElement: function () {
+            var context = this;
+            var label = document.createElement('label');
+            label.id = this._addUID('GPshowMeasureAzimutPicto');
+            label.className = 'GPshowAdvancedToolPicto';
+            label.htmlFor = this._addUID('GPshowMeasureAzimut');
+            label.title = 'Calculer une azimut';
+            if (label.addEventListener) {
+                label.addEventListener('click', function (e) {
+                    context.onShowMeasureAzimutClick(e);
+                });
+            } else if (label.attachEvent) {
+                label.attachEvent('onclick', function (e) {
+                    context.onShowMeasureAzimutClick(e);
+                });
+            }
+            var spanOpen = document.createElement('span');
+            spanOpen.id = this._addUID('GPshowMeasureAzimutOpen');
+            spanOpen.className = 'GPshowAdvancedToolOpen';
+            label.appendChild(spanOpen);
+            return label;
+        }
+    };
+    return MeasureAzimutDOM;
+}();
+Ol3ControlsMeasuresMeasureAzimut = function (ol, woodman, Utils, Measures, MeasureAzimutDOM, ID) {
+    function MeasureAzimut(options) {
+        options = options || {};
+        if (!(this instanceof MeasureAzimut)) {
+            throw new TypeError('ERROR CLASS_CONSTRUCTOR');
+        }
+        this._uid = ID.generate();
+        this._showContainer = null;
+        this._initialize(options);
+        var container = options.element ? options.element : this._initializeContainer();
+        ol.control.Control.call(this, {
+            element: container,
+            target: options.target,
+            render: options.render
+        });
+    }
+    ol.inherits(MeasureAzimut, ol.control.Control);
+    MeasureAzimut.prototype = Object.create(ol.control.Control.prototype, {});
+    Utils.assign(MeasureAzimut.prototype, Measures);
+    Utils.assign(MeasureAzimut.prototype, MeasureAzimutDOM);
+    MeasureAzimut.prototype.constructor = MeasureAzimut;
+    MeasureAzimut.prototype.setMap = function (map) {
+        if (map) {
+            var self = this;
+            map.on('pointermove', function (e) {
+                self.onPointerMoveHandler(e);
+            });
+            map.on('click', function (e) {
+                self.onPointerClickAzimutHandler(e);
+            });
+        }
+        ol.control.Control.prototype.setMap.call(this, map);
+    };
+    MeasureAzimut.prototype._initialize = function (options) {
+        this.options = options || {};
+        this.options.geodesic = options.geodesic === null ? true : options.geodesic;
+    };
+    MeasureAzimut.prototype._initializeContainer = function () {
+        var container = this._createMainContainerElement();
+        var show = this._showContainer = this._createShowMeasureAzimutElement();
+        container.appendChild(show);
+        this._showContainer.checked = true;
+        var picto = this._createShowMeasureAzimutPictoElement();
+        container.appendChild(picto);
+        return container;
+    };
+    MeasureAzimut.prototype.format = function (line) {
+        var map = this.getMap();
+        var sourceProj = map.getView().getProjection();
+        var c1 = ol.proj.transform(line.getFirstCoordinate(), sourceProj, 'EPSG:4326');
+        var c2 = ol.proj.transform(line.getCoordinateAt(0.001), sourceProj, 'EPSG:4326');
+        var x = Math.cos(c1[1]) * Math.sin(c2[1]) - Math.sin(c1[1]) * Math.cos(c2[1]) * Math.cos(c2[0] - c1[0]);
+        var y = Math.sin(c2[0] - c1[0]) * Math.cos(c2[1]);
+        var azimut = Math.atan2(y, x) / Math.PI * -180;
+        if (azimut < 0) {
+            azimut += 360;
+        }
+        var output = Math.round(azimut * 100) / 100 + ' \xB0';
+        return output;
+    };
+    MeasureAzimut.prototype.onShowMeasureAzimutClick = function (e) {
+        this.onShowMeasureClick(e, 'LineString');
+    };
+    MeasureAzimut.prototype.onPointerClickAzimutHandler = function (e) {
+        var tooltipCoord = e.coordinate;
+        if (this.sketch) {
+            var output;
+            var geom = this.sketch.getGeometry();
+            output = this.format(geom);
+            tooltipCoord = geom.getLastCoordinate();
+            this.measureTooltipElement.innerHTML = output;
+            this.measureTooltip.setPosition(tooltipCoord);
+            if (geom.getCoordinates().length > 2) {
+                this.measureDraw.finishDrawing();
+            }
+        }
+    };
+    return MeasureAzimut;
+}(ol, {}, Ol3Utils, Ol3ControlsMeasuresMeasures, CommonControlsMeasureAzimutDOM, CommonUtilsSelectorID);
+Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, KML, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution, MeasureLength, MeasureArea, MeasureAzimut) {
     Gp.ol3extVersion = '0.11.0';
-    Gp.ol3extDate = '2016-09-23';
+    Gp.ol3extDate = '2016-09-27';
     Gp.LayerUtils = LayerUtils;
     ol.format.KMLExtended = KML;
     CRS.overload();
@@ -25490,8 +26046,11 @@ Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, KML, CRS, SourceWMTS, S
     ol.control.Drawing = Drawing;
     ol.control.ReverseGeocode = ReverseGeocode;
     ol.control.LayerImport = LayerImport;
+    ol.control.MeasureLength = MeasureLength;
+    ol.control.MeasureArea = MeasureArea;
+    ol.control.MeasureAzimut = MeasureAzimut;
     return Gp;
-}(ol, gp, CommonUtilsLayerUtils, CommonUtilsRegister, Ol3FormatsKML, Ol3CRSCRS, Ol3LayersSourceWMTS, Ol3LayersSourceWMS, Ol3LayersLayerWMTS, Ol3LayersLayerWMS, Ol3ControlsLayerSwitcher, Ol3ControlsSearchEngine, Ol3ControlsMousePosition, Ol3ControlsDrawing, Ol3ControlsRoute, Ol3ControlsIsocurve, Ol3ControlsReverseGeocode, Ol3ControlsLayerImport, Ol3ControlsGeoportalAttribution);
+}(ol, gp, CommonUtilsLayerUtils, CommonUtilsRegister, Ol3FormatsKML, Ol3CRSCRS, Ol3LayersSourceWMTS, Ol3LayersSourceWMS, Ol3LayersLayerWMTS, Ol3LayersLayerWMS, Ol3ControlsLayerSwitcher, Ol3ControlsSearchEngine, Ol3ControlsMousePosition, Ol3ControlsDrawing, Ol3ControlsRoute, Ol3ControlsIsocurve, Ol3ControlsReverseGeocode, Ol3ControlsLayerImport, Ol3ControlsGeoportalAttribution, Ol3ControlsMeasuresMeasureLength, Ol3ControlsMeasuresMeasureArea, Ol3ControlsMeasuresMeasureAzimut);
 window.proj4 = proj4;
 
 return Gp;

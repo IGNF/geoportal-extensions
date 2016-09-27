@@ -17,7 +17,10 @@ define([
     "Ol3/Controls/Isocurve",
     "Ol3/Controls/ReverseGeocode",
     "Ol3/Controls/LayerImport",
-    "Ol3/Controls/GeoportalAttribution"
+    "Ol3/Controls/GeoportalAttribution",
+    "Ol3/Controls/Measures/MeasureLength",
+    "Ol3/Controls/Measures/MeasureArea",
+    "Ol3/Controls/Measures/MeasureAzimut"
 ], function (
     ol,
     Gp,
@@ -37,7 +40,10 @@ define([
     Isocurve,
     ReverseGeocode,
     LayerImport,
-    GeoportalAttribution
+    GeoportalAttribution,
+    MeasureLength,
+    MeasureArea,
+    MeasureAzimut
 ) {
 
     "use strict";
@@ -69,6 +75,9 @@ define([
     ol.control.Drawing = Drawing;
     ol.control.ReverseGeocode = ReverseGeocode;
     ol.control.LayerImport = LayerImport;
+    ol.control.MeasureLength = MeasureLength;
+    ol.control.MeasureArea = MeasureArea;
+    ol.control.MeasureAzimut = MeasureAzimut;
 
     // FIXME : parce qu'il faut bien retourner quelque chose
     return Gp;
