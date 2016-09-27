@@ -179,7 +179,7 @@ define([
         onShowMeasureClick : function (e, type) {
 
             var map  = this.getMap();
-            var self = this.constructor.name;
+            var self = this.CLASSNAME; // FIXME this.constructor.name : pas possible en mode minifié/manglifié !
             for (var instance in this.tools) {
                 if (this.tools.hasOwnProperty(instance)) {
                     if (this.tools[instance].active && instance !== self) {

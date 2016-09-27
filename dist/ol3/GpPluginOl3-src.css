@@ -3180,6 +3180,51 @@ span[id^=GPshowMeasureLengthOpen-] {
 #GPmapCenter {
   background-image: url("img/GPmapCenter.png");
 }
+/* REVERSE GEOCODING */
+
+[id^="GPreverseGeocoding-"] {
+  left: 10px;
+}
+
+/* Showing/hiding reverse geocoding panel */
+
+[id^="GPshowReverseGeocodingOpen-"] {
+  background-image: url("img/GPreverseGeocodingOpen.png");
+}
+
+/* General panels */
+
+[id^="GPreverseGeocodingResultsClose"] {
+  background-image: url("img/GPreverseGeocodingOpen.png");
+}
+
+[id^="GPreverseGeocodingPanel-"] {
+  left: 8px;
+}
+
+[id^="GPreverseGeocodingPanelClose-"] {
+  background-image: url("img/GPreverseGeocodingOpen.png");
+}
+
+/* Calc waiting */
+
+.GPreverseGeocodingCalcWaitingContainerVisible,
+.GPreverseGeocodingCalcWaitingContainerHidden {
+  border-radius: 4px;
+}
+
+/* Results panel */
+
+div[id^=GPreverseGeocodingReturnPicto-] {
+  background-color: #366291;
+  background-image: url("img/GPreturn.png");
+}
+
+.GPreverseGeocodedLocationHighlight {
+    background-color: rgba(255,200,0,0.25);
+    color: #222;
+}
+
 /* ROUTE */
 
 div[id^=GProute-] {
@@ -3257,51 +3302,6 @@ input[id^=GProuteResultsShowDetails] + label + label:hover {
 
 .gp-features-content-div {
   min-width: 230px;
-}
-
-/* REVERSE GEOCODING */
-
-[id^="GPreverseGeocoding-"] {
-  left: 10px;
-}
-
-/* Showing/hiding reverse geocoding panel */
-
-[id^="GPshowReverseGeocodingOpen-"] {
-  background-image: url("img/GPreverseGeocodingOpen.png");
-}
-
-/* General panels */
-
-[id^="GPreverseGeocodingResultsClose"] {
-  background-image: url("img/GPreverseGeocodingOpen.png");
-}
-
-[id^="GPreverseGeocodingPanel-"] {
-  left: 8px;
-}
-
-[id^="GPreverseGeocodingPanelClose-"] {
-  background-image: url("img/GPreverseGeocodingOpen.png");
-}
-
-/* Calc waiting */
-
-.GPreverseGeocodingCalcWaitingContainerVisible,
-.GPreverseGeocodingCalcWaitingContainerHidden {
-  border-radius: 4px;
-}
-
-/* Results panel */
-
-div[id^=GPreverseGeocodingReturnPicto-] {
-  background-color: #366291;
-  background-image: url("img/GPreturn.png");
-}
-
-.GPreverseGeocodedLocationHighlight {
-    background-color: rgba(255,200,0,0.25);
-    color: #222;
 }
 
 /* SEARCH ENGINE */

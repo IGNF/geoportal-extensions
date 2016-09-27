@@ -25561,7 +25561,7 @@ Ol3ControlsMeasuresMeasures = function (ol, woodman) {
         },
         onShowMeasureClick: function (e, type) {
             var map = this.getMap();
-            var self = this.constructor.name;
+            var self = this.CLASSNAME;
             for (var instance in this.tools) {
                 if (this.tools.hasOwnProperty(instance)) {
                     if (this.tools[instance].active && instance !== self) {
@@ -25720,6 +25720,7 @@ Ol3ControlsMeasuresMeasureLength = function (ol, woodman, Utils, Measures, Measu
         if (!(this instanceof MeasureLength)) {
             throw new TypeError('ERROR CLASS_CONSTRUCTOR');
         }
+        this.CLASSNAME = 'MeasureLength';
         this._uid = ID.generate();
         this._showContainer = null;
         this._initialize(options);
@@ -25837,6 +25838,7 @@ Ol3ControlsMeasuresMeasureArea = function (ol, woodman, Utils, Measures, Measure
         if (!(this instanceof MeasureArea)) {
             throw new TypeError('ERROR CLASS_CONSTRUCTOR');
         }
+        this.CLASSNAME = 'MeasureArea';
         this._uid = ID.generate();
         this._showContainer = null;
         this._initialize(options);
@@ -25954,6 +25956,7 @@ Ol3ControlsMeasuresMeasureAzimut = function (ol, woodman, Utils, Measures, Measu
         if (!(this instanceof MeasureAzimut)) {
             throw new TypeError('ERROR CLASS_CONSTRUCTOR');
         }
+        this.CLASSNAME = 'MeasureAzimut';
         this._uid = ID.generate();
         this._showContainer = null;
         this._initialize(options);
