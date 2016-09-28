@@ -25636,12 +25636,64 @@ Ol3ControlsMeasuresMeasures = function (ol, woodman) {
             });
             map.addOverlay(this.measureTooltip);
         },
+        createStylingMeasureInteraction: function (styles) {
+            if (typeof styles === 'undefined' || Object.keys(styles).length === 0) {
+                this.options.styles = {
+                    start: this.measureStyle,
+                    finish: this.measureFinalStyle
+                };
+            } else {
+                var start = styles.start;
+                var finish = styles.finish;
+                this.options.styles = {};
+                if (typeof start === 'undefined') {
+                    this.options.styles.start = this.measureStyle;
+                } else {
+                    this.options.styles.start = new ol.style.Style({
+                        fill: new ol.style.Fill({ color: styles.start.fillColor || null }),
+                        stroke: new ol.style.Stroke({
+                            color: styles.start.strokeColor || null,
+                            lineDash: styles.start.strokeLineDash || null,
+                            width: styles.start.strokeWidth || null
+                        }),
+                        image: new ol.style.Circle({
+                            radius: styles.start.imageRadius || null,
+                            stroke: new ol.style.Stroke({
+                                color: styles.start.imageStrokeColor || null,
+                                width: styles.start.imageStrokeWidth || null
+                            }),
+                            fill: new ol.style.Fill({ color: styles.start.imageFillColor || null })
+                        })
+                    });
+                }
+                if (typeof finish === 'undefined') {
+                    this.options.styles.finish = this.measureFinalStyle;
+                } else {
+                    this.options.styles.finish = new ol.style.Style({
+                        fill: new ol.style.Fill({ color: styles.finish.fillColor || null }),
+                        stroke: new ol.style.Stroke({
+                            color: styles.finish.strokeColor || null,
+                            lineDash: styles.finish.strokeLineDash || null,
+                            width: styles.finish.strokeWidth || null
+                        }),
+                        image: new ol.style.Circle({
+                            radius: styles.finish.imageRadius || null,
+                            stroke: new ol.style.Stroke({
+                                color: styles.finish.imageStrokeColor || null,
+                                width: styles.finish.imageStrokeWidth || null
+                            }),
+                            fill: new ol.style.Fill({ color: styles.finish.imageFillColor || null })
+                        })
+                    });
+                }
+            }
+        },
         addMeasureInteraction: function (type) {
             var map = this.getMap();
             this.measureDraw = new ol.interaction.Draw({
                 source: this.measureSource,
                 type: type,
-                style: this.measureStyle
+                style: this.options.styles.start || this.measureStyle
             });
             map.addInteraction(this.measureDraw);
             this.createMeasureTooltip(map);
@@ -25665,7 +25717,7 @@ Ol3ControlsMeasuresMeasures = function (ol, woodman) {
             this.measureSource = new ol.source.Vector();
             this.measureVector = new ol.layer.Vector({
                 source: this.measureSource,
-                style: this.measureFinalStyle
+                style: this.options.styles.finish || this.measureFinalStyle
             });
             map.addLayer(this.measureVector);
         }
@@ -25749,8 +25801,9 @@ Ol3ControlsMeasuresMeasureLength = function (ol, woodman, Utils, Measures, Measu
         ol.control.Control.prototype.setMap.call(this, map);
     };
     MeasureLength.prototype._initialize = function (options) {
-        this.options = options || {};
-        this.options.geodesic = options.geodesic === null ? true : options.geodesic;
+        this.options = {};
+        this.options.geodesic = typeof options.geodesic !== 'undefined' ? options.geodesic : true;
+        this.createStylingMeasureInteraction(options.styles);
     };
     MeasureLength.prototype._initializeContainer = function () {
         var container = this._createMainContainerElement();
@@ -25867,8 +25920,9 @@ Ol3ControlsMeasuresMeasureArea = function (ol, woodman, Utils, Measures, Measure
         ol.control.Control.prototype.setMap.call(this, map);
     };
     MeasureArea.prototype._initialize = function (options) {
-        this.options = options || {};
-        this.options.geodesic = options.geodesic === null ? true : options.geodesic;
+        this.options = {};
+        this.options.geodesic = typeof options.geodesic !== 'undefined' ? options.geodesic : true;
+        this.createStylingMeasureInteraction(options.styles);
     };
     MeasureArea.prototype._initializeContainer = function () {
         var container = this._createMainContainerElement();
@@ -25985,8 +26039,8 @@ Ol3ControlsMeasuresMeasureAzimuth = function (ol, woodman, Utils, Measures, Meas
         ol.control.Control.prototype.setMap.call(this, map);
     };
     MeasureAzimuth.prototype._initialize = function (options) {
-        this.options = options || {};
-        this.options.geodesic = options.geodesic === null ? true : options.geodesic;
+        this.options = {};
+        this.createStylingMeasureInteraction(options.styles);
     };
     MeasureAzimuth.prototype._initializeContainer = function () {
         var container = this._createMainContainerElement();

@@ -26,15 +26,17 @@ define([
     *    target : null,
     *    render : null,
     *    styles : {
+    *     start : {
     *       fillColor : "rgba(255, 255, 255, 0.2)",
     *       strokeColor : "rgba(0, 0, 0, 0.5)",
     *       strokeLineDash : [10, 10],
     *       strokeWidth : 2,
     *       imageRadius : 5,
     *       imageFillColor : "rgba(255, 255, 255, 0.2)",
-    *       imageStrokeColor : "rgba(0, 0, 0, 0.7)",
+    *       imageStrokeColor : "rgba(0, 0, 0, 0.7)"
+    *     },
+    *     finish : {}
     *    },
-    *    unit : "km",
     *    tooltip : {
     *       messageContinue : "Click to continue drawing the line",
     *       messageStart : "Click to start drawing"
@@ -134,8 +136,12 @@ define([
         logger.trace("call MeasureLength::_initialize() : ", options);
 
         // liste des options
-        this.options = options || {};
-        this.options.geodesic = (options.geodesic === null) ? true : options.geodesic;
+        this.options = {};
+        this.options.geodesic = ( typeof options.geodesic !== "undefined" ) ? options.geodesic : true;
+
+        // gestion des styles !
+        this.createStylingMeasureInteraction(options.styles);
+
     };
 
     /**
