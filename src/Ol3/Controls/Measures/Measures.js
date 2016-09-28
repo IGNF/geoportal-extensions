@@ -35,7 +35,7 @@ define([
                 layer : null,
                 active : false
             },
-            MeasureAzimut : {
+            MeasureAzimuth : {
                 container : null,
                 draw : null,
                 layer : null,

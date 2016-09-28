@@ -10,9 +10,9 @@
   <!-- Plugin OpenLayers 3 IGN -->
   <link rel="stylesheet" href="../../../res/common/GPgeneralWidget.css" />
   <link rel="stylesheet" href="../../../res/common/GPmeasureToolTip.css" />
-  <link rel="stylesheet" href="../../../res/common/GPmeasureAzimut.css" />
+  <link rel="stylesheet" href="../../../res/common/GPmeasureAzimuth.css" />
   <link rel="stylesheet" href="../../../res/ol3/GPgeneralWidgetOL3.css" />
-  <link rel="stylesheet" href="../../../res/ol3/Controls/Measures/GPmeasureAzimutOL3.css" />
+  <link rel="stylesheet" href="../../../res/ol3/Controls/Measures/GPmeasureAzimuthOL3.css" />
 
   <!-- requirejs -->
   <script src="../../../lib/require.js"></script>
@@ -64,13 +64,13 @@
         "ol",
         "gp",
         "Ol3/Layers/LayerWMTS",
-        "Ol3/Controls/Measures/MeasureAzimut"
+        "Ol3/Controls/Measures/MeasureAzimuth"
       ],
       function (
         ol,
         Gp,
         LayerWMTS,
-        MeasureAzimut
+        MeasureAzimuth
       ) {
 
         var map;
@@ -94,7 +94,7 @@
             })
           });
 
-          var measure = new MeasureAzimut({
+          var measure = new MeasureAzimuth({
             element : null,
             target : null,
             render : null,

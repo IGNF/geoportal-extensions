@@ -2,7 +2,7 @@ define([], function () {
 
     "use strict";
 
-    var MeasureAzimutDOM = {
+    var MeasureAzimuthDOM = {
 
         /** Add uuid to the tag ID */
         _addUID : function (id) {
@@ -17,7 +17,7 @@ define([], function () {
         _createMainContainerElement : function () {
 
             var container = document.createElement("div");
-            container.id  = this._addUID("GPmeasureAzimut");
+            container.id  = this._addUID("GPmeasureAzimuth");
             container.className = "GPwidget";
             return container;
         },
@@ -31,10 +31,10 @@ define([], function () {
         *
         * @returns {DOMElement} DOM element
         */
-        _createShowMeasureAzimutElement : function () {
+        _createShowMeasureAzimuthElement : function () {
 
             var input  = document.createElement("input");
-            input.id   = this._addUID("GPshowMeasureAzimut");
+            input.id   = this._addUID("GPshowMeasureAzimuth");
             input.type = "checkbox";
             return input;
         },
@@ -45,15 +45,15 @@ define([], function () {
         *
         * @returns {DOMElement} DOM element
         */
-        _createShowMeasureAzimutPictoElement : function () {
+        _createShowMeasureAzimuthPictoElement : function () {
 
             // contexte d'execution
             var context = this;
 
             var label = document.createElement("label");
-            label.id  = this._addUID("GPshowMeasureAzimutPicto");
+            label.id  = this._addUID("GPshowMeasureAzimuthPicto");
             label.className = "GPshowAdvancedToolPicto";
-            label.htmlFor = this._addUID("GPshowMeasureAzimut");
+            label.htmlFor = this._addUID("GPshowMeasureAzimuth");
             label.title = "Calculer une azimut";
 
             // gestionnaire d'evenement :
@@ -62,16 +62,16 @@ define([], function () {
             // (reinitialisation)
             if (label.addEventListener) {
                 label.addEventListener("click", function (e) {
-                    context.onShowMeasureAzimutClick(e);
+                    context.onShowMeasureAzimuthClick(e);
                 });
             } else if (label.attachEvent) {
                 label.attachEvent("onclick", function (e) {
-                    context.onShowMeasureAzimutClick(e);
+                    context.onShowMeasureAzimuthClick(e);
                 });
             }
 
             var spanOpen = document.createElement("span");
-            spanOpen.id  = this._addUID("GPshowMeasureAzimutOpen");
+            spanOpen.id  = this._addUID("GPshowMeasureAzimuthOpen");
             spanOpen.className  = "GPshowAdvancedToolOpen";
             label.appendChild(spanOpen);
 
@@ -79,5 +79,5 @@ define([], function () {
         }
     };
 
-    return MeasureAzimutDOM;
+    return MeasureAzimuthDOM;
 });

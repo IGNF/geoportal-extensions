@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-09-27
+ * @date 2016-09-28
  *
  */
 /*!
@@ -90,7 +90,7 @@
   }
 }(this, function(ol) {
 
-var gp, CommonUtilsAutoLoadConfig, CommonUtilsLayerUtils, proj4, CommonUtilsRegister, Ol3FormatsKML, Ol3CRSCRS, Ol3Utils, CommonUtilsConfig, Ol3LayersSourceWMTS, Ol3LayersSourceWMS, Ol3LayersLayerWMTS, Ol3LayersLayerWMS, sortable, CommonControlsLayerSwitcherDOM, Ol3ControlsLayerSwitcher, Ol3ControlsUtilsMarkers, CommonUtilsCheckRightManagement, CommonUtilsSelectorID, CommonControlsSearchEngineDOM, CommonControlsSearchEngineUtils, Ol3ControlsSearchEngine, CommonControlsMousePositionDOM, Ol3ControlsMousePosition, CommonControlsDrawingDOM, Ol3ControlsDrawing, CommonControlsLocationSelectorDOM, Ol3ControlsLocationSelector, CommonControlsRouteDOM, Ol3ControlsRoute, CommonControlsIsoDOM, Ol3ControlsIsocurve, CommonControlsReverseGeocodingDOM, Ol3ControlsReverseGeocode, CommonControlsLayerImportDOM, Ol3ControlsLayerImport, Ol3ControlsGeoportalAttribution, Ol3ControlsMeasuresMeasures, CommonControlsMeasureLengthDOM, Ol3ControlsMeasuresMeasureLength, CommonControlsMeasureAreaDOM, Ol3ControlsMeasuresMeasureArea, CommonControlsMeasureAzimutDOM, Ol3ControlsMeasuresMeasureAzimut, Ol3GpPluginOl3;
+var gp, CommonUtilsAutoLoadConfig, CommonUtilsLayerUtils, proj4, CommonUtilsRegister, Ol3FormatsKML, Ol3CRSCRS, Ol3Utils, CommonUtilsConfig, Ol3LayersSourceWMTS, Ol3LayersSourceWMS, Ol3LayersLayerWMTS, Ol3LayersLayerWMS, sortable, CommonControlsLayerSwitcherDOM, Ol3ControlsLayerSwitcher, Ol3ControlsUtilsMarkers, CommonUtilsCheckRightManagement, CommonUtilsSelectorID, CommonControlsSearchEngineDOM, CommonControlsSearchEngineUtils, Ol3ControlsSearchEngine, CommonControlsMousePositionDOM, Ol3ControlsMousePosition, CommonControlsDrawingDOM, Ol3ControlsDrawing, CommonControlsLocationSelectorDOM, Ol3ControlsLocationSelector, CommonControlsRouteDOM, Ol3ControlsRoute, CommonControlsIsoDOM, Ol3ControlsIsocurve, CommonControlsReverseGeocodingDOM, Ol3ControlsReverseGeocode, CommonControlsLayerImportDOM, Ol3ControlsLayerImport, Ol3ControlsGeoportalAttribution, Ol3ControlsMeasuresMeasures, CommonControlsMeasureLengthDOM, Ol3ControlsMeasuresMeasureLength, CommonControlsMeasureAreaDOM, Ol3ControlsMeasuresMeasureArea, CommonControlsMeasureAzimuthDOM, Ol3ControlsMeasuresMeasureAzimuth, Ol3GpPluginOl3;
 (function (root, factory) {
     if (true) {
         gp = function () {
@@ -25486,7 +25486,7 @@ Ol3ControlsMeasuresMeasures = function (ol, woodman) {
                 layer: null,
                 active: false
             },
-            MeasureAzimut: {
+            MeasureAzimuth: {
                 container: null,
                 draw: null,
                 layer: null,
@@ -25908,55 +25908,55 @@ Ol3ControlsMeasuresMeasureArea = function (ol, woodman, Utils, Measures, Measure
     };
     return MeasureArea;
 }(ol, {}, Ol3Utils, Ol3ControlsMeasuresMeasures, CommonControlsMeasureAreaDOM, CommonUtilsSelectorID);
-CommonControlsMeasureAzimutDOM = function () {
-    var MeasureAzimutDOM = {
+CommonControlsMeasureAzimuthDOM = function () {
+    var MeasureAzimuthDOM = {
         _addUID: function (id) {
             return id + '-' + this._uid;
         },
         _createMainContainerElement: function () {
             var container = document.createElement('div');
-            container.id = this._addUID('GPmeasureAzimut');
+            container.id = this._addUID('GPmeasureAzimuth');
             container.className = 'GPwidget';
             return container;
         },
-        _createShowMeasureAzimutElement: function () {
+        _createShowMeasureAzimuthElement: function () {
             var input = document.createElement('input');
-            input.id = this._addUID('GPshowMeasureAzimut');
+            input.id = this._addUID('GPshowMeasureAzimuth');
             input.type = 'checkbox';
             return input;
         },
-        _createShowMeasureAzimutPictoElement: function () {
+        _createShowMeasureAzimuthPictoElement: function () {
             var context = this;
             var label = document.createElement('label');
-            label.id = this._addUID('GPshowMeasureAzimutPicto');
+            label.id = this._addUID('GPshowMeasureAzimuthPicto');
             label.className = 'GPshowAdvancedToolPicto';
-            label.htmlFor = this._addUID('GPshowMeasureAzimut');
+            label.htmlFor = this._addUID('GPshowMeasureAzimuth');
             label.title = 'Calculer une azimut';
             if (label.addEventListener) {
                 label.addEventListener('click', function (e) {
-                    context.onShowMeasureAzimutClick(e);
+                    context.onShowMeasureAzimuthClick(e);
                 });
             } else if (label.attachEvent) {
                 label.attachEvent('onclick', function (e) {
-                    context.onShowMeasureAzimutClick(e);
+                    context.onShowMeasureAzimuthClick(e);
                 });
             }
             var spanOpen = document.createElement('span');
-            spanOpen.id = this._addUID('GPshowMeasureAzimutOpen');
+            spanOpen.id = this._addUID('GPshowMeasureAzimuthOpen');
             spanOpen.className = 'GPshowAdvancedToolOpen';
             label.appendChild(spanOpen);
             return label;
         }
     };
-    return MeasureAzimutDOM;
+    return MeasureAzimuthDOM;
 }();
-Ol3ControlsMeasuresMeasureAzimut = function (ol, woodman, Utils, Measures, MeasureAzimutDOM, ID) {
-    function MeasureAzimut(options) {
+Ol3ControlsMeasuresMeasureAzimuth = function (ol, woodman, Utils, Measures, MeasureAzimuthDOM, ID) {
+    function MeasureAzimuth(options) {
         options = options || {};
-        if (!(this instanceof MeasureAzimut)) {
+        if (!(this instanceof MeasureAzimuth)) {
             throw new TypeError('ERROR CLASS_CONSTRUCTOR');
         }
-        this.CLASSNAME = 'MeasureAzimut';
+        this.CLASSNAME = 'MeasureAzimuth';
         this._uid = ID.generate();
         this._showContainer = null;
         this._initialize(options);
@@ -25967,12 +25967,12 @@ Ol3ControlsMeasuresMeasureAzimut = function (ol, woodman, Utils, Measures, Measu
             render: options.render
         });
     }
-    ol.inherits(MeasureAzimut, ol.control.Control);
-    MeasureAzimut.prototype = Object.create(ol.control.Control.prototype, {});
-    Utils.assign(MeasureAzimut.prototype, Measures);
-    Utils.assign(MeasureAzimut.prototype, MeasureAzimutDOM);
-    MeasureAzimut.prototype.constructor = MeasureAzimut;
-    MeasureAzimut.prototype.setMap = function (map) {
+    ol.inherits(MeasureAzimuth, ol.control.Control);
+    MeasureAzimuth.prototype = Object.create(ol.control.Control.prototype, {});
+    Utils.assign(MeasureAzimuth.prototype, Measures);
+    Utils.assign(MeasureAzimuth.prototype, MeasureAzimuthDOM);
+    MeasureAzimuth.prototype.constructor = MeasureAzimuth;
+    MeasureAzimuth.prototype.setMap = function (map) {
         if (map) {
             var self = this;
             map.on('pointermove', function (e) {
@@ -25984,20 +25984,20 @@ Ol3ControlsMeasuresMeasureAzimut = function (ol, woodman, Utils, Measures, Measu
         }
         ol.control.Control.prototype.setMap.call(this, map);
     };
-    MeasureAzimut.prototype._initialize = function (options) {
+    MeasureAzimuth.prototype._initialize = function (options) {
         this.options = options || {};
         this.options.geodesic = options.geodesic === null ? true : options.geodesic;
     };
-    MeasureAzimut.prototype._initializeContainer = function () {
+    MeasureAzimuth.prototype._initializeContainer = function () {
         var container = this._createMainContainerElement();
-        var show = this._showContainer = this._createShowMeasureAzimutElement();
+        var show = this._showContainer = this._createShowMeasureAzimuthElement();
         container.appendChild(show);
         this._showContainer.checked = true;
-        var picto = this._createShowMeasureAzimutPictoElement();
+        var picto = this._createShowMeasureAzimuthPictoElement();
         container.appendChild(picto);
         return container;
     };
-    MeasureAzimut.prototype.format = function (line) {
+    MeasureAzimuth.prototype.format = function (line) {
         var map = this.getMap();
         var sourceProj = map.getView().getProjection();
         var c1 = ol.proj.transform(line.getFirstCoordinate(), sourceProj, 'EPSG:4326');
@@ -26011,10 +26011,10 @@ Ol3ControlsMeasuresMeasureAzimut = function (ol, woodman, Utils, Measures, Measu
         var output = Math.round(azimut * 100) / 100 + ' \xB0';
         return output;
     };
-    MeasureAzimut.prototype.onShowMeasureAzimutClick = function (e) {
+    MeasureAzimuth.prototype.onShowMeasureAzimuthClick = function (e) {
         this.onShowMeasureClick(e, 'LineString');
     };
-    MeasureAzimut.prototype.onPointerClickAzimutHandler = function (e) {
+    MeasureAzimuth.prototype.onPointerClickAzimutHandler = function (e) {
         var tooltipCoord = e.coordinate;
         if (this.sketch) {
             var output;
@@ -26028,11 +26028,11 @@ Ol3ControlsMeasuresMeasureAzimut = function (ol, woodman, Utils, Measures, Measu
             }
         }
     };
-    return MeasureAzimut;
-}(ol, {}, Ol3Utils, Ol3ControlsMeasuresMeasures, CommonControlsMeasureAzimutDOM, CommonUtilsSelectorID);
-Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, KML, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution, MeasureLength, MeasureArea, MeasureAzimut) {
+    return MeasureAzimuth;
+}(ol, {}, Ol3Utils, Ol3ControlsMeasuresMeasures, CommonControlsMeasureAzimuthDOM, CommonUtilsSelectorID);
+Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, KML, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution, MeasureLength, MeasureArea, MeasureAzimuth) {
     Gp.ol3extVersion = '0.11.0';
-    Gp.ol3extDate = '2016-09-27';
+    Gp.ol3extDate = '2016-09-28';
     Gp.LayerUtils = LayerUtils;
     ol.format.KMLExtended = KML;
     CRS.overload();
@@ -26051,9 +26051,9 @@ Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, KML, CRS, SourceWMTS, S
     ol.control.LayerImport = LayerImport;
     ol.control.MeasureLength = MeasureLength;
     ol.control.MeasureArea = MeasureArea;
-    ol.control.MeasureAzimut = MeasureAzimut;
+    ol.control.MeasureAzimuth = MeasureAzimuth;
     return Gp;
-}(ol, gp, CommonUtilsLayerUtils, CommonUtilsRegister, Ol3FormatsKML, Ol3CRSCRS, Ol3LayersSourceWMTS, Ol3LayersSourceWMS, Ol3LayersLayerWMTS, Ol3LayersLayerWMS, Ol3ControlsLayerSwitcher, Ol3ControlsSearchEngine, Ol3ControlsMousePosition, Ol3ControlsDrawing, Ol3ControlsRoute, Ol3ControlsIsocurve, Ol3ControlsReverseGeocode, Ol3ControlsLayerImport, Ol3ControlsGeoportalAttribution, Ol3ControlsMeasuresMeasureLength, Ol3ControlsMeasuresMeasureArea, Ol3ControlsMeasuresMeasureAzimut);
+}(ol, gp, CommonUtilsLayerUtils, CommonUtilsRegister, Ol3FormatsKML, Ol3CRSCRS, Ol3LayersSourceWMTS, Ol3LayersSourceWMS, Ol3LayersLayerWMTS, Ol3LayersLayerWMS, Ol3ControlsLayerSwitcher, Ol3ControlsSearchEngine, Ol3ControlsMousePosition, Ol3ControlsDrawing, Ol3ControlsRoute, Ol3ControlsIsocurve, Ol3ControlsReverseGeocode, Ol3ControlsLayerImport, Ol3ControlsGeoportalAttribution, Ol3ControlsMeasuresMeasureLength, Ol3ControlsMeasuresMeasureArea, Ol3ControlsMeasuresMeasureAzimuth);
 window.proj4 = proj4;
 
 return Gp;

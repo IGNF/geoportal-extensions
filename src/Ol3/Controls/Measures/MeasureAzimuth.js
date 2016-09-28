@@ -3,14 +3,14 @@ define([
     "woodman",
     "Ol3/Utils",
     "Ol3/Controls/Measures/Measures",
-    "Common/Controls/MeasureAzimutDOM",
+    "Common/Controls/MeasureAzimuthDOM",
     "Common/Utils/SelectorID"
 ], function (
     ol,
     woodman,
     Utils,
     Measures,
-    MeasureAzimutDOM,
+    MeasureAzimuthDOM,
     ID
 ) {
 
@@ -21,7 +21,7 @@ define([
 
     /**
     * @example
-    * var measure = new ol.control.MeasureAzimut({
+    * var measure = new ol.control.MeasureAzimuth({
     *    element : null,
     *    target : null,
     *    render : null,
@@ -40,17 +40,17 @@ define([
     *    }
     * });
     */
-    function MeasureAzimut (options) {
+    function MeasureAzimuth (options) {
 
         /** options */
         options = options || {};
 
-        if (!(this instanceof MeasureAzimut)) {
+        if (!(this instanceof MeasureAzimuth)) {
             throw new TypeError("ERROR CLASS_CONSTRUCTOR");
         }
 
         /** Nom de la classe (heritage) */
-        this.CLASSNAME = "MeasureAzimut";
+        this.CLASSNAME = "MeasureAzimuth";
 
         /** uuid */
         this._uid = ID.generate();
@@ -75,23 +75,23 @@ define([
     }
 
     // heritage avec ol.control.Control
-    ol.inherits(MeasureAzimut, ol.control.Control);
+    ol.inherits(MeasureAzimuth, ol.control.Control);
 
     /**
-     * @lends module:MeasureAzimut
+     * @lends module:MeasureAzimuth
      */
-    MeasureAzimut.prototype = Object.create(ol.control.Control.prototype, {});
+    MeasureAzimuth.prototype = Object.create(ol.control.Control.prototype, {});
 
-    // on récupère les mixins de la classe "MeasureAzimutDOM" ainsi que celles
+    // on récupère les mixins de la classe "MeasureAzimuthDOM" ainsi que celles
     // de "Measures".
-    Utils.assign(MeasureAzimut.prototype, Measures);
-    Utils.assign(MeasureAzimut.prototype, MeasureAzimutDOM);
+    Utils.assign(MeasureAzimuth.prototype, Measures);
+    Utils.assign(MeasureAzimuth.prototype, MeasureAzimuthDOM);
 
     /**
      * Constructor (alias)
      * @private
      */
-    MeasureAzimut.prototype.constructor = MeasureAzimut;
+    MeasureAzimuth.prototype.constructor = MeasureAzimuth;
 
     // ################################################################### //
     // ##################### public methods ############################## //
@@ -102,7 +102,7 @@ define([
      *
      * @param {ol.Map} map - Map.
      */
-    MeasureAzimut.prototype.setMap = function (map) {
+    MeasureAzimuth.prototype.setMap = function (map) {
 
         if ( map ) {
             var self = this;
@@ -128,8 +128,8 @@ define([
      *
      * @private
      */
-    MeasureAzimut.prototype._initialize = function (options) {
-        logger.trace("call MeasureAzimut::_initialize() : ", options);
+    MeasureAzimuth.prototype._initialize = function (options) {
+        logger.trace("call MeasureAzimuth::_initialize() : ", options);
 
         // liste des options
         this.options = options || {};
@@ -141,18 +141,18 @@ define([
      *
      * @private
      */
-    MeasureAzimut.prototype._initializeContainer = function () {
-        logger.trace("call MeasureAzimut::_initializeContainer() : ", this._uid);
+    MeasureAzimuth.prototype._initializeContainer = function () {
+        logger.trace("call MeasureAzimuth::_initializeContainer() : ", this._uid);
 
         var container = this._createMainContainerElement();;
 
-        var show = this._showContainer = this._createShowMeasureAzimutElement();
+        var show = this._showContainer = this._createShowMeasureAzimuthElement();
         container.appendChild(show);
 
         // par defaut, pas d'interaction à l'initialisation...
         this._showContainer.checked = true;
 
-        var picto = this._createShowMeasureAzimutPictoElement();
+        var picto = this._createShowMeasureAzimuthPictoElement();
         container.appendChild(picto);
 
         return container;
@@ -169,8 +169,8 @@ define([
     * @return {String} The formatted output.
     * @private
     */
-    MeasureAzimut.prototype.format = function (line) {
-        logger.trace("call MeasureAzimut::format()");
+    MeasureAzimuth.prototype.format = function (line) {
+        logger.trace("call MeasureAzimuth::format()");
 
         var map = this.getMap();
 
@@ -204,8 +204,8 @@ define([
     * @param {Object} e - HTMLElement
     * @private
     */
-    MeasureAzimut.prototype.onShowMeasureAzimutClick = function (e) {
-        logger.trace("call MeasureAzimut::onShowMeasureAzimutClick()", e);
+    MeasureAzimuth.prototype.onShowMeasureAzimuthClick = function (e) {
+        logger.trace("call MeasureAzimuth::onShowMeasureAzimuthClick()", e);
         this.onShowMeasureClick(e, "LineString");
     };
 
@@ -214,7 +214,7 @@ define([
     * @param {ol.MapBrowserEvent} e - The event.
     * @private
     */
-    MeasureAzimut.prototype.onPointerClickAzimutHandler = function (e) {
+    MeasureAzimuth.prototype.onPointerClickAzimutHandler = function (e) {
 
         var tooltipCoord = e.coordinate;
 
@@ -232,5 +232,5 @@ define([
 
     };
 
-    return MeasureAzimut;
+    return MeasureAzimuth;
 });
