@@ -99,13 +99,23 @@
             target : null,
             render : null,
             styles : {
-              fillColor : "rgba(255, 255, 255, 0.2)",
-              strokeColor : "rgba(0, 0, 0, 0.5)",
-              strokeLineDash : [10, 10],
-              strokeWidth : 2,
-              imageRadius : 5,
-              imageFillColor : "rgba(255, 255, 255, 0.2)",
-              imageStrokeColor : "rgba(0, 0, 0, 0.7)",
+              start : {
+                fillColor : "rgba(255, 0, 0, 0.2)",
+                strokeColor : "rgba(0, 0, 255, 0.5)",
+                strokeLineDash : [10, 10],
+                strokeWidth : 2,
+                imageRadius : 5,
+                imageFillColor : "rgba(255, 255, 255, 0.2)",
+                imageStrokeColor : "rgba(0, 0, 0, 0.7)"
+              },
+              finish : {
+                fillColor : "rgba(0, 0, 255, 0.2)",
+                strokeColor : "rgba(255, 255, 0, 0.5)",
+                strokeWidth : 5,
+                imageRadius : 2,
+                imageFillColor : "rgba(0, 0, 0, 0.2)",
+                imageStrokeColor : "rgba(255, 255, 255, 0.7)"
+              }
             },
             unit : "km",
             tooltip : {

@@ -288,8 +288,82 @@ define([
         },
 
         /**
+        * TODO Creates a style for drawing
+        *
+        * @param {Object} styles - styles.
+        */
+        createStylingMeasureInteraction : function (styles) {
+
+            // TODO cas où options.styles = {} : vide !
+            if ( typeof styles === "undefined" || Object.keys(styles).length === 0 ) {
+                // on applique les styles par defaut
+                this.options.styles = {
+                    start : this.measureStyle,
+                    finish : this.measureFinalStyle
+                };
+            } else {
+                // on interprete les params pour y creer un objet ol.Style
+                var start  = styles.start;
+                var finish = styles.finish;
+
+                this.options.styles = {};
+
+                if ( typeof start === "undefined" ) {
+                    this.options.styles.start = this.measureStyle;
+                } else {
+                    logger.trace("Custom Styles !");
+                    this.options.styles.start = new ol.style.Style({
+                        fill : new ol.style.Fill({
+                            color : styles.start.fillColor || null
+                        }),
+                        stroke : new ol.style.Stroke({
+                            color : styles.start.strokeColor || null,
+                            lineDash : styles.start.strokeLineDash || null,
+                            width : styles.start.strokeWidth || null
+                        }),
+                        image : new ol.style.Circle({
+                            radius : styles.start.imageRadius || null,
+                            stroke : new ol.style.Stroke({
+                                color : styles.start.imageStrokeColor || null,
+                                width : styles.start.imageStrokeWidth || null
+                            }),
+                            fill : new ol.style.Fill({
+                                color : styles.start.imageFillColor || null
+                            })
+                        })
+                    });
+                }
+
+                if ( typeof finish === "undefined" ) {
+                    this.options.styles.finish = this.measureFinalStyle;
+                } else {
+                    logger.trace("Custom Styles !");
+                    this.options.styles.finish = new ol.style.Style({
+                        fill : new ol.style.Fill({
+                            color : styles.finish.fillColor || null
+                        }),
+                        stroke : new ol.style.Stroke({
+                            color : styles.finish.strokeColor || null,
+                            lineDash : styles.finish.strokeLineDash || null,
+                            width : styles.finish.strokeWidth || null
+                        }),
+                        image : new ol.style.Circle({
+                            radius : styles.finish.imageRadius || null,
+                            stroke : new ol.style.Stroke({
+                                color : styles.finish.imageStrokeColor || null,
+                                width : styles.finish.imageStrokeWidth || null
+                            }),
+                            fill : new ol.style.Fill({
+                                color : styles.finish.imageFillColor || null
+                            })
+                        })
+                    });
+                }
+            }
+        },
+
+        /**
          * Add the measure interaction
-         * TODO gestion des styles utilisateurs
          *
          * @param {String} type - LineString or Polygon.
          */
@@ -301,7 +375,7 @@ define([
             this.measureDraw = new ol.interaction.Draw({
                 source : this.measureSource,
                 type : type,
-                style : this.measureStyle
+                style : this.options.styles.start || this.measureStyle
             });
             map.addInteraction(this.measureDraw);
 
@@ -329,7 +403,6 @@ define([
 
         /**
          * Init the measure interaction
-         * TODO gestion des styles utilisateurs
          */
         initMeasureInteraction : function () {
 
@@ -339,7 +412,7 @@ define([
 
              this.measureVector = new ol.layer.Vector({
                source : this.measureSource,
-               style : this.measureFinalStyle
+               style : this.options.styles.finish || this.measureFinalStyle
              });
 
              map.addLayer(this.measureVector);

@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta content="IE=edge,chrome=1; charset=UTF-8" http-equiv="X-UA-Compatible">
-  <title>sample ol3 measure length default (amd)</title>
+  <title>sample ol3 measure area default (amd)</title>
 
   <!-- Library OpenLayers 3 -->
   <link rel="stylesheet" href="../../../lib/ol3/ol.css" />
@@ -99,13 +99,15 @@
             target : null,
             render : null,
             styles : {
-              fillColor : "rgba(255, 255, 255, 0.2)",
-              strokeColor : "rgba(0, 0, 0, 0.5)",
-              strokeLineDash : [10, 10],
-              strokeWidth : 2,
-              imageRadius : 5,
-              imageFillColor : "rgba(255, 255, 255, 0.2)",
-              imageStrokeColor : "rgba(0, 0, 0, 0.7)",
+              start : {
+                fillColor : "rgba(255, 255, 255, 0.2)",
+                strokeColor : "rgba(0, 0, 0, 0.5)",
+                strokeLineDash : [10, 10],
+                strokeWidth : 2,
+                imageRadius : 5,
+                imageFillColor : "rgba(255, 255, 255, 0.2)",
+                imageStrokeColor : "rgba(0, 0, 0, 0.7)",
+              }
             },
             unit : "km",
             tooltip : {
