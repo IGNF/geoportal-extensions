@@ -20,7 +20,7 @@ define([
     "Ol3/Controls/GeoportalAttribution",
     "Ol3/Controls/Measures/MeasureLength",
     "Ol3/Controls/Measures/MeasureArea",
-    "Ol3/Controls/Measures/MeasureAzimut"
+    "Ol3/Controls/Measures/MeasureAzimuth"
 ], function (
     ol,
     Gp,
@@ -43,7 +43,7 @@ define([
     GeoportalAttribution,
     MeasureLength,
     MeasureArea,
-    MeasureAzimut
+    MeasureAzimuth
 ) {
 
     "use strict";
@@ -77,7 +77,7 @@ define([
     ol.control.LayerImport = LayerImport;
     ol.control.MeasureLength = MeasureLength;
     ol.control.MeasureArea = MeasureArea;
-    ol.control.MeasureAzimut = MeasureAzimut;
+    ol.control.MeasureAzimuth = MeasureAzimuth;
 
     // FIXME : parce qu'il faut bien retourner quelque chose
     return Gp;
