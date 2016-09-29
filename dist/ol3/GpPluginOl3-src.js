@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-09-28
+ * @date 2016-09-29
  *
  */
 /*!
@@ -25472,6 +25472,24 @@ Ol3ControlsGeoportalAttribution = function (ol, LayerUtils) {
     return GeoportalAttribution;
 }(ol, CommonUtilsLayerUtils);
 Ol3ControlsMeasuresMeasures = function (ol, woodman) {
+    var defaultStyle = {
+        fillColor: 'rgba(0, 183, 152, 0.2)',
+        strokeColor: '#002A50',
+        strokeLineDash: [
+            10,
+            10
+        ],
+        strokeWidth: 2,
+        imageRadius: 5,
+        imageFillColor: 'rgba(255, 155, 0, 0.7)',
+        imageStrokeColor: '#002A50',
+        imageStrokeWidth: 2
+    };
+    var defaultStyleFinal = {
+        fillColor: 'rgba(0, 183, 152, 0.3)',
+        strokeColor: '#002A50',
+        strokeWidth: 3
+    };
     var Measures = {
         tools: {
             MeasureLength: {
@@ -25499,44 +25517,29 @@ Ol3ControlsMeasuresMeasures = function (ol, woodman) {
         sketch: null,
         measureTooltipElement: null,
         measureTooltip: null,
+        helpTooltipElement: null,
+        helpTooltip: null,
         measureStyle: new ol.style.Style({
-            fill: new ol.style.Fill({ color: 'rgba(0, 183, 152, 0.2)' }),
+            fill: new ol.style.Fill({ color: defaultStyle.fillColor }),
             stroke: new ol.style.Stroke({
-                color: '#002A50',
-                lineDash: [
-                    10,
-                    10
-                ],
-                width: 2
+                color: defaultStyle.strokeColor,
+                lineDash: defaultStyle.strokeLineDash,
+                width: defaultStyle.strokeWidth
             }),
             image: new ol.style.Circle({
-                radius: 5,
+                radius: defaultStyle.imageRadius,
                 stroke: new ol.style.Stroke({
-                    color: '#002A50',
-                    width: 2
+                    color: defaultStyle.imageStrokeColor,
+                    width: defaultStyle.imageStrokeWidth
                 }),
-                fill: new ol.style.Fill({ color: 'rgba(255, 155, 0, 0.7)' })
+                fill: new ol.style.Fill({ color: defaultStyle.imageFillColor })
             })
         }),
         measureFinalStyle: new ol.style.Style({
-            fill: new ol.style.Fill({ color: 'rgba(0, 183, 152, 0.3)' }),
+            fill: new ol.style.Fill({ color: defaultStyleFinal.fillColor }),
             stroke: new ol.style.Stroke({
-                color: '#002A50',
-                width: 3
-            }),
-            image: new ol.style.Icon({
-                src: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAsCAYAAAAATWqyAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAABTtJREFUeNq8WGtsFUUU/rb3gtdCAykFG9AUDTQUKimhxUewEusrJYoBo4FfEgoqotHERH6oP9TGmJhIrIlWAf9hjAaEiME2pgFfVVpFii8sWqIQLLSx3EJLW7p+Z2Z2b2l7d/b23vZLTmZ2duacb2fmnDk7DlKA67rXs1hJKacsohRQppjXFygnKT9TDlH2O47zFzIFGnco91EOuqnjoBnr2Ow4FhIlLN6m3DykFTh3BGj/Doj/CfSe082xPCDnBmDWTUBeyXDVjZTHOUNHUiZCEs+weI0ySTV0/w0c2wa07gIungn+vOx8YN46oPhpYOp1Xms/5TmSeSMUERKImFnYqBoGuPRNL5LEW8BgX2rrmjWZZLYApS8BUW8r4T0zO5eTEjFr+S6lSjV0HgPqVwNdf6S30abNB+7aDeQWey3bKZtIxvU5DxvyrE/izJfAvuXpkxCIDtElOjWqjK2RM8LZWMbiG0oEnUc5kB7a14WMYvI04H56du5ieZKluZWz8r0/IyQh5TuKRH8cqFuTeRIC0Sm6xYbYok1j21+ahyhLVO3wC8D5VowbRLfY0FhibOulIavDLEoRZyD8sJDeMWBXKG5ZsIobsdDsg+OMq3u1m1u9KQo8zP45EqjRxOUpk6i50IRl4FuGjpZtwUoiMYa314GFj/EzIsN8n8v+C1e4kfvwcm+wnhsZY27xQ8oiWZpKrWRQB6tAElfxpKnjsCdGklDzG9HvpI/0DYLYEpsalVnmAAM6fgR62oMHl70C5N9mn3rpI32DILbEpkZ5ljlFgbPNFtebzij5VPhNKX1lTBASNtXSzPZ3cxCuvVOH7FTCu4yxeZDGbCES0z5+PniQ3uGpwTYmYTOWCPGTpgYP6u9OnYhtzBCbQkSH0NiM4EEdP6VOxDYmYbNLiJxQ1elFwYPaG3XQCn3QHddjgpCweUKI6K2bvzw4YROf//rJob6fZl/H2FRoFiINfqo3qyzYwD8MVIeYLw32J+8j76SP9A2C2BKbGg1CZL+EF/W4YKP9a3/fCeyhkrY9DOOXEu1SlzZ5J31sSNjqURm/OfQkY9qgvkYOvXhbuH0g505Oga7HT9rPF9+t5+pDL0ulwzt46FV5ROax+JUSRRtP0LoHMK64+xNg7iqVEVOKSKRVxRGpsKhRnaRD4SPjR0J0axKCGmP7ilQxm4X8d8xXmfvHJZlPkCR3WfODl9FLMlxCIhevSJ5Nwzo1XdKxYpe3hpmB6BKdmoS43VqPxIgsni+aWOg8biZ3f+nLmSMiuvKWek/P01az7QdLyNVT7lC/l59WAKcb0iMxhzpW1nvmvpDtSiKD1l9OkpnDgv8UyMWFU9wvTP8vdY6NhJwnD1JVtso2OiiLSeL0iJUbNfg6zikVVwRTyOn2HWOfjfLtHgnBhtFIJCViyNDZUatdmnGlaFPqJIoe1WM1aqlz71ivJbLNobgAA9zgu7nZ/vstHAk5WVdzaPRqmGC5lER6kjpV4OWJdq+1kkshSk4VH9izcy/bV66qSPQZV+0J9G7rTY6+XNmqHmYwyJVV24kse1X31dhKHdasygkzy+a64oC4nWr47F4e858nSbLv4V/KAe9JKpVDrx/SImLIXMOiRUKdujESl+49O8xVZxpXzVc/C/I/RxL/hgq8YYkYhev9q6kVO4d9B+sr3vdICNaHJTHWW8Ya/87wqy2uWwstUk/gTYw3aCRGOarMDfS67kfFWqSuIe9imAjQEC272nJHixYNaSvGRIIGN49ywbsZEw1zI11N6TZSHeaGORn+F2AAJtRIMx4t+hUAAAAASUVORK5CYII=',
-                size: [
-                    34,
-                    44
-                ],
-                anchor: [
-                    0.5,
-                    1
-                ],
-                anchorOrigin: 'bottom-left',
-                anchorYUnits: 'pixels',
-                snapToPixel: true
+                color: defaultStyleFinal.strokeColor,
+                width: defaultStyleFinal.strokeWidth
             })
         }),
         onPointerMoveHandler: function (e) {
@@ -25591,8 +25594,9 @@ Ol3ControlsMeasuresMeasures = function (ol, woodman) {
             }
         },
         clearMeasureToolTip: function () {
-            var nodes = document.querySelector('.ol-overlaycontainer-stopevent');
-            if (nodes) {
+            var lstNodes = document.querySelectorAll('.ol-overlaycontainer-stopevent');
+            for (var k = 0; k < lstNodes.length; k++) {
+                var nodes = lstNodes[k];
                 var len = nodes.children.length;
                 var nodesToRemove = [];
                 for (var i = 0; i < len; i++) {
@@ -25636,6 +25640,22 @@ Ol3ControlsMeasuresMeasures = function (ol, woodman) {
             });
             map.addOverlay(this.measureTooltip);
         },
+        createHelpTooltip: function (map) {
+            if (this.helpTooltipElement) {
+                this.helpTooltipElement.parentNode.removeChild(this.helpTooltipElement);
+            }
+            this.helpTooltipElement = document.createElement('div');
+            this.helpTooltipElement.className = 'tooltip hidden';
+            this.helpTooltip = new ol.Overlay({
+                element: this.helpTooltipElement,
+                offset: [
+                    15,
+                    0
+                ],
+                positioning: 'center-left'
+            });
+            map.addOverlay(this.helpTooltip);
+        },
         createStylingMeasureInteraction: function (styles) {
             if (typeof styles === 'undefined' || Object.keys(styles).length === 0) {
                 this.options.styles = {
@@ -25649,40 +25669,65 @@ Ol3ControlsMeasuresMeasures = function (ol, woodman) {
                 if (typeof start === 'undefined') {
                     this.options.styles.start = this.measureStyle;
                 } else {
-                    this.options.styles.start = new ol.style.Style({
-                        fill: new ol.style.Fill({ color: styles.start.fillColor || null }),
+                    Object.keys(defaultStyle).forEach(function (key) {
+                        if (!start.hasOwnProperty(key)) {
+                            start[key] = defaultStyle[key];
+                            return;
+                        }
+                        if (key === 'strokeWidth') {
+                            var intValue = parseInt(start[key], 10);
+                            if (isNaN(intValue) || intValue < 0) {
+                                console.log('Wrong value (' + start[key] + ') for strokeWidth. Must be a positive interger value.');
+                                start[key] = defaultStyle[key];
+                                return;
+                            }
+                            start[key] = intValue;
+                        }
+                    }, this);
+                    var _fill = new ol.style.Fill({ color: start.fillColor });
+                    var _stroke = new ol.style.Stroke({
+                        color: start.strokeColor,
+                        lineDash: start.strokeLineDash,
+                        width: start.strokeWidth
+                    });
+                    var _image = new ol.style.Circle({
+                        radius: start.imageRadius,
                         stroke: new ol.style.Stroke({
-                            color: styles.start.strokeColor || null,
-                            lineDash: styles.start.strokeLineDash || null,
-                            width: styles.start.strokeWidth || null
+                            color: start.imageStrokeColor,
+                            width: start.imageStrokeWidth
                         }),
-                        image: new ol.style.Circle({
-                            radius: styles.start.imageRadius || null,
-                            stroke: new ol.style.Stroke({
-                                color: styles.start.imageStrokeColor || null,
-                                width: styles.start.imageStrokeWidth || null
-                            }),
-                            fill: new ol.style.Fill({ color: styles.start.imageFillColor || null })
-                        })
+                        fill: new ol.style.Fill({ color: start.imageFillColor })
+                    });
+                    this.options.styles.start = new ol.style.Style({
+                        fill: _fill,
+                        stroke: _stroke,
+                        image: _image
                     });
                 }
                 if (typeof finish === 'undefined') {
                     this.options.styles.finish = this.measureFinalStyle;
                 } else {
+                    Object.keys(defaultStyleFinal).forEach(function (key) {
+                        if (!finish.hasOwnProperty(key)) {
+                            finish[key] = defaultStyleFinal[key];
+                            return;
+                        }
+                        if (key === 'strokeWidth') {
+                            var intValue = parseInt(finish[key], 10);
+                            if (isNaN(intValue) || intValue < 0) {
+                                console.log('Wrong value (' + finish[key] + ') for strokeWidth. Must be a positive interger value.');
+                                finish[key] = defaultStyleFinal[key];
+                                return;
+                            }
+                            finish[key] = intValue;
+                        }
+                    }, this);
                     this.options.styles.finish = new ol.style.Style({
-                        fill: new ol.style.Fill({ color: styles.finish.fillColor || null }),
+                        fill: new ol.style.Fill({ color: styles.finish.fillColor }),
                         stroke: new ol.style.Stroke({
-                            color: styles.finish.strokeColor || null,
-                            lineDash: styles.finish.strokeLineDash || null,
-                            width: styles.finish.strokeWidth || null
-                        }),
-                        image: new ol.style.Circle({
-                            radius: styles.finish.imageRadius || null,
-                            stroke: new ol.style.Stroke({
-                                color: styles.finish.imageStrokeColor || null,
-                                width: styles.finish.imageStrokeWidth || null
-                            }),
-                            fill: new ol.style.Fill({ color: styles.finish.imageFillColor || null })
+                            color: styles.finish.strokeColor,
+                            lineDash: styles.finish.strokeLineDash,
+                            width: styles.finish.strokeWidth
                         })
                     });
                 }
@@ -26086,7 +26131,7 @@ Ol3ControlsMeasuresMeasureAzimuth = function (ol, woodman, Utils, Measures, Meas
 }(ol, {}, Ol3Utils, Ol3ControlsMeasuresMeasures, CommonControlsMeasureAzimuthDOM, CommonUtilsSelectorID);
 Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, KML, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution, MeasureLength, MeasureArea, MeasureAzimuth) {
     Gp.ol3extVersion = '0.11.0';
-    Gp.ol3extDate = '2016-09-28';
+    Gp.ol3extDate = '2016-09-29';
     Gp.LayerUtils = LayerUtils;
     ol.format.KMLExtended = KML;
     CRS.overload();
