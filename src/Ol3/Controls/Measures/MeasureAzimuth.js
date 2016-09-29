@@ -16,6 +16,9 @@ define([
 
     "use strict";
 
+    // Derived from OpenLayers measure example
+    // http://openlayers.org/en/latest/examples/measure.html
+    
     woodman.load("console");
     var logger = woodman.getLogger("measureazimut");
 
