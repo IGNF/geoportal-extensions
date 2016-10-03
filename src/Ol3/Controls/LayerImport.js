@@ -514,6 +514,10 @@ define([
             console.log("[ol.control.LayerImport] url parameter is mandatory");
             return;
         }
+        // on supprime les éventuels espaces avant ou après
+        if ( url.trim ) {
+            url = url.trim();
+        }
 
         // 2. récupération proxy
         if ( !this.options.webServicesOptions || ( !this.options.webServicesOptions.proxyUrl && !this.options.webServicesOptions.noProxyDomains ) ) {
@@ -794,6 +798,10 @@ define([
         }
         logger.log("url : ",url);
 
+        // on supprime les éventuels espaces avant ou après
+        if ( url.trim ) {
+            url = url.trim();
+        }
         // Info : on ajoute des paramètres uniquement si l'utilisateur n'en a pas déjà saisi (on vérifie la position du caractère "?")
         var questionMarkIndex = url.indexOf("?");
         if ( questionMarkIndex < 0 ) {
