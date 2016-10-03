@@ -18,7 +18,7 @@ define([
 
     // Derived from OpenLayers measure example
     // http://openlayers.org/en/latest/examples/measure.html
-    
+
     woodman.load("console");
     var logger = woodman.getLogger("measureazimut");
 
@@ -173,6 +173,7 @@ define([
 
     /**
     * Format length output.
+    * FIXME bug sur le calcul (pb de signe !?)
     *
     * @param {ol.geom.LineString} line - geometry line.
     * @return {String} The formatted output.
@@ -184,19 +185,28 @@ define([
         var map = this.getMap();
 
         var sourceProj = map.getView().getProjection();
+        // on calcule sur des distances plus courtes !
         var c1 = ol.proj.transform(line.getFirstCoordinate(), sourceProj, "EPSG:4326");
-        // FIXME calcul sur de longue distance !
-        // var c2 = ol.proj.transform(line.getLastCoordinate(),  sourceProj, "EPSG:4326");
         var c2 = ol.proj.transform(line.getCoordinateAt(0.001), sourceProj, "EPSG:4326");
 
-        var x = Math.cos(c1[1]) * Math.sin(c2[1]) - Math.sin(c1[1]) * Math.cos(c2[1]) * Math.cos(c2[0] - c1[0]);
-        var y = Math.sin(c2[0] - c1[0]) * Math.cos(c2[1]);
-        var azimut = Math.atan2(y, x) / Math.PI * (-180);
+        var degrees2radians = Math.PI / 180;
+        var radians2degrees = 180 / Math.PI;
+        var lon1 = degrees2radians * c1[0];
+        var lon2 = degrees2radians * c2[0];
+        var lat1 = degrees2radians * c1[1];
+        var lat2 = degrees2radians * c2[1];
+        var a = Math.sin(lon2 - lon1) * Math.cos(lat2);
+        var b = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1);
+
+        var atan = Math.atan2(a, b);
+        logger.trace(atan);
+
+        var azimut = radians2degrees * atan;
+        logger.trace(azimut);
 
         if (azimut < 0) {
             azimut += 360;
         }
-
         var output = Math.round(azimut * 100) / 100 + " °";
 
         return output;
