@@ -24720,6 +24720,9 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
             console.log('[ol.control.LayerImport] url parameter is mandatory');
             return;
         }
+        if (url.trim) {
+            url = url.trim();
+        }
         if (!this.options.webServicesOptions || !this.options.webServicesOptions.proxyUrl && !this.options.webServicesOptions.noProxyDomains) {
             console.log('[ol.control.LayerImport] options.webServicesOptions.proxyUrl parameter is mandatory to request resources on another domain (cross-domain)');
             return;
@@ -24859,6 +24862,9 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
             console.log('[ol.control.LayerImport] url parameter is mandatory');
             return;
         }
+        if (url.trim) {
+            url = url.trim();
+        }
         var questionMarkIndex = url.indexOf('?');
         if (questionMarkIndex < 0) {
             url += '?SERVICE=' + this._currentImportType + '&REQUEST=GetCapabilities';
@@ -24979,6 +24985,11 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
     LayerImport.prototype._addGetCapWMSLayer = function (layerInfo) {
         var map = this.getMap();
         if (!map) {
+            console.log('[ol.control.LayerImport] _addGetCapWMSLayer error : map is not defined');
+            return;
+        }
+        if (!layerInfo) {
+            console.log('[ol.control.LayerImport] _addGetCapWMSLayer error : layerInfo is not defined');
             return;
         }
         var mapProjCode = this._getMapProjectionCode();
@@ -25087,17 +25098,43 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
         }
     };
     LayerImport.prototype._getWMSLayerExtent = function (layerInfo, mapProjCode, layerTileOptions) {
-        if (layerInfo.BoundingBox && Array.isArray(layerInfo.BoundingBox)) {
-            for (var i = 0; i < layerInfo.BoundingBox.length; i++) {
-                var crs = layerInfo.BoundingBox[i].crs;
+        if (!layerInfo) {
+            console.log('[ol.control.LayerImport] _getWMSLayerExtent error : layerInfo is not defined');
+            return;
+        }
+        var exGeographicBoundingBox = layerInfo['EX_GeographicBoundingBox'];
+        var boundingBox = layerInfo.BoundingBox;
+        if (exGeographicBoundingBox && Array.isArray(exGeographicBoundingBox)) {
+            if (mapProjCode === 'EPSG:4326') {
+                layerTileOptions.extent = exGeographicBoundingBox;
+            } else {
+                layerTileOptions.extent = ol.proj.transformExtent(exGeographicBoundingBox, 'EPSG:4326', mapProjCode);
+            }
+        } else if (boundingBox && Array.isArray(boundingBox)) {
+            var crs;
+            var extent;
+            for (var i = 0; i < boundingBox.length; i++) {
+                crs = boundingBox[i].crs;
+                extent = boundingBox[i].extent;
                 if (crs) {
                     if (crs === mapProjCode) {
-                        layerTileOptions.extent = layerInfo.BoundingBox[i].extent;
+                        layerTileOptions.extent = extent;
                         break;
                     } else {
                         if (crs && typeof crs === 'string') {
-                            if (ol.proj.get(crs) || ol.proj.get(crs.toUpperCase())) {
-                                layerTileOptions.extent = ol.proj.transformExtent(layerInfo.BoundingBox[i].extent, crs, mapProjCode);
+                            var olProj = ol.proj.get(crs) ? ol.proj.get(crs) : ol.proj.get(crs.toUpperCase());
+                            if (olProj) {
+                                if (olProj.getUnits() === 'degrees' && crs.toUpperCase().indexOf('EPSG') === 0) {
+                                    var reversedExtent = [
+                                        extent[1],
+                                        extent[0],
+                                        extent[3],
+                                        extent[2]
+                                    ];
+                                    layerTileOptions.extent = ol.proj.transformExtent(reversedExtent, olProj, mapProjCode);
+                                } else {
+                                    layerTileOptions.extent = ol.proj.transformExtent(extent, olProj, mapProjCode);
+                                }
                                 break;
                             }
                         }
