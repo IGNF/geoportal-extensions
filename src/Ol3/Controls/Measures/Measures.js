@@ -49,18 +49,21 @@ define([
                 container : null,
                 draw : null,
                 layer : null,
+                // tootltip : null,
                 active : false
             },
             MeasureArea : {
                 container : null,
                 draw : null,
                 layer : null,
+                // tootltip : null,
                 active : false
             },
             MeasureAzimuth : {
                 container : null,
                 draw : null,
                 layer : null,
+                // tootltip : null,
                 active : false
             }
         },
@@ -106,13 +109,13 @@ define([
         measureTooltip : null,
 
         /**
-        * The help tooltip element.
+        * TODO The help tooltip element.
         * @type {Element}
         */
         helpTooltipElement : null,
 
         /**
-        * Overlay to show the help.
+        * TODO Overlay to show the help.
         * @type {ol.Overlay}
         */
         helpTooltip : null,
@@ -210,10 +213,12 @@ define([
                         this.clearMeasureToolTip();
                         map.removeLayer(this.tools[instance].layer);
                         map.removeInteraction(this.tools[instance].draw);
+                        // map.removeOverlay(this.tools[instance].tooltip);
                         this.tools[instance].active = false;
                         this.tools[instance].container.checked = true;
                         this.tools[instance].draw  = null;
                         this.tools[instance].layer = null;
+                        // this.tools[instance].tooltip = null;
                     }
                 }
             }
@@ -229,16 +234,18 @@ define([
                 this.initMeasureInteraction();
                 this.addMeasureInteraction(type);
                 this.tools[self].active = true;
-                this.tools[self].container = this._showContainer; // FIXME pourri !?
+                this.tools[self].container = this._showContainer; // FIXME pourri, mais il me faut cette information !?
                 this.tools[self].draw  = this.measureDraw;
                 this.tools[self].layer = this.measureVector;
+                // this.tools[self].tooltip = this.measureTooltip;
             } else {
 
                 this.clearMeasure();
                 this.tools[self].active = false;
-                this.tools[self].container = this._showContainer; // FIXME pourri !?
+                this.tools[self].container = this._showContainer; // FIXME pourri, mais il me faut cette information !?
                 this.tools[self].draw  = null;
                 this.tools[self].layer = null;
+                // this.tools[self].tooltip = null;
             }
         },
 
@@ -251,7 +258,8 @@ define([
         */
         clearMeasureToolTip : function () {
 
-            // "querySelectorAll" : au cas où il y'aurait plusieurs container (ex. overview-map)
+            // "querySelectorAll" :
+            // au cas où il y'aurait plusieurs container (ex. overview-map)
             var lstNodes = document.querySelectorAll(".ol-overlaycontainer-stopevent");
             for (var k = 0; k < lstNodes.length; k++) {
                 var nodes = lstNodes[k];
@@ -281,9 +289,10 @@ define([
 
             this.clearMeasureToolTip();
 
-            if (this.measureTooltip) { // FIXME !?
-                map.removeOverlay(this.measureTooltip);
-            }
+            // FIXME !?
+            // if (this.measureTooltip) {
+            //     map.removeOverlay(this.measureTooltip);
+            // }
 
             if (this.measureVector) {
                 map.removeLayer(this.measureVector);
@@ -296,6 +305,8 @@ define([
 
         /**
         * Creates a new measure tooltip
+        * FIXME bug d'affichage de la tooltip de saisie en cours si on ne termine pas
+        * la saisie  !?
         *
         * @param {ol.Map} map - The Map.
         */
@@ -317,7 +328,7 @@ define([
         },
 
         /**
-        * TODO
+        * TODO evolution
         * Creates a new help tooltip
         *
         * @param {ol.Map} map - The Map.

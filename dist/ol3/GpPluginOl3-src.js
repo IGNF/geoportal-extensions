@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-09-29
+ * @date 2016-10-03
  *
  */
 /*!
@@ -25614,9 +25614,6 @@ Ol3ControlsMeasuresMeasures = function (ol, woodman) {
         clearMeasure: function () {
             var map = this.getMap();
             this.clearMeasureToolTip();
-            if (this.measureTooltip) {
-                map.removeOverlay(this.measureTooltip);
-            }
             if (this.measureVector) {
                 map.removeLayer(this.measureVector);
             }
@@ -26101,9 +26098,16 @@ Ol3ControlsMeasuresMeasureAzimuth = function (ol, woodman, Utils, Measures, Meas
         var sourceProj = map.getView().getProjection();
         var c1 = ol.proj.transform(line.getFirstCoordinate(), sourceProj, 'EPSG:4326');
         var c2 = ol.proj.transform(line.getCoordinateAt(0.001), sourceProj, 'EPSG:4326');
-        var x = Math.cos(c1[1]) * Math.sin(c2[1]) - Math.sin(c1[1]) * Math.cos(c2[1]) * Math.cos(c2[0] - c1[0]);
-        var y = Math.sin(c2[0] - c1[0]) * Math.cos(c2[1]);
-        var azimut = Math.atan2(y, x) / Math.PI * -180;
+        var degrees2radians = Math.PI / 180;
+        var radians2degrees = 180 / Math.PI;
+        var lon1 = degrees2radians * c1[0];
+        var lon2 = degrees2radians * c2[0];
+        var lat1 = degrees2radians * c1[1];
+        var lat2 = degrees2radians * c2[1];
+        var a = Math.sin(lon2 - lon1) * Math.cos(lat2);
+        var b = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1);
+        var atan = Math.atan2(a, b);
+        var azimut = radians2degrees * atan;
         if (azimut < 0) {
             azimut += 360;
         }
@@ -26131,7 +26135,7 @@ Ol3ControlsMeasuresMeasureAzimuth = function (ol, woodman, Utils, Measures, Meas
 }(ol, {}, Ol3Utils, Ol3ControlsMeasuresMeasures, CommonControlsMeasureAzimuthDOM, CommonUtilsSelectorID);
 Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, KML, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution, MeasureLength, MeasureArea, MeasureAzimuth) {
     Gp.ol3extVersion = '0.11.0';
-    Gp.ol3extDate = '2016-09-29';
+    Gp.ol3extDate = '2016-10-03';
     Gp.LayerUtils = LayerUtils;
     ol.format.KMLExtended = KML;
     CRS.overload();
