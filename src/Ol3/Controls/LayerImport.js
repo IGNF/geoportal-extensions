@@ -1002,8 +1002,14 @@ define([
     LayerImport.prototype._addGetCapWMSLayer = function (layerInfo) {
         var map = this.getMap();
         if ( !map ) {
+            console.log("[ol.control.LayerImport] _addGetCapWMSLayer error : map is not defined");
             return;
         }
+        if ( !layerInfo ) {
+            console.log("[ol.control.LayerImport] _addGetCapWMSLayer error : layerInfo is not defined");
+            return;
+        }
+
         // récupération de la projection de la carte
         var mapProjCode = this._getMapProjectionCode();
 
@@ -1183,20 +1189,53 @@ define([
      * @private
      */
     LayerImport.prototype._getWMSLayerExtent = function (layerInfo, mapProjCode, layerTileOptions) {
-        // récupération de l'étendue (bbox)
-        if ( layerInfo.BoundingBox && Array.isArray(layerInfo.BoundingBox) ) {
-            for ( var i = 0; i < layerInfo.BoundingBox.length; i++ ) {
-                var crs = layerInfo.BoundingBox[i].crs;
+        if ( !layerInfo ) {
+            console.log("[ol.control.LayerImport] _getWMSLayerExtent error : layerInfo is not defined");
+            return;
+        }
+
+        // récupération des 2 propriétés qui peuvent spécifier l'étendue (bbox) selon les specs OGC WMS 1.3.0 :
+        // 1. layerInfo.EX_GeographicBoundingBox est un tableau de type [westBoundLongitude, southBoundLatitude, eastBoundLongitude, northBoundLatitude] en WGS84
+        var exGeographicBoundingBox = layerInfo["EX_GeographicBoundingBox"];
+        // 2. layerInfo.BoundingBox est un tableau dont chaque élément est un objet (balise bbox) avec les propriétés suivantes :
+        // crs (String) et extent (tableau de type [minx, miny, maxx, maxy])
+        var boundingBox = layerInfo.BoundingBox;
+
+        if ( exGeographicBoundingBox && Array.isArray(exGeographicBoundingBox) ) {
+            if ( mapProjCode === "EPSG:4326" ) {
+                // si la projection de la carte est la même que celle de l'extent (EPSG:4326), on la passe telle quelle
+                layerTileOptions.extent = exGeographicBoundingBox;
+            } else {
+                layerTileOptions.extent = ol.proj.transformExtent(exGeographicBoundingBox, "EPSG:4326", mapProjCode);
+            }
+
+        // si jamais EX_GeographicBoundingBox n'est pas ou est mal renseigné, on essaie de récupérer via le paramètre BoundingBox
+        } else if ( boundingBox && Array.isArray(boundingBox) ) {
+            var crs;
+            var extent;
+            for ( var i = 0; i < boundingBox.length; i++ ) { // on peut avoir plusieurs BoundingBox
+                crs = boundingBox[i].crs;
+                extent = boundingBox[i].extent;
                 if ( crs ) {
                     if ( crs === mapProjCode ) {
                         // si la bbox est dans la projection de la carte, on la passe telle quelle
-                        layerTileOptions.extent = layerInfo.BoundingBox[i].extent;
+                        layerTileOptions.extent = extent;
                         break;
                     } else {
                         if ( crs && typeof crs === "string" ) {
-                            if ( ol.proj.get(crs) || ol.proj.get(crs.toUpperCase()) ) {
-                                // si la bbox est dans une projection connue, on la reprojette
-                                layerTileOptions.extent = ol.proj.transformExtent(layerInfo.BoundingBox[i].extent, crs, mapProjCode);
+                            var olProj = ol.proj.get(crs) ? ol.proj.get(crs) : ol.proj.get(crs.toUpperCase());
+                            // if ( ol.proj.get(crs) || ol.proj.get(crs.toUpperCase()) ) {
+                            if ( olProj ) {
+                                // si la bbox est dans une projection connue, on va la reprojeter
+                                // tout d'abord, on gère le cas des systèmes EPSG géographiques : inversion des axes x et y
+                                if ( olProj.getUnits() === "degrees" && crs.toUpperCase().indexOf("EPSG") === 0 ) {
+                                    // le tableau extent est inversé, on a besoin de : [miny, minx, maxx, maxy]
+                                    var reversedExtent = [extent[1], extent[0], extent[3], extent[2]];
+                                    layerTileOptions.extent = ol.proj.transformExtent(reversedExtent, olProj, mapProjCode);
+                                } else {
+                                    // reprojection dans la projection de la carte
+                                    layerTileOptions.extent = ol.proj.transformExtent(extent, olProj, mapProjCode);
+                                }
                                 break;
                             }
                         }
