@@ -5,6 +5,7 @@ define([
     "Leaflet/Controls/ReverseGeocoding",
     "Leaflet/Controls/Route",
     "Leaflet/Controls/SearchEngine",
+    "Leaflet/Controls/ElevationPath",
     "Leaflet/Controls/Logo"
 ],
 function (
@@ -14,6 +15,7 @@ function (
     ReverseGeocoding,
     Route,
     SearchEngine,
+    ElevationPath,
     Logo
 ) {
 
@@ -272,6 +274,31 @@ function (
         */
         SearchEngine : function (options) {
             return new SearchEngine(options);
+        },
+
+        /**
+        * Factory function for ElevationPath Control creation.
+        *
+        * @method ElevationPath
+        * @static
+        * @alias L.geoportalControl.ElevationPath
+        * @param {Object} options - ElevationPath control options
+        * @param {Sting}   [options.apiKey] - API key for services call (isocurve and autocomplete services), mandatory if autoconf service has not been charged in advance
+        * @param {String}  [options.position] - position of component into the map, 'topleft' by default
+        * @param {Boolean} [options.collapsed] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
+        * @param {Object} [options.graphOptions] - TODO graph options.
+        * @param {Object} [options.elevationPathOptions] - altitude service options.
+        * @returns {L.geoportalControl.ElevationPath}
+        * @example
+        *  var e = L.geoportalControl.ElevationPath({
+        *      collapsed : false
+        *      position : "topleft"
+        *      graphOptions : {},
+        *      elevationPathOptions : {}
+        *  });
+        */
+        ElevationPath : function (options) {
+            return new ElevationPath(options);
         },
 
         /**
