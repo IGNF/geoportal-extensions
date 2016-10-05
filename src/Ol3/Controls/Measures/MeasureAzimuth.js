@@ -113,10 +113,10 @@ define([
         if ( map ) {
             var self = this;
             map.on("pointermove", function (e) {
-                self.onPointerMoveHandler(e);
+                self.onPointerMoveAzimutHandler(e);
             });
             map.on("click", function (e) {
-                self.onPointerClickAzimutHandler(e);
+                self.onPointerMoveAzimutHandler(e);
             });
         }
 
@@ -233,17 +233,12 @@ define([
     * @param {ol.MapBrowserEvent} e - The event.
     * @private
     */
-    MeasureAzimuth.prototype.onPointerClickAzimutHandler = function (e) {
+    MeasureAzimuth.prototype.onPointerMoveAzimutHandler = function (e) {
 
-        var tooltipCoord = e.coordinate;
+        this.onPointerMoveHandler(e);
 
         if (this.sketch) {
-            var output;
             var geom = (/** @type {ol.geom.LineString} */ (this.sketch.getGeometry()));
-            output = this.format(geom);
-            tooltipCoord = geom.getLastCoordinate();
-            this.measureTooltipElement.innerHTML = output;
-            this.measureTooltip.setPosition(tooltipCoord);
             if (geom.getCoordinates().length > 2) {
                 this.measureDraw.finishDrawing();
             }

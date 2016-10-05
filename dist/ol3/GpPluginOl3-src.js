@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-10-03
+ * @date 2016-10-05
  *
  */
 /*!
@@ -26109,10 +26109,10 @@ Ol3ControlsMeasuresMeasureAzimuth = function (ol, woodman, Utils, Measures, Meas
         if (map) {
             var self = this;
             map.on('pointermove', function (e) {
-                self.onPointerMoveHandler(e);
+                self.onPointerMoveAzimutHandler(e);
             });
             map.on('click', function (e) {
-                self.onPointerClickAzimutHandler(e);
+                self.onPointerMoveAzimutHandler(e);
             });
         }
         ol.control.Control.prototype.setMap.call(this, map);
@@ -26154,15 +26154,10 @@ Ol3ControlsMeasuresMeasureAzimuth = function (ol, woodman, Utils, Measures, Meas
     MeasureAzimuth.prototype.onShowMeasureAzimuthClick = function (e) {
         this.onShowMeasureClick(e, 'LineString');
     };
-    MeasureAzimuth.prototype.onPointerClickAzimutHandler = function (e) {
-        var tooltipCoord = e.coordinate;
+    MeasureAzimuth.prototype.onPointerMoveAzimutHandler = function (e) {
+        this.onPointerMoveHandler(e);
         if (this.sketch) {
-            var output;
             var geom = this.sketch.getGeometry();
-            output = this.format(geom);
-            tooltipCoord = geom.getLastCoordinate();
-            this.measureTooltipElement.innerHTML = output;
-            this.measureTooltip.setPosition(tooltipCoord);
             if (geom.getCoordinates().length > 2) {
                 this.measureDraw.finishDrawing();
             }
@@ -26172,7 +26167,7 @@ Ol3ControlsMeasuresMeasureAzimuth = function (ol, woodman, Utils, Measures, Meas
 }(ol, {}, Ol3Utils, Ol3ControlsMeasuresMeasures, CommonControlsMeasureAzimuthDOM, CommonUtilsSelectorID);
 Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, KML, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution, MeasureLength, MeasureArea, MeasureAzimuth) {
     Gp.ol3extVersion = '0.11.0';
-    Gp.ol3extDate = '2016-10-03';
+    Gp.ol3extDate = '2016-10-05';
     Gp.LayerUtils = LayerUtils;
     ol.format.KMLExtended = KML;
     CRS.overload();

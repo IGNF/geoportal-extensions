@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.8.1
- * @date 2016-10-03
+ * @date 2016-10-05
  *
  */
 /* MOUSE POSITION */
@@ -2152,62 +2152,6 @@ input.GPinputSubmit {
   background-image: url("img/GPshowMoreOptions.png");
 }
 
-/* ISOCHRON */
-
-div[id^=GPisochron-] {
-   /* left: 10px; */
-  top: 0; /*overwritten*/
-}
-
-/* Showing/hiding isochron panel */
-
-span[id^=GPshowIsochronOpen] {
-  background-image: url("img/GPisochronOpen.png");
-}
-
-/* General panels */
-
-div[id^=GPisochronPanel-] {
-  left: 10px;
-}
-
-div[id^=GPisochronPanelClose] {
-  background-image: url("img/GPisochronOpen.png");
-}
-
-div[id^=GPisochronPanelReduce] {
-  background-image: url("img/GPisochronOpen.png");
-}
-
-/* Calc waiting */
-
-.GPisochronCalcWaitingContainerVisible,
-.GPisochronCalcWaitingContainerHidden {
-  border-radius: 5px;
-}
-
-/* Isochron form */
-
-.GPisochronChoiceAlt input:checked + label + span {
-  color: #C77A04;
-}
-
-.GPisochronOriginPointerImg,
-.GPisochronChoiceAltImg,
-.GPisochronTransportImg {
-  background-image: url("img/GPisochronOptions.png");
-}
-
-.GPisoExclusionsOption {
-  background-image: url("img/GPisochronCheck.png");
-}
-
-/* Reset picto */
-div[id^=GPisochronReset] {
-  background-color: #C77A04;
-  background-image: url("img/GPisochronOptions.png");
-}
-
 /* LAYER SWITCHER LEAFLET */
 
 #GPlayerSwitcher {
@@ -2290,6 +2234,62 @@ div[id^=GPisochronReset] {
 .GPlayerInfoLink,
 .GPlayerInfoPopup {
   background-image: url("img/GPlayerInfo.png");
+}
+
+/* ISOCHRON */
+
+div[id^=GPisochron-] {
+   /* left: 10px; */
+  top: 0; /*overwritten*/
+}
+
+/* Showing/hiding isochron panel */
+
+span[id^=GPshowIsochronOpen] {
+  background-image: url("img/GPisochronOpen.png");
+}
+
+/* General panels */
+
+div[id^=GPisochronPanel-] {
+  left: 10px;
+}
+
+div[id^=GPisochronPanelClose] {
+  background-image: url("img/GPisochronOpen.png");
+}
+
+div[id^=GPisochronPanelReduce] {
+  background-image: url("img/GPisochronOpen.png");
+}
+
+/* Calc waiting */
+
+.GPisochronCalcWaitingContainerVisible,
+.GPisochronCalcWaitingContainerHidden {
+  border-radius: 5px;
+}
+
+/* Isochron form */
+
+.GPisochronChoiceAlt input:checked + label + span {
+  color: #C77A04;
+}
+
+.GPisochronOriginPointerImg,
+.GPisochronChoiceAltImg,
+.GPisochronTransportImg {
+  background-image: url("img/GPisochronOptions.png");
+}
+
+.GPisoExclusionsOption {
+  background-image: url("img/GPisochronCheck.png");
+}
+
+/* Reset picto */
+div[id^=GPisochronReset] {
+  background-color: #C77A04;
+  background-image: url("img/GPisochronOptions.png");
 }
 
 /* Location */
@@ -2375,60 +2375,6 @@ div[id^=GPlocationStageAdd],
     color: #222;
 }
 
-/* SEARCH ENGINE */
-
-div[id^=GPsearchEngine-] {
-  /* top: 10px; */
-  /* left: 46px; */
-}
-
-/* Showing/hiding search engine input */
-
-span[id^=GPshowSearchEngineOpen] {
-  background-image: url("img/GPsearchEngineOpen.png");
-}
-
-/* Simple search input */
-
-form[id^=GPsearchInput-] {
-  height: 30px;
-}
-
-div[id^=GPsearchInputReset] {
-  background-image: url("img/GPsearchEngineClose.png");
-}
-
-/* General panels */
-
-div[id^=GPgeocodeResultsClose] {
-  background-image: url("img/GPsearchEngineClose.png");
-}
-
-div[id^=GPadvancedSearchClose] {
-  background-image: url("img/GPsearchEngineOpen.png");
-  background-position: -60px 0;
-}
-
-/* Advanced search picto */
-
-span[id^=GPshowAdvancedSearchOpen] {
-  background-image: url("img/GPsearchEngineOpen.png");
-  background-position: -30px 0;
-}
-
-/* Autocomplete list / geocode results */
-
-div[id^=GPautoCompleteList],
-div[id^=GPgeocodeResultsList] {
-  margin-left: 27px;
-  box-shadow: 0 1px 5px #000;
-}
-
-div[id^=GPgeocodeResultsList] {
-  top: 38px;
-  border-radius: 5px;
-}
-
 /* ROUTE */
 
 div[id^=GProute-] {
@@ -2496,6 +2442,60 @@ input[id^=GProuteResultsShowDetails] + label + label:hover {
 .GProuteResultsDetailsHighlight {
     background-color: rgba(255,200,0,0.25);
     color: #222;
+}
+
+/* SEARCH ENGINE */
+
+div[id^=GPsearchEngine-] {
+  /* top: 10px; */
+  /* left: 46px; */
+}
+
+/* Showing/hiding search engine input */
+
+span[id^=GPshowSearchEngineOpen] {
+  background-image: url("img/GPsearchEngineOpen.png");
+}
+
+/* Simple search input */
+
+form[id^=GPsearchInput-] {
+  height: 30px;
+}
+
+div[id^=GPsearchInputReset] {
+  background-image: url("img/GPsearchEngineClose.png");
+}
+
+/* General panels */
+
+div[id^=GPgeocodeResultsClose] {
+  background-image: url("img/GPsearchEngineClose.png");
+}
+
+div[id^=GPadvancedSearchClose] {
+  background-image: url("img/GPsearchEngineOpen.png");
+  background-position: -60px 0;
+}
+
+/* Advanced search picto */
+
+span[id^=GPshowAdvancedSearchOpen] {
+  background-image: url("img/GPsearchEngineOpen.png");
+  background-position: -30px 0;
+}
+
+/* Autocomplete list / geocode results */
+
+div[id^=GPautoCompleteList],
+div[id^=GPgeocodeResultsList] {
+  margin-left: 27px;
+  box-shadow: 0 1px 5px #000;
+}
+
+div[id^=GPgeocodeResultsList] {
+  top: 38px;
+  border-radius: 5px;
 }
 
 /* ================================================================== */
