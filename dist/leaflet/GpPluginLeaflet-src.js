@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.8.1
- * @date 2016-10-04
+ * @date 2016-10-05
  *
  */
 /*!
@@ -24065,8 +24065,24 @@ LeafletControlsElevationPath = function (L, P, woodman, Gp, RightManagement, ID,
                 this._displayProfilWithD3(elevations);
             } else {
                 console.log('No library is loaded !');
-                return;
+                this._displayProfilWithResults(elevations);
             }
+        },
+        _displayProfilWithResults: function (data) {
+            var container = this._profilContainer;
+            if (container) {
+                while (container.firstChild) {
+                    container.removeChild(container.firstChild);
+                }
+            }
+            var div = document.createElement('textarea');
+            div.id = 'profilElevationResults';
+            div.rows = 10;
+            div.cols = 50;
+            div.style.width = '100%';
+            div.innerHTML = JSON.stringify(data, undefined, 4);
+            container.appendChild(div);
+            this._profil = container;
         },
         _displayProfilWithD3: function (data) {
             var container = this._profilContainer;
@@ -24890,7 +24906,7 @@ LeafletLayersLayers = function (L, woodman, LayerConfig, WMS, WMTS) {
 }(leaflet, {}, LeafletLayersLayerConfig, LeafletLayersWMS, LeafletLayersWMTS);
 LeafletGpPluginLeaflet = function (L, P, Gp, Controls, Layers, CRS, Register) {
     Gp.leafletExtVersion = '0.8.1';
-    Gp.leafletExtDate = '2016-10-04';
+    Gp.leafletExtDate = '2016-10-05';
     Gp.Register = Register;
     L.geoportalLayer = Layers;
     L.geoportalControl = Controls;
