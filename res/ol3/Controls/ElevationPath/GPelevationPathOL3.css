@@ -1,0 +1,189 @@
+div[id^=GPelevationPath-] {
+  top: 260px;
+  left: 106px;
+}
+
+/* Showing/hiding elevationPath panel */
+
+label[id^=GPshowElevationPathPicto] {
+  display: inline-block;
+}
+
+input[id^=GPshowElevationPath-] + label {
+  display: block;
+}
+
+input[id^=GPshowElevationPath-]:checked + label {
+  /* display: none; */
+}
+
+input[id^=GPshowElevationPath-] + label + div {
+  display: none;
+}
+
+input[id^=GPshowElevationPath-]:checked + label + div {
+  display: block;
+}
+
+span[id^=GPshowElevationPathOpen] {
+  background-image: url("img/GPshowElevationPath.png");
+}
+
+/* Panel */
+
+[id^=GPelevationPathPanelClose] {
+  background-image: url("img/GPshowElevationPath.png");
+}
+
+div[id^=GPelevationPathPanelReduce] {
+  background-image: url("img/GPshowElevationPath.png");
+}
+
+[id^=GPelevationPathPanel-] {
+  width: 280px;
+}
+/* Calc waiting */
+
+.GPelevationPathCalcWaitingContainerVisible,
+.GPelevationPathCalcWaitingContainerHidden {
+  position: absolute;
+  top: 32px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(255,255,255,0.9);
+  font-size: 1.5em;
+  font-weight: bold;
+  overflow: hidden;
+}
+
+.GPelevationPathCalcWaitingContainerVisible {
+  display: -webkit-flex;
+  display: flex;
+}
+
+.GPelevationPathCalcWaitingContainerHidden {
+  display: none;
+}
+
+.GPelevationPathCalcWaiting {
+  margin: auto;
+}
+
+.GPelevationPathCalcWaitingContainerVisible,
+.GPelevationPathCalcWaitingContainerHidden {
+  border-radius: 5px;
+}
+
+/* ELEVATION PATH DISPLAY */
+
+[id^=GPelevationPathProfil] {
+  height: 150px;
+}
+
+/* CSS : D3 */
+
+text {
+  fill: rgb(94, 94, 94);
+  font-family: Verdana;
+  font-size: 10px;
+  opacity: 1;
+  text-anchor: end;
+}
+
+.axis {
+  fill: none;
+  stroke: #5E5E5E;
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+
+.area {
+  fill: #C77A04;
+  stroke: #5E5E5E;
+  stroke-width: 0;
+  fill-opacity: 0.4;
+}
+
+.line {
+  fill: none;
+  stroke: #C77A04;
+  stroke-width: 1px;
+}
+
+.grid .tick {
+  stroke: lightgrey;
+  opacity: 0.7;
+}
+
+.grid path {
+  stroke-width: 0;
+}
+
+.grid .tick {
+  stroke: lightgrey;
+  opacity: 0.7;
+}
+
+.grid path {
+  stroke-width: 0;
+}
+
+.overlay {
+  fill: none;
+  pointer-events: all;
+}
+
+.focusLine {
+  fill: none;
+  stroke: #C77A04;
+  stroke-width: 0.5px;
+}
+
+.focusCircle {
+  fill: #C77A04;
+}
+
+div.tooltip {
+    position: inherit;;
+    text-align: left;
+    width: 80px;
+    height: 35px;
+    padding: 2px;
+    font: 8px sans-serif;
+    background: lightsteelblue;
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
+}
+
+/*
+@media (min-width:720px) and (min-height:720px) {
+
+[id^=GPelevationPathPanel] {
+top: 15px;
+left: 15px;
+}
+
+}
+
+@media (min-width:720px) and (min-height:520px) {
+
+[id^=GPelevationPathPanel] {
+width: 460px;
+}
+
+[id^=GPelevationPathProfil] {
+height: 220px;
+}
+
+}
+
+@media (max-width:560px), (max-height:340px) {
+
+[id^=GPelevationPathPanel] {
+display: none !important;
+}
+
+}
+*/
