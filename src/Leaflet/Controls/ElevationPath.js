@@ -839,9 +839,7 @@ define([
 
         },
 
-        /**
-        * TODO...
-        */
+        /** ... */
         _displayProfilWithAmCharts : function (data) {
 
             AmCharts.addInitHandler(function () {

@@ -95,9 +95,26 @@
           });
 
           var profil = new ElevationPath({
-            collapsed : true,
-            elevationPathOptions : {
+            collapsed : false,
+            elevationOptions : {
               sampling : 50
+            },
+            stylesOptions : {
+              draw : {
+               start : {
+                 fillColor : "rgba(255, 255, 255, 0.2)",
+                 strokeColor : "rgba(0, 0, 0, 0.5)",
+                 strokeLineDash : [3, 3],
+                 strokeWidth : 2,
+                 imageRadius : 5,
+                 imageFillColor : "rgba(255, 255, 255, 0.2)",
+                 imageStrokeColor : "rgba(0, 0, 0, 0.7)"
+               },
+               finish : {}
+              },
+              marker : {
+                imageSrc : "http://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi.png"
+              }
             }
           });
           map.addControl(profil);
