@@ -25007,6 +25007,11 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
                     layerObj[key] = parentLayersInfos[key];
                 }
             }
+            if (!parentLayersInfos._isRootLayer && parentLayersInfos.Title) {
+                layerObj.Title = parentLayersInfos.Title + ' > ' + layerObj.Title;
+            }
+        } else {
+            layerObj._isRootLayer = true;
         }
         if (layerObj.Layer) {
             if (Array.isArray(layerObj.Layer)) {

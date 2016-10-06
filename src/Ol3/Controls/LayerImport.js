@@ -1023,6 +1023,14 @@ define([
                     layerObj[key] = parentLayersInfos[key];
                 }
             }
+            // on affiche l'arborescence dans le titre de la couche (sauf si on est au premier niveau ?)
+            if ( !parentLayersInfos._isRootLayer && parentLayersInfos.Title ) {
+                layerObj.Title = parentLayersInfos.Title + " > " + layerObj.Title;
+            }
+
+        }else {
+            // si on n'a pas d'infos de couche parent, on est à la racine du Capability, on le note
+            layerObj._isRootLayer = true;
         }
 
         // 2. si on a d'autres couches <Layer> imbriquées, on descend d'un niveau, sinon on affiche la couche dans la liste des résultats
