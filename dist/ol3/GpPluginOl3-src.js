@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-10-05
+ * @date 2016-10-06
  *
  */
 /*!
@@ -24909,6 +24909,7 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
         var layers;
         var layerDescription;
         var projection;
+        this._getCapResponseWMSLayers = [];
         this.contentService = xmlResponse;
         this._importPanel.style.display = 'none';
         this._getCapPanel.style.display = 'block';
@@ -24919,23 +24920,14 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
                 return;
             }
             var getCapResponseWMS = this._getCapResponseWMS = parser.read(xmlResponse);
-            if (getCapResponseWMS && getCapResponseWMS.Capability && getCapResponseWMS.Capability.Layer && getCapResponseWMS.Capability.Layer.Layer) {
-                layers = getCapResponseWMS.Capability.Layer.Layer;
-                if (Array.isArray(layers)) {
-                    this._getCapResponseWMSLayers = layers;
-                    for (var i = 0; i < layers.length; i++) {
-                        projection = this._getWMSLayerProjection(layers[i], mapProjCode);
-                        if (!projection) {
-                            console.log('[ol.control.LayerImport] wms layer cannot be added to map : unknown projection', layers[i]);
-                            continue;
-                        } else {
-                            layers[i]._projection = projection;
-                            layerDescription = layers[i].Title;
-                            if (this._getCapResultsListContainer) {
-                                this._getCapResultsListContainer.appendChild(this._createImportGetCapResultElement(layerDescription, i));
-                            }
-                        }
+            if (getCapResponseWMS && getCapResponseWMS.Capability && getCapResponseWMS.Capability.Layer) {
+                var getCapLayer = getCapResponseWMS.Capability.Layer;
+                if (Array.isArray(getCapLayer)) {
+                    for (var i = 0; i < getCapLayer.length; i++) {
+                        this._displayGetCapResponseWMSLayer(getCapLayer[i]);
                     }
+                } else {
+                    this._displayGetCapResponseWMSLayer(getCapLayer);
                 }
             }
         } else if (this._currentImportType === 'WMTS') {
@@ -24963,6 +24955,77 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
                         }
                     }
                 }
+            }
+        }
+    };
+    LayerImport.prototype._displayGetCapResponseWMSLayer = function (layerObj, parentLayersInfos) {
+        if (!layerObj) {
+            console.log('[ol.control.LayerImport] _displayGetCapResponseWMSLayer : getCapabilities layer object not found');
+        } else {
+        }
+        var mapProjCode = this._getMapProjectionCode();
+        var projection;
+        var layerDescription;
+        if (parentLayersInfos) {
+            var key;
+            var i;
+            var addKeys = [
+                'CRS',
+                'Style'
+            ];
+            for (var i = 0; i < addKeys.length; i++) {
+                key = addKeys[i];
+                if (Array.isArray(parentLayersInfos[key]) && parentLayersInfos[key].length !== 0) {
+                    if (Array.isArray(layerObj[key]) && layerObj[key].length !== 0) {
+                        for (var n = 0; n < parentLayersInfos[key]; n++) {
+                            if (layerObj[key].indexOf(parentLayersInfos[key][n]) === -1) {
+                                layerObj[key].push(parentLayersInfos[key][n]);
+                            }
+                        }
+                    } else {
+                        layerObj[key] = parentLayersInfos[key];
+                    }
+                }
+            }
+            var replaceKeys = [
+                'BoundingBox',
+                'EX_GeographicBoundingBox',
+                'MaxScaleDenominator',
+                'MinScaleDenominator',
+                'Attribution',
+                'Dimension',
+                'queryable',
+                'cascaded',
+                'opaque',
+                'noSubsets',
+                'fixedWidth',
+                'fixedHeight'
+            ];
+            for (var i = 0; i < replaceKeys.length; i++) {
+                key = replaceKeys[i];
+                if (parentLayersInfos[key] && !layerObj[key]) {
+                    layerObj[key] = parentLayersInfos[key];
+                }
+            }
+        }
+        if (layerObj.Layer) {
+            if (Array.isArray(layerObj.Layer)) {
+                for (var j = 0; j < layerObj.Layer.length; j++) {
+                    this._displayGetCapResponseWMSLayer(layerObj.Layer[j], layerObj);
+                }
+            }
+        } else {
+            var lastIndex = this._getCapResponseWMSLayers.length;
+            projection = this._getWMSLayerProjection(layerObj, mapProjCode);
+            if (!projection) {
+                console.log('[ol.control.LayerImport] wms layer cannot be added to map : unknown projection', layerObj);
+            } else {
+                layerObj._projection = projection;
+                layerDescription = layerObj.Title;
+                if (this._getCapResultsListContainer) {
+                    this._getCapResultsListContainer.appendChild(this._createImportGetCapResultElement(layerDescription, lastIndex));
+                }
+                this._getCapResponseWMSLayers[lastIndex] = layerObj;
             }
         }
     };
@@ -26167,7 +26230,7 @@ Ol3ControlsMeasuresMeasureAzimuth = function (ol, woodman, Utils, Measures, Meas
 }(ol, {}, Ol3Utils, Ol3ControlsMeasuresMeasures, CommonControlsMeasureAzimuthDOM, CommonUtilsSelectorID);
 Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, KML, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution, MeasureLength, MeasureArea, MeasureAzimuth) {
     Gp.ol3extVersion = '0.11.0';
-    Gp.ol3extDate = '2016-10-05';
+    Gp.ol3extDate = '2016-10-06';
     Gp.LayerUtils = LayerUtils;
     ol.format.KMLExtended = KML;
     CRS.overload();
