@@ -23,7 +23,36 @@ define([
     var logger = woodman.getLogger("elevationpath");
 
     /**
+    * @classdesc
+    *
+    * Tool Measure Elevation Path Control.
+    *
+    * @constructor
+    * @alias ol.control.ElevationPath
+    * @extends {ol.control.Control}
+    * @param {Object} options - options for function call.
+    * @param {Boolean} [options.collapsed = true] - specify if control should be collapsed at startup. Default is true.
+    * @param {Object} [options.stylesOptions = {}] - styles management
+    * @param {Object} [options.stylesOptions.marker = {}] - styles management of marker
+    * @param {Object} [options.stylesOptions.marker.imageSrc] - Icon source
+    * @param {Object} [options.stylesOptions.marker.imageAnchor] - Icon anchor
+    * @param {Object} [options.stylesOptions.graph = {}] - styles management of a profil (NOT YET IMPLEMENTED !)
+    * @param {Object} [options.stylesOptions.draw = {}] - styles management of draw
+    * @param {Object} [options.stylesOptions.draw.start = {}] - Line Style for a start drawing
+    * @param {Object} [options.stylesOptions.draw.start.fillColor] - Line for fill color
+    * @param {Object} [options.stylesOptions.draw.start.strokeColor] - Line for stroke color
+    * @param {Object} [options.stylesOptions.draw.start.strokeLineDash] - Line for stroke dash
+    * @param {Object} [options.stylesOptions.draw.start.strokeWidth] - Line for stroke width
+    * @param {Object} [options.stylesOptions.draw.start.imageRadius] - Point radius
+    * @param {Object} [options.stylesOptions.draw.start.imageFillColor] - Point for fill color
+    * @param {Object} [options.stylesOptions.draw.start.imageStrokeColor] - Point for stroke color
+    * @param {Object} [options.stylesOptions.draw.finish = {}] - Line Style for a finish drawing
+    * @param {Object} [options.stylesOptions.draw.finish.fillColor] - Line for fill color
+    * @param {Object} [options.stylesOptions.draw.finish.strokeColor] - Line for stroke color
+    * @param {Object} [options.stylesOptions.draw.finish.strokeWidth] - Line for stroke width
+    * @param {Object} [options.elevationPathOptions = {}] -
     * @example
+
     * var measure = new ol.control.ElevationPath({
     *    element : null,
     *    target : null,

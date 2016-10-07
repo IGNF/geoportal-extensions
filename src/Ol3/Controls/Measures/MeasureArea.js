@@ -18,11 +18,34 @@ define([
 
     // Derived from OpenLayers measure example
     // http://openlayers.org/en/latest/examples/measure.html
-    
+
     woodman.load("console");
     var logger = woodman.getLogger("measurearea");
 
     /**
+    * @classdesc
+    *
+    * Tool Measure Area Control.
+    *
+    * @constructor
+    * @alias ol.control.MeasureArea
+    * @extends {ol.control.Control}
+    * @param {Object} options - options for function call.
+    * @param {Boolean} [options.geodesic = true] - precision calculation
+    * @param {Object} [options.styles = {}] - styles management of draw
+    * @param {Object} [options.styles.start = {}] - Line Style for a start drawing
+    * @param {Object} [options.styles.start.fillColor] - Line for fill color
+    * @param {Object} [options.styles.start.strokeColor] - Line for stroke color
+    * @param {Object} [options.styles.start.strokeLineDash] - Line for stroke dash
+    * @param {Object} [options.styles.start.strokeWidth] - Line for stroke width
+    * @param {Object} [options.styles.start.imageRadius] - Point radius
+    * @param {Object} [options.styles.start.imageFillColor] - Point for fill color
+    * @param {Object} [options.styles.start.imageStrokeColor] - Point for stroke color
+    * @param {Object} [options.styles.finish = {}] - Line Style for a finish drawing
+    * @param {Object} [options.styles.finish.fillColor] - Line for fill color
+    * @param {Object} [options.styles.finish.strokeColor] - Line for stroke color
+    * @param {Object} [options.styles.finish.strokeWidth] - Line for stroke width
+    * @param {Object} [options.tooltip = {}] - NOT YET IMPLEMENTED !
     * @example
     * var measureArea = new ol.control.MeasureArea({
     *    element : null,
