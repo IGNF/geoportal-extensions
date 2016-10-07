@@ -1195,6 +1195,10 @@ define([
         var wmsLayer = new ol.layer.Tile(layerTileOptions);
         // on rajoute le champ gpResultLayerId permettant d'identifier une couche crée par le composant. (pour layerSwitcher par ex)
         wmsLayer.gpResultLayerId = "layerimport:WMS";
+        // on rajoute le champ gpQueryableWMSImport permettant d'identifier si la couche est queryable (pour getFeatureInfo)
+        if ( layerInfo.queryable ) {
+            wmsLayer.gpQueryableWMSImport = true;
+        }
 
         map.addLayer(wmsLayer);
     };

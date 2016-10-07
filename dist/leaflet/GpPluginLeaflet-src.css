@@ -2307,30 +2307,6 @@ div[id^=GPlocationStageAdd],
   background-image: url("img/GPlocationOptions.png");
 }
 
-/* MOUSE POSITION */
-
-#GPmousePosition {
-  /* bottom: 10px; */
-  /* left: 10px; */
-}
-
-/* Showing/hiding mouse position panel */
-
-#GPshowMousePositionOpen {
-  background-image: url("img/GPmousePositionOpen.png");
-}
-
-/* General panels */
-
-#GPmousePositionPanelClose {
-  background-image: url("img/GPmousePositionOpen.png");
-}
-
-/* Map center localisation */
-
-#GPmapCenter {
-  background-image: url("img/GPmapCenter.png");
-}
 /* REVERSE GEOCODING */
 
 [id^="GPreverseGeocoding-"] {
@@ -2375,6 +2351,30 @@ div[id^=GPlocationStageAdd],
     color: #222;
 }
 
+/* MOUSE POSITION */
+
+#GPmousePosition {
+  /* bottom: 10px; */
+  /* left: 10px; */
+}
+
+/* Showing/hiding mouse position panel */
+
+#GPshowMousePositionOpen {
+  background-image: url("img/GPmousePositionOpen.png");
+}
+
+/* General panels */
+
+#GPmousePositionPanelClose {
+  background-image: url("img/GPmousePositionOpen.png");
+}
+
+/* Map center localisation */
+
+#GPmapCenter {
+  background-image: url("img/GPmapCenter.png");
+}
 /* ROUTE */
 
 div[id^=GProute-] {

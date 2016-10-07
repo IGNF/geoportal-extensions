@@ -25107,6 +25107,9 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
         this._getWMSLayerExtent(layerInfo, mapProjCode, layerTileOptions);
         var wmsLayer = new ol.layer.Tile(layerTileOptions);
         wmsLayer.gpResultLayerId = 'layerimport:WMS';
+        if (layerInfo.queryable) {
+            wmsLayer.gpQueryableWMSImport = true;
+        }
         map.addLayer(wmsLayer);
     };
     LayerImport.prototype._getWMSLayerGetMapUrl = function () {
