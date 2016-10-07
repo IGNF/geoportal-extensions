@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-10-06
+ * @date 2016-10-07
  *
  */
 /*!
@@ -25717,8 +25717,10 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, El
         }
         this._lastSketch = null;
         this._currentSketch = null;
-        this._measureSource.removeFeature(this._marker);
-        this._marker = null;
+        if (this._marker) {
+            this._measureSource.removeFeature(this._marker);
+            this._marker = null;
+        }
         var _features = this._measureSource.getFeatures();
         for (var i = 0; i < _features.length; i++) {
             this._measureSource.removeFeature(_features[i]);
@@ -25910,6 +25912,10 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, El
                 self._lastSketch = null;
             }
             self._currentSketch = evt.feature;
+            var _features = self._measureSource.getFeatures();
+            for (var i = 0; i < _features.length; i++) {
+                self._measureSource.removeFeature(_features[i]);
+            }
         }, this);
         this._measureDraw.on('drawend', function (evt) {
             self._lastSketch = self._currentSketch;
@@ -25995,11 +26001,11 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, El
         var distance = 0;
         for (var i = 1; i < elevations.length; i++) {
             distance += wgs84Sphere.haversineDistance([
-                elevations[i].lat,
-                elevations[i].lon
+                elevations[i].lon,
+                elevations[i].lat
             ], [
-                elevations[i - 1].lat,
-                elevations[i - 1].lon
+                elevations[i - 1].lon,
+                elevations[i - 1].lat
             ]) / 1000;
             elevations[i].dist = distance;
             elevations[i].lat = Math.round(elevations[i].lat * 10000) / 10000;
@@ -26044,6 +26050,26 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, El
         div.innerHTML = JSON.stringify(data, undefined, 4);
         container.appendChild(div);
         this._profil = container;
+        var _proj = this.getMap().getView().getProjection();
+        for (var i = 0; i < data.length; i++) {
+            var obj = data[i];
+            var _coordinate = ol.proj.transform([
+                obj.lon,
+                obj.lat
+            ], 'EPSG:4326', _proj);
+            var _geometry = new ol.geom.Point(_coordinate);
+            this._marker = new ol.Feature({ geometry: _geometry });
+            var _image = new ol.style.Circle({
+                radius: 5,
+                stroke: new ol.style.Stroke({
+                    color: 'rgba(0, 0, 0, 0.7)',
+                    width: 2
+                }),
+                fill: new ol.style.Fill({ color: 'rgba(128, 128, 128, 0.2)' })
+            });
+            this._marker.setStyle(new ol.style.Style({ image: _image }));
+            this._measureSource.addFeature(this._marker);
+        }
     };
     ElevationPath.prototype._displayProfilWithD3 = function (data) {
     };
@@ -26811,7 +26837,7 @@ Ol3ControlsMeasuresMeasureAzimuth = function (ol, woodman, Utils, Measures, Meas
 }(ol, {}, Ol3Utils, Ol3ControlsMeasuresMeasures, CommonControlsMeasureAzimuthDOM, CommonUtilsSelectorID);
 Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, KML, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution, ElevationPath, MeasureLength, MeasureArea, MeasureAzimuth) {
     Gp.ol3extVersion = '0.11.0';
-    Gp.ol3extDate = '2016-10-06';
+    Gp.ol3extDate = '2016-10-07';
     Gp.LayerUtils = LayerUtils;
     ol.format.KMLExtended = KML;
     CRS.overload();

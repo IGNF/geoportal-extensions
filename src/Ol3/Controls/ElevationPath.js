@@ -238,8 +238,10 @@ define([
         this._currentSketch = null;
 
         // marker
-        this._measureSource.removeFeature(this._marker);
-        this._marker =  null;
+        if (this._marker) {
+            this._measureSource.removeFeature(this._marker);
+            this._marker = null;
+        }
 
         var _features = this._measureSource.getFeatures();
         for (var i = 0; i < _features.length; i++) {
@@ -575,6 +577,7 @@ define([
         this._measureDraw.on("drawstart", function (evt) {
             logger.trace(evt);
 
+            // delete marker current
             if (self._marker !== null) {
                 self._measureSource.removeFeature(self._marker);
                 self._marker = null;
@@ -586,6 +589,12 @@ define([
                 self._lastSketch = null;
             }
             self._currentSketch = evt.feature;
+
+            // and, all features
+            var _features = self._measureSource.getFeatures();
+            for (var i = 0; i < _features.length; i++) {
+                self._measureSource.removeFeature(_features[i]);
+            }
 
         }, this);
 
@@ -771,7 +780,7 @@ define([
         elevations[0].dist = 0;
         var distance = 0;
         for (var i = 1; i < elevations.length; i++) {
-            distance += (wgs84Sphere.haversineDistance([elevations[i].lat, elevations[i].lon],[elevations[i - 1].lat, elevations[i - 1].lon])) / 1000;
+            distance += (wgs84Sphere.haversineDistance([elevations[i].lon, elevations[i].lat], [elevations[i - 1].lon, elevations[i - 1].lat])) / 1000;
             elevations[i].dist = distance;
             elevations[i].lat = Math.round(elevations[i].lat * 10000) / 10000;
             elevations[i].lon = Math.round(elevations[i].lon * 10000) / 10000;
@@ -814,6 +823,7 @@ define([
     /**
     * display profil with simple results of service
     * TODO CSS externe pour id=profilElevationResults
+    * TODO Style des points du profil
     *
     * @param {Array} data - array of elevation
     * @private
@@ -840,6 +850,38 @@ define([
         container.appendChild(div);
 
         this._profil = container;
+
+        // symbolisation des points produits par le service
+        var _proj = this.getMap().getView().getProjection();
+        for (var i = 0; i < data.length; i++) {
+            var obj = data[i];
+            var _coordinate = ol.proj.transform([obj.lon, obj.lat], "EPSG:4326", _proj);
+            var _geometry   = new ol.geom.Point(_coordinate);
+
+            this._marker = new ol.Feature({
+                geometry : _geometry
+            });
+            logger.trace(_geometry);
+
+            // TODO style en options ?
+            var _image = new ol.style.Circle({
+                radius : 5,
+                stroke : new ol.style.Stroke({
+                    color : "rgba(0, 0, 0, 0.7)",
+                    width : 2
+                }),
+                fill : new ol.style.Fill({
+                    color : "rgba(128, 128, 128, 0.2)"
+                })
+            });
+            this._marker.setStyle(new ol.style.Style({
+                image : _image
+            }));
+
+            // ajout du marker sur la map
+            this._measureSource.addFeature(this._marker);
+        }
+
     };
 
     /**
