@@ -885,18 +885,271 @@ define([
     };
 
     /**
-    * TODO display graphical profil with lib. D3
+    * display graphical profil with lib. D3
+    * TODO gestion des styles utilisateurs !
+    * FIXME feature or overlay pour le deplacement du marker ?
     *
     * @param {Array} data - array of elevation
     * @private
     */
     ElevationPath.prototype._displayProfilWithD3 = function (data) {
         logger.trace("ElevationPath::_displayProfilWithD3", data);
+
+        var container = this._profilContainer;
+
+        // on nettoie toujours...
+        if (container) {
+            while (container.firstChild) {
+                container.removeChild(container.firstChild);
+            }
+        }
+
+        var margin = {
+            top : 20,
+            right : 20,
+            bottom : 30,
+            left : 40
+        };
+
+        var width  = container.clientWidth - margin.left - margin.right;
+        var height = container.clientHeight - margin.top - margin.bottom;
+
+        var x = d3.scale.linear()
+            .range([0, width]);
+
+        var y = d3.scale.linear()
+            .range([height, 0]);
+
+        var xAxis = d3.svg.axis()
+            .scale(x)
+            .orient("bottom")
+            .ticks(5);
+
+        var yAxis = d3.svg.axis()
+            .scale(y)
+            .orient("left")
+            .ticks(5);
+
+        var line = d3.svg.line()
+            .interpolate("basis")
+            .x(function (d) {
+                return x(d.dist);
+            })
+            .y(function (d) {
+                return y(d.z);
+            });
+
+        var area = d3.svg.area()
+            .interpolate("basis")
+            .x(function (d) {
+                return x(d.dist);
+            })
+            .y0(height)
+            .y1(function (d) {
+                return y(d.z);
+            });
+
+        var svg = d3.select(container)
+            .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        var xDomain = d3.extent(data, function (d) {
+            return d.dist;
+        });
+        x.domain(xDomain);
+
+        var yDomain = [
+            0,
+            d3.max(data, function (d) {
+                return d.z;
+            })
+        ];
+        y.domain(yDomain);
+
+        svg.append("path")
+            .datum(data)
+            .attr("class", "area")
+            .attr("d", area);
+
+        svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(xAxis)
+            .append("text")
+            .attr("y", -15)
+            .attr("dy", ".71em")
+            .attr("x", width)
+            .text("Distance (km)");
+
+        svg.append("g")
+            .attr("class", "y axis")
+            .call(yAxis)
+            .append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 6)
+            .attr("dy", ".71em")
+            .text("Altitude (m)");
+
+        svg.append("g")
+            .attr("class", "grid vertical")
+            .attr("transform", "translate(0," + height + ")")
+            .call(xAxis
+                .orient("bottom")
+                .tickSize(-height, 0, 0)
+                .tickFormat("")
+            );
+
+        svg.append("g")
+            .attr("class", "grid horizontal")
+            .call(yAxis
+                .orient("left")
+                .tickSize(-width, 0, 0)
+                .tickFormat("")
+            );
+
+        svg.append("path")
+            .datum(data)
+            .attr("class", "line")
+            .attr("d", line);
+
+        svg.selectAll("circle")
+            .data(data)
+            .enter()
+            .append("circle")
+            .attr("cx", function (d) {
+                return x(d.dist);
+            })
+            .attr("cy", function (d) {
+                return y(d.z);
+            })
+            .attr("r", 0)
+            .attr("class", "circle");
+
+        var focus = svg.append("g").style("display", "none");
+
+        focus.append("line")
+            .attr("id", "focusLineX")
+            .attr("class", "focusLine");
+        focus.append("line")
+            .attr("id", "focusLineY")
+            .attr("class", "focusLine");
+        focus.append("circle")
+            .attr("id", "focusCircle")
+            .attr("r", 4)
+            .attr("class", "circle focusCircle");
+
+        var div = d3.select(container).append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0);
+
+        var bisectDist = d3.bisector(function (d) {
+            return d.dist;
+        }).left;
+
+        var self = this;
+
+        /** suppression du marker */
+        var _removeMarker = function () {
+            // suppression de l'ancien marker
+            if (self._marker) {
+                self._measureSource.removeFeature(self._marker);
+                self._marker = null;
+            }
+        };
+
+        /** mise à jour du marker */
+        var _updateMarker = function (d) {
+
+            var map  = self.getMap();
+            var proj = map.getView().getProjection();
+
+            _removeMarker();
+
+            var _coordinate = ol.proj.transform([d.lon, d.lat], "EPSG:4326", proj);
+            var _geometry   = new ol.geom.Point(_coordinate);
+
+            self._marker = new ol.Feature({
+                geometry : _geometry
+            });
+            logger.trace(_geometry);
+
+            // style
+            self._marker.setStyle(self._markerStyle);
+
+            // ajout du marker sur la map
+            self._measureSource.addFeature(self._marker);
+        };
+
+        svg.append("rect")
+            .attr("class", "overlay")
+            .attr("width", width)
+            .attr("height", height)
+            .on("mouseover", function () {
+                focus.style("display", null);
+
+                _updateMarker(data[0]);
+
+            })
+            .on("mouseout", function () {
+                focus.style("display", "none");
+
+                _removeMarker();
+
+                // tooltips
+                div.transition()
+                    .duration(500)
+                    .style("opacity", 0);
+            })
+            .on("mousemove", function () {
+
+                var m = d3.mouse(this);
+                var distance = x.invert(m[0]);
+                var i = bisectDist(data, distance);
+
+                var d0 = (i === 0) ? data[0] : data[i - 1];
+                var d1 = data[i];
+                var d  = distance - d0[0] > d1[0] - distance ? d1 : d0;
+
+                var xc = x(d.dist);
+                var yc = y(d.z);
+
+                focus.select("#focusCircle")
+                    .attr("cx", xc)
+                    .attr("cy", yc);
+                focus.select("#focusLineX")
+                    .attr("x1", xc).attr("y1", y(yDomain[0]))
+                    .attr("x2", xc).attr("y2", y(yDomain[1]));
+                focus.select("#focusLineY")
+                    .attr("x1", x(xDomain[0])).attr("y1", yc)
+                    .attr("x2", x(xDomain[1])).attr("y2", yc);
+
+                // mise à jour de la position du marker
+                _updateMarker(d);
+
+                // tooltips
+                div.transition()
+                    .duration(200)
+                    .style("opacity", 0.9);
+                div	.html(
+                        "Alt : " + d.z + " m <br/>" +
+                        "Lon : " + d.lon + " <br/>" +
+                        "Lat : " + d.lat
+                    )
+                    .style("left", (d3.event.pageX) + "px")
+                    .style("top", (d3.event.pageY - 28) + "px");
+            }
+        );
+
+        this._profil = d3.selectAll("rect.overlay")[0][0];
     };
 
     /**
     * display graphical profil with lib.AmCharts
     * TODO gestion des styles utilisateurs !
+    * FIXME feature or overlay pour le deplacement du marker ?
     *
     * @param {Array} data - array of elevation
     * @private
@@ -1025,7 +1278,6 @@ define([
     /**
     * this method is called by event 'click' on '' picto
     * and enable or disable the entry of the path
-    * TODO prévoir un nettoyage à la fermeture
     *
     * @private
     */

@@ -3289,24 +3289,6 @@ div[id^="GPimportGetCapResults-"] {
   background-image: url("img/GPlayerInfo.png");
 }
 
-/* Location */
-
-.GPlocationOriginPointerImg,
-.GPlocationStageRemove,
-div[id^=GPlocationStageAdd],
-.GPlocationTransportImg {
-  background-image: url("img/GPlocationOptions.png");
-}
-
-/* All div elements whose class attribute value begins with "GPlocationPoint" */
-div[class*="GPlocationPoint"] {
-    position: relative;
-}
-
-.GPlocationStageFlexInput {
-    margin-bottom: 5px;
-}
-
 /* MEASURELENGTH POSITION */
 
 div[id^=GPmeasureArea-] {
@@ -3346,6 +3328,24 @@ div[id^=GPmeasureLength-] {
 span[id^=GPshowMeasureLengthOpen-] {
   background-image: url("img/GPmeasuresOpen.png");
   background-position: -26px;
+}
+
+/* Location */
+
+.GPlocationOriginPointerImg,
+.GPlocationStageRemove,
+div[id^=GPlocationStageAdd],
+.GPlocationTransportImg {
+  background-image: url("img/GPlocationOptions.png");
+}
+
+/* All div elements whose class attribute value begins with "GPlocationPoint" */
+div[class*="GPlocationPoint"] {
+    position: relative;
+}
+
+.GPlocationStageFlexInput {
+    margin-bottom: 5px;
 }
 
 /* MOUSE POSITION */
