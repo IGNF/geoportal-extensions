@@ -48,7 +48,9 @@ define([
     * @param {Object} [options.stylesOptions.draw.finish = {}] - Line Style for a finish drawing
     * @param {Object} [options.stylesOptions.draw.finish.strokeColor] - Line for stroke color
     * @param {Object} [options.stylesOptions.draw.finish.strokeWidth] - Line for stroke width
-    * @param {Object} [options.elevationPathOptions = {}] - ...
+    * @param {Object} [options.elevationPathOptions = {}] - elevation service options.
+    *       see {@link http://depot.ign.fr/geoportail/bibacces/develop/doc/module-Services.html#~getAltitude}
+    *       to know all elevation options
     * @example
     *
     * var measure = new ol.control.ElevationPath({
@@ -156,7 +158,9 @@ define([
 
     /** styles by default */
     ElevationPath.DEFAULT_STYLES = {
+        // styling drawing
         DRAW : {
+            // start drawing
             START : {
                 // FIXME objet "ol.style"
                 // stroke : {
@@ -182,6 +186,7 @@ define([
                 imageStrokeColor : "#002A50",
                 imageStrokeWidth : 2
             },
+            // finish drawing
             FINISH : {
                 // FIXME objet "ol.style"
                 // stroke : {
@@ -192,6 +197,7 @@ define([
                 strokeWidth : 3
             }
         },
+        // stying marker to the profil
         MARKER : {
             // FIXME objet "ol.style"
             // image : {
@@ -211,6 +217,26 @@ define([
             imageAnchorYUnits : "ratio",
             imageSnapToPixel : true
         },
+        // styling service results points
+        RESULTS : {
+            // INFO orienté maintenance !
+            // FIXME objet "ol.style"
+            // image : {
+            //     radius : 5,
+            //     fill : {
+            //         color :  "rgba(128, 128, 128, 0.2)"
+            //     },
+            //     stroke : {
+            //         color : "rgba(0, 0, 0, 0.7)",
+            //         width : 2
+            //     }
+            // }
+            imageRadius : 5,
+            imageFillColor : "rgba(128, 128, 128, 0.2)",
+            imageStrokeColor : "rgba(0, 0, 0, 0.7)",
+            imageStrokeWidth : 2
+        },
+        // styling amCharts profil
         GRAPH : {
             type : "serial",
             pathToImages : "http://cdn.amcharts.com/lib/3/images/",
@@ -393,11 +419,15 @@ define([
         // cle API sur le service
         this.options.apiKey = options.apiKey;
 
+        // mode debug (tracé des points du service d'alti)
+        var debug = options.debug;
+        this.options.debug = ( typeof debug === "undefined") ? false : debug;
+
         // gestion du mode collapsed
         var collapsed = options.collapsed;
         this.options.collapsed = ( typeof collapsed === "undefined") ? true : collapsed;
 
-        // gestion des options du Services
+        // gestion des options du service
         var service = options.elevationOptions;
         this.options.service = ( typeof service === "undefined" || Object.keys(service).length === 0 ) ? {} : service;
 
@@ -993,41 +1023,44 @@ define([
         this._profil = container;
 
         // symbolisation des points produits par le service
-        var _proj = this.getMap().getView().getProjection();
-        for (var i = 0; i < data.length; i++) {
-            var obj = data[i];
-            var _coordinate = ol.proj.transform([obj.lon, obj.lat], "EPSG:4326", _proj);
-            var _geometry   = new ol.geom.Point(_coordinate);
+        // INFO orienté maintenance !
+        if (this.options.debug) {
+            var _proj = this.getMap().getView().getProjection();
+            for (var i = 0; i < data.length; i++) {
+                var obj = data[i];
+                var _coordinate = ol.proj.transform([obj.lon, obj.lat], "EPSG:4326", _proj);
+                var _geometry   = new ol.geom.Point(_coordinate);
 
-            this._marker = new ol.Feature({
-                geometry : _geometry
-            });
-            logger.trace(_geometry);
+                this._marker = new ol.Feature({
+                    geometry : _geometry
+                });
+                logger.trace(_geometry);
 
-            // TODO style en options ?
-            var _image = new ol.style.Circle({
-                radius : 5,
-                stroke : new ol.style.Stroke({
-                    color : "rgba(0, 0, 0, 0.7)",
-                    width : 2
-                }),
-                fill : new ol.style.Fill({
-                    color : "rgba(128, 128, 128, 0.2)"
-                })
-            });
-            this._marker.setStyle(new ol.style.Style({
-                image : _image
-            }));
+                // TODO style en options ?
+                var styles = ElevationPath.DEFAULT_STYLES.RESULTS;
+                var _image = new ol.style.Circle({
+                    radius : styles.imageRadius,
+                    stroke : new ol.style.Stroke({
+                        color : styles.imageStrokeColor,
+                        width : styles.imageStrokeWidth
+                    }),
+                    fill : new ol.style.Fill({
+                        color : styles.imageFillColor
+                    })
+                });
+                this._marker.setStyle(new ol.style.Style({
+                    image : _image
+                }));
 
-            // ajout du marker sur la map
-            this._measureSource.addFeature(this._marker);
+                // ajout du marker sur la map
+                this._measureSource.addFeature(this._marker);
+            }
         }
-
     };
 
     /**
     * display graphical profil with lib. D3
-    * TODO gestion des styles utilisateurs !
+    * TODO gestion des styles utilisateurs (text) !
     * FIXME feature or overlay pour le deplacement du marker ?
     *
     * @param {Array} data - array of elevation
