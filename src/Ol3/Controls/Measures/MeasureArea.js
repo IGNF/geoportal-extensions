@@ -237,7 +237,6 @@ define([
 
     /**
     * this method is called by event 'click' on picto
-    * TODO gestion des styles utilisateurs
     *
     * @param {Object} e - HTMLElement
     *

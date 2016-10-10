@@ -542,7 +542,7 @@ define([
             elevations[0].dist = 0;
             var distance = 0;
             for (var i = 1; i < elevations.length; i++) {
-                distance += ( _haversineDistance([elevations[i].lat, elevations[i].lon], [elevations[i - 1].lat, elevations[i - 1].lon]) ) / 1000;
+                distance += ( _haversineDistance([elevations[i].lon, elevations[i].lat], [elevations[i - 1].lon, elevations[i - 1].lat]) ) / 1000;
                 elevations[i].dist = distance;
                 elevations[i].lat = Math.round(elevations[i].lat * 10000) / 10000;
                 elevations[i].lon = Math.round(elevations[i].lon * 10000) / 10000;
@@ -961,6 +961,7 @@ define([
 
                 self._marker.setLatLng(L.latLng(obj.lat, obj.lon));
                 self._marker.update();
+
             };
 
             // FIXME remove event !?
@@ -996,12 +997,26 @@ define([
                 }
             };
 
+            var mousemove = function (e) {
+                console.log("mousemove");
+                if (self._profil === null) {
+                    return;
+                }
+
+                // suppression de l'ancien d'un marker
+                if (self._marker) {
+                    self._marker.setLatLng(L.latLng(e.lat, e.lon));
+                    self._marker.update();
+                }
+            };
 
             // FIXME event !?
             // this._profilContainer.removeEventListener("mouseover", mouseover);
             // this._profilContainer.addEventListener("mouseover", mouseover);
             // this._profilContainer.removeEventListener("mouseout", mouseout);
             // this._profilContainer.addEventListener("mouseout", mouseout);
+            // this._profilContainer.removeEventListener("mousemove", mousemove);
+            // this._profilContainer.addEventListener("mousemove", mousemove);
         },
 
         // ################################################################### //

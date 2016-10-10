@@ -36,10 +36,9 @@ define([
     * @param {Object} [options.stylesOptions.marker = {}] - styles management of marker
     * @param {Object} [options.stylesOptions.marker.imageSrc] - Icon source
     * @param {Object} [options.stylesOptions.marker.imageAnchor] - Icon anchor
-    * @param {Object} [options.stylesOptions.graph = {}] - styles management of a profil (NOT YET IMPLEMENTED !)
+    * @param {Object} [options.stylesOptions.graph = {}] - styles management of a profil AmCharts (https://docs.amcharts.com/3/javascriptcharts/AmChart)
     * @param {Object} [options.stylesOptions.draw = {}] - styles management of draw
     * @param {Object} [options.stylesOptions.draw.start = {}] - Line Style for a start drawing
-    * @param {Object} [options.stylesOptions.draw.start.fillColor] - Line for fill color
     * @param {Object} [options.stylesOptions.draw.start.strokeColor] - Line for stroke color
     * @param {Object} [options.stylesOptions.draw.start.strokeLineDash] - Line for stroke dash
     * @param {Object} [options.stylesOptions.draw.start.strokeWidth] - Line for stroke width
@@ -47,12 +46,11 @@ define([
     * @param {Object} [options.stylesOptions.draw.start.imageFillColor] - Point for fill color
     * @param {Object} [options.stylesOptions.draw.start.imageStrokeColor] - Point for stroke color
     * @param {Object} [options.stylesOptions.draw.finish = {}] - Line Style for a finish drawing
-    * @param {Object} [options.stylesOptions.draw.finish.fillColor] - Line for fill color
     * @param {Object} [options.stylesOptions.draw.finish.strokeColor] - Line for stroke color
     * @param {Object} [options.stylesOptions.draw.finish.strokeWidth] - Line for stroke width
-    * @param {Object} [options.elevationPathOptions = {}] -
+    * @param {Object} [options.elevationPathOptions = {}] - ...
     * @example
-
+    *
     * var measure = new ol.control.ElevationPath({
     *    element : null,
     *    target : null,
@@ -61,7 +59,6 @@ define([
     *    stylesOptions : {
     *     draw : {
     *       start : {
-    *           fillColor : "rgba(255, 255, 255, 0.2)",
     *           strokeColor : "rgba(0, 0, 0, 0.5)",
     *           strokeLineDash : [10, 10],
     *           strokeWidth : 2,
@@ -161,22 +158,51 @@ define([
     ElevationPath.DEFAULT_STYLES = {
         DRAW : {
             START : {
-                fillColor : "rgba(0, 183, 152, 0.2)",
+                // FIXME objet "ol.style"
+                // stroke : {
+                //     color : "#002A50",
+                //     lineDash : [10, 10],
+                //     width : 2
+                // },
+                // image : {
+                //     radius : 5,
+                //     fill : {
+                //         color :  "rgba(255, 155, 0, 0.7)"
+                //     },
+                //     stroke : {
+                //         color : "#002A50",
+                //         width : 2
+                //     }
+                // }
                 strokeColor : "#002A50",
                 strokeLineDash : [10, 10],
                 strokeWidth : 2,
                 imageRadius : 5,
-                imageFillColor :  "rgba(255, 155, 0, 0.7)",
+                imageFillColor : "rgba(255, 155, 0, 0.7)",
                 imageStrokeColor : "#002A50",
                 imageStrokeWidth : 2
             },
             FINISH : {
-                fillColor : "rgba(0, 183, 152, 0.3)",
+                // FIXME objet "ol.style"
+                // stroke : {
+                //     color : "#002A50",
+                //     width : 3
+                // }
                 strokeColor : "#002A50",
                 strokeWidth : 3
             }
         },
         MARKER : {
+            // FIXME objet "ol.style"
+            // image : {
+            //      src : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAsCAYAAAAATWqyAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAABTtJREFUeNq8WGtsFUUU/rb3gtdCAykFG9AUDTQUKimhxUewEusrJYoBo4FfEgoqotHERH6oP9TGmJhIrIlWAf9hjAaEiME2pgFfVVpFii8sWqIQLLSx3EJLW7p+Z2Z2b2l7d/b23vZLTmZ2duacb2fmnDk7DlKA67rXs1hJKacsohRQppjXFygnKT9TDlH2O47zFzIFGnco91EOuqnjoBnr2Ow4FhIlLN6m3DykFTh3BGj/Doj/CfSe082xPCDnBmDWTUBeyXDVjZTHOUNHUiZCEs+weI0ySTV0/w0c2wa07gIungn+vOx8YN46oPhpYOp1Xms/5TmSeSMUERKImFnYqBoGuPRNL5LEW8BgX2rrmjWZZLYApS8BUW8r4T0zO5eTEjFr+S6lSjV0HgPqVwNdf6S30abNB+7aDeQWey3bKZtIxvU5DxvyrE/izJfAvuXpkxCIDtElOjWqjK2RM8LZWMbiG0oEnUc5kB7a14WMYvI04H56du5ieZKluZWz8r0/IyQh5TuKRH8cqFuTeRIC0Sm6xYbYok1j21+ahyhLVO3wC8D5VowbRLfY0FhibOulIavDLEoRZyD8sJDeMWBXKG5ZsIobsdDsg+OMq3u1m1u9KQo8zP45EqjRxOUpk6i50IRl4FuGjpZtwUoiMYa314GFj/EzIsN8n8v+C1e4kfvwcm+wnhsZY27xQ8oiWZpKrWRQB6tAElfxpKnjsCdGklDzG9HvpI/0DYLYEpsalVnmAAM6fgR62oMHl70C5N9mn3rpI32DILbEpkZ5ljlFgbPNFtebzij5VPhNKX1lTBASNtXSzPZ3cxCuvVOH7FTCu4yxeZDGbCES0z5+PniQ3uGpwTYmYTOWCPGTpgYP6u9OnYhtzBCbQkSH0NiM4EEdP6VOxDYmYbNLiJxQ1elFwYPaG3XQCn3QHddjgpCweUKI6K2bvzw4YROf//rJob6fZl/H2FRoFiINfqo3qyzYwD8MVIeYLw32J+8j76SP9A2C2BKbGg1CZL+EF/W4YKP9a3/fCeyhkrY9DOOXEu1SlzZ5J31sSNjqURm/OfQkY9qgvkYOvXhbuH0g505Oga7HT9rPF9+t5+pDL0ulwzt46FV5ROax+JUSRRtP0LoHMK64+xNg7iqVEVOKSKRVxRGpsKhRnaRD4SPjR0J0axKCGmP7ilQxm4X8d8xXmfvHJZlPkCR3WfODl9FLMlxCIhevSJ5Nwzo1XdKxYpe3hpmB6BKdmoS43VqPxIgsni+aWOg8biZ3f+nLmSMiuvKWek/P01az7QdLyNVT7lC/l59WAKcb0iMxhzpW1nvmvpDtSiKD1l9OkpnDgv8UyMWFU9wvTP8vdY6NhJwnD1JVtso2OiiLSeL0iJUbNfg6zikVVwRTyOn2HWOfjfLtHgnBhtFIJCViyNDZUatdmnGlaFPqJIoe1WM1aqlz71ivJbLNobgAA9zgu7nZ/vstHAk5WVdzaPRqmGC5lER6kjpV4OWJdq+1kkshSk4VH9izcy/bV66qSPQZV+0J9G7rTY6+XNmqHmYwyJVV24kse1X31dhKHdasygkzy+a64oC4nWr47F4e858nSbLv4V/KAe9JKpVDrx/SImLIXMOiRUKdujESl+49O8xVZxpXzVc/C/I/RxL/hgq8YYkYhev9q6kVO4d9B+sr3vdICNaHJTHWW8Ya/87wqy2uWwstUk/gTYw3aCRGOarMDfS67kfFWqSuIe9imAjQEC272nJHixYNaSvGRIIGN49ywbsZEw1zI11N6TZSHeaGORn+F2AAJtRIMx4t+hUAAAAASUVORK5CYII=",
+            //      size : [34, 44],
+            //      anchor : [0.5, 1],
+            //      anchorOrigin : "bottom-left",
+            //      anchorXUnits : "ratio",
+            //      anchorYUnits : "ratio",
+            //      snapToPixel : true
+            // }
             imageSrc : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAsCAYAAAAATWqyAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAABTtJREFUeNq8WGtsFUUU/rb3gtdCAykFG9AUDTQUKimhxUewEusrJYoBo4FfEgoqotHERH6oP9TGmJhIrIlWAf9hjAaEiME2pgFfVVpFii8sWqIQLLSx3EJLW7p+Z2Z2b2l7d/b23vZLTmZ2duacb2fmnDk7DlKA67rXs1hJKacsohRQppjXFygnKT9TDlH2O47zFzIFGnco91EOuqnjoBnr2Ow4FhIlLN6m3DykFTh3BGj/Doj/CfSe082xPCDnBmDWTUBeyXDVjZTHOUNHUiZCEs+weI0ySTV0/w0c2wa07gIungn+vOx8YN46oPhpYOp1Xms/5TmSeSMUERKImFnYqBoGuPRNL5LEW8BgX2rrmjWZZLYApS8BUW8r4T0zO5eTEjFr+S6lSjV0HgPqVwNdf6S30abNB+7aDeQWey3bKZtIxvU5DxvyrE/izJfAvuXpkxCIDtElOjWqjK2RM8LZWMbiG0oEnUc5kB7a14WMYvI04H56du5ieZKluZWz8r0/IyQh5TuKRH8cqFuTeRIC0Sm6xYbYok1j21+ahyhLVO3wC8D5VowbRLfY0FhibOulIavDLEoRZyD8sJDeMWBXKG5ZsIobsdDsg+OMq3u1m1u9KQo8zP45EqjRxOUpk6i50IRl4FuGjpZtwUoiMYa314GFj/EzIsN8n8v+C1e4kfvwcm+wnhsZY27xQ8oiWZpKrWRQB6tAElfxpKnjsCdGklDzG9HvpI/0DYLYEpsalVnmAAM6fgR62oMHl70C5N9mn3rpI32DILbEpkZ5ljlFgbPNFtebzij5VPhNKX1lTBASNtXSzPZ3cxCuvVOH7FTCu4yxeZDGbCES0z5+PniQ3uGpwTYmYTOWCPGTpgYP6u9OnYhtzBCbQkSH0NiM4EEdP6VOxDYmYbNLiJxQ1elFwYPaG3XQCn3QHddjgpCweUKI6K2bvzw4YROf//rJob6fZl/H2FRoFiINfqo3qyzYwD8MVIeYLw32J+8j76SP9A2C2BKbGg1CZL+EF/W4YKP9a3/fCeyhkrY9DOOXEu1SlzZ5J31sSNjqURm/OfQkY9qgvkYOvXhbuH0g505Oga7HT9rPF9+t5+pDL0ulwzt46FV5ROax+JUSRRtP0LoHMK64+xNg7iqVEVOKSKRVxRGpsKhRnaRD4SPjR0J0axKCGmP7ilQxm4X8d8xXmfvHJZlPkCR3WfODl9FLMlxCIhevSJ5Nwzo1XdKxYpe3hpmB6BKdmoS43VqPxIgsni+aWOg8biZ3f+nLmSMiuvKWek/P01az7QdLyNVT7lC/l59WAKcb0iMxhzpW1nvmvpDtSiKD1l9OkpnDgv8UyMWFU9wvTP8vdY6NhJwnD1JVtso2OiiLSeL0iJUbNfg6zikVVwRTyOn2HWOfjfLtHgnBhtFIJCViyNDZUatdmnGlaFPqJIoe1WM1aqlz71ivJbLNobgAA9zgu7nZ/vstHAk5WVdzaPRqmGC5lER6kjpV4OWJdq+1kkshSk4VH9izcy/bV66qSPQZV+0J9G7rTY6+XNmqHmYwyJVV24kse1X31dhKHdasygkzy+a64oC4nWr47F4e858nSbLv4V/KAe9JKpVDrx/SImLIXMOiRUKdujESl+49O8xVZxpXzVc/C/I/RxL/hgq8YYkYhev9q6kVO4d9B+sr3vdICNaHJTHWW8Ya/87wqy2uWwstUk/gTYw3aCRGOarMDfS67kfFWqSuIe9imAjQEC272nJHixYNaSvGRIIGN49ywbsZEw1zI11N6TZSHeaGORn+F2AAJtRIMx4t+hUAAAAASUVORK5CYII=",
             imageSize : [34, 44],
             imageAnchor : [0.5, 1],
@@ -185,7 +211,76 @@ define([
             imageAnchorYUnits : "ratio",
             imageSnapToPixel : true
         },
-        GRAPH : {}
+        GRAPH : {
+            type : "serial",
+            pathToImages : "http://cdn.amcharts.com/lib/3/images/",
+            categoryField : "dist",
+            autoMarginOffset : 0,
+            marginRight : 10,
+            marginTop : 10,
+            startDuration : 0,
+            color : "#5E5E5E",
+            fontSize : 10,
+            theme : "light",
+            thousandsSeparator : "",
+            categoryAxis : {
+                color : "#5E5E5E",
+                gridPosition : "start",
+                minHorizontalGap : 40,
+                tickPosition : "start",
+                title : "Distance (km)",
+                titleColor : "#5E5E5E",
+                startOnAxis : true
+            },
+            chartCursor : {
+                animationDuration : 0,
+                bulletsEnabled : true,
+                bulletSize : 10,
+                categoryBalloonEnabled : false,
+                cursorColor : "#F90",
+                graphBulletAlpha : 1,
+                graphBulletSize : 1,
+                zoomable : false
+            },
+            trendLines : [],
+            graphs : [
+                {
+                    balloonColor : "#CCCCCC",
+                    balloonText : "<span class='altiPathValue'>[[title]] : [[value]]m</span><br/><span class='altiPathCoords'>(lat: [[lat]] / lon:[[lon]])</span>",
+                    bullet : "round",
+                    bulletAlpha : 0,
+                    bulletBorderColor : "#FFF",
+                    bulletBorderThickness : 2,
+                    bulletColor : "#F90",
+                    bulletSize : 6,
+                    hidden : false,
+                    id : "AmGraph-1",
+                    fillAlphas : 0.4,
+                    fillColors : "#C77A04",
+                    lineAlpha : 1,
+                    lineColor : "#C77A04",
+                    lineThickness : 1,
+                    title : "Altitude",
+                    valueField : "z"
+                }
+            ],
+            guides : [],
+            valueAxes : [
+                {
+                    id : "ValueAxis-1",
+                    minVerticalGap : 20,
+                    title : "Altitude (m)"
+                }
+            ],
+            allLabels : [],
+            balloon : {
+                borderColor : "#CCCCCC",
+                borderThickness : 1,
+                fillColor : "#FFFFFF",
+                showBullet : true
+            },
+            titles : []
+        }
     };
 
     /**
@@ -315,9 +410,11 @@ define([
                 marker : ElevationPath.DEFAULT_STYLES.MARKER,
                 graph : ElevationPath.DEFAULT_STYLES.GRAPH
             };
-        }
 
-        if ( typeof this.options.styles === "undefined") {
+        } else {
+            // TODO gestion des styles du tracé
+            // TODO gestion des styles du marker
+            // TODO gestion des styles du profil de type AmCharts
             this.options.styles = {};
         }
 
@@ -341,7 +438,7 @@ define([
             ElevationPath.DEFAULT_STYLES.MARKER : marker;
         this._createStylingMarker();
 
-        // gestion des styles du profil
+        // gestion des styles du profil de type AmCharts
         var graph = styles.graph || this.options.styles.graph;
         this.options.styles.graph = ( typeof graph === "undefined" || Object.keys(graph).length === 0 ) ?
             ElevationPath.DEFAULT_STYLES.GRAPH : graph;
@@ -485,11 +582,6 @@ define([
             }
         },this);
 
-        // surface : fill
-        var _fill = new ol.style.Fill({
-            color : start.fillColor
-        });
-
         // ligne : stroke
         var _stroke = new ol.style.Stroke({
             color : start.strokeColor,
@@ -510,7 +602,6 @@ define([
         });
 
         this._drawStyleStart = new ol.style.Style({
-            fill : _fill,
             stroke : _stroke,
             image : _image
         });
@@ -533,9 +624,6 @@ define([
         },this);
 
         this._drawStyleFinish = new ol.style.Style({
-            fill : new ol.style.Fill({
-                color : styles.finish.fillColor
-            }),
             stroke : new ol.style.Stroke({
                 color : styles.finish.strokeColor,
                 lineDash : styles.finish.strokeLineDash,
@@ -545,9 +633,33 @@ define([
 
     };
 
-    /** TODO create style graph */
+    /** create style graph */
     ElevationPath.prototype._createStylingGraph = function () {
         logger.trace("ElevationPath::_createStylingGraph");
+
+        var userStyles = this.options.styles.graph;
+
+        logger.trace("style graph", userStyles);
+
+        var defaultStyle = ElevationPath.DEFAULT_STYLES.GRAPH;
+        Object.keys(defaultStyle).forEach(function (key) {
+
+            if (!userStyles.hasOwnProperty(key)) {
+                // si le style user n'existe pas, on ajoute celui par defaut
+                userStyles[key] = defaultStyle[key];
+                return;
+            } else {
+                var _defaultStyle = defaultStyle[key];
+                if ( typeof _defaultStyle === "object" ) {
+                    // on merge avec un objet,
+                    // les styles user ecrasent ceux par defaut...
+                    Utils.mergeParams(_defaultStyle, userStyles[key]);
+                    userStyles[key] = _defaultStyle;
+                    return;
+                }
+            }
+
+        },this);
     };
 
     // ################################################################### //
@@ -1000,11 +1112,11 @@ define([
 
         svg.append("path")
             .datum(data)
-            .attr("class", "area")
+            .attr("class", "area-d3")
             .attr("d", area);
 
         svg.append("g")
-            .attr("class", "x axis")
+            .attr("class", "x axis-d3")
             .attr("transform", "translate(0," + height + ")")
             .call(xAxis)
             .append("text")
@@ -1014,7 +1126,7 @@ define([
             .text("Distance (km)");
 
         svg.append("g")
-            .attr("class", "y axis")
+            .attr("class", "y axis-d3")
             .call(yAxis)
             .append("text")
             .attr("transform", "rotate(-90)")
@@ -1023,7 +1135,7 @@ define([
             .text("Altitude (m)");
 
         svg.append("g")
-            .attr("class", "grid vertical")
+            .attr("class", "grid-d3 vertical")
             .attr("transform", "translate(0," + height + ")")
             .call(xAxis
                 .orient("bottom")
@@ -1032,7 +1144,7 @@ define([
             );
 
         svg.append("g")
-            .attr("class", "grid horizontal")
+            .attr("class", "grid-d3 horizontal")
             .call(yAxis
                 .orient("left")
                 .tickSize(-width, 0, 0)
@@ -1041,7 +1153,7 @@ define([
 
         svg.append("path")
             .datum(data)
-            .attr("class", "line")
+            .attr("class", "line-d3")
             .attr("d", line);
 
         svg.selectAll("circle")
@@ -1055,23 +1167,23 @@ define([
                 return y(d.z);
             })
             .attr("r", 0)
-            .attr("class", "circle");
+            .attr("class", "circle-d3");
 
         var focus = svg.append("g").style("display", "none");
 
         focus.append("line")
             .attr("id", "focusLineX")
-            .attr("class", "focusLine");
+            .attr("class", "focusLine-d3");
         focus.append("line")
             .attr("id", "focusLineY")
-            .attr("class", "focusLine");
+            .attr("class", "focusLine-d3");
         focus.append("circle")
             .attr("id", "focusCircle")
             .attr("r", 4)
-            .attr("class", "circle focusCircle");
+            .attr("class", "circle-d3 focusCircle-d3");
 
         var div = d3.select(container).append("div")
-            .attr("class", "tooltip")
+            .attr("class", "tooltip-d3")
             .style("opacity", 0);
 
         var bisectDist = d3.bisector(function (d) {
@@ -1113,7 +1225,7 @@ define([
         };
 
         svg.append("rect")
-            .attr("class", "overlay")
+            .attr("class", "overlay-d3")
             .attr("width", width)
             .attr("height", height)
             .on("mouseover", function () {
@@ -1177,7 +1289,8 @@ define([
 
     /**
     * display graphical profil with lib.AmCharts
-    * TODO gestion des styles utilisateurs !
+    * properties amcharts :
+    * https://docs.amcharts.com/3/javascriptcharts/AmChart
     * FIXME feature or overlay pour le deplacement du marker ?
     *
     * @param {Array} data - array of elevation
@@ -1195,77 +1308,12 @@ define([
         //     AmCharts.removeListener(this._profil, "changed", _onFollowProfilPathChanged);
         // }
 
-        this._profil = AmCharts.makeChart( this._profilContainer, {
-            type : "serial",
-            pathToImages : "http://cdn.amcharts.com/lib/3/images/",
-            categoryField : "dist",
-            autoMarginOffset : 0,
-            marginRight : 10,
-            marginTop : 10,
-            startDuration : 0,
-            color : "#5E5E5E",
-            fontSize : 10,
-            theme : "light",
-            thousandsSeparator : "",
-            categoryAxis : {
-                color : "#5E5E5E",
-                gridPosition : "start",
-                minHorizontalGap : 40,
-                tickPosition : "start",
-                title : "Distance (km)",
-                titleColor : "#5E5E5E",
-                startOnAxis : true
-            },
-            chartCursor : {
-                animationDuration : 0,
-                bulletsEnabled : true,
-                bulletSize : 10,
-                categoryBalloonEnabled : false,
-                cursorColor : "#F90",
-                graphBulletAlpha : 1,
-                graphBulletSize : 1,
-                zoomable : false
-            },
-            trendLines : [],
-            graphs : [
-                {
-                    balloonColor : "#CCCCCC",
-                    balloonText : "<span class='altiPathValue'>[[title]] : [[value]]m</span><br/><span class='altiPathCoords'>(lat: [[lat]] / lon:[[lon]])</span>",
-                    bullet : "round",
-                    bulletAlpha : 0,
-                    bulletBorderColor : "#FFF",
-                    bulletBorderThickness : 2,
-                    bulletColor : "#F90",
-                    bulletSize : 6,
-                    hidden : false,
-                    id : "AmGraph-1",
-                    fillAlphas : 0.4,
-                    fillColors : "#C77A04",
-                    lineAlpha : 1,
-                    lineColor : "#C77A04",
-                    lineThickness : 1,
-                    title : "Altitude",
-                    valueField : "z"
-                }
-            ],
-            guides : [],
-            valueAxes : [
-                {
-                    id : "ValueAxis-1",
-                    minVerticalGap : 20,
-                    title : "Altitude (m)"
-                }
-            ],
-            allLabels : [],
-            balloon : {
-                borderColor : "#CCCCCC",
-                borderThickness : 1,
-                fillColor : "#FFFFFF",
-                showBullet : true
-            },
-            titles : [],
+        var _config = {};
+        Utils.mergeParams(_config, this.options.styles.graph);
+        Utils.mergeParams(_config, {
             dataProvider : data
         });
+        this._profil = AmCharts.makeChart( this._profilContainer, _config);
 
         var self = this;
         /** _onFollowProfilPathChanged */

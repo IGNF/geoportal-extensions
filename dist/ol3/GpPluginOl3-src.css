@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-10-07
+ * @date 2016-10-10
  *
  */
 /* MOUSE POSITION */
@@ -2815,60 +2815,60 @@ text {
   text-anchor: end;
 }
 
-.axis {
+.axis-d3 {
   fill: none;
   stroke: #5E5E5E;
   stroke-width: 1;
   shape-rendering: crispEdges;
 }
 
-.area {
+.area-d3 {
   fill: #C77A04;
   stroke: #5E5E5E;
   stroke-width: 0;
   fill-opacity: 0.4;
 }
 
-.line {
+.line-d3 {
   fill: none;
   stroke: #C77A04;
   stroke-width: 1px;
 }
 
-.grid .tick {
+.grid-d3 .tick {
   stroke: lightgrey;
   opacity: 0.7;
 }
 
-.grid path {
+.grid-d3 path {
   stroke-width: 0;
 }
 
-.grid .tick {
+.grid-d3 .tick {
   stroke: lightgrey;
   opacity: 0.7;
 }
 
-.grid path {
+.grid-d3 path {
   stroke-width: 0;
 }
 
-.overlay {
+.overlay-d3 {
   fill: none;
   pointer-events: all;
 }
 
-.focusLine {
+.focusLine-d3 {
   fill: none;
   stroke: #C77A04;
   stroke-width: 0.5px;
 }
 
-.focusCircle {
+.focusCircle-d3 {
   fill: #C77A04;
 }
 
-div.tooltip {
+div.tooltip-d3 {
     position: inherit;;
     text-align: left;
     width: 80px;
@@ -3289,6 +3289,24 @@ div[id^="GPimportGetCapResults-"] {
   background-image: url("img/GPlayerInfo.png");
 }
 
+/* Location */
+
+.GPlocationOriginPointerImg,
+.GPlocationStageRemove,
+div[id^=GPlocationStageAdd],
+.GPlocationTransportImg {
+  background-image: url("img/GPlocationOptions.png");
+}
+
+/* All div elements whose class attribute value begins with "GPlocationPoint" */
+div[class*="GPlocationPoint"] {
+    position: relative;
+}
+
+.GPlocationStageFlexInput {
+    margin-bottom: 5px;
+}
+
 /* MEASURELENGTH POSITION */
 
 div[id^=GPmeasureArea-] {
@@ -3328,24 +3346,6 @@ div[id^=GPmeasureLength-] {
 span[id^=GPshowMeasureLengthOpen-] {
   background-image: url("img/GPmeasuresOpen.png");
   background-position: -26px;
-}
-
-/* Location */
-
-.GPlocationOriginPointerImg,
-.GPlocationStageRemove,
-div[id^=GPlocationStageAdd],
-.GPlocationTransportImg {
-  background-image: url("img/GPlocationOptions.png");
-}
-
-/* All div elements whose class attribute value begins with "GPlocationPoint" */
-div[class*="GPlocationPoint"] {
-    position: relative;
-}
-
-.GPlocationStageFlexInput {
-    margin-bottom: 5px;
 }
 
 /* MOUSE POSITION */

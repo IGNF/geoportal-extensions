@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.8.1
- * @date 2016-10-07
+ * @date 2016-10-10
  *
  */
 /*!
@@ -24034,11 +24034,11 @@ LeafletControlsElevationPath = function (L, P, woodman, Gp, RightManagement, ID,
             var distance = 0;
             for (var i = 1; i < elevations.length; i++) {
                 distance += _haversineDistance([
-                    elevations[i].lat,
-                    elevations[i].lon
+                    elevations[i].lon,
+                    elevations[i].lat
                 ], [
-                    elevations[i - 1].lat,
-                    elevations[i - 1].lon
+                    elevations[i - 1].lon,
+                    elevations[i - 1].lat
                 ]) / 1000;
                 elevations[i].dist = distance;
                 elevations[i].lat = Math.round(elevations[i].lat * 10000) / 10000;
@@ -24306,6 +24306,16 @@ LeafletControlsElevationPath = function (L, P, woodman, Gp, RightManagement, ID,
                 if (self._marker) {
                     map.removeLayer(self._marker);
                     self._marker = null;
+                }
+            };
+            var mousemove = function (e) {
+                console.log('mousemove');
+                if (self._profil === null) {
+                    return;
+                }
+                if (self._marker) {
+                    self._marker.setLatLng(L.latLng(e.lat, e.lon));
+                    self._marker.update();
                 }
             };
         },
@@ -24906,7 +24916,7 @@ LeafletLayersLayers = function (L, woodman, LayerConfig, WMS, WMTS) {
 }(leaflet, {}, LeafletLayersLayerConfig, LeafletLayersWMS, LeafletLayersWMTS);
 LeafletGpPluginLeaflet = function (L, P, Gp, Controls, Layers, CRS, Register) {
     Gp.leafletExtVersion = '0.8.1';
-    Gp.leafletExtDate = '2016-10-07';
+    Gp.leafletExtDate = '2016-10-10';
     Gp.Register = Register;
     L.geoportalLayer = Layers;
     L.geoportalControl = Controls;

@@ -91,60 +91,60 @@ text {
   text-anchor: end;
 }
 
-.axis {
+.axis-d3 {
   fill: none;
   stroke: #5E5E5E;
   stroke-width: 1;
   shape-rendering: crispEdges;
 }
 
-.area {
+.area-d3 {
   fill: #C77A04;
   stroke: #5E5E5E;
   stroke-width: 0;
   fill-opacity: 0.4;
 }
 
-.line {
+.line-d3 {
   fill: none;
   stroke: #C77A04;
   stroke-width: 1px;
 }
 
-.grid .tick {
+.grid-d3 .tick {
   stroke: lightgrey;
   opacity: 0.7;
 }
 
-.grid path {
+.grid-d3 path {
   stroke-width: 0;
 }
 
-.grid .tick {
+.grid-d3 .tick {
   stroke: lightgrey;
   opacity: 0.7;
 }
 
-.grid path {
+.grid-d3 path {
   stroke-width: 0;
 }
 
-.overlay {
+.overlay-d3 {
   fill: none;
   pointer-events: all;
 }
 
-.focusLine {
+.focusLine-d3 {
   fill: none;
   stroke: #C77A04;
   stroke-width: 0.5px;
 }
 
-.focusCircle {
+.focusCircle-d3 {
   fill: #C77A04;
 }
 
-div.tooltip {
+div.tooltip-d3 {
     position: inherit;;
     text-align: left;
     width: 80px;
