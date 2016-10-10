@@ -293,7 +293,7 @@ define([
             }
             // add layer info picto if necessary
             var infodiv = document.getElementById("GPinfo_ID" + id);
-            if ( !document.getElementById("GPinfo_ID" + id) && config.description && ( config.legends || config.metadata || config.quicklookUrl ) ) {
+            if ( !document.getElementById("GPinfo_ID" + id) && config.description ) {
                 var advancedTools = document.getElementById("GPadvancedTools_ID" + id);
                 if ( advancedTools ) {
                     advancedTools.appendChild(

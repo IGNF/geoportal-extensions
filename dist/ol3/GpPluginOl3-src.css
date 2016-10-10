@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-09-19
+ * @date 2016-10-06
  *
  */
 /* MOUSE POSITION */
@@ -1056,6 +1056,119 @@ div[id^=GPlocationStageAdd] {
 
 div[id^=GPlocationStageAdd] {
   background-position: -56px 0;
+}
+
+/* Showing/hiding drawing panel */
+
+label[id^=GPshowMeasureAreaPicto-] {
+  display: inline-block;
+}
+
+input[id^=GPshowMeasureArea-] + label {
+  display: block;
+}
+
+input[id^=GPshowMeasureArea-]:checked + label {
+  display: block;
+}
+
+input[id^=GPshowMeasureArea-] + label + div {
+  display: block;
+}
+
+input[id^=GPshowMeasureArea-]:checked + label + div {
+  display: block;
+}
+
+/* Showing/hiding drawing panel */
+
+label[id^=GPshowMeasureAzimuthPicto-] {
+  display: inline-block;
+}
+
+input[id^=GPshowMeasureAzimuth-] + label {
+  display: block;
+}
+
+input[id^=GPshowMeasureAzimuth-]:checked + label {
+  display: block;
+}
+
+input[id^=GPshowMeasureAzimuth-] + label + div {
+  display: block;
+}
+
+input[id^=GPshowMeasureAzimuth-]:checked + label + div {
+  display: block;
+}
+
+/* Showing/hiding drawing panel */
+
+label[id^=GPshowMeasureLengthPicto-] {
+  display: inline-block;
+}
+
+input[id^=GPshowMeasureLength-] + label {
+  display: block;
+}
+
+input[id^=GPshowMeasureLength-]:checked + label {
+  display: block;
+}
+
+input[id^=GPshowMeasureLength-] + label + div {
+  display: block;
+}
+
+input[id^=GPshowMeasureLength-]:checked + label + div {
+  display: block;
+}
+
+/* MEASURE TOOL */
+
+.tooltip {
+  position: relative;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+  color: white;
+  padding: 4px 8px;
+  white-space: nowrap;
+}
+
+.tooltip-measure {
+  font-weight: bold;
+}
+
+.tooltip-info {
+  font-size: 0.75em;
+  text-align: center;
+}
+
+.tooltip-static {
+  background-color: #ffcc33;
+  color: black;
+  border: 1px solid white;
+}
+
+.tooltip-hidden {
+  display: none;
+}
+
+.tooltip-measure::before,
+.tooltip-info::before,
+.tooltip-static::before {
+  border-top: 6px solid rgba(0, 0, 0, 0.5);
+  border-right: 6px solid transparent;
+  border-left: 6px solid transparent;
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  margin-left: -7px;
+  left: 50%;
+}
+
+.tooltip-static::before {
+  border-top-color: #ffcc33;
 }
 
 /* MOUSE POSITION */
@@ -3000,6 +3113,47 @@ div[class*="GPlocationPoint"] {
 
 .GPlocationStageFlexInput {
     margin-bottom: 5px;
+}
+
+/* MEASURELENGTH POSITION */
+
+div[id^=GPmeasureArea-] {
+  top: 260px;
+  left: 74px;
+}
+
+/* Showing/hiding measureLength position panel */
+
+span[id^=GPshowMeasureAreaOpen-] {
+  background-image: url("img/GPmeasuresOpen.png");
+  background-position: -52px;
+}
+
+/* MEASURELENGTH POSITION */
+
+div[id^=GPmeasureAzimuth-] {
+  top: 260px;
+  left: 10px;
+}
+
+/* Showing/hiding measureLength position panel */
+
+span[id^=GPshowMeasureAzimuthOpen-] {
+  background-image: url("img/GPmeasuresOpen.png");
+}
+
+/* MEASURELENGTH POSITION */
+
+div[id^=GPmeasureLength-] {
+  top: 260px;
+  left: 42px;
+}
+
+/* Showing/hiding measureLength position panel */
+
+span[id^=GPshowMeasureLengthOpen-] {
+  background-image: url("img/GPmeasuresOpen.png");
+  background-position: -26px;
 }
 
 /* MOUSE POSITION */

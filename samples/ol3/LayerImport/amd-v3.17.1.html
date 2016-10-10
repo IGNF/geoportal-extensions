@@ -104,6 +104,15 @@
                             })
                         );
 
+                        // on affiche le KML/GPX...
+                        var element = layerimport._formContainer;
+                        element.addEventListener("submit", function (e) {
+                            setTimeout(function (e) {
+                              console.log(layerimport.getStaticImportContent());
+                            }, 3000);
+                        },false);
+
+
                     };
 
                     Gp.Services.getConfig({
@@ -115,6 +124,10 @@
                     });
 
                 });
+            </script>
+
+            <script>
+
             </script>
 
             <!-- map -->

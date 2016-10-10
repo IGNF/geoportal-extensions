@@ -13,7 +13,7 @@ define([
     Utils,
     LayerImportDOM,
     SelectorID,
-    KML
+    KMLExtended
 ) {
 
     "use strict";
@@ -119,6 +119,25 @@ define([
             document.getElementById("GPshowImport-" + this._uid).click();
         }
         this.collapsed = collapsed;
+    };
+
+
+    /**
+     * Returns content of a static import (KML or GPX)
+     *
+     * @returns {String} contentStatic  - content static
+     */
+    LayerImport.prototype.getStaticImportContent = function () {
+        return this.contentStatic;
+    };
+
+    /**
+     * Returns content of a service import (GetCapabilities)
+     *
+     * @returns {String} contentService  - content service
+     */
+    LayerImport.prototype.getServiceImportContent = function () {
+        return this.contentService;
     };
 
     // ################################################################### //
@@ -435,6 +454,12 @@ define([
 
         logger.log("import d'une couche de type : " + this._currentImportType);
 
+        // reinitialisation du contenu d'un import de type
+        // - static (KML ou GPX)
+        this.contentStatic = null;
+        // - service (WMS, ...)
+        this.contentService = null;
+
         if ( this._isCurrentImportTypeStatic ) {
             this._importStaticLayer();
         } else {
@@ -489,6 +514,10 @@ define([
             console.log("[ol.control.LayerImport] url parameter is mandatory");
             return;
         }
+        // on supprime les éventuels espaces avant ou après
+        if ( url.trim ) {
+            url = url.trim();
+        }
 
         // 2. récupération proxy
         if ( !this.options.webServicesOptions || ( !this.options.webServicesOptions.proxyUrl && !this.options.webServicesOptions.noProxyDomains ) ) {
@@ -512,6 +541,10 @@ define([
         if ( bfound === false ) {
             url = proxyUrl + encodeURIComponent(url);
         }
+
+        // FIXME pb de surcharge en mode UMD !? ça ne marche pas...
+        // this._hideWaitingContainer();
+        // this._addFeaturesFromImportStaticLayerUrl(url, layerName);
 
         var context = this;
         Gp.Protocols.XHR.call({
@@ -613,10 +646,13 @@ define([
             return;
         }
 
+        // sauvegarde du content KML/GPX
+        this.contentStatic = fileContent;
+
         var format;
         if ( this._currentImportType === "KML" ) {
             // lecture du fichier KML : création d'un format ol.format.KML, qui possède une méthode readFeatures (et readProjection)
-            format = new KML({
+            format = new KMLExtended({
                 showPointNames : false // FIXME !
             });
         } else if ( this._currentImportType === "GPX" ) {
@@ -631,17 +667,6 @@ define([
 
         // récupération des entités avec reprojection éventuelle des géométries
         var features = null;
-
-        if ( this._currentImportType === "KML" ) {
-            // surcharge KML
-            features = format.readExtendStylesFeatures(
-                fileContent,
-                {
-                    dataProjection : fileProj,
-                    featureProjection : mapProj
-                }
-            );
-        } else {
             features = format.readFeatures(
                 fileContent,
                 {
@@ -649,7 +674,7 @@ define([
                     featureProjection : mapProj
                 }
             );
-        }
+
         logger.log("loaded features : ", features);
 
         // création d'une couche vectorielle à partir de ces features
@@ -667,6 +692,64 @@ define([
                 vectorSource._title = vectorSource._description = "Import " + this._currentImportType;
                 logger.log("[ol.control.LayerImport] set default name \"Import " + this._currentImportType + "\"");
             }
+        }
+
+        var vectorLayer = new ol.layer.Vector({
+            source : vectorSource
+        });
+
+        // on rajoute le champ gpResultLayerId permettant d'identifier une couche crée par le composant. (pour layerSwitcher par ex)
+        vectorLayer.gpResultLayerId = "layerimport:" + this._currentImportType;
+        map.addLayer(vectorLayer);
+
+        // TODO : appeler fonction commune
+        // zoom sur l'étendue des entités récupérées (si possible)
+        if ( map.getView() && map.getSize() && vectorSource.getExtent ) {
+            var sourceExtent = vectorSource.getExtent();
+            if ( sourceExtent && sourceExtent[0] !== Infinity ) {
+                map.getView().fit(vectorSource.getExtent(), map.getSize());
+            }
+        }
+    };
+
+    /**
+     * NOT USE : this method is called by _importStaticLayerFom* method
+     * and add features to the map
+     *
+     * @param {String} url - url
+     * @param {String} layerName - imported layer name
+     * @private
+     */
+    LayerImport.prototype._addFeaturesFromImportStaticLayerUrl = function (url, layerName) {
+
+        // récupération du contenu du fichier
+        var map = this.getMap();
+        if ( !map || !url ) {
+            return;
+        }
+
+        var format;
+        if ( this._currentImportType === "KML" ) {
+            // lecture du fichier KML : création d'un format ol.format.KML, qui possède une méthode readFeatures (et readProjection)
+            format = new KMLExtended({
+                showPointNames : false // FIXME !
+            });
+        } else if ( this._currentImportType === "GPX" ) {
+            // lecture du fichier GPX : création d'un format ol.format.GPX, qui possède une méthode readFeatures (et readProjection)
+            format = new ol.format.GPX();
+        }
+
+        // création d'une couche vectorielle à partir de ces features
+        var vectorSource = new ol.source.Vector({
+            url : url,
+            format : format
+        });
+
+        // ajout des informations pour le layerSwitcher (titre, description)
+        if ( layerName ) {
+            vectorSource._title = vectorSource._description = layerName;
+        } else {
+            vectorSource._title = vectorSource._description = "Import " + this._currentImportType;
         }
 
         var vectorLayer = new ol.layer.Vector({
@@ -715,6 +798,10 @@ define([
         }
         logger.log("url : ",url);
 
+        // on supprime les éventuels espaces avant ou après
+        if ( url.trim ) {
+            url = url.trim();
+        }
         // Info : on ajoute des paramètres uniquement si l'utilisateur n'en a pas déjà saisi (on vérifie la position du caractère "?")
         var questionMarkIndex = url.indexOf("?");
         if ( questionMarkIndex < 0 ) {
@@ -785,6 +872,10 @@ define([
         var layers;
         var layerDescription;
         var projection;
+        this._getCapResponseWMSLayers = [];
+
+        // sauvegarde du content d'un GetCapabilities
+        this.contentService = xmlResponse;
 
         // Affichage du panel des couches accessibles
         this._importPanel.style.display = "none";
@@ -803,32 +894,20 @@ define([
             var getCapResponseWMS = this._getCapResponseWMS = parser.read(xmlResponse);
             logger.log("getCapabilities response : ", getCapResponseWMS);
 
-            if ( getCapResponseWMS && getCapResponseWMS.Capability && getCapResponseWMS.Capability.Layer && getCapResponseWMS.Capability.Layer.Layer ) {
-                layers = getCapResponseWMS.Capability.Layer.Layer;
+            if ( getCapResponseWMS && getCapResponseWMS.Capability && getCapResponseWMS.Capability.Layer ) {
+                // info: le parser OL3 récupère la première layer de <Capability> comme un unique objet (il écrase les précédents s'il y a pls <Layer> à la racine de <Capability>)
+                // /!\ être vigilant si le parser est modifié (notamment pour récupérer les différentes layers à la racine. ex  http://geoservices.brgm.fr/geologie?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities)
 
-                if ( Array.isArray(layers) ) {
-                    // on stocke la liste des couches pour faire le lien avec le DOM
-                    this._getCapResponseWMSLayers = layers;
-
-                    for ( var i = 0; i < layers.length; i ++ ) {
-                        // on vérifie que la couche ait une projection compatible avec celle de la carte
-                        // ou soit connue par proj4js, et on stocke cette projection dans les infos de la couche.
-                        projection = this._getWMSLayerProjection(layers[i], mapProjCode);
-                        if ( !projection ) {
-                            // si aucune projection n'est compatible avec celle de la carte ou connue par ol.proj,
-                            // on n'affiche pas la couche dans le panel des résultats
-                            console.log("[ol.control.LayerImport] wms layer cannot be added to map : unknown projection", layers[i]);
-                            continue;
-                        } else {
-                            // si on a une projection compatible : on la stocke et la couche sera éventuellement reprojetée à l'ajout
-                            layers[i]._projection = projection;
-                            // on ajoute chaque couche de la réponse dans la liste des couches accessibles
-                            layerDescription = layers[i].Title;
-                            if ( this._getCapResultsListContainer ) {
-                                this._getCapResultsListContainer.appendChild(this._createImportGetCapResultElement(layerDescription, i));
-                            }
-                        }
+                var getCapLayer = getCapResponseWMS.Capability.Layer;
+                // on va lire le contenu de la (ou les) <Layer> pour l'afficher ou en afficher les couches disponibles
+                if ( Array.isArray(getCapLayer) ) {
+                    // cas où on a plusieurs <Layer> à la racine, mais non géré encore par ol.format.WMSCapabilities jusqu'à la v3.18.2.
+                    for ( var i = 0; i < getCapLayer.length; i ++ ) {
+                        this._displayGetCapResponseWMSLayer(getCapLayer[i]);
                     }
+                } else {
+                    // cas du parser ol.format.WMSCapabilities jusqu'à la v3.18.2.
+                    this._displayGetCapResponseWMSLayer(getCapLayer);
                 }
             }
 
@@ -852,20 +931,140 @@ define([
                         // on vérifie que la projection de la couche WMTS est compatible avec celle de la carte
                         // (ie elle doit être connue par ol.proj)
                         projection = this._getWMTSLayerProjection(layers[j], getCapResponseWMTS);
-                        if ( !projection || !ol.proj.get(projection) ) {
-                            // si la projection de la couche n'est pas connue par ol.proj,
-                            // on n'affiche pas la couche dans le panel des résultats
-                            console.log("[ol.control.LayerImport] wmts layer cannot be added to map : unknown projection", layers[j]);
-                            continue;
-                        } else {
-                            // on ajoute chaque couche de la réponse dans la liste des couches accessibles
-                            layerDescription = layers[j].Title;
-                            if ( this._getCapResultsListContainer ) {
-                                this._getCapResultsListContainer.appendChild(this._createImportGetCapResultElement(layerDescription, j));
+                        if ( projection && typeof projection === "string" ) {
+                            if ( ol.proj.get(projection) || ol.proj.get(projection.toUpperCase()) ) {
+                                // si la projection de la couche est connue par ol.proj,
+                                // on ajoute chaque couche de la réponse dans la liste des couches accessibles
+                                layerDescription = layers[j].Title;
+                                if ( this._getCapResultsListContainer ) {
+                                    this._getCapResultsListContainer.appendChild(this._createImportGetCapResultElement(layerDescription, j));
+                                }
+                            } else {
+                                // si la projection de la couche n'est pas connue par ol.proj,
+                                // on n'affiche pas la couche dans le panel des résultats
+                                console.log("[ol.control.LayerImport] wmts layer cannot be added to map : unknown projection", layers[j]);
+                                continue;
                             }
                         }
                     }
                 }
+            }
+        }
+    };
+
+    /**
+     * this method is called by this._displayGetCapResponseLayers method
+     * and display WMS layer in list from getcapabilities response
+     *
+     * @param {Object} layerObj - object corresponding to <Layer> content in WMS GetCapabilities response
+     * @param {Object} [parentLayersObj] - object corresponding to parents <Layer> content in WMS GetCapabilities response (without children <Layer> infos)
+     * @private
+     */
+    LayerImport.prototype._displayGetCapResponseWMSLayer = function (layerObj, parentLayersInfos) {
+        if ( !layerObj ) {
+            console.log("[ol.control.LayerImport] _displayGetCapResponseWMSLayer : getCapabilities layer object not found");
+        } else {
+            logger.log("[ol.control.LayerImport] _displayGetCapResponseWMSLayer - layerObj : ", layerObj);
+        }
+
+        // récupération de la projection de la map (pour vérifier que l'on peut reprojeter les couches disponibles)
+        var mapProjCode = this._getMapProjectionCode();
+        var projection;
+        var layerDescription;
+
+        // 1. héritage éventuels des informations de la couche parent
+        if ( parentLayersInfos ) {
+            var key;
+            var i;
+
+            // propriétés héritées à ajouter aux propriétés parent
+            var addKeys = [
+                "CRS",
+                "Style"
+                // "AuthorityURL" // TODO
+            ];
+            for ( var i = 0; i < addKeys.length; i ++ ) {
+                key = addKeys[i];
+                if ( Array.isArray(parentLayersInfos[key]) && parentLayersInfos[key].length !== 0 ) {
+                    if ( Array.isArray(layerObj[key]) && layerObj[key].length !== 0 ) {
+                        // on ajoute celles de la couche parent
+                        for ( var n = 0; n < parentLayersInfos[key]; n ++ ) {
+                            if ( layerObj[key].indexOf(parentLayersInfos[key][n]) === -1 ) {
+                                // si le CRS/Style parent n'est pas dans les CRS/Style de la couche, on l'ajoute
+                                layerObj[key].push(parentLayersInfos[key][n]);
+                            }
+                        }
+                    } else {
+                        // si la couche n'a pas de CRS ou Style, on récupère ceux de la couche parent
+                        layerObj[key] = parentLayersInfos[key];
+                    }
+                }
+            }
+
+            // propriétés qui remplacent les valeurs des propriétés héritées,
+            // càd on récupère la propriété parent seulement si elle n'est pas définie pour l'élément enfant
+            var replaceKeys = [
+                "BoundingBox",
+                "EX_GeographicBoundingBox",
+                "MaxScaleDenominator",
+                "MinScaleDenominator",
+                "Attribution",
+                "Dimension",
+                "queryable",
+                "cascaded",
+                "opaque",
+                "noSubsets",
+                "fixedWidth",
+                "fixedHeight"
+            ];
+            for ( var i = 0; i < replaceKeys.length; i ++ ) {
+                key = replaceKeys[i];
+                if ( parentLayersInfos[key] && !layerObj[key] ) {
+                    layerObj[key] = parentLayersInfos[key];
+                }
+            }
+            // on affiche l'arborescence dans le titre de la couche (sauf si on est au premier niveau ?)
+            if ( !parentLayersInfos._isRootLayer && parentLayersInfos.Title ) {
+                layerObj.Title = parentLayersInfos.Title + " > " + layerObj.Title;
+            }
+
+        }else {
+            // si on n'a pas d'infos de couche parent, on est à la racine du Capability, on le note
+            layerObj._isRootLayer = true;
+        }
+
+        // 2. si on a d'autres couches <Layer> imbriquées, on descend d'un niveau, sinon on affiche la couche dans la liste des résultats
+        if ( layerObj.Layer ) {
+            if ( Array.isArray(layerObj.Layer) ) {
+                for ( var j = 0; j < layerObj.Layer.length; j ++ ) {
+                    // on recommence pour chaque sous couche, avec les infos éventuellement héritées
+                    this._displayGetCapResponseWMSLayer(layerObj.Layer[j], layerObj);
+                }
+            }
+        } else {
+
+            // on récupère la longueur de la liste des couches déjà récupérées, pour avoir ce qui sera l'index de la couche à ajouter.
+            var lastIndex = this._getCapResponseWMSLayers.length;
+
+            // on vérifie que la couche ait une projection compatible avec celle de la carte
+            // ou soit connue par proj4js, et on stocke cette projection dans les infos de la couche.
+            projection = this._getWMSLayerProjection(layerObj, mapProjCode);
+
+            if ( !projection ) {
+                // si aucune projection n'est compatible avec celle de la carte ou connue par ol.proj,
+                // on n'affiche pas la couche dans le panel des résultats
+                console.log("[ol.control.LayerImport] wms layer cannot be added to map : unknown projection", layerObj);
+
+            } else {
+                // si on a une projection compatible : on la stocke et la couche sera éventuellement reprojetée à l'ajout
+                layerObj._projection = projection;
+                // on ajoute chaque couche de la réponse dans la liste des couches accessibles
+                layerDescription = layerObj.Title;
+                if ( this._getCapResultsListContainer ) {
+                    this._getCapResultsListContainer.appendChild(this._createImportGetCapResultElement(layerDescription, lastIndex));
+                }
+                // puis on stoke la couche dans la liste pour faire le lien avec le DOM
+                this._getCapResponseWMSLayers[lastIndex] = layerObj;
             }
         }
     };
@@ -917,8 +1116,14 @@ define([
     LayerImport.prototype._addGetCapWMSLayer = function (layerInfo) {
         var map = this.getMap();
         if ( !map ) {
+            console.log("[ol.control.LayerImport] _addGetCapWMSLayer error : map is not defined");
             return;
         }
+        if ( !layerInfo ) {
+            console.log("[ol.control.LayerImport] _addGetCapWMSLayer error : layerInfo is not defined");
+            return;
+        }
+
         // récupération de la projection de la carte
         var mapProjCode = this._getMapProjectionCode();
 
@@ -990,6 +1195,10 @@ define([
         var wmsLayer = new ol.layer.Tile(layerTileOptions);
         // on rajoute le champ gpResultLayerId permettant d'identifier une couche crée par le composant. (pour layerSwitcher par ex)
         wmsLayer.gpResultLayerId = "layerimport:WMS";
+        // on rajoute le champ gpQueryableWMSImport permettant d'identifier si la couche est queryable (pour getFeatureInfo)
+        if ( layerInfo.queryable ) {
+            wmsLayer.gpQueryableWMSImport = true;
+        }
 
         map.addLayer(wmsLayer);
     };
@@ -1035,14 +1244,21 @@ define([
 
         // on va parcourir la liste des CRS disponibles pour la couche
         // si on trouve la projection de la carte : c'est parfait
-        // si on trouve une projection qui est connue par ol.prog : OL3 gère la reprojection
+        // si on trouve une projection qui est connue par ol.proj : OL3 gère la reprojection
         var CRSList = layerInfo.CRS;
         if ( Array.isArray(CRSList) ) {
             for ( var i = 0; i < CRSList.length; i ++ ) {
                 var layerCRS = CRSList[i];
-                if ( layerCRS === mapProjCode || ol.proj.get(layerCRS) ) {
+                if ( layerCRS === mapProjCode ) {
                     projection = layerCRS;
                     break;
+                } else {
+                    if ( layerCRS && typeof layerCRS === "string" ) {
+                        if ( ol.proj.get(layerCRS) || ol.proj.get(layerCRS.toUpperCase()) ) {
+                            projection = layerCRS;
+                            break;
+                        }
+                    }
                 }
             }
         }
@@ -1091,19 +1307,56 @@ define([
      * @private
      */
     LayerImport.prototype._getWMSLayerExtent = function (layerInfo, mapProjCode, layerTileOptions) {
-        // récupération de l'étendue (bbox)
-        if ( layerInfo.BoundingBox && Array.isArray(layerInfo.BoundingBox) ) {
-            for ( var i = 0; i < layerInfo.BoundingBox.length; i++ ) {
-                var crs = layerInfo.BoundingBox[i].crs;
+        if ( !layerInfo ) {
+            console.log("[ol.control.LayerImport] _getWMSLayerExtent error : layerInfo is not defined");
+            return;
+        }
+
+        // récupération des 2 propriétés qui peuvent spécifier l'étendue (bbox) selon les specs OGC WMS 1.3.0 :
+        // 1. layerInfo.EX_GeographicBoundingBox est un tableau de type [westBoundLongitude, southBoundLatitude, eastBoundLongitude, northBoundLatitude] en WGS84
+        var exGeographicBoundingBox = layerInfo["EX_GeographicBoundingBox"];
+        // 2. layerInfo.BoundingBox est un tableau dont chaque élément est un objet (balise bbox) avec les propriétés suivantes :
+        // crs (String) et extent (tableau de type [minx, miny, maxx, maxy])
+        var boundingBox = layerInfo.BoundingBox;
+
+        if ( exGeographicBoundingBox && Array.isArray(exGeographicBoundingBox) ) {
+            if ( mapProjCode === "EPSG:4326" ) {
+                // si la projection de la carte est la même que celle de l'extent (EPSG:4326), on la passe telle quelle
+                layerTileOptions.extent = exGeographicBoundingBox;
+            } else {
+                layerTileOptions.extent = ol.proj.transformExtent(exGeographicBoundingBox, "EPSG:4326", mapProjCode);
+            }
+
+        // si jamais EX_GeographicBoundingBox n'est pas ou est mal renseigné, on essaie de récupérer via le paramètre BoundingBox
+        } else if ( boundingBox && Array.isArray(boundingBox) ) {
+            var crs;
+            var extent;
+            for ( var i = 0; i < boundingBox.length; i++ ) { // on peut avoir plusieurs BoundingBox
+                crs = boundingBox[i].crs;
+                extent = boundingBox[i].extent;
                 if ( crs ) {
                     if ( crs === mapProjCode ) {
                         // si la bbox est dans la projection de la carte, on la passe telle quelle
-                        layerTileOptions.extent = layerInfo.BoundingBox[i].extent;
+                        layerTileOptions.extent = extent;
                         break;
-                    } else if ( ol.proj.get(crs) ) {
-                        // si la bbox est dans une projection connue, on la reprojette
-                        layerTileOptions.extent = ol.proj.transformExtent(layerInfo.BoundingBox[i].extent, crs, mapProjCode);
-                        break;
+                    } else {
+                        if ( crs && typeof crs === "string" ) {
+                            var olProj = ol.proj.get(crs) ? ol.proj.get(crs) : ol.proj.get(crs.toUpperCase());
+                            // if ( ol.proj.get(crs) || ol.proj.get(crs.toUpperCase()) ) {
+                            if ( olProj ) {
+                                // si la bbox est dans une projection connue, on va la reprojeter
+                                // tout d'abord, on gère le cas des systèmes EPSG géographiques : inversion des axes x et y
+                                if ( olProj.getUnits() === "degrees" && crs.toUpperCase().indexOf("EPSG") === 0 ) {
+                                    // le tableau extent est inversé, on a besoin de : [miny, minx, maxx, maxy]
+                                    var reversedExtent = [extent[1], extent[0], extent[3], extent[2]];
+                                    layerTileOptions.extent = ol.proj.transformExtent(reversedExtent, olProj, mapProjCode);
+                                } else {
+                                    // reprojection dans la projection de la carte
+                                    layerTileOptions.extent = ol.proj.transformExtent(extent, olProj, mapProjCode);
+                                }
+                                break;
+                            }
+                        }
                     }
                 }
             }
@@ -1327,14 +1580,18 @@ define([
 
         if ( layerInfo.TileMatrixSetLink && Array.isArray(layerInfo.TileMatrixSetLink) ) {
             var tms = layerInfo.TileMatrixSetLink[0].TileMatrixSet;
+            var crs;
             if ( getCapResponseWMTS.Contents && Array.isArray(getCapResponseWMTS.Contents.TileMatrixSet) ) {
                 var tileMatrixSets = getCapResponseWMTS.Contents.TileMatrixSet;
                 for ( var i = 0; i < tileMatrixSets.length; i ++ ) {
                     if ( tileMatrixSets[i].Identifier === tms && tileMatrixSets[i].TileMatrix ) {
                         // on a trouvé le TMS correspondant
                         var tileMatrixSet = tileMatrixSets[i];
-                        if ( tileMatrixSet.SupportedCRS && ol.proj.get(tileMatrixSet.SupportedCRS) ) {
-                            projection = tileMatrixSet.SupportedCRS;
+                        crs = tileMatrixSet.SupportedCRS;
+                        if ( crs && typeof crs === "string" ) {
+                            if ( ol.proj.get(crs) || ol.proj.get(crs.toUpperCase()) ) {
+                                projection = crs;
+                            }
                         }
                         break;
                     }

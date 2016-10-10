@@ -7,7 +7,7 @@
 
   <!-- Plugin ol3 IGN -->
   <link rel="stylesheet" href="../../dist/ol3/GpPluginOl3.css" />
-  <script src="../../dist/ol3/GpPluginOl3.js"></script>
+  <script src="../../dist/ol3/GpPluginOl3.js" data-url="./resources/AutoConf.js"></script>
 
 </head>
 <body>
@@ -28,8 +28,49 @@
     <!-- Mettre le code source de l'exemple -->
     <script>
 
-      console.log(ol);  // variable globale L exposée
-    //   ol.control.LayerSwitcher.runSample();
+    window.onload = function () {
+      // on cache l'image de chargement du Géoportail.
+      document.getElementById("map").style.backgroundImage = "none";
+
+      // Création de la map
+      var map = new ol.Map({
+        target : "map",
+        layers : [
+          new ol.layer.GeoportalWMTS({
+            layer : "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+          })
+        ],
+        view : new ol.View({
+          center : [288074.8449901076, 6247982.515792289],
+          zoom : 8
+        })
+      });
+
+      var drawing = new ol.control.Drawing();
+      map.addControl(drawing);
+      var iso = new ol.control.Isocurve();
+      map.addControl(iso);
+      var layerImport = new ol.control.LayerImport();
+      map.addControl(layerImport);
+      var layerSwitcher = new ol.control.LayerSwitcher();
+      map.addControl(layerSwitcher);
+      var mp = new ol.control.GeoportalMousePosition();
+      map.addControl(mp);
+      var route = new ol.control.Route();
+      map.addControl(route);
+      var reverse = new ol.control.ReverseGeocode({});
+      map.addControl(reverse);
+      var search = new ol.control.SearchEngine({});
+      map.addControl(search);
+
+      var measureLength = new ol.control.MeasureLength();
+      map.addControl(measureLength);
+      var measureArea = new ol.control.MeasureArea();
+      map.addControl(measureArea);
+      var measureAzimuth = new ol.control.MeasureAzimuth();
+      map.addControl(measureAzimuth);
+
+    };
 
     </script>
 

@@ -1,0 +1,21 @@
+/* Showing/hiding drawing panel */
+
+label[id^=GPshowMeasureAzimuthPicto-] {
+  display: inline-block;
+}
+
+input[id^=GPshowMeasureAzimuth-] + label {
+  display: block;
+}
+
+input[id^=GPshowMeasureAzimuth-]:checked + label {
+  display: block;
+}
+
+input[id^=GPshowMeasureAzimuth-] + label + div {
+  display: block;
+}
+
+input[id^=GPshowMeasureAzimuth-]:checked + label + div {
+  display: block;
+}

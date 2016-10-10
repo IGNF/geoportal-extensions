@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.8.1
- * @date 2016-09-19
+ * @date 2016-10-06
  *
  */
 /*!
@@ -23911,13 +23911,13 @@ CommonUtilsLayerUtils = function () {
                             image.style.width = '30px';
                         } else {
                             if (name) {
-                                link.text = name;
+                                link.textContent = name;
                             } else if (text) {
-                                link.text = text;
+                                link.textContent = text;
                             } else if (url) {
-                                link.text = url;
+                                link.textContent = url;
                             } else {
-                                link.text = '';
+                                link.textContent = '';
                             }
                         }
                         attributions.push(container.innerHTML + ' ');
@@ -24276,7 +24276,7 @@ LeafletLayersLayers = function (L, woodman, LayerConfig, WMS, WMTS) {
 }(leaflet, {}, LeafletLayersLayerConfig, LeafletLayersWMS, LeafletLayersWMTS);
 LeafletGpPluginLeaflet = function (L, P, Gp, Controls, Layers, CRS, Register) {
     Gp.leafletExtVersion = '0.8.1';
-    Gp.leafletExtDate = '2016-09-19';
+    Gp.leafletExtDate = '2016-10-06';
     Gp.Register = Register;
     L.geoportalLayer = Layers;
     L.geoportalControl = Controls;

@@ -3,7 +3,14 @@
 ## [ol3-0.11.0-dev](https://github.com/IGNF/geoportal-extensions/tree/ol3-0.11.0-dev) (2016-09-02)
 [Full Changelog](https://github.com/IGNF/geoportal-extensions/compare/leaflet-0.8.1-dev...ol3-0.11.0-dev)
 
-
+- fix \#61 : ol.control.LayerImport - display WMS enclosed child layers [\#62](https://github.com/IGNF/geoportal-extensions/pull/62)
+- fix \#52 : ol.control.LayerImport : extent mal récupérée pour les couches en EPSG:4326 [\#60](https://github.com/IGNF/geoportal-extensions/pull/60)
+- Extension OL3 : proposer un outil de mesure de surface [\#57](https://github.com/IGNF/geoportal-extensions/issues/57)
+- Extension OL3 : proposer un outil de mesure de distance [\#56](https://github.com/IGNF/geoportal-extensions/issues/56)
+- Extension OL3 : proposer un outil de mesure d'azimuth [\#55](https://github.com/IGNF/geoportal-extensions/issues/55)
+- fix \#50 : ol.control.GeoportalAttribution : affichage attributions de type text sous Safari
+- fix \#53 : correction titre des outils d'edition
+- fix \#51 : try ol.proj.get\(crs.toUpperCase\(\)\) \(e.g. if crs="epsg:3857"\) [\#54](https://github.com/IGNF/geoportal-extensions/pull/54)
 - Suppression de codes EPSG en doublons [\#38](https://github.com/IGNF/geoportal-extensions/pull/38)
 - Feature register proj4 [\#37](https://github.com/IGNF/geoportal-extensions/pull/37)
 - Rajout des définitions du registre IGNF et enrichissement des définitions EPSG dans les extensions [\#36](https://github.com/IGNF/geoportal-extensions/issues/36)

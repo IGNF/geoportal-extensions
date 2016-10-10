@@ -3,6 +3,7 @@ define([
     "gp",
     "Common/Utils/LayerUtils",
     "Common/Utils/Register",
+    "Ol3/Formats/KML",
     "Ol3/CRS/CRS",
     "Ol3/Layers/SourceWMTS",
     "Ol3/Layers/SourceWMS",
@@ -16,12 +17,16 @@ define([
     "Ol3/Controls/Isocurve",
     "Ol3/Controls/ReverseGeocode",
     "Ol3/Controls/LayerImport",
-    "Ol3/Controls/GeoportalAttribution"
+    "Ol3/Controls/GeoportalAttribution",
+    "Ol3/Controls/Measures/MeasureLength",
+    "Ol3/Controls/Measures/MeasureArea",
+    "Ol3/Controls/Measures/MeasureAzimuth"
 ], function (
     ol,
     Gp,
     LayerUtils,
     Register,
+    KML,
     CRS,
     SourceWMTS,
     SourceWMS,
@@ -35,7 +40,10 @@ define([
     Isocurve,
     ReverseGeocode,
     LayerImport,
-    GeoportalAttribution
+    GeoportalAttribution,
+    MeasureLength,
+    MeasureArea,
+    MeasureAzimuth
 ) {
 
     "use strict";
@@ -46,6 +54,9 @@ define([
 
     // Classes utilitaires
     Gp.LayerUtils = LayerUtils;
+
+    // FIXME overload or not ? name Gp.format.kml ?
+    ol.format.KMLExtended = KML;
 
     // Surcharge sur les functions ol/proj4 par défaut
     CRS.overload();
@@ -64,6 +75,9 @@ define([
     ol.control.Drawing = Drawing;
     ol.control.ReverseGeocode = ReverseGeocode;
     ol.control.LayerImport = LayerImport;
+    ol.control.MeasureLength = MeasureLength;
+    ol.control.MeasureArea = MeasureArea;
+    ol.control.MeasureAzimuth = MeasureAzimuth;
 
     // FIXME : parce qu'il faut bien retourner quelque chose
     return Gp;
