@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 5.0.0
- * @date 2016-09-19
+ * @date 2016-10-10
  *
  */
 /*!
@@ -7568,13 +7568,13 @@ CommonUtilsLayerUtils = function () {
                             image.style.width = '30px';
                         } else {
                             if (name) {
-                                link.text = name;
+                                link.textContent = name;
                             } else if (text) {
-                                link.text = text;
+                                link.textContent = text;
                             } else if (url) {
-                                link.text = url;
+                                link.textContent = url;
                             } else {
-                                link.text = '';
+                                link.textContent = '';
                             }
                         }
                         attributions.push(container.innerHTML + ' ');
