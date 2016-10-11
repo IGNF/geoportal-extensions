@@ -25898,7 +25898,7 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, El
         var start = styles.start;
         var finish = styles.finish;
         var _pointerImage = null;
-        if (pointer instanceof ol.style.Circle) {
+        if (pointer instanceof ol.style.Image) {
             _pointerImage = pointer;
         } else {
             var defaultStylePointer = ElevationPath.DEFAULT_STYLES.DRAW.POINTER;

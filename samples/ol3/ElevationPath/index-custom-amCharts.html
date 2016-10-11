@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="../../../res/ol3/Controls/ElevationPath/GPelevationPathOL3.css" />
 
   <!-- requirejs -->
+  <script src="lib/amCharts-min.js"></script>
   <script src="../../../lib/require.js"></script>
 
   <!-- load geoportail-waiting image -->
@@ -82,10 +83,13 @@
           var osm = new ol.layer.Tile({
             source : new ol.source.OSM()
           });
+
           map = new ol.Map({
             target : "map",
             layers : [
-              osm
+              new LayerWMTS({
+                  layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS" ,
+              })
             ],
             view : new ol.View({
               center : [288074.8449901076, 6247982.515792289],
@@ -94,34 +98,11 @@
           });
 
           var profil = new ElevationPath({
-            apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
-            debug : true, // orienté maintenance : affiche les points du service sur le tracé !
             collapsed : false,
-            elevationOptions : {
-              sampling : 50
-            },
+            elevationOptions : {},
             stylesOptions : {
-              draw : {
-                start : new ol.style.Stroke({
-                    color : "yellow",
-                    lineDash : null,
-                    width : 5
-                }),
-                pointer : new ol.style.Circle({
-                    radius : 8,
-                    stroke : new ol.style.Stroke({
-                        color : "red",
-                        width : 1
-                    }),
-                    fill : new ol.style.Fill({
-                        color : "blue"
-                    })
-                }),
-                finish : new ol.style.Stroke({
-                    color : "rgba(0, 0, 0, 0.5)",
-                    width : 8
-                })
-              }
+              marker : {},
+              graph : {}
             }
           });
           map.addControl(profil);

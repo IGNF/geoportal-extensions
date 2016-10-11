@@ -576,8 +576,8 @@ define([
 
         logger.trace("style pointer",  pointer);
         var _pointerImage = null;
-        if ( pointer instanceof ol.style.Circle ) {
-            logger.trace( "instance ol.style.Circle for pointer drawing !" );
+        if ( pointer instanceof ol.style.Image ) {
+            logger.trace( "instance ol.style.Image for pointer drawing !" );
             _pointerImage = pointer;
         } else {
             logger.trace( "use properties to define a style for pointer drawing !" );
