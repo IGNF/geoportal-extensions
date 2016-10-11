@@ -95,30 +95,26 @@
 
           var profil = new ElevationPath({
             apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
-            debug : true, // orienté maintenance : affiche les points du service sur le tracé !
+            debug : true,
             collapsed : false,
             elevationOptions : {
-              sampling : 50
+              sampling : 10
             },
             stylesOptions : {
+              marker : {}, // par defaut
               draw : {
-                start : new ol.style.Stroke({
-                    color : "yellow",
-                    lineDash : null,
-                    width : 5
-                }),
-                pointer : new ol.style.Circle({
-                    radius : 8,
-                    stroke : new ol.style.Stroke({
-                        color : "red",
-                        width : 1
-                    }),
-                    fill : new ol.style.Fill({
-                        color : "blue"
-                    })
-                }),
+                start : { // custom en mode properties
+                   strokeColor : "rgba(0, 0, 0, 0.5)",
+                   strokeLineDash : [10, 10],
+                   strokeWidth : 2
+                 },
+                 pointer : {
+                   imageRadius : 5,
+                   imageFillColor : "rgba(255, 255, 255, 0.2)",
+                   imageStrokeColor : "rgba(0, 0, 0, 0.7)"
+                },
                 finish : new ol.style.Stroke({
-                    color : "rgba(0, 0, 0, 0.5)",
+                    color : "rgba(0, 0, 128, 0.5)",
                     width : 8
                 })
               }

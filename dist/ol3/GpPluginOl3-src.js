@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-10-10
+ * @date 2016-10-11
  *
  */
 /*!
@@ -25653,17 +25653,19 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, El
     Utils.assign(ElevationPath.prototype, ElevationPathDOM);
     ElevationPath.DEFAULT_STYLES = {
         DRAW: {
+            POINTER: {
+                imageRadius: 5,
+                imageFillColor: 'rgba(255, 155, 0, 0.7)',
+                imageStrokeColor: '#002A50',
+                imageStrokeWidth: 2
+            },
             START: {
                 strokeColor: '#002A50',
                 strokeLineDash: [
                     10,
                     10
                 ],
-                strokeWidth: 2,
-                imageRadius: 5,
-                imageFillColor: 'rgba(255, 155, 0, 0.7)',
-                imageStrokeColor: '#002A50',
-                imageStrokeWidth: 2
+                strokeWidth: 2
             },
             FINISH: {
                 strokeColor: '#002A50',
@@ -25684,6 +25686,12 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, El
             imageAnchorXUnits: 'ratio',
             imageAnchorYUnits: 'ratio',
             imageSnapToPixel: true
+        },
+        RESULTS: {
+            imageRadius: 5,
+            imageFillColor: 'rgba(128, 128, 128, 0.2)',
+            imageStrokeColor: 'rgba(0, 0, 0, 0.7)',
+            imageStrokeWidth: 2
         },
         GRAPH: {
             type: 'serial',
@@ -25793,6 +25801,8 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, El
     ElevationPath.prototype._initialize = function (options) {
         this.options = {};
         this.options.apiKey = options.apiKey;
+        var debug = options.debug;
+        this.options.debug = typeof debug === 'undefined' ? false : debug;
         var collapsed = options.collapsed;
         this.options.collapsed = typeof collapsed === 'undefined' ? true : collapsed;
         var service = options.elevationOptions;
@@ -25809,8 +25819,12 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, El
         }
         var draw = styles.draw || this.options.styles.draw;
         this.options.styles.draw = typeof draw === 'undefined' || Object.keys(draw).length === 0 ? ElevationPath.DEFAULT_STYLES.DRAW : draw;
+        var drawPointer = this.options.styles.draw.pointer;
         var drawStart = this.options.styles.draw.start;
         var drawFinish = this.options.styles.draw.finish;
+        if (typeof drawPointer === 'undefined') {
+            this.options.styles.draw.pointer = ElevationPath.DEFAULT_STYLES.DRAW.POINTER;
+        }
         if (typeof drawStart === 'undefined') {
             this.options.styles.draw.start = ElevationPath.DEFAULT_STYLES.DRAW.START;
         }
@@ -25858,82 +25872,117 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, El
         }
     };
     ElevationPath.prototype._createStylingMarker = function () {
-        var styles = this.options.styles.marker;
-        var defaultStyle = ElevationPath.DEFAULT_STYLES.MARKER;
-        Object.keys(defaultStyle).forEach(function (key) {
-            if (!styles.hasOwnProperty(key)) {
-                styles[key] = defaultStyle[key];
-                return;
-            }
-        }, this);
-        this._markerStyle = new ol.style.Style({
-            image: new ol.style.Icon({
-                src: styles.imageSrc,
-                anchor: styles.imageAnchor,
-                snapToPixel: true
-            })
-        });
+        var marker = this.options.styles.marker;
+        if (marker instanceof ol.style.Image) {
+            this._drawStyleStart = new ol.style.Style({ image: marker });
+        } else {
+            var defaultStyle = ElevationPath.DEFAULT_STYLES.MARKER;
+            Object.keys(defaultStyle).forEach(function (key) {
+                if (!marker.hasOwnProperty(key)) {
+                    marker[key] = defaultStyle[key];
+                    return;
+                }
+            }, this);
+            this._markerStyle = new ol.style.Style({
+                image: new ol.style.Icon({
+                    src: marker.imageSrc,
+                    anchor: marker.imageAnchor,
+                    snapToPixel: true
+                })
+            });
+        }
     };
     ElevationPath.prototype._createStylingDraw = function () {
         var styles = this.options.styles.draw;
+        var pointer = styles.pointer;
         var start = styles.start;
         var finish = styles.finish;
-        var defaultStyleStart = ElevationPath.DEFAULT_STYLES.DRAW.START;
-        Object.keys(defaultStyleStart).forEach(function (key) {
-            if (!start.hasOwnProperty(key)) {
-                start[key] = defaultStyleStart[key];
-                return;
-            }
-            if (key === 'strokeWidth') {
-                var intValue = parseInt(start[key], 10);
-                if (isNaN(intValue) || intValue < 0) {
-                    console.log('Wrong value (' + start[key] + ') for strokeWidth. Must be a positive interger value.');
+        var _pointerImage = null;
+        if (pointer instanceof ol.style.Circle) {
+            _pointerImage = pointer;
+        } else {
+            var defaultStylePointer = ElevationPath.DEFAULT_STYLES.DRAW.POINTER;
+            Object.keys(defaultStylePointer).forEach(function (key) {
+                if (!pointer.hasOwnProperty(key)) {
+                    pointer[key] = defaultStylePointer[key];
+                    return;
+                }
+                if (key === 'imageStrokeWidth' || key === 'imageRadius') {
+                    var intValue = parseInt(pointer[key], 10);
+                    if (isNaN(intValue) || intValue < 0) {
+                        console.log('Wrong value (' + pointer[key] + ') for strokeWidth or radius. Must be a positive interger value.');
+                        pointer[key] = defaultStylePointer[key];
+                        return;
+                    }
+                    pointer[key] = intValue;
+                }
+            }, this);
+            _pointerImage = new ol.style.Circle({
+                radius: pointer.imageRadius,
+                stroke: new ol.style.Stroke({
+                    color: pointer.imageStrokeColor,
+                    width: pointer.imageStrokeWidth
+                }),
+                fill: new ol.style.Fill({ color: pointer.imageFillColor })
+            });
+        }
+        var _startStroke = null;
+        if (start instanceof ol.style.Stroke) {
+            _startStroke = start;
+        } else {
+            var defaultStyleStart = ElevationPath.DEFAULT_STYLES.DRAW.START;
+            Object.keys(defaultStyleStart).forEach(function (key) {
+                if (!start.hasOwnProperty(key)) {
                     start[key] = defaultStyleStart[key];
                     return;
                 }
-                start[key] = intValue;
-            }
-        }, this);
-        var _stroke = new ol.style.Stroke({
-            color: start.strokeColor,
-            lineDash: start.strokeLineDash,
-            width: start.strokeWidth
-        });
-        var _image = new ol.style.Circle({
-            radius: start.imageRadius,
-            stroke: new ol.style.Stroke({
-                color: start.imageStrokeColor,
-                width: start.imageStrokeWidth
-            }),
-            fill: new ol.style.Fill({ color: start.imageFillColor })
-        });
+                if (key === 'strokeWidth') {
+                    var intValue = parseInt(start[key], 10);
+                    if (isNaN(intValue) || intValue < 0) {
+                        console.log('Wrong value (' + start[key] + ') for strokeWidth. Must be a positive interger value.');
+                        start[key] = defaultStyleStart[key];
+                        return;
+                    }
+                    start[key] = intValue;
+                }
+            }, this);
+            _startStroke = new ol.style.Stroke({
+                color: start.strokeColor,
+                lineDash: start.strokeLineDash,
+                width: start.strokeWidth
+            });
+        }
         this._drawStyleStart = new ol.style.Style({
-            stroke: _stroke,
-            image: _image
+            stroke: _startStroke,
+            image: _pointerImage
         });
-        var defaultStyleFinish = ElevationPath.DEFAULT_STYLES.DRAW.FINISH;
-        Object.keys(defaultStyleFinish).forEach(function (key) {
-            if (!finish.hasOwnProperty(key)) {
-                finish[key] = defaultStyleFinish[key];
-                return;
-            }
-            if (key === 'strokeWidth') {
-                var intValue = parseInt(finish[key], 10);
-                if (isNaN(intValue) || intValue < 0) {
-                    console.log('Wrong value (' + finish[key] + ') for strokeWidth. Must be a positive interger value.');
+        var _finishStroke = null;
+        if (finish instanceof ol.style.Stroke) {
+            _finishStroke = finish;
+        } else {
+            var defaultStyleFinish = ElevationPath.DEFAULT_STYLES.DRAW.FINISH;
+            Object.keys(defaultStyleFinish).forEach(function (key) {
+                if (!finish.hasOwnProperty(key)) {
                     finish[key] = defaultStyleFinish[key];
                     return;
                 }
-                finish[key] = intValue;
-            }
-        }, this);
-        this._drawStyleFinish = new ol.style.Style({
-            stroke: new ol.style.Stroke({
-                color: styles.finish.strokeColor,
-                lineDash: styles.finish.strokeLineDash,
-                width: styles.finish.strokeWidth
-            })
-        });
+                if (key === 'strokeWidth') {
+                    var intValue = parseInt(finish[key], 10);
+                    if (isNaN(intValue) || intValue < 0) {
+                        console.log('Wrong value (' + finish[key] + ') for strokeWidth. Must be a positive interger value.');
+                        finish[key] = defaultStyleFinish[key];
+                        return;
+                    }
+                    finish[key] = intValue;
+                }
+            }, this);
+            _finishStroke = new ol.style.Stroke({
+                color: finish.strokeColor,
+                lineDash: finish.strokeLineDash,
+                width: finish.strokeWidth
+            });
+        }
+        this._drawStyleFinish = new ol.style.Style({ stroke: _finishStroke });
     };
     ElevationPath.prototype._createStylingGraph = function () {
         var userStyles = this.options.styles.graph;
@@ -26124,25 +26173,28 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, El
         div.innerHTML = JSON.stringify(data, undefined, 4);
         container.appendChild(div);
         this._profil = container;
-        var _proj = this.getMap().getView().getProjection();
-        for (var i = 0; i < data.length; i++) {
-            var obj = data[i];
-            var _coordinate = ol.proj.transform([
-                obj.lon,
-                obj.lat
-            ], 'EPSG:4326', _proj);
-            var _geometry = new ol.geom.Point(_coordinate);
-            this._marker = new ol.Feature({ geometry: _geometry });
-            var _image = new ol.style.Circle({
-                radius: 5,
-                stroke: new ol.style.Stroke({
-                    color: 'rgba(0, 0, 0, 0.7)',
-                    width: 2
-                }),
-                fill: new ol.style.Fill({ color: 'rgba(128, 128, 128, 0.2)' })
-            });
-            this._marker.setStyle(new ol.style.Style({ image: _image }));
-            this._measureSource.addFeature(this._marker);
+        if (this.options.debug) {
+            var _proj = this.getMap().getView().getProjection();
+            for (var i = 0; i < data.length; i++) {
+                var obj = data[i];
+                var _coordinate = ol.proj.transform([
+                    obj.lon,
+                    obj.lat
+                ], 'EPSG:4326', _proj);
+                var _geometry = new ol.geom.Point(_coordinate);
+                this._marker = new ol.Feature({ geometry: _geometry });
+                var styles = ElevationPath.DEFAULT_STYLES.RESULTS;
+                var _image = new ol.style.Circle({
+                    radius: styles.imageRadius,
+                    stroke: new ol.style.Stroke({
+                        color: styles.imageStrokeColor,
+                        width: styles.imageStrokeWidth
+                    }),
+                    fill: new ol.style.Fill({ color: styles.imageFillColor })
+                });
+                this._marker.setStyle(new ol.style.Style({ image: _image }));
+                this._measureSource.addFeature(this._marker);
+            }
         }
     };
     ElevationPath.prototype._displayProfilWithD3 = function (data) {
@@ -26957,7 +27009,7 @@ Ol3ControlsMeasuresMeasureAzimuth = function (ol, woodman, Utils, Measures, Meas
 }(ol, {}, Ol3Utils, Ol3ControlsMeasuresMeasures, CommonControlsMeasureAzimuthDOM, CommonUtilsSelectorID);
 Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, KML, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution, ElevationPath, MeasureLength, MeasureArea, MeasureAzimuth) {
     Gp.ol3extVersion = '0.11.0';
-    Gp.ol3extDate = '2016-10-10';
+    Gp.ol3extDate = '2016-10-11';
     Gp.LayerUtils = LayerUtils;
     ol.format.KMLExtended = KML;
     CRS.overload();

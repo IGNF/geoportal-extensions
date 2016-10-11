@@ -33,21 +33,22 @@ define([
     * @param {Object} options - options for function call.
     * @param {Boolean} [options.collapsed = true] - specify if control should be collapsed at startup. Default is true.
     * @param {Object} [options.stylesOptions = {}] - styles management
-    * @param {Object} [options.stylesOptions.marker = {}] - styles management of marker
-    * @param {Object} [options.stylesOptions.marker.imageSrc] - Icon source
-    * @param {Object} [options.stylesOptions.marker.imageAnchor] - Icon anchor
+    * @param {Object} [options.stylesOptions.marker = {}] - styles management of marker with properties or object {ol.style.Icon}
+    * @param {String} [options.stylesOptions.marker.imageSrc] - Icon source
+    * @param {Array}  [options.stylesOptions.marker.imageAnchor] - Icon anchor
     * @param {Object} [options.stylesOptions.graph = {}] - styles management of a profil AmCharts (https://docs.amcharts.com/3/javascriptcharts/AmChart)
-    * @param {Object} [options.stylesOptions.draw = {}] - styles management of draw
-    * @param {Object} [options.stylesOptions.draw.start = {}] - Line Style for a start drawing
-    * @param {Object} [options.stylesOptions.draw.start.strokeColor] - Line for stroke color
-    * @param {Object} [options.stylesOptions.draw.start.strokeLineDash] - Line for stroke dash
-    * @param {Object} [options.stylesOptions.draw.start.strokeWidth] - Line for stroke width
-    * @param {Object} [options.stylesOptions.draw.start.imageRadius] - Point radius
-    * @param {Object} [options.stylesOptions.draw.start.imageFillColor] - Point for fill color
-    * @param {Object} [options.stylesOptions.draw.start.imageStrokeColor] - Point for stroke color
-    * @param {Object} [options.stylesOptions.draw.finish = {}] - Line Style for a finish drawing
-    * @param {Object} [options.stylesOptions.draw.finish.strokeColor] - Line for stroke color
-    * @param {Object} [options.stylesOptions.draw.finish.strokeWidth] - Line for stroke width
+    * @param {Object} [options.stylesOptions.draw = {}] - styles management of draw with properties or object {ol.style}
+    * @param {Object} [options.stylesOptions.draw.pointer = {}] - Point Style for a start drawing with properties or object {ol.style.Circle}
+    * @param {Number} [options.stylesOptions.draw.pointer.imageRadius] - Point radius (properties)
+    * @param {String} [options.stylesOptions.draw.pointer.imageFillColor] - Point for fill color (properties)
+    * @param {String} [options.stylesOptions.draw.pointer.imageStrokeColor] - Point for stroke color (properties)
+    * @param {Object} [options.stylesOptions.draw.start = {}] - Line Style for a start drawing with properties or object {ol.style.Stroke}
+    * @param {String} [options.stylesOptions.draw.start.strokeColor] - Line for stroke color (properties)
+    * @param {Array}  [options.stylesOptions.draw.start.strokeLineDash] - Line for stroke dash (properties)
+    * @param {Number} [options.stylesOptions.draw.start.strokeWidth] - Line for stroke width (properties)
+    * @param {Object} [options.stylesOptions.draw.finish = {}] - Line Style for a finish drawing with properties or object {ol.style.Stroke}
+    * @param {String} [options.stylesOptions.draw.finish.strokeColor] - Line for stroke color (properties)
+    * @param {Number} [options.stylesOptions.draw.finish.strokeWidth] - Line for stroke width (properties)
     * @param {Object} [options.elevationPathOptions = {}] - elevation service options.
     *       see {@link http://depot.ign.fr/geoportail/bibacces/develop/doc/module-Services.html#~getAltitude}
     *       to know all elevation options
@@ -60,15 +61,20 @@ define([
     *    collapsed : true,
     *    stylesOptions : {
     *     draw : {
-    *       start : {
-    *           strokeColor : "rgba(0, 0, 0, 0.5)",
-    *           strokeLineDash : [10, 10],
-    *           strokeWidth : 2,
+    *       pointer : {
     *           imageRadius : 5,
     *           imageFillColor : "rgba(255, 255, 255, 0.2)",
     *           imageStrokeColor : "rgba(0, 0, 0, 0.7)"
     *       },
-    *       finish : {}
+    *       start : {
+    *           strokeColor : "rgba(0, 0, 0, 0.5)",
+    *           strokeLineDash : [10, 10],
+    *           strokeWidth : 2,
+    *       },
+    *       finish : new ol.style.Stroke({
+    *            color : "rgba(0, 0, 0, 0.5)",
+    *            width : 2
+    *       })
     *     },
     *     marker : {},
     *     graph : {}
@@ -160,55 +166,27 @@ define([
     ElevationPath.DEFAULT_STYLES = {
         // styling drawing
         DRAW : {
-            // start drawing
-            START : {
-                // FIXME objet "ol.style"
-                // stroke : {
-                //     color : "#002A50",
-                //     lineDash : [10, 10],
-                //     width : 2
-                // },
-                // image : {
-                //     radius : 5,
-                //     fill : {
-                //         color :  "rgba(255, 155, 0, 0.7)"
-                //     },
-                //     stroke : {
-                //         color : "#002A50",
-                //         width : 2
-                //     }
-                // }
-                strokeColor : "#002A50",
-                strokeLineDash : [10, 10],
-                strokeWidth : 2,
+            // start drawing point
+            POINTER : {
                 imageRadius : 5,
                 imageFillColor : "rgba(255, 155, 0, 0.7)",
                 imageStrokeColor : "#002A50",
                 imageStrokeWidth : 2
             },
-            // finish drawing
+            // start drawing line
+            START : {
+                strokeColor : "#002A50",
+                strokeLineDash : [10, 10],
+                strokeWidth : 2
+            },
+            // finish drawing line
             FINISH : {
-                // FIXME objet "ol.style"
-                // stroke : {
-                //     color : "#002A50",
-                //     width : 3
-                // }
                 strokeColor : "#002A50",
                 strokeWidth : 3
             }
         },
         // stying marker to the profil
         MARKER : {
-            // FIXME objet "ol.style"
-            // image : {
-            //      src : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAsCAYAAAAATWqyAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAABTtJREFUeNq8WGtsFUUU/rb3gtdCAykFG9AUDTQUKimhxUewEusrJYoBo4FfEgoqotHERH6oP9TGmJhIrIlWAf9hjAaEiME2pgFfVVpFii8sWqIQLLSx3EJLW7p+Z2Z2b2l7d/b23vZLTmZ2duacb2fmnDk7DlKA67rXs1hJKacsohRQppjXFygnKT9TDlH2O47zFzIFGnco91EOuqnjoBnr2Ow4FhIlLN6m3DykFTh3BGj/Doj/CfSe082xPCDnBmDWTUBeyXDVjZTHOUNHUiZCEs+weI0ySTV0/w0c2wa07gIungn+vOx8YN46oPhpYOp1Xms/5TmSeSMUERKImFnYqBoGuPRNL5LEW8BgX2rrmjWZZLYApS8BUW8r4T0zO5eTEjFr+S6lSjV0HgPqVwNdf6S30abNB+7aDeQWey3bKZtIxvU5DxvyrE/izJfAvuXpkxCIDtElOjWqjK2RM8LZWMbiG0oEnUc5kB7a14WMYvI04H56du5ieZKluZWz8r0/IyQh5TuKRH8cqFuTeRIC0Sm6xYbYok1j21+ahyhLVO3wC8D5VowbRLfY0FhibOulIavDLEoRZyD8sJDeMWBXKG5ZsIobsdDsg+OMq3u1m1u9KQo8zP45EqjRxOUpk6i50IRl4FuGjpZtwUoiMYa314GFj/EzIsN8n8v+C1e4kfvwcm+wnhsZY27xQ8oiWZpKrWRQB6tAElfxpKnjsCdGklDzG9HvpI/0DYLYEpsalVnmAAM6fgR62oMHl70C5N9mn3rpI32DILbEpkZ5ljlFgbPNFtebzij5VPhNKX1lTBASNtXSzPZ3cxCuvVOH7FTCu4yxeZDGbCES0z5+PniQ3uGpwTYmYTOWCPGTpgYP6u9OnYhtzBCbQkSH0NiM4EEdP6VOxDYmYbNLiJxQ1elFwYPaG3XQCn3QHddjgpCweUKI6K2bvzw4YROf//rJob6fZl/H2FRoFiINfqo3qyzYwD8MVIeYLw32J+8j76SP9A2C2BKbGg1CZL+EF/W4YKP9a3/fCeyhkrY9DOOXEu1SlzZ5J31sSNjqURm/OfQkY9qgvkYOvXhbuH0g505Oga7HT9rPF9+t5+pDL0ulwzt46FV5ROax+JUSRRtP0LoHMK64+xNg7iqVEVOKSKRVxRGpsKhRnaRD4SPjR0J0axKCGmP7ilQxm4X8d8xXmfvHJZlPkCR3WfODl9FLMlxCIhevSJ5Nwzo1XdKxYpe3hpmB6BKdmoS43VqPxIgsni+aWOg8biZ3f+nLmSMiuvKWek/P01az7QdLyNVT7lC/l59WAKcb0iMxhzpW1nvmvpDtSiKD1l9OkpnDgv8UyMWFU9wvTP8vdY6NhJwnD1JVtso2OiiLSeL0iJUbNfg6zikVVwRTyOn2HWOfjfLtHgnBhtFIJCViyNDZUatdmnGlaFPqJIoe1WM1aqlz71ivJbLNobgAA9zgu7nZ/vstHAk5WVdzaPRqmGC5lER6kjpV4OWJdq+1kkshSk4VH9izcy/bV66qSPQZV+0J9G7rTY6+XNmqHmYwyJVV24kse1X31dhKHdasygkzy+a64oC4nWr47F4e858nSbLv4V/KAe9JKpVDrx/SImLIXMOiRUKdujESl+49O8xVZxpXzVc/C/I/RxL/hgq8YYkYhev9q6kVO4d9B+sr3vdICNaHJTHWW8Ya/87wqy2uWwstUk/gTYw3aCRGOarMDfS67kfFWqSuIe9imAjQEC272nJHixYNaSvGRIIGN49ywbsZEw1zI11N6TZSHeaGORn+F2AAJtRIMx4t+hUAAAAASUVORK5CYII=",
-            //      size : [34, 44],
-            //      anchor : [0.5, 1],
-            //      anchorOrigin : "bottom-left",
-            //      anchorXUnits : "ratio",
-            //      anchorYUnits : "ratio",
-            //      snapToPixel : true
-            // }
             imageSrc : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAsCAYAAAAATWqyAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAABTtJREFUeNq8WGtsFUUU/rb3gtdCAykFG9AUDTQUKimhxUewEusrJYoBo4FfEgoqotHERH6oP9TGmJhIrIlWAf9hjAaEiME2pgFfVVpFii8sWqIQLLSx3EJLW7p+Z2Z2b2l7d/b23vZLTmZ2duacb2fmnDk7DlKA67rXs1hJKacsohRQppjXFygnKT9TDlH2O47zFzIFGnco91EOuqnjoBnr2Ow4FhIlLN6m3DykFTh3BGj/Doj/CfSe082xPCDnBmDWTUBeyXDVjZTHOUNHUiZCEs+weI0ySTV0/w0c2wa07gIungn+vOx8YN46oPhpYOp1Xms/5TmSeSMUERKImFnYqBoGuPRNL5LEW8BgX2rrmjWZZLYApS8BUW8r4T0zO5eTEjFr+S6lSjV0HgPqVwNdf6S30abNB+7aDeQWey3bKZtIxvU5DxvyrE/izJfAvuXpkxCIDtElOjWqjK2RM8LZWMbiG0oEnUc5kB7a14WMYvI04H56du5ieZKluZWz8r0/IyQh5TuKRH8cqFuTeRIC0Sm6xYbYok1j21+ahyhLVO3wC8D5VowbRLfY0FhibOulIavDLEoRZyD8sJDeMWBXKG5ZsIobsdDsg+OMq3u1m1u9KQo8zP45EqjRxOUpk6i50IRl4FuGjpZtwUoiMYa314GFj/EzIsN8n8v+C1e4kfvwcm+wnhsZY27xQ8oiWZpKrWRQB6tAElfxpKnjsCdGklDzG9HvpI/0DYLYEpsalVnmAAM6fgR62oMHl70C5N9mn3rpI32DILbEpkZ5ljlFgbPNFtebzij5VPhNKX1lTBASNtXSzPZ3cxCuvVOH7FTCu4yxeZDGbCES0z5+PniQ3uGpwTYmYTOWCPGTpgYP6u9OnYhtzBCbQkSH0NiM4EEdP6VOxDYmYbNLiJxQ1elFwYPaG3XQCn3QHddjgpCweUKI6K2bvzw4YROf//rJob6fZl/H2FRoFiINfqo3qyzYwD8MVIeYLw32J+8j76SP9A2C2BKbGg1CZL+EF/W4YKP9a3/fCeyhkrY9DOOXEu1SlzZ5J31sSNjqURm/OfQkY9qgvkYOvXhbuH0g505Oga7HT9rPF9+t5+pDL0ulwzt46FV5ROax+JUSRRtP0LoHMK64+xNg7iqVEVOKSKRVxRGpsKhRnaRD4SPjR0J0axKCGmP7ilQxm4X8d8xXmfvHJZlPkCR3WfODl9FLMlxCIhevSJ5Nwzo1XdKxYpe3hpmB6BKdmoS43VqPxIgsni+aWOg8biZ3f+nLmSMiuvKWek/P01az7QdLyNVT7lC/l59WAKcb0iMxhzpW1nvmvpDtSiKD1l9OkpnDgv8UyMWFU9wvTP8vdY6NhJwnD1JVtso2OiiLSeL0iJUbNfg6zikVVwRTyOn2HWOfjfLtHgnBhtFIJCViyNDZUatdmnGlaFPqJIoe1WM1aqlz71ivJbLNobgAA9zgu7nZ/vstHAk5WVdzaPRqmGC5lER6kjpV4OWJdq+1kkshSk4VH9izcy/bV66qSPQZV+0J9G7rTY6+XNmqHmYwyJVV24kse1X31dhKHdasygkzy+a64oC4nWr47F4e858nSbLv4V/KAe9JKpVDrx/SImLIXMOiRUKdujESl+49O8xVZxpXzVc/C/I/RxL/hgq8YYkYhev9q6kVO4d9B+sr3vdICNaHJTHWW8Ya/87wqy2uWwstUk/gTYw3aCRGOarMDfS67kfFWqSuIe9imAjQEC272nJHixYNaSvGRIIGN49ywbsZEw1zI11N6TZSHeaGORn+F2AAJtRIMx4t+hUAAAAASUVORK5CYII=",
             imageSize : [34, 44],
             imageAnchor : [0.5, 1],
@@ -220,17 +198,6 @@ define([
         // styling service results points
         RESULTS : {
             // INFO orienté maintenance !
-            // FIXME objet "ol.style"
-            // image : {
-            //     radius : 5,
-            //     fill : {
-            //         color :  "rgba(128, 128, 128, 0.2)"
-            //     },
-            //     stroke : {
-            //         color : "rgba(0, 0, 0, 0.7)",
-            //         width : 2
-            //     }
-            // }
             imageRadius : 5,
             imageFillColor : "rgba(128, 128, 128, 0.2)",
             imageStrokeColor : "rgba(0, 0, 0, 0.7)",
@@ -434,7 +401,7 @@ define([
         // gestion des styles
         var styles = options.stylesOptions || {};
         if ( typeof styles === "undefined" || Object.keys(styles).length === 0 ) {
-            // on applique les styles par defaut
+            // on applique les styles par defaut (en mode properties)
             this.options.styles = {
                 draw : ElevationPath.DEFAULT_STYLES.DRAW,
                 marker : ElevationPath.DEFAULT_STYLES.MARKER,
@@ -452,8 +419,12 @@ define([
         var draw = styles.draw || this.options.styles.draw;
         this.options.styles.draw = ( typeof draw === "undefined" || Object.keys(draw).length === 0 ) ?
             ElevationPath.DEFAULT_STYLES.DRAW : draw;
-        var drawStart  = this.options.styles.draw.start;
-        var drawFinish = this.options.styles.draw.finish;
+        var drawPointer = this.options.styles.draw.pointer;
+        var drawStart   = this.options.styles.draw.start;
+        var drawFinish  = this.options.styles.draw.finish;
+        if ( typeof drawPointer === "undefined" ) {
+            this.options.styles.draw.pointer = ElevationPath.DEFAULT_STYLES.DRAW.POINTER;
+        }
         if ( typeof drawStart === "undefined" ) {
             this.options.styles.draw.start = ElevationPath.DEFAULT_STYLES.DRAW.START;
         }
@@ -551,36 +522,46 @@ define([
     // ###################### init styles ################################ //
     // ################################################################### //
 
-    /** create style marker object : "ol.style.icon" */
+    /** create style marker object : "ol.style" */
     ElevationPath.prototype._createStylingMarker = function () {
         logger.trace("ElevationPath::_createStylingMarker ");
 
         // on interprete les params pour y creer un objet ol.Style
-        var styles = this.options.styles.marker;
+        // on determine s'ils sont en mode properties ou directemzent en objet ol.Style
+        var marker = this.options.styles.marker;
 
-        logger.trace("style marker", styles);
+        logger.trace("style marker", marker);
+        if ( marker instanceof ol.style.Image ) {
+            logger.trace( "instance ol.style.Image for marker !" );
+            this._drawStyleStart = new ol.style.Style({
+                image : marker
+            });
 
-        var defaultStyle = ElevationPath.DEFAULT_STYLES.MARKER;
-        Object.keys(defaultStyle).forEach(function (key) {
-            if (!styles.hasOwnProperty(key)) {
-                styles[key] = defaultStyle[key];
-                return;
-            }
-        },this);
+        } else {
+            logger.trace( "use properties to define a style for marker !" );
 
-        // FIXME on se limite à qqch de simple sur la gestion des Icones
-        this._markerStyle = new ol.style.Style({
-            image : new ol.style.Icon({
-                src : styles.imageSrc,
-                // size : styles.imageSize,
-                // imgSize :  styles.imageImgSize,
-                anchor : styles.imageAnchor,
-                // anchorOrigin : styles.imageAnchorOrigin,
-                // anchorXUnits : styles.imageAnchorXUnits,
-                // anchorYUnits : styles.imageAnchorYUnits,
-                snapToPixel : true
-            })
-        });
+            var defaultStyle = ElevationPath.DEFAULT_STYLES.MARKER;
+            Object.keys(defaultStyle).forEach(function (key) {
+                if (!marker.hasOwnProperty(key)) {
+                    marker[key] = defaultStyle[key];
+                    return;
+                }
+            },this);
+
+            // FIXME on se limite à qqch de simple sur la gestion des Icones
+            this._markerStyle = new ol.style.Style({
+                image : new ol.style.Icon({
+                    src : marker.imageSrc,
+                    // size : marker.imageSize,
+                    // imgSize :  marker.imageImgSize,
+                    anchor : marker.imageAnchor,
+                    // anchorOrigin : marker.imageAnchorOrigin,
+                    // anchorXUnits : marker.imageAnchorXUnits,
+                    // anchorYUnits : marker.imageAnchorYUnits,
+                    snapToPixel : true
+                })
+            });
+        }
     };
 
     /** create style draw object : "ol.style" */
@@ -588,79 +569,123 @@ define([
         logger.trace("ElevationPath::_createStylingDraw");
 
         // on interprete les params pour y creer un objet ol.Style
-        var styles = this.options.styles.draw;
-        var start  = styles.start;
-        var finish = styles.finish;
+        var styles  = this.options.styles.draw;
+        var pointer = styles.pointer;
+        var start   = styles.start;
+        var finish  = styles.finish;
+
+        logger.trace("style pointer",  pointer);
+        var _pointerImage = null;
+        if ( pointer instanceof ol.style.Circle ) {
+            logger.trace( "instance ol.style.Circle for pointer drawing !" );
+            _pointerImage = pointer;
+        } else {
+            logger.trace( "use properties to define a style for pointer drawing !" );
+
+            var defaultStylePointer = ElevationPath.DEFAULT_STYLES.DRAW.POINTER;
+            Object.keys(defaultStylePointer).forEach(function (key) {
+                if (!pointer.hasOwnProperty(key)) {
+                    pointer[key] = defaultStylePointer[key];
+                    return;
+                }
+                if (key === "imageStrokeWidth" || key === "imageRadius") {
+                    var intValue = parseInt(pointer[key],10);
+                    if (isNaN(intValue) || intValue < 0) {
+                        console.log("Wrong value (" + pointer[key] + ") for strokeWidth or radius. Must be a positive interger value." );
+                        pointer[key] = defaultStylePointer[key];
+                        return;
+                    }
+                    pointer[key] = intValue;
+                }
+            },this);
+
+            // point : image
+            _pointerImage = new ol.style.Circle({
+                radius : pointer.imageRadius,
+                stroke : new ol.style.Stroke({
+                    color : pointer.imageStrokeColor,
+                    width : pointer.imageStrokeWidth
+                }),
+                fill : new ol.style.Fill({
+                    color : pointer.imageFillColor
+                })
+            });
+        }
 
         logger.trace("style start",  start);
-        logger.trace("style finish", finish);
+        var _startStroke = null;
+        if ( start instanceof ol.style.Stroke ) {
+            logger.trace( "instance ol.style.Stroke for start drawing !" );
+            _startStroke = start;
+        } else {
+            logger.trace( "use properties to define a style for start drawing !" );
 
-        var defaultStyleStart = ElevationPath.DEFAULT_STYLES.DRAW.START;
-        Object.keys(defaultStyleStart).forEach(function (key) {
-            if (!start.hasOwnProperty(key)) {
-                start[key] = defaultStyleStart[key];
-                return;
-            }
-            if (key === "strokeWidth") {
-                var intValue = parseInt(start[key],10);
-                if (isNaN(intValue) || intValue < 0) {
-                    console.log("Wrong value (" + start[key] + ") for strokeWidth. Must be a positive interger value." );
+            var defaultStyleStart = ElevationPath.DEFAULT_STYLES.DRAW.START;
+            Object.keys(defaultStyleStart).forEach(function (key) {
+                if (!start.hasOwnProperty(key)) {
                     start[key] = defaultStyleStart[key];
                     return;
                 }
-                start[key] = intValue;
-            }
-        },this);
+                if (key === "strokeWidth") {
+                    var intValue = parseInt(start[key],10);
+                    if (isNaN(intValue) || intValue < 0) {
+                        console.log("Wrong value (" + start[key] + ") for strokeWidth. Must be a positive interger value." );
+                        start[key] = defaultStyleStart[key];
+                        return;
+                    }
+                    start[key] = intValue;
+                }
+            },this);
 
-        // ligne : stroke
-        var _stroke = new ol.style.Stroke({
-            color : start.strokeColor,
-            lineDash : start.strokeLineDash,
-            width : start.strokeWidth
-        });
-
-        // point : image
-        var _image = new ol.style.Circle({
-            radius : start.imageRadius,
-            stroke : new ol.style.Stroke({
-                color : start.imageStrokeColor,
-                width : start.imageStrokeWidth
-            }),
-            fill : new ol.style.Fill({
-                color : start.imageFillColor
-            })
-        });
+            // ligne : stroke
+            _startStroke = new ol.style.Stroke({
+                color : start.strokeColor,
+                lineDash : start.strokeLineDash,
+                width : start.strokeWidth
+            });
+        }
 
         this._drawStyleStart = new ol.style.Style({
-            stroke : _stroke,
-            image : _image
+                stroke : _startStroke,
+                image : _pointerImage
         });
 
-        var defaultStyleFinish = ElevationPath.DEFAULT_STYLES.DRAW.FINISH;
-        Object.keys(defaultStyleFinish).forEach(function (key) {
-            if (!finish.hasOwnProperty(key)) {
-                finish[key] = defaultStyleFinish[key];
-                return;
-            }
-            if (key === "strokeWidth") {
-                var intValue = parseInt(finish[key],10);
-                if (isNaN(intValue) || intValue < 0) {
-                    console.log("Wrong value (" + finish[key] + ") for strokeWidth. Must be a positive interger value." );
+        logger.trace("style finish", finish);
+        var _finishStroke = null;
+        if ( finish instanceof ol.style.Stroke ) {
+            logger.trace( "instance ol.style.Stroke for finish drawing !" );
+            _finishStroke = finish;
+
+        } else {
+            logger.trace( "use properties to define a style for finish drawing !" );
+
+            var defaultStyleFinish = ElevationPath.DEFAULT_STYLES.DRAW.FINISH;
+            Object.keys(defaultStyleFinish).forEach(function (key) {
+                if (!finish.hasOwnProperty(key)) {
                     finish[key] = defaultStyleFinish[key];
                     return;
                 }
-                finish[key] = intValue;
-            }
-        },this);
+                if (key === "strokeWidth") {
+                    var intValue = parseInt(finish[key],10);
+                    if (isNaN(intValue) || intValue < 0) {
+                        console.log("Wrong value (" + finish[key] + ") for strokeWidth. Must be a positive interger value." );
+                        finish[key] = defaultStyleFinish[key];
+                        return;
+                    }
+                    finish[key] = intValue;
+                }
+            },this);
+
+            _finishStroke = new ol.style.Stroke({
+                color : finish.strokeColor,
+                lineDash : finish.strokeLineDash,
+                width : finish.strokeWidth
+            });
+        }
 
         this._drawStyleFinish = new ol.style.Style({
-            stroke : new ol.style.Stroke({
-                color : styles.finish.strokeColor,
-                lineDash : styles.finish.strokeLineDash,
-                width : styles.finish.strokeWidth
-            })
+            stroke : _finishStroke
         });
-
     };
 
     /** create style graph */
