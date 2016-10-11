@@ -250,7 +250,7 @@ define([
                 },
                 {
                     code : "MERCATOR",
-                    label : "Mercator",
+                    label : "Web Mercator",
                     crs : L.CRS.EPSG3395, // L.Projection.SphericalMercator !
                     type : "Metric"
                 },
