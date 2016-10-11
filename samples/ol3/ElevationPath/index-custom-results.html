@@ -99,10 +99,14 @@
 
           var profil = new ElevationPath({
             collapsed : false,
-            elevationOptions : {},
-            stylesOptions : {
-              marker : {},
-              graph : {}
+            elevationOptions : {
+              onSuccess : function (elevation) {
+                console.log(elevation);
+                // TODO some stuff..
+              },
+              onFailure : function (error) {
+                console.log(error);
+              }
             }
           });
           map.addControl(profil);
@@ -121,8 +125,7 @@
       </script>
 
       <!-- map -->
-      <div id="map">
-      </div>
+      <div id="map"></div>
 
       <!-- Comment utiliser le plugin avec un exemple -->
       <p>EXEMPLE D'UTILISATION</p>

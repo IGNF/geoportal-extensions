@@ -802,8 +802,13 @@ define([
             self._lastSketch = self._currentSketch;
 
             // set an alti request and display results
-            self._pictoContainer.style.display = "none";
-            self._panelContainer.style.display = "block";
+
+            // Si il n'y a pas de surcharge utilisateur de la fonction de recuperation des
+            // resultats, on realise l'affichage du panneau
+            if ( typeof self.options.service.onSuccess === "undefined" ) {
+                self._pictoContainer.style.display = "none";
+                self._panelContainer.style.display = "block";
+            }
             self._requestService();
         }, this);
     };
@@ -924,14 +929,17 @@ define([
 
         /** callback _requestServiceOnFailure */
         var _requestServiceOnFailure = function (error) {
+            // on ferme le panneau en cas d'erreur !
+            self._pictoContainer.style.display = "block";
+            self._panelContainer.style.display = "none";
             logger.error(error.message);
             self._waitingContainer.className = "GPelevationPathCalcWaitingContainerHidden";
             self._waiting = false;
         };
 
         Utils.mergeParams(options, {
-            onSuccess : _requestServiceOnSuccess,
-            onFailure : _requestServiceOnFailure
+            onSuccess : this.options.service.onSuccess || _requestServiceOnSuccess,
+            onFailure : this.options.service.onFailure || _requestServiceOnFailure
         });
 
         // le sampling
@@ -961,14 +969,14 @@ define([
     // ################################################################### //
 
     /**
-    * this method is called after service request (in case of success)
-    * and display results
+    * this method computes results elevations (Z and distance)
     *
     * @param {Array} elevations - array of elevation
+    * @return {Array} elevations
     * @private
     */
-    ElevationPath.prototype._displayProfil = function (elevations) {
-        logger.trace("ElevationPath::_displayProfil", elevations);
+    ElevationPath.prototype._computeElevationMeasure = function (elevations) {
+        logger.trace("ElevationPath::_computeElevationMeasure", elevations);
 
         var wgs84Sphere = new ol.Sphere(6378137);
 
@@ -999,19 +1007,34 @@ define([
             data.dist = Math.round(data.dist * coeffArrond) / coeffArrond;
         }
 
+        return elevations;
+    };
+
+    /**
+    * this method is called after service request (in case of success)
+    * and display results
+    *
+    * @param {Array} elevations - array of elevation
+    * @private
+    */
+    ElevationPath.prototype._displayProfil = function (elevations) {
+        logger.trace("ElevationPath::_displayProfil", elevations);
+
+        var data = this._computeElevationMeasure(elevations);
+
         // Calcul du profil
         if ( typeof AmCharts !== "undefined" ) {
             // AmCharts, it's a variable global because i do the choice to put it on lib. external !
             console.log("Lib. AmCharts is loaded !");
-            this._displayProfilWithAmCharts(elevations);
+            this._displayProfilWithAmCharts(data);
 
         } else if ( typeof d3 !== "undefined" ) {
             console.log("Lib. D3 is loaded !");
-            this._displayProfilWithD3(elevations);
+            this._displayProfilWithD3(data);
 
         } else {
             console.log("No library is loaded !");
-            this._displayProfilResults(elevations);
+            this._displayProfilResults(data);
 
         }
     };

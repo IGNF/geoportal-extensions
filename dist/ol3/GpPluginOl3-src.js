@@ -26042,8 +26042,10 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, El
         }, this);
         this._measureDraw.on('drawend', function (evt) {
             self._lastSketch = self._currentSketch;
-            self._pictoContainer.style.display = 'none';
-            self._panelContainer.style.display = 'block';
+            if (typeof self.options.service.onSuccess === 'undefined') {
+                self._pictoContainer.style.display = 'none';
+                self._panelContainer.style.display = 'block';
+            }
             self._requestService();
         }, this);
     };
@@ -26103,12 +26105,14 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, El
             }
         };
         var _requestServiceOnFailure = function (error) {
+            self._pictoContainer.style.display = 'block';
+            self._panelContainer.style.display = 'none';
             self._waitingContainer.className = 'GPelevationPathCalcWaitingContainerHidden';
             self._waiting = false;
         };
         Utils.mergeParams(options, {
-            onSuccess: _requestServiceOnSuccess,
-            onFailure: _requestServiceOnFailure
+            onSuccess: this.options.service.onSuccess || _requestServiceOnSuccess,
+            onFailure: this.options.service.onFailure || _requestServiceOnFailure
         });
         var sampling = options.sampling;
         if (!sampling) {
@@ -26118,7 +26122,7 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, El
         this._waitingContainer.className = 'GPelevationPathCalcWaitingContainerVisible';
         Gp.Services.getAltitude(options);
     };
-    ElevationPath.prototype._displayProfil = function (elevations) {
+    ElevationPath.prototype._computeElevationMeasure = function (elevations) {
         var wgs84Sphere = new ol.Sphere(6378137);
         elevations[0].dist = 0;
         var distance = 0;
@@ -26147,15 +26151,19 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, El
             }
             data.dist = Math.round(data.dist * coeffArrond) / coeffArrond;
         }
+        return elevations;
+    };
+    ElevationPath.prototype._displayProfil = function (elevations) {
+        var data = this._computeElevationMeasure(elevations);
         if (typeof AmCharts !== 'undefined') {
             console.log('Lib. AmCharts is loaded !');
-            this._displayProfilWithAmCharts(elevations);
+            this._displayProfilWithAmCharts(data);
         } else if (typeof d3 !== 'undefined') {
             console.log('Lib. D3 is loaded !');
-            this._displayProfilWithD3(elevations);
+            this._displayProfilWithD3(data);
         } else {
             console.log('No library is loaded !');
-            this._displayProfilResults(elevations);
+            this._displayProfilResults(data);
         }
     };
     ElevationPath.prototype._displayProfilResults = function (data) {

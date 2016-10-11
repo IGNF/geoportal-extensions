@@ -2266,6 +2266,196 @@ input.GPinputSubmit {
   max-width: inherit;
   vertical-align: middle;
 }
+div[id^=GPelevationPath-] {
+  top: 260px;
+  left: 106px;
+}
+
+/* Showing/hiding elevationPath panel */
+
+label[id^=GPshowElevationPathPicto] {
+  display: inline-block;
+}
+
+input[id^=GPshowElevationPath-] + label {
+  display: block;
+}
+
+input[id^=GPshowElevationPath-]:checked + label {
+  /* display: none; */
+}
+
+input[id^=GPshowElevationPath-] + label + div {
+  display: none;
+}
+
+input[id^=GPshowElevationPath-]:checked + label + div {
+  display: block;
+}
+
+span[id^=GPshowElevationPathOpen] {
+  background-image: url("img/GPshowElevationPath.png");
+}
+
+/* Panel */
+
+[id^=GPelevationPathPanelClose] {
+  background-image: url("img/GPshowElevationPath.png");
+}
+
+div[id^=GPelevationPathPanelReduce] {
+  background-image: url("img/GPshowElevationPath.png");
+}
+
+[id^=GPelevationPathPanel-] {
+  width: 280px;
+}
+/* Calc waiting */
+
+.GPelevationPathCalcWaitingContainerVisible,
+.GPelevationPathCalcWaitingContainerHidden {
+  position: absolute;
+  top: 32px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(255,255,255,0.9);
+  font-size: 1.5em;
+  font-weight: bold;
+  overflow: hidden;
+}
+
+.GPelevationPathCalcWaitingContainerVisible {
+  display: -webkit-flex;
+  display: flex;
+}
+
+.GPelevationPathCalcWaitingContainerHidden {
+  display: none;
+}
+
+.GPelevationPathCalcWaiting {
+  margin: auto;
+}
+
+.GPelevationPathCalcWaitingContainerVisible,
+.GPelevationPathCalcWaitingContainerHidden {
+  border-radius: 5px;
+}
+
+/* ELEVATION PATH DISPLAY */
+
+[id^=GPelevationPathProfil] {
+  height: 150px;
+}
+
+/* CSS : D3 */
+
+text {
+  fill: rgb(94, 94, 94);
+  font-family: Verdana;
+  font-size: 10px;
+  opacity: 1;
+  text-anchor: end;
+}
+
+.axis-d3 {
+  fill: none;
+  stroke: #5E5E5E;
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+
+.area-d3 {
+  fill: #C77A04;
+  stroke: #5E5E5E;
+  stroke-width: 0;
+  fill-opacity: 0.4;
+}
+
+.line-d3 {
+  fill: none;
+  stroke: #C77A04;
+  stroke-width: 1px;
+}
+
+.grid-d3 .tick {
+  stroke: lightgrey;
+  opacity: 0.7;
+}
+
+.grid-d3 path {
+  stroke-width: 0;
+}
+
+.grid-d3 .tick {
+  stroke: lightgrey;
+  opacity: 0.7;
+}
+
+.grid-d3 path {
+  stroke-width: 0;
+}
+
+.overlay-d3 {
+  fill: none;
+  pointer-events: all;
+}
+
+.focusLine-d3 {
+  fill: none;
+  stroke: #C77A04;
+  stroke-width: 0.5px;
+}
+
+.focusCircle-d3 {
+  fill: #C77A04;
+}
+
+div.tooltip-d3 {
+    position: inherit;;
+    text-align: left;
+    width: 80px;
+    height: 35px;
+    padding: 2px;
+    font: 8px sans-serif;
+    background: lightsteelblue;
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
+}
+
+/*
+@media (min-width:720px) and (min-height:720px) {
+
+[id^=GPelevationPathPanel] {
+top: 15px;
+left: 15px;
+}
+
+}
+
+@media (min-width:720px) and (min-height:520px) {
+
+[id^=GPelevationPathPanel] {
+width: 460px;
+}
+
+[id^=GPelevationPathProfil] {
+height: 220px;
+}
+
+}
+
+@media (max-width:560px), (max-height:340px) {
+
+[id^=GPelevationPathPanel] {
+display: none !important;
+}
+
+}
+*/
+
 /* MOUSE POSITION */
 
 div[id^=GPdrawing-] {
@@ -2722,196 +2912,6 @@ button[id^=drawing-export-] {
   height: 24px;
 }
 
-div[id^=GPelevationPath-] {
-  top: 260px;
-  left: 106px;
-}
-
-/* Showing/hiding elevationPath panel */
-
-label[id^=GPshowElevationPathPicto] {
-  display: inline-block;
-}
-
-input[id^=GPshowElevationPath-] + label {
-  display: block;
-}
-
-input[id^=GPshowElevationPath-]:checked + label {
-  /* display: none; */
-}
-
-input[id^=GPshowElevationPath-] + label + div {
-  display: none;
-}
-
-input[id^=GPshowElevationPath-]:checked + label + div {
-  display: block;
-}
-
-span[id^=GPshowElevationPathOpen] {
-  background-image: url("img/GPshowElevationPath.png");
-}
-
-/* Panel */
-
-[id^=GPelevationPathPanelClose] {
-  background-image: url("img/GPshowElevationPath.png");
-}
-
-div[id^=GPelevationPathPanelReduce] {
-  background-image: url("img/GPshowElevationPath.png");
-}
-
-[id^=GPelevationPathPanel-] {
-  width: 280px;
-}
-/* Calc waiting */
-
-.GPelevationPathCalcWaitingContainerVisible,
-.GPelevationPathCalcWaitingContainerHidden {
-  position: absolute;
-  top: 32px;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: rgba(255,255,255,0.9);
-  font-size: 1.5em;
-  font-weight: bold;
-  overflow: hidden;
-}
-
-.GPelevationPathCalcWaitingContainerVisible {
-  display: -webkit-flex;
-  display: flex;
-}
-
-.GPelevationPathCalcWaitingContainerHidden {
-  display: none;
-}
-
-.GPelevationPathCalcWaiting {
-  margin: auto;
-}
-
-.GPelevationPathCalcWaitingContainerVisible,
-.GPelevationPathCalcWaitingContainerHidden {
-  border-radius: 5px;
-}
-
-/* ELEVATION PATH DISPLAY */
-
-[id^=GPelevationPathProfil] {
-  height: 150px;
-}
-
-/* CSS : D3 */
-
-text {
-  fill: rgb(94, 94, 94);
-  font-family: Verdana;
-  font-size: 10px;
-  opacity: 1;
-  text-anchor: end;
-}
-
-.axis-d3 {
-  fill: none;
-  stroke: #5E5E5E;
-  stroke-width: 1;
-  shape-rendering: crispEdges;
-}
-
-.area-d3 {
-  fill: #C77A04;
-  stroke: #5E5E5E;
-  stroke-width: 0;
-  fill-opacity: 0.4;
-}
-
-.line-d3 {
-  fill: none;
-  stroke: #C77A04;
-  stroke-width: 1px;
-}
-
-.grid-d3 .tick {
-  stroke: lightgrey;
-  opacity: 0.7;
-}
-
-.grid-d3 path {
-  stroke-width: 0;
-}
-
-.grid-d3 .tick {
-  stroke: lightgrey;
-  opacity: 0.7;
-}
-
-.grid-d3 path {
-  stroke-width: 0;
-}
-
-.overlay-d3 {
-  fill: none;
-  pointer-events: all;
-}
-
-.focusLine-d3 {
-  fill: none;
-  stroke: #C77A04;
-  stroke-width: 0.5px;
-}
-
-.focusCircle-d3 {
-  fill: #C77A04;
-}
-
-div.tooltip-d3 {
-    position: inherit;;
-    text-align: left;
-    width: 80px;
-    height: 35px;
-    padding: 2px;
-    font: 8px sans-serif;
-    background: lightsteelblue;
-    border: 0px;
-    border-radius: 8px;
-    pointer-events: none;
-}
-
-/*
-@media (min-width:720px) and (min-height:720px) {
-
-[id^=GPelevationPathPanel] {
-top: 15px;
-left: 15px;
-}
-
-}
-
-@media (min-width:720px) and (min-height:520px) {
-
-[id^=GPelevationPathPanel] {
-width: 460px;
-}
-
-[id^=GPelevationPathProfil] {
-height: 220px;
-}
-
-}
-
-@media (max-width:560px), (max-height:340px) {
-
-[id^=GPelevationPathPanel] {
-display: none !important;
-}
-
-}
-*/
-
 /* ISOCHRON */
 
 div[id^=GPisochron-] {
@@ -2964,6 +2964,98 @@ div[id^=GPisochronPanelClose] {
 div[id^=GPisochronReset] {
   background-color: #366291;
   background-image: url("img/GPisochronOptions.png");
+}
+
+/* LAYER SWITCHER OL3 */
+
+#GPlayerSwitcher {
+  top: 8px;
+  right: 8px;
+}
+
+/* Showing/hiding layers list */
+
+#GPshowLayersListPicto {
+  width: 38px;
+  height: 38px;
+}
+
+#GPshowLayersListOpen,
+#GPshowLayersListClose {
+  top: 3px;
+  left: 3px;
+  width: 32px;
+  height: 32px;
+  background-image: url("img/GPshowLayersList.png");
+}
+
+#GPshowLayersListClose {
+  background-position: -32px 0;
+}
+
+
+#GPlayerSwitcher input[type="checkbox"]:checked + div + #GPshowLayersListPicto #GPshowLayersListOpen {
+  opacity: 0.7;
+}
+
+#GPlayerSwitcher input[type="checkbox"]:checked + div + #GPshowLayersListPicto #GPshowLayersListClose {
+  background-color: rgba(0,60,136,0.3);
+}
+
+#GPlayerSwitcher input[type="checkbox"]:checked + div + #GPshowLayersListPicto:hover #GPshowLayersListClose {
+  background-color: rgba(0,60,136,0.4);
+}
+
+/* Layers list */
+
+.GPlayerVisibility,
+.GPshowLayerAdvancedTools,
+.GPlayerInfo,
+.GPlayerInfoOpened,
+.GPlayerRemove {
+  background-image: url("img/GPlayerTools.png");
+}
+
+/* Opacity slider : Chrome, Safari, Opera */
+
+.GPlayerOpacity input[type="range"]::-webkit-slider-runnable-track {
+  background: url("img/GPopacitySlider.png");
+}
+
+/* Opacity slider : Firefox */
+
+.GPlayerOpacity input[type="range"]::-moz-range-track {
+  background: url("img/GPopacitySlider.png");
+}
+
+/* Opacity slider : IE */
+
+.GPlayerOpacity input[type="range"]::-ms-track {
+  background: url("img/GPopacitySlider.png");
+}
+
+/* Layer info panel */
+
+#GPlayerInfoPanel {
+  right: 190px;
+}
+
+#GPlayerInfoTitle {
+  color: #366291;
+  border-bottom: 1px solid #366291;
+}
+
+#GPlayerInfoQuicklook {
+  background-image: url("img/GPlayerInfo.png");
+}
+
+#GPlayerInfoClose {
+  background-image: url("img/GPlayerInfoClose.png");
+}
+
+.GPlayerInfoLink,
+.GPlayerInfoPopup {
+  background-image: url("img/GPlayerInfo.png");
 }
 
 /* Layer Import */
@@ -3213,98 +3305,6 @@ div[class*="GPlocationPoint"] {
 
 .GPlocationStageFlexInput {
     margin-bottom: 5px;
-}
-
-/* LAYER SWITCHER OL3 */
-
-#GPlayerSwitcher {
-  top: 8px;
-  right: 8px;
-}
-
-/* Showing/hiding layers list */
-
-#GPshowLayersListPicto {
-  width: 38px;
-  height: 38px;
-}
-
-#GPshowLayersListOpen,
-#GPshowLayersListClose {
-  top: 3px;
-  left: 3px;
-  width: 32px;
-  height: 32px;
-  background-image: url("img/GPshowLayersList.png");
-}
-
-#GPshowLayersListClose {
-  background-position: -32px 0;
-}
-
-
-#GPlayerSwitcher input[type="checkbox"]:checked + div + #GPshowLayersListPicto #GPshowLayersListOpen {
-  opacity: 0.7;
-}
-
-#GPlayerSwitcher input[type="checkbox"]:checked + div + #GPshowLayersListPicto #GPshowLayersListClose {
-  background-color: rgba(0,60,136,0.3);
-}
-
-#GPlayerSwitcher input[type="checkbox"]:checked + div + #GPshowLayersListPicto:hover #GPshowLayersListClose {
-  background-color: rgba(0,60,136,0.4);
-}
-
-/* Layers list */
-
-.GPlayerVisibility,
-.GPshowLayerAdvancedTools,
-.GPlayerInfo,
-.GPlayerInfoOpened,
-.GPlayerRemove {
-  background-image: url("img/GPlayerTools.png");
-}
-
-/* Opacity slider : Chrome, Safari, Opera */
-
-.GPlayerOpacity input[type="range"]::-webkit-slider-runnable-track {
-  background: url("img/GPopacitySlider.png");
-}
-
-/* Opacity slider : Firefox */
-
-.GPlayerOpacity input[type="range"]::-moz-range-track {
-  background: url("img/GPopacitySlider.png");
-}
-
-/* Opacity slider : IE */
-
-.GPlayerOpacity input[type="range"]::-ms-track {
-  background: url("img/GPopacitySlider.png");
-}
-
-/* Layer info panel */
-
-#GPlayerInfoPanel {
-  right: 190px;
-}
-
-#GPlayerInfoTitle {
-  color: #366291;
-  border-bottom: 1px solid #366291;
-}
-
-#GPlayerInfoQuicklook {
-  background-image: url("img/GPlayerInfo.png");
-}
-
-#GPlayerInfoClose {
-  background-image: url("img/GPlayerInfoClose.png");
-}
-
-.GPlayerInfoLink,
-.GPlayerInfoPopup {
-  background-image: url("img/GPlayerInfo.png");
 }
 
 /* MEASURELENGTH POSITION */
