@@ -79,6 +79,9 @@ define([
         // call VirtualGeo.Control constructor
         VirtualGeo.Control.call(this, container, LStarget);
 
+        this.setOptions({
+            name : "LayerSwitcher"
+        });
         // Surcharge de la méthode _setMap
         var VGsetMap = this._setMap;
 

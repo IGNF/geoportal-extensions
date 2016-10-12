@@ -95,6 +95,9 @@ define([
         // call VirtualGeo.Control constructor
         VirtualGeo.Control.call(this, container, MPtarget);
 
+        this.setOptions({
+            name : "MousePosition"
+        });
         // Surcharge de la méthode _setMap qu'on stocker dans une variable
         // FIXME
         var VGsetMap = this._setMap;
