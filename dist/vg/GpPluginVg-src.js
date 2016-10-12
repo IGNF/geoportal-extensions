@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 5.0.0
- * @date 2016-10-10
+ * @date 2016-10-12
  *
  */
 /*!
@@ -8704,6 +8704,7 @@ VgControlsLayerSwitcher = function (LayerSwitcherDOM, LayerUtils) {
         this._options = options;
         var LStarget = document.getElementById(options.div);
         VirtualGeo.Control.call(this, container, LStarget);
+        this.setOptions({ name: 'LayerSwitcher' });
         var VGsetMap = this._setMap;
         this._setMap = function (map, mapDiv, f) {
             if (map) {
@@ -14703,6 +14704,7 @@ VgControlsMousePosition = function (proj4, woodman, Gp, Config, RightManagement,
         this._callbacks = {};
         var MPtarget = document.getElementById(MPoptions.div);
         VirtualGeo.Control.call(this, container, MPtarget);
+        this.setOptions({ name: 'MousePosition' });
         var VGsetMap = this._setMap;
         this._setMap = function (map, mapDiv, f) {
             if (map) {
