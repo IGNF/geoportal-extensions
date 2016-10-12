@@ -66,7 +66,7 @@ define([
      *      systems : [
      *       {
      *          crs : "EPSG:3857",
-     *          label : "Mercator",
+     *          label : "Web Mercator",
      *          type : "Metric"
      *        },
      *       {
@@ -488,7 +488,7 @@ define([
             },
             {
                 code : "EPSG:3857",
-                label : "Mercator",
+                label : "Web Mercator",
                 crs : ol.proj.get("EPSG:3857").getCode(),
                 type : "Metric"
             },

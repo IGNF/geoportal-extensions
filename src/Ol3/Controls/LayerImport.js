@@ -881,9 +881,6 @@ define([
         this._importPanel.style.display = "none";
         this._getCapPanel.style.display = "block";
 
-        // récupération de la projection de la map (pour vérifier que l'on peut reprojeter les couches disponibles)
-        var mapProjCode = this._getMapProjectionCode();
-
         // Parse GetCapabilities Response
         if ( this._currentImportType === "WMS" ) {
 
@@ -983,7 +980,7 @@ define([
                 "Style"
                 // "AuthorityURL" // TODO
             ];
-            for ( var i = 0; i < addKeys.length; i ++ ) {
+            for ( i = 0; i < addKeys.length; i ++ ) {
                 key = addKeys[i];
                 if ( Array.isArray(parentLayersInfos[key]) && parentLayersInfos[key].length !== 0 ) {
                     if ( Array.isArray(layerObj[key]) && layerObj[key].length !== 0 ) {
@@ -1017,7 +1014,7 @@ define([
                 "fixedWidth",
                 "fixedHeight"
             ];
-            for ( var i = 0; i < replaceKeys.length; i ++ ) {
+            for ( i = 0; i < replaceKeys.length; i ++ ) {
                 key = replaceKeys[i];
                 if ( parentLayersInfos[key] && !layerObj[key] ) {
                     layerObj[key] = parentLayersInfos[key];
@@ -1195,9 +1192,15 @@ define([
         var wmsLayer = new ol.layer.Tile(layerTileOptions);
         // on rajoute le champ gpResultLayerId permettant d'identifier une couche crée par le composant. (pour layerSwitcher par ex)
         wmsLayer.gpResultLayerId = "layerimport:WMS";
-        // on rajoute le champ gpQueryableWMSImport permettant d'identifier si la couche est queryable (pour getFeatureInfo)
+        // on rajoute le champ gpGFIparams permettant d'identifier si la couche est queryable, et de transmettre les formats reconnus par GetFeatureInfo
         if ( layerInfo.queryable ) {
-            wmsLayer.gpQueryableWMSImport = true;
+            wmsLayer.gpGFIparams = {
+                queryable : true
+            };
+            // récupération des différents formats reconnus par le GetFeatureInfo
+            if ( this._getCapResponseWMS && this._getCapResponseWMS.Capability && this._getCapResponseWMS.Capability.Request && this._getCapResponseWMS.Capability.Request.GetFeatureInfo && this._getCapResponseWMS.Capability.Request.GetFeatureInfo.Format && Array.isArray(this._getCapResponseWMS.Capability.Request.GetFeatureInfo.Format) ) {
+                wmsLayer.gpGFIparams.formats = this._getCapResponseWMS.Capability.Request.GetFeatureInfo.Format;
+            }
         }
 
         map.addLayer(wmsLayer);

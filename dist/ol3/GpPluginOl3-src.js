@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-10-06
+ * @date 2016-10-12
  *
  */
 /*!
@@ -17435,7 +17435,7 @@ Ol3ControlsMousePosition = function (ol, proj4, woodman, Gp, Utils, RightManagem
             },
             {
                 code: 'EPSG:3857',
-                label: 'Mercator',
+                label: 'Web Mercator',
                 crs: ol.proj.get('EPSG:3857').getCode(),
                 type: 'Metric'
             },
@@ -24913,7 +24913,6 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
         this.contentService = xmlResponse;
         this._importPanel.style.display = 'none';
         this._getCapPanel.style.display = 'block';
-        var mapProjCode = this._getMapProjectionCode();
         if (this._currentImportType === 'WMS') {
             parser = new ol.format.WMSCapabilities();
             if (!parser) {
@@ -24973,7 +24972,7 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
                 'CRS',
                 'Style'
             ];
-            for (var i = 0; i < addKeys.length; i++) {
+            for (i = 0; i < addKeys.length; i++) {
                 key = addKeys[i];
                 if (Array.isArray(parentLayersInfos[key]) && parentLayersInfos[key].length !== 0) {
                     if (Array.isArray(layerObj[key]) && layerObj[key].length !== 0) {
@@ -25001,7 +25000,7 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
                 'fixedWidth',
                 'fixedHeight'
             ];
-            for (var i = 0; i < replaceKeys.length; i++) {
+            for (i = 0; i < replaceKeys.length; i++) {
                 key = replaceKeys[i];
                 if (parentLayersInfos[key] && !layerObj[key]) {
                     layerObj[key] = parentLayersInfos[key];
@@ -25108,7 +25107,10 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
         var wmsLayer = new ol.layer.Tile(layerTileOptions);
         wmsLayer.gpResultLayerId = 'layerimport:WMS';
         if (layerInfo.queryable) {
-            wmsLayer.gpQueryableWMSImport = true;
+            wmsLayer.gpGFIparams = { queryable: true };
+            if (this._getCapResponseWMS && this._getCapResponseWMS.Capability && this._getCapResponseWMS.Capability.Request && this._getCapResponseWMS.Capability.Request.GetFeatureInfo && this._getCapResponseWMS.Capability.Request.GetFeatureInfo.Format && Array.isArray(this._getCapResponseWMS.Capability.Request.GetFeatureInfo.Format)) {
+                wmsLayer.gpGFIparams.formats = this._getCapResponseWMS.Capability.Request.GetFeatureInfo.Format;
+            }
         }
         map.addLayer(wmsLayer);
     };
@@ -25852,6 +25854,21 @@ Ol3ControlsMeasuresMeasures = function (ol, woodman) {
                 self.sketch = evt.feature;
             }, this);
             this.measureDraw.on('drawend', function () {
+                if (self.sketch) {
+                    var output;
+                    var tooltipCoord;
+                    var geom = self.sketch.getGeometry();
+                    output = self.format(geom);
+                    if (geom.getType() === 'LineString') {
+                        tooltipCoord = geom.getLastCoordinate();
+                    } else if (geom.getType() === 'Polygon') {
+                        tooltipCoord = geom.getInteriorPoint().getCoordinates();
+                    } else {
+                        return;
+                    }
+                    self.measureTooltipElement.innerHTML = output;
+                    self.measureTooltip.setPosition(tooltipCoord);
+                }
                 self.measureTooltipElement.className = 'tooltip tooltip-static';
                 self.measureTooltip.setOffset([
                     0,
@@ -25941,10 +25958,10 @@ Ol3ControlsMeasuresMeasureLength = function (ol, woodman, Utils, Measures, Measu
     MeasureLength.prototype.setMap = function (map) {
         if (map) {
             var self = this;
-            map.on('pointermove', function (e) {
+            map.on('singleclick', function (e) {
                 self.onPointerMoveHandler(e);
             });
-            map.on('click', function (e) {
+            map.on('pointermove', function (e) {
                 self.onPointerMoveHandler(e);
             });
         }
@@ -26060,10 +26077,10 @@ Ol3ControlsMeasuresMeasureArea = function (ol, woodman, Utils, Measures, Measure
     MeasureArea.prototype.setMap = function (map) {
         if (map) {
             var self = this;
-            map.on('pointermove', function (e) {
+            map.on('singleclick', function (e) {
                 self.onPointerMoveHandler(e);
             });
-            map.on('click', function (e) {
+            map.on('pointermove', function (e) {
                 self.onPointerMoveHandler(e);
             });
         }
@@ -26179,10 +26196,10 @@ Ol3ControlsMeasuresMeasureAzimuth = function (ol, woodman, Utils, Measures, Meas
     MeasureAzimuth.prototype.setMap = function (map) {
         if (map) {
             var self = this;
-            map.on('pointermove', function (e) {
+            map.on('singleclick', function (e) {
                 self.onPointerMoveAzimutHandler(e);
             });
-            map.on('click', function (e) {
+            map.on('pointermove', function (e) {
                 self.onPointerMoveAzimutHandler(e);
             });
         }
@@ -26238,7 +26255,7 @@ Ol3ControlsMeasuresMeasureAzimuth = function (ol, woodman, Utils, Measures, Meas
 }(ol, {}, Ol3Utils, Ol3ControlsMeasuresMeasures, CommonControlsMeasureAzimuthDOM, CommonUtilsSelectorID);
 Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, KML, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution, MeasureLength, MeasureArea, MeasureAzimuth) {
     Gp.ol3extVersion = '0.11.0';
-    Gp.ol3extDate = '2016-10-06';
+    Gp.ol3extDate = '2016-10-12';
     Gp.LayerUtils = LayerUtils;
     ol.format.KMLExtended = KML;
     CRS.overload();
