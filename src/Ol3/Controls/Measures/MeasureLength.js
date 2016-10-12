@@ -23,6 +23,29 @@ define([
     var logger = woodman.getLogger("measurelength");
 
     /**
+    * @classdesc
+    *
+    * Tool Measure Length Control.
+    *
+    * @constructor
+    * @alias ol.control.MeasureLength
+    * @extends {ol.control.Control}
+    * @param {Object} options - options for function call.
+    * @param {Boolean} [options.geodesic = true] - precision calculation
+    * @param {Object} [options.styles = {}] - styles management of draw
+    * @param {Object} [options.styles.start = {}] - Line Style for a start drawing
+    * @param {Object} [options.styles.start.fillColor] - Line for fill color
+    * @param {Object} [options.styles.start.strokeColor] - Line for stroke color
+    * @param {Object} [options.styles.start.strokeLineDash] - Line for stroke dash
+    * @param {Object} [options.styles.start.strokeWidth] - Line for stroke width
+    * @param {Object} [options.styles.start.imageRadius] - Point radius
+    * @param {Object} [options.styles.start.imageFillColor] - Point for fill color
+    * @param {Object} [options.styles.start.imageStrokeColor] - Point for stroke color
+    * @param {Object} [options.styles.finish = {}] - Line Style for a finish drawing
+    * @param {Object} [options.styles.finish.fillColor] - Line for fill color
+    * @param {Object} [options.styles.finish.strokeColor] - Line for stroke color
+    * @param {Object} [options.styles.finish.strokeWidth] - Line for stroke width
+    * @param {Object} [options.tooltip = {}] - NOT YET IMPLEMENTED !
     * @example
     * var measureLength = new ol.control.MeasureLength({
     *    element : null,
@@ -112,13 +135,23 @@ define([
     MeasureLength.prototype.setMap = function (map) {
 
         if ( map ) {
+
             var self = this;
+            // FIXME
+            // map.on("click", function (e) {
+            //     logger.trace("event on map with click!");
+            //     self.onPointerMoveHandler(e);
+            // });
+            map.on("singleclick", function (e) {
+                logger.trace("event on map with singleclick!");
+                self.onPointerMoveHandler(e);
+            });
+
             map.on("pointermove", function (e) {
+                logger.trace("event on map with pointermove!");
                 self.onPointerMoveHandler(e);
             });
-            map.on("click", function (e) {
-                self.onPointerMoveHandler(e);
-            });
+
         }
 
         // on appelle la méthode setMap originale d'OpenLayers
@@ -215,7 +248,6 @@ define([
 
     /**
     * this method is called by event 'click' on picto
-    * TODO gestion des styles utilisateurs
     *
     * @param {Object} e - HTMLElement
     *

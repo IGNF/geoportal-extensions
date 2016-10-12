@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-10-11
+ * @date 2016-10-12
  *
  */
 /* MOUSE POSITION */
@@ -2774,98 +2774,6 @@ div[id^=GPisochronReset] {
   background-image: url("img/GPisochronOptions.png");
 }
 
-/* LAYER SWITCHER OL3 */
-
-#GPlayerSwitcher {
-  top: 8px;
-  right: 8px;
-}
-
-/* Showing/hiding layers list */
-
-#GPshowLayersListPicto {
-  width: 38px;
-  height: 38px;
-}
-
-#GPshowLayersListOpen,
-#GPshowLayersListClose {
-  top: 3px;
-  left: 3px;
-  width: 32px;
-  height: 32px;
-  background-image: url("img/GPshowLayersList.png");
-}
-
-#GPshowLayersListClose {
-  background-position: -32px 0;
-}
-
-
-#GPlayerSwitcher input[type="checkbox"]:checked + div + #GPshowLayersListPicto #GPshowLayersListOpen {
-  opacity: 0.7;
-}
-
-#GPlayerSwitcher input[type="checkbox"]:checked + div + #GPshowLayersListPicto #GPshowLayersListClose {
-  background-color: rgba(0,60,136,0.3);
-}
-
-#GPlayerSwitcher input[type="checkbox"]:checked + div + #GPshowLayersListPicto:hover #GPshowLayersListClose {
-  background-color: rgba(0,60,136,0.4);
-}
-
-/* Layers list */
-
-.GPlayerVisibility,
-.GPshowLayerAdvancedTools,
-.GPlayerInfo,
-.GPlayerInfoOpened,
-.GPlayerRemove {
-  background-image: url("img/GPlayerTools.png");
-}
-
-/* Opacity slider : Chrome, Safari, Opera */
-
-.GPlayerOpacity input[type="range"]::-webkit-slider-runnable-track {
-  background: url("img/GPopacitySlider.png");
-}
-
-/* Opacity slider : Firefox */
-
-.GPlayerOpacity input[type="range"]::-moz-range-track {
-  background: url("img/GPopacitySlider.png");
-}
-
-/* Opacity slider : IE */
-
-.GPlayerOpacity input[type="range"]::-ms-track {
-  background: url("img/GPopacitySlider.png");
-}
-
-/* Layer info panel */
-
-#GPlayerInfoPanel {
-  right: 190px;
-}
-
-#GPlayerInfoTitle {
-  color: #366291;
-  border-bottom: 1px solid #366291;
-}
-
-#GPlayerInfoQuicklook {
-  background-image: url("img/GPlayerInfo.png");
-}
-
-#GPlayerInfoClose {
-  background-image: url("img/GPlayerInfoClose.png");
-}
-
-.GPlayerInfoLink,
-.GPlayerInfoPopup {
-  background-image: url("img/GPlayerInfo.png");
-}
-
 /* Layer Import */
 
 div[id^="GPimport-"] {
@@ -3097,22 +3005,96 @@ div[id^="GPimportGetCapResults-"] {
   background-color: #CEDBEF
 }
 
-/* Location */
+/* LAYER SWITCHER OL3 */
 
-.GPlocationOriginPointerImg,
-.GPlocationStageRemove,
-div[id^=GPlocationStageAdd],
-.GPlocationTransportImg {
-  background-image: url("img/GPlocationOptions.png");
+#GPlayerSwitcher {
+  top: 8px;
+  right: 8px;
 }
 
-/* All div elements whose class attribute value begins with "GPlocationPoint" */
-div[class*="GPlocationPoint"] {
-    position: relative;
+/* Showing/hiding layers list */
+
+#GPshowLayersListPicto {
+  width: 38px;
+  height: 38px;
 }
 
-.GPlocationStageFlexInput {
-    margin-bottom: 5px;
+#GPshowLayersListOpen,
+#GPshowLayersListClose {
+  top: 3px;
+  left: 3px;
+  width: 32px;
+  height: 32px;
+  background-image: url("img/GPshowLayersList.png");
+}
+
+#GPshowLayersListClose {
+  background-position: -32px 0;
+}
+
+
+#GPlayerSwitcher input[type="checkbox"]:checked + div + #GPshowLayersListPicto #GPshowLayersListOpen {
+  opacity: 0.7;
+}
+
+#GPlayerSwitcher input[type="checkbox"]:checked + div + #GPshowLayersListPicto #GPshowLayersListClose {
+  background-color: rgba(0,60,136,0.3);
+}
+
+#GPlayerSwitcher input[type="checkbox"]:checked + div + #GPshowLayersListPicto:hover #GPshowLayersListClose {
+  background-color: rgba(0,60,136,0.4);
+}
+
+/* Layers list */
+
+.GPlayerVisibility,
+.GPshowLayerAdvancedTools,
+.GPlayerInfo,
+.GPlayerInfoOpened,
+.GPlayerRemove {
+  background-image: url("img/GPlayerTools.png");
+}
+
+/* Opacity slider : Chrome, Safari, Opera */
+
+.GPlayerOpacity input[type="range"]::-webkit-slider-runnable-track {
+  background: url("img/GPopacitySlider.png");
+}
+
+/* Opacity slider : Firefox */
+
+.GPlayerOpacity input[type="range"]::-moz-range-track {
+  background: url("img/GPopacitySlider.png");
+}
+
+/* Opacity slider : IE */
+
+.GPlayerOpacity input[type="range"]::-ms-track {
+  background: url("img/GPopacitySlider.png");
+}
+
+/* Layer info panel */
+
+#GPlayerInfoPanel {
+  right: 190px;
+}
+
+#GPlayerInfoTitle {
+  color: #366291;
+  border-bottom: 1px solid #366291;
+}
+
+#GPlayerInfoQuicklook {
+  background-image: url("img/GPlayerInfo.png");
+}
+
+#GPlayerInfoClose {
+  background-image: url("img/GPlayerInfoClose.png");
+}
+
+.GPlayerInfoLink,
+.GPlayerInfoPopup {
+  background-image: url("img/GPlayerInfo.png");
 }
 
 /* MEASURELENGTH POSITION */
@@ -3156,6 +3138,24 @@ span[id^=GPshowMeasureLengthOpen-] {
   background-position: -26px;
 }
 
+/* Location */
+
+.GPlocationOriginPointerImg,
+.GPlocationStageRemove,
+div[id^=GPlocationStageAdd],
+.GPlocationTransportImg {
+  background-image: url("img/GPlocationOptions.png");
+}
+
+/* All div elements whose class attribute value begins with "GPlocationPoint" */
+div[class*="GPlocationPoint"] {
+    position: relative;
+}
+
+.GPlocationStageFlexInput {
+    margin-bottom: 5px;
+}
+
 /* MOUSE POSITION */
 
 #GPmousePosition {
@@ -3180,6 +3180,51 @@ span[id^=GPshowMeasureLengthOpen-] {
 #GPmapCenter {
   background-image: url("img/GPmapCenter.png");
 }
+/* REVERSE GEOCODING */
+
+[id^="GPreverseGeocoding-"] {
+  left: 10px;
+}
+
+/* Showing/hiding reverse geocoding panel */
+
+[id^="GPshowReverseGeocodingOpen-"] {
+  background-image: url("img/GPreverseGeocodingOpen.png");
+}
+
+/* General panels */
+
+[id^="GPreverseGeocodingResultsClose"] {
+  background-image: url("img/GPreverseGeocodingOpen.png");
+}
+
+[id^="GPreverseGeocodingPanel-"] {
+  left: 8px;
+}
+
+[id^="GPreverseGeocodingPanelClose-"] {
+  background-image: url("img/GPreverseGeocodingOpen.png");
+}
+
+/* Calc waiting */
+
+.GPreverseGeocodingCalcWaitingContainerVisible,
+.GPreverseGeocodingCalcWaitingContainerHidden {
+  border-radius: 4px;
+}
+
+/* Results panel */
+
+div[id^=GPreverseGeocodingReturnPicto-] {
+  background-color: #366291;
+  background-image: url("img/GPreturn.png");
+}
+
+.GPreverseGeocodedLocationHighlight {
+    background-color: rgba(255,200,0,0.25);
+    color: #222;
+}
+
 /* ROUTE */
 
 div[id^=GProute-] {
@@ -3257,51 +3302,6 @@ input[id^=GProuteResultsShowDetails] + label + label:hover {
 
 .gp-features-content-div {
   min-width: 230px;
-}
-
-/* REVERSE GEOCODING */
-
-[id^="GPreverseGeocoding-"] {
-  left: 10px;
-}
-
-/* Showing/hiding reverse geocoding panel */
-
-[id^="GPshowReverseGeocodingOpen-"] {
-  background-image: url("img/GPreverseGeocodingOpen.png");
-}
-
-/* General panels */
-
-[id^="GPreverseGeocodingResultsClose"] {
-  background-image: url("img/GPreverseGeocodingOpen.png");
-}
-
-[id^="GPreverseGeocodingPanel-"] {
-  left: 8px;
-}
-
-[id^="GPreverseGeocodingPanelClose-"] {
-  background-image: url("img/GPreverseGeocodingOpen.png");
-}
-
-/* Calc waiting */
-
-.GPreverseGeocodingCalcWaitingContainerVisible,
-.GPreverseGeocodingCalcWaitingContainerHidden {
-  border-radius: 4px;
-}
-
-/* Results panel */
-
-div[id^=GPreverseGeocodingReturnPicto-] {
-  background-color: #366291;
-  background-image: url("img/GPreturn.png");
-}
-
-.GPreverseGeocodedLocationHighlight {
-    background-color: rgba(255,200,0,0.25);
-    color: #222;
 }
 
 /* SEARCH ENGINE */

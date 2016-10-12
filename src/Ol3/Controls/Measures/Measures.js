@@ -494,8 +494,27 @@ define([
 
             // Event end measuring
             this.measureDraw.on("drawend", function () {
+
+                // FIXME MaJ de la tooltip en mode mobile !
+                if (self.sketch) {
+                    var output;
+                    var tooltipCoord;
+                    var geom = (self.sketch.getGeometry());
+                    output = self.format((geom));
+                    if (geom.getType() === "LineString") {
+                        tooltipCoord = geom.getLastCoordinate();
+                    } else if (geom.getType() === "Polygon") {
+                        tooltipCoord = geom.getInteriorPoint().getCoordinates();
+                    } else {
+                        return;
+                    }
+                    self.measureTooltipElement.innerHTML = output;
+                    self.measureTooltip.setPosition(tooltipCoord);
+                }
+
                 self.measureTooltipElement.className = "tooltip tooltip-static";
                 self.measureTooltip.setOffset([0, -7]);
+                
                 // unset sketch
                 self.sketch = null;
                 // unset tooltip so that a new one can be created

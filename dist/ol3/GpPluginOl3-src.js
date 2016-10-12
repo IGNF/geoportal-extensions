@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-10-11
+ * @date 2016-10-12
  *
  */
 /*!
@@ -25854,6 +25854,21 @@ Ol3ControlsMeasuresMeasures = function (ol, woodman) {
                 self.sketch = evt.feature;
             }, this);
             this.measureDraw.on('drawend', function () {
+                if (self.sketch) {
+                    var output;
+                    var tooltipCoord;
+                    var geom = self.sketch.getGeometry();
+                    output = self.format(geom);
+                    if (geom.getType() === 'LineString') {
+                        tooltipCoord = geom.getLastCoordinate();
+                    } else if (geom.getType() === 'Polygon') {
+                        tooltipCoord = geom.getInteriorPoint().getCoordinates();
+                    } else {
+                        return;
+                    }
+                    self.measureTooltipElement.innerHTML = output;
+                    self.measureTooltip.setPosition(tooltipCoord);
+                }
                 self.measureTooltipElement.className = 'tooltip tooltip-static';
                 self.measureTooltip.setOffset([
                     0,
@@ -25943,10 +25958,10 @@ Ol3ControlsMeasuresMeasureLength = function (ol, woodman, Utils, Measures, Measu
     MeasureLength.prototype.setMap = function (map) {
         if (map) {
             var self = this;
-            map.on('pointermove', function (e) {
+            map.on('singleclick', function (e) {
                 self.onPointerMoveHandler(e);
             });
-            map.on('click', function (e) {
+            map.on('pointermove', function (e) {
                 self.onPointerMoveHandler(e);
             });
         }
@@ -26062,10 +26077,10 @@ Ol3ControlsMeasuresMeasureArea = function (ol, woodman, Utils, Measures, Measure
     MeasureArea.prototype.setMap = function (map) {
         if (map) {
             var self = this;
-            map.on('pointermove', function (e) {
+            map.on('singleclick', function (e) {
                 self.onPointerMoveHandler(e);
             });
-            map.on('click', function (e) {
+            map.on('pointermove', function (e) {
                 self.onPointerMoveHandler(e);
             });
         }
@@ -26181,10 +26196,10 @@ Ol3ControlsMeasuresMeasureAzimuth = function (ol, woodman, Utils, Measures, Meas
     MeasureAzimuth.prototype.setMap = function (map) {
         if (map) {
             var self = this;
-            map.on('pointermove', function (e) {
+            map.on('singleclick', function (e) {
                 self.onPointerMoveAzimutHandler(e);
             });
-            map.on('click', function (e) {
+            map.on('pointermove', function (e) {
                 self.onPointerMoveAzimutHandler(e);
             });
         }
@@ -26240,7 +26255,7 @@ Ol3ControlsMeasuresMeasureAzimuth = function (ol, woodman, Utils, Measures, Meas
 }(ol, {}, Ol3Utils, Ol3ControlsMeasuresMeasures, CommonControlsMeasureAzimuthDOM, CommonUtilsSelectorID);
 Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, KML, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution, MeasureLength, MeasureArea, MeasureAzimuth) {
     Gp.ol3extVersion = '0.11.0';
-    Gp.ol3extDate = '2016-10-11';
+    Gp.ol3extDate = '2016-10-12';
     Gp.LayerUtils = LayerUtils;
     ol.format.KMLExtended = KML;
     CRS.overload();
