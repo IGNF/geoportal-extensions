@@ -863,9 +863,9 @@ define([
         var map  = this.getMap();
         var projSrc  = map.getView().getProjection();
         var projDest = "EPSG:4326";
-        var geom = this._currentSketch.getGeometry().getCoordinates();
-        for (var i = 0; i < geom.length; i++) {
-            var xy = geom[i];
+        var coordinates = this._currentSketch.getGeometry().getCoordinates();
+        for (var i = 0; i < coordinates.length; i++) {
+            var xy = coordinates[i];
             var ll = xy;
             // on transmet au service des coordonnées en EPSG:4326
             if (projSrc !== projDest) {
@@ -878,6 +878,36 @@ define([
         }
 
         return geometry;
+    };
+
+    /**
+    * get geometry feature length
+    *
+    * @private
+    */
+    ElevationPath.prototype._getLength = function () {
+
+        if (this._currentSketch === null) {
+            logger.warn("Current Feature undefined !?");
+            return;
+        }
+
+        var length = 0;
+
+        var wgs84Sphere = new ol.Sphere(6378137);
+
+        var map  = this.getMap();
+        var projSrc  = map.getView().getProjection();
+        var projDest = "EPSG:4326";
+
+        var coordinates = this._currentSketch.getGeometry().getCoordinates();
+        for (var i = 0, ii = coordinates.length - 1; i < ii; ++i) {
+            var c1 = ol.proj.transform(coordinates[i], projSrc, projDest);
+            var c2 = ol.proj.transform(coordinates[i + 1], projSrc, projDest);
+            length += wgs84Sphere.haversineDistance(c1, c2);
+        }
+
+        return length;
     };
 
     /**
@@ -942,11 +972,24 @@ define([
             onFailure : this.options.service.onFailure || _requestServiceOnFailure
         });
 
-        // le sampling
+        // le sampling est soit defini par l'utilisateur (opts),
+        // ou soit calculé dynamiquement...
         var sampling = options.sampling;
         if (!sampling) {
+
+            // computing sampling
+            var _sampling = 50;
+            var _length = this._getLength();
+            logger.trace("length", _length);
+            var p = Math.floor(_length) / 5; // en mètre sur un pas moyen de 5m !
+            if (p >= 200) {
+                _sampling = 200;
+            } else {
+                _sampling = Math.floor(p);
+            }
+
             Utils.mergeParams(options, {
-                sampling : options.sampling || 200
+                sampling : _sampling || 50
             });
         }
 

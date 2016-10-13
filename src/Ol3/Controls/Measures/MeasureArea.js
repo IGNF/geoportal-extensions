@@ -136,10 +136,18 @@ define([
 
         if ( map ) {
             var self = this;
-            map.on("pointermove", function (e) {
+            // FIXME
+            // map.on("click", function (e) {
+            //     logger.trace("event on map with click!");
+            //     self.onPointerMoveHandler(e);
+            // });
+            map.on("singleclick", function (e) {
+                logger.trace("event on map with singleclick!");
                 self.onPointerMoveHandler(e);
             });
-            map.on("click", function (e) {
+
+            map.on("pointermove", function (e) {
+                logger.trace("event on map with pointermove!");
                 self.onPointerMoveHandler(e);
             });
         }

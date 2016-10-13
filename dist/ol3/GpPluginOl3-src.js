@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-10-11
+ * @date 2016-10-13
  *
  */
 /*!
@@ -26071,9 +26071,9 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, El
         var map = this.getMap();
         var projSrc = map.getView().getProjection();
         var projDest = 'EPSG:4326';
-        var geom = this._currentSketch.getGeometry().getCoordinates();
-        for (var i = 0; i < geom.length; i++) {
-            var xy = geom[i];
+        var coordinates = this._currentSketch.getGeometry().getCoordinates();
+        for (var i = 0; i < coordinates.length; i++) {
+            var xy = coordinates[i];
             var ll = xy;
             if (projSrc !== projDest) {
                 ll = ol.proj.transform(xy, projSrc, projDest);
@@ -26084,6 +26084,23 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, El
             });
         }
         return geometry;
+    };
+    ElevationPath.prototype._getLength = function () {
+        if (this._currentSketch === null) {
+            return;
+        }
+        var length = 0;
+        var wgs84Sphere = new ol.Sphere(6378137);
+        var map = this.getMap();
+        var projSrc = map.getView().getProjection();
+        var projDest = 'EPSG:4326';
+        var coordinates = this._currentSketch.getGeometry().getCoordinates();
+        for (var i = 0, ii = coordinates.length - 1; i < ii; ++i) {
+            var c1 = ol.proj.transform(coordinates[i], projSrc, projDest);
+            var c2 = ol.proj.transform(coordinates[i + 1], projSrc, projDest);
+            length += wgs84Sphere.haversineDistance(c1, c2);
+        }
+        return length;
     };
     ElevationPath.prototype._requestService = function () {
         var geometry = this._getGeometry();
@@ -26116,7 +26133,15 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, El
         });
         var sampling = options.sampling;
         if (!sampling) {
-            Utils.mergeParams(options, { sampling: options.sampling || 200 });
+            var _sampling = 50;
+            var _length = this._getLength();
+            var p = Math.floor(_length) / 5;
+            if (p >= 200) {
+                _sampling = 200;
+            } else {
+                _sampling = Math.floor(p);
+            }
+            Utils.mergeParams(options, { sampling: _sampling || 50 });
         }
         Utils.mergeParams(options, { positions: geometry });
         this._waitingContainer.className = 'GPelevationPathCalcWaitingContainerVisible';
@@ -26631,6 +26656,21 @@ Ol3ControlsMeasuresMeasures = function (ol, woodman) {
                 self.sketch = evt.feature;
             }, this);
             this.measureDraw.on('drawend', function () {
+                if (self.sketch) {
+                    var output;
+                    var tooltipCoord;
+                    var geom = self.sketch.getGeometry();
+                    output = self.format(geom);
+                    if (geom.getType() === 'LineString') {
+                        tooltipCoord = geom.getLastCoordinate();
+                    } else if (geom.getType() === 'Polygon') {
+                        tooltipCoord = geom.getInteriorPoint().getCoordinates();
+                    } else {
+                        return;
+                    }
+                    self.measureTooltipElement.innerHTML = output;
+                    self.measureTooltip.setPosition(tooltipCoord);
+                }
                 self.measureTooltipElement.className = 'tooltip tooltip-static';
                 self.measureTooltip.setOffset([
                     0,
@@ -26720,10 +26760,10 @@ Ol3ControlsMeasuresMeasureLength = function (ol, woodman, Utils, Measures, Measu
     MeasureLength.prototype.setMap = function (map) {
         if (map) {
             var self = this;
-            map.on('pointermove', function (e) {
+            map.on('singleclick', function (e) {
                 self.onPointerMoveHandler(e);
             });
-            map.on('click', function (e) {
+            map.on('pointermove', function (e) {
                 self.onPointerMoveHandler(e);
             });
         }
@@ -26839,10 +26879,10 @@ Ol3ControlsMeasuresMeasureArea = function (ol, woodman, Utils, Measures, Measure
     MeasureArea.prototype.setMap = function (map) {
         if (map) {
             var self = this;
-            map.on('pointermove', function (e) {
+            map.on('singleclick', function (e) {
                 self.onPointerMoveHandler(e);
             });
-            map.on('click', function (e) {
+            map.on('pointermove', function (e) {
                 self.onPointerMoveHandler(e);
             });
         }
@@ -26958,10 +26998,10 @@ Ol3ControlsMeasuresMeasureAzimuth = function (ol, woodman, Utils, Measures, Meas
     MeasureAzimuth.prototype.setMap = function (map) {
         if (map) {
             var self = this;
-            map.on('pointermove', function (e) {
+            map.on('singleclick', function (e) {
                 self.onPointerMoveAzimutHandler(e);
             });
-            map.on('click', function (e) {
+            map.on('pointermove', function (e) {
                 self.onPointerMoveAzimutHandler(e);
             });
         }
@@ -27017,7 +27057,7 @@ Ol3ControlsMeasuresMeasureAzimuth = function (ol, woodman, Utils, Measures, Meas
 }(ol, {}, Ol3Utils, Ol3ControlsMeasuresMeasures, CommonControlsMeasureAzimuthDOM, CommonUtilsSelectorID);
 Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, KML, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution, ElevationPath, MeasureLength, MeasureArea, MeasureAzimuth) {
     Gp.ol3extVersion = '0.11.0';
-    Gp.ol3extDate = '2016-10-11';
+    Gp.ol3extDate = '2016-10-13';
     Gp.LayerUtils = LayerUtils;
     ol.format.KMLExtended = KML;
     CRS.overload();

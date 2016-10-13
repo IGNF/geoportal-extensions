@@ -14,26 +14,66 @@
 echo "BEGIN"
 
 # leaflet
-
-gulp --production --leaflet
-gulp publish
-
-gulp --leaflet
-gulp publish
+function leaflet() {
+  echo "####### LEAFLET production !"
+  gulp --production --leaflet
+  gulp publish
+  echo "####### LEAFLET !"
+  gulp --leaflet
+  gulp publish
+}
 
 # ol3
-
-gulp --production --ol3
-gulp publish
-
-gulp --ol3
-gulp publish
+function ol3() {
+  echo "####### OL production !"
+  gulp --production --ol3
+  gulp publish
+  echo "####### OL !"
+  gulp --ol3
+  gulp publish
+}
 
 # vg
-gulp --vg
-gulp publish
+function vg() {
+  echo "####### VG production !"
+  gulp --vg
+  gulp publish
+  echo "####### VG !"
+  gulp --production --vg
+  gulp publish
+}
 
-gulp --production --vg
-gulp publish
+while getopts "aolv" opts
+do
+   case $opts in
+     o)
+        echo "#################################"
+        echo "###### OpenLayers bundle ! ######"
+        ol3
+        ;;
+     l)
+        echo "#################################"
+        echo "####### Leaflet bundle ! ########"
+        leaflet
+        ;;
+     v)
+        echo "#################################"
+        echo "###### VirtualGeo bundle ! ######"
+        vg
+        ;;
+     a)
+        echo "#################################"
+        echo "########## ALL bundle ! #########"
+        ol3
+        leaflet
+        vg
+        ;;
+     \?)
+        echo "$OPTARG : option invalide : a, o, l ou v !"
+        exit -1
+        ;;
+   esac
+done
 
 echo "END"
+exit 0

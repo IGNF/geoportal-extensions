@@ -135,13 +135,23 @@ define([
     MeasureLength.prototype.setMap = function (map) {
 
         if ( map ) {
+
             var self = this;
+            // FIXME
+            // map.on("click", function (e) {
+            //     logger.trace("event on map with click!");
+            //     self.onPointerMoveHandler(e);
+            // });
+            map.on("singleclick", function (e) {
+                logger.trace("event on map with singleclick!");
+                self.onPointerMoveHandler(e);
+            });
+
             map.on("pointermove", function (e) {
+                logger.trace("event on map with pointermove!");
                 self.onPointerMoveHandler(e);
             });
-            map.on("click", function (e) {
-                self.onPointerMoveHandler(e);
-            });
+
         }
 
         // on appelle la méthode setMap originale d'OpenLayers
