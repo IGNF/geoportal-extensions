@@ -85,6 +85,7 @@ define([
 
         /** container d'activation du controle */
         this._showContainer = null;
+        this._pictoContainer = null;
 
         // initialisation du composant
         this._initialize(options);
@@ -132,22 +133,30 @@ define([
      */
     MeasureAzimuth.prototype.setMap = function (map) {
 
+        // sauvegarde de l'état de l'outil
+        var className = this.CLASSNAME;
+        this.tools[className].instance = this;
+
+        // on fait le choix de ne pas activer les events sur la map à l'init de l'outil,
+        // mais uniquement à son utilisation !
         if ( map ) {
-            var self = this;
-            // FIXME
+
+            logger.trace("setMap()");
+            // var self = this;
             // map.on("click", function (e) {
             //     logger.trace("event on map with click!");
             //     self.onPointerMoveAzimutHandler(e);
             // });
-            map.on("singleclick", function (e) {
-                logger.trace("event on map with singleclick!");
-                self.onPointerMoveAzimutHandler(e);
-            });
-
-            map.on("pointermove", function (e) {
-                logger.trace("event on map with pointermove!");
-                self.onPointerMoveAzimutHandler(e);
-            });
+            //
+            // map.on("singleclick", function (e) {
+            //     logger.trace("event on map with singleclick!");
+            //     self.onPointerMoveAzimutHandler(e);
+            // });
+            //
+            // map.on("pointermove", function (e) {
+            //     logger.trace("event on map with pointermove!");
+            //     self.onPointerMoveAzimutHandler(e);
+            // });
         }
 
         // on appelle la méthode setMap originale d'OpenLayers
@@ -191,7 +200,7 @@ define([
         // par defaut, pas d'interaction à l'initialisation...
         this._showContainer.checked = true;
 
-        var picto = this._createShowMeasureAzimuthPictoElement();
+        var picto = this._pictoContainer = this._createShowMeasureAzimuthPictoElement();
         container.appendChild(picto);
 
         return container;
@@ -201,9 +210,28 @@ define([
     // ##################### overridden methods ########################## //
     // ################################################################### //
 
+    /** Add all events on map */
+    MeasureAzimuth.prototype.addMeasureEvents = function () {
+        logger.trace("call MeasureAzimuth::addMeasureEvents()");
+
+        var map = this.getMap();
+
+        map.on("singleclick", this.onPointerMoveAzimutHandler, this);
+        map.on("pointermove", this.onPointerMoveAzimutHandler, this);
+    };
+
+    /** Remove all events on map */
+    MeasureAzimuth.prototype.removeMeasureEvents = function () {
+        logger.trace("call MeasureAzimuth::removeMeasureEvents()");
+
+        var map = this.getMap();
+
+        map.un("singleclick", this.onPointerMoveAzimutHandler, this);
+        map.un("pointermove", this.onPointerMoveAzimutHandler, this);
+    };
+
     /**
     * Format length output.
-    * FIXME bug sur le calcul (pb de signe !?)
     *
     * @param {ol.geom.LineString} line - geometry line.
     * @return {String} The formatted output.
@@ -254,6 +282,8 @@ define([
     */
     MeasureAzimuth.prototype.onShowMeasureAzimuthClick = function (e) {
         logger.trace("call MeasureAzimuth::onShowMeasureAzimuthClick()", e);
+
+        // appel de la methode commune
         this.onShowMeasureClick(e, "LineString");
     };
 

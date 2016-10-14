@@ -46,25 +46,16 @@ define([
         // ****************************************************************** //
         tools : {
             MeasureLength : {
-                container : null,
-                draw : null,
-                layer : null,
-                // tootltip : null,
-                active : false
+                active : false,
+                instance : null
             },
             MeasureArea : {
-                container : null,
-                draw : null,
-                layer : null,
-                // tootltip : null,
-                active : false
+                active : false,
+                instance : null
             },
             MeasureAzimuth : {
-                container : null,
-                draw : null,
-                layer : null,
-                // tootltip : null,
-                active : false
+                active : false,
+                instance : null
             }
         },
 
@@ -162,6 +153,23 @@ define([
         }),
 
         // ****************************************************************** //
+        // > Methods Public
+        // ****************************************************************** //
+
+        /** Desactived Tool Measure */
+        setDesactivated : function () {
+            var _class = this.CLASSNAME;
+            logger.trace("[" + _class + "] deactived tool !");
+            // sur la desactivation de l'outil de mesure
+            // on fait un nettoyage des ressources
+            // ainsi que le DOM
+            this.clearMeasure();
+            this.clearMeasureToolTip();
+            this.removeMeasureEvents();
+            this._showContainer.checked = true;
+        },
+
+        // ****************************************************************** //
         // > Methods Events
         // ****************************************************************** //
 
@@ -205,20 +213,12 @@ define([
         */
         onShowMeasureClick : function (e, type) {
 
-            var map  = this.getMap();
-            var self = this.CLASSNAME; // FIXME this.constructor.name : pas possible en mode minifié/manglifié !
-            for (var instance in this.tools) {
-                if (this.tools.hasOwnProperty(instance)) {
-                    if (this.tools[instance].active && instance !== self) {
-                        this.clearMeasureToolTip();
-                        map.removeLayer(this.tools[instance].layer);
-                        map.removeInteraction(this.tools[instance].draw);
-                        // map.removeOverlay(this.tools[instance].tooltip);
-                        this.tools[instance].active = false;
-                        this.tools[instance].container.checked = true;
-                        this.tools[instance].draw  = null;
-                        this.tools[instance].layer = null;
-                        // this.tools[instance].tooltip = null;
+            var self = this.CLASSNAME; // this.constructor.name : pas possible en mode minifié/manglifié !
+            for (var className in this.tools) {
+                if (this.tools.hasOwnProperty(className)) {
+                    if (this.tools[className].active && className !== self) {
+                        this.tools[className].active = false;
+                        this.tools[className].instance.setDesactivated();
                     }
                 }
             }
@@ -227,30 +227,26 @@ define([
             //  statut de la checkbox : true par defaut.
             //  lors du clic, le statut devient false apres que la fonction
             //  soit executée.
-            //  clic true run false
-            //  clic false run true, ...
+            //  clic true run false -> activation
+            //  clic false run true -> desactivation
             if (this._showContainer.checked) {
 
+                this.addMeasureEvents();
                 this.initMeasureInteraction();
                 this.addMeasureInteraction(type);
                 this.tools[self].active = true;
-                this.tools[self].container = this._showContainer; // FIXME pourri, mais il me faut cette information !?
-                this.tools[self].draw  = this.measureDraw;
-                this.tools[self].layer = this.measureVector;
-                // this.tools[self].tooltip = this.measureTooltip;
+
             } else {
 
                 this.clearMeasure();
+                this.clearMeasureToolTip();
+                this.removeMeasureEvents();
                 this.tools[self].active = false;
-                this.tools[self].container = this._showContainer; // FIXME pourri, mais il me faut cette information !?
-                this.tools[self].draw  = null;
-                this.tools[self].layer = null;
-                // this.tools[self].tooltip = null;
             }
         },
 
         // ****************************************************************** //
-        // > Methods
+        // > Methods not Public
         // ****************************************************************** //
 
         /**
@@ -287,19 +283,20 @@ define([
 
             var map = this.getMap();
 
-            this.clearMeasureToolTip();
-
             // FIXME !?
             // if (this.measureTooltip) {
             //     map.removeOverlay(this.measureTooltip);
+            //     this.measureTooltip = null;
             // }
 
             if (this.measureVector) {
                 map.removeLayer(this.measureVector);
+                this.measureVector = null;
             }
 
             if (this.measureDraw) {
                 map.removeInteraction(this.measureDraw);
+                this.measureDraw = null;
             }
         },
 
@@ -514,7 +511,7 @@ define([
 
                 self.measureTooltipElement.className = "tooltip tooltip-static";
                 self.measureTooltip.setOffset([0, -7]);
-                
+
                 // unset sketch
                 self.sketch = null;
                 // unset tooltip so that a new one can be created

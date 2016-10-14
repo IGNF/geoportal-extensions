@@ -87,6 +87,7 @@ define([
 
         /** container d'activation du controle */
         this._showContainer = null;
+        this._pictoContainer = null;
 
         // initialisation du composant
         this._initialize(options);
@@ -134,23 +135,30 @@ define([
      */
     MeasureLength.prototype.setMap = function (map) {
 
+        // sauvegarde de l'état de l'outil
+        var className = this.CLASSNAME;
+        this.tools[className].instance = this;
+
+        // on fait le choix de ne pas activer les events sur la map à l'init de l'outil,
+        // mais uniquement à son utilisation !
         if ( map ) {
 
-            var self = this;
-            // FIXME
+            logger.trace("setMap()");
+            // var self = this;
             // map.on("click", function (e) {
             //     logger.trace("event on map with click!");
             //     self.onPointerMoveHandler(e);
             // });
-            map.on("singleclick", function (e) {
-                logger.trace("event on map with singleclick!");
-                self.onPointerMoveHandler(e);
-            });
-
-            map.on("pointermove", function (e) {
-                logger.trace("event on map with pointermove!");
-                self.onPointerMoveHandler(e);
-            });
+            //
+            // map.on("singleclick", function (e) {
+            //     logger.trace("event on map with singleclick!");
+            //     self.onPointerMoveHandler(e);
+            // });
+            //
+            // map.on("pointermove", function (e) {
+            //     logger.trace("event on map with pointermove!");
+            //     self.onPointerMoveHandler(e);
+            // });
 
         }
 
@@ -196,15 +204,35 @@ define([
         // par defaut, pas d'interaction à l'initialisation...
         this._showContainer.checked = true;
 
-        var picto = this._createShowMeasureLengthPictoElement();
+        var picto = this._pictoContainer = this._createShowMeasureLengthPictoElement();
         container.appendChild(picto);
 
         return container;
     };
 
     // ################################################################### //
-    // ##################### overridden methods ########################## //
+    // ########################## methods ################################ //
     // ################################################################### //
+
+    /** Add all events on map */
+    MeasureLength.prototype.addMeasureEvents = function () {
+        logger.trace("call MeasureLength::addMeasureEvents()");
+
+        var map = this.getMap();
+
+        map.on("singleclick", this.onPointerMoveHandler, this);
+        map.on("pointermove", this.onPointerMoveHandler, this);
+    };
+
+    /** Remove all events on map */
+    MeasureLength.prototype.removeMeasureEvents = function () {
+        logger.trace("call MeasureLength::removeMeasureEvents()");
+
+        var map = this.getMap();
+
+        map.un("singleclick", this.onPointerMoveHandler, this);
+        map.un("pointermove", this.onPointerMoveHandler, this);
+    };
 
     /**
     * Format length output.
@@ -255,6 +283,8 @@ define([
     */
     MeasureLength.prototype.onShowMeasureLengthClick = function (e) {
         logger.trace("call MeasureLength::onShowMeasureLengthClick()", e);
+
+        // appel de la methode commune
         this.onShowMeasureClick(e, "LineString");
     };
 

@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-10-13
+ * @date 2016-10-14
  *
  */
 /*!
@@ -26405,22 +26405,16 @@ Ol3ControlsMeasuresMeasures = function (ol, woodman) {
     var Measures = {
         tools: {
             MeasureLength: {
-                container: null,
-                draw: null,
-                layer: null,
-                active: false
+                active: false,
+                instance: null
             },
             MeasureArea: {
-                container: null,
-                draw: null,
-                layer: null,
-                active: false
+                active: false,
+                instance: null
             },
             MeasureAzimuth: {
-                container: null,
-                draw: null,
-                layer: null,
-                active: false
+                active: false,
+                instance: null
             }
         },
         measureDraw: null,
@@ -26454,6 +26448,13 @@ Ol3ControlsMeasuresMeasures = function (ol, woodman) {
                 width: defaultStyleFinal.strokeWidth
             })
         }),
+        setDesactivated: function () {
+            var _class = this.CLASSNAME;
+            this.clearMeasure();
+            this.clearMeasureToolTip();
+            this.removeMeasureEvents();
+            this._showContainer.checked = true;
+        },
         onPointerMoveHandler: function (e) {
             if (e.dragging) {
                 return;
@@ -26475,34 +26476,25 @@ Ol3ControlsMeasuresMeasures = function (ol, woodman) {
             }
         },
         onShowMeasureClick: function (e, type) {
-            var map = this.getMap();
             var self = this.CLASSNAME;
-            for (var instance in this.tools) {
-                if (this.tools.hasOwnProperty(instance)) {
-                    if (this.tools[instance].active && instance !== self) {
-                        this.clearMeasureToolTip();
-                        map.removeLayer(this.tools[instance].layer);
-                        map.removeInteraction(this.tools[instance].draw);
-                        this.tools[instance].active = false;
-                        this.tools[instance].container.checked = true;
-                        this.tools[instance].draw = null;
-                        this.tools[instance].layer = null;
+            for (var className in this.tools) {
+                if (this.tools.hasOwnProperty(className)) {
+                    if (this.tools[className].active && className !== self) {
+                        this.tools[className].active = false;
+                        this.tools[className].instance.setDesactivated();
                     }
                 }
             }
             if (this._showContainer.checked) {
+                this.addMeasureEvents();
                 this.initMeasureInteraction();
                 this.addMeasureInteraction(type);
                 this.tools[self].active = true;
-                this.tools[self].container = this._showContainer;
-                this.tools[self].draw = this.measureDraw;
-                this.tools[self].layer = this.measureVector;
             } else {
                 this.clearMeasure();
+                this.clearMeasureToolTip();
+                this.removeMeasureEvents();
                 this.tools[self].active = false;
-                this.tools[self].container = this._showContainer;
-                this.tools[self].draw = null;
-                this.tools[self].layer = null;
             }
         },
         clearMeasureToolTip: function () {
@@ -26525,12 +26517,13 @@ Ol3ControlsMeasuresMeasures = function (ol, woodman) {
         },
         clearMeasure: function () {
             var map = this.getMap();
-            this.clearMeasureToolTip();
             if (this.measureVector) {
                 map.removeLayer(this.measureVector);
+                this.measureVector = null;
             }
             if (this.measureDraw) {
                 map.removeInteraction(this.measureDraw);
+                this.measureDraw = null;
             }
         },
         createMeasureTooltip: function (map) {
@@ -26744,6 +26737,7 @@ Ol3ControlsMeasuresMeasureLength = function (ol, woodman, Utils, Measures, Measu
         this.CLASSNAME = 'MeasureLength';
         this._uid = ID.generate();
         this._showContainer = null;
+        this._pictoContainer = null;
         this._initialize(options);
         var container = options.element ? options.element : this._initializeContainer();
         ol.control.Control.call(this, {
@@ -26758,14 +26752,9 @@ Ol3ControlsMeasuresMeasureLength = function (ol, woodman, Utils, Measures, Measu
     Utils.assign(MeasureLength.prototype, MeasureLengthDOM);
     MeasureLength.prototype.constructor = MeasureLength;
     MeasureLength.prototype.setMap = function (map) {
+        var className = this.CLASSNAME;
+        this.tools[className].instance = this;
         if (map) {
-            var self = this;
-            map.on('singleclick', function (e) {
-                self.onPointerMoveHandler(e);
-            });
-            map.on('pointermove', function (e) {
-                self.onPointerMoveHandler(e);
-            });
         }
         ol.control.Control.prototype.setMap.call(this, map);
     };
@@ -26779,9 +26768,19 @@ Ol3ControlsMeasuresMeasureLength = function (ol, woodman, Utils, Measures, Measu
         var show = this._showContainer = this._createShowMeasureLengthElement();
         container.appendChild(show);
         this._showContainer.checked = true;
-        var picto = this._createShowMeasureLengthPictoElement();
+        var picto = this._pictoContainer = this._createShowMeasureLengthPictoElement();
         container.appendChild(picto);
         return container;
+    };
+    MeasureLength.prototype.addMeasureEvents = function () {
+        var map = this.getMap();
+        map.on('singleclick', this.onPointerMoveHandler, this);
+        map.on('pointermove', this.onPointerMoveHandler, this);
+    };
+    MeasureLength.prototype.removeMeasureEvents = function () {
+        var map = this.getMap();
+        map.un('singleclick', this.onPointerMoveHandler, this);
+        map.un('pointermove', this.onPointerMoveHandler, this);
     };
     MeasureLength.prototype.format = function (line) {
         var map = this.getMap();
@@ -26863,6 +26862,7 @@ Ol3ControlsMeasuresMeasureArea = function (ol, woodman, Utils, Measures, Measure
         this.CLASSNAME = 'MeasureArea';
         this._uid = ID.generate();
         this._showContainer = null;
+        this._pictoContainer = null;
         this._initialize(options);
         var container = options.element ? options.element : this._initializeContainer();
         ol.control.Control.call(this, {
@@ -26877,14 +26877,9 @@ Ol3ControlsMeasuresMeasureArea = function (ol, woodman, Utils, Measures, Measure
     Utils.assign(MeasureArea.prototype, MeasureAreaDOM);
     MeasureArea.prototype.constructor = MeasureArea;
     MeasureArea.prototype.setMap = function (map) {
+        var className = this.CLASSNAME;
+        this.tools[className].instance = this;
         if (map) {
-            var self = this;
-            map.on('singleclick', function (e) {
-                self.onPointerMoveHandler(e);
-            });
-            map.on('pointermove', function (e) {
-                self.onPointerMoveHandler(e);
-            });
         }
         ol.control.Control.prototype.setMap.call(this, map);
     };
@@ -26898,9 +26893,19 @@ Ol3ControlsMeasuresMeasureArea = function (ol, woodman, Utils, Measures, Measure
         var show = this._showContainer = this._createShowMeasureAreaElement();
         container.appendChild(show);
         this._showContainer.checked = true;
-        var picto = this._createShowMeasureAreaPictoElement();
+        var picto = this._pictoContainer = this._createShowMeasureAreaPictoElement();
         container.appendChild(picto);
         return container;
+    };
+    MeasureArea.prototype.addMeasureEvents = function () {
+        var map = this.getMap();
+        map.on('singleclick', this.onPointerMoveHandler, this);
+        map.on('pointermove', this.onPointerMoveHandler, this);
+    };
+    MeasureArea.prototype.removeMeasureEvents = function () {
+        var map = this.getMap();
+        map.un('singleclick', this.onPointerMoveHandler, this);
+        map.un('pointermove', this.onPointerMoveHandler, this);
     };
     MeasureArea.prototype.format = function (polygon) {
         var map = this.getMap();
@@ -26982,6 +26987,7 @@ Ol3ControlsMeasuresMeasureAzimuth = function (ol, woodman, Utils, Measures, Meas
         this.CLASSNAME = 'MeasureAzimuth';
         this._uid = ID.generate();
         this._showContainer = null;
+        this._pictoContainer = null;
         this._initialize(options);
         var container = options.element ? options.element : this._initializeContainer();
         ol.control.Control.call(this, {
@@ -26996,14 +27002,9 @@ Ol3ControlsMeasuresMeasureAzimuth = function (ol, woodman, Utils, Measures, Meas
     Utils.assign(MeasureAzimuth.prototype, MeasureAzimuthDOM);
     MeasureAzimuth.prototype.constructor = MeasureAzimuth;
     MeasureAzimuth.prototype.setMap = function (map) {
+        var className = this.CLASSNAME;
+        this.tools[className].instance = this;
         if (map) {
-            var self = this;
-            map.on('singleclick', function (e) {
-                self.onPointerMoveAzimutHandler(e);
-            });
-            map.on('pointermove', function (e) {
-                self.onPointerMoveAzimutHandler(e);
-            });
         }
         ol.control.Control.prototype.setMap.call(this, map);
     };
@@ -27016,9 +27017,19 @@ Ol3ControlsMeasuresMeasureAzimuth = function (ol, woodman, Utils, Measures, Meas
         var show = this._showContainer = this._createShowMeasureAzimuthElement();
         container.appendChild(show);
         this._showContainer.checked = true;
-        var picto = this._createShowMeasureAzimuthPictoElement();
+        var picto = this._pictoContainer = this._createShowMeasureAzimuthPictoElement();
         container.appendChild(picto);
         return container;
+    };
+    MeasureAzimuth.prototype.addMeasureEvents = function () {
+        var map = this.getMap();
+        map.on('singleclick', this.onPointerMoveAzimutHandler, this);
+        map.on('pointermove', this.onPointerMoveAzimutHandler, this);
+    };
+    MeasureAzimuth.prototype.removeMeasureEvents = function () {
+        var map = this.getMap();
+        map.un('singleclick', this.onPointerMoveAzimutHandler, this);
+        map.un('pointermove', this.onPointerMoveAzimutHandler, this);
     };
     MeasureAzimuth.prototype.format = function (line) {
         var map = this.getMap();
@@ -27057,7 +27068,7 @@ Ol3ControlsMeasuresMeasureAzimuth = function (ol, woodman, Utils, Measures, Meas
 }(ol, {}, Ol3Utils, Ol3ControlsMeasuresMeasures, CommonControlsMeasureAzimuthDOM, CommonUtilsSelectorID);
 Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, KML, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution, ElevationPath, MeasureLength, MeasureArea, MeasureAzimuth) {
     Gp.ol3extVersion = '0.11.0';
-    Gp.ol3extDate = '2016-10-13';
+    Gp.ol3extDate = '2016-10-14';
     Gp.LayerUtils = LayerUtils;
     ol.format.KMLExtended = KML;
     CRS.overload();
