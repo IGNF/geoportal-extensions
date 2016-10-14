@@ -42,7 +42,7 @@ define([
     var Measures = {
 
         // ****************************************************************** //
-        // > ToolBox
+        // > ToolBox : these tools work together
         // ****************************************************************** //
         tools : {
             MeasureLength : {
@@ -476,6 +476,9 @@ define([
                 source : this.measureSource,
                 type : type,
                 style : this.options.styles.start || this.measureStyle
+            });
+            this.measureDraw.setProperties({
+                source : this.CLASSNAME
             });
             map.addInteraction(this.measureDraw);
 

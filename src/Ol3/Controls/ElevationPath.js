@@ -1484,6 +1484,29 @@ define([
     */
     ElevationPath.prototype.onShowElevationPathClick = function () {
 
+        var map = this.getMap();
+        var interactions = map.getInteractions().getArray() ;
+        for (var i = 0 ; i < interactions.length ; i++ ) {
+
+            if (interactions[i].getActive() && interactions[i] instanceof ol.interaction.Draw) {
+                var prop = interactions[i].getProperties();
+                var src  = prop.source;
+                if ( typeof src !== "undefined") {
+                    switch (src) {
+                        case "MeasureLength" :
+                        case "MeasureArea" :
+                        case "MeasureAzimuth" :
+                            // TODO...
+                            console.log("TODO : delete interaction !");
+                            break;
+                        default:
+
+                    }
+                }
+
+            }
+        }
+
         // Activation/Desactivation des interactions de dessins
         if (!this._showContainer.checked) {
             // on n'affiche pas la fenetre de profil s'il n'existe pas...

@@ -26368,6 +26368,24 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, El
         this._profil.addListener('changed', _onFollowProfilPathChanged);
     };
     ElevationPath.prototype.onShowElevationPathClick = function () {
+        var map = this.getMap();
+        var interactions = map.getInteractions().getArray();
+        for (var i = 0; i < interactions.length; i++) {
+            if (interactions[i].getActive() && interactions[i] instanceof ol.interaction.Draw) {
+                var prop = interactions[i].getProperties();
+                var src = prop.source;
+                if (typeof src !== 'undefined') {
+                    switch (src) {
+                    case 'MeasureLength':
+                    case 'MeasureArea':
+                    case 'MeasureAzimuth':
+                        console.log('TODO : delete interaction !');
+                        break;
+                    default:
+                    }
+                }
+            }
+        }
         if (!this._showContainer.checked) {
             if (this._profil === null) {
                 this._panelContainer.style.display = 'none';
@@ -26642,6 +26660,7 @@ Ol3ControlsMeasuresMeasures = function (ol, woodman) {
                 type: type,
                 style: this.options.styles.start || this.measureStyle
             });
+            this.measureDraw.setProperties({ source: this.CLASSNAME });
             map.addInteraction(this.measureDraw);
             this.createMeasureTooltip(map);
             var self = this;
