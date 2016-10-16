@@ -1,10 +1,12 @@
 
 define([
     "ol",
+    "gp",
     "Ol3/Utils",
     "Common/Utils/Config"
 ], function (
     ol,
+    Gp,
     Utils,
     Config
 ) {
@@ -52,7 +54,11 @@ define([
             var wmsParams = Config.getLayerParams(options.layer, "WMS", options.apiKey);
 
             var wmsSourceOptions = {
-                url : wmsParams.url,
+                // tracker extension ol3
+                // FIXME : gp-ext version en mode AMD
+                url : Gp.Helper.normalyzeUrl(wmsParams.url,{
+                          "gp-ol3-ext" : "__GPOL3EXTVERSION__"
+                      },false),
                 params : {
                     SERVICE : "WMS",
                     LAYERS : options.layer,
