@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-10-12
+ * @date 2016-10-16
  *
  */
 /*!
@@ -1300,6 +1300,7 @@ var gp, CommonUtilsAutoLoadConfig, CommonUtilsLayerUtils, proj4, CommonUtilsRegi
                 var strUrlProxified = null;
                 var strData = this.request;
                 var bUrlProxified = this.options.proxyURL && this.options.protocol === 'XHR' ? true : false;
+                this.options.serverUrl = Helper.normalyzeUrl(this.options.serverUrl, { 'gp-access-lib': '1.0.0-beta3' }, false);
                 if (bUrlProxified) {
                     if (this.options.httpMethod === 'GET') {
                         strUrlProxified = this.options.proxyURL + Helper.normalyzeUrl(this.options.serverUrl, this.request, true);
@@ -7332,11 +7333,11 @@ var gp, CommonUtilsAutoLoadConfig, CommonUtilsLayerUtils, proj4, CommonUtilsRegi
         var bbox = {};
         return Services;
     }(ServicesAltiAlti, ServicesAutoConfAutoConf, ServicesGeocodeGeocode, ServicesGeocodeReverseGeocode, ServicesAutoCompleteAutoComplete, ServicesRouteRoute, ServicesProcessIsoCurveProcessIsoCurve);
-    Gp = function (XHR, Services, AltiResponse, Elevation, AutoCompleteResponse, SuggestedLocation, GetConfigResponse, Constraint, Format, Layer, Legend, Metadata, Originator, Service, Style, Territory, Thematic, TM, TMLimit, TMS, GeocodeResponse, GeocodedLocation, DirectGeocodedLocation, ReverseGeocodedLocation, IsoCurveResponse, RouteResponse, RouteInstruction, Error) {
+    Gp = function (XHR, Services, AltiResponse, Elevation, AutoCompleteResponse, SuggestedLocation, GetConfigResponse, Constraint, Format, Layer, Legend, Metadata, Originator, Service, Style, Territory, Thematic, TM, TMLimit, TMS, GeocodeResponse, GeocodedLocation, DirectGeocodedLocation, ReverseGeocodedLocation, IsoCurveResponse, RouteResponse, RouteInstruction, Helper, Error) {
         var scope = typeof window !== 'undefined' ? window : {};
         var Gp = scope.Gp || {
             servicesVersion: '1.0.0-beta3',
-            servicesDate: '2016-07-29',
+            servicesDate: '2016-10-16',
             extend: function (strNS, value) {
                 var parts = strNS.split('.');
                 var parent = this;
@@ -7383,10 +7384,11 @@ var gp, CommonUtilsAutoLoadConfig, CommonUtilsLayerUtils, proj4, CommonUtilsRegi
         Gp.extend('Services.IsoCurveResponse', IsoCurveResponse);
         Gp.extend('Services.RouteResponse', RouteResponse);
         Gp.extend('Services.Route.RouteInstruction', RouteInstruction);
+        Gp.extend('Helper', Helper);
         Gp.extend('Error', Error);
         scope.Gp = Gp;
         return scope.Gp;
-    }(ProtocolsXHR, ServicesServices, ServicesAltiResponseModelAltiResponse, ServicesAltiResponseModelElevation, ServicesAutoCompleteResponseModelAutoCompleteResponse, ServicesAutoCompleteResponseModelSuggestedLocation, ServicesAutoConfResponseModelAutoConfResponse, ServicesAutoConfResponseModelConstraint, ServicesAutoConfResponseModelFormat, ServicesAutoConfResponseModelLayer, ServicesAutoConfResponseModelLegend, ServicesAutoConfResponseModelMetadata, ServicesAutoConfResponseModelOriginator, ServicesAutoConfResponseModelService, ServicesAutoConfResponseModelStyle, ServicesAutoConfResponseModelTerritory, ServicesAutoConfResponseModelThematic, ServicesAutoConfResponseModelTileMatrix, ServicesAutoConfResponseModelTileMatrixLimit, ServicesAutoConfResponseModelTileMatrixSet, ServicesGeocodeResponseModelGeocodeResponse, ServicesGeocodeResponseModelGeocodedLocation, ServicesGeocodeResponseModelDirectGeocodedLocation, ServicesGeocodeResponseModelReverseGeocodedLocation, ServicesProcessIsoCurveResponseModelProcessIsoCurveResponse, ServicesRouteResponseModelRouteResponse, ServicesRouteResponseModelRouteInstruction, ExceptionsErrorService);
+    }(ProtocolsXHR, ServicesServices, ServicesAltiResponseModelAltiResponse, ServicesAltiResponseModelElevation, ServicesAutoCompleteResponseModelAutoCompleteResponse, ServicesAutoCompleteResponseModelSuggestedLocation, ServicesAutoConfResponseModelAutoConfResponse, ServicesAutoConfResponseModelConstraint, ServicesAutoConfResponseModelFormat, ServicesAutoConfResponseModelLayer, ServicesAutoConfResponseModelLegend, ServicesAutoConfResponseModelMetadata, ServicesAutoConfResponseModelOriginator, ServicesAutoConfResponseModelService, ServicesAutoConfResponseModelStyle, ServicesAutoConfResponseModelTerritory, ServicesAutoConfResponseModelThematic, ServicesAutoConfResponseModelTileMatrix, ServicesAutoConfResponseModelTileMatrixLimit, ServicesAutoConfResponseModelTileMatrixSet, ServicesGeocodeResponseModelGeocodeResponse, ServicesGeocodeResponseModelGeocodedLocation, ServicesGeocodeResponseModelDirectGeocodedLocation, ServicesGeocodeResponseModelReverseGeocodedLocation, ServicesProcessIsoCurveResponseModelProcessIsoCurveResponse, ServicesRouteResponseModelRouteResponse, ServicesRouteResponseModelRouteInstruction, UtilsHelper, ExceptionsErrorService);
     return Gp;
 }));
 CommonUtilsAutoLoadConfig = function (Gp) {
@@ -13669,7 +13671,7 @@ CommonUtilsConfig = function () {
     };
     return Config;
 }();
-Ol3LayersSourceWMTS = function (ol, Utils, Config, LayerUtils) {
+Ol3LayersSourceWMTS = function (ol, Gp, Utils, Config, LayerUtils) {
     function SourceWMTS(options) {
         if (!(this instanceof SourceWMTS)) {
             throw new TypeError('ERROR CLASS_CONSTRUCTOR');
@@ -13690,7 +13692,7 @@ Ol3LayersSourceWMTS = function (ol, Utils, Config, LayerUtils) {
             this._legends = wmtsParams.legends;
             this._metadata = wmtsParams.metadata;
             var wmtsSourceOptions = {
-                url: wmtsParams.url,
+                url: Gp.Helper.normalyzeUrl(wmtsParams.url, { 'gp-ol3-ext': '0.11.0' }, false),
                 version: wmtsParams.version,
                 style: wmtsParams.styles,
                 format: wmtsParams.format,
@@ -13724,8 +13726,8 @@ Ol3LayersSourceWMTS = function (ol, Utils, Config, LayerUtils) {
     SourceWMTS.prototype = Object.create(ol.source.WMTS.prototype, {});
     SourceWMTS.prototype.constructor = SourceWMTS;
     return SourceWMTS;
-}(ol, Ol3Utils, CommonUtilsConfig, CommonUtilsLayerUtils);
-Ol3LayersSourceWMS = function (ol, Utils, Config) {
+}(ol, gp, Ol3Utils, CommonUtilsConfig, CommonUtilsLayerUtils);
+Ol3LayersSourceWMS = function (ol, Gp, Utils, Config) {
     function SourceWMS(options) {
         if (!(this instanceof SourceWMS)) {
             throw new TypeError('ERROR CLASS_CONSTRUCTOR');
@@ -13743,7 +13745,7 @@ Ol3LayersSourceWMS = function (ol, Utils, Config) {
         if (layerId && Config.configuration.getLayerConf(layerId)) {
             var wmsParams = Config.getLayerParams(options.layer, 'WMS', options.apiKey);
             var wmsSourceOptions = {
-                url: wmsParams.url,
+                url: Gp.Helper.normalyzeUrl(wmsParams.url, { 'gp-ol3-ext': '0.11.0' }, false),
                 params: {
                     SERVICE: 'WMS',
                     LAYERS: options.layer,
@@ -13766,7 +13768,7 @@ Ol3LayersSourceWMS = function (ol, Utils, Config) {
     SourceWMS.prototype = Object.create(ol.source.TileWMS.prototype, {});
     SourceWMS.prototype.constructor = SourceWMS;
     return SourceWMS;
-}(ol, Ol3Utils, CommonUtilsConfig);
+}(ol, gp, Ol3Utils, CommonUtilsConfig);
 Ol3LayersLayerWMTS = function (ol, Utils, Config, LayerUtils, SourceWMTS) {
     function LayerWMTS(options) {
         if (!(this instanceof LayerWMTS)) {
@@ -26255,7 +26257,7 @@ Ol3ControlsMeasuresMeasureAzimuth = function (ol, woodman, Utils, Measures, Meas
 }(ol, {}, Ol3Utils, Ol3ControlsMeasuresMeasures, CommonControlsMeasureAzimuthDOM, CommonUtilsSelectorID);
 Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, KML, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution, MeasureLength, MeasureArea, MeasureAzimuth) {
     Gp.ol3extVersion = '0.11.0';
-    Gp.ol3extDate = '2016-10-12';
+    Gp.ol3extDate = '2016-10-16';
     Gp.LayerUtils = LayerUtils;
     ol.format.KMLExtended = KML;
     CRS.overload();
