@@ -2,19 +2,23 @@
 <html>
 <head>
   <meta content="IE=edge,chrome=1; charset=UTF-8" http-equiv="X-UA-Compatible">
-  <title>sample ol3 measure profil default (amd)</title>
+  <title>sample ol3 measure length default (amd)</title>
 
   <!-- Library OpenLayers 3 -->
   <link rel="stylesheet" href="../../../lib/ol3/ol.css" />
 
   <!-- Plugin OpenLayers 3 IGN -->
   <link rel="stylesheet" href="../../../res/common/GPgeneralWidget.css" />
-  <link rel="stylesheet" href="../../../res/common/GPelevationPath.css" />
+  <link rel="stylesheet" href="../../../res/common/GPmeasureToolTip.css" />
+  <link rel="stylesheet" href="../../../res/common/GPmeasureArea.css" />
+  <link rel="stylesheet" href="../../../res/common/GPmeasureLength.css" />
+  <link rel="stylesheet" href="../../../res/common/GPmeasureAzimuth.css" />
   <link rel="stylesheet" href="../../../res/ol3/GPgeneralWidgetOL3.css" />
-  <link rel="stylesheet" href="../../../res/ol3/Controls/ElevationPath/GPelevationPathOL3.css" />
+  <link rel="stylesheet" href="../../../res/ol3/Controls/Measures/GPmeasureAreaOL3.css" />
+  <link rel="stylesheet" href="../../../res/ol3/Controls/Measures/GPmeasureLengthOL3.css" />
+  <link rel="stylesheet" href="../../../res/ol3/Controls/Measures/GPmeasureAzimuthOL3.css" />
 
   <!-- requirejs -->
-  <script src="lib/amCharts-min.js"></script>
   <script src="../../../lib/require.js"></script>
 
   <!-- load geoportail-waiting image -->
@@ -30,6 +34,9 @@
     height: 500px;
     margin: 10px;
   }
+  div#toolbox {
+    /* TODO */
+  }
   </style>
 </head>
 <body>
@@ -42,7 +49,7 @@
   </h3>
 
   <div>
-    <p>Ajout d'un widget de calcul de profil alti</p>
+    <p>Ajout d'un widget d'import de couches'</p>
 
     <script>
     var map;
@@ -64,13 +71,17 @@
         "ol",
         "gp",
         "Ol3/Layers/LayerWMTS",
-        "Ol3/Controls/ElevationPath"
+        "Ol3/Controls/Measures/MeasureLength",
+        "Ol3/Controls/Measures/MeasureArea",
+        "Ol3/Controls/Measures/MeasureAzimuth"
       ],
       function (
         ol,
         Gp,
         LayerWMTS,
-        ElevationPath
+        MeasureLength,
+        MeasureArea,
+        MeasureAzimuth
       ) {
 
         var map;
@@ -83,61 +94,29 @@
           var osm = new ol.layer.Tile({
             source : new ol.source.OSM()
           });
-
           map = new ol.Map({
             target : "map",
             layers : [
-              new LayerWMTS({
-                  layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS" ,
-              })
+              osm
             ],
             view : new ol.View({
               center : [288074.8449901076, 6247982.515792289],
-              zoom : 12
+              zoom : 6
             })
           });
 
-          var profil = new ElevationPath({
-            collapsed : false,
-            elevationOptions : {
-              // sampling : 50
-            },
-            stylesOptions : {
-              draw : {
-               start : {
-                 strokeColor : "rgba(0, 0, 0, 0.5)",
-                 strokeLineDash : [3, 3],
-                 strokeWidth : 2
-               },
-               pointer : {
-                 imageRadius : 5,
-                 imageFillColor : "rgba(255, 255, 255, 0.2)",
-                 imageStrokeColor : "rgba(0, 0, 0, 0.7)"
-               },
-               finish : {}
-              },
-              marker : {
-                imageSrc : "http://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi.png"
-              },
-              graph : {
-                fontSize : 12,
-                categoryAxis : {
-                  title : "Axix horizontal title"
-                },
-                valueAxes : [{
-                  title : "Axis vertical title",
-                }],
-                graphs : [{
-                  fillAlphas : 1,
-                  fillColors : "#FF00FF",
-                  lineAlpha : 1,
-                  lineColor : "#000000",
-                  lineThickness : 1
-                }]
-              }
-            }
+          var CtrlMeasureArea = new MeasureArea({
+            target : document.getElementById('toolbox')
           });
-          map.addControl(profil);
+          var CtrlMeasureAzimuth = new MeasureAzimuth({
+            target : document.getElementById('toolbox')
+          });
+          var CtrlMeasureLength = new MeasureLength({
+            target : document.getElementById('toolbox')
+          });
+          map.addControl(CtrlMeasureArea);
+          map.addControl(CtrlMeasureAzimuth);
+          map.addControl(CtrlMeasureLength);
 
         };
 
@@ -153,8 +132,9 @@
       </script>
 
       <!-- map -->
-      <div id="map">
-      </div>
+      <div id="map"></div>
+      <div id="toolbox"></div>
+
 
       <!-- Comment utiliser le plugin avec un exemple -->
       <p>EXEMPLE D'UTILISATION</p>

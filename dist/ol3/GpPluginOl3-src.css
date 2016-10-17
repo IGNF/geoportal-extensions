@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-10-14
+ * @date 2016-10-17
  *
  */
 /* MOUSE POSITION */
@@ -2966,6 +2966,98 @@ div[id^=GPisochronReset] {
   background-image: url("img/GPisochronOptions.png");
 }
 
+/* LAYER SWITCHER OL3 */
+
+#GPlayerSwitcher {
+  top: 8px;
+  right: 8px;
+}
+
+/* Showing/hiding layers list */
+
+#GPshowLayersListPicto {
+  width: 38px;
+  height: 38px;
+}
+
+#GPshowLayersListOpen,
+#GPshowLayersListClose {
+  top: 3px;
+  left: 3px;
+  width: 32px;
+  height: 32px;
+  background-image: url("img/GPshowLayersList.png");
+}
+
+#GPshowLayersListClose {
+  background-position: -32px 0;
+}
+
+
+#GPlayerSwitcher input[type="checkbox"]:checked + div + #GPshowLayersListPicto #GPshowLayersListOpen {
+  opacity: 0.7;
+}
+
+#GPlayerSwitcher input[type="checkbox"]:checked + div + #GPshowLayersListPicto #GPshowLayersListClose {
+  background-color: rgba(0,60,136,0.3);
+}
+
+#GPlayerSwitcher input[type="checkbox"]:checked + div + #GPshowLayersListPicto:hover #GPshowLayersListClose {
+  background-color: rgba(0,60,136,0.4);
+}
+
+/* Layers list */
+
+.GPlayerVisibility,
+.GPshowLayerAdvancedTools,
+.GPlayerInfo,
+.GPlayerInfoOpened,
+.GPlayerRemove {
+  background-image: url("img/GPlayerTools.png");
+}
+
+/* Opacity slider : Chrome, Safari, Opera */
+
+.GPlayerOpacity input[type="range"]::-webkit-slider-runnable-track {
+  background: url("img/GPopacitySlider.png");
+}
+
+/* Opacity slider : Firefox */
+
+.GPlayerOpacity input[type="range"]::-moz-range-track {
+  background: url("img/GPopacitySlider.png");
+}
+
+/* Opacity slider : IE */
+
+.GPlayerOpacity input[type="range"]::-ms-track {
+  background: url("img/GPopacitySlider.png");
+}
+
+/* Layer info panel */
+
+#GPlayerInfoPanel {
+  right: 190px;
+}
+
+#GPlayerInfoTitle {
+  color: #366291;
+  border-bottom: 1px solid #366291;
+}
+
+#GPlayerInfoQuicklook {
+  background-image: url("img/GPlayerInfo.png");
+}
+
+#GPlayerInfoClose {
+  background-image: url("img/GPlayerInfoClose.png");
+}
+
+.GPlayerInfoLink,
+.GPlayerInfoPopup {
+  background-image: url("img/GPlayerInfo.png");
+}
+
 /* Layer Import */
 
 div[id^="GPimport-"] {
@@ -3195,98 +3287,6 @@ div[id^="GPimportGetCapResults-"] {
 .GPimportGetCapProposal:hover {
   color: #000000;
   background-color: #CEDBEF
-}
-
-/* LAYER SWITCHER OL3 */
-
-#GPlayerSwitcher {
-  top: 8px;
-  right: 8px;
-}
-
-/* Showing/hiding layers list */
-
-#GPshowLayersListPicto {
-  width: 38px;
-  height: 38px;
-}
-
-#GPshowLayersListOpen,
-#GPshowLayersListClose {
-  top: 3px;
-  left: 3px;
-  width: 32px;
-  height: 32px;
-  background-image: url("img/GPshowLayersList.png");
-}
-
-#GPshowLayersListClose {
-  background-position: -32px 0;
-}
-
-
-#GPlayerSwitcher input[type="checkbox"]:checked + div + #GPshowLayersListPicto #GPshowLayersListOpen {
-  opacity: 0.7;
-}
-
-#GPlayerSwitcher input[type="checkbox"]:checked + div + #GPshowLayersListPicto #GPshowLayersListClose {
-  background-color: rgba(0,60,136,0.3);
-}
-
-#GPlayerSwitcher input[type="checkbox"]:checked + div + #GPshowLayersListPicto:hover #GPshowLayersListClose {
-  background-color: rgba(0,60,136,0.4);
-}
-
-/* Layers list */
-
-.GPlayerVisibility,
-.GPshowLayerAdvancedTools,
-.GPlayerInfo,
-.GPlayerInfoOpened,
-.GPlayerRemove {
-  background-image: url("img/GPlayerTools.png");
-}
-
-/* Opacity slider : Chrome, Safari, Opera */
-
-.GPlayerOpacity input[type="range"]::-webkit-slider-runnable-track {
-  background: url("img/GPopacitySlider.png");
-}
-
-/* Opacity slider : Firefox */
-
-.GPlayerOpacity input[type="range"]::-moz-range-track {
-  background: url("img/GPopacitySlider.png");
-}
-
-/* Opacity slider : IE */
-
-.GPlayerOpacity input[type="range"]::-ms-track {
-  background: url("img/GPopacitySlider.png");
-}
-
-/* Layer info panel */
-
-#GPlayerInfoPanel {
-  right: 190px;
-}
-
-#GPlayerInfoTitle {
-  color: #366291;
-  border-bottom: 1px solid #366291;
-}
-
-#GPlayerInfoQuicklook {
-  background-image: url("img/GPlayerInfo.png");
-}
-
-#GPlayerInfoClose {
-  background-image: url("img/GPlayerInfoClose.png");
-}
-
-.GPlayerInfoLink,
-.GPlayerInfoPopup {
-  background-image: url("img/GPlayerInfo.png");
 }
 
 /* Location */

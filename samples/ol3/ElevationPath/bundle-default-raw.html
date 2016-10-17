@@ -10,7 +10,6 @@
   <!-- Plugin OpenLayers 3 IGN -->
   <link rel="stylesheet" href="../../../dist/ol3/GpPluginOl3-src.css" />
   <script src="../../../dist/ol3/GpPluginOl3-src.js" data-url="./../resources/AutoConf.js"></script>
-  <script src="lib/amCharts-min.js"></script>
 
   <!-- load geoportail-waiting image -->
   <style>
@@ -49,7 +48,7 @@
     });
 
     var profil = new ol.control.ElevationPath({
-      displayProfileFunction : ol.control.ElevationPath.DISPLAY_PROFILE_LIB_AMCHARTS
+      displayProfileFunction : ol.control.ElevationPath.DISPLAY_PROFILE_RAW
     });
     map.addControl(profil);
 

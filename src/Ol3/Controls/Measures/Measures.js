@@ -478,7 +478,7 @@ define([
                 style : this.options.styles.start || this.measureStyle
             });
             this.measureDraw.setProperties({
-                source : this.CLASSNAME
+                source : "Measure"
             });
             map.addInteraction(this.measureDraw);
 

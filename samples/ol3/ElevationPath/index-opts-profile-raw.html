@@ -96,9 +96,11 @@
 
           var profil = new ElevationPath({
             collapsed : true,
+            debug : true,
             elevationOptions : {
               sampling : 50
-            }
+            },
+            displayProfileFunction : ElevationPath.DISPLAY_PROFILE_RAW
           });
           map.addControl(profil);
 
