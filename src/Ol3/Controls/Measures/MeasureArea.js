@@ -4,6 +4,7 @@ define([
     "Ol3/Utils",
     "Ol3/Controls/Measures/Measures",
     "Common/Controls/MeasureAreaDOM",
+    "Common/Controls/MeasureToolBoxDOM",
     "Common/Utils/SelectorID"
 ], function (
     ol,
@@ -11,6 +12,7 @@ define([
     Utils,
     Measures,
     MeasureAreaDOM,
+    MeasureToolBoxDOM,
     ID
 ) {
 
@@ -117,6 +119,7 @@ define([
     // de "Measures".
     Utils.assign(MeasureArea.prototype, Measures);
     Utils.assign(MeasureArea.prototype, MeasureAreaDOM);
+    Utils.assign(MeasureArea.prototype, MeasureToolBoxDOM);
 
     /**
      * Constructor (alias)
@@ -159,6 +162,20 @@ define([
             //     logger.trace("event on map with pointermove!");
             //     self.onPointerMoveHandler(e);
             // });
+
+            var toolboxId = this.getToolBoxID();
+            var widgetId  = this.getWidgetID();
+            var mapContainer = map.getTargetElement();
+            var mapDocument  = mapContainer.ownerDocument;
+
+            if (! mapDocument.getElementById(toolboxId)) {
+                // creation et ajout de la toolbox sur la map
+                var toolboxContainer = this._createToolBoxContainerElement();
+                mapContainer.appendChild(toolboxContainer);
+            }
+            // ajout du widget dans la toolbox
+            var widgetContainer = mapDocument.getElementById(widgetId);
+            this.setTarget(widgetContainer);
         }
 
         // on appelle la méthode setMap originale d'OpenLayers

@@ -2,24 +2,19 @@
 <html>
 <head>
   <meta content="IE=edge,chrome=1; charset=UTF-8" http-equiv="X-UA-Compatible">
-  <title>sample ol3 measure length default (amd)</title>
+  <title>sample ol3 measure profil default (amd)</title>
 
   <!-- Library OpenLayers 3 -->
   <link rel="stylesheet" href="../../../lib/ol3/ol.css" />
 
   <!-- Plugin OpenLayers 3 IGN -->
   <link rel="stylesheet" href="../../../res/common/GPgeneralWidget.css" />
-  <link rel="stylesheet" href="../../../res/common/GPmeasureToolBox.css" />
-  <link rel="stylesheet" href="../../../res/common/GPmeasureToolTip.css" />
-  <link rel="stylesheet" href="../../../res/common/GPmeasureArea.css" />
-  <link rel="stylesheet" href="../../../res/common/GPmeasureLength.css" />
-  <link rel="stylesheet" href="../../../res/common/GPmeasureAzimuth.css" />
+  <link rel="stylesheet" href="../../../res/common/GPelevationPath.css" />
   <link rel="stylesheet" href="../../../res/ol3/GPgeneralWidgetOL3.css" />
-  <link rel="stylesheet" href="../../../res/ol3/Controls/Measures/GPmeasureAreaOL3.css" />
-  <link rel="stylesheet" href="../../../res/ol3/Controls/Measures/GPmeasureLengthOL3.css" />
-  <link rel="stylesheet" href="../../../res/ol3/Controls/Measures/GPmeasureAzimuthOL3.css" />
+  <link rel="stylesheet" href="../../../res/ol3/Controls/ElevationPath/GPelevationPathOL3.css" />
 
   <!-- requirejs -->
+  <script src="lib/amCharts-min.js"></script>
   <script src="../../../lib/require.js"></script>
 
   <!-- load geoportail-waiting image -->
@@ -35,7 +30,6 @@
     height: 500px;
     margin: 10px;
   }
-
   </style>
 </head>
 <body>
@@ -48,7 +42,7 @@
   </h3>
 
   <div>
-    <p>Ajout d'un widget d'import de couches'</p>
+    <p>Ajout d'un widget de calcul de profil alti</p>
 
     <script>
     var map;
@@ -70,17 +64,13 @@
         "ol",
         "gp",
         "Ol3/Layers/LayerWMTS",
-        "Ol3/Controls/Measures/MeasureLength",
-        "Ol3/Controls/Measures/MeasureArea",
-        "Ol3/Controls/Measures/MeasureAzimuth"
+        "Ol3/Controls/ElevationPath"
       ],
       function (
         ol,
         Gp,
         LayerWMTS,
-        MeasureLength,
-        MeasureArea,
-        MeasureAzimuth
+        ElevationPath
       ) {
 
         var map;
@@ -93,23 +83,62 @@
           var osm = new ol.layer.Tile({
             source : new ol.source.OSM()
           });
+
           map = new ol.Map({
             target : "map",
             layers : [
-              osm
+              new LayerWMTS({
+                  layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS" ,
+              })
             ],
             view : new ol.View({
               center : [288074.8449901076, 6247982.515792289],
-              zoom : 6
+              zoom : 12
             })
           });
 
-          var CtrlMeasureArea = new MeasureArea();
-          var CtrlMeasureAzimuth = new MeasureAzimuth();
-          var CtrlMeasureLength = new MeasureLength();
-          map.addControl(CtrlMeasureArea);
-          map.addControl(CtrlMeasureAzimuth);
-          map.addControl(CtrlMeasureLength);
+          var profil = new ElevationPath({
+            collapsed : false,
+            elevationOptions : {
+              // sampling : 50
+            },
+            displayProfileFunction : ElevationPath.DISPLAY_PROFILE_LIB_AMCHARTS,
+            stylesOptions : {
+              draw : {
+               start : {
+                 strokeColor : "rgba(0, 0, 0, 0.5)",
+                 strokeLineDash : [3, 3],
+                 strokeWidth : 2
+               },
+               pointer : {
+                 imageRadius : 5,
+                 imageFillColor : "rgba(255, 255, 255, 0.2)",
+                 imageStrokeColor : "rgba(0, 0, 0, 0.7)"
+               },
+               finish : {}
+              },
+              marker : {
+                imageSrc : "http://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi.png"
+              },
+              profile : {
+                fontSize : 12,
+                categoryAxis : {
+                  title : "Axix horizontal title"
+                },
+                valueAxes : [{
+                  title : "Axis vertical title",
+                }],
+                graphs : [{
+                  fillAlphas : 1,
+                  fillColors : "#FF00FF",
+                  lineAlpha : 1,
+                  lineColor : "#000000",
+                  lineThickness : 1
+                }]
+              }
+            }
+          });
+          map.addControl(profil);
 
         };
 
@@ -125,7 +154,8 @@
       </script>
 
       <!-- map -->
-      <div id="map"></div>
+      <div id="map">
+      </div>
 
       <!-- Comment utiliser le plugin avec un exemple -->
       <p>EXEMPLE D'UTILISATION</p>
