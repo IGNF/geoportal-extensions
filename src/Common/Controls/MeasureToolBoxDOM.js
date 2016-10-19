@@ -4,12 +4,18 @@ define([], function () {
 
     var MeasureToolBoxDOM = {
 
-        _toolboxId : "GPtoolbox-measure",
-        _widgetId : "GPtoolbox-measure-content",
+        _toolboxId : "GPtoolbox-measure-main",
+        _buttonId : "GPtoolbox-measure-button",
+        _widgetId : "GPtoolbox-measure-widget",
 
         /** get toolBox ID */
         getToolBoxID : function () {
             return this._toolboxId;
+        },
+
+        /** get toolBox ID */
+        getButtonID : function () {
+            return this._buttonId;
         },
 
         /** get toolBox Container for widget */
@@ -24,9 +30,9 @@ define([], function () {
         */
         _createToolBoxContainerElement : function () {
 
-            // <div id="GPtoolbox-measure">
-            //   <button id="GPtoolbox-measure-btn">&#9776;</button>
-            //   <div id="GPtoolbox-measure-content">
+            // <div id="GPtoolbox-measure-main">
+            //   <button id="GPtoolbox-measure-button">&#9776;</button>
+            //   <div id="GPtoolbox-measure-widget">
             //     <!-- HERE : widgets tools measures -->
             //   </div>
             // </div>
@@ -34,7 +40,7 @@ define([], function () {
             container.id  = this._toolboxId;
 
             var button = document.createElement("button");
-            button.id = "GPtoolbox-measure-btn";
+            button.id = this._buttonId;
             button.innerHTML = "&#9776;";
             container.appendChild(button);
 

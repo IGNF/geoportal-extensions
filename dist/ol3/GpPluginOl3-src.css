@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-10-17
+ * @date 2016-10-19
  *
  */
 /* MOUSE POSITION */
@@ -1124,6 +1124,50 @@ input[id^=GPshowMeasureLength-] + label + div {
 
 input[id^=GPshowMeasureLength-]:checked + label + div {
   display: block;
+}
+
+#GPtoolbox-measure-main {
+  float: left;
+  position: absolute;
+  display: inline-block;
+  top: 265px;
+  left: 10px;
+  z-index: 1;
+}
+
+#GPtoolbox-measure-button {
+  color: white;
+  border: none;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  background-color: rgba(0,60,136,0.5);
+  border-radius: 4px;
+}
+
+#GPtoolbox-measure-widget {
+  left:auto;
+  display: none;
+  position: absolute;
+  /*right: 0;*/
+  border-radius: 2px;
+  background-color: #f9f9f9;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+#GPtoolbox-measure-widget div {
+  display: block;
+  position: relative;
+  top: auto;
+  left: auto;
+}
+
+#GPtoolbox-measure-main:hover #GPtoolbox-measure-widget {
+    display: block;
+}
+
+#GPtoolbox-measure-main:hover #GPtoolbox-measure-button {
+    background-color: rgba(0,60,136,0.7);
 }
 
 /* MEASURE TOOL */
@@ -2966,98 +3010,6 @@ div[id^=GPisochronReset] {
   background-image: url("img/GPisochronOptions.png");
 }
 
-/* LAYER SWITCHER OL3 */
-
-#GPlayerSwitcher {
-  top: 8px;
-  right: 8px;
-}
-
-/* Showing/hiding layers list */
-
-#GPshowLayersListPicto {
-  width: 38px;
-  height: 38px;
-}
-
-#GPshowLayersListOpen,
-#GPshowLayersListClose {
-  top: 3px;
-  left: 3px;
-  width: 32px;
-  height: 32px;
-  background-image: url("img/GPshowLayersList.png");
-}
-
-#GPshowLayersListClose {
-  background-position: -32px 0;
-}
-
-
-#GPlayerSwitcher input[type="checkbox"]:checked + div + #GPshowLayersListPicto #GPshowLayersListOpen {
-  opacity: 0.7;
-}
-
-#GPlayerSwitcher input[type="checkbox"]:checked + div + #GPshowLayersListPicto #GPshowLayersListClose {
-  background-color: rgba(0,60,136,0.3);
-}
-
-#GPlayerSwitcher input[type="checkbox"]:checked + div + #GPshowLayersListPicto:hover #GPshowLayersListClose {
-  background-color: rgba(0,60,136,0.4);
-}
-
-/* Layers list */
-
-.GPlayerVisibility,
-.GPshowLayerAdvancedTools,
-.GPlayerInfo,
-.GPlayerInfoOpened,
-.GPlayerRemove {
-  background-image: url("img/GPlayerTools.png");
-}
-
-/* Opacity slider : Chrome, Safari, Opera */
-
-.GPlayerOpacity input[type="range"]::-webkit-slider-runnable-track {
-  background: url("img/GPopacitySlider.png");
-}
-
-/* Opacity slider : Firefox */
-
-.GPlayerOpacity input[type="range"]::-moz-range-track {
-  background: url("img/GPopacitySlider.png");
-}
-
-/* Opacity slider : IE */
-
-.GPlayerOpacity input[type="range"]::-ms-track {
-  background: url("img/GPopacitySlider.png");
-}
-
-/* Layer info panel */
-
-#GPlayerInfoPanel {
-  right: 190px;
-}
-
-#GPlayerInfoTitle {
-  color: #366291;
-  border-bottom: 1px solid #366291;
-}
-
-#GPlayerInfoQuicklook {
-  background-image: url("img/GPlayerInfo.png");
-}
-
-#GPlayerInfoClose {
-  background-image: url("img/GPlayerInfoClose.png");
-}
-
-.GPlayerInfoLink,
-.GPlayerInfoPopup {
-  background-image: url("img/GPlayerInfo.png");
-}
-
 /* Layer Import */
 
 div[id^="GPimport-"] {
@@ -3287,6 +3239,98 @@ div[id^="GPimportGetCapResults-"] {
 .GPimportGetCapProposal:hover {
   color: #000000;
   background-color: #CEDBEF
+}
+
+/* LAYER SWITCHER OL3 */
+
+#GPlayerSwitcher {
+  top: 8px;
+  right: 8px;
+}
+
+/* Showing/hiding layers list */
+
+#GPshowLayersListPicto {
+  width: 38px;
+  height: 38px;
+}
+
+#GPshowLayersListOpen,
+#GPshowLayersListClose {
+  top: 3px;
+  left: 3px;
+  width: 32px;
+  height: 32px;
+  background-image: url("img/GPshowLayersList.png");
+}
+
+#GPshowLayersListClose {
+  background-position: -32px 0;
+}
+
+
+#GPlayerSwitcher input[type="checkbox"]:checked + div + #GPshowLayersListPicto #GPshowLayersListOpen {
+  opacity: 0.7;
+}
+
+#GPlayerSwitcher input[type="checkbox"]:checked + div + #GPshowLayersListPicto #GPshowLayersListClose {
+  background-color: rgba(0,60,136,0.3);
+}
+
+#GPlayerSwitcher input[type="checkbox"]:checked + div + #GPshowLayersListPicto:hover #GPshowLayersListClose {
+  background-color: rgba(0,60,136,0.4);
+}
+
+/* Layers list */
+
+.GPlayerVisibility,
+.GPshowLayerAdvancedTools,
+.GPlayerInfo,
+.GPlayerInfoOpened,
+.GPlayerRemove {
+  background-image: url("img/GPlayerTools.png");
+}
+
+/* Opacity slider : Chrome, Safari, Opera */
+
+.GPlayerOpacity input[type="range"]::-webkit-slider-runnable-track {
+  background: url("img/GPopacitySlider.png");
+}
+
+/* Opacity slider : Firefox */
+
+.GPlayerOpacity input[type="range"]::-moz-range-track {
+  background: url("img/GPopacitySlider.png");
+}
+
+/* Opacity slider : IE */
+
+.GPlayerOpacity input[type="range"]::-ms-track {
+  background: url("img/GPopacitySlider.png");
+}
+
+/* Layer info panel */
+
+#GPlayerInfoPanel {
+  right: 190px;
+}
+
+#GPlayerInfoTitle {
+  color: #366291;
+  border-bottom: 1px solid #366291;
+}
+
+#GPlayerInfoQuicklook {
+  background-image: url("img/GPlayerInfo.png");
+}
+
+#GPlayerInfoClose {
+  background-image: url("img/GPlayerInfoClose.png");
+}
+
+.GPlayerInfoLink,
+.GPlayerInfoPopup {
+  background-image: url("img/GPlayerInfo.png");
 }
 
 /* Location */

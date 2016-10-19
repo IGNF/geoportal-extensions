@@ -1,13 +1,13 @@
-#GPtoolbox-measure {
+#GPtoolbox-measure-main {
   float: left;
-  position: relative;
+  position: absolute;
   display: inline-block;
-  top: 100px;
-  left: 8px;
+  top: 265px;
+  left: 10px;
   z-index: 1;
 }
 
-#GPtoolbox-measure-btn {
+#GPtoolbox-measure-button {
   color: white;
   border: none;
   cursor: pointer;
@@ -17,7 +17,7 @@
   border-radius: 4px;
 }
 
-#GPtoolbox-measure-content {
+#GPtoolbox-measure-widget {
   left:auto;
   display: none;
   position: absolute;
@@ -27,17 +27,17 @@
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
-#GPtoolbox-measure-content div {
+#GPtoolbox-measure-widget div {
   display: block;
   position: relative;
   top: auto;
   left: auto;
 }
 
-#GPtoolbox-measure:hover #GPtoolbox-measure-content {
+#GPtoolbox-measure-main:hover #GPtoolbox-measure-widget {
     display: block;
 }
 
-#GPtoolbox-measure:hover #GPtoolbox-measure-btn {
+#GPtoolbox-measure-main:hover #GPtoolbox-measure-button {
     background-color: rgba(0,60,136,0.7);
 }

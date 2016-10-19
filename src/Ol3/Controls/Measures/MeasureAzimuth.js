@@ -2,17 +2,17 @@ define([
     "ol",
     "woodman",
     "Ol3/Utils",
+    "Ol3/Controls/MeasureToolBox",
     "Ol3/Controls/Measures/Measures",
     "Common/Controls/MeasureAzimuthDOM",
-    "Common/Controls/MeasureToolBoxDOM",
     "Common/Utils/SelectorID"
 ], function (
     ol,
     woodman,
     Utils,
+    MeasureToolBox,
     Measures,
     MeasureAzimuthDOM,
-    MeasureToolBoxDOM,
     ID
 ) {
 
@@ -117,7 +117,6 @@ define([
     // de "Measures".
     Utils.assign(MeasureAzimuth.prototype, Measures);
     Utils.assign(MeasureAzimuth.prototype, MeasureAzimuthDOM);
-    Utils.assign(MeasureAzimuth.prototype, MeasureToolBoxDOM);
 
     /**
      * Constructor (alias)
@@ -161,19 +160,9 @@ define([
             //     self.onPointerMoveAzimutHandler(e);
             // });
 
-            var toolboxId = this.getToolBoxID();
-            var widgetId  = this.getWidgetID();
-            var mapContainer = map.getTargetElement();
-            var mapDocument  = mapContainer.ownerDocument;
-
-            if (! mapDocument.getElementById(toolboxId)) {
-                // creation et ajout de la toolbox sur la map
-                var toolboxContainer = this._createToolBoxContainerElement();
-                mapContainer.appendChild(toolboxContainer);
+            if (! this.options.target) {
+                MeasureToolBox.add(map, this);
             }
-            // ajout du widget dans la toolbox
-            var widgetContainer = mapDocument.getElementById(widgetId);
-            this.setTarget(widgetContainer);
         }
 
         // on appelle la méthode setMap originale d'OpenLayers
@@ -195,7 +184,9 @@ define([
 
         // liste des options
         this.options = {};
-
+        this.options.target   = ( typeof options.target !== "undefined" ) ? options.target : null;
+        this.options.render   = ( typeof options.render !== "undefined" ) ? options.render : null;
+        
         // gestion des styles !
         this.createStylingMeasureInteraction(options.styles);
 
@@ -306,6 +297,7 @@ define([
 
     /**
     * Handle pointer click.
+    *
     * @param {ol.MapBrowserEvent} e - The event.
     * @private
     */

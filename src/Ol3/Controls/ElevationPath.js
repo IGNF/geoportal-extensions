@@ -5,6 +5,7 @@ define([
     "gp",
     "Ol3/Utils",
     "Common/Utils/CheckRightManagement",
+    "Ol3/Controls/MeasureToolBox",
     "Common/Controls/ElevationPathDOM",
     "Common/Utils/SelectorID"
 ], function (
@@ -13,6 +14,7 @@ define([
     Gp,
     Utils,
     RightManagement,
+    MeasureToolBox,
     ElevationPathDOM,
     ID
 ) {
@@ -170,7 +172,9 @@ define([
     // on récupère les mixins de la classe "ElevationPathDOM"
     Utils.assign(ElevationPath.prototype, ElevationPathDOM);
 
-    /** TODO display Profile with Amcharts
+    /**
+    * display Profile with Amcharts
+    *
     * @param {Object} data - collection elevations
     * @param {HTMLElement} container - container
     * @param {Object} context - context
@@ -225,7 +229,9 @@ define([
         });
     };
 
-    /** display Profile with D3
+    /**
+    * display Profile with D3
+    *
     * @param {Object} data - collection elevations
     * @param {HTMLElement} container - container
     * @param {Object} context - context
@@ -488,7 +494,9 @@ define([
         self._profile = d3.selectAll("rect.overlay")[0][0];
     };
 
-    /** display Profile without graphical lib (raw)
+    /**
+    * display Profile without graphical lib (raw)
+    *
     * @param {Object} data - collection elevations
     * @param {HTMLElement} container - container
     * @param {Object} context - context
@@ -552,8 +560,9 @@ define([
         }
     };
 
-    /** TODO
-    * display Profile by default
+    /**
+    * TODO display Profile by default
+    *
     * @param {Object} data - collection elevations
     * @param {HTMLElement} container - container
     * @param {Object} context - context
@@ -694,9 +703,6 @@ define([
     ElevationPath.prototype.setMap = function (map) {
         logger.trace("ElevationPath::setMap");
 
-        // on appelle la méthode setMap originale d'OpenLayers
-        ol.control.Control.prototype.setMap.call(this, map);
-
         if ( map ) {
             // activation des interactions de dessin selon la valeur de
             // l'option collapsed
@@ -708,7 +714,15 @@ define([
                 this._initMeasureInteraction();
                 this._addMeasureInteraction();
             }
+
+            // ajout du composant dans une toolbox
+            // if (! this.options.target) {
+            //     MeasureToolBox.add(map, this);
+            // }
         }
+
+        // on appelle la méthode setMap originale d'OpenLayers
+        ol.control.Control.prototype.setMap.call(this, map);
 
     };
 
@@ -782,6 +796,9 @@ define([
 
         // liste des options
         this.options = {};
+
+        this.options.target   = ( typeof options.target !== "undefined" ) ? options.target : null;
+        this.options.render   = ( typeof options.render !== "undefined" ) ? options.render : null;
 
         // cle API sur le service
         this.options.apiKey = options.apiKey;

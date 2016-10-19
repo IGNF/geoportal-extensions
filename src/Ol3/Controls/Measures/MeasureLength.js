@@ -2,17 +2,17 @@ define([
     "ol",
     "woodman",
     "Ol3/Utils",
+    "Ol3/Controls/MeasureToolBox",
     "Ol3/Controls/Measures/Measures",
     "Common/Controls/MeasureLengthDOM",
-    "Common/Controls/MeasureToolBoxDOM",
     "Common/Utils/SelectorID"
 ], function (
     ol,
     woodman,
     Utils,
+    MeasureToolBox,
     Measures,
     MeasureLengthDOM,
-    MeasureToolBoxDOM,
     ID
 ) {
 
@@ -119,7 +119,6 @@ define([
     // de "Measures".
     Utils.assign(MeasureLength.prototype, Measures);
     Utils.assign(MeasureLength.prototype, MeasureLengthDOM);
-    Utils.assign(MeasureLength.prototype, MeasureToolBoxDOM);
 
     /**
      * Constructor (alias)
@@ -163,19 +162,9 @@ define([
             //     self.onPointerMoveHandler(e);
             // });
 
-            var toolboxId = this.getToolBoxID();
-            var widgetId  = this.getWidgetID();
-            var mapContainer = map.getTargetElement();
-            var mapDocument  = mapContainer.ownerDocument;
-
-            if (! mapDocument.getElementById(toolboxId)) {
-                // creation et ajout de la toolbox sur la map
-                var toolboxContainer = this._createToolBoxContainerElement();
-                mapContainer.appendChild(toolboxContainer);
+            if (! this.options.target) {
+                MeasureToolBox.add(map, this);
             }
-            // ajout du widget dans la toolbox
-            var widgetContainer = mapDocument.getElementById(widgetId);
-            this.setTarget(widgetContainer);
 
         }
 
@@ -199,7 +188,9 @@ define([
         // liste des options
         this.options = {};
         this.options.geodesic = ( typeof options.geodesic !== "undefined" ) ? options.geodesic : true;
-
+        this.options.target   = ( typeof options.target !== "undefined" ) ? options.target : null;
+        this.options.render   = ( typeof options.render !== "undefined" ) ? options.render : null;
+        
         // gestion des styles !
         this.createStylingMeasureInteraction(options.styles);
 

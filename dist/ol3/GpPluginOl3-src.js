@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-10-17
+ * @date 2016-10-19
  *
  */
 /*!
@@ -90,7 +90,7 @@
   }
 }(this, function(ol) {
 
-var gp, CommonUtilsAutoLoadConfig, CommonUtilsLayerUtils, proj4, CommonUtilsRegister, Ol3FormatsKML, Ol3CRSCRS, Ol3Utils, CommonUtilsConfig, Ol3LayersSourceWMTS, Ol3LayersSourceWMS, Ol3LayersLayerWMTS, Ol3LayersLayerWMS, sortable, CommonControlsLayerSwitcherDOM, Ol3ControlsLayerSwitcher, Ol3ControlsUtilsMarkers, CommonUtilsCheckRightManagement, CommonUtilsSelectorID, CommonControlsSearchEngineDOM, CommonControlsSearchEngineUtils, Ol3ControlsSearchEngine, CommonControlsMousePositionDOM, Ol3ControlsMousePosition, CommonControlsDrawingDOM, Ol3ControlsDrawing, CommonControlsLocationSelectorDOM, Ol3ControlsLocationSelector, CommonControlsRouteDOM, Ol3ControlsRoute, CommonControlsIsoDOM, Ol3ControlsIsocurve, CommonControlsReverseGeocodingDOM, Ol3ControlsReverseGeocode, CommonControlsLayerImportDOM, Ol3ControlsLayerImport, Ol3ControlsGeoportalAttribution, CommonControlsElevationPathDOM, Ol3ControlsElevationPath, Ol3ControlsMeasuresMeasures, CommonControlsMeasureLengthDOM, Ol3ControlsMeasuresMeasureLength, CommonControlsMeasureAreaDOM, Ol3ControlsMeasuresMeasureArea, CommonControlsMeasureAzimuthDOM, Ol3ControlsMeasuresMeasureAzimuth, Ol3GpPluginOl3;
+var gp, CommonUtilsAutoLoadConfig, CommonUtilsLayerUtils, proj4, CommonUtilsRegister, Ol3FormatsKML, Ol3CRSCRS, Ol3Utils, CommonUtilsConfig, Ol3LayersSourceWMTS, Ol3LayersSourceWMS, Ol3LayersLayerWMTS, Ol3LayersLayerWMS, sortable, CommonControlsLayerSwitcherDOM, Ol3ControlsLayerSwitcher, Ol3ControlsUtilsMarkers, CommonUtilsCheckRightManagement, CommonUtilsSelectorID, CommonControlsSearchEngineDOM, CommonControlsSearchEngineUtils, Ol3ControlsSearchEngine, CommonControlsMousePositionDOM, Ol3ControlsMousePosition, CommonControlsDrawingDOM, Ol3ControlsDrawing, CommonControlsLocationSelectorDOM, Ol3ControlsLocationSelector, CommonControlsRouteDOM, Ol3ControlsRoute, CommonControlsIsoDOM, Ol3ControlsIsocurve, CommonControlsReverseGeocodingDOM, Ol3ControlsReverseGeocode, CommonControlsLayerImportDOM, Ol3ControlsLayerImport, Ol3ControlsGeoportalAttribution, CommonControlsMeasureToolBoxDOM, Ol3ControlsMeasureToolBox, CommonControlsElevationPathDOM, Ol3ControlsElevationPath, Ol3ControlsMeasuresMeasures, CommonControlsMeasureLengthDOM, Ol3ControlsMeasuresMeasureLength, CommonControlsMeasureAreaDOM, Ol3ControlsMeasuresMeasureArea, CommonControlsMeasureAzimuthDOM, Ol3ControlsMeasuresMeasureAzimuth, Ol3GpPluginOl3;
 (function (root, factory) {
     if (true) {
         gp = function () {
@@ -25508,6 +25508,55 @@ Ol3ControlsGeoportalAttribution = function (ol, LayerUtils) {
     };
     return GeoportalAttribution;
 }(ol, CommonUtilsLayerUtils);
+CommonControlsMeasureToolBoxDOM = function () {
+    var MeasureToolBoxDOM = {
+        _toolboxId: 'GPtoolbox-measure-main',
+        _buttonId: 'GPtoolbox-measure-button',
+        _widgetId: 'GPtoolbox-measure-widget',
+        getToolBoxID: function () {
+            return this._toolboxId;
+        },
+        getButtonID: function () {
+            return this._buttonId;
+        },
+        getWidgetID: function () {
+            return this._widgetId;
+        },
+        _createToolBoxContainerElement: function () {
+            var container = document.createElement('div');
+            container.id = this._toolboxId;
+            var button = document.createElement('button');
+            button.id = this._buttonId;
+            button.innerHTML = '&#9776;';
+            container.appendChild(button);
+            var widget = document.createElement('div');
+            widget.id = this._widgetId;
+            container.appendChild(widget);
+            return container;
+        }
+    };
+    return MeasureToolBoxDOM;
+}();
+Ol3ControlsMeasureToolBox = function (ol, woodman, Utils, MeasureToolBoxDOM) {
+    var MeasureToolBox = {
+        add: function (map, ctrl) {
+            if (!map) {
+                return;
+            }
+            var mapContainer = map.getTargetElement();
+            var mapDocument = mapContainer.ownerDocument;
+            if (!mapDocument.getElementById(this.getToolBoxID())) {
+                var toolboxContainer = this._createToolBoxContainerElement();
+                var overlaysContainer = mapDocument.getElementsByClassName('ol-overlaycontainer-stopevent');
+                overlaysContainer[0].appendChild(toolboxContainer);
+            }
+            var widgetContainer = mapDocument.getElementById(this.getWidgetID());
+            ctrl.setTarget(widgetContainer);
+        }
+    };
+    Utils.assign(MeasureToolBox, MeasureToolBoxDOM);
+    return MeasureToolBox;
+}(ol, {}, Ol3Utils, CommonControlsMeasureToolBoxDOM);
 CommonControlsElevationPathDOM = function () {
     var ElevationPathDOM = {
         _addUID: function (id) {
@@ -25615,7 +25664,7 @@ CommonControlsElevationPathDOM = function () {
     };
     return ElevationPathDOM;
 }();
-Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, ElevationPathDOM, ID) {
+Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, MeasureToolBox, ElevationPathDOM, ID) {
     function ElevationPath(options) {
         options = options || {};
         if (!(this instanceof ElevationPath)) {
@@ -25946,7 +25995,6 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, El
     };
     ElevationPath.prototype.constructor = ElevationPath;
     ElevationPath.prototype.setMap = function (map) {
-        ol.control.Control.prototype.setMap.call(this, map);
         if (map) {
             if (!this.options.collapsed) {
                 if (this._profile === null) {
@@ -25956,6 +26004,7 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, El
                 this._addMeasureInteraction();
             }
         }
+        ol.control.Control.prototype.setMap.call(this, map);
     };
     ElevationPath.prototype.getCollapsed = function () {
         return this.options.collapsed;
@@ -25984,6 +26033,8 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, El
     };
     ElevationPath.prototype._initialize = function (options) {
         this.options = {};
+        this.options.target = typeof options.target !== 'undefined' ? options.target : null;
+        this.options.render = typeof options.render !== 'undefined' ? options.render : null;
         this.options.apiKey = options.apiKey;
         var debug = options.debug;
         this.options.debug = typeof debug === 'undefined' ? false : debug;
@@ -26573,7 +26624,7 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, El
         }
     };
     return ElevationPath;
-}(ol, {}, gp, Ol3Utils, CommonUtilsCheckRightManagement, CommonControlsElevationPathDOM, CommonUtilsSelectorID);
+}(ol, {}, gp, Ol3Utils, CommonUtilsCheckRightManagement, Ol3ControlsMeasureToolBox, CommonControlsElevationPathDOM, CommonUtilsSelectorID);
 Ol3ControlsMeasuresMeasures = function (ol, woodman) {
     var defaultStyle = {
         fillColor: 'rgba(0, 183, 152, 0.2)',
@@ -26920,7 +26971,7 @@ CommonControlsMeasureLengthDOM = function () {
     };
     return MeasureLengthDOM;
 }();
-Ol3ControlsMeasuresMeasureLength = function (ol, woodman, Utils, Measures, MeasureLengthDOM, ID) {
+Ol3ControlsMeasuresMeasureLength = function (ol, woodman, Utils, MeasureToolBox, Measures, MeasureLengthDOM, ID) {
     function MeasureLength(options) {
         options = options || {};
         if (!(this instanceof MeasureLength)) {
@@ -26947,12 +26998,17 @@ Ol3ControlsMeasuresMeasureLength = function (ol, woodman, Utils, Measures, Measu
         var className = this.CLASSNAME;
         this.tools[className].instance = this;
         if (map) {
+            if (!this.options.target) {
+                MeasureToolBox.add(map, this);
+            }
         }
         ol.control.Control.prototype.setMap.call(this, map);
     };
     MeasureLength.prototype._initialize = function (options) {
         this.options = {};
         this.options.geodesic = typeof options.geodesic !== 'undefined' ? options.geodesic : true;
+        this.options.target = typeof options.target !== 'undefined' ? options.target : null;
+        this.options.render = typeof options.render !== 'undefined' ? options.render : null;
         this.createStylingMeasureInteraction(options.styles);
     };
     MeasureLength.prototype._initializeContainer = function () {
@@ -27002,7 +27058,7 @@ Ol3ControlsMeasuresMeasureLength = function (ol, woodman, Utils, Measures, Measu
         this.onShowMeasureClick(e, 'LineString');
     };
     return MeasureLength;
-}(ol, {}, Ol3Utils, Ol3ControlsMeasuresMeasures, CommonControlsMeasureLengthDOM, CommonUtilsSelectorID);
+}(ol, {}, Ol3Utils, Ol3ControlsMeasureToolBox, Ol3ControlsMeasuresMeasures, CommonControlsMeasureLengthDOM, CommonUtilsSelectorID);
 CommonControlsMeasureAreaDOM = function () {
     var MeasureAreaDOM = {
         _addUID: function (id) {
@@ -27045,7 +27101,7 @@ CommonControlsMeasureAreaDOM = function () {
     };
     return MeasureAreaDOM;
 }();
-Ol3ControlsMeasuresMeasureArea = function (ol, woodman, Utils, Measures, MeasureAreaDOM, ID) {
+Ol3ControlsMeasuresMeasureArea = function (ol, woodman, Utils, MeasureToolBox, Measures, MeasureAreaDOM, ID) {
     function MeasureArea(options) {
         options = options || {};
         if (!(this instanceof MeasureArea)) {
@@ -27072,12 +27128,17 @@ Ol3ControlsMeasuresMeasureArea = function (ol, woodman, Utils, Measures, Measure
         var className = this.CLASSNAME;
         this.tools[className].instance = this;
         if (map) {
+            if (!this.options.target) {
+                MeasureToolBox.add(map, this);
+            }
         }
         ol.control.Control.prototype.setMap.call(this, map);
     };
     MeasureArea.prototype._initialize = function (options) {
         this.options = {};
         this.options.geodesic = typeof options.geodesic !== 'undefined' ? options.geodesic : true;
+        this.options.target = typeof options.target !== 'undefined' ? options.target : null;
+        this.options.render = typeof options.render !== 'undefined' ? options.render : null;
         this.createStylingMeasureInteraction(options.styles);
     };
     MeasureArea.prototype._initializeContainer = function () {
@@ -27127,7 +27188,7 @@ Ol3ControlsMeasuresMeasureArea = function (ol, woodman, Utils, Measures, Measure
         this.onShowMeasureClick(e, 'Polygon');
     };
     return MeasureArea;
-}(ol, {}, Ol3Utils, Ol3ControlsMeasuresMeasures, CommonControlsMeasureAreaDOM, CommonUtilsSelectorID);
+}(ol, {}, Ol3Utils, Ol3ControlsMeasureToolBox, Ol3ControlsMeasuresMeasures, CommonControlsMeasureAreaDOM, CommonUtilsSelectorID);
 CommonControlsMeasureAzimuthDOM = function () {
     var MeasureAzimuthDOM = {
         _addUID: function (id) {
@@ -27170,7 +27231,7 @@ CommonControlsMeasureAzimuthDOM = function () {
     };
     return MeasureAzimuthDOM;
 }();
-Ol3ControlsMeasuresMeasureAzimuth = function (ol, woodman, Utils, Measures, MeasureAzimuthDOM, ID) {
+Ol3ControlsMeasuresMeasureAzimuth = function (ol, woodman, Utils, MeasureToolBox, Measures, MeasureAzimuthDOM, ID) {
     function MeasureAzimuth(options) {
         options = options || {};
         if (!(this instanceof MeasureAzimuth)) {
@@ -27197,11 +27258,16 @@ Ol3ControlsMeasuresMeasureAzimuth = function (ol, woodman, Utils, Measures, Meas
         var className = this.CLASSNAME;
         this.tools[className].instance = this;
         if (map) {
+            if (!this.options.target) {
+                MeasureToolBox.add(map, this);
+            }
         }
         ol.control.Control.prototype.setMap.call(this, map);
     };
     MeasureAzimuth.prototype._initialize = function (options) {
         this.options = {};
+        this.options.target = typeof options.target !== 'undefined' ? options.target : null;
+        this.options.render = typeof options.render !== 'undefined' ? options.render : null;
         this.createStylingMeasureInteraction(options.styles);
     };
     MeasureAzimuth.prototype._initializeContainer = function () {
@@ -27257,10 +27323,10 @@ Ol3ControlsMeasuresMeasureAzimuth = function (ol, woodman, Utils, Measures, Meas
         }
     };
     return MeasureAzimuth;
-}(ol, {}, Ol3Utils, Ol3ControlsMeasuresMeasures, CommonControlsMeasureAzimuthDOM, CommonUtilsSelectorID);
+}(ol, {}, Ol3Utils, Ol3ControlsMeasureToolBox, Ol3ControlsMeasuresMeasures, CommonControlsMeasureAzimuthDOM, CommonUtilsSelectorID);
 Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, KML, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution, ElevationPath, MeasureLength, MeasureArea, MeasureAzimuth) {
     Gp.ol3extVersion = '0.11.0';
-    Gp.ol3extDate = '2016-10-17';
+    Gp.ol3extDate = '2016-10-19';
     Gp.LayerUtils = LayerUtils;
     ol.format.KMLExtended = KML;
     CRS.overload();
