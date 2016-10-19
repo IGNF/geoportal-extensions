@@ -1126,23 +1126,31 @@ input[id^=GPshowMeasureLength-]:checked + label + div {
   display: block;
 }
 
+/* TODO coller un peu plus à la charte
+- liseret blanc transparent 32x32 autour du pictogramme
+- pictogramme 26x26
+- ...
+*/
 #GPtoolbox-measure-main {
   float: left;
   position: absolute;
   display: inline-block;
-  top: 265px;
-  left: 10px;
+  top: 11px;
+  left: 80px;
   z-index: 1;
 }
 
 #GPtoolbox-measure-button {
   color: white;
-  border: none;
+  border-color: rgba(255, 255, 255, 0.8);
+  border-style: solid;
+  border-width: 1px;
   cursor: pointer;
-  width: 32px;
-  height: 32px;
+  width: 26px;
+  height: 26px;
   background-color: rgba(0,60,136,0.5);
   border-radius: 4px;
+  padding: 2px;
 }
 
 #GPtoolbox-measure-widget {
@@ -1155,11 +1163,13 @@ input[id^=GPshowMeasureLength-]:checked + label + div {
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
-#GPtoolbox-measure-widget div {
+#GPtoolbox-measure-widget > div {
   display: block;
   position: relative;
   top: auto;
   left: auto;
+  bottom: auto;
+  right: auto;
 }
 
 #GPtoolbox-measure-main:hover #GPtoolbox-measure-widget {
@@ -2767,8 +2777,8 @@ button[id^=drawing-export-] {
 }
 
 div[id^=GPelevationPath-] {
-  top: 260px;
-  left: 106px;
+  bottom: 48px;
+  left: 10px;
 }
 
 /* Showing/hiding elevationPath panel */
@@ -3241,6 +3251,24 @@ div[id^="GPimportGetCapResults-"] {
   background-color: #CEDBEF
 }
 
+/* Location */
+
+.GPlocationOriginPointerImg,
+.GPlocationStageRemove,
+div[id^=GPlocationStageAdd],
+.GPlocationTransportImg {
+  background-image: url("img/GPlocationOptions.png");
+}
+
+/* All div elements whose class attribute value begins with "GPlocationPoint" */
+div[class*="GPlocationPoint"] {
+    position: relative;
+}
+
+.GPlocationStageFlexInput {
+    margin-bottom: 5px;
+}
+
 /* LAYER SWITCHER OL3 */
 
 #GPlayerSwitcher {
@@ -3333,24 +3361,6 @@ div[id^="GPimportGetCapResults-"] {
   background-image: url("img/GPlayerInfo.png");
 }
 
-/* Location */
-
-.GPlocationOriginPointerImg,
-.GPlocationStageRemove,
-div[id^=GPlocationStageAdd],
-.GPlocationTransportImg {
-  background-image: url("img/GPlocationOptions.png");
-}
-
-/* All div elements whose class attribute value begins with "GPlocationPoint" */
-div[class*="GPlocationPoint"] {
-    position: relative;
-}
-
-.GPlocationStageFlexInput {
-    margin-bottom: 5px;
-}
-
 /* MEASURELENGTH POSITION */
 
 div[id^=GPmeasureArea-] {
@@ -3396,7 +3406,7 @@ span[id^=GPshowMeasureLengthOpen-] {
 
 #GPmousePosition {
   bottom: 8px;
-  left: 8px;
+  left: 10px;
 }
 
 /* Showing/hiding mouse position panel */
@@ -3416,6 +3426,7 @@ span[id^=GPshowMeasureLengthOpen-] {
 #GPmapCenter {
   background-image: url("img/GPmapCenter.png");
 }
+
 /* REVERSE GEOCODING */
 
 [id^="GPreverseGeocoding-"] {

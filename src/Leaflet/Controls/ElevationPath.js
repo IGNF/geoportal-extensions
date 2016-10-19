@@ -799,7 +799,7 @@ define([
                     var distance = x.invert(m[0]);
                     var i = bisectDist(data, distance);
 
-                    var d0 = data[i - 1]
+                    var d0 = data[i - 1];
                     var d1 = data[i];
                     var d  = distance - d0[0] > d1[0] - distance ? d1 : d0;
 

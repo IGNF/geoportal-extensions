@@ -716,9 +716,9 @@ define([
             }
 
             // ajout du composant dans une toolbox
-            // if (! this.options.target) {
-            //     MeasureToolBox.add(map, this);
-            // }
+            if (! this.options.target) {
+                MeasureToolBox.add(map, this);
+            }
         }
 
         // on appelle la méthode setMap originale d'OpenLayers

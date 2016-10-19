@@ -1,6 +1,6 @@
 div[id^=GPelevationPath-] {
-  top: 260px;
-  left: 106px;
+  bottom: 48px;
+  left: 10px;
 }
 
 /* Showing/hiding elevationPath panel */

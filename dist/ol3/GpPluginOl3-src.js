@@ -26003,6 +26003,9 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, Me
                 this._initMeasureInteraction();
                 this._addMeasureInteraction();
             }
+            if (!this.options.target) {
+                MeasureToolBox.add(map, this);
+            }
         }
         ol.control.Control.prototype.setMap.call(this, map);
     };

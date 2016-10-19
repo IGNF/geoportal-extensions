@@ -1,20 +1,28 @@
+/* TODO coller un peu plus à la charte
+- liseret blanc transparent 32x32 autour du pictogramme
+- pictogramme 26x26
+- ...
+*/
 #GPtoolbox-measure-main {
   float: left;
   position: absolute;
   display: inline-block;
-  top: 265px;
-  left: 10px;
+  top: 11px;
+  left: 80px;
   z-index: 1;
 }
 
 #GPtoolbox-measure-button {
   color: white;
-  border: none;
+  border-color: rgba(255, 255, 255, 0.8);
+  border-style: solid;
+  border-width: 1px;
   cursor: pointer;
-  width: 32px;
-  height: 32px;
+  width: 26px;
+  height: 26px;
   background-color: rgba(0,60,136,0.5);
   border-radius: 4px;
+  padding: 2px;
 }
 
 #GPtoolbox-measure-widget {
@@ -27,11 +35,13 @@
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
-#GPtoolbox-measure-widget div {
+#GPtoolbox-measure-widget > div {
   display: block;
   position: relative;
   top: auto;
   left: auto;
+  bottom: auto;
+  right: auto;
 }
 
 #GPtoolbox-measure-main:hover #GPtoolbox-measure-widget {
