@@ -1,11 +1,13 @@
 
 define([
     "ol",
+    "gp",
     "Ol3/Utils",
     "Common/Utils/Config",
     "Common/Utils/LayerUtils"
 ], function (
     ol,
+    Gp,
     Utils,
     Config,
     LayerUtils
@@ -61,7 +63,11 @@ define([
             this._metadata = wmtsParams.metadata;
 
             var wmtsSourceOptions = {
-                url : wmtsParams.url,
+                // tracker extension ol3
+                // FIXME : gp-ext version en mode AMD
+                url : Gp.Helper.normalyzeUrl(wmtsParams.url,{
+                          "gp-ol3-ext" : "__GPOL3EXTVERSION__"
+                      },false),
                 version : wmtsParams.version,
                 style : wmtsParams.styles,
                 format : wmtsParams.format,
