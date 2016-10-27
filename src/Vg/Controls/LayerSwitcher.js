@@ -523,7 +523,7 @@ define([
             this
         );
         // on ajoute les couches au layerSwitcher dans le bon ordre
-        for ( var i in this._layersOrder ) {
+        for ( var i = 0; i < this._layersOrder.length; i++ ) {
             if (this._layersOrder[i].type !== "elevation") {
                 var layerDiv = this._createLayerDiv(this._layers[this._layersOrder[i].id]);
                 this._layers[this._layersOrder[i].id].div = layerDiv;
