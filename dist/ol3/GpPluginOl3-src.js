@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-10-24
+ * @date 2016-09-19
  *
  */
 /*!
@@ -90,7 +90,7 @@
   }
 }(this, function(ol) {
 
-var gp, CommonUtilsAutoLoadConfig, CommonUtilsLayerUtils, proj4, CommonUtilsRegister, Ol3FormatsKML, Ol3CRSCRS, Ol3Utils, CommonUtilsConfig, Ol3LayersSourceWMTS, Ol3LayersSourceWMS, Ol3LayersLayerWMTS, Ol3LayersLayerWMS, sortable, CommonControlsLayerSwitcherDOM, Ol3ControlsLayerSwitcher, Ol3ControlsUtilsMarkers, CommonUtilsCheckRightManagement, CommonUtilsSelectorID, CommonControlsSearchEngineDOM, CommonControlsSearchEngineUtils, Ol3ControlsSearchEngine, CommonControlsMousePositionDOM, Ol3ControlsMousePosition, CommonControlsDrawingDOM, Ol3ControlsDrawing, CommonControlsLocationSelectorDOM, Ol3ControlsLocationSelector, CommonControlsRouteDOM, Ol3ControlsRoute, CommonControlsIsoDOM, Ol3ControlsIsocurve, CommonControlsReverseGeocodingDOM, Ol3ControlsReverseGeocode, CommonControlsLayerImportDOM, Ol3ControlsLayerImport, Ol3ControlsGeoportalAttribution, Ol3ControlsMeasuresMeasures, CommonControlsMeasureLengthDOM, Ol3ControlsMeasuresMeasureLength, CommonControlsMeasureAreaDOM, Ol3ControlsMeasuresMeasureArea, CommonControlsMeasureAzimuthDOM, Ol3ControlsMeasuresMeasureAzimuth, Ol3GpPluginOl3;
+var gp, CommonUtilsAutoLoadConfig, CommonUtilsLayerUtils, proj4, CommonUtilsRegister, Ol3CRSCRS, Ol3Utils, CommonUtilsConfig, Ol3LayersSourceWMTS, Ol3LayersSourceWMS, Ol3LayersLayerWMTS, Ol3LayersLayerWMS, sortable, CommonControlsLayerSwitcherDOM, Ol3ControlsLayerSwitcher, Ol3ControlsUtilsMarkers, CommonUtilsCheckRightManagement, CommonUtilsSelectorID, CommonControlsSearchEngineDOM, CommonControlsSearchEngineUtils, Ol3ControlsSearchEngine, CommonControlsMousePositionDOM, Ol3ControlsMousePosition, CommonControlsDrawingDOM, Ol3FormatsKML, Ol3ControlsDrawing, CommonControlsLocationSelectorDOM, Ol3ControlsLocationSelector, CommonControlsRouteDOM, Ol3ControlsRoute, CommonControlsIsoDOM, Ol3ControlsIsocurve, CommonControlsReverseGeocodingDOM, Ol3ControlsReverseGeocode, CommonControlsLayerImportDOM, Ol3ControlsLayerImport, Ol3ControlsGeoportalAttribution, Ol3GpPluginOl3;
 (function (root, factory) {
     if (true) {
         gp = function () {
@@ -1300,7 +1300,6 @@ var gp, CommonUtilsAutoLoadConfig, CommonUtilsLayerUtils, proj4, CommonUtilsRegi
                 var strUrlProxified = null;
                 var strData = this.request;
                 var bUrlProxified = this.options.proxyURL && this.options.protocol === 'XHR' ? true : false;
-                this.options.serverUrl = Helper.normalyzeUrl(this.options.serverUrl, { 'gp-access-lib': '1.0.0-beta3' }, false);
                 if (bUrlProxified) {
                     if (this.options.httpMethod === 'GET') {
                         strUrlProxified = this.options.proxyURL + Helper.normalyzeUrl(this.options.serverUrl, this.request, true);
@@ -7333,11 +7332,11 @@ var gp, CommonUtilsAutoLoadConfig, CommonUtilsLayerUtils, proj4, CommonUtilsRegi
         var bbox = {};
         return Services;
     }(ServicesAltiAlti, ServicesAutoConfAutoConf, ServicesGeocodeGeocode, ServicesGeocodeReverseGeocode, ServicesAutoCompleteAutoComplete, ServicesRouteRoute, ServicesProcessIsoCurveProcessIsoCurve);
-    Gp = function (XHR, Services, AltiResponse, Elevation, AutoCompleteResponse, SuggestedLocation, GetConfigResponse, Constraint, Format, Layer, Legend, Metadata, Originator, Service, Style, Territory, Thematic, TM, TMLimit, TMS, GeocodeResponse, GeocodedLocation, DirectGeocodedLocation, ReverseGeocodedLocation, IsoCurveResponse, RouteResponse, RouteInstruction, Helper, Error) {
+    Gp = function (XHR, Services, AltiResponse, Elevation, AutoCompleteResponse, SuggestedLocation, GetConfigResponse, Constraint, Format, Layer, Legend, Metadata, Originator, Service, Style, Territory, Thematic, TM, TMLimit, TMS, GeocodeResponse, GeocodedLocation, DirectGeocodedLocation, ReverseGeocodedLocation, IsoCurveResponse, RouteResponse, RouteInstruction, Error) {
         var scope = typeof window !== 'undefined' ? window : {};
         var Gp = scope.Gp || {
             servicesVersion: '1.0.0-beta3',
-            servicesDate: '2016-10-16',
+            servicesDate: '2016-07-29',
             extend: function (strNS, value) {
                 var parts = strNS.split('.');
                 var parent = this;
@@ -7384,11 +7383,10 @@ var gp, CommonUtilsAutoLoadConfig, CommonUtilsLayerUtils, proj4, CommonUtilsRegi
         Gp.extend('Services.IsoCurveResponse', IsoCurveResponse);
         Gp.extend('Services.RouteResponse', RouteResponse);
         Gp.extend('Services.Route.RouteInstruction', RouteInstruction);
-        Gp.extend('Helper', Helper);
         Gp.extend('Error', Error);
         scope.Gp = Gp;
         return scope.Gp;
-    }(ProtocolsXHR, ServicesServices, ServicesAltiResponseModelAltiResponse, ServicesAltiResponseModelElevation, ServicesAutoCompleteResponseModelAutoCompleteResponse, ServicesAutoCompleteResponseModelSuggestedLocation, ServicesAutoConfResponseModelAutoConfResponse, ServicesAutoConfResponseModelConstraint, ServicesAutoConfResponseModelFormat, ServicesAutoConfResponseModelLayer, ServicesAutoConfResponseModelLegend, ServicesAutoConfResponseModelMetadata, ServicesAutoConfResponseModelOriginator, ServicesAutoConfResponseModelService, ServicesAutoConfResponseModelStyle, ServicesAutoConfResponseModelTerritory, ServicesAutoConfResponseModelThematic, ServicesAutoConfResponseModelTileMatrix, ServicesAutoConfResponseModelTileMatrixLimit, ServicesAutoConfResponseModelTileMatrixSet, ServicesGeocodeResponseModelGeocodeResponse, ServicesGeocodeResponseModelGeocodedLocation, ServicesGeocodeResponseModelDirectGeocodedLocation, ServicesGeocodeResponseModelReverseGeocodedLocation, ServicesProcessIsoCurveResponseModelProcessIsoCurveResponse, ServicesRouteResponseModelRouteResponse, ServicesRouteResponseModelRouteInstruction, UtilsHelper, ExceptionsErrorService);
+    }(ProtocolsXHR, ServicesServices, ServicesAltiResponseModelAltiResponse, ServicesAltiResponseModelElevation, ServicesAutoCompleteResponseModelAutoCompleteResponse, ServicesAutoCompleteResponseModelSuggestedLocation, ServicesAutoConfResponseModelAutoConfResponse, ServicesAutoConfResponseModelConstraint, ServicesAutoConfResponseModelFormat, ServicesAutoConfResponseModelLayer, ServicesAutoConfResponseModelLegend, ServicesAutoConfResponseModelMetadata, ServicesAutoConfResponseModelOriginator, ServicesAutoConfResponseModelService, ServicesAutoConfResponseModelStyle, ServicesAutoConfResponseModelTerritory, ServicesAutoConfResponseModelThematic, ServicesAutoConfResponseModelTileMatrix, ServicesAutoConfResponseModelTileMatrixLimit, ServicesAutoConfResponseModelTileMatrixSet, ServicesGeocodeResponseModelGeocodeResponse, ServicesGeocodeResponseModelGeocodedLocation, ServicesGeocodeResponseModelDirectGeocodedLocation, ServicesGeocodeResponseModelReverseGeocodedLocation, ServicesProcessIsoCurveResponseModelProcessIsoCurveResponse, ServicesRouteResponseModelRouteResponse, ServicesRouteResponseModelRouteInstruction, ExceptionsErrorService);
     return Gp;
 }));
 CommonUtilsAutoLoadConfig = function (Gp) {
@@ -7570,13 +7568,13 @@ CommonUtilsLayerUtils = function () {
                             image.style.width = '30px';
                         } else {
                             if (name) {
-                                link.textContent = name;
+                                link.text = name;
                             } else if (text) {
-                                link.textContent = text;
+                                link.text = text;
                             } else if (url) {
-                                link.textContent = url;
+                                link.text = url;
                             } else {
-                                link.textContent = '';
+                                link.text = '';
                             }
                         }
                         attributions.push(container.innerHTML + ' ');
@@ -13038,406 +13036,6 @@ CommonUtilsRegister = function (proj4) {
     };
     return Register;
 }(proj4);
-Ol3FormatsKML = function (woodman, ol) {
-    function KML(options) {
-        if (!(this instanceof KML)) {
-            throw new TypeError('ERROR CLASS_CONSTRUCTOR');
-        }
-        ol.format.KML.call(this, options);
-    }
-    ol.inherits(KML, ol.format.KML);
-    KML.prototype = Object.create(ol.format.KML.prototype, {});
-    KML.prototype.constructor = KML;
-    function _kmlFormattedToString(xml) {
-        var reg = /(>)\s*(<)(\/*)/g;
-        var wsexp = / *(.*) +\n/g;
-        var contexp = /(<.+>)(.+\n)/g;
-        xml = xml.replace(reg, '$1\n$2$3').replace(wsexp, '$1\n').replace(contexp, '$1\n$2');
-        var formatted = '';
-        var lines = xml.split('\n');
-        var indent = 0;
-        var lastType = 'other';
-        var transitions = {
-            'single->single': 0,
-            'single->closing': -1,
-            'single->opening': 0,
-            'single->other': 0,
-            'closing->single': 0,
-            'closing->closing': -1,
-            'closing->opening': 0,
-            'closing->other': 0,
-            'opening->single': 1,
-            'opening->closing': 0,
-            'opening->opening': 1,
-            'opening->other': 1,
-            'other->single': 0,
-            'other->closing': -1,
-            'other->opening': 0,
-            'other->other': 0
-        };
-        for (var i = 0; i < lines.length; i++) {
-            var ln = lines[i];
-            var single = Boolean(ln.match(/<.+\/>/));
-            var closing = Boolean(ln.match(/<\/.+>/));
-            var opening = Boolean(ln.match(/<[^!].*>/));
-            var type = single ? 'single' : closing ? 'closing' : opening ? 'opening' : 'other';
-            var fromTo = lastType + '->' + type;
-            lastType = type;
-            var padding = '';
-            indent += transitions[fromTo];
-            for (var j = 0; j < indent; j++) {
-                padding += '\t';
-            }
-            if (fromTo == 'opening->closing') {
-                formatted = formatted.substr(0, formatted.length - 1) + ln + '\n';
-            } else {
-                formatted += padding + ln + '\n';
-            }
-        }
-        return formatted;
-    }
-    function _kmlParse(kmlString) {
-        var kmlDoc = null;
-        var parser = null;
-        var scope = typeof window !== 'undefined' ? window : null;
-        if (typeof exports === 'object' && window === null) {
-            var DOMParser = xmldom.DOMParser;
-            parser = new DOMParser();
-            kmlDoc = parser.parseFromString(kmlString, 'text/xml');
-        } else if (scope.DOMParser) {
-            parser = new scope.DOMParser();
-            kmlDoc = parser.parseFromString(kmlString, 'text/xml');
-        } else if (scope.ActiveXObject) {
-            kmlDoc = new scope.ActiveXObject('Microsoft.XMLDOM');
-            kmlDoc.async = false;
-            kmlDoc.loadXML(kmlString);
-        } else {
-            console.log('Incompatible environment for DOM Parser !');
-        }
-        return kmlDoc;
-    }
-    function _kmlToString(kmlDoc) {
-        var oSerializer = new XMLSerializer();
-        var kmlStringExtended = oSerializer.serializeToString(kmlDoc);
-        return kmlStringExtended;
-    }
-    function _kmlRead(kmlDoc, features, process) {
-        var root = kmlDoc.documentElement;
-        var firstNodeLevel = root.childNodes;
-        var nodes = firstNodeLevel;
-        if (firstNodeLevel.length === 1 && firstNodeLevel[0].nodeName === 'Document') {
-            nodes = firstNodeLevel[0].childNodes;
-        }
-        var stylesUrl = {};
-        var index = -1;
-        for (var i = 0; i < nodes.length; i++) {
-            var node = nodes[i];
-            switch (node.nodeName) {
-            case 'Style':
-                var id = node.attributes[0];
-                if (id.nodeName === 'id') {
-                    var _k = id.nodeValue;
-                    var _v = node;
-                    stylesUrl[_k] = _v;
-                }
-                break;
-            case 'Placemark':
-                index++;
-                var types = node.childNodes;
-                var point = false;
-                var styles = null;
-                var extend = null;
-                for (var j = 0; j < types.length; j++) {
-                    switch (types[j].nodeName) {
-                    case 'Point':
-                        point = true;
-                        break;
-                    case 'Style':
-                        styles = types[j].childNodes;
-                        break;
-                    case 'styleUrl':
-                        var _idStyle = types[j].textContent.slice(1);
-                        styles = stylesUrl[_idStyle].childNodes;
-                        break;
-                    case 'ExtendedData':
-                        extend = types[j].childNodes;
-                        break;
-                    default:
-                    }
-                }
-                if (extend) {
-                    var fctExtend = process.extendedData;
-                    if (fctExtend && typeof fctExtend === 'function') {
-                        fctExtend(features[index], extend);
-                    }
-                }
-                if (point && styles) {
-                    if (styles.length) {
-                        var labelStyle = null;
-                        var iconStyle = null;
-                        for (var k = 0; k < styles.length; k++) {
-                            switch (styles[k].nodeName) {
-                            case 'LabelStyle':
-                                labelStyle = styles[k];
-                                break;
-                            case 'IconStyle':
-                                iconStyle = styles[k];
-                                break;
-                            default:
-                            }
-                        }
-                        if (labelStyle) {
-                            var fctLabel = process.labelStyle;
-                            if (fctLabel && typeof fctLabel === 'function') {
-                                fctLabel(features[index], labelStyle);
-                            }
-                        } else if (iconStyle) {
-                            var fctIcon = process.iconStyle;
-                            if (fctIcon && typeof fctIcon === 'function') {
-                                fctIcon(features[index], iconStyle);
-                            }
-                        }
-                    }
-                }
-                break;
-            default:
-            }
-        }
-    }
-    KML.prototype.writeFeatures = function (features, options) {
-        var kmlString = this._writeExtendStylesFeatures(features, options);
-        return kmlString;
-    };
-    KML.prototype._writeExtendStylesFeatures = function (features, options) {
-        var kmlString = ol.format.KML.prototype.writeFeatures.call(this, features, options);
-        var kmlDoc = _kmlParse(kmlString);
-        if (kmlDoc === null) {
-            return kmlString;
-        }
-        var __createExtensionStyleLabel = function (feature, style) {
-            if (!feature) {
-                return;
-            }
-            function __convertRGBColorsToKML(data) {
-                var strColor = data.toString(16);
-                if (strColor.charAt(0) === '#') {
-                    strColor = strColor.slice(1);
-                }
-                var opacity = 1;
-                opacity = parseInt(opacity * 255, 10);
-                opacity = opacity.toString(16);
-                var color = opacity;
-                color = color + strColor.substr(4, 2);
-                color = color + strColor.substr(2, 2);
-                color = color + strColor.substr(0, 2);
-                return color;
-            }
-            var _haloColor = __convertRGBColorsToKML('#FFFFFF');
-            var _haloRadius = '3';
-            var _haloOpacity = '1';
-            var _font = 'Sans';
-            var fTextStyle = feature.getStyle().getText().getStroke();
-            _haloColor = __convertRGBColorsToKML(fTextStyle.getColor());
-            _haloRadius = fTextStyle.getWidth();
-            if (style && style.getElementsByTagName('LabelStyleSimpleExtensionGroup').length === 0) {
-                var labelextend = kmlDoc.createElement('LabelStyleSimpleExtensionGroup');
-                labelextend.setAttribute('fontFamily', _font);
-                labelextend.setAttribute('haloColor', _haloColor);
-                labelextend.setAttribute('haloRadius', _haloRadius);
-                labelextend.setAttribute('haloOpacity', _haloOpacity);
-                style.appendChild(labelextend);
-            }
-        };
-        var __createHotSpotStyleIcon = function (feature, style) {
-            if (!feature) {
-                return;
-            }
-            var x = 0;
-            var y = 0;
-            var xunits = 'pixels';
-            var yunits = 'pixels';
-            var fImageStyle = feature.getStyle().getImage();
-            var size = fImageStyle.getSize();
-            var anchor = fImageStyle.getAnchor();
-            if (anchor.length) {
-                x = anchor[0];
-                y = anchor[1];
-                if (yunits === 'fraction') {
-                    y = anchor[1] === 1 ? 0 : 1 - anchor[1];
-                } else {
-                    y = yunits === 'pixels' && anchor[1] === size[1] ? 0 : size[1] - anchor[1];
-                }
-            }
-            if (style && style.getElementsByTagName('hotSpot').length === 0) {
-                var hotspot = kmlDoc.createElement('hotSpot');
-                hotspot.setAttribute('x', x);
-                hotspot.setAttribute('y', y);
-                hotspot.setAttribute('xunits', xunits);
-                hotspot.setAttribute('yunits', yunits);
-                style.appendChild(hotspot);
-            }
-        };
-        _kmlRead(kmlDoc, features, {
-            labelStyle: __createExtensionStyleLabel,
-            iconStyle: __createHotSpotStyleIcon
-        });
-        var kmlStringExtended = _kmlToString(kmlDoc);
-        if (kmlStringExtended === null) {
-            kmlStringExtended = kmlString;
-        }
-        var kmlStringFormatted = _kmlFormattedToString(kmlStringExtended);
-        if (kmlStringFormatted === null) {
-            kmlStringFormatted = kmlString;
-        }
-        return kmlStringFormatted;
-    };
-    KML.prototype.readFeatures = function (source, options) {
-        var features = this._readExtendStylesFeatures(source, options);
-        return features;
-    };
-    KML.prototype._readExtendStylesFeatures = function (source, options) {
-        var features = ol.format.KML.prototype.readFeatures.call(this, source, options);
-        var kmlDoc = null;
-        var kmlString = '';
-        if (typeof source === 'string') {
-            kmlString = source;
-        } else {
-            kmlString = source.documentElement.outerHTML;
-        }
-        kmlString = kmlString.replace(/\n/g, '');
-        kmlString = kmlString.replace(/(>)\s*(<)/g, '$1$2');
-        kmlDoc = _kmlParse(kmlString);
-        if (kmlDoc === null) {
-            return features;
-        }
-        var __getExtensionStyleToFeatureLabel = function (feature, style) {
-            if (!feature) {
-                return;
-            }
-            function __convertKMLColorsToRGB(data) {
-                var color = '';
-                color = color + data.substr(6, 2);
-                color = color + data.substr(4, 2);
-                color = color + data.substr(2, 2);
-                var hex = parseInt(color, 16).toString(16);
-                var comp = '';
-                var len = hex.length || 0;
-                for (var i = 0; i < 6 - len; i++) {
-                    comp += '0';
-                }
-                hex = '#' + comp + hex;
-                return hex.toString(16);
-            }
-            var _text = feature.getProperties().name || '---';
-            var _color = __convertKMLColorsToRGB('ff000000');
-            var _colorHalo = '#FFFFFF';
-            var _radiusHalo = 4;
-            var _font = 'Sans';
-            var _fontSize = '16px';
-            var styles = style.childNodes;
-            for (var k = 0; k < styles.length; k++) {
-                switch (styles[k].nodeName) {
-                case 'scale':
-                    break;
-                case 'colorMode':
-                    break;
-                case 'color':
-                    _color = __convertKMLColorsToRGB(styles[k].textContent);
-                    break;
-                case 'LabelStyleSimpleExtensionGroup':
-                    var attributs = styles[k].attributes;
-                    for (var l = 0; l < attributs.length; l++) {
-                        switch (attributs[l].nodeName) {
-                        case 'fontFamily':
-                            break;
-                        case 'haloColor':
-                            _colorHalo = __convertKMLColorsToRGB(attributs[l].nodeValue);
-                            break;
-                        case 'haloRadius':
-                            _radiusHalo = parseInt(attributs[l].nodeValue, 10);
-                            break;
-                        case 'haloOpacity':
-                            break;
-                        default:
-                        }
-                    }
-                    break;
-                default:
-                }
-            }
-            feature.setStyle(new ol.style.Style({
-                image: new ol.style.Icon({
-                    src: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNiYAAAAAkAAxkR2eQAAAAASUVORK5CYII=',
-                    size: [
-                        51,
-                        38
-                    ],
-                    anchor: [
-                        25.5,
-                        38
-                    ],
-                    anchorOrigin: 'top-left',
-                    anchorXUnits: 'pixels',
-                    anchorYUnits: 'pixels'
-                }),
-                text: new ol.style.Text({
-                    font: _fontSize + ' ' + _font,
-                    textAlign: 'left',
-                    text: _text,
-                    fill: new ol.style.Fill({ color: _color }),
-                    stroke: new ol.style.Stroke({
-                        color: _colorHalo,
-                        width: _radiusHalo
-                    })
-                })
-            }));
-        };
-        var __getHotSpotStyleToFeatureIcon = function (feature, style) {
-        };
-        var __getExtendedData = function (feature, extend) {
-            if (!feature) {
-                return;
-            }
-            var _fname = '';
-            var _fdescription = feature.getProperties().description || '';
-            var _ftitle = null;
-            for (var i = 0; i < extend.length; i++) {
-                var data = extend[i];
-                var name = data.attributes[0];
-                if (name.nodeName === 'name') {
-                    switch (name.nodeValue) {
-                    case 'label':
-                        _fname = data.textContent;
-                        break;
-                    case 'attributetitle':
-                        var nodes = data.childNodes;
-                        for (var j = 0; j < nodes.length; j++) {
-                            if (nodes[j].nodeName === 'value') {
-                                _ftitle = nodes[j].textContent;
-                            }
-                        }
-                        break;
-                    default:
-                    }
-                }
-            }
-            if (_ftitle) {
-                _fdescription = _fdescription ? _ftitle + ' : ' + _fdescription : _ftitle;
-            }
-            feature.setProperties({
-                name: _fname,
-                description: _fdescription
-            });
-        };
-        _kmlRead(kmlDoc, features, {
-            labelStyle: __getExtensionStyleToFeatureLabel,
-            iconStyle: __getHotSpotStyleToFeatureIcon,
-            extendedData: __getExtendedData
-        });
-        return features;
-    };
-    return KML;
-}({}, ol);
 Ol3CRSCRS = function (proj4, ol, Register) {
     (function () {
         Register.load();
@@ -13671,7 +13269,7 @@ CommonUtilsConfig = function () {
     };
     return Config;
 }();
-Ol3LayersSourceWMTS = function (ol, Gp, Utils, Config, LayerUtils) {
+Ol3LayersSourceWMTS = function (ol, Utils, Config, LayerUtils) {
     function SourceWMTS(options) {
         if (!(this instanceof SourceWMTS)) {
             throw new TypeError('ERROR CLASS_CONSTRUCTOR');
@@ -13692,7 +13290,7 @@ Ol3LayersSourceWMTS = function (ol, Gp, Utils, Config, LayerUtils) {
             this._legends = wmtsParams.legends;
             this._metadata = wmtsParams.metadata;
             var wmtsSourceOptions = {
-                url: Gp.Helper.normalyzeUrl(wmtsParams.url, { 'gp-ol3-ext': '0.11.0' }, false),
+                url: wmtsParams.url,
                 version: wmtsParams.version,
                 style: wmtsParams.styles,
                 format: wmtsParams.format,
@@ -13726,8 +13324,8 @@ Ol3LayersSourceWMTS = function (ol, Gp, Utils, Config, LayerUtils) {
     SourceWMTS.prototype = Object.create(ol.source.WMTS.prototype, {});
     SourceWMTS.prototype.constructor = SourceWMTS;
     return SourceWMTS;
-}(ol, gp, Ol3Utils, CommonUtilsConfig, CommonUtilsLayerUtils);
-Ol3LayersSourceWMS = function (ol, Gp, Utils, Config) {
+}(ol, Ol3Utils, CommonUtilsConfig, CommonUtilsLayerUtils);
+Ol3LayersSourceWMS = function (ol, Utils, Config) {
     function SourceWMS(options) {
         if (!(this instanceof SourceWMS)) {
             throw new TypeError('ERROR CLASS_CONSTRUCTOR');
@@ -13745,7 +13343,7 @@ Ol3LayersSourceWMS = function (ol, Gp, Utils, Config) {
         if (layerId && Config.configuration.getLayerConf(layerId)) {
             var wmsParams = Config.getLayerParams(options.layer, 'WMS', options.apiKey);
             var wmsSourceOptions = {
-                url: Gp.Helper.normalyzeUrl(wmsParams.url, { 'gp-ol3-ext': '0.11.0' }, false),
+                url: wmsParams.url,
                 params: {
                     SERVICE: 'WMS',
                     LAYERS: options.layer,
@@ -13768,7 +13366,7 @@ Ol3LayersSourceWMS = function (ol, Gp, Utils, Config) {
     SourceWMS.prototype = Object.create(ol.source.TileWMS.prototype, {});
     SourceWMS.prototype.constructor = SourceWMS;
     return SourceWMS;
-}(ol, gp, Ol3Utils, CommonUtilsConfig);
+}(ol, Ol3Utils, CommonUtilsConfig);
 Ol3LayersLayerWMTS = function (ol, Utils, Config, LayerUtils, SourceWMTS) {
     function LayerWMTS(options) {
         if (!(this instanceof LayerWMTS)) {
@@ -15093,7 +14691,7 @@ Ol3ControlsLayerSwitcher = function (ol, Utils, LayerSwitcherDOM) {
                 }
             }
             var infodiv = document.getElementById('GPinfo_ID' + id);
-            if (!document.getElementById('GPinfo_ID' + id) && config.description) {
+            if (!document.getElementById('GPinfo_ID' + id) && config.description && (config.legends || config.metadata || config.quicklookUrl)) {
                 var advancedTools = document.getElementById('GPadvancedTools_ID' + id);
                 if (advancedTools) {
                     advancedTools.appendChild(this._createAdvancedToolInformationElement({ id: id }));
@@ -17437,7 +17035,7 @@ Ol3ControlsMousePosition = function (ol, proj4, woodman, Gp, Utils, RightManagem
             },
             {
                 code: 'EPSG:3857',
-                label: 'Web Mercator',
+                label: 'Mercator',
                 crs: ol.proj.get('EPSG:3857').getCode(),
                 type: 'Metric'
             },
@@ -18280,7 +17878,394 @@ CommonControlsDrawingDOM = function () {
     };
     return DrawingDOM;
 }();
-Ol3ControlsDrawing = function (woodman, ol, Gp, SelectorID, DrawingDOM, Utils, KMLExtended) {
+Ol3FormatsKML = function (woodman, ol) {
+    function KML(options) {
+        if (!(this instanceof KML)) {
+            throw new TypeError('ERROR CLASS_CONSTRUCTOR');
+        }
+        ol.format.KML.call(this, options);
+    }
+    ol.inherits(KML, ol.format.KML);
+    KML.prototype = Object.create(ol.format.KML.prototype, {});
+    KML.prototype.constructor = KML;
+    function _kmlFormattedToString(xml) {
+        var reg = /(>)\s*(<)(\/*)/g;
+        var wsexp = / *(.*) +\n/g;
+        var contexp = /(<.+>)(.+\n)/g;
+        xml = xml.replace(reg, '$1\n$2$3').replace(wsexp, '$1\n').replace(contexp, '$1\n$2');
+        var formatted = '';
+        var lines = xml.split('\n');
+        var indent = 0;
+        var lastType = 'other';
+        var transitions = {
+            'single->single': 0,
+            'single->closing': -1,
+            'single->opening': 0,
+            'single->other': 0,
+            'closing->single': 0,
+            'closing->closing': -1,
+            'closing->opening': 0,
+            'closing->other': 0,
+            'opening->single': 1,
+            'opening->closing': 0,
+            'opening->opening': 1,
+            'opening->other': 1,
+            'other->single': 0,
+            'other->closing': -1,
+            'other->opening': 0,
+            'other->other': 0
+        };
+        for (var i = 0; i < lines.length; i++) {
+            var ln = lines[i];
+            var single = Boolean(ln.match(/<.+\/>/));
+            var closing = Boolean(ln.match(/<\/.+>/));
+            var opening = Boolean(ln.match(/<[^!].*>/));
+            var type = single ? 'single' : closing ? 'closing' : opening ? 'opening' : 'other';
+            var fromTo = lastType + '->' + type;
+            lastType = type;
+            var padding = '';
+            indent += transitions[fromTo];
+            for (var j = 0; j < indent; j++) {
+                padding += '\t';
+            }
+            if (fromTo == 'opening->closing') {
+                formatted = formatted.substr(0, formatted.length - 1) + ln + '\n';
+            } else {
+                formatted += padding + ln + '\n';
+            }
+        }
+        return formatted;
+    }
+    function _kmlParse(kmlString) {
+        var kmlDoc = null;
+        var parser = null;
+        var scope = typeof window !== 'undefined' ? window : null;
+        if (typeof exports === 'object' && window === null) {
+            var DOMParser = xmldom.DOMParser;
+            parser = new DOMParser();
+            kmlDoc = parser.parseFromString(kmlString, 'text/xml');
+        } else if (scope.DOMParser) {
+            parser = new scope.DOMParser();
+            kmlDoc = parser.parseFromString(kmlString, 'text/xml');
+        } else if (scope.ActiveXObject) {
+            kmlDoc = new scope.ActiveXObject('Microsoft.XMLDOM');
+            kmlDoc.async = false;
+            kmlDoc.loadXML(kmlString);
+        } else {
+            console.log('Incompatible environment for DOM Parser !');
+        }
+        return kmlDoc;
+    }
+    function _kmlToString(kmlDoc) {
+        var oSerializer = new XMLSerializer();
+        var kmlStringExtended = oSerializer.serializeToString(kmlDoc);
+        return kmlStringExtended;
+    }
+    function _kmlRead(kmlDoc, features, process) {
+        var root = kmlDoc.documentElement;
+        var firstNodeLevel = root.childNodes;
+        var nodes = firstNodeLevel;
+        if (firstNodeLevel.length === 1 && firstNodeLevel[0].nodeName === 'Document') {
+            nodes = firstNodeLevel[0].childNodes;
+        }
+        var stylesUrl = {};
+        var index = -1;
+        for (var i = 0; i < nodes.length; i++) {
+            var node = nodes[i];
+            switch (node.nodeName) {
+            case 'Style':
+                var id = node.attributes[0];
+                if (id.nodeName === 'id') {
+                    var _k = id.nodeValue;
+                    var _v = node;
+                    stylesUrl[_k] = _v;
+                }
+                break;
+            case 'Placemark':
+                index++;
+                var types = node.childNodes;
+                var point = false;
+                var styles = null;
+                var extend = null;
+                for (var j = 0; j < types.length; j++) {
+                    switch (types[j].nodeName) {
+                    case 'Point':
+                        point = true;
+                        break;
+                    case 'Style':
+                        styles = types[j].childNodes;
+                        break;
+                    case 'styleUrl':
+                        var _idStyle = types[j].textContent.slice(1);
+                        styles = stylesUrl[_idStyle].childNodes;
+                        break;
+                    case 'ExtendedData':
+                        extend = types[j].childNodes;
+                        break;
+                    default:
+                    }
+                }
+                if (extend) {
+                    var fctExtend = process.extendedData;
+                    if (fctExtend && typeof fctExtend === 'function') {
+                        fctExtend(features[index], extend);
+                    }
+                }
+                if (point && styles) {
+                    if (styles.length) {
+                        var labelStyle = null;
+                        var iconStyle = null;
+                        for (var k = 0; k < styles.length; k++) {
+                            switch (styles[k].nodeName) {
+                            case 'LabelStyle':
+                                labelStyle = styles[k];
+                                break;
+                            case 'IconStyle':
+                                iconStyle = styles[k];
+                                break;
+                            default:
+                            }
+                        }
+                        if (labelStyle) {
+                            var fctLabel = process.labelStyle;
+                            if (fctLabel && typeof fctLabel === 'function') {
+                                fctLabel(features[index], labelStyle);
+                            }
+                        } else if (iconStyle) {
+                            var fctIcon = process.iconStyle;
+                            if (fctIcon && typeof fctIcon === 'function') {
+                                fctIcon(features[index], iconStyle);
+                            }
+                        }
+                    }
+                }
+                break;
+            default:
+            }
+        }
+    }
+    KML.prototype.writeExtendStylesFeatures = function (features, options) {
+        var kmlString = ol.format.KML.prototype.writeFeatures.call(this, features, options);
+        var kmlDoc = _kmlParse(kmlString);
+        if (kmlDoc === null) {
+            return kmlString;
+        }
+        var __createExtensionStyleLabel = function (feature, style) {
+            if (!feature) {
+                return;
+            }
+            function __convertRGBColorsToKML(data) {
+                var strColor = data.toString(16);
+                if (strColor.charAt(0) === '#') {
+                    strColor = strColor.slice(1);
+                }
+                var opacity = 1;
+                opacity = parseInt(opacity * 255, 10);
+                opacity = opacity.toString(16);
+                var color = opacity;
+                color = color + strColor.substr(4, 2);
+                color = color + strColor.substr(2, 2);
+                color = color + strColor.substr(0, 2);
+                return color;
+            }
+            var _haloColor = __convertRGBColorsToKML('#FFFFFF');
+            var _haloRadius = '3';
+            var _haloOpacity = '1';
+            var _font = 'Sans';
+            var fTextStyle = feature.getStyle().getText().getStroke();
+            _haloColor = __convertRGBColorsToKML(fTextStyle.getColor());
+            _haloRadius = fTextStyle.getWidth();
+            if (style && style.getElementsByTagName('LabelStyleSimpleExtensionGroup').length === 0) {
+                var labelextend = kmlDoc.createElement('LabelStyleSimpleExtensionGroup');
+                labelextend.setAttribute('fontFamily', _font);
+                labelextend.setAttribute('haloColor', _haloColor);
+                labelextend.setAttribute('haloRadius', _haloRadius);
+                labelextend.setAttribute('haloOpacity', _haloOpacity);
+                style.appendChild(labelextend);
+            }
+        };
+        var __createHotSpotStyleIcon = function (feature, style) {
+            if (!feature) {
+                return;
+            }
+            var x = 0;
+            var y = 0;
+            var xunits = 'pixels';
+            var yunits = 'pixels';
+            var fImageStyle = feature.getStyle().getImage();
+            var size = fImageStyle.getSize();
+            var anchor = fImageStyle.getAnchor();
+            if (anchor.length) {
+                x = anchor[0];
+                y = anchor[1];
+                if (yunits === 'fraction') {
+                    y = anchor[1] === 1 ? 0 : 1 - anchor[1];
+                } else {
+                    y = yunits === 'pixels' && anchor[1] === size[1] ? 0 : size[1] - anchor[1];
+                }
+            }
+            if (style && style.getElementsByTagName('hotSpot').length === 0) {
+                var hotspot = kmlDoc.createElement('hotSpot');
+                hotspot.setAttribute('x', x);
+                hotspot.setAttribute('y', y);
+                hotspot.setAttribute('xunits', xunits);
+                hotspot.setAttribute('yunits', yunits);
+                style.appendChild(hotspot);
+            }
+        };
+        _kmlRead(kmlDoc, features, {
+            labelStyle: __createExtensionStyleLabel,
+            iconStyle: __createHotSpotStyleIcon
+        });
+        var kmlStringExtended = _kmlToString(kmlDoc);
+        if (kmlStringExtended === null) {
+            kmlStringExtended = kmlString;
+        }
+        var kmlStringFormatted = _kmlFormattedToString(kmlStringExtended);
+        if (kmlStringFormatted === null) {
+            kmlStringFormatted = kmlString;
+        }
+        return kmlStringFormatted;
+    };
+    KML.prototype.readExtendStylesFeatures = function (source, options) {
+        var features = ol.format.KML.prototype.readFeatures.call(this, source, options);
+        if (typeof source === 'string') {
+            source = source.replace(/\n/g, '');
+            source = source.replace(/(>)\s*(<)/g, '$1$2');
+            var kmlDoc = _kmlParse(source);
+            if (kmlDoc === null) {
+                return features;
+            }
+            var __getExtensionStyleToFeatureLabel = function (feature, style) {
+                if (!feature) {
+                    return;
+                }
+                function __convertKMLColorsToRGB(data) {
+                    var color = '';
+                    color = color + data.substr(6, 2);
+                    color = color + data.substr(4, 2);
+                    color = color + data.substr(2, 2);
+                    var hex = parseInt(color, 16).toString(16);
+                    var comp = '';
+                    var len = hex.length || 0;
+                    for (var i = 0; i < 6 - len; i++) {
+                        comp += '0';
+                    }
+                    hex = '#' + comp + hex;
+                    return hex.toString(16);
+                }
+                var _text = feature.getProperties().name || '---';
+                var _color = __convertKMLColorsToRGB('ff000000');
+                var _colorHalo = '#FFFFFF';
+                var _radiusHalo = 4;
+                var _font = 'Sans';
+                var _fontSize = '16px';
+                var styles = style.childNodes;
+                for (var k = 0; k < styles.length; k++) {
+                    switch (styles[k].nodeName) {
+                    case 'scale':
+                        break;
+                    case 'colorMode':
+                        break;
+                    case 'color':
+                        _color = __convertKMLColorsToRGB(styles[k].textContent);
+                        break;
+                    case 'LabelStyleSimpleExtensionGroup':
+                        var attributs = styles[k].attributes;
+                        for (var l = 0; l < attributs.length; l++) {
+                            switch (attributs[l].nodeName) {
+                            case 'fontFamily':
+                                break;
+                            case 'haloColor':
+                                _colorHalo = __convertKMLColorsToRGB(attributs[l].nodeValue);
+                                break;
+                            case 'haloRadius':
+                                _radiusHalo = parseInt(attributs[l].nodeValue, 10);
+                                break;
+                            case 'haloOpacity':
+                                break;
+                            default:
+                            }
+                        }
+                        break;
+                    default:
+                    }
+                }
+                feature.setStyle(new ol.style.Style({
+                    image: new ol.style.Icon({
+                        src: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNiYAAAAAkAAxkR2eQAAAAASUVORK5CYII=',
+                        size: [
+                            51,
+                            38
+                        ],
+                        anchor: [
+                            25.5,
+                            38
+                        ],
+                        anchorOrigin: 'top-left',
+                        anchorXUnits: 'pixels',
+                        anchorYUnits: 'pixels'
+                    }),
+                    text: new ol.style.Text({
+                        font: _fontSize + ' ' + _font,
+                        textAlign: 'left',
+                        text: _text,
+                        fill: new ol.style.Fill({ color: _color }),
+                        stroke: new ol.style.Stroke({
+                            color: _colorHalo,
+                            width: _radiusHalo
+                        })
+                    })
+                }));
+            };
+            var __getHotSpotStyleToFeatureIcon = function (feature, style) {
+            };
+            var __getExtendedData = function (feature, extend) {
+                if (!feature) {
+                    return;
+                }
+                var _fname = '';
+                var _fdescription = feature.getProperties().description || '';
+                var _ftitle = null;
+                for (var i = 0; i < extend.length; i++) {
+                    var data = extend[i];
+                    var name = data.attributes[0];
+                    if (name.nodeName === 'name') {
+                        switch (name.nodeValue) {
+                        case 'label':
+                            _fname = data.textContent;
+                            break;
+                        case 'attributetitle':
+                            var nodes = data.childNodes;
+                            for (var j = 0; j < nodes.length; j++) {
+                                if (nodes[j].nodeName === 'value') {
+                                    _ftitle = nodes[j].textContent;
+                                }
+                            }
+                            break;
+                        default:
+                        }
+                    }
+                }
+                if (_ftitle) {
+                    _fdescription = _fdescription ? _ftitle + ' : ' + _fdescription : _ftitle;
+                }
+                feature.setProperties({
+                    name: _fname,
+                    description: _fdescription
+                });
+            };
+            _kmlRead(kmlDoc, features, {
+                labelStyle: __getExtensionStyleToFeatureLabel,
+                iconStyle: __getHotSpotStyleToFeatureIcon,
+                extendedData: __getExtendedData
+            });
+        }
+        return features;
+    };
+    return KML;
+}({}, ol);
+Ol3ControlsDrawing = function (woodman, ol, Gp, SelectorID, DrawingDOM, Utils, KML) {
     function Drawing(options) {
         options = options || {};
         if (!(this instanceof Drawing)) {
@@ -18313,7 +18298,7 @@ Ol3ControlsDrawing = function (woodman, ol, Gp, SelectorID, DrawingDOM, Utils, K
         lines: 'Dessiner des lignes',
         polygons: 'Dessiner des polygones',
         text: 'Ecrire sur la carte',
-        editingTools: 'Outils d\'édition',
+        editingTools: 'Outils d\'éditon',
         edit: 'Editer les tracés',
         display: 'Modifier l\'apparence des objets',
         tooltip: 'Modifier les textes / infos-bulles',
@@ -18402,8 +18387,8 @@ Ol3ControlsDrawing = function (woodman, ol, Gp, SelectorID, DrawingDOM, Utils, K
         }
         var featProj = this.layer.getSource().getProjection();
         featProj = featProj || this.getMap().getView().getProjection();
-        var kmlFormat = new KMLExtended({ writeStyles: true });
-        result = kmlFormat.writeFeatures(this.layer.getSource().getFeatures(), {
+        var kmlFormat = new KML({ writeStyles: true });
+        result = kmlFormat.writeExtendStylesFeatures(this.layer.getSource().getFeatures(), {
             dataProjection: 'EPSG:4326',
             featureProjection: featProj
         });
@@ -24505,7 +24490,7 @@ CommonControlsLayerImportDOM = function () {
     };
     return LayerImportDOM;
 }();
-Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, SelectorID, KMLExtended) {
+Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, SelectorID, KML) {
     function LayerImport(options) {
         options = options || {};
         if (!(this instanceof LayerImport)) {
@@ -24540,12 +24525,6 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
             document.getElementById('GPshowImport-' + this._uid).click();
         }
         this.collapsed = collapsed;
-    };
-    LayerImport.prototype.getStaticImportContent = function () {
-        return this.contentStatic;
-    };
-    LayerImport.prototype.getServiceImportContent = function () {
-        return this.contentService;
     };
     LayerImport.prototype._initialize = function (options) {
         this._checkInputOptions(options);
@@ -24695,8 +24674,6 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
         this._emptyGetCapResultsList();
     };
     LayerImport.prototype._onImportSubmit = function () {
-        this.contentStatic = null;
-        this.contentService = null;
         if (this._isCurrentImportTypeStatic) {
             this._importStaticLayer();
         } else {
@@ -24721,9 +24698,6 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
         if (url.length === 0) {
             console.log('[ol.control.LayerImport] url parameter is mandatory');
             return;
-        }
-        if (url.trim) {
-            url = url.trim();
         }
         if (!this.options.webServicesOptions || !this.options.webServicesOptions.proxyUrl && !this.options.webServicesOptions.noProxyDomains) {
             console.log('[ol.control.LayerImport] options.webServicesOptions.proxyUrl parameter is mandatory to request resources on another domain (cross-domain)');
@@ -24789,20 +24763,26 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
         if (!map || !fileContent) {
             return;
         }
-        this.contentStatic = fileContent;
         var format;
         if (this._currentImportType === 'KML') {
-            format = new KMLExtended({ showPointNames: false });
+            format = new KML({ showPointNames: false });
         } else if (this._currentImportType === 'GPX') {
             format = new ol.format.GPX();
         }
         var fileProj = format.readProjection(fileContent);
         var mapProj = this._getMapProjectionCode();
         var features = null;
-        features = format.readFeatures(fileContent, {
-            dataProjection: fileProj,
-            featureProjection: mapProj
-        });
+        if (this._currentImportType === 'KML') {
+            features = format.readExtendStylesFeatures(fileContent, {
+                dataProjection: fileProj,
+                featureProjection: mapProj
+            });
+        } else {
+            features = format.readFeatures(fileContent, {
+                dataProjection: fileProj,
+                featureProjection: mapProj
+            });
+        }
         var vectorSource = new ol.source.Vector({ features: features });
         if (layerName) {
             vectorSource._title = vectorSource._description = layerName;
@@ -24812,36 +24792,6 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
             } else {
                 vectorSource._title = vectorSource._description = 'Import ' + this._currentImportType;
             }
-        }
-        var vectorLayer = new ol.layer.Vector({ source: vectorSource });
-        vectorLayer.gpResultLayerId = 'layerimport:' + this._currentImportType;
-        map.addLayer(vectorLayer);
-        if (map.getView() && map.getSize() && vectorSource.getExtent) {
-            var sourceExtent = vectorSource.getExtent();
-            if (sourceExtent && sourceExtent[0] !== Infinity) {
-                map.getView().fit(vectorSource.getExtent(), map.getSize());
-            }
-        }
-    };
-    LayerImport.prototype._addFeaturesFromImportStaticLayerUrl = function (url, layerName) {
-        var map = this.getMap();
-        if (!map || !url) {
-            return;
-        }
-        var format;
-        if (this._currentImportType === 'KML') {
-            format = new KMLExtended({ showPointNames: false });
-        } else if (this._currentImportType === 'GPX') {
-            format = new ol.format.GPX();
-        }
-        var vectorSource = new ol.source.Vector({
-            url: url,
-            format: format
-        });
-        if (layerName) {
-            vectorSource._title = vectorSource._description = layerName;
-        } else {
-            vectorSource._title = vectorSource._description = 'Import ' + this._currentImportType;
         }
         var vectorLayer = new ol.layer.Vector({ source: vectorSource });
         vectorLayer.gpResultLayerId = 'layerimport:' + this._currentImportType;
@@ -24863,9 +24813,6 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
         if (!url) {
             console.log('[ol.control.LayerImport] url parameter is mandatory');
             return;
-        }
-        if (url.trim) {
-            url = url.trim();
         }
         var questionMarkIndex = url.indexOf('?');
         if (questionMarkIndex < 0) {
@@ -24911,24 +24858,32 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
         var layers;
         var layerDescription;
         var projection;
-        this._getCapResponseWMSLayers = [];
-        this.contentService = xmlResponse;
         this._importPanel.style.display = 'none';
         this._getCapPanel.style.display = 'block';
+        var mapProjCode = this._getMapProjectionCode();
         if (this._currentImportType === 'WMS') {
             parser = new ol.format.WMSCapabilities();
             if (!parser) {
                 return;
             }
             var getCapResponseWMS = this._getCapResponseWMS = parser.read(xmlResponse);
-            if (getCapResponseWMS && getCapResponseWMS.Capability && getCapResponseWMS.Capability.Layer) {
-                var getCapLayer = getCapResponseWMS.Capability.Layer;
-                if (Array.isArray(getCapLayer)) {
-                    for (var i = 0; i < getCapLayer.length; i++) {
-                        this._displayGetCapResponseWMSLayer(getCapLayer[i]);
+            if (getCapResponseWMS && getCapResponseWMS.Capability && getCapResponseWMS.Capability.Layer && getCapResponseWMS.Capability.Layer.Layer) {
+                layers = getCapResponseWMS.Capability.Layer.Layer;
+                if (Array.isArray(layers)) {
+                    this._getCapResponseWMSLayers = layers;
+                    for (var i = 0; i < layers.length; i++) {
+                        projection = this._getWMSLayerProjection(layers[i], mapProjCode);
+                        if (!projection) {
+                            console.log('[ol.control.LayerImport] wms layer cannot be added to map : unknown projection', layers[i]);
+                            continue;
+                        } else {
+                            layers[i]._projection = projection;
+                            layerDescription = layers[i].Title;
+                            if (this._getCapResultsListContainer) {
+                                this._getCapResultsListContainer.appendChild(this._createImportGetCapResultElement(layerDescription, i));
+                            }
+                        }
                     }
-                } else {
-                    this._displayGetCapResponseWMSLayer(getCapLayer);
                 }
             }
         } else if (this._currentImportType === 'WMTS') {
@@ -24943,95 +24898,17 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
                     this._getCapResponseWMTSLayers = layers;
                     for (var j = 0; j < layers.length; j++) {
                         projection = this._getWMTSLayerProjection(layers[j], getCapResponseWMTS);
-                        if (projection && typeof projection === 'string') {
-                            if (ol.proj.get(projection) || ol.proj.get(projection.toUpperCase())) {
-                                layerDescription = layers[j].Title;
-                                if (this._getCapResultsListContainer) {
-                                    this._getCapResultsListContainer.appendChild(this._createImportGetCapResultElement(layerDescription, j));
-                                }
-                            } else {
-                                console.log('[ol.control.LayerImport] wmts layer cannot be added to map : unknown projection', layers[j]);
-                                continue;
+                        if (!projection || !ol.proj.get(projection)) {
+                            console.log('[ol.control.LayerImport] wmts layer cannot be added to map : unknown projection', layers[j]);
+                            continue;
+                        } else {
+                            layerDescription = layers[j].Title;
+                            if (this._getCapResultsListContainer) {
+                                this._getCapResultsListContainer.appendChild(this._createImportGetCapResultElement(layerDescription, j));
                             }
                         }
                     }
                 }
-            }
-        }
-    };
-    LayerImport.prototype._displayGetCapResponseWMSLayer = function (layerObj, parentLayersInfos) {
-        if (!layerObj) {
-            console.log('[ol.control.LayerImport] _displayGetCapResponseWMSLayer : getCapabilities layer object not found');
-        } else {
-        }
-        var mapProjCode = this._getMapProjectionCode();
-        var projection;
-        var layerDescription;
-        if (parentLayersInfos) {
-            var key;
-            var i;
-            var addKeys = [
-                'CRS',
-                'Style'
-            ];
-            for (i = 0; i < addKeys.length; i++) {
-                key = addKeys[i];
-                if (Array.isArray(parentLayersInfos[key]) && parentLayersInfos[key].length !== 0) {
-                    if (Array.isArray(layerObj[key]) && layerObj[key].length !== 0) {
-                        for (var n = 0; n < parentLayersInfos[key]; n++) {
-                            if (layerObj[key].indexOf(parentLayersInfos[key][n]) === -1) {
-                                layerObj[key].push(parentLayersInfos[key][n]);
-                            }
-                        }
-                    } else {
-                        layerObj[key] = parentLayersInfos[key];
-                    }
-                }
-            }
-            var replaceKeys = [
-                'BoundingBox',
-                'EX_GeographicBoundingBox',
-                'MaxScaleDenominator',
-                'MinScaleDenominator',
-                'Attribution',
-                'Dimension',
-                'queryable',
-                'cascaded',
-                'opaque',
-                'noSubsets',
-                'fixedWidth',
-                'fixedHeight'
-            ];
-            for (i = 0; i < replaceKeys.length; i++) {
-                key = replaceKeys[i];
-                if (parentLayersInfos[key] && !layerObj[key]) {
-                    layerObj[key] = parentLayersInfos[key];
-                }
-            }
-            if (!parentLayersInfos._isRootLayer && parentLayersInfos.Title) {
-                layerObj.Title = parentLayersInfos.Title + ' > ' + layerObj.Title;
-            }
-        } else {
-            layerObj._isRootLayer = true;
-        }
-        if (layerObj.Layer) {
-            if (Array.isArray(layerObj.Layer)) {
-                for (var j = 0; j < layerObj.Layer.length; j++) {
-                    this._displayGetCapResponseWMSLayer(layerObj.Layer[j], layerObj);
-                }
-            }
-        } else {
-            var lastIndex = this._getCapResponseWMSLayers.length;
-            projection = this._getWMSLayerProjection(layerObj, mapProjCode);
-            if (!projection) {
-                console.log('[ol.control.LayerImport] wms layer cannot be added to map : unknown projection', layerObj);
-            } else {
-                layerObj._projection = projection;
-                layerDescription = layerObj.Title;
-                if (this._getCapResultsListContainer) {
-                    this._getCapResultsListContainer.appendChild(this._createImportGetCapResultElement(layerDescription, lastIndex));
-                }
-                this._getCapResponseWMSLayers[lastIndex] = layerObj;
             }
         }
     };
@@ -25054,11 +24931,6 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
     LayerImport.prototype._addGetCapWMSLayer = function (layerInfo) {
         var map = this.getMap();
         if (!map) {
-            console.log('[ol.control.LayerImport] _addGetCapWMSLayer error : map is not defined');
-            return;
-        }
-        if (!layerInfo) {
-            console.log('[ol.control.LayerImport] _addGetCapWMSLayer error : layerInfo is not defined');
             return;
         }
         var mapProjCode = this._getMapProjectionCode();
@@ -25108,12 +24980,6 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
         this._getWMSLayerExtent(layerInfo, mapProjCode, layerTileOptions);
         var wmsLayer = new ol.layer.Tile(layerTileOptions);
         wmsLayer.gpResultLayerId = 'layerimport:WMS';
-        if (layerInfo.queryable) {
-            wmsLayer.gpGFIparams = { queryable: true };
-            if (this._getCapResponseWMS && this._getCapResponseWMS.Capability && this._getCapResponseWMS.Capability.Request && this._getCapResponseWMS.Capability.Request.GetFeatureInfo && this._getCapResponseWMS.Capability.Request.GetFeatureInfo.Format && Array.isArray(this._getCapResponseWMS.Capability.Request.GetFeatureInfo.Format)) {
-                wmsLayer.gpGFIparams.formats = this._getCapResponseWMS.Capability.Request.GetFeatureInfo.Format;
-            }
-        }
         map.addLayer(wmsLayer);
     };
     LayerImport.prototype._getWMSLayerGetMapUrl = function () {
@@ -25138,16 +25004,9 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
         if (Array.isArray(CRSList)) {
             for (var i = 0; i < CRSList.length; i++) {
                 var layerCRS = CRSList[i];
-                if (layerCRS === mapProjCode) {
+                if (layerCRS === mapProjCode || ol.proj.get(layerCRS)) {
                     projection = layerCRS;
                     break;
-                } else {
-                    if (layerCRS && typeof layerCRS === 'string') {
-                        if (ol.proj.get(layerCRS) || ol.proj.get(layerCRS.toUpperCase())) {
-                            projection = layerCRS;
-                            break;
-                        }
-                    }
                 }
             }
         }
@@ -25173,46 +25032,16 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
         }
     };
     LayerImport.prototype._getWMSLayerExtent = function (layerInfo, mapProjCode, layerTileOptions) {
-        if (!layerInfo) {
-            console.log('[ol.control.LayerImport] _getWMSLayerExtent error : layerInfo is not defined');
-            return;
-        }
-        var exGeographicBoundingBox = layerInfo['EX_GeographicBoundingBox'];
-        var boundingBox = layerInfo.BoundingBox;
-        if (exGeographicBoundingBox && Array.isArray(exGeographicBoundingBox)) {
-            if (mapProjCode === 'EPSG:4326') {
-                layerTileOptions.extent = exGeographicBoundingBox;
-            } else {
-                layerTileOptions.extent = ol.proj.transformExtent(exGeographicBoundingBox, 'EPSG:4326', mapProjCode);
-            }
-        } else if (boundingBox && Array.isArray(boundingBox)) {
-            var crs;
-            var extent;
-            for (var i = 0; i < boundingBox.length; i++) {
-                crs = boundingBox[i].crs;
-                extent = boundingBox[i].extent;
+        if (layerInfo.BoundingBox && Array.isArray(layerInfo.BoundingBox)) {
+            for (var i = 0; i < layerInfo.BoundingBox.length; i++) {
+                var crs = layerInfo.BoundingBox[i].crs;
                 if (crs) {
                     if (crs === mapProjCode) {
-                        layerTileOptions.extent = extent;
+                        layerTileOptions.extent = layerInfo.BoundingBox[i].extent;
                         break;
-                    } else {
-                        if (crs && typeof crs === 'string') {
-                            var olProj = ol.proj.get(crs) ? ol.proj.get(crs) : ol.proj.get(crs.toUpperCase());
-                            if (olProj) {
-                                if (olProj.getUnits() === 'degrees' && crs.toUpperCase().indexOf('EPSG') === 0) {
-                                    var reversedExtent = [
-                                        extent[1],
-                                        extent[0],
-                                        extent[3],
-                                        extent[2]
-                                    ];
-                                    layerTileOptions.extent = ol.proj.transformExtent(reversedExtent, olProj, mapProjCode);
-                                } else {
-                                    layerTileOptions.extent = ol.proj.transformExtent(extent, olProj, mapProjCode);
-                                }
-                                break;
-                            }
-                        }
+                    } else if (ol.proj.get(crs)) {
+                        layerTileOptions.extent = ol.proj.transformExtent(layerInfo.BoundingBox[i].extent, crs, mapProjCode);
+                        break;
                     }
                 }
             }
@@ -25356,17 +25185,13 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
         }
         if (layerInfo.TileMatrixSetLink && Array.isArray(layerInfo.TileMatrixSetLink)) {
             var tms = layerInfo.TileMatrixSetLink[0].TileMatrixSet;
-            var crs;
             if (getCapResponseWMTS.Contents && Array.isArray(getCapResponseWMTS.Contents.TileMatrixSet)) {
                 var tileMatrixSets = getCapResponseWMTS.Contents.TileMatrixSet;
                 for (var i = 0; i < tileMatrixSets.length; i++) {
                     if (tileMatrixSets[i].Identifier === tms && tileMatrixSets[i].TileMatrix) {
                         var tileMatrixSet = tileMatrixSets[i];
-                        crs = tileMatrixSet.SupportedCRS;
-                        if (crs && typeof crs === 'string') {
-                            if (ol.proj.get(crs) || ol.proj.get(crs.toUpperCase())) {
-                                projection = crs;
-                            }
+                        if (tileMatrixSet.SupportedCRS && ol.proj.get(tileMatrixSet.SupportedCRS)) {
+                            projection = tileMatrixSet.SupportedCRS;
                         }
                         break;
                     }
@@ -25583,683 +25408,10 @@ Ol3ControlsGeoportalAttribution = function (ol, LayerUtils) {
     };
     return GeoportalAttribution;
 }(ol, CommonUtilsLayerUtils);
-Ol3ControlsMeasuresMeasures = function (ol, woodman) {
-    var defaultStyle = {
-        fillColor: 'rgba(0, 183, 152, 0.2)',
-        strokeColor: '#002A50',
-        strokeLineDash: [
-            10,
-            10
-        ],
-        strokeWidth: 2,
-        imageRadius: 5,
-        imageFillColor: 'rgba(255, 155, 0, 0.7)',
-        imageStrokeColor: '#002A50',
-        imageStrokeWidth: 2
-    };
-    var defaultStyleFinal = {
-        fillColor: 'rgba(0, 183, 152, 0.3)',
-        strokeColor: '#002A50',
-        strokeWidth: 3
-    };
-    var Measures = {
-        tools: {
-            MeasureLength: {
-                container: null,
-                draw: null,
-                layer: null,
-                active: false
-            },
-            MeasureArea: {
-                container: null,
-                draw: null,
-                layer: null,
-                active: false
-            },
-            MeasureAzimuth: {
-                container: null,
-                draw: null,
-                layer: null,
-                active: false
-            }
-        },
-        measureDraw: null,
-        measureSource: null,
-        measureVector: null,
-        sketch: null,
-        measureTooltipElement: null,
-        measureTooltip: null,
-        helpTooltipElement: null,
-        helpTooltip: null,
-        measureStyle: new ol.style.Style({
-            fill: new ol.style.Fill({ color: defaultStyle.fillColor }),
-            stroke: new ol.style.Stroke({
-                color: defaultStyle.strokeColor,
-                lineDash: defaultStyle.strokeLineDash,
-                width: defaultStyle.strokeWidth
-            }),
-            image: new ol.style.Circle({
-                radius: defaultStyle.imageRadius,
-                stroke: new ol.style.Stroke({
-                    color: defaultStyle.imageStrokeColor,
-                    width: defaultStyle.imageStrokeWidth
-                }),
-                fill: new ol.style.Fill({ color: defaultStyle.imageFillColor })
-            })
-        }),
-        measureFinalStyle: new ol.style.Style({
-            fill: new ol.style.Fill({ color: defaultStyleFinal.fillColor }),
-            stroke: new ol.style.Stroke({
-                color: defaultStyleFinal.strokeColor,
-                width: defaultStyleFinal.strokeWidth
-            })
-        }),
-        onPointerMoveHandler: function (e) {
-            if (e.dragging) {
-                return;
-            }
-            var tooltipCoord = e.coordinate;
-            if (this.sketch) {
-                var output;
-                var geom = this.sketch.getGeometry();
-                output = this.format(geom);
-                if (geom.getType() === 'LineString') {
-                    tooltipCoord = geom.getLastCoordinate();
-                } else if (geom.getType() === 'Polygon') {
-                    tooltipCoord = geom.getInteriorPoint().getCoordinates();
-                } else {
-                    return;
-                }
-                this.measureTooltipElement.innerHTML = output;
-                this.measureTooltip.setPosition(tooltipCoord);
-            }
-        },
-        onShowMeasureClick: function (e, type) {
-            var map = this.getMap();
-            var self = this.CLASSNAME;
-            for (var instance in this.tools) {
-                if (this.tools.hasOwnProperty(instance)) {
-                    if (this.tools[instance].active && instance !== self) {
-                        this.clearMeasureToolTip();
-                        map.removeLayer(this.tools[instance].layer);
-                        map.removeInteraction(this.tools[instance].draw);
-                        this.tools[instance].active = false;
-                        this.tools[instance].container.checked = true;
-                        this.tools[instance].draw = null;
-                        this.tools[instance].layer = null;
-                    }
-                }
-            }
-            if (this._showContainer.checked) {
-                this.initMeasureInteraction();
-                this.addMeasureInteraction(type);
-                this.tools[self].active = true;
-                this.tools[self].container = this._showContainer;
-                this.tools[self].draw = this.measureDraw;
-                this.tools[self].layer = this.measureVector;
-            } else {
-                this.clearMeasure();
-                this.tools[self].active = false;
-                this.tools[self].container = this._showContainer;
-                this.tools[self].draw = null;
-                this.tools[self].layer = null;
-            }
-        },
-        clearMeasureToolTip: function () {
-            var lstNodes = document.querySelectorAll('.ol-overlaycontainer-stopevent');
-            for (var k = 0; k < lstNodes.length; k++) {
-                var nodes = lstNodes[k];
-                var len = nodes.children.length;
-                var nodesToRemove = [];
-                for (var i = 0; i < len; i++) {
-                    var node = nodes.children[i];
-                    var child = node.children[0];
-                    if (child.className === 'tooltip tooltip-static' || child.className === 'tooltip tooltip-measure') {
-                        nodesToRemove.push(node);
-                    }
-                }
-                for (var j = 0; j < nodesToRemove.length; j++) {
-                    nodes.removeChild(nodesToRemove[j]);
-                }
-            }
-        },
-        clearMeasure: function () {
-            var map = this.getMap();
-            this.clearMeasureToolTip();
-            if (this.measureVector) {
-                map.removeLayer(this.measureVector);
-            }
-            if (this.measureDraw) {
-                map.removeInteraction(this.measureDraw);
-            }
-        },
-        createMeasureTooltip: function (map) {
-            if (this.measureTooltipElement) {
-                this.measureTooltipElement.parentNode.removeChild(this.measureTooltipElement);
-            }
-            this.measureTooltipElement = document.createElement('div');
-            this.measureTooltipElement.className = 'tooltip tooltip-measure';
-            this.measureTooltip = new ol.Overlay({
-                element: this.measureTooltipElement,
-                offset: [
-                    0,
-                    -15
-                ],
-                positioning: 'bottom-center'
-            });
-            map.addOverlay(this.measureTooltip);
-        },
-        createHelpTooltip: function (map) {
-            if (this.helpTooltipElement) {
-                this.helpTooltipElement.parentNode.removeChild(this.helpTooltipElement);
-            }
-            this.helpTooltipElement = document.createElement('div');
-            this.helpTooltipElement.className = 'tooltip hidden';
-            this.helpTooltip = new ol.Overlay({
-                element: this.helpTooltipElement,
-                offset: [
-                    15,
-                    0
-                ],
-                positioning: 'center-left'
-            });
-            map.addOverlay(this.helpTooltip);
-        },
-        createStylingMeasureInteraction: function (styles) {
-            if (typeof styles === 'undefined' || Object.keys(styles).length === 0) {
-                this.options.styles = {
-                    start: this.measureStyle,
-                    finish: this.measureFinalStyle
-                };
-            } else {
-                var start = styles.start;
-                var finish = styles.finish;
-                this.options.styles = {};
-                if (typeof start === 'undefined') {
-                    this.options.styles.start = this.measureStyle;
-                } else {
-                    Object.keys(defaultStyle).forEach(function (key) {
-                        if (!start.hasOwnProperty(key)) {
-                            start[key] = defaultStyle[key];
-                            return;
-                        }
-                        if (key === 'strokeWidth') {
-                            var intValue = parseInt(start[key], 10);
-                            if (isNaN(intValue) || intValue < 0) {
-                                console.log('Wrong value (' + start[key] + ') for strokeWidth. Must be a positive interger value.');
-                                start[key] = defaultStyle[key];
-                                return;
-                            }
-                            start[key] = intValue;
-                        }
-                    }, this);
-                    var _fill = new ol.style.Fill({ color: start.fillColor });
-                    var _stroke = new ol.style.Stroke({
-                        color: start.strokeColor,
-                        lineDash: start.strokeLineDash,
-                        width: start.strokeWidth
-                    });
-                    var _image = new ol.style.Circle({
-                        radius: start.imageRadius,
-                        stroke: new ol.style.Stroke({
-                            color: start.imageStrokeColor,
-                            width: start.imageStrokeWidth
-                        }),
-                        fill: new ol.style.Fill({ color: start.imageFillColor })
-                    });
-                    this.options.styles.start = new ol.style.Style({
-                        fill: _fill,
-                        stroke: _stroke,
-                        image: _image
-                    });
-                }
-                if (typeof finish === 'undefined') {
-                    this.options.styles.finish = this.measureFinalStyle;
-                } else {
-                    Object.keys(defaultStyleFinal).forEach(function (key) {
-                        if (!finish.hasOwnProperty(key)) {
-                            finish[key] = defaultStyleFinal[key];
-                            return;
-                        }
-                        if (key === 'strokeWidth') {
-                            var intValue = parseInt(finish[key], 10);
-                            if (isNaN(intValue) || intValue < 0) {
-                                console.log('Wrong value (' + finish[key] + ') for strokeWidth. Must be a positive interger value.');
-                                finish[key] = defaultStyleFinal[key];
-                                return;
-                            }
-                            finish[key] = intValue;
-                        }
-                    }, this);
-                    this.options.styles.finish = new ol.style.Style({
-                        fill: new ol.style.Fill({ color: styles.finish.fillColor }),
-                        stroke: new ol.style.Stroke({
-                            color: styles.finish.strokeColor,
-                            lineDash: styles.finish.strokeLineDash,
-                            width: styles.finish.strokeWidth
-                        })
-                    });
-                }
-            }
-        },
-        addMeasureInteraction: function (type) {
-            var map = this.getMap();
-            this.measureDraw = new ol.interaction.Draw({
-                source: this.measureSource,
-                type: type,
-                style: this.options.styles.start || this.measureStyle
-            });
-            map.addInteraction(this.measureDraw);
-            this.createMeasureTooltip(map);
-            var self = this;
-            this.measureDraw.on('drawstart', function (evt) {
-                self.sketch = evt.feature;
-            }, this);
-            this.measureDraw.on('drawend', function () {
-                if (self.sketch) {
-                    var output;
-                    var tooltipCoord;
-                    var geom = self.sketch.getGeometry();
-                    output = self.format(geom);
-                    if (geom.getType() === 'LineString') {
-                        tooltipCoord = geom.getLastCoordinate();
-                    } else if (geom.getType() === 'Polygon') {
-                        tooltipCoord = geom.getInteriorPoint().getCoordinates();
-                    } else {
-                        return;
-                    }
-                    self.measureTooltipElement.innerHTML = output;
-                    self.measureTooltip.setPosition(tooltipCoord);
-                }
-                self.measureTooltipElement.className = 'tooltip tooltip-static';
-                self.measureTooltip.setOffset([
-                    0,
-                    -7
-                ]);
-                self.sketch = null;
-                self.measureTooltipElement = null;
-                self.createMeasureTooltip(map);
-            }, this);
-        },
-        initMeasureInteraction: function () {
-            var map = this.getMap();
-            this.measureSource = new ol.source.Vector();
-            this.measureVector = new ol.layer.Vector({
-                source: this.measureSource,
-                style: this.options.styles.finish || this.measureFinalStyle
-            });
-            map.addLayer(this.measureVector);
-        }
-    };
-    return Measures;
-}(ol, {});
-CommonControlsMeasureLengthDOM = function () {
-    var MeasureLengthDOM = {
-        _addUID: function (id) {
-            return id + '-' + this._uid;
-        },
-        _createMainContainerElement: function () {
-            var container = document.createElement('div');
-            container.id = this._addUID('GPmeasureLength');
-            container.className = 'GPwidget';
-            return container;
-        },
-        _createShowMeasureLengthElement: function () {
-            var input = document.createElement('input');
-            input.id = this._addUID('GPshowMeasureLength');
-            input.type = 'checkbox';
-            return input;
-        },
-        _createShowMeasureLengthPictoElement: function () {
-            var context = this;
-            var label = document.createElement('label');
-            label.id = this._addUID('GPshowMeasureLengthPicto');
-            label.className = 'GPshowAdvancedToolPicto';
-            label.htmlFor = this._addUID('GPshowMeasureLength');
-            label.title = 'Calculer une distance';
-            if (label.addEventListener) {
-                label.addEventListener('click', function (e) {
-                    context.onShowMeasureLengthClick(e);
-                });
-            } else if (label.attachEvent) {
-                label.attachEvent('onclick', function (e) {
-                    context.onShowMeasureLengthClick(e);
-                });
-            }
-            var spanOpen = document.createElement('span');
-            spanOpen.id = this._addUID('GPshowMeasureLengthOpen');
-            spanOpen.className = 'GPshowAdvancedToolOpen';
-            label.appendChild(spanOpen);
-            return label;
-        }
-    };
-    return MeasureLengthDOM;
-}();
-Ol3ControlsMeasuresMeasureLength = function (ol, woodman, Utils, Measures, MeasureLengthDOM, ID) {
-    function MeasureLength(options) {
-        options = options || {};
-        if (!(this instanceof MeasureLength)) {
-            throw new TypeError('ERROR CLASS_CONSTRUCTOR');
-        }
-        this.CLASSNAME = 'MeasureLength';
-        this._uid = ID.generate();
-        this._showContainer = null;
-        this._initialize(options);
-        var container = options.element ? options.element : this._initializeContainer();
-        ol.control.Control.call(this, {
-            element: container,
-            target: options.target,
-            render: options.render
-        });
-    }
-    ol.inherits(MeasureLength, ol.control.Control);
-    MeasureLength.prototype = Object.create(ol.control.Control.prototype, {});
-    Utils.assign(MeasureLength.prototype, Measures);
-    Utils.assign(MeasureLength.prototype, MeasureLengthDOM);
-    MeasureLength.prototype.constructor = MeasureLength;
-    MeasureLength.prototype.setMap = function (map) {
-        if (map) {
-            var self = this;
-            map.on('singleclick', function (e) {
-                self.onPointerMoveHandler(e);
-            });
-            map.on('pointermove', function (e) {
-                self.onPointerMoveHandler(e);
-            });
-        }
-        ol.control.Control.prototype.setMap.call(this, map);
-    };
-    MeasureLength.prototype._initialize = function (options) {
-        this.options = {};
-        this.options.geodesic = typeof options.geodesic !== 'undefined' ? options.geodesic : true;
-        this.createStylingMeasureInteraction(options.styles);
-    };
-    MeasureLength.prototype._initializeContainer = function () {
-        var container = this._createMainContainerElement();
-        var show = this._showContainer = this._createShowMeasureLengthElement();
-        container.appendChild(show);
-        this._showContainer.checked = true;
-        var picto = this._createShowMeasureLengthPictoElement();
-        container.appendChild(picto);
-        return container;
-    };
-    MeasureLength.prototype.format = function (line) {
-        var map = this.getMap();
-        var measure;
-        if (this.options.geodesic) {
-            var wgs84Sphere = new ol.Sphere(6378137);
-            var coordinates = line.getCoordinates();
-            measure = 0;
-            var sourceProj = map.getView().getProjection();
-            for (var i = 0, ii = coordinates.length - 1; i < ii; ++i) {
-                var c1 = ol.proj.transform(coordinates[i], sourceProj, 'EPSG:4326');
-                var c2 = ol.proj.transform(coordinates[i + 1], sourceProj, 'EPSG:4326');
-                measure += wgs84Sphere.haversineDistance(c1, c2);
-            }
-        } else {
-            measure = Math.round(line.getLength() * 100) / 100;
-        }
-        var output;
-        if (measure > 1000) {
-            output = Math.round(measure / 1000 * 100) / 100 + ' ' + 'km';
-        } else {
-            output = Math.round(measure * 100) / 100 + ' ' + 'm';
-        }
-        return output;
-    };
-    MeasureLength.prototype.onShowMeasureLengthClick = function (e) {
-        this.onShowMeasureClick(e, 'LineString');
-    };
-    return MeasureLength;
-}(ol, {}, Ol3Utils, Ol3ControlsMeasuresMeasures, CommonControlsMeasureLengthDOM, CommonUtilsSelectorID);
-CommonControlsMeasureAreaDOM = function () {
-    var MeasureAreaDOM = {
-        _addUID: function (id) {
-            return id + '-' + this._uid;
-        },
-        _createMainContainerElement: function () {
-            var container = document.createElement('div');
-            container.id = this._addUID('GPmeasureArea');
-            container.className = 'GPwidget';
-            return container;
-        },
-        _createShowMeasureAreaElement: function () {
-            var input = document.createElement('input');
-            input.id = this._addUID('GPshowMeasureArea');
-            input.type = 'checkbox';
-            return input;
-        },
-        _createShowMeasureAreaPictoElement: function () {
-            var context = this;
-            var label = document.createElement('label');
-            label.id = this._addUID('GPshowMeasureAreaPicto');
-            label.className = 'GPshowAdvancedToolPicto';
-            label.htmlFor = this._addUID('GPshowMeasureArea');
-            label.title = 'Calculer une surface';
-            if (label.addEventListener) {
-                label.addEventListener('click', function (e) {
-                    context.onShowMeasureAreaClick(e);
-                });
-            } else if (label.attachEvent) {
-                label.attachEvent('onclick', function (e) {
-                    context.onShowMeasureAreaClick(e);
-                });
-            }
-            var spanOpen = document.createElement('span');
-            spanOpen.id = this._addUID('GPshowMeasureAreaOpen');
-            spanOpen.className = 'GPshowAdvancedToolOpen';
-            label.appendChild(spanOpen);
-            return label;
-        }
-    };
-    return MeasureAreaDOM;
-}();
-Ol3ControlsMeasuresMeasureArea = function (ol, woodman, Utils, Measures, MeasureAreaDOM, ID) {
-    function MeasureArea(options) {
-        options = options || {};
-        if (!(this instanceof MeasureArea)) {
-            throw new TypeError('ERROR CLASS_CONSTRUCTOR');
-        }
-        this.CLASSNAME = 'MeasureArea';
-        this._uid = ID.generate();
-        this._showContainer = null;
-        this._initialize(options);
-        var container = options.element ? options.element : this._initializeContainer();
-        ol.control.Control.call(this, {
-            element: container,
-            target: options.target,
-            render: options.render
-        });
-    }
-    ol.inherits(MeasureArea, ol.control.Control);
-    MeasureArea.prototype = Object.create(ol.control.Control.prototype, {});
-    Utils.assign(MeasureArea.prototype, Measures);
-    Utils.assign(MeasureArea.prototype, MeasureAreaDOM);
-    MeasureArea.prototype.constructor = MeasureArea;
-    MeasureArea.prototype.setMap = function (map) {
-        if (map) {
-            var self = this;
-            map.on('singleclick', function (e) {
-                self.onPointerMoveHandler(e);
-            });
-            map.on('pointermove', function (e) {
-                self.onPointerMoveHandler(e);
-            });
-        }
-        ol.control.Control.prototype.setMap.call(this, map);
-    };
-    MeasureArea.prototype._initialize = function (options) {
-        this.options = {};
-        this.options.geodesic = typeof options.geodesic !== 'undefined' ? options.geodesic : true;
-        this.createStylingMeasureInteraction(options.styles);
-    };
-    MeasureArea.prototype._initializeContainer = function () {
-        var container = this._createMainContainerElement();
-        var show = this._showContainer = this._createShowMeasureAreaElement();
-        container.appendChild(show);
-        this._showContainer.checked = true;
-        var picto = this._createShowMeasureAreaPictoElement();
-        container.appendChild(picto);
-        return container;
-    };
-    MeasureArea.prototype.format = function (polygon) {
-        var map = this.getMap();
-        var measure;
-        if (this.options.geodesic) {
-            var wgs84Sphere = new ol.Sphere(6378137);
-            var sourceProj = map.getView().getProjection();
-            var geom = polygon.clone().transform(sourceProj, 'EPSG:4326');
-            var coordinates = geom.getLinearRing(0).getCoordinates();
-            measure = Math.abs(wgs84Sphere.geodesicArea(coordinates));
-        } else {
-            measure = polygon.getArea();
-        }
-        var output;
-        if (measure > 1000000) {
-            output = Math.round(measure / 1000000 * 100) / 100 + ' ' + 'km<sup>2</sup>';
-        } else if (measure > 100000) {
-            output = Math.round(measure / 1000000 * 1000) / 1000 + ' ' + 'km<sup>2</sup>';
-        } else if (measure > 1000) {
-            output = Math.round(measure / 10) * 10 + ' ' + 'm<sup>2</sup>';
-        } else {
-            output = Math.round(measure * 100) / 100 + ' ' + 'm<sup>2</sup>';
-        }
-        return output;
-    };
-    MeasureArea.prototype.onShowMeasureAreaClick = function (e) {
-        this.onShowMeasureClick(e, 'Polygon');
-    };
-    return MeasureArea;
-}(ol, {}, Ol3Utils, Ol3ControlsMeasuresMeasures, CommonControlsMeasureAreaDOM, CommonUtilsSelectorID);
-CommonControlsMeasureAzimuthDOM = function () {
-    var MeasureAzimuthDOM = {
-        _addUID: function (id) {
-            return id + '-' + this._uid;
-        },
-        _createMainContainerElement: function () {
-            var container = document.createElement('div');
-            container.id = this._addUID('GPmeasureAzimuth');
-            container.className = 'GPwidget';
-            return container;
-        },
-        _createShowMeasureAzimuthElement: function () {
-            var input = document.createElement('input');
-            input.id = this._addUID('GPshowMeasureAzimuth');
-            input.type = 'checkbox';
-            return input;
-        },
-        _createShowMeasureAzimuthPictoElement: function () {
-            var context = this;
-            var label = document.createElement('label');
-            label.id = this._addUID('GPshowMeasureAzimuthPicto');
-            label.className = 'GPshowAdvancedToolPicto';
-            label.htmlFor = this._addUID('GPshowMeasureAzimuth');
-            label.title = 'Calculer une azimut';
-            if (label.addEventListener) {
-                label.addEventListener('click', function (e) {
-                    context.onShowMeasureAzimuthClick(e);
-                });
-            } else if (label.attachEvent) {
-                label.attachEvent('onclick', function (e) {
-                    context.onShowMeasureAzimuthClick(e);
-                });
-            }
-            var spanOpen = document.createElement('span');
-            spanOpen.id = this._addUID('GPshowMeasureAzimuthOpen');
-            spanOpen.className = 'GPshowAdvancedToolOpen';
-            label.appendChild(spanOpen);
-            return label;
-        }
-    };
-    return MeasureAzimuthDOM;
-}();
-Ol3ControlsMeasuresMeasureAzimuth = function (ol, woodman, Utils, Measures, MeasureAzimuthDOM, ID) {
-    function MeasureAzimuth(options) {
-        options = options || {};
-        if (!(this instanceof MeasureAzimuth)) {
-            throw new TypeError('ERROR CLASS_CONSTRUCTOR');
-        }
-        this.CLASSNAME = 'MeasureAzimuth';
-        this._uid = ID.generate();
-        this._showContainer = null;
-        this._initialize(options);
-        var container = options.element ? options.element : this._initializeContainer();
-        ol.control.Control.call(this, {
-            element: container,
-            target: options.target,
-            render: options.render
-        });
-    }
-    ol.inherits(MeasureAzimuth, ol.control.Control);
-    MeasureAzimuth.prototype = Object.create(ol.control.Control.prototype, {});
-    Utils.assign(MeasureAzimuth.prototype, Measures);
-    Utils.assign(MeasureAzimuth.prototype, MeasureAzimuthDOM);
-    MeasureAzimuth.prototype.constructor = MeasureAzimuth;
-    MeasureAzimuth.prototype.setMap = function (map) {
-        if (map) {
-            var self = this;
-            map.on('singleclick', function (e) {
-                self.onPointerMoveAzimutHandler(e);
-            });
-            map.on('pointermove', function (e) {
-                self.onPointerMoveAzimutHandler(e);
-            });
-        }
-        ol.control.Control.prototype.setMap.call(this, map);
-    };
-    MeasureAzimuth.prototype._initialize = function (options) {
-        this.options = {};
-        this.createStylingMeasureInteraction(options.styles);
-    };
-    MeasureAzimuth.prototype._initializeContainer = function () {
-        var container = this._createMainContainerElement();
-        var show = this._showContainer = this._createShowMeasureAzimuthElement();
-        container.appendChild(show);
-        this._showContainer.checked = true;
-        var picto = this._createShowMeasureAzimuthPictoElement();
-        container.appendChild(picto);
-        return container;
-    };
-    MeasureAzimuth.prototype.format = function (line) {
-        var map = this.getMap();
-        var sourceProj = map.getView().getProjection();
-        var c1 = ol.proj.transform(line.getFirstCoordinate(), sourceProj, 'EPSG:4326');
-        var c2 = ol.proj.transform(line.getCoordinateAt(0.001), sourceProj, 'EPSG:4326');
-        var degrees2radians = Math.PI / 180;
-        var radians2degrees = 180 / Math.PI;
-        var lon1 = degrees2radians * c1[0];
-        var lon2 = degrees2radians * c2[0];
-        var lat1 = degrees2radians * c1[1];
-        var lat2 = degrees2radians * c2[1];
-        var a = Math.sin(lon2 - lon1) * Math.cos(lat2);
-        var b = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1);
-        var atan = Math.atan2(a, b);
-        var azimut = radians2degrees * atan;
-        if (azimut < 0) {
-            azimut += 360;
-        }
-        var output = Math.round(azimut * 100) / 100 + ' \xB0';
-        return output;
-    };
-    MeasureAzimuth.prototype.onShowMeasureAzimuthClick = function (e) {
-        this.onShowMeasureClick(e, 'LineString');
-    };
-    MeasureAzimuth.prototype.onPointerMoveAzimutHandler = function (e) {
-        this.onPointerMoveHandler(e);
-        if (this.sketch) {
-            var geom = this.sketch.getGeometry();
-            if (geom.getCoordinates().length > 2) {
-                this.measureDraw.finishDrawing();
-            }
-        }
-    };
-    return MeasureAzimuth;
-}(ol, {}, Ol3Utils, Ol3ControlsMeasuresMeasures, CommonControlsMeasureAzimuthDOM, CommonUtilsSelectorID);
-Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, KML, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution, MeasureLength, MeasureArea, MeasureAzimuth) {
+Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution) {
     Gp.ol3extVersion = '0.11.0';
-    Gp.ol3extDate = '2016-10-24';
+    Gp.ol3extDate = '2016-09-19';
     Gp.LayerUtils = LayerUtils;
-    ol.format.KMLExtended = KML;
     CRS.overload();
     ol.source.GeoportalWMTS = SourceWMTS;
     ol.source.GeoportalWMS = SourceWMS;
@@ -26274,11 +25426,8 @@ Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, KML, CRS, SourceWMTS, S
     ol.control.Drawing = Drawing;
     ol.control.ReverseGeocode = ReverseGeocode;
     ol.control.LayerImport = LayerImport;
-    ol.control.MeasureLength = MeasureLength;
-    ol.control.MeasureArea = MeasureArea;
-    ol.control.MeasureAzimuth = MeasureAzimuth;
     return Gp;
-}(ol, gp, CommonUtilsLayerUtils, CommonUtilsRegister, Ol3FormatsKML, Ol3CRSCRS, Ol3LayersSourceWMTS, Ol3LayersSourceWMS, Ol3LayersLayerWMTS, Ol3LayersLayerWMS, Ol3ControlsLayerSwitcher, Ol3ControlsSearchEngine, Ol3ControlsMousePosition, Ol3ControlsDrawing, Ol3ControlsRoute, Ol3ControlsIsocurve, Ol3ControlsReverseGeocode, Ol3ControlsLayerImport, Ol3ControlsGeoportalAttribution, Ol3ControlsMeasuresMeasureLength, Ol3ControlsMeasuresMeasureArea, Ol3ControlsMeasuresMeasureAzimuth);
+}(ol, gp, CommonUtilsLayerUtils, CommonUtilsRegister, Ol3CRSCRS, Ol3LayersSourceWMTS, Ol3LayersSourceWMS, Ol3LayersLayerWMTS, Ol3LayersLayerWMS, Ol3ControlsLayerSwitcher, Ol3ControlsSearchEngine, Ol3ControlsMousePosition, Ol3ControlsDrawing, Ol3ControlsRoute, Ol3ControlsIsocurve, Ol3ControlsReverseGeocode, Ol3ControlsLayerImport, Ol3ControlsGeoportalAttribution);
 window.proj4 = proj4;
 
 return Gp;
