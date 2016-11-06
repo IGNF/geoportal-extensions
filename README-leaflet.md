@@ -125,7 +125,7 @@ Partie à écrire...
 
 ### Versions de Leaflet supportées
 
-L'extension Géoportail pour Leaflet peut s'utiliser avec la [version 0.7](http://leafletjs.com/reference.html) de Leaflet ainsi qu'avec les [versions 1.0.0 en release candidate RC1 et RC2] (http://leafletjs.com/reference-1.0.0.html) dont le support de ces dernières versions, non encore définitives, sont encore expérimentales.
+L'extension Géoportail pour Leaflet peut s'utiliser avec la [version 0.7](http://leafletjs.com/reference.html) de Leaflet ainsi qu'avec la [version 1.0] (http://leafletjs.com/2016/09/27/leaflet-1.0-final.html) sortie le 27 septembre 2016. 
 
 La compatibilité avec les versions antérieures n'a pas été testée.
 
