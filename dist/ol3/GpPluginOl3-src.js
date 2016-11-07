@@ -26277,7 +26277,7 @@ Ol3ControlsMeasuresMeasureAzimuth = function (ol, woodman, Utils, Measures, Meas
     };
     return MeasureAzimuth;
 }(ol, {}, Ol3Utils, Ol3ControlsMeasuresMeasures, CommonControlsMeasureAzimuthDOM, CommonUtilsSelectorID);
-Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, KML, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution, MeasureLength, MeasureArea, MeasureAzimuth) {
+Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, KML, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution, Markers, MeasureLength, MeasureArea, MeasureAzimuth) {
     Gp.ol3extVersion = '0.11.0';
     Gp.ol3extDate = '2016-11-07';
     Gp.LayerUtils = LayerUtils;
@@ -26299,8 +26299,9 @@ Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, KML, CRS, SourceWMTS, S
     ol.control.MeasureLength = MeasureLength;
     ol.control.MeasureArea = MeasureArea;
     ol.control.MeasureAzimuth = MeasureAzimuth;
+    ol.control.DefaultMarkers = Markers;
     return Gp;
-}(ol, gp, CommonUtilsLayerUtils, CommonUtilsRegister, Ol3FormatsKML, Ol3CRSCRS, Ol3LayersSourceWMTS, Ol3LayersSourceWMS, Ol3LayersLayerWMTS, Ol3LayersLayerWMS, Ol3ControlsLayerSwitcher, Ol3ControlsSearchEngine, Ol3ControlsMousePosition, Ol3ControlsDrawing, Ol3ControlsRoute, Ol3ControlsIsocurve, Ol3ControlsReverseGeocode, Ol3ControlsLayerImport, Ol3ControlsGeoportalAttribution, Ol3ControlsMeasuresMeasureLength, Ol3ControlsMeasuresMeasureArea, Ol3ControlsMeasuresMeasureAzimuth);
+}(ol, gp, CommonUtilsLayerUtils, CommonUtilsRegister, Ol3FormatsKML, Ol3CRSCRS, Ol3LayersSourceWMTS, Ol3LayersSourceWMS, Ol3LayersLayerWMTS, Ol3LayersLayerWMS, Ol3ControlsLayerSwitcher, Ol3ControlsSearchEngine, Ol3ControlsMousePosition, Ol3ControlsDrawing, Ol3ControlsRoute, Ol3ControlsIsocurve, Ol3ControlsReverseGeocode, Ol3ControlsLayerImport, Ol3ControlsGeoportalAttribution, Ol3ControlsUtilsMarkers, Ol3ControlsMeasuresMeasureLength, Ol3ControlsMeasuresMeasureArea, Ol3ControlsMeasuresMeasureAzimuth);
 window.proj4 = proj4;
 
 return Gp;
