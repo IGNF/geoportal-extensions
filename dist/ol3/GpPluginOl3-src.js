@@ -17613,8 +17613,11 @@ Ol3ControlsMousePosition = function (ol, proj4, woodman, Gp, Utils, RightManagem
     };
     MousePosition.prototype._displayDMS = function (olCoordinate) {
         var coordinate = {};
-        var coords = ol.coordinate.toStringHDMS(olCoordinate, 2).split('N ');
-        coordinate.lat = coords[0] + 'N';
+        var regex = /(.*)([NS])\s(.*)([EW])/;
+        var subst = '$1$2 | $3$4';
+        var str = ol.coordinate.toStringHDMS(olCoordinate, 2).replace(regex, subst);
+        var coords = str.split('|');
+        coordinate.lat = coords[0];
         coordinate.lng = coords[1];
         return coordinate;
     };

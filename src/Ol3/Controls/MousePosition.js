@@ -789,9 +789,12 @@ define([
      */
     MousePosition.prototype._displayDMS = function (olCoordinate) {
         var coordinate = {};
-        var coords = ol.coordinate.toStringHDMS(olCoordinate, 2).split("N ");
+        var regex = /(.*)([NS])\s(.*)([EW])/;
+        var subst = "$1$2 | $3$4";
+        var str = ol.coordinate.toStringHDMS(olCoordinate, 2).replace(regex, subst);
+        var coords = str.split("|");
         // coords est du type : "48° 00′ 00″ N 2° 00′ 00″ E". On veut récupérer les 2 coordonnées séparément.
-        coordinate.lat = coords[0] + "N";
+        coordinate.lat = coords[0];
         coordinate.lng = coords[1];
         return coordinate;
     };
