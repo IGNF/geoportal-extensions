@@ -62,6 +62,7 @@ define([
         * @param {Boolean} [options.collapsed] - collapse mode, false by default
         * @param {String}  [options.position] - position of component into the map, 'topleft' by default
         * @param {Boolean} [options.displayInfo] - get informations on popup marker
+        * @param {Sting|Numeric} [options.zoomTo] - zoom to results, by default, current zoom. Value possible : min, max or zoom level
         * @param {Sting}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
         * @param {Object}  [options.resources] - resources to be used by geocode and autocompletion services, by default : ["StreetAddress", "PositionOfInterest"]
         * @param {Boolean} [options.displayAdvancedSearch] - False to disable advanced search tools (it will not be displayed). Default is true (displayed)
@@ -74,6 +75,7 @@ define([
         *      collapsed : true,
         *      displayInfo : true,
         *      displayAdvancedSearch : true,
+        *      zoomTo : 15,
         *      resources : ["PositionOfInterest", "StreetAddress"],
         *      advancedSearch : {
         *          PositionOfInterest : [{name : "municipality", title : "Ville"}],
@@ -955,8 +957,23 @@ define([
         */
         _setPosition : function (position) {
 
-            var map = this._map;
-            // map.setZoomAround(L.latLng(position.x, position.y), map.getMaxZoom(), true);
+            var map  = this._map;
+            var zoom = this.options.zoomTo;
+
+            if (!zoom || zoom === "") {
+                zoom = map.getZoom();
+            } else {
+                if (zoom === "max") {
+                    zoom = map.getMaxZoom();
+                } else if (zoom === "min") {
+                    zoom = map.getMinZoom();
+                } else {
+                    if (isNaN(zoom)) {
+                        zoom = map.getZoom();
+                    }
+                }
+            }
+            map.setZoomAround(L.latLng(position.x, position.y), zoom, true);
             map.panTo(L.latLng(position.x, position.y));
 
         },

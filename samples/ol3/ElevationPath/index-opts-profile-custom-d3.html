@@ -32,6 +32,10 @@
     height: 500px;
     margin: 10px;
   }
+  #profil {
+    z-index: 50;
+    position: absolute;
+  }
   </style>
 </head>
 <body>
@@ -97,7 +101,11 @@
           });
 
           var profil = new ElevationPath({
-            displayProfileFunction : ElevationPath.DISPLAY_PROFILE_LIB_D3
+            active : true,
+            displayProfileOptions : {
+              apply : ElevationPath.DISPLAY_PROFILE_LIB_D3,
+              target : document.getElementById("profil")
+            }
           });
           map.addControl(profil);
 
@@ -116,7 +124,9 @@
 
       <!-- map -->
       <div id="map">
+        <div id="profil"></div>
       </div>
+
 
       <!-- Comment utiliser le plugin avec un exemple -->
       <p>EXEMPLE D'UTILISATION</p>

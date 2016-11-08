@@ -49,7 +49,9 @@
     });
 
     var profil = new ol.control.ElevationPath({
-      displayProfileFunction : ol.control.ElevationPath.DISPLAY_PROFILE_LIB_AMCHARTS
+      displayProfileOptions : {
+        apply : ol.control.ElevationPath.DISPLAY_PROFILE_LIB_AMCHARTS
+      }
     });
     map.addControl(profil);
 

@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="../../../res/ol3/Controls/ElevationPath/GPelevationPathOL3.css" />
 
   <!-- requirejs -->
-  <script src="lib/amCharts-min.js"></script>
+  <script src="lib/d3.v3.min.js"></script>
   <script src="../../../lib/require.js"></script>
 
   <!-- load geoportail-waiting image -->
@@ -29,6 +29,7 @@
     background-repeat:no-repeat;
     max-width: 800px;
     height: 500px;
+    margin: 10px;
   }
   #profil {
     z-index: 50;
@@ -87,62 +88,26 @@
           var osm = new ol.layer.Tile({
             source : new ol.source.OSM()
           });
-
           map = new ol.Map({
             target : "map",
             layers : [
-              new LayerWMTS({
-                  layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS" ,
-              })
+              osm
             ],
             view : new ol.View({
               center : [288074.8449901076, 6247982.515792289],
-              zoom : 12
+              zoom : 6
             })
           });
 
           var profil = new ElevationPath({
             active : true,
+            debug : true,
             elevationOptions : {
-              // sampling : 50
+              sampling : 50
             },
             displayProfileOptions : {
-              apply : ElevationPath.DISPLAY_PROFILE_LIB_AMCHARTS,
+              apply : ElevationPath.DISPLAY_PROFILE_RAW,
               target : document.getElementById("profil")
-            },
-            stylesOptions : {
-              draw : {
-               start : {
-                 strokeColor : "rgba(0, 0, 0, 0.5)",
-                 strokeLineDash : [3, 3],
-                 strokeWidth : 2
-               },
-               pointer : {
-                 imageRadius : 5,
-                 imageFillColor : "rgba(255, 255, 255, 0.2)",
-                 imageStrokeColor : "rgba(0, 0, 0, 0.7)"
-               },
-               finish : {}
-              },
-              marker : {
-                imageSrc : "http://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi.png"
-              },
-              profile : {
-                fontSize : 12,
-                categoryAxis : {
-                  title : "Axix horizontal title"
-                },
-                valueAxes : [{
-                  title : "Axis vertical title",
-                }],
-                graphs : [{
-                  fillAlphas : 1,
-                  fillColors : "#FF00FF",
-                  lineAlpha : 1,
-                  lineColor : "#000000",
-                  lineThickness : 1
-                }]
-              }
             }
           });
           map.addControl(profil);
@@ -160,9 +125,9 @@
       });
       </script>
 
-      <!-- map -->
       <div id="profil">
       </div>
+      <!-- map -->
       <div id="map">
       </div>
 

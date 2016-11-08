@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.8.1
- * @date 2016-10-13
+ * @date 2016-11-08
  *
  */
 /*!
@@ -1346,6 +1346,7 @@ var gp, CommonUtilsAutoLoadConfig, leafletDraw, sortable, CommonControlsLayerSwi
                 var strUrlProxified = null;
                 var strData = this.request;
                 var bUrlProxified = this.options.proxyURL && this.options.protocol === 'XHR' ? true : false;
+                this.options.serverUrl = Helper.normalyzeUrl(this.options.serverUrl, { 'gp-access-lib': '1.0.0-beta3' }, false);
                 if (bUrlProxified) {
                     if (this.options.httpMethod === 'GET') {
                         strUrlProxified = this.options.proxyURL + Helper.normalyzeUrl(this.options.serverUrl, this.request, true);
@@ -7378,11 +7379,11 @@ var gp, CommonUtilsAutoLoadConfig, leafletDraw, sortable, CommonControlsLayerSwi
         var bbox = {};
         return Services;
     }(ServicesAltiAlti, ServicesAutoConfAutoConf, ServicesGeocodeGeocode, ServicesGeocodeReverseGeocode, ServicesAutoCompleteAutoComplete, ServicesRouteRoute, ServicesProcessIsoCurveProcessIsoCurve);
-    Gp = function (XHR, Services, AltiResponse, Elevation, AutoCompleteResponse, SuggestedLocation, GetConfigResponse, Constraint, Format, Layer, Legend, Metadata, Originator, Service, Style, Territory, Thematic, TM, TMLimit, TMS, GeocodeResponse, GeocodedLocation, DirectGeocodedLocation, ReverseGeocodedLocation, IsoCurveResponse, RouteResponse, RouteInstruction, Error) {
+    Gp = function (XHR, Services, AltiResponse, Elevation, AutoCompleteResponse, SuggestedLocation, GetConfigResponse, Constraint, Format, Layer, Legend, Metadata, Originator, Service, Style, Territory, Thematic, TM, TMLimit, TMS, GeocodeResponse, GeocodedLocation, DirectGeocodedLocation, ReverseGeocodedLocation, IsoCurveResponse, RouteResponse, RouteInstruction, Helper, Error) {
         var scope = typeof window !== 'undefined' ? window : {};
         var Gp = scope.Gp || {
             servicesVersion: '1.0.0-beta3',
-            servicesDate: '2016-07-29',
+            servicesDate: '2016-10-16',
             extend: function (strNS, value) {
                 var parts = strNS.split('.');
                 var parent = this;
@@ -7429,10 +7430,11 @@ var gp, CommonUtilsAutoLoadConfig, leafletDraw, sortable, CommonControlsLayerSwi
         Gp.extend('Services.IsoCurveResponse', IsoCurveResponse);
         Gp.extend('Services.RouteResponse', RouteResponse);
         Gp.extend('Services.Route.RouteInstruction', RouteInstruction);
+        Gp.extend('Helper', Helper);
         Gp.extend('Error', Error);
         scope.Gp = Gp;
         return scope.Gp;
-    }(ProtocolsXHR, ServicesServices, ServicesAltiResponseModelAltiResponse, ServicesAltiResponseModelElevation, ServicesAutoCompleteResponseModelAutoCompleteResponse, ServicesAutoCompleteResponseModelSuggestedLocation, ServicesAutoConfResponseModelAutoConfResponse, ServicesAutoConfResponseModelConstraint, ServicesAutoConfResponseModelFormat, ServicesAutoConfResponseModelLayer, ServicesAutoConfResponseModelLegend, ServicesAutoConfResponseModelMetadata, ServicesAutoConfResponseModelOriginator, ServicesAutoConfResponseModelService, ServicesAutoConfResponseModelStyle, ServicesAutoConfResponseModelTerritory, ServicesAutoConfResponseModelThematic, ServicesAutoConfResponseModelTileMatrix, ServicesAutoConfResponseModelTileMatrixLimit, ServicesAutoConfResponseModelTileMatrixSet, ServicesGeocodeResponseModelGeocodeResponse, ServicesGeocodeResponseModelGeocodedLocation, ServicesGeocodeResponseModelDirectGeocodedLocation, ServicesGeocodeResponseModelReverseGeocodedLocation, ServicesProcessIsoCurveResponseModelProcessIsoCurveResponse, ServicesRouteResponseModelRouteResponse, ServicesRouteResponseModelRouteInstruction, ExceptionsErrorService);
+    }(ProtocolsXHR, ServicesServices, ServicesAltiResponseModelAltiResponse, ServicesAltiResponseModelElevation, ServicesAutoCompleteResponseModelAutoCompleteResponse, ServicesAutoCompleteResponseModelSuggestedLocation, ServicesAutoConfResponseModelAutoConfResponse, ServicesAutoConfResponseModelConstraint, ServicesAutoConfResponseModelFormat, ServicesAutoConfResponseModelLayer, ServicesAutoConfResponseModelLegend, ServicesAutoConfResponseModelMetadata, ServicesAutoConfResponseModelOriginator, ServicesAutoConfResponseModelService, ServicesAutoConfResponseModelStyle, ServicesAutoConfResponseModelTerritory, ServicesAutoConfResponseModelThematic, ServicesAutoConfResponseModelTileMatrix, ServicesAutoConfResponseModelTileMatrixLimit, ServicesAutoConfResponseModelTileMatrixSet, ServicesGeocodeResponseModelGeocodeResponse, ServicesGeocodeResponseModelGeocodedLocation, ServicesGeocodeResponseModelDirectGeocodedLocation, ServicesGeocodeResponseModelReverseGeocodedLocation, ServicesProcessIsoCurveResponseModelProcessIsoCurveResponse, ServicesRouteResponseModelRouteResponse, ServicesRouteResponseModelRouteInstruction, UtilsHelper, ExceptionsErrorService);
     return Gp;
 }));
 CommonUtilsAutoLoadConfig = function (Gp) {
@@ -19809,7 +19811,7 @@ LeafletControlsMousePosition = function (L, woodman, Gp, RightManagement, MouseP
                 },
                 {
                     code: 'MERCATOR',
-                    label: 'Mercator',
+                    label: 'Web Mercator',
                     crs: L.CRS.EPSG3395,
                     type: 'Metric'
                 },
@@ -23461,6 +23463,21 @@ LeafletControlsSearchEngine = function (L, woodman, Gp, RightManagement, ID, Sea
         },
         _setPosition: function (position) {
             var map = this._map;
+            var zoom = this.options.zoomTo;
+            if (!zoom || zoom === '') {
+                zoom = map.getZoom();
+            } else {
+                if (zoom === 'max') {
+                    zoom = map.getMaxZoom();
+                } else if (zoom === 'min') {
+                    zoom = map.getMinZoom();
+                } else {
+                    if (isNaN(zoom)) {
+                        zoom = map.getZoom();
+                    }
+                }
+            }
+            map.setZoomAround(L.latLng(position.x, position.y), zoom, true);
             map.panTo(L.latLng(position.x, position.y));
         },
         _setMarker: function (position, information, display) {
@@ -24672,13 +24689,13 @@ LeafletLayersLayerEvent = function (woodman, LayerUtil) {
     };
     return LayerEvent;
 }({}, CommonUtilsLayerUtils);
-LeafletLayersWMS = function (L, woodman, LayerEvent) {
+LeafletLayersWMS = function (L, Gp, woodman, LayerEvent) {
     var WMS = L.TileLayer.WMS.extend({
         includes: LayerEvent,
         initialize: function (url, options) {
             var settings = {};
             L.Util.extend(settings, options.paramsWms, options.paramsNative);
-            L.TileLayer.WMS.prototype.initialize.call(this, url, settings);
+            L.TileLayer.WMS.prototype.initialize.call(this, Gp.Helper.normalyzeUrl(url, { 'gp-leaflet-ext': '0.8.1' }, false), settings);
             this._originators = options.originators;
             this._legends = options.legends;
             this._metadata = options.metadata;
@@ -24741,8 +24758,8 @@ LeafletLayersWMS = function (L, woodman, LayerEvent) {
         }
     });
     return WMS;
-}(leaflet, {}, LeafletLayersLayerEvent);
-LeafletLayersWMTS = function (L, woodman, LayerEvent) {
+}(leaflet, gp, {}, LeafletLayersLayerEvent);
+LeafletLayersWMTS = function (L, Gp, woodman, LayerEvent) {
     var WMTS = L.TileLayer.extend({
         includes: LayerEvent,
         defaultWmtsParams: {
@@ -24757,7 +24774,7 @@ LeafletLayersWMTS = function (L, woodman, LayerEvent) {
         initialize: function (url, options) {
             this._wmtsParams = {};
             L.Util.extend(this._wmtsParams, this.defaultWmtsParams, options.paramsWmts);
-            L.TileLayer.prototype.initialize.call(this, url, options.paramsNative);
+            L.TileLayer.prototype.initialize.call(this, Gp.Helper.normalyzeUrl(url, { 'gp-leaflet-ext': '0.8.1' }, false), options.paramsNative);
             this._originators = options.originators;
             this._legends = options.legends;
             this._metadata = options.metadata;
@@ -24807,7 +24824,7 @@ LeafletLayersWMTS = function (L, woodman, LayerEvent) {
         }
     });
     return WMTS;
-}(leaflet, {}, LeafletLayersLayerEvent);
+}(leaflet, gp, {}, LeafletLayersLayerEvent);
 LeafletLayersLayers = function (L, woodman, LayerConfig, WMS, WMTS) {
     var Layers = {
         options: {},
@@ -24916,7 +24933,7 @@ LeafletLayersLayers = function (L, woodman, LayerConfig, WMS, WMTS) {
 }(leaflet, {}, LeafletLayersLayerConfig, LeafletLayersWMS, LeafletLayersWMTS);
 LeafletGpPluginLeaflet = function (L, P, Gp, Controls, Layers, CRS, Register) {
     Gp.leafletExtVersion = '0.8.1';
-    Gp.leafletExtDate = '2016-10-13';
+    Gp.leafletExtDate = '2016-11-08';
     Gp.Register = Register;
     L.geoportalLayer = Layers;
     L.geoportalControl = Controls;

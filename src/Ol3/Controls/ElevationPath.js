@@ -33,7 +33,7 @@ define([
     * @alias ol.control.ElevationPath
     * @extends {ol.control.Control}
     * @param {Object} options - options for function call.
-    * @param {Boolean} [options.collapsed = true] - specify if control should be collapsed at startup. Default is true.
+    * @param {Boolean} [options.active = false] - specify if control should be actved at startup. Default is false.
     * @param {Object} [options.stylesOptions = {}] - styles management
     * @param {Object} [options.stylesOptions.marker = {}] - styles management of marker with properties or object {ol.style.Icon}
     * @param {String} [options.stylesOptions.marker.imageSrc] - Icon source
@@ -54,13 +54,16 @@ define([
     * @param {Object} [options.elevationPathOptions = {}] - elevation service options.
     *       see {@link http://depot.ign.fr/geoportail/bibacces/develop/doc/module-Services.html#~getAltitude}
     *       to know all elevation options
+    * @param {Object} [options.displayProfileOptions = {}] - profile options.
+    * @param {Function} [options.displayProfileOptions.apply] - function to display profil panel.
+    * @param {Object} [options.displayProfileOptions.target] - container DOM for the profil panel.
     * @example
     *
     * var measure = new ol.control.ElevationPath({
     *    element : null,
     *    target : null,
     *    render : null,
-    *    collapsed : true,
+    *    active : false,
     *    stylesOptions : {
     *     draw : {
     *       pointer : {
@@ -82,13 +85,16 @@ define([
     *     profile : {}
     *    },
     *    elevationPathOptions : {},
-    *    displayProfilFunction : null
+    *    displayProfileOptions : {
+    *       apply : null,
+    *       target : null
+    *    }
     * });
     *
     * Exemples :
-    * - displayProfileFunction : null
-    * - displayProfileFunction : function (elevations, container, context) {  // TODO... }
-    * - displayProfileFunction : ol.control.ElevationPath.displayProfile
+    * - displayProfileOptions.function : null
+    * - displayProfileOptions.function : function (elevations, container, context) {  // do stuff... }
+    * - displayProfileOptions.function : ol.control.ElevationPath.DISPLAY_PROFILE_{LIB_AMCHARTS | LIB_D3 | RAW}
     * (detection de la lib. graphique : d3 / AmCharts)
     *
     */
@@ -259,6 +265,8 @@ define([
             left : 40
         };
 
+        // FIXME
+        // If your DIV is not visible, you won't be able to get its dimensions.
         var width  = container.clientWidth - margin.left - margin.right;
         var height = container.clientHeight - margin.top - margin.bottom;
 
@@ -705,14 +713,14 @@ define([
 
         if ( map ) {
             // activation des interactions de dessin selon la valeur de
-            // l'option collapsed
-            if (!this.options.collapsed) {
+            // l'option active
+            if (this.options.active) {
                 // on n'affiche pas la fenetre de profile s'il n'existe pas...
                 if (this._profile === null) {
                     this._panelContainer.style.display = "none";
                 }
-                this._initMeasureInteraction();
-                this._addMeasureInteraction();
+                this._initMeasureInteraction(map);
+                this._addMeasureInteraction(map);
             }
 
             // ajout du composant dans une toolbox
@@ -727,25 +735,24 @@ define([
     };
 
     /**
-     * Returns true if widget is collapsed (minimized),
+     * Returns true if widget is actived (drawing),
      * false otherwise
      *
-     * @returns {Boolean} collapsed - true if widget is collapsed
+     * @returns {Boolean} active - true or false
      */
-    ElevationPath.prototype.getCollapsed = function () {
-        logger.trace("ElevationPath::getCollapsed");
-        return this.options.collapsed;
+    ElevationPath.prototype.getActive = function () {
+        logger.trace("ElevationPath::getActive");
+        return this.options.active;
     };
 
     /**
-     * TODO Collapse or display widget main container
+     * Actived widget drawing or not
      *
-     * @param {Boolean} collapsed - true to collapse widget, false to display it
+     * @param {Boolean} active - true / false
      */
-    ElevationPath.prototype.setCollapsed = function (collapsed) {
-        logger.trace("ElevationPath::setCollapsed");
-        this.options.collapsed = collapsed;
-        // TODO gestion du clic d'ouverture/fermeture du panneau du profil...
+    ElevationPath.prototype.setActive = function (active) {
+        logger.trace("ElevationPath::setActive");
+        this.options.active = active;
     };
 
     /**
@@ -753,6 +760,8 @@ define([
      */
     ElevationPath.prototype.clear = function () {
         logger.trace("ElevationPath::clear");
+
+        var map = this.getMap();
 
         // graph
         this._profile = null;
@@ -768,18 +777,21 @@ define([
         this._lastSketch = null;
         this._currentSketch = null;
 
-        // marker
-        if (this._marker) {
-            this._measureSource.removeFeature(this._marker);
-            this._marker = null;
+        if (this._measureSource) {
+            // marker
+            if (this._marker) {
+                this._measureSource.removeFeature(this._marker);
+                this._marker = null;
+            }
+
+            // all other features
+            var _features = this._measureSource.getFeatures();
+            for (var i = 0; i < _features.length; i++) {
+                this._measureSource.removeFeature(_features[i]);
+            }
         }
 
-        var _features = this._measureSource.getFeatures();
-        for (var i = 0; i < _features.length; i++) {
-            this._measureSource.removeFeature(_features[i]);
-        }
-
-        this._removeMeasureInteraction();
+        this._removeMeasureInteraction(map);
     };
 
     // ################################################################### //
@@ -807,18 +819,35 @@ define([
         var debug = options.debug;
         this.options.debug = ( typeof debug === "undefined") ? false : debug;
 
-        // gestion du mode collapsed
-        var collapsed = options.collapsed;
-        this.options.collapsed = ( typeof collapsed === "undefined") ? true : collapsed;
+        // gestion du mode active
+        var active = options.active;
+        this.options.active = ( typeof active === "undefined") ? false : active;
 
         // gestion des options du service
         var service = options.elevationOptions;
         this.options.service = ( typeof service === "undefined" || Object.keys(service).length === 0 ) ? {} : service;
 
-        // gestion de la fonction d'affichage
-        var displayFunction = options.displayProfileFunction;
-        this.options.displayFunction =  ( typeof displayFunction === "function" ) ?
+        // gestion de l'affichage du profil
+        var profil = options.displayProfileOptions || {};
+        if ( typeof profil === "undefined" || Object.keys(profil).length === 0 ) {
+            this.options.profile = {
+                apply : ElevationPath.DISPLAY_PROFILE_BY_DEFAULT,
+                target : null
+            };
+
+        } else {
+            this.options.profile = {};
+        }
+
+        // gestion de la fonction du profil
+        var displayFunction = profil.apply || this.options.profile.apply;
+        this.options.profile.apply =  ( typeof displayFunction === "function" ) ?
             displayFunction : ElevationPath.DISPLAY_PROFILE_BY_DEFAULT;
+
+        // gestion du container du profil
+        var displayContainer = profil.target || this.options.profile.target;
+        this.options.profile.target =  ( typeof displayContainer === "undefined" ) ?
+            null : displayContainer;
 
         // gestion des styles
         var styles = options.stylesOptions || {};
@@ -880,13 +909,13 @@ define([
         var inputShow = this._showContainer = this._createShowElevationPathElement();
         container.appendChild(inputShow);
 
-        // mode "collapsed"
-        if (!this.options.collapsed) {
-            this._showContainer.checked = true;
-        }
-
         var picto = this._pictoContainer = this._createShowElevationPathPictoElement();
         container.appendChild(picto);
+
+        // mode "active"
+        if (this.options.active) {
+            this._showContainer.checked = true;
+        }
 
         // panneau
         var panel = this._panelContainer = this._createElevationPathPanelElement();
@@ -903,7 +932,9 @@ define([
         var waiting = this._waitingContainer = this._createElevationPathWaitingElement();
         panel.appendChild(waiting);
 
-        container.appendChild(panel);
+        if (this.options.profile.target === null) {
+            container.appendChild(panel);
+        }
 
         return container;
     };
@@ -1142,14 +1173,15 @@ define([
 
     /**
     * this method is called by this.onShowElevationPathClick,
-    * and initialize a vector layer, if widget is not collapsed.
+    * and initialize a vector layer, if widget is active.
     *
+    * @param {ol.Map} map - Map
     * @private
     */
-    ElevationPath.prototype._initMeasureInteraction = function () {
+    ElevationPath.prototype._initMeasureInteraction = function (map) {
         logger.trace("ElevationPath::_initMeasureInteraction()");
 
-        var map = this.getMap();
+        // var map = this.getMap();
         if (!map) {
             return;
         }
@@ -1166,14 +1198,15 @@ define([
 
     /**
     * this method is called by this.onShowElevationPathClick,
-    * and add draw interaction to map, if widget is not collapsed.
+    * and add draw interaction to map, if widget is not active.
     *
+    * @param {ol.Map} map - Map
     * @private
     */
-    ElevationPath.prototype._addMeasureInteraction = function () {
+    ElevationPath.prototype._addMeasureInteraction = function (map) {
         logger.trace("ElevationPath::_addMeasureInteraction()");
 
-        var map = this.getMap();
+        // var map = this.getMap();
         if (!map) {
             return;
         }
@@ -1222,10 +1255,10 @@ define([
 
             // set an alti request and display results
 
+            // FIXME à revoir...
             // Si il n'y a pas de surcharge utilisateur de la fonction de recuperation des
             // resultats, on realise l'affichage du panneau
-            if ( typeof self.options.service.onSuccess === "undefined" ) {
-                self._pictoContainer.style.display = "none";
+            if ( typeof self.options.service.onSuccess === "undefined" && self.options.profile.target === null) {
                 self._panelContainer.style.display = "block";
             }
             self._requestService();
@@ -1237,12 +1270,13 @@ define([
     * and removes draw interaction from map (if exists)
     * And removes layer too...
     *
+    * @param {ol.Map} map - Map
     * @private
     */
-    ElevationPath.prototype._removeMeasureInteraction = function () {
+    ElevationPath.prototype._removeMeasureInteraction = function (map) {
         logger.trace("ElevationPath::_removeMeasureInteraction()");
 
-        var map = this.getMap();
+        // var map = this.getMap();
         if (!map) {
             return;
         }
@@ -1370,6 +1404,7 @@ define([
         var _requestServiceOnSuccess = function (result) {
             logger.trace(result);
             if (result) {
+                self._panelContainer.style.display = "block";
                 self._displayProfile(result.elevations);
                 self._waitingContainer.className = "GPelevationPathCalcWaitingContainerHidden";
                 self._waiting = false;
@@ -1379,7 +1414,6 @@ define([
         /** callback _requestServiceOnFailure */
         var _requestServiceOnFailure = function (error) {
             // on ferme le panneau en cas d'erreur !
-            self._pictoContainer.style.display = "block";
             self._panelContainer.style.display = "none";
             logger.error(error.message);
             self._waitingContainer.className = "GPelevationPathCalcWaitingContainerHidden";
@@ -1482,10 +1516,23 @@ define([
     ElevationPath.prototype._displayProfile = function (elevations) {
         logger.trace("ElevationPath::_displayProfile", elevations);
 
+        // data
         var data = this._computeElevationMeasure(elevations);
-        var container = this._profileContainer;
+
+        // container
+        var container = this.options.profile.target;
+        if (container) {
+            container.appendChild(this._panelContainer);
+        }
+        container = this._profileContainer;
+
+        // TODO contexte ?
         var context = this;
-        var displayFunction = this.options.displayFunction;
+
+        // fonction
+        var displayFunction = this.options.profile.apply;
+
+        // execution...
         displayFunction.call(this, data, container, context);
 
         // Calcul du profile
@@ -1506,7 +1553,7 @@ define([
     };
 
     /**
-    * display profile with simple results of service
+    * NOT USE : display profile with simple results of service
     * TODO CSS externe pour id=profileElevationResults
     * TODO Style des points du profile
     *
@@ -1573,7 +1620,7 @@ define([
     };
 
     /**
-    * display graphical profile with lib. D3
+    * NOT USE : display graphical profile with lib. D3
     * TODO gestion des styles utilisateurs (text) !
     * FIXME feature or overlay pour le deplacement du marker ?
     *
@@ -1835,7 +1882,7 @@ define([
     };
 
     /**
-    * display graphical profile with lib.AmCharts
+    * NOT USE : display graphical profile with lib.AmCharts
     * properties amcharts :
     * https://docs.amcharts.com/3/javascriptcharts/AmChart
     * FIXME feature or overlay pour le deplacement du marker ?
@@ -1926,12 +1973,11 @@ define([
             if (this._profile === null) {
                 this._panelContainer.style.display = "none";
             }
-            this._initMeasureInteraction();
-            this._addMeasureInteraction();
+            this._initMeasureInteraction(map);
+            this._addMeasureInteraction(map);
         } else {
-            this._pictoContainer.style.display = "block";
             this._panelContainer.style.display = "none";
-            this._removeMeasureInteraction();
+            this._removeMeasureInteraction(map);
             this.clear();
         }
     };

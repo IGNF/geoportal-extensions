@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-10-19
+ * @date 2016-11-08
  *
  */
 /*!
@@ -1300,6 +1300,7 @@ var gp, CommonUtilsAutoLoadConfig, CommonUtilsLayerUtils, proj4, CommonUtilsRegi
                 var strUrlProxified = null;
                 var strData = this.request;
                 var bUrlProxified = this.options.proxyURL && this.options.protocol === 'XHR' ? true : false;
+                this.options.serverUrl = Helper.normalyzeUrl(this.options.serverUrl, { 'gp-access-lib': '1.0.0-beta3' }, false);
                 if (bUrlProxified) {
                     if (this.options.httpMethod === 'GET') {
                         strUrlProxified = this.options.proxyURL + Helper.normalyzeUrl(this.options.serverUrl, this.request, true);
@@ -7332,11 +7333,11 @@ var gp, CommonUtilsAutoLoadConfig, CommonUtilsLayerUtils, proj4, CommonUtilsRegi
         var bbox = {};
         return Services;
     }(ServicesAltiAlti, ServicesAutoConfAutoConf, ServicesGeocodeGeocode, ServicesGeocodeReverseGeocode, ServicesAutoCompleteAutoComplete, ServicesRouteRoute, ServicesProcessIsoCurveProcessIsoCurve);
-    Gp = function (XHR, Services, AltiResponse, Elevation, AutoCompleteResponse, SuggestedLocation, GetConfigResponse, Constraint, Format, Layer, Legend, Metadata, Originator, Service, Style, Territory, Thematic, TM, TMLimit, TMS, GeocodeResponse, GeocodedLocation, DirectGeocodedLocation, ReverseGeocodedLocation, IsoCurveResponse, RouteResponse, RouteInstruction, Error) {
+    Gp = function (XHR, Services, AltiResponse, Elevation, AutoCompleteResponse, SuggestedLocation, GetConfigResponse, Constraint, Format, Layer, Legend, Metadata, Originator, Service, Style, Territory, Thematic, TM, TMLimit, TMS, GeocodeResponse, GeocodedLocation, DirectGeocodedLocation, ReverseGeocodedLocation, IsoCurveResponse, RouteResponse, RouteInstruction, Helper, Error) {
         var scope = typeof window !== 'undefined' ? window : {};
         var Gp = scope.Gp || {
             servicesVersion: '1.0.0-beta3',
-            servicesDate: '2016-07-29',
+            servicesDate: '2016-10-16',
             extend: function (strNS, value) {
                 var parts = strNS.split('.');
                 var parent = this;
@@ -7383,10 +7384,11 @@ var gp, CommonUtilsAutoLoadConfig, CommonUtilsLayerUtils, proj4, CommonUtilsRegi
         Gp.extend('Services.IsoCurveResponse', IsoCurveResponse);
         Gp.extend('Services.RouteResponse', RouteResponse);
         Gp.extend('Services.Route.RouteInstruction', RouteInstruction);
+        Gp.extend('Helper', Helper);
         Gp.extend('Error', Error);
         scope.Gp = Gp;
         return scope.Gp;
-    }(ProtocolsXHR, ServicesServices, ServicesAltiResponseModelAltiResponse, ServicesAltiResponseModelElevation, ServicesAutoCompleteResponseModelAutoCompleteResponse, ServicesAutoCompleteResponseModelSuggestedLocation, ServicesAutoConfResponseModelAutoConfResponse, ServicesAutoConfResponseModelConstraint, ServicesAutoConfResponseModelFormat, ServicesAutoConfResponseModelLayer, ServicesAutoConfResponseModelLegend, ServicesAutoConfResponseModelMetadata, ServicesAutoConfResponseModelOriginator, ServicesAutoConfResponseModelService, ServicesAutoConfResponseModelStyle, ServicesAutoConfResponseModelTerritory, ServicesAutoConfResponseModelThematic, ServicesAutoConfResponseModelTileMatrix, ServicesAutoConfResponseModelTileMatrixLimit, ServicesAutoConfResponseModelTileMatrixSet, ServicesGeocodeResponseModelGeocodeResponse, ServicesGeocodeResponseModelGeocodedLocation, ServicesGeocodeResponseModelDirectGeocodedLocation, ServicesGeocodeResponseModelReverseGeocodedLocation, ServicesProcessIsoCurveResponseModelProcessIsoCurveResponse, ServicesRouteResponseModelRouteResponse, ServicesRouteResponseModelRouteInstruction, ExceptionsErrorService);
+    }(ProtocolsXHR, ServicesServices, ServicesAltiResponseModelAltiResponse, ServicesAltiResponseModelElevation, ServicesAutoCompleteResponseModelAutoCompleteResponse, ServicesAutoCompleteResponseModelSuggestedLocation, ServicesAutoConfResponseModelAutoConfResponse, ServicesAutoConfResponseModelConstraint, ServicesAutoConfResponseModelFormat, ServicesAutoConfResponseModelLayer, ServicesAutoConfResponseModelLegend, ServicesAutoConfResponseModelMetadata, ServicesAutoConfResponseModelOriginator, ServicesAutoConfResponseModelService, ServicesAutoConfResponseModelStyle, ServicesAutoConfResponseModelTerritory, ServicesAutoConfResponseModelThematic, ServicesAutoConfResponseModelTileMatrix, ServicesAutoConfResponseModelTileMatrixLimit, ServicesAutoConfResponseModelTileMatrixSet, ServicesGeocodeResponseModelGeocodeResponse, ServicesGeocodeResponseModelGeocodedLocation, ServicesGeocodeResponseModelDirectGeocodedLocation, ServicesGeocodeResponseModelReverseGeocodedLocation, ServicesProcessIsoCurveResponseModelProcessIsoCurveResponse, ServicesRouteResponseModelRouteResponse, ServicesRouteResponseModelRouteInstruction, UtilsHelper, ExceptionsErrorService);
     return Gp;
 }));
 CommonUtilsAutoLoadConfig = function (Gp) {
@@ -13669,7 +13671,7 @@ CommonUtilsConfig = function () {
     };
     return Config;
 }();
-Ol3LayersSourceWMTS = function (ol, Utils, Config, LayerUtils) {
+Ol3LayersSourceWMTS = function (ol, Gp, Utils, Config, LayerUtils) {
     function SourceWMTS(options) {
         if (!(this instanceof SourceWMTS)) {
             throw new TypeError('ERROR CLASS_CONSTRUCTOR');
@@ -13690,7 +13692,7 @@ Ol3LayersSourceWMTS = function (ol, Utils, Config, LayerUtils) {
             this._legends = wmtsParams.legends;
             this._metadata = wmtsParams.metadata;
             var wmtsSourceOptions = {
-                url: wmtsParams.url,
+                url: Gp.Helper.normalyzeUrl(wmtsParams.url, { 'gp-ol3-ext': '0.11.0' }, false),
                 version: wmtsParams.version,
                 style: wmtsParams.styles,
                 format: wmtsParams.format,
@@ -13724,8 +13726,8 @@ Ol3LayersSourceWMTS = function (ol, Utils, Config, LayerUtils) {
     SourceWMTS.prototype = Object.create(ol.source.WMTS.prototype, {});
     SourceWMTS.prototype.constructor = SourceWMTS;
     return SourceWMTS;
-}(ol, Ol3Utils, CommonUtilsConfig, CommonUtilsLayerUtils);
-Ol3LayersSourceWMS = function (ol, Utils, Config) {
+}(ol, gp, Ol3Utils, CommonUtilsConfig, CommonUtilsLayerUtils);
+Ol3LayersSourceWMS = function (ol, Gp, Utils, Config) {
     function SourceWMS(options) {
         if (!(this instanceof SourceWMS)) {
             throw new TypeError('ERROR CLASS_CONSTRUCTOR');
@@ -13743,7 +13745,7 @@ Ol3LayersSourceWMS = function (ol, Utils, Config) {
         if (layerId && Config.configuration.getLayerConf(layerId)) {
             var wmsParams = Config.getLayerParams(options.layer, 'WMS', options.apiKey);
             var wmsSourceOptions = {
-                url: wmsParams.url,
+                url: Gp.Helper.normalyzeUrl(wmsParams.url, { 'gp-ol3-ext': '0.11.0' }, false),
                 params: {
                     SERVICE: 'WMS',
                     LAYERS: options.layer,
@@ -13766,7 +13768,7 @@ Ol3LayersSourceWMS = function (ol, Utils, Config) {
     SourceWMS.prototype = Object.create(ol.source.TileWMS.prototype, {});
     SourceWMS.prototype.constructor = SourceWMS;
     return SourceWMS;
-}(ol, Ol3Utils, CommonUtilsConfig);
+}(ol, gp, Ol3Utils, CommonUtilsConfig);
 Ol3LayersLayerWMTS = function (ol, Utils, Config, LayerUtils, SourceWMTS) {
     function LayerWMTS(options) {
         if (!(this instanceof LayerWMTS)) {
@@ -17435,7 +17437,7 @@ Ol3ControlsMousePosition = function (ol, proj4, woodman, Gp, Utils, RightManagem
             },
             {
                 code: 'EPSG:3857',
-                label: 'Mercator',
+                label: 'Web Mercator',
                 crs: ol.proj.get('EPSG:3857').getCode(),
                 type: 'Metric'
             },
@@ -17611,8 +17613,11 @@ Ol3ControlsMousePosition = function (ol, proj4, woodman, Gp, Utils, RightManagem
     };
     MousePosition.prototype._displayDMS = function (olCoordinate) {
         var coordinate = {};
-        var coords = ol.coordinate.toStringHDMS(olCoordinate, 2).split('N ');
-        coordinate.lat = coords[0] + 'N';
+        var regex = /(.*)([NS])\s(.*)([EW])/;
+        var subst = '$1$2 | $3$4';
+        var str = ol.coordinate.toStringHDMS(olCoordinate, 2).replace(regex, subst);
+        var coords = str.split('|');
+        coordinate.lat = coords[0];
         coordinate.lng = coords[1];
         return coordinate;
     };
@@ -21067,6 +21072,11 @@ Ol3ControlsRoute = function (ol, Gp, Utils, woodman, RightManagement, SelectorID
         this._currentComputation = options.computation;
         this._currentExclusions = options.exclusions;
         var routeOptions = this.options.routeOptions;
+        var _protocol = routeOptions.protocol || 'XHR';
+        var _timeout = routeOptions.timeOut || 0;
+        if (_protocol === 'JSONP' && _timeout === 0) {
+            _timeout = 15000;
+        }
         var context = this;
         this._requestRouting({
             startPoint: start,
@@ -21077,8 +21087,8 @@ Ol3ControlsRoute = function (ol, Gp, Utils, woodman, RightManagement, SelectorID
             exclusions: routeOptions.exclusions || this._currentExclusions,
             geometryInInstructions: true,
             distanceUnit: 'm',
-            timeOut: routeOptions.timeOut || 15000,
-            protocol: routeOptions.protocol || 'XHR',
+            timeOut: _timeout,
+            protocol: _protocol,
             onSuccess: function (results) {
                 if (results) {
                     context._fillRouteResultsDetails(results);
@@ -21552,27 +21562,33 @@ Ol3ControlsRoute = function (ol, Gp, Utils, woodman, RightManagement, SelectorID
     Route.prototype._displayWaitingContainer = function () {
         this._waitingContainer.className = 'GProuteCalcWaitingContainerVisible';
         this._waiting = true;
-        if (this._timer) {
-            clearTimeout(this._timer);
-            this._timer = null;
-        }
-        var context = this;
-        this._timer = setTimeout(function () {
-            if (context._waiting === true) {
-                context._hideWaitingContainer();
-            } else {
-                if (context._timer) {
-                    clearTimeout(context._timer);
-                }
+        var opts = this.options.routeOptions;
+        if (opts && opts.timeOut) {
+            if (this._timer) {
+                clearTimeout(this._timer);
+                this._timer = null;
             }
-        }, 16000);
+            var context = this;
+            this._timer = setTimeout(function () {
+                if (context._waiting === true) {
+                    context._hideWaitingContainer();
+                } else {
+                    if (context._timer) {
+                        clearTimeout(context._timer);
+                    }
+                }
+            }, 16000);
+        }
     };
     Route.prototype._hideWaitingContainer = function () {
         if (this._waiting) {
             this._waitingContainer.className = 'GProuteCalcWaitingContainerHidden';
             this._waiting = false;
-            clearTimeout(this._timer);
-            this._timer = null;
+            var opts = this.options.routeOptions;
+            if (opts && opts.timeOut) {
+                clearTimeout(this._timer);
+                this._timer = null;
+            }
         }
     };
     Route.prototype._simplifiedInstructions = function (instructions) {
@@ -22566,6 +22582,11 @@ Ol3ControlsIsocurve = function (ol, Gp, Utils, woodman, RightManagement, Selecto
             return;
         }
         var options = this.options.isocurveOptions || {};
+        var _protocol = options.protocol || 'XHR';
+        var _timeout = options.timeOut || 0;
+        if (_protocol === 'JSONP' && _timeout === 0) {
+            _timeout = 15000;
+        }
         var context = this;
         var isoRequestOptions = {
             position: position,
@@ -22573,8 +22594,8 @@ Ol3ControlsIsocurve = function (ol, Gp, Utils, woodman, RightManagement, Selecto
             exclusions: options.exclusions || this._currentExclusions,
             method: options.method || this._currentComputation,
             smoothing: options.smoothing || true,
-            timeOut: options.timeOut || 15000,
-            protocol: options.protocol || 'XHR',
+            timeOut: _timeout,
+            protocol: _protocol,
             onSuccess: function (results) {
                 if (results) {
                     context._drawIsoResults(results);
@@ -22848,27 +22869,33 @@ Ol3ControlsIsocurve = function (ol, Gp, Utils, woodman, RightManagement, Selecto
     Isocurve.prototype._displayWaitingContainer = function () {
         this._waitingContainer.className = 'GPisochronCalcWaitingContainerVisible';
         this._waiting = true;
-        if (this._timer) {
-            clearTimeout(this._timer);
-            this._timer = null;
-        }
-        var context = this;
-        this._timer = setTimeout(function () {
-            if (context._waiting === true) {
-                context._hideWaitingContainer();
-            } else {
-                if (context._timer) {
-                    clearTimeout(context._timer);
-                }
+        var opts = this.options.isocurveOptions;
+        if (opts && opts.timeOut) {
+            if (this._timer) {
+                clearTimeout(this._timer);
+                this._timer = null;
             }
-        }, 16000);
+            var context = this;
+            this._timer = setTimeout(function () {
+                if (context._waiting === true) {
+                    context._hideWaitingContainer();
+                } else {
+                    if (context._timer) {
+                        clearTimeout(context._timer);
+                    }
+                }
+            }, 16000);
+        }
     };
     Isocurve.prototype._hideWaitingContainer = function () {
         if (this._waiting) {
             this._waitingContainer.className = 'GPisochronCalcWaitingContainerHidden';
             this._waiting = false;
-            clearTimeout(this._timer);
-            this._timer = null;
+            var opts = this.options.isocurveOptions;
+            if (opts && opts.timeOut) {
+                clearTimeout(this._timer);
+                this._timer = null;
+            }
         }
     };
     return Isocurve;
@@ -24909,33 +24936,24 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
         var layers;
         var layerDescription;
         var projection;
+        this._getCapResponseWMSLayers = [];
         this.contentService = xmlResponse;
         this._importPanel.style.display = 'none';
         this._getCapPanel.style.display = 'block';
-        var mapProjCode = this._getMapProjectionCode();
         if (this._currentImportType === 'WMS') {
             parser = new ol.format.WMSCapabilities();
             if (!parser) {
                 return;
             }
             var getCapResponseWMS = this._getCapResponseWMS = parser.read(xmlResponse);
-            if (getCapResponseWMS && getCapResponseWMS.Capability && getCapResponseWMS.Capability.Layer && getCapResponseWMS.Capability.Layer.Layer) {
-                layers = getCapResponseWMS.Capability.Layer.Layer;
-                if (Array.isArray(layers)) {
-                    this._getCapResponseWMSLayers = layers;
-                    for (var i = 0; i < layers.length; i++) {
-                        projection = this._getWMSLayerProjection(layers[i], mapProjCode);
-                        if (!projection) {
-                            console.log('[ol.control.LayerImport] wms layer cannot be added to map : unknown projection', layers[i]);
-                            continue;
-                        } else {
-                            layers[i]._projection = projection;
-                            layerDescription = layers[i].Title;
-                            if (this._getCapResultsListContainer) {
-                                this._getCapResultsListContainer.appendChild(this._createImportGetCapResultElement(layerDescription, i));
-                            }
-                        }
+            if (getCapResponseWMS && getCapResponseWMS.Capability && getCapResponseWMS.Capability.Layer) {
+                var getCapLayer = getCapResponseWMS.Capability.Layer;
+                if (Array.isArray(getCapLayer)) {
+                    for (var i = 0; i < getCapLayer.length; i++) {
+                        this._displayGetCapResponseWMSLayer(getCapLayer[i]);
                     }
+                } else {
+                    this._displayGetCapResponseWMSLayer(getCapLayer);
                 }
             }
         } else if (this._currentImportType === 'WMTS') {
@@ -24963,6 +24981,82 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
                         }
                     }
                 }
+            }
+        }
+    };
+    LayerImport.prototype._displayGetCapResponseWMSLayer = function (layerObj, parentLayersInfos) {
+        if (!layerObj) {
+            console.log('[ol.control.LayerImport] _displayGetCapResponseWMSLayer : getCapabilities layer object not found');
+        } else {
+        }
+        var mapProjCode = this._getMapProjectionCode();
+        var projection;
+        var layerDescription;
+        if (parentLayersInfos) {
+            var key;
+            var i;
+            var addKeys = [
+                'CRS',
+                'Style'
+            ];
+            for (i = 0; i < addKeys.length; i++) {
+                key = addKeys[i];
+                if (Array.isArray(parentLayersInfos[key]) && parentLayersInfos[key].length !== 0) {
+                    if (Array.isArray(layerObj[key]) && layerObj[key].length !== 0) {
+                        for (var n = 0; n < parentLayersInfos[key]; n++) {
+                            if (layerObj[key].indexOf(parentLayersInfos[key][n]) === -1) {
+                                layerObj[key].push(parentLayersInfos[key][n]);
+                            }
+                        }
+                    } else {
+                        layerObj[key] = parentLayersInfos[key];
+                    }
+                }
+            }
+            var replaceKeys = [
+                'BoundingBox',
+                'EX_GeographicBoundingBox',
+                'MaxScaleDenominator',
+                'MinScaleDenominator',
+                'Attribution',
+                'Dimension',
+                'queryable',
+                'cascaded',
+                'opaque',
+                'noSubsets',
+                'fixedWidth',
+                'fixedHeight'
+            ];
+            for (i = 0; i < replaceKeys.length; i++) {
+                key = replaceKeys[i];
+                if (parentLayersInfos[key] && !layerObj[key]) {
+                    layerObj[key] = parentLayersInfos[key];
+                }
+            }
+            if (!parentLayersInfos._isRootLayer && parentLayersInfos.Title) {
+                layerObj.Title = parentLayersInfos.Title + ' > ' + layerObj.Title;
+            }
+        } else {
+            layerObj._isRootLayer = true;
+        }
+        if (layerObj.Layer) {
+            if (Array.isArray(layerObj.Layer)) {
+                for (var j = 0; j < layerObj.Layer.length; j++) {
+                    this._displayGetCapResponseWMSLayer(layerObj.Layer[j], layerObj);
+                }
+            }
+        } else {
+            var lastIndex = this._getCapResponseWMSLayers.length;
+            projection = this._getWMSLayerProjection(layerObj, mapProjCode);
+            if (!projection) {
+                console.log('[ol.control.LayerImport] wms layer cannot be added to map : unknown projection', layerObj);
+            } else {
+                layerObj._projection = projection;
+                layerDescription = layerObj.Title;
+                if (this._getCapResultsListContainer) {
+                    this._getCapResultsListContainer.appendChild(this._createImportGetCapResultElement(layerDescription, lastIndex));
+                }
+                this._getCapResponseWMSLayers[lastIndex] = layerObj;
             }
         }
     };
@@ -25039,6 +25133,12 @@ Ol3ControlsLayerImport = function (ol, Gp, woodman, Utils, LayerImportDOM, Selec
         this._getWMSLayerExtent(layerInfo, mapProjCode, layerTileOptions);
         var wmsLayer = new ol.layer.Tile(layerTileOptions);
         wmsLayer.gpResultLayerId = 'layerimport:WMS';
+        if (layerInfo.queryable) {
+            wmsLayer.gpGFIparams = { queryable: true };
+            if (this._getCapResponseWMS && this._getCapResponseWMS.Capability && this._getCapResponseWMS.Capability.Request && this._getCapResponseWMS.Capability.Request.GetFeatureInfo && this._getCapResponseWMS.Capability.Request.GetFeatureInfo.Format && Array.isArray(this._getCapResponseWMS.Capability.Request.GetFeatureInfo.Format)) {
+                wmsLayer.gpGFIparams.formats = this._getCapResponseWMS.Capability.Request.GetFeatureInfo.Format;
+            }
+        }
         map.addLayer(wmsLayer);
     };
     LayerImport.prototype._getWMSLayerGetMapUrl = function () {
@@ -25525,6 +25625,7 @@ CommonControlsMeasureToolBoxDOM = function () {
         _createToolBoxContainerElement: function () {
             var container = document.createElement('div');
             container.id = this._toolboxId;
+            container.className = 'GPshowAdvancedToolPicto';
             var button = document.createElement('button');
             button.id = this._buttonId;
             button.innerHTML = '&#9776;';
@@ -25996,12 +26097,12 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, Me
     ElevationPath.prototype.constructor = ElevationPath;
     ElevationPath.prototype.setMap = function (map) {
         if (map) {
-            if (!this.options.collapsed) {
+            if (this.options.active) {
                 if (this._profile === null) {
                     this._panelContainer.style.display = 'none';
                 }
-                this._initMeasureInteraction();
-                this._addMeasureInteraction();
+                this._initMeasureInteraction(map);
+                this._addMeasureInteraction(map);
             }
             if (!this.options.target) {
                 MeasureToolBox.add(map, this);
@@ -26009,13 +26110,14 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, Me
         }
         ol.control.Control.prototype.setMap.call(this, map);
     };
-    ElevationPath.prototype.getCollapsed = function () {
-        return this.options.collapsed;
+    ElevationPath.prototype.getActive = function () {
+        return this.options.active;
     };
-    ElevationPath.prototype.setCollapsed = function (collapsed) {
-        this.options.collapsed = collapsed;
+    ElevationPath.prototype.setActive = function (active) {
+        this.options.active = active;
     };
     ElevationPath.prototype.clear = function () {
+        var map = this.getMap();
         this._profile = null;
         if (this._profileContainer) {
             while (this._profileContainer.firstChild) {
@@ -26024,15 +26126,17 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, Me
         }
         this._lastSketch = null;
         this._currentSketch = null;
-        if (this._marker) {
-            this._measureSource.removeFeature(this._marker);
-            this._marker = null;
+        if (this._measureSource) {
+            if (this._marker) {
+                this._measureSource.removeFeature(this._marker);
+                this._marker = null;
+            }
+            var _features = this._measureSource.getFeatures();
+            for (var i = 0; i < _features.length; i++) {
+                this._measureSource.removeFeature(_features[i]);
+            }
         }
-        var _features = this._measureSource.getFeatures();
-        for (var i = 0; i < _features.length; i++) {
-            this._measureSource.removeFeature(_features[i]);
-        }
-        this._removeMeasureInteraction();
+        this._removeMeasureInteraction(map);
     };
     ElevationPath.prototype._initialize = function (options) {
         this.options = {};
@@ -26041,12 +26145,23 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, Me
         this.options.apiKey = options.apiKey;
         var debug = options.debug;
         this.options.debug = typeof debug === 'undefined' ? false : debug;
-        var collapsed = options.collapsed;
-        this.options.collapsed = typeof collapsed === 'undefined' ? true : collapsed;
+        var active = options.active;
+        this.options.active = typeof active === 'undefined' ? false : active;
         var service = options.elevationOptions;
         this.options.service = typeof service === 'undefined' || Object.keys(service).length === 0 ? {} : service;
-        var displayFunction = options.displayProfileFunction;
-        this.options.displayFunction = typeof displayFunction === 'function' ? displayFunction : ElevationPath.DISPLAY_PROFILE_BY_DEFAULT;
+        var profil = options.displayProfileOptions || {};
+        if (typeof profil === 'undefined' || Object.keys(profil).length === 0) {
+            this.options.profile = {
+                apply: ElevationPath.DISPLAY_PROFILE_BY_DEFAULT,
+                target: null
+            };
+        } else {
+            this.options.profile = {};
+        }
+        var displayFunction = profil.apply || this.options.profile.apply;
+        this.options.profile.apply = typeof displayFunction === 'function' ? displayFunction : ElevationPath.DISPLAY_PROFILE_BY_DEFAULT;
+        var displayContainer = profil.target || this.options.profile.target;
+        this.options.profile.target = typeof displayContainer === 'undefined' ? null : displayContainer;
         var styles = options.stylesOptions || {};
         if (typeof styles === 'undefined' || Object.keys(styles).length === 0) {
             this.options.styles = {
@@ -26083,11 +26198,11 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, Me
         var container = this._createMainContainerElement();
         var inputShow = this._showContainer = this._createShowElevationPathElement();
         container.appendChild(inputShow);
-        if (!this.options.collapsed) {
-            this._showContainer.checked = true;
-        }
         var picto = this._pictoContainer = this._createShowElevationPathPictoElement();
         container.appendChild(picto);
+        if (this.options.active) {
+            this._showContainer.checked = true;
+        }
         var panel = this._panelContainer = this._createElevationPathPanelElement();
         var header = this._createElevationPathPanelHeaderElement();
         panel.appendChild(header);
@@ -26095,7 +26210,9 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, Me
         panel.appendChild(profile);
         var waiting = this._waitingContainer = this._createElevationPathWaitingElement();
         panel.appendChild(waiting);
-        container.appendChild(panel);
+        if (this.options.profile.target === null) {
+            container.appendChild(panel);
+        }
         return container;
     };
     ElevationPath.prototype._checkRightsManagement = function () {
@@ -26241,8 +26358,7 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, Me
             }
         }, this);
     };
-    ElevationPath.prototype._initMeasureInteraction = function () {
-        var map = this.getMap();
+    ElevationPath.prototype._initMeasureInteraction = function (map) {
         if (!map) {
             return;
         }
@@ -26253,8 +26369,7 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, Me
         });
         map.addLayer(this._measureVector);
     };
-    ElevationPath.prototype._addMeasureInteraction = function () {
-        var map = this.getMap();
+    ElevationPath.prototype._addMeasureInteraction = function (map) {
         if (!map) {
             return;
         }
@@ -26282,15 +26397,13 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, Me
         }, this);
         this._measureDraw.on('drawend', function (evt) {
             self._lastSketch = self._currentSketch;
-            if (typeof self.options.service.onSuccess === 'undefined') {
-                self._pictoContainer.style.display = 'none';
+            if (typeof self.options.service.onSuccess === 'undefined' && self.options.profile.target === null) {
                 self._panelContainer.style.display = 'block';
             }
             self._requestService();
         }, this);
     };
-    ElevationPath.prototype._removeMeasureInteraction = function () {
-        var map = this.getMap();
+    ElevationPath.prototype._removeMeasureInteraction = function (map) {
         if (!map) {
             return;
         }
@@ -26356,13 +26469,13 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, Me
         var self = this;
         var _requestServiceOnSuccess = function (result) {
             if (result) {
+                self._panelContainer.style.display = 'block';
                 self._displayProfile(result.elevations);
                 self._waitingContainer.className = 'GPelevationPathCalcWaitingContainerHidden';
                 self._waiting = false;
             }
         };
         var _requestServiceOnFailure = function (error) {
-            self._pictoContainer.style.display = 'block';
             self._panelContainer.style.display = 'none';
             self._waitingContainer.className = 'GPelevationPathCalcWaitingContainerHidden';
             self._waiting = false;
@@ -26420,9 +26533,13 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, Me
     };
     ElevationPath.prototype._displayProfile = function (elevations) {
         var data = this._computeElevationMeasure(elevations);
-        var container = this._profileContainer;
+        var container = this.options.profile.target;
+        if (container) {
+            container.appendChild(this._panelContainer);
+        }
+        container = this._profileContainer;
         var context = this;
-        var displayFunction = this.options.displayFunction;
+        var displayFunction = this.options.profile.apply;
         displayFunction.call(this, data, container, context);
     };
     ElevationPath.prototype._displayProfileResults = function (data) {
@@ -26617,12 +26734,11 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, Me
             if (this._profile === null) {
                 this._panelContainer.style.display = 'none';
             }
-            this._initMeasureInteraction();
-            this._addMeasureInteraction();
+            this._initMeasureInteraction(map);
+            this._addMeasureInteraction(map);
         } else {
-            this._pictoContainer.style.display = 'block';
             this._panelContainer.style.display = 'none';
-            this._removeMeasureInteraction();
+            this._removeMeasureInteraction(map);
             this.clear();
         }
     };
@@ -27327,9 +27443,9 @@ Ol3ControlsMeasuresMeasureAzimuth = function (ol, woodman, Utils, MeasureToolBox
     };
     return MeasureAzimuth;
 }(ol, {}, Ol3Utils, Ol3ControlsMeasureToolBox, Ol3ControlsMeasuresMeasures, CommonControlsMeasureAzimuthDOM, CommonUtilsSelectorID);
-Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, KML, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution, ElevationPath, MeasureLength, MeasureArea, MeasureAzimuth) {
+Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, KML, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution, Markers, ElevationPath, MeasureLength, MeasureArea, MeasureAzimuth) {
     Gp.ol3extVersion = '0.11.0';
-    Gp.ol3extDate = '2016-10-19';
+    Gp.ol3extDate = '2016-11-08';
     Gp.LayerUtils = LayerUtils;
     ol.format.KMLExtended = KML;
     CRS.overload();
@@ -27349,9 +27465,10 @@ Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, KML, CRS, SourceWMTS, S
     ol.control.MeasureLength = MeasureLength;
     ol.control.MeasureArea = MeasureArea;
     ol.control.MeasureAzimuth = MeasureAzimuth;
+    ol.control.DefaultMarkers = Markers;
     ol.control.ElevationPath = ElevationPath;
     return Gp;
-}(ol, gp, CommonUtilsLayerUtils, CommonUtilsRegister, Ol3FormatsKML, Ol3CRSCRS, Ol3LayersSourceWMTS, Ol3LayersSourceWMS, Ol3LayersLayerWMTS, Ol3LayersLayerWMS, Ol3ControlsLayerSwitcher, Ol3ControlsSearchEngine, Ol3ControlsMousePosition, Ol3ControlsDrawing, Ol3ControlsRoute, Ol3ControlsIsocurve, Ol3ControlsReverseGeocode, Ol3ControlsLayerImport, Ol3ControlsGeoportalAttribution, Ol3ControlsElevationPath, Ol3ControlsMeasuresMeasureLength, Ol3ControlsMeasuresMeasureArea, Ol3ControlsMeasuresMeasureAzimuth);
+}(ol, gp, CommonUtilsLayerUtils, CommonUtilsRegister, Ol3FormatsKML, Ol3CRSCRS, Ol3LayersSourceWMTS, Ol3LayersSourceWMS, Ol3LayersLayerWMTS, Ol3LayersLayerWMS, Ol3ControlsLayerSwitcher, Ol3ControlsSearchEngine, Ol3ControlsMousePosition, Ol3ControlsDrawing, Ol3ControlsRoute, Ol3ControlsIsocurve, Ol3ControlsReverseGeocode, Ol3ControlsLayerImport, Ol3ControlsGeoportalAttribution, Ol3ControlsUtilsMarkers, Ol3ControlsElevationPath, Ol3ControlsMeasuresMeasureLength, Ol3ControlsMeasuresMeasureArea, Ol3ControlsMeasuresMeasureAzimuth);
 window.proj4 = proj4;
 
 return Gp;

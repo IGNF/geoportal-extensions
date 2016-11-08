@@ -48,7 +48,9 @@
     });
 
     var profil = new ol.control.ElevationPath({
-      displayProfileFunction : ol.control.ElevationPath.DISPLAY_PROFILE_RAW
+      displayProfileOptions : {
+        apply : ol.control.ElevationPath.DISPLAY_PROFILE_RAW
+      }
     });
     map.addControl(profil);
 

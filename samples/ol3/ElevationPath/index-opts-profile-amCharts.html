@@ -99,8 +99,10 @@
           });
 
           var profil = new ElevationPath({
-            collapsed : false,
-            displayProfileFunction : ElevationPath.DISPLAY_PROFILE_LIB_AMCHARTS
+            active : true,
+            displayProfileOptions : {
+              apply : ElevationPath.DISPLAY_PROFILE_LIB_AMCHARTS
+            }
           });
           map.addControl(profil);
 

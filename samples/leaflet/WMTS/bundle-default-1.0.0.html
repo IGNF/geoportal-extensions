@@ -2,14 +2,12 @@
 <html>
 <head>
   <!-- Library Leaflet -->
-  <!--link rel="stylesheet" href="../../../lib/leaflet/1.0.0-rc1/leaflet.css" /-->
   <link rel="stylesheet" href="../../../lib/leaflet/1.0.1/leaflet.css" />
+  <script src="../../../lib/leaflet/1.0.1/leaflet.js"></script>
 
   <!-- Plugin leaflet IGN -->
   <link rel="stylesheet" href="../../../dist/leaflet/GpPluginLeaflet-src.css" />
-
-  <!-- requirejs -->
-  <script src="../../../lib/require.js"></script>
+  <script src="../../../dist/leaflet/GpPluginLeaflet-src.js" data-key="jhyvi0fgmnuxvfv0zjzorvdn"></script>
 
 </head>
 <body>
@@ -26,49 +24,23 @@
 
     <!-- Mettre le code source de l'exemple -->
     <script>
-        /* global requirejs */
-        requirejs.config({
-            'baseUrl' : "../../../src/",
-            'paths': {
-                // lib external
-                //"leaflet" : "../lib/leaflet/1.0.0-rc1/leaflet-src",
-                "leaflet" : "../lib/leaflet/1.0.1/leaflet-src",
-                "gp"      : "../lib/gp/GpServices-src",
-                "proj4" : "../lib/proj4/proj4-src",
-                "proj4leaflet-0.7.x" : "../lib/proj4leaflet/proj4leaflet-src",
-                "proj4leaflet-1.0.x" : "../lib/proj4leaflet/1.0.0-beta.2/proj4leaflet-src",
-                "woodman" : "../lib/woodman/woodman-amd",
-                "sortable": "../lib/sortable/Sortable"
-            }
-        });
+    window.onload = function () {
 
-        requirejs(['gp', 'Leaflet/Layers/Layers', 'Leaflet/Controls/MousePosition'],
-        function (Gp, Layers, MousePosition) {
-
-          Gp.Services.getConfig({
-            // serverUrl : "../../resources/autoconf/callback-autoconf-xml-light-more",
-            apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
-            timeOut : 20000,
-            onSuccess : function () {
-
-              var wms = Layers.WMS({
-                layer : "ORTHOIMAGERY.ORTHOPHOTOS",
-              });
-
-              var map  = L.map('map', {
-                zoom : 2,
-                center : L.latLng(48, 2)
-              });
-
-              wms.addTo(map);
-
-              var mouse = new MousePosition();
-
-              map.addControl(mouse);
-
-          }
-        })
+      var wmts = L.geoportalLayer.WMTS({
+        layer : "ORTHOIMAGERY.ORTHOPHOTOS"
       });
+
+      var map  = L.map('map', {
+        zoom : 2,
+        center : L.latLng(48, 2)
+      });
+
+      wmts.addTo(map);
+
+      L.marker([48, 2]).addTo(map)
+            .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+            .openPopup();
+    }
     </script>
 
     <!-- map -->

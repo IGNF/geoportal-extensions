@@ -38,6 +38,7 @@ define([], function () {
             // </div>
             var container = document.createElement("div");
             container.id  = this._toolboxId;
+            container.className = "GPshowAdvancedToolPicto";
 
             var button = document.createElement("button");
             button.id = this._buttonId;

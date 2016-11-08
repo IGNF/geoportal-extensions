@@ -96,12 +96,14 @@
           });
 
           var profil = new ElevationPath({
-            collapsed : true,
+            active : true,
             debug : true,
             elevationOptions : {
               sampling : 50
             },
-            displayProfileFunction : ElevationPath.DISPLAY_PROFILE_RAW
+            displayProfileOptions : {
+              apply : ElevationPath.DISPLAY_PROFILE_RAW
+            }
           });
           map.addControl(profil);
 

@@ -7,10 +7,11 @@
  
 define([
     "leaflet",
+    "gp",
     "woodman",
     "Leaflet/Layers/LayerEvent"
 ],
-function (L, woodman, LayerEvent) {
+function (L, Gp, woodman, LayerEvent) {
 
     "use strict";
 
@@ -94,7 +95,15 @@ function (L, woodman, LayerEvent) {
             L.Util.extend(this._wmtsParams, this.defaultWmtsParams, options.paramsWmts);
 
             // appel du constructeur de la classe étendue
-            L.TileLayer.prototype.initialize.call(this, url, options.paramsNative);
+            L.TileLayer.prototype.initialize.call(
+                this,
+                // tracker extension leaflet
+                // FIXME : gp-ext version en mode AMD
+                Gp.Helper.normalyzeUrl(url,{
+                    "gp-leaflet-ext" : "__GPLEAFLETEXTVERSION__"
+                },false),
+                options.paramsNative
+            );
 
             // sauvegarde des originators
             this._originators  = options.originators;

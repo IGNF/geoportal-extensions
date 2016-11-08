@@ -96,10 +96,12 @@
           });
 
           var profil = new ElevationPath({
-            displayProfileFunction : function (elevations, container, context) {
-              console.log(elevations);
-              console.log(container);
-              console.log(context);
+            displayProfileOptions : {
+              apply : function (elevations, container, context) {
+                console.log(elevations);
+                console.log(container);
+                console.log(context);
+              }
             }
           });
           map.addControl(profil);

@@ -42,6 +42,7 @@ div[id^=GPelevationPathPanelReduce] {
 [id^=GPelevationPathPanel-] {
   width: 280px;
 }
+
 /* Calc waiting */
 
 .GPelevationPathCalcWaitingContainerVisible,
@@ -79,6 +80,10 @@ div[id^=GPelevationPathPanelReduce] {
 
 [id^=GPelevationPathProfil] {
   height: 150px;
+}
+
+.GPpanelHeader {
+  padding: unset;
 }
 
 /* CSS : D3 */

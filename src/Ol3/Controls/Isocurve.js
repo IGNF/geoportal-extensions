@@ -796,6 +796,15 @@ define([
         // on recupere les éventuelles options du service passées par l'utilisateur
         var options = this.options.isocurveOptions || {};
 
+        // gestion du protocole et du timeout
+        // le timeout est indispensable sur le protocole JSONP.
+        var _protocol = options.protocol || "XHR";
+        var _timeout  = options.timeOut  || 0;
+        if (_protocol === "JSONP" && _timeout === 0) {
+            // FIXME le timeout est obligatoire pour ce type de protocole...
+            _timeout = 15000;
+        }
+
         // on met en place l'affichage des resultats dans la fenetre de resultats.
         var context = this;
         var isoRequestOptions = {
@@ -804,8 +813,8 @@ define([
             exclusions : options.exclusions || this._currentExclusions,
             method : options.method || this._currentComputation,
             smoothing : options.smoothing || true,
-            timeOut : options.timeOut || 15000, // 15s ?
-            protocol : options.protocol || "XHR",
+            timeOut : _timeout,
+            protocol : _protocol,
             /** callback onSuccess */
             onSuccess : function (results) {
                 logger.log(results);
@@ -1285,20 +1294,23 @@ define([
 
         // mise en place d'un timeout pour réinitialiser le panel (cacher la patience)
         // si on est toujours en attente (si la requête est bloquée par exemple)
-        if ( this._timer ) {
-            clearTimeout(this._timer);
-            this._timer = null;
-        }
-        var context = this;
-        this._timer = setTimeout( function () {
-            if ( context._waiting === true ) {
-                context._hideWaitingContainer();
-            } else {
-                if ( context._timer ) {
-                    clearTimeout(context._timer);
-                }
+        var opts = this.options.isocurveOptions;
+        if (opts && opts.timeOut) {
+            if ( this._timer ) {
+                clearTimeout(this._timer);
+                this._timer = null;
             }
-        }, 16000);
+            var context = this;
+            this._timer = setTimeout( function () {
+                if ( context._waiting === true ) {
+                    context._hideWaitingContainer();
+                } else {
+                    if ( context._timer ) {
+                        clearTimeout(context._timer);
+                    }
+                }
+            }, 16000);
+        }
     };
 
     /**
@@ -1310,8 +1322,11 @@ define([
         if ( this._waiting ) {
             this._waitingContainer.className = "GPisochronCalcWaitingContainerHidden";
             this._waiting = false;
-            clearTimeout(this._timer);
-            this._timer = null;
+            var opts = this.options.isocurveOptions;
+            if (opts && opts.timeOut) {
+                clearTimeout(this._timer);
+                this._timer = null;
+            }
         }
     };
 
