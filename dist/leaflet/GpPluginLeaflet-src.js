@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.8.1
- * @date 2016-11-07
+ * @date 2016-11-08
  *
  */
 /*!
@@ -23463,6 +23463,21 @@ LeafletControlsSearchEngine = function (L, woodman, Gp, RightManagement, ID, Sea
         },
         _setPosition: function (position) {
             var map = this._map;
+            var zoom = this.options.zoomTo;
+            if (!zoom || zoom === '') {
+                zoom = map.getZoom();
+            } else {
+                if (zoom === 'max') {
+                    zoom = map.getMaxZoom();
+                } else if (zoom === 'min') {
+                    zoom = map.getMinZoom();
+                } else {
+                    if (isNaN(zoom)) {
+                        zoom = map.getZoom();
+                    }
+                }
+            }
+            map.setZoomAround(L.latLng(position.x, position.y), zoom, true);
             map.panTo(L.latLng(position.x, position.y));
         },
         _setMarker: function (position, information, display) {
@@ -24278,7 +24293,7 @@ LeafletLayersLayers = function (L, woodman, LayerConfig, WMS, WMTS) {
 }(leaflet, {}, LeafletLayersLayerConfig, LeafletLayersWMS, LeafletLayersWMTS);
 LeafletGpPluginLeaflet = function (L, P, Gp, Controls, Layers, CRS, Register) {
     Gp.leafletExtVersion = '0.8.1';
-    Gp.leafletExtDate = '2016-11-07';
+    Gp.leafletExtDate = '2016-11-08';
     Gp.Register = Register;
     L.geoportalLayer = Layers;
     L.geoportalControl = Controls;

@@ -246,6 +246,7 @@ function (
         * @param {Boolean} [options.collapsed] - collapse mode, false by default
         * @param {String}  [options.position] - position of component into the map, 'topleft' by default
         * @param {Boolean} [options.displayInfo] - get informations on popup marker
+        * @param {Sting|Numeric} [options.zoomTo] - zoom to results, by default, it's the current zoom. Value possible : min, max or zoom level
         * @param {Sting}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
         * @param {Object}  [options.resources] - resources to be used by geocode and autocompletion services, by default : ["StreetAddress", "PositionOfInterest"]
         * @param {Boolean} [options.displayAdvancedSearch] - False to disable advanced search tools (it will not be displayed). Default is true (displayed)
