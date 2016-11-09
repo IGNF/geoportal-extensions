@@ -25,18 +25,25 @@
   padding: 2px;
 }
 
+#GPtoolbox-measure-button {
+  background-repeat: no-repeat;
+  background-image: url("img/GPtoolBoxMeasureOpen.png");
+}
+
 #GPtoolbox-measure-widget {
   left:auto;
   display: none;
+  /*visibility: hidden;*/
   position: absolute;
   /*right: 0;*/
   border-radius: 2px;
   /*background-color: #f9f9f9;*/
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  /*box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);*/
 }
 
 #GPtoolbox-measure-widget > div {
   display: block;
+  /*visibility: visible;*/
   position: relative;
   top: auto;
   left: auto;
@@ -46,6 +53,7 @@
 
 #GPtoolbox-measure-main:hover #GPtoolbox-measure-widget {
     display: block;
+    /*visibility: visible;*/
 }
 
 #GPtoolbox-measure-main:hover #GPtoolbox-measure-button {

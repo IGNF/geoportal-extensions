@@ -42,7 +42,7 @@ define([], function () {
 
             var button = document.createElement("button");
             button.id = this._buttonId;
-            button.innerHTML = "&#9776;";
+            // button.innerHTML = "&#9776;";
             container.appendChild(button);
 
             var widget = document.createElement("div");

@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="../../../res/ol3/Controls/ElevationPath/GPelevationPathOL3.css" />
 
   <!-- requirejs -->
+  <script src="lib/d3.v3.min.js"></script>
   <script src="../../../lib/require.js"></script>
 
   <!-- load geoportail-waiting image -->
@@ -94,33 +95,7 @@
             })
           });
 
-          var profil = new ElevationPath({
-            apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
-            debug : true,
-            active : true,
-            elevationOptions : {
-              sampling : 10
-            },
-            stylesOptions : {
-              marker : {}, // par defaut
-              draw : {
-                start : { // custom en mode properties
-                   strokeColor : "rgba(0, 0, 0, 0.5)",
-                   strokeLineDash : [10, 10],
-                   strokeWidth : 2
-                 },
-                 pointer : {
-                   imageRadius : 5,
-                   imageFillColor : "rgba(255, 255, 255, 0.2)",
-                   imageStrokeColor : "rgba(0, 0, 0, 0.7)"
-                },
-                finish : new ol.style.Stroke({
-                    color : "rgba(0, 0, 128, 0.5)",
-                    width : 8
-                })
-              }
-            }
-          });
+          var profil = new ElevationPath();
           map.addControl(profil);
 
         };

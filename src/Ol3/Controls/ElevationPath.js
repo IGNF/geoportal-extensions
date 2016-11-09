@@ -205,8 +205,8 @@ define([
         Utils.mergeParams(_config, {
             dataProvider : data
         });
-        self._profile = AmCharts.makeChart(container, _config);
 
+        self._profile = AmCharts.makeChart(container, _config);
         self._profile.addListener("changed", function (e) {
             logger.trace("AmCharts::changed (event)", e);
             var obj = e.chart.dataProvider[e.index];
@@ -267,8 +267,14 @@ define([
 
         // FIXME
         // If your DIV is not visible, you won't be able to get its dimensions.
-        var width  = container.clientWidth - margin.left - margin.right;
-        var height = container.clientHeight - margin.top - margin.bottom;
+        // var width  = container.clientWidth - margin.left - margin.right;
+        // var height = container.clientHeight - margin.top - margin.bottom;
+
+        var h = getComputedStyle(container, null).getPropertyValue("height").replace("px", "");
+        var w = getComputedStyle(container, null).getPropertyValue("width").replace("px", "");
+
+        var width  = w - margin.left - margin.right;
+        var height = h - margin.top - margin.bottom;
 
         var x = d3.scale.linear()
             .range([0, width]);
@@ -523,10 +529,11 @@ define([
 
         // TODO CSS externe
         var div  = document.createElement("textarea");
-        div.id = "profileElevationResults";
+        div.id = "profileElevationRaw";
         div.rows = 10;
         div.cols = 50;
         div.style.width = "100%";
+        div.wrap = "off";
         div.innerHTML = JSON.stringify(data, undefined, 4);
         container.appendChild(div);
 
@@ -577,6 +584,54 @@ define([
     */
     ElevationPath.DISPLAY_PROFILE_BY_DEFAULT = function (data, container, context) {
         logger.trace("ElevationPath.DISPLAY_PROFILE_BY_DEFAULT");
+
+        // on nettoie toujours...
+        if (container) {
+            while (container.firstChild) {
+                container.removeChild(container.firstChild);
+            }
+        }
+
+        var self = context;
+
+        var ul  = document.createElement("ul");
+        ul.id = "profileElevationByDefault";
+        container.appendChild(ul);
+
+        var sortedElev = JSON.parse(JSON.stringify(data)) ;
+        sortedElev.sort(function (e1, e2) {
+            return e1.z - e2.z ;
+        }) ;
+
+        var minZ = sortedElev[0].z ;
+        var maxZ = sortedElev[sortedElev.length - 1].z ;
+        var diff = maxZ - minZ ;
+        console.log({
+            minZ : minZ,
+            maxZ : maxZ,
+            diff : diff
+        }) ;
+
+        var barwidth = 100 / data.length ;
+        var pctMax = Math.floor((maxZ - minZ) * 100 / diff) ;
+        for (var i = 0 ; i < data.length ; i++) {
+            var e = data[i] ;
+            var li = document.createElement("li") ;
+            li.setAttribute("data-z",e.z) ;
+            li.setAttribute("data-lon",e.lon) ;
+            li.setAttribute("data-lat",e.lat) ;
+            li.setAttribute("data-dist",e.dist) ;
+            li.addEventListener("mouseover", function () {
+                // TODO
+            }) ;
+            var pct = Math.floor((e.z - minZ) * 100 / diff) ;
+            li.setAttribute("class", "percent v" + pct) ;
+            li.title = "altitude : " + e.z + "m" ;
+            li.setAttribute("style", "width: " + barwidth + "%") ;
+            ul.appendChild(li) ;
+       }
+
+       self._profile = container;
     };
 
     /** styles by default */
@@ -718,6 +773,7 @@ define([
                 // on n'affiche pas la fenetre de profile s'il n'existe pas...
                 if (this._profile === null) {
                     this._panelContainer.style.display = "none";
+                    // this._panelContainer.style.visibility = "hidden";
                 }
                 this._initMeasureInteraction(map);
                 this._addMeasureInteraction(map);
@@ -1260,6 +1316,7 @@ define([
             // resultats, on realise l'affichage du panneau
             if ( typeof self.options.service.onSuccess === "undefined" && self.options.profile.target === null) {
                 self._panelContainer.style.display = "block";
+                // self._panelContainer.style.visibility = "visible";
             }
             self._requestService();
         }, this);
@@ -1415,6 +1472,7 @@ define([
         var _requestServiceOnFailure = function (error) {
             // on ferme le panneau en cas d'erreur !
             self._panelContainer.style.display = "none";
+            // self._panelContainer.style.visibility = "hidden";
             logger.error(error.message);
             self._waitingContainer.className = "GPelevationPathCalcWaitingContainerHidden";
             self._waiting = false;
@@ -1972,11 +2030,13 @@ define([
             // on n'affiche pas la fenetre de profile s'il n'existe pas...
             if (this._profile === null) {
                 this._panelContainer.style.display = "none";
+                // this._panelContainer.style.visibility = "hidden";
             }
             this._initMeasureInteraction(map);
             this._addMeasureInteraction(map);
         } else {
             this._panelContainer.style.display = "none";
+            // this._panelContainer.style.visibility = "hidden";
             this._removeMeasureInteraction(map);
             this.clear();
         }

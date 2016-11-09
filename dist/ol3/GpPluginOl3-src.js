@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-11-08
+ * @date 2016-11-09
  *
  */
 /*!
@@ -25628,7 +25628,6 @@ CommonControlsMeasureToolBoxDOM = function () {
             container.className = 'GPshowAdvancedToolPicto';
             var button = document.createElement('button');
             button.id = this._buttonId;
-            button.innerHTML = '&#9776;';
             container.appendChild(button);
             var widget = document.createElement('div');
             widget.id = this._widgetId;
@@ -25846,8 +25845,10 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, Me
             bottom: 30,
             left: 40
         };
-        var width = container.clientWidth - margin.left - margin.right;
-        var height = container.clientHeight - margin.top - margin.bottom;
+        var h = getComputedStyle(container, null).getPropertyValue('height').replace('px', '');
+        var w = getComputedStyle(container, null).getPropertyValue('width').replace('px', '');
+        var width = w - margin.left - margin.right;
+        var height = h - margin.top - margin.bottom;
         var x = d3.scale.linear().range([
             0,
             width
@@ -25952,10 +25953,11 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, Me
         }
         var self = context;
         var div = document.createElement('textarea');
-        div.id = 'profileElevationResults';
+        div.id = 'profileElevationRaw';
         div.rows = 10;
         div.cols = 50;
         div.style.width = '100%';
+        div.wrap = 'off';
         div.innerHTML = JSON.stringify(data, undefined, 4);
         container.appendChild(div);
         self._profile = container;
@@ -25984,6 +25986,45 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, Me
         }
     };
     ElevationPath.DISPLAY_PROFILE_BY_DEFAULT = function (data, container, context) {
+        if (container) {
+            while (container.firstChild) {
+                container.removeChild(container.firstChild);
+            }
+        }
+        var self = context;
+        var ul = document.createElement('ul');
+        ul.id = 'profileElevationByDefault';
+        container.appendChild(ul);
+        var sortedElev = JSON.parse(JSON.stringify(data));
+        sortedElev.sort(function (e1, e2) {
+            return e1.z - e2.z;
+        });
+        var minZ = sortedElev[0].z;
+        var maxZ = sortedElev[sortedElev.length - 1].z;
+        var diff = maxZ - minZ;
+        console.log({
+            minZ: minZ,
+            maxZ: maxZ,
+            diff: diff
+        });
+        var barwidth = 100 / data.length;
+        var pctMax = Math.floor((maxZ - minZ) * 100 / diff);
+        for (var i = 0; i < data.length; i++) {
+            var e = data[i];
+            var li = document.createElement('li');
+            li.setAttribute('data-z', e.z);
+            li.setAttribute('data-lon', e.lon);
+            li.setAttribute('data-lat', e.lat);
+            li.setAttribute('data-dist', e.dist);
+            li.addEventListener('mouseover', function () {
+            });
+            var pct = Math.floor((e.z - minZ) * 100 / diff);
+            li.setAttribute('class', 'percent v' + pct);
+            li.title = 'altitude : ' + e.z + 'm';
+            li.setAttribute('style', 'width: ' + barwidth + '%');
+            ul.appendChild(li);
+        }
+        self._profile = container;
     };
     ElevationPath.DEFAULT_STYLES = {
         DRAW: {
@@ -27445,7 +27486,7 @@ Ol3ControlsMeasuresMeasureAzimuth = function (ol, woodman, Utils, MeasureToolBox
 }(ol, {}, Ol3Utils, Ol3ControlsMeasureToolBox, Ol3ControlsMeasuresMeasures, CommonControlsMeasureAzimuthDOM, CommonUtilsSelectorID);
 Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, KML, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution, Markers, ElevationPath, MeasureLength, MeasureArea, MeasureAzimuth) {
     Gp.ol3extVersion = '0.11.0';
-    Gp.ol3extDate = '2016-11-08';
+    Gp.ol3extDate = '2016-11-09';
     Gp.LayerUtils = LayerUtils;
     ol.format.KMLExtended = KML;
     CRS.overload();
