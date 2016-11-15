@@ -3156,6 +3156,30 @@ span[id^=GPshowMeasureLengthOpen-] {
   background-position: -26px;
 }
 
+/* MOUSE POSITION */
+
+#GPmousePosition {
+  bottom: 8px;
+  left: 8px;
+}
+
+/* Showing/hiding mouse position panel */
+
+#GPshowMousePositionOpen {
+  background-image: url("img/GPmousePositionOpen.png");
+}
+
+/* General panels */
+
+#GPmousePositionPanelClose {
+  background-image: url("img/GPmousePositionOpen.png");
+}
+
+/* Map center localisation */
+
+#GPmapCenter {
+  background-image: url("img/GPmapCenter.png");
+}
 /* REVERSE GEOCODING */
 
 [id^="GPreverseGeocoding-"] {
@@ -3201,30 +3225,6 @@ div[id^=GPreverseGeocodingReturnPicto-] {
     color: #222;
 }
 
-/* MOUSE POSITION */
-
-#GPmousePosition {
-  bottom: 8px;
-  left: 8px;
-}
-
-/* Showing/hiding mouse position panel */
-
-#GPshowMousePositionOpen {
-  background-image: url("img/GPmousePositionOpen.png");
-}
-
-/* General panels */
-
-#GPmousePositionPanelClose {
-  background-image: url("img/GPmousePositionOpen.png");
-}
-
-/* Map center localisation */
-
-#GPmapCenter {
-  background-image: url("img/GPmapCenter.png");
-}
 /* ROUTE */
 
 div[id^=GProute-] {
