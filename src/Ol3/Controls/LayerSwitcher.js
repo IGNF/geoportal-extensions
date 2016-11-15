@@ -269,10 +269,12 @@ define([
             var updateLayersOrder = function (e) {
                 context._updateLayersOrder.call(context, e);
             };
-            this._layers[id].onZIndexChangeEvent = layer.on(
-                "change:zIndex",
-                updateLayersOrder
-            );
+            if ( this._layers[id].onZIndexChangeEvent == null ) {
+                this._layers[id].onZIndexChangeEvent = layer.on(
+                    "change:zIndex",
+                    updateLayersOrder
+                );
+            }
 
         // user may also add a new configuration for an already added layer
         } else if ( this._layers[id] && config ) {
@@ -616,10 +618,12 @@ define([
                     // et on réordonne les couches avec des zindex, uniques.
                     this._lastZIndex++;
                     layers[l].layer.setZIndex(this._lastZIndex);
-                    this._layers[layers[l].layer.gpLayerId].onZIndexChangeEvent = layers[l].layer.on(
-                        "change:zIndex",
-                        updateLayersOrder
-                    );
+                    if ( this._layers[layers[l].layer.gpLayerId].onZIndexChangeEvent == null ) {
+                        this._layers[layers[l].layer.gpLayerId].onZIndexChangeEvent = layers[l].layer.on(
+                            "change:zIndex",
+                            updateLayersOrder
+                        );
+                    }
                 }
             }
         }
@@ -772,7 +776,7 @@ define([
         );
 
         // on réordonne les couches entre elles dans la carte, à partir des zindex stockés ci-dessus.
-        var lastZIndex = 0;
+        this._lastZIndex = 0;
         var context = this;
         /** fonction de callback appelée au changement de zindex d'une couche  */
         var updateLayersOrder = function (e) {
@@ -786,13 +790,15 @@ define([
                     // on conserve l'ordre des couches : la première est celle qui se situe tout en haut, et la dernière est le "fond de carte"
                     this._layersOrder.unshift(layers[l]);
                     // et on réordonne les couches avec des zindex, uniques.
-                    lastZIndex++;
+                    this._lastZIndex++;
                     // layers[l].layer.setZIndex(lastZIndex);
                     // et on réactive l'écouteur d'événement sur les zindex
-                    this._layers[layers[l].layer.gpLayerId].onZIndexChangeEvent = layers[l].layer.on(
-                        "change:zIndex",
-                        updateLayersOrder
-                    );
+                    if ( this._layers[layers[l].layer.gpLayerId].onZIndexChangeEvent == null ) {
+                        this._layers[layers[l].layer.gpLayerId].onZIndexChangeEvent = layers[l].layer.on(
+                            "change:zIndex",
+                            updateLayersOrder
+                        );
+                    }
                 }
             }
         }
@@ -943,10 +949,12 @@ define([
             }
 
             // et on réactive l'écouteur d'événement sur les zindex
-            this._layers[id].onZIndexChangeEvent = layer.on(
-                "change:zIndex",
-                updateLayersOrder
-            );
+            if ( this._layers[id].onZIndexChangeEvent == null ) {
+                this._layers[id].onZIndexChangeEvent = layer.on(
+                    "change:zIndex",
+                    updateLayersOrder
+                );
+            }
 
         }
 

@@ -15080,7 +15080,9 @@ Ol3ControlsLayerSwitcher = function (ol, Utils, LayerSwitcherDOM) {
             var updateLayersOrder = function (e) {
                 context._updateLayersOrder.call(context, e);
             };
-            this._layers[id].onZIndexChangeEvent = layer.on('change:zIndex', updateLayersOrder);
+            if (this._layers[id].onZIndexChangeEvent == null) {
+                this._layers[id].onZIndexChangeEvent = layer.on('change:zIndex', updateLayersOrder);
+            }
         } else if (this._layers[id] && config) {
             for (var prop in config) {
                 if (config.hasOwnProperty(prop)) {
@@ -15287,7 +15289,9 @@ Ol3ControlsLayerSwitcher = function (ol, Utils, LayerSwitcherDOM) {
                     this._layersOrder.unshift(layers[l]);
                     this._lastZIndex++;
                     layers[l].layer.setZIndex(this._lastZIndex);
-                    this._layers[layers[l].layer.gpLayerId].onZIndexChangeEvent = layers[l].layer.on('change:zIndex', updateLayersOrder);
+                    if (this._layers[layers[l].layer.gpLayerId].onZIndexChangeEvent == null) {
+                        this._layers[layers[l].layer.gpLayerId].onZIndexChangeEvent = layers[l].layer.on('change:zIndex', updateLayersOrder);
+                    }
                 }
             }
         }
@@ -15367,7 +15371,7 @@ Ol3ControlsLayerSwitcher = function (ol, Utils, LayerSwitcherDOM) {
                 this._layersIndex[layerIndex].push(this._layers[id]);
             }
         }, this);
-        var lastZIndex = 0;
+        this._lastZIndex = 0;
         var context = this;
         var updateLayersOrder = function (e) {
             context._updateLayersOrder.call(context, e);
@@ -15378,8 +15382,10 @@ Ol3ControlsLayerSwitcher = function (ol, Utils, LayerSwitcherDOM) {
                 var layers = this._layersIndex[zindex];
                 for (var l = 0; l < layers.length; l++) {
                     this._layersOrder.unshift(layers[l]);
-                    lastZIndex++;
-                    this._layers[layers[l].layer.gpLayerId].onZIndexChangeEvent = layers[l].layer.on('change:zIndex', updateLayersOrder);
+                    this._lastZIndex++;
+                    if (this._layers[layers[l].layer.gpLayerId].onZIndexChangeEvent == null) {
+                        this._layers[layers[l].layer.gpLayerId].onZIndexChangeEvent = layers[l].layer.on('change:zIndex', updateLayersOrder);
+                    }
                 }
             }
         }
@@ -15477,7 +15483,9 @@ Ol3ControlsLayerSwitcher = function (ol, Utils, LayerSwitcherDOM) {
                 this._layersOrder.push(this._layers[id]);
                 maxZIndex--;
             }
-            this._layers[id].onZIndexChangeEvent = layer.on('change:zIndex', updateLayersOrder);
+            if (this._layers[id].onZIndexChangeEvent == null) {
+                this._layers[id].onZIndexChangeEvent = layer.on('change:zIndex', updateLayersOrder);
+            }
         }
         map.updateSize();
     };
