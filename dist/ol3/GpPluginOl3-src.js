@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-11-07
+ * @date 2016-11-15
  *
  */
 /*!
@@ -1323,7 +1323,7 @@ var gp, CommonUtilsAutoLoadConfig, CommonUtilsLayerUtils, proj4, CommonUtilsRegi
                     callbackSuffix: this.options.callbackSuffix,
                     data: strData,
                     headers: null,
-                    content: null,
+                    content: this.options.contentType || 'application/xml',
                     scope: this.options.scope || this,
                     onResponse: function (response) {
                         var content = null;
@@ -6109,11 +6109,12 @@ var gp, CommonUtilsAutoLoadConfig, CommonUtilsLayerUtils, proj4, CommonUtilsRegi
                 var oParams = new RouteParamREST(this.settings);
                 var params = oParams.getParams();
                 var request = '';
-                for (var idx in params) {
+                for (var i = 0; i < params.length; i++) {
+                    var o = params[i];
                     if (request) {
                         request += '&';
                     }
-                    request += params[idx].k + '=' + params[idx].v;
+                    request += o.k + '=' + o.v;
                 }
                 this.requestString = request;
                 return this.requestString;
@@ -6876,11 +6877,12 @@ var gp, CommonUtilsAutoLoadConfig, CommonUtilsLayerUtils, proj4, CommonUtilsRegi
                 case 'GET':
                     var oParams = new ProcessIsoCurveParam(this.settings);
                     var params = oParams.getParams();
-                    for (var idx in params) {
+                    for (var i = 0; i < params.length; i++) {
+                        var o = params[i];
                         if (request) {
                             request += '&';
                         }
-                        request += params[idx].k + '=' + params[idx].v;
+                        request += o.k + '=' + o.v;
                     }
                     break;
                 case 'POST':
@@ -7333,11 +7335,11 @@ var gp, CommonUtilsAutoLoadConfig, CommonUtilsLayerUtils, proj4, CommonUtilsRegi
         var bbox = {};
         return Services;
     }(ServicesAltiAlti, ServicesAutoConfAutoConf, ServicesGeocodeGeocode, ServicesGeocodeReverseGeocode, ServicesAutoCompleteAutoComplete, ServicesRouteRoute, ServicesProcessIsoCurveProcessIsoCurve);
-    Gp = function (XHR, Services, AltiResponse, Elevation, AutoCompleteResponse, SuggestedLocation, GetConfigResponse, Constraint, Format, Layer, Legend, Metadata, Originator, Service, Style, Territory, Thematic, TM, TMLimit, TMS, GeocodeResponse, GeocodedLocation, DirectGeocodedLocation, ReverseGeocodedLocation, IsoCurveResponse, RouteResponse, RouteInstruction, Helper, Error) {
+    Gp = function (XHR, Services, AltiResponse, Elevation, AutoCompleteResponse, SuggestedLocation, GetConfigResponse, Constraint, Format, Layer, Legend, Metadata, Originator, Service, Style, Territory, Thematic, TM, TMLimit, TMS, GeocodeResponse, GeocodedLocation, DirectGeocodedLocation, ReverseGeocodedLocation, IsoCurveResponse, RouteResponse, RouteInstruction, Error) {
         var scope = typeof window !== 'undefined' ? window : {};
         var Gp = scope.Gp || {
             servicesVersion: '1.0.0-beta3',
-            servicesDate: '2016-10-16',
+            servicesDate: '2016-11-15',
             extend: function (strNS, value) {
                 var parts = strNS.split('.');
                 var parent = this;
@@ -7384,11 +7386,10 @@ var gp, CommonUtilsAutoLoadConfig, CommonUtilsLayerUtils, proj4, CommonUtilsRegi
         Gp.extend('Services.IsoCurveResponse', IsoCurveResponse);
         Gp.extend('Services.RouteResponse', RouteResponse);
         Gp.extend('Services.Route.RouteInstruction', RouteInstruction);
-        Gp.extend('Helper', Helper);
         Gp.extend('Error', Error);
         scope.Gp = Gp;
         return scope.Gp;
-    }(ProtocolsXHR, ServicesServices, ServicesAltiResponseModelAltiResponse, ServicesAltiResponseModelElevation, ServicesAutoCompleteResponseModelAutoCompleteResponse, ServicesAutoCompleteResponseModelSuggestedLocation, ServicesAutoConfResponseModelAutoConfResponse, ServicesAutoConfResponseModelConstraint, ServicesAutoConfResponseModelFormat, ServicesAutoConfResponseModelLayer, ServicesAutoConfResponseModelLegend, ServicesAutoConfResponseModelMetadata, ServicesAutoConfResponseModelOriginator, ServicesAutoConfResponseModelService, ServicesAutoConfResponseModelStyle, ServicesAutoConfResponseModelTerritory, ServicesAutoConfResponseModelThematic, ServicesAutoConfResponseModelTileMatrix, ServicesAutoConfResponseModelTileMatrixLimit, ServicesAutoConfResponseModelTileMatrixSet, ServicesGeocodeResponseModelGeocodeResponse, ServicesGeocodeResponseModelGeocodedLocation, ServicesGeocodeResponseModelDirectGeocodedLocation, ServicesGeocodeResponseModelReverseGeocodedLocation, ServicesProcessIsoCurveResponseModelProcessIsoCurveResponse, ServicesRouteResponseModelRouteResponse, ServicesRouteResponseModelRouteInstruction, UtilsHelper, ExceptionsErrorService);
+    }(ProtocolsXHR, ServicesServices, ServicesAltiResponseModelAltiResponse, ServicesAltiResponseModelElevation, ServicesAutoCompleteResponseModelAutoCompleteResponse, ServicesAutoCompleteResponseModelSuggestedLocation, ServicesAutoConfResponseModelAutoConfResponse, ServicesAutoConfResponseModelConstraint, ServicesAutoConfResponseModelFormat, ServicesAutoConfResponseModelLayer, ServicesAutoConfResponseModelLegend, ServicesAutoConfResponseModelMetadata, ServicesAutoConfResponseModelOriginator, ServicesAutoConfResponseModelService, ServicesAutoConfResponseModelStyle, ServicesAutoConfResponseModelTerritory, ServicesAutoConfResponseModelThematic, ServicesAutoConfResponseModelTileMatrix, ServicesAutoConfResponseModelTileMatrixLimit, ServicesAutoConfResponseModelTileMatrixSet, ServicesGeocodeResponseModelGeocodeResponse, ServicesGeocodeResponseModelGeocodedLocation, ServicesGeocodeResponseModelDirectGeocodedLocation, ServicesGeocodeResponseModelReverseGeocodedLocation, ServicesProcessIsoCurveResponseModelProcessIsoCurveResponse, ServicesRouteResponseModelRouteResponse, ServicesRouteResponseModelRouteInstruction, ExceptionsErrorService);
     return Gp;
 }));
 CommonUtilsAutoLoadConfig = function (Gp) {
@@ -26282,7 +26283,7 @@ Ol3ControlsMeasuresMeasureAzimuth = function (ol, woodman, Utils, Measures, Meas
 }(ol, {}, Ol3Utils, Ol3ControlsMeasuresMeasures, CommonControlsMeasureAzimuthDOM, CommonUtilsSelectorID);
 Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, KML, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution, Markers, MeasureLength, MeasureArea, MeasureAzimuth) {
     Gp.ol3extVersion = '0.11.0';
-    Gp.ol3extDate = '2016-11-07';
+    Gp.ol3extDate = '2016-11-15';
     Gp.LayerUtils = LayerUtils;
     ol.format.KMLExtended = KML;
     CRS.overload();
