@@ -15,7 +15,7 @@ This extension is not standalone and has to be used **together with Leaflet** li
 <link rel="stylesheet" href="path/to/GpPluginLeaflet.css" />
 ```
 
-NB : to have complete access to this extension functionnalities, you need to provide your geoportal access key (<a href="http://professionnels.ign.fr/geoservices-ign" target="_blank">obtained here</a>) either when loading extension script (using the data-key attribute) or by conditinning their use to the onSuccess callback function of a <a href="http://ignf.github.io/geoportal-access-lib/v1.0.0-beta.2/jsdoc/module-Services.html#~getConfig" target="_blank">Gp.Services.GetConfig()</a> call with that key. Otherwhise some functionalities may not work as announced.
+NB : to have complete access to this extension functionnalities, you need to provide your geoportal access key (<a href="http://professionnels.ign.fr/ign/contrats" target="_blank">obtained here</a>) either when loading extension script (using the data-key attribute) or by conditinning their use to the onSuccess callback function of a <a href="http://ignf.github.io/geoportal-access-lib/v1.0.0-beta.2/jsdoc/module-Services.html#~getConfig" target="_blank">Gp.Services.GetConfig()</a> call with that key. Otherwhise some functionalities may not work as announced.
 
 
 ## Geoportal CRS
