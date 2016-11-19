@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.8.1
- * @date 2016-11-08
+ * @date 2016-11-15
  *
  */
 /*!
@@ -1369,7 +1369,7 @@ var gp, CommonUtilsAutoLoadConfig, leafletDraw, sortable, CommonControlsLayerSwi
                     callbackSuffix: this.options.callbackSuffix,
                     data: strData,
                     headers: null,
-                    content: null,
+                    content: this.options.contentType || 'application/xml',
                     scope: this.options.scope || this,
                     onResponse: function (response) {
                         var content = null;
@@ -6155,11 +6155,12 @@ var gp, CommonUtilsAutoLoadConfig, leafletDraw, sortable, CommonControlsLayerSwi
                 var oParams = new RouteParamREST(this.settings);
                 var params = oParams.getParams();
                 var request = '';
-                for (var idx in params) {
+                for (var i = 0; i < params.length; i++) {
+                    var o = params[i];
                     if (request) {
                         request += '&';
                     }
-                    request += params[idx].k + '=' + params[idx].v;
+                    request += o.k + '=' + o.v;
                 }
                 this.requestString = request;
                 return this.requestString;
@@ -6922,11 +6923,12 @@ var gp, CommonUtilsAutoLoadConfig, leafletDraw, sortable, CommonControlsLayerSwi
                 case 'GET':
                     var oParams = new ProcessIsoCurveParam(this.settings);
                     var params = oParams.getParams();
-                    for (var idx in params) {
+                    for (var i = 0; i < params.length; i++) {
+                        var o = params[i];
                         if (request) {
                             request += '&';
                         }
-                        request += params[idx].k + '=' + params[idx].v;
+                        request += o.k + '=' + o.v;
                     }
                     break;
                 case 'POST':
@@ -7379,11 +7381,11 @@ var gp, CommonUtilsAutoLoadConfig, leafletDraw, sortable, CommonControlsLayerSwi
         var bbox = {};
         return Services;
     }(ServicesAltiAlti, ServicesAutoConfAutoConf, ServicesGeocodeGeocode, ServicesGeocodeReverseGeocode, ServicesAutoCompleteAutoComplete, ServicesRouteRoute, ServicesProcessIsoCurveProcessIsoCurve);
-    Gp = function (XHR, Services, AltiResponse, Elevation, AutoCompleteResponse, SuggestedLocation, GetConfigResponse, Constraint, Format, Layer, Legend, Metadata, Originator, Service, Style, Territory, Thematic, TM, TMLimit, TMS, GeocodeResponse, GeocodedLocation, DirectGeocodedLocation, ReverseGeocodedLocation, IsoCurveResponse, RouteResponse, RouteInstruction, Helper, Error) {
+    Gp = function (XHR, Services, AltiResponse, Elevation, AutoCompleteResponse, SuggestedLocation, GetConfigResponse, Constraint, Format, Layer, Legend, Metadata, Originator, Service, Style, Territory, Thematic, TM, TMLimit, TMS, GeocodeResponse, GeocodedLocation, DirectGeocodedLocation, ReverseGeocodedLocation, IsoCurveResponse, RouteResponse, RouteInstruction, Error, Helper) {
         var scope = typeof window !== 'undefined' ? window : {};
         var Gp = scope.Gp || {
             servicesVersion: '1.0.0-beta3',
-            servicesDate: '2016-10-16',
+            servicesDate: '2016-11-15',
             extend: function (strNS, value) {
                 var parts = strNS.split('.');
                 var parent = this;
@@ -7430,11 +7432,11 @@ var gp, CommonUtilsAutoLoadConfig, leafletDraw, sortable, CommonControlsLayerSwi
         Gp.extend('Services.IsoCurveResponse', IsoCurveResponse);
         Gp.extend('Services.RouteResponse', RouteResponse);
         Gp.extend('Services.Route.RouteInstruction', RouteInstruction);
-        Gp.extend('Helper', Helper);
         Gp.extend('Error', Error);
+        Gp.extend('Helper', Helper);
         scope.Gp = Gp;
         return scope.Gp;
-    }(ProtocolsXHR, ServicesServices, ServicesAltiResponseModelAltiResponse, ServicesAltiResponseModelElevation, ServicesAutoCompleteResponseModelAutoCompleteResponse, ServicesAutoCompleteResponseModelSuggestedLocation, ServicesAutoConfResponseModelAutoConfResponse, ServicesAutoConfResponseModelConstraint, ServicesAutoConfResponseModelFormat, ServicesAutoConfResponseModelLayer, ServicesAutoConfResponseModelLegend, ServicesAutoConfResponseModelMetadata, ServicesAutoConfResponseModelOriginator, ServicesAutoConfResponseModelService, ServicesAutoConfResponseModelStyle, ServicesAutoConfResponseModelTerritory, ServicesAutoConfResponseModelThematic, ServicesAutoConfResponseModelTileMatrix, ServicesAutoConfResponseModelTileMatrixLimit, ServicesAutoConfResponseModelTileMatrixSet, ServicesGeocodeResponseModelGeocodeResponse, ServicesGeocodeResponseModelGeocodedLocation, ServicesGeocodeResponseModelDirectGeocodedLocation, ServicesGeocodeResponseModelReverseGeocodedLocation, ServicesProcessIsoCurveResponseModelProcessIsoCurveResponse, ServicesRouteResponseModelRouteResponse, ServicesRouteResponseModelRouteInstruction, UtilsHelper, ExceptionsErrorService);
+    }(ProtocolsXHR, ServicesServices, ServicesAltiResponseModelAltiResponse, ServicesAltiResponseModelElevation, ServicesAutoCompleteResponseModelAutoCompleteResponse, ServicesAutoCompleteResponseModelSuggestedLocation, ServicesAutoConfResponseModelAutoConfResponse, ServicesAutoConfResponseModelConstraint, ServicesAutoConfResponseModelFormat, ServicesAutoConfResponseModelLayer, ServicesAutoConfResponseModelLegend, ServicesAutoConfResponseModelMetadata, ServicesAutoConfResponseModelOriginator, ServicesAutoConfResponseModelService, ServicesAutoConfResponseModelStyle, ServicesAutoConfResponseModelTerritory, ServicesAutoConfResponseModelThematic, ServicesAutoConfResponseModelTileMatrix, ServicesAutoConfResponseModelTileMatrixLimit, ServicesAutoConfResponseModelTileMatrixSet, ServicesGeocodeResponseModelGeocodeResponse, ServicesGeocodeResponseModelGeocodedLocation, ServicesGeocodeResponseModelDirectGeocodedLocation, ServicesGeocodeResponseModelReverseGeocodedLocation, ServicesProcessIsoCurveResponseModelProcessIsoCurveResponse, ServicesRouteResponseModelRouteResponse, ServicesRouteResponseModelRouteInstruction, ExceptionsErrorService, UtilsHelper);
     return Gp;
 }));
 CommonUtilsAutoLoadConfig = function (Gp) {
@@ -24293,7 +24295,7 @@ LeafletLayersLayers = function (L, woodman, LayerConfig, WMS, WMTS) {
 }(leaflet, {}, LeafletLayersLayerConfig, LeafletLayersWMS, LeafletLayersWMTS);
 LeafletGpPluginLeaflet = function (L, P, Gp, Controls, Layers, CRS, Register) {
     Gp.leafletExtVersion = '0.8.1';
-    Gp.leafletExtDate = '2016-11-08';
+    Gp.leafletExtDate = '2016-11-15';
     Gp.Register = Register;
     L.geoportalLayer = Layers;
     L.geoportalControl = Controls;
