@@ -121,11 +121,52 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
 </html>
 ```
 
-<!--
 #### Optimisation du chargement : configuration locale
 
-Partie à écrire...
--->
+Vous pouvez améliorer le temps de chargement de votre page en mettant en cache sur votre plateforme la configuration associée à votre clef d'accès. Il vous suffit pour cela de récupérer le fichier de configuration (autoconf.json) obtenu à l'aide [du formulaire de ce tutoriel](http://ignf.github.io/geoportal-access-lib/latest/jsdoc/tutorial-optimize-getconfig.html).
+
+Enregistrez ce fichier sur votre plateforme et paramétrez l'extension Géoportail de la manière suivante (selon les méthodes citées précédemment) :
+
+**Méthode 1** : Utilisez l'attribut *data-url* de la balise script chargeant l'extension pour pointer vers votre fichier :
+
+``` html
+<html>
+    <head>
+        <!-- Library OpenLayers 3 -->
+        ...
+        <script src="GpPluginOl3.js" data-url="chemin/vers/autoconf.json"></script>
+    </head>
+    <body>
+        <script>
+            window.onload = function () {
+                // votre utilisation de l'extension Géoportail pour OpenLayers 3
+            }
+        </script>
+    </body>
+</html>
+```
+
+
+**Méthode 2** : Utilisez le paramètre *serverUrl* de la fonction Gp.Services.getConfig() pour pointer vers votre fichier :
+
+``` html
+<html>
+    ...
+    <body>
+        <script>
+            window.onload = function () {
+                Gp.Services.getConfig({
+                    serverUrl: 'chemin/vers/autoconf.json',
+                    onSuccess: function (response) {
+                        // votre utilisation de l'extension Géoportail pour OpenLayers 3
+                    }
+                });
+            }
+        </script>
+    </body>
+</html>
+```
+
 
 ## Compatibilités
 
