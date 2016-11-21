@@ -497,14 +497,14 @@ define([
                 label : "Lambert 93",
                 crs : ol.proj.get("EPSG:2154").getCode(),
                 type : "Metric",
-                WGS84Bounds : [-9.6200, 41.1800, 10.3000, 51.5400]
+                WGS84Bounds : [-9.86, 41.15, 10.38, 51.56]
             },
             {
                 code : "EPSG:27572",
                 label : "Lambert II étendu",
                 crs : ol.proj.get("EPSG:27572"),
                 type : "Metric",
-                WGS84Bounds : [-5.2000, 42.2500, 8.2300, 51.1000]
+                WGS84Bounds : [-4.87, 42.33, 8.23, 51.14]
             }
         ];
 
@@ -1173,15 +1173,15 @@ define([
     };
 
     /**
-     * this method is called by event 'click' on 'GPmousePositionProjectionSystem'
+     * this method is called by event 'focus' on 'GPmousePositionProjectionSystem'
      * tag select (cf. this._createMousePositionSettingsElement),
      * and selects the system projection.
      *
-     * @method onMousePositionProjectionSystemClick
+     * @method onMousePositionProjectionSystemFocus
      * @param {Object} e - HTMLElement
      * @private
      */
-    MousePosition.prototype.onMousePositionProjectionSystemClick = function (e) {
+    MousePosition.prototype.onMousePositionProjectionSystemFocus = function (e) {
 
         //map infos
         var map = this.getMap();
