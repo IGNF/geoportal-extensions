@@ -186,7 +186,7 @@ define([
         this.options = {};
         this.options.target   = ( typeof options.target !== "undefined" ) ? options.target : null;
         this.options.render   = ( typeof options.render !== "undefined" ) ? options.render : null;
-        
+
         // gestion des styles !
         this.createStylingMeasureInteraction(options.styles);
 
@@ -206,7 +206,7 @@ define([
         container.appendChild(show);
 
         // par defaut, pas d'interaction à l'initialisation...
-        this._showContainer.checked = true;
+        this._showContainer.checked = false;
 
         var picto = this._pictoContainer = this._createShowMeasureAzimuthPictoElement();
         container.appendChild(picto);

@@ -190,7 +190,7 @@ define([
         this.options.geodesic = ( typeof options.geodesic !== "undefined" ) ? options.geodesic : true;
         this.options.target   = ( typeof options.target !== "undefined" ) ? options.target : null;
         this.options.render   = ( typeof options.render !== "undefined" ) ? options.render : null;
-        
+
         // gestion des styles !
         this.createStylingMeasureInteraction(options.styles);
 
@@ -210,7 +210,7 @@ define([
         container.appendChild(show);
 
         // par defaut, pas d'interaction à l'initialisation...
-        this._showContainer.checked = true;
+        this._showContainer.checked = false;
 
         var picto = this._pictoContainer = this._createShowMeasureLengthPictoElement();
         container.appendChild(picto);

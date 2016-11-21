@@ -1,54 +1,162 @@
-div[id^=GPelevationPath-] {
-  bottom: 48px;
-  left: 10px;
+/* Widgets : general */
+
+.GPwidget {
+  position: absolute;
+  font-family: "Helvetica Neue",Arial,Helvetica,sans-serif;
+  font-size: 13px;
+  color: #333;
 }
 
-/* Showing/hiding elevationPath panel */
-
-label[id^=GPshowElevationPathPicto] {
-  display: inline-block;
+.GPwidget * {
+  box-sizing: border-box;
+  background-repeat: no-repeat;
 }
 
-input[id^=GPshowElevationPath-] + label {
+/* waiting */
+
+.GPwaiting {
+    background-image : url("img/waiting.gif");
+    background-position : center center;
+    background-repeat : no-repeat;
+}
+
+/* General panels */
+
+.GPpanel {
+  background-color: #FFF;
+}
+
+.GPpanelHeader {
+  position: relative;
+  width: 100%;
+}
+
+.GPpanelTitle {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-weight: bold;
+}
+
+.GPpanelClose, .GPpanelReduce {
+  position: absolute;
+  cursor: pointer;
+}
+
+/* Showing/hiding advanced panels */
+
+.GPshowAdvancedToolPicto {
+  position: relative;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.GPshowAdvancedToolOpen {
+  position: absolute;
   display: block;
-  /*visibility: visible;*/
+  box-sizing: border-box;
 }
 
-input[id^=GPshowElevationPath-]:checked + label {
-  background-color: rgba(0,60,136,0.5);
-  /* on garde le picto toujours visible... */
-  /* display: none; */
+/* Flex inputs */
+
+.GPflexInput {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: flex;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
 }
 
-input[id^=GPshowElevationPath-] + label + div {
-  display: none;
-  /*visibility: hidden;*/
-}
-
-input[id^=GPshowElevationPath-]:checked + label + div {
+.GPflexInput > * {
   display: block;
-  /*visibility: visible;*/
+  height: 28px;
+  line-height: 26px;
+  border: 1px solid #999;
+  border-radius: 0;
 }
 
-span[id^=GPshowElevationPathOpen] {
-  background-image: url("img/GPshowElevationPath.png");
+.GPflexInput *:not(:last-child) {
+  border-right:none;
+}
+
+.GPflexInput *:first-child {
+  border-radius: 3px 0 0 3px;
+}
+
+.GPflexInput *:last-child {
+  border-radius: 0 3px 3px 0;
+}
+
+.GPflexInput > *:not(input) {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.GPflexInput > input {
+  -webkit-flex: 1;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  padding: 0 5px;
+  min-width: 0;
+}
+
+.GPflexInput > select {
+  -webkit-flex: 1;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  padding-right: 7px;
+}
+
+.GPflexInput > label {
+  background-color:  #F2F2F2;
+  color: #666;
+  padding-left: 7px;
+  padding-right: 9px;
+  cursor: pointer;
+}
+
+/* General panels */
+
+.GPpanel {
+  box-shadow: 0 0 6px #000;
+  border-radius: 4px;
+}
+
+.GPpanelHeader {
+  height: 32px;
+  padding: 3px;
+  background-color: #9DB1BD;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.GPpanelTitle {
+  line-height: 26px;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  background-color: #366291;
+  color: #FFF;
+}
+
+.GPpanelClose {
+  top: 3px;
+  right: 3px;
+  width: 26px;
+  height: 26px;
+  background-position: -26px 0;
 }
 
 /* Panel */
 
-[id^=GPelevationPathPanelClose] {
-  background-image: url("img/GPshowElevationPath.png");
-}
-
-div[id^=GPelevationPathPanelReduce] {
-  background-image: url("img/GPshowElevationPath.png");
-}
-
 [id^=GPelevationPathPanel-] {
-  position : relative;
+  /*position : relative;
   top : 6px;
-  left: 32px;
-  width: 280px;
+  left: 32px;*/
+  width : 280px ;
+
 }
 
 /* Calc waiting */
@@ -95,13 +203,6 @@ div[id^=GPelevationPathPanelReduce] {
   padding: unset;
 }
 
-/* CSS : Raw */
-
-#profileElevationRaw {
-  resize: none;
-  padding: unset;
-}
-
 /* CSS : default */
 
 /* suppression des puces sur les listes */
@@ -122,12 +223,12 @@ ul#data-default {
 
 .z-title-vertical {
   position: absolute;
-  transform: translate(120px, 0px);
+  transform: rotate(-90deg) translateX(-50px);
 }
 
 .x-title-horizontal {
   position: absolute;
-  transform: translate(120px, 120px);
+  transform: translate(120px, 115px);
 }
 
 .z-axis {
@@ -263,110 +364,3 @@ ul#data-default .percent:hover {
 .v98 { height: 98%; }
 .v99 { height: 99%; }
 .v100 { height: 100%; }
-
-/* CSS : D3 */
-
-text {
-  fill: rgb(94, 94, 94);
-  font-family: Verdana;
-  font-size: 10px;
-  opacity: 1;
-  text-anchor: end;
-}
-
-.axis-d3 {
-  fill: none;
-  stroke: #5E5E5E;
-  stroke-width: 1;
-  shape-rendering: crispEdges;
-}
-
-.area-d3 {
-  fill: #C77A04;
-  stroke: #5E5E5E;
-  stroke-width: 0;
-  fill-opacity: 0.4;
-}
-
-.line-d3 {
-  fill: none;
-  stroke: #C77A04;
-  stroke-width: 1px;
-}
-
-.grid-d3 .tick {
-  stroke: lightgrey;
-  opacity: 0.7;
-}
-
-.grid-d3 path {
-  stroke-width: 0;
-}
-
-.grid-d3 .tick {
-  stroke: lightgrey;
-  opacity: 0.7;
-}
-
-.grid-d3 path {
-  stroke-width: 0;
-}
-
-.overlay-d3 {
-  fill: none;
-  pointer-events: all;
-}
-
-.focusLine-d3 {
-  fill: none;
-  stroke: #C77A04;
-  stroke-width: 0.5px;
-}
-
-.focusCircle-d3 {
-  fill: #C77A04;
-}
-
-div.tooltip-d3 {
-    position: inherit;;
-    text-align: left;
-    width: 80px;
-    height: 35px;
-    padding: 2px;
-    font: 8px sans-serif;
-    background: lightsteelblue;
-    border: 0px;
-    border-radius: 8px;
-    pointer-events: none;
-}
-
-/*
-@media (min-width:720px) and (min-height:720px) {
-
-[id^=GPelevationPathPanel] {
-top: 15px;
-left: 15px;
-}
-
-}
-
-@media (min-width:720px) and (min-height:520px) {
-
-[id^=GPelevationPathPanel] {
-width: 460px;
-}
-
-[id^=GPelevationPathProfil] {
-height: 220px;
-}
-
-}
-
-@media (max-width:560px), (max-height:340px) {
-
-[id^=GPelevationPathPanel] {
-display: none !important;
-}
-
-}
-*/

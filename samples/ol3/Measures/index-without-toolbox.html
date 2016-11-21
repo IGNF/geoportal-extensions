@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta content="IE=edge,chrome=1; charset=UTF-8" http-equiv="X-UA-Compatible">
-  <title>sample ol3 measure with a custom toolbox (amd)</title>
+  <title>sample ol3 measure witout toolbox (amd)</title>
 
   <!-- Library OpenLayers 3 -->
   <link rel="stylesheet" href="../../../lib/ol3/ol.css" />
@@ -35,49 +35,15 @@
     margin: 10px;
   }
 
-  #GPtoolbox-measure {
-    float: left;
-    position: relative;
-    display: inline-block;
-    top: 100px;
-    left: 8px;
-    z-index: 1;
-  }
-
-  #GPtoolbox-measure-btn {
-    color: white;
-    border: none;
-    cursor: pointer;
-    width: 32px;
-    height: 32px;
-    background-color: rgba(0,60,136,0.5);
-    border-radius: 4px;
-  }
-
-  #GPtoolbox-measure-content {
-    left:auto;
-    display: none;
+  #container-measure-content {
     position: absolute;
-    /*right: 0;*/
-    border-radius: 2px;
-    background-color: #f9f9f9;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    top: 42px;
+    left: 16px;
+    z-index: 1;
+￼    bottom: auto;
+￼    right: auto;
   }
 
-  #GPtoolbox-measure-content div {
-    display: block;
-    position: relative;
-    top: auto;
-    left: auto;
-  }
-
-  #GPtoolbox-measure:hover #GPtoolbox-measure-content {
-      display: block;
-  }
-
-  #GPtoolbox-measure:hover #GPtoolbox-measure-btn {
-      background-color: rgba(0,60,136,0.7);
-  }
   </style>
 </head>
 <body>
@@ -147,13 +113,13 @@
           });
 
           var CtrlMeasureArea = new MeasureArea({
-            target : document.getElementById('GPtoolbox-measure-content')
+            target : document.getElementById('container-measure-content')
           });
           var CtrlMeasureAzimuth = new MeasureAzimuth({
-            target : document.getElementById('GPtoolbox-measure-content')
+            target : document.getElementById('container-measure-content')
           });
           var CtrlMeasureLength = new MeasureLength({
-            target : document.getElementById('GPtoolbox-measure-content')
+            target : document.getElementById('container-measure-content')
           });
           map.addControl(CtrlMeasureArea);
           map.addControl(CtrlMeasureAzimuth);
@@ -174,12 +140,9 @@
 
       <!-- map -->
       <div id="map">
-        <div id="GPtoolbox-measure">
-          <button id="GPtoolbox-measure-btn">&#9776;</button>
-          <div id="GPtoolbox-measure-content">
+          <div id="container-measure-content">
             <!-- HERE : widgets tools measures -->
           </div>
-        </div>
       </div>
 
       <!-- Comment utiliser le plugin avec un exemple -->

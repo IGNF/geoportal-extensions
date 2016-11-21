@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-11-09
+ * @date 2016-11-21
  *
  */
 /* MOUSE POSITION */
@@ -1072,6 +1072,7 @@ input[id^=GPshowMeasureArea-] + label {
 
 input[id^=GPshowMeasureArea-]:checked + label {
   display: block;
+  background-color: rgba(0,60,136,0.5);
 }
 
 input[id^=GPshowMeasureArea-] + label + div {
@@ -1094,6 +1095,7 @@ input[id^=GPshowMeasureAzimuth-] + label {
 
 input[id^=GPshowMeasureAzimuth-]:checked + label {
   display: block;
+  background-color: rgba(0,60,136,0.5);
 }
 
 input[id^=GPshowMeasureAzimuth-] + label + div {
@@ -1116,6 +1118,7 @@ input[id^=GPshowMeasureLength-] + label {
 
 input[id^=GPshowMeasureLength-]:checked + label {
   display: block;
+  background-color: rgba(0,60,136,0.5);
 }
 
 input[id^=GPshowMeasureLength-] + label + div {
@@ -2739,6 +2742,7 @@ input[id^=GPshowElevationPath-] + label {
 }
 
 input[id^=GPshowElevationPath-]:checked + label {
+  background-color: rgba(0,60,136,0.5);
   /* on garde le picto toujours visible... */
   /* display: none; */
 }
@@ -2768,6 +2772,9 @@ div[id^=GPelevationPathPanelReduce] {
 }
 
 [id^=GPelevationPathPanel-] {
+  position : relative;
+  top : 6px;
+  left: 32px;
   width: 280px;
 }
 
@@ -2825,47 +2832,50 @@ div[id^=GPelevationPathPanelReduce] {
 /* CSS : default */
 
 /* suppression des puces sur les listes */
-ul#profileElevationByDefault {
+div#profileElevationByDefault {
+  height: inherit;
+  width: inherit;
+}
+
+ul#data-default {
     list-style: none;
-    /*border : solid 1px;*/
-    padding-left : 0px ;
+    box-sizing: border-box;
+    padding: 0px;
     position : relative;
-    margin : 0px ;
+    margin : 10px ;
     height: 95%;
-    width: 100%
+    width: 95%;
+}
+
+.z-title-vertical {
+  position: absolute;
+  transform: translate(120px, 0px);
+}
+
+.x-title-horizontal {
+  position: absolute;
+  transform: translate(120px, 120px);
 }
 
 .z-axis {
-    display: inline-block;
-    height :100%;
-    width: 5px ;
-    border-right: solid 1px #000;
-    border-top: solid 1px #000;
-    border-bottom: solid 1px #000;
+    border-right: none;
+    border-left: solid 2px;
     cursor: default;
-    /*margin-right: 2px;*/
 }
 
-div.x-axis {
-    height: 5px ;
-    border-right: solid 1px #000;
-    border-top: solid 1px #000;
-    border-left: solid 1px #000;
+.x-axis {
+    border-top: none;
+    border-bottom: solid 2px;
     cursor: default;
-    margin-left: 15px;
-    margin-top: 5px;
-    /*
-    margin-right: 15px;
-    padding-right: 15px;
-    */
 }
 
-ul#profileElevationByDefault li.percent {
+ul#data-default li.percent {
     display: inline-block;
-    /*vertical-align: bottom;*/
+    vertical-align: bottom;
     background-color: #C77A04;
     opacity : 0.3;
     border-top: solid 1px;
+    border-radius: 2px;
     cursor: pointer;
 }
 
@@ -2873,9 +2883,9 @@ li.axe span.bottom-axis {
     vertical-align: bottom;
 }
 
-ul#profileElevationByDefault .percent:hover {
+ul#data-default .percent:hover {
     display: inline-block;
-    vertical-align: bottom;
+    /*vertical-align: bottom;*/
     background-color: #f00;
 }
 
@@ -3736,8 +3746,8 @@ input[id^=GProuteResultsShowDetails] + label + label:hover {
 */
 #GPtoolbox-measure-main {
   float: left;
-  left: 10px;
-  top: 262px;
+  left: 78px;
+  top: 8px;
   position: absolute;
   display: inline-block;￼
   z-index: 1;
@@ -3746,14 +3756,14 @@ input[id^=GProuteResultsShowDetails] + label + label:hover {
 #GPtoolbox-measure-button {
   color: white;
   border-color: rgba(255, 255, 255, 0.8);
-  border-style: solid;
+  border-style: none;
   border-width: 1px;
   cursor: pointer;
   width: 26px;
   height: 26px;
   background-color: rgba(0,60,136,0.5);
   border-radius: 4px;
-  padding: 2px;
+  padding: 0px;
 }
 
 #GPtoolbox-measure-button {
@@ -3765,7 +3775,7 @@ input[id^=GProuteResultsShowDetails] + label + label:hover {
   left:auto;
   display: none;
   /*visibility: hidden;*/
-  position: absolute;
+  /*position: absolute;*/
   /*right: 0;*/
   border-radius: 2px;
   /*background-color: #f9f9f9;*/
@@ -3782,9 +3792,13 @@ input[id^=GProuteResultsShowDetails] + label + label:hover {
   right: auto;
 }
 
-#GPtoolbox-measure-main:hover #GPtoolbox-measure-widget {
-    display: block;
+#GPtoolbox-measure-main:hover {
+    /*display: block;*/
     /*visibility: visible;*/
+}
+
+#GPtoolbox-measure-main:hover:not(.active) {
+    /*background-color: rgba(0,60,136,0.3);*/
 }
 
 #GPtoolbox-measure-main:hover #GPtoolbox-measure-button {

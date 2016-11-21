@@ -48,6 +48,7 @@ define([
             var widgetContainer = mapDocument.getElementById(this.getWidgetID());
             ctrl.setTarget(widgetContainer);
             logger.trace("add control to toolbox !");
+
         }
     };
 

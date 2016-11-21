@@ -42,11 +42,62 @@ define([], function () {
 
             var button = document.createElement("button");
             button.id = this._buttonId;
-            // button.innerHTML = "&#9776;";
+            var self = this;
+            button.addEventListener("click", function () {
+                this.blur(); // permet de perdre le focus !
+                var widget = document.getElementById(self._widgetId);
+                if ( widget.style.display === "block") {
+                    widget.style.display = "none";
+                } else {
+                    widget.style.display = "block";
+                }
+            });
             container.appendChild(button);
 
             var widget = document.createElement("div");
             widget.id = this._widgetId;
+            widget.addEventListener("click", function (e) {
+                console.log(e);
+                // e.preventDefault();
+
+                // FIXME comment desactiver les outils ?
+
+                // A l'initialisation, les inputs sont decochés (non actif).
+                // Le clic sur un outil va coché l'input courant (actif).
+                // Et les autres devront être desactivés !
+
+
+                // init:input.checked:false
+                // clic:input.checked:false
+                //      puis on passe dans cette fonction (1ere fois)
+                //      target:noinput !
+                //      et en y sortant, input.checked:true
+                //      ensuite on passe dans cette fonction (2eme fois)
+                //      target:input.checked:true
+
+
+                // var current = e.target.parentNode.getAttribute("for");
+                // var widgets = this.querySelectorAll("div > input");
+                // for (var i = 0; i < widgets.length; i++) {
+                //     var id = widgets[i].id;
+                //
+                //     if (document.getElementById(id) &&
+                //         document.getElementById(id).checked &&
+                //         document.querySelector("#" + id + " + label")) {
+                //             document.querySelector("#" + id + " + label").click();
+                //             // document.getElementById(id).checked = true;
+                //     }
+                //
+                //     if (current === id && widgets[i].checked) {
+                //         widgets[i].checked = false;
+                //     } else if (current === id && !widgets[i].checked) {
+                //         widgets[i].checked = true;
+                //     }
+                // }
+
+
+            }, false);
+
             container.appendChild(widget);
 
             return container;

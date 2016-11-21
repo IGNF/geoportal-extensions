@@ -178,6 +178,39 @@ define([
     // on récupère les mixins de la classe "ElevationPathDOM"
     Utils.assign(ElevationPath.prototype, ElevationPathDOM);
 
+    /** suppression du marker */
+    ElevationPath.__removeProfilMarker = function (context) {
+        var self = context;
+        // suppression de l'ancien marker
+        if (self._marker) {
+            self._measureSource.removeFeature(self._marker);
+            self._marker = null;
+        }
+    };
+
+    /** mise à jour du marker */
+    ElevationPath.__updateProfilMarker = function (d, context) {
+        var self = context;
+        var map  = self.getMap();
+        var proj = map.getView().getProjection();
+
+        ElevationPath.__removeProfilMarker(self);
+
+        var _coordinate = ol.proj.transform([d.lon, d.lat], "EPSG:4326", proj);
+        var _geometry   = new ol.geom.Point(_coordinate);
+
+        self._marker = new ol.Feature({
+            geometry : _geometry
+        });
+        logger.trace(_geometry);
+
+        // style
+        self._marker.setStyle(self._markerStyle);
+
+        // ajout du marker sur la map
+        self._measureSource.addFeature(self._marker);
+    };
+
     /**
     * display Profile with Amcharts
     *
@@ -212,26 +245,29 @@ define([
             var obj = e.chart.dataProvider[e.index];
             logger.trace(obj);
 
-            var _proj = self.getMap().getView().getProjection();
-            var _coordinate = ol.proj.transform([obj.lon, obj.lat], "EPSG:4326", _proj);
-            var _geometry   = new ol.geom.Point(_coordinate);
+            ElevationPath.__removeProfilMarker(self);
+            ElevationPath.__updateProfilMarker(obj, self);
 
-            // suppression de l'ancien marker
-            if (self._marker) {
-                self._measureSource.removeFeature(self._marker);
-                self._marker = null;
-            }
-
-            self._marker = new ol.Feature({
-                geometry : _geometry
-            });
-            logger.trace(_geometry);
-
-            // style
-            self._marker.setStyle(self._markerStyle);
-
-            // ajout du marker sur la map
-            self._measureSource.addFeature(self._marker);
+            // var _proj = self.getMap().getView().getProjection();
+            // var _coordinate = ol.proj.transform([obj.lon, obj.lat], "EPSG:4326", _proj);
+            // var _geometry   = new ol.geom.Point(_coordinate);
+            //
+            // // suppression de l'ancien marker
+            // if (self._marker) {
+            //     self._measureSource.removeFeature(self._marker);
+            //     self._marker = null;
+            // }
+            //
+            // self._marker = new ol.Feature({
+            //     geometry : _geometry
+            // });
+            // logger.trace(_geometry);
+            //
+            // // style
+            // self._marker.setStyle(self._markerStyle);
+            //
+            // // ajout du marker sur la map
+            // self._measureSource.addFeature(self._marker);
         });
     };
 
@@ -413,38 +449,6 @@ define([
 
         var self = context;
 
-        /** suppression du marker */
-        var __removeMarker = function () {
-            // suppression de l'ancien marker
-            if (self._marker) {
-                self._measureSource.removeFeature(self._marker);
-                self._marker = null;
-            }
-        };
-
-        /** mise à jour du marker */
-        var __updateMarker = function (d) {
-
-            var map  = self.getMap();
-            var proj = map.getView().getProjection();
-
-            __removeMarker();
-
-            var _coordinate = ol.proj.transform([d.lon, d.lat], "EPSG:4326", proj);
-            var _geometry   = new ol.geom.Point(_coordinate);
-
-            self._marker = new ol.Feature({
-                geometry : _geometry
-            });
-            logger.trace(_geometry);
-
-            // style
-            self._marker.setStyle(self._markerStyle);
-
-            // ajout du marker sur la map
-            self._measureSource.addFeature(self._marker);
-        };
-
         svg.append("rect")
             .attr("class", "overlay-d3")
             .attr("width", width)
@@ -452,13 +456,13 @@ define([
             .on("mouseover", function () {
                 focus.style("display", null);
 
-                __updateMarker(data[0]);
+                ElevationPath.__updateProfilMarker(data[0], self);
 
             })
             .on("mouseout", function () {
                 focus.style("display", "none");
 
-                __removeMarker();
+                ElevationPath.__removeProfilMarker(self);
 
                 // tooltips
                 div.transition()
@@ -489,7 +493,7 @@ define([
                     .attr("x2", x(xDomain[1])).attr("y2", yc);
 
                 // mise à jour de la position du marker
-                __updateMarker(d);
+                ElevationPath.__updateProfilMarker(d, self);
 
                 // tooltips
                 div.transition()
@@ -592,11 +596,12 @@ define([
             }
         }
 
-        var self = context;
+        if (!data) {
+            return;
+        }
 
-        var ul  = document.createElement("ul");
-        ul.id = "profileElevationByDefault";
-        container.appendChild(ul);
+        var h = getComputedStyle(container, null).getPropertyValue("height").replace("px", "");
+        var w = getComputedStyle(container, null).getPropertyValue("width").replace("px", "");
 
         var sortedElev = JSON.parse(JSON.stringify(data)) ;
         sortedElev.sort(function (e1, e2) {
@@ -606,27 +611,65 @@ define([
         var minZ = sortedElev[0].z ;
         var maxZ = sortedElev[sortedElev.length - 1].z ;
         var diff = maxZ - minZ ;
+        var dist = data[data.length - 1].dist;
         console.log({
             minZ : minZ,
             maxZ : maxZ,
+            dist : dist,
             diff : diff
         }) ;
 
         var barwidth = 100 / data.length ;
         var pctMax = Math.floor((maxZ - minZ) * 100 / diff) ;
+
+        var self = context;
+
+        var div = document.createElement("div");
+        div.id  = "profileElevationByDefault";
+        div.addEventListener("mouseover", function (e) {
+            // console.log("over", e);
+            var _lon = parseFloat(e.target.dataset["lon"]);
+            var _lat = parseFloat(e.target.dataset["lat"]);
+
+            if (_lon && _lat) {
+                ElevationPath.__updateProfilMarker({
+                    lon : _lon,
+                    lat : _lat
+                }, self);
+            }
+
+        });
+        div.addEventListener("mousemove", function () {});
+        div.addEventListener("mouseout", function () {
+            ElevationPath.__removeProfilMarker(self);
+        });
+        container.appendChild(div);
+
+        var divZ = document.createElement("div");
+        divZ.className = "z-title-vertical";
+        divZ.innerHTML = minZ + " / " + maxZ + " m";
+        div.appendChild(divZ);
+        var divX = document.createElement("div");
+        divX.className = "x-title-horizontal";
+        divX.innerHTML = dist + " km";
+        div.appendChild(divX);
+
+        var ul  = document.createElement("ul");
+        ul.id   = "data-default";
+        ul.className = "z-axis x-axis";
+        div.appendChild(ul);
+
         for (var i = 0 ; i < data.length ; i++) {
-            var e = data[i] ;
+            var d = data[i] ;
             var li = document.createElement("li") ;
-            li.setAttribute("data-z",e.z) ;
-            li.setAttribute("data-lon",e.lon) ;
-            li.setAttribute("data-lat",e.lat) ;
-            li.setAttribute("data-dist",e.dist) ;
-            li.addEventListener("mouseover", function () {
-                // TODO
-            }) ;
-            var pct = Math.floor((e.z - minZ) * 100 / diff) ;
+            li.setAttribute("data-z",d.z) ;
+            li.setAttribute("data-lon",d.lon) ;
+            li.setAttribute("data-lat",d.lat) ;
+            li.setAttribute("data-dist",d.dist) ;
+
+            var pct = Math.floor((d.z - minZ) * 100 / diff) ;
             li.setAttribute("class", "percent v" + pct) ;
-            li.title = "altitude : " + e.z + "m" ;
+            li.title = "altitude : " + d.z + "m" ;
             li.setAttribute("style", "width: " + barwidth + "%") ;
             ul.appendChild(li) ;
        }
@@ -1272,6 +1315,10 @@ define([
             source : this._measureSource,
             type : "LineString",
             style : this._drawStyleStart
+        });
+
+        this._measureDraw.setProperties({
+            source : "ElevationPath"
         });
 
         map.addInteraction(this._measureDraw);
@@ -2015,7 +2062,8 @@ define([
         var map = this.getMap();
         var interactions = map.getInteractions().getArray() ;
         for (var i = 0 ; i < interactions.length ; i++ ) {
-
+            // FIXME
+            // on desactive les interactions parasites avec les mesures
             if (interactions[i].getActive() && interactions[i] instanceof ol.interaction.Draw) {
                 var prop = interactions[i].getProperties();
                 var src  = prop.source;

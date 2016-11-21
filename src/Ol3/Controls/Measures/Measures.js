@@ -157,8 +157,9 @@ define([
         // ****************************************************************** //
 
         /** Desactived Tool Measure */
-        setDesactivated : function () {
+        clean : function () {
             var _class = this.CLASSNAME;
+
             logger.trace("[" + _class + "] deactived tool !");
             // sur la desactivation de l'outil de mesure
             // on fait un nettoyage des ressources
@@ -166,7 +167,8 @@ define([
             this.clearMeasure();
             this.clearMeasureToolTip();
             this.removeMeasureEvents();
-            this._showContainer.checked = true;
+            this._showContainer.checked = false;
+
         },
 
         // ****************************************************************** //
@@ -213,23 +215,27 @@ define([
         */
         onShowMeasureClick : function (e, type) {
 
+            // desactivation des controles de mesures
             var self = this.CLASSNAME; // this.constructor.name : pas possible en mode minifié/manglifié !
             for (var className in this.tools) {
                 if (this.tools.hasOwnProperty(className)) {
                     if (this.tools[className].active && className !== self) {
                         this.tools[className].active = false;
-                        this.tools[className].instance.setDesactivated();
+                        this.tools[className].instance.clean();
                     }
                 }
             }
 
-            // Activation du controle
-            //  statut de la checkbox : true par defaut.
-            //  lors du clic, le statut devient false apres que la fonction
-            //  soit executée.
-            //  clic true run false -> activation
-            //  clic false run true -> desactivation
-            if (this._showContainer.checked) {
+            // FIXME desactivation des autres interactions parasites
+            var map = this.getMap();
+            var interactions = map.getInteractions().getArray() ;
+            for (var i = 0 ; i < interactions.length ; i++ ) {
+                if (interactions[i].getActive() && interactions[i] instanceof ol.interaction.Draw) {
+                    interactions[i].setActive(false);
+                }
+            }
+
+            if (!this._showContainer.checked) {
 
                 this.addMeasureEvents();
                 this.initMeasureInteraction();

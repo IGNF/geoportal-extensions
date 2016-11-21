@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.8.1
- * @date 2016-11-08
+ * @date 2016-11-21
  *
  */
 /* MOUSE POSITION */
@@ -1072,6 +1072,7 @@ input[id^=GPshowMeasureArea-] + label {
 
 input[id^=GPshowMeasureArea-]:checked + label {
   display: block;
+  background-color: rgba(0,60,136,0.5);
 }
 
 input[id^=GPshowMeasureArea-] + label + div {
@@ -1094,6 +1095,7 @@ input[id^=GPshowMeasureAzimuth-] + label {
 
 input[id^=GPshowMeasureAzimuth-]:checked + label {
   display: block;
+  background-color: rgba(0,60,136,0.5);
 }
 
 input[id^=GPshowMeasureAzimuth-] + label + div {
@@ -1116,6 +1118,7 @@ input[id^=GPshowMeasureLength-] + label {
 
 input[id^=GPshowMeasureLength-]:checked + label {
   display: block;
+  background-color: rgba(0,60,136,0.5);
 }
 
 input[id^=GPshowMeasureLength-] + label + div {
@@ -1124,60 +1127,6 @@ input[id^=GPshowMeasureLength-] + label + div {
 
 input[id^=GPshowMeasureLength-]:checked + label + div {
   display: block;
-}
-
-/* TODO coller un peu plus à la charte
-- liseret blanc transparent 32x32 autour du pictogramme
-- pictogramme 26x26
-- ...
-*/
-#GPtoolbox-measure-main {
-  float: left;
-  left: 10px;
-  top: 262px;
-  position: absolute;
-  display: inline-block;￼
-  z-index: 1;
-}
-
-#GPtoolbox-measure-button {
-  color: white;
-  border-color: rgba(255, 255, 255, 0.8);
-  border-style: solid;
-  border-width: 1px;
-  cursor: pointer;
-  width: 26px;
-  height: 26px;
-  background-color: rgba(0,60,136,0.5);
-  border-radius: 4px;
-  padding: 2px;
-}
-
-#GPtoolbox-measure-widget {
-  left:auto;
-  display: none;
-  position: absolute;
-  /*right: 0;*/
-  border-radius: 2px;
-  /*background-color: #f9f9f9;*/
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-}
-
-#GPtoolbox-measure-widget > div {
-  display: block;
-  position: relative;
-  top: auto;
-  left: auto;
-  bottom: auto;
-  right: auto;
-}
-
-#GPtoolbox-measure-main:hover #GPtoolbox-measure-widget {
-    display: block;
-}
-
-#GPtoolbox-measure-main:hover #GPtoolbox-measure-button {
-    background-color: rgba(0,60,136,0.7);
 }
 
 /* MEASURE TOOL */
@@ -2397,62 +2346,6 @@ display: none !important;
 }
 */
 
-/* ISOCHRON */
-
-div[id^=GPisochron-] {
-   /* left: 10px; */
-  top: 0; /*overwritten*/
-}
-
-/* Showing/hiding isochron panel */
-
-span[id^=GPshowIsochronOpen] {
-  background-image: url("img/GPisochronOpen.png");
-}
-
-/* General panels */
-
-div[id^=GPisochronPanel-] {
-  left: 10px;
-}
-
-div[id^=GPisochronPanelClose] {
-  background-image: url("img/GPisochronOpen.png");
-}
-
-div[id^=GPisochronPanelReduce] {
-  background-image: url("img/GPisochronOpen.png");
-}
-
-/* Calc waiting */
-
-.GPisochronCalcWaitingContainerVisible,
-.GPisochronCalcWaitingContainerHidden {
-  border-radius: 5px;
-}
-
-/* Isochron form */
-
-.GPisochronChoiceAlt input:checked + label + span {
-  color: #C77A04;
-}
-
-.GPisochronOriginPointerImg,
-.GPisochronChoiceAltImg,
-.GPisochronTransportImg {
-  background-image: url("img/GPisochronOptions.png");
-}
-
-.GPisoExclusionsOption {
-  background-image: url("img/GPisochronCheck.png");
-}
-
-/* Reset picto */
-div[id^=GPisochronReset] {
-  background-color: #C77A04;
-  background-image: url("img/GPisochronOptions.png");
-}
-
 /* LAYER SWITCHER LEAFLET */
 
 #GPlayerSwitcher {
@@ -2537,19 +2430,60 @@ div[id^=GPisochronReset] {
   background-image: url("img/GPlayerInfo.png");
 }
 
-/* Location */
+/* ISOCHRON */
 
-.GPlocationStageFlexInput {
-  margin-bottom: 5px; /*overwritten*/
+div[id^=GPisochron-] {
+   /* left: 10px; */
+  top: 0; /*overwritten*/
 }
 
-/* Location form */
+/* Showing/hiding isochron panel */
 
-.GPlocationOriginPointerImg,
-.GPlocationStageRemove,
-div[id^=GPlocationStageAdd],
-.GPlocationTransportImg {
-  background-image: url("img/GPlocationOptions.png");
+span[id^=GPshowIsochronOpen] {
+  background-image: url("img/GPisochronOpen.png");
+}
+
+/* General panels */
+
+div[id^=GPisochronPanel-] {
+  left: 10px;
+}
+
+div[id^=GPisochronPanelClose] {
+  background-image: url("img/GPisochronOpen.png");
+}
+
+div[id^=GPisochronPanelReduce] {
+  background-image: url("img/GPisochronOpen.png");
+}
+
+/* Calc waiting */
+
+.GPisochronCalcWaitingContainerVisible,
+.GPisochronCalcWaitingContainerHidden {
+  border-radius: 5px;
+}
+
+/* Isochron form */
+
+.GPisochronChoiceAlt input:checked + label + span {
+  color: #C77A04;
+}
+
+.GPisochronOriginPointerImg,
+.GPisochronChoiceAltImg,
+.GPisochronTransportImg {
+  background-image: url("img/GPisochronOptions.png");
+}
+
+.GPisoExclusionsOption {
+  background-image: url("img/GPisochronCheck.png");
+}
+
+/* Reset picto */
+div[id^=GPisochronReset] {
+  background-color: #C77A04;
+  background-image: url("img/GPisochronOptions.png");
 }
 
 /* MOUSE POSITION */
@@ -2576,6 +2510,21 @@ div[id^=GPlocationStageAdd],
 #GPmapCenter {
   background-image: url("img/GPmapCenter.png");
 }
+/* Location */
+
+.GPlocationStageFlexInput {
+  margin-bottom: 5px; /*overwritten*/
+}
+
+/* Location form */
+
+.GPlocationOriginPointerImg,
+.GPlocationStageRemove,
+div[id^=GPlocationStageAdd],
+.GPlocationTransportImg {
+  background-image: url("img/GPlocationOptions.png");
+}
+
 /* REVERSE GEOCODING */
 
 [id^="GPreverseGeocoding-"] {

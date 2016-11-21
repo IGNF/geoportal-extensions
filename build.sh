@@ -69,7 +69,7 @@ do
         vg
         ;;
      \?)
-        echo "$OPTARG : option invalide : a, o, l ou v !"
+        echo "$OPTARG : option invalide : a(all), o(openlayers), l(leaflet) ou v(virtualgeo) !"
         exit -1
         ;;
    esac

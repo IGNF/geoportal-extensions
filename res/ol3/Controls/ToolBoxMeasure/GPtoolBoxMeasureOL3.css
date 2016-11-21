@@ -5,8 +5,8 @@
 */
 #GPtoolbox-measure-main {
   float: left;
-  left: 10px;
-  top: 262px;
+  left: 78px;
+  top: 8px;
   position: absolute;
   display: inline-block;￼
   z-index: 1;
@@ -15,14 +15,14 @@
 #GPtoolbox-measure-button {
   color: white;
   border-color: rgba(255, 255, 255, 0.8);
-  border-style: solid;
+  border-style: none;
   border-width: 1px;
   cursor: pointer;
   width: 26px;
   height: 26px;
   background-color: rgba(0,60,136,0.5);
   border-radius: 4px;
-  padding: 2px;
+  padding: 0px;
 }
 
 #GPtoolbox-measure-button {
@@ -34,7 +34,7 @@
   left:auto;
   display: none;
   /*visibility: hidden;*/
-  position: absolute;
+  /*position: absolute;*/
   /*right: 0;*/
   border-radius: 2px;
   /*background-color: #f9f9f9;*/
@@ -51,9 +51,13 @@
   right: auto;
 }
 
-#GPtoolbox-measure-main:hover #GPtoolbox-measure-widget {
-    display: block;
+#GPtoolbox-measure-main:hover {
+    /*display: block;*/
     /*visibility: visible;*/
+}
+
+#GPtoolbox-measure-main:hover:not(.active) {
+    /*background-color: rgba(0,60,136,0.3);*/
 }
 
 #GPtoolbox-measure-main:hover #GPtoolbox-measure-button {
