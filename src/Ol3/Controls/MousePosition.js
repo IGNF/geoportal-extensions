@@ -496,13 +496,15 @@ define([
                 code : "EPSG:2154",
                 label : "Lambert 93",
                 crs : ol.proj.get("EPSG:2154").getCode(),
-                type : "Metric"
+                type : "Metric",
+                WGS84Bounds : [-9.6200, 41.1800, 10.3000, 51.5400]
             },
             {
                 code : "EPSG:27572",
                 label : "Lambert II étendu",
                 crs : ol.proj.get("EPSG:27572"),
-                type : "Metric"
+                type : "Metric",
+                WGS84Bounds : [-5.2000, 42.2500, 8.2300, 51.1000]
             }
         ];
 
@@ -1167,6 +1169,59 @@ define([
         // resultats
         if (!this._isDesktop) {
             this.onMapMove();
+        }
+    };
+
+    /**
+     * this method is called by event 'click' on 'GPmousePositionProjectionSystem'
+     * tag select (cf. this._createMousePositionSettingsElement),
+     * and selects the system projection.
+     *
+     * @method onMousePositionProjectionSystemClick
+     * @param {Object} e - HTMLElement
+     * @private
+     */
+    MousePosition.prototype.onMousePositionProjectionSystemClick = function (e) {
+
+        //map infos
+        var map = this.getMap();
+        if ( !map || !map.getView() ) {
+            return;
+        }
+        var view = map.getView();
+        var center = view.getCenter();
+        var crs = view.getProjection();
+
+        //center in WGS84 coordinates is needed because this is
+        //the system in which the systems extent are expressed
+        var coordinates = ol.proj.transform(center, crs, "EPSG:4326");
+
+        //get all project whose extent intersects the map center
+        var selectedCodes = [];
+        for (var j = 0; j < this._projectionSystems.length; j++) {
+            var obj = this._projectionSystems[j];
+            if( obj.WGS84Bounds )
+            {
+                if(  coordinates[0] < obj.WGS84Bounds[0]
+                  || coordinates[1] < obj.WGS84Bounds[1]
+                  || coordinates[0] > obj.WGS84Bounds[2]
+                  || coordinates[1] > obj.WGS84Bounds[3]
+                ){
+                    continue;
+                }
+            }
+            selectedCodes.push( obj.crs );
+        }
+
+        //display in select widget only the projections previously filtered
+        var systemList = document.getElementById("GPmousePositionProjectionSystem");
+        for ( var j = 0; j < systemList.childNodes.length; j++) {
+            if( selectedCodes.indexOf( systemList.childNodes[j].value ) > -1 )
+            {
+                systemList.childNodes[j].setAttribute( "style", "display: none" );
+            }else{
+                systemList.childNodes[j].setAttribute( "style", "display: true" );
+            }
         }
     };
 

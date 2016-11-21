@@ -356,6 +356,9 @@ define([], function () {
             selectSystem.addEventListener("change", function (e) {
                 context.onMousePositionProjectionSystemChange(e);
             });
+            selectSystem.addEventListener("click", function (e) {
+                context.onMousePositionProjectionSystemClick(e);
+            });
 
             for (var i = 0; i < systems.length; i++) {
                 var obj = systems[i];
