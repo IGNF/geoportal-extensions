@@ -645,15 +645,6 @@ define([
         });
         container.appendChild(div);
 
-        var divZ = document.createElement("div");
-        divZ.className = "z-title-vertical";
-        divZ.innerHTML = minZ + " / " + maxZ + " m";
-        div.appendChild(divZ);
-        var divX = document.createElement("div");
-        divX.className = "x-title-horizontal";
-        divX.innerHTML = dist + " km";
-        div.appendChild(divX);
-
         var ul  = document.createElement("ul");
         ul.id   = "data-default";
         ul.className = "z-axis x-axis";
@@ -674,6 +665,15 @@ define([
             ul.appendChild(li) ;
        }
 
+       var divZ = document.createElement("div");
+       divZ.className = "z-title-vertical";
+       divZ.innerHTML = minZ + " / " + maxZ + " m";
+       div.appendChild(divZ);
+       var divX = document.createElement("div");
+       divX.className = "x-title-horizontal";
+       divX.innerHTML = dist + " km";
+       div.appendChild(divX);
+       
        self._profile = container;
     };
 

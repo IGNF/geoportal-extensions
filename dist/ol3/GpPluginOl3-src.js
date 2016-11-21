@@ -26045,14 +26045,6 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, Me
             ElevationPath.__removeProfilMarker(self);
         });
         container.appendChild(div);
-        var divZ = document.createElement('div');
-        divZ.className = 'z-title-vertical';
-        divZ.innerHTML = minZ + ' / ' + maxZ + ' m';
-        div.appendChild(divZ);
-        var divX = document.createElement('div');
-        divX.className = 'x-title-horizontal';
-        divX.innerHTML = dist + ' km';
-        div.appendChild(divX);
         var ul = document.createElement('ul');
         ul.id = 'data-default';
         ul.className = 'z-axis x-axis';
@@ -26070,6 +26062,14 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, Me
             li.setAttribute('style', 'width: ' + barwidth + '%');
             ul.appendChild(li);
         }
+        var divZ = document.createElement('div');
+        divZ.className = 'z-title-vertical';
+        divZ.innerHTML = minZ + ' / ' + maxZ + ' m';
+        div.appendChild(divZ);
+        var divX = document.createElement('div');
+        divX.className = 'x-title-horizontal';
+        divX.innerHTML = dist + ' km';
+        div.appendChild(divX);
         self._profile = container;
     };
     ElevationPath.DEFAULT_STYLES = {

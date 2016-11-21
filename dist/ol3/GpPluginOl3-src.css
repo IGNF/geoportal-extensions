@@ -2262,13 +2262,6 @@ input.GPinputSubmit {
   border-bottom: 1px dotted #666;
 }
 
-/* Geoportal Attribution */
-
-.ol-attribution .gp-control-attribution-image {
-  max-height: 30px;
-  max-width: inherit;
-  vertical-align: middle;
-}
 /* MOUSE POSITION */
 
 div[id^=GPdrawing-] {
@@ -2725,6 +2718,13 @@ button[id^=drawing-export-] {
   height: 24px;
 }
 
+/* Geoportal Attribution */
+
+.ol-attribution .gp-control-attribution-image {
+  max-height: 30px;
+  max-width: inherit;
+  vertical-align: middle;
+}
 div[id^=GPelevationPath-] {
   bottom: 48px;
   left: 10px;
@@ -2848,13 +2848,15 @@ ul#data-default {
 }
 
 .z-title-vertical {
-  position: absolute;
-  transform: translate(120px, 0px);
+  position: absolute;￼
+  left: -30px;
+  top: 100px;
+  transform: rotate(-90deg);
 }
 
 .x-title-horizontal {
   position: absolute;
-  transform: translate(120px, 120px);
+  transform: translate(120px, -30px);
 }
 
 .z-axis {

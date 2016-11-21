@@ -121,13 +121,15 @@ ul#data-default {
 }
 
 .z-title-vertical {
-  position: absolute;
-  transform: translate(120px, 0px);
+  position: absolute;￼
+  left: -30px;
+  top: 100px;
+  transform: rotate(-90deg);
 }
 
 .x-title-horizontal {
   position: absolute;
-  transform: translate(120px, 120px);
+  transform: translate(120px, -30px);
 }
 
 .z-axis {
