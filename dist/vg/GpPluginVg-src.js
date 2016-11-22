@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 5.0.0
- * @date 2016-09-19
+ * @date 2016-10-27
  *
  */
 /*!
@@ -1300,6 +1300,7 @@ var gp, CommonUtilsAutoLoadConfig, CommonUtilsLayerUtils, sortable, CommonContro
                 var strUrlProxified = null;
                 var strData = this.request;
                 var bUrlProxified = this.options.proxyURL && this.options.protocol === 'XHR' ? true : false;
+                this.options.serverUrl = Helper.normalyzeUrl(this.options.serverUrl, { 'gp-access-lib': '1.0.0-beta3' }, false);
                 if (bUrlProxified) {
                     if (this.options.httpMethod === 'GET') {
                         strUrlProxified = this.options.proxyURL + Helper.normalyzeUrl(this.options.serverUrl, this.request, true);
@@ -7332,11 +7333,11 @@ var gp, CommonUtilsAutoLoadConfig, CommonUtilsLayerUtils, sortable, CommonContro
         var bbox = {};
         return Services;
     }(ServicesAltiAlti, ServicesAutoConfAutoConf, ServicesGeocodeGeocode, ServicesGeocodeReverseGeocode, ServicesAutoCompleteAutoComplete, ServicesRouteRoute, ServicesProcessIsoCurveProcessIsoCurve);
-    Gp = function (XHR, Services, AltiResponse, Elevation, AutoCompleteResponse, SuggestedLocation, GetConfigResponse, Constraint, Format, Layer, Legend, Metadata, Originator, Service, Style, Territory, Thematic, TM, TMLimit, TMS, GeocodeResponse, GeocodedLocation, DirectGeocodedLocation, ReverseGeocodedLocation, IsoCurveResponse, RouteResponse, RouteInstruction, Error) {
+    Gp = function (XHR, Services, AltiResponse, Elevation, AutoCompleteResponse, SuggestedLocation, GetConfigResponse, Constraint, Format, Layer, Legend, Metadata, Originator, Service, Style, Territory, Thematic, TM, TMLimit, TMS, GeocodeResponse, GeocodedLocation, DirectGeocodedLocation, ReverseGeocodedLocation, IsoCurveResponse, RouteResponse, RouteInstruction, Helper, Error) {
         var scope = typeof window !== 'undefined' ? window : {};
         var Gp = scope.Gp || {
             servicesVersion: '1.0.0-beta3',
-            servicesDate: '2016-07-29',
+            servicesDate: '2016-10-16',
             extend: function (strNS, value) {
                 var parts = strNS.split('.');
                 var parent = this;
@@ -7383,10 +7384,11 @@ var gp, CommonUtilsAutoLoadConfig, CommonUtilsLayerUtils, sortable, CommonContro
         Gp.extend('Services.IsoCurveResponse', IsoCurveResponse);
         Gp.extend('Services.RouteResponse', RouteResponse);
         Gp.extend('Services.Route.RouteInstruction', RouteInstruction);
+        Gp.extend('Helper', Helper);
         Gp.extend('Error', Error);
         scope.Gp = Gp;
         return scope.Gp;
-    }(ProtocolsXHR, ServicesServices, ServicesAltiResponseModelAltiResponse, ServicesAltiResponseModelElevation, ServicesAutoCompleteResponseModelAutoCompleteResponse, ServicesAutoCompleteResponseModelSuggestedLocation, ServicesAutoConfResponseModelAutoConfResponse, ServicesAutoConfResponseModelConstraint, ServicesAutoConfResponseModelFormat, ServicesAutoConfResponseModelLayer, ServicesAutoConfResponseModelLegend, ServicesAutoConfResponseModelMetadata, ServicesAutoConfResponseModelOriginator, ServicesAutoConfResponseModelService, ServicesAutoConfResponseModelStyle, ServicesAutoConfResponseModelTerritory, ServicesAutoConfResponseModelThematic, ServicesAutoConfResponseModelTileMatrix, ServicesAutoConfResponseModelTileMatrixLimit, ServicesAutoConfResponseModelTileMatrixSet, ServicesGeocodeResponseModelGeocodeResponse, ServicesGeocodeResponseModelGeocodedLocation, ServicesGeocodeResponseModelDirectGeocodedLocation, ServicesGeocodeResponseModelReverseGeocodedLocation, ServicesProcessIsoCurveResponseModelProcessIsoCurveResponse, ServicesRouteResponseModelRouteResponse, ServicesRouteResponseModelRouteInstruction, ExceptionsErrorService);
+    }(ProtocolsXHR, ServicesServices, ServicesAltiResponseModelAltiResponse, ServicesAltiResponseModelElevation, ServicesAutoCompleteResponseModelAutoCompleteResponse, ServicesAutoCompleteResponseModelSuggestedLocation, ServicesAutoConfResponseModelAutoConfResponse, ServicesAutoConfResponseModelConstraint, ServicesAutoConfResponseModelFormat, ServicesAutoConfResponseModelLayer, ServicesAutoConfResponseModelLegend, ServicesAutoConfResponseModelMetadata, ServicesAutoConfResponseModelOriginator, ServicesAutoConfResponseModelService, ServicesAutoConfResponseModelStyle, ServicesAutoConfResponseModelTerritory, ServicesAutoConfResponseModelThematic, ServicesAutoConfResponseModelTileMatrix, ServicesAutoConfResponseModelTileMatrixLimit, ServicesAutoConfResponseModelTileMatrixSet, ServicesGeocodeResponseModelGeocodeResponse, ServicesGeocodeResponseModelGeocodedLocation, ServicesGeocodeResponseModelDirectGeocodedLocation, ServicesGeocodeResponseModelReverseGeocodedLocation, ServicesProcessIsoCurveResponseModelProcessIsoCurveResponse, ServicesRouteResponseModelRouteResponse, ServicesRouteResponseModelRouteInstruction, UtilsHelper, ExceptionsErrorService);
     return Gp;
 }));
 CommonUtilsAutoLoadConfig = function (Gp) {
@@ -7568,13 +7570,13 @@ CommonUtilsLayerUtils = function () {
                             image.style.width = '30px';
                         } else {
                             if (name) {
-                                link.text = name;
+                                link.textContent = name;
                             } else if (text) {
-                                link.text = text;
+                                link.textContent = text;
                             } else if (url) {
-                                link.text = url;
+                                link.textContent = url;
                             } else {
-                                link.text = '';
+                                link.textContent = '';
                             }
                         }
                         attributions.push(container.innerHTML + ' ');
@@ -8704,6 +8706,7 @@ VgControlsLayerSwitcher = function (LayerSwitcherDOM, LayerUtils) {
         this._options = options;
         var LStarget = document.getElementById(options.div);
         VirtualGeo.Control.call(this, container, LStarget);
+        this.setOptions({ name: 'LayerSwitcher' });
         var VGsetMap = this._setMap;
         this._setMap = function (map, mapDiv, f) {
             if (map) {
@@ -8970,7 +8973,7 @@ VgControlsLayerSwitcher = function (LayerSwitcherDOM, LayerUtils) {
                 }
             }
         }, this);
-        for (var i in this._layersOrder) {
+        for (var i = 0; i < this._layersOrder.length; i++) {
             if (this._layersOrder[i].type !== 'elevation') {
                 var layerDiv = this._createLayerDiv(this._layers[this._layersOrder[i].id]);
                 this._layers[this._layersOrder[i].id].div = layerDiv;
@@ -14703,6 +14706,7 @@ VgControlsMousePosition = function (proj4, woodman, Gp, Config, RightManagement,
         this._callbacks = {};
         var MPtarget = document.getElementById(MPoptions.div);
         VirtualGeo.Control.call(this, container, MPtarget);
+        this.setOptions({ name: 'MousePosition' });
         var VGsetMap = this._setMap;
         this._setMap = function (map, mapDiv, f) {
             if (map) {
