@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-11-21
+ * @date 2016-11-22
  *
  */
 /*!
@@ -26045,6 +26045,10 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, Me
             ElevationPath.__removeProfilMarker(self);
         });
         container.appendChild(div);
+        var divZ = document.createElement('div');
+        divZ.className = 'z-title-vertical';
+        divZ.innerHTML = minZ + ' / ' + maxZ + ' m';
+        div.appendChild(divZ);
         var ul = document.createElement('ul');
         ul.id = 'data-default';
         ul.className = 'z-axis x-axis';
@@ -26062,10 +26066,6 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, Me
             li.setAttribute('style', 'width: ' + barwidth + '%');
             ul.appendChild(li);
         }
-        var divZ = document.createElement('div');
-        divZ.className = 'z-title-vertical';
-        divZ.innerHTML = minZ + ' / ' + maxZ + ' m';
-        div.appendChild(divZ);
         var divX = document.createElement('div');
         divX.className = 'x-title-horizontal';
         divX.innerHTML = dist + ' km';
@@ -27540,7 +27540,7 @@ Ol3ControlsMeasuresMeasureAzimuth = function (ol, woodman, Utils, MeasureToolBox
 }(ol, {}, Ol3Utils, Ol3ControlsMeasureToolBox, Ol3ControlsMeasuresMeasures, CommonControlsMeasureAzimuthDOM, CommonUtilsSelectorID);
 Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, KML, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution, Markers, ElevationPath, MeasureLength, MeasureArea, MeasureAzimuth) {
     Gp.ol3extVersion = '0.11.0';
-    Gp.ol3extDate = '2016-11-21';
+    Gp.ol3extDate = '2016-11-22';
     Gp.LayerUtils = LayerUtils;
     ol.format.KMLExtended = KML;
     CRS.overload();

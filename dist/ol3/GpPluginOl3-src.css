@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-11-21
+ * @date 2016-11-22
  *
  */
 /* MOUSE POSITION */
@@ -2262,6 +2262,13 @@ input.GPinputSubmit {
   border-bottom: 1px dotted #666;
 }
 
+/* Geoportal Attribution */
+
+.ol-attribution .gp-control-attribution-image {
+  max-height: 30px;
+  max-width: inherit;
+  vertical-align: middle;
+}
 /* MOUSE POSITION */
 
 div[id^=GPdrawing-] {
@@ -2718,13 +2725,6 @@ button[id^=drawing-export-] {
   height: 24px;
 }
 
-/* Geoportal Attribution */
-
-.ol-attribution .gp-control-attribution-image {
-  max-height: 30px;
-  max-width: inherit;
-  vertical-align: middle;
-}
 div[id^=GPelevationPath-] {
   bottom: 48px;
   left: 10px;
@@ -2833,8 +2833,21 @@ div[id^=GPelevationPathPanelReduce] {
 
 /* suppression des puces sur les listes */
 div#profileElevationByDefault {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: flex;
+  flex-direction: column;
+  /*flex-flow: row wrap;*/
   height: inherit;
   width: inherit;
+}
+
+div#profileElevationByDefault > * {
+  -webkit-flex: 1;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1 100%;
 }
 
 ul#data-default {
@@ -2842,21 +2855,25 @@ ul#data-default {
     box-sizing: border-box;
     padding: 0px;
     position : relative;
-    margin : 10px ;
-    height: 95%;
-    width: 95%;
+    margin : 10px ;￼
+    margin-top: auto;
+￼    margin-bottom: auto;
+    height: 100px;
+    /*width: 100%*/
 }
 
 .z-title-vertical {
-  position: absolute;￼
-  left: -30px;
-  top: 100px;
-  transform: rotate(-90deg);
+  align-self: flex-start;
+  padding-left: 10px;
+  /*position: absolute;*/
+  /*transform: rotate(-90deg);*/
 }
 
 .x-title-horizontal {
-  position: absolute;
-  transform: translate(120px, -30px);
+  align-self: flex-end;
+  padding-right: 10px;
+  /*position: absolute;*/
+  /*transform: translate(120px, -30px);*/
 }
 
 .z-axis {

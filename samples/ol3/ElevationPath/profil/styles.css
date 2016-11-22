@@ -207,8 +207,15 @@
 
 /* suppression des puces sur les listes */
 div#profileElevationByDefault {
+  display: flex;
+  flex-direction: column;
+  /*flex-flow: row wrap;*/
   height: inherit;
   width: inherit;
+}
+
+div#profileElevationByDefault > * {
+  flex: 1 100%;
 }
 
 ul#data-default {
@@ -216,19 +223,37 @@ ul#data-default {
     box-sizing: border-box;
     padding: 0px;
     position : relative;
-    margin : 10px ;
-    height: 95%;
-    width: 95%;
+    margin:  0px 10px 0px 10px;
+    height: 100px;
+    /*width: 100%*/
+}
+
+.x-fleche {
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 5px solid green;
 }
 
 .z-title-vertical {
-  position: absolute;
-  transform: rotate(-90deg) translateX(100px);
+  align-self: flex-start;
+  /*position: absolute;*/
+  /*transform: rotate(-90deg);*/
+}
+
+.z-fleche {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid red;
 }
 
 .x-title-horizontal {
-  position: absolute;
-  transform: translate(120px, -30px);
+  align-self: flex-end;
+  /*position: absolute;*/
+  /*transform: translate(120px, -30px);*/
 }
 
 .z-axis {
