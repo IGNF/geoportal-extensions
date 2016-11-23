@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.8.1
- * @date 2016-11-15
+ * @date 2016-11-23
  *
  */
 /*!
@@ -21046,11 +21046,11 @@ LeafletControlsReverseGeocoding = function (L, P, woodman, Gp, RightManagement, 
                     if (results) {
                         var locations = results.locations;
                         self._displayGeocodedLocations(locations);
-                        this._hideWaitingContainer();
+                        self._hideWaitingContainer();
                     }
                 },
                 onFailure: function (error) {
-                    this._hideWaitingContainer();
+                    self._hideWaitingContainer();
                     self._clearLocations();
                     self._clearLocationsFeature();
                     self._clearInputRequest();
@@ -23015,6 +23015,7 @@ LeafletControlsSearchEngine = function (L, woodman, Gp, RightManagement, ID, Sea
             position: 'topleft',
             collapsed: true,
             displayInfo: true,
+            zoomTo: '',
             resources: [],
             displayAdvancedSearch: true,
             advancedSearch: {},
@@ -23463,24 +23464,62 @@ LeafletControlsSearchEngine = function (L, woodman, Gp, RightManagement, ID, Sea
             var element = L.DomUtil.get('GPsearchInputText-' + this._uid);
             element.value = label || '';
         },
-        _setPosition: function (position) {
+        _setPosition: function (position, zoom) {
             var map = this._map;
-            var zoom = this.options.zoomTo;
-            if (!zoom || zoom === '') {
-                zoom = map.getZoom();
-            } else {
-                if (zoom === 'max') {
-                    zoom = map.getMaxZoom();
-                } else if (zoom === 'min') {
-                    zoom = map.getMinZoom();
-                } else {
-                    if (isNaN(zoom)) {
-                        zoom = map.getZoom();
-                    }
-                }
-            }
             map.setZoomAround(L.latLng(position.x, position.y), zoom, true);
             map.panTo(L.latLng(position.x, position.y));
+        },
+        _getZoom: function (info) {
+            var map = this._map;
+            var key = this.options.zoomTo;
+            var zoom = null;
+            if (key === 'max') {
+                zoom = map.getMaxZoom();
+            } else if (key === 'min') {
+                zoom = map.getMinZoom();
+            } else if (key === 'auto') {
+                zoom = 15;
+                var service = info.service;
+                var fields = info.fields;
+                var type = info.type;
+                if (service === 'SuggestedLocation') {
+                    var importance = {
+                        1: 11,
+                        2: 12,
+                        3: 13,
+                        4: 14,
+                        5: 15,
+                        6: 16,
+                        7: 17,
+                        8: 17
+                    };
+                    if (type === 'PositionOfInterest') {
+                        zoom = importance[fields.classification];
+                    }
+                }
+                if (service === 'DirectGeocodedLocation') {
+                    if (type === 'PositionOfInterest') {
+                        zoom = 14;
+                    }
+                }
+                if (type === 'StreetAddress') {
+                    zoom = 17;
+                }
+                if (type === 'CadastralParcel') {
+                    zoom = 17;
+                }
+                if (type === 'Administratif') {
+                    zoom = 12;
+                }
+            } else {
+                if (typeof key === 'function') {
+                    zoom = key.call(this, info);
+                }
+            }
+            if (!zoom || zoom === '') {
+                zoom = map.getZoom();
+            }
+            return zoom;
         },
         _setMarker: function (position, information, display) {
             var map = this._map;
@@ -23604,8 +23643,9 @@ LeafletControlsSearchEngine = function (L, woodman, Gp, RightManagement, ID, Sea
                 type: this._suggestedLocations[idx].type,
                 fields: this._suggestedLocations[idx]
             };
+            var zoom = this._getZoom(info);
             this._setLabel(label);
-            this._setPosition(position);
+            this._setPosition(position, zoom);
             this._setMarker(position, info, this.options.displayInfo);
         },
         onGeocodingSearchSubmit: function (e) {
@@ -23643,8 +23683,9 @@ LeafletControlsSearchEngine = function (L, woodman, Gp, RightManagement, ID, Sea
                 type: this._geocodedLocations[idx].type,
                 fields: this._geocodedLocations[idx].placeAttributes
             };
+            var zoom = this._getZoom(info);
             this._setLabel(label);
-            this._setPosition(position);
+            this._setPosition(position, zoom);
             this._setMarker(position, info, this.options.displayInfo);
         },
         onGeocodingAdvancedSearchCodeChange: function (e) {
@@ -24295,7 +24336,7 @@ LeafletLayersLayers = function (L, woodman, LayerConfig, WMS, WMTS) {
 }(leaflet, {}, LeafletLayersLayerConfig, LeafletLayersWMS, LeafletLayersWMTS);
 LeafletGpPluginLeaflet = function (L, P, Gp, Controls, Layers, CRS, Register) {
     Gp.leafletExtVersion = '0.8.1';
-    Gp.leafletExtDate = '2016-11-15';
+    Gp.leafletExtDate = '2016-11-23';
     Gp.Register = Register;
     L.geoportalLayer = Layers;
     L.geoportalControl = Controls;

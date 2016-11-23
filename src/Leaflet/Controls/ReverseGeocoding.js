@@ -1118,13 +1118,13 @@ define([
                     if (results) {
                         var locations = results.locations;
                         self._displayGeocodedLocations(locations);
-                        this._hideWaitingContainer();
+                        self._hideWaitingContainer();
                     }
                 },
                 /** callback onFailure */
                 onFailure : function (error) {
 
-                    this._hideWaitingContainer();
+                    self._hideWaitingContainer();
 
                     // suppression d'éventuels résultats précédents
                     self._clearLocations();
