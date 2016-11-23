@@ -47,6 +47,7 @@ define([
             position : "topleft",
             collapsed : true,
             displayInfo : true,
+            zoomTo : "",
             resources : [],
             displayAdvancedSearch : true,
             advancedSearch : {},
@@ -62,7 +63,13 @@ define([
         * @param {Boolean} [options.collapsed] - collapse mode, false by default
         * @param {String}  [options.position] - position of component into the map, 'topleft' by default
         * @param {Boolean} [options.displayInfo] - get informations on popup marker
-        * @param {Sting|Numeric} [options.zoomTo] - zoom to results, by default, current zoom. Value possible : min, max or zoom level
+        * @param {Sting|Numeric|Function} [options.zoomTo] - zoom to results, by default, current zoom.
+        *       Value possible : min, max, auto or zoom level.
+        *       Possible to overload it with a function :
+        *       zoomTo : function (info) {
+                    // do some stuff...
+        *           return zoom;
+        *       }
         * @param {Sting}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
         * @param {Object}  [options.resources] - resources to be used by geocode and autocompletion services, by default : ["StreetAddress", "PositionOfInterest"]
         * @param {Boolean} [options.displayAdvancedSearch] - False to disable advanced search tools (it will not be displayed). Default is true (displayed)
@@ -952,30 +959,99 @@ define([
         * and move/zoom on a position.
         *
         * @param {Object} position - {x: ..., y: ...}
+        * @param {Number} zoom - zoom level
         *
         * @private
         */
-        _setPosition : function (position) {
+        _setPosition : function (position, zoom) {
 
             var map  = this._map;
-            var zoom = this.options.zoomTo;
 
-            if (!zoom || zoom === "") {
-                zoom = map.getZoom();
-            } else {
-                if (zoom === "max") {
-                    zoom = map.getMaxZoom();
-                } else if (zoom === "min") {
-                    zoom = map.getMinZoom();
-                } else {
-                    if (isNaN(zoom)) {
-                        zoom = map.getZoom();
-                    }
-                }
-            }
             map.setZoomAround(L.latLng(position.x, position.y), zoom, true);
             map.panTo(L.latLng(position.x, position.y));
 
+        },
+
+        /**
+        * this method is called by this.on*ResultsItemClick()
+        * and get zoom.
+        *
+        * @param {Object} info - {}
+        *
+        * @private
+        */
+        _getZoom : function (info) {
+            var map  = this._map;
+            var key  = this.options.zoomTo;
+            var zoom = null;
+
+            // les valeurs du zooms sont determinées via les mots clefs suivants :
+            // max, min ou auto
+            if (key === "max") {
+                zoom = map.getMaxZoom();
+            } else if (key === "min") {
+                zoom = map.getMinZoom();
+            } else if (key === "auto") {
+
+                zoom = 15; // par defaut !
+
+                var service = info.service;
+                var fields  = info.fields;
+                var type = info.type;
+
+                // AutoCompletion POI
+                if (service === "SuggestedLocation") {
+
+                    var importance = {
+                        1 : 11,
+                        2 : 12,
+                        3 : 13,
+                        4 : 14,
+                        5 : 15,
+                        6 : 16,
+                        7 : 17,
+                        8 : 17
+                    };
+
+                    if (type === "PositionOfInterest") {
+                        zoom = importance[fields.classification];
+                    }
+
+                }
+
+                // Geocodage POI
+                if (service === "DirectGeocodedLocation") {
+
+                    if (type === "PositionOfInterest") {
+                        zoom = 14; // FIXME !?
+                    }
+
+                }
+
+                // les autres ressources ont un zoom constant...
+                if (type === "StreetAddress") {
+                    zoom = 17;
+                }
+
+                if (type === "CadastralParcel") {
+                    zoom = 17;
+                }
+
+                if (type === "Administratif") {
+                    zoom = 12;
+                }
+            } else {
+                if ( typeof key === "function" ) {
+                    zoom = key.call(this, info);
+                }
+            }
+
+            // au cas où, on prend le zoom courrant ...
+            if (!zoom || zoom === "") {
+                zoom = map.getZoom();
+            }
+
+            return zoom;
         },
 
         /**
@@ -1250,8 +1326,10 @@ define([
                 fields : this._suggestedLocations[idx]
             };
 
+            var zoom = this._getZoom(info);
+
             this._setLabel(label);
-            this._setPosition(position);
+            this._setPosition(position, zoom);
             this._setMarker(position, info, this.options.displayInfo);
         },
 
@@ -1335,8 +1413,10 @@ define([
                 fields : this._geocodedLocations[idx].placeAttributes
             };
 
+            var zoom = this._getZoom(info);
+
             this._setLabel(label);
-            this._setPosition(position);
+            this._setPosition(position, zoom);
             this._setMarker(position, info, this.options.displayInfo);
         },
 
