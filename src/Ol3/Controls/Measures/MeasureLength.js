@@ -84,10 +84,10 @@ define([
         /** Nom de la classe (heritage) */
         this.CLASSNAME = "MeasureLength";
 
-        /** uuid */
+        // uuid
         this._uid = ID.generate();
 
-        /** container d'activation du controle */
+        // container d'activation du controle
         this._showContainer = null;
         this._pictoContainer = null;
 
@@ -222,7 +222,11 @@ define([
     // ########################## methods ################################ //
     // ################################################################### //
 
-    /** Add all events on map */
+    /**
+     * Add all events on map 
+     *
+     * @private
+     */
     MeasureLength.prototype.addMeasureEvents = function () {
         logger.trace("call MeasureLength::addMeasureEvents()");
 
@@ -232,7 +236,11 @@ define([
         map.on("pointermove", this.onPointerMoveHandler, this);
     };
 
-    /** Remove all events on map */
+    /**
+     * Remove all events on map
+     *
+     * @private
+     */
     MeasureLength.prototype.removeMeasureEvents = function () {
         logger.trace("call MeasureLength::removeMeasureEvents()");
 

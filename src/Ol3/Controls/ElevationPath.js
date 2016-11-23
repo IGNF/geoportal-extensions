@@ -33,7 +33,7 @@ define([
     * @alias ol.control.ElevationPath
     * @extends {ol.control.Control}
     * @param {Object} options - options for function call.
-    * @param {Boolean} [options.active = false] - specify if control should be actved at startup. Default is false.
+    * @param {Boolean} [options.active = false] - specify if control should be actived at startup. Default is false.
     * @param {Object} [options.stylesOptions = {}] - styles management
     * @param {Object} [options.stylesOptions.marker = {}] - styles management of marker with properties or object {ol.style.Icon}
     * @param {String} [options.stylesOptions.marker.imageSrc] - Icon source
@@ -92,10 +92,10 @@ define([
     * });
     *
     * Exemples :
-    * - displayProfileOptions.function : null
-    * - displayProfileOptions.function : function (elevations, container, context) {  // do stuff... }
-    * - displayProfileOptions.function : ol.control.ElevationPath.DISPLAY_PROFILE_{LIB_AMCHARTS | LIB_D3 | RAW}
-    * (detection de la lib. graphique : d3 / AmCharts)
+    * - displayProfileOptions.apply : null
+    * - displayProfileOptions.apply : function (elevations, container, context) {  // do some stuff... }
+    * - displayProfileOptions.apply : ol.control.ElevationPath.DISPLAY_PROFILE_{LIB_AMCHARTS | LIB_D3 | RAW}
+    * (detect auto lib. : d3 / AmCharts)
     *
     */
     function ElevationPath (options) {
@@ -111,25 +111,25 @@ define([
         /** Nom de la classe (heritage) */
         this.CLASSNAME = "ElevationPath";
 
-        /** uuid */
+        // uuid
         this._uid = ID.generate();
 
-        /** container : HTMLElement */
+        // container : HTMLElement
         this._showContainer = null;
         this._pictoContainer = null;
         this._panelContainer = null;
         this._profileContainer = null;
         this._waitingContainer = null;
 
-        /** objet de type "ol.style" */
+        // objet de type "ol.style"
         this._drawStyleStart = null;
         this._drawStyleFinish = null;
         this._markerStyle = null;
 
-        /** graph */
+        // graph
         this._profile = null;
 
-        /** objet de type
+        /* objet de type
             "ol.source.Vector",
             "ol.layer.Vector",
             "ol.interaction.Draw"
@@ -138,14 +138,14 @@ define([
         this._measureVector = null;
         this._measureDraw = null;
 
-        /** objet de type ol.feature, saisie en cours */
+        // objet de type ol.feature, saisie en cours
         this._lastSketch = null;
         this._currentSketch = null;
 
-        /** objet de type ol.feature, marker */
+        // objet de type ol.feature, marker
         this._marker =  null;
 
-        /** gestion des droits sur le service */
+        // gestion des droits sur le service
         this._noRightManagement = false;
 
         // initialisation du composant
@@ -178,7 +178,10 @@ define([
     // on récupère les mixins de la classe "ElevationPathDOM"
     Utils.assign(ElevationPath.prototype, ElevationPathDOM);
 
-    /** suppression du marker */
+    /**
+    * suppression du marker
+    * @private
+    */
     ElevationPath.__removeProfilMarker = function (context) {
         var self = context;
         // suppression de l'ancien marker
@@ -188,7 +191,10 @@ define([
         }
     };
 
-    /** mise à jour du marker */
+    /**
+    * mise à jour du marker
+    * @private
+    */
     ElevationPath.__updateProfilMarker = function (d, context) {
         var self = context;
         var map  = self.getMap();
@@ -649,7 +655,7 @@ define([
         divZ.className = "z-title-vertical";
         divZ.innerHTML = minZ + " / " + maxZ + " m";
         div.appendChild(divZ);
-        
+
         var ul  = document.createElement("ul");
         ul.id   = "data-default";
         ul.className = "z-axis x-axis";
@@ -1072,7 +1078,11 @@ define([
     // ###################### init styles ################################ //
     // ################################################################### //
 
-    /** create style marker object : "ol.style" */
+    /**
+     * create style marker object : "ol.style"
+     *
+     * @private
+     */
     ElevationPath.prototype._createStylingMarker = function () {
         logger.trace("ElevationPath::_createStylingMarker ");
 
@@ -1114,7 +1124,11 @@ define([
         }
     };
 
-    /** create style draw object : "ol.style" */
+    /**
+     * create style draw object : "ol.style"
+     *
+     * @private
+     */
     ElevationPath.prototype._createStylingDraw = function () {
         logger.trace("ElevationPath::_createStylingDraw");
 
@@ -1238,7 +1252,11 @@ define([
         });
     };
 
-    /** create style graph */
+    /**
+    * create style graph
+    *
+    * @private
+    */
     ElevationPath.prototype._createStylingProfile = function () {
         logger.trace("ElevationPath::_createStylingProfile");
 

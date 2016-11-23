@@ -82,10 +82,10 @@ define([
         /** Nom de la classe (heritage) */
         this.CLASSNAME = "MeasureAzimuth";
 
-        /** uuid */
+        // uuid
         this._uid = ID.generate();
 
-        /** container d'activation du controle */
+        // container d'activation du controle
         this._showContainer = null;
         this._pictoContainer = null;
 
@@ -218,7 +218,11 @@ define([
     // ##################### overridden methods ########################## //
     // ################################################################### //
 
-    /** Add all events on map */
+    /**
+     * Add all events on map 
+     *
+     * @private
+     */
     MeasureAzimuth.prototype.addMeasureEvents = function () {
         logger.trace("call MeasureAzimuth::addMeasureEvents()");
 
@@ -228,7 +232,11 @@ define([
         map.on("pointermove", this.onPointerMoveAzimutHandler, this);
     };
 
-    /** Remove all events on map */
+    /**
+     * Remove all events on map
+     *
+     * @private
+     */
     MeasureAzimuth.prototype.removeMeasureEvents = function () {
         logger.trace("call MeasureAzimuth::removeMeasureEvents()");
 

@@ -84,10 +84,10 @@ define([
         /** Nom de la classe (heritage) */
         this.CLASSNAME = "MeasureArea";
 
-        /** uuid */
+        // uuid
         this._uid = ID.generate();
 
-        /** container d'activation du controle */
+        // container d'activation du controle
         this._showContainer = null;
         this._pictoContainer = null;
 
@@ -220,7 +220,11 @@ define([
     // ##################### overridden methods ########################## //
     // ################################################################### //
 
-    /** Add all events on map */
+    /**
+     * Add all events on map
+     *
+     * @private
+     */
     MeasureArea.prototype.addMeasureEvents = function () {
         logger.trace("call MeasureArea::addMeasureEvents()");
 
@@ -230,7 +234,11 @@ define([
         map.on("pointermove", this.onPointerMoveHandler, this);
     };
 
-    /** Remove all events on map */
+    /**
+     * Remove all events on map 
+     *
+     * @private
+     */
     MeasureArea.prototype.removeMeasureEvents = function () {
         logger.trace("call MeasureArea::removeMeasureEvents()");
 
