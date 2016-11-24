@@ -3,6 +3,7 @@ define([
     "gp",
     "woodman",
     "Ol3/Utils",
+    "Ol3/Controls/Utils/Markers",
     "Common/Controls/LayerImportDOM",
     "Common/Utils/SelectorID",
     "Ol3/Formats/KML"
@@ -11,6 +12,7 @@ define([
     Gp,
     woodman,
     Utils,
+    Markers,
     LayerImportDOM,
     SelectorID,
     KMLExtended
@@ -653,7 +655,27 @@ define([
         if ( this._currentImportType === "KML" ) {
             // lecture du fichier KML : création d'un format ol.format.KML, qui possède une méthode readFeatures (et readProjection)
             format = new KMLExtended({
-                showPointNames : false // FIXME !
+                showPointNames : false, // FIXME !
+                defaultStyle : [
+                    new ol.style.Style({
+                        image : new ol.style.Icon({
+                            src : Markers["lightOrange"],
+                            size : [51, 38],
+                            anchor : [25.5 , 38],
+                            anchorOrigin : "top-left",
+                            anchorXUnits : "pixels",
+                            anchorYUnits : "pixels"
+                        }),
+                        stroke : new ol.style.Stroke({
+                            // color : "#002A50",
+                            color : "rgba(0,42,80,0.8)",
+                            width : 4
+                        }),
+                        fill : new ol.style.Fill({
+                            color: "rgba(0, 183, 152, 0.5)"
+                        })
+                    })
+                ]
             });
         } else if ( this._currentImportType === "GPX" ) {
             // lecture du fichier GPX : création d'un format ol.format.GPX, qui possède une méthode readFeatures (et readProjection)
@@ -676,6 +698,34 @@ define([
             );
 
         logger.log("loaded features : ", features);
+
+        if ( this._currentImportType === "GPX" ) {
+            for (var i = 0 ; i < features.length; i++ ) {
+                // si aucun style n'est associé au feature
+                if ( features[i].getStyle() == null ) {
+                    logger.log("[ol.control.LayerImport] set default style for GPX feature");
+                    features[i].setStyle(
+                        new ol.style.Style({
+                            image : new ol.style.Icon({
+                                src : Markers["lightOrange"],
+                                size : [51, 38],
+                                anchor : [25.5 , 38],
+                                anchorOrigin : "top-left",
+                                anchorXUnits : "pixels",
+                                anchorYUnits : "pixels"
+                            }),
+                            stroke : new ol.style.Stroke({
+                                color : "rgba(0,42,80,0.8)",
+                                width : 4
+                            }),
+                            fill : new ol.style.Fill({
+                                color: "rgba(0, 183, 152, 0.5)"
+                            })
+                        })
+                    );
+                }
+            }
+        }
 
         // création d'une couche vectorielle à partir de ces features
         var vectorSource = new ol.source.Vector({
@@ -732,8 +782,28 @@ define([
         if ( this._currentImportType === "KML" ) {
             // lecture du fichier KML : création d'un format ol.format.KML, qui possède une méthode readFeatures (et readProjection)
             format = new KMLExtended({
-                showPointNames : false // FIXME !
+                showPointNames : false, // FIXME !
+                defaultStyle : [
+                    new ol.style.Style({
+                        image : new ol.style.Icon({
+                            src : Markers["lightOrange"],
+                            size : [51, 38],
+                            anchor : [25.5 , 38],
+                            anchorOrigin : "top-left",
+                            anchorXUnits : "pixels",
+                            anchorYUnits : "pixels"
+                        }),
+                        stroke : new ol.style.Stroke({
+                            color : "rgba(0,42,80,0.8)",
+                            width : 4
+                        }),
+                        fill : new ol.style.Fill({
+                            color: "rgba(0, 183, 152, 0.5)"
+                        })
+                    })
+                ]
             });
+
         } else if ( this._currentImportType === "GPX" ) {
             // lecture du fichier GPX : création d'un format ol.format.GPX, qui possède une méthode readFeatures (et readProjection)
             format = new ol.format.GPX();
@@ -744,6 +814,36 @@ define([
             url : url,
             format : format
         });
+
+        if ( this._currentImportType === "GPX" ) {
+            vectorSource.forEachFeature(
+                function (feature) {
+                    // si aucun style n'est associé au feature
+                    if ( feature.getStyle() == null ) {
+                        logger.log("[ol.control.LayerImport] set default style for GPX feature");
+                        feature.setStyle(
+                            new ol.style.Style({
+                                image : new ol.style.Icon({
+                                    src : Markers["lightOrange"],
+                                    size : [51, 38],
+                                    anchor : [25.5 , 38],
+                                    anchorOrigin : "top-left",
+                                    anchorXUnits : "pixels",
+                                    anchorYUnits : "pixels"
+                                }),
+                                stroke : new ol.style.Stroke({
+                                    color : "rgba(0,42,80,0.8)",
+                                    width : 4
+                                }),
+                                fill : new ol.style.Fill({
+                                    color: "rgba(0, 183, 152, 0.5)"
+                                })
+                            })
+                        );
+                    }
+                }
+            );
+        }
 
         // ajout des informations pour le layerSwitcher (titre, description)
         if ( layerName ) {
