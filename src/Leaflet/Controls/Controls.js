@@ -131,7 +131,7 @@ function (
          *      Values may be "DEC" (decimal degrees), "DMS" (sexagecimal), "RAD" (radians) and "GON" (grades) for geographical coordinates,
          *      and "M" or "KM" for metric coordinates
         * @param {Boolean} [options.displayAltitude] - active/desactivate the altitude panel, if desactivate, have just the coordinate panel, true by default
-        * @param {Boolean} [options.displayCoordinate] - active/desactivate the coordinate panel, if desactivate, have just the altitude panel, true by default
+        * @param {Boolean} [options.displayCoordinates] - active/desactivate the coordinate panel, if desactivate, have just the altitude panel, true by default
         * @param {Object}  [options.altitude] - elevation configuration
         * @param {Object}  [options.altitude.serviceOptions] - options of elevation service
         * @param {Number}  [options.altitude.responseDelay] - latency for altitude request, 500 ms by default
@@ -247,7 +247,7 @@ function (
         * @param {String}  [options.position] - position of component into the map, 'topleft' by default
         * @param {Boolean} [options.displayInfo] - get informations on popup marker
         * @param {Sting|Numeric|Function} [options.zoomTo] - zoom to results, by default, current zoom.
-        *       Value possible : min, max, auto or zoom level.
+        *       Value possible : auto or zoom level.
         *       Possible to overloading with a custom function :
         *       ```
         *       zoomTo : function (info) {
@@ -272,6 +272,7 @@ function (
         *  var SearchEngine = L.geoportalControl.SearchEngine({
         *      position : "topright",
         *      collapsed : true,
+        *      zoomTo : "auto",
         *      displayInfo : true,
         *      displayAdvancedSearch : true,
         *      resources : ["PositionOfInterest", "StreetAddress"],

@@ -64,7 +64,7 @@ define([
         * @param {String}  [options.position] - position of component into the map, 'topleft' by default
         * @param {Boolean} [options.displayInfo] - get informations on popup marker
         * @param {Sting|Numeric|Function} [options.zoomTo] - zoom to results, by default, current zoom.
-        *       Value possible : min, max, auto or zoom level.
+        *       Value possible : auto or zoom level.
         *       Possible to overload it with a function :
         *       zoomTo : function (info) {
                     // do some stuff...
@@ -867,7 +867,7 @@ define([
             // on y force le param suivant, s'il n'a pas été surchargé :
             if (!options.hasOwnProperty("returnFreeForm")) {
                 L.Util.extend(options, {
-                    returnFreeForm : true
+                    returnFreeForm : false
                 });
             }
 
@@ -985,22 +985,35 @@ define([
             var key  = this.options.zoomTo;
             var zoom = null;
 
-            // les valeurs du zooms sont determinées via les mots clefs suivants :
-            // max, min ou auto
-            if (key === "max") {
-                zoom = map.getMaxZoom();
-            } else if (key === "min") {
-                zoom = map.getMinZoom();
-            } else if (key === "auto") {
+            // les valeurs du zooms sont determinées
+            // soit par les mots clefs suivants :  max, min ou auto
+            // soit par un niveau de zoom
+            // soit defini par l'utilisateur via une fonction
 
-                zoom = 15; // par defaut !
+            if ( typeof key === "function" ) {
+                logger.trace("zoom function");
+                zoom = key.call(this, info);
+            }
 
-                var service = info.service;
-                var fields  = info.fields;
-                var type = info.type;
+            if ( typeof key === "number" ) {
+                logger.trace("zoom level");
+                zoom = key;
+            }
 
-                // AutoCompletion POI
-                if (service === "SuggestedLocation") {
+            if ( typeof key === "string") {
+
+                // if (key === "max") {
+                //     zoom = map.getMaxZoom();
+                // } else if (key === "min") {
+                //     zoom = map.getMinZoom();
+                // } else
+
+                if (key === "auto") {
+                    logger.trace("zoom auto");
+
+                    var service = info.service;
+                    var fields  = info.fields;
+                    var type = info.type;
 
                     var importance = {
                         1 : 11,
@@ -1013,44 +1026,71 @@ define([
                         8 : 17
                     };
 
-                    if (type === "PositionOfInterest") {
-                        zoom = importance[fields.classification];
+                    // AutoCompletion POI
+                    if (service === "SuggestedLocation") {
+                        // FIXME classification different de importance !
+                        if (type === "PositionOfInterest") {
+                            zoom = importance[fields.classification];
+                        }
                     }
 
-                }
+                    // Geocodage POI
+                    if (service === "DirectGeocodedLocation") {
 
-                // Geocodage POI
-                if (service === "DirectGeocodedLocation") {
-
-                    if (type === "PositionOfInterest") {
-                        zoom = 14; // FIXME !?
+                        if (type === "PositionOfInterest") {
+                            zoom = importance[fields.importance] || 14; // au cas où la recherche est en freeform !
+                        }
                     }
 
-                }
+                    // les autres ressources ont toujours un zoom constant...
+                    if (type === "StreetAddress") {
+                        zoom = 17;
+                    }
 
-                // les autres ressources ont un zoom constant...
-                if (type === "StreetAddress") {
-                    zoom = 17;
-                }
+                    if (type === "CadastralParcel") {
+                        zoom = 17;
+                    }
 
-                if (type === "CadastralParcel") {
-                    zoom = 17;
-                }
-
-                if (type === "Administratif") {
-                    zoom = 12;
-                }
-            } else {
-                if ( typeof key === "function" ) {
-                    zoom = key.call(this, info);
+                    if (type === "Administratif") {
+                        zoom = 12;
+                    }
+                } else {
+                    // TODO ex. "5" !
+                    var value = parseInt(key, 10);
+                    if (!isNaN(value)) {
+                        logger.trace("zoom parsing");
+                        zoom = value;
+                    }
                 }
             }
 
-            // au cas où, on prend le zoom courrant ...
-            if (!zoom || zoom === "") {
+            // polyfill IE
+            Number.isInteger = Number.isInteger || function (value) {
+                return typeof value === "number" &&
+                       isFinite(value) &&
+                       Math.floor(value) === value;
+            };
+
+            // test de validité du zoom,
+            // on prend le zoom courant par defaut ...
+            if (!zoom || zoom === "" || !Number.isInteger(zoom)) {
+                logger.trace("zoom not found, current zoom...");
                 zoom = map.getZoom();
             }
 
+            // test si le zoom est dans l'espace de la carte
+            var min = map.getMinZoom();
+            var max = map.getMaxZoom();
+            if (zoom < min) {
+                logger.trace("zoom level min...");
+                zoom = min;
+            }
+            if (zoom > max) {
+                logger.trace("zoom level max...");
+                zoom = max;
+            }
+
+            logger.trace("zoom", zoom);
             return zoom;
         },
 
