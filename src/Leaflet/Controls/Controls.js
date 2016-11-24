@@ -133,7 +133,7 @@ function (
          *      Values may be "DEC" (decimal degrees), "DMS" (sexagecimal), "RAD" (radians) and "GON" (grades) for geographical coordinates,
          *      and "M" or "KM" for metric coordinates
         * @param {Boolean} [options.displayAltitude] - active/desactivate the altitude panel, if desactivate, have just the coordinate panel, true by default
-        * @param {Boolean} [options.displayCoordinate] - active/desactivate the coordinate panel, if desactivate, have just the altitude panel, true by default
+        * @param {Boolean} [options.displayCoordinates] - active/desactivate the coordinate panel, if desactivate, have just the altitude panel, true by default
         * @param {Object}  [options.altitude] - elevation configuration
         * @param {Object}  [options.altitude.serviceOptions] - options of elevation service
         * @param {Number}  [options.altitude.responseDelay] - latency for altitude request, 500 ms by default
@@ -248,7 +248,21 @@ function (
         * @param {Boolean} [options.collapsed] - collapse mode, false by default
         * @param {String}  [options.position] - position of component into the map, 'topleft' by default
         * @param {Boolean} [options.displayInfo] - get informations on popup marker
-        * @param {Sting|Numeric} [options.zoomTo] - zoom to results, by default, it's the current zoom. Value possible : min, max or zoom level
+        * @param {Sting|Numeric|Function} [options.zoomTo] - zoom to results, by default, current zoom.
+        *       Value possible : auto or zoom level.
+        *       Possible to overloading with a custom function :
+        *       ```
+        *       zoomTo : function (info) {
+        *           // do some stuff...
+        *           return zoom; // required : return the zoom level !
+        *       }
+        *
+        *       With parameter 'info' : {
+        *           type : "PositionOfInterest" | "StreetAddress" | ...
+        *           service : "SuggestedLocation" | "DirectGeocodedLocation"
+        *           fields : { // fields of service response }
+        *       }
+        *       ```
         * @param {Sting}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
         * @param {Object}  [options.resources] - resources to be used by geocode and autocompletion services, by default : ["StreetAddress", "PositionOfInterest"]
         * @param {Boolean} [options.displayAdvancedSearch] - False to disable advanced search tools (it will not be displayed). Default is true (displayed)
@@ -260,6 +274,7 @@ function (
         *  var SearchEngine = L.geoportalControl.SearchEngine({
         *      position : "topright",
         *      collapsed : true,
+        *      zoomTo : "auto",
         *      displayInfo : true,
         *      displayAdvancedSearch : true,
         *      resources : ["PositionOfInterest", "StreetAddress"],

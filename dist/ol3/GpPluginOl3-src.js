@@ -17012,15 +17012,15 @@ CommonControlsMousePositionDOM = function () {
             label.appendChild(spanOpen);
             return label;
         },
-        _createMousePositionPanelElement: function (displayAltitude, displayCoordinate) {
+        _createMousePositionPanelElement: function (displayAltitude, displayCoordinates) {
             displayAltitude = displayAltitude ? true : typeof displayAltitude === 'undefined' ? true : false;
-            displayCoordinate = displayCoordinate ? true : typeof displayCoordinate === 'undefined' ? true : false;
+            displayCoordinates = displayCoordinates ? true : typeof displayCoordinates === 'undefined' ? true : false;
             var div = document.createElement('div');
             div.id = 'GPmousePositionPanel';
             div.className = 'GPpanel';
             div.appendChild(this._createMousePositionPanelHeaderElement());
-            div.appendChild(this._createMousePositionPanelBasicElement(displayAltitude, displayCoordinate));
-            var arraySettings = this._createShowMousePositionSettingsElement(displayCoordinate);
+            div.appendChild(this._createMousePositionPanelBasicElement(displayAltitude, displayCoordinates));
+            var arraySettings = this._createShowMousePositionSettingsElement(displayCoordinates);
             for (var j = 0; j < arraySettings.length; j++) {
                 div.appendChild(arraySettings[j]);
             }
@@ -17055,10 +17055,10 @@ CommonControlsMousePositionDOM = function () {
             container.appendChild(divClose);
             return container;
         },
-        _createMousePositionPanelBasicElement: function (displayAltitude, displayCoordinate) {
+        _createMousePositionPanelBasicElement: function (displayAltitude, displayCoordinates) {
             var container = document.createElement('div');
             container.id = 'GPmousePositionBasicPanel';
-            container.appendChild(this._createMousePositionPanelBasicCoordinateElement(displayCoordinate));
+            container.appendChild(this._createMousePositionPanelBasicCoordinateElement(displayCoordinates));
             container.appendChild(this._createMousePositionPanelBasicAltitudeElement(displayAltitude));
             return container;
         },

@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!-- Library Leaflet -->
-  <link rel="stylesheet" href="../../../lib/leaflet/leaflet.css" />
-  <script src="../../../lib/leaflet/leaflet.js"></script>
+  <!-- Library Ol3 -->
+  <link rel="stylesheet" href="../../lib/leaflet/leaflet.css" />
+  <script src="../../lib/leaflet/leaflet.js"></script>
 
-  <!-- Plugin leaflet IGN -->
-  <link rel="stylesheet" href="../../../dist/leaflet/GpPluginLeaflet-src.css" />
-  <script src="../../../dist/leaflet/GpPluginLeaflet-src.js" data-key="jhyvi0fgmnuxvfv0zjzorvdn"></script>
+  <!-- Plugin ol3 IGN -->
+  <link rel="stylesheet" href="../../dist/leaflet/GpPluginLeaflet.css" />
+  <script src="../../dist/leaflet/GpPluginLeaflet.js" data-key="jhyvi0fgmnuxvfv0zjzorvdn"></script>
 
 </head>
 <body>
   <h1>
-    <a href="http://leafletjs.com"><img src="../../resources/logo-leaflet.png" alt="Leaflet" width="300" /></a>
-    <a href="http://www.ign.fr"><img src="../../resources/logo-ign.jpg" alt="IGN" width="100" /></a>
+    <a href="http://leafletjs.com"><img src="../resources/logo-leaflet.png" alt="Leaflet" width="300" /></a>
+    <a href="http://www.ign.fr"><img src="../resources/logo-ign.jpg" alt="IGN" width="100" /></a>
   </h1>
   <h3>
     Leaflet - une bibliothèque JavaScript open-source pour des cartes interactives mobile-friendly
@@ -22,10 +22,17 @@
     <!-- Faire une bréve description du plugin -->
     <p>TODO : DESCRIPTION DU PLUGIN</p>
 
+    <!-- map -->
+    <div id="map" style="height: 400px;"></div>
+
     <!-- Mettre le code source de l'exemple -->
     <script>
-    window.onload = function () {
 
+    window.onload = function () {
+      // on cache l'image de chargement du Géoportail.
+      document.getElementById("map").style.backgroundImage = "none";
+
+      // Création de la map
       var layer = L.geoportalLayer.WMS({
         layer : "ORTHOIMAGERY.ORTHOPHOTOS"
       });
@@ -37,17 +44,22 @@
 
       layer.addTo(map);
 
-      var mouse = L.geoportalControl.MousePosition({
-        collapsed : false,
-        displayCoordinates : false
-      });
+      var iso = L.geoportalControl.Isocurve();
+      map.addControl(iso);
+      var layerSwitcher = L.geoportalControl.LayerSwitcher();
+      map.addControl(layerSwitcher);
+      var mp = L.geoportalControl.MousePosition();
+      map.addControl(mp);
+      var route = L.geoportalControl.Route();
+      map.addControl(route);
+      var reverse = L.geoportalControl.ReverseGeocode();
+      map.addControl(reverse);
+      var search = L.geoportalControl.SearchEngine();
+      map.addControl(search);
 
-      map.addControl(mouse);
-    }
+    };
+
     </script>
-
-    <!-- map -->
-    <div id="map" style="height: 400px;"></div>
 
     <!-- Comment utiliser le plugin avec un exemple -->
     <p>TODO : EXEMPLE D'UTILISATION DU PLUGIN</p>

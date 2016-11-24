@@ -33,7 +33,7 @@ apiKey      | String  | Optional | null      | Key API for the use of services
 systems     | Array   | Optional | [...]     | list of projection systems, by default, all systems
 units       | Array   | Optional | [...]     | list of units, by default, all units
 displayAltitude| Boolean | Optional | true     | Desactivate/activate the altitude panel, if desactivate, so have just the coordinate panel
-displayCoordinate| Boolean | Optional | true     | Desactivate/activate the coordinate panel, if desactivate, so have just the altitude panel
+displayCoordinates| Boolean | Optional | true     | Desactivate/activate the coordinate panel, if desactivate, so have just the altitude panel
 altitude    | Object  | Optional | {}        | Options elevation calculation service
 
 ## Configuration of elevation calculation service

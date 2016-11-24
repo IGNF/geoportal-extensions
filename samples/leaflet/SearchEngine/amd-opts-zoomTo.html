@@ -60,28 +60,20 @@
               // avec les options par defaut
               // var search = new SearchEngine();
 
-              // avec les options surchargées
+              // avec qq options surchargées
               var search = new SearchEngine({
-                collapsed : true,
+                collapsed : false,
                 displayInfo : true,
-                resources : ["PositionOfInterest", "CadastralParcel", "Administratif"],
-                // apiKey : "APIKEYFAKE1",
-                geocodeOptions : {
-                  // apiKey : "APIKEYFAKE2",
-                  returnFreeForm : true,
-                  filterOptions : {
-                    type : ["PositionOfInterest"],
-                    department : "77",
-                    nature : "Commune"
-                  }
+                // zoomTo : "auto",
+                zoomTo : function (info) {
+                  // Ex.
+                  // { service : "SuggestedLocation", type : "PositionOfInterest", fields : {...}}
+                  console.log(info);
+                  return 12;
                 },
-                autocompleteOptions : {
-                  serverUrl : "http://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/ols/apis/completion",
-                  filterOptions : {
-                    territory : ["DOMTOM"],
-                    type : ["PositionOfInterest"]
-                  }
-                }
+                resources : ["PositionOfInterest", "StreetAddress", "CadastralParcel"],
+                displayAdvancedSearch : true,
+                advancedSearch : {}
               });
 
               map.addControl(search);
