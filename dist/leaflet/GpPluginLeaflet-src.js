@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.8.1
- * @date 2016-11-23
+ * @date 2016-11-24
  *
  */
 /*!
@@ -13464,15 +13464,15 @@ CommonControlsMousePositionDOM = function () {
             label.appendChild(spanOpen);
             return label;
         },
-        _createMousePositionPanelElement: function (displayAltitude, displayCoordinate) {
+        _createMousePositionPanelElement: function (displayAltitude, displayCoordinates) {
             displayAltitude = displayAltitude ? true : typeof displayAltitude === 'undefined' ? true : false;
-            displayCoordinate = displayCoordinate ? true : typeof displayCoordinate === 'undefined' ? true : false;
+            displayCoordinates = displayCoordinates ? true : typeof displayCoordinates === 'undefined' ? true : false;
             var div = document.createElement('div');
             div.id = 'GPmousePositionPanel';
             div.className = 'GPpanel';
             div.appendChild(this._createMousePositionPanelHeaderElement());
-            div.appendChild(this._createMousePositionPanelBasicElement(displayAltitude, displayCoordinate));
-            var arraySettings = this._createShowMousePositionSettingsElement(displayCoordinate);
+            div.appendChild(this._createMousePositionPanelBasicElement(displayAltitude, displayCoordinates));
+            var arraySettings = this._createShowMousePositionSettingsElement(displayCoordinates);
             for (var j = 0; j < arraySettings.length; j++) {
                 div.appendChild(arraySettings[j]);
             }
@@ -13507,10 +13507,10 @@ CommonControlsMousePositionDOM = function () {
             container.appendChild(divClose);
             return container;
         },
-        _createMousePositionPanelBasicElement: function (displayAltitude, displayCoordinate) {
+        _createMousePositionPanelBasicElement: function (displayAltitude, displayCoordinates) {
             var container = document.createElement('div');
             container.id = 'GPmousePositionBasicPanel';
-            container.appendChild(this._createMousePositionPanelBasicCoordinateElement(displayCoordinate));
+            container.appendChild(this._createMousePositionPanelBasicCoordinateElement(displayCoordinates));
             container.appendChild(this._createMousePositionPanelBasicAltitudeElement(displayAltitude));
             return container;
         },
@@ -19752,7 +19752,7 @@ LeafletControlsMousePosition = function (L, woodman, Gp, RightManagement, MouseP
             units: [],
             systems: [],
             displayAltitude: true,
-            displayCoordinate: true,
+            displayCoordinates: true,
             altitude: {
                 triggerDelay: 200,
                 responseDelay: 500,
@@ -19778,8 +19778,8 @@ LeafletControlsMousePosition = function (L, woodman, Gp, RightManagement, MouseP
             this._currentProjectionUnits = this._projectionUnits[this._currentProjectionType][0].code;
             this._projectionUnitsContainer = null;
             this._showMousePositionContainer = null;
-            if (!this.options.displayAltitude && !this.options.displayCoordinate) {
-                this.options.displayCoordinate = true;
+            if (!this.options.displayAltitude && !this.options.displayCoordinates) {
+                this.options.displayCoordinates = true;
             }
             this._noRightManagement = false;
             if (this.options.displayAltitude) {
@@ -19956,7 +19956,7 @@ LeafletControlsMousePosition = function (L, woodman, Gp, RightManagement, MouseP
             }
             var picto = this._createShowMousePositionPictoElement(this._isDesktop);
             container.appendChild(picto);
-            var panel = this._createMousePositionPanelElement(this.options.displayAltitude, this.options.displayCoordinate);
+            var panel = this._createMousePositionPanelElement(this.options.displayAltitude, this.options.displayCoordinates);
             var settings = this._createMousePositionSettingsElement();
             var systems = this._projectionSystemsContainer = this._createMousePositionSettingsSystemsElement(this._projectionSystems);
             var units = this._projectionUnitsContainer = this._createMousePositionSettingsUnitsElement(this._projectionUnits[this._currentProjectionType]);
@@ -20162,8 +20162,8 @@ LeafletControlsMousePosition = function (L, woodman, Gp, RightManagement, MouseP
                 this._isDesktop ? map.on('mousemove', this.onMouseMove, this) : map.on('move', this.onMapMove, this);
             }
             this._setElevationPanel(this.options.displayAltitude);
-            this._setCoordinatePanel(this.options.displayCoordinate);
-            if (!this.options.displayCoordinate) {
+            this._setCoordinatePanel(this.options.displayCoordinates);
+            if (!this.options.displayCoordinates) {
                 this._setSettingsPanel(false);
             }
         },
@@ -23428,7 +23428,7 @@ LeafletControlsSearchEngine = function (L, woodman, Gp, RightManagement, ID, Sea
             L.Util.extend(options, this.options.geocodeOptions);
             L.Util.extend(options, settings);
             if (!options.hasOwnProperty('returnFreeForm')) {
-                L.Util.extend(options, { returnFreeForm: true });
+                L.Util.extend(options, { returnFreeForm: false });
             }
             var resources = this._servicesRightManagement['Geocode'].resources;
             if (!resources || Object.keys(resources).length === 0) {
@@ -23473,16 +23473,17 @@ LeafletControlsSearchEngine = function (L, woodman, Gp, RightManagement, ID, Sea
             var map = this._map;
             var key = this.options.zoomTo;
             var zoom = null;
-            if (key === 'max') {
-                zoom = map.getMaxZoom();
-            } else if (key === 'min') {
-                zoom = map.getMinZoom();
-            } else if (key === 'auto') {
-                zoom = 15;
-                var service = info.service;
-                var fields = info.fields;
-                var type = info.type;
-                if (service === 'SuggestedLocation') {
+            if (typeof key === 'function') {
+                zoom = key.call(this, info);
+            }
+            if (typeof key === 'number') {
+                zoom = key;
+            }
+            if (typeof key === 'string') {
+                if (key === 'auto') {
+                    var service = info.service;
+                    var fields = info.fields;
+                    var type = info.type;
                     var importance = {
                         1: 11,
                         2: 12,
@@ -23493,31 +23494,45 @@ LeafletControlsSearchEngine = function (L, woodman, Gp, RightManagement, ID, Sea
                         7: 17,
                         8: 17
                     };
-                    if (type === 'PositionOfInterest') {
-                        zoom = importance[fields.classification];
+                    if (service === 'SuggestedLocation') {
+                        if (type === 'PositionOfInterest') {
+                            zoom = importance[fields.classification];
+                        }
                     }
-                }
-                if (service === 'DirectGeocodedLocation') {
-                    if (type === 'PositionOfInterest') {
-                        zoom = 14;
+                    if (service === 'DirectGeocodedLocation') {
+                        if (type === 'PositionOfInterest') {
+                            zoom = importance[fields.importance] || 14;
+                        }
                     }
-                }
-                if (type === 'StreetAddress') {
-                    zoom = 17;
-                }
-                if (type === 'CadastralParcel') {
-                    zoom = 17;
-                }
-                if (type === 'Administratif') {
-                    zoom = 12;
-                }
-            } else {
-                if (typeof key === 'function') {
-                    zoom = key.call(this, info);
+                    if (type === 'StreetAddress') {
+                        zoom = 17;
+                    }
+                    if (type === 'CadastralParcel') {
+                        zoom = 17;
+                    }
+                    if (type === 'Administratif') {
+                        zoom = 12;
+                    }
+                } else {
+                    var value = parseInt(key, 10);
+                    if (!isNaN(value)) {
+                        zoom = value;
+                    }
                 }
             }
-            if (!zoom || zoom === '') {
+            Number.isInteger = Number.isInteger || function (value) {
+                return typeof value === 'number' && isFinite(value) && Math.floor(value) === value;
+            };
+            if (!zoom || zoom === '' || !Number.isInteger(zoom)) {
                 zoom = map.getZoom();
+            }
+            var min = map.getMinZoom();
+            var max = map.getMaxZoom();
+            if (zoom < min) {
+                zoom = min;
+            }
+            if (zoom > max) {
+                zoom = max;
             }
             return zoom;
         },
@@ -24336,7 +24351,7 @@ LeafletLayersLayers = function (L, woodman, LayerConfig, WMS, WMTS) {
 }(leaflet, {}, LeafletLayersLayerConfig, LeafletLayersWMS, LeafletLayersWMTS);
 LeafletGpPluginLeaflet = function (L, P, Gp, Controls, Layers, CRS, Register) {
     Gp.leafletExtVersion = '0.8.1';
-    Gp.leafletExtDate = '2016-11-23';
+    Gp.leafletExtDate = '2016-11-24';
     Gp.Register = Register;
     L.geoportalLayer = Layers;
     L.geoportalControl = Controls;

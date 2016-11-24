@@ -35,6 +35,7 @@ geocodeOptions | Object | Optional | {}      | Options of geocode service
 autocompleteOptions | Object | Optional | {} | Options of autocomplete service
 displayInfo | Boolean | Optional | false     | Get informations on popup marker
 resources | Array  | Optional | []           | Resources geocoding
+zoomTo | Sting|Numeric|Function | Optional | null | zoom to results, by default, current zoom.
 
 ## Configuration of services
 
@@ -44,11 +45,53 @@ resources | Array  | Optional | []           | Resources geocoding
 
 ## simple
 
-...
+```
+var search = L.geoportalControl.SearchEngine();
+```
 
 ## advanced
 
-...
+Custom Service parameter
+```
+var search = L.geoportalControl.SearchEngine({
+        geocodeOptions : {
+          filterOptions : {
+            type : ["PositionOfInterest", "StreetAddress"],
+            departement : 77
+          }
+        },
+        autocompleteOptions : {
+          serverUrl : "http://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/ols/apis/completion",
+          filterOptions : {
+            type : ["PositionOfInterest", "StreetAddress"]
+          }
+        }
+      });
+```
+
+Custom Resources parameter
+```
+var search = L.geoportalControl.SearchEngine({
+  resources : ["PositionOfInterest"]
+});
+```
+
+Custom Zoom parameter
+```
+var search = L.geoportalControl.SearchEngine({
+  zoomTo : function (info) {
+    // Ex.
+    // { service : "SuggestedLocation", type : "PositionOfInterest", fields : {...}}
+    console.log(info);
+    return 12;
+  }
+});
+```
+```
+var search = L.geoportalControl.SearchEngine({
+  zoomTo : "auto" // or zoom leve1 1, 2, 3...
+});
+```
 
 # Requirements
 
