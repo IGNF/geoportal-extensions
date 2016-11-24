@@ -2402,6 +2402,21 @@ div[id^=GPisochronReset] {
   background-image: url("img/GPisochronOptions.png");
 }
 
+/* Location */
+
+.GPlocationStageFlexInput {
+  margin-bottom: 5px; /*overwritten*/
+}
+
+/* Location form */
+
+.GPlocationOriginPointerImg,
+.GPlocationStageRemove,
+div[id^=GPlocationStageAdd],
+.GPlocationTransportImg {
+  background-image: url("img/GPlocationOptions.png");
+}
+
 /* LAYER SWITCHER LEAFLET */
 
 #GPlayerSwitcher {
@@ -2484,21 +2499,6 @@ div[id^=GPisochronReset] {
 .GPlayerInfoLink,
 .GPlayerInfoPopup {
   background-image: url("img/GPlayerInfo.png");
-}
-
-/* Location */
-
-.GPlocationStageFlexInput {
-  margin-bottom: 5px; /*overwritten*/
-}
-
-/* Location form */
-
-.GPlocationOriginPointerImg,
-.GPlocationStageRemove,
-div[id^=GPlocationStageAdd],
-.GPlocationTransportImg {
-  background-image: url("img/GPlocationOptions.png");
 }
 
 /* MOUSE POSITION */
