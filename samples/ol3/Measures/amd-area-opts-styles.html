@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta content="IE=edge,chrome=1; charset=UTF-8" http-equiv="X-UA-Compatible">
-  <title>sample ol3 measure azimut default (amd)</title>
+  <title>sample ol3 measure area default (amd)</title>
 
   <!-- Library OpenLayers 3 -->
   <link rel="stylesheet" href="../../../lib/ol3/ol.css" />
@@ -10,9 +10,10 @@
   <!-- Plugin OpenLayers 3 IGN -->
   <link rel="stylesheet" href="../../../res/common/GPgeneralWidget.css" />
   <link rel="stylesheet" href="../../../res/common/GPmeasureToolTip.css" />
-  <link rel="stylesheet" href="../../../res/common/GPmeasureAzimuth.css" />
+  <link rel="stylesheet" href="../../../res/common/GPmeasureArea.css" />
   <link rel="stylesheet" href="../../../res/ol3/GPgeneralWidgetOL3.css" />
-  <link rel="stylesheet" href="../../../res/ol3/Controls/Measures/GPmeasureAzimuthOL3.css" />
+  <link rel="stylesheet" href="../../../res/ol3/Controls/Measures/GPmeasureAreaOL3.css" />
+  <link rel="stylesheet" href="../../../res/ol3/Controls/ToolBoxMeasure/GPtoolBoxMeasureOL3.css" />
 
   <!-- requirejs -->
   <script src="../../../lib/require.js"></script>
@@ -64,13 +65,13 @@
         "ol",
         "gp",
         "Ol3/Layers/LayerWMTS",
-        "Ol3/Controls/Measures/MeasureAzimuth"
+        "Ol3/Controls/Measures/MeasureArea"
       ],
       function (
         ol,
         Gp,
         LayerWMTS,
-        MeasureAzimuth
+        MeasureArea
       ) {
 
         var map;
@@ -94,24 +95,35 @@
             })
           });
 
-          var measure = new MeasureAzimuth({
+          var measure = new MeasureArea({
             element : null,
             target : null,
             render : null,
             styles : {
-              finish : {
-                fillColor : "rgba(255, 255, 255, 0.2)",
-                strokeColor : "rgba(0, 0, 0, 0.5)",
-                strokeLineDash : [10, 10],
-                strokeWidth : 2,
-                imageRadius : 5,
-                imageFillColor : "rgba(255, 255, 255, 0.2)",
-                imageStrokeColor : "rgba(0, 0, 0, 0.7)"
-              }
+              start : new ol.style.Style({
+                stroke : new ol.style.Stroke({
+                    color : "yellow",
+                    lineDash : null,
+                    width : 5
+                }),
+                image : new ol.style.Circle({
+                    radius : 8,
+                    stroke : new ol.style.Stroke({
+                        color : "red",
+                        width : 1
+                    })
+                })
+              }),
+              finish : new ol.style.Style({
+                stroke : new ol.style.Stroke({
+                    color : "rgba(0, 0, 0, 0.5)",
+                    width : 8
+                })
+              })
             },
-            unit : "km", // not yet implemented !
-            tooltip : {  // not yet implemented !
-              messageContinue : "Click to continue drawing the line",
+            unit : "miles", // not yet implemented !
+            tooltip : {     // not yet implemented !
+              messageContinue : "Click to continue drawing the polygon",
               messageStart : "Click to start drawing"
             },
             geodesic : true

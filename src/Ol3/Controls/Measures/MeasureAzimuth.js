@@ -33,19 +33,18 @@ define([
     * @alias ol.control.MeasureAzimuth
     * @extends {ol.control.Control}
     * @param {Object} options - options for function call.
-    * @param {Object} [options.styles = {}] - styles management of draw
-    * @param {Object} [options.styles.start = {}] - Line Style for a start drawing
-    * @param {Object} [options.styles.start.fillColor] - Line for fill color
-    * @param {Object} [options.styles.start.strokeColor] - Line for stroke color
-    * @param {Object} [options.styles.start.strokeLineDash] - Line for stroke dash
-    * @param {Object} [options.styles.start.strokeWidth] - Line for stroke width
-    * @param {Object} [options.styles.start.imageRadius] - Point radius
-    * @param {Object} [options.styles.start.imageFillColor] - Point for fill color
-    * @param {Object} [options.styles.start.imageStrokeColor] - Point for stroke color
-    * @param {Object} [options.styles.finish = {}] - Line Style for a finish drawing
-    * @param {Object} [options.styles.finish.fillColor] - Line for fill color
-    * @param {Object} [options.styles.finish.strokeColor] - Line for stroke color
-    * @param {Object} [options.styles.finish.strokeWidth] - Line for stroke width
+    * @param {Object} [options.styles = {}] - styles management of draw with properties or object {ol.style}
+    * @param {Object} [options.styles.pointer = {}] - Point Style for a start drawing with properties or object {ol.style.Circle}
+    * @param {Number} [options.styles.pointer.imageRadius] - Point radius (properties)
+    * @param {String} [options.styles.pointer.imageFillColor] - Point for fill color (properties)
+    * @param {String} [options.styles.pointer.imageStrokeColor] - Point for stroke color (properties)
+    * @param {Object} [options.styles.start = {}] - Line Style for a start drawing with properties or object {ol.style.Stroke}
+    * @param {String} [options.styles.start.strokeColor] - Line for stroke color (properties)
+    * @param {Array}  [options.styles.start.strokeLineDash] - Line for stroke dash (properties)
+    * @param {Number} [options.styles.start.strokeWidth] - Line for stroke width (properties)
+    * @param {Object} [options.styles.finish = {}] - Line Style for a finish drawing with properties or object {ol.style.Stroke}
+    * @param {String} [options.styles.finish.strokeColor] - Line for stroke color (properties)
+    * @param {Number} [options.styles.finish.strokeWidth] - Line for stroke width (properties)
     * @param {Object} [options.tooltip = {}] - NOT YET IMPLEMENTED !
     * @example
     * var measure = new ol.control.MeasureAzimuth({
@@ -54,10 +53,11 @@ define([
     *    render : null,
     *    styles : {
     *     start : {
-    *       fillColor : "rgba(255, 255, 255, 0.2)",
     *       strokeColor : "rgba(0, 0, 0, 0.5)",
     *       strokeLineDash : [10, 10],
-    *       strokeWidth : 2,
+    *       strokeWidth : 2
+    *     },
+    *     pointer : {
     *       imageRadius : 5,
     *       imageFillColor : "rgba(255, 255, 255, 0.2)",
     *       imageStrokeColor : "rgba(0, 0, 0, 0.7)"
@@ -219,7 +219,7 @@ define([
     // ################################################################### //
 
     /**
-     * Add all events on map 
+     * Add all events on map
      *
      * @private
      */

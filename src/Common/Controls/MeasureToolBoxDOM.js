@@ -56,45 +56,33 @@ define([], function () {
 
             var widget = document.createElement("div");
             widget.id = this._widgetId;
-            widget.addEventListener("click", function (e) {
-                console.log(e);
-                // e.preventDefault();
+            widget.addEventListener("click", function () {
 
-                // FIXME comment desactiver les outils ?
+                /*
+                    e.preventDefault();
 
-                // A l'initialisation, les inputs sont decochés (non actif).
-                // Le clic sur un outil va coché l'input courant (actif).
-                // Et les autres devront être desactivés !
+                    // FIXME comment desactiver tous les outils sur
+                    // l'ouverture/fermeture de la toolbox ?
 
+                    var current = e.target.parentNode.getAttribute("for");
+                    var widgets = this.querySelectorAll("div > input");
+                    for (var i = 0; i < widgets.length; i++) {
+                        var id = widgets[i].id;
 
-                // init:input.checked:false
-                // clic:input.checked:false
-                //      puis on passe dans cette fonction (1ere fois)
-                //      target:noinput !
-                //      et en y sortant, input.checked:true
-                //      ensuite on passe dans cette fonction (2eme fois)
-                //      target:input.checked:true
+                        if (document.getElementById(id) &&
+                            document.getElementById(id).checked &&
+                            document.querySelector("#" + id + " + label")) {
+                                document.querySelector("#" + id + " + label").click();
+                                // document.getElementById(id).checked = true;
+                        }
 
-
-                // var current = e.target.parentNode.getAttribute("for");
-                // var widgets = this.querySelectorAll("div > input");
-                // for (var i = 0; i < widgets.length; i++) {
-                //     var id = widgets[i].id;
-                //
-                //     if (document.getElementById(id) &&
-                //         document.getElementById(id).checked &&
-                //         document.querySelector("#" + id + " + label")) {
-                //             document.querySelector("#" + id + " + label").click();
-                //             // document.getElementById(id).checked = true;
-                //     }
-                //
-                //     if (current === id && widgets[i].checked) {
-                //         widgets[i].checked = false;
-                //     } else if (current === id && !widgets[i].checked) {
-                //         widgets[i].checked = true;
-                //     }
-                // }
-
+                        if (current === id && widgets[i].checked) {
+                            widgets[i].checked = false;
+                        } else if (current === id && !widgets[i].checked) {
+                            widgets[i].checked = true;
+                        }
+                    }
+                */
 
             }, false);
 

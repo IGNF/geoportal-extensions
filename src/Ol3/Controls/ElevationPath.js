@@ -180,6 +180,7 @@ define([
 
     /**
     * suppression du marker
+    *
     * @private
     */
     ElevationPath.__removeProfilMarker = function (context) {
@@ -193,6 +194,7 @@ define([
 
     /**
     * mise à jour du marker
+    *
     * @private
     */
     ElevationPath.__updateProfilMarker = function (d, context) {
@@ -606,9 +608,6 @@ define([
             return;
         }
 
-        var h = getComputedStyle(container, null).getPropertyValue("height").replace("px", "");
-        var w = getComputedStyle(container, null).getPropertyValue("width").replace("px", "");
-
         var sortedElev = JSON.parse(JSON.stringify(data)) ;
         sortedElev.sort(function (e1, e2) {
             return e1.z - e2.z ;
@@ -618,22 +617,15 @@ define([
         var maxZ = sortedElev[sortedElev.length - 1].z ;
         var diff = maxZ - minZ ;
         var dist = data[data.length - 1].dist;
-        console.log({
-            minZ : minZ,
-            maxZ : maxZ,
-            dist : dist,
-            diff : diff
-        }) ;
 
         var barwidth = 100 / data.length ;
-        var pctMax = Math.floor((maxZ - minZ) * 100 / diff) ;
 
         var self = context;
 
         var div = document.createElement("div");
         div.id  = "profileElevationByDefault";
         div.addEventListener("mouseover", function (e) {
-            // console.log("over", e);
+
             var _lon = parseFloat(e.target.dataset["lon"]);
             var _lat = parseFloat(e.target.dataset["lat"]);
 

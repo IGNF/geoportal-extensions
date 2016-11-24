@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-11-23
+ * @date 2016-11-24
  *
  */
 /*!
@@ -25651,8 +25651,7 @@ CommonControlsMeasureToolBoxDOM = function () {
             container.appendChild(button);
             var widget = document.createElement('div');
             widget.id = this._widgetId;
-            widget.addEventListener('click', function (e) {
-                console.log(e);
+            widget.addEventListener('click', function () {
             }, false);
             container.appendChild(widget);
             return container;
@@ -26008,8 +26007,6 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, Me
         if (!data) {
             return;
         }
-        var h = getComputedStyle(container, null).getPropertyValue('height').replace('px', '');
-        var w = getComputedStyle(container, null).getPropertyValue('width').replace('px', '');
         var sortedElev = JSON.parse(JSON.stringify(data));
         sortedElev.sort(function (e1, e2) {
             return e1.z - e2.z;
@@ -26018,14 +26015,7 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, Me
         var maxZ = sortedElev[sortedElev.length - 1].z;
         var diff = maxZ - minZ;
         var dist = data[data.length - 1].dist;
-        console.log({
-            minZ: minZ,
-            maxZ: maxZ,
-            dist: dist,
-            diff: diff
-        });
         var barwidth = 100 / data.length;
-        var pctMax = Math.floor((maxZ - minZ) * 100 / diff);
         var self = context;
         var div = document.createElement('div');
         div.id = 'profileElevationByDefault';
@@ -26833,23 +26823,23 @@ Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, Me
     return ElevationPath;
 }(ol, {}, gp, Ol3Utils, CommonUtilsCheckRightManagement, Ol3ControlsMeasureToolBox, CommonControlsElevationPathDOM, CommonUtilsSelectorID);
 Ol3ControlsMeasuresMeasures = function (ol, woodman) {
-    var defaultStyle = {
-        fillColor: 'rgba(0, 183, 152, 0.2)',
+    var DEFAULT_STYLE_START = {
         strokeColor: '#002A50',
         strokeLineDash: [
             10,
             10
         ],
         strokeWidth: 2,
+        fillColor: 'rgba(0, 183, 152, 0.2)',
         imageRadius: 5,
         imageFillColor: 'rgba(255, 155, 0, 0.7)',
         imageStrokeColor: '#002A50',
         imageStrokeWidth: 2
     };
-    var defaultStyleFinal = {
-        fillColor: 'rgba(0, 183, 152, 0.3)',
+    var DEFAULT_STYLE_FINISH = {
         strokeColor: '#002A50',
-        strokeWidth: 3
+        strokeWidth: 3,
+        fillColor: 'rgba(0, 183, 152, 0.3)'
     };
     var Measures = {
         tools: {
@@ -26874,27 +26864,27 @@ Ol3ControlsMeasuresMeasures = function (ol, woodman) {
         measureTooltip: null,
         helpTooltipElement: null,
         helpTooltip: null,
-        measureStyle: new ol.style.Style({
-            fill: new ol.style.Fill({ color: defaultStyle.fillColor }),
+        measureDrawStartStyle: new ol.style.Style({
+            fill: new ol.style.Fill({ color: DEFAULT_STYLE_START.fillColor }),
             stroke: new ol.style.Stroke({
-                color: defaultStyle.strokeColor,
-                lineDash: defaultStyle.strokeLineDash,
-                width: defaultStyle.strokeWidth
+                color: DEFAULT_STYLE_START.strokeColor,
+                lineDash: DEFAULT_STYLE_START.strokeLineDash,
+                width: DEFAULT_STYLE_START.strokeWidth
             }),
             image: new ol.style.Circle({
-                radius: defaultStyle.imageRadius,
+                radius: DEFAULT_STYLE_START.imageRadius,
                 stroke: new ol.style.Stroke({
-                    color: defaultStyle.imageStrokeColor,
-                    width: defaultStyle.imageStrokeWidth
+                    color: DEFAULT_STYLE_START.imageStrokeColor,
+                    width: DEFAULT_STYLE_START.imageStrokeWidth
                 }),
-                fill: new ol.style.Fill({ color: defaultStyle.imageFillColor })
+                fill: new ol.style.Fill({ color: DEFAULT_STYLE_START.imageFillColor })
             })
         }),
-        measureFinalStyle: new ol.style.Style({
-            fill: new ol.style.Fill({ color: defaultStyleFinal.fillColor }),
+        measureDrawFinishStyle: new ol.style.Style({
+            fill: new ol.style.Fill({ color: DEFAULT_STYLE_FINISH.fillColor }),
             stroke: new ol.style.Stroke({
-                color: defaultStyleFinal.strokeColor,
-                width: defaultStyleFinal.strokeWidth
+                color: DEFAULT_STYLE_FINISH.strokeColor,
+                width: DEFAULT_STYLE_FINISH.strokeWidth
             })
         }),
         clean: function () {
@@ -27017,78 +27007,98 @@ Ol3ControlsMeasuresMeasures = function (ol, woodman) {
         createStylingMeasureInteraction: function (styles) {
             if (typeof styles === 'undefined' || Object.keys(styles).length === 0) {
                 this.options.styles = {
-                    start: this.measureStyle,
-                    finish: this.measureFinalStyle
+                    start: this.measureDrawStartStyle,
+                    finish: this.measureDrawFinishStyle
                 };
             } else {
-                var start = styles.start;
-                var finish = styles.finish;
-                this.options.styles = {};
-                if (typeof start === 'undefined') {
-                    this.options.styles.start = this.measureStyle;
-                } else {
-                    Object.keys(defaultStyle).forEach(function (key) {
-                        if (!start.hasOwnProperty(key)) {
+                this.options.styles = styles || {};
+            }
+            var start = this.options.styles.start;
+            var finish = this.options.styles.finish;
+            if (typeof start === 'undefined') {
+                start = this.measureDrawStartStyle;
+            }
+            if (typeof finish === 'undefined') {
+                finish = this.measureDrawFinishStyle;
+            }
+            if (start instanceof ol.style.Style) {
+                this.options.styles.start = start;
+            } else {
+                var defaultStyle = DEFAULT_STYLE_START;
+                Object.keys(defaultStyle).forEach(function (key) {
+                    if (!start.hasOwnProperty(key)) {
+                        start[key] = defaultStyle[key];
+                        return;
+                    }
+                    var intValue;
+                    if (key === 'strokeWidth') {
+                        intValue = parseInt(start[key], 10);
+                        if (isNaN(intValue) || intValue < 0) {
+                            console.log('Wrong value (' + start[key] + ') for strokeWidth. Must be a positive interger value.');
                             start[key] = defaultStyle[key];
                             return;
                         }
-                        if (key === 'strokeWidth') {
-                            var intValue = parseInt(start[key], 10);
-                            if (isNaN(intValue) || intValue < 0) {
-                                console.log('Wrong value (' + start[key] + ') for strokeWidth. Must be a positive interger value.');
-                                start[key] = defaultStyle[key];
-                                return;
-                            }
-                            start[key] = intValue;
-                        }
-                    }, this);
-                    var _fill = new ol.style.Fill({ color: start.fillColor });
-                    var _stroke = new ol.style.Stroke({
-                        color: start.strokeColor,
-                        lineDash: start.strokeLineDash,
-                        width: start.strokeWidth
-                    });
-                    var _image = new ol.style.Circle({
-                        radius: start.imageRadius,
-                        stroke: new ol.style.Stroke({
-                            color: start.imageStrokeColor,
-                            width: start.imageStrokeWidth
-                        }),
-                        fill: new ol.style.Fill({ color: start.imageFillColor })
-                    });
-                    this.options.styles.start = new ol.style.Style({
-                        fill: _fill,
-                        stroke: _stroke,
-                        image: _image
-                    });
-                }
-                if (typeof finish === 'undefined') {
-                    this.options.styles.finish = this.measureFinalStyle;
-                } else {
-                    Object.keys(defaultStyleFinal).forEach(function (key) {
-                        if (!finish.hasOwnProperty(key)) {
-                            finish[key] = defaultStyleFinal[key];
+                        start[key] = intValue;
+                    }
+                    if (key === 'imageStrokeWidth' || key === 'imageRadius') {
+                        intValue = parseInt(start[key], 10);
+                        if (isNaN(intValue) || intValue < 0) {
+                            console.log('Wrong value (' + start[key] + ') for strokeWidth or radius. Must be a positive interger value.');
+                            start[key] = defaultStyle[key];
                             return;
                         }
-                        if (key === 'strokeWidth') {
-                            var intValue = parseInt(finish[key], 10);
-                            if (isNaN(intValue) || intValue < 0) {
-                                console.log('Wrong value (' + finish[key] + ') for strokeWidth. Must be a positive interger value.');
-                                finish[key] = defaultStyleFinal[key];
-                                return;
-                            }
-                            finish[key] = intValue;
+                        start[key] = intValue;
+                    }
+                }, this);
+                var _startImage = new ol.style.Circle({
+                    radius: start.imageRadius,
+                    stroke: new ol.style.Stroke({
+                        color: start.imageStrokeColor,
+                        width: start.imageStrokeWidth
+                    }),
+                    fill: new ol.style.Fill({ color: start.imageFillColor })
+                });
+                var _startFill = new ol.style.Fill({ color: start.fillColor });
+                var _startStroke = new ol.style.Stroke({
+                    color: start.strokeColor,
+                    lineDash: start.strokeLineDash,
+                    width: start.strokeWidth
+                });
+                this.options.styles.start = new ol.style.Style({
+                    fill: _startFill,
+                    stroke: _startStroke,
+                    image: _startImage
+                });
+            }
+            if (finish instanceof ol.style.Style) {
+                this.options.styles.finish = finish;
+            } else {
+                var defaultStyleFinish = DEFAULT_STYLE_FINISH;
+                Object.keys(defaultStyleFinish).forEach(function (key) {
+                    if (!finish.hasOwnProperty(key)) {
+                        finish[key] = defaultStyleFinish[key];
+                        return;
+                    }
+                    if (key === 'strokeWidth') {
+                        var intValue = parseInt(finish[key], 10);
+                        if (isNaN(intValue) || intValue < 0) {
+                            console.log('Wrong value (' + finish[key] + ') for strokeWidth. Must be a positive interger value.');
+                            finish[key] = defaultStyleFinish[key];
+                            return;
                         }
-                    }, this);
-                    this.options.styles.finish = new ol.style.Style({
-                        fill: new ol.style.Fill({ color: styles.finish.fillColor }),
-                        stroke: new ol.style.Stroke({
-                            color: styles.finish.strokeColor,
-                            lineDash: styles.finish.strokeLineDash,
-                            width: styles.finish.strokeWidth
-                        })
-                    });
-                }
+                        finish[key] = intValue;
+                    }
+                }, this);
+                var _finishFill = new ol.style.Fill({ color: finish.fillColor });
+                var _finishStroke = new ol.style.Stroke({
+                    color: finish.strokeColor,
+                    lineDash: finish.strokeLineDash,
+                    width: finish.strokeWidth
+                });
+                this.options.styles.finish = new ol.style.Style({
+                    stroke: _finishStroke,
+                    fill: _finishFill
+                });
             }
         },
         addMeasureInteraction: function (type) {
@@ -27096,7 +27106,7 @@ Ol3ControlsMeasuresMeasures = function (ol, woodman) {
             this.measureDraw = new ol.interaction.Draw({
                 source: this.measureSource,
                 type: type,
-                style: this.options.styles.start || this.measureStyle
+                style: this.options.styles.start || this.measureDrawStartStyle
             });
             this.measureDraw.setProperties({ source: 'Measure' });
             map.addInteraction(this.measureDraw);
@@ -27136,7 +27146,7 @@ Ol3ControlsMeasuresMeasures = function (ol, woodman) {
             this.measureSource = new ol.source.Vector();
             this.measureVector = new ol.layer.Vector({
                 source: this.measureSource,
-                style: this.options.styles.finish || this.measureFinalStyle
+                style: this.options.styles.finish || this.measureDrawFinishStyle
             });
             map.addLayer(this.measureVector);
         }
@@ -27540,7 +27550,7 @@ Ol3ControlsMeasuresMeasureAzimuth = function (ol, woodman, Utils, MeasureToolBox
 }(ol, {}, Ol3Utils, Ol3ControlsMeasureToolBox, Ol3ControlsMeasuresMeasures, CommonControlsMeasureAzimuthDOM, CommonUtilsSelectorID);
 Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, KML, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution, Markers, ElevationPath, MeasureLength, MeasureArea, MeasureAzimuth) {
     Gp.ol3extVersion = '0.11.0';
-    Gp.ol3extDate = '2016-11-23';
+    Gp.ol3extDate = '2016-11-24';
     Gp.LayerUtils = LayerUtils;
     ol.format.KMLExtended = KML;
     CRS.overload();
