@@ -55,8 +55,9 @@ define([
             autocompleteOptions : {}
         },
 
-        /**
+       /**
         * @constructor SearchEngine
+        *
         * @private
         * @param {Object}  options - control options
         * @param {String}  [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
@@ -67,7 +68,7 @@ define([
         *       Value possible : auto or zoom level.
         *       Possible to overload it with a function :
         *       zoomTo : function (info) {
-                    // do some stuff...
+        *           // do some stuff...
         *           return zoom;
         *       }
         * @param {Sting}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
@@ -93,6 +94,7 @@ define([
         *      geocodeOptions : {},
         *      autocompleteOptions : {}
         *  });
+        *
         */
         initialize : function (options) {
 

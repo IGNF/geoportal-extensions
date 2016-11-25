@@ -247,8 +247,8 @@ function (
         * @param {String}  [options.position] - position of component into the map, 'topleft' by default
         * @param {Boolean} [options.displayInfo] - get informations on popup marker
         * @param {Sting|Numeric|Function} [options.zoomTo] - zoom to results, by default, current zoom.
-        *       Value possible : auto or zoom level.
-        *       Possible to overloading with a custom function :
+        *       possible values : "auto", any fixed zoom level or a function retruning a zoom :
+        *       
         *       ```
         *       zoomTo : function (info) {
         *           // do some stuff...
