@@ -55,13 +55,16 @@ define([
             autocompleteOptions : {}
         },
 
-        /**
+       /**
         * @constructor SearchEngine
+        *
         * @private
-        * @param {Object}  options - control options
-        * @param {String}  [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
+        * @alias SearchEngine
+        * @extends {L.Control}
+        * @param {Object} options - control options
+        * @param {String} [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
         * @param {Boolean} [options.collapsed] - collapse mode, false by default
-        * @param {String}  [options.position] - position of component into the map, 'topleft' by default
+        * @param {String} [options.position] - position of component into the map, 'topleft' by default
         * @param {Boolean} [options.displayInfo] - get informations on popup marker
         * @param {Sting|Numeric|Function} [options.zoomTo] - zoom to results, by default, current zoom.
         *       Value possible : auto or zoom level.
@@ -70,12 +73,12 @@ define([
                     // do some stuff...
         *           return zoom;
         *       }
-        * @param {Sting}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
-        * @param {Object}  [options.resources] - resources to be used by geocode and autocompletion services, by default : ["StreetAddress", "PositionOfInterest"]
+        * @param {Sting} [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
+        * @param {Object} [options.resources] - resources to be used by geocode and autocompletion services, by default : ["StreetAddress", "PositionOfInterest"]
         * @param {Boolean} [options.displayAdvancedSearch] - False to disable advanced search tools (it will not be displayed). Default is true (displayed)
-        * @param {Object}  [options.advancedSearch] - advanced search for geocoding (filters)
-        * @param {Object}  [options.geocodeOptions] - options of geocode service
-        * @param {Object}  [options.autocompleteOptions] - options of autocomplete service
+        * @param {Object} [options.advancedSearch] - advanced search for geocoding (filters)
+        * @param {Object} [options.geocodeOptions] - options of geocode service
+        * @param {Object} [options.autocompleteOptions] - options of autocomplete service
         * @example
         *  var SearchEngine = L.geoportalControl.SearchEngine({
         *      position : "topright",
