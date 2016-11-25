@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 0.11.0
- * @date 2016-11-15
+ * @date 2016-11-25
  *
  */
 /*!
@@ -90,7 +90,7 @@
   }
 }(this, function(ol) {
 
-var gp, CommonUtilsAutoLoadConfig, CommonUtilsLayerUtils, proj4, CommonUtilsRegister, Ol3FormatsKML, Ol3CRSCRS, Ol3Utils, CommonUtilsConfig, Ol3LayersSourceWMTS, Ol3LayersSourceWMS, Ol3LayersLayerWMTS, Ol3LayersLayerWMS, sortable, CommonControlsLayerSwitcherDOM, Ol3ControlsLayerSwitcher, Ol3ControlsUtilsMarkers, CommonUtilsCheckRightManagement, CommonUtilsSelectorID, CommonControlsSearchEngineDOM, CommonControlsSearchEngineUtils, Ol3ControlsSearchEngine, CommonControlsMousePositionDOM, Ol3ControlsMousePosition, CommonControlsDrawingDOM, Ol3ControlsDrawing, CommonControlsLocationSelectorDOM, Ol3ControlsLocationSelector, CommonControlsRouteDOM, Ol3ControlsRoute, CommonControlsIsoDOM, Ol3ControlsIsocurve, CommonControlsReverseGeocodingDOM, Ol3ControlsReverseGeocode, CommonControlsLayerImportDOM, Ol3ControlsLayerImport, Ol3ControlsGeoportalAttribution, Ol3ControlsMeasuresMeasures, CommonControlsMeasureLengthDOM, Ol3ControlsMeasuresMeasureLength, CommonControlsMeasureAreaDOM, Ol3ControlsMeasuresMeasureArea, CommonControlsMeasureAzimuthDOM, Ol3ControlsMeasuresMeasureAzimuth, Ol3GpPluginOl3;
+var gp, CommonUtilsAutoLoadConfig, CommonUtilsLayerUtils, proj4, CommonUtilsRegister, Ol3FormatsKML, Ol3CRSCRS, Ol3Utils, CommonUtilsConfig, Ol3LayersSourceWMTS, Ol3LayersSourceWMS, Ol3LayersLayerWMTS, Ol3LayersLayerWMS, sortable, CommonControlsLayerSwitcherDOM, Ol3ControlsLayerSwitcher, Ol3ControlsUtilsMarkers, CommonUtilsCheckRightManagement, CommonUtilsSelectorID, CommonControlsSearchEngineDOM, CommonControlsSearchEngineUtils, Ol3ControlsSearchEngine, CommonControlsMousePositionDOM, Ol3ControlsMousePosition, CommonControlsDrawingDOM, Ol3ControlsDrawing, CommonControlsLocationSelectorDOM, Ol3ControlsLocationSelector, CommonControlsRouteDOM, Ol3ControlsRoute, CommonControlsIsoDOM, Ol3ControlsIsocurve, CommonControlsReverseGeocodingDOM, Ol3ControlsReverseGeocode, CommonControlsLayerImportDOM, Ol3ControlsLayerImport, Ol3ControlsGeoportalAttribution, CommonControlsMeasureToolBoxDOM, Ol3ControlsMeasureToolBox, CommonControlsElevationPathDOM, Ol3ControlsElevationPath, Ol3ControlsMeasuresMeasures, CommonControlsMeasureLengthDOM, Ol3ControlsMeasuresMeasureLength, CommonControlsMeasureAreaDOM, Ol3ControlsMeasuresMeasureArea, CommonControlsMeasureAzimuthDOM, Ol3ControlsMeasuresMeasureAzimuth, Ol3GpPluginOl3;
 (function (root, factory) {
     if (true) {
         gp = function () {
@@ -17012,15 +17012,15 @@ CommonControlsMousePositionDOM = function () {
             label.appendChild(spanOpen);
             return label;
         },
-        _createMousePositionPanelElement: function (displayAltitude, displayCoordinate) {
+        _createMousePositionPanelElement: function (displayAltitude, displayCoordinates) {
             displayAltitude = displayAltitude ? true : typeof displayAltitude === 'undefined' ? true : false;
-            displayCoordinate = displayCoordinate ? true : typeof displayCoordinate === 'undefined' ? true : false;
+            displayCoordinates = displayCoordinates ? true : typeof displayCoordinates === 'undefined' ? true : false;
             var div = document.createElement('div');
             div.id = 'GPmousePositionPanel';
             div.className = 'GPpanel';
             div.appendChild(this._createMousePositionPanelHeaderElement());
-            div.appendChild(this._createMousePositionPanelBasicElement(displayAltitude, displayCoordinate));
-            var arraySettings = this._createShowMousePositionSettingsElement(displayCoordinate);
+            div.appendChild(this._createMousePositionPanelBasicElement(displayAltitude, displayCoordinates));
+            var arraySettings = this._createShowMousePositionSettingsElement(displayCoordinates);
             for (var j = 0; j < arraySettings.length; j++) {
                 div.appendChild(arraySettings[j]);
             }
@@ -17055,10 +17055,10 @@ CommonControlsMousePositionDOM = function () {
             container.appendChild(divClose);
             return container;
         },
-        _createMousePositionPanelBasicElement: function (displayAltitude, displayCoordinate) {
+        _createMousePositionPanelBasicElement: function (displayAltitude, displayCoordinates) {
             var container = document.createElement('div');
             container.id = 'GPmousePositionBasicPanel';
-            container.appendChild(this._createMousePositionPanelBasicCoordinateElement(displayCoordinate));
+            container.appendChild(this._createMousePositionPanelBasicCoordinateElement(displayCoordinates));
             container.appendChild(this._createMousePositionPanelBasicAltitudeElement(displayAltitude));
             return container;
         },
@@ -25618,44 +25618,1242 @@ Ol3ControlsGeoportalAttribution = function (ol, LayerUtils) {
     };
     return GeoportalAttribution;
 }(ol, CommonUtilsLayerUtils);
+CommonControlsMeasureToolBoxDOM = function () {
+    var MeasureToolBoxDOM = {
+        _toolboxId: 'GPtoolbox-measure-main',
+        _buttonId: 'GPtoolbox-measure-button',
+        _widgetId: 'GPtoolbox-measure-widget',
+        getToolBoxID: function () {
+            return this._toolboxId;
+        },
+        getButtonID: function () {
+            return this._buttonId;
+        },
+        getWidgetID: function () {
+            return this._widgetId;
+        },
+        _createToolBoxContainerElement: function () {
+            var container = document.createElement('div');
+            container.id = this._toolboxId;
+            container.className = 'GPshowAdvancedToolPicto';
+            var button = document.createElement('button');
+            button.id = this._buttonId;
+            var self = this;
+            button.addEventListener('click', function () {
+                this.blur();
+                var widget = document.getElementById(self._widgetId);
+                if (widget.style.display === 'block') {
+                    widget.style.display = 'none';
+                } else {
+                    widget.style.display = 'block';
+                }
+            });
+            container.appendChild(button);
+            var widget = document.createElement('div');
+            widget.id = this._widgetId;
+            widget.addEventListener('click', function () {
+            }, false);
+            container.appendChild(widget);
+            return container;
+        }
+    };
+    return MeasureToolBoxDOM;
+}();
+Ol3ControlsMeasureToolBox = function (ol, woodman, Utils, MeasureToolBoxDOM) {
+    var MeasureToolBox = {
+        add: function (map, ctrl) {
+            if (!map) {
+                return;
+            }
+            var mapContainer = map.getTargetElement();
+            var mapDocument = mapContainer.ownerDocument;
+            if (!mapDocument.getElementById(this.getToolBoxID())) {
+                var toolboxContainer = this._createToolBoxContainerElement();
+                var overlaysContainer = mapDocument.getElementsByClassName('ol-overlaycontainer-stopevent');
+                overlaysContainer[0].appendChild(toolboxContainer);
+            }
+            var widgetContainer = mapDocument.getElementById(this.getWidgetID());
+            ctrl.setTarget(widgetContainer);
+        }
+    };
+    Utils.assign(MeasureToolBox, MeasureToolBoxDOM);
+    return MeasureToolBox;
+}(ol, {}, Ol3Utils, CommonControlsMeasureToolBoxDOM);
+CommonControlsElevationPathDOM = function () {
+    var ElevationPathDOM = {
+        _addUID: function (id) {
+            return id + '-' + this._uid;
+        },
+        _createMainContainerElement: function () {
+            var container = document.createElement('div');
+            container.id = this._addUID('GPelevationPath');
+            container.className = 'GPwidget';
+            return container;
+        },
+        _createShowElevationPathElement: function () {
+            var input = document.createElement('input');
+            input.id = this._addUID('GPshowElevationPath');
+            input.type = 'checkbox';
+            return input;
+        },
+        _createShowElevationPathPictoElement: function () {
+            var context = this;
+            var label = document.createElement('label');
+            label.id = this._addUID('GPshowElevationPathPicto');
+            label.className = 'GPshowAdvancedToolPicto';
+            label.htmlFor = this._addUID('GPshowElevationPath');
+            label.title = 'Calculer un profil';
+            if (label.addEventListener) {
+                label.addEventListener('click', function (e) {
+                    context.onShowElevationPathClick(e);
+                });
+            } else if (label.attachEvent) {
+                label.attachEvent('onclick', function (e) {
+                    context.onShowElevationPathClick(e);
+                });
+            }
+            var spanOpen = document.createElement('span');
+            spanOpen.id = this._addUID('GPshowElevationPathOpen');
+            spanOpen.className = 'GPshowAdvancedToolOpen';
+            label.appendChild(spanOpen);
+            return label;
+        },
+        _createElevationPathPanelElement: function () {
+            var div = document.createElement('div');
+            div.id = this._addUID('GPelevationPathPanel');
+            div.className = 'GPpanel';
+            return div;
+        },
+        _createElevationPathPanelHeaderElement: function () {
+            var self = this;
+            var container = document.createElement('div');
+            container.className = 'GPpanelHeader';
+            var div = document.createElement('div');
+            div.className = 'GPpanelTitle';
+            div.innerHTML = 'Profil Altimétrique';
+            container.appendChild(div);
+            var divReduce = document.createElement('div');
+            divReduce.id = this._addUID('GPelevationPathPanelReduce');
+            divReduce.className = 'GPpanelReduce';
+            divReduce.title = 'Masquer le panneau';
+            if (divReduce.addEventListener) {
+                divReduce.addEventListener('click', function () {
+                    if (typeof self.onReduceElevationPathPanelClick === 'function') {
+                        document.getElementById(self._addUID('GPshowElevationPath')).checked = false;
+                        self.onReduceElevationPathPanelClick();
+                    }
+                }, false);
+            } else if (divReduce.attachEvent) {
+                divReduce.attachEvent('onclick', function () {
+                    if (typeof self.onReduceElevationPathPanelClick === 'function') {
+                        document.getElementById(self._addUID('GPshowElevationPath')).checked = false;
+                        self.onReduceElevationPathPanelClick();
+                    }
+                });
+            }
+            container.appendChild(divReduce);
+            var divClose = document.createElement('div');
+            divClose.id = this._addUID('GPelevationPathPanelClose');
+            divClose.className = 'GPpanelClose';
+            divClose.title = 'Fermer le panneau';
+            if (divClose.addEventListener) {
+                divClose.addEventListener('click', function () {
+                    document.getElementById(self._addUID('GPshowElevationPathPicto')).click();
+                }, false);
+            } else if (divClose.attachEvent) {
+                divClose.attachEvent('onclick', function () {
+                    document.getElementById(self._addUID('GPshowElevationPathPicto')).click();
+                });
+            }
+            container.appendChild(divClose);
+            return container;
+        },
+        _createElevationPathPanelProfilElement: function () {
+            var div = document.createElement('div');
+            div.id = 'GPelevationPathProfil';
+            return div;
+        },
+        _createElevationPathWaitingElement: function () {
+            var div = document.createElement('div');
+            div.id = this._addUID('GPelevationPathCalcWaitingContainer');
+            div.className = 'GPelevationPathCalcWaitingContainerHidden';
+            var p = document.createElement('p');
+            p.className = 'GPelevationPathCalcWaiting';
+            p.innerHTML = 'Calcul en cours...';
+            div.appendChild(p);
+            return div;
+        }
+    };
+    return ElevationPathDOM;
+}();
+Ol3ControlsElevationPath = function (ol, woodman, Gp, Utils, RightManagement, MeasureToolBox, ElevationPathDOM, ID) {
+    function ElevationPath(options) {
+        options = options || {};
+        if (!(this instanceof ElevationPath)) {
+            throw new TypeError('ERROR CLASS_CONSTRUCTOR');
+        }
+        this.CLASSNAME = 'ElevationPath';
+        this._uid = ID.generate();
+        this._showContainer = null;
+        this._pictoContainer = null;
+        this._panelContainer = null;
+        this._profileContainer = null;
+        this._waitingContainer = null;
+        this._drawStyleStart = null;
+        this._drawStyleFinish = null;
+        this._markerStyle = null;
+        this._profile = null;
+        this._measureSource = null;
+        this._measureVector = null;
+        this._measureDraw = null;
+        this._lastSketch = null;
+        this._currentSketch = null;
+        this._marker = null;
+        this._noRightManagement = false;
+        this._initialize(options);
+        this._checkRightsManagement();
+        var container = options.element ? options.element : this._initializeContainer();
+        ol.control.Control.call(this, {
+            element: container,
+            target: options.target,
+            render: options.render
+        });
+    }
+    ol.inherits(ElevationPath, ol.control.Control);
+    ElevationPath.prototype = Object.create(ol.control.Control.prototype, {});
+    Utils.assign(ElevationPath.prototype, ElevationPathDOM);
+    ElevationPath.__removeProfilMarker = function (context) {
+        var self = context;
+        if (self._marker) {
+            self._measureSource.removeFeature(self._marker);
+            self._marker = null;
+        }
+    };
+    ElevationPath.__updateProfilMarker = function (d, context) {
+        var self = context;
+        var map = self.getMap();
+        var proj = map.getView().getProjection();
+        ElevationPath.__removeProfilMarker(self);
+        var _coordinate = ol.proj.transform([
+            d.lon,
+            d.lat
+        ], 'EPSG:4326', proj);
+        var _geometry = new ol.geom.Point(_coordinate);
+        self._marker = new ol.Feature({ geometry: _geometry });
+        self._marker.setStyle(self._markerStyle);
+        self._measureSource.addFeature(self._marker);
+    };
+    ElevationPath.DISPLAY_PROFILE_LIB_AMCHARTS = function (data, container, context) {
+        if (typeof AmCharts === 'undefined') {
+            console.log('Lib. AmCharts is not loaded !');
+            return;
+        }
+        AmCharts.addInitHandler(function () {
+        });
+        var self = context;
+        var _config = {};
+        Utils.mergeParams(_config, self.options.styles.profile);
+        Utils.mergeParams(_config, { dataProvider: data });
+        self._profile = AmCharts.makeChart(container, _config);
+        self._profile.addListener('changed', function (e) {
+            var obj = e.chart.dataProvider[e.index];
+            ElevationPath.__removeProfilMarker(self);
+            ElevationPath.__updateProfilMarker(obj, self);
+        });
+    };
+    ElevationPath.DISPLAY_PROFILE_LIB_D3 = function (data, container, context) {
+        if (typeof d3 === 'undefined') {
+            console.log('Lib. D3 is not loaded !');
+            return;
+        }
+        if (container) {
+            while (container.firstChild) {
+                container.removeChild(container.firstChild);
+            }
+        }
+        var margin = {
+            top: 20,
+            right: 20,
+            bottom: 30,
+            left: 40
+        };
+        var h = getComputedStyle(container, null).getPropertyValue('height').replace('px', '');
+        var w = getComputedStyle(container, null).getPropertyValue('width').replace('px', '');
+        var width = w - margin.left - margin.right;
+        var height = h - margin.top - margin.bottom;
+        var x = d3.scale.linear().range([
+            0,
+            width
+        ]);
+        var y = d3.scale.linear().range([
+            height,
+            0
+        ]);
+        var xAxis = d3.svg.axis().scale(x).orient('bottom').ticks(5);
+        var yAxis = d3.svg.axis().scale(y).orient('left').ticks(5);
+        var line = d3.svg.line().interpolate('basis').x(function (d) {
+            return x(d.dist);
+        }).y(function (d) {
+            return y(d.z);
+        });
+        var area = d3.svg.area().interpolate('basis').x(function (d) {
+            return x(d.dist);
+        }).y0(height).y1(function (d) {
+            return y(d.z);
+        });
+        var svg = d3.select(container).append('svg').attr('width', width + margin.left + margin.right).attr('height', height + margin.top + margin.bottom).append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+        var xDomain = d3.extent(data, function (d) {
+            return d.dist;
+        });
+        x.domain(xDomain);
+        var yDomain = [
+            0,
+            d3.max(data, function (d) {
+                return d.z;
+            })
+        ];
+        y.domain(yDomain);
+        svg.append('path').datum(data).attr('class', 'area-d3').attr('d', area);
+        svg.append('g').attr('class', 'x axis-d3').attr('transform', 'translate(0,' + height + ')').call(xAxis).append('text').attr('y', -15).attr('dy', '.71em').attr('x', width).text('Distance (km)');
+        svg.append('g').attr('class', 'y axis-d3').call(yAxis).append('text').attr('transform', 'rotate(-90)').attr('y', 6).attr('dy', '.71em').text('Altitude (m)');
+        svg.append('g').attr('class', 'grid-d3 vertical').attr('transform', 'translate(0,' + height + ')').call(xAxis.orient('bottom').tickSize(-height, 0, 0).tickFormat(''));
+        svg.append('g').attr('class', 'grid-d3 horizontal').call(yAxis.orient('left').tickSize(-width, 0, 0).tickFormat(''));
+        svg.append('path').datum(data).attr('class', 'line-d3').attr('d', line);
+        svg.selectAll('circle').data(data).enter().append('circle').attr('cx', function (d) {
+            return x(d.dist);
+        }).attr('cy', function (d) {
+            return y(d.z);
+        }).attr('r', 0).attr('class', 'circle-d3');
+        var focus = svg.append('g').style('display', 'none');
+        focus.append('line').attr('id', 'focusLineX').attr('class', 'focusLine-d3');
+        focus.append('line').attr('id', 'focusLineY').attr('class', 'focusLine-d3');
+        focus.append('circle').attr('id', 'focusCircle').attr('r', 4).attr('class', 'circle-d3 focusCircle-d3');
+        var div = d3.select(container).append('div').attr('class', 'tooltip-d3').style('opacity', 0);
+        var bisectDist = d3.bisector(function (d) {
+            return d.dist;
+        }).left;
+        var self = context;
+        svg.append('rect').attr('class', 'overlay-d3').attr('width', width).attr('height', height).on('mouseover', function () {
+            focus.style('display', null);
+            ElevationPath.__updateProfilMarker(data[0], self);
+        }).on('mouseout', function () {
+            focus.style('display', 'none');
+            ElevationPath.__removeProfilMarker(self);
+            div.transition().duration(500).style('opacity', 0);
+        }).on('mousemove', function () {
+            var m = d3.mouse(this);
+            var distance = x.invert(m[0]);
+            var i = bisectDist(data, distance);
+            var d0 = i === 0 ? data[0] : data[i - 1];
+            var d1 = data[i];
+            var d = distance - d0[0] > d1[0] - distance ? d1 : d0;
+            var xc = x(d.dist);
+            var yc = y(d.z);
+            focus.select('#focusCircle').attr('cx', xc).attr('cy', yc);
+            focus.select('#focusLineX').attr('x1', xc).attr('y1', y(yDomain[0])).attr('x2', xc).attr('y2', y(yDomain[1]));
+            focus.select('#focusLineY').attr('x1', x(xDomain[0])).attr('y1', yc).attr('x2', x(xDomain[1])).attr('y2', yc);
+            ElevationPath.__updateProfilMarker(d, self);
+            div.transition().duration(200).style('opacity', 0.9);
+            div.html('Alt : ' + d.z + ' m <br/>' + 'Lon : ' + d.lon + ' <br/>' + 'Lat : ' + d.lat).style('left', d3.event.pageX + 'px').style('top', d3.event.pageY - 28 + 'px');
+        });
+        self._profile = d3.selectAll('rect.overlay')[0][0];
+    };
+    ElevationPath.DISPLAY_PROFILE_RAW = function (data, container, context) {
+        if (container) {
+            while (container.firstChild) {
+                container.removeChild(container.firstChild);
+            }
+        }
+        var self = context;
+        var div = document.createElement('textarea');
+        div.id = 'profileElevationRaw';
+        div.rows = 10;
+        div.cols = 50;
+        div.style.width = '100%';
+        div.wrap = 'off';
+        div.innerHTML = JSON.stringify(data, undefined, 4);
+        container.appendChild(div);
+        self._profile = container;
+        if (self.options.debug) {
+            var _proj = self.getMap().getView().getProjection();
+            for (var i = 0; i < data.length; i++) {
+                var obj = data[i];
+                var _coordinate = ol.proj.transform([
+                    obj.lon,
+                    obj.lat
+                ], 'EPSG:4326', _proj);
+                var _geometry = new ol.geom.Point(_coordinate);
+                self._marker = new ol.Feature({ geometry: _geometry });
+                var styles = ElevationPath.DEFAULT_STYLES.RESULTS;
+                var _image = new ol.style.Circle({
+                    radius: styles.imageRadius,
+                    stroke: new ol.style.Stroke({
+                        color: styles.imageStrokeColor,
+                        width: styles.imageStrokeWidth
+                    }),
+                    fill: new ol.style.Fill({ color: styles.imageFillColor })
+                });
+                self._marker.setStyle(new ol.style.Style({ image: _image }));
+                self._measureSource.addFeature(self._marker);
+            }
+        }
+    };
+    ElevationPath.DISPLAY_PROFILE_BY_DEFAULT = function (data, container, context) {
+        if (container) {
+            while (container.firstChild) {
+                container.removeChild(container.firstChild);
+            }
+        }
+        if (!data) {
+            return;
+        }
+        var sortedElev = JSON.parse(JSON.stringify(data));
+        sortedElev.sort(function (e1, e2) {
+            return e1.z - e2.z;
+        });
+        var minZ = sortedElev[0].z;
+        var maxZ = sortedElev[sortedElev.length - 1].z;
+        var diff = maxZ - minZ;
+        var dist = data[data.length - 1].dist;
+        var barwidth = 100 / data.length;
+        var self = context;
+        var div = document.createElement('div');
+        div.id = 'profileElevationByDefault';
+        div.addEventListener('mouseover', function (e) {
+            var _lon = parseFloat(e.target.dataset['lon']);
+            var _lat = parseFloat(e.target.dataset['lat']);
+            if (_lon && _lat) {
+                ElevationPath.__updateProfilMarker({
+                    lon: _lon,
+                    lat: _lat
+                }, self);
+            }
+        });
+        div.addEventListener('mousemove', function () {
+        });
+        div.addEventListener('mouseout', function () {
+            ElevationPath.__removeProfilMarker(self);
+        });
+        container.appendChild(div);
+        var divZ = document.createElement('div');
+        divZ.className = 'z-title-vertical';
+        divZ.innerHTML = minZ + ' / ' + maxZ + ' m';
+        div.appendChild(divZ);
+        var ul = document.createElement('ul');
+        ul.id = 'data-default';
+        ul.className = 'z-axis x-axis';
+        div.appendChild(ul);
+        for (var i = 0; i < data.length; i++) {
+            var d = data[i];
+            var li = document.createElement('li');
+            li.setAttribute('data-z', d.z);
+            li.setAttribute('data-lon', d.lon);
+            li.setAttribute('data-lat', d.lat);
+            li.setAttribute('data-dist', d.dist);
+            var pct = Math.floor((d.z - minZ) * 100 / diff);
+            li.setAttribute('class', 'percent v' + pct);
+            li.title = 'altitude : ' + d.z + 'm';
+            li.setAttribute('style', 'width: ' + barwidth + '%');
+            ul.appendChild(li);
+        }
+        var divX = document.createElement('div');
+        divX.className = 'x-title-horizontal';
+        divX.innerHTML = dist + ' km';
+        div.appendChild(divX);
+        self._profile = container;
+    };
+    ElevationPath.DEFAULT_STYLES = {
+        DRAW: {
+            POINTER: {
+                imageRadius: 5,
+                imageFillColor: 'rgba(255, 155, 0, 0.7)',
+                imageStrokeColor: '#002A50',
+                imageStrokeWidth: 2
+            },
+            START: {
+                strokeColor: '#002A50',
+                strokeLineDash: [
+                    10,
+                    10
+                ],
+                strokeWidth: 2
+            },
+            FINISH: {
+                strokeColor: '#002A50',
+                strokeWidth: 3
+            }
+        },
+        MARKER: {
+            imageSrc: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAsCAYAAAAATWqyAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAABTtJREFUeNq8WGtsFUUU/rb3gtdCAykFG9AUDTQUKimhxUewEusrJYoBo4FfEgoqotHERH6oP9TGmJhIrIlWAf9hjAaEiME2pgFfVVpFii8sWqIQLLSx3EJLW7p+Z2Z2b2l7d/b23vZLTmZ2duacb2fmnDk7DlKA67rXs1hJKacsohRQppjXFygnKT9TDlH2O47zFzIFGnco91EOuqnjoBnr2Ow4FhIlLN6m3DykFTh3BGj/Doj/CfSe082xPCDnBmDWTUBeyXDVjZTHOUNHUiZCEs+weI0ySTV0/w0c2wa07gIungn+vOx8YN46oPhpYOp1Xms/5TmSeSMUERKImFnYqBoGuPRNL5LEW8BgX2rrmjWZZLYApS8BUW8r4T0zO5eTEjFr+S6lSjV0HgPqVwNdf6S30abNB+7aDeQWey3bKZtIxvU5DxvyrE/izJfAvuXpkxCIDtElOjWqjK2RM8LZWMbiG0oEnUc5kB7a14WMYvI04H56du5ieZKluZWz8r0/IyQh5TuKRH8cqFuTeRIC0Sm6xYbYok1j21+ahyhLVO3wC8D5VowbRLfY0FhibOulIavDLEoRZyD8sJDeMWBXKG5ZsIobsdDsg+OMq3u1m1u9KQo8zP45EqjRxOUpk6i50IRl4FuGjpZtwUoiMYa314GFj/EzIsN8n8v+C1e4kfvwcm+wnhsZY27xQ8oiWZpKrWRQB6tAElfxpKnjsCdGklDzG9HvpI/0DYLYEpsalVnmAAM6fgR62oMHl70C5N9mn3rpI32DILbEpkZ5ljlFgbPNFtebzij5VPhNKX1lTBASNtXSzPZ3cxCuvVOH7FTCu4yxeZDGbCES0z5+PniQ3uGpwTYmYTOWCPGTpgYP6u9OnYhtzBCbQkSH0NiM4EEdP6VOxDYmYbNLiJxQ1elFwYPaG3XQCn3QHddjgpCweUKI6K2bvzw4YROf//rJob6fZl/H2FRoFiINfqo3qyzYwD8MVIeYLw32J+8j76SP9A2C2BKbGg1CZL+EF/W4YKP9a3/fCeyhkrY9DOOXEu1SlzZ5J31sSNjqURm/OfQkY9qgvkYOvXhbuH0g505Oga7HT9rPF9+t5+pDL0ulwzt46FV5ROax+JUSRRtP0LoHMK64+xNg7iqVEVOKSKRVxRGpsKhRnaRD4SPjR0J0axKCGmP7ilQxm4X8d8xXmfvHJZlPkCR3WfODl9FLMlxCIhevSJ5Nwzo1XdKxYpe3hpmB6BKdmoS43VqPxIgsni+aWOg8biZ3f+nLmSMiuvKWek/P01az7QdLyNVT7lC/l59WAKcb0iMxhzpW1nvmvpDtSiKD1l9OkpnDgv8UyMWFU9wvTP8vdY6NhJwnD1JVtso2OiiLSeL0iJUbNfg6zikVVwRTyOn2HWOfjfLtHgnBhtFIJCViyNDZUatdmnGlaFPqJIoe1WM1aqlz71ivJbLNobgAA9zgu7nZ/vstHAk5WVdzaPRqmGC5lER6kjpV4OWJdq+1kkshSk4VH9izcy/bV66qSPQZV+0J9G7rTY6+XNmqHmYwyJVV24kse1X31dhKHdasygkzy+a64oC4nWr47F4e858nSbLv4V/KAe9JKpVDrx/SImLIXMOiRUKdujESl+49O8xVZxpXzVc/C/I/RxL/hgq8YYkYhev9q6kVO4d9B+sr3vdICNaHJTHWW8Ya/87wqy2uWwstUk/gTYw3aCRGOarMDfS67kfFWqSuIe9imAjQEC272nJHixYNaSvGRIIGN49ywbsZEw1zI11N6TZSHeaGORn+F2AAJtRIMx4t+hUAAAAASUVORK5CYII=',
+            imageSize: [
+                34,
+                44
+            ],
+            imageAnchor: [
+                0.5,
+                1
+            ],
+            imageAnchorOrigin: 'bottom-left',
+            imageAnchorXUnits: 'ratio',
+            imageAnchorYUnits: 'ratio',
+            imageSnapToPixel: true
+        },
+        RESULTS: {
+            imageRadius: 5,
+            imageFillColor: 'rgba(128, 128, 128, 0.2)',
+            imageStrokeColor: 'rgba(0, 0, 0, 0.7)',
+            imageStrokeWidth: 2
+        },
+        PROFILE: {
+            type: 'serial',
+            pathToImages: 'http://cdn.amcharts.com/lib/3/images/',
+            categoryField: 'dist',
+            autoMarginOffset: 0,
+            marginRight: 10,
+            marginTop: 10,
+            startDuration: 0,
+            color: '#5E5E5E',
+            fontSize: 10,
+            theme: 'light',
+            thousandsSeparator: '',
+            categoryAxis: {
+                color: '#5E5E5E',
+                gridPosition: 'start',
+                minHorizontalGap: 40,
+                tickPosition: 'start',
+                title: 'Distance (km)',
+                titleColor: '#5E5E5E',
+                startOnAxis: true
+            },
+            chartCursor: {
+                animationDuration: 0,
+                bulletsEnabled: true,
+                bulletSize: 10,
+                categoryBalloonEnabled: false,
+                cursorColor: '#F90',
+                graphBulletAlpha: 1,
+                graphBulletSize: 1,
+                zoomable: false
+            },
+            trendLines: [],
+            graphs: [{
+                    balloonColor: '#CCCCCC',
+                    balloonText: '<span class=\'altiPathValue\'>[[title]] : [[value]]m</span><br/><span class=\'altiPathCoords\'>(lat: [[lat]] / lon:[[lon]])</span>',
+                    bullet: 'round',
+                    bulletAlpha: 0,
+                    bulletBorderColor: '#FFF',
+                    bulletBorderThickness: 2,
+                    bulletColor: '#F90',
+                    bulletSize: 6,
+                    hidden: false,
+                    id: 'AmGraph-1',
+                    fillAlphas: 0.4,
+                    fillColors: '#C77A04',
+                    lineAlpha: 1,
+                    lineColor: '#C77A04',
+                    lineThickness: 1,
+                    title: 'Altitude',
+                    valueField: 'z'
+                }],
+            guides: [],
+            valueAxes: [{
+                    id: 'ValueAxis-1',
+                    minVerticalGap: 20,
+                    title: 'Altitude (m)'
+                }],
+            allLabels: [],
+            balloon: {
+                borderColor: '#CCCCCC',
+                borderThickness: 1,
+                fillColor: '#FFFFFF',
+                showBullet: true
+            },
+            titles: []
+        }
+    };
+    ElevationPath.prototype.constructor = ElevationPath;
+    ElevationPath.prototype.setMap = function (map) {
+        if (map) {
+            if (this.options.active) {
+                if (this._profile === null) {
+                    this._panelContainer.style.display = 'none';
+                }
+                this._initMeasureInteraction(map);
+                this._addMeasureInteraction(map);
+            }
+            if (!this.options.target) {
+                MeasureToolBox.add(map, this);
+            }
+        }
+        ol.control.Control.prototype.setMap.call(this, map);
+    };
+    ElevationPath.prototype.getActive = function () {
+        return this.options.active;
+    };
+    ElevationPath.prototype.setActive = function (active) {
+        this.options.active = active;
+    };
+    ElevationPath.prototype.clear = function () {
+        var map = this.getMap();
+        this._profile = null;
+        if (this._profileContainer) {
+            while (this._profileContainer.firstChild) {
+                this._profileContainer.removeChild(this._profileContainer.firstChild);
+            }
+        }
+        this._lastSketch = null;
+        this._currentSketch = null;
+        if (this._measureSource) {
+            if (this._marker) {
+                this._measureSource.removeFeature(this._marker);
+                this._marker = null;
+            }
+            var _features = this._measureSource.getFeatures();
+            for (var i = 0; i < _features.length; i++) {
+                this._measureSource.removeFeature(_features[i]);
+            }
+        }
+        this._removeMeasureInteraction(map);
+    };
+    ElevationPath.prototype._initialize = function (options) {
+        this.options = {};
+        this.options.target = typeof options.target !== 'undefined' ? options.target : null;
+        this.options.render = typeof options.render !== 'undefined' ? options.render : null;
+        this.options.apiKey = options.apiKey;
+        var debug = options.debug;
+        this.options.debug = typeof debug === 'undefined' ? false : debug;
+        var active = options.active;
+        this.options.active = typeof active === 'undefined' ? false : active;
+        var service = options.elevationOptions;
+        this.options.service = typeof service === 'undefined' || Object.keys(service).length === 0 ? {} : service;
+        var profil = options.displayProfileOptions || {};
+        if (typeof profil === 'undefined' || Object.keys(profil).length === 0) {
+            this.options.profile = {
+                apply: ElevationPath.DISPLAY_PROFILE_BY_DEFAULT,
+                target: null
+            };
+        } else {
+            this.options.profile = {};
+        }
+        var displayFunction = profil.apply || this.options.profile.apply;
+        this.options.profile.apply = typeof displayFunction === 'function' ? displayFunction : ElevationPath.DISPLAY_PROFILE_BY_DEFAULT;
+        var displayContainer = profil.target || this.options.profile.target;
+        this.options.profile.target = typeof displayContainer === 'undefined' ? null : displayContainer;
+        var styles = options.stylesOptions || {};
+        if (typeof styles === 'undefined' || Object.keys(styles).length === 0) {
+            this.options.styles = {
+                draw: ElevationPath.DEFAULT_STYLES.DRAW,
+                marker: ElevationPath.DEFAULT_STYLES.MARKER,
+                profile: ElevationPath.DEFAULT_STYLES.PROFILE
+            };
+        } else {
+            this.options.styles = {};
+        }
+        var draw = styles.draw || this.options.styles.draw;
+        this.options.styles.draw = typeof draw === 'undefined' || Object.keys(draw).length === 0 ? ElevationPath.DEFAULT_STYLES.DRAW : draw;
+        var drawPointer = this.options.styles.draw.pointer;
+        var drawStart = this.options.styles.draw.start;
+        var drawFinish = this.options.styles.draw.finish;
+        if (typeof drawPointer === 'undefined') {
+            this.options.styles.draw.pointer = ElevationPath.DEFAULT_STYLES.DRAW.POINTER;
+        }
+        if (typeof drawStart === 'undefined') {
+            this.options.styles.draw.start = ElevationPath.DEFAULT_STYLES.DRAW.START;
+        }
+        if (typeof drawFinish === 'undefined') {
+            this.options.styles.draw.finish = ElevationPath.DEFAULT_STYLES.DRAW.FINISH;
+        }
+        this._createStylingDraw();
+        var marker = styles.marker || this.options.styles.marker;
+        this.options.styles.marker = typeof marker === 'undefined' || Object.keys(marker).length === 0 ? ElevationPath.DEFAULT_STYLES.MARKER : marker;
+        this._createStylingMarker();
+        var profile = styles.profile || this.options.styles.profile;
+        this.options.styles.profile = typeof profile === 'undefined' || Object.keys(profile).length === 0 ? ElevationPath.DEFAULT_STYLES.PROFILE : profile;
+        this._createStylingProfile();
+    };
+    ElevationPath.prototype._initializeContainer = function () {
+        var container = this._createMainContainerElement();
+        var inputShow = this._showContainer = this._createShowElevationPathElement();
+        container.appendChild(inputShow);
+        var picto = this._pictoContainer = this._createShowElevationPathPictoElement();
+        container.appendChild(picto);
+        if (this.options.active) {
+            this._showContainer.checked = true;
+        }
+        var panel = this._panelContainer = this._createElevationPathPanelElement();
+        var header = this._createElevationPathPanelHeaderElement();
+        panel.appendChild(header);
+        var profile = this._profileContainer = this._createElevationPathPanelProfilElement();
+        panel.appendChild(profile);
+        var waiting = this._waitingContainer = this._createElevationPathWaitingElement();
+        panel.appendChild(waiting);
+        if (this.options.profile.target === null) {
+            container.appendChild(panel);
+        }
+        return container;
+    };
+    ElevationPath.prototype._checkRightsManagement = function () {
+        var rightManagement = RightManagement.check({
+            key: this.options.apiKey,
+            resources: ['SERVICE_CALCUL_ALTIMETRIQUE_RSC'],
+            services: ['Elevation']
+        });
+        if (!rightManagement) {
+            this._noRightManagement = true;
+        }
+        if (!this.options.apiKey) {
+            this.options.apiKey = rightManagement.key;
+        }
+    };
+    ElevationPath.prototype._createStylingMarker = function () {
+        var marker = this.options.styles.marker;
+        if (marker instanceof ol.style.Image) {
+            this._drawStyleStart = new ol.style.Style({ image: marker });
+        } else {
+            var defaultStyle = ElevationPath.DEFAULT_STYLES.MARKER;
+            Object.keys(defaultStyle).forEach(function (key) {
+                if (!marker.hasOwnProperty(key)) {
+                    marker[key] = defaultStyle[key];
+                    return;
+                }
+            }, this);
+            this._markerStyle = new ol.style.Style({
+                image: new ol.style.Icon({
+                    src: marker.imageSrc,
+                    anchor: marker.imageAnchor,
+                    snapToPixel: true
+                })
+            });
+        }
+    };
+    ElevationPath.prototype._createStylingDraw = function () {
+        var styles = this.options.styles.draw;
+        var pointer = styles.pointer;
+        var start = styles.start;
+        var finish = styles.finish;
+        var _pointerImage = null;
+        if (pointer instanceof ol.style.Image) {
+            _pointerImage = pointer;
+        } else {
+            var defaultStylePointer = ElevationPath.DEFAULT_STYLES.DRAW.POINTER;
+            Object.keys(defaultStylePointer).forEach(function (key) {
+                if (!pointer.hasOwnProperty(key)) {
+                    pointer[key] = defaultStylePointer[key];
+                    return;
+                }
+                if (key === 'imageStrokeWidth' || key === 'imageRadius') {
+                    var intValue = parseInt(pointer[key], 10);
+                    if (isNaN(intValue) || intValue < 0) {
+                        console.log('Wrong value (' + pointer[key] + ') for strokeWidth or radius. Must be a positive interger value.');
+                        pointer[key] = defaultStylePointer[key];
+                        return;
+                    }
+                    pointer[key] = intValue;
+                }
+            }, this);
+            _pointerImage = new ol.style.Circle({
+                radius: pointer.imageRadius,
+                stroke: new ol.style.Stroke({
+                    color: pointer.imageStrokeColor,
+                    width: pointer.imageStrokeWidth
+                }),
+                fill: new ol.style.Fill({ color: pointer.imageFillColor })
+            });
+        }
+        var _startStroke = null;
+        if (start instanceof ol.style.Stroke) {
+            _startStroke = start;
+        } else {
+            var defaultStyleStart = ElevationPath.DEFAULT_STYLES.DRAW.START;
+            Object.keys(defaultStyleStart).forEach(function (key) {
+                if (!start.hasOwnProperty(key)) {
+                    start[key] = defaultStyleStart[key];
+                    return;
+                }
+                if (key === 'strokeWidth') {
+                    var intValue = parseInt(start[key], 10);
+                    if (isNaN(intValue) || intValue < 0) {
+                        console.log('Wrong value (' + start[key] + ') for strokeWidth. Must be a positive interger value.');
+                        start[key] = defaultStyleStart[key];
+                        return;
+                    }
+                    start[key] = intValue;
+                }
+            }, this);
+            _startStroke = new ol.style.Stroke({
+                color: start.strokeColor,
+                lineDash: start.strokeLineDash,
+                width: start.strokeWidth
+            });
+        }
+        this._drawStyleStart = new ol.style.Style({
+            stroke: _startStroke,
+            image: _pointerImage
+        });
+        var _finishStroke = null;
+        if (finish instanceof ol.style.Stroke) {
+            _finishStroke = finish;
+        } else {
+            var defaultStyleFinish = ElevationPath.DEFAULT_STYLES.DRAW.FINISH;
+            Object.keys(defaultStyleFinish).forEach(function (key) {
+                if (!finish.hasOwnProperty(key)) {
+                    finish[key] = defaultStyleFinish[key];
+                    return;
+                }
+                if (key === 'strokeWidth') {
+                    var intValue = parseInt(finish[key], 10);
+                    if (isNaN(intValue) || intValue < 0) {
+                        console.log('Wrong value (' + finish[key] + ') for strokeWidth. Must be a positive interger value.');
+                        finish[key] = defaultStyleFinish[key];
+                        return;
+                    }
+                    finish[key] = intValue;
+                }
+            }, this);
+            _finishStroke = new ol.style.Stroke({
+                color: finish.strokeColor,
+                lineDash: finish.strokeLineDash,
+                width: finish.strokeWidth
+            });
+        }
+        this._drawStyleFinish = new ol.style.Style({ stroke: _finishStroke });
+    };
+    ElevationPath.prototype._createStylingProfile = function () {
+        var userStyles = this.options.styles.profile;
+        var defaultStyle = ElevationPath.DEFAULT_STYLES.PROFILE;
+        Object.keys(defaultStyle).forEach(function (key) {
+            if (!userStyles.hasOwnProperty(key)) {
+                userStyles[key] = defaultStyle[key];
+                return;
+            } else {
+                var _defaultStyle = defaultStyle[key];
+                if (typeof _defaultStyle === 'object') {
+                    Utils.mergeParams(_defaultStyle, userStyles[key]);
+                    userStyles[key] = _defaultStyle;
+                    return;
+                }
+            }
+        }, this);
+    };
+    ElevationPath.prototype._initMeasureInteraction = function (map) {
+        if (!map) {
+            return;
+        }
+        this._measureSource = new ol.source.Vector();
+        this._measureVector = new ol.layer.Vector({
+            source: this._measureSource,
+            style: this._drawStyleFinish
+        });
+        map.addLayer(this._measureVector);
+    };
+    ElevationPath.prototype._addMeasureInteraction = function (map) {
+        if (!map) {
+            return;
+        }
+        this._measureDraw = new ol.interaction.Draw({
+            source: this._measureSource,
+            type: 'LineString',
+            style: this._drawStyleStart
+        });
+        this._measureDraw.setProperties({ source: 'ElevationPath' });
+        map.addInteraction(this._measureDraw);
+        var self = this;
+        this._measureDraw.on('drawstart', function (evt) {
+            if (self._marker !== null) {
+                self._measureSource.removeFeature(self._marker);
+                self._marker = null;
+            }
+            if (self._lastSketch !== null) {
+                self._measureSource.removeFeature(self._lastSketch);
+                self._lastSketch = null;
+            }
+            self._currentSketch = evt.feature;
+            var _features = self._measureSource.getFeatures();
+            for (var i = 0; i < _features.length; i++) {
+                self._measureSource.removeFeature(_features[i]);
+            }
+        }, this);
+        this._measureDraw.on('drawend', function (evt) {
+            self._lastSketch = self._currentSketch;
+            if (typeof self.options.service.onSuccess === 'undefined' && self.options.profile.target === null) {
+                self._panelContainer.style.display = 'block';
+            }
+            self._requestService();
+        }, this);
+    };
+    ElevationPath.prototype._removeMeasureInteraction = function (map) {
+        if (!map) {
+            return;
+        }
+        if (this._measureVector) {
+            map.removeLayer(this._measureVector);
+            this._measureVector = null;
+        }
+        if (this._measureDraw) {
+            map.removeInteraction(this._measureDraw);
+            this._measureDraw = null;
+        }
+    };
+    ElevationPath.prototype._getGeometry = function () {
+        if (this._currentSketch === null) {
+            return;
+        }
+        var geometry = [];
+        var map = this.getMap();
+        var projSrc = map.getView().getProjection();
+        var projDest = 'EPSG:4326';
+        var coordinates = this._currentSketch.getGeometry().getCoordinates();
+        for (var i = 0; i < coordinates.length; i++) {
+            var xy = coordinates[i];
+            var ll = xy;
+            if (projSrc !== projDest) {
+                ll = ol.proj.transform(xy, projSrc, projDest);
+            }
+            geometry.push({
+                lon: ll[0],
+                lat: ll[1]
+            });
+        }
+        return geometry;
+    };
+    ElevationPath.prototype._getLength = function () {
+        if (this._currentSketch === null) {
+            return;
+        }
+        var length = 0;
+        var wgs84Sphere = new ol.Sphere(6378137);
+        var map = this.getMap();
+        var projSrc = map.getView().getProjection();
+        var projDest = 'EPSG:4326';
+        var coordinates = this._currentSketch.getGeometry().getCoordinates();
+        for (var i = 0, ii = coordinates.length - 1; i < ii; ++i) {
+            var c1 = ol.proj.transform(coordinates[i], projSrc, projDest);
+            var c2 = ol.proj.transform(coordinates[i + 1], projSrc, projDest);
+            length += wgs84Sphere.haversineDistance(c1, c2);
+        }
+        return length;
+    };
+    ElevationPath.prototype._requestService = function () {
+        var geometry = this._getGeometry();
+        if (!geometry) {
+            return;
+        }
+        if (this._noRightManagement) {
+            return;
+        }
+        var options = {};
+        Utils.mergeParams(options, this.options.service);
+        Utils.mergeParams(options, { apiKey: this.options.apiKey });
+        var self = this;
+        var _requestServiceOnSuccess = function (result) {
+            if (result) {
+                self._panelContainer.style.display = 'block';
+                self._displayProfile(result.elevations);
+                self._waitingContainer.className = 'GPelevationPathCalcWaitingContainerHidden';
+                self._waiting = false;
+            }
+        };
+        var _requestServiceOnFailure = function (error) {
+            self._panelContainer.style.display = 'none';
+            self._waitingContainer.className = 'GPelevationPathCalcWaitingContainerHidden';
+            self._waiting = false;
+        };
+        Utils.mergeParams(options, {
+            onSuccess: this.options.service.onSuccess || _requestServiceOnSuccess,
+            onFailure: this.options.service.onFailure || _requestServiceOnFailure
+        });
+        var sampling = options.sampling;
+        if (!sampling) {
+            var _sampling = 50;
+            var _length = this._getLength();
+            var p = Math.floor(_length) / 5;
+            if (p >= 200) {
+                _sampling = 200;
+            } else {
+                _sampling = Math.floor(p);
+            }
+            Utils.mergeParams(options, { sampling: _sampling || 50 });
+        }
+        Utils.mergeParams(options, { positions: geometry });
+        this._waitingContainer.className = 'GPelevationPathCalcWaitingContainerVisible';
+        Gp.Services.getAltitude(options);
+    };
+    ElevationPath.prototype._computeElevationMeasure = function (elevations) {
+        var wgs84Sphere = new ol.Sphere(6378137);
+        elevations[0].dist = 0;
+        var distance = 0;
+        for (var i = 1; i < elevations.length; i++) {
+            distance += wgs84Sphere.haversineDistance([
+                elevations[i].lon,
+                elevations[i].lat
+            ], [
+                elevations[i - 1].lon,
+                elevations[i - 1].lat
+            ]) / 1000;
+            elevations[i].dist = distance;
+            elevations[i].lat = Math.round(elevations[i].lat * 10000) / 10000;
+            elevations[i].lon = Math.round(elevations[i].lon * 10000) / 10000;
+        }
+        var coeffArrond = 100;
+        if (distance > 100) {
+            coeffArrond = 1;
+        } else if (distance > 10) {
+            coeffArrond = 10;
+        }
+        for (var j = 0; j < elevations.length; j++) {
+            var data = elevations[j];
+            if (data.z < 0) {
+                data.z = 0;
+            }
+            data.dist = Math.round(data.dist * coeffArrond) / coeffArrond;
+        }
+        return elevations;
+    };
+    ElevationPath.prototype._displayProfile = function (elevations) {
+        var data = this._computeElevationMeasure(elevations);
+        var container = this.options.profile.target;
+        if (container) {
+            container.appendChild(this._panelContainer);
+        }
+        container = this._profileContainer;
+        var context = this;
+        var displayFunction = this.options.profile.apply;
+        displayFunction.call(this, data, container, context);
+    };
+    ElevationPath.prototype._displayProfileResults = function (data) {
+        var container = this._profileContainer;
+        if (container) {
+            while (container.firstChild) {
+                container.removeChild(container.firstChild);
+            }
+        }
+        var div = document.createElement('textarea');
+        div.id = 'profileElevationResults';
+        div.rows = 10;
+        div.cols = 50;
+        div.style.width = '100%';
+        div.innerHTML = JSON.stringify(data, undefined, 4);
+        container.appendChild(div);
+        this._profile = container;
+        if (this.options.debug) {
+            var _proj = this.getMap().getView().getProjection();
+            for (var i = 0; i < data.length; i++) {
+                var obj = data[i];
+                var _coordinate = ol.proj.transform([
+                    obj.lon,
+                    obj.lat
+                ], 'EPSG:4326', _proj);
+                var _geometry = new ol.geom.Point(_coordinate);
+                this._marker = new ol.Feature({ geometry: _geometry });
+                var styles = ElevationPath.DEFAULT_STYLES.RESULTS;
+                var _image = new ol.style.Circle({
+                    radius: styles.imageRadius,
+                    stroke: new ol.style.Stroke({
+                        color: styles.imageStrokeColor,
+                        width: styles.imageStrokeWidth
+                    }),
+                    fill: new ol.style.Fill({ color: styles.imageFillColor })
+                });
+                this._marker.setStyle(new ol.style.Style({ image: _image }));
+                this._measureSource.addFeature(this._marker);
+            }
+        }
+    };
+    ElevationPath.prototype._displayProfileWithD3 = function (data) {
+        var container = this._profileContainer;
+        if (container) {
+            while (container.firstChild) {
+                container.removeChild(container.firstChild);
+            }
+        }
+        var margin = {
+            top: 20,
+            right: 20,
+            bottom: 30,
+            left: 40
+        };
+        var width = container.clientWidth - margin.left - margin.right;
+        var height = container.clientHeight - margin.top - margin.bottom;
+        var x = d3.scale.linear().range([
+            0,
+            width
+        ]);
+        var y = d3.scale.linear().range([
+            height,
+            0
+        ]);
+        var xAxis = d3.svg.axis().scale(x).orient('bottom').ticks(5);
+        var yAxis = d3.svg.axis().scale(y).orient('left').ticks(5);
+        var line = d3.svg.line().interpolate('basis').x(function (d) {
+            return x(d.dist);
+        }).y(function (d) {
+            return y(d.z);
+        });
+        var area = d3.svg.area().interpolate('basis').x(function (d) {
+            return x(d.dist);
+        }).y0(height).y1(function (d) {
+            return y(d.z);
+        });
+        var svg = d3.select(container).append('svg').attr('width', width + margin.left + margin.right).attr('height', height + margin.top + margin.bottom).append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+        var xDomain = d3.extent(data, function (d) {
+            return d.dist;
+        });
+        x.domain(xDomain);
+        var yDomain = [
+            0,
+            d3.max(data, function (d) {
+                return d.z;
+            })
+        ];
+        y.domain(yDomain);
+        svg.append('path').datum(data).attr('class', 'area-d3').attr('d', area);
+        svg.append('g').attr('class', 'x axis-d3').attr('transform', 'translate(0,' + height + ')').call(xAxis).append('text').attr('y', -15).attr('dy', '.71em').attr('x', width).text('Distance (km)');
+        svg.append('g').attr('class', 'y axis-d3').call(yAxis).append('text').attr('transform', 'rotate(-90)').attr('y', 6).attr('dy', '.71em').text('Altitude (m)');
+        svg.append('g').attr('class', 'grid-d3 vertical').attr('transform', 'translate(0,' + height + ')').call(xAxis.orient('bottom').tickSize(-height, 0, 0).tickFormat(''));
+        svg.append('g').attr('class', 'grid-d3 horizontal').call(yAxis.orient('left').tickSize(-width, 0, 0).tickFormat(''));
+        svg.append('path').datum(data).attr('class', 'line-d3').attr('d', line);
+        svg.selectAll('circle').data(data).enter().append('circle').attr('cx', function (d) {
+            return x(d.dist);
+        }).attr('cy', function (d) {
+            return y(d.z);
+        }).attr('r', 0).attr('class', 'circle-d3');
+        var focus = svg.append('g').style('display', 'none');
+        focus.append('line').attr('id', 'focusLineX').attr('class', 'focusLine-d3');
+        focus.append('line').attr('id', 'focusLineY').attr('class', 'focusLine-d3');
+        focus.append('circle').attr('id', 'focusCircle').attr('r', 4).attr('class', 'circle-d3 focusCircle-d3');
+        var div = d3.select(container).append('div').attr('class', 'tooltip-d3').style('opacity', 0);
+        var bisectDist = d3.bisector(function (d) {
+            return d.dist;
+        }).left;
+        var self = this;
+        var _removeMarker = function () {
+            if (self._marker) {
+                self._measureSource.removeFeature(self._marker);
+                self._marker = null;
+            }
+        };
+        var _updateMarker = function (d) {
+            var map = self.getMap();
+            var proj = map.getView().getProjection();
+            _removeMarker();
+            var _coordinate = ol.proj.transform([
+                d.lon,
+                d.lat
+            ], 'EPSG:4326', proj);
+            var _geometry = new ol.geom.Point(_coordinate);
+            self._marker = new ol.Feature({ geometry: _geometry });
+            self._marker.setStyle(self._markerStyle);
+            self._measureSource.addFeature(self._marker);
+        };
+        svg.append('rect').attr('class', 'overlay-d3').attr('width', width).attr('height', height).on('mouseover', function () {
+            focus.style('display', null);
+            _updateMarker(data[0]);
+        }).on('mouseout', function () {
+            focus.style('display', 'none');
+            _removeMarker();
+            div.transition().duration(500).style('opacity', 0);
+        }).on('mousemove', function () {
+            var m = d3.mouse(this);
+            var distance = x.invert(m[0]);
+            var i = bisectDist(data, distance);
+            var d0 = i === 0 ? data[0] : data[i - 1];
+            var d1 = data[i];
+            var d = distance - d0[0] > d1[0] - distance ? d1 : d0;
+            var xc = x(d.dist);
+            var yc = y(d.z);
+            focus.select('#focusCircle').attr('cx', xc).attr('cy', yc);
+            focus.select('#focusLineX').attr('x1', xc).attr('y1', y(yDomain[0])).attr('x2', xc).attr('y2', y(yDomain[1]));
+            focus.select('#focusLineY').attr('x1', x(xDomain[0])).attr('y1', yc).attr('x2', x(xDomain[1])).attr('y2', yc);
+            _updateMarker(d);
+            div.transition().duration(200).style('opacity', 0.9);
+            div.html('Alt : ' + d.z + ' m <br/>' + 'Lon : ' + d.lon + ' <br/>' + 'Lat : ' + d.lat).style('left', d3.event.pageX + 'px').style('top', d3.event.pageY - 28 + 'px');
+        });
+        this._profile = d3.selectAll('rect.overlay')[0][0];
+    };
+    ElevationPath.prototype._displayProfileWithAmCharts = function (data) {
+        AmCharts.addInitHandler(function () {
+        });
+        var _config = {};
+        Utils.mergeParams(_config, this.options.styles.profile);
+        Utils.mergeParams(_config, { dataProvider: data });
+        this._profile = AmCharts.makeChart(this._profileContainer, _config);
+        var self = this;
+        var _onFollowProfilePathChanged = function (e) {
+            var obj = e.chart.dataProvider[e.index];
+            var _proj = self.getMap().getView().getProjection();
+            var _coordinate = ol.proj.transform([
+                obj.lon,
+                obj.lat
+            ], 'EPSG:4326', _proj);
+            var _geometry = new ol.geom.Point(_coordinate);
+            if (self._marker) {
+                self._measureSource.removeFeature(self._marker);
+                self._marker = null;
+            }
+            self._marker = new ol.Feature({ geometry: _geometry });
+            self._marker.setStyle(self._markerStyle);
+            self._measureSource.addFeature(self._marker);
+        };
+        this._profile.addListener('changed', _onFollowProfilePathChanged);
+    };
+    ElevationPath.prototype.onShowElevationPathClick = function () {
+        var map = this.getMap();
+        var interactions = map.getInteractions().getArray();
+        for (var i = 0; i < interactions.length; i++) {
+            if (interactions[i].getActive() && interactions[i] instanceof ol.interaction.Draw) {
+                var prop = interactions[i].getProperties();
+                var src = prop.source;
+                if (typeof src !== 'undefined' && src === 'Measure') {
+                    interactions[i].setActive(false);
+                }
+            }
+        }
+        if (!this._showContainer.checked) {
+            if (this._profile === null) {
+                this._panelContainer.style.display = 'none';
+            }
+            this._initMeasureInteraction(map);
+            this._addMeasureInteraction(map);
+        } else {
+            this._panelContainer.style.display = 'none';
+            this._removeMeasureInteraction(map);
+            this.clear();
+        }
+    };
+    return ElevationPath;
+}(ol, {}, gp, Ol3Utils, CommonUtilsCheckRightManagement, Ol3ControlsMeasureToolBox, CommonControlsElevationPathDOM, CommonUtilsSelectorID);
 Ol3ControlsMeasuresMeasures = function (ol, woodman) {
-    var defaultStyle = {
-        fillColor: 'rgba(0, 183, 152, 0.2)',
+    var DEFAULT_STYLE_START = {
         strokeColor: '#002A50',
         strokeLineDash: [
             10,
             10
         ],
         strokeWidth: 2,
+        fillColor: 'rgba(0, 183, 152, 0.2)',
         imageRadius: 5,
         imageFillColor: 'rgba(255, 155, 0, 0.7)',
         imageStrokeColor: '#002A50',
         imageStrokeWidth: 2
     };
-    var defaultStyleFinal = {
-        fillColor: 'rgba(0, 183, 152, 0.3)',
+    var DEFAULT_STYLE_FINISH = {
         strokeColor: '#002A50',
-        strokeWidth: 3
+        strokeWidth: 3,
+        fillColor: 'rgba(0, 183, 152, 0.3)'
     };
     var Measures = {
         tools: {
             MeasureLength: {
-                container: null,
-                draw: null,
-                layer: null,
-                active: false
+                active: false,
+                instance: null
             },
             MeasureArea: {
-                container: null,
-                draw: null,
-                layer: null,
-                active: false
+                active: false,
+                instance: null
             },
             MeasureAzimuth: {
-                container: null,
-                draw: null,
-                layer: null,
-                active: false
+                active: false,
+                instance: null
             }
         },
         measureDraw: null,
@@ -25666,29 +26864,36 @@ Ol3ControlsMeasuresMeasures = function (ol, woodman) {
         measureTooltip: null,
         helpTooltipElement: null,
         helpTooltip: null,
-        measureStyle: new ol.style.Style({
-            fill: new ol.style.Fill({ color: defaultStyle.fillColor }),
+        measureDrawStartStyle: new ol.style.Style({
+            fill: new ol.style.Fill({ color: DEFAULT_STYLE_START.fillColor }),
             stroke: new ol.style.Stroke({
-                color: defaultStyle.strokeColor,
-                lineDash: defaultStyle.strokeLineDash,
-                width: defaultStyle.strokeWidth
+                color: DEFAULT_STYLE_START.strokeColor,
+                lineDash: DEFAULT_STYLE_START.strokeLineDash,
+                width: DEFAULT_STYLE_START.strokeWidth
             }),
             image: new ol.style.Circle({
-                radius: defaultStyle.imageRadius,
+                radius: DEFAULT_STYLE_START.imageRadius,
                 stroke: new ol.style.Stroke({
-                    color: defaultStyle.imageStrokeColor,
-                    width: defaultStyle.imageStrokeWidth
+                    color: DEFAULT_STYLE_START.imageStrokeColor,
+                    width: DEFAULT_STYLE_START.imageStrokeWidth
                 }),
-                fill: new ol.style.Fill({ color: defaultStyle.imageFillColor })
+                fill: new ol.style.Fill({ color: DEFAULT_STYLE_START.imageFillColor })
             })
         }),
-        measureFinalStyle: new ol.style.Style({
-            fill: new ol.style.Fill({ color: defaultStyleFinal.fillColor }),
+        measureDrawFinishStyle: new ol.style.Style({
+            fill: new ol.style.Fill({ color: DEFAULT_STYLE_FINISH.fillColor }),
             stroke: new ol.style.Stroke({
-                color: defaultStyleFinal.strokeColor,
-                width: defaultStyleFinal.strokeWidth
+                color: DEFAULT_STYLE_FINISH.strokeColor,
+                width: DEFAULT_STYLE_FINISH.strokeWidth
             })
         }),
+        clean: function () {
+            var _class = this.CLASSNAME;
+            this.clearMeasure();
+            this.clearMeasureToolTip();
+            this.removeMeasureEvents();
+            this._showContainer.checked = false;
+        },
         onPointerMoveHandler: function (e) {
             if (e.dragging) {
                 return;
@@ -25710,34 +26915,32 @@ Ol3ControlsMeasuresMeasures = function (ol, woodman) {
             }
         },
         onShowMeasureClick: function (e, type) {
-            var map = this.getMap();
             var self = this.CLASSNAME;
-            for (var instance in this.tools) {
-                if (this.tools.hasOwnProperty(instance)) {
-                    if (this.tools[instance].active && instance !== self) {
-                        this.clearMeasureToolTip();
-                        map.removeLayer(this.tools[instance].layer);
-                        map.removeInteraction(this.tools[instance].draw);
-                        this.tools[instance].active = false;
-                        this.tools[instance].container.checked = true;
-                        this.tools[instance].draw = null;
-                        this.tools[instance].layer = null;
+            for (var className in this.tools) {
+                if (this.tools.hasOwnProperty(className)) {
+                    if (this.tools[className].active && className !== self) {
+                        this.tools[className].active = false;
+                        this.tools[className].instance.clean();
                     }
                 }
             }
-            if (this._showContainer.checked) {
+            var map = this.getMap();
+            var interactions = map.getInteractions().getArray();
+            for (var i = 0; i < interactions.length; i++) {
+                if (interactions[i].getActive() && interactions[i] instanceof ol.interaction.Draw) {
+                    interactions[i].setActive(false);
+                }
+            }
+            if (!this._showContainer.checked) {
+                this.addMeasureEvents();
                 this.initMeasureInteraction();
                 this.addMeasureInteraction(type);
                 this.tools[self].active = true;
-                this.tools[self].container = this._showContainer;
-                this.tools[self].draw = this.measureDraw;
-                this.tools[self].layer = this.measureVector;
             } else {
                 this.clearMeasure();
+                this.clearMeasureToolTip();
+                this.removeMeasureEvents();
                 this.tools[self].active = false;
-                this.tools[self].container = this._showContainer;
-                this.tools[self].draw = null;
-                this.tools[self].layer = null;
             }
         },
         clearMeasureToolTip: function () {
@@ -25760,12 +26963,13 @@ Ol3ControlsMeasuresMeasures = function (ol, woodman) {
         },
         clearMeasure: function () {
             var map = this.getMap();
-            this.clearMeasureToolTip();
             if (this.measureVector) {
                 map.removeLayer(this.measureVector);
+                this.measureVector = null;
             }
             if (this.measureDraw) {
                 map.removeInteraction(this.measureDraw);
+                this.measureDraw = null;
             }
         },
         createMeasureTooltip: function (map) {
@@ -25803,78 +27007,98 @@ Ol3ControlsMeasuresMeasures = function (ol, woodman) {
         createStylingMeasureInteraction: function (styles) {
             if (typeof styles === 'undefined' || Object.keys(styles).length === 0) {
                 this.options.styles = {
-                    start: this.measureStyle,
-                    finish: this.measureFinalStyle
+                    start: this.measureDrawStartStyle,
+                    finish: this.measureDrawFinishStyle
                 };
             } else {
-                var start = styles.start;
-                var finish = styles.finish;
-                this.options.styles = {};
-                if (typeof start === 'undefined') {
-                    this.options.styles.start = this.measureStyle;
-                } else {
-                    Object.keys(defaultStyle).forEach(function (key) {
-                        if (!start.hasOwnProperty(key)) {
+                this.options.styles = styles || {};
+            }
+            var start = this.options.styles.start;
+            var finish = this.options.styles.finish;
+            if (typeof start === 'undefined') {
+                start = this.measureDrawStartStyle;
+            }
+            if (typeof finish === 'undefined') {
+                finish = this.measureDrawFinishStyle;
+            }
+            if (start instanceof ol.style.Style) {
+                this.options.styles.start = start;
+            } else {
+                var defaultStyle = DEFAULT_STYLE_START;
+                Object.keys(defaultStyle).forEach(function (key) {
+                    if (!start.hasOwnProperty(key)) {
+                        start[key] = defaultStyle[key];
+                        return;
+                    }
+                    var intValue;
+                    if (key === 'strokeWidth') {
+                        intValue = parseInt(start[key], 10);
+                        if (isNaN(intValue) || intValue < 0) {
+                            console.log('Wrong value (' + start[key] + ') for strokeWidth. Must be a positive interger value.');
                             start[key] = defaultStyle[key];
                             return;
                         }
-                        if (key === 'strokeWidth') {
-                            var intValue = parseInt(start[key], 10);
-                            if (isNaN(intValue) || intValue < 0) {
-                                console.log('Wrong value (' + start[key] + ') for strokeWidth. Must be a positive interger value.');
-                                start[key] = defaultStyle[key];
-                                return;
-                            }
-                            start[key] = intValue;
-                        }
-                    }, this);
-                    var _fill = new ol.style.Fill({ color: start.fillColor });
-                    var _stroke = new ol.style.Stroke({
-                        color: start.strokeColor,
-                        lineDash: start.strokeLineDash,
-                        width: start.strokeWidth
-                    });
-                    var _image = new ol.style.Circle({
-                        radius: start.imageRadius,
-                        stroke: new ol.style.Stroke({
-                            color: start.imageStrokeColor,
-                            width: start.imageStrokeWidth
-                        }),
-                        fill: new ol.style.Fill({ color: start.imageFillColor })
-                    });
-                    this.options.styles.start = new ol.style.Style({
-                        fill: _fill,
-                        stroke: _stroke,
-                        image: _image
-                    });
-                }
-                if (typeof finish === 'undefined') {
-                    this.options.styles.finish = this.measureFinalStyle;
-                } else {
-                    Object.keys(defaultStyleFinal).forEach(function (key) {
-                        if (!finish.hasOwnProperty(key)) {
-                            finish[key] = defaultStyleFinal[key];
+                        start[key] = intValue;
+                    }
+                    if (key === 'imageStrokeWidth' || key === 'imageRadius') {
+                        intValue = parseInt(start[key], 10);
+                        if (isNaN(intValue) || intValue < 0) {
+                            console.log('Wrong value (' + start[key] + ') for strokeWidth or radius. Must be a positive interger value.');
+                            start[key] = defaultStyle[key];
                             return;
                         }
-                        if (key === 'strokeWidth') {
-                            var intValue = parseInt(finish[key], 10);
-                            if (isNaN(intValue) || intValue < 0) {
-                                console.log('Wrong value (' + finish[key] + ') for strokeWidth. Must be a positive interger value.');
-                                finish[key] = defaultStyleFinal[key];
-                                return;
-                            }
-                            finish[key] = intValue;
+                        start[key] = intValue;
+                    }
+                }, this);
+                var _startImage = new ol.style.Circle({
+                    radius: start.imageRadius,
+                    stroke: new ol.style.Stroke({
+                        color: start.imageStrokeColor,
+                        width: start.imageStrokeWidth
+                    }),
+                    fill: new ol.style.Fill({ color: start.imageFillColor })
+                });
+                var _startFill = new ol.style.Fill({ color: start.fillColor });
+                var _startStroke = new ol.style.Stroke({
+                    color: start.strokeColor,
+                    lineDash: start.strokeLineDash,
+                    width: start.strokeWidth
+                });
+                this.options.styles.start = new ol.style.Style({
+                    fill: _startFill,
+                    stroke: _startStroke,
+                    image: _startImage
+                });
+            }
+            if (finish instanceof ol.style.Style) {
+                this.options.styles.finish = finish;
+            } else {
+                var defaultStyleFinish = DEFAULT_STYLE_FINISH;
+                Object.keys(defaultStyleFinish).forEach(function (key) {
+                    if (!finish.hasOwnProperty(key)) {
+                        finish[key] = defaultStyleFinish[key];
+                        return;
+                    }
+                    if (key === 'strokeWidth') {
+                        var intValue = parseInt(finish[key], 10);
+                        if (isNaN(intValue) || intValue < 0) {
+                            console.log('Wrong value (' + finish[key] + ') for strokeWidth. Must be a positive interger value.');
+                            finish[key] = defaultStyleFinish[key];
+                            return;
                         }
-                    }, this);
-                    this.options.styles.finish = new ol.style.Style({
-                        fill: new ol.style.Fill({ color: styles.finish.fillColor }),
-                        stroke: new ol.style.Stroke({
-                            color: styles.finish.strokeColor,
-                            lineDash: styles.finish.strokeLineDash,
-                            width: styles.finish.strokeWidth
-                        })
-                    });
-                }
+                        finish[key] = intValue;
+                    }
+                }, this);
+                var _finishFill = new ol.style.Fill({ color: finish.fillColor });
+                var _finishStroke = new ol.style.Stroke({
+                    color: finish.strokeColor,
+                    lineDash: finish.strokeLineDash,
+                    width: finish.strokeWidth
+                });
+                this.options.styles.finish = new ol.style.Style({
+                    stroke: _finishStroke,
+                    fill: _finishFill
+                });
             }
         },
         addMeasureInteraction: function (type) {
@@ -25882,8 +27106,9 @@ Ol3ControlsMeasuresMeasures = function (ol, woodman) {
             this.measureDraw = new ol.interaction.Draw({
                 source: this.measureSource,
                 type: type,
-                style: this.options.styles.start || this.measureStyle
+                style: this.options.styles.start || this.measureDrawStartStyle
             });
+            this.measureDraw.setProperties({ source: 'Measure' });
             map.addInteraction(this.measureDraw);
             this.createMeasureTooltip(map);
             var self = this;
@@ -25921,7 +27146,7 @@ Ol3ControlsMeasuresMeasures = function (ol, woodman) {
             this.measureSource = new ol.source.Vector();
             this.measureVector = new ol.layer.Vector({
                 source: this.measureSource,
-                style: this.options.styles.finish || this.measureFinalStyle
+                style: this.options.styles.finish || this.measureDrawFinishStyle
             });
             map.addLayer(this.measureVector);
         }
@@ -25970,7 +27195,7 @@ CommonControlsMeasureLengthDOM = function () {
     };
     return MeasureLengthDOM;
 }();
-Ol3ControlsMeasuresMeasureLength = function (ol, woodman, Utils, Measures, MeasureLengthDOM, ID) {
+Ol3ControlsMeasuresMeasureLength = function (ol, woodman, Utils, MeasureToolBox, Measures, MeasureLengthDOM, ID) {
     function MeasureLength(options) {
         options = options || {};
         if (!(this instanceof MeasureLength)) {
@@ -25979,6 +27204,7 @@ Ol3ControlsMeasuresMeasureLength = function (ol, woodman, Utils, Measures, Measu
         this.CLASSNAME = 'MeasureLength';
         this._uid = ID.generate();
         this._showContainer = null;
+        this._pictoContainer = null;
         this._initialize(options);
         var container = options.element ? options.element : this._initializeContainer();
         ol.control.Control.call(this, {
@@ -25993,30 +27219,40 @@ Ol3ControlsMeasuresMeasureLength = function (ol, woodman, Utils, Measures, Measu
     Utils.assign(MeasureLength.prototype, MeasureLengthDOM);
     MeasureLength.prototype.constructor = MeasureLength;
     MeasureLength.prototype.setMap = function (map) {
+        var className = this.CLASSNAME;
+        this.tools[className].instance = this;
         if (map) {
-            var self = this;
-            map.on('singleclick', function (e) {
-                self.onPointerMoveHandler(e);
-            });
-            map.on('pointermove', function (e) {
-                self.onPointerMoveHandler(e);
-            });
+            if (!this.options.target) {
+                MeasureToolBox.add(map, this);
+            }
         }
         ol.control.Control.prototype.setMap.call(this, map);
     };
     MeasureLength.prototype._initialize = function (options) {
         this.options = {};
         this.options.geodesic = typeof options.geodesic !== 'undefined' ? options.geodesic : true;
+        this.options.target = typeof options.target !== 'undefined' ? options.target : null;
+        this.options.render = typeof options.render !== 'undefined' ? options.render : null;
         this.createStylingMeasureInteraction(options.styles);
     };
     MeasureLength.prototype._initializeContainer = function () {
         var container = this._createMainContainerElement();
         var show = this._showContainer = this._createShowMeasureLengthElement();
         container.appendChild(show);
-        this._showContainer.checked = true;
-        var picto = this._createShowMeasureLengthPictoElement();
+        this._showContainer.checked = false;
+        var picto = this._pictoContainer = this._createShowMeasureLengthPictoElement();
         container.appendChild(picto);
         return container;
+    };
+    MeasureLength.prototype.addMeasureEvents = function () {
+        var map = this.getMap();
+        map.on('singleclick', this.onPointerMoveHandler, this);
+        map.on('pointermove', this.onPointerMoveHandler, this);
+    };
+    MeasureLength.prototype.removeMeasureEvents = function () {
+        var map = this.getMap();
+        map.un('singleclick', this.onPointerMoveHandler, this);
+        map.un('pointermove', this.onPointerMoveHandler, this);
     };
     MeasureLength.prototype.format = function (line) {
         var map = this.getMap();
@@ -26046,7 +27282,7 @@ Ol3ControlsMeasuresMeasureLength = function (ol, woodman, Utils, Measures, Measu
         this.onShowMeasureClick(e, 'LineString');
     };
     return MeasureLength;
-}(ol, {}, Ol3Utils, Ol3ControlsMeasuresMeasures, CommonControlsMeasureLengthDOM, CommonUtilsSelectorID);
+}(ol, {}, Ol3Utils, Ol3ControlsMeasureToolBox, Ol3ControlsMeasuresMeasures, CommonControlsMeasureLengthDOM, CommonUtilsSelectorID);
 CommonControlsMeasureAreaDOM = function () {
     var MeasureAreaDOM = {
         _addUID: function (id) {
@@ -26089,7 +27325,7 @@ CommonControlsMeasureAreaDOM = function () {
     };
     return MeasureAreaDOM;
 }();
-Ol3ControlsMeasuresMeasureArea = function (ol, woodman, Utils, Measures, MeasureAreaDOM, ID) {
+Ol3ControlsMeasuresMeasureArea = function (ol, woodman, Utils, MeasureToolBox, Measures, MeasureAreaDOM, ID) {
     function MeasureArea(options) {
         options = options || {};
         if (!(this instanceof MeasureArea)) {
@@ -26098,6 +27334,7 @@ Ol3ControlsMeasuresMeasureArea = function (ol, woodman, Utils, Measures, Measure
         this.CLASSNAME = 'MeasureArea';
         this._uid = ID.generate();
         this._showContainer = null;
+        this._pictoContainer = null;
         this._initialize(options);
         var container = options.element ? options.element : this._initializeContainer();
         ol.control.Control.call(this, {
@@ -26112,30 +27349,40 @@ Ol3ControlsMeasuresMeasureArea = function (ol, woodman, Utils, Measures, Measure
     Utils.assign(MeasureArea.prototype, MeasureAreaDOM);
     MeasureArea.prototype.constructor = MeasureArea;
     MeasureArea.prototype.setMap = function (map) {
+        var className = this.CLASSNAME;
+        this.tools[className].instance = this;
         if (map) {
-            var self = this;
-            map.on('singleclick', function (e) {
-                self.onPointerMoveHandler(e);
-            });
-            map.on('pointermove', function (e) {
-                self.onPointerMoveHandler(e);
-            });
+            if (!this.options.target) {
+                MeasureToolBox.add(map, this);
+            }
         }
         ol.control.Control.prototype.setMap.call(this, map);
     };
     MeasureArea.prototype._initialize = function (options) {
         this.options = {};
         this.options.geodesic = typeof options.geodesic !== 'undefined' ? options.geodesic : true;
+        this.options.target = typeof options.target !== 'undefined' ? options.target : null;
+        this.options.render = typeof options.render !== 'undefined' ? options.render : null;
         this.createStylingMeasureInteraction(options.styles);
     };
     MeasureArea.prototype._initializeContainer = function () {
         var container = this._createMainContainerElement();
         var show = this._showContainer = this._createShowMeasureAreaElement();
         container.appendChild(show);
-        this._showContainer.checked = true;
-        var picto = this._createShowMeasureAreaPictoElement();
+        this._showContainer.checked = false;
+        var picto = this._pictoContainer = this._createShowMeasureAreaPictoElement();
         container.appendChild(picto);
         return container;
+    };
+    MeasureArea.prototype.addMeasureEvents = function () {
+        var map = this.getMap();
+        map.on('singleclick', this.onPointerMoveHandler, this);
+        map.on('pointermove', this.onPointerMoveHandler, this);
+    };
+    MeasureArea.prototype.removeMeasureEvents = function () {
+        var map = this.getMap();
+        map.un('singleclick', this.onPointerMoveHandler, this);
+        map.un('pointermove', this.onPointerMoveHandler, this);
     };
     MeasureArea.prototype.format = function (polygon) {
         var map = this.getMap();
@@ -26165,7 +27412,7 @@ Ol3ControlsMeasuresMeasureArea = function (ol, woodman, Utils, Measures, Measure
         this.onShowMeasureClick(e, 'Polygon');
     };
     return MeasureArea;
-}(ol, {}, Ol3Utils, Ol3ControlsMeasuresMeasures, CommonControlsMeasureAreaDOM, CommonUtilsSelectorID);
+}(ol, {}, Ol3Utils, Ol3ControlsMeasureToolBox, Ol3ControlsMeasuresMeasures, CommonControlsMeasureAreaDOM, CommonUtilsSelectorID);
 CommonControlsMeasureAzimuthDOM = function () {
     var MeasureAzimuthDOM = {
         _addUID: function (id) {
@@ -26208,7 +27455,7 @@ CommonControlsMeasureAzimuthDOM = function () {
     };
     return MeasureAzimuthDOM;
 }();
-Ol3ControlsMeasuresMeasureAzimuth = function (ol, woodman, Utils, Measures, MeasureAzimuthDOM, ID) {
+Ol3ControlsMeasuresMeasureAzimuth = function (ol, woodman, Utils, MeasureToolBox, Measures, MeasureAzimuthDOM, ID) {
     function MeasureAzimuth(options) {
         options = options || {};
         if (!(this instanceof MeasureAzimuth)) {
@@ -26217,6 +27464,7 @@ Ol3ControlsMeasuresMeasureAzimuth = function (ol, woodman, Utils, Measures, Meas
         this.CLASSNAME = 'MeasureAzimuth';
         this._uid = ID.generate();
         this._showContainer = null;
+        this._pictoContainer = null;
         this._initialize(options);
         var container = options.element ? options.element : this._initializeContainer();
         ol.control.Control.call(this, {
@@ -26231,29 +27479,39 @@ Ol3ControlsMeasuresMeasureAzimuth = function (ol, woodman, Utils, Measures, Meas
     Utils.assign(MeasureAzimuth.prototype, MeasureAzimuthDOM);
     MeasureAzimuth.prototype.constructor = MeasureAzimuth;
     MeasureAzimuth.prototype.setMap = function (map) {
+        var className = this.CLASSNAME;
+        this.tools[className].instance = this;
         if (map) {
-            var self = this;
-            map.on('singleclick', function (e) {
-                self.onPointerMoveAzimutHandler(e);
-            });
-            map.on('pointermove', function (e) {
-                self.onPointerMoveAzimutHandler(e);
-            });
+            if (!this.options.target) {
+                MeasureToolBox.add(map, this);
+            }
         }
         ol.control.Control.prototype.setMap.call(this, map);
     };
     MeasureAzimuth.prototype._initialize = function (options) {
         this.options = {};
+        this.options.target = typeof options.target !== 'undefined' ? options.target : null;
+        this.options.render = typeof options.render !== 'undefined' ? options.render : null;
         this.createStylingMeasureInteraction(options.styles);
     };
     MeasureAzimuth.prototype._initializeContainer = function () {
         var container = this._createMainContainerElement();
         var show = this._showContainer = this._createShowMeasureAzimuthElement();
         container.appendChild(show);
-        this._showContainer.checked = true;
-        var picto = this._createShowMeasureAzimuthPictoElement();
+        this._showContainer.checked = false;
+        var picto = this._pictoContainer = this._createShowMeasureAzimuthPictoElement();
         container.appendChild(picto);
         return container;
+    };
+    MeasureAzimuth.prototype.addMeasureEvents = function () {
+        var map = this.getMap();
+        map.on('singleclick', this.onPointerMoveAzimutHandler, this);
+        map.on('pointermove', this.onPointerMoveAzimutHandler, this);
+    };
+    MeasureAzimuth.prototype.removeMeasureEvents = function () {
+        var map = this.getMap();
+        map.un('singleclick', this.onPointerMoveAzimutHandler, this);
+        map.un('pointermove', this.onPointerMoveAzimutHandler, this);
     };
     MeasureAzimuth.prototype.format = function (line) {
         var map = this.getMap();
@@ -26289,10 +27547,10 @@ Ol3ControlsMeasuresMeasureAzimuth = function (ol, woodman, Utils, Measures, Meas
         }
     };
     return MeasureAzimuth;
-}(ol, {}, Ol3Utils, Ol3ControlsMeasuresMeasures, CommonControlsMeasureAzimuthDOM, CommonUtilsSelectorID);
-Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, KML, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution, Markers, MeasureLength, MeasureArea, MeasureAzimuth) {
+}(ol, {}, Ol3Utils, Ol3ControlsMeasureToolBox, Ol3ControlsMeasuresMeasures, CommonControlsMeasureAzimuthDOM, CommonUtilsSelectorID);
+Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, KML, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution, Markers, ElevationPath, MeasureLength, MeasureArea, MeasureAzimuth) {
     Gp.ol3extVersion = '0.11.0';
-    Gp.ol3extDate = '2016-11-15';
+    Gp.ol3extDate = '2016-11-25';
     Gp.LayerUtils = LayerUtils;
     ol.format.KMLExtended = KML;
     CRS.overload();
@@ -26313,8 +27571,9 @@ Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, KML, CRS, SourceWMTS, S
     ol.control.MeasureArea = MeasureArea;
     ol.control.MeasureAzimuth = MeasureAzimuth;
     ol.control.DefaultMarkers = Markers;
+    ol.control.ElevationPath = ElevationPath;
     return Gp;
-}(ol, gp, CommonUtilsLayerUtils, CommonUtilsRegister, Ol3FormatsKML, Ol3CRSCRS, Ol3LayersSourceWMTS, Ol3LayersSourceWMS, Ol3LayersLayerWMTS, Ol3LayersLayerWMS, Ol3ControlsLayerSwitcher, Ol3ControlsSearchEngine, Ol3ControlsMousePosition, Ol3ControlsDrawing, Ol3ControlsRoute, Ol3ControlsIsocurve, Ol3ControlsReverseGeocode, Ol3ControlsLayerImport, Ol3ControlsGeoportalAttribution, Ol3ControlsUtilsMarkers, Ol3ControlsMeasuresMeasureLength, Ol3ControlsMeasuresMeasureArea, Ol3ControlsMeasuresMeasureAzimuth);
+}(ol, gp, CommonUtilsLayerUtils, CommonUtilsRegister, Ol3FormatsKML, Ol3CRSCRS, Ol3LayersSourceWMTS, Ol3LayersSourceWMS, Ol3LayersLayerWMTS, Ol3LayersLayerWMS, Ol3ControlsLayerSwitcher, Ol3ControlsSearchEngine, Ol3ControlsMousePosition, Ol3ControlsDrawing, Ol3ControlsRoute, Ol3ControlsIsocurve, Ol3ControlsReverseGeocode, Ol3ControlsLayerImport, Ol3ControlsGeoportalAttribution, Ol3ControlsUtilsMarkers, Ol3ControlsElevationPath, Ol3ControlsMeasuresMeasureLength, Ol3ControlsMeasuresMeasureArea, Ol3ControlsMeasuresMeasureAzimuth);
 window.proj4 = proj4;
 
 return Gp;

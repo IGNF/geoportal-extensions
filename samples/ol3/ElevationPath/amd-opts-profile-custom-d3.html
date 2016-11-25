@@ -2,19 +2,21 @@
 <html>
 <head>
   <meta content="IE=edge,chrome=1; charset=UTF-8" http-equiv="X-UA-Compatible">
-  <title>sample ol3 measure length default (amd)</title>
+  <title>sample ol3 measure profil default (amd)</title>
 
   <!-- Library OpenLayers 3 -->
   <link rel="stylesheet" href="../../../lib/ol3/ol.css" />
 
   <!-- Plugin OpenLayers 3 IGN -->
   <link rel="stylesheet" href="../../../res/common/GPgeneralWidget.css" />
-  <link rel="stylesheet" href="../../../res/common/GPmeasureToolTip.css" />
-  <link rel="stylesheet" href="../../../res/common/GPmeasureLength.css" />
+  <link rel="stylesheet" href="../../../res/common/GPelevationPath.css" />
   <link rel="stylesheet" href="../../../res/ol3/GPgeneralWidgetOL3.css" />
-  <link rel="stylesheet" href="../../../res/ol3/Controls/Measures/GPmeasureLengthOL3.css" />
+  <link rel="stylesheet" href="../../../res/ol3/Controls/ToolBoxMeasure/GPtoolBoxMeasureOL3.css" />
+  <link rel="stylesheet" href="../../../res/ol3/Controls/ElevationPath/GPelevationPathOL3.css" />
+  <link rel="stylesheet" href="custom-style-d3.css" />
 
   <!-- requirejs -->
+  <script src="lib/d3.v3.min.js"></script>
   <script src="../../../lib/require.js"></script>
 
   <!-- load geoportail-waiting image -->
@@ -30,6 +32,10 @@
     height: 500px;
     margin: 10px;
   }
+  #profil {
+    z-index: 50;
+    position: absolute;
+  }
   </style>
 </head>
 <body>
@@ -42,7 +48,7 @@
   </h3>
 
   <div>
-    <p>Ajout d'un widget d'import de couches'</p>
+    <p>Ajout d'un widget de calcul de profil alti</p>
 
     <script>
     var map;
@@ -64,13 +70,13 @@
         "ol",
         "gp",
         "Ol3/Layers/LayerWMTS",
-        "Ol3/Controls/Measures/MeasureLength"
+        "Ol3/Controls/ElevationPath"
       ],
       function (
         ol,
         Gp,
         LayerWMTS,
-        MeasureLength
+        ElevationPath
       ) {
 
         var map;
@@ -94,36 +100,14 @@
             })
           });
 
-          var measureLength = new MeasureLength({
-            element : null,
-            target : null,
-            render : null,
-            styles : {
-              start : {
-                fillColor : "rgba(255, 0, 0, 0.2)",
-                strokeColor : "rgba(0, 0, 255, 0.5)",
-                // strokeLineDash : [10, 10],
-                strokeWidth : 5,
-                imageRadius : 10,
-                imageFillColor : "rgba(128, 128, 128, 0.2)",
-                imageStrokeColor : "rgba(0, 0, 0, 0.7)"
-              },
-              finish : {
-                fillColor : "rgba(0, 0, 255, 0.2)",
-                strokeColor : "rgba(255, 0, 0, 0.5)",
-                strokeWidth : 5
-              }
-            },
-            /* EVOL possible
-              unit : "miles",
-            */
-            tooltip : {
-              messageContinue : "Click to continue drawing the line",
-              messageStart : "Click to start drawing"
-            },
-            geodesic : true
+          var profil = new ElevationPath({
+            active : true,
+            displayProfileOptions : {
+              apply : ElevationPath.DISPLAY_PROFILE_LIB_D3,
+              target : document.getElementById("profil")
+            }
           });
-          map.addControl(measureLength);
+          map.addControl(profil);
 
         };
 
@@ -140,7 +124,9 @@
 
       <!-- map -->
       <div id="map">
+        <div id="profil"></div>
       </div>
+
 
       <!-- Comment utiliser le plugin avec un exemple -->
       <p>EXEMPLE D'UTILISATION</p>

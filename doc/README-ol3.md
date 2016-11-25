@@ -55,7 +55,7 @@ Controls provided by the Geoportal Extension are additionnal <a href="http://ope
 | {@link ol.control.Route ol.control.Route} | Allows users to compute and display routes on a Map using  <a href="http://api.ign.fr/tech-docs-js/developpeur/TODO" target="_blank">routing service</a> of the Geoportal Platform. |
 | {@link ol.control.Isocurve ol.control.Isocurve} | Allows users to compute and display Isochrone or Isodistance curves on a Map using  <a href="http://api.ign.fr/tech-docs-js/developpeur/TODO" target="_blank">isochron/isodistance service</a> of the Geoportal Platform. |
 | {@link ol.control.Drawing ol.control.Drawing} | Provides tools to users for making and saving annotations on a map. |
-
-
-
-
+| {@link ol.control.MeasureArea ol.control.MeasureArea} | Allows users to compute an area measure.
+| {@link ol.control.MeasureLength ol.control.MeasureLength} | Allows users to compute a length measure. |
+| {@link ol.control.MeasureAzimuth ol.control.MeasureAzimuth} | Allows users to compute an azimuth measure. |
+| {@link ol.control.ElevationPath ol.control.ElevationPath} | Provides tools to users for compute a profile altimetric using <a href="http://api.ign.fr/tech-docs-js/developpeur/alti.html" target="_blank">elevation service</a> of the Geoportal Platform. |

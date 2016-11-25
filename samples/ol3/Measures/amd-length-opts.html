@@ -10,13 +10,10 @@
   <!-- Plugin OpenLayers 3 IGN -->
   <link rel="stylesheet" href="../../../res/common/GPgeneralWidget.css" />
   <link rel="stylesheet" href="../../../res/common/GPmeasureToolTip.css" />
-  <link rel="stylesheet" href="../../../res/common/GPmeasureArea.css" />
   <link rel="stylesheet" href="../../../res/common/GPmeasureLength.css" />
-  <link rel="stylesheet" href="../../../res/common/GPmeasureAzimuth.css" />
   <link rel="stylesheet" href="../../../res/ol3/GPgeneralWidgetOL3.css" />
-  <link rel="stylesheet" href="../../../res/ol3/Controls/Measures/GPmeasureAreaOL3.css" />
   <link rel="stylesheet" href="../../../res/ol3/Controls/Measures/GPmeasureLengthOL3.css" />
-  <link rel="stylesheet" href="../../../res/ol3/Controls/Measures/GPmeasureAzimuthOL3.css" />
+  <link rel="stylesheet" href="../../../res/ol3/Controls/ToolBoxMeasure/GPtoolBoxMeasureOL3.css" />
 
   <!-- requirejs -->
   <script src="../../../lib/require.js"></script>
@@ -68,17 +65,13 @@
         "ol",
         "gp",
         "Ol3/Layers/LayerWMTS",
-        "Ol3/Controls/Measures/MeasureLength",
-        "Ol3/Controls/Measures/MeasureArea",
-        "Ol3/Controls/Measures/MeasureAzimuth"
+        "Ol3/Controls/Measures/MeasureLength"
       ],
       function (
         ol,
         Gp,
         LayerWMTS,
-        MeasureLength,
-        MeasureArea,
-        MeasureAzimuth
+        MeasureLength
       ) {
 
         var map;
@@ -102,12 +95,36 @@
             })
           });
 
-          var measureA = new MeasureArea();
-          map.addControl(measureA);
-          var measureZ = new MeasureAzimuth();
-          map.addControl(measureZ);
-          var measureD = new MeasureLength();
-          map.addControl(measureD);
+          var measureLength = new MeasureLength({
+            element : null,
+            target : null,
+            render : null,
+            styles : {
+              start : {
+                fillColor : "rgba(255, 0, 0, 0.2)",
+                strokeColor : "rgba(0, 0, 255, 0.5)",
+                // strokeLineDash : [10, 10],
+                strokeWidth : 5,
+                imageRadius : 10,
+                imageFillColor : "rgba(128, 128, 128, 0.2)",
+                imageStrokeColor : "rgba(0, 0, 0, 0.7)"
+              },
+              finish : {
+                fillColor : "rgba(0, 0, 255, 0.2)",
+                strokeColor : "rgba(255, 0, 0, 0.5)",
+                strokeWidth : 5
+              }
+            },
+            /* EVOL possible
+              unit : "miles",
+            */
+            tooltip : { // not yet implemented !
+              messageContinue : "Click to continue drawing the line",
+              messageStart : "Click to start drawing"
+            },
+            geodesic : true
+          });
+          map.addControl(measureLength);
 
         };
 

@@ -10,6 +10,7 @@ input[id^=GPshowMeasureAzimuth-] + label {
 
 input[id^=GPshowMeasureAzimuth-]:checked + label {
   display: block;
+  background-color: rgba(0,60,136,0.5);
 }
 
 input[id^=GPshowMeasureAzimuth-] + label + div {

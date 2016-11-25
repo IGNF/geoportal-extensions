@@ -2,17 +2,17 @@
 <html>
 <head>
   <meta content="IE=edge,chrome=1; charset=UTF-8" http-equiv="X-UA-Compatible">
-  <title>sample ol3 measure area default (amd)</title>
+  <title>sample ol3 measure profil default (amd)</title>
 
   <!-- Library OpenLayers 3 -->
   <link rel="stylesheet" href="../../../lib/ol3/ol.css" />
 
   <!-- Plugin OpenLayers 3 IGN -->
   <link rel="stylesheet" href="../../../res/common/GPgeneralWidget.css" />
-  <link rel="stylesheet" href="../../../res/common/GPmeasureToolTip.css" />
-  <link rel="stylesheet" href="../../../res/common/GPmeasureArea.css" />
+  <link rel="stylesheet" href="../../../res/common/GPelevationPath.css" />
   <link rel="stylesheet" href="../../../res/ol3/GPgeneralWidgetOL3.css" />
-  <link rel="stylesheet" href="../../../res/ol3/Controls/Measures/GPmeasureAreaOL3.css" />
+  <link rel="stylesheet" href="../../../res/ol3/Controls/ToolBoxMeasure/GPtoolBoxMeasureOL3.css" />
+  <link rel="stylesheet" href="../../../res/ol3/Controls/ElevationPath/GPelevationPathOL3.css" />
 
   <!-- requirejs -->
   <script src="../../../lib/require.js"></script>
@@ -42,7 +42,7 @@
   </h3>
 
   <div>
-    <p>Ajout d'un widget d'import de couches'</p>
+    <p>Ajout d'un widget de calcul de profil alti</p>
 
     <script>
     var map;
@@ -64,13 +64,13 @@
         "ol",
         "gp",
         "Ol3/Layers/LayerWMTS",
-        "Ol3/Controls/Measures/MeasureArea"
+        "Ol3/Controls/ElevationPath"
       ],
       function (
         ol,
         Gp,
         LayerWMTS,
-        MeasureArea
+        ElevationPath
       ) {
 
         var map;
@@ -94,30 +94,34 @@
             })
           });
 
-          var measure = new MeasureArea({
-            element : null,
-            target : null,
-            render : null,
-            styles : {
-              start : {
-                fillColor : "rgba(255, 255, 255, 0.2)",
-                strokeColor : "rgba(0, 0, 0, 0.5)",
-                strokeLineDash : [10, 10],
-                strokeWidth : 2,
-                imageRadius : 5,
-                imageFillColor : "rgba(255, 255, 255, 0.2)",
-                imageStrokeColor : "rgba(0, 0, 0, 0.7)",
+          var profil = new ElevationPath({
+            apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
+            debug : true,
+            active : true,
+            elevationOptions : {
+              sampling : 10
+            },
+            stylesOptions : {
+              marker : {}, // par defaut
+              draw : {
+                start : { // custom en mode properties
+                   strokeColor : "rgba(0, 0, 0, 0.5)",
+                   strokeLineDash : [10, 10],
+                   strokeWidth : 2
+                 },
+                 pointer : {
+                   imageRadius : 5,
+                   imageFillColor : "rgba(255, 255, 255, 0.2)",
+                   imageStrokeColor : "rgba(0, 0, 0, 0.7)"
+                },
+                finish : new ol.style.Stroke({
+                    color : "rgba(0, 0, 128, 0.5)",
+                    width : 8
+                })
               }
-            },
-            unit : "km",
-            tooltip : {
-              messageContinue : "Click to continue drawing the line",
-              messageStart : "Click to start drawing",
-              styles : {} // FIXME css ?
-            },
-            geodesic : true
+            }
           });
-          map.addControl(measure);
+          map.addControl(profil);
 
         };
 

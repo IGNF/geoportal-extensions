@@ -15,11 +15,11 @@ define([
     var logger = woodman.getLogger("measures");
 
     /** styles by default */
-    var defaultStyle = {
-        fillColor : "rgba(0, 183, 152, 0.2)",
+    var DEFAULT_STYLE_START = {
         strokeColor : "#002A50",
         strokeLineDash : [10, 10],
         strokeWidth : 2,
+        fillColor : "rgba(0, 183, 152, 0.2)",
         imageRadius : 5,
         imageFillColor :  "rgba(255, 155, 0, 0.7)",
         imageStrokeColor : "#002A50",
@@ -27,10 +27,10 @@ define([
     };
 
     /** styles by default */
-    var defaultStyleFinal = {
-        fillColor : "rgba(0, 183, 152, 0.3)",
+    var DEFAULT_STYLE_FINISH = {
         strokeColor : "#002A50",
-        strokeWidth : 3
+        strokeWidth : 3,
+        fillColor : "rgba(0, 183, 152, 0.3)"
     };
 
     /**
@@ -42,29 +42,20 @@ define([
     var Measures = {
 
         // ****************************************************************** //
-        // > ToolBox
+        // > ToolBox : these tools work together
         // ****************************************************************** //
         tools : {
             MeasureLength : {
-                container : null,
-                draw : null,
-                layer : null,
-                // tootltip : null,
-                active : false
+                active : false,
+                instance : null
             },
             MeasureArea : {
-                container : null,
-                draw : null,
-                layer : null,
-                // tootltip : null,
-                active : false
+                active : false,
+                instance : null
             },
             MeasureAzimuth : {
-                container : null,
-                draw : null,
-                layer : null,
-                // tootltip : null,
-                active : false
+                active : false,
+                instance : null
             }
         },
 
@@ -125,41 +116,60 @@ define([
         // ****************************************************************** //
 
         /*
-         * Measures style
+         * Measures style line
          */
-        measureStyle : new ol.style.Style({
+        measureDrawStartStyle : new ol.style.Style({
             fill : new ol.style.Fill({
-                color : defaultStyle.fillColor
+                color : DEFAULT_STYLE_START.fillColor
             }),
             stroke : new ol.style.Stroke({
-                color : defaultStyle.strokeColor,
-                lineDash : defaultStyle.strokeLineDash,
-                width : defaultStyle.strokeWidth
+                color : DEFAULT_STYLE_START.strokeColor,
+                lineDash : DEFAULT_STYLE_START.strokeLineDash,
+                width : DEFAULT_STYLE_START.strokeWidth
             }),
             image : new ol.style.Circle({
-                radius : defaultStyle.imageRadius,
+                radius : DEFAULT_STYLE_START.imageRadius,
                 stroke : new ol.style.Stroke({
-                    color : defaultStyle.imageStrokeColor,
-                    width : defaultStyle.imageStrokeWidth
+                    color : DEFAULT_STYLE_START.imageStrokeColor,
+                    width : DEFAULT_STYLE_START.imageStrokeWidth
                 }),
                 fill : new ol.style.Fill({
-                    color : defaultStyle.imageFillColor
+                    color : DEFAULT_STYLE_START.imageFillColor
                 })
             })
         }),
 
         /*
-         * Measures final style
+         * Measures final style line
          */
-        measureFinalStyle : new ol.style.Style({
+        measureDrawFinishStyle : new ol.style.Style({
             fill : new ol.style.Fill({
-                color : defaultStyleFinal.fillColor
+                color : DEFAULT_STYLE_FINISH.fillColor
             }),
             stroke : new ol.style.Stroke({
-                color : defaultStyleFinal.strokeColor,
-                width : defaultStyleFinal.strokeWidth
+                color : DEFAULT_STYLE_FINISH.strokeColor,
+                width : DEFAULT_STYLE_FINISH.strokeWidth
             })
         }),
+
+        // ****************************************************************** //
+        // > Methods Public
+        // ****************************************************************** //
+
+        /** Desactived Tool Measure */
+        clean : function () {
+            var _class = this.CLASSNAME;
+
+            logger.trace("[" + _class + "] deactived tool !");
+            // sur la desactivation de l'outil de mesure
+            // on fait un nettoyage des ressources
+            // ainsi que le DOM
+            this.clearMeasure();
+            this.clearMeasureToolTip();
+            this.removeMeasureEvents();
+            this._showContainer.checked = false;
+
+        },
 
         // ****************************************************************** //
         // > Methods Events
@@ -205,52 +215,44 @@ define([
         */
         onShowMeasureClick : function (e, type) {
 
-            var map  = this.getMap();
-            var self = this.CLASSNAME; // FIXME this.constructor.name : pas possible en mode minifié/manglifié !
-            for (var instance in this.tools) {
-                if (this.tools.hasOwnProperty(instance)) {
-                    if (this.tools[instance].active && instance !== self) {
-                        this.clearMeasureToolTip();
-                        map.removeLayer(this.tools[instance].layer);
-                        map.removeInteraction(this.tools[instance].draw);
-                        // map.removeOverlay(this.tools[instance].tooltip);
-                        this.tools[instance].active = false;
-                        this.tools[instance].container.checked = true;
-                        this.tools[instance].draw  = null;
-                        this.tools[instance].layer = null;
-                        // this.tools[instance].tooltip = null;
+            // desactivation des controles de mesures
+            var self = this.CLASSNAME; // this.constructor.name : pas possible en mode minifié/manglifié !
+            for (var className in this.tools) {
+                if (this.tools.hasOwnProperty(className)) {
+                    if (this.tools[className].active && className !== self) {
+                        this.tools[className].active = false;
+                        this.tools[className].instance.clean();
                     }
                 }
             }
 
-            // Activation du controle
-            //  statut de la checkbox : true par defaut.
-            //  lors du clic, le statut devient false apres que la fonction
-            //  soit executée.
-            //  clic true run false
-            //  clic false run true, ...
-            if (this._showContainer.checked) {
+            // FIXME desactivation des autres interactions parasites
+            var map = this.getMap();
+            var interactions = map.getInteractions().getArray() ;
+            for (var i = 0 ; i < interactions.length ; i++ ) {
+                if (interactions[i].getActive() && interactions[i] instanceof ol.interaction.Draw) {
+                    interactions[i].setActive(false);
+                }
+            }
 
+            if (!this._showContainer.checked) {
+
+                this.addMeasureEvents();
                 this.initMeasureInteraction();
                 this.addMeasureInteraction(type);
                 this.tools[self].active = true;
-                this.tools[self].container = this._showContainer; // FIXME pourri, mais il me faut cette information !?
-                this.tools[self].draw  = this.measureDraw;
-                this.tools[self].layer = this.measureVector;
-                // this.tools[self].tooltip = this.measureTooltip;
+
             } else {
 
                 this.clearMeasure();
+                this.clearMeasureToolTip();
+                this.removeMeasureEvents();
                 this.tools[self].active = false;
-                this.tools[self].container = this._showContainer; // FIXME pourri, mais il me faut cette information !?
-                this.tools[self].draw  = null;
-                this.tools[self].layer = null;
-                // this.tools[self].tooltip = null;
             }
         },
 
         // ****************************************************************** //
-        // > Methods
+        // > Methods not Public
         // ****************************************************************** //
 
         /**
@@ -287,19 +289,20 @@ define([
 
             var map = this.getMap();
 
-            this.clearMeasureToolTip();
-
             // FIXME !?
             // if (this.measureTooltip) {
             //     map.removeOverlay(this.measureTooltip);
+            //     this.measureTooltip = null;
             // }
 
             if (this.measureVector) {
                 map.removeLayer(this.measureVector);
+                this.measureVector = null;
             }
 
             if (this.measureDraw) {
                 map.removeInteraction(this.measureDraw);
+                this.measureDraw = null;
             }
         },
 
@@ -358,111 +361,136 @@ define([
         */
         createStylingMeasureInteraction : function (styles) {
 
-            // TODO cas où options.styles = {} : vide !
             if ( typeof styles === "undefined" || Object.keys(styles).length === 0 ) {
-                // on applique les styles par defaut
+                // on applique les styles par defaut (en mode object)
                 this.options.styles = {
-                    start : this.measureStyle,
-                    finish : this.measureFinalStyle
+                    start : this.measureDrawStartStyle,
+                    finish : this.measureDrawFinishStyle
                 };
             } else {
-                // on interprete les params pour y creer un objet ol.Style
-                var start  = styles.start;
-                var finish = styles.finish;
+                this.options.styles = styles || {};
+            }
 
-                this.options.styles = {};
+            // on interprete les params pour y creer un objet ol.Style
+            var start   = this.options.styles.start;
+            var finish  = this.options.styles.finish;
 
-                if ( typeof start === "undefined" ) {
-                    this.options.styles.start = this.measureStyle;
-                } else {
+            if ( typeof start === "undefined" ) {
+                start = this.measureDrawStartStyle;
+            }
+            if ( typeof finish === "undefined" ) {
+                finish = this.measureDrawFinishStyle;
+            }
 
-                    logger.trace("Custom Styles !");
+            logger.trace("style start",  start);
 
-                    // styles par defaut
-                    Object.keys(defaultStyle).forEach(function (key) {
-                        if (!start.hasOwnProperty(key)) {
+            if ( start instanceof ol.style.Style ) {
+                logger.trace( "instance ol.style.Style for start drawing !" );
+                this.options.styles.start = start;
+            } else {
+                logger.trace( "use properties to define a style for start drawing !" );
+
+                var defaultStyle = DEFAULT_STYLE_START;
+                Object.keys(defaultStyle).forEach(function (key) {
+                    if (!start.hasOwnProperty(key)) {
+                        start[key] = defaultStyle[key];
+                        return;
+                    }
+                    var intValue;
+                    if (key === "strokeWidth") {
+                        intValue = parseInt(start[key],10);
+                        if (isNaN(intValue) || intValue < 0) {
+                            console.log("Wrong value (" + start[key] + ") for strokeWidth. Must be a positive interger value." );
                             start[key] = defaultStyle[key];
                             return;
                         }
-                        if (key === "strokeWidth") {
-                            var intValue = parseInt(start[key],10);
-                            if (isNaN(intValue) || intValue < 0) {
-                                console.log("Wrong value (" + start[key] + ") for strokeWidth. Must be a positive interger value." );
-                                start[key] = defaultStyle[key];
-                                return;
-                            }
-                            start[key] = intValue;
-                        }
-                    },this);
+                        start[key] = intValue;
+                    }
 
-                    // surface : fill
-                    var _fill = new ol.style.Fill({
-                        color : start.fillColor
-                    });
-
-                    // ligne : stroke
-                    var _stroke = new ol.style.Stroke({
-                        color : start.strokeColor,
-                        lineDash : start.strokeLineDash,
-                        width : start.strokeWidth
-                    });
-
-                    // point : image
-                    var _image = new ol.style.Circle({
-                        radius : start.imageRadius,
-                        stroke : new ol.style.Stroke({
-                            color : start.imageStrokeColor,
-                            width : start.imageStrokeWidth
-                        }),
-                        fill : new ol.style.Fill({
-                            color : start.imageFillColor
-                        })
-                    });
-
-                    this.options.styles.start = new ol.style.Style({
-                        fill : _fill,
-                        stroke : _stroke,
-                        image : _image
-                    });
-                }
-
-                logger.trace("style start", this.options.styles.start);
-
-                if ( typeof finish === "undefined" ) {
-                    this.options.styles.finish = this.measureFinalStyle;
-                } else {
-                    logger.trace("Custom Styles !");
-
-                    // styles par defaut
-                    Object.keys(defaultStyleFinal).forEach(function (key) {
-                        if (!finish.hasOwnProperty(key)) {
-                            finish[key] = defaultStyleFinal[key];
+                    if (key === "imageStrokeWidth" || key === "imageRadius") {
+                        intValue = parseInt(start[key],10);
+                        if (isNaN(intValue) || intValue < 0) {
+                            console.log("Wrong value (" + start[key] + ") for strokeWidth or radius. Must be a positive interger value." );
+                            start[key] = defaultStyle[key];
                             return;
                         }
-                        if (key === "strokeWidth") {
-                            var intValue = parseInt(finish[key],10);
-                            if (isNaN(intValue) || intValue < 0) {
-                                console.log("Wrong value (" + finish[key] + ") for strokeWidth. Must be a positive interger value." );
-                                finish[key] = defaultStyleFinal[key];
-                                return;
-                            }
-                            finish[key] = intValue;
-                        }
-                    },this);
+                        start[key] = intValue;
+                    }
+                },this);
 
-                    this.options.styles.finish = new ol.style.Style({
-                        fill : new ol.style.Fill({
-                            color : styles.finish.fillColor
-                        }),
-                        stroke : new ol.style.Stroke({
-                            color : styles.finish.strokeColor,
-                            lineDash : styles.finish.strokeLineDash,
-                            width : styles.finish.strokeWidth
-                        })
-                    });
-                }
-                logger.trace("style finish", this.options.styles.finish);
+                // point : image
+                var _startImage = new ol.style.Circle({
+                    radius : start.imageRadius,
+                    stroke : new ol.style.Stroke({
+                        color : start.imageStrokeColor,
+                        width : start.imageStrokeWidth
+                    }),
+                    fill : new ol.style.Fill({
+                        color : start.imageFillColor
+                    })
+                });
+
+                // surface : fill
+                var _startFill = new ol.style.Fill({
+                    color : start.fillColor
+                });
+
+                // ligne : stroke
+                var _startStroke = new ol.style.Stroke({
+                    color : start.strokeColor,
+                    lineDash : start.strokeLineDash,
+                    width : start.strokeWidth
+                });
+
+                this.options.styles.start = new ol.style.Style({
+                        fill : _startFill,
+                        stroke : _startStroke,
+                        image : _startImage
+                });
             }
+
+            logger.trace("style finish", finish);
+
+            if ( finish instanceof ol.style.Style ) {
+                logger.trace( "instance ol.style.Style for finish drawing !" );
+                this.options.styles.finish = finish;
+            } else {
+                logger.trace( "use properties to define a style for finish drawing !" );
+
+                var defaultStyleFinish = DEFAULT_STYLE_FINISH;
+                Object.keys(defaultStyleFinish).forEach(function (key) {
+                    if (!finish.hasOwnProperty(key)) {
+                        finish[key] = defaultStyleFinish[key];
+                        return;
+                    }
+                    if (key === "strokeWidth") {
+                        var intValue = parseInt(finish[key],10);
+                        if (isNaN(intValue) || intValue < 0) {
+                            console.log("Wrong value (" + finish[key] + ") for strokeWidth. Must be a positive interger value." );
+                            finish[key] = defaultStyleFinish[key];
+                            return;
+                        }
+                        finish[key] = intValue;
+                    }
+                },this);
+
+                // surface : fill
+                var _finishFill = new ol.style.Fill({
+                    color : finish.fillColor
+                });
+
+                var _finishStroke = new ol.style.Stroke({
+                    color : finish.strokeColor,
+                    lineDash : finish.strokeLineDash,
+                    width : finish.strokeWidth
+                });
+
+                this.options.styles.finish = new ol.style.Style({
+                    stroke : _finishStroke,
+                    fill : _finishFill
+                });
+            }
+
         },
 
         /**
@@ -478,7 +506,10 @@ define([
             this.measureDraw = new ol.interaction.Draw({
                 source : this.measureSource,
                 type : type,
-                style : this.options.styles.start || this.measureStyle
+                style : this.options.styles.start || this.measureDrawStartStyle
+            });
+            this.measureDraw.setProperties({
+                source : "Measure"
             });
             map.addInteraction(this.measureDraw);
 
@@ -514,7 +545,7 @@ define([
 
                 self.measureTooltipElement.className = "tooltip tooltip-static";
                 self.measureTooltip.setOffset([0, -7]);
-                
+
                 // unset sketch
                 self.sketch = null;
                 // unset tooltip so that a new one can be created
@@ -535,7 +566,7 @@ define([
 
              this.measureVector = new ol.layer.Vector({
                source : this.measureSource,
-               style : this.options.styles.finish || this.measureFinalStyle
+               style : this.options.styles.finish || this.measureDrawFinishStyle
              });
 
              map.addLayer(this.measureVector);
