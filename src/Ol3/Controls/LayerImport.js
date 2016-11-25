@@ -45,6 +45,10 @@ define([
      *      webServicesOptions : {
      *          proxyUrl : "http://localhost/proxy/php/proxy.php?url=",
      *          noProxyDomains : []
+     *      },
+     *      vectorStyleOptions : {
+     *          KML : {},
+     *          GPX : {}
      *      }
      *  });
      */
@@ -73,6 +77,38 @@ define([
 
     // Inherits from ol.control.Control
     ol.inherits(LayerImport, ol.control.Control);
+
+    /**
+     * Default styles applyied to KML features.
+     *
+     * @private
+     */
+    LayerImport.KMLDefaultStyles = {
+        iconSrc : Markers["lightOrange"],
+        iconAnchor : [25.5, 38],
+        iconSize : [51, 38],
+        strokeColor : "#002A50",
+        strokeWidth : 4,
+        strokeOpacity : 0.8,
+        fillColor : "#00B798",
+        fillOpacity : 0.5
+    } ;
+
+    /**
+     * Default styles applyied to GPX features.
+     *
+     * @private
+     */
+    LayerImport.GPXDefaultStyles = {
+        iconSrc : Markers["lightOrange"],
+        iconAnchor : [25.5, 38],
+        iconSize : [51, 38],
+        strokeColor : "#002A50",
+        strokeWidth : 4,
+        strokeOpacity : 0.8,
+        fillColor : "#00B798",
+        fillOpacity : 0.5
+    } ;
 
     /**
      * @lends module:LayerImport
@@ -123,7 +159,6 @@ define([
         this.collapsed = collapsed;
     };
 
-
     /**
      * Returns content of a static import (KML or GPX)
      *
@@ -163,13 +198,34 @@ define([
         // set default options
         this.options = {
             collapsed : true,
-            // layerTypes : ["KML", "GPX", "WMS", "WMTS", "WFS"],
             layerTypes : ["KML", "GPX", "WMS", "WMTS"],
-            webServicesOptions : {}
+            webServicesOptions : {},
+            vectorStyleOptions : {
+                KML : {
+                    extractStyles : true,
+                    showPointNames : true,
+                    defaultStyle : LayerImport.KMLDefaultStyles
+                },
+                GPX : {
+                    defaultStyle : LayerImport.GPXDefaultStyles
+                }
+            }
         };
 
+        // merge default styles (KML and GPX)
+        var defaultStyle;
+        if ( options.vectorStyleOptions ) {
+            for ( var format in options.vectorStyleOptions ) {
+                if ( options.vectorStyleOptions[format] && options.vectorStyleOptions[format].defaultStyle ) {
+                    defaultStyle = this.options.vectorStyleOptions[format].defaultStyle;
+                    Utils.mergeParams(defaultStyle, options.vectorStyleOptions[format].defaultStyle);
+                    options.vectorStyleOptions[format].defaultStyle = defaultStyle;
+                }
+            }
+        }
+
         // merge with user options
-        Utils.assign(this.options, options);
+        Utils.mergeParams(this.options, options);
 
         /** {Boolean} specify if reverseGeocoding control is collapsed (true) or not (false) */
         this.collapsed = this.options.collapsed;
@@ -188,6 +244,69 @@ define([
         this._currentImportType = "KML";
         this._isCurrentImportTypeStatic = true;
         this._currentStaticImportType = "local";
+
+        // #################################################################### //
+        // ############### initialisation des styles par défaut ################## //
+
+        var kmlDefaultStyles = this.options.vectorStyleOptions.KML.defaultStyle;
+        this._defaultKMLStyle = new ol.style.Style({
+            image : new ol.style.Icon({
+                src : kmlDefaultStyles.iconSrc,
+                size : kmlDefaultStyles.iconSize,
+                anchor : kmlDefaultStyles.iconAnchor,
+                anchorOrigin : "top-left",
+                anchorXUnits : "pixels",
+                anchorYUnits : "pixels"
+            }),
+            stroke : new ol.style.Stroke({
+                color : this.hexToRgba(
+                    kmlDefaultStyles.strokeColor,
+                    kmlDefaultStyles.strokeOpacity
+                ),
+                width : kmlDefaultStyles.strokeWidth
+            }),
+            fill : new ol.style.Fill({
+                color: this.hexToRgba(
+                    kmlDefaultStyles.fillColor,
+                    kmlDefaultStyles.fillOpacity
+                )
+            }),
+            text : new ol.style.Text({
+                textAlign : "left",
+                font : "16px sans",
+                fill : new ol.style.Fill({
+                    color : kmlDefaultStyles.textFillColor
+                }),
+                stroke : new ol.style.Stroke({
+                    color : kmlDefaultStyles.textStrokeColor,
+                    width : 3
+                })
+            })
+        });
+        var gpxDefaultStyles = this.options.vectorStyleOptions.GPX.defaultStyle;
+        this._defaultGPXStyle = new ol.style.Style({
+            image : new ol.style.Icon({
+                src : gpxDefaultStyles.iconSrc,
+                size : gpxDefaultStyles.iconSize,
+                anchor : gpxDefaultStyles.iconAnchor,
+                anchorOrigin : "top-left",
+                anchorXUnits : "pixels",
+                anchorYUnits : "pixels"
+            }),
+            stroke : new ol.style.Stroke({
+                color : this.hexToRgba(
+                    gpxDefaultStyles.strokeColor,
+                    gpxDefaultStyles.strokeOpacity
+                ),
+                width :  gpxDefaultStyles.strokeWidth
+            }),
+            fill : new ol.style.Fill({
+                color: this.hexToRgba(
+                    gpxDefaultStyles.fillColor,
+                    gpxDefaultStyles.fillOpacity
+                )
+            })
+        })
 
         // ################################################################## //
         // ################### Elements principaux du DOM ################### //
@@ -657,24 +776,7 @@ define([
             format = new KMLExtended({
                 showPointNames : false, // FIXME !
                 defaultStyle : [
-                    new ol.style.Style({
-                        image : new ol.style.Icon({
-                            src : Markers["lightOrange"],
-                            size : [51, 38],
-                            anchor : [25.5 , 38],
-                            anchorOrigin : "top-left",
-                            anchorXUnits : "pixels",
-                            anchorYUnits : "pixels"
-                        }),
-                        stroke : new ol.style.Stroke({
-                            // color : "#002A50",
-                            color : "rgba(0,42,80,0.8)",
-                            width : 4
-                        }),
-                        fill : new ol.style.Fill({
-                            color: "rgba(0, 183, 152, 0.5)"
-                        })
-                    })
+                    this._defaultKMLStyle
                 ]
             });
         } else if ( this._currentImportType === "GPX" ) {
@@ -705,23 +807,7 @@ define([
                 if ( features[i].getStyle() == null ) {
                     logger.log("[ol.control.LayerImport] set default style for GPX feature");
                     features[i].setStyle(
-                        new ol.style.Style({
-                            image : new ol.style.Icon({
-                                src : Markers["lightOrange"],
-                                size : [51, 38],
-                                anchor : [25.5 , 38],
-                                anchorOrigin : "top-left",
-                                anchorXUnits : "pixels",
-                                anchorYUnits : "pixels"
-                            }),
-                            stroke : new ol.style.Stroke({
-                                color : "rgba(0,42,80,0.8)",
-                                width : 4
-                            }),
-                            fill : new ol.style.Fill({
-                                color: "rgba(0, 183, 152, 0.5)"
-                            })
-                        })
+                        this._defaultGPXStyle
                     );
                 }
             }
@@ -784,23 +870,7 @@ define([
             format = new KMLExtended({
                 showPointNames : false, // FIXME !
                 defaultStyle : [
-                    new ol.style.Style({
-                        image : new ol.style.Icon({
-                            src : Markers["lightOrange"],
-                            size : [51, 38],
-                            anchor : [25.5 , 38],
-                            anchorOrigin : "top-left",
-                            anchorXUnits : "pixels",
-                            anchorYUnits : "pixels"
-                        }),
-                        stroke : new ol.style.Stroke({
-                            color : "rgba(0,42,80,0.8)",
-                            width : 4
-                        }),
-                        fill : new ol.style.Fill({
-                            color: "rgba(0, 183, 152, 0.5)"
-                        })
-                    })
+                    this._defaultKMLStyle
                 ]
             });
 
@@ -822,23 +892,7 @@ define([
                     if ( feature.getStyle() == null ) {
                         logger.log("[ol.control.LayerImport] set default style for GPX feature");
                         feature.setStyle(
-                            new ol.style.Style({
-                                image : new ol.style.Icon({
-                                    src : Markers["lightOrange"],
-                                    size : [51, 38],
-                                    anchor : [25.5 , 38],
-                                    anchorOrigin : "top-left",
-                                    anchorXUnits : "pixels",
-                                    anchorYUnits : "pixels"
-                                }),
-                                stroke : new ol.style.Stroke({
-                                    color : "rgba(0,42,80,0.8)",
-                                    width : 4
-                                }),
-                                fill : new ol.style.Fill({
-                                    color: "rgba(0, 183, 152, 0.5)"
-                                })
-                            })
+                            this._defaultGPXStyle
                         );
                     }
                 }
@@ -1854,6 +1908,31 @@ define([
         }
         var mapProjCode = map.getView().getProjection().getCode();
         return mapProjCode;
+    };
+
+    /**
+     * Converts hex color and opacity value to rgba String.
+     * (Code adapted from : http://stackoverflow.com/a/5624139)
+     *
+     * @return {String} hex - color hexadecimal value (e.g. "#ffffff")
+     * @return {Float} alpha - alpha parameters, that means the color transparence / opacity (in the range [0,1] inclusive)
+     * @private
+     */
+    LayerImport.prototype.hexToRgba = function (hex, alpha) {
+        // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+        var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+        hex = hex.replace(shorthandRegex, function (m, r, g, b) {
+            return r + r + g + g + b + b;
+        });
+
+        var rgb = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        rgb = rgb ? {
+            r : parseInt(rgb[1], 16),
+            g : parseInt(rgb[2], 16),
+            b : parseInt(rgb[3], 16)
+        } : null;
+        var result = rgb ? "rgba(" + rgb.r + ", " + rgb.g + ", " + rgb.b + ", " + alpha + ")" : null ;
+        return result ;
     };
 
     // ################################################################### //
