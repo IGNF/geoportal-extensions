@@ -944,7 +944,7 @@
         isExecuteOl3 = !isExecuteVg;
         isExecuteLeaflet = !isExecuteVg;
         $.util.log("# Run task for VirtualGeo 3D...");
-        runSequence("check", /*"test",*/ "dist", "doc", "lib", "sample", cb);
+        runSequence("check", /*"test",*/ "dist", /*"doc",*/ "lib", "sample", cb);
     });
 
     gulp.task("build-dist", function(cb) {
