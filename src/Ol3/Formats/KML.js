@@ -237,7 +237,9 @@ define([
                             case "styleUrl":
                                 // style avec lien vers...
                                 var _idStyle = types[j].textContent.slice(1);
-                                styles = stylesUrl[_idStyle].childNodes;
+                                if ( stylesUrl[_idStyle] ) {
+                                    styles = stylesUrl[_idStyle].childNodes;
+                                }
                                 break;
                             case "ExtendedData":
                                 extend = types[j].childNodes;
