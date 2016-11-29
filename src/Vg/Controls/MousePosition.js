@@ -1274,8 +1274,11 @@ define([
 
           var mapExtent = Utils.getMapExtent(map);//extent = [topLeft.lat, topLeft.lon, bottomRight.lat, bottomRight.lon]
 
-          //get all project whose extent intersects the map extent
-          var selectedCodes = [];
+          //clear select
+          var systemList = document.getElementById("GPmousePositionProjectionSystem");
+          systemList.innerHTML = "";
+
+          //add systems whose extent intersects the map extent
           for (var j = 0; j < this._projectionSystems.length; j++) {
               var proj = this._projectionSystems[j];
               if( proj.geoBBox )
@@ -1289,18 +1292,11 @@ define([
                       continue;//do not intersect
                   }
               }
-              selectedCodes.push( proj.code.toString() );
-          }
+              var option = document.createElement("option");
+              option.value = proj.code;
+              option.text  = proj.label || j;
 
-          //display in select widget only the projections previously filtered
-          var systemList = document.getElementById("GPmousePositionProjectionSystem");
-          for ( var j = 0; j < systemList.childNodes.length; j++) {
-              if( selectedCodes.indexOf( systemList.childNodes[j].value ) > -1 )
-              {
-                  systemList.childNodes[j].setAttribute( "style", "display: true" );
-              }else{
-                  systemList.childNodes[j].setAttribute( "style", "display: none" );
-              }
+              systemList.appendChild(option);
           }
       };
 
