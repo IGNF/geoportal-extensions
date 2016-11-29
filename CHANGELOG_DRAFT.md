@@ -3,6 +3,7 @@
 ## [ol3-0.11.0-dev](https://github.com/IGNF/geoportal-extensions/tree/ol3-0.11.0-dev) (2016-09-02)
 [Full Changelog](https://github.com/IGNF/geoportal-extensions/compare/leaflet-0.8.1-dev...ol3-0.11.0-dev)
 
+- fix \#76 : ol.control.layerimport - define default styles for KML and GPX imports [\#79](https://github.com/IGNF/geoportal-extensions/pull/79)
 - fix \#61 : ol.control.LayerImport - display WMS enclosed child layers [\#62](https://github.com/IGNF/geoportal-extensions/pull/62)
 - fix \#52 : ol.control.LayerImport : extent mal récupérée pour les couches en EPSG:4326 [\#60](https://github.com/IGNF/geoportal-extensions/pull/60)
 - Extension OL3 : proposer un outil de mesure de surface [\#57](https://github.com/IGNF/geoportal-extensions/issues/57)

@@ -107,7 +107,6 @@ define([
     // Inherits from ol.control.Control
     ol.inherits(LayerImport, ol.control.Control);
 
-
     /**
      * Default styles applyied to KML and GPX features.
      *
@@ -116,7 +115,6 @@ define([
     LayerImport.DefaultStyles = {
         image : new ol.style.Icon({
             src : Markers["lightOrange"],
-            size : [51, 38],
             anchor : [25.5, 38],
             anchorOrigin : "top-left",
             anchorXUnits : "pixels",
@@ -130,7 +128,6 @@ define([
             color : "rgba(0, 183, 152, 0.5)"
         })
     };
-
 
     /**
      * @lends module:LayerImport
