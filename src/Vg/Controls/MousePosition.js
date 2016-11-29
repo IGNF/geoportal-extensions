@@ -7,6 +7,7 @@ define([
     "Common/Utils/CheckRightManagement",
     "Common/Controls/MousePositionDOM",
     "Vg/Controls/Utils/PositionFormater",
+    "Vg/Controls/Utils",
     "Vg/CRS/CRS"
 ], function (
     // VirtualGeo, // FIXME Global for browser only !
@@ -17,6 +18,7 @@ define([
     RightManagement,
     MousePositionDOM,
     PositionFormater,
+    Utils,
     CRS
 ) {
 
@@ -1269,8 +1271,8 @@ define([
           if ( !map ) {
               return;
           }
-          
-          var mapExtent = getMapExtent(map);//extent = [topLeft.lat, topLeft.lon, bottomRight.lat, bottomRight.lon]
+
+          var mapExtent = Utils.getMapExtent(map);//extent = [topLeft.lat, topLeft.lon, bottomRight.lat, bottomRight.lon]
 
           //get all project whose extent intersects the map extent
           var selectedCodes = [];

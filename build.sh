@@ -31,9 +31,9 @@ gulp publish
 
 # vg
 gulp --vg
-gulp publish
+gulp publish --vg
 
 gulp --production --vg
-gulp publish
+gulp publish --vg
 
 echo "END"

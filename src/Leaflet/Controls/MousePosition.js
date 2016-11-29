@@ -310,9 +310,9 @@ define([
             }
 
             //re-initilisation des codes pour gerer le lien entre _projectionSystems et select du mouse position (lien code/value)
-            for(var i = 0 ; i < this._projectionSystems.length ; ++i)
+            for(var k = 0 ; k < this._projectionSystems.length ; ++k)
             {
-                this._projectionSystems[i].code = i;
+                this._projectionSystems[k].code = i;
             }
         },
 
@@ -1077,12 +1077,12 @@ define([
 
             //display in select widget only the projections previously filtered
             var systemList = document.getElementById("GPmousePositionProjectionSystem");
-            for ( var j = 0; j < systemList.childNodes.length; j++) {
-                if( selectedCodes.indexOf( systemList.childNodes[j].value ) > -1 )
+            for ( var k = 0; k < systemList.childNodes.length; k++) {
+                if( selectedCodes.indexOf( systemList.childNodes[k].value ) > -1 )
                 {
-                    systemList.childNodes[j].setAttribute( "style", "display: true" );
+                    systemList.childNodes[k].setAttribute( "style", "display: true" );
                 }else{
-                    systemList.childNodes[j].setAttribute( "style", "display: none" );
+                    systemList.childNodes[k].setAttribute( "style", "display: none" );
                 }
             }
         },
