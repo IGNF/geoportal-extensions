@@ -3,6 +3,7 @@ define([
     "woodman",
     "gp",
     "Common/Utils/CheckRightManagement",
+    "Common/Utils/SelectorID",
     "Common/Controls/MousePositionDOM",
     "Leaflet/Controls/Utils/PositionFormater",
     "Leaflet/CRS/CRS"
@@ -11,6 +12,7 @@ define([
     woodman,
     Gp,
     RightManagement,
+    ID,
     MousePositionDOM,
     PositionFormater,
     CRS
@@ -116,6 +118,9 @@ define([
 
             // on merge les options avec celles par defaut
             L.Util.extend(this.options, options);
+
+            /** uuid */
+            this._uid = ID.generate();
 
             // initialisation des systemes de projections
             this._projectionSystems = [];
@@ -520,12 +525,12 @@ define([
             var div = null;
 
             if (! active) {
-                div = L.DomUtil.get("GPmousePositionAltitude");
+                div = L.DomUtil.get(this._addUID("GPmousePositionAltitude"));
                 div.style.display = "none";
             }
 
             if (active && this._noRightManagement) {
-                div = L.DomUtil.get("GPmousePositionAlt");
+                div = L.DomUtil.get(this._addUID("GPmousePositionAlt"));
                 div.innerHTML = "no right !";
             }
         },
@@ -541,7 +546,7 @@ define([
         */
         _setCoordinatePanel : function (active) {
             if (! active) {
-                var div  = L.DomUtil.get("GPmousePositionCoordinate");
+                var div  = L.DomUtil.get(this._addUID("GPmousePositionCoordinate"));
                 div.style.display = "none";
             }
         },
@@ -558,7 +563,7 @@ define([
         _setSettingsPanel : function (active) {
             if (! active) {
                 var divPicto  = L.DomUtil.get("GPshowMousePositionSettingsPicto");
-                var divPanel  = L.DomUtil.get("GPmousePositionSettings");
+                var divPanel  = L.DomUtil.get(this._addUID("GPmousePositionSettings"));
                 divPicto.style.display = "none";
                 divPanel.style.display = "none";
             }

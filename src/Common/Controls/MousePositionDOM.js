@@ -4,6 +4,12 @@ define([], function () {
 
     var MousePositionDOM = {
 
+        /** Add uuid to the tag ID */
+        _addUID : function (id) {
+            var uid = (this._uid) ?  id + "-" + this._uid : id;
+            return uid;
+        },
+
         /**
         * Main container (DOM)
         *
@@ -12,7 +18,7 @@ define([], function () {
         _createMainContainerElement : function () {
 
             var container = document.createElement("div");
-            container.id  = "GPmousePosition";
+            container.id  = this._addUID("GPmousePosition");
             container.className = "GPwidget";
             return container;
         },
@@ -29,7 +35,7 @@ define([], function () {
         _createShowMousePositionElement : function () {
 
             var input  = document.createElement("input");
-            input.id   = "GPshowMousePosition";
+            input.id   = this._addUID("GPshowMousePosition");
             input.type = "checkbox";
             return input;
         },
@@ -42,12 +48,12 @@ define([], function () {
         _createShowMousePositionPictoElement : function (isDesktop) {
 
             // contexte d'execution
-            var context = this;
+            var self = this;
 
             var label = document.createElement("label");
-            label.id  = "GPshowMousePositionPicto";
+            label.id  = this._addUID("GPshowMousePositionPicto");
             label.className = "GPshowAdvancedToolPicto";
-            label.htmlFor = "GPshowMousePosition";
+            label.htmlFor = this._addUID("GPshowMousePosition");
             label.title = "Afficher les coordonnées du curseur";
 
             // FIXME detection disponible dans le JS !
@@ -73,15 +79,15 @@ define([], function () {
             // Show map center localisation if panel opened and tactile support
             label.addEventListener("click", function (e) {
                 var mapCenterClass = "";
-                if (!document.getElementById("GPshowMousePosition").checked && !isDesktop) {
+                if (!document.getElementById(self._addUID("GPshowMousePosition")).checked && !isDesktop) {
                     mapCenterClass = "GPmapCenterVisible";
                 }
                 document.getElementById("GPmapCenter").className = mapCenterClass;
-                context.onShowMousePositionClick(e);
+                self.onShowMousePositionClick(e);
             });
 
             var spanOpen = document.createElement("span");
-            spanOpen.id  = "GPshowMousePositionOpen";
+            spanOpen.id  = this._addUID("GPshowMousePositionOpen");
             spanOpen.className  = "GPshowAdvancedToolOpen";
             label.appendChild(spanOpen);
 
@@ -103,7 +109,7 @@ define([], function () {
             displayCoordinates = displayCoordinates ? true : ( typeof displayCoordinates === "undefined") ? true : false;
 
             var div = document.createElement("div");
-            div.id   = "GPmousePositionPanel";
+            div.id  = this._addUID("GPmousePositionPanel");
             div.className = "GPpanel";
 
             div.appendChild(this._createMousePositionPanelHeaderElement());
@@ -151,13 +157,14 @@ define([], function () {
             divClose.title = "Fermer le panneau";
 
             // Link panel close / visibility checkbox
+            var self = this;
             if (divClose.addEventListener) {
                 divClose.addEventListener("click", function () {
-                    document.getElementById("GPshowMousePositionPicto").click();
+                    document.getElementById(self._addUID("GPshowMousePositionPicto")).click();
                 }, false);
             } else if (divClose.attachEvent) {
                 divClose.attachEvent("onclick", function () {
-                    document.getElementById("GPshowMousePositionPicto").click();
+                    document.getElementById(self._addUID("GPshowMousePositionPicto")).click();
                 });
             }
 
@@ -178,7 +185,7 @@ define([], function () {
         _createMousePositionPanelBasicElement : function (displayAltitude, displayCoordinates) {
 
             var container = document.createElement("div");
-            container.id = "GPmousePositionBasicPanel";
+            container.id = this._addUID("GPmousePositionBasicPanel");
 
             // FIXME on devrait decomposer la fonction pour les besoins du controle,
             // on ajoutera ces childs à la main...
@@ -193,30 +200,30 @@ define([], function () {
         _createMousePositionPanelBasicCoordinateElement : function (display) {
 
             var div = document.createElement("div");
-            div.id = "GPmousePositionCoordinate";
+            div.id = this._addUID("GPmousePositionCoordinate");
             div.style.display = display ? "block" : "none";
 
             var spanLat = document.createElement("span");
             spanLat.className  = "GPmousePositionLabel";
-            spanLat.id = "GPmousePositionLatLabel";
+            spanLat.id = this._addUID("GPmousePositionLatLabel");
             spanLat.innerHTML = "Latitude : ";
             div.appendChild(spanLat);
 
             var spanCLat = document.createElement("span");
             spanCLat.className  = "GPmousePositionCoords";
-            spanCLat.id = "GPmousePositionLat";
+            spanCLat.id = this._addUID("GPmousePositionLat");
             spanCLat.innerHTML = "";
             div.appendChild(spanCLat);
 
             var spanLon = document.createElement("span");
             spanLon.className  = "GPmousePositionLabel";
-            spanLon.id = "GPmousePositionLonLabel";
+            spanLon.id = this._addUID("GPmousePositionLonLabel");
             spanLon.innerHTML = "Longitude : ";
             div.appendChild(spanLon);
 
             var spanCLon = document.createElement("span");
             spanCLon.className  = "GPmousePositionCoords";
-            spanCLon.id = "GPmousePositionLon";
+            spanCLon.id = this._addUID("GPmousePositionLon");
             spanCLon.innerHTML = "";
             div.appendChild(spanCLon);
 
@@ -227,7 +234,7 @@ define([], function () {
         _createMousePositionPanelBasicAltitudeElement : function (display) {
 
             var div = document.createElement("div");
-            div.id  = "GPmousePositionAltitude";
+            div.id  = this._addUID("GPmousePositionAltitude");
             div.style.display = display ? "block" : "none";
 
             var spanLabel = document.createElement("span");
@@ -237,7 +244,7 @@ define([], function () {
 
             var spanAlt = document.createElement("span");
             spanAlt.className  = "GPmousePositionCoords";
-            spanAlt.id = "GPmousePositionAlt";
+            spanAlt.id = this._addUID("GPmousePositionAlt");
             spanAlt.innerHTML = "";
             div.appendChild(spanAlt);
 
@@ -255,13 +262,13 @@ define([], function () {
 
             var input = document.createElement("input");
             input.type = "checkbox";
-            input.id = "GPshowMousePositionSettings";
+            input.id = this._addUID("GPshowMousePositionSettings");
 
             var label = document.createElement("label");
-            label.id = "GPshowMousePositionSettingsPicto";
-            label.htmlFor = "GPshowMousePositionSettings";
+            label.id = this._addUID("GPshowMousePositionSettingsPicto");
+            label.htmlFor = this._addUID("GPshowMousePositionSettings");
             label.title = "Réglages";
-            label.className = "GPshowMoreOptions GPshowMousePositionSettingsPicto";
+            label.className = "GPshowMoreOptions GPshowMousePositionSettingsPicto"; // FIXME classname and id ?
             label.style.display = display ? "block" : "none";
 
             list.push(input);
@@ -282,7 +289,7 @@ define([], function () {
         _createMousePositionSettingsElement : function () {
 
             var container = document.createElement("div");
-            container.id  = "GPmousePositionSettings";
+            container.id  = this._addUID("GPmousePositionSettings");
 
             var span = document.createElement("span");
             span.className  = "GPmousePositionSettingsLabel";
@@ -351,7 +358,7 @@ define([], function () {
             var context = this;
 
             var selectSystem = document.createElement("select");
-            selectSystem.id = "GPmousePositionProjectionSystem";
+            selectSystem.id = this._addUID("GPmousePositionProjectionSystem");
             selectSystem.className = "GPinputSelect GPmousePositionSettingsSelect";
             selectSystem.addEventListener("change", function (e) {
                 context.onMousePositionProjectionSystemChange(e);
@@ -376,7 +383,7 @@ define([], function () {
             var context = this;
 
             var selectUnits = document.createElement("select");
-            selectUnits.id = "GPmousePositionProjectionUnits";
+            selectUnits.id = this._addUID("GPmousePositionProjectionUnits");
             selectUnits.className = "GPinputSelect GPmousePositionSettingsSelect";
             selectUnits.addEventListener("change", function (e) {
                 context.onMousePositionProjectionUnitsChange(e);
@@ -407,8 +414,8 @@ define([], function () {
             // Compute coords in case of cursor position (desktop)
             if (coordinate && coordinate != null) {
 
-                var labelLon = document.getElementById("GPmousePositionLonLabel");
-                var labelLat = document.getElementById("GPmousePositionLatLabel");
+                var labelLon = document.getElementById(this._addUID("GPmousePositionLonLabel"));
+                var labelLat = document.getElementById(this._addUID("GPmousePositionLatLabel"));
 
                 if (coordinate.x || coordinate.y) {
                     labelLat.innerHTML = "X : ";
@@ -421,16 +428,16 @@ define([], function () {
                     labelLon.innerHTML = "Longitude : ";
                 }
 
-                var elLat = document.getElementById("GPmousePositionLat");
-                var elLon = document.getElementById("GPmousePositionLon");
+                var elLat = document.getElementById(this._addUID("GPmousePositionLat"));
+                var elLon = document.getElementById(this._addUID("GPmousePositionLon"));
 
-                elLat.innerHTML = coordinate.x || coordinate.lat || coordinate.e;
+                elLat.innerHTML = coordinate.x || coordinate.lat || coordinate.e || "0";
                 if (coordinate.unit) {
                     elLat.innerHTML += " ";
                     elLat.innerHTML += coordinate.unit;
                 }
 
-                elLon.innerHTML = coordinate.y || coordinate.lng || coordinate.lon || coordinate.n;
+                elLon.innerHTML = coordinate.y || coordinate.lng || coordinate.lon || coordinate.n || "0";
                 if (coordinate.unit) {
                     elLon.innerHTML += " ";
                     elLon.innerHTML += coordinate.unit;
@@ -446,7 +453,7 @@ define([], function () {
         GPdisplayElevation : function (coordinate, altitudeTimeoutDelay, noDataValue, noDataValueTolerance) {
 
             // contexte d'execution
-            var context = this;
+            var self = this;
 
             // Latency for altitude request
             var altitudeTimeout;
@@ -455,7 +462,7 @@ define([], function () {
             }
 
             clearTimeout(altitudeTimeout);
-            document.getElementById("GPmousePositionAlt").innerHTML = "...";
+            document.getElementById(this._addUID("GPmousePositionAlt")).innerHTML = "...";
 
             if ( noDataValue == null ) {
                 noDataValue = -99999;
@@ -470,13 +477,13 @@ define([], function () {
             if (coordinate && coordinate != null) {
 
                 // If no altitude panel, don't call altitude request
-                if (document.getElementById("GPmousePositionAltitude")) {
+                if (document.getElementById(this._addUID("GPmousePositionAltitude"))) {
                     altitudeTimeout = setTimeout( function () {
-                        context.onRequestAltitude(coordinate, function (z) {
+                        self.onRequestAltitude(coordinate, function (z) {
                             if ( minThreshold < z && z < maxThreshold ) {
-                                document.getElementById("GPmousePositionAlt").innerHTML = "--- m";
+                                document.getElementById(self._addUID("GPmousePositionAlt")).innerHTML = "--- m";
                             } else {
-                                document.getElementById("GPmousePositionAlt").innerHTML = z + " m";
+                                document.getElementById(self._addUID("GPmousePositionAlt")).innerHTML = z + " m";
                             }
                         });
                     }, altitudeTimeoutDelay);

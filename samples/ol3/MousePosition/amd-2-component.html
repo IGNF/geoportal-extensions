@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta content="IE=edge,chrome=1; charset=UTF-8" http-equiv="X-UA-Compatible">
+        <title>sample ol3 MousePosition</title>
+
+        <!-- Library OpenLayers 3 -->
+        <link rel="stylesheet" href="../../../lib/ol3/ol.css" />
+        <!-- <script src="../../../lib/ol3/ol-debug.js"></script> -->
+
+        <!-- Plugin OpenLayers 3 IGN -->
+        <link rel="stylesheet" href="../../../dist/ol3/GpPluginOl3.css" />
+        <!-- <script src="../../../dist/ol3/GpPluginOl3.js" data-url="./../resources/AutoConf.js"></script> -->
+
+        <!-- requirejs -->
+        <script src="../../../lib/require.js"></script>
+
+        <!-- load geoportail-waiting image -->
+        <style>
+            div#map1 {
+                background-image:url(../resources/geoportail-waiting.gif);
+                background-position:center center;
+                background-repeat:no-repeat;
+                max-width: 400px;
+                height: 150px;
+                margin: 10px;
+            }
+            div#map2 {
+                background-image:url(../resources/geoportail-waiting.gif);
+                background-position:center center;
+                background-repeat:no-repeat;
+                max-width: 400px;
+                height: 150px;
+                margin: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>
+            <a href="http://openlayers.org/"><img src="../resources/logo-ol3.png" alt="OpenLayers3" width="100" /></a>
+            <a href="http://www.ign.fr"><img src="../resources/logo-ign.jpg" alt="IGN" width="100" /></a>
+        </h1>
+        <h3>
+            OpenLayers3 - A high-performance, feature-packed library for all your mapping needs.
+        </h3>
+
+        <div>
+            <p>Ajout d'un widget d'affichage des coordonnées de la souris (x, y et H) - mode AMD - tests options</p>
+
+            <script>
+                var map;
+                /* global requirejs */
+                requirejs.config({
+                    "baseUrl" : "../../../src/",
+                    "paths": {
+                        // lib external
+                        "ol" : "../lib/ol3/ol-debug",
+                        "proj4"   : "../lib/proj4/proj4-src",
+                        "gp"      : "../lib/gp/GpServices-src",
+                        "sortable" : "../lib/sortable/Sortable",
+                        "woodman" : "../lib/woodman/woodman-amd"
+                    }
+                });
+                requirejs(
+                    ["ol", "proj4", "gp", "Ol3/Layers/LayerWMTS", "Ol3/Controls/MousePosition"],
+                    function (ol, proj4, Gp, LayerWMTS, MousePosition)
+                {
+                    // var map;
+                    console.log(ol.proj.get("EPSG:27582"));
+
+                    var createMap = function() {
+                        // on cache l'image de chargement du Géoportail.
+                        document.getElementById('map1').style.backgroundImage = 'none';
+
+                        //Création de la map
+                        var map1 = new ol.Map({
+                            target : "map1",
+                            layers : [new LayerWMTS({
+                                layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS",
+                            })],
+                            view : new ol.View({
+                                center : [288074.8449901076, 6247982.515792289],
+                                zoom : 8
+                            })
+                        });
+
+                        var mp1 = new MousePosition({
+                            collapsed : false,
+                            displayCoordinates : true,
+                            displayAltitude : true,
+                            altitude : {
+                                 triggerDelay : 100,
+                                 responseDelay : 500,
+                                 noDataValue : -99999,
+                                 noDataValueTolerance : 90000,
+                                 serviceOptions : {}
+                            },
+                            systems : [
+                             {
+                                crs : "EPSG:3857",
+                                label : "Mercator",
+                                type : "Metric"
+                              },
+                             {
+                                crs : "EPSG:4326",
+                                label : "Géographiques EPSG",
+                                type : "Geographical"
+                             },
+                             {
+                                crs : "IGNF:RGF93G",
+                                label : "Géographiques IGN",
+                                type : "Geographical"
+                             },
+                             {
+                                crs : "EPSG:27572",
+                                label : "Lambert 2 EPSG",
+                                type : "Metric"
+                             },
+                             ,
+                             {
+                                crs : "IGNF:LAMB2C",
+                                label : "Lambert 2 IGN",
+                                type : "Metric"
+                             },
+                             {
+                                crs : "IGNF:LAMBE",
+                                label : "Lambert 2 étendu IGN",
+                                type : "Metric"
+                             },
+                             {
+                                crs : "EPSG:2154",
+                                label : "Lambert 93 EPSG",
+                                type : "Metric"
+                             },
+                             {
+                                crs : "IGNF:LAMB93",
+                                label : "Lambert 93 IGN",
+                                type : "Metric"
+                             },
+                             {
+                                crs : "IGNF:WGS84G",
+                                label : "WGS84G IGN",
+                                type : "Geographical"
+                             }
+
+                            ],
+                            units : ["DEC", "DMS"]
+                        });
+                        map1.addControl(mp1);
+
+                        //Création de la map
+                        var map2 = new ol.Map({
+                            target : "map2",
+                            layers : [new LayerWMTS({
+                                layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS",
+                            })],
+                            view : new ol.View({
+                                center : [288074.8449901076, 6247982.515792289],
+                                zoom : 15
+                            })
+                        });
+
+                        var mp2 = new MousePosition();
+                        map2.addControl(mp2);
+                    }
+
+                    Gp.Services.getConfig({
+                        serverUrl : "./../resources/AutoConf.js",
+                        callbackSuffix : '',
+                        // apiKey: "jhyvi0fgmnuxvfv0zjzorvdn",
+                        timeOut : 20000,
+                        onSuccess : createMap
+                    });
+
+                });
+            </script>
+
+            <!-- map -->
+            <div id="map1">
+            </div>
+            <div id="map2">
+            </div>
+            <!-- Comment utiliser le plugin avec un exemple -->
+            <p>EXEMPLE D'UTILISATION</p>
+            <pre>
+                <code>
+                    window.onload = function () {
+                        var map = new ol.Map({
+                            layers: [
+                                new LayerWMTS({
+                                    layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS",
+                                })
+                            ],
+                            target: 'map',
+                            view: new ol.View({
+                                center: [288074.8449901076, 6247982.515792289],
+                                zoom: 5
+                            })
+                        });
+                    }
+                </code>
+            </pre>
+
+            <!-- Toutes les informations utiles sur ol3 -->
+            <p>
+                <ul>
+                    <li>En savoir plus avec le <a href="http://openlayers.org/en/v3.11.2/doc/quickstart.html">quick start guide</a>,</li>
+                    <li>d'autres informations avec <a href="http://openlayers.org/en/v3.11.2/examples/">les exemples</a>,</li>
+                    <li>ou aller directement à l'<a href="http://openlayers.org/en/v3.11.2/apidoc/">API documentation</a>.</li>
+                </ul>
+                Si vous avez des questions, jetez un oeil à la
+                <a href="http://stackoverflow.com/questions/tagged/openlayers-3">FAQ</a>.
+            </p>
+        </div>
+    </body>
+</html>
