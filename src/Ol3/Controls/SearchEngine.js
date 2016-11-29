@@ -41,6 +41,13 @@ define([
      * @param {Object}  [options.advancedSearch] - advanced search options for geocoding (filters). Properties can be found among geocode options.filterOptions (see {@link http://depot.ign.fr/geoportail/bibacces/develop/doc/module-Services.html#~geocode})
      * @param {Object}  [options.geocodeOptions = {}] - options of geocode service (see {@link http://depot.ign.fr/geoportail/bibacces/develop/doc/module-Services.html#~geocode})
      * @param {Object}  [options.autocompleteOptions = {}] - options of autocomplete service (see {@link http://depot.ign.fr/geoportail/bibacces/develop/doc/module-Services.html#~autoComplete}
+     * @param {Sting|Numeric|Function} [options.zoomTo] - zoom to results, by default, current zoom.
+     *       Value possible : auto or zoom level.
+     *       Possible to overload it with a function :
+     *       zoomTo : function (info) {
+     *           // do some stuff...
+     *           return zoom;
+     *       }
      * @example
      *  var SearchEngine = ol.control.SearchEngine({
      *      apiKey : "CLEAPI",
@@ -160,6 +167,7 @@ define([
         // define default options
         this.options = {
             collapsed : true,
+            zoomTo : "",
             resources : {
                 geocode : [],
                 autocomplete : []
@@ -857,13 +865,15 @@ define([
      * and move/zoom on a position.
      *
      * @param {Array} position - ol.Coordinate object [lon, lat] (en lat/lon : "EPSG:4326")
+     * @param {Number} zoom - zoom level
      * @private
      */
-    SearchEngine.prototype._setPosition = function (position) {
+    SearchEngine.prototype._setPosition = function (position, zoom) {
 
         var view = this.getMap().getView();
         console.log(position);
         view.setCenter(position);
+        view.setZoom(zoom);
 
     };
 
@@ -920,6 +930,128 @@ define([
             map.addOverlay(this._marker);
         }
     };
+
+    /**
+     * this method is called by this.on*ResultsItemClick()
+     * and get zoom to results.
+     *
+     * @param {Object} info - {}
+     * @private
+     */
+    SearchEngine.prototype._getZoom = function (info) {
+
+        var map  = this.getMap();
+        var key  = this.options.zoomTo;
+        var zoom = null;
+
+        // les valeurs du zooms sont determinées
+        // soit par les mots clefs suivants :  max, min ou auto
+        // soit par un niveau de zoom
+        // soit defini par l'utilisateur via une fonction
+
+        if ( typeof key === "function" ) {
+            logger.trace("zoom function");
+            zoom = key.call(this, info);
+        }
+
+        if ( typeof key === "number" ) {
+            logger.trace("zoom level");
+            zoom = key;
+        }
+
+        if ( typeof key === "string") {
+
+            // if (key === "max") {
+            //     zoom = map.getMaxZoom();
+            // } else if (key === "min") {
+            //     zoom = map.getMinZoom();
+            // } else
+
+            if (key === "auto") {
+                logger.trace("zoom auto");
+
+                var service = info.service;
+                var fields  = info.fields;
+                var type = info.type;
+
+                var importance = {
+                    1 : 11,
+                    2 : 12,
+                    3 : 13,
+                    4 : 14,
+                    5 : 15,
+                    6 : 16,
+                    7 : 17,
+                    8 : 17
+                };
+
+                // AutoCompletion POI
+                if (service === "SuggestedLocation") {
+                    // FIXME classification different de importance !
+                    if (type === "PositionOfInterest") {
+                        zoom = importance[fields.classification];
+                    }
+                }
+
+                // Geocodage POI
+                if (service === "DirectGeocodedLocation") {
+
+                    if (type === "PositionOfInterest") {
+                        zoom = importance[fields.importance] || 14; // au cas où la recherche est en freeform !
+                    }
+                }
+
+                // les autres ressources ont toujours un zoom constant...
+                if (type === "StreetAddress") {
+                    zoom = 17;
+                }
+
+                if (type === "CadastralParcel") {
+                    zoom = 17;
+                }
+
+                if (type === "Administratif") {
+                    zoom = 12;
+                }
+            } else {
+                // TODO ex. "5" !
+                var value = parseInt(key, 10);
+                if (!isNaN(value)) {
+                    logger.trace("zoom parsing");
+                    zoom = value;
+                }
+            }
+        }
+
+        // polyfill IE
+        Number.isInteger = Number.isInteger || function (value) {
+            return typeof value === "number" &&
+                   isFinite(value) &&
+                   Math.floor(value) === value;
+        };
+
+        // test de validité du zoom,
+        // on prend le zoom courant par defaut ...
+        if (!zoom || zoom === "" || !Number.isInteger(zoom)) {
+            logger.trace("zoom not found, current zoom...");
+            zoom = map.getView().getZoom();
+        }
+
+        // FIXME test si le zoom est dans l'espace de la carte
+        var min = map.minZoom; // .getMinZoom();
+        var max = map.maxZoom; // .getMaxZoom();
+        if (zoom < min) {
+            logger.trace("zoom level min...");
+            zoom = min;
+        }
+        if (zoom > max) {
+            logger.trace("zoom level max...");
+            zoom = max;
+        }
+
+        logger.trace("zoom", zoom);
+        return zoom;
+    },
 
     /**
      * this method is called on 'click' on this._marker
@@ -1119,7 +1251,8 @@ define([
         ];
         var info = {
             service : "SuggestedLocation",
-            type : this._suggestedLocations[idx].type
+            type : this._suggestedLocations[idx].type,
+            fields : this._suggestedLocations[idx]
         };
 
         // on ajoute le texte de l'autocomplétion dans l'input
@@ -1135,7 +1268,8 @@ define([
             position = ol.proj.transform(position, "EPSG:4326", mapProj);
         }
         // on centre la vue et positionne le marker, à la position reprojetée dans la projection de la carte
-        this._setPosition(position);
+        var zoom = this._getZoom(info);
+        this._setPosition(position, zoom);
         this._setMarker(position, info);
     };
 
@@ -1213,7 +1347,8 @@ define([
         var attributes = this._geocodedLocations[idx].placeAttributes;
         var info = {
             service : "DirectGeocodedLocation",
-            type : this._geocodedLocations[idx].type
+            type : this._geocodedLocations[idx].type,
+            fields : this._geocodedLocations[idx]
         };
 
         // on ajoute le texte du géocodage dans l'input
@@ -1244,7 +1379,8 @@ define([
             position = ol.proj.transform(position, "EPSG:4326", mapProj);
         }
         // on centre la vue et positionne le marker, à la position reprojetée dans la projection de la carte
-        this._setPosition(position);
+        var zoom = this._getZoom(info);
+        this._setPosition(position, zoom);
         this._setMarker(position, info);
     };
 
