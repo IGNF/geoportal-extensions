@@ -113,6 +113,12 @@
                       code : "LAMB93",
                       crs : CRS.EPSG2154,
                       label : "Lambert 93 (overload)",
+                      type : "Metric",
+                      geoBBox : { left: -9.86, bottom : 41.15, right : 10.38, top : 51.56 }
+                    },
+                    {
+                      crs : new L.Proj.CRS("IGNF:LAMB93"),
+                      label : "Lambert 93 (IGNF)",
                       type : "Metric"
                     },
                     {
@@ -123,7 +129,8 @@
                     {
                       crs : CRS.EPSG27572,
                       label : "Lambert 2 étendu (overload)",
-                      type : "Metric"
+                      type : "Metric",
+                      geoBBox : { left: -4.87, bottom : 42.33, right : 8.23, top : 51.14 }
                     },
                     {
                       crs : new L.Proj.CRS("IGNF:LAMB2C"),

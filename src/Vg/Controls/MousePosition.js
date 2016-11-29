@@ -520,13 +520,15 @@ define([
                 code : "EPSG:2154",
                 label : "Lambert 93",
                 crs : "EPSG:2154",
-                type : "Metric"
+                type : "Metric",
+                geoBBox : { left: -9.86, bottom : 41.15, right : 10.38, top : 51.56 }
             },
             {
                 code : "EPSG:27572",
                 label : "Lambert II étendu",
                 crs : "EPSG:27572",
-                type : "Metric"
+                type : "Metric",
+                geoBBox : { left: -4.87, bottom : 42.33, right : 8.23, top : 51.14 }
             }
         ];
 
@@ -1214,26 +1216,91 @@ define([
      * @param {Object} e - HTMLElement
      * @private
      */
-    MousePosition.prototype.onMousePositionProjectionSystemChange = function (e) {
+     MousePosition.prototype.onMousePositionProjectionSystemChange = function (e) {
 
-        var idx   = e.target.selectedIndex;      // index
+          var idx   = e.target.selectedIndex;      // index
+          var value = e.target.options[idx].value; // crs
 
-        // si on change de type de systeme, on doit aussi changer le type d'unités !
-        var type = this._projectionSystems[idx].type;
-        if (type !== this._currentProjectionType) {
-            this._setTypeUnitsPanel(type);
-        }
+          // si on change de type de systeme, on doit aussi changer le type d'unités !
+          var type = null;
+          for(var i = 0 ; i < this._projectionSystems.length ; ++i)
+          {
+              if( this._projectionSystems[i].code == value )
+              {
+                  type = this._projectionSystems[i].type;
+                  break;
+              }
+          }
 
-        // on enregistre le systeme courrant
-        this._currentProjectionSystems = this._projectionSystems[idx];
+          if( !type )
+          {
+              logger.log("system not found in projection systems container");
+              return;
+          }
 
-        // on simule un deplacement en mode tactile pour mettre à jour les
-        // resultats
-        if (!this._isDesktop) {
-            this.onMapMove();
-        }
-        // FIXME : adapter le rechargement en mode tactile à OpenLayers !!
-    };
+          if (type !== this._currentProjectionType) {
+              this._setTypeUnitsPanel(type);
+          }
+
+          // on enregistre le systeme courrant
+          this._currentProjectionSystems = this._projectionSystems[idx];
+
+          // on simule un deplacement en mode tactile pour mettre à jour les
+          // resultats
+          if (!this._isDesktop) {
+              this.onMapMove();
+          }
+          // FIXME : adapter le rechargement en mode tactile à OpenLayers !!
+      };
+
+    /**
+     * this method is called by event 'mouseover' on 'GPmousePositionProjectionSystem'
+     * tag select (cf. this._createMousePositionSettingsElement),
+     * and selects the system projection.
+     *
+     * @method onMousePositionProjectionSystemMouseOver
+     * @param {Object} e - HTMLElement
+     * @private
+     */
+      MousePosition.prototype.onMousePositionProjectionSystemMouseOver = function (e) {
+
+          //map infos
+          var map = this.getMap();
+          if ( !map ) {
+              return;
+          }
+          
+          var mapExtent = getMapExtent(map);//extent = [topLeft.lat, topLeft.lon, bottomRight.lat, bottomRight.lon]
+
+          //get all project whose extent intersects the map extent
+          var selectedCodes = [];
+          for (var j = 0; j < this._projectionSystems.length; j++) {
+              var proj = this._projectionSystems[j];
+              if( proj.geoBBox )
+              {
+                  //bboxes intersection test
+                  if(   mapExtent[1] > proj.geoBBox.right ||
+                        mapExtent[2] > proj.geoBBox.top   ||
+                        mapExtent[3] < proj.geoBBox.left  ||
+                        mapExtent[0] < proj.geoBBox.bottom
+                  ){
+                      continue;//do not intersect
+                  }
+              }
+              selectedCodes.push( proj.code.toString() );
+          }
+
+          //display in select widget only the projections previously filtered
+          var systemList = document.getElementById("GPmousePositionProjectionSystem");
+          for ( var j = 0; j < systemList.childNodes.length; j++) {
+              if( selectedCodes.indexOf( systemList.childNodes[j].value ) > -1 )
+              {
+                  systemList.childNodes[j].setAttribute( "style", "display: true" );
+              }else{
+                  systemList.childNodes[j].setAttribute( "style", "display: none" );
+              }
+          }
+      };
 
     /**
      * this method is called by event 'change' on 'GPmousePositionProjectionUnits'
