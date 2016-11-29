@@ -10,6 +10,7 @@ input[id^=GPshowMeasureLength-] + label {
 
 input[id^=GPshowMeasureLength-]:checked + label {
   display: block;
+  background-color: rgba(0,60,136,0.5);
 }
 
 input[id^=GPshowMeasureLength-] + label + div {

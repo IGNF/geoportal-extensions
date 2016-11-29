@@ -47,7 +47,7 @@ define([
             units : [],
             systems : [],
             displayAltitude : true,
-            displayCoordinate : true,
+            displayCoordinates : true,
             altitude : {
                 triggerDelay : 200,
                 responseDelay : 500,
@@ -76,7 +76,7 @@ define([
          *      Values may be "DEC" (decimal degrees), "DMS" (sexagecimal), "RAD" (radians) and "GON" (grades) for geographical coordinates,
          *      and "M" or "KM" for metric coordinates
         * @param {Boolean} [options.displayAltitude] - active/desactivate the altitude panel, if desactivate, have just the coordinate panel, true by default
-        * @param {Boolean} [options.displayCoordinate] - active/desactivate the coordinate panel, if desactivate, have just the altitude panel, true by default
+        * @param {Boolean} [options.displayCoordinates] - active/desactivate the coordinate panel, if desactivate, have just the altitude panel, true by default
         * @param {Object}  [options.altitude] - elevation configuration
         * @param {Object}  [options.altitude.serviceOptions] - options of elevation service
         * @param {Number}  [options.altitude.responseDelay] - latency for altitude request, 500 ms by default
@@ -155,9 +155,9 @@ define([
             this._showMousePositionContainer = null;
 
             // gestion de l'affichage du panneau de l'altitude / coordonnées
-            if (!this.options.displayAltitude && !this.options.displayCoordinate) {
+            if (!this.options.displayAltitude && !this.options.displayCoordinates) {
                 // on reactive cette option !
-                this.options.displayCoordinate = true;
+                this.options.displayCoordinates = true;
             }
 
             /**
@@ -489,7 +489,7 @@ define([
             var picto = this._createShowMousePositionPictoElement(this._isDesktop);
             container.appendChild(picto);
 
-            var panel    = this._createMousePositionPanelElement(this.options.displayAltitude, this.options.displayCoordinate);
+            var panel    = this._createMousePositionPanelElement(this.options.displayAltitude, this.options.displayCoordinates);
             var settings = this._createMousePositionSettingsElement();
             var systems  = this._projectionSystemsContainer = this._createMousePositionSettingsSystemsElement(this._projectionSystems);
             var units    = this._projectionUnitsContainer   = this._createMousePositionSettingsUnitsElement(this._projectionUnits[this._currentProjectionType]);
@@ -987,8 +987,8 @@ define([
             // on gère l'affichage des panneaux ici...,
             // même si ce n'est pas l'endroit adequate...
             this._setElevationPanel(this.options.displayAltitude);
-            this._setCoordinatePanel(this.options.displayCoordinate);
-            if (! this.options.displayCoordinate) {
+            this._setCoordinatePanel(this.options.displayCoordinates);
+            if (! this.options.displayCoordinates) {
                 this._setSettingsPanel(false);
             }
         },

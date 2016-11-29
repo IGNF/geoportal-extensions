@@ -41,5 +41,5 @@ nb-configuration.xml
 /bower_components/
 /bower_dependencies/
 /node_modules/
-
+/dist/
 /lib/vg/

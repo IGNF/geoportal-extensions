@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Library Ol3 -->
+  <link rel="stylesheet" href="../../lib/leaflet/leaflet.css" />
+  <script src="../../lib/leaflet/leaflet.js"></script>
+
+  <!-- Plugin ol3 IGN -->
+  <link rel="stylesheet" href="../../dist/leaflet/GpPluginLeaflet.css" />
+  <script src="../../dist/leaflet/GpPluginLeaflet.js" data-key="jhyvi0fgmnuxvfv0zjzorvdn"></script>
+
+</head>
+<body>
+  <h1>
+    <a href="http://leafletjs.com"><img src="../resources/logo-leaflet.png" alt="Leaflet" width="300" /></a>
+    <a href="http://www.ign.fr"><img src="../resources/logo-ign.jpg" alt="IGN" width="100" /></a>
+  </h1>
+  <h3>
+    Leaflet - une bibliothèque JavaScript open-source pour des cartes interactives mobile-friendly
+  </h3>
+  <div>
+    <!-- Faire une bréve description du plugin -->
+    <p>TODO : DESCRIPTION DU PLUGIN</p>
+
+    <!-- map -->
+    <div id="map" style="height: 400px;"></div>
+
+    <!-- Mettre le code source de l'exemple -->
+    <script>
+
+    window.onload = function () {
+      // on cache l'image de chargement du Géoportail.
+      document.getElementById("map").style.backgroundImage = "none";
+
+      // Création de la map
+      var layer = L.geoportalLayer.WMS({
+        layer : "ORTHOIMAGERY.ORTHOPHOTOS"
+      });
+
+      var map  = L.map('map', {
+        zoom : 2,
+        center : L.latLng(48, 2)
+      });
+
+      layer.addTo(map);
+
+      var iso = L.geoportalControl.Isocurve();
+      map.addControl(iso);
+      var layerSwitcher = L.geoportalControl.LayerSwitcher();
+      map.addControl(layerSwitcher);
+      var mp = L.geoportalControl.MousePosition();
+      map.addControl(mp);
+      var route = L.geoportalControl.Route();
+      map.addControl(route);
+      var reverse = L.geoportalControl.ReverseGeocode();
+      map.addControl(reverse);
+      var search = L.geoportalControl.SearchEngine();
+      map.addControl(search);
+
+    };
+
+    </script>
+
+    <!-- Comment utiliser le plugin avec un exemple -->
+    <p>TODO : EXEMPLE D'UTILISATION DU PLUGIN</p>
+    <pre>
+      <code>TODO : CODE DE L'EXEMPLE</code>
+    </pre>
+
+    <!-- Toutes les informations utiles sur Leaflet -->
+    <p>
+      <ul>
+        <li>En savoir plus avec le <a href="http://leafletjs.com/examples/quick-start.html">quick start guide</a>,</li>
+        <li>d'autres informations avec <a href="http://leafletjs.com/examples.html">les exemples</a>,</li>
+        <li>ou aller directement à l'<a href="http://leafletjs.com/reference.html">API documentation</a>.</li>
+      </ul>
+      Si vous avez des questions, jetez un oeil à la
+      <a href="https://github.com/Leaflet/Leaflet/blob/master/FAQ.md">FAQ</a>.
+    </p>
+  </div>
+</body>
+</html>

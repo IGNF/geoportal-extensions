@@ -664,6 +664,7 @@
                 .pipe($.plumber())
                 .pipe($.size());
     });
+
     //|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     //| ✓ jsdoc
     //| > Documenting JavaScript with JSDoc.
@@ -735,6 +736,7 @@
     //'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     gulp.task("copy-sample", function () {
 
+        var bundle   = (isExecuteOl3) ? ol3OutputNameBase : (isExecuteLeaflet) ? leafletOutputNameBase : (isExecuteVg) ? vgOutputNameBase : null;
         var baseDir  = (isExecuteOl3) ? "ol3" : (isExecuteLeaflet) ? "leaflet" : (isExecuteVg) ? "vg" : null;
         var buildDir = (isExecuteOl3) ? path.join(_build, "Ol3", "samples", baseDir) :
                             (isExecuteLeaflet) ? path.join(_build, "Leaflet", "samples", baseDir) :
@@ -749,7 +751,11 @@
         sources.push("!" + path.join(_dir.samples, baseDir, "Test"));
         sources.push("!" + path.join(_dir.samples, baseDir, "Test/**"));
 
+        var bundleToReplace  = bundle + "-src";
+
         return gulp.src(sources)
+            .pipe((isProduction) ? $.replace(bundleToReplace, bundle) : $.util.noop())
+            .pipe((isProduction) ? $.replace(bundleToReplace, bundle) : $.util.noop())
             .pipe(gulp.dest(buildDir));
     });
 
@@ -760,14 +766,13 @@
     gulp.task("copy-resources-sample", function () {
 
         var baseDir  = (isExecuteOl3) ? "ol3" : (isExecuteLeaflet) ? "leaflet" : (isExecuteVg) ? "vg" : null;
-        var buildDir = (isExecuteOl3) ? path.join(_build, "Ol3", "samples", "resources") :
-                            (isExecuteLeaflet) ? path.join(_build, "Leaflet", "samples", "resources") :
-                                (isExecuteVg) ? path.join(_build, "Vg", "samples", "resources") :
+        var buildDir = (isExecuteOl3) ? path.join(_build, "Ol3", "samples", baseDir, "resources") :
+                            (isExecuteLeaflet) ? path.join(_build, "Leaflet", "samples", baseDir, "resources") :
+                                (isExecuteVg) ? path.join(_build, "Vg", "samples", baseDir, "resources") :
                                     null;
 
         var sources  = [];
         // includes : les ressources
-        sources.push(path.join(_dir.samples, "resources", "**"));
         sources.push(path.join(_dir.samples, baseDir, "resources", "**"));
 
         return gulp.src(sources)
@@ -939,7 +944,7 @@
         isExecuteOl3 = !isExecuteVg;
         isExecuteLeaflet = !isExecuteVg;
         $.util.log("# Run task for VirtualGeo 3D...");
-        runSequence("check", /*"test",*/ "dist", "doc", "lib", "sample", cb);
+        runSequence("check", /*"test",*/ "dist", /*"doc",*/ "lib", "sample", cb);
     });
 
     gulp.task("build-dist", function(cb) {

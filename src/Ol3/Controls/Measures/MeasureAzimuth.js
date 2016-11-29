@@ -2,6 +2,7 @@ define([
     "ol",
     "woodman",
     "Ol3/Utils",
+    "Ol3/Controls/MeasureToolBox",
     "Ol3/Controls/Measures/Measures",
     "Common/Controls/MeasureAzimuthDOM",
     "Common/Utils/SelectorID"
@@ -9,6 +10,7 @@ define([
     ol,
     woodman,
     Utils,
+    MeasureToolBox,
     Measures,
     MeasureAzimuthDOM,
     ID
@@ -31,19 +33,18 @@ define([
     * @alias ol.control.MeasureAzimuth
     * @extends {ol.control.Control}
     * @param {Object} options - options for function call.
-    * @param {Object} [options.styles = {}] - styles management of draw
-    * @param {Object} [options.styles.start = {}] - Line Style for a start drawing
-    * @param {Object} [options.styles.start.fillColor] - Line for fill color
-    * @param {Object} [options.styles.start.strokeColor] - Line for stroke color
-    * @param {Object} [options.styles.start.strokeLineDash] - Line for stroke dash
-    * @param {Object} [options.styles.start.strokeWidth] - Line for stroke width
-    * @param {Object} [options.styles.start.imageRadius] - Point radius
-    * @param {Object} [options.styles.start.imageFillColor] - Point for fill color
-    * @param {Object} [options.styles.start.imageStrokeColor] - Point for stroke color
-    * @param {Object} [options.styles.finish = {}] - Line Style for a finish drawing
-    * @param {Object} [options.styles.finish.fillColor] - Line for fill color
-    * @param {Object} [options.styles.finish.strokeColor] - Line for stroke color
-    * @param {Object} [options.styles.finish.strokeWidth] - Line for stroke width
+    * @param {Object} [options.styles = {}] - styles management of draw with properties or object {ol.style}
+    * @param {Object} [options.styles.pointer = {}] - Point Style for a start drawing with properties or object {ol.style.Circle}
+    * @param {Number} [options.styles.pointer.imageRadius] - Point radius (properties)
+    * @param {String} [options.styles.pointer.imageFillColor] - Point for fill color (properties)
+    * @param {String} [options.styles.pointer.imageStrokeColor] - Point for stroke color (properties)
+    * @param {Object} [options.styles.start = {}] - Line Style for a start drawing with properties or object {ol.style.Stroke}
+    * @param {String} [options.styles.start.strokeColor] - Line for stroke color (properties)
+    * @param {Array}  [options.styles.start.strokeLineDash] - Line for stroke dash (properties)
+    * @param {Number} [options.styles.start.strokeWidth] - Line for stroke width (properties)
+    * @param {Object} [options.styles.finish = {}] - Line Style for a finish drawing with properties or object {ol.style.Stroke}
+    * @param {String} [options.styles.finish.strokeColor] - Line for stroke color (properties)
+    * @param {Number} [options.styles.finish.strokeWidth] - Line for stroke width (properties)
     * @param {Object} [options.tooltip = {}] - NOT YET IMPLEMENTED !
     * @example
     * var measure = new ol.control.MeasureAzimuth({
@@ -52,10 +53,11 @@ define([
     *    render : null,
     *    styles : {
     *     start : {
-    *       fillColor : "rgba(255, 255, 255, 0.2)",
     *       strokeColor : "rgba(0, 0, 0, 0.5)",
     *       strokeLineDash : [10, 10],
-    *       strokeWidth : 2,
+    *       strokeWidth : 2
+    *     },
+    *     pointer : {
     *       imageRadius : 5,
     *       imageFillColor : "rgba(255, 255, 255, 0.2)",
     *       imageStrokeColor : "rgba(0, 0, 0, 0.7)"
@@ -80,11 +82,12 @@ define([
         /** Nom de la classe (heritage) */
         this.CLASSNAME = "MeasureAzimuth";
 
-        /** uuid */
+        // uuid
         this._uid = ID.generate();
 
-        /** container d'activation du controle */
+        // container d'activation du controle
         this._showContainer = null;
+        this._pictoContainer = null;
 
         // initialisation du composant
         this._initialize(options);
@@ -132,22 +135,34 @@ define([
      */
     MeasureAzimuth.prototype.setMap = function (map) {
 
+        // sauvegarde de l'état de l'outil
+        var className = this.CLASSNAME;
+        this.tools[className].instance = this;
+
+        // on fait le choix de ne pas activer les events sur la map à l'init de l'outil,
+        // mais uniquement à son utilisation !
         if ( map ) {
-            var self = this;
-            // FIXME
+
+            logger.trace("setMap()");
+            // var self = this;
             // map.on("click", function (e) {
             //     logger.trace("event on map with click!");
             //     self.onPointerMoveAzimutHandler(e);
             // });
-            map.on("singleclick", function (e) {
-                logger.trace("event on map with singleclick!");
-                self.onPointerMoveAzimutHandler(e);
-            });
+            //
+            // map.on("singleclick", function (e) {
+            //     logger.trace("event on map with singleclick!");
+            //     self.onPointerMoveAzimutHandler(e);
+            // });
+            //
+            // map.on("pointermove", function (e) {
+            //     logger.trace("event on map with pointermove!");
+            //     self.onPointerMoveAzimutHandler(e);
+            // });
 
-            map.on("pointermove", function (e) {
-                logger.trace("event on map with pointermove!");
-                self.onPointerMoveAzimutHandler(e);
-            });
+            if (! this.options.target) {
+                MeasureToolBox.add(map, this);
+            }
         }
 
         // on appelle la méthode setMap originale d'OpenLayers
@@ -169,6 +184,8 @@ define([
 
         // liste des options
         this.options = {};
+        this.options.target   = ( typeof options.target !== "undefined" ) ? options.target : null;
+        this.options.render   = ( typeof options.render !== "undefined" ) ? options.render : null;
 
         // gestion des styles !
         this.createStylingMeasureInteraction(options.styles);
@@ -189,9 +206,9 @@ define([
         container.appendChild(show);
 
         // par defaut, pas d'interaction à l'initialisation...
-        this._showContainer.checked = true;
+        this._showContainer.checked = false;
 
-        var picto = this._createShowMeasureAzimuthPictoElement();
+        var picto = this._pictoContainer = this._createShowMeasureAzimuthPictoElement();
         container.appendChild(picto);
 
         return container;
@@ -202,8 +219,35 @@ define([
     // ################################################################### //
 
     /**
+     * Add all events on map
+     *
+     * @private
+     */
+    MeasureAzimuth.prototype.addMeasureEvents = function () {
+        logger.trace("call MeasureAzimuth::addMeasureEvents()");
+
+        var map = this.getMap();
+
+        map.on("singleclick", this.onPointerMoveAzimutHandler, this);
+        map.on("pointermove", this.onPointerMoveAzimutHandler, this);
+    };
+
+    /**
+     * Remove all events on map
+     *
+     * @private
+     */
+    MeasureAzimuth.prototype.removeMeasureEvents = function () {
+        logger.trace("call MeasureAzimuth::removeMeasureEvents()");
+
+        var map = this.getMap();
+
+        map.un("singleclick", this.onPointerMoveAzimutHandler, this);
+        map.un("pointermove", this.onPointerMoveAzimutHandler, this);
+    };
+
+    /**
     * Format length output.
-    * FIXME bug sur le calcul (pb de signe !?)
     *
     * @param {ol.geom.LineString} line - geometry line.
     * @return {String} The formatted output.
@@ -254,11 +298,14 @@ define([
     */
     MeasureAzimuth.prototype.onShowMeasureAzimuthClick = function (e) {
         logger.trace("call MeasureAzimuth::onShowMeasureAzimuthClick()", e);
+
+        // appel de la methode commune
         this.onShowMeasureClick(e, "LineString");
     };
 
     /**
     * Handle pointer click.
+    *
     * @param {ol.MapBrowserEvent} e - The event.
     * @private
     */
