@@ -1,19 +1,19 @@
 /* MOUSE POSITION */
 
-#GPmousePosition {
+div[id^=GPmousePosition-] {
   bottom: 8px;
   left: 10px;
 }
 
 /* Showing/hiding mouse position panel */
 
-#GPshowMousePositionOpen {
+span[id^=GPshowMousePositionOpen] {
   background-image: url("img/GPmousePositionOpen.png");
 }
 
 /* General panels */
 
-#GPmousePositionPanelClose {
+div[id^=GPmousePositionPanelClose]  {
   background-image: url("img/GPmousePositionOpen.png");
 }
 
