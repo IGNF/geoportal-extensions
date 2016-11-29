@@ -3,6 +3,7 @@ define([
     "gp",
     "woodman",
     "Ol3/Utils",
+    "Ol3/Controls/Utils/Markers",
     "Common/Controls/LayerImportDOM",
     "Common/Utils/SelectorID",
     "Ol3/Formats/KML"
@@ -11,6 +12,7 @@ define([
     Gp,
     woodman,
     Utils,
+    Markers,
     LayerImportDOM,
     SelectorID,
     KMLExtended
@@ -36,6 +38,12 @@ define([
      * @param {Object} [options.webServicesOptions = {}] - Options to import WMS or WMTS layers
      * @param {String} [options.webServicesOptions.proxyUrl] - Proxy URL to avoid cross-domain problems. Mandatory to import WMS and WMTS layer.
      * @param {Array.<String>} [options.webServicesOptions.noProxyDomains] - Proxy will not be used for this list of domain names. Only use if you know what you're doing.
+     * @param {Object} [options.vectorStyleOptions] - Options for imported vector layer styling (KML, GPX)
+     * @param {Object} [options.vectorStyleOptions.KML] - Options for KML layer styling
+     * @param {Boolean} [options.vectorStyleOptions.KML.extractStyles = true] - Extract styles from the KML. Default is true.
+     * @param {Object} [options.vectorStyleOptions.KML.defaultStyle] - default style to be applied to KML imports in case no style is defined. defaultStyle is an ol.style.Style object (see. http://openlayers.org/en/latest/apidoc/ol.style.Style.htmlhttp://openlayers.org/en/latest/apidoc/ol.style.Style.html)
+     * @param {Object} [options.vectorStyleOptions.GPX] - Options for GPX layer styling
+     * @param {Object} [options.vectorStyleOptions.GPX.defaultStyle] - default style to be applied to GPX imports in case no style is defined. defaultStyle is an ol.style.Style object (see. http://openlayers.org/en/latest/apidoc/ol.style.Style.htmlhttp://openlayers.org/en/latest/apidoc/ol.style.Style.html)
      * @example
      *  var LayerImport = new ol.control.LayerImport({
      *      collapsed : false,
@@ -43,6 +51,33 @@ define([
      *      webServicesOptions : {
      *          proxyUrl : "http://localhost/proxy/php/proxy.php?url=",
      *          noProxyDomains : []
+     *      },
+     *      vectorStyleOptions : {
+     *          KML : {
+     *              extractStyles : true,
+     *              defaultStyle : {
+     *                  image : new ol.style.Icon({
+     *                       src : "data:image/png;base64....",
+     *                       size : [51, 38],
+     *                  }),
+     *                  stroke : new ol.style.Stroke({
+     *                       color : "#ffffff",
+     *                       width : 7
+     *                  })
+     *              }
+     *          },
+     *          GPX : {
+     *              defaultStyle : {
+     *                  image : new ol.style.Icon({
+     *                       src : "data:image/png;base64....",
+     *                       size : [51, 38],
+     *                  }),
+     *                  stroke : new ol.style.Stroke({
+     *                       color : "#ffffff",
+     *                       width : 7
+     *                  })
+     *              }
+     *          }
      *      }
      *  });
      */
@@ -71,6 +106,31 @@ define([
 
     // Inherits from ol.control.Control
     ol.inherits(LayerImport, ol.control.Control);
+
+
+    /**
+     * Default styles applyied to KML and GPX features.
+     *
+     * @private
+     */
+    LayerImport.DefaultStyles = {
+        image : new ol.style.Icon({
+            src : Markers["lightOrange"],
+            size : [51, 38],
+            anchor : [25.5, 38],
+            anchorOrigin : "top-left",
+            anchorXUnits : "pixels",
+            anchorYUnits : "pixels"
+        }),
+        stroke : new ol.style.Stroke({
+            color : "rgba(0,42,80,0.8)",
+            width : 4
+        }),
+        fill : new ol.style.Fill({
+            color : "rgba(0, 183, 152, 0.5)"
+        })
+    };
+
 
     /**
      * @lends module:LayerImport
@@ -121,7 +181,6 @@ define([
         this.collapsed = collapsed;
     };
 
-
     /**
      * Returns content of a static import (KML or GPX)
      *
@@ -161,13 +220,34 @@ define([
         // set default options
         this.options = {
             collapsed : true,
-            // layerTypes : ["KML", "GPX", "WMS", "WMTS", "WFS"],
             layerTypes : ["KML", "GPX", "WMS", "WMTS"],
-            webServicesOptions : {}
+            webServicesOptions : {},
+            vectorStyleOptions : {
+                KML : {
+                    extractStyles : true,
+                    showPointNames : true,
+                    defaultStyle : LayerImport.DefaultStyles
+                },
+                GPX : {
+                    defaultStyle : LayerImport.DefaultStyles
+                }
+            }
         };
 
+        // merge default styles (KML and GPX)
+        var defaultStyle;
+        if ( options.vectorStyleOptions ) {
+            for ( var format in options.vectorStyleOptions ) {
+                if ( options.vectorStyleOptions[format] && options.vectorStyleOptions[format].defaultStyle ) {
+                    defaultStyle = this.options.vectorStyleOptions[format].defaultStyle;
+                    Utils.mergeParams(defaultStyle, options.vectorStyleOptions[format].defaultStyle);
+                    options.vectorStyleOptions[format].defaultStyle = defaultStyle;
+                }
+            }
+        }
+
         // merge with user options
-        Utils.assign(this.options, options);
+        Utils.mergeParams(this.options, options);
 
         /** {Boolean} specify if reverseGeocoding control is collapsed (true) or not (false) */
         this.collapsed = this.options.collapsed;
@@ -186,6 +266,22 @@ define([
         this._currentImportType = "KML";
         this._isCurrentImportTypeStatic = true;
         this._currentStaticImportType = "local";
+
+        // #################################################################### //
+        // ############### initialisation des styles par défaut ################## //
+
+        var kmlDefaultStyles = this.options.vectorStyleOptions.KML.defaultStyle;
+        this._defaultKMLStyle = new ol.style.Style({
+            image : kmlDefaultStyles.image,
+            stroke : kmlDefaultStyles.stroke,
+            fill : kmlDefaultStyles.fill
+        });
+        var gpxDefaultStyles = this.options.vectorStyleOptions.GPX.defaultStyle;
+        this._defaultGPXStyle = new ol.style.Style({
+            image : gpxDefaultStyles.image,
+            stroke : gpxDefaultStyles.stroke,
+            fill : gpxDefaultStyles.fill
+        });
 
         // ################################################################## //
         // ################### Elements principaux du DOM ################### //
@@ -653,7 +749,11 @@ define([
         if ( this._currentImportType === "KML" ) {
             // lecture du fichier KML : création d'un format ol.format.KML, qui possède une méthode readFeatures (et readProjection)
             format = new KMLExtended({
-                showPointNames : false // FIXME !
+                showPointNames : false, // FIXME !
+                extractStyles : this.options.vectorStyleOptions.KML.extractStyles,
+                defaultStyle : [
+                    this._defaultKMLStyle
+                ]
             });
         } else if ( this._currentImportType === "GPX" ) {
             // lecture du fichier GPX : création d'un format ol.format.GPX, qui possède une méthode readFeatures (et readProjection)
@@ -676,6 +776,18 @@ define([
             );
 
         logger.log("loaded features : ", features);
+
+        if ( this._currentImportType === "GPX" ) {
+            for (var i = 0 ; i < features.length; i++ ) {
+                // si aucun style n'est associé au feature
+                if ( features[i].getStyle() == null ) {
+                    logger.log("[ol.control.LayerImport] set default style for GPX feature");
+                    features[i].setStyle(
+                        this._defaultGPXStyle
+                    );
+                }
+            }
+        }
 
         // création d'une couche vectorielle à partir de ces features
         var vectorSource = new ol.source.Vector({
@@ -732,8 +844,12 @@ define([
         if ( this._currentImportType === "KML" ) {
             // lecture du fichier KML : création d'un format ol.format.KML, qui possède une méthode readFeatures (et readProjection)
             format = new KMLExtended({
-                showPointNames : false // FIXME !
+                showPointNames : false, // FIXME !
+                defaultStyle : [
+                    this._defaultKMLStyle
+                ]
             });
+
         } else if ( this._currentImportType === "GPX" ) {
             // lecture du fichier GPX : création d'un format ol.format.GPX, qui possède une méthode readFeatures (et readProjection)
             format = new ol.format.GPX();
@@ -744,6 +860,20 @@ define([
             url : url,
             format : format
         });
+
+        if ( this._currentImportType === "GPX" ) {
+            vectorSource.forEachFeature(
+                function (feature) {
+                    // si aucun style n'est associé au feature
+                    if ( feature.getStyle() == null ) {
+                        logger.log("[ol.control.LayerImport] set default style for GPX feature");
+                        feature.setStyle(
+                            this._defaultGPXStyle
+                        );
+                    }
+                }
+            );
+        }
 
         // ajout des informations pour le layerSwitcher (titre, description)
         if ( layerName ) {

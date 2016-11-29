@@ -10,8 +10,8 @@
 </head>
 <body>
   <h1>
-    <a href="http://leafletjs.com"><img src="../../resources/logo-leaflet.png" alt="Leaflet" width="300" /></a>
-    <a href="http://www.ign.fr"><img src="../../resources/logo-ign.jpg" alt="IGN" width="100" /></a>
+    <a href="http://leafletjs.com"><img src="../resources/logo-leaflet.png" alt="Leaflet" width="300" /></a>
+    <a href="http://www.ign.fr"><img src="../resources/logo-ign.jpg" alt="IGN" width="100" /></a>
   </h1>
   <h3>
     Leaflet - une bibliothèque JavaScript open-source pour des cartes interactives mobile-friendly
@@ -43,7 +43,7 @@
             var map  = L.map('map').setView([48, 2], 4);
 
             var logo1 = Factory.Logo({
-              picto : "../../resources/logo-ign-inverse-noir.gif",
+              picto : "../resources/logo-ign-inverse-noir.gif",
               url : "http://www.ign.fr",
               size : {width : "50px", height : "30px"}
             });
@@ -51,7 +51,7 @@
             logo1.addTo(map);
 
             var logo2 = Factory.Logo({
-              picto : "../../resources/logo-ign-noir.gif",
+              picto : "../resources/logo-ign-noir.gif",
               url : "http://www.ign.fr"
             });
 
@@ -70,7 +70,7 @@
         var map = L.map('viewerDiv').setView([48.845, 2.424], 15);
 
         var ctrlLogo = new Gp.L.Logo({
-          picto : "../../resources/logo-ign.jpg",
+          picto : "../resources/logo-ign.jpg",
           url : "http://www.ign.fr",
           text : "© IGN"
         });
