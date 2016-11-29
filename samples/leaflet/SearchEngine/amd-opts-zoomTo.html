@@ -64,13 +64,13 @@
               var search = new SearchEngine({
                 collapsed : false,
                 displayInfo : true,
-                // zoomTo : "auto",
-                zoomTo : function (info) {
-                  // Ex.
-                  // { service : "SuggestedLocation", type : "PositionOfInterest", fields : {...}}
-                  console.log(info);
-                  return 12;
-                },
+                zoomTo : "auto",
+                // zoomTo : function (info) {
+                //   // Ex.
+                //   // { service : "SuggestedLocation", type : "PositionOfInterest", fields : {...}}
+                //   console.log(info);
+                //   return 12;
+                // },
                 resources : ["PositionOfInterest", "StreetAddress", "CadastralParcel"],
                 displayAdvancedSearch : true,
                 advancedSearch : {}

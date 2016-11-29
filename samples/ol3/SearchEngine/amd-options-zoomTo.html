@@ -80,10 +80,8 @@
 
                         // Ajout du moteur de recherche Géoportail
                         searchEngine = new SearchEngine({
-                            // valeur possible : "" ou null, "auto", 18
-                            zoomTo : function (i) {
-                              return 1;
-                            }
+                            // valeur possible : "" ou null, "auto", 18, function (i) { return 1; }
+                            zoomTo : "auto"
                         });
                         map.addControl(searchEngine);
                     }

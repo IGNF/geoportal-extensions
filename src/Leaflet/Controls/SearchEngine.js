@@ -4,14 +4,16 @@ define([
     "gp",
     "Common/Utils/CheckRightManagement",
     "Common/Utils/SelectorID",
-    "Common/Controls/SearchEngineDOM"
+    "Common/Controls/SearchEngineDOM",
+    "Common/Controls/SearchEngineUtils"
 ], function (
     L,
     woodman,
     Gp,
     RightManagement,
     ID,
-    SearchEngineDOM
+    SearchEngineDOM,
+    SearchEngineUtils
 ) {
 
     "use strict";
@@ -1013,53 +1015,13 @@ define([
                 // } else
 
                 if (key === "auto") {
+
                     logger.trace("zoom auto");
+                    zoom = SearchEngineUtils.zoomToResultsByDefault(info);
 
-                    var service = info.service;
-                    var fields  = info.fields;
-                    var type = info.type;
-
-                    var importance = {
-                        1 : 11,
-                        2 : 12,
-                        3 : 13,
-                        4 : 14,
-                        5 : 15,
-                        6 : 16,
-                        7 : 17,
-                        8 : 17
-                    };
-
-                    // AutoCompletion POI
-                    if (service === "SuggestedLocation") {
-                        // FIXME classification different de importance !
-                        if (type === "PositionOfInterest") {
-                            zoom = importance[fields.classification];
-                        }
-                    }
-
-                    // Geocodage POI
-                    if (service === "DirectGeocodedLocation") {
-
-                        if (type === "PositionOfInterest") {
-                            zoom = importance[fields.importance] || 14; // au cas où la recherche est en freeform !
-                        }
-                    }
-
-                    // les autres ressources ont toujours un zoom constant...
-                    if (type === "StreetAddress") {
-                        zoom = 17;
-                    }
-
-                    if (type === "CadastralParcel") {
-                        zoom = 17;
-                    }
-
-                    if (type === "Administratif") {
-                        zoom = 12;
-                    }
                 } else {
-                    // TODO ex. "5" !
+                    
+                    logger.trace("zoom level parsing");
                     var value = parseInt(key, 10);
                     if (!isNaN(value)) {
                         logger.trace("zoom parsing");
