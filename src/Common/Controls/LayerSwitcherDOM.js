@@ -28,6 +28,12 @@ define(["sortable"], function (Sortable) {
         // ######################### Main container ########################## //
         // ################################################################### //
 
+        /** Add uuid to the tag ID */
+        _addUID : function (id) {
+            var uid = (this._uid) ?  id + "-" + this._uid : id;
+            return uid;
+        },
+
         /**
          * Creation du container principal (DOM)
          *
@@ -36,7 +42,7 @@ define(["sortable"], function (Sortable) {
         _createMainContainerElement : function () {
 
             var container = document.createElement("div");
-            container.id  = "GPlayerSwitcher";
+            container.id  = this._addUID("GPlayerSwitcher");
             container.className = "GPwidget";
             return container;
         },
@@ -47,7 +53,7 @@ define(["sortable"], function (Sortable) {
         _createMainLayersShowElement : function () {
             // <!-- Hidden checkbox for minimizing/maximizing -->
             var input  = document.createElement("input");
-            input.id   = "GPshowLayersList";
+            input.id   = this._addUID("GPshowLayersList");
             input.type = "checkbox";
             return input;
         },
@@ -61,7 +67,7 @@ define(["sortable"], function (Sortable) {
             //   (...)
             // </div>
             var div = document.createElement("div");
-            div.id  = "GPlayersList";
+            div.id  = this._addUID("GPlayersList");
             div.className = "GPpanel";
             return div;
         },
@@ -70,6 +76,9 @@ define(["sortable"], function (Sortable) {
          * Creation du container du picto du controle (DOM)
          */
         _createMainPictoElement : function () {
+
+            var self = this;
+
             // exemple :
             // <!-- Label for minimizing/maximizing -->
             // <label id="GPshowLayersListPicto" class="GPshowAdvancedToolPicto" for="GPshowLayersList" title="Afficher/masquer le gestionnaire de couches">
@@ -77,21 +86,21 @@ define(["sortable"], function (Sortable) {
             // </label>
 
             var label = document.createElement("label");
-            label.id  = "GPshowLayersListPicto";
+            label.id  = this._addUID("GPshowLayersListPicto");
             label.className = "GPshowAdvancedToolPicto";
-            label.htmlFor = "GPshowLayersList";
+            label.htmlFor = this._addUID("GPshowLayersList");
             label.title = "Afficher/masquer le gestionnaire de couches";
 
             var spanOpen = document.createElement("span");
-            spanOpen.id  = "GPshowLayersListOpen";
+            spanOpen.id  = this._addUID("GPshowLayersListOpen");
             spanOpen.className  = "GPshowAdvancedToolOpen";
             spanOpen.addEventListener("click", function () {
-                if (document.getElementById("GPshowLayersList").checked) {
+                if (document.getElementById(self._addUID("GPshowLayersList")).checked) {
                     var layers = document.getElementsByClassName("GPlayerInfoOpened");
                     for ( var i = 0; i < layers.length; i++ ) {
                         layers[i].className = "GPlayerInfo";
                     }
-                    document.getElementById("GPlayerInfoPanel").className = "GPlayerInfoPanelClosed";
+                    document.getElementById(self._addUID("GPlayerInfoPanel")).className = "GPlayerInfoPanelClosed";
                 }
             });
 
@@ -99,15 +108,15 @@ define(["sortable"], function (Sortable) {
 
             var spanClose = document.createElement("span");
             spanClose.addEventListener("click", function () {
-                if (document.getElementById("GPshowLayersList").checked) {
+                if (document.getElementById(self._addUID("GPshowLayersList")).checked) {
                     var layers = document.getElementsByClassName("GPlayerInfoOpened");
                     for ( var i = 0; i < layers.length; i++ ) {
                         layers[i].className = "GPlayerInfo";
                     }
-                    document.getElementById("GPlayerInfoPanel").className = "GPlayerInfoPanelClosed";
+                    document.getElementById(self._addUID("GPlayerInfoPanel")).className = "GPlayerInfoPanelClosed";
                 }
             });
-            spanClose.id  = "GPshowLayersListClose";
+            spanClose.id  = self._addUID("GPshowLayersListClose");
 
             label.appendChild(spanClose);
 
@@ -121,7 +130,7 @@ define(["sortable"], function (Sortable) {
             // gestion du panneau d"information dans le container principal
             // <div id="GPlayerInfoPanel" class="GPlayerInfoPanelClosed">...</div>
             var div = document.createElement("div");
-            div.id = "GPlayerInfoPanel";
+            div.id = this._addUID("GPlayerInfoPanel");
             div.className = "GPpanel GPlayerInfoPanelClosed";
             return div;
         },

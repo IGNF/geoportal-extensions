@@ -2,36 +2,36 @@
 
 /* Showing/hiding mouse position panel */
 
-#GPshowMousePositionPicto {
+label[id^=GPshowMousePositionPicto] {
   display: inline-block;
 }
 
-#GPshowMousePosition + label {
+input[id^=GPshowMousePosition-] + label {
   display: block;
 }
 
-#GPshowMousePosition:checked + label {
+input[id^=GPshowMousePosition-]:checked + label {
   display: none;
 }
 
-#GPshowMousePosition + label + div {
+input[id^=GPshowMousePosition-] + label + div {
   display: none;
 }
 
-#GPshowMousePosition:checked + label + div {
+input[id^=GPshowMousePosition-]:checked + label + div {
   display: block;
 }
 
 /* General panels */
 
-#GPmousePositionPanel {
+div[id^=GPmousePositionPanel-] {
   width: 240px;
   overflow: hidden;
 }
 
 /* Basic infos */
 
-#GPmousePositionBasicPanel {
+div[id^=GPmousePositionBasicPanel] {
   padding: 10px 15px;
 }
 
@@ -58,25 +58,25 @@
   transition: all 0.5s ease-out 0s;
 }
 
-#GPmousePosition input[type="checkbox"]:checked + .GPshowMousePositionSettingsPicto {
+div[id^=GPmousePosition-] input[type="checkbox"]:checked + .GPshowMousePositionSettingsPicto {
   bottom: 100px;
 }
 
-#GPmousePositionSettings {
+div[id^=GPmousePositionSettings-] {
   display: block;
   max-height: 0;
   opacity: 0;
   transition: max-height 0.5s ease-out 0s, opacity 0.5s ease-out 0s;
 }
 
-#GPmousePosition input[type="checkbox"]:checked + label + #GPmousePositionSettings {
+div[id^=GPmousePosition-] input[type="checkbox"]:checked + label + div[id^=GPmousePositionSettings-] {
   max-height: 95px;
   opacity: 1;
 }
 
 /* Settings */
 
-#GPmousePositionSettings {
+div[id^=GPmousePositionSettings-] {
   height: 95px;
   padding-left: 0 15px;
   overflow: hidden;
