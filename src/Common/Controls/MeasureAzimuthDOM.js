@@ -54,7 +54,7 @@ define([], function () {
             label.id  = this._addUID("GPshowMeasureAzimuthPicto");
             label.className = "GPshowAdvancedToolPicto";
             label.htmlFor = this._addUID("GPshowMeasureAzimuth");
-            label.title = "Calculer une azimut";
+            label.title = "Mesurer un azimut";
 
             // gestionnaire d'evenement :
             // on ouvre le menu de saisie...
