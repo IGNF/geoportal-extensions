@@ -429,46 +429,49 @@ define([
             }
 
             // cf. https://leaflet.github.io/Leaflet.draw/docs/leaflet-draw-latest.html
-            var polylineOptions = {
-                allowIntersection : true,
-                repeatMode : false,
-                drawError : {
-                    color : "#b00b00",
-                    timeout : 2500
-                },
-                icon : new L.DivIcon({
-                    iconSize : new L.Point(8, 8),
-                    className : 'leaflet-div-icon leaflet-editing-icon'
-                }),
-                touchIcon : new L.DivIcon({
-                    iconSize : new L.Point(20, 20),
-                    className : 'leaflet-div-icon leaflet-editing-icon leaflet-touch-icon'
-                }),
-                guidelineDistance : 1, // 20,
-                maxGuideLineLength : 4000,
-                shapeOptions : {
-                    stroke : true,
-                    color : "#C77A04", // '#f06eaa',
-                    weight : 4,
-                    opacity : 0.5,
-                    fill : false,
-                    clickable : true
-                },
-                metric : true, // Whether to use the metric measurement system or imperial
-                feet : true, // When not metric, to use feet instead of yards for display.
-                nautic : false, // When not metric, not feet use nautic mile for display
-                showLength : true, // Whether to display distance in the tooltip
-                zIndexOffset : 2000 // This should be > than the highest z-index any map layersallowIntersection: true,
-            };
-
             // var polylineOptions = {
-            //     repeatMode : true,
+            //     allowIntersection : true,
+            //     repeatMode : false,
+            //     drawError : {
+            //         color : "#b00b00",
+            //         timeout : 2500
+            //     },
+            //     icon : new L.DivIcon({
+            //         iconSize : new L.Point(8, 8),
+            //         className : 'leaflet-div-icon leaflet-editing-icon'
+            //     }),
+            //     touchIcon : new L.DivIcon({
+            //         iconSize : new L.Point(20, 20),
+            //         className : 'leaflet-div-icon leaflet-editing-icon leaflet-touch-icon'
+            //     }),
+            //     guidelineDistance : 1, // 20,
+            //     maxGuideLineLength : 4000,
             //     shapeOptions : {
-            //         color : "#C77A04"
-            //     }
+            //         stroke : true,
+            //         color : "#C77A04", // '#f06eaa',
+            //         weight : 4,
+            //         opacity : 0.5,
+            //         fill : false,
+            //         clickable : true
+            //     },
+            //     metric : true, // Whether to use the metric measurement system or imperial
+            //     feet : true, // When not metric, to use feet instead of yards for display.
+            //     nautic : false, // When not metric, not feet use nautic mile for display
+            //     showLength : true, // Whether to display distance in the tooltip
+            //     zIndexOffset : 2000 // This should be > than the highest z-index any map layersallowIntersection: true,
             // };
 
-            this._currentFeature = new L.Draw.Polyline(map, polylineOptions);
+            var styles = this.options.stylesOptions || {};
+            var _shapeOptions = (Object.keys(styles).length !== 0) ?  styles : {
+                stroke : true,
+                color : "#C77A04",
+                weight : 4,
+                opacity : 0.5
+            };
+
+            this._currentFeature = new L.Draw.Polyline(map, {
+                shapeOptions : _shapeOptions
+            });
             this._currentFeature.enable();
         },
 
