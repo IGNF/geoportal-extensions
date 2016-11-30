@@ -3,6 +3,7 @@
 ## [ol3-0.11.0-dev](https://github.com/IGNF/geoportal-extensions/tree/ol3-0.11.0-dev) (2016-09-02)
 [Full Changelog](https://github.com/IGNF/geoportal-extensions/compare/leaflet-0.8.1-dev...ol3-0.11.0-dev)
 
+- gestion des emprise des differents systemes de projection pour un affichage dynamique dans le widget mouse position des systems en fonction de l'emprise de la vue.
 - fix \#76 : ol.control.layerimport - define default styles for KML and GPX imports [\#79](https://github.com/IGNF/geoportal-extensions/pull/79)
 - fix \#61 : ol.control.LayerImport - display WMS enclosed child layers [\#62](https://github.com/IGNF/geoportal-extensions/pull/62)
 - fix \#52 : ol.control.LayerImport : extent mal récupérée pour les couches en EPSG:4326 [\#60](https://github.com/IGNF/geoportal-extensions/pull/60)
@@ -37,7 +38,7 @@
 ## [leaflet-0.8.1-dev](https://github.com/IGNF/geoportal-extensions/tree/leaflet-0.8.1-dev) (2016-07-21)
 [Full Changelog](https://github.com/IGNF/geoportal-extensions/compare/ol3-0.10.0...leaflet-0.8.1-dev)
 
-
+- gestion des emprise des differents systemes de projection pour un affichage dynamique dans le widget mouse position des systems en fonction de l'emprise de la vue.
 - PB de Compatibilité IE10 \(extension OL3 et Leaflet\) [\#30](https://github.com/IGNF/geoportal-extensions/issues/30)
 - Authentification HTTP et couches WMTS [\#31](https://github.com/IGNF/geoportal-extensions/issues/31)
 - Rajout des définitions du registre IGNF et enrichissement des définitions EPSG dans les extensions [\#36](https://github.com/IGNF/geoportal-extensions/issues/36)
