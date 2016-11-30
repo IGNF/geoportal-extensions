@@ -1063,7 +1063,7 @@ define([
             }
 
             //clear select
-            var systemList = document.getElementById("GPmousePositionProjectionSystem");
+            var systemList = document.getElementById( this._addUID("GPmousePositionProjectionSystem") );
             systemList.innerHTML = "";
 
             //add systems whose extent intersects the map extent
