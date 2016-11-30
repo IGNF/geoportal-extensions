@@ -96,7 +96,7 @@ define([
         * @extends {L.TileLayer.WMS}
         * @param {Object} options - options for function call.
         * @param {String} options.layer - layer name (e.g. "ORTHOIMAGERY.ORTHOPHOTOS")
-        * @param {String} [options.apiKey] - access key to Geoportal platform, obtained [here]{@link http://professionnels.ign.fr/geoservices-ign}.
+        * @param {String} [options.apiKey] - access key to Geoportal platform, obtained [here]{@link http://professionnels.ign.fr/ign/contrats}.
         * @param {Object} [settings] - other options for L.TileLayer.WMS function (see {@link http://leafletjs.com/reference.html#tilelayer-wms-options})
         * @returns {L.geoportalLayer.WMS}
         * @example
@@ -190,7 +190,7 @@ define([
         * @extends {L.TileLayer}
         * @param {Object} options - options for function call.
         * @param {String} options.layer - layer name (e.g. "ORTHOIMAGERY.ORTHOPHOTOS")
-        * @param {String} [options.apiKey] - access key to Geoportal platform, obtained [here]{@link http://professionnels.ign.fr/geoservices-ign}.
+        * @param {String} [options.apiKey] - access key to Geoportal platform, obtained [here]{@link http://professionnels.ign.fr/ign/contrats}.
         * @param {Object} [settings] - other options for L.TileLayer function (see {@link http://leafletjs.com/reference.html#tilelayer-options})
         * @returns {L.geoportalLayer.WMTS}
         * @example

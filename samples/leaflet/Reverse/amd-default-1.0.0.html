@@ -2,8 +2,9 @@
 <html>
 <head>
   <!-- Library Leaflet-->
-  <link rel="stylesheet" href="../../../lib/leaflet/1.0.0-rc1/leaflet.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0-beta.2.rc.2/leaflet.css" />
+  <!--link rel="stylesheet" href="../../../lib/leaflet/1.0.0-rc1/leaflet.css" /-->
+  <!--link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0-beta.2.rc.2/leaflet.css" /-->
+  <link rel="stylesheet" href="../../../lib/leaflet/1.0.1/leaflet.css" />
 
   <!-- Plugin leaflet IGN -->
   <link rel="stylesheet" href="../../../dist/leaflet/GpPluginLeaflet-src.css" />
@@ -14,8 +15,8 @@
 </head>
 <body>
   <h1>
-    <a href="http://leafletjs.com"><img src="../../resources/logo-leaflet.png" alt="Leaflet" width="300" /></a>
-    <a href="http://www.ign.fr"><img src="../../resources/logo-ign.jpg" alt="IGN" width="100" /></a>
+    <a href="http://leafletjs.com"><img src="../resources/logo-leaflet.png" alt="Leaflet" width="300" /></a>
+    <a href="http://www.ign.fr"><img src="../resources/logo-ign.jpg" alt="IGN" width="100" /></a>
   </h1>
   <h3>
     Leaflet - une bibliothèque JavaScript open-source pour des cartes interactives mobile-friendly
@@ -31,7 +32,9 @@
             'baseUrl' : "../../../src/",
             'paths' : {
                 // lib external
-                "leaflet" : "../lib/leaflet/leaflet-src",
+                // "leaflet" : "../lib/leaflet/leaflet-src",
+                //"leaflet" : "../lib/leaflet/1.0.0-rc1/leaflet-src",
+                "leaflet" : "../lib/leaflet/1.0.1/leaflet-src",
                 // cf. issues #17
                 // OK  => "leaflet" : "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0-rc.1/leaflet"
                 // OK  => "leaflet" : "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0-rc.2/leaflet",
@@ -51,7 +54,7 @@
         function (Gp, Layers, ReverseGeocoding) {
 
           Gp.Services.getConfig({
-            // serverUrl : "../../resources/autoconf/callback-autoconf-xml-light-more",
+            // serverUrl : "../resources/autoconf/callback-autoconf-xml-light-more",
             apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
             timeOut : 20000,
             onSuccess : function () {

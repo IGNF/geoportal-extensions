@@ -5,6 +5,7 @@ define([
     "gp",
     "Ol3/Utils",
     "Common/Utils/CheckRightManagement",
+    "Common/Utils/SelectorID",
     "Common/Controls/MousePositionDOM",
     "Ol3/CRS/CRS" // call autoload function !
 ], function (
@@ -14,6 +15,7 @@ define([
     Gp,
     Utils,
     RightManagement,
+    SelectorID,
     MousePositionDOM
 ) {
 
@@ -161,7 +163,7 @@ define([
 
         // mode "collapsed"
         if (!this.collapsed) {
-            var inputShow = document.getElementById("GPshowMousePosition");
+            var inputShow = document.getElementById("GPshowMousePosition-" + this._uid);
             inputShow.checked = "checked";
             this._setElevationPanel(this.options.displayAltitude);
             this._setCoordinatesPanel(this.options.displayCoordinates);
@@ -217,7 +219,7 @@ define([
         this._projectionSystems.push(system);
 
         // 2. add system settings option to container (if it was already build)
-        var selectSystem = document.getElementById("GPmousePositionProjectionSystem");
+        var selectSystem = document.getElementById("GPmousePositionProjectionSystem-" + this._uid);
         if ( selectSystem ) {
             var option = document.createElement("option");
             option.value = system.code;
@@ -271,7 +273,7 @@ define([
         }
 
         // find system in control container systems list
-        var systemList = document.getElementById("GPmousePositionProjectionSystem");
+        var systemList = document.getElementById("GPmousePositionProjectionSystem-" + this._uid);
         for ( var j = 0; j < systemList.childNodes.length; j++) {
             if ( systemCode === systemList.childNodes[j].value ) {
                 // remove system from control container systems list
@@ -416,6 +418,9 @@ define([
             };
         }
 
+        // identifiant du contrôle : utile pour suffixer les identifiants CSS (pour gérer le cas où il y en a plusieurs dans la même page)
+        this._uid = SelectorID.generate();
+        
         // initialisation des systemes de projections
         this._projectionSystems = [];
         this._initProjectionSystems();
@@ -679,14 +684,14 @@ define([
         var div = null;
 
         if ( !active ) {
-            div = document.getElementById("GPmousePositionAltitude");
+            div = document.getElementById("GPmousePositionAltitude-" + this._uid);
             div.style.display = "none";
         } else {
             if ( this._noRightManagement ) {
-                div = document.getElementById("GPmousePositionAlt");
+                div = document.getElementById("GPmousePositionAlt-" + this._uid);
                 div.innerHTML = "No rights!";
             } else {
-                div = document.getElementById("GPmousePositionAltitude");
+                div = document.getElementById("GPmousePositionAltitude-" + this._uid);
                 div.style.display = "";
             }
         }
@@ -701,7 +706,7 @@ define([
      * @private
      */
     MousePosition.prototype._setCoordinatesPanel = function (active) {
-        var div  = document.getElementById("GPmousePositionCoordinate");
+        var div  = document.getElementById("GPmousePositionCoordinate-" + this._uid);
         if ( !active) {
             div.style.display = "none";
         } else {
@@ -718,8 +723,8 @@ define([
     * @private
     */
     MousePosition.prototype._setSettingsPanel = function (active) {
-        var divPicto  = document.getElementById("GPshowMousePositionSettingsPicto");
-        var divPanel  = document.getElementById("GPmousePositionSettings");
+        var divPicto  = document.getElementById("GPshowMousePositionSettingsPicto-" + this._uid);
+        var divPanel  = document.getElementById("GPmousePositionSettings-" + this._uid);
         if ( !active) {
             divPicto.style.display = "none";
             divPanel.style.display = "none";
@@ -791,9 +796,12 @@ define([
      */
     MousePosition.prototype._displayDMS = function (olCoordinate) {
         var coordinate = {};
-        var coords = ol.coordinate.toStringHDMS(olCoordinate, 2).split("N ");
+        var regex = /(.*)([NS])\s(.*)([EW])/;
+        var subst = "$1$2 | $3$4";
+        var str = ol.coordinate.toStringHDMS(olCoordinate, 2).replace(regex, subst);
+        var coords = str.split("|");
         // coords est du type : "48° 00′ 00″ N 2° 00′ 00″ E". On veut récupérer les 2 coordonnées séparément.
-        coordinate.lat = coords[0] + "N";
+        coordinate.lat = coords[0];
         coordinate.lng = coords[1];
         return coordinate;
     };
@@ -1051,7 +1059,7 @@ define([
         // continuer !
         if ( this._noRightManagement ) {
             console.log("[WARNING] contract key configuration has no rights to load geoportal elevation ");
-            document.getElementById("GPmousePositionAlt").innerHTML = "No rights!";
+            document.getElementById("GPmousePositionAlt-" + this._uid).innerHTML = "No rights!";
             return;
         }
 

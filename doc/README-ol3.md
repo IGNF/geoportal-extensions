@@ -15,7 +15,7 @@ This extension is not standalone and has to be used **together with OpenLayers 3
 <link rel="stylesheet" href="path/to/GpPluginOl3.css" />
 ```
 
-NB : to have complete access to this extension functionnalities, you need to provide your geoportal access key (<a href="http://professionnels.ign.fr/geoservices-ign" target="_blank">obtained here</a>) either when loading extension script (using the data-key attribute) or by conditinning their use to the onSuccess callback function of a <a href="http://ignf.github.io/geoportal-access-lib/v1.0.0-beta.2/jsdoc/module-Services.html#~getConfig" target="_blank">Gp.Services.GetConfig()</a> call with that key. Otherwhise some functionalities may not work as announced.
+NB : to have complete access to this extension functionnalities, you need to provide your geoportal access key (<a href="http://professionnels.ign.fr/ign/contrats" target="_blank">obtained here</a>) either when loading extension script (using the data-key attribute) or by conditinning their use to the onSuccess callback function of a <a href="http://ignf.github.io/geoportal-access-lib/v1.0.0-beta.2/jsdoc/module-Services.html#~getConfig" target="_blank">Gp.Services.GetConfig()</a> call with that key. Otherwhise some functionalities may not work as announced.
 
 
 <a id="sources"></a>
@@ -55,7 +55,7 @@ Controls provided by the Geoportal Extension are additionnal <a href="http://ope
 | {@link ol.control.Route ol.control.Route} | Allows users to compute and display routes on a Map using  <a href="http://api.ign.fr/tech-docs-js/developpeur/TODO" target="_blank">routing service</a> of the Geoportal Platform. |
 | {@link ol.control.Isocurve ol.control.Isocurve} | Allows users to compute and display Isochrone or Isodistance curves on a Map using  <a href="http://api.ign.fr/tech-docs-js/developpeur/TODO" target="_blank">isochron/isodistance service</a> of the Geoportal Platform. |
 | {@link ol.control.Drawing ol.control.Drawing} | Provides tools to users for making and saving annotations on a map. |
-
-
-
-
+| {@link ol.control.MeasureArea ol.control.MeasureArea} | Allows users to compute an area measure.
+| {@link ol.control.MeasureLength ol.control.MeasureLength} | Allows users to compute a length measure. |
+| {@link ol.control.MeasureAzimuth ol.control.MeasureAzimuth} | Allows users to compute an azimuth measure. |
+| {@link ol.control.ElevationPath ol.control.ElevationPath} | Provides tools to users for compute a profile altimetric using <a href="http://api.ign.fr/tech-docs-js/developpeur/alti.html" target="_blank">elevation service</a> of the Geoportal Platform. |

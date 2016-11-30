@@ -4,14 +4,16 @@ define([
     "gp",
     "Common/Utils/CheckRightManagement",
     "Common/Utils/SelectorID",
-    "Common/Controls/SearchEngineDOM"
+    "Common/Controls/SearchEngineDOM",
+    "Common/Controls/SearchEngineUtils"
 ], function (
     L,
     woodman,
     Gp,
     RightManagement,
     ID,
-    SearchEngineDOM
+    SearchEngineDOM,
+    SearchEngineUtils
 ) {
 
     "use strict";
@@ -47,6 +49,7 @@ define([
             position : "topleft",
             collapsed : true,
             displayInfo : true,
+            zoomTo : "",
             resources : [],
             displayAdvancedSearch : true,
             advancedSearch : {},
@@ -54,26 +57,37 @@ define([
             autocompleteOptions : {}
         },
 
-        /**
+       /**
         * @constructor SearchEngine
+        *
         * @private
-        * @param {Object}  options - control options
-        * @param {String}  [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
+        * @alias SearchEngine
+        * @extends {L.Control}
+        * @param {Object} options - control options
+        * @param {String} [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
         * @param {Boolean} [options.collapsed] - collapse mode, false by default
-        * @param {String}  [options.position] - position of component into the map, 'topleft' by default
+        * @param {String} [options.position] - position of component into the map, 'topleft' by default
         * @param {Boolean} [options.displayInfo] - get informations on popup marker
-        * @param {Sting}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
-        * @param {Object}  [options.resources] - resources to be used by geocode and autocompletion services, by default : ["StreetAddress", "PositionOfInterest"]
+        * @param {Sting|Numeric|Function} [options.zoomTo] - zoom to results, by default, current zoom.
+        *       Value possible : auto or zoom level.
+        *       Possible to overload it with a function :
+        *       zoomTo : function (info) {
+        *           // do some stuff...
+        *           return zoom;
+        *       }
+        * @param {Sting} [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
+        * @param {Object} [options.resources] - resources to be used by geocode and autocompletion services, by default : ["StreetAddress", "PositionOfInterest"]
         * @param {Boolean} [options.displayAdvancedSearch] - False to disable advanced search tools (it will not be displayed). Default is true (displayed)
-        * @param {Object}  [options.advancedSearch] - advanced search for geocoding (filters)
-        * @param {Object}  [options.geocodeOptions] - options of geocode service
-        * @param {Object}  [options.autocompleteOptions] - options of autocomplete service
+        * @param {Object} [options.advancedSearch] - advanced search for geocoding (filters)
+        * @param {Object} [options.geocodeOptions] - options of geocode service
+        * @param {Object} [options.autocompleteOptions] - options of autocomplete service
         * @example
         *  var SearchEngine = L.geoportalControl.SearchEngine({
         *      position : "topright",
         *      collapsed : true,
         *      displayInfo : true,
         *      displayAdvancedSearch : true,
+        *      zoomTo : 15,
         *      resources : ["PositionOfInterest", "StreetAddress"],
         *      advancedSearch : {
         *          PositionOfInterest : [{name : "municipality", title : "Ville"}],
@@ -84,6 +98,7 @@ define([
         *      geocodeOptions : {},
         *      autocompleteOptions : {}
         *  });
+        *
         */
         initialize : function (options) {
 
@@ -858,7 +873,7 @@ define([
             // on y force le param suivant, s'il n'a pas été surchargé :
             if (!options.hasOwnProperty("returnFreeForm")) {
                 L.Util.extend(options, {
-                    returnFreeForm : true
+                    returnFreeForm : false
                 });
             }
 
@@ -950,15 +965,99 @@ define([
         * and move/zoom on a position.
         *
         * @param {Object} position - {x: ..., y: ...}
+        * @param {Number} zoom - zoom level
         *
         * @private
         */
-        _setPosition : function (position) {
+        _setPosition : function (position, zoom) {
 
-            var map = this._map;
-            // map.setZoomAround(L.latLng(position.x, position.y), map.getMaxZoom(), true);
+            var map  = this._map;
+
+            map.setZoomAround(L.latLng(position.x, position.y), zoom, true);
             map.panTo(L.latLng(position.x, position.y));
 
+        },
+
+        /**
+        * this method is called by this.on*ResultsItemClick()
+        * and get zoom.
+        *
+        * @param {Object} info - {}
+        *
+        * @private
+        */
+        _getZoom : function (info) {
+            var map  = this._map;
+            var key  = this.options.zoomTo;
+            var zoom = null;
+
+            // les valeurs du zooms sont determinées
+            // soit par les mots clefs suivants :  max, min ou auto
+            // soit par un niveau de zoom
+            // soit defini par l'utilisateur via une fonction
+
+            if ( typeof key === "function" ) {
+                logger.trace("zoom function");
+                zoom = key.call(this, info);
+            }
+
+            if ( typeof key === "number" ) {
+                logger.trace("zoom level");
+                zoom = key;
+            }
+
+            if ( typeof key === "string") {
+
+                // if (key === "max") {
+                //     zoom = map.getMaxZoom();
+                // } else if (key === "min") {
+                //     zoom = map.getMinZoom();
+                // } else
+
+                if (key === "auto") {
+
+                    logger.trace("zoom auto");
+                    zoom = SearchEngineUtils.zoomToResultsByDefault(info);
+
+                } else {
+                    
+                    logger.trace("zoom level parsing");
+                    var value = parseInt(key, 10);
+                    if (!isNaN(value)) {
+                        logger.trace("zoom parsing");
+                        zoom = value;
+                    }
+                }
+            }
+
+            // polyfill IE
+            Number.isInteger = Number.isInteger || function (value) {
+                return typeof value === "number" &&
+                       isFinite(value) &&
+                       Math.floor(value) === value;
+            };
+
+            // test de validité du zoom,
+            // on prend le zoom courant par defaut ...
+            if (!zoom || zoom === "" || !Number.isInteger(zoom)) {
+                logger.trace("zoom not found, current zoom...");
+                zoom = map.getZoom();
+            }
+
+            // test si le zoom est dans l'espace de la carte
+            var min = map.getMinZoom();
+            var max = map.getMaxZoom();
+            if (zoom < min) {
+                logger.trace("zoom level min...");
+                zoom = min;
+            }
+            if (zoom > max) {
+                logger.trace("zoom level max...");
+                zoom = max;
+            }
+
+            logger.trace("zoom", zoom);
+            return zoom;
         },
 
         /**
@@ -1233,8 +1332,10 @@ define([
                 fields : this._suggestedLocations[idx]
             };
 
+            var zoom = this._getZoom(info);
+
             this._setLabel(label);
-            this._setPosition(position);
+            this._setPosition(position, zoom);
             this._setMarker(position, info, this.options.displayInfo);
         },
 
@@ -1318,8 +1419,10 @@ define([
                 fields : this._geocodedLocations[idx].placeAttributes
             };
 
+            var zoom = this._getZoom(info);
+
             this._setLabel(label);
-            this._setPosition(position);
+            this._setPosition(position, zoom);
             this._setMarker(position, info, this.options.displayInfo);
         },
 

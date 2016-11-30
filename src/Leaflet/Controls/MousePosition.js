@@ -3,6 +3,7 @@ define([
     "woodman",
     "gp",
     "Common/Utils/CheckRightManagement",
+    "Common/Utils/SelectorID",
     "Common/Controls/MousePositionDOM",
     "Leaflet/Controls/Utils/PositionFormater",
     "Leaflet/CRS/CRS"
@@ -11,6 +12,7 @@ define([
     woodman,
     Gp,
     RightManagement,
+    ID,
     MousePositionDOM,
     PositionFormater,
     CRS
@@ -47,7 +49,7 @@ define([
             units : [],
             systems : [],
             displayAltitude : true,
-            displayCoordinate : true,
+            displayCoordinates : true,
             altitude : {
                 triggerDelay : 200,
                 responseDelay : 500,
@@ -76,7 +78,7 @@ define([
          *      Values may be "DEC" (decimal degrees), "DMS" (sexagecimal), "RAD" (radians) and "GON" (grades) for geographical coordinates,
          *      and "M" or "KM" for metric coordinates
         * @param {Boolean} [options.displayAltitude] - active/desactivate the altitude panel, if desactivate, have just the coordinate panel, true by default
-        * @param {Boolean} [options.displayCoordinate] - active/desactivate the coordinate panel, if desactivate, have just the altitude panel, true by default
+        * @param {Boolean} [options.displayCoordinates] - active/desactivate the coordinate panel, if desactivate, have just the altitude panel, true by default
         * @param {Object}  [options.altitude] - elevation configuration
         * @param {Object}  [options.altitude.serviceOptions] - options of elevation service
         * @param {Number}  [options.altitude.responseDelay] - latency for altitude request, 500 ms by default
@@ -117,6 +119,9 @@ define([
             // on merge les options avec celles par defaut
             L.Util.extend(this.options, options);
 
+            /** uuid */
+            this._uid = ID.generate();
+
             // initialisation des systemes de projections
             this._projectionSystems = [];
             this._initProjectionSystems();
@@ -155,9 +160,9 @@ define([
             this._showMousePositionContainer = null;
 
             // gestion de l'affichage du panneau de l'altitude / coordonnées
-            if (!this.options.displayAltitude && !this.options.displayCoordinate) {
+            if (!this.options.displayAltitude && !this.options.displayCoordinates) {
                 // on reactive cette option !
-                this.options.displayCoordinate = true;
+                this.options.displayCoordinates = true;
             }
 
             /**
@@ -489,7 +494,7 @@ define([
             var picto = this._createShowMousePositionPictoElement(this._isDesktop);
             container.appendChild(picto);
 
-            var panel    = this._createMousePositionPanelElement(this.options.displayAltitude, this.options.displayCoordinate);
+            var panel    = this._createMousePositionPanelElement(this.options.displayAltitude, this.options.displayCoordinates);
             var settings = this._createMousePositionSettingsElement();
             var systems  = this._projectionSystemsContainer = this._createMousePositionSettingsSystemsElement(this._projectionSystems);
             var units    = this._projectionUnitsContainer   = this._createMousePositionSettingsUnitsElement(this._projectionUnits[this._currentProjectionType]);
@@ -520,12 +525,12 @@ define([
             var div = null;
 
             if (! active) {
-                div = L.DomUtil.get("GPmousePositionAltitude");
+                div = L.DomUtil.get(this._addUID("GPmousePositionAltitude"));
                 div.style.display = "none";
             }
 
             if (active && this._noRightManagement) {
-                div = L.DomUtil.get("GPmousePositionAlt");
+                div = L.DomUtil.get(this._addUID("GPmousePositionAlt"));
                 div.innerHTML = "no right !";
             }
         },
@@ -541,7 +546,7 @@ define([
         */
         _setCoordinatePanel : function (active) {
             if (! active) {
-                var div  = L.DomUtil.get("GPmousePositionCoordinate");
+                var div  = L.DomUtil.get(this._addUID("GPmousePositionCoordinate"));
                 div.style.display = "none";
             }
         },
@@ -558,7 +563,7 @@ define([
         _setSettingsPanel : function (active) {
             if (! active) {
                 var divPicto  = L.DomUtil.get("GPshowMousePositionSettingsPicto");
-                var divPanel  = L.DomUtil.get("GPmousePositionSettings");
+                var divPanel  = L.DomUtil.get(this._addUID("GPmousePositionSettings"));
                 divPicto.style.display = "none";
                 divPanel.style.display = "none";
             }
@@ -987,8 +992,8 @@ define([
             // on gère l'affichage des panneaux ici...,
             // même si ce n'est pas l'endroit adequate...
             this._setElevationPanel(this.options.displayAltitude);
-            this._setCoordinatePanel(this.options.displayCoordinate);
-            if (! this.options.displayCoordinate) {
+            this._setCoordinatePanel(this.options.displayCoordinates);
+            if (! this.options.displayCoordinates) {
                 this._setSettingsPanel(false);
             }
         },

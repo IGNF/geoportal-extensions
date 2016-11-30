@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+body {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.area {
+  fill: steelblue;
+}
+
+</style>
+<body>
+  <script src="../../../../lib/gp/GpServices-debug.js"></script>
+  <script src="d3.v4.min.js"></script>
+  <script>
+  // fonction issue du portail
+  var _haversineDistance = function (c1, c2) {
+    var lat1 = PositionFormater.decimalToRadian(c1[1]);
+    var lat2 = PositionFormater.decimalToRadian(c2[1]);
+    var deltaLatBy2 = (lat2 - lat1) / 2;
+    var deltaLonBy2 = PositionFormater.decimalToRadian(c2[0] - c1[0]) / 2;
+    var a = Math.sin(deltaLatBy2) * Math.sin(deltaLatBy2) +
+    Math.sin(deltaLonBy2) * Math.sin(deltaLonBy2) *
+    Math.cos(lat1) * Math.cos(lat2);
+    return 2 * 6378137 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  };
+  </script>
+  <script>
+  // module issu des extensions
+  var PositionFormater = {
+
+    /** ... */
+    NORTH : "N",
+
+    /** ... */
+    SOUTH : "S",
+
+    /** ... */
+    EAST : "E",
+
+    /** ... */
+    WEST : "W",
+
+    /** ... */
+    digitSecond : 2,
+
+    /** ... */
+    digitDecimal : 5,
+
+    /** ... */
+    digitRadian : 8,
+
+    /** ... */
+    roundToDecimal : function ( inputNum, numPoints ) {
+      var multiplier = Math.pow( 10, numPoints );
+      return Math.round( inputNum * multiplier ) / multiplier;
+    },
+
+    /** ... */
+    decimalToRadian  : function ( location ) {
+      var d = 0.01745329251994329577;
+      return this.roundToDecimal( location * d, this.digitRadian);
+    },
+
+    /** ... */
+    decimalToGrade  : function ( location ) {
+      var d = 1.11111111111111111111;
+      return this.roundToDecimal( location * d, this.digitRadian);
+    },
+
+    /** ... */
+    decimalToDMS : function ( location, hemisphere ) {
+      if ( location < 0 ) {
+        location *= -1; // strip dash '-'
+      }
+
+      var degrees = Math.floor( location );          // strip decimal remainer for degrees
+      var minutesFromRemainder = ( location - degrees ) * 60;       // multiply the remainer by 60
+      var minutes = Math.floor( minutesFromRemainder );       // get minutes from integer
+      var secondsFromRemainder = ( minutesFromRemainder - minutes ) * 60;   // multiply the remainer by 60
+      var seconds = this.roundToDecimal( secondsFromRemainder, this.digitSecond ); // get minutes by rounding to integer
+
+      var dms = degrees + "° " + minutes + "' " + seconds + "\" ";
+      if (hemisphere) {
+        dms += hemisphere;
+      }
+
+      return dms;
+    },
+
+    /** ... */
+    decimalLatToDMS : function ( location ) {
+      var hemisphere = ( location < 0 ) ? this.SOUTH : this.NORTH; // south if negative
+      return this.decimalToDMS( location, hemisphere );
+    },
+
+    /** ... */
+    decimalLongToDMS : function ( location ) {
+      var hemisphere = ( location < 0 ) ? this.WEST : this.EAST;  // west if negative
+      return this.decimalToDMS( location, hemisphere );
+    },
+
+    /** ... */
+    DMSToDecimal : function ( degrees, minutes, seconds, hemisphere ) {
+      var ddVal = degrees + minutes / 60 + seconds / 3600;
+      ddVal = ( hemisphere == this.SOUTH || hemisphere == this.WEST ) ? ddVal * -1 : ddVal;
+
+      var decimal = this.roundToDecimal( ddVal, this.digitDecimal );
+      return decimal;
+    }
+
+  };
+  </script>
+  <script>
+  // exemple issu des sites suivants :
+  // cf. http://abenrob.com/tdf-maptime/docs/
+  // cf. http://bl.ocks.org/mbostock/3883195
+  // cf. http://bl.ocks.org/pgiraud/8938194
+  // cf. http://tributary.io/inlet/8361294
+
+  var margin = {top: 20, right: 20, bottom: 30, left: 50},
+      width = 280 - margin.left - margin.right,
+      height = 150 - margin.top - margin.bottom;
+
+  var x = d3.scaleLinear()
+    .range([0, width]);
+
+  var y = d3.scaleLinear()
+    .range([height, 0]);
+
+  var xAxis = d3.axisBottom(x);
+
+  var yAxis = d3.axisLeft(y);
+
+  var area = d3.area()
+    .x(function(d) { return x(d.dist); })
+    .y0(height)
+    .y1(function(d) { return y(d.z); });
+
+  var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+  Gp.Services.getAltitude({
+    // de lille à monaco !
+    positions : [
+      {
+        lon : 8.2177734375,
+        lat : 44.26388770060487
+      },
+      {
+        lon : 1.7578125,
+        lat : 50.97485908658873
+      }
+    ],
+    apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
+    sampling : 200,
+    onSuccess : function (result) {
+
+      if (result) {
+
+        var elevations = result.elevations;
+
+        // Calcul de la distance au départ pour chaque point + arrondi des lat/lon
+        elevations[0].dist = 0;
+        var distance = 0;
+        for (var i = 1; i < elevations.length; i++) {
+          distance += ( _haversineDistance([elevations[i].lat, elevations[i].lon], [elevations[i - 1].lat, elevations[i - 1].lon]) ) / 1000;
+          elevations[i].dist = distance;
+          elevations[i].lat = Math.round(elevations[i].lat * 10000) / 10000;
+          elevations[i].lon = Math.round(elevations[i].lon * 10000) / 10000;
+        }
+
+        // Valeur du coeff d'arrondi des distances en fonction de la distance totale
+        var coeffArrond = 100;
+        if (distance > 100) {
+            coeffArrond = 1;
+        } else if (distance > 10) {
+            coeffArrond = 10;
+        }
+
+        // Correction des altitudes aberrantes + arrondi des calculs de distance
+        for (var j = 0 ; j < elevations.length; j++) {
+            var data = elevations[j];
+            if (data.z < 0) {
+                data.z = 0;
+            }
+            data.dist = Math.round(data.dist * coeffArrond) / coeffArrond;
+        }
+
+        x.domain(d3.extent(elevations, function(d) { return d.dist; }));
+        y.domain([0, d3.max(elevations, function(d) { return d.z; })]);
+
+        svg.append("path")
+          .datum(elevations)
+          .attr("class", "area")
+          .attr("d", area);
+
+        svg.append("g")
+          .attr("class", "x axis")
+          .attr("transform", "translate(0," + height + ")")
+          .call(xAxis)
+          .append("text")
+          .attr("y", -12)
+          .attr("dy", ".71em")
+          .attr("x", width)
+          .style("text-anchor", "end")
+          .text("Distance (km)");
+
+        svg.append("g")
+          .attr("class", "y axis")
+          .call(yAxis)
+          .append("text")
+          .attr("transform", "rotate(-90)")
+          .attr("y", 6)
+          .attr("dy", ".71em")
+          .style("text-anchor", "end")
+          .text("Altitude (m)");
+      }
+    },
+    /** callback onFailure */
+    onFailure : function (error) {
+      console.log(error.message);
+    }
+  });
+
+  </script>

@@ -18,6 +18,8 @@ define([
     "Ol3/Controls/ReverseGeocode",
     "Ol3/Controls/LayerImport",
     "Ol3/Controls/GeoportalAttribution",
+    "Ol3/Controls/Utils/Markers",
+    "Ol3/Controls/ElevationPath",
     "Ol3/Controls/Measures/MeasureLength",
     "Ol3/Controls/Measures/MeasureArea",
     "Ol3/Controls/Measures/MeasureAzimuth"
@@ -41,6 +43,8 @@ define([
     ReverseGeocode,
     LayerImport,
     GeoportalAttribution,
+    Markers,
+    ElevationPath,
     MeasureLength,
     MeasureArea,
     MeasureAzimuth
@@ -78,6 +82,9 @@ define([
     ol.control.MeasureLength = MeasureLength;
     ol.control.MeasureArea = MeasureArea;
     ol.control.MeasureAzimuth = MeasureAzimuth;
+    // export default markers definitions
+    ol.control.DefaultMarkers = Markers ;
+    ol.control.ElevationPath = ElevationPath;
 
     // FIXME : parce qu'il faut bien retourner quelque chose
     return Gp;

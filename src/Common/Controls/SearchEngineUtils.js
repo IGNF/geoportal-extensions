@@ -3,6 +3,9 @@ define([], function () {
     "use strict";
 
     var SearchEngineUtils = {
+        /**
+        * Advanced Search Filters by default
+        */
         advancedSearchFiltersByDefault : {
             PositionOfInterest : [
                 {
@@ -103,6 +106,63 @@ define([], function () {
                     title : "Ville"
                 }
             ]
+        },
+
+        /**
+        * Provides default zoom based on results.
+        *
+        * @param {Object} info - location information
+        * @returns zoom level
+        */
+        zoomToResultsByDefault : function (info) {
+
+            // FIXME
+            // la classification du geocodage est differente de l'importance de l'autocompletion !
+
+            var zoom = 15;
+
+            var service = info.service;
+            var fields  = info.fields;
+            var type = info.type;
+
+            var importance = {
+                1 : 11,
+                2 : 12,
+                3 : 13,
+                4 : 14,
+                5 : 15,
+                6 : 16,
+                7 : 17,
+                8 : 17
+            };
+
+            // AutoCompletion POI
+            if (service === "SuggestedLocation") {
+                if (type === "PositionOfInterest") {
+                    zoom = importance[fields.classification];
+                }
+            }
+
+            // Geocodage POI
+            if (service === "DirectGeocodedLocation") {
+                if (type === "PositionOfInterest") {
+                    zoom = importance[fields.importance] || 14; // au cas où la recherche est en freeform !
+                }
+            }
+
+            if (type === "StreetAddress") {
+                zoom = 17;
+            }
+
+            if (type === "CadastralParcel") {
+                zoom = 17;
+            }
+
+            if (type === "Administratif") {
+                zoom = 12;
+            }
+
+            return zoom;
         }
     };
 
