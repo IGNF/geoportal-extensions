@@ -363,11 +363,14 @@ define([], function () {
             selectSystem.addEventListener("change", function (e) {
                 context.onMousePositionProjectionSystemChange(e);
             });
+            selectSystem.addEventListener("mouseover", function (e) {
+                context.onMousePositionProjectionSystemMouseOver(e);
+            });
 
             for (var i = 0; i < systems.length; i++) {
                 var obj = systems[i];
                 var option = document.createElement("option");
-                option.value = (obj.code) ? obj.code : i;
+                option.value = obj.code;
                 option.text  = obj.label || i;
                 // option.label = obj.label;
                 selectSystem.appendChild(option);

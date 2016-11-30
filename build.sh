@@ -37,10 +37,10 @@ function ol3() {
 function vg() {
   echo "####### VG production !"
   gulp --vg
-  gulp publish
+  gulp publish --vg
   echo "####### VG !"
   gulp --production --vg
-  gulp publish
+  gulp publish --vg
 }
 
 while getopts "aolv" opts

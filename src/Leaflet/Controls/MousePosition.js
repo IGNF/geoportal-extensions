@@ -248,28 +248,26 @@ define([
             // systemes de projection disponible par defaut
             var projectionSystemsByDefault = [
                 {
-                    code : "GEOGRAPHIC",
-                    label : "Géographique",
+                    label : "G\u00e9ographique",
                     crs : L.CRS.Simple, // L.Projection.LonLat !
                     type : "Geographical"
                 },
                 {
-                    code : "MERCATOR",
                     label : "Web Mercator",
                     crs : L.CRS.EPSG3395, // L.Projection.SphericalMercator !
                     type : "Metric"
                 },
                 {
-                    code : "LAMB93",
                     label : "Lambert 93",
                     crs : CRS.EPSG2154,
-                    type : "Metric"
+                    type : "Metric",
+                    geoBBox : { left: -9.86, bottom : 41.15, right : 10.38, top : 51.56 }
                 },
                 {
-                    code : "LAMB2E",
-                    label : "Lambert II étendu",
+                    label : "Lambert II \u00e9tendu",
                     crs : CRS.EPSG27572,
-                    type : "Metric"
+                    type : "Metric",
+                    geoBBox : { left: -4.87, bottom : 42.33, right : 8.23, top : 51.14 }
                 }
             ];
 
@@ -279,13 +277,9 @@ define([
                 // definition d'un systeme de reference
                 var sys = systems[i];
 
-                if (! sys.label && ! sys.code) {
-                    logger.error("label srs not defined !");
-                    continue;
-                }
-
                 if (! sys.label) {
-                    sys.label = sys.code;
+                    logger.error("not defined !");
+                    continue;
                 }
 
                 if (! sys.crs) {
@@ -299,6 +293,7 @@ define([
                 }
 
                 this._projectionSystems.push(systems[i]);
+
 
                 // it's a just a test ...
                 var found = false;
@@ -319,6 +314,11 @@ define([
                 this._projectionSystems = projectionSystemsByDefault;
             }
 
+            //re-initilisation des codes pour gerer le lien entre _projectionSystems et select du mouse position (lien code/value)
+            for(var k = 0 ; k < this._projectionSystems.length ; ++k)
+            {
+                this._projectionSystems[k].code = i;
+            }
         },
 
         /**
@@ -1010,13 +1010,28 @@ define([
         onMousePositionProjectionSystemChange : function (e) {
 
             var idx   = e.target.selectedIndex;      // index
-            var value = e.target.options[idx].value; // code, ex. MERCATOR (optionnel)
+            var value = e.target.options[idx].value; // crs, ex. MERCATOR (optionnel)
             var label = e.target.options[idx].label; // etiquette, ex Géographiques
 
             logger.log(idx, value, label);
 
             // si on change de type de systeme, on doit aussi changer le type d'unités !
-            var type = this._projectionSystems[idx].type;
+            var type = null;
+            for(var i = 0 ; i < this._projectionSystems.length ; ++i)
+            {
+                if( this._projectionSystems[i].code == value )
+                {
+                    type = this._projectionSystems[i].type;
+                    break;
+                }
+            }
+
+            if( !type )
+            {
+                logger.log("system not found in projection systems container");
+                return;
+            }
+
             if (type !== this._currentProjectionType) {
                 this._setTypeUnitsPanel(type);
             }
@@ -1028,6 +1043,48 @@ define([
             // resultats
             if (!this._isDesktop) {
                 this.onMapMove();
+            }
+        },
+
+        /**
+         * this method is called by event 'mouseover' on 'GPmousePositionProjectionSystem'
+         * tag select (cf. this._createMousePositionSettingsElement),
+         * and selects the system projection.
+         *
+         * @param {Object} e - HTMLElement
+         *
+         * @private
+         */
+        onMousePositionProjectionSystemMouseOver : function (e) {
+
+            var map = this._map;
+            if ( !map ) {
+                return;
+            }
+
+            //clear select
+            var systemList = document.getElementById("GPmousePositionProjectionSystem");
+            systemList.innerHTML = "";
+
+            //add systems whose extent intersects the map extent
+            for (var j = 0; j < this._projectionSystems.length; j++) {
+                var proj = this._projectionSystems[j];
+                if( proj.geoBBox )
+                {
+                    //bboxes intersection test
+                    if(   map.getBounds()._southWest.lng > proj.geoBBox.right ||
+                          map.getBounds()._southWest.lat > proj.geoBBox.top   ||
+                          map.getBounds()._northEast.lng < proj.geoBBox.left  ||
+                          map.getBounds()._northEast.lat < proj.geoBBox.bottom
+                    ){
+                        continue;//do not intersect
+                    }
+                }
+                var option = document.createElement("option");
+                option.value = proj.code;
+                option.text  = proj.label || j;
+
+                systemList.appendChild(option);
             }
         },
 
