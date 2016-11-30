@@ -27,36 +27,28 @@ define([
     /**
     * @classdesc
     *
-    * Tool Measure Elevation Path Control.
+    * Elevation Path measure tool Control.
     *
     * @constructor
     * @alias ol.control.ElevationPath
     * @extends {ol.control.Control}
     * @param {Object} options - options for function call.
     * @param {Boolean} [options.active = false] - specify if control should be actived at startup. Default is false.
-    * @param {Object} [options.stylesOptions = {}] - styles management
-    * @param {Object} [options.stylesOptions.marker = {}] - styles management of marker with properties or object {ol.style.Icon}
-    * @param {String} [options.stylesOptions.marker.imageSrc] - Icon source
-    * @param {Array}  [options.stylesOptions.marker.imageAnchor] - Icon anchor
-    * @param {Object} [options.stylesOptions.profile = {}] - styles management of a profile AmCharts (https://docs.amcharts.com/3/javascriptcharts/AmChart)
-    * @param {Object} [options.stylesOptions.draw = {}] - styles management of draw with properties or object {ol.style}
-    * @param {Object} [options.stylesOptions.draw.pointer = {}] - Point Style for a start drawing with properties or object {ol.style.Circle}
-    * @param {Number} [options.stylesOptions.draw.pointer.imageRadius] - Point radius (properties)
-    * @param {String} [options.stylesOptions.draw.pointer.imageFillColor] - Point for fill color (properties)
-    * @param {String} [options.stylesOptions.draw.pointer.imageStrokeColor] - Point for stroke color (properties)
-    * @param {Object} [options.stylesOptions.draw.start = {}] - Line Style for a start drawing with properties or object {ol.style.Stroke}
-    * @param {String} [options.stylesOptions.draw.start.strokeColor] - Line for stroke color (properties)
-    * @param {Array}  [options.stylesOptions.draw.start.strokeLineDash] - Line for stroke dash (properties)
-    * @param {Number} [options.stylesOptions.draw.start.strokeWidth] - Line for stroke width (properties)
-    * @param {Object} [options.stylesOptions.draw.finish = {}] - Line Style for a finish drawing with properties or object {ol.style.Stroke}
-    * @param {String} [options.stylesOptions.draw.finish.strokeColor] - Line for stroke color (properties)
-    * @param {Number} [options.stylesOptions.draw.finish.strokeWidth] - Line for stroke width (properties)
-    * @param {Object} [options.elevationPathOptions = {}] - elevation service options.
-    *       see {@link http://depot.ign.fr/geoportail/bibacces/develop/doc/module-Services.html#~getAltitude}
-    *       to know all elevation options
+    * @param {Object} [options.stylesOptions = DEFAULT_STYLES] - styles management
+    * @param {Object} [options.stylesOptions.marker = {}] - styles management of marker displayed on map when the user follows the elevation path. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Icon.html ol.style.Icon} object
+    * <!-- * @param {String} [options.stylesOptions.marker.imageSrc] - Icon source * @param {Array}  [options.stylesOptions.marker.imageAnchor] - Icon anchor * -->
+    * <!-- @param {Object} [options.stylesOptions.profile = {}] - styles management of a profile AmCharts (https://docs.amcharts.com/3/javascriptcharts/AmChart) -->
+    * @param {Object} [options.stylesOptions.draw = {}] - styles used when drawing. Specified with following properties or with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Style.html ol.style.Style} object. 
+    * @param {Object} [options.stylesOptions.draw.pointer = {}] - Style for mouse pointer when drawing the line. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Circle.html ol.style.Circle} object.
+    * <!-- * @param {Number} [options.stylesOptions.draw.pointer.imageRadius] - Point radius * @param {String} [options.stylesOptions.draw.pointer.imageFillColor] - fill color * @param {String} [options.stylesOptions.draw.pointer.imageStrokeColor] - stroke color * -->
+    * @param {Object} [options.stylesOptions.draw.start = {}] - Line Style when drawing the line. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Stroke.html ol.style.Stroke} object.
+    * <!-- * @param {String} [options.stylesOptions.draw.start.strokeColor] - stroke color * @param {Array}  [options.stylesOptions.draw.start.strokeLineDash] - stroke dash * @param {Number} [options.stylesOptions.draw.start.strokeWidth] - stroke width * -->
+    * @param {Object} [options.stylesOptions.draw.finish = {}] - Line Style when line is finished drawing. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Stroke.html ol.style.Stroke} object.
+    * <!-- * @param {String} [options.stylesOptions.draw.finish.strokeColor] - stroke color * @param {Number} [options.stylesOptions.draw.finish.strokeWidth] - stroke width * -->
+    * @param {Object} [options.elevationPathOptions = {}] - elevation path service options. See {@link http://depot.ign.fr/geoportail/bibacces/develop/doc/module-Services.html#~getAltitude options} for available options
     * @param {Object} [options.displayProfileOptions = {}] - profile options.
-    * @param {Function} [options.displayProfileOptions.apply] - function to display profil panel.
-    * @param {Object} [options.displayProfileOptions.target] - container DOM for the profil panel.
+    * @param {Function} [options.displayProfileOptions.apply] - function to display profile if you want to cutomise it. By default, ol.control.ElevationPath.DISPLAY_PROFILE_BY_DEFAULT() is used. Helper functions to use with D3 (ol.control.ElevationPath.DISPLAY_PROFILE_LIB_D3()) or AmCharts (ol.control.ElevationPath.DISPLAY_PROFILE_LIB_AMCHARTS()) frameworks are also provided. You may also provide your own function.
+    * @param {Object} [options.displayProfileOptions.target] - DOM container to use to display the profile.
     * @example
     *
     * var measure = new ol.control.ElevationPath({
@@ -66,16 +58,6 @@ define([
     *    active : false,
     *    stylesOptions : {
     *     draw : {
-    *       pointer : {
-    *           imageRadius : 5,
-    *           imageFillColor : "rgba(255, 255, 255, 0.2)",
-    *           imageStrokeColor : "rgba(0, 0, 0, 0.7)"
-    *       },
-    *       start : {
-    *           strokeColor : "rgba(0, 0, 0, 0.5)",
-    *           strokeLineDash : [10, 10],
-    *           strokeWidth : 2,
-    *       },
     *       finish : new ol.style.Stroke({
     *            color : "rgba(0, 0, 0, 0.5)",
     *            width : 2
@@ -83,8 +65,7 @@ define([
     *     },
     *     marker : {},
     *     profile : {}
-    *    },
-    *    elevationPathOptions : {},
+    *    }
     *    displayProfileOptions : {
     *       apply : null,
     *       target : null
@@ -101,14 +82,20 @@ define([
     function ElevationPath (options) {
         logger.trace("ElevationPath()");
 
-        /** options */
+        /** 
+         * options 
+         * @private
+         */
         options = options || {};
 
         if (!(this instanceof ElevationPath)) {
             throw new TypeError("ERROR CLASS_CONSTRUCTOR");
         }
 
-        /** Nom de la classe (heritage) */
+        /** 
+         * Nom de la classe (heritage) 
+         * @private
+         */
         this.CLASSNAME = "ElevationPath";
 
         // uuid
@@ -676,7 +663,9 @@ define([
        self._profile = container;
     };
 
-    /** styles by default */
+    /** 
+     * Styles applied by default if stylesOptions property is not set.
+     */
     ElevationPath.DEFAULT_STYLES = {
         // styling drawing by default
         DRAW : {
@@ -801,7 +790,7 @@ define([
     // ################################################################### //
 
     /**
-     * Overwrite OpenLayers setMap method
+     * Attach control to map. Overloaded ol.control.Control.setMap() method.
      *
      * @param {ol.Map} map - Map.
      */
@@ -855,6 +844,8 @@ define([
 
     /**
      * Clear
+     *
+     * @private
      */
     ElevationPath.prototype.clear = function () {
         logger.trace("ElevationPath::clear");
