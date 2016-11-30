@@ -11,7 +11,6 @@
 
   <!-- requirejs -->
   <script src="../../../lib/require.js"></script>
-  <script src="amCharts-min.js"></script>
 
 </head>
 <body>
@@ -68,9 +67,13 @@
               wms.addTo(map);
 
               var el = new ElevationPath({
-                active : false,
-                elevationPathOptions : {},
-                displayProfileOptions : {}
+                active : true,
+                elevationPathOptions : {
+                  sampling : 50
+                },
+                displayProfileOptions : {
+                  apply : ElevationPath.DISPLAY_PROFILE_RAW
+                }
               });
 
               map.addControl(el);

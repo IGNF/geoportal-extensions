@@ -9,7 +9,8 @@
   <!-- Plugin leaflet IGN -->
   <link rel="stylesheet" href="../../../dist/leaflet/GpPluginLeaflet-src.css" />
 
-  <!-- requirejs -->
+  <!-- lib -->
+  <script src="d3.v3.min.js"></script>
   <script src="../../../lib/require.js"></script>
   <script src="amCharts-min.js"></script>
 
@@ -70,7 +71,9 @@
               var el = new ElevationPath({
                 active : false,
                 elevationPathOptions : {},
-                displayProfileOptions : {}
+                displayProfileOptions : {
+                  apply : ElevationPath.DISPLAY_PROFILE_LIB_D3
+                }
               });
 
               map.addControl(el);

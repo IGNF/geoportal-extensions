@@ -250,7 +250,7 @@ function (
         * @param {Boolean} [options.displayInfo] - get informations on popup marker
         * @param {Sting|Numeric|Function} [options.zoomTo] - zoom to results, by default, current zoom.
         *       possible values : "auto", any fixed zoom level or a function retruning a zoom :
-        *       
+        *
         *       ```
         *       zoomTo : function (info) {
         *           // do some stuff...
@@ -301,13 +301,13 @@ function (
         * @param {Object} options - ElevationPath control options
         * @param {Sting}   [options.apiKey] - API key for services call (isocurve and autocomplete services), mandatory if autoconf service has not been charged in advance
         * @param {String}  [options.position] - position of component into the map, 'topleft' by default
-        * @param {Boolean} [options.collapsed] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
+        * @param {Boolean} [options.active] - Specify if widget has to be actived to drawing (true) or not (false) on map loading. Default is false.
         * @param {Object} [options.graphOptions] - TODO graph options.
         * @param {Object} [options.elevationPathOptions] - altitude service options.
         * @returns {L.geoportalControl.ElevationPath}
         * @example
         *  var e = L.geoportalControl.ElevationPath({
-        *      collapsed : false
+        *      active : false
         *      position : "topleft"
         *      graphOptions : {},
         *      elevationPathOptions : {}
@@ -316,7 +316,7 @@ function (
         ElevationPath : function (options) {
             return new ElevationPath(options);
         },
-
+        
         /**
         * Control Logo
         *

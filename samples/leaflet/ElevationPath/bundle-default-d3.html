@@ -38,7 +38,11 @@
 
       layer.addTo(map);
 
-      var e = L.geoportalControl.ElevationPath();
+      var e = L.geoportalControl.ElevationPath({
+        displayProfileOptions : {
+          apply : L.geoportalControl.ElevationPath.DISPLAY_PROFILE_LIB_D3
+        }
+      });
 
       map.addControl(e);
     }
