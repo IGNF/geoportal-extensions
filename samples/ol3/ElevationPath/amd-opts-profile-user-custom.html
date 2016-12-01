@@ -101,6 +101,20 @@
                 console.log(elevations);
                 console.log(container);
                 console.log(context);
+                container.style.overflow = "auto";
+                var div = document.createElement("div");
+                div.id = "container-mydata";
+                div.style.display = "flex";
+                div.style["flex-wrap"] = "nowrap";
+                div.style["flex-direction"] = "column";
+                for (var i = 0; i < elevations.length; i++) {
+                  var e = elevations[i];
+                  var span = document.createElement("span");
+                  span.className = "mydata";
+                  span.innerHTML = "Alt : " + e.z + " (lon: " + e.lon + "-lat: " + e.lat + ")";
+                  div.appendChild(span);
+                }
+                container.appendChild(div);
               }
             }
           });

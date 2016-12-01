@@ -117,7 +117,7 @@ define([
             this._currentFeature = null;
 
             // graph
-            this._profil = null;
+            this._profile = null;
             this._marker = null;
 
             // geometry à transmettre au service :  { lon : [], lat : []}
@@ -147,7 +147,7 @@ define([
                 // lors de l'ajout à la map, on active la saisie du point,
                 // mais seulement si le widget est ouvert
                 if (this.options.active) {
-                    if (this._profil === null) {
+                    if (this._profile === null) {
                         this._panelContainer.style.display = "none";
                         // this._panelContainer.style.visibility = "hidden";
                     }
@@ -307,14 +307,16 @@ define([
                     this._removeMapInteraction(map);
                     this._clear();
                 } else {
-                    if (this._profil === null) {
+                    if (this._profile === null) {
                         this._panelContainer.style.display = "none";
                     }
                     this._activateMapInteraction(map);
                 }
             } else {
-                if (this._profil !== null) {
-                    this._pictoContainer.style.display = "none";
+                if (this._profile !== null) {
+                    if (this.options.displayProfileOptions.target === null) {
+                        this._pictoContainer.style.display = "none";
+                    }
                     this._panelContainer.style.display = "block";
                 }
             }
@@ -378,8 +380,10 @@ define([
                 /* evenements */
                 map.on("draw:drawstop", function () {
                     logger.trace("draw:drawstop");
-                    self._pictoContainer.style.display = "none";
-                    self._panelContainer.style.display = "block";
+                    if ( typeof self.options.elevationPathOptions.onSuccess === "undefined" && self.options.displayProfileOptions.target === null ) {
+                        self._pictoContainer.style.display = "none";
+                        self._panelContainer.style.display = "block";
+                    }
                     self._altiRequest();
                 });
             }
@@ -428,6 +432,7 @@ define([
                 this._currentFeature.disable();
             }
 
+            // liste des options par defaut
             // cf. https://leaflet.github.io/Leaflet.draw/docs/leaflet-draw-latest.html
             // var polylineOptions = {
             //     allowIntersection : true,
@@ -444,11 +449,11 @@ define([
             //         iconSize : new L.Point(20, 20),
             //         className : 'leaflet-div-icon leaflet-editing-icon leaflet-touch-icon'
             //     }),
-            //     guidelineDistance : 1, // 20,
+            //     guidelineDistance : 20,
             //     maxGuideLineLength : 4000,
             //     shapeOptions : {
             //         stroke : true,
-            //         color : "#C77A04", // '#f06eaa',
+            //         color : '#f06eaa',
             //         weight : 4,
             //         opacity : 0.5,
             //         fill : false,
@@ -466,7 +471,8 @@ define([
                 stroke : true,
                 color : "#C77A04",
                 weight : 4,
-                opacity : 0.5
+                opacity : 0.5,
+                fill : false
             };
 
             this._currentFeature = new L.Draw.Polyline(map, {
@@ -582,9 +588,13 @@ define([
                 sampling : options.sampling || 200,
 
                 /** callback onSuccess */
-                onSuccess : function (result) {
+                onSuccess : this.options.elevationPathOptions.onSuccess || function (result) {
                     logger.log(result);
                     if (result) {
+                        if (self.options.displayProfileOptions.target !== null) {
+                            self._pictoContainer.style.display = "block";
+                            self._panelContainer.style.display = "block";
+                        }
                         self._displayProfil(result.elevations);
                         self._waitingContainer.className = "GPelevationPathCalcWaitingContainerHidden";
                         self._waiting = false;
@@ -592,8 +602,10 @@ define([
                 },
 
                 /** callback onFailure */
-                onFailure : function (error) {
+                onFailure : this.options.elevationPathOptions.onFailure || function (error) {
                     logger.log(error.message);
+                    self._pictoContainer.style.display = "block";
+                    self._panelContainer.style.display = "none";
                     self._waitingContainer.className = "GPelevationPathCalcWaitingContainerHidden";
                     self._waiting = false;
                     self._clear();
@@ -713,7 +725,7 @@ define([
         */
         _activateProfilEvent : function (position) {
 
-            if (this._profil === null) {
+            if (this._profile === null) {
                 return;
             }
 
@@ -749,8 +761,8 @@ define([
             };
 
             // FIXME remove event !?
-            self._profil.removeListener("changed", changed);
-            self._profil.addListener("changed", changed);
+            self._profile.removeListener("changed", changed);
+            self._profile.addListener("changed", changed);
 
             /**
             * event sur le survol du graphe qui permet de mettre à jour la position du marker
@@ -758,7 +770,7 @@ define([
             */
             var mouseover = function (e) {
                 logger.trace(e);
-                if (self._profil === null) {
+                if (self._profile === null) {
                     return;
                 }
 
@@ -778,7 +790,7 @@ define([
             */
             var mouseout = function (e) {
                 logger.trace(e);
-                if (self._profil === null) {
+                if (self._profile === null) {
                     return;
                 }
 
@@ -794,7 +806,7 @@ define([
             * @private
             */
             var mousemove = function (e) {
-                if (self._profil === null) {
+                if (self._profile === null) {
                     return;
                 }
 
@@ -825,7 +837,7 @@ define([
         */
         _clear : function () {
             this._geometry = null;
-            this._profil = null;
+            this._profile = null;
 
             // on vide le container
             if (this._profilContainer) {
@@ -972,7 +984,7 @@ define([
         div.innerHTML = JSON.stringify(data, undefined, 4);
         container.appendChild(div);
 
-        context._profil = container;
+        context._profile = container;
     };
 
     /**
@@ -1217,7 +1229,7 @@ define([
             }
         );
 
-        context._profil = d3.selectAll("rect.overlay")[0][0];
+        context._profile = d3.selectAll("rect.overlay")[0][0];
     };
 
     /**
@@ -1240,7 +1252,7 @@ define([
 
         AmCharts.addInitHandler(function () {});
 
-        context._profil = AmCharts.makeChart( container, {
+        context._profile = AmCharts.makeChart( container, {
             type : "serial",
             pathToImages : "http://cdn.amcharts.com/lib/3/images/",
             categoryField : "dist",

@@ -68,18 +68,16 @@
 
               var el = new ElevationPath({
                 active : true,
-                stylesOptions : {
-                    stroke : true,
-                    color : "#000000",
-                    weight : 3,
-                    opacity : 0.7,
-                    lineCap : 'square',
-                    lineJoin : 'miter',
-                    dashArray : '5, 1, 5, 1, 5',
-                    dashOffset : '',
-                    fill : false,
-                    clickable : true
-                }
+                elevationPathOptions : {
+                  onSuccess : function (elevation) {
+                    console.log(elevation);
+                    // TODO some stuff..
+                  },
+                  onFailure : function (error) {
+                    console.log(error);
+                  }
+                },
+                stylesOptions : {}
               });
 
               map.addControl(el);
