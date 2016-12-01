@@ -502,14 +502,24 @@ define([
                 label : "Lambert 93",
                 crs : ol.proj.get("EPSG:2154").getCode(),
                 type : "Metric",
-                geoBBox : { left: -9.86, bottom : 41.15, right : 10.38, top : 51.56 }
+                geoBBox : {
+                    left : -9.86,
+                    bottom : 41.15,
+                    right : 10.38,
+                    top : 51.56
+                }
             },
             {
                 code : "EPSG:27572",
                 label : "Lambert II \u00e9tendu",
                 crs : ol.proj.get("EPSG:27572"),
                 type : "Metric",
-                geoBBox : { left: -4.87, bottom : 42.33, right : 8.23, top : 51.14 }
+                geoBBox : {
+                    left : -4.87,
+                    bottom : 42.33,
+                    right : 8.23,
+                    top : 51.14
+                }
             }
         ];
 
@@ -1167,17 +1177,14 @@ define([
 
         // si on change de type de systeme, on doit aussi changer le type d'unités !
         var type = null;
-        for(var i = 0 ; i < this._projectionSystems.length ; ++i)
-        {
-            if( this._projectionSystems[i].code == value )
-            {
+        for (var i = 0 ; i < this._projectionSystems.length ; ++i) {
+            if ( this._projectionSystems[i].code == value ) {
                 type = this._projectionSystems[i].type;
                 break;
             }
         }
 
-        if( !type )
-        {
+        if ( !type ) {
             logger.log("system not found in projection systems container");
             return;
         }
@@ -1207,7 +1214,9 @@ define([
      */
     MousePosition.prototype.onMousePositionProjectionSystemMouseOver = function (e) {
 
-        //map infos
+        logger.trace(e);
+
+        // map infos
         var map = this.getMap();
         if ( !map || !map.getView() ) {
             return;
@@ -1216,25 +1225,24 @@ define([
         var crs = view.getProjection();
         var mapExtent = view.calculateExtent( map.getSize() );
 
-        //get extent in WGS84 coordinates
+        // get extent in WGS84 coordinates
         mapExtent = ol.proj.transformExtent( mapExtent, crs, "EPSG:4326");
 
-        //clear select
+        // clear select
         var systemList = document.getElementById(this._addUID("GPmousePositionProjectionSystem"));
         systemList.innerHTML = "";
 
-        //add systems whose extent intersects the map extent
+        // add systems whose extent intersects the map extent
         for (var j = 0; j < this._projectionSystems.length; j++) {
             var proj = this._projectionSystems[j];
-            if( proj.geoBBox )
-            {
-                //bboxes intersection test
-                if(   mapExtent[0] > proj.geoBBox.right ||
+            if ( proj.geoBBox ) {
+                // bboxes intersection test
+                if (  mapExtent[0] > proj.geoBBox.right ||
                       mapExtent[1] > proj.geoBBox.top   ||
                       mapExtent[2] < proj.geoBBox.left  ||
                       mapExtent[3] < proj.geoBBox.bottom
-                ){
-                    continue;//do not intersect
+                ) {
+                    continue; // do not intersect
                 }
             }
             var option = document.createElement("option");
