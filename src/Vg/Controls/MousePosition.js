@@ -95,7 +95,7 @@ define([
 
         this._callbacks = {};
         // FIXME problème avec doc VirtualGeo
-        var MPtarget = document.getElementById(this._addUID("GpMousePosition"));
+        var MPtarget = document.getElementById(this._addUID(MPoptions.div));
         // call VirtualGeo.Control constructor
         VirtualGeo.Control.call(this, container, MPtarget);
 

@@ -420,7 +420,7 @@ define([
 
         // identifiant du contrôle : utile pour suffixer les identifiants CSS (pour gérer le cas où il y en a plusieurs dans la même page)
         this._uid = SelectorID.generate();
-        
+
         // initialisation des systemes de projections
         this._projectionSystems = [];
         this._initProjectionSystems();
@@ -1220,7 +1220,7 @@ define([
         mapExtent = ol.proj.transformExtent( mapExtent, crs, "EPSG:4326");
 
         //clear select
-        var systemList = document.getElementById("GPmousePositionProjectionSystem");
+        var systemList = document.getElementById(this._addUID("GPmousePositionProjectionSystem"));
         systemList.innerHTML = "";
 
         //add systems whose extent intersects the map extent
