@@ -747,8 +747,10 @@ define([
             });
             self._marker.addTo(map);
 
-            /**
+           /**
             * event sur le survol du graphe qui permet de mettre à jour la position du marker
+            *
+            * @param {Object} e - event
             * @private
             */
             var changed = function (e) {
@@ -764,8 +766,10 @@ define([
             self._profile.removeListener("changed", changed);
             self._profile.addListener("changed", changed);
 
-            /**
+           /**
             * event sur le survol du graphe qui permet de mettre à jour la position du marker
+            *
+            * @param {Object} e - event
             * @private
             */
             var mouseover = function (e) {
@@ -784,8 +788,10 @@ define([
                 self._marker.addTo(map);
             };
 
-            /**
+           /**
             * event sur la sortie du graphe qui permet de mettre à jour la position du marker
+            *
+            * @param {Object} e - event
             * @private
             */
             var mouseout = function (e) {
@@ -801,11 +807,14 @@ define([
                 }
             };
 
-            /**
+           /**
             * event sur le deplacement sur le graphe qui permet de mettre à jour la position du marker
+            *
+            * @param {Object} e - event
             * @private
             */
             var mousemove = function (e) {
+                logger.trace(e);
                 if (self._profile === null) {
                     return;
                 }
