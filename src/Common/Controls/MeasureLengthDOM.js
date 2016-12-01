@@ -54,7 +54,7 @@ define([], function () {
             label.id  = this._addUID("GPshowMeasureLengthPicto");
             label.className = "GPshowAdvancedToolPicto";
             label.htmlFor = this._addUID("GPshowMeasureLength");
-            label.title = "Calculer une distance";
+            label.title = "Mesurer une distance";
 
             // gestionnaire d'evenement :
             // on ouvre le menu de saisie...

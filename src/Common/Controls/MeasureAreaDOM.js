@@ -54,7 +54,7 @@ define([], function () {
             label.id  = this._addUID("GPshowMeasureAreaPicto");
             label.className = "GPshowAdvancedToolPicto";
             label.htmlFor = this._addUID("GPshowMeasureArea");
-            label.title = "Calculer une surface";
+            label.title = "Mesurer une surface";
 
             // gestionnaire d'evenement :
             // on ouvre le menu de saisie...
