@@ -68,9 +68,13 @@
               wms.addTo(map);
 
               var el = new ElevationPath({
-                active : false,
-                elevationPathOptions : {},
-                displayProfileOptions : {}
+                active : true,
+                elevationPathOptions : {
+                  sampling : 50
+                },
+                displayProfileOptions : {
+                  apply : ElevationPath.DISPLAY_PROFILE_LIB_AMCHARTS
+                }
               });
 
               map.addControl(el);

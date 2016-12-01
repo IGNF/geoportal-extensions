@@ -95,7 +95,7 @@ define([
 
         this._callbacks = {};
         // FIXME problème avec doc VirtualGeo
-        var MPtarget = document.getElementById(this._addUID(MPoptions.div));
+        var MPtarget = document.getElementById(MPoptions.div);
         // call VirtualGeo.Control constructor
         VirtualGeo.Control.call(this, container, MPtarget);
 

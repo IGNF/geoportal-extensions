@@ -261,13 +261,23 @@ define([
                     label : "Lambert 93",
                     crs : CRS.EPSG2154,
                     type : "Metric",
-                    geoBBox : { left: -9.86, bottom : 41.15, right : 10.38, top : 51.56 }
+                    geoBBox : {
+                        left : -9.86,
+                        bottom : 41.15,
+                        right : 10.38,
+                        top : 51.56
+                    }
                 },
                 {
                     label : "Lambert II \u00e9tendu",
                     crs : CRS.EPSG27572,
                     type : "Metric",
-                    geoBBox : { left: -4.87, bottom : 42.33, right : 8.23, top : 51.14 }
+                    geoBBox : {
+                        left : -4.87,
+                        bottom : 42.33,
+                        right : 8.23,
+                        top : 51.14
+                    }
                 }
             ];
 
@@ -294,7 +304,6 @@ define([
 
                 this._projectionSystems.push(systems[i]);
 
-
                 // it's a just a test ...
                 var found = false;
                 for (var j = 0; j < projectionSystemsByDefault.length; j++) {
@@ -314,9 +323,8 @@ define([
                 this._projectionSystems = projectionSystemsByDefault;
             }
 
-            //re-initilisation des codes pour gerer le lien entre _projectionSystems et select du mouse position (lien code/value)
-            for(var k = 0 ; k < this._projectionSystems.length ; ++k)
-            {
+            // re-initilisation des codes pour gerer le lien entre _projectionSystems et select du mouse position (lien code/value)
+            for (var k = 0 ; k < this._projectionSystems.length ; ++k) {
                 this._projectionSystems[k].code = i;
             }
         },
@@ -1017,17 +1025,14 @@ define([
 
             // si on change de type de systeme, on doit aussi changer le type d'unités !
             var type = null;
-            for(var i = 0 ; i < this._projectionSystems.length ; ++i)
-            {
-                if( this._projectionSystems[i].code == value )
-                {
+            for (var i = 0 ; i < this._projectionSystems.length ; ++i) {
+                if ( this._projectionSystems[i].code == value ) {
                     type = this._projectionSystems[i].type;
                     break;
                 }
             }
 
-            if( !type )
-            {
+            if ( !type ) {
                 logger.log("system not found in projection systems container");
                 return;
             }
@@ -1057,27 +1062,28 @@ define([
          */
         onMousePositionProjectionSystemMouseOver : function (e) {
 
+            logger.log(e);
+
             var map = this._map;
             if ( !map ) {
                 return;
             }
 
-            //clear select
-            var systemList = document.getElementById("GPmousePositionProjectionSystem");
+            // clear select
+            var systemList = document.getElementById(this._addUID("GPmousePositionProjectionSystem"));
             systemList.innerHTML = "";
 
-            //add systems whose extent intersects the map extent
+            // add systems whose extent intersects the map extent
             for (var j = 0; j < this._projectionSystems.length; j++) {
                 var proj = this._projectionSystems[j];
-                if( proj.geoBBox )
-                {
-                    //bboxes intersection test
-                    if(   map.getBounds()._southWest.lng > proj.geoBBox.right ||
+                if ( proj.geoBBox ) {
+                    // bboxes intersection test
+                    if (  map.getBounds()._southWest.lng > proj.geoBBox.right ||
                           map.getBounds()._southWest.lat > proj.geoBBox.top   ||
                           map.getBounds()._northEast.lng < proj.geoBBox.left  ||
                           map.getBounds()._northEast.lat < proj.geoBBox.bottom
-                    ){
-                        continue;//do not intersect
+                    ) {
+                        continue; // do not intersect
                     }
                 }
                 var option = document.createElement("option");

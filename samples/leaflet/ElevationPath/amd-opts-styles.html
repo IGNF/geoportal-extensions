@@ -9,9 +9,8 @@
   <!-- Plugin leaflet IGN -->
   <link rel="stylesheet" href="../../../dist/leaflet/GpPluginLeaflet-src.css" />
 
-  <!-- requirejs -->
+  <!-- lib -->
   <script src="../../../lib/require.js"></script>
-  <script src="amCharts-min.js"></script>
 
 </head>
 <body>
@@ -68,9 +67,19 @@
               wms.addTo(map);
 
               var el = new ElevationPath({
-                active : false,
-                elevationPathOptions : {},
-                displayProfileOptions : {}
+                active : true,
+                stylesOptions : {
+                    stroke : true,
+                    color : "#000000",
+                    weight : 3,
+                    opacity : 0.7,
+                    lineCap : 'square',
+                    lineJoin : 'miter',
+                    dashArray : '5, 1, 5, 1, 5',
+                    dashOffset : '',
+                    fill : false,
+                    clickable : true
+                }
               });
 
               map.addControl(el);

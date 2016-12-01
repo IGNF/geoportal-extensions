@@ -9,9 +9,9 @@
   <!-- Plugin leaflet IGN -->
   <link rel="stylesheet" href="../../../dist/leaflet/GpPluginLeaflet-src.css" />
 
+  <script src="amCharts-min.js"></script>
   <!-- requirejs -->
   <script src="../../../lib/require.js"></script>
-  <script src="amCharts-min.js"></script>
 
 </head>
 <body>
@@ -68,9 +68,11 @@
               wms.addTo(map);
 
               var el = new ElevationPath({
-                active : false,
-                elevationPathOptions : {},
-                displayProfileOptions : {}
+                active : true,
+                displayProfileOptions : {
+                  apply : ElevationPath.DISPLAY_PROFILE_LIB_AMCHARTS,
+                  target : document.getElementById("profil")
+                }
               });
 
               map.addControl(el);
@@ -82,6 +84,7 @@
 
     <!-- map -->
     <div id="map" style="height: 500px;"></div>
+    <div id="profil" style="height: 300px;"></div>
 
     <!-- Comment utiliser le plugin avec un exemple -->
     <p>TODO : EXEMPLE D'UTILISATION DU PLUGIN</p>
