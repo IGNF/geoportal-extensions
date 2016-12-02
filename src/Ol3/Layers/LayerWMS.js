@@ -102,7 +102,7 @@ define([
                         /* fixme : fix temporaire pour gérer les min/max scaledenominator qui sont arrondis dans l'autoconf !
                          * on les arrondit respectivement à l'unité inférieure et supérieure
                          * pour que les couches soient bien disponibles aux niveaux de zoom correspondants */
-                         // info : 1 pixel = 0.00028 m
+                        // info : 1 pixel = 0.00028 m
                         layerTileOptions.minResolution = ( globalConstraints.minScale - 1 ) * 0.00028;
                         layerTileOptions.maxResolution = ( globalConstraints.maxScale + 1 ) * 0.00028;
                     } else if ( p.getUnits() === "degrees" ) {

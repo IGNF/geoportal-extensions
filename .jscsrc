@@ -744,7 +744,7 @@
                  *        value: (required) the same effect as the non-object values
                  *        includeEmptyLines: (default: false) require empty lines to be indented
                  */
-        // "validateIndentation": 4,
+        "validateIndentation": 4,
 
                 /*
                  * Option to check line break characters
@@ -823,7 +823,7 @@
             "checkRedundantParams" : true,
             "checkRedundantReturns" : true,
             "requireHyphenBeforeDescription" : true,
-            "requireNewlineAfterDescription" : true,
+            // "requireNewlineAfterDescription" : true,
             "requireParamDescription" : true,
             "checkTypes": "capitalizedNativeCase",
             "enforceExistence": "exceptExports"

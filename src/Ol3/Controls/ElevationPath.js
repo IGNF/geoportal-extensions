@@ -640,14 +640,14 @@ define([
             li.title = "altitude : " + d.z + "m" ;
             li.setAttribute("style", "width: " + barwidth + "%") ;
             ul.appendChild(li) ;
-       }
+        }
 
-       var divX = document.createElement("div");
-       divX.className = "x-title-horizontal";
-       divX.innerHTML = dist + " km";
-       div.appendChild(divX);
+        var divX = document.createElement("div");
+        divX.className = "x-title-horizontal";
+        divX.innerHTML = dist + " km";
+        div.appendChild(divX);
 
-       self._profile = container;
+        self._profile = container;
     };
 
     /** 
@@ -1180,8 +1180,8 @@ define([
         }
 
         this._drawStyleStart = new ol.style.Style({
-                stroke : _startStroke,
-                image : _pointerImage
+            stroke : _startStroke,
+            image : _pointerImage
         });
 
         logger.trace("style finish", finish);

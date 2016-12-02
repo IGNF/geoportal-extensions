@@ -1662,7 +1662,7 @@ define([
      * @private
      */
     Route.prototype._removeRouteStepLocations = function () {
-        var points = document.querySelectorAll('div[id^="GPlocationPoint"]');
+        var points = document.querySelectorAll("div[id^=\"GPlocationPoint\"]");
         var stepPoints = 0;
         if ( points.length !== 0 ) {
             // on boucle sur les points intermédiaires

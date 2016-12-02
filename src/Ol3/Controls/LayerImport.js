@@ -763,13 +763,13 @@ define([
 
         // récupération des entités avec reprojection éventuelle des géométries
         var features = null;
-            features = format.readFeatures(
-                fileContent,
-                {
-                    dataProjection : fileProj,
-                    featureProjection : mapProj
-                }
-            );
+        features = format.readFeatures(
+            fileContent,
+            {
+                dataProjection : fileProj,
+                featureProjection : mapProj
+            }
+        );
 
         logger.log("loaded features : ", features);
 

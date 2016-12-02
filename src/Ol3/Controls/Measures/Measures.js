@@ -443,9 +443,9 @@ define([
                 });
 
                 this.options.styles.start = new ol.style.Style({
-                        fill : _startFill,
-                        stroke : _startStroke,
-                        image : _startImage
+                    fill : _startFill,
+                    stroke : _startStroke,
+                    image : _startImage
                 });
             }
 
@@ -560,17 +560,17 @@ define([
          */
         initMeasureInteraction : function () {
 
-             var map = this.getMap();
+            var map = this.getMap();
 
-             this.measureSource = new ol.source.Vector();
+            this.measureSource = new ol.source.Vector();
 
-             this.measureVector = new ol.layer.Vector({
-               source : this.measureSource,
-               style : this.options.styles.finish || this.measureDrawFinishStyle
-             });
+            this.measureVector = new ol.layer.Vector({
+                source : this.measureSource,
+                style : this.options.styles.finish || this.measureDrawFinishStyle
+            });
 
-             map.addLayer(this.measureVector);
-         }
+            map.addLayer(this.measureVector);
+        }
     };
 
     return Measures;

@@ -125,6 +125,8 @@
     //'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     gulp.task("jscs", function () {
 
+        var jscs = require("gulp-jscs");
+
         var src = [];
         (isExecuteOl3) ? src.push(_src.js.ol3) : (isExecuteLeaflet) ? src.push(_src.js.leaflet) : (isExecuteVg) ? src.push(_src.js.vg) : null;
         src.push(_src.js.common);
@@ -133,7 +135,9 @@
 
         return gulp.src(src)
             .pipe($.plumber())
-            .pipe($.jscs());
+            //.pipe($.jscs());
+            .pipe(jscs())
+            .pipe(jscs.reporter()) ;;
     });
 
     //|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
