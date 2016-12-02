@@ -18,6 +18,8 @@ L'extension Géoportail pour Leaflet propose les fonctionnalités suivantes à u
 
 * [altitude en un point de la carte à l'aide du service d'altimétrie de la plateforme Géoportail](#mp)
 
+* [profil altimétrique d'un traçé à l'aide du service d'altimétrie de la plateforme Géoportail](#ep)
+
 
 ## Mise en oeuvre
 
@@ -599,3 +601,42 @@ map.addControl(mpCtrl);
 **Exemple d'utilisation avec paramétrage des systèmes de coordonnées** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/oy601s3c/embedded/result,js,html,css/)
 
 **Exemple d'utilisation avec appel d'un système de coordonnées défini** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/ggx4u7n8/embedded/result,js,html,css/)
+
+
+<a id="ep"/>
+
+### Profil altimétrique le long d'un traçé
+
+Ce widget permet d'afficher le profil altimétrique d'un traçé saisi par l'internaute sur une carte Leaflet. Le profil est calculé à l'aide du service d'altimétrie de la plateforme Géoportail.
+
+Son utilisation se fait par la création d'un nouveau contrôle à l'aide de la fonction [L.geoportalControl.ElevationPath()](http://ignf.github.io/geoportal-extensions/leaflet-latest/jsdoc/module-Controls.html#.ElevationPath), que l'on peut ensuite ajouter à la carte comme [les autres contrôles Leaflet](http://leafletjs.com/reference.html#map-stuff-methods), par exemple de la manière suivante :
+
+``` javascript
+var ep = L.geoportalControl.ElevationPath(opts);
+map.addControl(ep);
+```
+
+#### Exemples d'utilisation
+
+##### Utilisation simple
+
+Ajout du widget sans paramétrage particulier.
+
+``` javascript
+// creation de la carte
+map = L.map("map").setView([47, 2.424], 12);
+
+// ajout d'une couche
+var lyrMaps = L.geoportalLayer.WMTS({
+    layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS",
+});
+map.addLayer(lyrMaps) ;
+
+// création et ajout du controle
+var ep = L.geoportalControl.ElevationPath({
+});
+map.addControl(ep);
+```
+
+**Exemple d'utilisation** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/L5ctL3nq/embedded/result,js,html,css/)
+

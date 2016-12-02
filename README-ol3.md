@@ -22,6 +22,12 @@ L'extension Géoportail pour OpenLayers 3 propose les fonctionnalités suivantes
 
 * [outils de croquis](#drawing)
 
+* [import de couches](#layerimport)
+
+* [profil altimétrique d'un traçé à l'aide du service d'altimétrie de la plateforme Géoportail](#ep)
+
+* [outils de mesure](#measure)
+
 ## Mise en oeuvre
 
 ### Téléchargement
@@ -851,3 +857,141 @@ map.addControl(drawControl);
 ```
 
 **Exemple d'utilisation** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/2Lj85jf1/embedded/result,js,html,css/)
+
+
+<a id="layerimport"/>
+
+### Widget d'import de couches
+
+Ce widget permet à un internaute d'importer ses propres données géographiques dans des formats standards en superposition des données d'une carte OL3.
+
+Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe [ol.control.LayerImport](http://ignf.github.io/geoportal-extensions/ol3-latest/jsdoc/ol.control.LayerImport.html), que l'on peut ensuite ajouter à la carte comme [les autres contrôles OpenLayers 3](http://openlayers.org/en/latest/apidoc/ol.Map.html#addControl), de la manière suivante :
+
+
+``` javascript
+var lyrImport = new ol.control.LayerImport(opts);
+map.addControl(lyrImport);
+```
+
+#### Exemples d'utilisation
+
+##### Utilisation simple
+
+Ajout du widget sans paramétrage particulier.
+
+``` javascript
+// Création de la carte
+var map = new ol.Map({
+    target: 'map',
+    layers: [
+        new ol.layer.GeoportalWMTS({
+            layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+        })
+    ],
+    view: new ol.View({
+        center: [288074.8449901076, 6247982.515792289],
+        zoom: 12
+    })
+});
+
+// Creation du controle
+var lyrImport = new ol.control.LayerImport({
+});
+
+// Ajout à la carte
+map.addControl(lyrImport);
+```
+
+**Exemple d'utilisation** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/u04nvno2/embedded/result,js,html,css/)
+
+
+<a id="ep"/>
+
+### Profil altimétrique le long d'un traçé
+
+Ce widget permet d'afficher le profil altimétrique d'un traçé saisi par l'internaute sur une carte OpenLayers 3. Le profil est calculé à l'aide du service d'altimétrie de la plateforme Géoportail.
+
+Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe [ol.control.ElevationPath](http://ignf.github.io/geoportal-extensions/ol3-latest/jsdoc/ol.control.ElevationPath.html), que l'on peut ensuite ajouter à la carte comme [les autres contrôles OpenLayers 3](http://openlayers.org/en/latest/apidoc/ol.Map.html#addControl), de la manière suivante :
+
+
+``` javascript
+var ep = new ol.control.ElevationPath(opts);
+map.addControl(ep);
+```
+
+#### Exemples d'utilisation
+
+##### Utilisation simple
+
+Ajout du widget sans paramétrage particulier.
+
+``` javascript
+// Création de la carte
+var map = new ol.Map({
+    target: 'map',
+    layers: [
+        new ol.layer.GeoportalWMTS({
+            layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+        })
+    ],
+    view: new ol.View({
+        center: [288074.8449901076, 6247982.515792289],
+        zoom: 12
+    })
+});
+
+// Creation du controle
+var ep = new ol.control.ElevationPath({
+});
+
+// Ajout à la carte
+map.addControl(ep);
+```
+
+**Exemple d'utilisation** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/cwfsLge7/embedded/result,js,html,css/)
+
+<a id="ep"/>
+
+### Outils de mesures
+
+Trois widgets sont proposés permettant à un internaute d'effectuer des mesures sur une carte OL3 : mesures de distance, de surface et d'azimuth.
+
+Leur utilisation se fait par la création d'un nouveau contrôle, instance de la classe [ol.control.MeasureLength](http://ignf.github.io/geoportal-extensions/ol3-latest/jsdoc/ol.control.MeasureLength.html), pour les distances ; [ol.control.MeasureArea](http://ignf.github.io/geoportal-extensions/ol3-latest/jsdoc/ol.control.MeasureArea.html), pour les surfaces ou [ol.control.MeasureAzimuth](http://ignf.github.io/geoportal-extensions/ol3-latest/jsdoc/ol.control.MeasureAzimuth.html) pour les mesures d'azimuth que l'on peut ensuite ajouter à la carte comme [les autres contrôles OpenLayers 3](http://openlayers.org/en/latest/apidoc/ol.Map.html#addControl), de la manière suivante :
+
+
+``` javascript
+var length = new ol.control.MeasureLength(opts);
+map.addControl(length);
+```
+
+#### Exemples d'utilisation
+
+##### Utilisation simple
+
+Ajout du widget sans paramétrage particulier.
+
+``` javascript
+// Création de la carte
+var map = new ol.Map({
+    target: 'map',
+    layers: [
+        new ol.layer.GeoportalWMTS({
+            layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+        })
+    ],
+    view: new ol.View({
+        center: [288074.8449901076, 6247982.515792289],
+        zoom: 12
+    })
+});
+
+// Creation du controle
+var length = new ol.control.MeasureLength({
+});
+
+// Ajout à la carte
+map.addControl(length);
+```
+
+**Exemple d'utilisation** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/cwfsLge7/embedded/result,js,html,css/)
+
