@@ -761,7 +761,10 @@
                  * Requires each element in array on a single line when array length is more than passed maximum number or array fills more than one line. Set ignoreBrackets to true to allow elements on the same line with brackets.
                  * Values: true or Object ({maximum: Number, ignoreBrackets: Boolean})
                  */
-        "validateNewlineAfterArrayElements": true,
+        "validateNewlineAfterArrayElements": {
+            ignoreBrackets : true,
+            maximum : 3
+        },
 
                 /*
                  * Enable validation of separators between function parameters. Will ignore newlines.
