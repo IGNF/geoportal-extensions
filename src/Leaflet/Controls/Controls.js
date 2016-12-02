@@ -129,6 +129,11 @@ function (
         * @param {String}  options.systems.crs - Proj4 crs alias (from proj4 defs). e.g. : "EPSG:4326". Required
         * @param {String}  [options.systems.label] - CRS label to be displayed in control. Default is crs code (e.g. "EPSG:4326")
         * @param {String}  [options.systems.type] - CRS units type for coordinates conversion : "Geographical" or "Metric". Default: "Metric"
+        * @param {Object}  [options.systems.geoBBox] - Aera covered by the system (WGS84 coordinates).
+        * @param {Number}  options.systems.geoBBox.right - Right bound.
+        * @param {Number}  options.systems.geoBBox.left - Left bound.
+        * @param {Number}  options.systems.geoBBox.top - Top bound.
+        * @param {Number}  options.systems.geoBBox.bottom - Bottom bound.
         * @param {Array}   [options.units] - list of units by system, Geographical and Metric by default
          *      Values may be "DEC" (decimal degrees), "DMS" (sexagecimal), "RAD" (radians) and "GON" (grades) for geographical coordinates,
          *      and "M" or "KM" for metric coordinates

@@ -74,6 +74,11 @@ define([
         * @param {String}  options.systems.crs - Proj4 crs alias (from proj4 defs). e.g. : "EPSG:4326". Required
         * @param {String}  [options.systems.label] - CRS label to be displayed in control. Default is crs code (e.g. "EPSG:4326")
         * @param {String}  [options.systems.type] - CRS units type for coordinates conversion : "Geographical" or "Metric". Default: "Metric"
+        * @param {Object}  [options.systems.geoBBox] - Aera covered by the system (WGS84 coordinates).
+        * @param {Number}  options.systems.geoBBox.right - Right bound.
+        * @param {Number}  options.systems.geoBBox.left - Left bound.
+        * @param {Number}  options.systems.geoBBox.top - Top bound.
+        * @param {Number}  options.systems.geoBBox.bottom - Bottom bound.
         * @param {Array}   [options.units] - list of units by system, Geographical and Metric by default
          *      Values may be "DEC" (decimal degrees), "DMS" (sexagecimal), "RAD" (radians) and "GON" (grades) for geographical coordinates,
          *      and "M" or "KM" for metric coordinates
@@ -323,9 +328,10 @@ define([
                 this._projectionSystems = projectionSystemsByDefault;
             }
 
-            // re-initilisation des codes pour gerer le lien entre _projectionSystems et select du mouse position (lien code/value)
-            for (var k = 0 ; k < this._projectionSystems.length ; ++k) {
-                this._projectionSystems[k].code = i;
+            //re-initilisation des codes pour gerer le lien entre _projectionSystems et select du mouse position (lien code/value)
+            for(var k = 0 ; k < this._projectionSystems.length ; ++k)
+            {
+                this._projectionSystems[k].code = k;
             }
         },
 
@@ -1023,33 +1029,47 @@ define([
 
             logger.log(idx, value, label);
 
-            // si on change de type de systeme, on doit aussi changer le type d'unités !
-            var type = null;
-            for (var i = 0 ; i < this._projectionSystems.length ; ++i) {
-                if ( this._projectionSystems[i].code == value ) {
-                    type = this._projectionSystems[i].type;
-                    break;
-                }
-            }
-
-            if ( !type ) {
-                logger.log("system not found in projection systems container");
-                return;
-            }
-
-            if (type !== this._currentProjectionType) {
-                this._setTypeUnitsPanel(type);
-            }
-
-            // on enregistre le systeme courrant
-            this._currentProjectionSystems = this._projectionSystems[idx];
-
-            // on simule un deplacement en mode tactile pour mettre à jour les
-            // resultats
-            if (!this._isDesktop) {
-                this.onMapMove();
-            }
+            this._setCurrentSystem( value );
         },
+
+        /**
+         * this method selects the current system projection.
+         *
+         * @param {Object} systemCode - inner code (rank in array _projectionSystems)
+         *
+         * @private
+         */
+          _setCurrentSystem : function ( systemCode ){
+              // si on change de type de systeme, on doit aussi changer le type d'unités !
+              var type = null;
+              for(var i = 0 ; i < this._projectionSystems.length ; ++i)
+              {
+                  if( this._projectionSystems[i].code == systemCode )
+                  {
+                      type = this._projectionSystems[i].type;
+                      break;
+                  }
+              }
+
+              if( !type )
+              {
+                  logger.log("system not found in projection systems container");
+                  return;
+              }
+
+              if (type !== this._currentProjectionType) {
+                  this._setTypeUnitsPanel(type);
+              }
+
+              // on enregistre le systeme courrant
+              this._currentProjectionSystems = this._projectionSystems[Number(systemCode)];
+
+              // on simule un deplacement en mode tactile pour mettre à jour les
+              // resultats
+              if (!this._isDesktop) {
+                  this.onMapMove();
+              }
+          },
 
         /**
          * this method is called by event 'mouseover' on 'GPmousePositionProjectionSystem'
@@ -1069,8 +1089,9 @@ define([
                 return;
             }
 
-            // clear select
-            var systemList = document.getElementById(this._addUID("GPmousePositionProjectionSystem"));
+            //clear select
+            var systemList = document.getElementById( this._addUID("GPmousePositionProjectionSystem") );
+
             systemList.innerHTML = "";
 
             // add systems whose extent intersects the map extent
@@ -1082,13 +1103,24 @@ define([
                           map.getBounds()._southWest.lat > proj.geoBBox.top   ||
                           map.getBounds()._northEast.lng < proj.geoBBox.left  ||
                           map.getBounds()._northEast.lat < proj.geoBBox.bottom
-                    ) {
-                        continue; // do not intersect
+                    ){
+                        if( proj === this._currentProjectionSystems )
+                        {
+                            var option = document.createElement("option");
+                            option.value = proj.code;
+                            option.text  = proj.label || j;
+                            option.setAttribute( "selected", "selected" );
+                            option.setAttribute( "disabled", "disabled" );
+
+                            systemList.appendChild(option);
+                        }
+                        continue;//do not intersect
                     }
                 }
                 var option = document.createElement("option");
                 option.value = proj.code;
                 option.text  = proj.label || j;
+                if( proj === this._currentProjectionSystems ) option.setAttribute( "selected", "selected" );
 
                 systemList.appendChild(option);
             }
