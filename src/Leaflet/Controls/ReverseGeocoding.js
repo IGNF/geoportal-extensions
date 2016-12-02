@@ -58,7 +58,7 @@ define([
         * @param {Boolean} [options.collapsed] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
         * @param {Array}  [options.resources] - resources for geocoding, by default : ["StreetAddress", "PositionOfInterest"]
         * @param {Array}  [options.delimitations] - delimitations for reverse geocoding, by default : ["Point", "Circle", "Extent"]
-        * @param {Object}  [options.reverseGeocodeOptions] - reverse geocode service options. see {@link http://depot.ign.fr/geoportail/bibacces/develop/doc/module-Services.html#~ReverseGeocode} to know all reverse geocode options.
+        * @param {Object}  [options.reverseGeocodeOptions] - reverse geocode service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~ReverseGeocode Gp.Services.reverseGeocode()} to know all reverse geocode options.
         * @example
         *  var iso = L.geoportalControl.ReverseGeocode({
         *      collapsed : false,

@@ -10,7 +10,7 @@ define(["ol", "Common/Utils/LayerUtils"], function (ol, LayerUtils) {
      * @constructor
      * @extends {ol.control.Attribution}
      * @alias ol.control.GeoportalAttribution
-     * @param {Object} options - ol.control.Attribution options (see http://openlayers.org/en/v3.13.0/apidoc/ol.control.Attribution.html)
+     * @param {Object} options - ol.control.Attribution options (see {@link http://openlayers.org/en/latest/apidoc/ol.control.Attribution.html ol.Control.Attribution})
      * @example
      * map.addControl(
      *      new ol.control.GeoportalAttribution({
@@ -77,14 +77,14 @@ define(["ol", "Common/Utils/LayerUtils"], function (ol, LayerUtils) {
             );
             map.getLayers().on(
                 "add",
-                function() {
+                function () {
                     context._updateAttributions(map);
                 },
                 this
             );
             map.getLayers().on(
                 "remove",
-                function() {
+                function () {
                     context._updateAttributions(map);
                 },
                 this
@@ -99,6 +99,7 @@ define(["ol", "Common/Utils/LayerUtils"], function (ol, LayerUtils) {
      * Overload setMap function, that enables to catch map events, such as movend events.
      *
      * @param {ol.Map} map - Map.
+     * @private
      */
     GeoportalAttribution.prototype._updateAttributions = function (map) {
         // get map parameters

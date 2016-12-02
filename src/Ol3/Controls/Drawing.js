@@ -209,9 +209,9 @@ define([
     Drawing.prototype.constructor = Drawing;
 
     /**
-     * Overload of {@link http://openlayers.org/en/v3.15.0/apidoc/ol.control.Control.html#setMap ol.control.Control.setMap()} method, called when control is added to or removed from map.
+     * Overload of {@link http://openlayers.org/en/latest/apidoc/ol.control.Control.html#setMap ol.control.Control.setMap()} method, called when control is added to or removed from map.
      *
-     * @param {Object} map - {@link http://openlayers.org/en/v3.15.0/apidoc/ol.Map.html ol.Map} object.
+     * @param {Object} map - {@link http://openlayers.org/en/latest/apidoc/ol.Map.html ol.Map} object.
      */
     Drawing.prototype.setMap = function (map) {
 
