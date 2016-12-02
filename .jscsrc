@@ -762,8 +762,8 @@
                  * Values: true or Object ({maximum: Number, ignoreBrackets: Boolean})
                  */
         "validateNewlineAfterArrayElements": {
-            ignoreBrackets : true,
-            maximum : 3
+            "ignoreBrackets" : true,
+            "maximum" : 5
         },
 
                 /*
