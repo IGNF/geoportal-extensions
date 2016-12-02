@@ -20,7 +20,7 @@ define([
 
     var logger = woodman.getLogger("searchengine");
 
-   /**
+    /**
     * @classdesc
     *
     * Leaflet Control Class to search positons of geographic identifiers (places names, address, cadastral parcel) using :
@@ -57,7 +57,7 @@ define([
             autocompleteOptions : {}
         },
 
-       /**
+        /**
         * @constructor SearchEngine
         *
         * @private
@@ -1482,7 +1482,7 @@ define([
             // à la requête, ainsi que le type de table de ressources de geocodage,
             // et le localisant
             var _filterOptions = {};
-                _filterOptions["type"] = [this._currentGeocodingCode];
+            _filterOptions["type"] = [this._currentGeocodingCode];
 
             var _location = this._currentGeocodingLocation || "";
             if (this._currentGeocodingCode === "CadastralParcel") {

@@ -17,7 +17,7 @@ function (L, Gp, woodman, LayerEvent) {
 
     var logger = woodman.getLogger("wmts");
 
-   /**
+    /**
     * @namespace
     * @alias L.geoportalLayer.WMTS
     * @classdesc

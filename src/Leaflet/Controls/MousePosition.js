@@ -22,7 +22,7 @@ define([
 
     var logger = woodman.getLogger("mouseposition");
 
-   /**
+    /**
     * @classdesc
     *
     * Leaflet Control Class to display Mouse position in various CRS and altitude using the <a href="http://api.ign.fr/tech-docs-js/developpeur/alti.html" target="_blank">altimetric web service of the Geoportal Platform</a>.
@@ -1039,32 +1039,32 @@ define([
          * @private
          */
         _setCurrentSystem : function ( systemCode ) {
-              // si on change de type de systeme, on doit aussi changer le type d'unités !
-              var type = null;
-              for (var i = 0 ; i < this._projectionSystems.length ; ++i) {
-                  if ( this._projectionSystems[i].code == systemCode ) {
-                      type = this._projectionSystems[i].type;
-                      break;
-                  }
-              }
+            // si on change de type de systeme, on doit aussi changer le type d'unités !
+            var type = null;
+            for (var i = 0 ; i < this._projectionSystems.length ; ++i) {
+                if ( this._projectionSystems[i].code == systemCode ) {
+                    type = this._projectionSystems[i].type;
+                    break;
+                }
+            }
 
-              if ( !type ) {
-                  logger.log("system not found in projection systems container");
-                  return;
-              }
+            if ( !type ) {
+                logger.log("system not found in projection systems container");
+                return;
+            }
 
-              if (type !== this._currentProjectionType) {
-                  this._setTypeUnitsPanel(type);
-              }
+            if (type !== this._currentProjectionType) {
+                this._setTypeUnitsPanel(type);
+            }
 
-              // on enregistre le systeme courrant
-              this._currentProjectionSystems = this._projectionSystems[Number(systemCode)];
+            // on enregistre le systeme courrant
+            this._currentProjectionSystems = this._projectionSystems[Number(systemCode)];
 
-              // on simule un deplacement en mode tactile pour mettre à jour les
-              // resultats
-              if (!this._isDesktop) {
-                  this.onMapMove();
-              }
+            // on simule un deplacement en mode tactile pour mettre à jour les
+            // resultats
+            if (!this._isDesktop) {
+                this.onMapMove();
+            }
         },
 
         /**

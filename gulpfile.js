@@ -107,7 +107,9 @@
         var jshint = require("gulp-jshint");
 
         var src = [];
-        (isExecuteOl3) ? src.push(_src.js.ol3) : (isExecuteLeaflet) ? src.push(_src.js.leaflet) : (isExecuteVg) ? src.push(_src.js.vg) : null;
+        src.push(_src.js.ol3);
+        src.push(_src.js.leaflet);
+        // src.push(_src.js.vg);
         src.push(_src.js.common);
         var exclude = "!" + path.join(_dir.src, "**", "__*.js");
         src.push(exclude);
@@ -128,7 +130,11 @@
         var jscs = require("gulp-jscs");
 
         var src = [];
-        (isExecuteOl3) ? src.push(_src.js.ol3) : (isExecuteLeaflet) ? src.push(_src.js.leaflet) : (isExecuteVg) ? src.push(_src.js.vg) : null;
+        // (isExecuteOl3) ? src.push(_src.js.ol3) : (isExecuteLeaflet) ? src.push(_src.js.leaflet) : (isExecuteVg) ? src.push(_src.js.vg) : null;
+        src.push(_src.js.ol3); 
+        src.push(_src.js.leaflet);
+        // plus souple sur vg...
+        // src.push(_src.js.vg);
         src.push(_src.js.common);
         var exclude = "!" + path.join(_dir.src, "**", "__*.js");
         src.push(exclude);

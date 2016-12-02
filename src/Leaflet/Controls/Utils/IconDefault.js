@@ -30,16 +30,16 @@ function (L) {
             switch (color) {
                 case "red" :
                     this.options.iconUrl = this.images.color.red;
-                break;
+                    break;
                 case "green" :
                     this.options.iconUrl = this.images.color.green;
-                break;
+                    break;
                 case "orange" :
                     this.options.iconUrl = this.images.color.orange;
-                break;
+                    break;
                 case "blue" :
                     this.options.iconUrl = this.images.color.blue;
-                break;
+                    break;
                 default :
                     this.options.iconUrl = this.images.color.blue;
             }

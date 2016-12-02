@@ -745,7 +745,7 @@ define([
             });
             self._marker.addTo(map);
 
-           /**
+            /**
             * event sur le survol du graphe qui permet de mettre à jour la position du marker
             *
             * @param {Object} e - event
@@ -764,7 +764,7 @@ define([
             self._profile.removeListener("changed", changed);
             self._profile.addListener("changed", changed);
 
-           /**
+            /**
             * event sur le survol du graphe qui permet de mettre à jour la position du marker
             *
             * @param {Object} e - event
@@ -786,7 +786,7 @@ define([
                 self._marker.addTo(map);
             };
 
-           /**
+            /**
             * event sur la sortie du graphe qui permet de mettre à jour la position du marker
             *
             * @param {Object} e - event
@@ -805,7 +805,7 @@ define([
                 }
             };
 
-           /**
+            /**
             * event sur le deplacement sur le graphe qui permet de mettre à jour la position du marker
             *
             * @param {Object} e - event
@@ -953,14 +953,14 @@ define([
             li.title = "altitude : " + d.z + "m" ;
             li.setAttribute("style", "width: " + barwidth + "%") ;
             ul.appendChild(li) ;
-       }
+        }
 
-       var divX = document.createElement("div");
-       divX.className = "x-title-horizontal";
-       divX.innerHTML = dist + " km";
-       div.appendChild(divX);
+        var divX = document.createElement("div");
+        divX.className = "x-title-horizontal";
+        divX.innerHTML = dist + " km";
+        div.appendChild(divX);
 
-       context._profile = container;
+        context._profile = container;
     };
 
     /**
