@@ -313,7 +313,7 @@ define([
 
         // find system in control container systems list
         var indexChildToRemove = null;
-        var systemList = document.getElementById("GPmousePositionProjectionSystem");
+        var systemList = document.getElementById(this._addUID("GPmousePositionProjectionSystem"));
         for ( var j = 0; j < systemList.childNodes.length; j++) {
             if ( systemCode == systemList.childNodes[j].value )
             {
