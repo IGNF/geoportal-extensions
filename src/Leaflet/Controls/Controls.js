@@ -129,6 +129,11 @@ function (
         * @param {String}  options.systems.crs - Proj4 crs alias (from proj4 defs). e.g. : "EPSG:4326". Required
         * @param {String}  [options.systems.label] - CRS label to be displayed in control. Default is crs code (e.g. "EPSG:4326")
         * @param {String}  [options.systems.type] - CRS units type for coordinates conversion : "Geographical" or "Metric". Default: "Metric"
+        * @param {Object}  [options.systems.geoBBox] - Aera covered by the system (WGS84 coordinates).
+        * @param {Number}  options.systems.geoBBox.right - Right bound.
+        * @param {Number}  options.systems.geoBBox.left - Left bound.
+        * @param {Number}  options.systems.geoBBox.top - Top bound.
+        * @param {Number}  options.systems.geoBBox.bottom - Bottom bound.
         * @param {Array}   [options.units] - list of units by system, Geographical and Metric by default
          *      Values may be "DEC" (decimal degrees), "DMS" (sexagecimal), "RAD" (radians) and "GON" (grades) for geographical coordinates,
          *      and "M" or "KM" for metric coordinates
@@ -250,7 +255,7 @@ function (
         * @param {Boolean} [options.displayInfo] - get informations on popup marker
         * @param {Sting|Numeric|Function} [options.zoomTo] - zoom to results, by default, current zoom.
         *       possible values : "auto", any fixed zoom level or a function retruning a zoom :
-        *       
+        *
         *       ```
         *       zoomTo : function (info) {
         *           // do some stuff...
@@ -298,19 +303,24 @@ function (
         * @method ElevationPath
         * @static
         * @alias L.geoportalControl.ElevationPath
-        * @param {Object} options - ElevationPath control options
+        * @param {Object} options - options for function call.
         * @param {Sting}   [options.apiKey] - API key for services call (isocurve and autocomplete services), mandatory if autoconf service has not been charged in advance
         * @param {String}  [options.position] - position of component into the map, 'topleft' by default
-        * @param {Boolean} [options.collapsed] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
-        * @param {Object} [options.graphOptions] - TODO graph options.
-        * @param {Object} [options.elevationPathOptions] - altitude service options.
+        * @param {Boolean} [options.active = false] - specify if control should be actived at startup. Default is false.
+        * @param {Object} [options.stylesOptions = DEFAULT_STYLES] - styles management [see leaflet.draw options](https://leaflet.github.io/Leaflet.draw/docs/leaflet-draw-latest.html#polylineoptions) and [see leaflet options](http://leafletjs.com/reference.html#path-options)
+        * @param {Object} [options.elevationPathOptions = {}] - elevation path service options. See {@link http://depot.ign.fr/geoportail/bibacces/develop/doc/module-Services.html#~getAltitude options} for available options
+        * @param {Object} [options.displayProfileOptions = {}] - profile options.
+        * @param {Function} [options.displayProfileOptions.apply] - function to display profile if you want to cutomise it. By default, L.geoportalControl.ElevationPath.DISPLAY_PROFILE_BY_DEFAULT() is used. Helper functions to use with D3 ( L.geoportalControl.ElevationPath.DISPLAY_PROFILE_LIB_D3()) or AmCharts ( L.geoportalControl.ElevationPath.DISPLAY_PROFILE_LIB_AMCHARTS()) frameworks are also provided. You may also provide your own function.
+        * @param {Object} [options.displayProfileOptions.target] - DOM container to use to display the profile.
+        *
         * @returns {L.geoportalControl.ElevationPath}
         * @example
         *  var e = L.geoportalControl.ElevationPath({
-        *      collapsed : false
+        *      active : false
         *      position : "topleft"
-        *      graphOptions : {},
-        *      elevationPathOptions : {}
+        *      stylesOptions : {},
+        *      elevationPathOptions : {},
+        *      displayProfileOptions  : {}
         *  });
         */
         ElevationPath : function (options) {

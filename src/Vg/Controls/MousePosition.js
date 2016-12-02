@@ -5,6 +5,7 @@ define([
     "gp",
     "Common/Utils/Config",
     "Common/Utils/CheckRightManagement",
+    "Common/Utils/SelectorID",
     "Common/Controls/MousePositionDOM",
     "Vg/Controls/Utils/PositionFormater",
     "Vg/Controls/Utils",
@@ -16,6 +17,7 @@ define([
     Gp,
     Config,
     RightManagement,
+    SelectorID,
     MousePositionDOM,
     PositionFormater,
     Utils,
@@ -43,6 +45,11 @@ define([
      * @param {String}  options.systems.crs - Proj4 crs alias (from proj4 defs). e.g. : "EPSG:4326". Required
      * @param {String}  [options.systems.label] - CRS label to be displayed in control. Default is crs code (e.g. "EPSG:4326")
      * @param {String}  options.systems.type - CRS units type for coordinates conversion : "Geographical" or "Metric". Default: "Metric"
+     * @param {Object}  [options.systems.geoBBox] - Aera covered by the system (WGS84 coordinates).
+     * @param {Number}  options.systems.geoBBox.right - Right bound.
+     * @param {Number}  options.systems.geoBBox.left - Left bound.
+     * @param {Number}  options.systems.geoBBox.top - Top bound.
+     * @param {Number}  options.systems.geoBBox.bottom - Bottom bound.
      * @param {Array}   [options.units] - list of coordinates units, to be displayed in control units list.
      *      Values may be "DEC" (decimal degrees), "DMS" (sexagecimal), "RAD" (radians) and "GON" (grades) for geographical coordinates,
      *      and "M" or "KM" for metric coordinates
@@ -135,7 +142,7 @@ define([
                         map.addEventListener("centerchanged", this.onMapMove());
                     }
                 }
-                // On associe la map au LayerSwitcher control ajouté
+                // On associe la map au MousePosition control ajouté
                 this._map = map;
             }
 
@@ -143,7 +150,7 @@ define([
 
             // nothing else to do if map == null
             if (map == null) {
-                // On retire les listeners qui étaient liés au layerSwitcher supprimé
+                // On retire les listeners qui étaient liés au MousePosition supprimé
                 if (this._callbacks.callbackMouseMove) {
                     mapDiv = document.getElementById(this.options.target);
                     mapDiv.removeEventListener("mousemove", this._callbacks.callbackMouseMove);
@@ -153,7 +160,7 @@ define([
 
             // mode "collapsed"
             if (!this.collapsed) {
-                var inputShow = document.getElementById("GPshowMousePosition");
+                var inputShow = document.getElementById(this._addUID("GPshowMousePosition"));
                 inputShow.checked = "checked";
                 this._setElevationPanel(this.options.displayAltitude);
                 this._setCoordinatesPanel(this.options.displayCoordinates);
@@ -238,7 +245,7 @@ define([
         this._projectionSystems.push(system);
 
         // 2. add system settings option to container (if it was already build)
-        var selectSystem = document.getElementById("GPmousePositionProjectionSystem");
+        var selectSystem = document.getElementById(this._addUID("GPmousePositionProjectionSystem"));
         if ( selectSystem ) {
             var option = document.createElement("option");
             option.value = system.code;
@@ -280,8 +287,6 @@ define([
             return;
         }
 
-        var systemList = document.getElementById("GPmousePositionProjectionSystem");
-
         var systemCode = null;
         // find system in control projection systems list
         for ( var i = 0; i < this._projectionSystems.length; i++ ) {
@@ -308,7 +313,7 @@ define([
 
         // find system in control container systems list
         var indexChildToRemove = null;
-
+        var systemList = document.getElementById("GPmousePositionProjectionSystem");
         for ( var j = 0; j < systemList.childNodes.length; j++) {
             if ( systemCode == systemList.childNodes[j].value )
             {
@@ -411,7 +416,7 @@ define([
             return;
         }
         if ( !this._isDesktop ) {
-            document.getElementById("GPmapCenter").className = collapsed ? "" : "GPmapCenterVisible";
+            document.getElementById(this._addUID("GPmapCenter")).className = collapsed ? "" : "GPmapCenterVisible";
         }
         // on simule l'ouverture du panneau après un click
         this.onShowMousePositionClick();
@@ -458,6 +463,9 @@ define([
                 serviceOptions : {}
             };
         }
+
+        // identifiant du contrôle : utile pour suffixer les identifiants CSS (pour gérer le cas où il y en a plusieurs dans la même page)
+        this._uid = SelectorID.generate();
 
         // initialisation des systemes de projections
         /** {Array} control projection systems */
@@ -761,14 +769,14 @@ define([
         var div = null;
 
         if ( !active ) {
-            div  = document.getElementById("GPmousePositionAltitude");
+            div  = document.getElementById(this._addUID("GPmousePositionAltitude"));
             div.style.display = "none";
         } else {
             if ( this._noRightManagement ) {
-                div = document.getElementById("GPmousePositionAlt");
+                div = document.getElementById(this._addUID("GPmousePositionAlt"));
                 div.innerHTML = "No rights!";
             } else {
-                div  = document.getElementById("GPmousePositionAltitude");
+                div  = document.getElementById(this._addUID("GPmousePositionAltitude"));
                 div.style.display = "";
             }
         }
@@ -783,7 +791,7 @@ define([
      * @private
      */
     MousePosition.prototype._setCoordinatesPanel = function (active) {
-        var div  = document.getElementById("GPmousePositionCoordinate");
+        var div  = document.getElementById(this._addUID("GPmousePositionCoordinate"));
         if ( !active) {
             div.style.display = "none";
         } else {
@@ -800,8 +808,8 @@ define([
     * @private
     */
     MousePosition.prototype._setSettingsPanel = function (active) {
-        var divPicto  = document.getElementById("GPshowMousePositionSettingsPicto");
-        var divPanel  = document.getElementById("GPmousePositionSettings");
+        var divPicto  = document.getElementById(this._addUID("GPshowMousePositionSettingsPicto"));
+        var divPanel  = document.getElementById(this._addUID("GPmousePositionSettings"));
         if ( !active) {
             divPicto.style.display = "none";
             divPanel.style.display = "none";
@@ -1133,7 +1141,7 @@ define([
         // continuer !
         if ( this._noRightManagement ) {
             console.log("[WARNING] contract key configuration has no rights to load geoportal elevation ");
-            document.getElementById("GPmousePositionAlt").innerHTML = "No rights!";
+            document.getElementById(this._addUID("GPmousePositionAlt")).innerHTML = "No rights!";
             return;
         }
 
@@ -1304,7 +1312,7 @@ define([
           var mapExtent = Utils.getMapExtent(map);//extent = [topLeft.lat, topLeft.lon, bottomRight.lat, bottomRight.lon]
 
           //clear select
-          var systemList = document.getElementById("GPmousePositionProjectionSystem");
+          var systemList = document.getElementById(this._addUID("GPmousePositionProjectionSystem"));
           systemList.innerHTML = "";
 
           //add systems whose extent intersects the map extent
@@ -1350,8 +1358,6 @@ define([
      * @private
      */
     MousePosition.prototype.onMousePositionProjectionUnitsChange = function (e) {
-//DEBUG
-        this.removeSystem( 'EPSG:4326');
 
         var idx   = e.target.selectedIndex;
         var value = e.target.options[idx].value;

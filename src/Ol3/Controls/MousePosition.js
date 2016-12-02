@@ -40,6 +40,11 @@ define([
      * @param {String}  options.systems.crs - Proj4 crs alias (from proj4 defs). e.g. : "EPSG:4326". Required
      * @param {String}  [options.systems.label] - CRS label to be displayed in control. Default is crs code (e.g. "EPSG:4326")
      * @param {String}  options.systems.type - CRS units type for coordinates conversion : "Geographical" or "Metric". Default: "Metric"
+     * @param {Object}  [options.systems.geoBBox] - Aera covered by the system (WGS84 coordinates).
+     * @param {Number}  options.systems.geoBBox.right - Right bound.
+     * @param {Number}  options.systems.geoBBox.left - Left bound.
+     * @param {Number}  options.systems.geoBBox.top - Top bound.
+     * @param {Number}  options.systems.geoBBox.bottom - Bottom bound.
      * @param {Array}   [options.units] - list of coordinates units, to be displayed in control units list.
      *      Values may be "DEC" (decimal degrees), "DMS" (sexagecimal), "RAD" (radians) and "GON" (grades) for geographical coordinates,
      *      and "M" or "KM" for metric coordinates
@@ -519,13 +524,23 @@ define([
                 label : "Lambert 93",
                 crs : ol.proj.get("EPSG:2154").getCode(),
                 type : "Metric",
-                geoBBox : { left: -9.86, bottom : 41.15, right : 10.38, top : 51.56 }
+                geoBBox : {
+                    left : -9.86,
+                    bottom : 41.15,
+                    right : 10.38,
+                    top : 51.56
+                }
             },
             {
                 label : "Lambert II \u00e9tendu",
                 crs : ol.proj.get("EPSG:27572"),
                 type : "Metric",
-                geoBBox : { left: -4.87, bottom : 42.33, right : 8.23, top : 51.14 }
+                geoBBox : {
+                    left : -4.87,
+                    bottom : 42.33,
+                    right : 8.23,
+                    top : 51.14
+                }
             }
         ];
 
@@ -1206,8 +1221,7 @@ define([
             }
         }
 
-        if( !type )
-        {
+        if ( !type ) {
             logger.log("system not found in projection systems container");
             return;
         }
@@ -1237,7 +1251,9 @@ define([
      */
     MousePosition.prototype.onMousePositionProjectionSystemMouseOver = function (e) {
 
-        //map infos
+        logger.trace(e);
+
+        // map infos
         var map = this.getMap();
         if ( !map || !map.getView() ) {
             return;
@@ -1246,14 +1262,14 @@ define([
         var crs = view.getProjection();
         var mapExtent = view.calculateExtent( map.getSize() );
 
-        //get extent in WGS84 coordinates
+        // get extent in WGS84 coordinates
         mapExtent = ol.proj.transformExtent( mapExtent, crs, "EPSG:4326");
 
         //clear select
         var systemList = document.getElementById( this._addUID("GPmousePositionProjectionSystem") );
         systemList.innerHTML = "";
 
-        //add systems whose extent intersects the map extent
+        // add systems whose extent intersects the map extent
         for (var j = 0; j < this._projectionSystems.length; j++) {
             var proj = this._projectionSystems[j];
 

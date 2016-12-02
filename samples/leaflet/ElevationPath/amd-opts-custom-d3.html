@@ -9,8 +9,8 @@
   <!-- Plugin leaflet IGN -->
   <link rel="stylesheet" href="../../../dist/leaflet/GpPluginLeaflet-src.css" />
 
-  <!-- requirejs -->
   <script src="d3.v3.min.js"></script>
+  <!-- requirejs -->
   <script src="../../../lib/require.js"></script>
 
 </head>
@@ -67,7 +67,13 @@
 
               wms.addTo(map);
 
-              var el = new ElevationPath({collapsed : true, elevationPathOptions : { sampling : 50}});
+              var el = new ElevationPath({
+                active : true,
+                displayProfileOptions : {
+                  apply : ElevationPath.DISPLAY_PROFILE_LIB_D3,
+                  target : document.getElementById("profil")
+                }
+              });
 
               map.addControl(el);
 
@@ -78,6 +84,7 @@
 
     <!-- map -->
     <div id="map" style="height: 500px;"></div>
+    <div id="profil" style="height: 300px;"></div>
 
     <!-- Comment utiliser le plugin avec un exemple -->
     <p>TODO : EXEMPLE D'UTILISATION DU PLUGIN</p>

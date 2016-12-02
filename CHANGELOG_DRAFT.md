@@ -3,27 +3,38 @@
 ## [ol3-0.11.0-dev](https://github.com/IGNF/geoportal-extensions/tree/ol3-0.11.0-dev) (2016-09-02)
 [Full Changelog](https://github.com/IGNF/geoportal-extensions/compare/leaflet-0.8.1-dev...ol3-0.11.0-dev)
 
+- proposer un outil de calcul de profil altimétrique  [\#64](https://github.com/IGNF/geoportal-extensions/issues/64)
+- zoom moteur de recherche
+[\#78](https://github.com/IGNF/geoportal-extensions/issues/78)
 - gestion des emprise des differents systemes de projection pour un affichage dynamique dans le widget mouse position des systems en fonction de l'emprise de la vue.
 - fix \#76 : ol.control.layerimport - define default styles for KML and GPX imports [\#79](https://github.com/IGNF/geoportal-extensions/pull/79)
 - fix \#61 : ol.control.LayerImport - display WMS enclosed child layers [\#62](https://github.com/IGNF/geoportal-extensions/pull/62)
 - fix \#52 : ol.control.LayerImport : extent mal récupérée pour les couches en EPSG:4326 [\#60](https://github.com/IGNF/geoportal-extensions/pull/60)
-- Extension OL3 : proposer un outil de mesure de surface [\#57](https://github.com/IGNF/geoportal-extensions/issues/57)
-- Extension OL3 : proposer un outil de mesure de distance [\#56](https://github.com/IGNF/geoportal-extensions/issues/56)
-- Extension OL3 : proposer un outil de mesure d'azimuth [\#55](https://github.com/IGNF/geoportal-extensions/issues/55)
+- proposer un outil de mesure de surface
+[\#57](https://github.com/IGNF/geoportal-extensions/issues/57)
+- proposer un outil de mesure de distance
+[\#56](https://github.com/IGNF/geoportal-extensions/issues/56)
+- proposer un outil de mesure d'azimuth
+[\#55](https://github.com/IGNF/geoportal-extensions/issues/55)
 - fix \#50 : ol.control.GeoportalAttribution : affichage attributions de type text sous Safari
 - fix \#53 : correction titre des outils d'edition
 - fix \#51 : try ol.proj.get\(crs.toUpperCase\(\)\) \(e.g. if crs="epsg:3857"\) [\#54](https://github.com/IGNF/geoportal-extensions/pull/54)
-- Suppression de codes EPSG en doublons [\#38](https://github.com/IGNF/geoportal-extensions/pull/38)
-- Feature register proj4 [\#37](https://github.com/IGNF/geoportal-extensions/pull/37)
+- Suppression de codes EPSG en doublons
+[\#38](https://github.com/IGNF/geoportal-extensions/pull/38)
+- Feature register proj4
+[\#37](https://github.com/IGNF/geoportal-extensions/pull/37)
 - Rajout des définitions du registre IGNF et enrichissement des définitions EPSG dans les extensions [\#36](https://github.com/IGNF/geoportal-extensions/issues/36)
 - PB de Compatibilité IE10 \(extension OL3 et Leaflet\) [\#30](https://github.com/IGNF/geoportal-extensions/issues/30)
-- Fix ie10 compatibility  [\#41](https://github.com/IGNF/geoportal-extensions/pull/41)
+- Fix ie10 compatibility  
+[\#41](https://github.com/IGNF/geoportal-extensions/pull/41)
 - Gérer l'import d'un KML créé via le portail
 [\#47](https://github.com/IGNF/geoportal-extensions/issues/47)
 - Surcharge de ol.format.KML pour la gestion des styles sur les outils …
 [\#46](https://github.com/IGNF/geoportal-extensions/pull/46)
-- Evolutions widgets itinéraires et isochrones \(ol.control.Route et ol.control.Isocurve\)[\#43](https://github.com/IGNF/geoportal-extensions/issues/43)
-- ol : route & isocurve enhancements [\#44](https://github.com/IGNF/geoportal-extensions/pull/44)
+- Evolutions widgets itinéraires et isochrones \(ol.control.Route et ol.control.Isocurve\)
+[\#43](https://github.com/IGNF/geoportal-extensions/issues/43)
+- ol : route & isocurve enhancements
+[\#44](https://github.com/IGNF/geoportal-extensions/pull/44)
 - Compatibilité IE10 : calculs d'itinéraires et isochrones non fonctionnels [\#40](https://github.com/IGNF/geoportal-extensions/issues/40)
 - Compatibilité IE10 : css des widgets Route et Isochrone [\#39](https://github.com/IGNF/geoportal-extensions/issues/39)
 - ol.control.LayerSwitcher : addLayer with zIndex param [\#29](https://github.com/IGNF/geoportal-extensions/issues/29)
@@ -38,6 +49,10 @@
 ## [leaflet-0.8.1-dev](https://github.com/IGNF/geoportal-extensions/tree/leaflet-0.8.1-dev) (2016-07-21)
 [Full Changelog](https://github.com/IGNF/geoportal-extensions/compare/ol3-0.10.0...leaflet-0.8.1-dev)
 
+- proposer un outil de calcul de profil altimétrique
+[\#82](https://github.com/IGNF/geoportal-extensions/pull/82)
+- Zoom barre de recherche
+[\#63](https://github.com/IGNF/geoportal-extensions/issues/63)
 - gestion des emprise des differents systemes de projection pour un affichage dynamique dans le widget mouse position des systems en fonction de l'emprise de la vue.
 - PB de Compatibilité IE10 \(extension OL3 et Leaflet\) [\#30](https://github.com/IGNF/geoportal-extensions/issues/30)
 - Authentification HTTP et couches WMTS [\#31](https://github.com/IGNF/geoportal-extensions/issues/31)

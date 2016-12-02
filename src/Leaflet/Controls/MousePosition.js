@@ -74,6 +74,11 @@ define([
         * @param {String}  options.systems.crs - Proj4 crs alias (from proj4 defs). e.g. : "EPSG:4326". Required
         * @param {String}  [options.systems.label] - CRS label to be displayed in control. Default is crs code (e.g. "EPSG:4326")
         * @param {String}  [options.systems.type] - CRS units type for coordinates conversion : "Geographical" or "Metric". Default: "Metric"
+        * @param {Object}  [options.systems.geoBBox] - Aera covered by the system (WGS84 coordinates).
+        * @param {Number}  options.systems.geoBBox.right - Right bound.
+        * @param {Number}  options.systems.geoBBox.left - Left bound.
+        * @param {Number}  options.systems.geoBBox.top - Top bound.
+        * @param {Number}  options.systems.geoBBox.bottom - Bottom bound.
         * @param {Array}   [options.units] - list of units by system, Geographical and Metric by default
          *      Values may be "DEC" (decimal degrees), "DMS" (sexagecimal), "RAD" (radians) and "GON" (grades) for geographical coordinates,
          *      and "M" or "KM" for metric coordinates
@@ -261,13 +266,23 @@ define([
                     label : "Lambert 93",
                     crs : CRS.EPSG2154,
                     type : "Metric",
-                    geoBBox : { left: -9.86, bottom : 41.15, right : 10.38, top : 51.56 }
+                    geoBBox : {
+                        left : -9.86,
+                        bottom : 41.15,
+                        right : 10.38,
+                        top : 51.56
+                    }
                 },
                 {
                     label : "Lambert II \u00e9tendu",
                     crs : CRS.EPSG27572,
                     type : "Metric",
-                    geoBBox : { left: -4.87, bottom : 42.33, right : 8.23, top : 51.14 }
+                    geoBBox : {
+                        left : -4.87,
+                        bottom : 42.33,
+                        right : 8.23,
+                        top : 51.14
+                    }
                 }
             ];
 
@@ -293,7 +308,6 @@ define([
                 }
 
                 this._projectionSystems.push(systems[i]);
-
 
                 // it's a just a test ...
                 var found = false;
@@ -1068,6 +1082,8 @@ define([
          */
         onMousePositionProjectionSystemMouseOver : function (e) {
 
+            logger.log(e);
+
             var map = this._map;
             if ( !map ) {
                 return;
@@ -1075,15 +1091,15 @@ define([
 
             //clear select
             var systemList = document.getElementById( this._addUID("GPmousePositionProjectionSystem") );
+
             systemList.innerHTML = "";
 
-            //add systems whose extent intersects the map extent
+            // add systems whose extent intersects the map extent
             for (var j = 0; j < this._projectionSystems.length; j++) {
                 var proj = this._projectionSystems[j];
-                if( proj.geoBBox )
-                {
-                    //bboxes intersection test
-                    if(   map.getBounds()._southWest.lng > proj.geoBBox.right ||
+                if ( proj.geoBBox ) {
+                    // bboxes intersection test
+                    if (  map.getBounds()._southWest.lng > proj.geoBBox.right ||
                           map.getBounds()._southWest.lat > proj.geoBBox.top   ||
                           map.getBounds()._northEast.lng < proj.geoBBox.left  ||
                           map.getBounds()._northEast.lat < proj.geoBBox.bottom

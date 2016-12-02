@@ -99,13 +99,19 @@ define([
                 // puis, selon l'unité de la projection, on calcule la résolution correspondante
                 if ( p && p.getUnits() ) {
                     if ( p.getUnits() === "m" ) {
-                        // info : 1 pixel = 0.00028 m
-                        layerTileOptions.minResolution = globalConstraints.minScale * 0.00028;
-                        layerTileOptions.maxResolution = globalConstraints.maxScale * 0.00028;
+                        /* fixme : fix temporaire pour gérer les min/max scaledenominator qui sont arrondis dans l'autoconf !
+                         * on les arrondit respectivement à l'unité inférieure et supérieure
+                         * pour que les couches soient bien disponibles aux niveaux de zoom correspondants */
+                         // info : 1 pixel = 0.00028 m
+                        layerTileOptions.minResolution = ( globalConstraints.minScale - 1 ) * 0.00028;
+                        layerTileOptions.maxResolution = ( globalConstraints.maxScale + 1 ) * 0.00028;
                     } else if ( p.getUnits() === "degrees" ) {
+                        /* fixme : fix temporaire pour gérer les min/max scaledenominator qui sont arrondis dans l'autoconf !
+                         * on les arrondit respectivement à l'unité inférieure et supérieure
+                         * pour que les couches soient bien disponibles aux niveaux de zoom correspondants */
                         // info : 6378137 * 2 * pi / 360 = rayon de la terre (ellipsoide WGS84)
-                        layerTileOptions.minResolution = globalConstraints.minScale * 0.00028 * 180 / ( Math.PI * 6378137 );
-                        layerTileOptions.maxResolution = globalConstraints.maxScale * 0.00028 * 180 / ( Math.PI * 6378137 );
+                        layerTileOptions.minResolution = ( globalConstraints.minScale - 1 ) * 0.00028 * 180 / ( Math.PI * 6378137 );
+                        layerTileOptions.maxResolution = ( globalConstraints.maxScale + 1 ) * 0.00028 * 180 / ( Math.PI * 6378137 );
                     }
                 }
             }
