@@ -866,9 +866,9 @@ define([
     * Display Profile function used by default : no additonal framework needed.
     *
     * @static
-    * @param {Object} data - collection elevations
-    * @param {HTMLElement} container - container
-    * @param {Object} context - context
+    * @param {Object} data - elevations values for profile
+    * @param {HTMLElement} container - html container where to display profile
+    * @param {Object} context - this control object
     */
     ElevationPath.DISPLAY_PROFILE_BY_DEFAULT = function (data, container, context) {
         logger.trace("ElevationPath.DISPLAY_PROFILE_BY_DEFAULT");
@@ -966,9 +966,9 @@ define([
     * Display Profile without graphical rendering (raw service response)
     *
     * @static
-    * @param {Object} data - collection elevations
-    * @param {HTMLElement} container - container
-    * @param {Object} context - context
+    * @param {Object} data - elevations values for profile
+    * @param {HTMLElement} container - html container where to display profile
+    * @param {Object} context - this control object
     */
     ElevationPath.DISPLAY_PROFILE_RAW = function (data, container, context) {
         logger.trace("ElevationPath.DISPLAY_PROFILE_RAW");
@@ -996,9 +996,9 @@ define([
     * Display Profile using D3 javascript framework. This method needs D3 libraries to be loaded.
     *
     * @static
-    * @param {Object} data - collection elevations
-    * @param {HTMLElement} container - container
-    * @param {Object} context - context
+    * @param {Object} data - elevations values for profile
+    * @param {HTMLElement} container - html container where to display profile
+    * @param {Object} context - this control object
     */
     ElevationPath.DISPLAY_PROFILE_LIB_D3 = function (data, container, context) {
         logger.trace("ElevationPath.DISPLAY_PROFILE_LIB_D3");
@@ -1240,9 +1240,9 @@ define([
     * Display Profile using Amcharts framework. This method needs AmCharts libraries to be loaded.
     *
     * @static
-    * @param {Object} data - collection elevations
-    * @param {HTMLElement} container - container
-    * @param {Object} context - context
+    * @param {Object} data - elevations values for profile
+    * @param {HTMLElement} container - html container where to display profile
+    * @param {Object} context - this control object
     */
     ElevationPath.DISPLAY_PROFILE_LIB_AMCHARTS = function (data, container, context) {
         logger.trace("ElevationPath.DISPLAY_PROFILE_LIB_AMCHARTS");

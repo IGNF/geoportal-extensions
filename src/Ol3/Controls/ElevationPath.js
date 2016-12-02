@@ -42,7 +42,7 @@ define([
     * @param {Object} [options.stylesOptions.draw.finish = {}] - Line Style when finished drawing. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Stroke.html ol.style.Stroke} object.
     * @param {Object} [options.elevationPathOptions = {}] - elevation path service options. See {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~getAltitude Gp.Services.getAltitude()} for available options
     * @param {Object} [options.displayProfileOptions = {}] - profile options.
-    * @param {Function} [options.displayProfileOptions.apply] - function to display profile if you want to cutomise it. By default, DISPLAY_PROFILE_BY_DEFAULT() is used. Helper functions to use with D3 (DISPLAY_PROFILE_LIB_D3()) or AmCharts (DISPLAY_PROFILE_LIB_AMCHARTS()) frameworks are also provided. You may also provide your own function.
+    * @param {Function} [options.displayProfileOptions.apply] - function to display profile if you want to cutomise it. By default, ([DISPLAY_PROFILE_BY_DEFAULT()](./ol.control.ElevationPath.html#.DISPLAY_PROFILE_BY_DEFAULT)) is used. Helper functions to use with D3 ([DISPLAY_PROFILE_LIB_D3()](./ol.control.ElevationPath.html#.DISPLAY_PROFILE_LIB_D3)) or AmCharts ([DISPLAY_PROFILE_LIB_AMCHARTS()](./ol.control.ElevationPath.html#.DISPLAY_PROFILE_LIB_AMCHARTS)) frameworks are also provided. You may also provide your own function.
     * @param {Object} [options.displayProfileOptions.target] - DOM container to use to display the profile.
     * @example
     *
@@ -198,7 +198,7 @@ define([
     *
     * @param {Object} data - collection elevations
     * @param {HTMLElement} container - container
-    * @param {Object} context - context
+    * @param {Object} context - this control object
     */
     ElevationPath.DISPLAY_PROFILE_LIB_AMCHARTS = function (data, container, context) {
         logger.trace("ElevationPath.DISPLAY_PROFILE_LIB_AMCHARTS");
@@ -256,9 +256,9 @@ define([
     /**
     * display Profile using D3 javascript framework. This method needs D3 libraries to be loaded.
     *
-    * @param {Object} data - collection elevations
-    * @param {HTMLElement} container - container
-    * @param {Object} context - context
+    * @param {Object} data - elevations values for profile
+    * @param {HTMLElement} container - html container where to display profile
+    * @param {Object} context - this control object
     */
     ElevationPath.DISPLAY_PROFILE_LIB_D3 = function (data, container, context) {
         logger.trace("ElevationPath.DISPLAY_PROFILE_LIB_D3");
@@ -497,9 +497,9 @@ define([
     /**
     * display Profile without graphical rendering (raw service response)
     *
-    * @param {Object} data - collection elevations
-    * @param {HTMLElement} container - container
-    * @param {Object} context - context
+    * @param {Object} data - elevations values for profile
+    * @param {HTMLElement} container - html container where to display profile
+    * @param {Object} context - this control object
     */
     ElevationPath.DISPLAY_PROFILE_RAW = function (data, container, context) {
         logger.trace("ElevationPath.DISPLAY_PROFILE_RAW");
@@ -564,9 +564,9 @@ define([
     /**
     * Display Profile function used by default : no additonal framework needed.
     *
-    * @param {Object} data - collection elevations
-    * @param {HTMLElement} container - container
-    * @param {Object} context - context
+    * @param {Object} data - elevations values for profile
+    * @param {HTMLElement} container - html container where to display profile
+    * @param {Object} context - this control object
     */
     ElevationPath.DISPLAY_PROFILE_BY_DEFAULT = function (data, container, context) {
         logger.trace("ElevationPath.DISPLAY_PROFILE_BY_DEFAULT");
