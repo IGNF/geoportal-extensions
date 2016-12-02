@@ -863,9 +863,8 @@ define([
     });
 
     /**
-    * Profil by default
+    * Display Profile function used by default : no additonal framework needed.
     *
-    * @method DISPLAY_PROFILE_BY_DEFAULT
     * @static
     * @param {Object} data - collection elevations
     * @param {HTMLElement} container - container
@@ -964,9 +963,8 @@ define([
     };
 
     /**
-    * Profil with raw data of service
+    * Display Profile without graphical rendering (raw service response)
     *
-    * @method DISPLAY_PROFILE_RAW
     * @static
     * @param {Object} data - collection elevations
     * @param {HTMLElement} container - container
@@ -995,9 +993,8 @@ define([
     };
 
     /**
-    * Profil with lib. d3
+    * Display Profile using D3 javascript framework. This method needs D3 libraries to be loaded.
     *
-    * @method DISPLAY_PROFILE_LIB_D3
     * @static
     * @param {Object} data - collection elevations
     * @param {HTMLElement} container - container
@@ -1240,9 +1237,8 @@ define([
     };
 
     /**
-    * Profil with lib AmCharts
+    * Display Profile using Amcharts framework. This method needs AmCharts libraries to be loaded.
     *
-    * @method DISPLAY_PROFILE_LIB_AMCHARTS
     * @static
     * @param {Object} data - collection elevations
     * @param {HTMLElement} container - container
