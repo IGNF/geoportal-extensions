@@ -317,7 +317,7 @@ define([
             //re-initilisation des codes pour gerer le lien entre _projectionSystems et select du mouse position (lien code/value)
             for(var k = 0 ; k < this._projectionSystems.length ; ++k)
             {
-                this._projectionSystems[k].code = i;
+                this._projectionSystems[k].code = k;
             }
         },
 
@@ -1015,36 +1015,47 @@ define([
 
             logger.log(idx, value, label);
 
-            // si on change de type de systeme, on doit aussi changer le type d'unités !
-            var type = null;
-            for(var i = 0 ; i < this._projectionSystems.length ; ++i)
-            {
-                if( this._projectionSystems[i].code == value )
-                {
-                    type = this._projectionSystems[i].type;
-                    break;
-                }
-            }
-
-            if( !type )
-            {
-                logger.log("system not found in projection systems container");
-                return;
-            }
-
-            if (type !== this._currentProjectionType) {
-                this._setTypeUnitsPanel(type);
-            }
-
-            // on enregistre le systeme courrant
-            this._currentProjectionSystems = this._projectionSystems[idx];
-
-            // on simule un deplacement en mode tactile pour mettre à jour les
-            // resultats
-            if (!this._isDesktop) {
-                this.onMapMove();
-            }
+            this._setCurrentSystem( value );
         },
+
+        /**
+         * this method selects the current system projection.
+         *
+         * @param {Object} systemCode - inner code (rank in array _projectionSystems)
+         *
+         * @private
+         */
+          _setCurrentSystem : function ( systemCode ){
+              // si on change de type de systeme, on doit aussi changer le type d'unités !
+              var type = null;
+              for(var i = 0 ; i < this._projectionSystems.length ; ++i)
+              {
+                  if( this._projectionSystems[i].code == systemCode )
+                  {
+                      type = this._projectionSystems[i].type;
+                      break;
+                  }
+              }
+
+              if( !type )
+              {
+                  logger.log("system not found in projection systems container");
+                  return;
+              }
+
+              if (type !== this._currentProjectionType) {
+                  this._setTypeUnitsPanel(type);
+              }
+
+              // on enregistre le systeme courrant
+              this._currentProjectionSystems = this._projectionSystems[Number(systemCode)];
+
+              // on simule un deplacement en mode tactile pour mettre à jour les
+              // resultats
+              if (!this._isDesktop) {
+                  this.onMapMove();
+              }
+          },
 
         /**
          * this method is called by event 'mouseover' on 'GPmousePositionProjectionSystem'
@@ -1077,12 +1088,23 @@ define([
                           map.getBounds()._northEast.lng < proj.geoBBox.left  ||
                           map.getBounds()._northEast.lat < proj.geoBBox.bottom
                     ){
+                        if( proj === this._currentProjectionSystems )
+                        {
+                            var option = document.createElement("option");
+                            option.value = proj.code;
+                            option.text  = proj.label || j;
+                            option.setAttribute( "selected", "selected" );
+                            option.setAttribute( "disabled", "disabled" );
+
+                            systemList.appendChild(option);
+                        }
                         continue;//do not intersect
                     }
                 }
                 var option = document.createElement("option");
                 option.value = proj.code;
                 option.text  = proj.label || j;
+                if( proj === this._currentProjectionSystems ) option.setAttribute( "selected", "selected" );
 
                 systemList.appendChild(option);
             }

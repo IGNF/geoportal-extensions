@@ -224,25 +224,24 @@ define([
             logger.warn("type srs not defined, use 'Metric' by default.");
             system.type = "Metric";
         }
-        system.code = system.crs;
 
         // 1. add system to control systems
-        var found = false;
         for (var j = 0; j < this._projectionSystems.length; j++) {
             var obj = this._projectionSystems[j];
             if (system.crs === obj.crs) {
-                found = true;
                 // warn user
-                logger.info("crs '{}' already configured", obj.crs);
+                console.log("crs '{}' already configured", obj.crs);
             }
         }
+
+        system.code = this._projectionSystems.length;
         this._projectionSystems.push(system);
 
         // 2. add system settings option to container (if it was already build)
         var selectSystem = document.getElementById("GPmousePositionProjectionSystem");
         if ( selectSystem ) {
             var option = document.createElement("option");
-            option.value = system.crs;
+            option.value = system.code;
             option.text  = system.label;
             selectSystem.appendChild(option);
         }
@@ -273,39 +272,59 @@ define([
     /**
      * Remove projection system (in case there are several system with same code, only the first one will be removed)
      *
-     * @param {String} systemCode - CRS alias (from proj4 defs)
+     * @param {String} systemCrs - CRS alias (from proj4 defs)
      */
-    MousePosition.prototype.removeSystem = function (systemCode) {
-        if ( !systemCode || typeof systemCode !== "string" ) {
+    MousePosition.prototype.removeSystem = function (systemCrs) {
+        if ( !systemCrs || typeof systemCrs !== "string" ) {
             console.log("[ERROR] MousePosition:removeSystem - systemCode parameter should be a string");
             return;
         }
 
-        var system;
+        var systemList = document.getElementById("GPmousePositionProjectionSystem");
+
+        var systemCode = null;
         // find system in control projection systems list
         for ( var i = 0; i < this._projectionSystems.length; i++ ) {
             var proj = this._projectionSystems[i];
-            if ( systemCode === proj.crs ) {
-                system = proj;
+            if ( systemCrs === proj.crs ) {
+                systemCode = proj.code;
                 // remove system from control projection systems list
                 this._projectionSystems.splice(i, 1);
                 break;
             }
         }
 
-        // find system in control container systems list
-        var systemList = document.getElementById("GPmousePositionProjectionSystem");
-        for ( var j = 0; j < systemList.childNodes.length; j++) {
-            if ( systemCode === systemList.childNodes[j].value ) {
-                // remove system from control container systems list
-                systemList.removeChild(systemList.childNodes[j]);
-                break;
-            }
-        }
-
-        if ( !system ) {
+        if ( systemCode == null ) {
             console.log("[WARN] MousePosition:removeSystem - system not found");
             return;
+        }
+
+        //re-initialization of codes
+        var oldNewCodeMap = [];
+        for( var i = 0; i < this._projectionSystems.length; i++ ) {
+            oldNewCodeMap[ Number( this._projectionSystems[i].code ) ] = i;
+            this._projectionSystems[i].code = i;
+        }
+
+        // find system in control container systems list
+        var indexChildToRemove = null;
+
+        for ( var j = 0; j < systemList.childNodes.length; j++) {
+            if ( systemCode == systemList.childNodes[j].value )
+            {
+                indexChildToRemove = j;
+                continue;
+            }
+            systemList.childNodes[j].value = oldNewCodeMap [ Number( systemList.childNodes[j].value ) ];
+        }
+        // remove system from control container systems list
+        if( indexChildToRemove != null ) systemList.removeChild( systemList.childNodes[ indexChildToRemove ] );
+
+        //choose arbitrarily a new current system if needed
+        if( this._currentProjectionSystems.code == systemCode )
+        {
+            systemList.childNodes[0].setAttribute( 'selected', 'selected');
+            this._setCurrentSystem( systemList.childNodes[0].value );
         }
     };
 
@@ -507,26 +526,22 @@ define([
         // systemes de projection disponible par defaut
         var projectionSystemsByDefault = [
             {
-                code : "EPSG:4326",
                 label : "Géographique",
                 crs : "EPSG:4326",
                 type : "Geographical"
             },
             {
-                code : "EPSG:3857",
                 label : "Mercator",
                 crs : "EPSG:3857",
                 type : "Metric"
             },
             {
-                code : "EPSG:2154",
                 label : "Lambert 93",
                 crs : "EPSG:2154",
                 type : "Metric",
                 geoBBox : { left: -9.86, bottom : 41.15, right : 10.38, top : 51.56 }
             },
             {
-                code : "EPSG:27572",
                 label : "Lambert II étendu",
                 crs : "EPSG:27572",
                 type : "Metric",
@@ -544,7 +559,10 @@ define([
 
         if ( this._projectionSystems.length === 0 ) {
             // on ajoute les systèmes de projections par défaut
-            this._projectionSystems = projectionSystemsByDefault;
+            for(var i = 0; i < projectionSystemsByDefault.length; i++ )
+            {
+                this.addSystem(projectionSystemsByDefault[i]);
+            }
         }
     };
 
@@ -1223,37 +1241,48 @@ define([
           var idx   = e.target.selectedIndex;      // index
           var value = e.target.options[idx].value; // crs
 
-          // si on change de type de systeme, on doit aussi changer le type d'unités !
-          var type = null;
-          for(var i = 0 ; i < this._projectionSystems.length ; ++i)
-          {
-              if( this._projectionSystems[i].code == value )
-              {
-                  type = this._projectionSystems[i].type;
-                  break;
-              }
-          }
-
-          if( !type )
-          {
-              logger.log("system not found in projection systems container");
-              return;
-          }
-
-          if (type !== this._currentProjectionType) {
-              this._setTypeUnitsPanel(type);
-          }
-
-          // on enregistre le systeme courrant
-          this._currentProjectionSystems = this._projectionSystems[idx];
-
-          // on simule un deplacement en mode tactile pour mettre à jour les
-          // resultats
-          if (!this._isDesktop) {
-              this.onMapMove();
-          }
-          // FIXME : adapter le rechargement en mode tactile à OpenLayers !!
+          this._setCurrentSystem( value );
       };
+
+      /**
+       * this method selects the current system projection.
+       *
+       * @method _setCurrentSystem
+       * @param {Object} systemCode - inner code (rank in array _projectionSystems)
+       * @private
+       */
+        MousePosition.prototype._setCurrentSystem = function ( systemCode ){
+            // si on change de type de systeme, on doit aussi changer le type d'unités !
+            var type = null;
+            for(var i = 0 ; i < this._projectionSystems.length ; ++i)
+            {
+                if( this._projectionSystems[i].code == systemCode )
+                {
+                    type = this._projectionSystems[i].type;
+                    break;
+                }
+            }
+
+            if( !type )
+            {
+                logger.log("system not found in projection systems container");
+                return;
+            }
+
+            if (type !== this._currentProjectionType) {
+                this._setTypeUnitsPanel(type);
+            }
+
+            // on enregistre le systeme courrant
+            this._currentProjectionSystems = this._projectionSystems[Number(systemCode)];
+
+            // on simule un deplacement en mode tactile pour mettre à jour les
+            // resultats
+            if (!this._isDesktop) {
+                this.onMapMove();
+            }
+            // FIXME : adapter le rechargement en mode tactile à OpenLayers !!
+        }
 
     /**
      * this method is called by event 'mouseover' on 'GPmousePositionProjectionSystem'
@@ -1289,12 +1318,23 @@ define([
                         mapExtent[3] < proj.geoBBox.left  ||
                         mapExtent[0] < proj.geoBBox.bottom
                   ){
+                      if( proj === this._currentProjectionSystems )
+                      {
+                          var option = document.createElement("option");
+                          option.value = proj.code;
+                          option.text  = proj.label || j;
+                          option.setAttribute( "selected", "selected" );
+                          option.setAttribute( "disabled", "disabled" );
+
+                          systemList.appendChild(option);
+                      }
                       continue;//do not intersect
                   }
               }
               var option = document.createElement("option");
               option.value = proj.code;
               option.text  = proj.label || j;
+              if( proj === this._currentProjectionSystems ) option.setAttribute( "selected", "selected" );
 
               systemList.appendChild(option);
           }
@@ -1310,6 +1350,8 @@ define([
      * @private
      */
     MousePosition.prototype.onMousePositionProjectionUnitsChange = function (e) {
+//DEBUG
+        this.removeSystem( 'EPSG:4326');
 
         var idx   = e.target.selectedIndex;
         var value = e.target.options[idx].value;
