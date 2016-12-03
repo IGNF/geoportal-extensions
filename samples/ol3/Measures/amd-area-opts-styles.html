@@ -100,18 +100,18 @@
             target : null,
             render : null,
             styles : {
+              pointer : new ol.style.Circle({
+                  radius : 8,
+                  stroke : new ol.style.Stroke({
+                      color : "red",
+                      width : 1
+                  })
+              }),
               start : new ol.style.Style({
                 stroke : new ol.style.Stroke({
                     color : "yellow",
                     lineDash : null,
                     width : 5
-                }),
-                image : new ol.style.Circle({
-                    radius : 8,
-                    stroke : new ol.style.Stroke({
-                        color : "red",
-                        width : 1
-                    })
                 })
               }),
               finish : new ol.style.Style({

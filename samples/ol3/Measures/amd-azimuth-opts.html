@@ -100,15 +100,26 @@
             target : null,
             render : null,
             styles : {
-              finish : {
-                fillColor : "rgba(255, 255, 255, 0.2)",
-                strokeColor : "rgba(0, 0, 0, 0.5)",
-                strokeLineDash : [10, 10],
-                strokeWidth : 2,
-                imageRadius : 5,
-                imageFillColor : "rgba(255, 255, 255, 0.2)",
-                imageStrokeColor : "rgba(0, 0, 0, 0.7)"
-              }
+              pointer : new ol.style.Circle({
+                  fill : new ol.style.Fill({
+                      color : "rgba(255, 255, 255, 0.5)"
+                  }),
+                  stroke : new ol.style.Stroke({
+                      color : "rgba(0, 0, 0, 0.7)"
+                  }),
+                  radius : 5
+              }),
+              start : new ol.style.Style({
+                  stroke : new ol.style.Stroke({
+                      color : "rgba(0, 0, 0, 0.5)",
+                      lineDash : [10, 10]
+                  })
+              }),
+              finish : new ol.style.Style({
+                  stroke : new ol.style.Stroke({
+                      color : "rgba(0, 0, 0, 1)"
+                  })
+              })
             },
             unit : "km", // not yet implemented !
             tooltip : {  // not yet implemented !

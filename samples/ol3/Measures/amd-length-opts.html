@@ -100,20 +100,26 @@
             target : null,
             render : null,
             styles : {
-              start : {
-                fillColor : "rgba(255, 0, 0, 0.2)",
-                strokeColor : "rgba(0, 0, 255, 0.5)",
-                // strokeLineDash : [10, 10],
-                strokeWidth : 5,
-                imageRadius : 10,
-                imageFillColor : "rgba(128, 128, 128, 0.2)",
-                imageStrokeColor : "rgba(0, 0, 0, 0.7)"
-              },
-              finish : {
-                fillColor : "rgba(0, 0, 255, 0.2)",
-                strokeColor : "rgba(255, 0, 0, 0.5)",
-                strokeWidth : 5
-              }
+              pointer : new ol.style.Circle({
+                  fill : new ol.style.Fill({
+                      color : "rgba(255, 255, 255, 0.5)"
+                  }),
+                  stroke : new ol.style.Stroke({
+                      color : "rgba(0, 0, 0, 0.7)"
+                  }),
+                  radius : 5
+              }),
+              start : new ol.style.Style({
+                  stroke : new ol.style.Stroke({
+                      color : "rgba(0, 0, 0, 0.5)",
+                      lineDash : [10, 10]
+                  })
+              }),
+              finish : new ol.style.Style({
+                  stroke : new ol.style.Stroke({
+                      color : "rgba(0, 0, 0, 1)"
+                  })
+              })
             },
             /* EVOL possible
               unit : "miles",
