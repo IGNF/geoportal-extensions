@@ -112,16 +112,21 @@
             },
             stylesOptions : {
               draw : {
-               start : {
-                 strokeColor : "rgba(0, 0, 0, 0.5)",
-                 strokeLineDash : [3, 3],
-                 strokeWidth : 2
-               },
-               pointer : {
-                 imageRadius : 5,
-                 imageFillColor : "rgba(255, 255, 255, 0.2)",
-                 imageStrokeColor : "rgba(0, 0, 0, 0.7)"
-               },
+               start : new ol.style.Stroke({
+                 color : "rgba(0, 0, 0, 0.5)",
+                 lineDash : [3, 3],
+                 width : 2
+               }),
+               pointer : new ol.style.Circle({
+                    radius : 5,
+                    stroke : new ol.style.Stroke({
+                        color : "rgba(0, 0, 0, 0.7)",
+                        width : 2
+                    }),
+                    fill : new ol.style.Fill({
+                        color : "rgba(255, 255, 255, 0.2)"
+                    })
+               }),
                finish : {}
               },
               marker : {

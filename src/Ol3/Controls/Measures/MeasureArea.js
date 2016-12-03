@@ -37,7 +37,7 @@ define([
     * @param {Object} [options.styles = {}] - styles used when drawing. Specified with following properties.
     * @param {Object} [options.styles.pointer = {}] - Style for mouse pointer when drawing the polygon to measure. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Circle.html ol.style.Circle} object.
     * @param {Object} [options.styles.start = {}] - Polygon Style when drawing. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Style.html ol.style.Style} object.
-    * @param {Object} [options.styles.finish = {}] - Polygon Style when finished drawing. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol  .style.Style.html ol.style.Style} object.
+    * @param {Object} [options.styles.finish = {}] - Polygon Style when finished drawing. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Style.html ol.style.Style} object.
     * <!-- @param {Object} [options.tooltip = {}] - NOT YET IMPLEMENTED ! -->
     * @example
     * var measureArea = new ol.control.MeasureArea({

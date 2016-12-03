@@ -14,49 +14,6 @@ define([
     woodman.load("console");
     var logger = woodman.getLogger("measures");
 
-    /** styles by default */
-
-    /*
-     * Pointer 
-     */
-    var DEFAULT_POINTER_STYLE = new ol.style.Circle({
-        radius : 5,
-        stroke : new ol.style.Stroke({
-            color : "#002A50",
-            width : 2
-        }),
-        fill : new ol.style.Fill({
-            color : "rgba(255, 155, 0, 0.7)"
-        })
-    }) ;
-
-    /*
-     * Measures style line
-     */
-    var DEFAULT_DRAW_START_STYLE = new ol.style.Style({
-        fill : new ol.style.Fill({
-            color : "rgba(0, 183, 152, 0.2)"
-        }),
-        stroke : new ol.style.Stroke({
-            color : "#002A50",
-            lineDash : [10, 10],
-            width : 2
-        })
-    }) ;
-
-    /*
-     * Measures final style line
-     */
-    var DEFAULT_DRAW_FINISH_STYLE = new ol.style.Style({
-        fill : new ol.style.Fill({
-            color : "rgba(0, 183, 152, 0.3)"
-        }),
-        stroke : new ol.style.Stroke({
-            color : "#002A50",
-            width : 3
-        })
-    }) ;
-
     /**
     * Measures Tools :
     * - length
@@ -64,6 +21,51 @@ define([
     * - azimut
     */
     var Measures = {
+
+        // ****************************************************************** //
+        // > Default Styles
+        // ****************************************************************** //
+    
+        /*
+         * Pointer 
+         */
+        DEFAULT_POINTER_STYLE : new ol.style.Circle({
+            radius : 5,
+            stroke : new ol.style.Stroke({
+                color : "#002A50",
+                width : 2
+            }),
+            fill : new ol.style.Fill({
+                color : "rgba(255, 155, 0, 0.7)"
+            })
+        }),
+
+        /*
+         * Measures style line
+         */
+        DEFAULT_DRAW_START_STYLE : new ol.style.Style({
+            fill : new ol.style.Fill({
+                color : "rgba(0, 183, 152, 0.2)"
+            }),
+            stroke : new ol.style.Stroke({
+                color : "#002A50",
+                lineDash : [10, 10],
+                width : 2
+            })
+        }),
+
+        /*
+         * Measures final style line
+         */
+        DEFAULT_DRAW_FINISH_STYLE : new ol.style.Style({
+            fill : new ol.style.Fill({
+                color : "rgba(0, 183, 152, 0.3)"
+            }),
+            stroke : new ol.style.Stroke({
+                color : "#002A50",
+                width : 3
+            })
+        }),
 
         // ****************************************************************** //
         // > ToolBox : these tools work together
@@ -351,9 +353,9 @@ define([
 
             // Creation à partir des styles par défaut
             var startStyleOpts = {
-                image : DEFAULT_POINTER_STYLE,
-                fill : DEFAULT_DRAW_START_STYLE.getFill(),
-                stroke : DEFAULT_DRAW_START_STYLE.getStroke()
+                image : Measures.DEFAULT_POINTER_STYLE,
+                fill : Measures.DEFAULT_DRAW_START_STYLE.getFill(),
+                stroke : Measures.DEFAULT_DRAW_START_STYLE.getStroke()
             } ;
             // ecrasement à partir des propriétés renseignées
             if (this.options.styles.hasOwnProperty("pointer") && this.options.styles.pointer instanceof ol.style.Image) {
@@ -374,8 +376,8 @@ define([
             logger.trace("style finish", this.options.styles.finish);
 
             var finishStyleOpts = {
-                fill : DEFAULT_DRAW_FINISH_STYLE.getFill(),
-                stroke : DEFAULT_DRAW_FINISH_STYLE.getStroke()
+                fill : Measures.DEFAULT_DRAW_FINISH_STYLE.getFill(),
+                stroke : Measures.DEFAULT_DRAW_FINISH_STYLE.getStroke()
             } ;
             // ecrasement à partir des propriétés renseignées
             if (this.options.styles.hasOwnProperty("finish") && this.options.styles.finish instanceof ol.style.Style) {
@@ -404,7 +406,7 @@ define([
             this.measureDraw = new ol.interaction.Draw({
                 source : this.measureSource,
                 type : type,
-                style : this.options.styles.start || DEFAULT_DRAW_START_STYLE
+                style : this.options.styles.start || Measures.DEFAULT_DRAW_START_STYLE
             });
             this.measureDraw.setProperties({
                 source : "Measure"
@@ -464,7 +466,7 @@ define([
 
             this.measureVector = new ol.layer.Vector({
                 source : this.measureSource,
-                style : this.options.styles.finish || DEFAULT_DRAW_FINISH_STYLE
+                style : this.options.styles.finish || Measures.DEFAULT_DRAW_FINISH_STYLE
             });
 
             map.addLayer(this.measureVector);

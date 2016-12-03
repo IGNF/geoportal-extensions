@@ -5,6 +5,7 @@ define([
     "gp",
     "Ol3/Utils",
     "Common/Utils/CheckRightManagement",
+    "Ol3/Controls/Measures/Measures",
     "Ol3/Controls/MeasureToolBox",
     "Common/Controls/ElevationPathDOM",
     "Common/Utils/SelectorID"
@@ -14,6 +15,7 @@ define([
     Gp,
     Utils,
     RightManagement,
+    Measures,
     MeasureToolBox,
     ElevationPathDOM,
     ID
@@ -36,7 +38,7 @@ define([
     * @param {Boolean} [options.active = false] - specify if control should be actived at startup. Default is false.
     * @param {Object} [options.stylesOptions = DEFAULT_STYLES] - styles management
     * @param {Object} [options.stylesOptions.marker = {}] - styles management of marker displayed on map when the user follows the elevation path. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Icon.html ol.style.Icon} object
-    * @param {Object} [options.stylesOptions.draw = {}] - styles used when drawing. Specified with following properties. 
+    * @param {Object} [options.stylesOptions.draw = {}] - styles used when drawing. Specified with following properties.
     * @param {Object} [options.stylesOptions.draw.pointer = {}] - Style for mouse pointer when drawing the line. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Circle.html ol.style.Circle} object.
     * @param {Object} [options.stylesOptions.draw.start = {}] - Line Style when drawing. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Stroke.html ol.style.Stroke} object.
     * @param {Object} [options.stylesOptions.draw.finish = {}] - Line Style when finished drawing. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Stroke.html ol.style.Stroke} object.
@@ -655,26 +657,7 @@ define([
      */
     ElevationPath.DEFAULT_STYLES = {
         // styling drawing by default
-        DRAW : {
-            // start drawing point by default
-            POINTER : {
-                imageRadius : 5,
-                imageFillColor : "rgba(255, 155, 0, 0.7)",
-                imageStrokeColor : "#002A50",
-                imageStrokeWidth : 2
-            },
-            // start drawing line by default
-            START : {
-                strokeColor : "#002A50",
-                strokeLineDash : [10, 10],
-                strokeWidth : 2
-            },
-            // finish drawing line
-            FINISH : {
-                strokeColor : "#002A50",
-                strokeWidth : 3
-            }
-        },
+        // see => Measures.DEFAULTS_STYLES
         // stying marker to the profile by default
         MARKER : {
             imageSrc : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAsCAYAAAAATWqyAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAABTtJREFUeNq8WGtsFUUU/rb3gtdCAykFG9AUDTQUKimhxUewEusrJYoBo4FfEgoqotHERH6oP9TGmJhIrIlWAf9hjAaEiME2pgFfVVpFii8sWqIQLLSx3EJLW7p+Z2Z2b2l7d/b23vZLTmZ2duacb2fmnDk7DlKA67rXs1hJKacsohRQppjXFygnKT9TDlH2O47zFzIFGnco91EOuqnjoBnr2Ow4FhIlLN6m3DykFTh3BGj/Doj/CfSe082xPCDnBmDWTUBeyXDVjZTHOUNHUiZCEs+weI0ySTV0/w0c2wa07gIungn+vOx8YN46oPhpYOp1Xms/5TmSeSMUERKImFnYqBoGuPRNL5LEW8BgX2rrmjWZZLYApS8BUW8r4T0zO5eTEjFr+S6lSjV0HgPqVwNdf6S30abNB+7aDeQWey3bKZtIxvU5DxvyrE/izJfAvuXpkxCIDtElOjWqjK2RM8LZWMbiG0oEnUc5kB7a14WMYvI04H56du5ieZKluZWz8r0/IyQh5TuKRH8cqFuTeRIC0Sm6xYbYok1j21+ahyhLVO3wC8D5VowbRLfY0FhibOulIavDLEoRZyD8sJDeMWBXKG5ZsIobsdDsg+OMq3u1m1u9KQo8zP45EqjRxOUpk6i50IRl4FuGjpZtwUoiMYa314GFj/EzIsN8n8v+C1e4kfvwcm+wnhsZY27xQ8oiWZpKrWRQB6tAElfxpKnjsCdGklDzG9HvpI/0DYLYEpsalVnmAAM6fgR62oMHl70C5N9mn3rpI32DILbEpkZ5ljlFgbPNFtebzij5VPhNKX1lTBASNtXSzPZ3cxCuvVOH7FTCu4yxeZDGbCES0z5+PniQ3uGpwTYmYTOWCPGTpgYP6u9OnYhtzBCbQkSH0NiM4EEdP6VOxDYmYbNLiJxQ1elFwYPaG3XQCn3QHddjgpCweUKI6K2bvzw4YROf//rJob6fZl/H2FRoFiINfqo3qyzYwD8MVIeYLw32J+8j76SP9A2C2BKbGg1CZL+EF/W4YKP9a3/fCeyhkrY9DOOXEu1SlzZ5J31sSNjqURm/OfQkY9qgvkYOvXhbuH0g505Oga7HT9rPF9+t5+pDL0ulwzt46FV5ROax+JUSRRtP0LoHMK64+xNg7iqVEVOKSKRVxRGpsKhRnaRD4SPjR0J0axKCGmP7ilQxm4X8d8xXmfvHJZlPkCR3WfODl9FLMlxCIhevSJ5Nwzo1XdKxYpe3hpmB6BKdmoS43VqPxIgsni+aWOg8biZ3f+nLmSMiuvKWek/P01az7QdLyNVT7lC/l59WAKcb0iMxhzpW1nvmvpDtSiKD1l9OkpnDgv8UyMWFU9wvTP8vdY6NhJwnD1JVtso2OiiLSeL0iJUbNfg6zikVVwRTyOn2HWOfjfLtHgnBhtFIJCViyNDZUatdmnGlaFPqJIoe1WM1aqlz71ivJbLNobgAA9zgu7nZ/vstHAk5WVdzaPRqmGC5lER6kjpV4OWJdq+1kkshSk4VH9izcy/bV66qSPQZV+0J9G7rTY6+XNmqHmYwyJVV24kse1X31dhKHdasygkzy+a64oC4nWr47F4e858nSbLv4V/KAe9JKpVDrx/SImLIXMOiRUKdujESl+49O8xVZxpXzVc/C/I/RxL/hgq8YYkYhev9q6kVO4d9B+sr3vdICNaHJTHWW8Ya/87wqy2uWwstUk/gTYw3aCRGOarMDfS67kfFWqSuIe9imAjQEC272nJHixYNaSvGRIIGN49ywbsZEw1zI11N6TZSHeaGORn+F2AAJtRIMx4t+hUAAAAASUVORK5CYII=",
@@ -930,7 +913,7 @@ define([
         if ( typeof styles === "undefined" || Object.keys(styles).length === 0 ) {
             // on applique les styles par defaut (en mode properties)
             this.options.styles = {
-                draw : ElevationPath.DEFAULT_STYLES.DRAW,
+                // draw : {}, // ElevationPath.DEFAULT_STYLES.DRAW,
                 marker : ElevationPath.DEFAULT_STYLES.MARKER,
                 profile : ElevationPath.DEFAULT_STYLES.PROFILE
             };
@@ -940,21 +923,7 @@ define([
         }
 
         // gestion des styles du tracé
-        var draw = styles.draw || this.options.styles.draw;
-        this.options.styles.draw = ( typeof draw === "undefined" || Object.keys(draw).length === 0 ) ?
-            ElevationPath.DEFAULT_STYLES.DRAW : draw;
-        var drawPointer = this.options.styles.draw.pointer;
-        var drawStart   = this.options.styles.draw.start;
-        var drawFinish  = this.options.styles.draw.finish;
-        if ( typeof drawPointer === "undefined" ) {
-            this.options.styles.draw.pointer = ElevationPath.DEFAULT_STYLES.DRAW.POINTER;
-        }
-        if ( typeof drawStart === "undefined" ) {
-            this.options.styles.draw.start = ElevationPath.DEFAULT_STYLES.DRAW.START;
-        }
-        if ( typeof drawFinish === "undefined" ) {
-            this.options.styles.draw.finish = ElevationPath.DEFAULT_STYLES.DRAW.FINISH;
-        }
+        this.options.styles.draw = styles.draw || {} ;
         this._createStylingDraw();
 
         // gestion des styles du marker
@@ -1104,122 +1073,37 @@ define([
 
         // on interprete les params pour y creer un objet ol.Style
         var styles  = this.options.styles.draw;
-        var pointer = styles.pointer;
-        var start   = styles.start;
-        var finish  = styles.finish;
 
-        logger.trace("style pointer",  pointer);
-        var _pointerImage = null;
-        if ( pointer instanceof ol.style.Image ) {
-            logger.trace( "instance ol.style.Image for pointer drawing !" );
-            _pointerImage = pointer;
-        } else {
-            logger.trace( "use properties to define a style for pointer drawing !" );
+        // style de depart
+        logger.trace("style start", styles.start);
 
-            var defaultStylePointer = ElevationPath.DEFAULT_STYLES.DRAW.POINTER;
-            Object.keys(defaultStylePointer).forEach(function (key) {
-                if (!pointer.hasOwnProperty(key)) {
-                    pointer[key] = defaultStylePointer[key];
-                    return;
-                }
-                if (key === "imageStrokeWidth" || key === "imageRadius") {
-                    var intValue = parseInt(pointer[key],10);
-                    if (isNaN(intValue) || intValue < 0) {
-                        console.log("Wrong value (" + pointer[key] + ") for strokeWidth or radius. Must be a positive interger value." );
-                        pointer[key] = defaultStylePointer[key];
-                        return;
-                    }
-                    pointer[key] = intValue;
-                }
-            },this);
-
-            // point : image
-            _pointerImage = new ol.style.Circle({
-                radius : pointer.imageRadius,
-                stroke : new ol.style.Stroke({
-                    color : pointer.imageStrokeColor,
-                    width : pointer.imageStrokeWidth
-                }),
-                fill : new ol.style.Fill({
-                    color : pointer.imageFillColor
-                })
-            });
+        // Creation à partir des styles par défaut
+        var startStyleOpts = {
+            image : Measures.DEFAULT_POINTER_STYLE,
+            stroke : Measures.DEFAULT_DRAW_START_STYLE.getStroke()
+        } ;
+        // ecrasement à partir des propriétés renseignées
+        if (styles.hasOwnProperty("pointer") && styles.pointer instanceof ol.style.Image) {
+            startStyleOpts.image = styles.pointer ;
+        }
+        if (styles.hasOwnProperty("start") && styles.start instanceof ol.style.Stroke) {
+            startStyleOpts.stroke = styles.start ;
         }
 
-        logger.trace("style start",  start);
-        var _startStroke = null;
-        if ( start instanceof ol.style.Stroke ) {
-            logger.trace( "instance ol.style.Stroke for start drawing !" );
-            _startStroke = start;
-        } else {
-            logger.trace( "use properties to define a style for start drawing !" );
+        this._drawStyleStart = new ol.style.Style(startStyleOpts);
 
-            var defaultStyleStart = ElevationPath.DEFAULT_STYLES.DRAW.START;
-            Object.keys(defaultStyleStart).forEach(function (key) {
-                if (!start.hasOwnProperty(key)) {
-                    start[key] = defaultStyleStart[key];
-                    return;
-                }
-                if (key === "strokeWidth") {
-                    var intValue = parseInt(start[key],10);
-                    if (isNaN(intValue) || intValue < 0) {
-                        console.log("Wrong value (" + start[key] + ") for strokeWidth. Must be a positive interger value." );
-                        start[key] = defaultStyleStart[key];
-                        return;
-                    }
-                    start[key] = intValue;
-                }
-            },this);
+        // style de fin
+        logger.trace("style finish", styles.finish);
 
-            // ligne : stroke
-            _startStroke = new ol.style.Stroke({
-                color : start.strokeColor,
-                lineDash : start.strokeLineDash,
-                width : start.strokeWidth
-            });
+        var finishStyleOpts = {
+            stroke : Measures.DEFAULT_DRAW_FINISH_STYLE.getStroke()
+        } ;
+        // ecrasement à partir des propriétés renseignées
+        if (styles.hasOwnProperty("finish") && styles.finish instanceof ol.style.Stroke) {
+            finishStyleOpts.stroke = styles.finish ;
         }
 
-        this._drawStyleStart = new ol.style.Style({
-            stroke : _startStroke,
-            image : _pointerImage
-        });
-
-        logger.trace("style finish", finish);
-        var _finishStroke = null;
-        if ( finish instanceof ol.style.Stroke ) {
-            logger.trace( "instance ol.style.Stroke for finish drawing !" );
-            _finishStroke = finish;
-
-        } else {
-            logger.trace( "use properties to define a style for finish drawing !" );
-
-            var defaultStyleFinish = ElevationPath.DEFAULT_STYLES.DRAW.FINISH;
-            Object.keys(defaultStyleFinish).forEach(function (key) {
-                if (!finish.hasOwnProperty(key)) {
-                    finish[key] = defaultStyleFinish[key];
-                    return;
-                }
-                if (key === "strokeWidth") {
-                    var intValue = parseInt(finish[key],10);
-                    if (isNaN(intValue) || intValue < 0) {
-                        console.log("Wrong value (" + finish[key] + ") for strokeWidth. Must be a positive interger value." );
-                        finish[key] = defaultStyleFinish[key];
-                        return;
-                    }
-                    finish[key] = intValue;
-                }
-            },this);
-
-            _finishStroke = new ol.style.Stroke({
-                color : finish.strokeColor,
-                lineDash : finish.strokeLineDash,
-                width : finish.strokeWidth
-            });
-        }
-
-        this._drawStyleFinish = new ol.style.Style({
-            stroke : _finishStroke
-        });
+        this._drawStyleFinish = new ol.style.Style(finishStyleOpts);
     };
 
     /**
