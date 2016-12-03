@@ -33,7 +33,7 @@ define([
     *
     * @constructor
     * @alias ol.control.ElevationPath
-    * @extends {ol.control.Control}
+    * @extends ol.control.Control
     * @param {Object} options - options for function call.
     * @param {Boolean} [options.active = false] - specify if control should be actived at startup. Default is false.
     * @param {Object} [options.stylesOptions = DEFAULT_STYLES] - styles management
@@ -659,15 +659,11 @@ define([
         // styling drawing by default
         // see => Measures.DEFAULTS_STYLES
         // stying marker to the profile by default
-        MARKER : {
-            imageSrc : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAsCAYAAAAATWqyAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAABTtJREFUeNq8WGtsFUUU/rb3gtdCAykFG9AUDTQUKimhxUewEusrJYoBo4FfEgoqotHERH6oP9TGmJhIrIlWAf9hjAaEiME2pgFfVVpFii8sWqIQLLSx3EJLW7p+Z2Z2b2l7d/b23vZLTmZ2duacb2fmnDk7DlKA67rXs1hJKacsohRQppjXFygnKT9TDlH2O47zFzIFGnco91EOuqnjoBnr2Ow4FhIlLN6m3DykFTh3BGj/Doj/CfSe082xPCDnBmDWTUBeyXDVjZTHOUNHUiZCEs+weI0ySTV0/w0c2wa07gIungn+vOx8YN46oPhpYOp1Xms/5TmSeSMUERKImFnYqBoGuPRNL5LEW8BgX2rrmjWZZLYApS8BUW8r4T0zO5eTEjFr+S6lSjV0HgPqVwNdf6S30abNB+7aDeQWey3bKZtIxvU5DxvyrE/izJfAvuXpkxCIDtElOjWqjK2RM8LZWMbiG0oEnUc5kB7a14WMYvI04H56du5ieZKluZWz8r0/IyQh5TuKRH8cqFuTeRIC0Sm6xYbYok1j21+ahyhLVO3wC8D5VowbRLfY0FhibOulIavDLEoRZyD8sJDeMWBXKG5ZsIobsdDsg+OMq3u1m1u9KQo8zP45EqjRxOUpk6i50IRl4FuGjpZtwUoiMYa314GFj/EzIsN8n8v+C1e4kfvwcm+wnhsZY27xQ8oiWZpKrWRQB6tAElfxpKnjsCdGklDzG9HvpI/0DYLYEpsalVnmAAM6fgR62oMHl70C5N9mn3rpI32DILbEpkZ5ljlFgbPNFtebzij5VPhNKX1lTBASNtXSzPZ3cxCuvVOH7FTCu4yxeZDGbCES0z5+PniQ3uGpwTYmYTOWCPGTpgYP6u9OnYhtzBCbQkSH0NiM4EEdP6VOxDYmYbNLiJxQ1elFwYPaG3XQCn3QHddjgpCweUKI6K2bvzw4YROf//rJob6fZl/H2FRoFiINfqo3qyzYwD8MVIeYLw32J+8j76SP9A2C2BKbGg1CZL+EF/W4YKP9a3/fCeyhkrY9DOOXEu1SlzZ5J31sSNjqURm/OfQkY9qgvkYOvXhbuH0g505Oga7HT9rPF9+t5+pDL0ulwzt46FV5ROax+JUSRRtP0LoHMK64+xNg7iqVEVOKSKRVxRGpsKhRnaRD4SPjR0J0axKCGmP7ilQxm4X8d8xXmfvHJZlPkCR3WfODl9FLMlxCIhevSJ5Nwzo1XdKxYpe3hpmB6BKdmoS43VqPxIgsni+aWOg8biZ3f+nLmSMiuvKWek/P01az7QdLyNVT7lC/l59WAKcb0iMxhzpW1nvmvpDtSiKD1l9OkpnDgv8UyMWFU9wvTP8vdY6NhJwnD1JVtso2OiiLSeL0iJUbNfg6zikVVwRTyOn2HWOfjfLtHgnBhtFIJCViyNDZUatdmnGlaFPqJIoe1WM1aqlz71ivJbLNobgAA9zgu7nZ/vstHAk5WVdzaPRqmGC5lER6kjpV4OWJdq+1kkshSk4VH9izcy/bV66qSPQZV+0J9G7rTY6+XNmqHmYwyJVV24kse1X31dhKHdasygkzy+a64oC4nWr47F4e858nSbLv4V/KAe9JKpVDrx/SImLIXMOiRUKdujESl+49O8xVZxpXzVc/C/I/RxL/hgq8YYkYhev9q6kVO4d9B+sr3vdICNaHJTHWW8Ya/87wqy2uWwstUk/gTYw3aCRGOarMDfS67kfFWqSuIe9imAjQEC272nJHixYNaSvGRIIGN49ywbsZEw1zI11N6TZSHeaGORn+F2AAJtRIMx4t+hUAAAAASUVORK5CYII=",
-            imageSize : [34, 44],
-            imageAnchor : [0.5, 1],
-            imageAnchorOrigin : "bottom-left",
-            imageAnchorXUnits : "ratio",
-            imageAnchorYUnits : "ratio",
-            imageSnapToPixel : true
-        },
+        MARKER : new ol.style.Icon({
+            src : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAsCAYAAAAATWqyAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAABTtJREFUeNq8WGtsFUUU/rb3gtdCAykFG9AUDTQUKimhxUewEusrJYoBo4FfEgoqotHERH6oP9TGmJhIrIlWAf9hjAaEiME2pgFfVVpFii8sWqIQLLSx3EJLW7p+Z2Z2b2l7d/b23vZLTmZ2duacb2fmnDk7DlKA67rXs1hJKacsohRQppjXFygnKT9TDlH2O47zFzIFGnco91EOuqnjoBnr2Ow4FhIlLN6m3DykFTh3BGj/Doj/CfSe082xPCDnBmDWTUBeyXDVjZTHOUNHUiZCEs+weI0ySTV0/w0c2wa07gIungn+vOx8YN46oPhpYOp1Xms/5TmSeSMUERKImFnYqBoGuPRNL5LEW8BgX2rrmjWZZLYApS8BUW8r4T0zO5eTEjFr+S6lSjV0HgPqVwNdf6S30abNB+7aDeQWey3bKZtIxvU5DxvyrE/izJfAvuXpkxCIDtElOjWqjK2RM8LZWMbiG0oEnUc5kB7a14WMYvI04H56du5ieZKluZWz8r0/IyQh5TuKRH8cqFuTeRIC0Sm6xYbYok1j21+ahyhLVO3wC8D5VowbRLfY0FhibOulIavDLEoRZyD8sJDeMWBXKG5ZsIobsdDsg+OMq3u1m1u9KQo8zP45EqjRxOUpk6i50IRl4FuGjpZtwUoiMYa314GFj/EzIsN8n8v+C1e4kfvwcm+wnhsZY27xQ8oiWZpKrWRQB6tAElfxpKnjsCdGklDzG9HvpI/0DYLYEpsalVnmAAM6fgR62oMHl70C5N9mn3rpI32DILbEpkZ5ljlFgbPNFtebzij5VPhNKX1lTBASNtXSzPZ3cxCuvVOH7FTCu4yxeZDGbCES0z5+PniQ3uGpwTYmYTOWCPGTpgYP6u9OnYhtzBCbQkSH0NiM4EEdP6VOxDYmYbNLiJxQ1elFwYPaG3XQCn3QHddjgpCweUKI6K2bvzw4YROf//rJob6fZl/H2FRoFiINfqo3qyzYwD8MVIeYLw32J+8j76SP9A2C2BKbGg1CZL+EF/W4YKP9a3/fCeyhkrY9DOOXEu1SlzZ5J31sSNjqURm/OfQkY9qgvkYOvXhbuH0g505Oga7HT9rPF9+t5+pDL0ulwzt46FV5ROax+JUSRRtP0LoHMK64+xNg7iqVEVOKSKRVxRGpsKhRnaRD4SPjR0J0axKCGmP7ilQxm4X8d8xXmfvHJZlPkCR3WfODl9FLMlxCIhevSJ5Nwzo1XdKxYpe3hpmB6BKdmoS43VqPxIgsni+aWOg8biZ3f+nLmSMiuvKWek/P01az7QdLyNVT7lC/l59WAKcb0iMxhzpW1nvmvpDtSiKD1l9OkpnDgv8UyMWFU9wvTP8vdY6NhJwnD1JVtso2OiiLSeL0iJUbNfg6zikVVwRTyOn2HWOfjfLtHgnBhtFIJCViyNDZUatdmnGlaFPqJIoe1WM1aqlz71ivJbLNobgAA9zgu7nZ/vstHAk5WVdzaPRqmGC5lER6kjpV4OWJdq+1kkshSk4VH9izcy/bV66qSPQZV+0J9G7rTY6+XNmqHmYwyJVV24kse1X31dhKHdasygkzy+a64oC4nWr47F4e858nSbLv4V/KAe9JKpVDrx/SImLIXMOiRUKdujESl+49O8xVZxpXzVc/C/I/RxL/hgq8YYkYhev9q6kVO4d9B+sr3vdICNaHJTHWW8Ya/87wqy2uWwstUk/gTYw3aCRGOarMDfS67kfFWqSuIe9imAjQEC272nJHixYNaSvGRIIGN49ywbsZEw1zI11N6TZSHeaGORn+F2AAJtRIMx4t+hUAAAAASUVORK5CYII=",
+            anchor : [0.5, 1],
+            snapToPixel : true
+        }),
         // styling service results points by default
         RESULTS : {
             // INFO orienté maintenance !
@@ -677,6 +673,7 @@ define([
             imageStrokeWidth : 2
         },
         // styling amCharts profile by default
+        // FIXME : should'nt be part of this class but in the helper function
         PROFILE : {
             type : "serial",
             pathToImages : "http://cdn.amcharts.com/lib/3/images/",
@@ -913,8 +910,6 @@ define([
         if ( typeof styles === "undefined" || Object.keys(styles).length === 0 ) {
             // on applique les styles par defaut (en mode properties)
             this.options.styles = {
-                // draw : {}, // ElevationPath.DEFAULT_STYLES.DRAW,
-                marker : ElevationPath.DEFAULT_STYLES.MARKER,
                 profile : ElevationPath.DEFAULT_STYLES.PROFILE
             };
 
@@ -927,12 +922,12 @@ define([
         this._createStylingDraw();
 
         // gestion des styles du marker
-        var marker = styles.marker || this.options.styles.marker;
-        this.options.styles.marker = ( typeof marker === "undefined" || Object.keys(marker).length === 0 ) ?
-            ElevationPath.DEFAULT_STYLES.MARKER : marker;
+        this.options.styles.marker = styles.marker || {} ;
         this._createStylingMarker();
 
         // gestion des styles du profile de type AmCharts
+        // TODO : Revoir le paramétrage de l'affichage du profil
+        //        Pour l'instant sert uniquement pour la bib amcharts...
         var profile = styles.profile || this.options.styles.profile;
         this.options.styles.profile = ( typeof profile === "undefined" || Object.keys(profile).length === 0 ) ?
             ElevationPath.DEFAULT_STYLES.PROFILE : profile;
@@ -1025,42 +1020,18 @@ define([
     ElevationPath.prototype._createStylingMarker = function () {
         logger.trace("ElevationPath::_createStylingMarker ");
 
-        // on interprete les params pour y creer un objet ol.Style
-        // on determine s'ils sont en mode properties ou directemzent en objet ol.Style
-        var marker = this.options.styles.marker;
-
+        var marker = ElevationPath.DEFAULT_STYLES.MARKER ;
         logger.trace("style marker", marker);
-        if ( marker instanceof ol.style.Image ) {
-            logger.trace( "instance ol.style.Image for marker !" );
-            this._drawStyleStart = new ol.style.Style({
-                image : marker
-            });
 
-        } else {
-            logger.trace( "use properties to define a style for marker !" );
-
-            var defaultStyle = ElevationPath.DEFAULT_STYLES.MARKER;
-            Object.keys(defaultStyle).forEach(function (key) {
-                if (!marker.hasOwnProperty(key)) {
-                    marker[key] = defaultStyle[key];
-                    return;
-                }
-            },this);
-
-            // FIXME on se limite à qqch de simple sur la gestion des Icones
-            this._markerStyle = new ol.style.Style({
-                image : new ol.style.Icon({
-                    src : marker.imageSrc,
-                    // size : marker.imageSize,
-                    // imgSize :  marker.imageImgSize,
-                    anchor : marker.imageAnchor,
-                    // anchorOrigin : marker.imageAnchorOrigin,
-                    // anchorXUnits : marker.imageAnchorXUnits,
-                    // anchorYUnits : marker.imageAnchorYUnits,
-                    snapToPixel : true
-                })
-            });
+        // si marker n'est pas un objet ol.style.Image, on applique le 
+        // style par défaut.
+        if (this.options.styles.marker instanceof ol.style.Image ) {
+            marker = this.options.styles.marker ;
         }
+
+        this._markerStyle = new ol.style.Style({
+            image : marker
+        });
     };
 
     /**
@@ -1108,6 +1079,7 @@ define([
 
     /**
     * create style graph
+    * TODO : à revoir (ne sert que pour AmCharts)
     *
     * @private
     */
