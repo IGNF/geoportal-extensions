@@ -50,6 +50,7 @@ Controls provided by the Geoportal Extension are additionnal <a href="http://lea
 | {@link L.geoportalControl.ReverseGeocode L.geoportalControl.ReverseGeocode} | Allows users to find locations by clicking on a map using <a href="http://api.ign.fr/tech-docs-js/developpeur/search.html" target="_blank">geocoding service</a> of the Geoportal Platform. |
 | {@link L.geoportalControl.Route L.geoportalControl.Route} | Allows users to compute and display routes on a Map using  <a href="http://api.ign.fr/tech-docs-js/developpeur/TODO" target="_blank">routing service</a> of the Geoportal Platform. |
 | {@link L.geoportalControl.Isocurve L.geoportalControl.Isocurve} | Allows users to compute and display Isochrone or Isodistance curves on a Map using  <a href="http://api.ign.fr/tech-docs-js/developpeur/TODO" target="_blank">isochron/isodistance service</a> of the Geoportal Platform. |
+| {@link L.geoportalControl.ElevationPath L.geoportalControl.ElevationPath} | Allows users to compute an altimetric profile using <a href="http://api.ign.fr/tech-docs-js/developpeur/alti.html" target="_blank">elevation service</a> of the Geoportal Platform. |
 
 
 
