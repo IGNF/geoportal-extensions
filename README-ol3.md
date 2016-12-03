@@ -1,5 +1,6 @@
 # Extension Géoportail pour OpenLayers 3
 
+
 L'extension Géoportail pour OpenLayers 3 propose les fonctionnalités suivantes à utiliser en complément de la biblothèque [OpenLayers 3](http://openlayers.org/) :
 
 * [affichage des couches WMTS Géoportail](#WMTS)
@@ -28,7 +29,20 @@ L'extension Géoportail pour OpenLayers 3 propose les fonctionnalités suivantes
 
 * [outils de mesure](#measure)
 
+
 ## Mise en oeuvre
+
+L'utilisation de l'extension Géoportail pour OpenLayers 3 se fait via les étapes suivantes :
+
+* [Téléchargement de l'extension Géoportail](#download)
+
+* [Intégration de l'extension dans une page web](#integration)
+
+* [Configuration de l'accès à la plateforme Géoportail](#config)
+
+
+
+<a id="download"/>
 
 ### Téléchargement
 
@@ -47,6 +61,8 @@ Elle contient l'arborescence suivante :
         img/
             (resources images utilisées par les fichiers CSS)
 
+
+<a id="integration"/>
 
 ### Intégration dans une page web
 

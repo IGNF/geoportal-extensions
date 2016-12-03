@@ -23,6 +23,18 @@ L'extension Géoportail pour Leaflet propose les fonctionnalités suivantes à u
 
 ## Mise en oeuvre
 
+L'utilisation de l'extension Géoportail pour Leaflet se fait via les étapes suivantes :
+
+* [Téléchargement de l'extension Géoportail](#download)
+
+* [Intégration de l'extension dans une page web](#integration)
+
+* [Configuration de l'accès à la plateforme Géoportail](#config)
+
+
+
+<a id="download"/>
+
 ### Téléchargement
 
 Vous pouvez récupérer l'extension Géoportail pour Leaflet [ici](https://github.com/IGNF/geoportal-extensions/releases/download/leaflet-0.8.0/GpLeaflet.zip).
@@ -37,6 +49,9 @@ Elle contient l'arborescence suivante :
     GpPluginLeaflet-src.css    (version non minifiée des css pour une utilisation en développement)
     img/                       (resources images utilisées par les fichiers CSS)
 ```
+
+
+<a id="integration"/>
 
 ### Intégration dans une page web
 
