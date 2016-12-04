@@ -254,7 +254,7 @@
             leaflet : "empty:",
             vg : "empty:",
             proj4 : "../../../../lib/proj4/proj4" + modeExt,
-            gp : "../../../../lib/gp/GpServices" + modeExt,
+            gp : "../../../../lib/gp/GpServices-src" /*+ modeExt */, //on evite la double minification...
             sortable : "../../../../lib/sortable/Sortable-src" // + modeExt
         };
 
