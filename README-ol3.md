@@ -27,7 +27,7 @@ L'extension Géoportail pour OpenLayers 3 propose les fonctionnalités suivantes
 
 * [profil altimétrique d'un traçé à l'aide du service d'altimétrie de la plateforme Géoportail](#ep)
 
-* [outils de mesure](#measure)
+* [outils de mesures](#measure)
 
 
 ## Mise en oeuvre
@@ -966,7 +966,7 @@ map.addControl(ep);
 
 **Exemple d'utilisation** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/cwfsLge7/embedded/result,js,html,css/)
 
-<a id="ep"/>
+<a id="measure"/>
 
 ### Outils de mesures
 
