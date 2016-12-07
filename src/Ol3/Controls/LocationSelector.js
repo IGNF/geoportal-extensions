@@ -36,11 +36,11 @@ define([
      * @param {String} [options.tag.label] - text to display in component (e.g. "Departure"). Default is ">"
      * @param {Object} [options.tag.markerOpts] - options to use your own marker. Default is a lightOrange marker.
      * @param {String} [options.tag.markerOpts.url] - marker base64 encoded url (ex "data:image/png;base64,...""). Mandatory for a custom marker
-     * @param {Array} [options.tag.markerOpts.offset] - Offsets in pixels used when positioning the overlay. The first element in the array is the horizontal offset. A positive value shifts the overlay right. The second element in the array is the vertical offset. A positive value shifts the overlay down. Default is [0, 0]. (see http://openlayers.org/en/latest/apidoc/ol.Overlay.html)
+     * @param {Array} [options.tag.markerOpts.offset] - Offsets in pixels used when positioning the overlay. The first element in the array is the horizontal offset. A positive value shifts the overlay right. The second element in the array is the vertical offset. A positive value shifts the overlay down. Default is [0, 0]. (see {@link http://openlayers.org/en/latest/apidoc/ol.Overlay.html ol.Overlay})
      * @param {Boolean} [options.tag.display = true] - whether to display or hide component. Default is true
      * @param {Boolean} [options.tag.addOption = false] - whether to display picto to add another LocationSelector (in case of route control)
      * @param {Boolean} [options.tag.removeOption = false] - whether to display picto to remove a LocationSelector (in case of route control)
-     * @param {Object} [options.autocompleteOptions] - autocomplete service options (see http://depot.ign.fr/geoportail/bibacces/develop/doc/module-Services.html#~autoComplete to know all autocomplete options)
+     * @param {Object} [options.autocompleteOptions] - autocomplete service options (see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~autoComplete Gp.Services.autoComplete()} to know all autocomplete options)
      * @example
      *  var locationselector = new LocationSelector({
      *      apiKey : "",
@@ -183,6 +183,7 @@ define([
 
     /**
      * initialize marker : url and offset
+     *
      * @private
      */
     LocationSelector.prototype._initMarker = function () {

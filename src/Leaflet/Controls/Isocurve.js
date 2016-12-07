@@ -20,7 +20,7 @@ define([
 
     var logger = woodman.getLogger("Isocurve");
 
-   /**
+    /**
     * @classdesc
     *
     * Leaflet Control Class to compute and display Isochrone or isodistances curves.

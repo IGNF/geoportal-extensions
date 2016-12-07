@@ -21,7 +21,7 @@ define([
 
     var logger = woodman.getLogger("reversegeocoding");
 
-   /**
+    /**
     * @classdesc
     *
     * Leaflet Control Class to find locations by clicking on a map using <a href="http://api.ign.fr/tech-docs-js/developpeur/search.html" target="_blank">reverse geocoding service</a> of the Geoportal platform.
@@ -58,7 +58,7 @@ define([
         * @param {Boolean} [options.collapsed] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
         * @param {Array}  [options.resources] - resources for geocoding, by default : ["StreetAddress", "PositionOfInterest"]
         * @param {Array}  [options.delimitations] - delimitations for reverse geocoding, by default : ["Point", "Circle", "Extent"]
-        * @param {Object}  [options.reverseGeocodeOptions] - reverse geocode service options. see {@link http://depot.ign.fr/geoportail/bibacces/develop/doc/module-Services.html#~ReverseGeocode} to know all reverse geocode options.
+        * @param {Object}  [options.reverseGeocodeOptions] - reverse geocode service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~ReverseGeocode Gp.Services.reverseGeocode()} to know all reverse geocode options.
         * @example
         *  var iso = L.geoportalControl.ReverseGeocode({
         *      collapsed : false,
@@ -855,47 +855,47 @@ define([
             switch ( location.type ) {
 
                 case "StreetAddress" :
-                if ( attr.street ) {
-                    locationDescription += attr.number ? attr.number + " " : "";
-                    locationDescription += attr.street + ", ";
-                }
-                locationDescription += attr.postalCode + " " + attr.commune;
-                break;
+                    if ( attr.street ) {
+                        locationDescription += attr.number ? attr.number + " " : "";
+                        locationDescription += attr.street + ", ";
+                    }
+                    locationDescription += attr.postalCode + " " + attr.commune;
+                    break;
 
                 case "PositionOfInterest" :
-                if ( location.matchType === "City" && attr.commune ) {
-                    locationDescription += attr.commune;
-                    locationDescription += attr.postalCode ? ", " + attr.postalCode : "";
-                } else if ( location.matchType === "Département" && attr.municipality ) {
-                    locationDescription += attr.municipality;
-                    locationDescription += attr.postalCode ? ", " + attr.postalCode : "";
-                } else if ( location.matchType === "Toponym" && attr.municipality ) {
-                    locationDescription += attr.municipality;
-                    locationDescription += attr.postalCode ? ", " + attr.postalCode : "";
-                    locationDescription += attr.commune ? " " + attr.commune : "";
-                } else {
-                    locationDescription += attr.municipality ? attr.municipality : "";
-                }
-                locationDescription += attr.nature ? " (" + attr.nature + ") " : "";
-                break;
+                    if ( location.matchType === "City" && attr.commune ) {
+                        locationDescription += attr.commune;
+                        locationDescription += attr.postalCode ? ", " + attr.postalCode : "";
+                    } else if ( location.matchType === "Département" && attr.municipality ) {
+                        locationDescription += attr.municipality;
+                        locationDescription += attr.postalCode ? ", " + attr.postalCode : "";
+                    } else if ( location.matchType === "Toponym" && attr.municipality ) {
+                        locationDescription += attr.municipality;
+                        locationDescription += attr.postalCode ? ", " + attr.postalCode : "";
+                        locationDescription += attr.commune ? " " + attr.commune : "";
+                    } else {
+                        locationDescription += attr.municipality ? attr.municipality : "";
+                    }
+                    locationDescription += attr.nature ? " (" + attr.nature + ") " : "";
+                    break;
 
                 case "CadastralParcel" :
-                locationDescription += attr.cadastralParcel ? attr.cadastralParcel : "";
-                locationDescription += attr.municipality ? " (" + attr.municipality + ")" : "";
-                break;
+                    locationDescription += attr.cadastralParcel ? attr.cadastralParcel : "";
+                    locationDescription += attr.municipality ? " (" + attr.municipality + ")" : "";
+                    break;
 
                 case "Administratif" :
-                locationDescription += attr.municipality ? attr.municipality : "";
-                if ( attr.inseeDepartment ) {
-                    locationDescription += "(Département)";
-                } else if ( attr.inseeRegion ) {
-                    locationDescription += "(Région)";
-                }
-                break;
+                    locationDescription += attr.municipality ? attr.municipality : "";
+                    if ( attr.inseeDepartment ) {
+                        locationDescription += "(Département)";
+                    } else if ( attr.inseeRegion ) {
+                        locationDescription += "(Région)";
+                    }
+                    break;
 
                 default :
-                locationDescription += attr.municipality ? attr.municipality : "";
-                break;
+                    locationDescription += attr.municipality ? attr.municipality : "" ;
+                    break;
             };
 
             return locationDescription;

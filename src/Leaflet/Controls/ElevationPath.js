@@ -66,9 +66,7 @@ define([
         * @param {Object} options - ElevationPath control options
         * @param {Sting}   [options.apiKey] - API key for services call (isocurve and autocomplete services), mandatory if autoconf service has not been charged in advance
         * @param {Boolean} [options.active] - Specify if widget has to be actived to drawing (true) or not (false) on map loading. Default is false.
-        * @param {Object} [options.elevationPathOptions = {}] - elevation service options.
-        *       see {@link http://depot.ign.fr/geoportail/bibacces/develop/doc/module-Services.html#~getAltitude}
-        *       to know all elevation options
+        * @param {Object} [options.elevationPathOptions = {}] - elevation service options. See {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~getAltitude Gp.Services.getAltitude()} to know all elevation options
         * @param {Object} [options.displayProfileOptions = {}] - profile options.
         * @param {Function} [options.displayProfileOptions.apply] - function to display profil panel.
         * @param {Object} [options.displayProfileOptions.target] - container DOM for the profil panel.
@@ -747,7 +745,7 @@ define([
             });
             self._marker.addTo(map);
 
-           /**
+            /**
             * event sur le survol du graphe qui permet de mettre à jour la position du marker
             *
             * @param {Object} e - event
@@ -766,7 +764,7 @@ define([
             self._profile.removeListener("changed", changed);
             self._profile.addListener("changed", changed);
 
-           /**
+            /**
             * event sur le survol du graphe qui permet de mettre à jour la position du marker
             *
             * @param {Object} e - event
@@ -788,7 +786,7 @@ define([
                 self._marker.addTo(map);
             };
 
-           /**
+            /**
             * event sur la sortie du graphe qui permet de mettre à jour la position du marker
             *
             * @param {Object} e - event
@@ -807,7 +805,7 @@ define([
                 }
             };
 
-           /**
+            /**
             * event sur le deplacement sur le graphe qui permet de mettre à jour la position du marker
             *
             * @param {Object} e - event
@@ -865,13 +863,12 @@ define([
     });
 
     /**
-    * Profil by default
+    * Display Profile function used by default : no additonal framework needed.
     *
-    * @method DISPLAY_PROFILE_BY_DEFAULT
     * @static
-    * @param {Object} data - collection elevations
-    * @param {HTMLElement} container - container
-    * @param {Object} context - context
+    * @param {Object} data - elevations values for profile
+    * @param {HTMLElement} container - html container where to display profile
+    * @param {Object} context - this control object
     */
     ElevationPath.DISPLAY_PROFILE_BY_DEFAULT = function (data, container, context) {
         logger.trace("ElevationPath.DISPLAY_PROFILE_BY_DEFAULT");
@@ -955,24 +952,23 @@ define([
             li.title = "altitude : " + d.z + "m" ;
             li.setAttribute("style", "width: " + barwidth + "%") ;
             ul.appendChild(li) ;
-       }
+        }
 
-       var divX = document.createElement("div");
-       divX.className = "x-title-horizontal";
-       divX.innerHTML = dist + " km";
-       div.appendChild(divX);
+        var divX = document.createElement("div");
+        divX.className = "x-title-horizontal";
+        divX.innerHTML = dist + " km";
+        div.appendChild(divX);
 
-       context._profile = container;
+        context._profile = container;
     };
 
     /**
-    * Profil with raw data of service
+    * Display Profile without graphical rendering (raw service response)
     *
-    * @method DISPLAY_PROFILE_RAW
     * @static
-    * @param {Object} data - collection elevations
-    * @param {HTMLElement} container - container
-    * @param {Object} context - context
+    * @param {Object} data - elevations values for profile
+    * @param {HTMLElement} container - html container where to display profile
+    * @param {Object} context - this control object
     */
     ElevationPath.DISPLAY_PROFILE_RAW = function (data, container, context) {
         logger.trace("ElevationPath.DISPLAY_PROFILE_RAW");
@@ -997,13 +993,12 @@ define([
     };
 
     /**
-    * Profil with lib. d3
+    * Display Profile using D3 javascript framework. This method needs D3 libraries to be loaded.
     *
-    * @method DISPLAY_PROFILE_LIB_D3
     * @static
-    * @param {Object} data - collection elevations
-    * @param {HTMLElement} container - container
-    * @param {Object} context - context
+    * @param {Object} data - elevations values for profile
+    * @param {HTMLElement} container - html container where to display profile
+    * @param {Object} context - this control object
     */
     ElevationPath.DISPLAY_PROFILE_LIB_D3 = function (data, container, context) {
         logger.trace("ElevationPath.DISPLAY_PROFILE_LIB_D3");
@@ -1242,13 +1237,12 @@ define([
     };
 
     /**
-    * Profil with lib AmCharts
+    * Display Profile using Amcharts framework. This method needs AmCharts libraries to be loaded.
     *
-    * @method DISPLAY_PROFILE_LIB_AMCHARTS
     * @static
-    * @param {Object} data - collection elevations
-    * @param {HTMLElement} container - container
-    * @param {Object} context - context
+    * @param {Object} data - elevations values for profile
+    * @param {HTMLElement} container - html container where to display profile
+    * @param {Object} context - this control object
     */
     ElevationPath.DISPLAY_PROFILE_LIB_AMCHARTS = function (data, container, context) {
         logger.trace("ElevationPath.DISPLAY_PROFILE_LIB_AMCHARTS");

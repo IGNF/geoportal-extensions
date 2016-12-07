@@ -14,24 +14,24 @@ define([
 
     "use strict";
 
-   /**
-    * @classdesc
-    *
-    * Leaflet Lambert 93 (EPSG:2154) <a href="http://leafletjs.com/reference.html#icrs" target="_blank">ICRS compatible</a> definition.
-    *
-    * @namespace
-    * @alias L.geoportalCRS.EPSG2154
-    * @example
-    *  var map = L.Map('divmap', {
-    *    crs : L.geoportalCRS.EPSG2154
-    *  }).setView();
-    *  var lyr = L.geoportalLayer.WMTS(
-    *    {
-    *      layer : "ORTHOIMAGERY.ORTHOPHOTOS.BDORTHO.L93"
-    *    });
-    *
-    *  lyr.addTo(map); // ou map.addLayer(lyr);
-    */
+    /**
+     * @classdesc
+     *
+     * Leaflet Lambert 93 (EPSG:2154) <a href="http://leafletjs.com/reference.html#icrs" target="_blank">ICRS compatible</a> definition.
+     *
+     * @namespace
+     * @alias L.geoportalCRS.EPSG2154
+     * @example
+     *  var map = L.Map('divmap', {
+     *    crs : L.geoportalCRS.EPSG2154
+     *  }).setView();
+     *  var lyr = L.geoportalLayer.WMTS(
+     *    {
+     *      layer : "ORTHOIMAGERY.ORTHOPHOTOS.BDORTHO.L93"
+     *    });
+     *
+     *  lyr.addTo(map); // ou map.addLayer(lyr);
+     */
     var EPSG2154 = {
 
         /**

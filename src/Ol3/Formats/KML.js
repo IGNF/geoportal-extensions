@@ -268,11 +268,11 @@ define([
                             for (var k = 0; k < styles.length; k++) {
                                 switch (styles[k].nodeName) {
                                     case "LabelStyle":
-                                    labelStyle = styles[k];
-                                    break;
+                                        labelStyle = styles[k];
+                                        break;
                                     case "IconStyle":
-                                    iconStyle = styles[k];
-                                    break;
+                                        iconStyle = styles[k];
+                                        break;
                                     default:
                                     // on ne traite pas les autres informations ...
                                 }
@@ -314,12 +314,18 @@ define([
     * @param {Object} options - Options.
     * @return {String} Result.
     */
-    // KML.prototype._parentWriteFeatures = ol.format.KML.prototype.writeFeatures;
     KML.prototype.writeFeatures = function (features, options) {
+        // KML.prototype._parentWriteFeatures = ol.format.KML.prototype.writeFeatures;
         logger.log("overload : ol.format.KML.writeFeatures");
         var kmlString = this._writeExtendStylesFeatures(features, options);
         return kmlString;
     };
+
+    /**
+     * _writeExtendStylesFeatures
+     *
+     * @private
+     */
     KML.prototype._writeExtendStylesFeatures = function (features, options) {
 
         var kmlString = ol.format.KML.prototype.writeFeatures.call(this, features, options);
@@ -387,20 +393,20 @@ define([
         };
 
         /**
-        * C'est un marker !
-        * On va donc ajouter la balise hotspot :
-        *  Traiter le cas où les unités sont de type
-        *   - FRACTION (TODO)
-        *   - PIXELS
-        *  Insertion du correctif dans le noeud : PlaceMark>Style>IconStyle
-        *
-        *  FIXME : BUG de lecture du KML dans OpenLayers
-        *
-        *  @example
-        *  <Style><IconStyle>
-        *    <hotSpot x="0.5"  y="1" xunits="fraction" yunits="fraction"/>
-        *  </IconStyle></Style>
-        */
+         * C'est un marker !
+         * On va donc ajouter la balise hotspot :
+         *  Traiter le cas où les unités sont de type
+         *   - FRACTION (TODO)
+         *   - PIXELS
+         *  Insertion du correctif dans le noeud : <PlaceMark><Style>IconStyle
+         *
+         *  FIXME : BUG de lecture du KML dans OpenLayers
+         *
+         *  @example
+         *  <Style><IconStyle>
+         *      <hotSpot x="0.5"  y="1" xunits="fraction" yunits="fraction"/>
+         *  </IconStyle></Style>
+         */
         var __createHotSpotStyleIcon = function (feature, style) {
             // FIXME BUG de lecture OL3 sur l'interpretation des properties :
             // origin, anchor avec bottom-left et top-left ?
@@ -475,13 +481,18 @@ define([
     * @param {olx.format.ReadOptions=} options - options.
     * @return {Array.<ol.Feature>} Features.
     */
-
-    // KML.prototype._parentReadFeatures = ol.format.KML.prototype.readFeatures;
     KML.prototype.readFeatures = function (source, options) {
+        // KML.prototype._parentReadFeatures = ol.format.KML.prototype.readFeatures;
         logger.log("overload : ol.format.KML.readFeatures");
         var features = this._readExtendStylesFeatures(source, options);
         return features;
     };
+
+    /**
+     * _readExtendStylesFeatures
+     *
+     * @private
+     */
     KML.prototype._readExtendStylesFeatures = function (source, options) {
         var features = ol.format.KML.prototype.readFeatures.call(this, source, options);
 
@@ -662,7 +673,7 @@ define([
                             }
                             break;
                         default:
-                            // ...
+                        // ...
                     }
                 }
             }

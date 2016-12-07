@@ -42,8 +42,8 @@ define([
      * @param {Object} [options.markersOpts] - options to use your own markers. Object properties can be "departure", "stages" or "arrival". Corresponding value is an object with following properties :
      * @param {String} [options.markersOpts[property].url] - marker base64 encoded url (ex "data:image/png;base64,...""). Mandatory for a custom marker
      * @param {Array} [options.markersOpts[property].offset] - Offsets in pixels used when positioning the overlay. The first element in the array is the horizontal offset. A positive value shifts the overlay right. The second element in the array is the vertical offset. A positive value shifts the overlay down. Default is [0, 0]. (see http://openlayers.org/en/latest/apidoc/ol.Overlay.html)
-     * @param {Object} [options.routeOptions = {}] - route service options. see {@link http://depot.ign.fr/geoportail/bibacces/develop/doc/module-Services.html#~route} to know all route options.
-     * @param {Object} [options.autocompleteOptions = {}] - autocomplete service options. see {@link http://depot.ign.fr/geoportail/bibacces/develop/doc/module-Services.html#~autoComplete} to know all autocomplete options
+     * @param {Object} [options.routeOptions = {}] - route service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~route Gp.Services.route()} to know all route options.
+     * @param {Object} [options.autocompleteOptions = {}] - autocomplete service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~autoComplete Gp.Services.autoComplete()} to know all autocomplete options
      * @example
      *  var route = ol.control.Route({
      *      collapsed : true
@@ -1662,7 +1662,7 @@ define([
      * @private
      */
     Route.prototype._removeRouteStepLocations = function () {
-        var points = document.querySelectorAll('div[id^="GPlocationPoint"]');
+        var points = document.querySelectorAll("div[id^=\"GPlocationPoint\"]");
         var stepPoints = 0;
         if ( points.length !== 0 ) {
             // on boucle sur les points intermédiaires
@@ -1673,7 +1673,7 @@ define([
                     for ( var j = 0; j < classList.length; j++ ) {
                         if ( classList[j] === "GPlocationStageFlexInput" ) {
                             // si l'élément est visible, on le supprime en simulant un clic sur la croix (x)
-                            document.getElementById(this._addUID("GPlocationStageRemove_"+(i+1))).click();
+                            document.getElementById(this._addUID("GPlocationStageRemove_" + (i + 1))).click();
                             stepPoints += 1;
                         }
                     }

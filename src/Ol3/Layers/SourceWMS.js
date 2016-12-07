@@ -23,7 +23,7 @@ define([
      * @param {Object} options            - options for function call.
      * @param {String} options.layer      - Layer name (e.g. "ORTHOIMAGERY.ORTHOPHOTOS")
      * @param {String} [options.apiKey]   - Access key to Geoportal platform
-     * @param {Object} [options.olParams] - other options for ol.source.TileWMS function (see {@link http://openlayers.org/en/v3.11.2/apidoc/ol.source.TileWMS.html})
+     * @param {Object} [options.olParams] - other options for ol.source.TileWMS function (see {@link http://openlayers.org/en/latest/apidoc/ol.source.TileWMS.html ol.source.TileWMS})
      * @example
      * var sourceWMS = new ol.source.GeoportalWMS({
      *      layer  : "ORTHOIMAGERY.ORTHOPHOTOS"

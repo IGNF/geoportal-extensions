@@ -1294,7 +1294,6 @@ define([
             if ( proj === this._currentProjectionSystems ) {
                 optionElement.setAttribute( "selected", "selected" );
             }
-
             systemList.appendChild(optionElement);
         }
     };

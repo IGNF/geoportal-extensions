@@ -26,13 +26,12 @@ define([
     /**
      * @classdesc
      *
-     * LayerImport Control.
+     * LayerImport Control. Allows users to add geographical data in standards formats from their own sources to the map.
      *
      * @constructor
      * @alias ol.control.LayerImport
      * @extends {ol.control.Control}
      * @param {Object} options - options for function call.
-     * @param {Sting}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
      * @param {Boolean} [options.collapsed = false] - Specify if LayerImport control should be collapsed at startup. Default is true.
      * @param {Array} [options.layerTypes = ["KML", "GPX", "WMS", "WMTS"]] - data types that could be imported : "KML", "GPX", "WMS" and "WMTS". Values will be displayed in the same order in widget list.
      * @param {Object} [options.webServicesOptions = {}] - Options to import WMS or WMTS layers
@@ -41,9 +40,9 @@ define([
      * @param {Object} [options.vectorStyleOptions] - Options for imported vector layer styling (KML, GPX)
      * @param {Object} [options.vectorStyleOptions.KML] - Options for KML layer styling
      * @param {Boolean} [options.vectorStyleOptions.KML.extractStyles = true] - Extract styles from the KML. Default is true.
-     * @param {Object} [options.vectorStyleOptions.KML.defaultStyle] - default style to be applied to KML imports in case no style is defined. defaultStyle is an ol.style.Style object (see. http://openlayers.org/en/latest/apidoc/ol.style.Style.htmlhttp://openlayers.org/en/latest/apidoc/ol.style.Style.html)
+     * @param {Object} [options.vectorStyleOptions.KML.defaultStyle] - default style to be applied to KML imports in case no style is defined. defaultStyle is an {@link http://openlayers.org/en/latest/apidoc/ol.style.Style.html ol.style.Style} object.
      * @param {Object} [options.vectorStyleOptions.GPX] - Options for GPX layer styling
-     * @param {Object} [options.vectorStyleOptions.GPX.defaultStyle] - default style to be applied to GPX imports in case no style is defined. defaultStyle is an ol.style.Style object (see. http://openlayers.org/en/latest/apidoc/ol.style.Style.htmlhttp://openlayers.org/en/latest/apidoc/ol.style.Style.html)
+     * @param {Object} [options.vectorStyleOptions.GPX.defaultStyle] - default style to be applied to GPX imports in case no style is defined. defaultStyle is an {@link http://openlayers.org/en/latest/apidoc/ol.style.Style.html ol.style.Style} object.
      * @example
      *  var LayerImport = new ol.control.LayerImport({
      *      collapsed : false,
@@ -764,13 +763,13 @@ define([
 
         // récupération des entités avec reprojection éventuelle des géométries
         var features = null;
-            features = format.readFeatures(
-                fileContent,
-                {
-                    dataProjection : fileProj,
-                    featureProjection : mapProj
-                }
-            );
+        features = format.readFeatures(
+            fileContent,
+            {
+                dataProjection : fileProj,
+                featureProjection : mapProj
+            }
+        );
 
         logger.log("loaded features : ", features);
 
@@ -1081,7 +1080,7 @@ define([
      * and display WMS layer in list from getcapabilities response
      *
      * @param {Object} layerObj - object corresponding to <Layer> content in WMS GetCapabilities response
-     * @param {Object} [parentLayersObj] - object corresponding to parents <Layer> content in WMS GetCapabilities response (without children <Layer> infos)
+     * @param {Object} [parentLayersInfos] - object corresponding to parents <Layer> content in WMS GetCapabilities response (without children <Layer> infos)
      * @private
      */
     LayerImport.prototype._displayGetCapResponseWMSLayer = function (layerObj, parentLayersInfos) {
@@ -1152,7 +1151,7 @@ define([
                 layerObj.Title = parentLayersInfos.Title + " > " + layerObj.Title;
             }
 
-        }else {
+        } else {
             // si on n'a pas d'infos de couche parent, on est à la racine du Capability, on le note
             layerObj._isRootLayer = true;
         }

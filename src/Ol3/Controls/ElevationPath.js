@@ -5,6 +5,7 @@ define([
     "gp",
     "Ol3/Utils",
     "Common/Utils/CheckRightManagement",
+    "Ol3/Controls/Measures/Measures",
     "Ol3/Controls/MeasureToolBox",
     "Common/Controls/ElevationPathDOM",
     "Common/Utils/SelectorID"
@@ -14,6 +15,7 @@ define([
     Gp,
     Utils,
     RightManagement,
+    Measures,
     MeasureToolBox,
     ElevationPathDOM,
     ID
@@ -27,35 +29,26 @@ define([
     /**
     * @classdesc
     *
-    * Elevation Path measure tool Control.
+    * Elevation Path Control. Allows users to draw a path on a OL3 map see the elevation profile computed with geoportal elevation path web service along that path.
     *
     * @constructor
     * @alias ol.control.ElevationPath
-    * @extends {ol.control.Control}
+    * @extends ol.control.Control
     * @param {Object} options - options for function call.
     * @param {Boolean} [options.active = false] - specify if control should be actived at startup. Default is false.
     * @param {Object} [options.stylesOptions = DEFAULT_STYLES] - styles management
-    * @param {Object} [options.stylesOptions.marker = {}] - styles management of marker displayed on map when the user follows the elevation path. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Icon.html ol.style.Icon} object
-    * <!-- * @param {String} [options.stylesOptions.marker.imageSrc] - Icon source * @param {Array}  [options.stylesOptions.marker.imageAnchor] - Icon anchor * -->
-    * <!-- @param {Object} [options.stylesOptions.profile = {}] - styles management of a profile AmCharts (https://docs.amcharts.com/3/javascriptcharts/AmChart) -->
-    * @param {Object} [options.stylesOptions.draw = {}] - styles used when drawing. Specified with following properties or with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Style.html ol.style.Style} object. 
-    * @param {Object} [options.stylesOptions.draw.pointer = {}] - Style for mouse pointer when drawing the line. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Circle.html ol.style.Circle} object.
-    * <!-- * @param {Number} [options.stylesOptions.draw.pointer.imageRadius] - Point radius * @param {String} [options.stylesOptions.draw.pointer.imageFillColor] - fill color * @param {String} [options.stylesOptions.draw.pointer.imageStrokeColor] - stroke color * -->
-    * @param {Object} [options.stylesOptions.draw.start = {}] - Line Style when drawing the line. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Stroke.html ol.style.Stroke} object.
-    * <!-- * @param {String} [options.stylesOptions.draw.start.strokeColor] - stroke color * @param {Array}  [options.stylesOptions.draw.start.strokeLineDash] - stroke dash * @param {Number} [options.stylesOptions.draw.start.strokeWidth] - stroke width * -->
-    * @param {Object} [options.stylesOptions.draw.finish = {}] - Line Style when line is finished drawing. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Stroke.html ol.style.Stroke} object.
-    * <!-- * @param {String} [options.stylesOptions.draw.finish.strokeColor] - stroke color * @param {Number} [options.stylesOptions.draw.finish.strokeWidth] - stroke width * -->
-    * @param {Object} [options.elevationPathOptions = {}] - elevation path service options. See {@link http://depot.ign.fr/geoportail/bibacces/develop/doc/module-Services.html#~getAltitude options} for available options
+    * @param {Object} [options.stylesOptions.marker = {}] - styles management of marker displayed on map when the user follows the elevation path. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Image.html ol.style.Image} subclass object
+    * @param {Object} [options.stylesOptions.draw = {}] - styles used when drawing. Specified with following properties.
+    * @param {Object} [options.stylesOptions.draw.pointer = {}] - Style for mouse pointer when drawing the line. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Image.html ol.style.Image} subclass object.
+    * @param {Object} [options.stylesOptions.draw.start = {}] - Line Style when drawing. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Stroke.html ol.style.Stroke} object.
+    * @param {Object} [options.stylesOptions.draw.finish = {}] - Line Style when finished drawing. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Stroke.html ol.style.Stroke} object.
+    * @param {Object} [options.elevationPathOptions = {}] - elevation path service options. See {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~getAltitude Gp.Services.getAltitude()} for available options
     * @param {Object} [options.displayProfileOptions = {}] - profile options.
-    * @param {Function} [options.displayProfileOptions.apply] - function to display profile if you want to cutomise it. By default, ol.control.ElevationPath.DISPLAY_PROFILE_BY_DEFAULT() is used. Helper functions to use with D3 (ol.control.ElevationPath.DISPLAY_PROFILE_LIB_D3()) or AmCharts (ol.control.ElevationPath.DISPLAY_PROFILE_LIB_AMCHARTS()) frameworks are also provided. You may also provide your own function.
+    * @param {Function} [options.displayProfileOptions.apply] - function to display profile if you want to cutomise it. By default, ([DISPLAY_PROFILE_BY_DEFAULT()](./ol.control.ElevationPath.html#.DISPLAY_PROFILE_BY_DEFAULT)) is used. Helper functions to use with D3 ([DISPLAY_PROFILE_LIB_D3()](./ol.control.ElevationPath.html#.DISPLAY_PROFILE_LIB_D3)) or AmCharts ([DISPLAY_PROFILE_LIB_AMCHARTS()](./ol.control.ElevationPath.html#.DISPLAY_PROFILE_LIB_AMCHARTS)) frameworks are also provided. You may also provide your own function.
     * @param {Object} [options.displayProfileOptions.target] - DOM container to use to display the profile.
     * @example
     *
     * var measure = new ol.control.ElevationPath({
-    *    element : null,
-    *    target : null,
-    *    render : null,
-    *    active : false,
     *    stylesOptions : {
     *     draw : {
     *       finish : new ol.style.Stroke({
@@ -63,12 +56,9 @@ define([
     *            width : 2
     *       })
     *     },
-    *     marker : {},
-    *     profile : {}
     *    }
     *    displayProfileOptions : {
-    *       apply : null,
-    *       target : null
+    *       apply : ol.control.ElevationPath.DISPLAY_PROFILE_RAW,
     *    }
     * });
     *
@@ -76,7 +66,6 @@ define([
     * - displayProfileOptions.apply : null
     * - displayProfileOptions.apply : function (elevations, container, context) {  // do some stuff... }
     * - displayProfileOptions.apply : ol.control.ElevationPath.DISPLAY_PROFILE_{LIB_AMCHARTS | LIB_D3 | RAW}
-    * (detect auto lib. : d3 / AmCharts)
     *
     */
     function ElevationPath (options) {
@@ -207,11 +196,11 @@ define([
     };
 
     /**
-    * display Profile with Amcharts
+    * display Profile using Amcharts framework. This method needs AmCharts libraries to be loaded.
     *
     * @param {Object} data - collection elevations
     * @param {HTMLElement} container - container
-    * @param {Object} context - context
+    * @param {Object} context - this control object
     */
     ElevationPath.DISPLAY_PROFILE_LIB_AMCHARTS = function (data, container, context) {
         logger.trace("ElevationPath.DISPLAY_PROFILE_LIB_AMCHARTS");
@@ -267,11 +256,11 @@ define([
     };
 
     /**
-    * display Profile with D3
+    * display Profile using D3 javascript framework. This method needs D3 libraries to be loaded.
     *
-    * @param {Object} data - collection elevations
-    * @param {HTMLElement} container - container
-    * @param {Object} context - context
+    * @param {Object} data - elevations values for profile
+    * @param {HTMLElement} container - html container where to display profile
+    * @param {Object} context - this control object
     */
     ElevationPath.DISPLAY_PROFILE_LIB_D3 = function (data, container, context) {
         logger.trace("ElevationPath.DISPLAY_PROFILE_LIB_D3");
@@ -508,11 +497,11 @@ define([
     };
 
     /**
-    * display Profile without graphical lib (raw)
+    * display Profile without graphical rendering (raw service response)
     *
-    * @param {Object} data - collection elevations
-    * @param {HTMLElement} container - container
-    * @param {Object} context - context
+    * @param {Object} data - elevations values for profile
+    * @param {HTMLElement} container - html container where to display profile
+    * @param {Object} context - this control object
     */
     ElevationPath.DISPLAY_PROFILE_RAW = function (data, container, context) {
         logger.trace("ElevationPath.DISPLAY_PROFILE_RAW");
@@ -575,11 +564,11 @@ define([
     };
 
     /**
-    * TODO display Profile by default
+    * Display Profile function used by default : no additonal framework needed.
     *
-    * @param {Object} data - collection elevations
-    * @param {HTMLElement} container - container
-    * @param {Object} context - context
+    * @param {Object} data - elevations values for profile
+    * @param {HTMLElement} container - html container where to display profile
+    * @param {Object} context - this control object
     */
     ElevationPath.DISPLAY_PROFILE_BY_DEFAULT = function (data, container, context) {
         logger.trace("ElevationPath.DISPLAY_PROFILE_BY_DEFAULT");
@@ -653,14 +642,14 @@ define([
             li.title = "altitude : " + d.z + "m" ;
             li.setAttribute("style", "width: " + barwidth + "%") ;
             ul.appendChild(li) ;
-       }
+        }
 
-       var divX = document.createElement("div");
-       divX.className = "x-title-horizontal";
-       divX.innerHTML = dist + " km";
-       div.appendChild(divX);
+        var divX = document.createElement("div");
+        divX.className = "x-title-horizontal";
+        divX.innerHTML = dist + " km";
+        div.appendChild(divX);
 
-       self._profile = container;
+        self._profile = container;
     };
 
     /** 
@@ -668,36 +657,13 @@ define([
      */
     ElevationPath.DEFAULT_STYLES = {
         // styling drawing by default
-        DRAW : {
-            // start drawing point by default
-            POINTER : {
-                imageRadius : 5,
-                imageFillColor : "rgba(255, 155, 0, 0.7)",
-                imageStrokeColor : "#002A50",
-                imageStrokeWidth : 2
-            },
-            // start drawing line by default
-            START : {
-                strokeColor : "#002A50",
-                strokeLineDash : [10, 10],
-                strokeWidth : 2
-            },
-            // finish drawing line
-            FINISH : {
-                strokeColor : "#002A50",
-                strokeWidth : 3
-            }
-        },
+        // see => Measures.DEFAULTS_STYLES
         // stying marker to the profile by default
-        MARKER : {
-            imageSrc : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAsCAYAAAAATWqyAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAABTtJREFUeNq8WGtsFUUU/rb3gtdCAykFG9AUDTQUKimhxUewEusrJYoBo4FfEgoqotHERH6oP9TGmJhIrIlWAf9hjAaEiME2pgFfVVpFii8sWqIQLLSx3EJLW7p+Z2Z2b2l7d/b23vZLTmZ2duacb2fmnDk7DlKA67rXs1hJKacsohRQppjXFygnKT9TDlH2O47zFzIFGnco91EOuqnjoBnr2Ow4FhIlLN6m3DykFTh3BGj/Doj/CfSe082xPCDnBmDWTUBeyXDVjZTHOUNHUiZCEs+weI0ySTV0/w0c2wa07gIungn+vOx8YN46oPhpYOp1Xms/5TmSeSMUERKImFnYqBoGuPRNL5LEW8BgX2rrmjWZZLYApS8BUW8r4T0zO5eTEjFr+S6lSjV0HgPqVwNdf6S30abNB+7aDeQWey3bKZtIxvU5DxvyrE/izJfAvuXpkxCIDtElOjWqjK2RM8LZWMbiG0oEnUc5kB7a14WMYvI04H56du5ieZKluZWz8r0/IyQh5TuKRH8cqFuTeRIC0Sm6xYbYok1j21+ahyhLVO3wC8D5VowbRLfY0FhibOulIavDLEoRZyD8sJDeMWBXKG5ZsIobsdDsg+OMq3u1m1u9KQo8zP45EqjRxOUpk6i50IRl4FuGjpZtwUoiMYa314GFj/EzIsN8n8v+C1e4kfvwcm+wnhsZY27xQ8oiWZpKrWRQB6tAElfxpKnjsCdGklDzG9HvpI/0DYLYEpsalVnmAAM6fgR62oMHl70C5N9mn3rpI32DILbEpkZ5ljlFgbPNFtebzij5VPhNKX1lTBASNtXSzPZ3cxCuvVOH7FTCu4yxeZDGbCES0z5+PniQ3uGpwTYmYTOWCPGTpgYP6u9OnYhtzBCbQkSH0NiM4EEdP6VOxDYmYbNLiJxQ1elFwYPaG3XQCn3QHddjgpCweUKI6K2bvzw4YROf//rJob6fZl/H2FRoFiINfqo3qyzYwD8MVIeYLw32J+8j76SP9A2C2BKbGg1CZL+EF/W4YKP9a3/fCeyhkrY9DOOXEu1SlzZ5J31sSNjqURm/OfQkY9qgvkYOvXhbuH0g505Oga7HT9rPF9+t5+pDL0ulwzt46FV5ROax+JUSRRtP0LoHMK64+xNg7iqVEVOKSKRVxRGpsKhRnaRD4SPjR0J0axKCGmP7ilQxm4X8d8xXmfvHJZlPkCR3WfODl9FLMlxCIhevSJ5Nwzo1XdKxYpe3hpmB6BKdmoS43VqPxIgsni+aWOg8biZ3f+nLmSMiuvKWek/P01az7QdLyNVT7lC/l59WAKcb0iMxhzpW1nvmvpDtSiKD1l9OkpnDgv8UyMWFU9wvTP8vdY6NhJwnD1JVtso2OiiLSeL0iJUbNfg6zikVVwRTyOn2HWOfjfLtHgnBhtFIJCViyNDZUatdmnGlaFPqJIoe1WM1aqlz71ivJbLNobgAA9zgu7nZ/vstHAk5WVdzaPRqmGC5lER6kjpV4OWJdq+1kkshSk4VH9izcy/bV66qSPQZV+0J9G7rTY6+XNmqHmYwyJVV24kse1X31dhKHdasygkzy+a64oC4nWr47F4e858nSbLv4V/KAe9JKpVDrx/SImLIXMOiRUKdujESl+49O8xVZxpXzVc/C/I/RxL/hgq8YYkYhev9q6kVO4d9B+sr3vdICNaHJTHWW8Ya/87wqy2uWwstUk/gTYw3aCRGOarMDfS67kfFWqSuIe9imAjQEC272nJHixYNaSvGRIIGN49ywbsZEw1zI11N6TZSHeaGORn+F2AAJtRIMx4t+hUAAAAASUVORK5CYII=",
-            imageSize : [34, 44],
-            imageAnchor : [0.5, 1],
-            imageAnchorOrigin : "bottom-left",
-            imageAnchorXUnits : "ratio",
-            imageAnchorYUnits : "ratio",
-            imageSnapToPixel : true
-        },
+        MARKER : new ol.style.Icon({
+            src : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAsCAYAAAAATWqyAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAABTtJREFUeNq8WGtsFUUU/rb3gtdCAykFG9AUDTQUKimhxUewEusrJYoBo4FfEgoqotHERH6oP9TGmJhIrIlWAf9hjAaEiME2pgFfVVpFii8sWqIQLLSx3EJLW7p+Z2Z2b2l7d/b23vZLTmZ2duacb2fmnDk7DlKA67rXs1hJKacsohRQppjXFygnKT9TDlH2O47zFzIFGnco91EOuqnjoBnr2Ow4FhIlLN6m3DykFTh3BGj/Doj/CfSe082xPCDnBmDWTUBeyXDVjZTHOUNHUiZCEs+weI0ySTV0/w0c2wa07gIungn+vOx8YN46oPhpYOp1Xms/5TmSeSMUERKImFnYqBoGuPRNL5LEW8BgX2rrmjWZZLYApS8BUW8r4T0zO5eTEjFr+S6lSjV0HgPqVwNdf6S30abNB+7aDeQWey3bKZtIxvU5DxvyrE/izJfAvuXpkxCIDtElOjWqjK2RM8LZWMbiG0oEnUc5kB7a14WMYvI04H56du5ieZKluZWz8r0/IyQh5TuKRH8cqFuTeRIC0Sm6xYbYok1j21+ahyhLVO3wC8D5VowbRLfY0FhibOulIavDLEoRZyD8sJDeMWBXKG5ZsIobsdDsg+OMq3u1m1u9KQo8zP45EqjRxOUpk6i50IRl4FuGjpZtwUoiMYa314GFj/EzIsN8n8v+C1e4kfvwcm+wnhsZY27xQ8oiWZpKrWRQB6tAElfxpKnjsCdGklDzG9HvpI/0DYLYEpsalVnmAAM6fgR62oMHl70C5N9mn3rpI32DILbEpkZ5ljlFgbPNFtebzij5VPhNKX1lTBASNtXSzPZ3cxCuvVOH7FTCu4yxeZDGbCES0z5+PniQ3uGpwTYmYTOWCPGTpgYP6u9OnYhtzBCbQkSH0NiM4EEdP6VOxDYmYbNLiJxQ1elFwYPaG3XQCn3QHddjgpCweUKI6K2bvzw4YROf//rJob6fZl/H2FRoFiINfqo3qyzYwD8MVIeYLw32J+8j76SP9A2C2BKbGg1CZL+EF/W4YKP9a3/fCeyhkrY9DOOXEu1SlzZ5J31sSNjqURm/OfQkY9qgvkYOvXhbuH0g505Oga7HT9rPF9+t5+pDL0ulwzt46FV5ROax+JUSRRtP0LoHMK64+xNg7iqVEVOKSKRVxRGpsKhRnaRD4SPjR0J0axKCGmP7ilQxm4X8d8xXmfvHJZlPkCR3WfODl9FLMlxCIhevSJ5Nwzo1XdKxYpe3hpmB6BKdmoS43VqPxIgsni+aWOg8biZ3f+nLmSMiuvKWek/P01az7QdLyNVT7lC/l59WAKcb0iMxhzpW1nvmvpDtSiKD1l9OkpnDgv8UyMWFU9wvTP8vdY6NhJwnD1JVtso2OiiLSeL0iJUbNfg6zikVVwRTyOn2HWOfjfLtHgnBhtFIJCViyNDZUatdmnGlaFPqJIoe1WM1aqlz71ivJbLNobgAA9zgu7nZ/vstHAk5WVdzaPRqmGC5lER6kjpV4OWJdq+1kkshSk4VH9izcy/bV66qSPQZV+0J9G7rTY6+XNmqHmYwyJVV24kse1X31dhKHdasygkzy+a64oC4nWr47F4e858nSbLv4V/KAe9JKpVDrx/SImLIXMOiRUKdujESl+49O8xVZxpXzVc/C/I/RxL/hgq8YYkYhev9q6kVO4d9B+sr3vdICNaHJTHWW8Ya/87wqy2uWwstUk/gTYw3aCRGOarMDfS67kfFWqSuIe9imAjQEC272nJHixYNaSvGRIIGN49ywbsZEw1zI11N6TZSHeaGORn+F2AAJtRIMx4t+hUAAAAASUVORK5CYII=",
+            anchor : [0.5, 1],
+            snapToPixel : true
+        }),
         // styling service results points by default
         RESULTS : {
             // INFO orienté maintenance !
@@ -707,6 +673,7 @@ define([
             imageStrokeWidth : 2
         },
         // styling amCharts profile by default
+        // FIXME : should'nt be part of this class but in the helper function
         PROFILE : {
             type : "serial",
             pathToImages : "http://cdn.amcharts.com/lib/3/images/",
@@ -943,8 +910,6 @@ define([
         if ( typeof styles === "undefined" || Object.keys(styles).length === 0 ) {
             // on applique les styles par defaut (en mode properties)
             this.options.styles = {
-                draw : ElevationPath.DEFAULT_STYLES.DRAW,
-                marker : ElevationPath.DEFAULT_STYLES.MARKER,
                 profile : ElevationPath.DEFAULT_STYLES.PROFILE
             };
 
@@ -953,30 +918,16 @@ define([
         }
 
         // gestion des styles du tracé
-        var draw = styles.draw || this.options.styles.draw;
-        this.options.styles.draw = ( typeof draw === "undefined" || Object.keys(draw).length === 0 ) ?
-            ElevationPath.DEFAULT_STYLES.DRAW : draw;
-        var drawPointer = this.options.styles.draw.pointer;
-        var drawStart   = this.options.styles.draw.start;
-        var drawFinish  = this.options.styles.draw.finish;
-        if ( typeof drawPointer === "undefined" ) {
-            this.options.styles.draw.pointer = ElevationPath.DEFAULT_STYLES.DRAW.POINTER;
-        }
-        if ( typeof drawStart === "undefined" ) {
-            this.options.styles.draw.start = ElevationPath.DEFAULT_STYLES.DRAW.START;
-        }
-        if ( typeof drawFinish === "undefined" ) {
-            this.options.styles.draw.finish = ElevationPath.DEFAULT_STYLES.DRAW.FINISH;
-        }
+        this.options.styles.draw = styles.draw || {} ;
         this._createStylingDraw();
 
         // gestion des styles du marker
-        var marker = styles.marker || this.options.styles.marker;
-        this.options.styles.marker = ( typeof marker === "undefined" || Object.keys(marker).length === 0 ) ?
-            ElevationPath.DEFAULT_STYLES.MARKER : marker;
+        this.options.styles.marker = styles.marker || {} ;
         this._createStylingMarker();
 
         // gestion des styles du profile de type AmCharts
+        // TODO : Revoir le paramétrage de l'affichage du profil
+        //        Pour l'instant sert uniquement pour la bib amcharts...
         var profile = styles.profile || this.options.styles.profile;
         this.options.styles.profile = ( typeof profile === "undefined" || Object.keys(profile).length === 0 ) ?
             ElevationPath.DEFAULT_STYLES.PROFILE : profile;
@@ -1069,42 +1020,18 @@ define([
     ElevationPath.prototype._createStylingMarker = function () {
         logger.trace("ElevationPath::_createStylingMarker ");
 
-        // on interprete les params pour y creer un objet ol.Style
-        // on determine s'ils sont en mode properties ou directemzent en objet ol.Style
-        var marker = this.options.styles.marker;
-
+        var marker = ElevationPath.DEFAULT_STYLES.MARKER ;
         logger.trace("style marker", marker);
-        if ( marker instanceof ol.style.Image ) {
-            logger.trace( "instance ol.style.Image for marker !" );
-            this._drawStyleStart = new ol.style.Style({
-                image : marker
-            });
 
-        } else {
-            logger.trace( "use properties to define a style for marker !" );
-
-            var defaultStyle = ElevationPath.DEFAULT_STYLES.MARKER;
-            Object.keys(defaultStyle).forEach(function (key) {
-                if (!marker.hasOwnProperty(key)) {
-                    marker[key] = defaultStyle[key];
-                    return;
-                }
-            },this);
-
-            // FIXME on se limite à qqch de simple sur la gestion des Icones
-            this._markerStyle = new ol.style.Style({
-                image : new ol.style.Icon({
-                    src : marker.imageSrc,
-                    // size : marker.imageSize,
-                    // imgSize :  marker.imageImgSize,
-                    anchor : marker.imageAnchor,
-                    // anchorOrigin : marker.imageAnchorOrigin,
-                    // anchorXUnits : marker.imageAnchorXUnits,
-                    // anchorYUnits : marker.imageAnchorYUnits,
-                    snapToPixel : true
-                })
-            });
+        // si marker n'est pas un objet ol.style.Image, on applique le 
+        // style par défaut.
+        if (this.options.styles.marker instanceof ol.style.Image ) {
+            marker = this.options.styles.marker ;
         }
+
+        this._markerStyle = new ol.style.Style({
+            image : marker
+        });
     };
 
     /**
@@ -1117,126 +1044,42 @@ define([
 
         // on interprete les params pour y creer un objet ol.Style
         var styles  = this.options.styles.draw;
-        var pointer = styles.pointer;
-        var start   = styles.start;
-        var finish  = styles.finish;
 
-        logger.trace("style pointer",  pointer);
-        var _pointerImage = null;
-        if ( pointer instanceof ol.style.Image ) {
-            logger.trace( "instance ol.style.Image for pointer drawing !" );
-            _pointerImage = pointer;
-        } else {
-            logger.trace( "use properties to define a style for pointer drawing !" );
+        // style de depart
+        logger.trace("style start", styles.start);
 
-            var defaultStylePointer = ElevationPath.DEFAULT_STYLES.DRAW.POINTER;
-            Object.keys(defaultStylePointer).forEach(function (key) {
-                if (!pointer.hasOwnProperty(key)) {
-                    pointer[key] = defaultStylePointer[key];
-                    return;
-                }
-                if (key === "imageStrokeWidth" || key === "imageRadius") {
-                    var intValue = parseInt(pointer[key],10);
-                    if (isNaN(intValue) || intValue < 0) {
-                        console.log("Wrong value (" + pointer[key] + ") for strokeWidth or radius. Must be a positive interger value." );
-                        pointer[key] = defaultStylePointer[key];
-                        return;
-                    }
-                    pointer[key] = intValue;
-                }
-            },this);
-
-            // point : image
-            _pointerImage = new ol.style.Circle({
-                radius : pointer.imageRadius,
-                stroke : new ol.style.Stroke({
-                    color : pointer.imageStrokeColor,
-                    width : pointer.imageStrokeWidth
-                }),
-                fill : new ol.style.Fill({
-                    color : pointer.imageFillColor
-                })
-            });
+        // Creation à partir des styles par défaut
+        var startStyleOpts = {
+            image : Measures.DEFAULT_POINTER_STYLE,
+            stroke : Measures.DEFAULT_DRAW_START_STYLE.getStroke()
+        } ;
+        // ecrasement à partir des propriétés renseignées
+        if (styles.hasOwnProperty("pointer") && styles.pointer instanceof ol.style.Image) {
+            startStyleOpts.image = styles.pointer ;
+        }
+        if (styles.hasOwnProperty("start") && styles.start instanceof ol.style.Stroke) {
+            startStyleOpts.stroke = styles.start ;
         }
 
-        logger.trace("style start",  start);
-        var _startStroke = null;
-        if ( start instanceof ol.style.Stroke ) {
-            logger.trace( "instance ol.style.Stroke for start drawing !" );
-            _startStroke = start;
-        } else {
-            logger.trace( "use properties to define a style for start drawing !" );
+        this._drawStyleStart = new ol.style.Style(startStyleOpts);
 
-            var defaultStyleStart = ElevationPath.DEFAULT_STYLES.DRAW.START;
-            Object.keys(defaultStyleStart).forEach(function (key) {
-                if (!start.hasOwnProperty(key)) {
-                    start[key] = defaultStyleStart[key];
-                    return;
-                }
-                if (key === "strokeWidth") {
-                    var intValue = parseInt(start[key],10);
-                    if (isNaN(intValue) || intValue < 0) {
-                        console.log("Wrong value (" + start[key] + ") for strokeWidth. Must be a positive interger value." );
-                        start[key] = defaultStyleStart[key];
-                        return;
-                    }
-                    start[key] = intValue;
-                }
-            },this);
+        // style de fin
+        logger.trace("style finish", styles.finish);
 
-            // ligne : stroke
-            _startStroke = new ol.style.Stroke({
-                color : start.strokeColor,
-                lineDash : start.strokeLineDash,
-                width : start.strokeWidth
-            });
+        var finishStyleOpts = {
+            stroke : Measures.DEFAULT_DRAW_FINISH_STYLE.getStroke()
+        } ;
+        // ecrasement à partir des propriétés renseignées
+        if (styles.hasOwnProperty("finish") && styles.finish instanceof ol.style.Stroke) {
+            finishStyleOpts.stroke = styles.finish ;
         }
 
-        this._drawStyleStart = new ol.style.Style({
-                stroke : _startStroke,
-                image : _pointerImage
-        });
-
-        logger.trace("style finish", finish);
-        var _finishStroke = null;
-        if ( finish instanceof ol.style.Stroke ) {
-            logger.trace( "instance ol.style.Stroke for finish drawing !" );
-            _finishStroke = finish;
-
-        } else {
-            logger.trace( "use properties to define a style for finish drawing !" );
-
-            var defaultStyleFinish = ElevationPath.DEFAULT_STYLES.DRAW.FINISH;
-            Object.keys(defaultStyleFinish).forEach(function (key) {
-                if (!finish.hasOwnProperty(key)) {
-                    finish[key] = defaultStyleFinish[key];
-                    return;
-                }
-                if (key === "strokeWidth") {
-                    var intValue = parseInt(finish[key],10);
-                    if (isNaN(intValue) || intValue < 0) {
-                        console.log("Wrong value (" + finish[key] + ") for strokeWidth. Must be a positive interger value." );
-                        finish[key] = defaultStyleFinish[key];
-                        return;
-                    }
-                    finish[key] = intValue;
-                }
-            },this);
-
-            _finishStroke = new ol.style.Stroke({
-                color : finish.strokeColor,
-                lineDash : finish.strokeLineDash,
-                width : finish.strokeWidth
-            });
-        }
-
-        this._drawStyleFinish = new ol.style.Style({
-            stroke : _finishStroke
-        });
+        this._drawStyleFinish = new ol.style.Style(finishStyleOpts);
     };
 
     /**
     * create style graph
+    * TODO : à revoir (ne sert que pour AmCharts)
     *
     * @private
     */
@@ -1641,411 +1484,6 @@ define([
 
         // execution...
         displayFunction.call(this, data, container, context);
-
-        // Calcul du profile
-        // if ( typeof AmCharts !== "undefined" ) {
-        //     // AmCharts, it's a variable global because i do the choice to put it on lib. external !
-        //     console.log("Lib. AmCharts is loaded !");
-        //     this._displayProfileWithAmCharts(data);
-        //
-        // } else if ( typeof d3 !== "undefined" ) {
-        //     console.log("Lib. D3 is loaded !");
-        //     this._displayProfileWithD3(data);
-        //
-        // } else {
-        //     console.log("No library is loaded !");
-        //     this._displayProfileResults(data);
-        //
-        // }
-    };
-
-    /**
-    * NOT USE : display profile with simple results of service
-    * TODO CSS externe pour id=profileElevationResults
-    * TODO Style des points du profile
-    *
-    * @param {Array} data - array of elevation
-    * @private
-    */
-    ElevationPath.prototype._displayProfileResults = function (data) {
-        logger.trace("ElevationPath::_displayProfileResults", data);
-
-        var container = this._profileContainer;
-
-        // on nettoie toujours...
-        if (container) {
-            while (container.firstChild) {
-                container.removeChild(container.firstChild);
-            }
-        }
-
-        // TODO CSS externe
-        var div  = document.createElement("textarea");
-        div.id = "profileElevationResults";
-        div.rows = 10;
-        div.cols = 50;
-        div.style.width = "100%";
-        div.innerHTML = JSON.stringify(data, undefined, 4);
-        container.appendChild(div);
-
-        this._profile = container;
-
-        // symbolisation des points produits par le service
-        // INFO orienté maintenance !
-        if (this.options.debug) {
-            var _proj = this.getMap().getView().getProjection();
-            for (var i = 0; i < data.length; i++) {
-                var obj = data[i];
-                var _coordinate = ol.proj.transform([obj.lon, obj.lat], "EPSG:4326", _proj);
-                var _geometry   = new ol.geom.Point(_coordinate);
-
-                this._marker = new ol.Feature({
-                    geometry : _geometry
-                });
-                logger.trace(_geometry);
-
-                // TODO style en options ?
-                var styles = ElevationPath.DEFAULT_STYLES.RESULTS;
-                var _image = new ol.style.Circle({
-                    radius : styles.imageRadius,
-                    stroke : new ol.style.Stroke({
-                        color : styles.imageStrokeColor,
-                        width : styles.imageStrokeWidth
-                    }),
-                    fill : new ol.style.Fill({
-                        color : styles.imageFillColor
-                    })
-                });
-                this._marker.setStyle(new ol.style.Style({
-                    image : _image
-                }));
-
-                // ajout du marker sur la map
-                this._measureSource.addFeature(this._marker);
-            }
-        }
-    };
-
-    /**
-    * NOT USE : display graphical profile with lib. D3
-    * TODO gestion des styles utilisateurs (text) !
-    * FIXME feature or overlay pour le deplacement du marker ?
-    *
-    * @param {Array} data - array of elevation
-    * @private
-    */
-    ElevationPath.prototype._displayProfileWithD3 = function (data) {
-        logger.trace("ElevationPath::_displayProfileWithD3", data);
-
-        var container = this._profileContainer;
-
-        // on nettoie toujours...
-        if (container) {
-            while (container.firstChild) {
-                container.removeChild(container.firstChild);
-            }
-        }
-
-        var margin = {
-            top : 20,
-            right : 20,
-            bottom : 30,
-            left : 40
-        };
-
-        var width  = container.clientWidth - margin.left - margin.right;
-        var height = container.clientHeight - margin.top - margin.bottom;
-
-        var x = d3.scale.linear()
-            .range([0, width]);
-
-        var y = d3.scale.linear()
-            .range([height, 0]);
-
-        var xAxis = d3.svg.axis()
-            .scale(x)
-            .orient("bottom")
-            .ticks(5);
-
-        var yAxis = d3.svg.axis()
-            .scale(y)
-            .orient("left")
-            .ticks(5);
-
-        var line = d3.svg.line()
-            .interpolate("basis")
-            .x(function (d) {
-                return x(d.dist);
-            })
-            .y(function (d) {
-                return y(d.z);
-            });
-
-        var area = d3.svg.area()
-            .interpolate("basis")
-            .x(function (d) {
-                return x(d.dist);
-            })
-            .y0(height)
-            .y1(function (d) {
-                return y(d.z);
-            });
-
-        var svg = d3.select(container)
-            .append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
-            .append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-        var xDomain = d3.extent(data, function (d) {
-            return d.dist;
-        });
-        x.domain(xDomain);
-
-        var yDomain = [
-            0,
-            d3.max(data, function (d) {
-                return d.z;
-            })
-        ];
-        y.domain(yDomain);
-
-        svg.append("path")
-            .datum(data)
-            .attr("class", "area-d3")
-            .attr("d", area);
-
-        svg.append("g")
-            .attr("class", "x axis-d3")
-            .attr("transform", "translate(0," + height + ")")
-            .call(xAxis)
-            .append("text")
-            .attr("y", -15)
-            .attr("dy", ".71em")
-            .attr("x", width)
-            .text("Distance (km)");
-
-        svg.append("g")
-            .attr("class", "y axis-d3")
-            .call(yAxis)
-            .append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("y", 6)
-            .attr("dy", ".71em")
-            .text("Altitude (m)");
-
-        svg.append("g")
-            .attr("class", "grid-d3 vertical")
-            .attr("transform", "translate(0," + height + ")")
-            .call(xAxis
-                .orient("bottom")
-                .tickSize(-height, 0, 0)
-                .tickFormat("")
-            );
-
-        svg.append("g")
-            .attr("class", "grid-d3 horizontal")
-            .call(yAxis
-                .orient("left")
-                .tickSize(-width, 0, 0)
-                .tickFormat("")
-            );
-
-        svg.append("path")
-            .datum(data)
-            .attr("class", "line-d3")
-            .attr("d", line);
-
-        svg.selectAll("circle")
-            .data(data)
-            .enter()
-            .append("circle")
-            .attr("cx", function (d) {
-                return x(d.dist);
-            })
-            .attr("cy", function (d) {
-                return y(d.z);
-            })
-            .attr("r", 0)
-            .attr("class", "circle-d3");
-
-        var focus = svg.append("g").style("display", "none");
-
-        focus.append("line")
-            .attr("id", "focusLineX")
-            .attr("class", "focusLine-d3");
-        focus.append("line")
-            .attr("id", "focusLineY")
-            .attr("class", "focusLine-d3");
-        focus.append("circle")
-            .attr("id", "focusCircle")
-            .attr("r", 4)
-            .attr("class", "circle-d3 focusCircle-d3");
-
-        var div = d3.select(container).append("div")
-            .attr("class", "tooltip-d3")
-            .style("opacity", 0);
-
-        var bisectDist = d3.bisector(function (d) {
-            return d.dist;
-        }).left;
-
-        var self = this;
-
-        /** suppression du marker */
-        var _removeMarker = function () {
-            // suppression de l'ancien marker
-            if (self._marker) {
-                self._measureSource.removeFeature(self._marker);
-                self._marker = null;
-            }
-        };
-
-        /** mise à jour du marker */
-        var _updateMarker = function (d) {
-
-            var map  = self.getMap();
-            var proj = map.getView().getProjection();
-
-            _removeMarker();
-
-            var _coordinate = ol.proj.transform([d.lon, d.lat], "EPSG:4326", proj);
-            var _geometry   = new ol.geom.Point(_coordinate);
-
-            self._marker = new ol.Feature({
-                geometry : _geometry
-            });
-            logger.trace(_geometry);
-
-            // style
-            self._marker.setStyle(self._markerStyle);
-
-            // ajout du marker sur la map
-            self._measureSource.addFeature(self._marker);
-        };
-
-        svg.append("rect")
-            .attr("class", "overlay-d3")
-            .attr("width", width)
-            .attr("height", height)
-            .on("mouseover", function () {
-                focus.style("display", null);
-
-                _updateMarker(data[0]);
-
-            })
-            .on("mouseout", function () {
-                focus.style("display", "none");
-
-                _removeMarker();
-
-                // tooltips
-                div.transition()
-                    .duration(500)
-                    .style("opacity", 0);
-            })
-            .on("mousemove", function () {
-
-                var m = d3.mouse(this);
-                var distance = x.invert(m[0]);
-                var i = bisectDist(data, distance);
-
-                var d0 = (i === 0) ? data[0] : data[i - 1];
-                var d1 = data[i];
-                var d  = distance - d0[0] > d1[0] - distance ? d1 : d0;
-
-                var xc = x(d.dist);
-                var yc = y(d.z);
-
-                focus.select("#focusCircle")
-                    .attr("cx", xc)
-                    .attr("cy", yc);
-                focus.select("#focusLineX")
-                    .attr("x1", xc).attr("y1", y(yDomain[0]))
-                    .attr("x2", xc).attr("y2", y(yDomain[1]));
-                focus.select("#focusLineY")
-                    .attr("x1", x(xDomain[0])).attr("y1", yc)
-                    .attr("x2", x(xDomain[1])).attr("y2", yc);
-
-                // mise à jour de la position du marker
-                _updateMarker(d);
-
-                // tooltips
-                div.transition()
-                    .duration(200)
-                    .style("opacity", 0.9);
-                div	.html(
-                        "Alt : " + d.z + " m <br/>" +
-                        "Lon : " + d.lon + " <br/>" +
-                        "Lat : " + d.lat
-                    )
-                    .style("left", (d3.event.pageX) + "px")
-                    .style("top", (d3.event.pageY - 28) + "px");
-            }
-        );
-
-        this._profile = d3.selectAll("rect.overlay")[0][0];
-    };
-
-    /**
-    * NOT USE : display graphical profile with lib.AmCharts
-    * properties amcharts :
-    * https://docs.amcharts.com/3/javascriptcharts/AmChart
-    * FIXME feature or overlay pour le deplacement du marker ?
-    *
-    * @param {Array} data - array of elevation
-    * @private
-    */
-    ElevationPath.prototype._displayProfileWithAmCharts = function (data) {
-        logger.trace("ElevationPath::_displayProfileWithAmCharts", data);
-
-        AmCharts.addInitHandler(function () {
-            logger.trace("AmCharts::addInitHandler (event)");
-        });
-
-        // FIXME a ton besoin de nettoyer les listiners sur AmCharts ?
-        // if (this._profile) {
-        //     AmCharts.removeListener(this._profile, "changed", _onFollowProfilPathChanged);
-        // }
-
-        var _config = {};
-        Utils.mergeParams(_config, this.options.styles.profile);
-        Utils.mergeParams(_config, {
-            dataProvider : data
-        });
-        this._profile = AmCharts.makeChart( this._profileContainer, _config);
-
-        var self = this;
-        /** _onFollowProfilePathChanged */
-        var _onFollowProfilePathChanged = function (e) {
-            logger.trace("AmCharts::changed (event)", e);
-            var obj = e.chart.dataProvider[e.index];
-            logger.trace(obj);
-
-            var _proj = self.getMap().getView().getProjection();
-            var _coordinate = ol.proj.transform([obj.lon, obj.lat], "EPSG:4326", _proj);
-            var _geometry   = new ol.geom.Point(_coordinate);
-
-            // suppression de l'ancien marker
-            if (self._marker) {
-                self._measureSource.removeFeature(self._marker);
-                self._marker = null;
-            }
-
-            self._marker = new ol.Feature({
-                geometry : _geometry
-            });
-            logger.trace(_geometry);
-
-            // style
-            self._marker.setStyle(self._markerStyle);
-
-            // ajout du marker sur la map
-            self._measureSource.addFeature(self._marker);
-        };
-
-        this._profile.addListener("changed", _onFollowProfilePathChanged);
 
     };
 

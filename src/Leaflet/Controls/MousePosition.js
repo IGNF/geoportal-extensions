@@ -22,7 +22,7 @@ define([
 
     var logger = woodman.getLogger("mouseposition");
 
-   /**
+    /**
     * @classdesc
     *
     * Leaflet Control Class to display Mouse position in various CRS and altitude using the <a href="http://api.ign.fr/tech-docs-js/developpeur/alti.html" target="_blank">altimetric web service of the Geoportal Platform</a>.
@@ -328,9 +328,8 @@ define([
                 this._projectionSystems = projectionSystemsByDefault;
             }
 
-            //re-initilisation des codes pour gerer le lien entre _projectionSystems et select du mouse position (lien code/value)
-            for(var k = 0 ; k < this._projectionSystems.length ; ++k)
-            {
+            // re-initilisation des codes pour gerer le lien entre _projectionSystems et select du mouse position (lien code/value)
+            for (var k = 0 ; k < this._projectionSystems.length ; ++k) {
                 this._projectionSystems[k].code = k;
             }
         },
@@ -1039,37 +1038,34 @@ define([
          *
          * @private
          */
-          _setCurrentSystem : function ( systemCode ){
-              // si on change de type de systeme, on doit aussi changer le type d'unités !
-              var type = null;
-              for(var i = 0 ; i < this._projectionSystems.length ; ++i)
-              {
-                  if( this._projectionSystems[i].code == systemCode )
-                  {
-                      type = this._projectionSystems[i].type;
-                      break;
-                  }
-              }
+        _setCurrentSystem : function ( systemCode ) {
+            // si on change de type de systeme, on doit aussi changer le type d'unités !
+            var type = null;
+            for (var i = 0 ; i < this._projectionSystems.length ; ++i) {
+                if ( this._projectionSystems[i].code == systemCode ) {
+                    type = this._projectionSystems[i].type;
+                    break;
+                }
+            }
 
-              if( !type )
-              {
-                  logger.log("system not found in projection systems container");
-                  return;
-              }
+            if ( !type ) {
+                logger.log("system not found in projection systems container");
+                return;
+            }
 
-              if (type !== this._currentProjectionType) {
-                  this._setTypeUnitsPanel(type);
-              }
+            if (type !== this._currentProjectionType) {
+                this._setTypeUnitsPanel(type);
+            }
 
-              // on enregistre le systeme courrant
-              this._currentProjectionSystems = this._projectionSystems[Number(systemCode)];
+            // on enregistre le systeme courrant
+            this._currentProjectionSystems = this._projectionSystems[Number(systemCode)];
 
-              // on simule un deplacement en mode tactile pour mettre à jour les
-              // resultats
-              if (!this._isDesktop) {
-                  this.onMapMove();
-              }
-          },
+            // on simule un deplacement en mode tactile pour mettre à jour les
+            // resultats
+            if (!this._isDesktop) {
+                this.onMapMove();
+            }
+        },
 
         /**
          * this method is called by event 'mouseover' on 'GPmousePositionProjectionSystem'
@@ -1089,7 +1085,7 @@ define([
                 return;
             }
 
-            //clear select
+            // clear select
             var systemList = document.getElementById( this._addUID("GPmousePositionProjectionSystem") );
 
             systemList.innerHTML = "";
@@ -1103,9 +1099,8 @@ define([
                           map.getBounds()._southWest.lat > proj.geoBBox.top   ||
                           map.getBounds()._northEast.lng < proj.geoBBox.left  ||
                           map.getBounds()._northEast.lat < proj.geoBBox.bottom
-                    ){
-                        if( proj === this._currentProjectionSystems )
-                        {
+                    ) {
+                        if ( proj === this._currentProjectionSystems ) {
                             var option = document.createElement("option");
                             option.value = proj.code;
                             option.text  = proj.label || j;
@@ -1114,13 +1109,15 @@ define([
 
                             systemList.appendChild(option);
                         }
-                        continue;//do not intersect
+                        continue; // do not intersect
                     }
                 }
                 var option = document.createElement("option");
                 option.value = proj.code;
                 option.text  = proj.label || j;
-                if( proj === this._currentProjectionSystems ) option.setAttribute( "selected", "selected" );
+                if ( proj === this._currentProjectionSystems ) {
+                    option.setAttribute( "selected", "selected" );
+                }
 
                 systemList.appendChild(option);
             }

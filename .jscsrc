@@ -744,7 +744,7 @@
                  *        value: (required) the same effect as the non-object values
                  *        includeEmptyLines: (default: false) require empty lines to be indented
                  */
-        // "validateIndentation": 4,
+        "validateIndentation": 4,
 
                 /*
                  * Option to check line break characters
@@ -761,7 +761,10 @@
                  * Requires each element in array on a single line when array length is more than passed maximum number or array fills more than one line. Set ignoreBrackets to true to allow elements on the same line with brackets.
                  * Values: true or Object ({maximum: Number, ignoreBrackets: Boolean})
                  */
-        "validateNewlineAfterArrayElements": true,
+        "validateNewlineAfterArrayElements": {
+            "ignoreBrackets" : true,
+            "maximum" : 5
+        },
 
                 /*
                  * Enable validation of separators between function parameters. Will ignore newlines.
@@ -820,7 +823,7 @@
             "checkRedundantParams" : true,
             "checkRedundantReturns" : true,
             "requireHyphenBeforeDescription" : true,
-            "requireNewlineAfterDescription" : true,
+            // "requireNewlineAfterDescription" : true,
             "requireParamDescription" : true,
             "checkTypes": "capitalizedNativeCase",
             "enforceExistence": "exceptExports"

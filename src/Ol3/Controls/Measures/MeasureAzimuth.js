@@ -27,59 +27,37 @@ define([
     /**
     * @classdesc
     *
-    * Tool Measure Azimuth Control.
+    * Azimuth measurement Control. Allows users to draw a line on an OL3 map and have its angle in decimal degrees clockwise from the geographical north.
     *
     * @constructor
     * @alias ol.control.MeasureAzimuth
     * @extends {ol.control.Control}
     * @param {Object} options - options for function call.
-    * @param {Object} [options.styles = {}] - styles management of draw with properties or object {ol.style}
-    * @param {Object} [options.styles.pointer = {}] - Point Style for a start drawing with properties or object {ol.style.Circle}
-    * @param {Number} [options.styles.pointer.imageRadius] - Point radius (properties)
-    * @param {String} [options.styles.pointer.imageFillColor] - Point for fill color (properties)
-    * @param {String} [options.styles.pointer.imageStrokeColor] - Point for stroke color (properties)
-    * @param {Object} [options.styles.start = {}] - Line Style for a start drawing with properties or object {ol.style.Stroke}
-    * @param {String} [options.styles.start.strokeColor] - Line for stroke color (properties)
-    * @param {Array}  [options.styles.start.strokeLineDash] - Line for stroke dash (properties)
-    * @param {Number} [options.styles.start.strokeWidth] - Line for stroke width (properties)
-    * @param {Object} [options.styles.finish = {}] - Line Style for a finish drawing with properties or object {ol.style.Stroke}
-    * @param {String} [options.styles.finish.strokeColor] - Line for stroke color (properties)
-    * @param {Number} [options.styles.finish.strokeWidth] - Line for stroke width (properties)
-    * @param {Object} [options.tooltip = {}] - NOT YET IMPLEMENTED !
+    * @param {Object} [options.styles = {}] - styles used when drawing. Specified with following properties.
+    * @param {Object} [options.styles.pointer = {}] - Style for mouse pointer when drawing the line. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Image.html ol.style.Image} subclass object.
+    * @param {Object} [options.styles.start = {}] - Line Style when drawing. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Style.html ol.style.Style} object.
+    * @param {Object} [options.styles.finish = {}] - Line Style when finished drawing. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Style.html ol.style.Style} object.
+    * <!-- @param {Object} [options.tooltip = {}] - NOT YET IMPLEMENTED ! -->
     * @example
     * var measure = new ol.control.MeasureAzimuth({
-    *    element : null,
-    *    target : null,
-    *    render : null,
-    *    styles : {
-    *     start : {
-    *       strokeColor : "rgba(0, 0, 0, 0.5)",
-    *       strokeLineDash : [10, 10],
-    *       strokeWidth : 2
-    *     },
-    *     pointer : {
-    *       imageRadius : 5,
-    *       imageFillColor : "rgba(255, 255, 255, 0.2)",
-    *       imageStrokeColor : "rgba(0, 0, 0, 0.7)"
-    *     },
-    *     finish : {}
-    *    },
-    *    tooltip : {
-    *       messageContinue : "Click to continue drawing the line",
-    *       messageStart : "Click to start drawing"
-    *    }
     * });
     */
     function MeasureAzimuth (options) {
 
-        /** options */
+        /** 
+         * options 
+         * @private
+         */
         options = options || {};
 
         if (!(this instanceof MeasureAzimuth)) {
             throw new TypeError("ERROR CLASS_CONSTRUCTOR");
         }
 
-        /** Nom de la classe (heritage) */
+        /** 
+         * Nom de la classe (heritage) 
+         * @private
+         */
         this.CLASSNAME = "MeasureAzimuth";
 
         // uuid

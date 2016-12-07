@@ -27,64 +27,39 @@ define([
     /**
     * @classdesc
     *
-    * Tool Measure Area Control.
+    * Tool Measure Area Control. Allows users to measure the length of a path drawn on the map.
     *
     * @constructor
     * @alias ol.control.MeasureArea
     * @extends {ol.control.Control}
     * @param {Object} options - options for function call.
-    * @param {Boolean} [options.geodesic = true] - precision calculation
-    * @param {Object} [options.styles = {}] - styles management of draw with properties or object {ol.style}
-    * @param {Object} [options.styles.pointer = {}] - Point Style for a start drawing with properties or object {ol.style.Circle}
-    * @param {Number} [options.styles.pointer.imageRadius] - Point radius (properties)
-    * @param {String} [options.styles.pointer.imageFillColor] - Point for fill color (properties)
-    * @param {String} [options.styles.pointer.imageStrokeColor] - Point for stroke color (properties)
-    * @param {Object} [options.styles.start = {}] - Line Style for a start drawing with properties or object {ol.style.Stroke}
-    * @param {Object} [options.styles.start.fillColor] - Line for fill color (properties)
-    * @param {String} [options.styles.start.strokeColor] - Line for stroke color (properties)
-    * @param {Array}  [options.styles.start.strokeLineDash] - Line for stroke dash (properties)
-    * @param {Number} [options.styles.start.strokeWidth] - Line for stroke width (properties)
-    * @param {Object} [options.styles.finish = {}] - Line Style for a finish drawing with properties or object {ol.style.Stroke}
-    * @param {String} [options.styles.finish.strokeColor] - Line for stroke color (properties)
-    * @param {Number} [options.styles.finish.strokeWidth] - Line for stroke width (properties)
-    * @param {String} [options.styles.finish.fillColor] - Line for fill color (properties)
-    * @param {Object} [options.tooltip = {}] - NOT YET IMPLEMENTED !
+    * @param {Boolean} [options.geodesic = true] - If true, area will be computed on the global sphere using the {@link https://openlayers.org/en/latest/apidoc/ol.Sphere.html#geodesicArea ol.Sphere.geodesicArea()} function. Otherwise, area will be computed on the projected plane.
+    * @param {Object} [options.styles = {}] - styles used when drawing. Specified with following properties.
+    * @param {Object} [options.styles.pointer = {}] - Style for mouse pointer when drawing the polygon to measure. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Image.html ol.style.Image} subclass object.
+    * @param {Object} [options.styles.start = {}] - Polygon Style when drawing. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Style.html ol.style.Style} object.
+    * @param {Object} [options.styles.finish = {}] - Polygon Style when finished drawing. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Style.html ol.style.Style} object.
+    * <!-- @param {Object} [options.tooltip = {}] - NOT YET IMPLEMENTED ! -->
     * @example
     * var measureArea = new ol.control.MeasureArea({
-    *    element : null,
-    *    target : null,
-    *    render : null,
-    *    styles : {
-    *     start : {
-    *       fillColor : "rgba(255, 255, 255, 0.2)",
-    *       strokeColor : "rgba(0, 0, 0, 0.5)",
-    *       strokeLineDash : [10, 10],
-    *       strokeWidth : 2
-    *     },
-    *     pointer : {
-    *       imageRadius : 5,
-    *       imageFillColor : "rgba(255, 255, 255, 0.2)",
-    *       imageStrokeColor : "rgba(0, 0, 0, 0.7)"
-    *     },
-    *     finish : {}
-    *    },
-    *    tooltip : {
-    *       messageContinue : "Click to continue drawing the polygon",
-    *       messageStart : "Click to start drawing"
-    *    },
-    *    geodesic : true
+    *    geodesic : false
     * });
     */
     function MeasureArea (options) {
 
-        /** options */
+        /** 
+         * options 
+         * @private
+         */
         options = options || {};
 
         if (!(this instanceof MeasureArea)) {
             throw new TypeError("ERROR CLASS_CONSTRUCTOR");
         }
 
-        /** Nom de la classe (heritage) */
+        /** 
+         * Nom de la classe (heritage) 
+         * @private
+         */
         this.CLASSNAME = "MeasureArea";
 
         // uuid

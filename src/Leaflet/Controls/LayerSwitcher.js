@@ -19,7 +19,7 @@ define([
 
     var logger = woodman.getLogger("layerswitcher");
 
-   /**
+    /**
     * @classdesc
     *
     * Leaflet Control Class to manage map layers : their order, visibility and opacity, and display their informations (title, description, legends, metadata...)
@@ -360,7 +360,7 @@ define([
                     container.style.position = "relative";
                     container.style.top = "0";
                     container.style.right = "0";
-                break;
+                    break;
                 case "topleft":
                     container.style.position = "relative";
                     container.style.top = "0";
@@ -370,7 +370,7 @@ define([
                     divL.style.borderBottomLeftRadius = "0";
                     divI.style.right = "initial";
                     divI.style.left = "190px";
-                break;
+                    break;
                 case "bottomleft":
                     container.style.position = "relative";
                     container.style.top = "0";
@@ -382,14 +382,14 @@ define([
                     divI.style.left = "190px";
                     // divI.style.top = "initial";
                     // divI.style.bottom = "190px";
-                break;
+                    break;
                 case "bottomright":
                     container.style.position = "relative";
                     container.style.top = "0";
                     container.style.right = "0";
                     // divI.style.top = "initial";
                     // divI.style.bottom = "190px";
-                break;
+                    break;
                 default:
                     container.style.position = "relative";
                     container.style.top = "0";

@@ -27,7 +27,7 @@ define([
      *      - url (String, mandatory) : link to a legend
      *      - minScaleDenominator (Number, optional) : min scale denominator for legend validity.
      * @param {Array} [lsOptions.layers.config.metadata] - array of layer metadata. Each array element is an object, with property url (String, mandatory) : link to a metadata
-     * @param {Object} [lsOptions.options] - ol.control.Control options (see {@link http://openlayers.org/en/v3.13.0/apidoc/ol.control.Control.html})
+     * @param {Object} [lsOptions.options] - ol.control.Control options (see {@link http://openlayers.org/en/latest/apidoc/ol.control.Control.html ol.control.Control})
      * @param {Boolean} [lsOptions.options.collapsed] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
      * @example
      * map.addControl(new ol.control.LayerSwitcher(
@@ -413,7 +413,7 @@ define([
     /**
      * Initialize LayerSwitcher control (called by constructor)
      *
-     * @param {Object} options - ol.control.Control options (see {@link http://openlayers.org/en/v3.13.0/apidoc/ol.control.Control.html})
+     * @param {Object} options - ol.control.Control options (see {@link http://openlayers.org/en/latest/apidoc/ol.control.Control.html ol.control.Control})
      * @param {Array} layers - list of layers to be configured. Each array element is an object, with following properties :
      * @private
      */
