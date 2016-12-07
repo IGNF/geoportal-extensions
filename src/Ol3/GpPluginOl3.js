@@ -3,6 +3,7 @@ define([
     "gp",
     "Common/Utils/LayerUtils",
     "Common/Utils/Register",
+    "Ol3/Utils",
     "Ol3/Formats/KML",
     "Ol3/CRS/CRS",
     "Ol3/Layers/SourceWMTS",
@@ -28,6 +29,7 @@ define([
     Gp,
     LayerUtils,
     Register,
+    Utils,
     KML,
     CRS,
     SourceWMTS,
@@ -55,6 +57,7 @@ define([
     // Rajout des propriétés de l'extension dans le namespace Gp
     Gp.ol3extVersion = "__GPOL3EXTVERSION__" ;
     Gp.ol3extDate = "__GPDATE__";
+    Gp.olUtils = Utils;
 
     // Classes utilitaires
     Gp.LayerUtils = LayerUtils;
