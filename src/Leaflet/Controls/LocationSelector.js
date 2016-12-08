@@ -938,6 +938,7 @@ define([
         * @private
         */
         onActivateMapPointClick : function (e) {
+            logger.trace("onActivateMapPointClick()", e);
 
             var map = this._map;
 

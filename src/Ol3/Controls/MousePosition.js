@@ -286,17 +286,17 @@ define([
 
         // re-initialization of codes
         var oldNewCodeMap = [];
-        for ( var i = 0; i < this._projectionSystems.length; i++ ) {
-            oldNewCodeMap[ Number( this._projectionSystems[i].code ) ] = i;
-            this._projectionSystems[i].code = i;
+        for ( var j = 0; j < this._projectionSystems.length; j++ ) {
+            oldNewCodeMap[ Number( this._projectionSystems[i].code ) ] = j;
+            this._projectionSystems[i].code = j;
         }
 
         // find system in control container systems list
         var indexChildToRemove = null;
 
-        for ( var j = 0; j < systemList.childNodes.length; j++) {
+        for ( var k = 0; k < systemList.childNodes.length; k++) {
             if ( systemCode == systemList.childNodes[j].value ) {
-                indexChildToRemove = j;
+                indexChildToRemove = k;
                 continue;
             }
             systemList.childNodes[j].value = oldNewCodeMap [ Number( systemList.childNodes[j].value ) ];
@@ -554,8 +554,8 @@ define([
 
         if ( this._projectionSystems.length === 0 ) {
             // on ajoute les systèmes de projections par défaut
-            for (var i = 0; i < projectionSystemsByDefault.length; i++ ) {
-                this.addSystem(projectionSystemsByDefault[i]);
+            for (var j = 0; j < projectionSystemsByDefault.length; j++ ) {
+                this.addSystem(projectionSystemsByDefault[j]);
             }
         }
     };
@@ -1268,7 +1268,8 @@ define([
 
         // add systems whose extent intersects the map extent
         for (var j = 0; j < this._projectionSystems.length; j++) {
-            var proj = this._projectionSystems[j];
+            var proj   = this._projectionSystems[j];
+            var option = null;
 
             if ( proj.geoBBox ) {
                 // bboxes intersection test
@@ -1278,7 +1279,7 @@ define([
                       mapExtent[3] < proj.geoBBox.bottom
                 ) {
                     if ( proj === this._currentProjectionSystems ) {
-                        var option = document.createElement("option");
+                        option = document.createElement("option");
                         option.value = proj.code;
                         option.text  = proj.label || j;
                         option.setAttribute( "selected", "selected" );
@@ -1289,7 +1290,7 @@ define([
                     continue; // do not intersect
                 }
             }
-            var option = document.createElement("option");
+            option = document.createElement("option");
             option.value = proj.code;
             option.text  = proj.label || j;
             if ( proj === this._currentProjectionSystems ) {

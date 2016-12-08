@@ -1093,6 +1093,8 @@ define([
             // add systems whose extent intersects the map extent
             for (var j = 0; j < this._projectionSystems.length; j++) {
                 var proj = this._projectionSystems[j];
+                var option = null;
+
                 if ( proj.geoBBox ) {
                     // bboxes intersection test
                     if (  map.getBounds()._southWest.lng > proj.geoBBox.right ||
@@ -1101,7 +1103,7 @@ define([
                           map.getBounds()._northEast.lat < proj.geoBBox.bottom
                     ) {
                         if ( proj === this._currentProjectionSystems ) {
-                            var option = document.createElement("option");
+                            option = document.createElement("option");
                             option.value = proj.code;
                             option.text  = proj.label || j;
                             option.setAttribute( "selected", "selected" );
@@ -1112,7 +1114,7 @@ define([
                         continue; // do not intersect
                     }
                 }
-                var option = document.createElement("option");
+                option = document.createElement("option");
                 option.value = proj.code;
                 option.text  = proj.label || j;
                 if ( proj === this._currentProjectionSystems ) {
