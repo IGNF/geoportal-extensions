@@ -88,8 +88,11 @@ define([
         *  ]
         *  options = {
         *      position : "topright",
-        *      collapsed : true
+        *      collapsed : true,
+        *      layers : layers
         *  }
+        *
+        *  var layerSwitcher = L.geoportalControl.LayerSwitcher(options);
         */
         initialize : function (options) {
 
@@ -834,10 +837,10 @@ define([
         },
 
         /**
-        * Set opacity of a layer
+        * Set the opacity of a layer, and opacity must be a number from 0 to 1.
         *
         * @param {Object} layer - layer into layerswitcher
-        * @param {Object} opacity - 0-100.
+        * @param {Number} opacity - 0-1.
         */
         setOpacity : function (layer, opacity) {
             logger.trace(layer, opacity);
@@ -852,7 +855,7 @@ define([
         },
 
         /**
-        * Set visibility of a layer
+        * Set the visibility of a layer.
         *
         * @param {Object} layer - layer into layerswitcher
         * @param {Object} visibility - true/false.
