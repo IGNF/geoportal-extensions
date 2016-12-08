@@ -154,7 +154,7 @@ define(["sortable"], function (Sortable) {
         _createContainerLayerElement : function (obj) {
 
             // exemple :
-            // <div id="GPlayerSwitcher_IDLayer1" class="GPlayerSwitcher_layer outOfRange">
+            // <div id="GPlayerSwitcher_ID_Layer1" class="GPlayerSwitcher_layer outOfRange">
             //     <!-- Basic toolbar : visibility / layer name
             //     _createBasicToolElement
             //           _createBasicToolVisibilityElement
@@ -174,7 +174,7 @@ define(["sortable"], function (Sortable) {
             // <!-- Layer entry in layer list -->
             // <!-- Every item is marked with layerID, which is defined at layer import -->
             var container = document.createElement("div");
-            container.id  = "GPlayerSwitcher_ID" + obj.id;
+            container.id  = this._addUID("GPlayerSwitcher_ID_" + obj.id);
             container.className = "GPlayerSwitcher_layer draggable-layer";
 
             // ajout des outils basiques (visibility / layer name)
@@ -203,13 +203,13 @@ define(["sortable"], function (Sortable) {
          */
         _createBasicToolElement : function (obj) {
             // exemple :
-            // <div id="GPbasicTools_IDLayer1" class="GPlayerBasicTools">
+            // <div id="GPbasicTools_ID_1" class="GPlayerBasicTools">
             //      <!-- _createBasicToolVisibilityElement -->
             //      <!-- _createBasicToolNameElement -->
             // </div>
 
             var div = document.createElement("div");
-            div.id  = "GPbasicTools_IDLayer" + obj.id;
+            div.id  = this._addUID("GPbasicTools_ID_" + obj.id);
             div.className = "GPlayerBasicTools";
 
             div.appendChild(this._createBasicToolNameElement(obj));
@@ -229,9 +229,9 @@ define(["sortable"], function (Sortable) {
          */
         _createBasicToolNameElement : function (obj) {
             // exemple :
-            // <span id="GPname_IDLayer1" class="GPlayerName" title="Quartiers prioritaires de la ville">Quartiers prioritaires de la ville</span>
+            // <span id="GPname_ID_Layer1" class="GPlayerName" title="Quartiers prioritaires de la ville">Quartiers prioritaires de la ville</span>
             var span = document.createElement("span");
-            span.id  = "GPname_ID" + obj.id;
+            span.id  = this._addUID("GPname_ID_" + obj.id);
             span.className = "GPlayerName";
             span.title = obj.description || obj.title;
             span.innerHTML = obj.title;
@@ -246,13 +246,13 @@ define(["sortable"], function (Sortable) {
          */
         _createBasicToolVisibilityElement : function (obj) {
             // exemple :
-            // <input type="checkbox" id="GPvisibility_IDLayer1" checked="">
-            // <label for="GPvisibility_IDLayer1" id="GPvisibilityPicto_IDLayer1" class="GPlayerVisibility" title="Afficher/masquer la couche"></label>
+            // <input type="checkbox" id="GPvisibility_ID_Layer1" checked="">
+            // <label for="GPvisibility_ID_Layer1" id="GPvisibilityPicto_ID_Layer1" class="GPlayerVisibility" title="Afficher/masquer la couche"></label>
 
             var list = [];
 
             var checked = obj.visibility;
-            var id = "GPvisibility_ID" + obj.id;
+            var id = this._addUID("GPvisibility_ID_" + obj.id);
 
             var input = document.createElement("input");
             input.id   = id;
@@ -261,7 +261,7 @@ define(["sortable"], function (Sortable) {
 
             var label = document.createElement("label");
             label.htmlFor = id;
-            label.id = "GPvisibilityPicto_ID" + obj.id;
+            label.id = this._addUID("GPvisibilityPicto_ID_" + obj.id);
             label.className = "GPlayerVisibility";
             label.title = "Afficher/masquer la couche";
 
@@ -296,20 +296,20 @@ define(["sortable"], function (Sortable) {
          * @param {Object} obj - options de la couche à ajouter dans le layer switcher
          */
         _createAdvancedToolShowElement : function (obj) {
-            // <input type="checkbox" id="GPshowAdvancedTools_IDLayer1">
-            // <label for="GPshowAdvancedTools_IDLayer1" id="GPshowAdvancedToolsPicto_IDLayer1" class="GPshowMoreOptions GPshowLayerAdvancedTools" title="Plus d'outils"></label>
+            // <input type="checkbox" id="GPshowAdvancedTools_ID_Layer1">
+            // <label for="GPshowAdvancedTools_ID_Layer1" id="GPshowAdvancedToolsPicto_ID_Layer1" class="GPshowMoreOptions GPshowLayerAdvancedTools" title="Plus d'outils"></label>
 
             var list = [];
 
             var label = document.createElement("label");
-            label.id = "GPshowAdvancedToolsPicto_ID" + obj.id;
-            label.htmlFor = "GPshowAdvancedTools_ID" + obj.id;
+            label.id = this._addUID("GPshowAdvancedToolsPicto_ID_" + obj.id);
+            label.htmlFor = this._addUID("GPshowAdvancedTools_ID_" + obj.id);
             label.title = "Plus d'outils";
             label.className = "GPshowMoreOptions GPshowLayerAdvancedTools";
 
             var input = document.createElement("input");
             input.type = "checkbox";
-            input.id = "GPshowAdvancedTools_ID" + obj.id;
+            input.id = this._addUID("GPshowAdvancedTools_ID_" + obj.id);
 
             list.push(input);
             list.push(label);
@@ -325,14 +325,14 @@ define(["sortable"], function (Sortable) {
         _createAdvancedToolElement : function (obj) {
 
             // exemple :
-            // <div id="GPadvancedTools_IDLayer1" class="GPlayerAdvancedTools">
+            // <div id="GPadvancedTools_ID_Layer1" class="GPlayerAdvancedTools">
             //     <!-- _createAdvancedToolDeleteElement -->
             //     <!-- _createAdvancedToolInformationElement -->
             //     <!-- _createAdvancedToolOpacityElement -->
             // </div>
 
             var container = document.createElement("div");
-            container.id = "GPadvancedTools_ID" + obj.id;
+            container.id = this._addUID("GPadvancedTools_ID_" + obj.id);
             container.className = "GPlayerAdvancedTools";
 
             container.appendChild(this._createAdvancedToolDeleteElement(obj));
@@ -360,10 +360,10 @@ define(["sortable"], function (Sortable) {
         _createAdvancedToolDeleteElement : function (obj) {
 
             // exemple :
-            // <div id="GPremove_IDLayer1" class="GPlayerRemove" title="Supprimer la couche" onclick="GPdropLayer(this);"></div>
+            // <div id="GPremove_ID_Layer1" class="GPlayerRemove" title="Supprimer la couche" onclick="GPdropLayer(this);"></div>
 
             var div = document.createElement("div");
-            div.id = "GPremove_ID" + obj.id;
+            div.id = this._addUID("GPremove_ID_" + obj.id);
             div.className = "GPlayerRemove";
             div.title   = "Supprimer la couche";
             div.layerId = obj.id;
@@ -397,10 +397,10 @@ define(["sortable"], function (Sortable) {
         _createAdvancedToolInformationElement : function (obj) {
 
             // exemple :
-            // <div id="GPinfo_IDLayer1" class="GPlayerInfo" title="Informations/légende" onclick="GPopenLayerInfo(this);"></div>
+            // <div id="GPinfo_ID_Layer1" class="GPlayerInfo" title="Informations/légende" onclick="GPopenLayerInfo(this);"></div>
 
             var div = document.createElement("div");
-            div.id = "GPinfo_ID" + obj.id;
+            div.id = this._addUID("GPinfo_ID_" + obj.id);
             div.className = "GPlayerInfo";
             div.title = "Informations/légende";
             div.layerId = obj.id;
@@ -434,11 +434,11 @@ define(["sortable"], function (Sortable) {
         _createAdvancedToolOpacityElement : function (obj) {
 
             // exemple :
-            // <div id="GPopacity_IDLayer1" class="GPlayerOpacity" title="Opacité">
-            //   <input id="GPopacityRange_IDLayer1" type="range" value="100" oninput="GPchangeLayerOpacity(this);" onchange="GPchangeLayerOpacity(this);">
+            // <div id="GPopacity_ID_Layer1" class="GPlayerOpacity" title="Opacité">
+            //   <input id="GPopacityRange_ID_Layer1" type="range" value="100" oninput="GPchangeLayerOpacity(this);" onchange="GPchangeLayerOpacity(this);">
             // </div>
-            // <div class="GPlayerOpacityValue" id="GPopacityValueDiv_IDLayer1">
-            //   <span id="GPopacityValue_IDLayer1">100</span>
+            // <div class="GPlayerOpacityValue" id="GPopacityValueDiv_ID_Layer1">
+            //   <span id="GPopacityValue_ID_Layer1">100</span>
             //   %
             // </div>
 
@@ -446,14 +446,14 @@ define(["sortable"], function (Sortable) {
 
             // curseur pour changer l'opacité
             var divO = document.createElement("div");
-            divO.id = "GPopacity_ID" + obj.id;
+            divO.id = this._addUID("GPopacity_ID_" + obj.id);
             divO.className = "GPlayerOpacity";
             divO.title = "Opacité";
 
             var opacity = Math.round(obj.opacity * 100);
 
             var input = document.createElement("input");
-            input.id = "GPopacityValueDiv_ID" + obj.id;
+            input.id = this._addUID("GPopacityValueDiv_ID_" + obj.id);
             input.type = "range";
             input.value = opacity;
 
@@ -497,11 +497,11 @@ define(["sortable"], function (Sortable) {
 
             // Valeur d'opacité
             var divC = document.createElement("div");
-            divC.id = "GPopacityValueDiv_ID" + obj.id;
+            divC.id = this._addUID("GPopacityValueDiv_ID_" + obj.id);
             divC.className = "GPlayerOpacityValue";
 
             var span = document.createElement("span");
-            span.id  = "GPopacityValue_ID" + obj.id;
+            span.id  = this._addUID("GPopacityValue_ID_" + obj.id);
             span.innerHTML  = opacity + "%";
 
             divC.appendChild(span);
@@ -527,17 +527,17 @@ define(["sortable"], function (Sortable) {
         _createContainerLayerInfoElement : function (obj) {
 
             var container = document.createElement("div");
-            container.id = "GPlayerInfoContent";
+            container.id = this._addUID("GPlayerInfoContent");
 
             var title = document.createElement("div");
-            title.id = "GPlayerInfoTitle";
+            title.id = this._addUID("GPlayerInfoTitle");
             title.innerHTML = obj.title;
             container.appendChild(title);
 
             if (obj.quicklookUrl) {
 
                 var quick = document.createElement("div");
-                quick.id = "GPlayerInfoQuicklook";
+                quick.id = this._addUID("GPlayerInfoQuicklook");
                 quick.title = "Afficher un aperçu de la couche";
                 var refquick = document.createElement("a");
                 refquick.href = obj.quicklookUrl;
@@ -546,12 +546,13 @@ define(["sortable"], function (Sortable) {
             }
 
             var close = document.createElement("div");
-            close.id = "GPlayerInfoClose";
+            close.id = this._addUID("GPlayerInfoClose");
             close.title = "Fermer la fenêtre";
 
+            var self = this;
             /** Call event function on close click */
             var onCloseClick = function () {
-                document.getElementById("GPlayerInfoPanel").className = "GPlayerInfoPanelClosed";
+                document.getElementById(self._addUID("GPlayerInfoPanel")).className = "GPlayerInfoPanelClosed";
                 var layers = document.getElementsByClassName("GPlayerInfoOpened");
                 for ( var i = 0; i < layers.length; i++ ) {
                     layers[i].className = "GPlayerInfo";
@@ -566,14 +567,14 @@ define(["sortable"], function (Sortable) {
             container.appendChild(close);
 
             var desc = document.createElement("div");
-            desc.id = "GPlayerInfoDescription";
+            desc.id = this._addUID("GPlayerInfoDescription");
             desc.innerHTML = obj.description;
             container.appendChild(desc);
 
             if (obj.metadata) {
 
                 var mtd = document.createElement("div");
-                mtd.id = "GPlayerInfoMetadata";
+                mtd.id = this._addUID("GPlayerInfoMetadata");
 
                 var mtdtitle = document.createElement("div");
                 mtdtitle.className = "GPlayerInfoSubtitle";
@@ -602,7 +603,7 @@ define(["sortable"], function (Sortable) {
             if (obj.legends) {
 
                 var lgd = document.createElement("div");
-                lgd.id = "GPlayerInfoLegend";
+                lgd.id = this._addUID("GPlayerInfoLegend");
 
                 var lgdtitle = document.createElement("div");
                 lgdtitle.className = "GPlayerInfoSubtitle";

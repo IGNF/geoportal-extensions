@@ -4,7 +4,7 @@
  */
 
  /*jshint -W106 */
- 
+
 define([
     "woodman",
     "Common/Utils/LayerUtils"
@@ -41,13 +41,13 @@ function (woodman, LayerUtil) {
 
         /**
          * visibilité de la couche
-         * // TODO supprimer le layer de la carte !
          *
          * @param {Boolean} visibility - true|false
          */
         setVisible : function (visibility) {
             logger.log("visibility", visibility);
             this._visibility = visibility;
+            this.fire("visibilitychange");
         },
 
         /**
@@ -63,7 +63,7 @@ function (woodman, LayerUtil) {
          * fonction de suppresion d'un layer du controle des layers
          */
         _onRemoveLayer : function (e) {
-            logger.log("onRemove event", e);
+            logger.trace("onRemove event", e);
             if (e.layer._geoportal_id != this._geoportal_id) {
                 return;
             }
@@ -75,7 +75,7 @@ function (woodman, LayerUtil) {
          * fonction d'ajout d'un layer du controle des layers
          */
         _onAddLayer : function (e) {
-            logger.log("onAdd event", e);
+            logger.trace("onAdd event", e);
             if (e.layer._geoportal_id != this._geoportal_id) {
                 return;
             }
@@ -87,7 +87,7 @@ function (woodman, LayerUtil) {
          * fonction de deplacement d'un layer
          */
         _onMoveEndLayer : function (e) {
-            logger.log("moveend event", e);
+            logger.trace("moveend event", e);
             // mise à jour des attributions
             this.updateAttributions(this._map, this);
         },
@@ -103,11 +103,13 @@ function (woodman, LayerUtil) {
 
             this.removeAttributions(map);
             this.addAttributions(map);
+
+            this.fire("attributionchange");
         },
 
         /** removeAttributions */
         removeAttributions : function (map) {
-            logger.log("removeAttributions...", this._geoportal_id);
+            logger.trace("removeAttributions...", this._geoportal_id);
             // suppression des attributions
             // L.Map utilise la methode getAttribution() du layer.
             // La construction concerne le layer courant.
@@ -129,7 +131,7 @@ function (woodman, LayerUtil) {
 
         /** addAttributions */
         addAttributions : function (map) {
-            logger.log("addAttributions...", this._geoportal_id);
+            logger.trace("addAttributions...", this._geoportal_id);
             // on interroge les originators en options pour obtenir les infos
             // suivantes :
             // - echelles

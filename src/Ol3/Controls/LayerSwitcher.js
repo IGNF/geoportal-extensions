@@ -1,10 +1,12 @@
 define([
     "ol",
     "Ol3/Utils",
+    "Common/Utils/SelectorID",
     "Common/Controls/LayerSwitcherDOM"
 ], function (
     ol,
     Utils,
+    SelectorID,
     LayerSwitcherDOM
 ) {
     "use strict";
@@ -257,11 +259,13 @@ define([
             // 3. Add listeners for opacity and visibility changes
             layer.on(
                 "change:opacity",
-                this._updateLayerOpacity
+                this._updateLayerOpacity,
+                this
             );
             layer.on(
                 "change:visible",
-                this._updateLayerVisibility
+                this._updateLayerVisibility,
+                this
             );
             // listener for zIndex change
             var context = this;
@@ -287,16 +291,16 @@ define([
             }
             // set new title in layer div
             if ( config.title ) {
-                var nameDiv = document.getElementById("GPname_ID" + id);
+                var nameDiv = document.getElementById(this._addUID("GPname_ID_" + id));
                 if ( nameDiv ) {
                     nameDiv.innerHTML = config.title;
                     nameDiv.title = config.description || config.title;
                 }
             }
             // add layer info picto if necessary
-            var infodiv = document.getElementById("GPinfo_ID" + id);
-            if ( !document.getElementById("GPinfo_ID" + id) && config.description ) {
-                var advancedTools = document.getElementById("GPadvancedTools_ID" + id);
+            var infodiv = document.getElementById(this._addUID("GPinfo_ID_" + id));
+            if ( !document.getElementById(this._addUID("GPinfo_ID_" + id)) && config.description ) {
+                var advancedTools = document.getElementById(this._addUID("GPadvancedTools_ID_" + id));
                 if ( advancedTools ) {
                     advancedTools.appendChild(
                         this._createAdvancedToolInformationElement({
@@ -307,7 +311,7 @@ define([
             }
             // close layer info element if open, to update information.
             if ( infodiv && infodiv.className === "GPlayerInfoOpened" ) {
-                document.getElementById("GPlayerInfoPanel").className = "GPlayerInfoPanelClosed";
+                document.getElementById(this._addUID("GPlayerInfoPanel")).className = "GPlayerInfoPanelClosed";
                 infodiv.className === "GPlayerInfo";
             }
 
@@ -322,15 +326,15 @@ define([
     LayerSwitcher.prototype.removeLayer = function (layer) {
 
         var layerID = layer.gpLayerId;
-        var layerList = document.getElementById("GPlayersList");
+        var layerList = document.getElementById(this._addUID("GPlayersList"));
         // close layer info element if open.
-        var infodiv = document.getElementById("GPinfo_ID" + layerID);
+        var infodiv = document.getElementById(this._addUID("GPinfo_ID_" + layerID));
         if ( infodiv && infodiv.className === "GPlayerInfoOpened" ) {
-            document.getElementById("GPlayerInfoPanel").className = "GPlayerInfoPanelClosed";
+            document.getElementById(this._addUID("GPlayerInfoPanel")).className = "GPlayerInfoPanelClosed";
             infodiv.className === "GPlayerInfo";
         }
         // remove layer div
-        var layerDiv = document.getElementById("GPlayerSwitcher_ID" + layerID);
+        var layerDiv = document.getElementById(this._addUID("GPlayerSwitcher_ID_" + layerID));
         layerList.removeChild(layerDiv);
 
         var layerIndex = Math.abs(layer.getZIndex() - this._lastZIndex);
@@ -356,7 +360,7 @@ define([
             console.log("[ERROR] LayerSwitcher:setCollapsed - missing collapsed parameter");
             return;
         }
-        var isCollapsed = !document.getElementById("GPshowLayersList").checked;
+        var isCollapsed = !document.getElementById(this._addUID("GPshowLayersList")).checked;
         if ( ( collapsed && isCollapsed) || ( !collapsed && !isCollapsed ) ) {
             return;
         }
@@ -366,9 +370,9 @@ define([
             for ( var i = 0; i < layers.length; i++ ) {
                 layers[i].className = "GPlayerInfo";
             }
-            document.getElementById("GPlayerInfoPanel").className = "GPlayerInfoPanelClosed";
+            document.getElementById(this._addUID("GPlayerInfoPanel")).className = "GPlayerInfoPanelClosed";
         }
-        document.getElementById("GPshowLayersList").checked = !collapsed;
+        document.getElementById(this._addUID("GPshowLayersList")).checked = !collapsed;
     };
 
     /**
@@ -393,7 +397,7 @@ define([
             console.log("[LayerSwitcher:setRemovable] layer should be added to map before calling setRemovable method");
             return;
         }
-        var removalDiv = document.getElementById("GPremove_ID" + layerID);
+        var removalDiv = document.getElementById(this._addUID("GPremove_ID_" + layerID));
         console.log(removalDiv.style.display);
         if ( removalDiv ) {
             if ( removable === false ) {
@@ -418,6 +422,9 @@ define([
      * @private
      */
     LayerSwitcher.prototype._initialize = function (options, layers) {
+
+        // identifiant du contrôle : utile pour suffixer les identifiants CSS (pour gérer le cas où il y en a plusieurs dans la même page)
+        this._uid = SelectorID.generate();
 
         // {Object} control layers list. Each key is a layer id, and its value is an object of layers options (layer, id, opacity, visibility, title, description...)
         this._layers = {};
@@ -584,11 +591,13 @@ define([
                 // Ajout de listeners sur les changements d'opacité, visibilité
                 layer.on(
                     "change:opacity",
-                    this._updateLayerOpacity
+                    this._updateLayerOpacity,
+                    this
                 );
                 layer.on(
                     "change:visible",
-                    this._updateLayerVisibility
+                    this._updateLayerVisibility,
+                    this
                 );
 
                 // récupération des zindex des couches s'ils existent, pour les ordonner.
@@ -674,12 +683,12 @@ define([
      * @private
      */
     LayerSwitcher.prototype._onChangeLayerOpacity = function (e) {
-        var divId    = e.target.id;
-        var layerID  = divId.substring(divId.indexOf("_") + 3);  // ex GPvisibilityPicto_ID26
+        var divId    = e.target.id; // ex GPvisibilityPicto_ID_26
+        var layerID  = SelectorID.index(divId);  // ex. 26
         var layer    = this._layers[layerID].layer;
 
         var opacityValue = e.target.value;
-        var opacityId = document.getElementById("GPopacityValue_ID" + layerID);
+        var opacityId = document.getElementById(this._addUID("GPopacityValue_ID_" + layerID));
         opacityId.innerHTML = opacityValue + "%";
 
         layer.setOpacity(opacityValue / 100);
@@ -700,9 +709,9 @@ define([
             opacity = 0;
         }
         var id = e.target.gpLayerId;
-        var layerOpacityInput = document.getElementById("GPopacityValueDiv_ID" + id);
+        var layerOpacityInput = document.getElementById(this._addUID("GPopacityValueDiv_ID_" + id));
         layerOpacityInput.value = Math.round(opacity * 100);
-        var layerOpacitySpan = document.getElementById("GPopacityValue_ID" + id);
+        var layerOpacitySpan = document.getElementById(this._addUID("GPopacityValue_ID_" + id));
         layerOpacitySpan.innerHTML = Math.round(opacity * 100) + "%";
     };
 
@@ -713,8 +722,8 @@ define([
      * @private
      */
     LayerSwitcher.prototype._onVisibilityLayerClick = function (e) {
-        var divId    = e.target.id;
-        var layerID  = divId.substring(divId.indexOf("_") + 3);  // ex GPvisibilityPicto_ID26
+        var divId    = e.target.id; // ex GPvisibilityPicto_ID_26
+        var layerID  = SelectorID.index(divId);  // ex. 26
         var layer    = this._layers[layerID].layer;
 
         layer.setVisible(e.target.checked);
@@ -729,7 +738,7 @@ define([
     LayerSwitcher.prototype._updateLayerVisibility = function (e) {
         var visible = e.target.getVisible();
         var id = e.target.gpLayerId;
-        var layerVisibilityInput = document.getElementById("GPvisibility_ID" + id);
+        var layerVisibilityInput = document.getElementById(this._addUID("GPvisibility_ID_" + id));
         layerVisibilityInput.checked = visible;
     };
 
@@ -827,9 +836,9 @@ define([
      */
     LayerSwitcher.prototype._onOpenLayerInfoClick = function (e) {
 
-        var divId    = e.target.id;
-        var layerID  = divId.substring(divId.indexOf("_") + 3);  // ex GPvisibilityPicto_ID26
-        var layerOptions    = this._layers[layerID];
+        var divId    = e.target.id; // ex GPvisibilityPicto_ID_26
+        var layerID  = SelectorID.index(divId);  // ex. 26
+        var layerOptions = this._layers[layerID];
 
         var panel;
         var info;
@@ -842,14 +851,14 @@ define([
                 divId.classList.add("GPlayerInfo");
             }
 
-            panel = document.getElementById("GPlayerInfoPanel");
+            panel = document.getElementById(this._addUID("GPlayerInfoPanel"));
             if ( panel.classList !== undefined ) {
                 panel.classList.remove("GPpanel");
                 panel.classList.remove("GPlayerInfoPanelOpened");
                 panel.classList.add("GPlayerInfoPanelClosed");
             }
 
-            info = document.getElementById("GPlayerInfoContent");
+            info = document.getElementById(this._addUID("GPlayerInfoContent"));
             panel.removeChild(info);
             return;
         }
@@ -865,14 +874,14 @@ define([
             divId.classList.add("GPlayerInfoOpened");
         }
 
-        panel = document.getElementById("GPlayerInfoPanel");
+        panel = document.getElementById(this._addUID("GPlayerInfoPanel"));
         if ( panel.classList !== undefined ) {
             panel.classList.add("GPpanel");
             panel.classList.remove("GPlayerInfoPanelClosed");
             panel.classList.add("GPlayerInfoPanelOpened");
         }
 
-        info = document.getElementById("GPlayerInfoContent");
+        info = document.getElementById(this._addUID("GPlayerInfoContent"));
         if (info) {
             panel.removeChild(info);
         }
@@ -903,8 +912,8 @@ define([
      * @private
      */
     LayerSwitcher.prototype._onDropLayerClick = function (e) {
-        var divId    = e.target.id;
-        var layerID  = divId.substring(divId.indexOf("_") + 3);  // ex GPvisibilityPicto_ID26
+        var divId    = e.target.id; // ex GPvisibilityPicto_ID_26
+        var layerID  = SelectorID.index(divId);  // ex. 26
         var layer    = this._layers[layerID].layer;
 
         // le retrait de la couche va déclencher l'ecouteur d'évenement,
@@ -934,7 +943,7 @@ define([
         for (var i = 0; i < matchesLayers.length; i++) {
 
             var tag = matchesLayers[i].id;
-            var id  = tag.substring(tag.indexOf("_") + 3);
+            var id  = SelectorID.index(tag);
             var layer = this._layers[id].layer;
 
             // on commence par désactiver temporairement l'écouteur d'événements sur le changement de zindex.
@@ -981,11 +990,11 @@ define([
                     var layerDiv;
                     if ( this.isInRange(layer, map) && !layerOptions.inRange ) {
                         layerOptions.inRange = true;
-                        layerDiv = document.getElementById("GPlayerSwitcher_ID" + id);
+                        layerDiv = document.getElementById(this._addUID("GPlayerSwitcher_ID_" + id));
                         layerDiv.classList.remove("outOfRange");
                     } else if ( !this.isInRange(layer, map) && layerOptions.inRange ) {
                         layerOptions.inRange = false;
-                        layerDiv = document.getElementById("GPlayerSwitcher_ID" + id);
+                        layerDiv = document.getElementById(this._addUID("GPlayerSwitcher_ID_" + id));
                         layerDiv.classList.add("outOfRange");
                     }
                 }
@@ -1016,7 +1025,7 @@ define([
         this) ;
 
         // TODO : recuperer "GPlayerSwitcher_ID" depuis une constante
-        return foundId !== null ? "GPlayerSwitcher_ID" + foundId : null ;
+        return foundId !== null ? this._addUID("GPlayerSwitcher_ID_" + foundId) : null ;
     };
 
     /**
