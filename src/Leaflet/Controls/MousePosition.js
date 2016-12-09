@@ -124,7 +124,7 @@ define([
             // on merge les options avec celles par defaut
             L.Util.extend(this.options, options);
 
-            /** uuid */
+            // uuid
             this._uid = ID.generate();
 
             // initialisation des systemes de projections
@@ -135,7 +135,7 @@ define([
             this._projectionUnits = {};
             this._initProjectionUnits();
 
-            /** detection du support : desktop ou tactile */
+            // detection du support : desktop ou tactile
             this._isDesktop = this._detectSupport();
 
             // on met en place un seuil sur le timer
@@ -143,22 +143,22 @@ define([
                 this.options.altitude.triggerDelay = 100;
             }
 
-            /** timer sur le delai d'immobilisation du mouvement */
+            // timer sur le delai d'immobilisation du mouvement
             this._timer = this.options.altitude.triggerDelay;
 
-            /** Systeme de projection selectionné (cf. _initProjectionSystems) */
+            // Systeme de projection selectionné (cf. _initProjectionSystems)
             this._currentProjectionSystems = this._projectionSystems[0];
 
-            /** Container des systemes */
+            // Container des systemes
             this._projectionSystemsContainer = null;
 
             /** Type d'unité de projection selectionnés : Geographical ou Metric (cf._initProjectionSystems ) */
             this._currentProjectionType = this._projectionSystems[0].type;
 
-            /** Unité de projection selectionnés (cf. _initProjectionUnits) */
+            // Unité de projection selectionnés (cf. _initProjectionUnits)
             this._currentProjectionUnits = this._projectionUnits[this._currentProjectionType][0].code;
 
-            /** Container des unités */
+            // Container des unités
             this._projectionUnitsContainer = null;
 
             /** Container de visualisation du panneau du composant */
@@ -1093,6 +1093,8 @@ define([
             // add systems whose extent intersects the map extent
             for (var j = 0; j < this._projectionSystems.length; j++) {
                 var proj = this._projectionSystems[j];
+                var option = null;
+
                 if ( proj.geoBBox ) {
                     // bboxes intersection test
                     if (  map.getBounds()._southWest.lng > proj.geoBBox.right ||
@@ -1101,7 +1103,7 @@ define([
                           map.getBounds()._northEast.lat < proj.geoBBox.bottom
                     ) {
                         if ( proj === this._currentProjectionSystems ) {
-                            var option = document.createElement("option");
+                            option = document.createElement("option");
                             option.value = proj.code;
                             option.text  = proj.label || j;
                             option.setAttribute( "selected", "selected" );
@@ -1112,7 +1114,7 @@ define([
                         continue; // do not intersect
                     }
                 }
-                var option = document.createElement("option");
+                option = document.createElement("option");
                 option.value = proj.code;
                 option.text  = proj.label || j;
                 if ( proj === this._currentProjectionSystems ) {

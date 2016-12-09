@@ -4,10 +4,6 @@ input[id^=GPshowSearchEngine-] + label + form[id^=GPsearchInput-] {
   max-width: 0px;
 }
 
-#GPlayerSwitcher label { /* FIXME !? */
-  display: block;
-}
-
 /* Showing/hiding search engine input */
 
 input[id^=GPshowSearchEngine-] {

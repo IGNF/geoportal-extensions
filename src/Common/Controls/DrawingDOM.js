@@ -6,18 +6,19 @@ define([], function () {
 
         /** Add uuid to the tag ID */
         _addUID : function (id) {
-            return id + "-" + this._uid;
+            var uid = (this._uid) ?  id + "-" + this._uid : id;
+            return uid;
         },
 
         /**
          * Main container (DOM)
-         * 
+         *
          * @returns {DOMElement} DOM element
          */
         _createMainContainerElement : function () {
 
             var container = document.createElement("div");
-            container.id  = this._addUID("GPdrawing") ; 
+            container.id  = this._addUID("GPdrawing") ;
             container.className = "GPwidget";
             return container;
         },
@@ -80,7 +81,7 @@ define([], function () {
                     label : this.options.labels.points,
                     active : false,
                     panel : "draw",
-                    id : "point" 
+                    id : "point"
                 } ;
             }
             if (this.options.tools.lines) {
@@ -88,7 +89,7 @@ define([], function () {
                     label : this.options.labels.lines,
                     active : false,
                     panel : "draw",
-                    id : "line" 
+                    id : "line"
                 } ;
             }
             if (this.options.tools.polygons) {
@@ -96,7 +97,7 @@ define([], function () {
                     label : this.options.labels.polygons,
                     active : false,
                     panel : "draw",
-                    id : "polygon" 
+                    id : "polygon"
                 } ;
             }
             if (this.options.tools.text) {
@@ -104,7 +105,7 @@ define([], function () {
                     label : this.options.labels.text,
                     active : false,
                     panel : "draw",
-                    id : "text" 
+                    id : "text"
                 } ;
             }
             if (this.options.tools.edit) {
@@ -112,7 +113,7 @@ define([], function () {
                     label : this.options.labels.edit,
                     active : false,
                     panel : "edit",
-                    id : "edit" 
+                    id : "edit"
                 } ;
             }
             if (this.options.tools.display) {
@@ -120,7 +121,7 @@ define([], function () {
                     label : this.options.labels.display,
                     active : false,
                     panel : "edit",
-                    id : "display" 
+                    id : "display"
                 } ;
             }
             if (this.options.tools.tooltip) {
@@ -128,7 +129,7 @@ define([], function () {
                     label : this.options.labels.tooltip,
                     active : false,
                     panel : "edit",
-                    id : "tooltip" 
+                    id : "tooltip"
                 } ;
             }
             if (this.options.tools.remove) {
@@ -136,20 +137,20 @@ define([], function () {
                     label : this.options.labels.remove,
                     active : false,
                     panel : "edit",
-                    id : "remove" 
+                    id : "remove"
                 } ;
             }
             // ajout drawing tools
-            if (this.dtOptions.points || 
-                this.dtOptions.lines || 
-                this.dtOptions.polygons || 
+            if (this.dtOptions.points ||
+                this.dtOptions.lines ||
+                this.dtOptions.polygons ||
                 this.dtOptions.text) {
                 div.appendChild(this._createDrawingToolSection(this.options.labels.creatingTools, "draw"));
             }
             // ajout editing tools
-            if (this.dtOptions.edit || 
-                this.dtOptions.display || 
-                this.dtOptions.tooltip || 
+            if (this.dtOptions.edit ||
+                this.dtOptions.display ||
+                this.dtOptions.tooltip ||
                 this.dtOptions.remove) {
                 div.appendChild(this._createDrawingToolSection(this.options.labels.editingTools, "edit"));
             }
@@ -228,7 +229,7 @@ define([], function () {
              *         <li id="drawing-tool-text" class="drawing-tool" title="Ecrire sur la carte"></li>
              *     </ul>
              * </div>
-             */ 
+             */
             var container = document.createElement("div");
             container.className = "drawing-tool-section" ;
 
@@ -275,7 +276,7 @@ define([], function () {
              * <div class="drawing-tool-section drawing-tools-flex-display">
              *     <button title="Exporter en KML" class="tool-form-submit drawing-button" id="drawing-export" type="button">Exporter</button>
              * </div>
-             */ 
+             */
             var container = document.createElement("div");
             container.className = "drawing-tool-section drawing-tools-flex-display" ;
 
@@ -375,7 +376,7 @@ define([], function () {
          * @param {String} options.className - input className
          * @returns {DOMElement} - created li element
          */
-        _createMarkersChooser : function (options) { 
+        _createMarkersChooser : function (options) {
             var li = document.createElement("li") ;
             li.className = options.className ;
             for (var i = 0 ; i < this.options.markersList.length ; i++) {
@@ -414,7 +415,7 @@ define([], function () {
          * @param {String} options.className - input className
          * @returns {DOMElement} - created li element
          */
-        _createStylingElement : function (options) { 
+        _createStylingElement : function (options) {
             var li = document.createElement("li") ;
             li.className = options.className ;
             var textNode = document.createTextNode(options.label) ;
@@ -447,7 +448,7 @@ define([], function () {
 
         /**
          * Creates Styling div to include in popup.
-         * 
+         *
          * @param {Object} options - toolId selected
          * @param {String} options.geomType - gemeotryType selected ("Point", "Line" or "Polygon")
          * @param {Object} options.initValues - values to init fields
@@ -455,7 +456,7 @@ define([], function () {
          * @param {Function} options.applyFunc - function called when apply is selected
          * @returns {DOMElement} DOM element created
          */
-        _createStylingDiv : function (options) { 
+        _createStylingDiv : function (options) {
             var div = document.createElement("div") ;
             div.className = "gp-styling-div"  ;
             var ul = document.createElement("ul") ;
@@ -593,7 +594,7 @@ define([], function () {
 
         /**
          * Creates Text editing div to include in popup.
-         * 
+         *
          * @param {Object} options - options for popup
          * @param {String} options.geomType - gemeotryType selected ("Point", "Line" or "Polygon")
          * @param {String} options.text - text to fill input.
@@ -603,7 +604,7 @@ define([], function () {
          * @returns {DOMElement} DOM element created
          * @private
          */
-        _createLabelDiv : function (options) { 
+        _createLabelDiv : function (options) {
             var popup = document.createElement("div") ;
             popup.className = "gp-label-div" ;
             var inputLabel = null ;
@@ -632,7 +633,7 @@ define([], function () {
             inputLabel.onkeyup = function (evtk) {
                 if (options.geomType == "Text" && evtk.keyCode == 13) {
                     options.applyFunc.call(this,inputLabel.value,true) ;
-                } 
+                }
                 if (evtk.keyCode == 27) {
                     options.applyFunc.call(this,inputLabel.value,false) ;
                 }
@@ -664,12 +665,12 @@ define([], function () {
 
         /**
          * Handles drawing tool selection from a DOM point of view.
-         * 
+         *
          * @param {Event} e - DOM Event
          * @param {String} toolId - toolId selected
          * @param {DrawingDOM} context - Drawing control instance
          */
-        _handleDOMToolClick : function (e,toolId,context) { 
+        _handleDOMToolClick : function (e,toolId,context) {
             for (var availType in context.dtOptions) {
                 var availToolId = context._addUID("drawing-tool-" + context.dtOptions[availType].id) ;
                 var li = document.getElementById(availToolId) ;

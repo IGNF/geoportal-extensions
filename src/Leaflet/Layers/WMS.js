@@ -82,9 +82,9 @@ function (L, Gp, woodman, LayerEvent) {
                 this,
                 // tracker extension leaflet
                 // FIXME : gp-ext version en mode AMD
-                Gp.Helper.normalyzeUrl(url,{
+                Gp.Helper.normalyzeUrl(url, {
                     "gp-leaflet-ext" : "__GPLEAFLETEXTVERSION__"
-                },false),
+                }, false),
                 settings
             );
 
@@ -109,7 +109,7 @@ function (L, Gp, woodman, LayerEvent) {
         * @private
         */
         onAdd : function (map) {
-            logger.log("onAdd layer", this._geoportal_id);
+            logger.trace("onAdd layer", this._geoportal_id);
 
             // recuperation de la map
             this._map = map;
@@ -191,7 +191,7 @@ function (L, Gp, woodman, LayerEvent) {
         * @private
         */
         onRemove : function (map) {
-            logger.log("onRemove layer", this._geoportal_id);
+            logger.trace("onRemove layer", this._geoportal_id);
 
             // recuperation de la map
             this._map = map;

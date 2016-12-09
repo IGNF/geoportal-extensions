@@ -8,10 +8,12 @@
 define([
     "leaflet",
     "woodman",
+    "Common/Utils/SelectorID",
     "Common/Controls/LayerSwitcherDOM"
 ], function (
     L,
     woodman,
+    ID,
     LayerSwitcherDOM
 ) {
 
@@ -53,6 +55,11 @@ define([
         // ################################################################### //
 
         /**
+        * @constructor LayerSwitcher
+        *
+        * @private
+        * @alias LayerSwitcher
+        * @extends {L.Control}
         * @param {Object} options - options of component
         * @param {String}  [options.position] - position of component into the map, 'topleft' by default
         * @param {Boolean} [options.collapsed] - collapse mode, false by default
@@ -81,14 +88,18 @@ define([
         *  ]
         *  options = {
         *      position : "topright",
-        *      collapsed : true
+        *      collapsed : true,
+        *      layers : layers
         *  }
         *
-        * @private
+        *  var layerSwitcher = L.geoportalControl.LayerSwitcher(options);
         */
         initialize : function (options) {
 
             L.Util.setOptions(this, options);
+
+            // uuid
+            this._uid = ID.generate();
 
             // il faut recuperer tous les layers de la carte (cf. onAdd).
             // si une configuration de layers est renseignée, on exploite cette
@@ -104,7 +115,7 @@ define([
             // configuration des layers
             this._layersConfig = (this._hasLayersConfig) ? this.options.layers : [];
 
-            // liste des layers (interface avec le dom)
+            // liste des layers (c'est l'interface avec le dom !)
             this._layers = {};
 
             // indice : ordre des layers sur la carte
@@ -206,13 +217,16 @@ define([
                 }
             }
 
-            // FIXME mise à jour des visibilités
+            // mise à jour des visibilités (au niveau du DOM, oeil coché ou non...)
             for (var k in this._layers) {
                 if (this._layers.hasOwnProperty(k)) {
                     var obj = this._layers[k];
-                    if (!obj.visibility) {
-                        // visibility et etat de la checkbox, ce n'est pas la même chose...
-                        this._visibilityLayer(!obj.visibility, obj.layer);
+                    var _layer = obj.layer;
+                    var _visibility = obj.visibility;
+                    // par defaut, la visibilité de la couche est active, donc avec un oeil non coché !
+                    if (!_visibility) {
+                        // on met à jour la liste des layers à afficher !
+                        this._updateVisibilityLayer(_layer);
                     }
                 }
             }
@@ -227,6 +241,20 @@ define([
             this._update();
             map.on("layeradd", this._onLayerChange, this);
             map.on("layerremove", this._onLayerChange, this);
+
+            // expiremental !
+            map.eachLayer(function (layer) {
+                // ecouteur sur la visibilité des attributions d'un layer IGN
+                layer.on("visibilitychange", function () {
+                    logger.trace("visibilitychange", layer);
+                },
+                this);
+                // ecouteur sur la liste des attributions d'un layer IGN
+                layer.on("attributionchange", function () {
+                    logger.trace("attributionchange", layer);
+                },
+                this);
+            });
 
             return this._container;
         },
@@ -262,15 +290,16 @@ define([
                 return;
             }
 
-            // recherche de la config
+            // recherche de la config pour un layer donné
             var layerConfig = {};
             for (var i in this._layersConfig) {
                 if (this._layersConfig.hasOwnProperty(i)) {
                     if (id === L.stamp(this._layersConfig[i].layer)) {
                         layerConfig = this._layersConfig[i].config;
-                        // prise en compte du layer display
+                        // display
                         // ce layer n'est pas pris en compte dans le controle
-                        // mais il est affiché dans la map
+                        // mais il peut être affiché dans la map
+                        // si au préalable, le client l'a ajouté...
                         var display = ( typeof this._layersConfig[i].display != "undefined" ) ? this._layersConfig[i].display : true;
                         if (!display) {
                             return;
@@ -280,28 +309,36 @@ define([
                 }
             }
 
-            // on construit un objet simplifié pour le dom,
+            // construit un objet simplifié pour le dom,
             // par defaut, on prend en compte les layers de type IGN
             // (info de l'autoconf).
             this._layers[id] = {
                 layer : layer,
                 id : id,
-                overlay : overlay, // FIXME not use !
+                overlay : overlay, // not use !
                 title : (layer._geoportal_id && layer._title) ? layer._title : (name) ? name : id,
                 description : (layer._geoportal_id && layer._description) ? layer._description : (name) ? name : id,
-                visibility : (layer._geoportal_id) ? layer.getVisible() : true,
+                visibility : true, // par defaut, sauf si surcharge via la config...
                 legends : (layer._geoportal_id) ? layer._legends : null,
                 metadata : (layer._geoportal_id) ? layer._metadata : null,
                 quicklookUrl : (layer._geoportal_id) ? layer._quicklookUrl : null
             };
 
-            // on surcharge les options de configuration
+            // surcharge la config ci dessus avec les options de configuration saisies
             if (layerConfig && Object.keys(layerConfig)) {
                 L.Util.extend(this._layers[id], layerConfig);
             }
 
-            // FIXME mise à jour de la visibilité pour un layer IGN
-            (layer._geoportal_id) ? layer.setVisible(this._layers[id].visibility) : null;
+            // mise à jour de la visibilité
+            var _visibility = this._layers[id].visibility;
+            if (layer._geoportal_id) {
+                // mise à jour de la visibilité des attributions pour un layer IGN
+                layer.setVisible(_visibility);
+            }
+            if (!_visibility) {
+                // on met à jour la liste des layers à afficher !
+                this._updateVisibilityLayer(layer);
+            }
 
         },
 
@@ -328,7 +365,7 @@ define([
 
             // gestion du mode "collapsed"
             if (!this.options.collapsed) {
-                input.checked = "checked";
+                input.checked = true;
             }
 
             // ajout dans le container principal de la liste des layers
@@ -496,9 +533,20 @@ define([
         * @returns {Object} layer
         */
         removeLayer : function (layer) {
+
+            // clean DOM !
             var id = L.stamp(layer);
             delete this._layers[id];
             this._update();
+
+            // clean Layers
+            var map = this._map;
+            if (map) {
+                if (map.hasLayer(layer)) {
+                    map.removeLayer(layer);
+                }
+            }
+
             return this;
         },
 
@@ -507,34 +555,62 @@ define([
         // ################################################################### //
 
         /**
-        * Set visibility of layer
+        * Set visibility of attribution layer
         * (call by this._onVisibilityLayerClick())
         *
         * @private
-        * @param {Boolean} checked - visible ou non
         * @param {Object} layer - layer
         */
-        _visibilityLayer :  function (checked, layer) {
+        _updateVisibilityLayer :  function (layer) {
 
             this._handlingClick = true;
 
-            if (layer._geoportal_id) {
-                // FIXME cas des couches IGN, cette methode devrait faire le boulot...,
-                // quand je l'aurais implementé...
-                var value = !layer.getVisible();
-                layer.setVisible(value);
-            }
+            var visibility = this._layers[L.stamp(layer)].visibility;
 
-            if (checked && this._map.hasLayer(layer)) {
-                this._map.removeLayer(layer);
-            } else if (!checked && !this._map.hasLayer(layer)) {
+            if (visibility && !this._map.hasLayer(layer)) {
+                // input non checked dans le DOM, on ouvre l'oeil
+                // et on ajoute la couche !
                 this._map.addLayer(layer);
+
+            } else if (!visibility && this._map.hasLayer(layer)) {
+                // input checked dans le DOM, on ferme l'oeil
+                // et on supprime la couche !
+                this._map.removeLayer(layer);
+
             } else {
                 logger.log("Status unknown layer !?");
             }
 
             this._handlingClick = false;
             this._refocusOnMap();
+        },
+
+        /**
+        * Set visibility of layer (DOM)
+        * (call by this.setVisibility())
+        *
+        * @private
+        * @param {Object} layer - layer
+        */
+        _updateVisibilityDOMLayer :  function (layer) {
+            var layerIdx = L.stamp(layer);
+            var visibilityElement = L.DomUtil.get(this._addUID("GPvisibility_ID_" + layerIdx)); // FIXME ID !
+            var visibilityValue   = this._layers[layerIdx].visibility;
+            visibilityElement.checked = visibilityValue;
+        },
+
+        /**
+        * Set opacity of layer (DOM)
+        * (call by this.setOpacity())
+        *
+        * @private
+        * @param {Object} layer - layer
+        */
+        _updateOpacityDOMLayer :  function (layer) {
+            var layerIdx = L.stamp(layer);
+            var opacityValue   = layer.options.opacity;
+            var opacityElement = L.DomUtil.get(this._addUID("GPopacityValue_ID_" +  layerIdx)); // FIXME ID !
+            opacityElement.innerHTML = parseInt(opacityValue * 100, 10) + "%";
         },
 
         // ################################################################### //
@@ -555,7 +631,7 @@ define([
                 if (layers.hasOwnProperty(i)) {
                     var layer = layers[i].layer;
                     var id    = layers[i].id;
-                    var div   = L.DomUtil.get("GPlayerSwitcher_ID" + id);
+                    var div   = L.DomUtil.get(this._addUID("GPlayerSwitcher_ID_" + id)); // FIXME ID !
                     if (layer.options.minZoom > map.getZoom() || layer.options.maxZoom < map.getZoom()) {
                         L.DomUtil.addClass(div, "outOfRange");
                     } else {
@@ -569,22 +645,19 @@ define([
         /**
         * Event 'click' on layer visibility
         *
-        * FIXME la methode layer.setVisible(false) n'est pas implementé
-        *
         * @private
         * @param {Event} e - MouseEvent
         */
         _onVisibilityLayerClick : function (e) {
 
-            var layerId  = e.target.id;  // ex GPvisibilityPicto_ID26
-            var layerIdx = layerId.substring(layerId.indexOf("_") + 3); // ex. 26
+            var visibilityElement  = e.target.id;  // ex GPvisibilityPicto_ID_26
+            var visibilityOrder    = ID.index(visibilityElement); // ex. 26
 
-            var input = L.DomUtil.get(layerId);
+            // on met à jour cette interface...
+            this._layers[visibilityOrder].visibility = L.DomUtil.get(visibilityElement).checked;
+            var layer = this._layers[visibilityOrder].layer;
 
-            // on met à jour cette interface..., car pas d'evenement sur son changement...
-            this._layers[layerIdx].visibility = input.checked;
-
-            this._visibilityLayer(!input.checked, this._layers[layerIdx].layer);
+            this._updateVisibilityLayer(layer);
 
         },
 
@@ -595,14 +668,11 @@ define([
         * @param {Event} e - MouseEvent
         */
         _onDropLayerClick : function (e) {
-            var layerId  = e.target.id;  // ex GPvisibilityPicto_ID26
-            var layerIdx = layerId.substring(layerId.indexOf("_") + 3); // ex. 26
-            var layer    = this._layers[layerIdx].layer;
+            var layerElement  = e.target.id;  // ex GPvisibilityPicto_ID_26
+            var layerOrder    = ID.index(layerElement); // ex. 26
+            var layer = this._layers[layerOrder].layer;
 
             this.removeLayer(layer);
-            if (this._map.hasLayer(layer)) {
-                this._map.removeLayer(layer);
-            }
         },
 
         /**
@@ -614,12 +684,12 @@ define([
         * @param {Event} e - ChangeEvent
         */
         _onChangeLayerOpacity : function (e) {
-            var layerId  = e.target.id;  // ex GPvisibilityPicto_ID26
-            var layerIdx = layerId.substring(layerId.indexOf("_") + 3); // ex. 26
-            var layer    = this._layers[layerIdx].layer;
+            var layerElement  = e.target.id;  // ex GPvisibilityPicto_ID_26
+            var layerOrder    = ID.index(layerElement);  // ex. 26
+            var layer = this._layers[layerOrder].layer;
 
             var opacityValue = e.target.value;
-            var opacityId = L.DomUtil.get("GPopacityValue_ID" + layerIdx); // FIXME ID !
+            var opacityId = L.DomUtil.get(this._addUID("GPopacityValue_ID_" + layerOrder)); // FIXME ID !
             opacityId.innerHTML = opacityValue + "%";
 
             if (this._map.hasLayer(layer)) {
@@ -637,9 +707,9 @@ define([
         */
         _onOpenLayerInfoClick : function (e) {
 
-            var layerId  = e.target.id;  // ex GPvisibilityPicto_ID26
-            var layerIdx = layerId.substring(layerId.indexOf("_") + 3); // ex. 26
-            var layer    = this._layers[layerIdx];
+            var layerElement  = e.target.id;  // ex GPvisibilityPicto_ID_26
+            var layerOrder    = ID.index(layerElement);  // ex. 26
+            var layer = this._layers[layerOrder];
 
             // Close layer info panel
             var divId = L.DomUtil.get(e.target.id);
@@ -649,12 +719,12 @@ define([
                 L.DomUtil.removeClass(divId, "GPlayerInfoOpened");
                 L.DomUtil.addClass(divId, "GPlayerInfo");
 
-                panel = L.DomUtil.get("GPlayerInfoPanel");
+                panel = L.DomUtil.get(this._addUID("GPlayerInfoPanel"));
                 L.DomUtil.removeClass(panel, "GPpanel");
                 L.DomUtil.removeClass(panel, "GPlayerInfoPanelOpened");
                 L.DomUtil.addClass(panel, "GPlayerInfoPanelClosed");
 
-                info = L.DomUtil.get("GPlayerInfoContent");
+                info = L.DomUtil.get(this._addUID("GPlayerInfoContent"));
                 panel.removeChild(info);
                 return;
             }
@@ -668,12 +738,12 @@ define([
             L.DomUtil.removeClass(divId, "GPlayerInfo");
             L.DomUtil.addClass(divId, "GPlayerInfoOpened");
 
-            panel = L.DomUtil.get("GPlayerInfoPanel");
+            panel = L.DomUtil.get(this._addUID("GPlayerInfoPanel"));
             L.DomUtil.addClass(panel, "GPpanel");
             L.DomUtil.removeClass(panel, "GPlayerInfoPanelClosed");
             L.DomUtil.addClass(panel, "GPlayerInfoPanelOpened");
 
-            info = L.DomUtil.get("GPlayerInfoContent");
+            info = L.DomUtil.get(this._addUID("GPlayerInfoContent"));
             if (info) {
                 panel.removeChild(info);
             }
@@ -694,9 +764,9 @@ define([
         */
         _onDragAndDropLayerClick : function (e) {
 
-            var layerId  = e.item.id;  // ex GPvisibilityPicto_ID26
-            var layerIdx = layerId.substring(layerId.indexOf("_") + 3); // ex. 26
-            var layer    = this._layers[layerIdx].layer;
+            var layerElement  = e.target.id;  // ex GPvisibilityPicto_ID_26
+            var layerOrder    = ID.index(layerElement);  // ex. 26
+            var layer = this._layers[layerOrder];
 
             logger.log(layer);
 
@@ -705,9 +775,9 @@ define([
             for (var i = 0; i < matchesLayers.length; i++) {
 
                 var tag = matchesLayers[i].id;
-                var id  = tag.substring(tag.indexOf("_") + 3);
+                var order = ID.index(tag);
 
-                var _layer = this._layers[id].layer;
+                var _layer = this._layers[order].layer;
                 if (this.options.autoZIndex && _layer.setZIndex) {
                     this._lastZIndex--;
                     _layer.setZIndex(this._lastZIndex);
@@ -755,12 +825,48 @@ define([
             });
 
             cfg.push(_config);
-            layer.setZIndex(this._lastZIndex++);
+
+            // layer déjà configuré, il reprend sa place !
+            if (!this._layers[id]) {
+                layer.setZIndex(this._lastZIndex++);
+            }
+
             this.addOverlay(layer);
 
             this._update();
-        }
+        },
 
+        /**
+        * Set the opacity of a layer, and opacity must be a number from 0 to 1.
+        *
+        * @param {Object} layer - layer into layerswitcher
+        * @param {Number} opacity - 0-1.
+        */
+        setOpacity : function (layer, opacity) {
+            logger.trace(layer, opacity);
+            if (opacity > 1 || opacity < 0) {
+                return;
+            }
+
+            if (this._map.hasLayer(layer)) {
+                layer.setOpacity(opacity);
+                this._updateOpacityDOMLayer(layer);
+            }
+        },
+
+        /**
+        * Set the visibility of a layer.
+        *
+        * @param {Object} layer - layer into layerswitcher
+        * @param {Object} visibility - true/false.
+        */
+        setVisibility : function (layer, visibility) {
+            logger.trace(layer, visibility);
+            this._layers[L.stamp(layer)].visibility = visibility;
+            this._updateVisibilityDOMLayer(layer);
+            this._updateVisibilityLayer(layer);
+
+        }
     });
 
     return LayerSwitcher;

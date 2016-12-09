@@ -5,7 +5,10 @@
   <link rel="stylesheet" href="../../../lib/leaflet/leaflet.css" />
 
   <!-- Plugin leaflet IGN -->
-  <link rel="stylesheet" href="../../../dist/leaflet/GpPluginLeaflet-src.css" />
+  <link rel="stylesheet" href="../../../res/common/GPgeneralWidget.css" />
+  <link rel="stylesheet" href="../../../res/common/GPlayerSwitcher.css" />
+  <link rel="stylesheet" href="../../../res/leaflet/GPgeneralWidgetLeaflet.css" />
+  <link rel="stylesheet" href="../../../res/leaflet/Controls/LayerSwitcher/GPlayerSwitcherLeaflet.css" />
 
   <!-- requirejs -->
   <script src="../../../lib/require.js"></script>
@@ -39,6 +42,7 @@
 
         requirejs(['gp', 'Leaflet/Layers/Layers', 'Leaflet/Controls/LayerSwitcher'],
         function (Gp, Layers, LayerSwitcher) {
+
 
           Gp.Services.getConfig({
             // serverUrl : "../resources/autoconf/callback-autoconf-xml-light-more",
@@ -127,7 +131,7 @@
                 layers : [wms0, wmts1, wmts2, wmts3, wms1, wms2, wms3]
               });
 
-              var layerSwitcher = new LayerSwitcher({collapsed : true});
+              var layerSwitcher = new LayerSwitcher({collapsed : false});
 
               map.on('overlayadd', function (e) {
                 console.log(e);
@@ -199,7 +203,7 @@
               // ];
 
               // liste des options par defaut
-              // var layerSwitcher = new LayerSwitcher({layers : layers, collapsed : true, position : 'topright', autoZIndex : true});
+              // var layerSwitcher = new LayerSwitcher({layers : layers, collapsed : false, position : 'topright', autoZIndex : true});
 
               // OK : ##############################################################
               // cas n°3, l'ajout des couches sur la carte est assuré uniquement par le controle
@@ -248,6 +252,43 @@
               // // ajout d'un layer au controle (qui n'existe pas sur la map)
               // map.addLayer(wms);
               // layerSwitcher.addLayer(wms);
+
+              // ajout de boutons
+              document.getElementById("changeOpacityLess").onclick = function(e) {
+                  var opacity = wmts3.options.opacity;
+                  layerSwitcher.setOpacity(wmts3, opacity - 0.1);
+                  // TODO listener sur la properties opacity afin de mofidier le DOM ?
+              }
+              document.getElementById("changeOpacityMore").onclick = function(e) {
+                  var opacity = wmts3.options.opacity;
+                  layerSwitcher.setOpacity(wmts3, opacity + 0.1);
+                  // TODO listener sur la properties opacity afin de mofidier le DOM ?
+              }
+              document.getElementById("changeVisibility").onclick = function(e) {
+                  var visible = wmts3.getVisible();
+                  layerSwitcher.setVisibility(wmts3, !visible);
+                  // TODO listener sur la properties visibility afin de mofidier le DOM ?
+              }
+              document.getElementById("updateLayerIGN").onclick = function(e) {
+                  layerSwitcher.addLayer(wms2, {
+                    config : {
+                      title : "Test update layer IGN (photo)",
+                      visibility : false
+                    }
+                  });
+                  // FIXME ...
+              }
+              document.getElementById("addLayer").onclick = function(e) {
+                  layerSwitcher.addLayer(wms0, {
+                    config : {
+                      title : "Test add layer",
+                      visibility : false
+                    }
+                  });
+              }
+              document.getElementById("removeLayer").onclick = function(e) {
+                layerSwitcher.removeLayer(wms0);
+              }
             }
           });
         });
@@ -255,6 +296,12 @@
 
     <!-- map -->
     <div id="map" style="height: 400px;"></div>
+    <button type="button" id="changeOpacityLess">Réduire l'opacité de la couche photo</button>
+    <button type="button" id="changeOpacityMore">Augmenter l'opacité de la couche photo</button>
+    <button type="button" id="changeVisibility">Changer la visibilité de la couche photo</button>
+    <button type="button" id="addLayer">Ajouter une couche</button>
+    <button type="button" id="updateLayerIGN">Mise à jour d'une couche IGN</button>
+    <button type="button" id="removeLayer">Supprimer la dernière couche</button>
 
     <!-- Comment utiliser le plugin avec un exemple -->
     <p>TODO : EXEMPLE D'UTILISATION DU PLUGIN</p>
