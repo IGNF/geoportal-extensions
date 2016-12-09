@@ -1,11 +1,13 @@
 define([
     // "vg",
     "Common/Controls/LayerSwitcherDOM",
-    "Common/Utils/LayerUtils"
+    "Common/Utils/LayerUtils",
+    "Common/Utils/SelectorID"
 ], function (
     // VirtualGeo, // FIXME Global for browser only !
     LayerSwitcherDOM,
-    LayerUtils
+    LayerUtils,
+    SelectorID
 ) {
 
     "use strict";
@@ -61,6 +63,9 @@ define([
         if ( options && typeof options !== "object" ) {
             throw new Error("ERROR WRONG_TYPE : options should be an object");
         }
+
+        // identifiant du contrôle : utile pour suffixer les identifiants CSS (pour gérer le cas où il y en a plusieurs dans la même page)
+        this._uid = SelectorID.generate();
 
         var container = this._initContainer(options);
 
@@ -381,15 +386,15 @@ define([
             }
             // set new title in layer div
             if ( config.title ) {
-                var nameDiv = document.getElementById("GPname_ID" + id);
+                var nameDiv = document.getElementById(this._addUID("GPname_ID_" + id));
                 if ( nameDiv ) {
                     nameDiv.innerHTML = config.title;
                 }
             }
             // add layer info picto if necessary
-            var infodiv = document.getElementById("GPinfo_ID" + id);
-            if ( !document.getElementById("GPinfo_ID" + id) && config.description && ( config.legends || config.metadata || config.quicklookUrl ) ) {
-                var advancedTools = document.getElementById("GPadvancedTools_ID" + id);
+            var infodiv = document.getElementById(this._addUID("GPinfo_ID_" + id));
+            if ( !document.getElementById(this._addUID("GPinfo_ID_" + id)) && config.description && ( config.legends || config.metadata || config.quicklookUrl ) ) {
+                var advancedTools = document.getElementById(this._addUID("GPadvancedTools_ID_" + id));
                 if ( advancedTools ) {
                     advancedTools.appendChild(
                         this._createAdvancedToolInformationElement({
@@ -400,7 +405,7 @@ define([
             }
             // close layer info element if open, to update information.
             if ( infodiv && infodiv.className === "GPlayerInfoOpened" ) {
-                document.getElementById("GPlayerInfoPanel").className = "GPlayerInfoPanelClosed";
+                document.getElementById(this._addUID("GPlayerInfoPanel")).className = "GPlayerInfoPanelClosed";
                 infodiv.className === "GPlayerInfo";
             }
 
@@ -414,15 +419,15 @@ define([
      */
     LayerSwitcher.prototype.removeLayer = function (layer) {
         var layerID = layer.id;
-        var layerList = document.getElementById("GPlayersList");
+        var layerList = document.getElementById(this._addUID("GPlayersList"));
         // close layer info element if open.
-        var infodiv = document.getElementById("GPinfo_ID" + layerID);
+        var infodiv = document.getElementById(this._addUID("GPinfo_ID_" + layerID));
         if ( infodiv && infodiv.className === "GPlayerInfoOpened" ) {
-            document.getElementById("GPlayerInfoPanel").className = "GPlayerInfoPanelClosed";
+            document.getElementById(this._addUID("GPlayerInfoPanel")).className = "GPlayerInfoPanelClosed";
             infodiv.className === "GPlayerInfo";
         }
         // remove layer div
-        var layerDiv = document.getElementById("GPlayerSwitcher_ID" + layerID);
+        var layerDiv = document.getElementById(this._addUID("GPlayerSwitcher_ID_" + layerID));
         layerList.removeChild(layerDiv);
 
         // on retire la couche de la liste des layers
@@ -473,7 +478,7 @@ define([
         var childNodes = this._container.childNodes;
 
         for ( var i = 0; i < childNodes.length; i ++ ) {
-            if ( childNodes[i].id === "GPlayersList" ) {
+            if ( childNodes[i].id === this._addUID("GPlayersList") ) {
                 elementLayersList = childNodes[i];
             }
         }
@@ -560,11 +565,12 @@ define([
      */
     LayerSwitcher.prototype._onChangeLayerOpacity = function (e) {
         var map = this.getMap();
-        var divId    = e.target.id;
-        var layerID  = divId.substring(divId.indexOf("_") + 3);  // ex GPvisibilityPicto_ID26
+        var divId    = e.target.id;  // ex GPvisibilityPicto_ID_26-564864564654564
+        var divName  = SelectorID.name(divId); // ex GPvisibilityPicto_ID_26
+        var layerID  = divName.substring(divName.indexOf("_ID_") + 4 );  // ex. 26
 
         var opacityValue = e.target.value;
-        var opacityId = document.getElementById("GPopacityValue_ID" + layerID);
+        var opacityId = document.getElementById(this._addUID("GPopacityValue_ID_" + layerID));
         opacityId.innerHTML = opacityValue + "%";
 
         map.setLayerOpacity({
@@ -588,9 +594,9 @@ define([
             opacity = 0;
         }
         var id = changedLayer.id;
-        var layerOpacityInput = document.getElementById("GPopacityValueDiv_ID" + id);
+        var layerOpacityInput = document.getElementById(this._addUID("GPopacityValueDiv_ID_" + id));
         layerOpacityInput.value = Math.round(opacity * 100);
-        var layerOpacitySpan = document.getElementById("GPopacityValue_ID" + id);
+        var layerOpacitySpan = document.getElementById(this._addUID("GPopacityValue_ID_" + id));
         layerOpacitySpan.innerHTML = Math.round(opacity * 100) + "%";
     };
 
@@ -601,8 +607,10 @@ define([
      */
     LayerSwitcher.prototype._onVisibilityLayerClick = function (e) {
         var map = this.getMap();
-        var divId    = e.target.id;
-        var layerID  = divId.substring(divId.indexOf("_") + 3);  // ex GPvisibilityPicto_ID26
+
+        var divId    = e.target.id;  // ex GPvisibilityPicto_ID_26-564864564654564
+        var divName  = SelectorID.name(divId); // ex GPvisibilityPicto_ID_26
+        var layerID  = divName.substring(divName.indexOf("_ID_") + 4 );  // ex. 26
 
         map.setLayerVisible({
             id : layerID,
@@ -618,7 +626,7 @@ define([
     LayerSwitcher.prototype._updateLayerVisibility = function (changedLayer) {
         var id = changedLayer.id;
         var visible = changedLayer.visible;
-        var layerVisibilityInput = document.getElementById("GPvisibility_ID" + id);
+        var layerVisibilityInput = document.getElementById(this._addUID("GPvisibility_ID_" + id));
         layerVisibilityInput.checked = visible;
     };
 
@@ -629,9 +637,11 @@ define([
      */
     LayerSwitcher.prototype._onOpenLayerInfoClick = function (e) {
 
-        var divId    = e.target.id;
-        var layerID  = divId.substring(divId.indexOf("_") + 3);  // ex GPvisibilityPicto_ID26
-        var layerOptions    = this._layers[layerID];
+        var divId    = e.target.id;  // ex GPvisibilityPicto_ID_26-564864564654564
+        var divName  = SelectorID.name(divId); // ex GPvisibilityPicto_ID_26
+        var layerID  = divName.substring(divName.indexOf("_ID_") + 4 );  // ex. 26
+
+        var layerOptions = this._layers[layerID];
 
         var panel;
         var info;
@@ -644,14 +654,14 @@ define([
                 divId.classList.add("GPlayerInfo");
             }
 
-            panel = document.getElementById("GPlayerInfoPanel");
+            panel = document.getElementById(this._addUID("GPlayerInfoPanel"));
             if ( panel.classList !== undefined ) {
                 panel.classList.remove("GPpanel");
                 panel.classList.remove("GPlayerInfoPanelOpened");
                 panel.classList.add("GPlayerInfoPanelClosed");
             }
 
-            info = document.getElementById("GPlayerInfoContent");
+            info = document.getElementById(this._addUID("GPlayerInfoContent"));
             panel.removeChild(info);
             return;
         }
@@ -667,14 +677,14 @@ define([
             divId.classList.add("GPlayerInfoOpened");
         }
 
-        panel = document.getElementById("GPlayerInfoPanel");
+        panel = document.getElementById(this._addUID("GPlayerInfoPanel"));
         if ( panel.classList !== undefined ) {
             panel.classList.add("GPpanel");
             panel.classList.remove("GPlayerInfoPanelClosed");
             panel.classList.add("GPlayerInfoPanelOpened");
         }
 
-        info = document.getElementById("GPlayerInfoContent");
+        info = document.getElementById(this._addUID("GPlayerInfoContent"));
         if (info) {
             panel.removeChild(info);
         }
@@ -699,8 +709,11 @@ define([
      */
     LayerSwitcher.prototype._onDropLayerClick = function (e) {
         var map = this.getMap();
-        var divId    = e.target.id;
-        var layerID  = divId.substring(divId.indexOf("_") + 3);  // ex GPvisibilityPicto_ID26
+
+        var divId    = e.target.id;  // ex GPvisibilityPicto_ID_26-564864564654564
+        var divName  = SelectorID.name(divId); // ex GPvisibilityPicto_ID_26
+        var layerID  = divName.substring(divName.indexOf("_ID_") + 4 );  // ex. 26
+
         // le retrait de la couche va déclencher l'ecouteur d'évenement,
         // et appeler this.removeLayer qui va supprimer la div.
         map.removeLayer({
@@ -739,8 +752,10 @@ define([
 
         for (var i = 0; i < matchesLayers.length; i++) {
             // newIndex = maxZIndex - i;
-            var tag = matchesLayers[i].id;
-            var id  = tag.substring(tag.indexOf("_") + 3);
+            var tag = matchesLayers[i].id; // ex. GPlayerSwitcher_ID_ELEVATION.SLOPES-1481286391563
+            var name = SelectorID.name(tag); // ex. GPlayerSwitcher_ID_ELEVATION.SLOPES
+            var id = name.substring(name.indexOf("_ID_") + 4 ); // ex. ELEVATION.SLOPES
+
             var layer = map.getLayer(id);
             if (layer.type === "raster") {
                 rasterLayerCount = rasterLayerCount - 1;
@@ -772,11 +787,11 @@ define([
                     var layerDiv;
                     if ( isInRange(layer, map) && !layerOptions.inRange ) {
                         layerOptions.inRange = true;
-                        layerDiv = document.getElementById("GPlayerSwitcher_ID" + id);
+                        layerDiv = document.getElementById(this._addUID("GPlayerSwitcher_ID_" + id));
                         layerDiv.classList.remove("outOfRange");
                     } else if ( !isInRange(layer, map) && layerOptions.inRange ) {
                         layerOptions.inRange = false;
-                        layerDiv = document.getElementById("GPlayerSwitcher_ID" + id);
+                        layerDiv = document.getElementById(this._addUID("GPlayerSwitcher_ID_" + id));
                         layerDiv.classList.add("outOfRange");
                     }
                 }
