@@ -135,12 +135,12 @@ define([
                 var extent = projectionExtent;
 
                 if (  extent != null  && projection.isGlobal() && extent[0] === projectionExtent[0] && extent[2] === projectionExtent[2]) {
-                      var numCols = Math.ceil(ol.extent.getWidth(extent) / ol.extent.getWidth(tileExtent));
-                      x = x % numCols;
-                      tmpTileCoord[0] = tileCoord[0];
-                      tmpTileCoord[1] = x;
-                      tmpTileCoord[2] = tileCoord[2];
-                      tileExtent = tileGrid.getTileCoordExtent(tmpTileCoord, tmpExtent);
+                    var numCols = Math.ceil(ol.extent.getWidth(extent) / ol.extent.getWidth(tileExtent));
+                    x = x % numCols;
+                    tmpTileCoord[0] = tileCoord[0];
+                    tmpTileCoord[1] = x;
+                    tmpTileCoord[2] = tileCoord[2];
+                    tileExtent = tileGrid.getTileCoordExtent(tmpTileCoord, tmpExtent);
                 }
                 if (!ol.extent.intersects(tileExtent, extent) /*|| ol.extent.touches(tileExtent, extent) */) {
                     return null;
@@ -172,6 +172,10 @@ define([
             };
 
             this.assign(baseParams, params);
+
+            /*var tileSize = tileGrid.getTileSize();
+            var x = Math.floor(tileSize*((coordinate[0]-tileExtent[0])/(tileExtent[2]-tileExtent[0])));
+            var y = Math.floor(tileSize*((tileExtent[3]-coordinate[1])/(tileExtent[3]-tileExtent[1])));*/
 
             var x = Math.floor((coordinate[0] - tileExtent[0]) / (tileResolution / pixelRatio));
             var y = Math.floor((tileExtent[3] - coordinate[1]) / (tileResolution / pixelRatio));
