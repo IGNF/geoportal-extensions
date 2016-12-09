@@ -270,34 +270,10 @@ define([
         // timer pour cacher la patience après un certain temps
         this._timer = null;
 
-        // #################################################################### //
-        // ############### initialisation des types d'import ################## //
-
-        this._currentImportType = "KML";
-        this._isCurrentImportTypeStatic = true;
-        this._currentStaticImportType = "local";
-
-        // #################################################################### //
-        // ############### initialisation des styles par défaut ################## //
-
-        var kmlDefaultStyles = this.options.vectorStyleOptions.KML.defaultStyle;
-        this._defaultKMLStyle = new ol.style.Style({
-            image : kmlDefaultStyles.image,
-            stroke : kmlDefaultStyles.stroke,
-            fill : kmlDefaultStyles.fill
-        });
-        var gpxDefaultStyles = this.options.vectorStyleOptions.GPX.defaultStyle;
-        this._defaultGPXStyle = new ol.style.Style({
-            image : gpxDefaultStyles.image,
-            stroke : gpxDefaultStyles.stroke,
-            fill : gpxDefaultStyles.fill
-        });
-        var geoJSONDefaultStyles = this.options.vectorStyleOptions.GeoJSON.defaultStyle;
-        this._defaultGeoJSONStyle = new ol.style.Style({
-            image : geoJSONDefaultStyles.image,
-            stroke : geoJSONDefaultStyles.stroke,
-            fill : geoJSONDefaultStyles.fill
-        });
+        // initialisation des types d'import
+        this._initImportTypes();
+        // initialisation des styles par défaut
+        this._initDefaultStyles();
 
         // ################################################################## //
         // ################### Elements principaux du DOM ################### //
@@ -337,38 +313,82 @@ define([
             var layerTypes = options.layerTypes;
             // on vérifie que la liste des types est bien un tableau
             if ( !Array.isArray(layerTypes) ) {
-                console.log("[ol.control.LayerImport] 'options.layerTypes' parameter should be an array");
-                layerTypes = null;
-            }
-            var typesList = ["KML", "GPX", "GEOJSON", "WMS", "WMTS", "WFS"];
-            var wrongTypesIndexes = [];
-            for ( var i = 0; i < layerTypes.length; i++ ) {
-                if ( typeof layerTypes[i] !== "string" ) {
-                    // si l'élément du tableau n'est pas une chaine de caractères, on stocke l'index pour le retirer du tableau
-                    wrongTypesIndexes.push(i);
-                    console.log("[ol.control.LayerImport] 'options.layerTypes' elements should be of type string (" + layerTypes[i] + ")");
-                } else {
-                    // on passe en majuscules pour comparer
-                    layerTypes[i] = layerTypes[i].toUpperCase();
-                    if ( typesList.indexOf(layerTypes[i]) === -1 ) {
-                        // si le type n'est pas référencé, on stocke son index pour le retirer du tableau (après avoir terminé de parcourir le tableau)
+                console.log("[ol.control.LayerImport] 'options.layerTypes' parameter should be an array. Set default values [\"KML\", \"GPX\", \"GeoJSON\", \"WMS\", \"WMTS\"]");
+                options.layerTypes = ["KML", "GPX", "GeoJSON", "WMS", "WMTS"];
+            } else {
+                var typesList = ["KML", "GPX", "GEOJSON", "WMS", "WMTS", "WFS"];
+                var wrongTypesIndexes = [];
+                for ( var i = 0; i < layerTypes.length; i++ ) {
+                    if ( typeof layerTypes[i] !== "string" ) {
+                        // si l'élément du tableau n'est pas une chaine de caractères, on stocke l'index pour le retirer du tableau
                         wrongTypesIndexes.push(i);
-                        console.log("[ol.control.LayerImport] options.layerTypes : " + layerTypes[i] + " is not a supported type");
-                    }
-                    // cas spécial du GeoJSON qu'on ne laisse pas en majuscules
-                    if ( layerTypes[i] === "GEOJSON" ) {
-                        layerTypes[i] = "GeoJSON";
+                        console.log("[ol.control.LayerImport] 'options.layerTypes' elements should be of type string (" + layerTypes[i] + ")");
+                    } else {
+                        // on passe en majuscules pour comparer
+                        layerTypes[i] = layerTypes[i].toUpperCase();
+                        if ( typesList.indexOf(layerTypes[i]) === -1 ) {
+                            // si le type n'est pas référencé, on stocke son index pour le retirer du tableau (après avoir terminé de parcourir le tableau)
+                            wrongTypesIndexes.push(i);
+                            console.log("[ol.control.LayerImport] options.layerTypes : " + layerTypes[i] + " is not a supported type");
+                        }
+                        // cas spécial du GeoJSON qu'on ne laisse pas en majuscules
+                        if ( layerTypes[i] === "GEOJSON" ) {
+                            layerTypes[i] = "GeoJSON";
+                        }
                     }
                 }
-            }
-            // on retire les types non référencés qu'on a pu rencontrer
-            if ( wrongTypesIndexes.length !== 0 ) {
-                for ( var j = wrongTypesIndexes.length - 1; j >= 0 ; j-- ) {
-                    layerTypes.splice(wrongTypesIndexes[j], 1);
+                // on retire les types non référencés qu'on a pu rencontrer
+                if ( wrongTypesIndexes.length !== 0 ) {
+                    for ( var j = wrongTypesIndexes.length - 1; j >= 0 ; j-- ) {
+                        layerTypes.splice(wrongTypesIndexes[j], 1);
+                    }
                 }
             }
         }
     };
+
+    /**
+     * this method is called by this.initialize()
+     * and initializes default styles for vector layers (KML/GPX/GeoJSON)
+     *
+     * @private
+     */
+    LayerImport.prototype._initDefaultStyles = function () {
+        var kmlDefaultStyles = this.options.vectorStyleOptions.KML.defaultStyle;
+        this._defaultKMLStyle = new ol.style.Style({
+            image : kmlDefaultStyles.image,
+            stroke : kmlDefaultStyles.stroke,
+            fill : kmlDefaultStyles.fill
+        });
+        var gpxDefaultStyles = this.options.vectorStyleOptions.GPX.defaultStyle;
+        this._defaultGPXStyle = new ol.style.Style({
+            image : gpxDefaultStyles.image,
+            stroke : gpxDefaultStyles.stroke,
+            fill : gpxDefaultStyles.fill
+        });
+        var geoJSONDefaultStyles = this.options.vectorStyleOptions.GeoJSON.defaultStyle;
+        this._defaultGeoJSONStyle = new ol.style.Style({
+            image : geoJSONDefaultStyles.image,
+            stroke : geoJSONDefaultStyles.stroke,
+            fill : geoJSONDefaultStyles.fill
+        });
+    }
+
+    /**
+     * this method is called by this.initialize()
+     * and initializes import types parameter
+     *
+     * @private
+     */
+    LayerImport.prototype._initImportTypes = function () {
+        this._currentImportType = this.options.layerTypes[0] || "KML";
+        if ( this._currentImportType === "KML" || this._currentImportType === "GPX" || this._currentImportType === "GeoJSON" ) {
+            this._isCurrentImportTypeStatic = true;
+        } else if ( this._currentImportType === "WMS" || this._currentImportType === "WMTS" || this._currentImportType === "WFS" ) {
+            this._isCurrentImportTypeStatic = false;
+        }
+        this._currentStaticImportType = "local";
+    }
 
     /**
      * Create control main container (DOM initialize)
