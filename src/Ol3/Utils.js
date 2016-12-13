@@ -124,7 +124,9 @@ define([
             var tileGrid = source.tileGrid;
             var tileCoord = source.tileGrid.getTileCoordForCoordAndResolution(coordinate, resolution);
 
-            /*this code is duplicated from createFromWMTSTemplate function*/
+            /*
+            * this code is duplicated from createFromWMTSTemplate function
+            */
             var getTransformedTileCoord = function (tileCoord, tileGrid, projection) {
                 var tmpTileCoord = [0,0,0]; /*Note : [z(zoomLevel),x,y]*/
                 var tmpExtent = ol.extent.createEmpty();
