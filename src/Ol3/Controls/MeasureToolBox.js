@@ -2,11 +2,13 @@ define([
     "ol",
     "woodman",
     "Ol3/Utils",
+    "Common/Utils/SelectorID",
     "Common/Controls/MeasureToolBoxDOM"
 ], function (
     ol,
     woodman,
     Utils,
+    ID,
     MeasureToolBoxDOM
 ) {
 
@@ -16,6 +18,9 @@ define([
     var logger = woodman.getLogger("toolbox");
 
     var MeasureToolBox = {
+
+        /** uuid */
+        _uid : null,
 
         /**
         * Ajout d'un controle dans la ToolBox.
@@ -30,6 +35,10 @@ define([
             if (! map) {
                 logger.trace("map doesn't exist !?");
                 return;
+            }
+
+            if (!this._uid) {
+                this._uid = ID.generate();
             }
 
             var mapContainer = map.getTargetElement();

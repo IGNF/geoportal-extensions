@@ -10,17 +10,17 @@ define([], function () {
 
         /** get toolBox ID */
         getToolBoxID : function () {
-            return this._toolboxId;
+            return (this._uid) ? this._toolboxId + "-" + this._uid : this._toolboxId;
         },
 
         /** get toolBox ID */
         getButtonID : function () {
-            return this._buttonId;
+            return (this._uid) ? this._buttonId + "-" + this._uid : this._buttonId;
         },
 
         /** get toolBox Container for widget */
         getWidgetID : function () {
-            return this._widgetId;
+            return (this._uid) ? this._widgetId + "-" + this._uid : this._widgetId;
         },
 
         /**
@@ -37,15 +37,15 @@ define([], function () {
             //   </div>
             // </div>
             var container = document.createElement("div");
-            container.id  = this._toolboxId;
+            container.id  = this.getToolBoxID();
             container.className = "GPshowAdvancedToolPicto";
 
             var button = document.createElement("button");
-            button.id = this._buttonId;
+            button.id = this.getButtonID();
             var self = this;
             button.addEventListener("click", function () {
                 this.blur(); // permet de perdre le focus !
-                var widget = document.getElementById(self._widgetId);
+                var widget = document.getElementById(self.getWidgetID());
                 if ( widget.style.display === "block") {
                     widget.style.display = "none";
                 } else {
@@ -55,13 +55,13 @@ define([], function () {
             container.appendChild(button);
 
             var widget = document.createElement("div");
-            widget.id = this._widgetId;
+            widget.id = this.getWidgetID();
             widget.addEventListener("click", function () {
 
                 /*
                     e.preventDefault();
 
-                    // FIXME comment desactiver tous les outils sur
+                    // FIXME desactiver tous les outils sur
                     // l'ouverture/fermeture de la toolbox ?
 
                     var current = e.target.parentNode.getAttribute("for");
