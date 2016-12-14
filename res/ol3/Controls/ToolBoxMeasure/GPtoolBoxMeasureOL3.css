@@ -3,7 +3,7 @@
 - pictogramme 26x26
 - ...
 */
-#GPtoolbox-measure-main {
+div[id^=GPtoolbox-measure-main] {
   float: left;
   left: 78px;
   top: 8px;
@@ -12,7 +12,7 @@
   z-index: 1;
 }
 
-#GPtoolbox-measure-button {
+button[id^=GPtoolbox-measure-button] {
   color: white;
   border-color: rgba(255, 255, 255, 0.8);
   border-style: none;
@@ -25,12 +25,12 @@
   padding: 0px;
 }
 
-#GPtoolbox-measure-button {
+button[id^=GPtoolbox-measure-button] {
   background-repeat: no-repeat;
   background-image: url("img/GPtoolBoxMeasureOpen.png");
 }
 
-#GPtoolbox-measure-widget {
+div[id^=GPtoolbox-measure-widget] {
   left:auto;
   display: none;
   /*visibility: hidden;*/
@@ -41,7 +41,7 @@
   /*box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);*/
 }
 
-#GPtoolbox-measure-widget > div {
+div[id^=GPtoolbox-measure-widget] > div {
   display: block;
   /*visibility: visible;*/
   position: relative;
@@ -51,15 +51,15 @@
   right: auto;
 }
 
-#GPtoolbox-measure-main:hover {
+div[id^=GPtoolbox-measure-main]:hover {
     /*display: block;*/
     /*visibility: visible;*/
 }
 
-#GPtoolbox-measure-main:hover:not(.active) {
+div[id^=GPtoolbox-measure-main]:hover:not(.active) {
     /*background-color: rgba(0,60,136,0.3);*/
 }
 
-#GPtoolbox-measure-main:hover #GPtoolbox-measure-button {
+div[id^=GPtoolbox-measure-main]:hover button[id^=GPtoolbox-measure-button] {
     background-color: rgba(0,60,136,0.7);
 }

@@ -578,12 +578,30 @@ define([
                 apiKey : options.apiKey || this.options.apiKey
             });
 
+            // le sampling est soit defini par l'utilisateur (opts),
+            // ou soit calculé dynamiquement...
+            var _sampling = options.sampling;
+            if (!_sampling) {
+
+                // computing sampling
+                var _computeSampling = 50;
+                var _length = this._currentFeature._measurementRunningTotal; // FIXME !!!
+                logger.trace("length", _length);
+                var p = Math.floor(_length) / 5; // en mètre sur un pas moyen de 5m !
+                if (p >= 200) {
+                    _computeSampling = 200;
+                } else {
+                    _computeSampling = Math.floor(p);
+                }
+                _sampling = _computeSampling;
+            }
+
             // on y ajoute les callbacks ainsi que les options par defaut
             var self = this;
             L.Util.extend(options, {
 
                 /** sampling à 200 (iso portail) */
-                sampling : options.sampling || 200,
+                sampling : _sampling,
 
                 /** callback onSuccess */
                 onSuccess : this.options.elevationPathOptions.onSuccess || function (result) {
@@ -892,8 +910,8 @@ define([
         var minZ = sortedElev[0].z ;
         var maxZ = sortedElev[sortedElev.length - 1].z ;
         var diff = maxZ - minZ ;
-        var dist = data[data.length - 1].dist;
-
+        var distMax = data[data.length - 1].dist; // km !
+        // var distMin = 0;
         var barwidth = 100 / data.length ;
 
         var self = this;
@@ -931,13 +949,29 @@ define([
 
         var divZ = document.createElement("div");
         divZ.className = "z-title-vertical";
-        divZ.innerHTML = minZ + " / " + maxZ + " m";
+        var ulZ  = document.createElement("ul");
+        var liZmin = document.createElement("li");
+        liZmin.setAttribute("class", "min-z");
+        liZmin.innerHTML = minZ + " m";
+        var liZmax = document.createElement("li");
+        liZmax.setAttribute("class", "max-z");
+        liZmax.innerHTML = maxZ + " m";
+        // var divUnit = document.createElement("div");
+        // divUnit.className = "unit";
+        // divUnit.innerHTML = "m";
+        ulZ.appendChild(liZmax);
+        ulZ.appendChild(liZmin);
+        divZ.appendChild(ulZ);
+        // divZ.appendChild(divUnit);
         div.appendChild(divZ);
 
-        var ul  = document.createElement("ul");
-        ul.id   = "data-default";
-        ul.className = "z-axis x-axis";
-        div.appendChild(ul);
+        var divData = document.createElement("div");
+        divData.className = "profileElevationContent";
+
+        var ulData  = document.createElement("ul");
+        ulData.id   = "data-default";
+        ulData.className = "z-axis x-axis";
+        divData.appendChild(ulData);
 
         for (var i = 0 ; i < data.length ; i++) {
             var d = data[i] ;
@@ -951,13 +985,24 @@ define([
             li.setAttribute("class", "percent v" + pct) ;
             li.title = "altitude : " + d.z + "m" ;
             li.setAttribute("style", "width: " + barwidth + "%") ;
-            ul.appendChild(li) ;
+            ulData.appendChild(li) ;
         }
 
         var divX = document.createElement("div");
         divX.className = "x-title-horizontal";
-        divX.innerHTML = dist + " km";
-        div.appendChild(divX);
+        var ulX  = document.createElement("ul");
+        var liXmin = document.createElement("li");
+        liXmin.setAttribute("class", "min-x");
+        liXmin.innerHTML = "";
+        var liXmax = document.createElement("li");
+        liXmax.setAttribute("class", "max-x");
+        liXmax.innerHTML = distMax + " km";
+        ulX.appendChild(liXmin);
+        ulX.appendChild(liXmax);
+        divX.appendChild(ulX);
+        divData.appendChild(divX);
+
+        div.appendChild(divData);
 
         context._profile = container;
     };
