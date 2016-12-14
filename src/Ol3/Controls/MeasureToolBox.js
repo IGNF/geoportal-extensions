@@ -19,8 +19,12 @@ define([
 
     var MeasureToolBox = {
 
-        /** uuid */
-        _uid : null,
+        /**
+        * liste des uid/map (pour chaque toolbox)
+        * { map : uid }
+        * Ex. { "map1" : 465456456486845 }
+        */
+        _toolbox : {},
 
         /**
         * Ajout d'un controle dans la ToolBox.
@@ -37,24 +41,30 @@ define([
                 return;
             }
 
-            if (!this._uid) {
-                this._uid = ID.generate();
-            }
-
             var mapContainer = map.getTargetElement();
             var mapDocument  = mapContainer.ownerDocument;
+            var mapId = mapContainer.id;
 
-            if (! mapDocument.getElementById(this.getToolBoxID())) {
+            if (!this._toolbox || Object.keys(this._toolbox).length === 0 ) {
+                this._toolbox[mapId] = ID.generate();
+            } else {
+                if (!this._toolbox[mapId]) {
+                    this._toolbox[mapId] = ID.generate();
+                }
+            }
+
+            var uid = this._toolbox[mapId];
+            if (! mapDocument.getElementById(this.getToolBoxID(uid))) {
                 logger.trace("create toolbox !");
                 // creation et ajout de la toolbox sur la map
-                var toolboxContainer = this._createToolBoxContainerElement();
-                var overlaysContainer = mapDocument.getElementsByClassName("ol-overlaycontainer-stopevent");
+                var toolboxContainer = this._createToolBoxContainerElement(uid);
+                var overlaysContainer = mapContainer.getElementsByClassName("ol-overlaycontainer-stopevent");
                 overlaysContainer[0].appendChild(toolboxContainer);
                 // mapContainer.appendChild(toolboxContainer);
             }
 
             // ajout du widget dans la toolbox
-            var widgetContainer = mapDocument.getElementById(this.getWidgetID());
+            var widgetContainer = mapDocument.getElementById(this.getWidgetID(uid));
             ctrl.setTarget(widgetContainer);
             logger.trace("add control to toolbox !");
 

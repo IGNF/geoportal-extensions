@@ -9,18 +9,18 @@ define([], function () {
         _widgetId : "GPtoolbox-measure-widget",
 
         /** get toolBox ID */
-        getToolBoxID : function () {
-            return (this._uid) ? this._toolboxId + "-" + this._uid : this._toolboxId;
+        getToolBoxID : function (uid) {
+            return (uid) ? this._toolboxId + "-" + uid : this._toolboxId;
         },
 
         /** get toolBox ID */
-        getButtonID : function () {
-            return (this._uid) ? this._buttonId + "-" + this._uid : this._buttonId;
+        getButtonID : function (uid) {
+            return (uid) ? this._buttonId + "-" + uid : this._buttonId;
         },
 
         /** get toolBox Container for widget */
-        getWidgetID : function () {
-            return (this._uid) ? this._widgetId + "-" + this._uid : this._widgetId;
+        getWidgetID : function (uid) {
+            return (uid) ? this._widgetId + "-" + uid : this._widgetId;
         },
 
         /**
@@ -28,7 +28,7 @@ define([], function () {
         *
         * @returns {DOMElement} DOM element
         */
-        _createToolBoxContainerElement : function () {
+        _createToolBoxContainerElement : function (uid) {
 
             // <div id="GPtoolbox-measure-main">
             //   <button id="GPtoolbox-measure-button">&#9776;</button>
@@ -37,15 +37,15 @@ define([], function () {
             //   </div>
             // </div>
             var container = document.createElement("div");
-            container.id  = this.getToolBoxID();
+            container.id  = this.getToolBoxID(uid);
             container.className = "GPshowAdvancedToolPicto";
 
             var button = document.createElement("button");
-            button.id = this.getButtonID();
+            button.id = this.getButtonID(uid);
             var self = this;
             button.addEventListener("click", function () {
                 this.blur(); // permet de perdre le focus !
-                var widget = document.getElementById(self.getWidgetID());
+                var widget = document.getElementById(self.getWidgetID(uid));
                 if ( widget.style.display === "block") {
                     widget.style.display = "none";
                 } else {
@@ -55,7 +55,7 @@ define([], function () {
             container.appendChild(button);
 
             var widget = document.createElement("div");
-            widget.id = this.getWidgetID();
+            widget.id = this.getWidgetID(uid);
             widget.addEventListener("click", function () {
 
                 /*
