@@ -284,31 +284,32 @@ define([
             return;
         }
 
-        // re-initialization of codes
+        /*re-initialization of codes*/
         var oldNewCodeMap = [];
-        for ( var i = 0; i < this._projectionSystems.length; i++ ) {
-            oldNewCodeMap[ Number( this._projectionSystems[i].code ) ] = i;
-            this._projectionSystems[i].code = i;
+
+        for ( var j = 0; j < this._projectionSystems.length; j++ ) {
+            oldNewCodeMap[ Number( this._projectionSystems[j].code ) ] = j;
+            this._projectionSystems[j].code = j;
         }
 
-        // find system in control container systems list
+        /*find system in control container systems list*/
         var indexChildToRemove = null;
 
-        for ( var j = 0; j < systemList.childNodes.length; j++) {
+        for ( var k = 0; k < systemList.childNodes.length; k++) {
             if ( systemCode == systemList.childNodes[j].value ) {
-                indexChildToRemove = j;
+                indexChildToRemove = k;
                 continue;
             }
             systemList.childNodes[j].value = oldNewCodeMap [ Number( systemList.childNodes[j].value ) ];
         }
-        // remove system from control container systems list
+        /*remove system from control container systems list*/
         if ( indexChildToRemove != null ) {
             systemList.removeChild( systemList.childNodes[ indexChildToRemove ] );
         }
 
-        // choose arbitrarily a new current system if needed
+        /*choose arbitrarily a new current system if needed*/
         if ( this._currentProjectionSystems.code == systemCode ) {
-            systemList.childNodes[0].setAttribute( "selected", "selected");
+            systemList.childNodes[0].setAttribute( "selected", "selected" );
             this._setCurrentSystem( systemList.childNodes[0].value );
         }
     };
@@ -546,16 +547,15 @@ define([
 
         var systems = this.options.systems;
         for (var i = 0; i < systems.length; i++) {
-
-            // definition d'un systeme de reference
+            /*definition d'un systeme de reference*/
             var sys = systems[i];
             this.addSystem(sys);
         }
 
         if ( this._projectionSystems.length === 0 ) {
             // on ajoute les systèmes de projections par défaut
-            for (var i = 0; i < projectionSystemsByDefault.length; i++ ) {
-                this.addSystem(projectionSystemsByDefault[i]);
+            for (var j = 0; j < projectionSystemsByDefault.length; j++ ) {
+                this.addSystem(projectionSystemsByDefault[j]);
             }
         }
     };
@@ -1211,7 +1211,7 @@ define([
     MousePosition.prototype._setCurrentSystem = function ( systemCode ) {
         // si on change de type de systeme, on doit aussi changer le type d'unités !
         var type = null;
-        for (var i = 0 ; i < this._projectionSystems.length ; ++i) {
+        for (var i = 0 ; i < this._projectionSystems.length ; ++i ) {
             if ( this._projectionSystems[i].code == systemCode ) {
                 type = this._projectionSystems[i].type;
                 break;
@@ -1262,23 +1262,24 @@ define([
         // get extent in WGS84 coordinates
         mapExtent = ol.proj.transformExtent( mapExtent, crs, "EPSG:4326");
 
-        // clear select
+        /*clear select*/
         var systemList = document.getElementById( this._addUID("GPmousePositionProjectionSystem") );
         systemList.innerHTML = "";
 
         // add systems whose extent intersects the map extent
         for (var j = 0; j < this._projectionSystems.length; j++) {
-            var proj = this._projectionSystems[j];
+            var proj   = this._projectionSystems[j];
+            var option = null;
 
             if ( proj.geoBBox ) {
-                // bboxes intersection test
+                /*bboxes intersection test*/
                 if (   mapExtent[0] > proj.geoBBox.right ||
                       mapExtent[1] > proj.geoBBox.top   ||
                       mapExtent[2] < proj.geoBBox.left  ||
                       mapExtent[3] < proj.geoBBox.bottom
                 ) {
                     if ( proj === this._currentProjectionSystems ) {
-                        var option = document.createElement("option");
+                        option = document.createElement("option");
                         option.value = proj.code;
                         option.text  = proj.label || j;
                         option.setAttribute( "selected", "selected" );
@@ -1286,17 +1287,18 @@ define([
 
                         systemList.appendChild(option);
                     }
-                    continue; // do not intersect
+                    continue;// do not intersect
                 }
             }
-            var option = document.createElement("option");
-            option.value = proj.code;
-            option.text  = proj.label || j;
-            if ( proj === this._currentProjectionSystems ) {
-                option.setAttribute( "selected", "selected" );
-            }
 
-            systemList.appendChild(option);
+            var optionElement = document.createElement("option");
+            optionElement.value = proj.code;
+            optionElement.text  = proj.label || j;
+
+            if ( proj === this._currentProjectionSystems ) {
+                optionElement.setAttribute( "selected", "selected" );
+            }
+            systemList.appendChild(optionElement);
         }
     };
 

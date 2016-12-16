@@ -5,7 +5,7 @@
     <title>sample vg LayerSwitcher</title>
 
     <!-- Library VirtualGeo -->
-    <script src="../../../lib/vg/js/VirtualGeoWeb-5.0.6.js"></script>
+    <script src="../../../lib/vg/js/VirtualGeoWeb-5.0.7rc.js"></script>
     <!-- <script src="../../../lib/ol3/ol-debug.js"></script> -->
 
     <!-- Plugin VirtualGeo IGN -->
@@ -257,15 +257,16 @@ requirejs(
                                 }
                             });
 
-                            pMap.addFeatureLayer({
-                               id: "myKmlLayer1",
-                               url: "http://localhost/Client3D/12_08_septembre/VirtualGeoWeb-5.0.6/Data/croquis.kml",
-                            });
+                            // pMap.addFeatureLayer({
+                            //    id: "myKmlLayer1",
+                            //    url: "http://localhost/Client3D/12_08_septembre/VirtualGeoWeb-5.0.6/Data/croquis.kml",
+                            // });
+                            //
+                            // pMap.addFeatureLayer({
+                            //    id: "myKmlLayer2",
+                            //    url: "http://localhost/Client3D/12_08_septembre/VirtualGeoWeb-5.0.6/Data/croquis.kml",
+                            // });
 
-                            pMap.addFeatureLayer({
-                               id: "myKmlLayer2",
-                               url: "http://localhost/Client3D/12_08_septembre/VirtualGeoWeb-5.0.6/Data/croquis.kml",
-                            });
                             // MNT IGN Haute résolution - 5 m - WMS
                             pMap.addElevationLayer({
                                 protocol : "wmts",

@@ -124,5 +124,20 @@ define([
      */
     SourceWMTS.prototype.constructor = SourceWMTS;
 
+    /**
+    * Return the GetFeatureInfo URL for the passed coordinate, resolution, and
+    * projection. Return `undefined` if the GetFeatureInfo URL cannot be
+    * constructed.
+    * @param {ol.Coordinate} coordinate - Coordinate.
+    * @param {Number} resolution - Resolution.
+    * @param {ol.proj.Projection} projection - Projection.
+    * @param {!Object} params - GetFeatureInfo params. `INFOFORMAT` at least should
+    *     be provided.
+    * @return {String|undefined} GetFeatureInfo URL.
+    */
+    SourceWMTS.prototype.getGetFeatureInfoUrl = function (coordinate, resolution, projection, params) {
+        return Utils.getGetFeatureInfoUrl(this, coordinate, resolution, projection, params);
+    };
+
     return SourceWMTS;
 });

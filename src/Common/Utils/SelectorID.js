@@ -27,7 +27,7 @@ define([], function () {
         name : function (id) {
             var name = null;
 
-            var i = id.indexOf("-");
+            var i = id.lastIndexOf("-");
             if (i === -1) {
                 name = id;
             } else {
@@ -42,12 +42,12 @@ define([], function () {
             var index = null;
 
             var name = this.name(id);
-            if (name !== id) {
-                var i = name.indexOf("_");
-                if (i !== -1) {
-                    index = name.substring(i + 1);
-                }
+            // if (name !== id) {
+            var i = name.lastIndexOf("_");
+            if (i !== -1) {
+                index = name.substring(i + 1);
             }
+            // }
 
             return index;
         },
@@ -56,7 +56,7 @@ define([], function () {
         uuid : function (id) {
             var uuid = null;
 
-            var i = id.indexOf("-");
+            var i = id.lastIndexOf("-");
             if (i !== -1) {
                 uuid = parseInt(id.substring(i + 1), 10);
             }

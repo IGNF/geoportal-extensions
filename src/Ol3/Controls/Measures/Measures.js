@@ -25,9 +25,9 @@ define([
         // ****************************************************************** //
         // > Default Styles
         // ****************************************************************** //
-    
+
         /*
-         * Pointer 
+         * Pointer
          */
         DEFAULT_POINTER_STYLE : new ol.style.Circle({
             radius : 5,
@@ -245,11 +245,16 @@ define([
         */
         clearMeasureToolTip : function () {
 
-            // "querySelectorAll" :
-            // au cas où il y'aurait plusieurs container (ex. overview-map)
-            var lstNodes = document.querySelectorAll(".ol-overlaycontainer-stopevent");
-            for (var k = 0; k < lstNodes.length; k++) {
-                var nodes = lstNodes[k];
+            var map = this.getMap();
+            if (!map) {
+                return;
+            }
+
+            var mapContainer = map.getTargetElement();
+            // au cas où il y'aurait plusieurs container de carte !
+            var overlays = mapContainer.getElementsByClassName("ol-overlaycontainer-stopevent");
+            for (var k = 0; k < overlays.length; k++) {
+                var nodes = overlays[k];
                 var len = nodes.children.length;
                 var nodesToRemove = [];
                 for (var i = 0; i < len; i++) {

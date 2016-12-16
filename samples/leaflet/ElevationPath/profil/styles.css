@@ -1,3 +1,168 @@
+/* Widgets : general */
+/*
+http://codepen.io/anon/pen/gLzMwa?editors=1100#0
+*/
+
+
+.GPwidget {
+  position: absolute;
+  font-family: "Helvetica Neue",Arial,Helvetica,sans-serif;
+  font-size: 13px;
+  color: #333;
+}
+
+.GPwidget * {
+  box-sizing: border-box;
+  background-repeat: no-repeat;
+}
+
+/* waiting */
+
+.GPwaiting {
+    background-image : url("img/waiting.gif");
+    background-position : center center;
+    background-repeat : no-repeat;
+}
+
+/* General panels */
+
+.GPpanel {
+  background-color: #FFF;
+}
+
+.GPpanelHeader {
+  position: relative;
+  width: 100%;
+}
+
+.GPpanelTitle {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-weight: bold;
+}
+
+.GPpanelClose, .GPpanelReduce {
+  position: absolute;
+  cursor: pointer;
+}
+
+/* Showing/hiding advanced panels */
+
+.GPshowAdvancedToolPicto {
+  position: relative;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.GPshowAdvancedToolOpen {
+  position: absolute;
+  display: block;
+  box-sizing: border-box;
+}
+
+/* Flex inputs */
+
+.GPflexInput {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: flex;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+.GPflexInput > * {
+  display: block;
+  height: 28px;
+  line-height: 26px;
+  border: 1px solid #999;
+  border-radius: 0;
+}
+
+.GPflexInput *:not(:last-child) {
+  border-right:none;
+}
+
+.GPflexInput *:first-child {
+  border-radius: 3px 0 0 3px;
+}
+
+.GPflexInput *:last-child {
+  border-radius: 0 3px 3px 0;
+}
+
+.GPflexInput > *:not(input) {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.GPflexInput > input {
+  -webkit-flex: 1;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  padding: 0 5px;
+  min-width: 0;
+}
+
+.GPflexInput > select {
+  -webkit-flex: 1;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  padding-right: 7px;
+}
+
+.GPflexInput > label {
+  background-color:  #F2F2F2;
+  color: #666;
+  padding-left: 7px;
+  padding-right: 9px;
+  cursor: pointer;
+}
+
+/* General panels */
+
+.GPpanel {
+  box-shadow: 0 0 6px #000;
+  border-radius: 4px;
+}
+
+.GPpanelHeader {
+  height: 32px;
+  padding: 3px;
+  background-color: #9DB1BD;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.GPpanelTitle {
+  line-height: 26px;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  background-color: #366291;
+  color: #FFF;
+}
+
+.GPpanelClose {
+  top: 3px;
+  right: 3px;
+  width: 26px;
+  height: 26px;
+  background-position: -26px 0;
+}
+
+/* Panel */
+
+[id^=GPelevationPathPanel-] {
+  /*position : relative;
+  top : 6px;
+  left: 32px;*/
+  width : 280px ;
+
+}
+
 /* Calc waiting */
 
 .GPelevationPathCalcWaitingContainerVisible,
@@ -31,14 +196,20 @@
   border-radius: 5px;
 }
 
-/* CSS : Raw */
 
-#profileElevationRaw {
-  resize: none;
+/* ELEVATION PATH DISPLAY */
+
+[id^=GPelevationPathProfil] {
+  height: 150px;
+  width: inherit;
+}
+
+.GPpanelHeader {
   padding: unset;
 }
 
-/* CSS : default */
+
+/* PROFIL */
 
 #profileElevationByDefault,
 .z-title-vertical,
@@ -245,79 +416,3 @@ ul#data-default .percent:hover {
 .v98 { height: 98%; }
 .v99 { height: 99%; }
 .v100 { height: 100%; }
-
-/* CSS : D3 */
-
-text {
-  fill: rgb(94, 94, 94);
-  font-family: Verdana;
-  font-size: 10px;
-  opacity: 1;
-  text-anchor: end;
-}
-
-.axis-d3 {
-  fill: none;
-  stroke: #5E5E5E;
-  stroke-width: 1;
-  shape-rendering: crispEdges;
-}
-
-.area-d3 {
-  fill: #C77A04;
-  stroke: #5E5E5E;
-  stroke-width: 0;
-  fill-opacity: 0.4;
-}
-
-.line-d3 {
-  fill: none;
-  stroke: #C77A04;
-  stroke-width: 1px;
-}
-
-.grid-d3 .tick {
-  stroke: lightgrey;
-  opacity: 0.7;
-}
-
-.grid-d3 path {
-  stroke-width: 0;
-}
-
-.grid-d3 .tick {
-  stroke: lightgrey;
-  opacity: 0.7;
-}
-
-.grid-d3 path {
-  stroke-width: 0;
-}
-
-.overlay-d3 {
-  fill: none;
-  pointer-events: all;
-}
-
-.focusLine-d3 {
-  fill: none;
-  stroke: #C77A04;
-  stroke-width: 0.5px;
-}
-
-.focusCircle-d3 {
-  fill: #C77A04;
-}
-
-div.tooltip-d3 {
-    position: inherit;;
-    text-align: left;
-    width: 80px;
-    height: 35px;
-    padding: 2px;
-    font: 8px sans-serif;
-    background: lightsteelblue;
-    border: 0px;
-    border-radius: 8px;
-    pointer-events: none;
-}

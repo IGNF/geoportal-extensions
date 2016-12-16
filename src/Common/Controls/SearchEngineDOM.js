@@ -6,7 +6,8 @@ define(["Common/Utils/SelectorID"], function (ID) {
 
         /** Add uuid to the tag ID */
         _addUID : function (id) {
-            return id + "-" + this._uid;
+            var uid = (this._uid) ?  id + "-" + this._uid : id;
+            return uid;
         },
 
         /**

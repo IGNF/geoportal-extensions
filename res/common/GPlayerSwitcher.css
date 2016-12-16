@@ -1,10 +1,10 @@
 /* LAYER SWITCHER */
 
-#GPlayerSwitcher {
+div[id^=GPlayerSwitcher-] {
   font-size: 11px;
 }
 
-#GPlayerSwitcher [draggable] {
+div[id^=GPlayerSwitcher-] [draggable] {
   -moz-user-select: none;
   -khtml-user-select: none;
   -webkit-user-select: none;
@@ -16,18 +16,18 @@
 
 /* Manage opening of the components through hiden checkboxes */
 
-#GPlayerSwitcher input[type="checkbox"] + div,
-#GPlayerSwitcher input[type="checkbox"] + label + div {
+div[id^=GPlayerSwitcher-] input[type="checkbox"] + div,
+div[id^=GPlayerSwitcher-] input[type="checkbox"] + label + div {
   max-height: 0px;
 }
 
-#GPlayerSwitcher label {
+div[id^=GPlayerSwitcher-] label {
   display: block;
 }
 
 /* Showing/hiding layers list */
 
-#GPshowLayersListPicto {
+label[id^=GPshowLayersListPicto] {
   position: relative;
   float: right;
   display: block;
@@ -36,34 +36,34 @@
   cursor: pointer;
 }
 
-#GPshowLayersListOpen,
-#GPshowLayersListClose {
+span[id^=GPshowLayersListOpen],
+span[id^=GPshowLayersListClose] {
   position: absolute;
   display: block;
   transition: border-radius 0.5s ease-out 0s, opacity 0.5s ease-out 0s;
 }
 
-#GPshowLayersListOpen {
+span[id^=GPshowLayersListOpen] {
   background-position: 0 0;
   opacity: 1;
 }
 
-#GPshowLayersListClose {
+span[id^=GPshowLayersListClose] {
   opacity: 0;
 }
 
-#GPlayerSwitcher input[type="checkbox"]:checked + div + #GPshowLayersListPicto {
+div[id^=GPlayerSwitcher-] input[type="checkbox"]:checked + div + label[id^=GPshowLayersListPicto] {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
 
-#GPlayerSwitcher input[type="checkbox"]:checked + div + #GPshowLayersListPicto #GPshowLayersListClose {
+div[id^=GPlayerSwitcher-] input[type="checkbox"]:checked + div + label[id^=GPshowLayersListPicto] span[id^=GPshowLayersListClose] {
   opacity: 1;
 }
 
 /* Layers list */
 
-#GPlayersList {
+div[id^=GPlayersList] {
   position: relative;
   width: 180px;
   border-bottom-right-radius: 0;
@@ -72,7 +72,7 @@
   transition: max-height 0.5s ease-out 0s, opacity 0.5s ease-out 0.25s;
 }
 
-#GPlayerSwitcher input[type="checkbox"]:checked + #GPlayersList {
+div[id^=GPlayerSwitcher-] input[type="checkbox"]:checked + div[id^=GPlayersList] {
   max-height: 232px;
   opacity: 1;
   transition: max-height 0.5s ease-in 0s, opacity 0.25s ease-in 0s;
@@ -88,7 +88,7 @@
   overflow: hidden;
 }
 
-#GPlayersList .GPlayerSwitcher_layer:last-child {
+div[id^=GPlayersList] .GPlayerSwitcher_layer:last-child {
   border-bottom: none;
 }
 
@@ -168,7 +168,7 @@ input[type="checkbox"]:checked + .GPlayerVisibility {
   transition: max-height 0.5s ease-out 0s, opacity 0.5s ease-out 0s;
 }
 
-#GPlayerSwitcher input[type="checkbox"]:checked + label + .GPlayerAdvancedTools {
+div[id^=GPlayerSwitcher-] input[type="checkbox"]:checked + label + .GPlayerAdvancedTools {
   max-height: 28px;
   opacity: 1;
 }
@@ -300,7 +300,7 @@ input[type="checkbox"]:checked + .GPlayerVisibility {
 
 /* Layer info panel */
 
-#GPlayerInfoPanel {
+div[id^=GPlayerInfoPanel] {
   position: absolute;
   top: 0;
   overflow-y: hidden;
@@ -316,7 +316,7 @@ input[type="checkbox"]:checked + .GPlayerVisibility {
   display: none;
 }
 
-#GPlayerInfoContent {
+div[id^=GPlayerInfoContent] {
   position: relative;
   width: 280px;
   max-height: 200px;
@@ -325,7 +325,7 @@ input[type="checkbox"]:checked + .GPlayerVisibility {
   padding-right: 10px;
 }
 
-#GPlayerInfoTitle {
+div[id^=GPlayerInfoTitle] {
   width: calc(100% - 52px);
   margin: auto;
   margin-bottom: 10px;
@@ -335,7 +335,7 @@ input[type="checkbox"]:checked + .GPlayerVisibility {
   font-weight: bold;
 }
 
-#GPlayerInfoQuicklook {
+div[id^=GPlayerInfoQuicklook] {
   position: absolute;
   top: -2px;
   left: 10px;
@@ -344,7 +344,7 @@ input[type="checkbox"]:checked + .GPlayerVisibility {
   cursor: pointer;
 }
 
-#GPlayerInfoClose {
+div[id^=GPlayerInfoClose] {
   position: absolute;
   top: -8px;
   right: 10px;
@@ -353,8 +353,16 @@ input[type="checkbox"]:checked + .GPlayerVisibility {
   cursor: pointer;
 }
 
-#GPlayerInfoDescription {
+div[id^=GPlayerInfoDescription] {
   font-size: 0.9em;
+}
+
+div[id^=GPlayerInfoLegend] {
+
+}
+
+div[id^=GPlayerInfoMetadata] {
+
 }
 
 .GPlayerInfoSubtitle {
