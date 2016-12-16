@@ -213,7 +213,7 @@ define([], function () {
             // gestionnaire d'evenement : on stocke la valeur du type d'import
             if ( select.addEventListener ) {
                 select.addEventListener("change", function (e) {
-                    if ( this.value === "KML" || this.value === "GPX" ) {
+                    if ( this.value === "KML" || this.value === "GPX" || this.value === "GeoJSON" ) {
                         // static import
                         document.getElementById(context._addUID("GPimportStaticParams")).className = "GPimportVisibleParams";
                         document.getElementById(context._addUID("GPimportServiceParams")).className = "GPimportHiddenParams";
@@ -226,7 +226,7 @@ define([], function () {
                 });
             } else if ( select.attachEvent ) {
                 select.attachEvent("onchange", function () {
-                    if ( this.value === "KML" || this.value === "GPX" ) {
+                    if ( this.value === "KML" || this.value === "GPX" || this.value === "GeoJSON" ) {
                         // static import
                         document.getElementById(context._addUID("GPimportStaticParams")).className = "GPimportVisibleParams";
                         document.getElementById(context._addUID("GPimportServiceParams")).className = "GPimportHiddenParams";
@@ -242,7 +242,14 @@ define([], function () {
 
             // on prend soit les valeurs passées par l'utilisateur, soit des valeurs par défaut
             if ( !importTypes || !Array.isArray(importTypes) ) {
-                importTypes = ["KML", "GPX", "WMS", "WMTS", "WFS"];
+                importTypes = [
+                    "KML",
+                    "GPX",
+                    "GeoJSON",
+                    "WMS",
+                    "WMTS",
+                    "WFS"
+                ];
             }
             var option;
             for ( var i = 0; i < importTypes.length; i++ ) {
@@ -277,18 +284,18 @@ define([], function () {
         },
 
         // ################################################################### //
-        // ############### Params for static import (KML / GPX) ############## //
+        // ############### Params for static import (KML / GPX / GeoJSON) ############## //
         // ################################################################### //
 
         /**
-         * Create container for KML/GPX parameters
+         * Create container for KML/GPX/GeoJSON parameters
          *
          * @returns {DOMElement} DOM element
          */
         _createImportStaticParamsContainer : function (currentType) {
             var div  = document.createElement("div");
             div.id = this._addUID("GPimportStaticParams");
-            if ( currentType === "KML" || currentType === "GPX" ) {
+            if ( currentType === "KML" || currentType === "GPX" || currentType === "GeoJSON" ) {
                 div.className = "GPimportVisibleParams";
             } else {
                 div.className = "GPimportHiddenParams";
@@ -298,7 +305,7 @@ define([], function () {
         },
 
         /**
-         * Create name label for KML/GPX parameters
+         * Create name label for KML/GPX/GeoJSON parameters
          *
          * @returns {DOMElement} DOM element
          */
@@ -324,7 +331,7 @@ define([], function () {
         },
 
         /**
-         * Create import choice for KML/GPX parameters (local or url)
+         * Create import choice for KML/GPX/GeoJSON parameters (local or url)
          *
          * @returns {DOMElement} DOM element
          */
@@ -336,7 +343,7 @@ define([], function () {
         },
 
         /**
-         * Create local import choice for KML/GPX parameters
+         * Create local import choice for KML/GPX/GeoJSON parameters
          *
          * @returns {DOMElement} DOM element
          */
@@ -379,7 +386,7 @@ define([], function () {
         },
 
         /**
-         * Create url import choice for KML/GPX parameters
+         * Create url import choice for KML/GPX/GeoJSON parameters
          *
          * @returns {DOMElement} DOM element
          */
@@ -422,7 +429,7 @@ define([], function () {
         },
 
         /**
-         * Create input div for KML/GPX parameters local import
+         * Create input div for KML/GPX/GeoJSON parameters local import
          *
          * @returns {DOMElement} DOM element
          */
@@ -434,7 +441,7 @@ define([], function () {
         },
 
         /**
-         * Create input label for KML/GPX parameters local import
+         * Create input label for KML/GPX/GeoJSON parameters local import
          *
          * @returns {DOMElement} DOM element
          */
@@ -448,7 +455,7 @@ define([], function () {
         },
 
         /**
-         * Create file input for KML/GPX parameters local import
+         * Create file input for KML/GPX/GeoJSON parameters local import
          *
          * @returns {DOMElement} DOM element
          */
@@ -461,7 +468,7 @@ define([], function () {
         },
 
         /**
-         * Create input div for KML/GPX parameters url import
+         * Create input div for KML/GPX/GeoJSON parameters url import
          *
          * @returns {DOMElement} DOM element
          */
@@ -473,7 +480,7 @@ define([], function () {
         },
 
         /**
-         * Create input label for KML/GPX parameters url import
+         * Create input label for KML/GPX/GeoJSON parameters url import
          *
          * @returns {DOMElement} DOM element
          */
@@ -487,7 +494,7 @@ define([], function () {
         },
 
         /**
-         * Create url input for KML/GPX parameters url import
+         * Create url input for KML/GPX/GeoJSON parameters url import
          *
          * @returns {DOMElement} DOM element
          */
