@@ -314,9 +314,22 @@ define([
             // on vérifie que la liste des types est bien un tableau
             if ( !Array.isArray(layerTypes) ) {
                 console.log("[ol.control.LayerImport] 'options.layerTypes' parameter should be an array. Set default values [\"KML\", \"GPX\", \"GeoJSON\", \"WMS\", \"WMTS\"]");
-                options.layerTypes = ["KML", "GPX", "GeoJSON", "WMS", "WMTS"];
+                options.layerTypes = [
+                    "KML",
+                    "GPX",
+                    "GeoJSON",
+                    "WMS",
+                    "WMTS"
+                ];
             } else {
-                var typesList = ["KML", "GPX", "GEOJSON", "WMS", "WMTS", "WFS"];
+                var typesList = [
+                    "KML",
+                    "GPX",
+                    "GEOJSON",
+                    "WMS",
+                    "WMTS",
+                    "WFS"
+                ];
                 var wrongTypesIndexes = [];
                 for ( var i = 0; i < layerTypes.length; i++ ) {
                     if ( typeof layerTypes[i] !== "string" ) {
@@ -372,7 +385,7 @@ define([
             stroke : geoJSONDefaultStyles.stroke,
             fill : geoJSONDefaultStyles.fill
         });
-    }
+    };
 
     /**
      * this method is called by this.initialize()
@@ -388,7 +401,7 @@ define([
             this._isCurrentImportTypeStatic = false;
         }
         this._currentStaticImportType = "local";
-    }
+    };
 
     /**
      * Create control main container (DOM initialize)
@@ -832,11 +845,11 @@ define([
             }
         }
         if ( this._currentImportType === "GeoJSON" ) {
-            for (var i = 0 ; i < features.length; i++ ) {
+            for (var j = 0 ; j < features.length; j++ ) {
                 // si aucun style n'est associé au feature
-                if ( features[i].getStyle() == null ) {
+                if ( features[j].getStyle() == null ) {
                     logger.log("[ol.control.LayerImport] set default style for GeoJSON feature");
-                    features[i].setStyle(
+                    features[j].setStyle(
                         this._defaultGeoJSONStyle
                     );
                 }

@@ -242,7 +242,14 @@ define([], function () {
 
             // on prend soit les valeurs passées par l'utilisateur, soit des valeurs par défaut
             if ( !importTypes || !Array.isArray(importTypes) ) {
-                importTypes = ["KML", "GPX", "GeoJSON", "WMS", "WMTS", "WFS"];
+                importTypes = [
+                    "KML",
+                    "GPX",
+                    "GeoJSON",
+                    "WMS",
+                    "WMTS",
+                    "WFS"
+                ];
             }
             var option;
             for ( var i = 0; i < importTypes.length; i++ ) {
