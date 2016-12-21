@@ -595,13 +595,10 @@ define([
         }
         var id = changedLayer.id;
         var layerOpacityInput = document.getElementById(this._addUID("GPopacityValueDiv_ID_" + id));
-        if (layerOpacityInput) {
-            layerOpacityInput.value = Math.round(opacity * 100);
-        }
+        layerOpacityInput.value = Math.round(opacity * 100);
+
         var layerOpacitySpan = document.getElementById(this._addUID("GPopacityValue_ID_" + id));
-        if (layerOpacitySpan) {
-            layerOpacitySpan.innerHTML = Math.round(opacity * 100) + "%";
-        }
+        layerOpacitySpan.innerHTML = Math.round(opacity * 100) + "%";
     };
 
     /**
@@ -631,9 +628,7 @@ define([
         var id = changedLayer.id;
         var visible = changedLayer.visible;
         var layerVisibilityInput = document.getElementById(this._addUID("GPvisibility_ID_" + id));
-        if (layerVisibilityInput) {
-            layerVisibilityInput.checked = visible;
-        }
+        layerVisibilityInput.checked = visible;
     };
 
     /**
