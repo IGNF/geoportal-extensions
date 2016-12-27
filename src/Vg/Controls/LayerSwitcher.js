@@ -890,11 +890,11 @@ define([
     function getLayerInfo (layer) {
         var layerInfo = {};
         if (layer) {
-            layerInfo._title = layer._title || "";
-            layerInfo._description = layer._description || "";
-            layerInfo._quicklookUrl = layer._quicklookUrl || "";
-            layerInfo._metadata = layer._metadata || [];
-            layerInfo._legends = layer._legends || [];
+            layerInfo._title = layer.title || "";
+            layerInfo._description = layer.description || "";
+            layerInfo._quicklookUrl = layer.quicklookUrl || "";
+            layerInfo._metadata = layer.metadata || [];
+            layerInfo._legends = layer.legends || [];
         }
         return layerInfo;
     };
