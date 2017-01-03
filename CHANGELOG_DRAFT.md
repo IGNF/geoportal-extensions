@@ -3,6 +3,8 @@
 ## [ol3-0.11.0-dev](https://github.com/IGNF/geoportal-extensions/tree/ol3-0.11.0-dev) (2016-09-02)
 [Full Changelog](https://github.com/IGNF/geoportal-extensions/compare/leaflet-0.8.1-dev...ol3-0.11.0-dev)
 
+- fix \#95 : Problème d'affichage du tracé du calcul d'itinéraire sur un petit parcours
+[\#95](https://github.com/IGNF/geoportal-extensions/issues/95)
 - fix \#77 : add GeoJSON format to ol3 layerimport control (ol.control.LayerImport) [\#92](https://github.com/IGNF/geoportal-extensions/pull/92)
 - proposer un outil de calcul de profil altimétrique  [\#64](https://github.com/IGNF/geoportal-extensions/issues/64)
 - zoom moteur de recherche
