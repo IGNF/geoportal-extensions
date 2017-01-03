@@ -140,6 +140,22 @@ define([
             // lors de l'ajout à la map, on active la saisie du point ou de la zone de recherche sur la carte,
             // mais seulement si le widget est ouvert
             this._activateMapInteraction(map);
+        } else {
+            var _map = this.getMap();
+            // on remet à zéro = on efface les géométries + interactions + valeurs stockées
+            // suppression des résultats précédents
+            this._clearResults();
+            // on efface les points qui ont pu être saisis précédemment
+            this._clearInputFeatures();
+            // on supprime l'éventuelle précédente interaction
+            this._removeMapInteraction(_map);
+            // on retire aussi la couche de saisie de la zone de recherche à la fermeture du widget
+            if ( this._inputFeaturesLayer != null ) {
+                _map.removeLayer(this._inputFeaturesLayer);
+                this._inputFeaturesLayer = null;
+                this._inputFeaturesSources = null;
+                this._inputFeatures = null;
+            }
         }
 
         // on appelle la méthode setMap originale d'OpenLayers

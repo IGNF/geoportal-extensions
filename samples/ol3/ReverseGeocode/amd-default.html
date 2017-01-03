@@ -102,6 +102,9 @@
                         });
                         map.addControl(mp);
 
+                        document.getElementById("removeControl").onclick = function(e) {
+                            map.removeControl(reverseGeocoding);
+                        }
                     };
 
                     Gp.Services.getConfig({
@@ -118,6 +121,7 @@
             <!-- map -->
             <div id="map">
             </div>
+            <button type="button" id="removeControl">Supprimer le controle "reverseGeocoding"</button>
 
             <!-- Comment utiliser le plugin avec un exemple -->
             <p>EXEMPLE D'UTILISATION</p>
