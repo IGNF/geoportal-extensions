@@ -40,91 +40,125 @@
 
 /* CSS : default */
 
-#profileElevationByDefault,
-.z-title-vertical,
-.z-title-vertical ul,
-.profileElevationContent,
-.profileElevationContent ul,
-.x-title-horizontal,
-.x-title-horizontal ul{
+#profileElevationByDefault {
   display:flex;
+  flex-direction:column;
+  height:100%;
+}
+
+.profile-box {
+  display:flex;
+  flex:1;
+  flex-direction:row;
+}
+
+.profile-content {
+  flex:1;
   justify-content:center;
   align-items:center;
-  height:95%;
-
 }
-.z-title-vertical,
-.z-title-vertical ul,
-.profileElevationContent
+
+.profile-z-vertical,
+.profile-z-vertical ul,
+.profile-x-horizontal,
+.profile-x-horizontal ul {
+  display:flex;
+  /*justify-content:center;*/
+  align-items:center;
+}
+
+
+.profile-z-vertical,
+.profile-z-vertical ul,
+.profile-content
 {
   flex-direction:column;
-  height:95%;
+  height:100%;
 }
 
-.z-title-vertical ul,
-.x-title-horizontal ul{
+.profile-z-vertical ul,
+.profile-x-horizontal ul{
   /*padding:0;*/
   margin:0;
   list-style-type:none;
 }
 
-.z-title-vertical{
+.profile-z-vertical{
   /*background:green;*/
   flex:0 1 auto;
 
 }
-.z-title-vertical ul{
+.profile-z-vertical ul{
   /*background:pink;*/
   justify-content:space-between;
   padding:2px 5px 2px 2px;
   /*border-right:1px solid #888;*/
 }
-.z-title-vertical .unit{
+.profile-z-vertical .profile-unit{
   /*background:gray;*/
   width:100%;
   text-align:center;
-  padding:5px 5px 2px 2px;
+  /*padding:5px 5px 2px 2px;*/
 }
-.profileElevationContent{
+.profile-content{
   /*background:yellow;*/
-  flex:1 0 auto;
+  /*flex:1 0 auto;*/
 
 }
-.profileElevationContent ul {
-  /*background:white;*/
+.profile-content ul {
+  background:white;
   flex:1 0 auto;
+  height:100%;
   width:100%;
   justify-content:flex-start;
   align-items:flex-end;
 
-  /*margin:0;*/
+  margin:0;
   padding:0;
 
 }
-.x-title-horizontal{
+.profile-x-horizontal{
   /*background:blue;*/
+  flex:0 1 auto;;
   width:100%;
 }
-.x-title-horizontal ul{
+.profile-x-horizontal ul{
   /*background:orange;*/
   justify-content:space-between;
-  padding:5px 2px 2px 2px;
+  /*padding:5px 2px 2px 2px;*/
+  width:100%;
   /*border-top:1px solid #888;*/
 }
 
-.z-axis {
+.profile-x-fleche {
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 5px solid green;
+}
+
+.profile-z-fleche {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid red;
+}
+
+.profile-z-axis {
     border-right: none;
     border-left: solid 2px #888;
     cursor: default;
 }
 
-.x-axis {
+.profile-x-axis {
     border-top: none;
     border-bottom: solid 2px #888;
     cursor: default;
 }
 
-ul#data-default li.percent {
+ul#profile-data li.percent {
     display: inline-block;
     vertical-align: bottom;
     background-color: #C77A04;
@@ -135,12 +169,12 @@ ul#data-default li.percent {
 }
 
 li.axe span.bottom-axis {
-    /*vertical-align: bottom;*/
+    vertical-align: bottom;
 }
 
-ul#data-default .percent:hover {
+ul#profile-data .percent:hover {
     display: inline-block;
-    /*vertical-align: bottom;*/
+    vertical-align: bottom;
     background-color: #f00;
 }
 

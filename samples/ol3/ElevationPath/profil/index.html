@@ -1,15 +1,15 @@
-
 <!DOCTYPE html>
 <html>
 <head>
-  <meta content="IE=edge,chrome=1; charset=UTF-8" http-equiv="X-UA-Compatible">
+  <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
+  <meta charset="utf-8" />
   <link rel="stylesheet" type="text/css" href="./styles.css">
   <title>test</title>
   <script type="text/javascript" src="./data.js"></script>
   <script type="text/javascript">
   window.onload = function () {
       var container = document.getElementById("profileElevationByDefault") ;
-      var ul = document.getElementById("data-default") ;
+      var ul = document.getElementById("profile-data") ;
       var sortedElev = JSON.parse(JSON.stringify(elevations)) ;
       sortedElev.sort(function(e1,e2) {
         return e1.z - e2.z ;
@@ -43,23 +43,38 @@
 <body>
   <p>Test du profil</p>
   <div id="GPelevationPathPanel-1479483404373" class="GPpanel GPwidget">
-  	<div class="GPpanelHeader">
-  		<div class="GPpanelTitle">Profil Altimétrique</div>
-  		<div id="GPelevationPathPanelReduce-1479483404373" class="GPpanelReduce" title="Masquer le panneau"></div>
-  		<div id="GPelevationPathPanelClose-1479483404373" class="GPpanelClose" title="Fermer le panneau"></div>
-  	</div>
-  	<div id="GPelevationPathProfil">
-  		<div id="profileElevationByDefault">
-        <div class="z-title-vertical">1289 m</div>
-        <div class="z-fleche"></div>
-  			<ul id="data-default" class="z-axis x-axis"></ul>
-        <div class="x-fleche"></div>
-        <div class="x-title-horizontal">530 km</div>
-  		</div>
-  	</div>
-  	<div id="GPelevationPathCalcWaitingContainer-1479483404373" class="GPelevationPathCalcWaitingContainerHidden">
-  		<p class="GPelevationPathCalcWaiting">Calcul en cours...</p>
-  	</div>
+    <div class="GPpanelHeader">
+      <div class="GPpanelTitle">Profil Altimétrique</div>
+      <div id="GPelevationPathPanelReduce-1479483404373" class="GPpanelReduce" title="Masquer le panneau"></div>
+      <div id="GPelevationPathPanelClose-1479483404373" class="GPpanelClose" title="Fermer le panneau"></div>
+    </div>
+
+    <div id="GPelevationPathProfil">
+      <div id="profileElevationByDefault">
+        <div class="profile-box">
+          <div class="profile-z-vertical">
+            <ul>
+              <li class="profile-min-z">2548</li>
+              <li class="profile-max-z">1024</li>
+            </ul>
+            <div class="profile-unit">m</div>
+          </div>
+          <div class="profile-content">
+            <ul id="profile-data" class="profile-z-axis profile-x-axis"></ul>
+          </div>
+        </div>
+        <div class="profile-x-horizontal">
+          <ul>
+            <li class="profile-min-x">0</li>
+            <li class="profile-max-x">1500</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="GPelevationPathCalcWaitingContainer-1479483404373" class="GPelevationPathCalcWaitingContainerHidden">
+      <p class="GPelevationPathCalcWaiting">Calcul en cours...</p>
+    </div>
   </div>
 </body>
 </html>
