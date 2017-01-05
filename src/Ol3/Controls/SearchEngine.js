@@ -121,6 +121,22 @@ define([
     // ################################################################### //
 
     /**
+     * Overwrite OpenLayers setMap method
+     *
+     * @param {ol.Map} map - Map.
+     */
+    SearchEngine.prototype.setMap = function (map) {
+
+        if ( ! map ) {
+            this._clearResults();
+        }
+
+        // on appelle la méthode setMap originale d'OpenLayers
+        ol.control.Control.prototype.setMap.call(this, map);
+
+    };
+
+    /**
      * Returns true if widget is collapsed (minimized), false otherwise
      *
      * @returns {Boolean} collapsed - true if widget is collapsed

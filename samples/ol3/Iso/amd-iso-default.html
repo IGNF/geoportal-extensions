@@ -45,7 +45,7 @@
 
             <script>
                 var map;
-                var iso;
+                var iso = null;
                 /* global requirejs */
                 requirejs.config({
                     "baseUrl" : "../../../src/",
@@ -92,6 +92,20 @@
                         });
                         map.addControl(iso);
 
+                        document.getElementById("removeControl").onclick = function(e) {
+                            map.removeControl(iso);
+                            iso = null;
+                        }
+
+                        document.getElementById("addControl").onclick = function(e) {
+                            if (iso !== null) {
+                              return;
+                            }
+                            iso = new Isocurve({
+                              collapsed : false
+                            });
+                            map.addControl(iso);
+                        }
                     };
 
                     Gp.Services.getConfig({
@@ -108,6 +122,8 @@
             <!-- map -->
             <div id="map">
             </div>
+            <button type="button" id="removeControl">Supprimer le controle "iso"</button>
+            <button type="button" id="addControl">Ajouter le controle "iso"</button>
 
             <!-- Comment utiliser le plugin avec un exemple -->
             <p>EXEMPLE D'UTILISATION</p>

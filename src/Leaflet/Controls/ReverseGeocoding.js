@@ -184,7 +184,15 @@ define([
         *
         * @private
         */
-        onRemove : function (/* map */) {},
+        onRemove : function (map) {
+
+            this._clearLocations();
+            this._clearLocationsFeature(map);
+            this._clearInputRequest();
+
+            // on supprime l'éventuelle précédente interaction
+            this._removeMapInteraction(map);
+        },
 
         // ################################################################### //
         // ##################### init component ############################## //
@@ -780,10 +788,11 @@ define([
          * @private
          */
         _displayGeocodedLocations : function (locations) {
+            var map = this._map;
 
             // 1. on vide les résultats précédents
             this._clearLocations();
-            this._clearLocationsFeature();
+            this._clearLocationsFeature(map);
 
             this._reverseGeocodingLocations = locations;
 
@@ -808,7 +817,6 @@ define([
             this._displayGeocodedLocationsOnMap(locations);
 
             // on zoom sur l'emprise des markers
-            var map = this._map;
             map.fitBounds(this._inputResultsLayer.getBounds());
 
         },
@@ -1074,15 +1082,17 @@ define([
          * @private
          */
         onGPreverseGeocodingReturnPictoClick : function () {
+            var map = this._map;
+
             // suppression des résultats précédents
             this._clearLocations();
-            this._clearLocationsFeature();
+            this._clearLocationsFeature(map);
 
             // on efface les points qui ont pu être saisis précédemment
             this._clearInputRequest();
 
             // et on réactive l'interaction sur la map
-            this._activateMapInteraction(this._map);
+            this._activateMapInteraction(map);
         },
 
         /**
@@ -1106,6 +1116,7 @@ define([
                 return;
             }
 
+            var map  = this._map;
             var self = this;
             this._reverseGeocodingRequest({
                 position : self._requestPosition,
@@ -1128,7 +1139,7 @@ define([
 
                     // suppression d'éventuels résultats précédents
                     self._clearLocations();
-                    self._clearLocationsFeature();
+                    self._clearLocationsFeature(map);
 
                     // on efface les points qui ont été saisis précédemment
                     self._clearInputRequest();
@@ -1234,9 +1245,7 @@ define([
          *
          * @private
          */
-        _clearLocationsFeature : function () {
-
-            var map = this._map;
+        _clearLocationsFeature : function (map) {
 
             // suppression des anciens resultats
             if (this._inputResultsLayer !== null) {

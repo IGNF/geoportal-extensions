@@ -45,7 +45,7 @@
 
             <script>
                 var map;
-                var reverseGeocoding;
+                var reverseGeocoding = null;
                 /* global requirejs */
                 requirejs.config({
                     "baseUrl" : "../../../src/",
@@ -104,6 +104,17 @@
 
                         document.getElementById("removeControl").onclick = function(e) {
                             map.removeControl(reverseGeocoding);
+                            reverseGeocoding = null;
+                        }
+
+                        document.getElementById("addControl").onclick = function(e) {
+                            if (reverseGeocoding !== null) {
+                              return;
+                            }
+                            reverseGeocoding = new ReverseGeocode({
+                              collapsed : false
+                            });
+                            map.addControl(reverseGeocoding);
                         }
                     };
 
@@ -122,7 +133,7 @@
             <div id="map">
             </div>
             <button type="button" id="removeControl">Supprimer le controle "reverseGeocoding"</button>
-
+            <button type="button" id="addControl">Ajouter le controle "reverseGeocoding"</button>
             <!-- Comment utiliser le plugin avec un exemple -->
             <p>EXEMPLE D'UTILISATION</p>
             <pre>

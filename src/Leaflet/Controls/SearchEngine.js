@@ -187,7 +187,16 @@ define([
         *
         * @private
         */
-        onRemove : function (/* map */) {},
+        onRemove : function (map) {
+
+            this._clearSuggestedLocation();
+            this._clearGeocodedLocation();
+
+            if (this._marker != null) {
+                map.removeLayer(this._marker);
+                this._marker = null;
+            }
+        },
 
         // ################################################################### //
         // ##################### methods rights management ################### //
@@ -1020,7 +1029,7 @@ define([
                     zoom = SearchEngineUtils.zoomToResultsByDefault(info);
 
                 } else {
-                    
+
                     logger.trace("zoom level parsing");
                     var value = parseInt(key, 10);
                     if (!isNaN(value)) {

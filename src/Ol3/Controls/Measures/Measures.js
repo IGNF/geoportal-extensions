@@ -204,9 +204,12 @@ define([
             var self = this.CLASSNAME; // this.constructor.name : pas possible en mode minifié/manglifié !
             for (var className in this.tools) {
                 if (this.tools.hasOwnProperty(className)) {
-                    if (this.tools[className].active && className !== self) {
-                        this.tools[className].active = false;
-                        this.tools[className].instance.clean();
+                    var o = this.tools[className];
+                    if (o.active && className !== self) {
+                        o.active = false;
+                        if (o.instance !== null) { // au cas où le controle a été supprimé !
+                            o.instance.clean();
+                        }
                     }
                 }
             }

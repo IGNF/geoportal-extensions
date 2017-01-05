@@ -83,7 +83,7 @@
       ) {
 
         var map;
-
+        var measureA, measureZ = null, measureD;
         var createMap = function () {
           // on cache l'image de chargement du Géoportail.
           document.getElementById("map").style.backgroundImage = "none";
@@ -103,13 +103,25 @@
             })
           });
 
-          var measureA = new MeasureArea();
+          measureA = new MeasureArea();
           map.addControl(measureA);
-          var measureZ = new MeasureAzimuth();
+          measureZ = new MeasureAzimuth();
           map.addControl(measureZ);
-          var measureD = new MeasureLength();
+          measureD = new MeasureLength();
           map.addControl(measureD);
 
+          document.getElementById("removeControl").onclick = function(e) {
+              map.removeControl(measureZ);
+              measureZ = null;
+          }
+
+          document.getElementById("addControl").onclick = function(e) {
+              if (measureZ !== null) {
+                return;
+              }
+              measureZ = new MeasureAzimuth();
+              map.addControl(measureZ);
+          }
         };
 
         Gp.Services.getConfig({
@@ -126,6 +138,8 @@
       <!-- map -->
       <div id="map">
       </div>
+      <button type="button" id="removeControl">Supprimer le controle "azimut"</button>
+      <button type="button" id="addControl">Ajouter le controle "azimut"</button>
 
       <!-- Comment utiliser le plugin avec un exemple -->
       <p>EXEMPLE D'UTILISATION</p>

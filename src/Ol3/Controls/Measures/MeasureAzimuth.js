@@ -44,8 +44,8 @@ define([
     */
     function MeasureAzimuth (options) {
 
-        /** 
-         * options 
+        /**
+         * options
          * @private
          */
         options = options || {};
@@ -54,8 +54,8 @@ define([
             throw new TypeError("ERROR CLASS_CONSTRUCTOR");
         }
 
-        /** 
-         * Nom de la classe (heritage) 
+        /**
+         * Nom de la classe (heritage)
          * @private
          */
         this.CLASSNAME = "MeasureAzimuth";
@@ -112,16 +112,14 @@ define([
      * @param {ol.Map} map - Map.
      */
     MeasureAzimuth.prototype.setMap = function (map) {
-
-        // sauvegarde de l'état de l'outil
+        logger.trace("setMap()");
+        
         var className = this.CLASSNAME;
-        this.tools[className].instance = this;
 
         // on fait le choix de ne pas activer les events sur la map à l'init de l'outil,
         // mais uniquement à son utilisation !
         if ( map ) {
 
-            logger.trace("setMap()");
             // var self = this;
             // map.on("click", function (e) {
             //     logger.trace("event on map with click!");
@@ -141,7 +139,12 @@ define([
             if (! this.options.target) {
                 MeasureToolBox.add(map, this);
             }
+        } else {
+            this.clean();
         }
+
+        // sauvegarde de l'état de l'outil
+        this.tools[className].instance = (map) ? this : null;
 
         // on appelle la méthode setMap originale d'OpenLayers
         ol.control.Control.prototype.setMap.call(this, map);

@@ -1718,7 +1718,10 @@ define([
      */
     ReverseGeocode.prototype._clearInputFeatures = function () {
         // on efface les points qui ont pu être saisis précédemment (on vide la collection des features de la couche)
-        this._inputFeatures.clear();
+        if (this._inputFeatures) {
+            this._inputFeatures.clear();
+        }
+        
         // on supprime les valeurs stockées (filtres, position)
         this._requestPosition = null;
         this._requestCircleFilter = null;
