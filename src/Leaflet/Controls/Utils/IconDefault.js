@@ -45,6 +45,16 @@ function (L) {
             }
 
             this.options.shadowUrl = this.images.shadow;
+        },
+
+        /**
+        * Overload function to ensure compatibility between versions 0.7.X and 1.0.X
+        * (extend to L.Icon._getIconUrl)
+        *
+        */
+        _getIconUrl : function (name) {
+            console.log("OVERWRITTEN L.Icon.Default._getIconUrl");
+            return L.Icon.prototype._getIconUrl.call(this, name);
         }
     });
 
