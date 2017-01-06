@@ -145,7 +145,9 @@ define(["ol", "Common/Utils/LayerUtils"], function (ol, LayerUtils) {
                     // check that this attribution hasn't been added yet for another layer
                     if ( !mapAttributions || !mapAttributions[attributionj] ) {
                         // add attribution html
-                        attributions.push(new ol.Attribution({ html: attributionj }))
+                        attributions.push(new ol.Attribution({
+                            html : attributionj
+                        }));
 
                         // add attribution to mapAttributions, to manage all layers attributions
                         mapAttributions[attributionj] = true;
