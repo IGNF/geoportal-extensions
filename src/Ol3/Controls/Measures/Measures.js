@@ -263,8 +263,8 @@ define([
                 for (var i = 0; i < len; i++) {
                     var node  = nodes.children[i];
                     var child = node.children[0];
-                    if (child.className === "tooltip tooltip-static" ||
-                        child.className === "tooltip tooltip-measure" ) {
+                    if (child.className === "GPmeasureTooltip GPmeasureTooltip-static" ||
+                        child.className === "GPmeasureTooltip GPmeasureTooltip-measure" ) {
                         nodesToRemove.push(node);
                     }
                 }
@@ -312,7 +312,7 @@ define([
             }
 
             this.measureTooltipElement = document.createElement("div");
-            this.measureTooltipElement.className = "tooltip tooltip-measure";
+            this.measureTooltipElement.className = "GPmeasureTooltip GPmeasureTooltip-measure";
 
             this.measureTooltip = new ol.Overlay({
                 element : this.measureTooltipElement,
@@ -451,7 +451,7 @@ define([
                     self.measureTooltip.setPosition(tooltipCoord);
                 }
 
-                self.measureTooltipElement.className = "tooltip tooltip-static";
+                self.measureTooltipElement.className = "GPmeasureTooltip GPmeasureTooltip-static";
                 self.measureTooltip.setOffset([0, -7]);
 
                 // unset sketch

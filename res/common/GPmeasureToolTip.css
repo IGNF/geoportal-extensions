@@ -1,6 +1,6 @@
 /* MEASURE TOOL */
 
-.tooltip {
+.GPmeasureTooltip {
   position: relative;
   background: rgba(0, 0, 0, 0.5);
   border-radius: 4px;
@@ -9,28 +9,28 @@
   white-space: nowrap;
 }
 
-.tooltip-measure {
+.GPmeasureTooltip-measure {
   font-weight: bold;
 }
 
-.tooltip-info {
+.GPmeasureTooltip-info {
   font-size: 0.75em;
   text-align: center;
 }
 
-.tooltip-static {
+.GPmeasureTooltip-static {
   background-color: #ffcc33;
   color: black;
   border: 1px solid white;
 }
 
-.tooltip-hidden {
+.GPmeasureTooltip-hidden {
   display: none;
 }
 
-.tooltip-measure::before,
-.tooltip-info::before,
-.tooltip-static::before {
+.GPmeasureTooltip-measure::before,
+.GPmeasureTooltip-info::before,
+.GPmeasureTooltip-static::before {
   border-top: 6px solid rgba(0, 0, 0, 0.5);
   border-right: 6px solid transparent;
   border-left: 6px solid transparent;
@@ -41,6 +41,6 @@
   left: 50%;
 }
 
-.tooltip-static::before {
+.GPmeasureTooltip-static::before {
   border-top-color: #ffcc33;
 }
