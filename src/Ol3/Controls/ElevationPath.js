@@ -71,8 +71,8 @@ define([
     function ElevationPath (options) {
         logger.trace("ElevationPath()");
 
-        /** 
-         * options 
+        /**
+         * options
          * @private
          */
         options = options || {};
@@ -81,8 +81,8 @@ define([
             throw new TypeError("ERROR CLASS_CONSTRUCTOR");
         }
 
-        /** 
-         * Nom de la classe (heritage) 
+        /**
+         * Nom de la classe (heritage)
          * @private
          */
         this.CLASSNAME = "ElevationPath";
@@ -592,7 +592,8 @@ define([
         var minZ = sortedElev[0].z ;
         var maxZ = sortedElev[sortedElev.length - 1].z ;
         var diff = maxZ - minZ ;
-        var dist = data[data.length - 1].dist;
+        var distMax = data[data.length - 1].dist; // km !
+        // var distMin = 0;
 
         var barwidth = 100 / data.length ;
 
@@ -619,15 +620,37 @@ define([
         });
         container.appendChild(div);
 
-        var divZ = document.createElement("div");
-        divZ.className = "z-title-vertical";
-        divZ.innerHTML = minZ + " / " + maxZ + " m";
-        div.appendChild(divZ);
+        var divBox = document.createElement("div");
+        divBox.className = "profile-box";
 
-        var ul  = document.createElement("ul");
-        ul.id   = "data-default";
-        ul.className = "z-axis x-axis";
-        div.appendChild(ul);
+        var divZ = document.createElement("div");
+        divZ.className = "profile-z-vertical";
+
+        var ulZ  = document.createElement("ul");
+        var liZmin = document.createElement("li");
+        liZmin.setAttribute("class", "profile-min-z");
+        liZmin.innerHTML = minZ + " m";
+        var liZmax = document.createElement("li");
+        liZmax.setAttribute("class", "profile-max-z");
+        liZmax.innerHTML = maxZ + " m";
+
+        // var divUnit = document.createElement("div");
+        // divUnit.className = "profile-unit";
+        // divUnit.innerHTML = "m";
+
+        ulZ.appendChild(liZmax);
+        ulZ.appendChild(liZmin);
+        divZ.appendChild(ulZ);
+        // divZ.appendChild(divUnit);
+        divBox.appendChild(divZ);
+
+        var divData = document.createElement("div");
+        divData.className = "profile-content";
+
+        var ulData  = document.createElement("ul");
+        ulData.id   = "profile-data";
+        ulData.className = "profile-z-axis profile-x-axis";
+        divData.appendChild(ulData);
 
         for (var i = 0 ; i < data.length ; i++) {
             var d = data[i] ;
@@ -641,18 +664,30 @@ define([
             li.setAttribute("class", "percent v" + pct) ;
             li.title = "altitude : " + d.z + "m" ;
             li.setAttribute("style", "width: " + barwidth + "%") ;
-            ul.appendChild(li) ;
+            ulData.appendChild(li) ;
         }
 
+        divBox.appendChild(divData);
+        div.appendChild(divBox);
+
         var divX = document.createElement("div");
-        divX.className = "x-title-horizontal";
-        divX.innerHTML = dist + " km";
+        divX.className = "profile-x-horizontal";
+        var ulX  = document.createElement("ul");
+        var liXmin = document.createElement("li");
+        liXmin.setAttribute("class", "profile-min-x");
+        liXmin.innerHTML = "";
+        var liXmax = document.createElement("li");
+        liXmax.setAttribute("class", "profile-max-x");
+        liXmax.innerHTML = distMax + " km";
+        ulX.appendChild(liXmin);
+        ulX.appendChild(liXmax);
+        divX.appendChild(ulX);
         div.appendChild(divX);
 
         self._profile = container;
     };
 
-    /** 
+    /**
      * Styles applied by default if stylesOptions property is not set.
      */
     ElevationPath.DEFAULT_STYLES = {
@@ -1023,7 +1058,7 @@ define([
         var marker = ElevationPath.DEFAULT_STYLES.MARKER ;
         logger.trace("style marker", marker);
 
-        // si marker n'est pas un objet ol.style.Image, on applique le 
+        // si marker n'est pas un objet ol.style.Image, on applique le
         // style par défaut.
         if (this.options.styles.marker instanceof ol.style.Image ) {
             marker = this.options.styles.marker ;

@@ -10,14 +10,14 @@
   <!-- Plugin OpenLayers 3 IGN -->
   <link rel="stylesheet" href="../../../res/common/GPgeneralWidget.css" />
   <link rel="stylesheet" href="../../../res/common/GPmeasureToolTip.css" />
-  <!-- <link rel="stylesheet" href="../../../res/common/GPmeasureArea.css" />
+  <link rel="stylesheet" href="../../../res/common/GPmeasureArea.css" />
   <link rel="stylesheet" href="../../../res/common/GPmeasureLength.css" />
-  <link rel="stylesheet" href="../../../res/common/GPmeasureAzimuth.css" /> -->
+  <link rel="stylesheet" href="../../../res/common/GPmeasureAzimuth.css" />
   <link rel="stylesheet" href="../../../res/ol3/GPgeneralWidgetOL3.css" />
   <link rel="stylesheet" href="../../../res/ol3/Controls/ToolBoxMeasure/GPtoolBoxMeasureOL3.css" />
-  <!-- <link rel="stylesheet" href="../../../res/ol3/Controls/Measures/GPmeasureAreaOL3.css" />
+  <link rel="stylesheet" href="../../../res/ol3/Controls/Measures/GPmeasureAreaOL3.css" />
   <link rel="stylesheet" href="../../../res/ol3/Controls/Measures/GPmeasureLengthOL3.css" />
-  <link rel="stylesheet" href="../../../res/ol3/Controls/Measures/GPmeasureAzimuthOL3.css" /> -->
+  <link rel="stylesheet" href="../../../res/ol3/Controls/Measures/GPmeasureAzimuthOL3.css" />
 
   <!-- requirejs -->
   <script src="../../../lib/require.js"></script>
@@ -27,12 +27,12 @@
   body {
     /* background-color: #A4A4A4; */
   }
-  div#map {
+  div#map1, div#map2 {
     background-image:url(../resources/geoportail-waiting.gif);
     background-position:center center;
     background-repeat:no-repeat;
-    max-width: 800px;
-    height: 500px;
+    max-width: 200px;
+    height: 200px;
     margin: 10px;
   }
   </style>
@@ -70,8 +70,8 @@
         "gp",
         "Ol3/Layers/LayerWMTS",
         "Ol3/Controls/MeasureToolBox",
-        "Ol3/Controls/Measures/MeasureLength",
         "Ol3/Controls/Measures/MeasureArea",
+        "Ol3/Controls/Measures/MeasureLength",
         "Ol3/Controls/Measures/MeasureAzimuth"
       ],
       function (
@@ -79,23 +79,24 @@
         Gp,
         LayerWMTS,
         ToolBox,
-        MeasureLength,
-        MeasureArea,
-        MeasureAzimuth
+        MeasureArea, MeasureLength, MeasureAzimuth
       ) {
 
-        var map;
+        var map1, map2;
 
         var createMap = function () {
+
           // on cache l'image de chargement du Géoportail.
-          document.getElementById("map").style.backgroundImage = "none";
+          document.getElementById("map1").style.backgroundImage = "none";
+          document.getElementById("map2").style.backgroundImage = "none";
 
           // Création de la map
           var osm = new ol.layer.Tile({
             source : new ol.source.OSM()
           });
-          map = new ol.Map({
-            target : "map",
+
+          map1 = new ol.Map({
+            target : "map1",
             layers : [
               osm
             ],
@@ -105,15 +106,21 @@
             })
           });
 
-          var measureA = new MeasureArea();
-          var measureZ = new MeasureAzimuth();
-          var measureD = new MeasureLength();
-          ToolBox.add(map, measureA);
-          ToolBox.add(map, measureZ);
-          ToolBox.add(map, measureD);
-          map.addControl(measureA);
-          map.addControl(measureZ);
-          map.addControl(measureD);
+          map1.addControl(new MeasureArea());
+
+          map2 = new ol.Map({
+            target : "map2",
+            layers : [
+              osm
+            ],
+            view : new ol.View({
+              center : [288074.8449901076, 6247982.515792289],
+              zoom : 10
+            })
+          });
+          map2.addControl(new MeasureArea());
+          map2.addControl(new MeasureLength());
+          map2.addControl(new MeasureAzimuth());
         };
 
         Gp.Services.getConfig({
@@ -128,9 +135,10 @@
       </script>
 
       <!-- map -->
-      <div id="map">
+      <div id="map1">
       </div>
-
+      <div id="map2">
+      </div>
       <!-- Comment utiliser le plugin avec un exemple -->
       <p>EXEMPLE D'UTILISATION</p>
       <pre>

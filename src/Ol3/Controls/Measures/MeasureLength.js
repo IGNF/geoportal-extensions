@@ -108,16 +108,14 @@ define([
      * @param {ol.Map} map - Map.
      */
     MeasureLength.prototype.setMap = function (map) {
+        logger.trace("setMap()");
 
-        // sauvegarde de l'état de l'outil
         var className = this.CLASSNAME;
-        this.tools[className].instance = this;
 
         // on fait le choix de ne pas activer les events sur la map à l'init de l'outil,
         // mais uniquement à son utilisation !
         if ( map ) {
 
-            logger.trace("setMap()");
             // var self = this;
             // map.on("click", function (e) {
             //     logger.trace("event on map with click!");
@@ -138,7 +136,12 @@ define([
                 MeasureToolBox.add(map, this);
             }
 
+        } else {
+            this.clean();
         }
+
+        // sauvegarde de l'état de l'outil
+        this.tools[className].instance = (map) ? this : null;
 
         // on appelle la méthode setMap originale d'OpenLayers
         ol.control.Control.prototype.setMap.call(this, map);

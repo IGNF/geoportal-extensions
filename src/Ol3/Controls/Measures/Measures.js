@@ -25,9 +25,9 @@ define([
         // ****************************************************************** //
         // > Default Styles
         // ****************************************************************** //
-    
+
         /*
-         * Pointer 
+         * Pointer
          */
         DEFAULT_POINTER_STYLE : new ol.style.Circle({
             radius : 5,
@@ -204,9 +204,12 @@ define([
             var self = this.CLASSNAME; // this.constructor.name : pas possible en mode minifié/manglifié !
             for (var className in this.tools) {
                 if (this.tools.hasOwnProperty(className)) {
-                    if (this.tools[className].active && className !== self) {
-                        this.tools[className].active = false;
-                        this.tools[className].instance.clean();
+                    var o = this.tools[className];
+                    if (o.active && className !== self) {
+                        o.active = false;
+                        if (o.instance !== null) { // au cas où le controle a été supprimé !
+                            o.instance.clean();
+                        }
                     }
                 }
             }
@@ -245,18 +248,23 @@ define([
         */
         clearMeasureToolTip : function () {
 
-            // "querySelectorAll" :
-            // au cas où il y'aurait plusieurs container (ex. overview-map)
-            var lstNodes = document.querySelectorAll(".ol-overlaycontainer-stopevent");
-            for (var k = 0; k < lstNodes.length; k++) {
-                var nodes = lstNodes[k];
+            var map = this.getMap();
+            if (!map) {
+                return;
+            }
+
+            var mapContainer = map.getTargetElement();
+            // au cas où il y'aurait plusieurs container de carte !
+            var overlays = mapContainer.getElementsByClassName("ol-overlaycontainer-stopevent");
+            for (var k = 0; k < overlays.length; k++) {
+                var nodes = overlays[k];
                 var len = nodes.children.length;
                 var nodesToRemove = [];
                 for (var i = 0; i < len; i++) {
                     var node  = nodes.children[i];
                     var child = node.children[0];
-                    if (child.className === "tooltip tooltip-static" ||
-                        child.className === "tooltip tooltip-measure" ) {
+                    if (child.className === "GPmeasureTooltip GPmeasureTooltip-static" ||
+                        child.className === "GPmeasureTooltip GPmeasureTooltip-measure" ) {
                         nodesToRemove.push(node);
                     }
                 }
@@ -304,7 +312,7 @@ define([
             }
 
             this.measureTooltipElement = document.createElement("div");
-            this.measureTooltipElement.className = "tooltip tooltip-measure";
+            this.measureTooltipElement.className = "GPmeasureTooltip GPmeasureTooltip-measure";
 
             this.measureTooltip = new ol.Overlay({
                 element : this.measureTooltipElement,
@@ -443,7 +451,7 @@ define([
                     self.measureTooltip.setPosition(tooltipCoord);
                 }
 
-                self.measureTooltipElement.className = "tooltip tooltip-static";
+                self.measureTooltipElement.className = "GPmeasureTooltip GPmeasureTooltip-static";
                 self.measureTooltip.setOffset([0, -7]);
 
                 // unset sketch

@@ -45,7 +45,7 @@
 
             <script>
                 var map;
-                var route;
+                var route = null;
                 var collapsed = false, setCollapsed;
                 /* global requirejs */
                 requirejs.config({
@@ -105,6 +105,21 @@
                             console.log("setCollapsed("+collapsed+")");
                             route.setCollapsed(collapsed);
                         }
+
+                        document.getElementById("removeControl").onclick = function(e) {
+                            map.removeControl(route);
+                            route = null;
+                        }
+
+                        document.getElementById("addControl").onclick = function(e) {
+                            if (route !== null) {
+                              return;
+                            }
+                            route = new Route({
+                              collapsed : false
+                            });
+                            map.addControl(route);
+                        }
                     };
 
                     Gp.Services.getConfig({
@@ -121,7 +136,8 @@
             <!-- map -->
             <div id="map">
             </div>
-
+            <button type="button" id="removeControl">Supprimer le controle "route"</button>
+            <button type="button" id="addControl">Ajouter le controle "route"</button>
             <!-- <div class="test1 couleur">
                 <p>blabla</p>
             </div> -->

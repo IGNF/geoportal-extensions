@@ -117,7 +117,8 @@
         return gulp.src(src)
             .pipe($.plumber())
             .pipe(jshint(".jshintrc"))
-            .pipe(jshint.reporter("default"));
+            .pipe(jshint.reporter("default", { verbose : true }))
+            .pipe(jshint.reporter("fail"));
     });
 
     //|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -131,7 +132,7 @@
 
         var src = [];
         // (isExecuteOl3) ? src.push(_src.js.ol3) : (isExecuteLeaflet) ? src.push(_src.js.leaflet) : (isExecuteVg) ? src.push(_src.js.vg) : null;
-        src.push(_src.js.ol3); 
+        src.push(_src.js.ol3);
         src.push(_src.js.leaflet);
         // plus souple sur vg...
         // src.push(_src.js.vg);
@@ -143,7 +144,8 @@
             .pipe($.plumber())
             //.pipe($.jscs());
             .pipe(jscs())
-            .pipe(jscs.reporter()) ;;
+            .pipe(jscs.reporter())
+            .pipe(jscs.reporter("fail")); // or "failImmediately" ?
     });
 
     //|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -253,8 +255,10 @@
             ol : "empty:",
             leaflet : "empty:",
             vg : "empty:",
+            request : "empty:", // depenance externe pour nodejs !
+            xmldom : "empty:", // depenance externe pour nodejs !
             proj4 : "../../../../lib/proj4/proj4" + modeExt,
-            gp : "../../../../lib/gp/GpServices-src" /*+ modeExt */, //on evite la double minification...
+            gp : "../../../../lib/gp/GpServices-src" /*+ modeExt */, // on evite la double minification...
             sortable : "../../../../lib/sortable/Sortable-src" // + modeExt
         };
 
@@ -312,7 +316,9 @@
                     filePath : outputFile,
                     prefixMode : "camelCase",
                     wrap : {
-                        start : "\n/* BEGIN CODE */\n",
+                        // FIXME petite bidouille interne avec les dependances nodejs...
+                        // même si le bundle n'est compatible nodejs...
+                        start : "\n/* BEGIN CODE */\nvar request, xmldom;\n",
                         end : "\n/* END CODE   */\n"
                        },
                     "escodegen" : {

@@ -596,6 +596,7 @@ define([
         var id = changedLayer.id;
         var layerOpacityInput = document.getElementById(this._addUID("GPopacityValueDiv_ID_" + id));
         layerOpacityInput.value = Math.round(opacity * 100);
+
         var layerOpacitySpan = document.getElementById(this._addUID("GPopacityValue_ID_" + id));
         layerOpacitySpan.innerHTML = Math.round(opacity * 100) + "%";
     };
@@ -889,11 +890,11 @@ define([
     function getLayerInfo (layer) {
         var layerInfo = {};
         if (layer) {
-            layerInfo._title = layer._title || "";
-            layerInfo._description = layer._description || "";
-            layerInfo._quicklookUrl = layer._quicklookUrl || "";
-            layerInfo._metadata = layer._metadata || [];
-            layerInfo._legends = layer._legends || [];
+            layerInfo._title = layer.title || "";
+            layerInfo._description = layer.description || "";
+            layerInfo._quicklookUrl = layer.quicklookUrl || "";
+            layerInfo._metadata = layer.metadata || [];
+            layerInfo._legends = layer.legends || [];
         }
         return layerInfo;
     };

@@ -37,6 +37,7 @@
             }
         });
 
+        var search = null;
         requirejs(['gp', 'Leaflet/Layers/Layers', 'Leaflet/Controls/SearchEngine'],
         function (Gp, Layers, SearchEngine) {
 
@@ -62,14 +63,14 @@
               // autoconf chargée,
               // sans clef API sur le controle,
               // sans ressources renseignées
-              var search = new SearchEngine();
+              search = new SearchEngine();
 
               // OK
               // avec les options par defaut
               // autoconf chargée,
               // avec clef API sur le controle,
               // sans ressources renseignées
-              // var search = new SearchEngine({
+              // search = new SearchEngine({
               //   apiKey : "jhyvi0fgmnuxvfv0zjzorvdn"
               // });
 
@@ -78,13 +79,27 @@
               // autoconf chargée,
               // avec ou sans clef API sur le controle (fake),
               // avec ressources renseignées
-              // var search = new SearchEngine({
+              // search = new SearchEngine({
               //    apiKey : "FAKE",
               //    resources : ["PositionOfInterest", "StreetAddress"]
               // });
 
               map.addControl(search);
 
+              document.getElementById("removeControl").onclick = function(e) {
+                  map.removeControl(search);
+                  search = null;
+              }
+
+              document.getElementById("addControl").onclick = function(e) {
+                  if (search !== null) {
+                    return;
+                  }
+                  search = new SearchEngine({
+                    collapsed : false
+                  });
+                  map.addControl(search);
+              }
           }
         })
       });
@@ -92,6 +107,8 @@
 
     <!-- map -->
     <div id="map" style="height: 400px;"></div>
+    <button type="button" id="removeControl">Supprimer le controle "search"</button>
+    <button type="button" id="addControl">Ajouter le controle "search"</button>
 
     <!-- Comment utiliser le plugin avec un exemple -->
     <p>TODO : EXEMPLE D'UTILISATION DU PLUGIN</p>

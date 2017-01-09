@@ -216,8 +216,10 @@ function (
         * @extends {L.Control}
         * @param {Object} options - options for function call.
         * @param {Sting}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
-        * @param {String}  [options.position] - position of component into the map, 'topleft' by default. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
-        * @param {Boolean} [options.collapsed] - collapse mode, false by default
+        * @param {String}  [options.position = "topleft"] - position of component into the map, 'topleft' by default. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
+        * @param {Boolean} [options.collapsed = false] - collapse mode, false by default
+        * @param {Boolean} [options.disableReverse = false] - whether to enable/disable the reverse geocoding when entering points.
+        *   Active by default. But, you can disable it when entering with the "ctrl" key on the keyboard
         * @param {Object}  [options.exclusions] - list of exclusions with status
         * @param {Array}   [options.graphs] - list of resources, by default : ["Voiture", "Pieton"], and the first element is selected.
         * @param {Object}  [options.autocompleteOptions] - options of autocomplete service
@@ -307,7 +309,7 @@ function (
         * @param {Sting}   [options.apiKey] - API key for elevation service call, mandatory if configuration service has not been loaded in advance. See {@link https://github.com/IGNF/geoportal-extensions/blob/master/README-leaflet.md#user-content-config "Configuration de l'accès à la plateforme Géoportail" documentation chapter} for more information.
         * @param {String}  [options.position] - position of component into the map, 'topleft' by default. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
         * @param {Boolean} [options.active = false] - specify if control should be actived at startup. Default is false.
-        * @param {Object} [options.stylesOptions = DEFAULT_STYLES] - Styles to use when drawing. see [leaflet options](http://leafletjs.com/reference.html#path-options) for available properties. 
+        * @param {Object} [options.stylesOptions = DEFAULT_STYLES] - Styles to use when drawing. see [leaflet options](http://leafletjs.com/reference.html#path-options) for available properties.
         * @param {Object} [options.elevationPathOptions = {}] - elevation path service options. See {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~getAltitude options} for available options
         * @param {Object} [options.displayProfileOptions = {}] - profile options.
         * @param {Function} [options.displayProfileOptions.apply] - function to display profile if you want to cutomise it. By default, [DISPLAY_PROFILE_BY_DEFAULT()](./L.geoportalControl.ElevationPath.html#.DISPLAY_PROFILE_BY_DEFAULT) is used. Helper functions to use with D3 [DISPLAY_PROFILE_LIB_D3()](./L.geoportalControl.ElevationPath.html#.DISPLAY_PROFILE_LIB_D3) or AmCharts [DISPLAY_PROFILE_LIB_AMCHARTS()](./L.geoportalControl.ElevationPath.html#.DISPLAY_PROFILE_LIB_AMCHARTS) frameworks are also provided. You may also provide your own function.

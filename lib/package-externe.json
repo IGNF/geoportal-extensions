@@ -40,10 +40,10 @@
     "version" : "3.14.2"
   },
   "gp" : {
-    "date" : "2016-11-15",
+    "date" : "2016-12-16",
     "desc" : "API Geoportail Services",
     "url" : "https://github.com/IGNF/geoportal-access-lib",
-    "version" : "1.0.0-beta3 - commit aa8d47b (master)"
+    "version" : "1.0.0-beta3 - commit f07492f (master)"
   },
   "woodman" : {
     "desc" : "Flexible JavaScript logger utility based on log4j. Runs client-side and server-side.",
