@@ -342,9 +342,9 @@ define([
         this._layersOrder.splice(layerIndex, 1);
         this._lastZIndex--;
         // on met à jour les zindex des couches restantes
-        for ( var i = 0; i < this._layersOrder.length; i++ ) {
-            // info: this._layersOrder[i] est un objet layerOptions.
-            this._layersOrder[i].layer.setZIndex(this._lastZIndex - i);
+        var layerOrderTemp = this._layersOrder;
+        for (var i = 0; i < layerOrderTemp.length; i++) {
+            layerOrderTemp[i].layer.setZIndex(this._lastZIndex - i);
         }
         // on retire la couche de la liste des layers
         delete this._layers[layerID];
