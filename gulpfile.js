@@ -117,7 +117,8 @@
         return gulp.src(src)
             .pipe($.plumber())
             .pipe(jshint(".jshintrc"))
-            .pipe(jshint.reporter("default"));
+            .pipe(jshint.reporter("default", { verbose : true }))
+            .pipe(jshint.reporter("fail"));
     });
 
     //|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -143,7 +144,8 @@
             .pipe($.plumber())
             //.pipe($.jscs());
             .pipe(jscs())
-            .pipe(jscs.reporter()) ;;
+            .pipe(jscs.reporter())
+            .pipe(jscs.reporter("fail")); // or "failImmediately" ?
     });
 
     //|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
