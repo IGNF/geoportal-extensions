@@ -2,9 +2,8 @@
 <html>
     <head>
           <!-- Library OpenLayers 3 -->
-          <!--<link rel="stylesheet" href="../../../lib/ol3/ol.css" />
-          <script src="../../../lib/ol3/ol.js"></script>
-          -->
+          <link rel="stylesheet" href="../../../lib/ol3/ol.css" />
+
           <!-- Plugin OpenLayers 3 IGN -->
           <link rel="stylesheet" href="../../../dist/ol3/GpPluginOl3.css" />
 
@@ -41,15 +40,18 @@
                 requirejs.config({
                     'baseUrl' : "../../../src",
                     'paths': {
-                        // lib external
-                        "ol" : "../lib/ol3/ol-debug",
-                        "GpPluginOl3" : "../dist/ol3/GpPluginOl3",
-                        "GpServices" : "../lib/gp/GpServices"
+                          gp : "../lib/gp/GpServices-src",
+                          proj4 : "../lib/proj4/proj4-src",
+                          // ol : "../lib/ol3/v3.20.1/ol",
+                          // ol : "../lib/ol3/v3.18.1/ol",
+                          // ol : "../lib/ol3/v3.17.1/ol",
+                          ol : "../lib/ol3/ol-debug",
+                          woodman : "../lib/woodman/woodman-amd"
                     }
                 });
 
-                requirejs(['ol','GpServices','Ol3/Layers/SourceWMTS'],
-                function (ol, Gp, SourceWMTS) {
+                requirejs(['gp', 'ol', 'Ol3/Layers/SourceWMTS', 'Ol3/Controls/GeoportalAttribution'],
+                function (Gp, ol, SourceWMTS, GeoportalAttribution) {
 
                     Gp.Services.getConfig({
                         apiKey: "0pc8wopu0q520etd77qi619k",
@@ -61,24 +63,36 @@
                     function loadMap() {
                         document.getElementById('map').style.backgroundImage = 'none';
 
-                        var wmts =  new SourceWMTS({
+                        var wmts0 =  new SourceWMTS({
                             layer: "ORTHOIMAGERY.ORTHOPHOTOS",
                             apiKey: "0pc8wopu0q520etd77qi619k"
                         });
-                        console.log("wmts : ",wmts);
+                        console.log("wmts : ",wmts0);
 
-                        var gpLayer = new ol.layer.Tile({
-                            source : wmts
+                        var gpLayer0 = new ol.layer.Tile({
+                            source : wmts0
                         });
+
+                        var wmts1 =  new SourceWMTS({
+                            layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS",
+                            apiKey: "0pc8wopu0q520etd77qi619k"
+                        });
+                        console.log("wmts : ",wmts1);
+
+                        var gpLayer1 = new ol.layer.Tile({
+                            source : wmts1
+                        });
+
                         var map = new ol.Map({
-                            layers: [gpLayer],
+                            layers: [gpLayer0, gpLayer1],
                             target: 'map',
                             view: new ol.View({
                                 center: [288074.8449901076, 6247982.515792289],
                                 zoom: 5
                             })
                         });
-                        // map.addLayer(gpLayer);
+                        map.addControl(new GeoportalAttribution());
+
                     }
 
                 });

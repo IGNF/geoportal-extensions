@@ -55,7 +55,7 @@ define(["ol", "Common/Utils/LayerUtils"], function (ol, LayerUtils) {
             var ctrls = map.getControls();
             ctrls.forEach(
                 function (element) {
-                    if ( element instanceof ol.control.Attribution && !(element instanceof ol.control.GeoportalAttribution) ) {
+                    if ( element instanceof ol.control.Attribution && !(element instanceof GeoportalAttribution) ) {
                         this.remove(element);
                     }
                 },
@@ -123,7 +123,8 @@ define(["ol", "Common/Utils/LayerUtils"], function (ol, LayerUtils) {
         for (var i = 0; i < layers.length; i++ ) {
 
             var src = layers[i].getSource();
-
+            src.setAttributions(); // clean
+            
             // srcAttributionHtml : html, composed of all layer's attributions html
             var srcAttributionHtml = "";
 
