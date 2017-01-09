@@ -788,21 +788,21 @@ define([
             * @param {Object} e - event
             * @private
             */
-            var mouseover = function (e) {
-                logger.trace(e);
-                if (self._profile === null) {
-                    return;
-                }
-
-                // creation d'un marker
-                self._marker = L.marker(L.latLng(position.lat, position.lon), {
-                    icon : new IconDefault("orange"),
-                    draggable : false,
-                    clickable : false,
-                    zIndexOffset : 1000
-                });
-                self._marker.addTo(map);
-            };
+            // var mouseover = function (e) {
+            //     logger.trace(e);
+            //     if (self._profile === null) {
+            //         return;
+            //     }
+            //
+            //     // creation d'un marker
+            //     self._marker = L.marker(L.latLng(position.lat, position.lon), {
+            //         icon : new IconDefault("orange"),
+            //         draggable : false,
+            //         clickable : false,
+            //         zIndexOffset : 1000
+            //     });
+            //     self._marker.addTo(map);
+            // };
 
             /**
             * event sur la sortie du graphe qui permet de mettre à jour la position du marker
@@ -810,18 +810,18 @@ define([
             * @param {Object} e - event
             * @private
             */
-            var mouseout = function (e) {
-                logger.trace(e);
-                if (self._profile === null) {
-                    return;
-                }
-
-                // suppression de l'ancien d'un marker
-                if (self._marker) {
-                    map.removeLayer(self._marker);
-                    self._marker = null;
-                }
-            };
+            // var mouseout = function (e) {
+            //     logger.trace(e);
+            //     if (self._profile === null) {
+            //         return;
+            //     }
+            //
+            //     // suppression de l'ancien d'un marker
+            //     if (self._marker) {
+            //         map.removeLayer(self._marker);
+            //         self._marker = null;
+            //     }
+            // };
 
             /**
             * event sur le deplacement sur le graphe qui permet de mettre à jour la position du marker
@@ -829,18 +829,18 @@ define([
             * @param {Object} e - event
             * @private
             */
-            var mousemove = function (e) {
-                logger.trace(e);
-                if (self._profile === null) {
-                    return;
-                }
-
-                // suppression de l'ancien d'un marker
-                if (self._marker) {
-                    self._marker.setLatLng(L.latLng(e.lat, e.lon));
-                    self._marker.update();
-                }
-            };
+            // var mousemove = function (e) {
+            //     logger.trace(e);
+            //     if (self._profile === null) {
+            //         return;
+            //     }
+            //
+            //     // suppression de l'ancien d'un marker
+            //     if (self._marker) {
+            //         self._marker.setLatLng(L.latLng(e.lat, e.lon));
+            //         self._marker.update();
+            //     }
+            // };
 
             // FIXME event !?
             // this._profilContainer.removeEventListener("mouseover", mouseover);
