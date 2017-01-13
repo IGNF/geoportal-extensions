@@ -202,7 +202,7 @@ define([], function () {
                         drawLogo = true;
 
                         var minZoomLevel = this.getZoomLevelFromScaleDenominator(constraint.maxScaleDenominator, params.crs);
-                        var maxZoomLevel = this.getZoomLevelFromScaleDenominator(constraint.minScaleDenominator, params.crs);
+                        var maxZoomLevel = this.getZoomLevelFromScaleDenominator(constraint.minScaleDenominator, params.crs) || 21;
 
                         // min zoom constraints
                         if (minZoomLevel && (minZoomLevel > zoom)) {
