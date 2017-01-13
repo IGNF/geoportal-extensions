@@ -788,21 +788,21 @@ define([
             * @param {Object} e - event
             * @private
             */
-            var mouseover = function (e) {
-                logger.trace(e);
-                if (self._profile === null) {
-                    return;
-                }
-
-                // creation d'un marker
-                self._marker = L.marker(L.latLng(position.lat, position.lon), {
-                    icon : new IconDefault("orange"),
-                    draggable : false,
-                    clickable : false,
-                    zIndexOffset : 1000
-                });
-                self._marker.addTo(map);
-            };
+            // var mouseover = function (e) {
+            //     logger.trace(e);
+            //     if (self._profile === null) {
+            //         return;
+            //     }
+            //
+            //     // creation d'un marker
+            //     self._marker = L.marker(L.latLng(position.lat, position.lon), {
+            //         icon : new IconDefault("orange"),
+            //         draggable : false,
+            //         clickable : false,
+            //         zIndexOffset : 1000
+            //     });
+            //     self._marker.addTo(map);
+            // };
 
             /**
             * event sur la sortie du graphe qui permet de mettre à jour la position du marker
@@ -810,18 +810,18 @@ define([
             * @param {Object} e - event
             * @private
             */
-            var mouseout = function (e) {
-                logger.trace(e);
-                if (self._profile === null) {
-                    return;
-                }
-
-                // suppression de l'ancien d'un marker
-                if (self._marker) {
-                    map.removeLayer(self._marker);
-                    self._marker = null;
-                }
-            };
+            // var mouseout = function (e) {
+            //     logger.trace(e);
+            //     if (self._profile === null) {
+            //         return;
+            //     }
+            //
+            //     // suppression de l'ancien d'un marker
+            //     if (self._marker) {
+            //         map.removeLayer(self._marker);
+            //         self._marker = null;
+            //     }
+            // };
 
             /**
             * event sur le deplacement sur le graphe qui permet de mettre à jour la position du marker
@@ -829,18 +829,18 @@ define([
             * @param {Object} e - event
             * @private
             */
-            var mousemove = function (e) {
-                logger.trace(e);
-                if (self._profile === null) {
-                    return;
-                }
-
-                // suppression de l'ancien d'un marker
-                if (self._marker) {
-                    self._marker.setLatLng(L.latLng(e.lat, e.lon));
-                    self._marker.update();
-                }
-            };
+            // var mousemove = function (e) {
+            //     logger.trace(e);
+            //     if (self._profile === null) {
+            //         return;
+            //     }
+            //
+            //     // suppression de l'ancien d'un marker
+            //     if (self._marker) {
+            //         self._marker.setLatLng(L.latLng(e.lat, e.lon));
+            //         self._marker.update();
+            //     }
+            // };
 
             // FIXME event !?
             // this._profilContainer.removeEventListener("mouseover", mouseover);
@@ -947,30 +947,35 @@ define([
         });
         container.appendChild(div);
 
+        var divBox = document.createElement("div");
+        divBox.className = "profile-box";
+
         var divZ = document.createElement("div");
-        divZ.className = "z-title-vertical";
+        divZ.className = "profile-z-vertical";
         var ulZ  = document.createElement("ul");
         var liZmin = document.createElement("li");
-        liZmin.setAttribute("class", "min-z");
+        liZmin.setAttribute("class", "profile-min-z");
         liZmin.innerHTML = minZ + " m";
         var liZmax = document.createElement("li");
-        liZmax.setAttribute("class", "max-z");
+        liZmax.setAttribute("class", "profile-max-z");
         liZmax.innerHTML = maxZ + " m";
+
         // var divUnit = document.createElement("div");
-        // divUnit.className = "unit";
+        // divUnit.className = "profile-unit";
         // divUnit.innerHTML = "m";
+
         ulZ.appendChild(liZmax);
         ulZ.appendChild(liZmin);
         divZ.appendChild(ulZ);
         // divZ.appendChild(divUnit);
-        div.appendChild(divZ);
+        divBox.appendChild(divZ);
 
         var divData = document.createElement("div");
-        divData.className = "profileElevationContent";
+        divData.className = "profile-content";
 
         var ulData  = document.createElement("ul");
-        ulData.id   = "data-default";
-        ulData.className = "z-axis x-axis";
+        ulData.id   = "profile-data";
+        ulData.className = "profile-z-axis profile-x-axis";
         divData.appendChild(ulData);
 
         for (var i = 0 ; i < data.length ; i++) {
@@ -988,21 +993,22 @@ define([
             ulData.appendChild(li) ;
         }
 
+        divBox.appendChild(divData);
+        div.appendChild(divBox);
+
         var divX = document.createElement("div");
-        divX.className = "x-title-horizontal";
+        divX.className = "profile-x-horizontal";
         var ulX  = document.createElement("ul");
         var liXmin = document.createElement("li");
-        liXmin.setAttribute("class", "min-x");
+        liXmin.setAttribute("class", "profile-min-x");
         liXmin.innerHTML = "";
         var liXmax = document.createElement("li");
-        liXmax.setAttribute("class", "max-x");
+        liXmax.setAttribute("class", "profile-max-x");
         liXmax.innerHTML = distMax + " km";
         ulX.appendChild(liXmin);
         ulX.appendChild(liXmax);
         divX.appendChild(ulX);
-        divData.appendChild(divX);
-
-        div.appendChild(divData);
+        div.appendChild(divX);
 
         context._profile = container;
     };

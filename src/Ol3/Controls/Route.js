@@ -1846,7 +1846,12 @@ define([
 
         var newInstructions = [];
 
+        // cas où...
         var current = instructions[0];
+        if (instructions.length === 1) {
+            newInstructions.push(current);
+        }
+
         for (var i = 1; i < instructions.length; i++) {
             var o  = instructions[i];
             if (o.instruction === current.instruction) {

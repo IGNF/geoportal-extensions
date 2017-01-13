@@ -1,4 +1,8 @@
 /* Widgets : general */
+/*
+http://codepen.io/anon/pen/gLzMwa?editors=1100#0
+*/
+
 
 .GPwidget {
   position: absolute;
@@ -192,6 +196,7 @@
   border-radius: 5px;
 }
 
+
 /* ELEVATION PATH DISPLAY */
 
 [id^=GPelevationPathProfil] {
@@ -203,32 +208,99 @@
   padding: unset;
 }
 
-/* CSS : default */
 
-/* suppression des puces sur les listes */
-div#profileElevationByDefault {
-  display: flex;
-  flex-direction: column;
-  /*flex-flow: row wrap;*/
-  height: inherit;
-  width: inherit;
+/* PROFIL */
+#profileElevationByDefault {
+  display:flex;
+  flex-direction:column;
+  height:100%;
 }
 
-div#profileElevationByDefault > * {
-  flex: 1 100%;
+.profile-box {
+  display:flex;
+  flex:1;
+  flex-direction:row;
 }
 
-ul#data-default {
-    list-style: none;
-    box-sizing: border-box;
-    padding: 0px;
-    position : relative;
-    margin:  0px 10px 0px 10px;
-    height: 100px;
-    /*width: 100%*/
+.profile-content {
+  flex:1;
+  justify-content:center;
+  align-items:center;
 }
 
-.x-fleche {
+.profile-z-vertical,
+.profile-z-vertical ul,
+.profile-x-horizontal,
+.profile-x-horizontal ul {
+  display:flex;
+  /*justify-content:center;*/
+  align-items:center;
+}
+
+
+.profile-z-vertical,
+.profile-z-vertical ul,
+.profile-content
+{
+  flex-direction:column;
+  height:100%;
+}
+
+.profile-z-vertical ul,
+.profile-x-horizontal ul{
+  /*padding:0;*/
+  margin:0;
+  list-style-type:none;
+}
+
+.profile-z-vertical{
+  /*background:green;*/
+  flex:0 1 auto;
+
+}
+.profile-z-vertical ul{
+  /*background:pink;*/
+  justify-content:space-between;
+  padding:2px 5px 2px 2px;
+  /*border-right:1px solid #888;*/
+}
+.profile-z-vertical .profile-unit{
+  /*background:gray;*/
+  width:100%;
+  text-align:center;
+  /*padding:5px 5px 2px 2px;*/
+}
+.profile-content{
+  /*background:yellow;*/
+  /*flex:1 0 auto;*/
+
+}
+.profile-content ul {
+  background:white;
+  flex:1 0 auto;
+  height:100%;
+  width:100%;
+  justify-content:flex-start;
+  align-items:flex-end;
+
+  margin:0;
+  padding:0;
+
+}
+.profile-x-horizontal{
+  /*background:blue;*/
+  flex:0 1 auto;;
+  width:100%;
+}
+.profile-x-horizontal ul{
+  /*background:orange;*/
+  justify-content:space-between;
+  /*padding:5px 2px 2px 2px;*/
+  width:100%;
+  /*border-top:1px solid #888;*/
+}
+
+.profile-x-fleche {
     width: 0;
     height: 0;
     border-top: 5px solid transparent;
@@ -236,13 +308,7 @@ ul#data-default {
     border-left: 5px solid green;
 }
 
-.z-title-vertical {
-  align-self: flex-start;
-  /*position: absolute;*/
-  /*transform: rotate(-90deg);*/
-}
-
-.z-fleche {
+.profile-z-fleche {
     width: 0;
     height: 0;
     border-left: 5px solid transparent;
@@ -250,25 +316,19 @@ ul#data-default {
     border-bottom: 5px solid red;
 }
 
-.x-title-horizontal {
-  align-self: flex-end;
-  /*position: absolute;*/
-  /*transform: translate(120px, -30px);*/
-}
-
-.z-axis {
+.profile-z-axis {
     border-right: none;
-    border-left: solid 2px;
+    border-left: solid 2px #888;
     cursor: default;
 }
 
-.x-axis {
+.profile-x-axis {
     border-top: none;
-    border-bottom: solid 2px;
+    border-bottom: solid 2px #888;
     cursor: default;
 }
 
-ul#data-default li.percent {
+ul#profile-data li.percent {
     display: inline-block;
     vertical-align: bottom;
     background-color: #C77A04;
@@ -282,9 +342,9 @@ li.axe span.bottom-axis {
     vertical-align: bottom;
 }
 
-ul#data-default .percent:hover {
+ul#profile-data .percent:hover {
     display: inline-block;
-    /*vertical-align: bottom;*/
+    vertical-align: bottom;
     background-color: #f00;
 }
 

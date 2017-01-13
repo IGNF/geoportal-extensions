@@ -621,7 +621,9 @@ define([
         * TODO Gestion de la balise kml:hostSpot sur les styles d'un Marker
         * - problème avec 'hotspot y === 0' (?)
         */
-        var __getHotSpotStyleToFeatureIcon  = function (feature, style) {};
+        var __getHotSpotStyleToFeatureIcon  = function (feature, style) {
+            logger.trace(feature, style);
+        };
 
         /**
         * Gestion de la balise kml:ExtendedData

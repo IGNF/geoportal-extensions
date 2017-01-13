@@ -55,7 +55,7 @@ define(["ol", "Common/Utils/LayerUtils"], function (ol, LayerUtils) {
             var ctrls = map.getControls();
             ctrls.forEach(
                 function (element) {
-                    if ( element instanceof ol.control.Attribution && !(element instanceof ol.control.GeoportalAttribution) ) {
+                    if ( element instanceof ol.control.Attribution && !(element instanceof GeoportalAttribution) ) {
                         this.remove(element);
                     }
                 },
@@ -123,9 +123,9 @@ define(["ol", "Common/Utils/LayerUtils"], function (ol, LayerUtils) {
         for (var i = 0; i < layers.length; i++ ) {
 
             var src = layers[i].getSource();
+            src.setAttributions(); // clean
 
-            // srcAttributionHtml : html, composed of all layer's attributions html
-            var srcAttributionHtml = "";
+            var attributions = [];
 
             visibility = layers[i].getVisible();
             originators = src._originators;
@@ -145,8 +145,10 @@ define(["ol", "Common/Utils/LayerUtils"], function (ol, LayerUtils) {
                     var attributionj = layerAttributions[j];
                     // check that this attribution hasn't been added yet for another layer
                     if ( !mapAttributions || !mapAttributions[attributionj] ) {
-                        // add attribution html to source attributions html
-                        srcAttributionHtml += attributionj;
+                        // add attribution html
+                        attributions.push(new ol.Attribution({
+                            html : attributionj
+                        }));
 
                         // add attribution to mapAttributions, to manage all layers attributions
                         mapAttributions[attributionj] = true;
@@ -154,11 +156,8 @@ define(["ol", "Common/Utils/LayerUtils"], function (ol, LayerUtils) {
                 };
 
                 // update source attribution
-                if ( srcAttributionHtml.length !== 0 ) {
-                    var olAttribution = new ol.Attribution({
-                        html : srcAttributionHtml
-                    });
-                    src.setAttributions([olAttribution]);
+                if (attributions.length !== 0) {
+                    src.setAttributions(attributions);
                 }
             }
         }

@@ -1,7 +1,12 @@
-define(["leaflet"],
-function (L) {
+define([
+    "leaflet",
+    "woodman"
+],
+function (L, woodman) {
 
     "use strict";
+
+    var logger = woodman.getLogger("icondefault");
 
     /**  cf. http://leafletjs.com/reference.html#icon */
     var IconDefault =  L.Icon.Default.extend( /** @lends IconDefault.prototype */ {
@@ -45,6 +50,16 @@ function (L) {
             }
 
             this.options.shadowUrl = this.images.shadow;
+        },
+
+        /**
+        * Overload function to ensure compatibility between versions 0.7.X and 1.0.X
+        * (extend to L.Icon._getIconUrl)
+        *
+        */
+        _getIconUrl : function (name) {
+            logger.trace("OVERWRITTEN L.Icon.Default._getIconUrl(" + name + ")");
+            return L.Icon.prototype._getIconUrl.call(this, name);
         }
     });
 

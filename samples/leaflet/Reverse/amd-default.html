@@ -41,6 +41,7 @@
             }
         });
 
+        var rev = null;
         requirejs(['gp', 'Leaflet/Layers/Layers', 'Leaflet/Controls/ReverseGeocoding'],
         function (Gp, Layers, ReverseGeocoding) {
 
@@ -66,7 +67,7 @@
               // autoconf chargée,
               // sans clef API sur le controle,
               // sans ressources renseignées
-              var rev = new ReverseGeocoding({
+              rev = new ReverseGeocoding({
                 reverseGeocodeOptions : {
                   maximumResponses : 50
                 }});
@@ -76,7 +77,7 @@
               // autoconf chargée,
               // avec clef API sur le controle,
               // sans ressources renseignées
-              // var search = new ReverseGeocoding({
+              // rev = new ReverseGeocoding({
               //   apiKey : "jhyvi0fgmnuxvfv0zjzorvdn"
               // });
 
@@ -85,13 +86,27 @@
               // autoconf chargée,
               // avec ou sans clef API sur le controle (fake),
               // avec ressources renseignées
-              // var search = new ReverseGeocoding({
+              // rev = new ReverseGeocoding({
               //    apiKey : "FAKE",
               //    resources : ["PositionOfInterest", "StreetAddress"]
               // });
 
               map.addControl(rev);
 
+              document.getElementById("removeControl").onclick = function(e) {
+                  map.removeControl(rev);
+                  rev = null;
+              }
+
+              document.getElementById("addControl").onclick = function(e) {
+                  if (rev !== null) {
+                    return;
+                  }
+                  rev = new ReverseGeocoding({
+                    collapsed : false
+                  });
+                  map.addControl(rev);
+              }
           }
         })
       });
@@ -99,6 +114,8 @@
 
     <!-- map -->
     <div id="map" style="height: 400px;"></div>
+    <button type="button" id="removeControl">Supprimer le controle "reverseGeocoding"</button>
+    <button type="button" id="addControl">Ajouter le controle "reverseGeocoding"</button>
 
     <!-- Comment utiliser le plugin avec un exemple -->
     <p>TODO : EXEMPLE D'UTILISATION DU PLUGIN</p>

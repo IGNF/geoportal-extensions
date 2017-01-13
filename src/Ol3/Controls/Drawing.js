@@ -596,10 +596,17 @@ define([
      * @param {ol.layer.Vector} vlayer - vector layer
      */
     Drawing.prototype.setLayer = function (vlayer) {
-        if (!vlayer || !(vlayer instanceof ol.layer.Vector)) {
-            console.log("no valid layer given for hosting drawn features.") ;
-            return ;
+
+        if (!vlayer) {
+            this.layer = null;
+            return;
         }
+
+        if (!(vlayer instanceof ol.layer.Vector)) {
+            console.log("no valid layer given for hosting drawn features.");
+            return;
+        }
+
         // ajout du layer de dessin à la carte s'il n'y est pas déjà
         var layers = this.getMap().getLayers() ;
         if (layers) {
