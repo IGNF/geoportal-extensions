@@ -50,6 +50,8 @@
                     }
                 });
 
+                var map;
+
                 requirejs(['gp', 'ol', 'Ol3/Layers/SourceWMTS', 'Ol3/Controls/GeoportalAttribution'],
                 function (Gp, ol, SourceWMTS, GeoportalAttribution) {
 
@@ -83,7 +85,7 @@
                             source : wmts1
                         });
 
-                        var map = new ol.Map({
+                        map = new ol.Map({
                             layers: [gpLayer0, gpLayer1],
                             target: 'map',
                             view: new ol.View({
