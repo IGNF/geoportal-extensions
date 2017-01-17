@@ -858,8 +858,11 @@ define([
 
         // création d'une couche vectorielle à partir de ces features
         var vectorSource = new ol.source.Vector({
-            features : features
+            features : new ol.Collection()
         });
+        vectorSource.addFeatures(features);
+
+        logger.trace(vectorSource);
 
         // ajout des informations pour le layerSwitcher (titre, description)
         if ( layerName ) {
@@ -912,6 +915,7 @@ define([
             // lecture du fichier KML : création d'un format ol.format.KML, qui possède une méthode readFeatures (et readProjection)
             format = new KMLExtended({
                 showPointNames : false, // FIXME !
+                extractStyles : this.options.vectorStyleOptions.KML.extractStyles,
                 defaultStyle : [
                     this._defaultKMLStyle
                 ]

@@ -172,9 +172,6 @@ define([
     *  - creation de styles étendus ou correctifs sur le KML
     *  - ajout de styles étendus sur les features
     *
-    * FIXME : le traitement des styles KML en mode styleUrl n'est pas implémenté !
-    * indispensable pour lire les KMl de l'ancien portail...
-    *
     * @example
     * // ajoute des fonctionnalités dans le KML
     * _kmlRead(kmlDoc, {
@@ -251,7 +248,7 @@ define([
 
                     // On traite les balises kml:extendedData pour tous les objets !
                     if (extend) {
-                        logger.log("(TODO) ExtendedData :", extend);
+                        logger.log("ExtendedData :", extend);
                         var fctExtend = process.extendedData;
                         if (fctExtend && typeof fctExtend === "function") {
                             fctExtend(features[index], extend);
@@ -278,11 +275,15 @@ define([
                                 }
                             }
 
+                            // Pour un label, il faut un titre !
+                            var label = features[index].getProperties().name;
+
                             // C'est un Label !
                             // On y ajoute qq fonctionnalités...
-                            if (labelStyle) {
+                            if (labelStyle && label) {
                                 var fctLabel = process.labelStyle;
                                 if (fctLabel && typeof fctLabel === "function") {
+                                    // console.log(features[index].getStyle());
                                     fctLabel(features[index], labelStyle);
                                 }
                             }
@@ -292,6 +293,7 @@ define([
                             else if (iconStyle) {
                                 var fctIcon = process.iconStyle;
                                 if (fctIcon && typeof fctIcon === "function") {
+                                    // FIXME pourquoi le feature ne renvoie pas de style ?
                                     fctIcon(features[index], iconStyle);
                                 }
                             }
@@ -378,18 +380,23 @@ define([
             var _haloOpacity = "1"; // TODO
             var _font = "Sans"; // TODO
 
-            var fTextStyle = feature.getStyle().getText().getStroke();
-            _haloColor  = __convertRGBColorsToKML(fTextStyle.getColor());
-            _haloRadius = fTextStyle.getWidth();
+            if ( feature.getStyle() instanceof ol.style.Style ) {
 
-            if (style && style.getElementsByTagName("LabelStyleSimpleExtensionGroup").length === 0) {
-                var labelextend = kmlDoc.createElement("LabelStyleSimpleExtensionGroup");
-                labelextend.setAttribute("fontFamily", _font);
-                labelextend.setAttribute("haloColor", _haloColor);
-                labelextend.setAttribute("haloRadius", _haloRadius);
-                labelextend.setAttribute("haloOpacity", _haloOpacity);
-                style.appendChild(labelextend);
+                var fTextStyle = feature.getStyle().getText().getStroke();
+
+                _haloColor  = __convertRGBColorsToKML(fTextStyle.getColor());
+                _haloRadius = fTextStyle.getWidth();
+
+                if (style && style.getElementsByTagName("LabelStyleSimpleExtensionGroup").length === 0) {
+                    var labelextend = kmlDoc.createElement("LabelStyleSimpleExtensionGroup");
+                    labelextend.setAttribute("fontFamily", _font);
+                    labelextend.setAttribute("haloColor", _haloColor);
+                    labelextend.setAttribute("haloRadius", _haloRadius);
+                    labelextend.setAttribute("haloOpacity", _haloOpacity);
+                    style.appendChild(labelextend);
+                }
             }
+
         };
 
         /**
@@ -399,8 +406,6 @@ define([
          *   - FRACTION (TODO)
          *   - PIXELS
          *  Insertion du correctif dans le noeud : <PlaceMark><Style>IconStyle
-         *
-         *  FIXME : BUG de lecture du KML dans OpenLayers
          *
          *  @example
          *  <Style><IconStyle>
@@ -422,28 +427,31 @@ define([
             var xunits = "pixels";
             var yunits = "pixels";
 
-            var fImageStyle = feature.getStyle().getImage();
+            if ( feature.getStyle() instanceof ol.style.Style ) {
 
-            var size   = fImageStyle.getSize();
-            var anchor = fImageStyle.getAnchor(); // pixels ! but anchor_ in the current unit !
+                var fImageStyle = feature.getStyle().getImage();
 
-            if (anchor.length) {
-                x = anchor[0];
-                y = anchor[1];
-                if (yunits === "fraction") {
-                    y = (anchor[1] === 1) ? 0 : 1 - anchor[1]; // cf. fixme !
-                } else {
-                    y = (yunits === "pixels" && anchor[1] === size[1]) ? 0 : size[1] - anchor[1]; // cf. fixme !
+                var size   = fImageStyle.getSize();
+                var anchor = fImageStyle.getAnchor(); // pixels ! but anchor_ in the current unit !
+
+                if (anchor.length) {
+                    x = anchor[0];
+                    y = anchor[1];
+                    if (yunits === "fraction") {
+                        y = (anchor[1] === 1) ? 0 : 1 - anchor[1]; // cf. fixme !
+                    } else {
+                        y = (yunits === "pixels" && anchor[1] === size[1]) ? 0 : size[1] - anchor[1]; // cf. fixme !
+                    }
                 }
-            }
 
-            if (style && style.getElementsByTagName("hotSpot").length === 0) {
-                var hotspot = kmlDoc.createElement("hotSpot");
-                hotspot.setAttribute("x", x);
-                hotspot.setAttribute("y", y);
-                hotspot.setAttribute("xunits", xunits);
-                hotspot.setAttribute("yunits", yunits);
-                style.appendChild(hotspot);
+                if (style && style.getElementsByTagName("hotSpot").length === 0) {
+                    var hotspot = kmlDoc.createElement("hotSpot");
+                    hotspot.setAttribute("x", x);
+                    hotspot.setAttribute("y", y);
+                    hotspot.setAttribute("xunits", xunits);
+                    hotspot.setAttribute("yunits", yunits);
+                    style.appendChild(hotspot);
+                }
             }
         };
 
