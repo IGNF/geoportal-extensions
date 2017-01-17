@@ -1036,7 +1036,8 @@ define([
             var textValue = null ;
             if (seEv.selected[0].getGeometry() instanceof ol.geom.Point) {
                 // on determine si c'est un marker ou un label.
-                if (seEv.selected[0].getStyle().getText()) {
+                if (seEv.selected[0].getStyle() &&
+                    seEv.selected[0].getStyle().getText()) {
                     geomType = "Text" ;
                 } else if (seEv.selected[0].getStyle() &&
                     seEv.selected[0].getStyle().getImage()) {

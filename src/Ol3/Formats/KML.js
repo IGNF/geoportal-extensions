@@ -631,6 +631,74 @@ define([
         */
         var __getHotSpotStyleToFeatureIcon  = function (feature, style) {
             logger.trace(feature, style);
+
+            var _src = null;
+            var _sizeW = 51;
+            var _sizeH = 38;
+            var _anchorX = 25.5;
+            var _anchorXUnits = "pixels";
+            var _anchorY = 38;
+            var _anchorYUnits = "pixels";
+
+            var styles = style.childNodes;
+            for (var k = 0; k < styles.length; k++) {
+                switch (styles[k].nodeName) {
+                    case "Icon":
+                        var nodes = styles[k].childNodes;
+                        for (var i = 0; i < nodes.length; i++) {
+                            switch (nodes[i].nodeName) {
+                                case "href" :
+                                    _src = nodes[i].textContent;
+                                    break;
+                                case "gx:w" :
+                                    _sizeW = parseFloat(nodes[i].textContent);
+                                    break;
+                                case "gx:h" :
+                                    _sizeH = parseFloat(nodes[i].textContent);
+                                    break;
+                                default:
+                            }
+                        }
+                        break;
+                    case "hotSpot":
+                        var attributs = styles[k].attributes;
+                        for (var l = 0; l < attributs.length; l++) {
+                            switch (attributs[l].nodeName) {
+                                case "x" :
+                                    _anchorX = parseFloat(attributs[l].nodeValue);
+                                    break;
+                                case "y" :
+                                    _anchorY = parseFloat(attributs[l].nodeValue);
+                                    // FIXME cf. plus haut...
+                                    if (_anchorY === 0) {
+                                        _anchorY = _sizeH;
+                                    }
+                                    break;
+                                case "yunits" :
+                                    _anchorXUnits = attributs[l].nodeValue;
+                                    break;
+                                case "xunits" :
+                                    _anchorYUnits = attributs[l].nodeValue;
+                                    break;
+                                default:
+                            }
+                        }
+                        break;
+                    default:
+                    // on ne traite pas les autres informations ...
+                }
+            }
+
+            feature.setStyle(new ol.style.Style({
+                image : new ol.style.Icon({
+                    src : _src,
+                    size : [_sizeW, _sizeH],
+                    anchor : [_anchorX, _anchorY],
+                    anchorOrigin : "top-left",
+                    anchorXUnits : _anchorXUnits || "pixels",
+                    anchorYUnits : _anchorYUnits || "pixels"
+                })
+            }));
         };
 
         /**

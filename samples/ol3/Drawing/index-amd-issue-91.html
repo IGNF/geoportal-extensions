@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="IE=edge,chrome=1; charset=UTF-8" http-equiv="X-UA-Compatible">
+  <title>sample ol3 MousePosition</title>
+
+  <!-- Library OpenLayers 3 -->
+  <link rel="stylesheet" href="../../../lib/ol3/ol.css" />
+
+  <!-- Plugin OpenLayers 3 IGN -->
+  <link rel="stylesheet" href="../../../dist/ol3/GpPluginOl3.css" />
+
+  <!-- requirejs -->
+  <script src="../../../lib/require.js"></script>
+
+  <!-- load geoportail-waiting image -->
+  <style>
+  div#map {
+    background-image:url(../resources/geoportail-waiting.gif);
+    background-position:center center;
+    background-repeat:no-repeat;
+    max-width: 800px;
+    height: 300px;
+    margin: 10px;
+  }
+
+  </style>
+
+</head>
+<body>
+  <h1>
+    <a href="http://openlayers.org/"><img src="../resources/logo-ol3.png" alt="OpenLayers3" width="100" /></a>
+    <a href="http://www.ign.fr"><img src="../resources/logo-ign.jpg" alt="IGN" width="100" /></a>
+  </h1>
+  <h3>
+    OpenLayers3 - A high-performance, feature-packed library for all your mapping needs.
+  </h3>
+
+  <div>
+    <p>...</p>
+
+    <script>
+
+    /* global requirejs */
+    requirejs.config({
+      "baseUrl" : "../../../src/",
+      "paths": {
+        // lib external
+        "ol" : "../lib/ol3/ol-debug",
+        "proj4"   : "../lib/proj4/proj4",
+        "gp"      : "../lib/gp/GpServices-src",
+        "sortable" : "../lib/sortable/Sortable",
+        "woodman" : "../lib/woodman/woodman-amd"
+      }
+    });
+
+    var map;
+    var drawing, layerSwitcher;
+    var kmlSave;
+    var vectorLayer;
+    var vectorSource;
+
+    requirejs(
+      ["ol", "gp", "Ol3/Controls/LayerSwitcher", "Ol3/Controls/Drawing", "Ol3/Formats/KML"],
+      function (ol, Gp, LayerSwitcher, Drawing, KMLExtended) {
+
+      var createMap = function () {
+
+        // layer
+        var rasterLayer = new ol.layer.Tile({
+          source : new ol.source.TileJSON({
+            url : 'https://api.tiles.mapbox.com/v3/mapbox.geography-class.json?secure',
+            crossOrigin : 'anonymous'
+          })
+        });
+
+        // Création de la map
+        map = new ol.Map({
+          target : "map",
+          layers : [rasterLayer],
+          view : new ol.View({
+            center : [0,0],
+            zoom : 3
+          })
+        });
+
+        // creation du controle
+        drawing = new Drawing();
+        map.addControl(drawing);
+        layerSwitcher = new LayerSwitcher();
+        map.addControl(layerSwitcher);
+
+      };
+
+      var addKMLToMap = function (features) {
+
+        var layer = drawing.layer;
+        if (layer) {
+          map.removeLayer(layer);
+          drawing.setLayer(null);
+        }
+
+        if (vectorLayer) {
+          map.removeLayer(vectorLayer);
+          drawing.setLayer(null);
+        }
+
+        // add KML into the map
+        vectorSource =  new ol.source.Vector({
+            features : new ol.Collection()
+        });
+        vectorSource.addFeatures(features);
+
+        vectorLayer = new ol.layer.Vector({
+          source : vectorSource
+        });
+
+        map.addLayer(vectorLayer);
+        drawing.setLayer(vectorLayer);
+      };
+
+      document.getElementById("saveKml").onclick = function (e) {
+        kmlSave = drawing.exportFeatures();
+        console.log("kmlSave", kmlSave);
+      };
+
+      document.getElementById("loadKml").onclick = function (e) {
+
+        if (!kmlSave) {
+          console.log("kmlSave ?");
+          return;
+        }
+
+        // read KML string
+        var format = new KMLExtended ({ // ol.format.KML
+          showPointNames : true
+        });
+        var kmlProj = format.readProjection(kmlSave);
+        var mapProj = map.getView().getProjection().getCode();
+        var features = format.readFeatures(
+          kmlSave,
+          {
+            dataProjection : kmlProj,
+            featureProjection : mapProj
+          }
+        );
+
+        addKMLToMap(features);
+      };
+
+      Gp.Services.getConfig({
+        serverUrl : "./../resources/AutoConf.js",
+        callbackSuffix : "",
+        // apiKey: "jhyvi0fgmnuxvfv0zjzorvdn",
+        timeOut : 20000,
+        onSuccess : createMap
+      });
+
+    });
+    </script>
+
+    <!-- map -->
+    <div id="map">
+    </div>
+    <button type="button" id="saveKml">Save KML</button> -->
+    <button type="button" id="loadKml">Load KML</button>
+
+    <!-- Comment utiliser le plugin avec un exemple -->
+    <p>EXEMPLE D'UTILISATION</p>
+    <pre>
+      <code>
+        window.onload = function () {
+          var map = new ol.Map({
+            layers: [
+            new LayerWMTS({
+              layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS",
+            })
+            ],
+            target: 'map',
+            view: new ol.View({
+              center: [288074.8449901076, 6247982.515792289],
+              zoom: 5
+            })
+          });
+          map.addControl(new MousePosition({}));
+        }
+      </code>
+    </pre>
+
+    <!-- Toutes les informations utiles sur ol3 -->
+    <p>
+      <ul>
+        <li>En savoir plus avec le <a href="http://openlayers.org/en/v3.11.2/doc/quickstart.html">quick start guide</a>,</li>
+        <li>d'autres informations avec <a href="http://openlayers.org/en/v3.11.2/examples/">les exemples</a>,</li>
+        <li>ou aller directement à l'<a href="http://openlayers.org/en/v3.11.2/apidoc/">API documentation</a>.</li>
+      </ul>
+      Si vous avez des questions, jetez un oeil à la
+      <a href="http://stackoverflow.com/questions/tagged/openlayers-3">FAQ</a>.
+    </p>
+  </div>
+</body>
+</html>
