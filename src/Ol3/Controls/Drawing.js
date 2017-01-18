@@ -818,6 +818,9 @@ define([
             if (!seEv || !seEv.selected || seEv.selected.length == 0) {
                 return ;
             }
+
+            var valuesColor = null;
+            var hexColor = null;
             var popupOvl = null ;
             var geomType = null ;
             var initValues = {} ;
@@ -827,11 +830,27 @@ define([
                     geomType = "Text" ;
                     if ( seEv.selected[0].getStyle().getText().getStroke() &&
                          seEv.selected[0].getStyle().getText().getStroke().getColor()) {
-                        initValues.strokeColor = seEv.selected[0].getStyle().getText().getStroke().getColor() ;
+                        valuesColor = seEv.selected[0].getStyle().getText().getStroke().getColor() ;
+                        if ( Array.isArray(valuesColor) ) {
+                            valuesColor = "rgba(" + valuesColor.join() + ")";
+                            hexColor = this.rgbaToHex(valuesColor) ;
+                            initValues.strokeColor = hexColor.hex;
+                            initValues.strokeOpacity = hexColor.opacity ;
+                        } else {
+                            initValues.strokeColor = valuesColor;
+                        }
                     }
                     if ( seEv.selected[0].getStyle().getText().getFill() &&
                          seEv.selected[0].getStyle().getText().getFill().getColor()) {
-                        initValues.fillColor = seEv.selected[0].getStyle().getText().getFill().getColor() ;
+                        valuesColor = seEv.selected[0].getStyle().getText().getFill().getColor() ;
+                        if ( Array.isArray(valuesColor) ) {
+                            valuesColor = "rgba(" + valuesColor.join() + ")";
+                            hexColor = this.rgbaToHex(valuesColor) ;
+                            initValues.fillColor = hexColor.hex;
+                            initValues.fillOpacity = hexColor.opacity ;
+                        } else {
+                            initValues.fillColor = valuesColor;
+                        }
                     }
                     initValues.strokeColor = initValues.hasOwnProperty("strokeColor") ? initValues.strokeColor : this.options.defaultStyles.textStrokeColor ;
                     initValues.fillColor = initValues.hasOwnProperty("fillColor") ? initValues.fillColor : this.options.defaultStyles.textFillColor ;
@@ -853,7 +872,15 @@ define([
                         initValues.strokeWidth = seEv.selected[0].getStyle().getStroke().getWidth() ;
                     }
                     if (seEv.selected[0].getStyle().getStroke().getColor() ) {
-                        initValues.strokeColor = seEv.selected[0].getStyle().getStroke().getColor() ;
+                        valuesColor = seEv.selected[0].getStyle().getStroke().getColor() ;
+                        if ( Array.isArray(valuesColor) ) {
+                            valuesColor = "rgba(" + valuesColor.join() + ")";
+                            hexColor = this.rgbaToHex(valuesColor) ;
+                            initValues.strokeColor = hexColor.hex;
+                            initValues.fillOpacity = hexColor.opacity ;
+                        } else {
+                            initValues.strokeColor = valuesColor;
+                        }
                     }
                 }
                 initValues.strokeWidth = initValues.hasOwnProperty("strokeWidth") ? initValues.strokeWidth : this.options.defaultStyles.strokeWidth ;
@@ -866,16 +893,27 @@ define([
                         initValues.strokeWidth = seEv.selected[0].getStyle().getStroke().getWidth() ;
                     }
                     if (seEv.selected[0].getStyle().getStroke().getColor() ) {
-                        initValues.strokeColor = seEv.selected[0].getStyle().getStroke().getColor() ;
+                        valuesColor = seEv.selected[0].getStyle().getStroke().getColor() ;
+                        if ( Array.isArray(valuesColor) ) {
+                            valuesColor = "rgba(" + valuesColor.join() + ")";
+                            hexColor = this.rgbaToHex(valuesColor) ;
+                            initValues.strokeColor = hexColor.hex;
+                            initValues.strokeOpacity = hexColor.opacity ;
+                        } else {
+                            initValues.strokeColor = valuesColor;
+                        }
                     }
                 }
                 if (seEv.selected[0].getStyle() &&
                     seEv.selected[0].getStyle().getFill()) {
                     if (seEv.selected[0].getStyle().getFill().getColor() ) {
-                        var color = this.rgbaToHex(seEv.selected[0].getStyle().getFill().getColor()) ;
-
-                        initValues.fillColor = color.hex ;
-                        initValues.fillOpacity = color.opacity ;
+                        valuesColor = seEv.selected[0].getStyle().getFill().getColor();
+                        if ( Array.isArray(valuesColor) ) {
+                            valuesColor = "rgba(" + valuesColor.join() + ")";
+                        }
+                        hexColor = this.rgbaToHex(valuesColor) ;
+                        initValues.fillColor = hexColor.hex;
+                        initValues.fillOpacity = hexColor.opacity ;
                     }
                 }
                 initValues.strokeWidth = initValues.hasOwnProperty("strokeWidth") ? initValues.strokeWidth : this.options.defaultStyles.polyStrokeWidth ;

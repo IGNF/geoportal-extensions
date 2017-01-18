@@ -8,6 +8,7 @@ define([
 
     "use strict";
 
+    woodman.load("console");
     var logger = woodman.getLogger("extended KML format");
 
     /**
@@ -493,6 +494,17 @@ define([
         // KML.prototype._parentReadFeatures = ol.format.KML.prototype.readFeatures;
         logger.log("overload : ol.format.KML.readFeatures");
         var features = this._readExtendStylesFeatures(source, options);
+        logger.trace(features);
+        // FIXME on remet à la bonne place tous les styles ...
+        features.forEach(function (feature) {
+            var featureStyleFunction = feature.getStyleFunction();
+            if (featureStyleFunction) {
+                var styles = featureStyleFunction.call(feature, 0);
+                if (styles && styles.length !== 0) {
+                    feature.setStyle(styles[0]);
+                }
+            }
+        });
         return features;
     };
 
