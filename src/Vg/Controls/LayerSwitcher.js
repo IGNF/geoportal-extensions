@@ -108,9 +108,12 @@ define([
                 }
                 for ( var i = 0; i < this._initLayers.length; i++ ) {
                     // recup la layer, son id,
-                    var layer = map.getLayer(layers[i].layer.id);
+                    var layer;
+                    if (layers[i].layer) {
+                        layer = map.getLayer(layers[i].layer.id);
+                    }
 
-                    if ( layer ) {
+                    if ( layer !== undefined) {
                         // et les infos de la conf si elles existent (title, description, legends, quicklook, metadata)
                         var conf = layers[i].config || {};
                         var layerOptions = {
