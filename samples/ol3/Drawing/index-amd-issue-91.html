@@ -37,7 +37,7 @@
   </h3>
 
   <div>
-    <p>...</p>
+    <p>Exemple de ecriture/lecture d'un KML (issu de l'outil de dessin) avec réattribution des styles</p>
 
     <script>
 
@@ -46,7 +46,8 @@
       "baseUrl" : "../../../src/",
       "paths": {
         // lib external
-        "ol" : "../lib/ol3/ol-debug",
+        "ol" : "../lib/ol3/v3.20.1/ol-debug",
+        // "ol" : "../lib/ol3/ol-debug",
         "proj4"   : "../lib/proj4/proj4",
         "gp"      : "../lib/gp/GpServices-src",
         "sortable" : "../lib/sortable/Sortable",
@@ -115,7 +116,6 @@
           source : vectorSource
         });
 
-        map.addLayer(vectorLayer);
         drawing.setLayer(vectorLayer);
       };
 
@@ -144,6 +144,25 @@
           }
         );
 
+        // INFO
+        // v3.14.1 ; getStyleFunction() renvoie un tableau de ol.style.Style.
+        //  Les styles par defauts y sont ajouté pour les features dont nous n'avons pas
+        //  explicitement ajouté un style avec setStyle().
+        //  Sur la prochaine écriture, on aura donc les styles par defaut pour
+        //  les entités non surchargées cad les polygones et lignes..., et
+        //  les styles que nous avons forcé sur les labels et les markers.
+        //
+        // Code ajouté sur l'outil Drawing
+        // features.forEach(function (feature) {
+        //     var featureStyleFunction = feature.getStyleFunction();
+        //     if (featureStyleFunction) {
+        //         var styles = featureStyleFunction.call(feature, 0);
+        //         if (styles && styles.length !== 0) {
+        //             feature.setStyle(styles[0]);
+        //         }
+        //     }
+        // });
+
         addKMLToMap(features);
       };
 
@@ -168,21 +187,25 @@
     <p>EXEMPLE D'UTILISATION</p>
     <pre>
       <code>
-        window.onload = function () {
-          var map = new ol.Map({
-            layers: [
-            new LayerWMTS({
-              layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS",
-            })
-            ],
-            target: 'map',
-            view: new ol.View({
-              center: [288074.8449901076, 6247982.515792289],
-              zoom: 5
-            })
-          });
-          map.addControl(new MousePosition({}));
-        }
+
+        var format = new ol.format.KML(); // Extended !
+        var features = format.readFeatures(
+          kmlString, {
+            dataProjection : ...,
+            featureProjection : ...
+          }
+        );
+
+        features.forEach(function (feature) {
+            var featureStyleFunction = feature.getStyleFunction();
+            if (featureStyleFunction) {
+                var styles = featureStyleFunction.call(feature, 0);
+                if (styles && styles.length !== 0) {
+                    feature.setStyle(styles[0]);
+                }
+            }
+        });
+
       </code>
     </pre>
 

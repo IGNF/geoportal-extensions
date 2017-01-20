@@ -622,7 +622,17 @@ define([
             if (!found) {
                 this.getMap().addLayer(vlayer) ;
             }
-            // TODO : application des styles par défaut sur le layer
+            // TODO style par defaut du geoportail !
+            // application des styles ainsi que ceux par defaut de ol sur le layer
+            vlayer.getSource().getFeatures().forEach(function (feature) {
+                var featureStyleFunction = feature.getStyleFunction();
+                if (featureStyleFunction) {
+                    var styles = featureStyleFunction.call(feature, 0);
+                    if (styles && styles.length !== 0) {
+                        feature.setStyle(styles[0]);
+                    }
+                }
+            });
         }
         this.layer = vlayer ;
     };
@@ -951,6 +961,7 @@ define([
                             seEv.selected[0].setStyle(new ol.style.Style({
                                 text : new ol.style.Text({
                                     font : "16px sans",
+                                    textAlign : "left",
                                     text : seEv.selected[0].getStyle().getText().getText(),
                                     fill : new ol.style.Fill({
                                         color : fillColorElem.value
