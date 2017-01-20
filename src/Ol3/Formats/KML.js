@@ -1,9 +1,11 @@
 define([
     "woodman",
-    "ol"
+    "ol",
+    "Ol3/Utils"
 ], function (
     woodman,
-    ol
+    ol,
+    Utils
 ) {
 
     "use strict";
@@ -495,16 +497,19 @@ define([
         logger.log("overload : ol.format.KML.readFeatures");
         var features = this._readExtendStylesFeatures(source, options);
         logger.trace(features);
-        // FIXME on remet à la bonne place tous les styles ...
-        features.forEach(function (feature) {
-            var featureStyleFunction = feature.getStyleFunction();
-            if (featureStyleFunction) {
-                var styles = featureStyleFunction.call(feature, 0);
-                if (styles && styles.length !== 0) {
-                    feature.setStyle(styles[0]);
-                }
-            }
-        });
+        // FIXME
+        // la gestion des styles est deplacée au niveau des extensions
+        // qui ont besoin de lire un KML (ex. Drawing) ...
+        //
+        // features.forEach(function (feature) {
+        //     var featureStyleFunction = feature.getStyleFunction();
+        //     if (featureStyleFunction) {
+        //         var styles = featureStyleFunction.call(feature, 0);
+        //         if (styles && styles.length !== 0) {
+        //             feature.setStyle(styles[0]);
+        //         }
+        //     }
+        // });
         return features;
     };
 
@@ -645,8 +650,12 @@ define([
             logger.trace(feature, style);
 
             var _src = null;
+
+            var _bSizeIcon = false;
             var _sizeW = 51;
             var _sizeH = 38;
+
+            var _bHotSpot = false;
             var _anchorX = 25.5;
             var _anchorXUnits = "pixels";
             var _anchorY = 38;
@@ -663,9 +672,11 @@ define([
                                     _src = nodes[i].textContent;
                                     break;
                                 case "gx:w" :
+                                    _bSizeIcon = true;
                                     _sizeW = parseFloat(nodes[i].textContent);
                                     break;
                                 case "gx:h" :
+                                    _bSizeIcon = true;
                                     _sizeH = parseFloat(nodes[i].textContent);
                                     break;
                                 default:
@@ -673,6 +684,7 @@ define([
                         }
                         break;
                     case "hotSpot":
+                        _bHotSpot = true;
                         var attributs = styles[k].attributes;
                         for (var l = 0; l < attributs.length; l++) {
                             switch (attributs[l].nodeName) {
@@ -701,15 +713,27 @@ define([
                 }
             }
 
-            feature.setStyle(new ol.style.Style({
-                image : new ol.style.Icon({
-                    src : _src,
-                    size : [_sizeW, _sizeH],
+            var _options = {
+                src : _src
+            };
+
+            if (_bSizeIcon) {
+                Utils.mergeParams(_options, {
+                    size : [_sizeW, _sizeH]
+                });
+            }
+
+            if (_bHotSpot) {
+                Utils.mergeParams(_options, {
                     anchor : [_anchorX, _anchorY],
                     anchorOrigin : "top-left",
                     anchorXUnits : _anchorXUnits || "pixels",
                     anchorYUnits : _anchorYUnits || "pixels"
-                })
+                });
+            }
+
+            feature.setStyle(new ol.style.Style({
+                image : new ol.style.Icon(_options)
             }));
         };
 
