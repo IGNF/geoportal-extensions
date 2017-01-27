@@ -127,6 +127,17 @@ define([
         }),
         fill : new ol.style.Fill({
             color : "rgba(0, 183, 152, 0.5)"
+        }),
+        text : new ol.style.Text({
+            font : "16px Sans",
+            textAlign : "left",
+            fill : new ol.style.Fill({
+                color : "rgba(255, 255, 255, 1)"
+            }),
+            stroke : new ol.style.Stroke({
+                color : "rgba(0, 0, 0, 1)",
+                width : 2
+            })
         })
     };
 
@@ -371,7 +382,8 @@ define([
         this._defaultKMLStyle = new ol.style.Style({
             image : kmlDefaultStyles.image,
             stroke : kmlDefaultStyles.stroke,
-            fill : kmlDefaultStyles.fill
+            fill : kmlDefaultStyles.fill,
+            text : kmlDefaultStyles.text
         });
         var gpxDefaultStyles = this.options.vectorStyleOptions.GPX.defaultStyle;
         this._defaultGPXStyle = new ol.style.Style({
@@ -802,7 +814,7 @@ define([
         if ( this._currentImportType === "KML" ) {
             // lecture du fichier KML : création d'un format ol.format.KML, qui possède une méthode readFeatures (et readProjection)
             format = new KMLExtended({
-                showPointNames : false, // FIXME !
+                showPointNames : true, // FIXME options !
                 extractStyles : this.options.vectorStyleOptions.KML.extractStyles,
                 defaultStyle : [
                     this._defaultKMLStyle
@@ -914,7 +926,7 @@ define([
         if ( this._currentImportType === "KML" ) {
             // lecture du fichier KML : création d'un format ol.format.KML, qui possède une méthode readFeatures (et readProjection)
             format = new KMLExtended({
-                showPointNames : false, // FIXME !
+                showPointNames : true, // FIXME option !
                 extractStyles : this.options.vectorStyleOptions.KML.extractStyles,
                 defaultStyle : [
                     this._defaultKMLStyle

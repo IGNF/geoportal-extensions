@@ -2,8 +2,16 @@
 <kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/kml/2.2 https://developers.google.com/kml/schema/kml22gx.xsd">
   <Document>
     <Placemark>
+      <description>Un point</description>
       <Point>
         <coordinates>1.1755371093749993,48.21735290928552</coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <description>Un texte</description>
+      <name>Un LABEL</name>
+      <Point>
+        <coordinates>1.1785371093749993,48.21795290928552</coordinates>
       </Point>
     </Placemark>
     <Placemark>

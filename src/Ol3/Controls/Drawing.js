@@ -836,7 +836,8 @@ define([
             var initValues = {} ;
             if (seEv.selected[0].getGeometry() instanceof ol.geom.Point) {
                 // on determine si c'est un marker ou un label.
-                if (seEv.selected[0].getStyle().getText()) {
+                var _label = seEv.selected[0].getProperties().name;
+                if (seEv.selected[0].getStyle().getText() && _label) {
                     geomType = "Text" ;
                     if ( seEv.selected[0].getStyle().getText().getStroke() &&
                          seEv.selected[0].getStyle().getText().getStroke().getColor()) {
@@ -1085,8 +1086,9 @@ define([
             var textValue = null ;
             if (seEv.selected[0].getGeometry() instanceof ol.geom.Point) {
                 // on determine si c'est un marker ou un label.
+                var _label = seEv.selected[0].getProperties().name;
                 if (seEv.selected[0].getStyle() &&
-                    seEv.selected[0].getStyle().getText()) {
+                    seEv.selected[0].getStyle().getText() && _label) {
                     geomType = "Text" ;
                 } else if (seEv.selected[0].getStyle() &&
                     seEv.selected[0].getStyle().getImage()) {
@@ -1127,6 +1129,9 @@ define([
                 if (geomType == "Text") {
                     var style = feature.getStyle() ;
                     style.getText().setText(value) ;
+                    feature.setProperties({
+                        name : value
+                    }) ;
                     feature.setStyle(style) ;
                     return ;
                 }
@@ -1300,6 +1305,11 @@ define([
                                 context.layer.getSource().removeFeature(deEv.feature) ;
                                 return ;
                             }
+
+                            deEv.feature.setProperties({
+                                name : value
+                            }) ;
+
                             deEv.feature.setStyle(new ol.style.Style({
                                 image : new ol.style.Icon(context._getIconStyleOptions(context.options.defaultStyles.textIcon1x1)),
                                 text : new ol.style.Text({
