@@ -8,54 +8,51 @@
 -61.671494,16.010906,0 -61.671321,16.011153,0 -61.671312,16.011424,0 -61.671258,16.011616,0 -61.671035,16.011794,0 -61.670893,16.012019,0 -61.670719,16.012245,0 -61.670553,16.012509,0 -61.670187,16.012821,0 -61.670107,16.013015,0 -61.670004,16.013340,0 -61.669790,16.013484,0 -61.669604,16.013605,0 -61.669243,16.013779,0 -61.669040,16.013841,0 -61.668883,16.013843,0 -61.668631,16.013916,0 -61.668454,16.013891,0 -61.668146,16.013879,0 -61.667971,16.013932,0 -61.667757,16.014006,0 -61.667591,16.014118,0 -61.667663,16.014108,0 -61.667542,16.014106,0 -61.667410,16.014218,0 -61.667282,16.014394,0 -61.667149,16.014352,0 -61.667127,16.014411,0 -61.666980,16.014571,0 -61.666797,16.014780,0 -61.666858,16.015152,0 -61.666801,16.015423,0 -61.666705,16.015679,0 -61.666695,16.015928,0 -61.666663,16.016018,0 -61.666408,16.016114,0 -61.666430,16.016288,0 -61.666528,16.016444,0 -61.666645,16.016524,0 -61.666547,16.016727,0 -61.666453,16.016888,0 -61.666502,16.016922,0 -61.666406,16.017142,0 -61.666240,16.017415,0 -61.666145,16.017569,0 -61.666064,16.017713,0 -61.666160,16.017864,0 -61.666131,16.017757,0 -61.666181,16.018001,0 -61.666222,16.018045,0 -61.666201,16.018100,0 -61.666346,16.018163,0 -61.666189,16.018044,0 -61.666286,16.018149,0 -61.666157,16.018074,0 -61.666107,16.017996,0 -61.666283,16.018122,0 -61.666170,16.018024,0 -61.666058,16.017910,0 -61.666212,16.018009,0 -61.666123,16.017971,0 -61.665956,16.018108,0 -61.666102,16.018279,0 -61.665975,16.018312,0 -61.665958,16.018427,0 -61.665834,16.018516,0 -61.665787,16.018643,0 -61.665706,16.018668,0 -61.665568,16.018724,0 -61.665652,16.018884,0 -61.665707,16.018834,0 -61.665573,16.018861,0 -61.665554,16.019080,0 -61.665599,16.019136,0 -61.665490,16.019093,0 -61.665487,16.019183,0 -61.665528,16.019198,0 -61.665542,16.019217,0 -61.665558,16.019160,0
 </coordinates></LineString></MultiGeometry>
 </Placemark>
-
-
-	<Style id="waypoint">
-		<IconStyle>
-			<Icon>
-				<href>http://zoom-guadeloupe.fr/Randos/icon_wp.png</href>
-			</Icon>
-		</IconStyle>
-	</Style>
-	<Folder>
-		<name>Waypoints</name>
-			<Placemark>
+<Style id="waypoint">
+<IconStyle>
+<Icon>
+<href>http://zoom-guadeloupe.fr/Randos/icon_wp.png</href>
+</Icon>
+</IconStyle>
+</Style>
+<Folder>
+<name>Waypoints</name>
+<Placemark>
 <name>Panneau d'informations</name>
-		<description><![CDATA[<img src="http://zoom-guadeloupe.fr/images/stories/Randos/BasseTerre/BassinBleu/Paysages/10-DSC06769M.jpg" width=240 height=180> ]]></description>
-				<styleUrl>#waypoint</styleUrl>
+<description><![CDATA[<img src="http://zoom-guadeloupe.fr/images/stories/Randos/BasseTerre/BassinBleu/Paysages/10-DSC06769M.jpg" width=240 height=180> ]]></description>
+<styleUrl>#waypoint</styleUrl>
 <Point><coordinates>-61.67135,16.01125,0</coordinates></Point>
-			</Placemark>
-			<Placemark>
+</Placemark>
+<Placemark>
 <name>Gommier blanc</name>
-		<description><![CDATA[<img src="http://zoom-guadeloupe.fr/images/stories/Randos/BasseTerre/BassinBleu/Paysages/21-DSC06796M.jpg" width=180 height=240> ]]></description>
-				<styleUrl>#waypoint</styleUrl>
+<description><![CDATA[<img src="http://zoom-guadeloupe.fr/images/stories/Randos/BasseTerre/BassinBleu/Paysages/21-DSC06796M.jpg" width=180 height=240> ]]></description>
+<styleUrl>#waypoint</styleUrl>
 <Point><coordinates>-61.66906,16.01388,0</coordinates></Point>
-			</Placemark>
-			<Placemark>
+</Placemark>
+<Placemark>
 <name>Le Bassin Bleu</name>
-			<description><![CDATA[<img src="http://zoom-guadeloupe.fr/images/stories/Randos/BasseTerre/BassinBleu/Paysages/41-IMG_2850M.jpg" width=240 height=180> ]]></description>
-				<styleUrl>#waypoint</styleUrl>
+<description><![CDATA[<img src="http://zoom-guadeloupe.fr/images/stories/Randos/BasseTerre/BassinBleu/Paysages/41-IMG_2850M.jpg" width=240 height=180> ]]></description>
+<styleUrl>#waypoint</styleUrl>
 <Point><coordinates>-61.66616,16.01820,0</coordinates></Point>
-			</Placemark>
-			<Placemark>
+</Placemark>
+<Placemark>
 <name>Les Carbets</name>
-		<description><![CDATA[<img src="http://zoom-guadeloupe.fr/images/stories/Randos/BasseTerre/BassinBleu/Paysages/35-DSC06859M.jpg" width=240 height=180> ]]></description>
-				<styleUrl>#waypoint</styleUrl>
+<description><![CDATA[<img src="http://zoom-guadeloupe.fr/images/stories/Randos/BasseTerre/BassinBleu/Paysages/35-DSC06859M.jpg" width=240 height=180> ]]></description>
+<styleUrl>#waypoint</styleUrl>
 <Point><coordinates>-61.66650,16.01696,0</coordinates></Point>
-			</Placemark>
-			<Placemark>
+</Placemark>
+<Placemark>
 <name>Cascade de Ravine Chaude</name>
-		<description><![CDATA[<img src="http://zoom-guadeloupe.fr/images/stories/Randos/BasseTerre/BassinBleu/Paysages/75-IMG_1751M.jpg" width=180 height=240> ]]></description>
-				<styleUrl>#waypoint</styleUrl>
+<description><![CDATA[<img src="http://zoom-guadeloupe.fr/images/stories/Randos/BasseTerre/BassinBleu/Paysages/75-IMG_1751M.jpg" width=180 height=240> ]]></description>
+<styleUrl>#waypoint</styleUrl>
 <Point><coordinates>-61.66548,16.01937,0</coordinates></Point>
-			</Placemark>
-			<Placemark>
+</Placemark>
+<Placemark>
 <name>Fougère Arborescentes</name>
-		<description><![CDATA[<img src="http://zoom-guadeloupe.fr/images/stories/Randos/BasseTerre/BassinBleu/Paysages/24-DSC06811M.jpg" width=180 height=240> ]]></description>
-				<styleUrl>#waypoint</styleUrl>
+<description><![CDATA[<img src="http://zoom-guadeloupe.fr/images/stories/Randos/BasseTerre/BassinBleu/Paysages/24-DSC06811M.jpg" width=180 height=240> ]]></description>
+<styleUrl>#waypoint</styleUrl>
 <Point><coordinates>-61.66768,16.01412,0</coordinates></Point>
-			</Placemark>
-			</Folder>
-
+</Placemark>
+</Folder>
 </Document>
 </kml>

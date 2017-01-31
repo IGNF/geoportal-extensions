@@ -27,13 +27,7 @@ define([
     * cf. https://developers.google.com/kml/forum/advanced
     *
     * ISSUES
-    * cf. https://github.com/openlayers/ol3/issues/4829 :
-    *    I confirm that there's a problem with the positioning of the marker in OpenLayers 3.
-    *    If no tag '_hotspot_' is present in the KML, the marker is centered by default ...
-    *    On the other side, if we put in place this tag (_hotspot_), vertical positioning is drawn to the wrong place...
-    *    [jsfiddle - read kml] (http://jsfiddle.net/lowzonenose/1dnrn1hu/embedded/result,js,html,css/)
-    *    [jsfiddle - write kml] (http://jsfiddle.net/lowzonenose/yh4stufb/embedded/result,js,html,css/)
-    *
+    * cf. https://github.com/openlayers/ol3/issues/4829
     * cf. https://github.com/openlayers/ol3/issues/4460
     * cf. https://github.com/openlayers/ol3/pull/5590
     * cf. https://github.com/openlayers/ol3/issues/5229
@@ -67,6 +61,31 @@ define([
 
     /**
     * Constructor (alias)
+    *
+    * En lecture, on surcharge la méthode readFeatures.
+    * ✔️ In : kml string + features du format original
+    * ✔️ Out : features étendus avec des styles, et des metadatas (name ou extendData)
+    * > on modifie les features du format original avec les fonctionnalités non gérées.
+    *
+    * En écriture, on surcharge la méthode writeFearures.
+    * ✔️ In : kml du format original + features étendus
+    * ✔️ Out : kml étendu avec des styles, et des metadatas (name ou extendData)
+    * > on modifie le kml généré par le format original avec les fonctionnalités que nous avons ajoutées aux features.
+    *
+    * Le principe
+    * On parse le kml, et on lit (get) ou on ajoute (set) des fonctionnalités.
+    *
+    * Les getters vont lire le kml (ex. LabelExtendStyle), et ajouter le style ainsi que le nom du label dans le feature original.
+    * getLabelIconStyle (appel des 2 fonctions suivantes)
+    * getLabelExtendStyle (New)
+    * getHotSpotIconStyle (Bug sur la lecture du  hotspot)
+    * getExtendData (New)
+    *
+    * Les setters vont écrire dans le dom du kml original les fonctionnalités ajoutées dans les features.
+    * setLabelExtendStyle (New)
+    * setHotSpotIconStyle (Bug sur l'écriture du hotspot)
+    * setNameData (Bug suppression de cette balise du format par défaut).
+    *
     */
     KML.prototype.constructor = KML;
 
@@ -452,12 +471,17 @@ define([
          *  </IconStyle></Style>
          */
         var __createHotSpotStyleIcon = function (feature, style) {
-            // FIXME BUG de lecture OL3 sur l'interpretation de la properties anchor
-            // quand la propriété 'y' est = à 0 , la balise hotspot n'est pas ecrite !?
             logger.trace("marker with style (hotspot):", style);
 
             if (!feature) {
                 return;
+            }
+
+            // FIXME EXPERIMENTAL : comment peut on deproxyfier l'url ?
+            var proxy = feature.getProperties().proxyUrl;
+            if (proxy) {
+                // TODO...
+                logger.warn("TODO deproxyfier les urls !");
             }
 
             // Si pas de style defini, c'est donc que l'on va utiliser celui par defaut...
@@ -481,9 +505,9 @@ define([
                     x = anchor[0];
                     y = anchor[1];
                     if (yunits === "fraction") {
-                        y = (anchor[1] === 1) ? 0 : 1 - anchor[1]; // cf. fixme !
+                        y = (anchor[1] === 1) ? 0 : 1 - anchor[1]; // cf. fixme contribution à faire !
                     } else {
-                        y = (yunits === "pixels" && anchor[1] === size[1]) ? 0 : size[1] - anchor[1]; // cf. fixme !
+                        y = (yunits === "pixels" && anchor[1] === size[1]) ? 0 : size[1] - anchor[1]; // cf. fixme contribution à faire !
                     }
                 }
 
@@ -566,7 +590,6 @@ define([
         var features = this._readExtendStylesFeatures(source, options);
         logger.trace("Styles étendus", features);
 
-        // FIXME
         // la gestion des styles est deplacée au niveau des extensions
         // qui ont besoin de lire un KML (ex. Drawing) ...
         //
@@ -579,6 +602,7 @@ define([
         //         }
         //     }
         // });
+
         return features;
     };
 
@@ -612,11 +636,36 @@ define([
             return features;
         }
 
+        // FIXME EXPERIMENTAL proxy ?
+        var proxy = this.options.proxyUrl || null;
+
         /**
         * Gestion des styles étendus sur le Label
         * - ajout d'un icone par defaut (1x1p transparent) sur les labels
         * s'il n'existe pas !
         * - lecture des styles étendus des labels
+        *
+        * @example
+        * <Placemark>
+        *  <description>Un label</description>
+        *  <name>C'est un label étendu !</name>
+        *  <Style>
+        *    <IconStyle>
+        *      <Icon>
+        *        <href>data:image/png;base64,...</href>
+        *      </Icon>
+        *    </IconStyle>
+        *    <LabelStyle>
+        *      <color>ffffffff</color>
+        *      <colorMode>normal</colorMode>
+        *      <scale>1.85</scale>
+        *      <LabelStyleSimpleExtensionGroup haloColor="16711680" haloRadius="5" haloOpacity="1"/>
+        *    </LabelStyle>
+        *  </Style>
+        *  <Point>
+        *    <coordinates>2,48</coordinates>
+        *  </Point>
+        * </Placemark>
         */
         var __getExtensionStyleToFeatureLabel = function (feature, style) {
 
@@ -709,7 +758,7 @@ define([
                     font : _fontSize + " " + _font,
                     textAlign : "left",
                     text : _text,
-                    // FIXME  offsetX : 5, // valeur arbitraire MAIS esthétique !
+                    // offsetX : 5, // FIXME valeur arbitraire MAIS esthétique !
                     fill : new ol.style.Fill({
                         color : _color
                     }),
@@ -725,6 +774,21 @@ define([
         /**
         * Gestion de la balise kml:hostSpot sur les styles d'un Marker
         * - problème avec 'hotspot y === 0' (?)
+        *
+        * @example
+        * <Placemark>
+        *   <Style>
+        *     <IconStyle>
+        *       <Icon>
+        *         <href>data:image/png;base64,...</href>
+        *       </Icon>
+        *       <hotSpot x="25.5" y="0" xunits="pixels" yunits="pixels"/>
+        *     </IconStyle>
+        *   </Style>
+        *   <Point>
+        *     <coordinates>2,48</coordinates>
+        *   </Point>
+        * </Placemark>
         */
         var __getHotSpotStyleToFeatureIcon  = function (feature, style) {
             logger.trace("hotspot :", style);
@@ -793,9 +857,21 @@ define([
                 }
             }
 
+            // FIXME EXPERIMENTAL doit on proxyfier l'url ?
+            if (proxy && /^https?:\/\//.test(_src)) {
+                if ( _src.indexOf(proxy) === -1 ) {
+                    _src = proxy + _src;
+                    // on devrait garder une trace de la proxyfication...
+                    feature.setProperties({
+                        proxyUrl : proxy
+                    });
+                }
+            }
+
             var _options = {
                 src : _src,
-                scale : _scale || 1
+                crossOrigin : "anonymous", // cf. https://gis.stackexchange.com/questions/121555/wms-server-with-cors-enabled/147403#147403
+                scale : _scale || 1 // FIXME !?
             };
 
             if (_bSizeIcon) {
@@ -818,13 +894,7 @@ define([
             if (featureStyleFunction) {
                 var _styles = featureStyleFunction.call(feature, 0);
                 if (_styles && _styles.length !== 0) {
-                    var _style = null;
-                    if (_styles.length === 1) { // style par defaut...
-                        _style = _styles[0];
-                    } else { // style utilisateur...
-                        // FIXME on ene prend que le dernier style utilisateur !
-                        _style = _styles[_styles.length - 1];
-                    }
+                    var _style = (_styles.length === 1) ? _styles[0] : _styles[_styles.length - 1];
                     // on écrase l'icone magic du label !
                     feature.setStyle(new ol.style.Style({
                         image : new ol.style.Icon(_options),
