@@ -153,8 +153,14 @@ define([
                 this._callbacks.onAddedLayerCallBack = function (addedLayer) {
                     if (addedLayer.type !== "elevation") {
                         var layer = addedLayer;
-                        if (self) { 
-                            self.addLayer(layer);
+                        var id = layer.id;
+                        if (self) {
+                            if (self._addedLayerConf[id]) {
+                                var conf = self._addedLayerConf[id];
+                                self.addLayer(layer, conf);
+                            } else {
+                                self.addLayer(layer);
+                            }
                         }
                     }
                 };
