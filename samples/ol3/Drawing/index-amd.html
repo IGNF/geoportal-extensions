@@ -115,6 +115,12 @@
                     map.addControl(drawing);
                     map.addControl(mp);
 
+                    drawing.on(
+                        "change:collapsed",
+                        function (e) {
+                            console.log("change:collapsed : collapsed =", e.target.collapsed);
+                        }
+                    );
                   };
 
                   Gp.Services.getConfig({

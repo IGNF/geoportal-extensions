@@ -113,7 +113,7 @@ define([
      */
     MeasureAzimuth.prototype.setMap = function (map) {
         logger.trace("setMap()");
-        
+
         var className = this.CLASSNAME;
 
         // on fait le choix de ne pas activer les events sur la map à l'init de l'outil,
