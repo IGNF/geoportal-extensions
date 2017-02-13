@@ -1,0 +1,5 @@
+/* GET FEATURE INFO */
+
+input[id^=GPactivateGetFeatureInfo] {
+  display: inline-block !important;
+}

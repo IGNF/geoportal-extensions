@@ -1,0 +1,6 @@
+/* MOUSE POSITION */
+
+div[id^=GPgetFeatureInfo-] {
+  bottom: 8px;
+  left: 30px;
+}
