@@ -1414,5 +1414,32 @@ define([
         this.dispatchEvent("change:collapsed");
     };
 
+    /**
+     * this method is called by event 'click' on 'drawing-export' tag button.
+     *
+     * @method onExportFeatureClick
+     * @private
+     */
+    Drawing.prototype.onExportFeatureClick = function () {
+
+        // TODO
+        var content = this.exportFeatures();
+        if (!content) {
+            return ;
+        }
+        var link = document.createElement("a") ;
+        // FIXME : determiner le bon charset !
+        var charset = "utf-8" ;
+        link.setAttribute("href","data:application/vnd.google-earth.kml+xml;charset=" + charset + "," + encodeURIComponent(content)) ;
+        link.setAttribute("download","croquis.kml") ;
+        if (document.createEvent) {
+            var event = document.createEvent("MouseEvents");
+            event.initEvent("click", true, true);
+            link.dispatchEvent(event);
+        } else {
+            link.click();
+        }
+    };
+
     return Drawing;
 });
