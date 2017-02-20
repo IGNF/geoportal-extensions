@@ -89,16 +89,10 @@
                         opacity : 0.2
                     });
 
-                    var olLayer = new ol.layer.Tile({
-                        source: new ol.source.MapQuest({layer: 'sat'}),
-                        opacity: 0.5
-                    });
-
                     var map = new ol.Map({
                         layers: [
                             osm
-                            // gpLayer
-                            // // olLayer,
+                            // gpLayer,
                             // gpCartes,
                             // gpCommunes
                         ],

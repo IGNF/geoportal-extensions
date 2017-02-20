@@ -48,7 +48,47 @@
       })
     });
 
-    profil = new ol.control.ElevationPath();
+    profil = new ol.control.ElevationPath({
+        debug : true, // orienté maintenance : affiche les points du service sur le tracé !
+        active : true,
+        elevationPathOptions : {
+          sampling : 2
+        },
+        stylesOptions : {
+          draw : {
+            start : new ol.style.Stroke({
+                color : "yellow",
+                lineDash : null,
+                width : 5
+            }),
+            pointer : new ol.style.Circle({
+                radius : 8,
+                stroke : new ol.style.Stroke({
+                    color : "red",
+                    width : 1
+                }),
+                fill : new ol.style.Fill({
+                    color : "blue"
+                })
+            }),
+            finish : new ol.style.Stroke({
+                color : "rgba(0, 0, 0, 0.5)",
+                width : 8
+            })
+          }
+      }
+    //   ,
+    //   elevationOptions : {
+    //     // sampling : 20,
+    //     onSuccess : function (elevation) {
+    //       console.log(elevation);
+    //       // TODO some stuff..
+    //     },
+    //     onFailure : function (error) {
+    //       console.log(error);
+    //     }
+    //   }
+    });
     map.addControl(profil);
 
   };
