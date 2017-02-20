@@ -289,23 +289,7 @@ define([], function () {
             var context = this ;
             /** export function */
             button.onclick = function () {
-                // TODO
-                var content = context.exportFeatures() ;
-                if (!content) {
-                    return ;
-                }
-                var link = document.createElement("a") ;
-                // FIXME : determiner le bon charset !
-                var charset = "utf-8" ;
-                link.setAttribute("href","data:application/vnd.google-earth.kml+xml;charset=" + charset + "," + encodeURIComponent(content)) ;
-                link.setAttribute("download","croquis.kml") ;
-                if (document.createEvent) {
-                    var event = document.createEvent("MouseEvents");
-                    event.initEvent("click", true, true);
-                    link.dispatchEvent(event);
-                } else {
-                    link.click();
-                }
+                context.onExportFeatureClick();
             } ;
             container.appendChild(button) ;
 
