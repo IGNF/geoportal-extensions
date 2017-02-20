@@ -195,7 +195,8 @@ Enregistrez ce fichier sur votre plateforme et paramétrez l'extension Géoporta
 ### Versions de OpenLayers 3 supportées
 
 L'extension Géoportail pour OpenLayers 3 peut s'utiliser avec les **versions 3.14 et supérieures** d'OpenLayers 3.
-Le support des versions antérieures d'OpenLayers 3 n'a pas été complètement testé.
+La compatibilité avec la **version 4.0.1** a été complètement testée, ainsi que la version 3.20.1.
+Le support des versions d'OpenLayers 3 antérieures à la version 3.14 n'a pas été complètement testé.
 
 
 ### Navigateurs supportés
@@ -1010,4 +1011,3 @@ map.addControl(length);
 ```
 
 **Exemple d'utilisation** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/cwfsLge7/embedded/result,js,html,css/)
-
