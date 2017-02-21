@@ -63,11 +63,11 @@
                     });
                     map.addLayer(gpMaps);
 
-                    var olSat = new ol.layer.Tile({
-                        source: new ol.source.MapQuest({layer: 'sat'}),
+                    var osmLayer = new ol.layer.Tile({
+                        source: new ol.source.OSM(),
                         opacity: 0.5
                     });
-                    map.addLayer(olSat);
+                    map.addLayer(osmLayer);
 
                     // var olStamen = new ol.layer.Tile({
                     //     source : new ol.source.Stamen({
@@ -80,20 +80,20 @@
                     var layerSwitcher = new ol.control.LayerSwitcher({
                             layers : [
                                 {
-                                    layer : olSat,
+                                    layer : osmLayer,
                                     config : {
-                                        title : "Images satellites MapQuest",
-                                        description : "Images satellites MapQuest",
-                                        quicklookUrl : "http://www.mapquest.com/",
+                                        title : "OpenStreetMap",
+                                        description : "OpenStreetMap",
+                                        quicklookUrl : "http://www.openstreetmap.com/",
                                         legends : [
                                             {
-                                                url : "http://www.mapquest.com/"
+                                                url : "http://www.openstreetmap.com/"
                                             }
                                         ]
                                         ,
                                         metadata : [
                                             {
-                                                url : "http://www.mapquest.com/"
+                                                url : "http://www.openstreetmap.com/"
                                             }
                                         ]
                                     }
@@ -107,19 +107,19 @@
 
                     // 4. Quelques évènements pour tester...
                     document.getElementById("testChangeOpacity").onclick = function(e) {
-                        var olSat = map.getLayers().item(2);
-                        var opacity = olSat.getOpacity();
-                        olSat.setOpacity(opacity - 0.1);
+                        var osmLayer = map.getLayers().item(2);
+                        var opacity = osmLayer.getOpacity();
+                        osmLayer.setOpacity(opacity - 0.1);
                     }
                     document.getElementById("testChangeOpacity2").onclick = function(e) {
-                        var olSat = map.getLayers().item(2);
-                        var opacity = olSat.getOpacity();
-                        olSat.setOpacity(opacity + 0.1);
+                        var osmLayer = map.getLayers().item(2);
+                        var opacity = osmLayer.getOpacity();
+                        osmLayer.setOpacity(opacity + 0.1);
                     }
                     document.getElementById("testChangeVisibility").onclick = function(e) {
-                        var olSat = map.getLayers().item(2);
-                        var visible = !olSat.getVisible();
-                        olSat.setVisible(visible);
+                        var osmLayer = map.getLayers().item(2);
+                        var visible = !osmLayer.getVisible();
+                        osmLayer.setVisible(visible);
                     }
                     document.getElementById("addLayerElevation").onclick = function(e) {
                         var olStamen = new ol.layer.Tile({
@@ -144,7 +144,7 @@
                     }
                     document.getElementById("setZIndex").onclick = function(e) {
                         var gpOrthos = map.getLayers().item(0);
-                        // var visible = !olSat.getVisible();
+                        // var visible = !osmLayer.getVisible();
                         gpOrthos.setZIndex(6);
                     }
 
@@ -153,9 +153,9 @@
 
             <!-- map -->
             <div id="map" style="height: 500px; width: 800px;"></div>
-            <button type="button" id="testChangeOpacity">Réduire l'opacité de la couche sat</button>
-            <button type="button" id="testChangeOpacity2">Augmenter l'opacité de la couche sat</button>
-            <button type="button" id="testChangeVisibility">Changer la visibilité de la couche sat</button>
+            <button type="button" id="testChangeOpacity">Réduire l'opacité de la couche OSM</button>
+            <button type="button" id="testChangeOpacity2">Augmenter l'opacité de la couche OSM</button>
+            <button type="button" id="testChangeVisibility">Changer la visibilité de la couche OSM</button>
             <button type="button" id="addLayerElevation">Ajouter une couche</button>
             <button type="button" id="removeLayerElevation">Supprimer la dernière couche ajoutée.</button>
             <button type="button" id="setZIndex">Monter les photos aériennes</button>

@@ -116,7 +116,7 @@
 
                     setCollapsed = function () {
                         // collapsed = !collapsed;
-                        collapsed = document.getElementById("GPshowLayersList").checked;
+                        collapsed = document.querySelector('input[id^="GPshowLayersList"]').checked;
                         console.log("setCollapsed("+collapsed+")");
                         layerSwitcher.setCollapsed(collapsed);
                     };

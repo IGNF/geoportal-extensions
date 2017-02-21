@@ -27,6 +27,7 @@
 
             <script>
                 var map;
+                var MousePosition;
                 window.onload = function() {
                     // on cache l'image de chargement du Géoportail.
                     document.getElementById('map').style.backgroundImage = 'none';
@@ -43,13 +44,13 @@
                         })
                     });
 
-                    var MousePosition = new ol.control.GeoportalMousePosition({
+                    MousePosition = new ol.control.GeoportalMousePosition({
                         apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
                         collapsed : false,
                         // displayCoordinates : false,
                         displayAltitude : true,
                         altitude : {
-                           triggerDelay : 0,
+                           triggerDelay : 1000,
                            responseDelay : 500,
                            serviceOptions : {}
                         },
@@ -60,7 +61,7 @@
                                 type : "Metric"
                             }
                         ],
-                        units : ["DEC", "DMS", "M"]
+                        units : ["DEC", "DMS", "KM"]
                     });
                     map.addControl(MousePosition);
                 };

@@ -70,13 +70,13 @@
                         })
                     });
 
-                    var olSat = new ol.layer.Tile({
-                        source: new ol.source.MapQuest({layer: 'sat'}),
+                    var osmLayer = new ol.layer.Tile({
+                        source: new ol.source.OSM,
                         // zIndex : 4,
                         opacity: 0.5,
                         visible : false
                     });
-                    map.addLayer(olSat);
+                    map.addLayer(osmLayer);
 
                     // ajout d'écouteurs d'événements sur le changement de zindex
                     map.getLayers().forEach( function (layer) {
@@ -92,11 +92,11 @@
                     layerSwitcher = new ol.control.LayerSwitcher({
                         layers : [
                             {
-                                layer : olSat,
+                                layer : osmLayer,
                                 config : {
-                                    title : "Images satellites MapQuest",
-                                    description : "Images satellites MapQuest",
-                                    quicklookUrl : "http://www.mapquest.com/"
+                                    title : "OpenStreetMap",
+                                    description : "OpenStreetMap",
+                                    quicklookUrl : "https://openstreetmap.fr/"
                                 }
                             }
                         ],
@@ -116,10 +116,10 @@
                     };
                     var orthosOption = addOption("ORTHOIMAGERY.ORTHOPHOTOS", 1);
                     var mapsOption = addOption("GEOGRAPHICALGRIDSYSTEMS.MAPS", 2);
-                    var olSatOption = addOption("MapQuest image satellite", 0);
+                    var osmLayerOption = addOption("OpenStreetMap", 0);
                     document.getElementById("selectLayer").appendChild(orthosOption);
                     document.getElementById("selectLayer").appendChild(mapsOption);
-                    document.getElementById("selectLayer").appendChild(olSatOption);
+                    document.getElementById("selectLayer").appendChild(osmLayerOption);
 
                     // ajout de boutons pour ajouter/supprimer des couches
                     document.getElementById("addLayerElevation").onclick = function(e) {
@@ -248,19 +248,19 @@
                         });
 
                         // ajout d'une couche non Géoportail
-                        var olSat = new ol.layer.Tile({
-                            source: new ol.source.MapQuest({layer: 'sat'}),
+                        var osmLayer = new ol.layer.Tile({
+                            source: new ol.source.OSM,
                             // zIndex : 4,
                             opacity: 0.5,
                             visible : false
                         });
-                        map.addLayer(olSat);
+                        map.addLayer(osmLayer);
 
                         // Ajout du contrôle de gestion de l'empilement des couches (layerSwitcher)
                         var layerSwitcher = new ol.control.LayerSwitcher({
                             layers : [
                                 {
-                                    layer : olSat,
+                                    layer : osmLayer,
                                     config : {
                                         title : "Images satellites MapQuest",
                                         description : "Images satellites MapQuest",

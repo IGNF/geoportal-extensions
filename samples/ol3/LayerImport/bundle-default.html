@@ -27,14 +27,14 @@
             <p>Ajout simple d'un widget d'import de couches</p>
 
             <script>
-                // var map;
-                // var route;
+                var map;
+                var layerImport;
                 window.onload = function () {
                     // on cache l'image de chargement du Géoportail.
                     document.getElementById("map").style.backgroundImage = "none";
 
                     // Création de la map
-                    var map = new ol.Map({
+                    map = new ol.Map({
                         target : "map",
                         layers : [
                             new ol.layer.GeoportalWMTS({
@@ -47,7 +47,7 @@
                         })
                     });
 
-                    var layerImport = new ol.control.LayerImport({
+                    layerImport = new ol.control.LayerImport({
                         webServicesOptions : {
                             proxyUrl : "http://localhost/proxy/php/proxy.php?url="
                         }
