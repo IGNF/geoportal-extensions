@@ -2,7 +2,7 @@ define(["woodman"], function (woodman) {
 
     "use strict";
 
-    var Tools = {
+    var ProxyUtils = {
         /**
          * ajoute un proxy aux url des couches vecteurs si besoin.
          *
@@ -24,9 +24,9 @@ define(["woodman"], function (woodman) {
                 Array.isArray(proxyOptions.noProxyDomains) &&
                 proxyOptions.noProxyDomains.length > 0 ) {
                 for (var i in proxyOptions.noProxyDomains) {
-                    logger.trace("[Tools] setProxy : analyzing " + proxyOptions.noProxyDomains[i]) ;
+                    logger.trace("[ProxyUtils] setProxy : analyzing " + proxyOptions.noProxyDomains[i]) ;
                     if (url.indexOf(proxyOptions.noProxyDomains[i]) !== -1 ) {
-                        logger.info("[Tools] setProxy : " + url + " found in noProxyDomains list (" + proxyOptions.noProxyDomains[i] + ").") ;
+                        logger.info("[ProxyUtils] setProxy : " + url + " found in noProxyDomains list (" + proxyOptions.noProxyDomains[i] + ").") ;
                         return url ;
                     }
                 }
@@ -35,6 +35,6 @@ define(["woodman"], function (woodman) {
         }
     };
 
-    return Tools;
+    return ProxyUtils;
 
 });

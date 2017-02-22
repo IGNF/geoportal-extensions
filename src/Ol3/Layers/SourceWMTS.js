@@ -2,12 +2,14 @@
 define([
     "ol",
     "gp",
+    "Ol3/GfiUtils",
     "Ol3/Utils",
     "Common/Utils/Config",
     "Common/Utils/LayerUtils"
 ], function (
     ol,
     Gp,
+    GfiUtils,
     Utils,
     Config,
     LayerUtils
@@ -136,7 +138,7 @@ define([
     * @return {String|undefined} GetFeatureInfo URL.
     */
     SourceWMTS.prototype.getGetFeatureInfoUrl = function (coordinate, resolution, projection, params) {
-        return Utils.getGetFeatureInfoUrl(this, coordinate, resolution, projection, params);
+        return GfiUtils.getGetFeatureInfoUrl(this, coordinate, resolution, projection, params);
     };
 
     return SourceWMTS;

@@ -59,7 +59,8 @@
         "Ol3/Controls/Measures/MeasureArea",
         "Ol3/Controls/Measures/MeasureAzimuth",
         "Ol3/Controls/Measures/MeasureLength",
-        "Ol3/Controls/ElevationPath"
+        "Ol3/Controls/ElevationPath",
+        "Ol3/Controls/GetFeatureInfo"
       ],
       function (
         ol,
@@ -68,7 +69,7 @@
         Drawing, Isocurve, Route, MousePosition,
         LayerImport, LayerSwitcher,
         ReverseGeocode, SearchEngine,
-        MeasureArea, MeasureAzimuth, MeasureLength, ElevationPath
+        MeasureArea, MeasureAzimuth, MeasureLength, ElevationPath, GetFeatureInfo
       ) {
 
         var map;
@@ -120,6 +121,15 @@
           map.addControl(measureAzimuth);
           var measureProfil = new ElevationPath();
           map.addControl(measureProfil);
+
+          var getFeatureInfo = new GetFeatureInfo(
+            {
+                options: {
+                    active : false
+                }
+            }
+          );
+          map.addControl(getFeatureInfo);
 
         };
 

@@ -29,10 +29,11 @@ define([], function () {
 
         /**
         * Hidden checkbox for activating getFeatureInfo
+        * @param {Boolean} activate - specify if the control is active or inactive
         *
         * @returns {DOMElement} DOM element
         */
-        _createActivateGetFeatureInfoElement : function () {
+        _createActivateGetFeatureInfoElement : function (activate) {
 
             // contexte d'execution
             var context = this;
@@ -40,13 +41,38 @@ define([], function () {
             var input     = document.createElement("input");
             input.id      = this._addUID("GPactivateGetFeatureInfo");
             input.type    = "checkbox";
-            input.checked = true;
+            input.checked = activate;
 
             input.addEventListener("change", function (e) {
                 context.onActivateGetFeatureInfoElementChange(e);
             });
 
             return input;
+        },
+
+        /**
+         * Creation du container du picto du controle (DOM)
+         */
+        _createMainPictoElement : function () {
+
+            var self = this;
+
+            var label = document.createElement("label");
+            label.id  = this._addUID("GPgetFeatureInfoPicto");
+            label.className = "GPshowAdvancedToolPicto";
+            label.htmlFor = this._addUID("GPactivateGetFeatureInfo");
+            label.title = "activer/desactiver l'interrogation des couches";
+
+            var spanOpen = document.createElement("span");
+            spanOpen.id  = this._addUID("GPgetFeatureInfoActivate");
+            spanOpen.className  = "GPshowAdvancedToolOpen";
+            label.appendChild(spanOpen);
+
+            var spanClose = document.createElement("span");
+            spanClose.id  = self._addUID("GPgetFeatureInfoDeactivate");
+            label.appendChild(spanClose);
+
+            return label;
         }
     };
 

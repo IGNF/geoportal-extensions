@@ -41,11 +41,11 @@
 
             <!-- map -->
             <div id="map" style="height: 500px; width: 800px;"></div>
-            <button type="button" id="testRemoveLayer">Supprimer une couche</button>
-            <button type="button" id="changeCursorStyle">Changer le style du cursor</button>
-            <button type="button" id="changeDefaultEvent">Changer l'événement par défaut</button>
-            <button type="button" id="changeActive">Activer/désactiver</button>
             <button type="button" id="addVectorKml">Ajouter une couche vecteur kml</button>
+            <button type="button" id="addVectorGpx">Ajouter une couche vecteur gpx</button>
+            <button type="button" id="addWms">Ajouter une couche WMS</button>
+            <button type="button" id="addWtms">Ajouter une couche WTMS</button>
+            <button type="button" id="changeDefaultEvent">Changer l'événement par défaut</button>
 
             <script>
                 var map;
@@ -62,8 +62,8 @@
                     }
                 });
                 requirejs(
-                    ["ol", "proj4", "gp", "Ol3/Layers/LayerWMS" , "Ol3/Layers/LayerWMTS", "Ol3/Controls/GetFeatureInfo", "Ol3/Controls/LayerSwitcher"],
-                    function (ol, proj4, Gp, LayerWMS, LayerWMTS, GetFeatureInfo, LayerSwitcher)
+                    ["ol", "proj4", "gp", "Ol3/Layers/LayerWMS" , "Ol3/Layers/LayerWMTS", "Ol3/Controls/GetFeatureInfo"],
+                    function (ol, proj4, Gp, LayerWMS, LayerWMTS, GetFeatureInfo)
                 {
                     var createMap = function() {
                         // on cache l'image de chargement du Géoportail.
@@ -79,11 +79,11 @@
                         });
 
                         // 2. Ajout de plusieurs couches différentes.
-                        var gpMaps = new LayerWMTS({
-                            layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS",
-                        });
-                        map.addLayer(gpMaps);
-
+                        // var gpMaps = new LayerWMTS({
+                        //     layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS",
+                        // });
+                        // map.addLayer(gpMaps);
+                        //
                         var gpMyKml = new ol.layer.Vector({
                             source: new ol.source.Vector({
                                 url: './../resources/KML/S_TOP100.kml',
@@ -91,38 +91,36 @@
                             })
                         });
                         map.addLayer(gpMyKml);
-
-                        var gpRoad = new LayerWMS({
-                          layer : "TN.RoadTransportNetwork",
-                        });
-                        map.addLayer(gpRoad);
-
-                        var gpHydro = new LayerWMS({
-                          layer : "HY.PhysicalWaters",
-                        });
-                        map.addLayer(gpHydro);
+                        //
+                        // var gpRoad = new LayerWMS({
+                        //   layer : "TN.RoadTransportNetwork",
+                        // });
+                        // map.addLayer(gpRoad);
+                        //
+                        // var gpHydro = new LayerWMS({
+                        //   layer : "HY.PhysicalWaters",
+                        // });
+                        // map.addLayer(gpHydro);
 
                         // 3. Ajout du GetFeatureInfo
                         var getFeatureInfo = new GetFeatureInfo({
                                 layers : [
-                                    {
-                                        obj : gpHydro,
-                                        infoFormat : "text/html",
-                                        event: "contextmenu"
-                                    },
+                                    // {
+                                    //     obj : gpHydro,
+                                    //     infoFormat : "text/html",
+                                    //     event: "contextmenu"
+                                    // },
                                     {
                                         obj : gpMyKml,
                                         infoFormat : "text/html",
                                         event: "dblclick"
                                     },
-                                    {
-                                        obj : gpRoad,
-                                    },
-                                    {
-                                        obj : gpMaps //pour test : non interrogeable
-                                    }
+                                    // {
+                                    //     obj : gpRoad,
+                                    // }
                                 ],
                                 options : {
+                                    auto : true,
                                     active: true,
                                     defaultInfoFormat: "text/html",
                                     defaultEvent: "singleclick",
@@ -131,62 +129,12 @@
                                     // proxyUrl: ""
                                 }
                             });
+
+                        // 4. On cache le widget
+                        getFeatureInfo.element.style.visibility = "hidden";
                         map.addControl(getFeatureInfo);
 
-                        // 4. Ajout du contrôle de gestion de l'empilement des couches (layerSwitcher)
-                        var layerSwitcher = new LayerSwitcher({
-                            options : {
-                                collapsed: false
-                            }
-                        });
-                        map.addControl(layerSwitcher);
-
                         // 5. Quelques évènements pour tester...
-                        document.getElementById("testRemoveLayer").onclick = function(e) {
-                            if ( map.getLayers() && map.getLayers().getLength() > 0 )
-                            {
-                                map.removeLayer(map.getLayers().item(0));
-                            }
-                        }
-                        document.getElementById("changeCursorStyle").onclick = function(e) {
-                            if ( !this.styles )
-                            {
-                              this.styles = ["cell","crosshair","none","pointer","progress"];
-                            }
-                            if ( !this.index )
-                            {
-                                this.index = 0;
-                            }
-
-                            ++this.index;
-                            if ( this.index ==  this.styles.length ) {
-                                this.index = 0;
-                            }
-                            getFeatureInfo.setCursorStyle(this.styles[this.index]);
-                        }
-                        document.getElementById("changeDefaultEvent").onclick = function(e) {
-                            if ( !this.events )
-                            {
-                              this.events = ["singleclick","dblclick","contextmenu"];
-                            }
-                            if ( !this.index )
-                            {
-                                this.index = 0;
-                            }
-                            ++this.index;
-                            if ( this.index ==  this.events.length ) {
-                                this.index = 0;
-                            }
-                            getFeatureInfo.setDefaultEvent(this.events[this.index]);
-                        }
-                        document.getElementById("changeActive").onclick = function(e) {
-                            if ( !this.active )
-                            {
-                              this.active = false;
-                            }
-                            getFeatureInfo.setActive(this.active);
-                            this.active = !this.active;
-                        }
                         document.getElementById("addVectorKml").onclick = function(e) {
                             if ( !this.kmlUrls )
                             {
@@ -212,6 +160,88 @@
                                     })
                                 })
                             );
+                        }
+                        document.getElementById("addVectorGpx").onclick = function(e) {
+                            if ( !this.gpxUrls )
+                            {
+                              this.gpxUrls = [
+                                './../resources/GPX/Campomoro-Tizzano-Sartene_3029.gpx',
+                              ];
+                            }
+                            if ( !this.index )
+                            {
+                                this.index = 0;
+                            }
+                            ++this.index;
+                            if ( this.index ==  this.gpxUrls.length ) {
+                                this.index = 0;
+                            }
+                            map.addLayer(
+                                new ol.layer.Vector({
+                                    source: new ol.source.Vector({
+                                        url: this.gpxUrls[this.index],
+                                        format: new ol.format.GPX()
+                                    })
+                                })
+                            );
+                        }
+                        document.getElementById("addWms").onclick = function(e) {
+                            if ( !this.wmsLayers )
+                            {
+                              this.wmsLayers = [
+                                "TN.RoadTransportNetwork",
+                                "HY.PhysicalWaters"
+                              ];
+                            }
+                            if ( !this.index )
+                            {
+                                this.index = 0;
+                            }
+                            ++this.index;
+                            if ( this.index ==  this.wmsLayers.length ) {
+                                this.index = 0;
+                            }
+                            map.addLayer(
+                                new LayerWMS({
+                                    layer : this.wmsLayers[this.index],
+                                })
+                            );
+                        }
+                        document.getElementById("addWtms").onclick = function(e) {
+                            if ( !this.wtmsLayers )
+                            {
+                              this.wtmsLayers = [
+                                "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+                              ];
+                            }
+                            if ( !this.index )
+                            {
+                                this.index = 0;
+                            }
+                            ++this.index;
+                            if ( this.index ==  this.wtmsLayers.length ) {
+                                this.index = 0;
+                            }
+                            map.addLayer(
+                                new LayerWMTS({
+                                    layer : this.wtmsLayers[this.index]
+                                })
+                            );
+                        }
+                        document.getElementById("changeDefaultEvent").onclick = function(e) {
+                            if ( !this.events )
+                            {
+                              this.events = ["singleclick","dblclick","contextmenu"];
+                            }
+                            if ( !this.index )
+                            {
+                                this.index = 0;
+                            }
+                            ++this.index;
+                            if ( this.index ==  this.events.length ) {
+                                this.index = 0;
+                            }
+                            getFeatureInfo.setDefaultEvent(this.events[this.index]);
                         }
                     }
 

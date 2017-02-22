@@ -2,14 +2,14 @@ define([
   "ol",
   "gp",
   "woodman",
-  "Ol3/Utils",
-  "Common/Utils/Tools"
+  "Common/Utils/ProxyUtils",
+  "Ol3/Utils"
 ], function (
   ol,
   Gp,
   woodman,
-  Utils,
-  Tools
+  ProxyUtils,
+  Utils
 ) {
 
     "use strict";
@@ -47,14 +47,15 @@ define([
          * @param {ol.Map} map - map openlayers
          * @param {ol.Coordinate} coords - coordinates where to anchor popup.
          * @param {HTMLElement} content - content to display
-         * @param {String} contentType - content mime-type
+         * @param {String} [contentType='text/html'] - content mime-type
+         * @return {Boolean} displayed - indicates if something has been displayed
          */
         displayInfo : function (map, coords, content, contentType) {
             logger.trace("[GfiUtils] : displayInfo...") ;
 
-            // FIXME
-            // contentType not used
-            contentType = "un_truc"; // pour que ca compile...
+            if ( !contentType ) {
+                contentType = "text/html";
+            }
 
             if ( content === null) {
                 return;
@@ -73,11 +74,11 @@ define([
                 // code for nodejs
                 var DOMParser = require("xmldom").DOMParser;
                 _parser = new DOMParser();
-                _htmlDoc = _parser.parseFromString(_content, "text/html");
+                _htmlDoc = _parser.parseFromString(_content, contentType);
             } else if (scope.DOMParser) {
                 // code for modern browsers
                 _parser = new scope.DOMParser();
-                _htmlDoc = _parser.parseFromString(_content, "text/html");
+                _htmlDoc = _parser.parseFromString(_content, contentType);
             } else if (scope.ActiveXObject) {
                 // code for old IE browsers
                 _htmlDoc = new scope.ActiveXObject("Microsoft.XMLDOM");
@@ -85,13 +86,13 @@ define([
                 _htmlDoc.loadXML(_content);
             } else {
                 console.log("Incompatible environment for DOM Parser !");
-                return;
+                return false;
             }
 
             var body = _htmlDoc.getElementsByTagName("body");
             if (body && body.length === 1) {
                 if (!body[0].hasChildNodes()) {
-                    return;
+                    return false;
                 }
             }
 
@@ -155,6 +156,7 @@ define([
             map.addOverlay(map.featuresOverlay);
             map.featuresOverlay.setPosition(coords) ;
 
+            return true;
         },
 
         /**
@@ -273,13 +275,13 @@ define([
          *
          * @param {ol.Map} map - map openlayers
          * @param {ol.Coordinate} olCoordinate - coordinates pointed by user
-         * @param {Array} gfiLayers - list of layers which can be requested through the control. Each array element is an object, with following properties :
+         * @param {Array.<Object>} gfiLayers - list of layers which can be requested through the control. Each array element is an object, with following properties :
          * @param {ol.layer.Layer} gfiLayers.obj - ol.layer.Layer layer handled by the control (that has been added to map).
          * @param {String} [gfiLayers.event] - name of the mouse event triggering getFeatureInfo on this layer (that has been added to map). allowed values are : 'singleclick', 'dblclick' and 'contextmenu'
          * @param {String} [gfiLayers.infoFormat] - indicates the format mime-type of the response of GetFeatureInfo requests.
          * @param {Object} [proxyOptions] - options for poxy configuration :
          * @param {String} [proxyOptions.proxyUrl] - Proxy URL to avoid cross-domain problems, if not already set in mapOptions. Mandatory to import WMS and WMTS layer.
-         * @param {Array} [proxyOptions.noProxyDomains] - Proxy will not be used for this list of domain names. Only use if you know what you're doing (if not already set in mapOptions).
+         * @param {Array.<String>} [proxyOptions.noProxyDomains] - Proxy will not be used for this list of domain names. Only use if you know what you're doing (if not already set in mapOptions).
          *
          */
         displayFeatureInfo : function (map, olCoordinate, gfiLayers, proxyOptions) {
@@ -288,7 +290,10 @@ define([
             for ( var j = 0; j < gfiLayers.length; j++ ) {
                 var layer = gfiLayers[j];
                 var position = layer.obj.getZIndex();
-                layersOrdered[position] = layer;
+                if ( !layersOrdered[position] ) {
+                    layersOrdered[position] = [];
+                }
+                layersOrdered[position].push(layer);
             }
 
             // affichage de la première popup d'informations en partant du dessus...
@@ -300,71 +305,74 @@ define([
             });
             for ( var k = 0 ; k < positions.length ; k++ ) {
                 var p = positions[k];
-                var l = layersOrdered[p].obj;
-                var infoFormat = layersOrdered[p].infoFormat || "text/html";
-                var minMaxResolutionOk = true ;
-                if (  l.minResolution  &&
-                      l.minResolution > map.getResolution()) {
-                    minMaxResolutionOk = false ;
-                }
-                if (  minMaxResolutionOk &&
-                      l.maxResolution &&
-                      l.maxResolution < map.getResolution()) {
-                    minMaxResolutionOk = false ;
-                }
+                for ( var h = 0 ; h < layersOrdered[p].length ; ++h ) {
+                    var l = layersOrdered[p][h].obj;
+                    var infoFormat = layersOrdered[p].infoFormat || "text/html";
+                    var minMaxResolutionOk = true ;
+                    if (  l.minResolution  &&
+                          l.minResolution > map.getResolution()) {
+                        minMaxResolutionOk = false ;
+                    }
+                    if (  minMaxResolutionOk &&
+                          l.maxResolution &&
+                          l.maxResolution < map.getResolution()) {
+                        minMaxResolutionOk = false ;
+                    }
 
-                if ( l.getVisible() && minMaxResolutionOk ) {
+                    if ( l.getVisible() && minMaxResolutionOk ) {
 
-                    var format = this.getLayerFormat(l);
-                    if ( format == "vector" ) {
-                        var olLayers = [];
-                        for ( var m = 0 ; m < gfiLayers.length ; ++m ) {
-                            olLayers.push( gfiLayers[m].obj );
-                        }
-                        if ( this.displayVectorFeatureInfo(map, olCoordinate, olLayers) ) {
-                            return;
-                        } else {
+                        var format = this.getLayerFormat(l);
+                        if ( format == "vector" ) {
+                            var olLayers = [];
+                            for ( var m = 0 ; m < gfiLayers.length ; ++m ) {
+                                olLayers.push( gfiLayers[m].obj );
+                            }
+                            if ( this.displayVectorFeatureInfo(map, olCoordinate, olLayers) ) {
+                                return;
+                            } else {
+                                continue;
+                            }
+                        } else if ( format != "wms" && format != "wmts" ) {
+                            console.log("[ERROR] DisplayFeatureInfo - layer format '" + format + "' not allowed");
                             continue;
                         }
-                    } else if ( format != "wms" && format != "wmts" ) {
-                        console.log("[ERROR] DisplayFeatureInfo - layer format '" + format + "' not allowed");
-                        continue;
-                    }
 
-                    // var _id     = l.id;
-                    var _format = infoFormat;
-                    var _coord  = olCoordinate;
-                    var _res    = map.getView().getResolution();
-                    var _url    = null;
-                    if ( format == "wmts" ) {
-                        _url = Utils.getGetFeatureInfoUrl(
-                            l.getSource(),
-                            _coord,
-                            _res,
-                            map.getView().getProjection(),
-                            {
-                                INFOFORMAT : _format
-                            }
-                        );
-                    } else {
-                        _url = l.getSource().getGetFeatureInfoUrl(
-                            _coord,
-                            _res,
-                            map.getView().getProjection(),
-                            {
-                                INFO_FORMAT : _format
-                            }
-                        );
-                    }
+                        // var _id     = l.id;
+                        var _format = infoFormat;
+                        var _coord  = olCoordinate;
+                        var _res    = map.getView().getResolution();
+                        var _url    = null;
+                        if ( format == "wmts" ) {
+                            _url = this.getGetFeatureInfoUrl(
+                                l.getSource(),
+                                _coord,
+                                _res,
+                                map.getView().getProjection(),
+                                {
+                                    INFOFORMAT : _format
+                                }
+                            );
+                        } else {
+                            _url = l.getSource().getGetFeatureInfoUrl(
+                                _coord,
+                                _res,
+                                map.getView().getProjection(),
+                                {
+                                    INFO_FORMAT : _format
+                                }
+                            );
+                        }
 
-                    requests.push({
-                        // id : _id,
-                        format : _format,
-                        url : Tools.setProxy(_url, proxyOptions),
-                        scope : this,
-                        coordinate : _coord
-                    });
+                        requests.push({
+                            // id : _id,
+                            format : _format,
+                            url : ProxyUtils.setProxy(_url, proxyOptions),
+                            scope : this,
+                            coordinate : _coord
+                        });
+                    }
                 }
+
             }
 
             /** call request sync */
@@ -408,13 +416,9 @@ define([
                             }
 
                             // on affiche la popup GFI !
-                            if (!exception) {
-                                // displayInfo(map, data.coordinate, resp, data.format);
-                                context.displayInfo(map, data.coordinate, resp);
-                            }
-
+                            var displayed = !exception && context.displayInfo(map, data.coordinate, resp);
                             // on reporte sur la prochaine requête...
-                            report(!exception);
+                            report(displayed);
                         },
                         /** Handles GFI response error */
                         onFailure : function (error) {
@@ -507,6 +511,93 @@ define([
             var coords = this.getPosition(e,map);
 
             this.displayFeatureInfo(map, coords, eventLayers, proxyOptions);
+        },
+
+        /**
+        * Return the GetFeatureInfo URL for the passed coordinate, resolution, and
+        * projection. Return `undefined` if the GetFeatureInfo URL cannot be
+        * constructed.
+        * @param {ol.Source.WMTS} source - Source.
+        * @param {ol.Coordinate} coordinate - Coordinate.
+        * @param {Number} resolution - Resolution.
+        * @param {ol.proj.Projection} projection - Projection.
+        * @param {!Object} params - GetFeatureInfo params. `INFOFORMAT` at least should
+        *     be provided.
+        * @return {String|undefined} GetFeatureInfo URL.
+        */
+        getGetFeatureInfoUrl : function (source, coordinate, resolution, projection, params) {
+
+            var pixelRatio = (source.option && source.options.tilePixelRatio) ? source.options.tilePixelRatio : 1;
+
+            var tileGrid = source.tileGrid;
+            var tileCoord = source.tileGrid.getTileCoordForCoordAndResolution(coordinate, resolution);
+
+            /**
+            * this code is duplicated from createFromWMTSTemplate function
+            */
+            var getTransformedTileCoord = function (tileCoord, tileGrid, projection) {
+                var tmpTileCoord = [0,0,0]; /*Note : [z(zoomLevel),x,y]*/
+                var tmpExtent = ol.extent.createEmpty();
+                var x = tileCoord[1];
+                var y = -tileCoord[2] - 1;
+                var tileExtent = tileGrid.getTileCoordExtent(tileCoord);
+                var projectionExtent = projection.getExtent();
+                var extent = projectionExtent;
+
+                if (  extent != null  && projection.isGlobal() && extent[0] === projectionExtent[0] && extent[2] === projectionExtent[2]) {
+                    var numCols = Math.ceil(ol.extent.getWidth(extent) / ol.extent.getWidth(tileExtent));
+                    x = x % numCols;
+                    tmpTileCoord[0] = tileCoord[0];
+                    tmpTileCoord[1] = x;
+                    tmpTileCoord[2] = tileCoord[2];
+                    tileExtent = tileGrid.getTileCoordExtent(tmpTileCoord, tmpExtent);
+                }
+                if (!ol.extent.intersects(tileExtent, extent) /*|| ol.extent.touches(tileExtent, extent) */) {
+                    return null;
+                }
+                return [tileCoord[0], x, y];
+            };
+
+            var tileExtent = tileGrid.getTileCoordExtent(tileCoord);
+            var transformedTileCoord = getTransformedTileCoord(tileCoord,tileGrid, projection);
+
+            if (tileGrid.getResolutions().length <= tileCoord[0]) {
+                return undefined;
+            }
+
+            var tileResolution = tileGrid.getResolution(tileCoord[0]);
+            var tileMatrix = tileGrid.getMatrixIds()[tileCoord[0]];
+
+            var baseParams = {
+                SERVICE : "WMTS",
+                VERSION : "1.0.0",
+                REQUEST : "GetFeatureInfo",
+                LAYER : source.getLayer(),
+                TILECOL : transformedTileCoord[1],
+                TILEROW : transformedTileCoord[2],
+                TILEMATRIX : tileMatrix,
+                TILEMATRIXSET : source.getMatrixSet(),
+                FORMAT : source.getFormat() || "image/png",
+                STYLE : source.getStyle() || "normal"
+            };
+
+            Utils.assign(baseParams, params);
+
+            /*var tileSize = tileGrid.getTileSize();
+            var x = Math.floor(tileSize*((coordinate[0]-tileExtent[0])/(tileExtent[2]-tileExtent[0])));
+            var y = Math.floor(tileSize*((tileExtent[3]-coordinate[1])/(tileExtent[3]-tileExtent[1])));*/
+
+            var x = Math.floor((coordinate[0] - tileExtent[0]) / (tileResolution / pixelRatio));
+            var y = Math.floor((tileExtent[3] - coordinate[1]) / (tileResolution / pixelRatio));
+
+            baseParams["I"] = x;
+            baseParams["J"] = y;
+
+            var url = source.urls[0];
+
+            var featureInfoUrl = Gp.Helper.normalyzeUrl(url, baseParams);
+
+            return featureInfoUrl;
         }
     };
     return GfiUtils;

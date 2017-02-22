@@ -3,6 +3,8 @@ define([
     "gp",
     "Common/Utils/LayerUtils",
     "Common/Utils/Register",
+    "Common/Utils/ProxyUtils",
+    "Ol3/GfiUtils",
     "Ol3/Utils",
     "Ol3/Formats/KML",
     "Ol3/CRS/CRS",
@@ -11,6 +13,7 @@ define([
     "Ol3/Layers/LayerWMTS",
     "Ol3/Layers/LayerWMS",
     "Ol3/Controls/LayerSwitcher",
+    "Ol3/Controls/GetFeatureInfo",
     "Ol3/Controls/SearchEngine",
     "Ol3/Controls/MousePosition",
     "Ol3/Controls/Drawing",
@@ -29,6 +32,8 @@ define([
     Gp,
     LayerUtils,
     Register,
+    ProxyUtils,
+    GfiUtils,
     Utils,
     KML,
     CRS,
@@ -37,6 +42,7 @@ define([
     LayerWMTS,
     LayerWMS,
     LayerSwitcher,
+    GetFeatureInfo,
     SearchEngine,
     MousePosition,
     Drawing,
@@ -61,6 +67,8 @@ define([
 
     // Classes utilitaires
     Gp.LayerUtils = LayerUtils;
+    Gp.ProxyUtils = ProxyUtils;
+    Gp.GfiUtils = GfiUtils;
 
     // FIXME overload or not ? name Gp.format.kml ?
     ol.format.KMLExtended = KML;
@@ -75,6 +83,7 @@ define([
     ol.layer.GeoportalWMS = LayerWMS;
     ol.control.GeoportalAttribution = GeoportalAttribution;
     ol.control.LayerSwitcher = LayerSwitcher;
+    ol.control.GetFeatureInfo = GetFeatureInfo;
     ol.control.SearchEngine = SearchEngine;
     ol.control.Route = Route;
     ol.control.Isocurve = Isocurve;
