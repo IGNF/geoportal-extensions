@@ -34,8 +34,8 @@ define([
      * @param {String} [gfiOptions.layers.event] - name of the mouse event triggering getFeatureInfo on this layer (that has been added to map). allowed values are : 'singleclick', 'dblclick' and 'contextmenu'
      * @param {String} [gfiOptions.layers.infoFormat] - indicates the format mime-type of the response of GetFeatureInfo requests.
      * @param {Object} [gfiOptions.options] - custom options object to configure the control, with following properties :
-     * @param {Boolean} [gfiOptions.options.auto=false] - specify if the control works in automatic mode. In automatique mode all vector layers added on run time can by requested through the control. The triggering event of those layers is the default event.
-     * @param {Boolean} [gfiOptions.options.active=true] - specify if the control is active or inactive. In inactive mode requests are not fired and no information is displayed.
+     * @param {Boolean} [gfiOptions.options.auto=false] - specifies if the control run in automatic mode. In automatic mode all vector layers added on run time or added at map initialization can be requested through the control. The triggering event of those layers is the default event.
+     * @param {Boolean} [gfiOptions.options.active=true] - specifies if the control is active or inactive. In inactive mode requests are not fired and no information are displayed.
      * @param {String} [gfiOptions.options.defaultEvent='singleclick'] - default triggering event chosen in the list ('singleclick', 'dblclick', 'contextmenu'). This is the triggering event of all layers added to the control without configured triggering event.
      * @param {String} [gfiOptions.options.defaultInfoFormat='text/html'] - indicates the default format mime-type of the response of GetFeatureInfo requests.
      * @param {String} [gfiOptions.options.cursorStyle='pointer'] - specifies the type of cursor to be displayed when pointing on vector feature of a layer previously added to the control. The value must be choosen in the possible values of the css cursor property.
