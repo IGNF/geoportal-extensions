@@ -302,11 +302,12 @@ define([
             console.log("[ERROR] GetFeatureInfo:setCursorStyle - cursorStyle parameter should be a string");
             return;
         }
-
-        if ( !cursorStyle && this._cursorStyle ) {
-            this._activateCursor(false);
-        } else if ( cursorStyle && !this._cursorStyle ) {
-            this._activateCursor(true);
+        if ( this._active ) {
+            if ( !this._cursorStyle && cursorStyle ) {
+                this._activateCursor(true);
+            } else if ( this._cursorStyle && !cursorStyle) {
+                this._activateCursor(false);
+            }
         }
         this._cursorStyle = cursorStyle;
     };
@@ -322,6 +323,9 @@ define([
             return;
         }
         this._active = active;
+        if ( this._cursorStyle ) {
+            this._activateCursor(active);
+        }
     };
 
     /**
@@ -331,6 +335,24 @@ define([
      */
     GetFeatureInfo.prototype.getActive = function () {
         return this._active;
+    };
+
+    /**
+     * Hides/displays widget
+     *
+     * @param {Boolean} hidden - specify if the widget must be hidden
+     */
+    GetFeatureInfo.prototype.setHidden = function (hidden) {
+        this.element.style.visibility = (hidden) ? "hidden" : "";
+    };
+
+    /**
+     * indicates if the widget is hidden
+     *
+     * @return {Boolean} hidden
+     */
+    GetFeatureInfo.prototype.getHidden = function () {
+        return this.element.style.visibility == "hidden";
     };
 
     /**
@@ -464,32 +486,36 @@ define([
      */
     GetFeatureInfo.prototype._activateCursor = function (activate) {
         var map = this.getMap();
-        var gfiObj = this;
-
-        /**
-         * displayCursor
-         */
-        var displayCursor = function (evt) {
-            var hit = map.forEachFeatureAtPixel(evt.pixel, function (feature, layer) {
-                // on ne prend en compte que les couches vecteurs connues du controle
-                var gfiLayers = gfiObj.getLayers();
-                for ( var m = 0 ; m < gfiLayers.length ; ++m ) {
-                    if ( gfiLayers[m].obj === layer) {
-                        return true;
-                    }
-                }
-            });
-            if (hit) {
-                map.getTargetElement().style.cursor = gfiObj._cursorStyle;
-            } else {
-                map.getTargetElement().style.cursor = "";
-            }
-        };
 
         if (activate) {
+            var gfiObj = this;
+
+            /**
+             * displayCursor
+             */
+            var displayCursor = function (evt) {
+                var hit = map.forEachFeatureAtPixel(evt.pixel, function (feature, layer) {
+                    // on ne prend en compte que les couches vecteurs connues du controle
+                    var gfiLayers = gfiObj.getLayers();
+                    for ( var m = 0 ; m < gfiLayers.length ; ++m ) {
+                        if ( gfiLayers[m].obj === layer) {
+                            return true;
+                        }
+                    }
+                });
+                if (hit) {
+                    map.getTargetElement().style.cursor = gfiObj._cursorStyle;
+                } else {
+                    map.getTargetElement().style.cursor = "";
+                }
+            };
+
+            this._eventsHandler["pointermove"] = displayCursor;
             map.on("pointermove", displayCursor);
         } else {
-            map.un("pointermove", displayCursor);
+            map.un("pointermove", this._eventsHandler["pointermove"]);
+            delete this._eventsHandler["pointermove"];
+            map.getTargetElement().style.cursor = "";
         }
     };
 

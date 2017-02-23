@@ -151,7 +151,8 @@
                         document.getElementById("changeCursorStyle").onclick = function(e) {
                             if ( !this.styles )
                             {
-                              this.styles = ["cell","crosshair","none","pointer","progress"];
+                              // la chaine vide doit desactiver l'evenement
+                              this.styles = ["cell","crosshair","none","pointer","progress",""];
                             }
                             if ( !this.index )
                             {

@@ -222,6 +222,25 @@ define([
         },
 
         /**
+         * Indicates if there is a feature at the given coordinates for the given layer
+         *
+         * @param {ol.Map} map - map openlayers
+         * @param {ol.layer.Layer} olLayer - vector layer openlayers
+         * @param {ol.Coordinate} olCoordinate - coordinates pointed by user
+         * @return {Boolean}
+         *
+         */
+        layerGetFeatureAtCoordinates : function (map, olLayer, olCoordinate) {
+            var pixel = map.getPixelFromCoordinate(olCoordinate);
+            return map.hasFeatureAtPixel(pixel, function (layer) {
+                        if ( layer === olLayer ) {
+                            return true;
+                        }
+                        return false;
+                    });
+        },
+
+        /**
          * Get information from all the features located at the specified coordinates
          * and belonging to the layers list argument. Those information are gathered
          * and displayed in an info popup.
@@ -234,15 +253,6 @@ define([
         displayVectorFeatureInfo : function (map, olCoordinate, olLayers) {
             var pixel = map.getPixelFromCoordinate(olCoordinate);
 
-            if (  !map.hasFeatureAtPixel(pixel, function (layer) {
-                      if ( !olLayers || olLayers.indexOf(layer) > -1 ) {
-                          return true;
-                      }
-                      return false;
-                  })
-                ) {
-                return false;
-            }
             // couches vecteur : on remplit un tableau avec les features à proximité.
             var features = [] ;
             map.forEachFeatureAtPixel(pixel, function (feature, layer) {
@@ -303,6 +313,12 @@ define([
             positions.sort( function (a,b) {
                 return b - a;
             });
+
+            // si la 1ere couche affichable est de type vecteur on affiche les infos de toutes
+            // les couches vecteur qui suivent. Par consequent, une seule requete vecteur suffit
+            // (celle correspondant au premier objet vecteur rencontre)
+            var foundFeature = false;
+
             for ( var k = 0 ; k < positions.length ; k++ ) {
                 var p = positions[k];
                 for ( var h = 0 ; h < layersOrdered[p].length ; ++h ) {
@@ -320,60 +336,57 @@ define([
                     }
 
                     if ( l.getVisible() && minMaxResolutionOk ) {
-
                         var format = this.getLayerFormat(l);
                         if ( format == "vector" ) {
-                            var olLayers = [];
-                            for ( var m = 0 ; m < gfiLayers.length ; ++m ) {
-                                olLayers.push( gfiLayers[m].obj );
+                            if ( !foundFeature && this.layerGetFeatureAtCoordinates(map, l, olCoordinate) ) {
+                                requests.push({
+                                    format : format,
+                                    scope : this,
+                                    coordinate : olCoordinate
+                                });
                             }
-                            if ( this.displayVectorFeatureInfo(map, olCoordinate, olLayers) ) {
-                                return;
-                            } else {
-                                continue;
-                            }
+                            continue;
                         } else if ( format != "wms" && format != "wmts" ) {
                             console.log("[ERROR] DisplayFeatureInfo - layer format '" + format + "' not allowed");
                             continue;
                         }
 
-                        // var _id     = l.id;
-                        var _format = infoFormat;
-                        var _coord  = olCoordinate;
                         var _res    = map.getView().getResolution();
                         var _url    = null;
                         if ( format == "wmts" ) {
                             _url = this.getGetFeatureInfoUrl(
                                 l.getSource(),
-                                _coord,
+                                olCoordinate,
                                 _res,
                                 map.getView().getProjection(),
                                 {
-                                    INFOFORMAT : _format
+                                    INFOFORMAT : infoFormat
                                 }
                             );
                         } else {
                             _url = l.getSource().getGetFeatureInfoUrl(
-                                _coord,
+                                olCoordinate,
                                 _res,
                                 map.getView().getProjection(),
                                 {
-                                    INFO_FORMAT : _format
+                                    INFO_FORMAT : infoFormat
                                 }
                             );
                         }
 
                         requests.push({
                             // id : _id,
-                            format : _format,
+                            format : infoFormat,
                             url : ProxyUtils.setProxy(_url, proxyOptions),
                             scope : this,
-                            coordinate : _coord
+                            coordinate : olCoordinate
                         });
                     }
                 }
-
             }
+
+            // on recupere les couches vecteur ordonnees (a utiliser dans le cas de l'affichage de donnees vecteur)
+            var vectorLayersOrdered = null;
 
             /** call request sync */
             function requestsSync (list, iterator, callback) {
@@ -398,34 +411,47 @@ define([
 
             requestsSync(requests,
                 function (data, report) {
-                    // var self = data.scope;
-                    Gp.Protocols.XHR.call({
-                        url : data.url,
-                        method : "GET",
-                        scope : data.scope,
-                        /** Handles GFI response */
-                        onResponse : function (resp) {
-                            var exception = false;
-
-                            // a t on une exception ?
-                            if (resp.trim().length === 0 ||
-                                resp.indexOf("java.lang.NullPointerException") !== -1 ||
-                                resp.indexOf("not queryable") !== -1) {
-                                // rien à afficher
-                                exception = true;
+                    if ( data.format == "vector" ) {
+                        if ( !vectorLayersOrdered ) {
+                            vectorLayersOrdered = [];
+                            for ( var m = 0 ; m < positions.length ; m++ ) {
+                                var p = positions[m];
+                                for ( var n = 0 ; n < layersOrdered[p].length ; ++n ) {
+                                    vectorLayersOrdered.push(layersOrdered[p][n].obj);
+                                }
                             }
-
-                            // on affiche la popup GFI !
-                            var displayed = !exception && context.displayInfo(map, data.coordinate, resp);
-                            // on reporte sur la prochaine requête...
-                            report(displayed);
-                        },
-                        /** Handles GFI response error */
-                        onFailure : function (error) {
-                            console.log(error);
-                            report(false);
                         }
-                    }) ;
+                        report( data.scope.displayVectorFeatureInfo(map, data.coordinate, vectorLayersOrdered) );
+                    } else {
+                        // var self = data.scope;
+                        Gp.Protocols.XHR.call({
+                            url : data.url,
+                            method : "GET",
+                            scope : data.scope,
+                            /** Handles GFI response */
+                            onResponse : function (resp) {
+                                var exception = false;
+
+                                // a t on une exception ?
+                                if (resp.trim().length === 0 ||
+                                    resp.indexOf("java.lang.NullPointerException") !== -1 ||
+                                    resp.indexOf("not queryable") !== -1) {
+                                    // rien à afficher
+                                    exception = true;
+                                }
+
+                                // on affiche la popup GFI !
+                                var displayed = !exception && context.displayInfo(map, data.coordinate, resp);
+                                // on reporte sur la prochaine requête...
+                                report(displayed);
+                            },
+                            /** Handles GFI response error */
+                            onFailure : function (error) {
+                                console.log(error);
+                                report(false);
+                            }
+                        }) ;
+                    }
                 },
                 function () {
                     console.log("Finish sync to GFI !");

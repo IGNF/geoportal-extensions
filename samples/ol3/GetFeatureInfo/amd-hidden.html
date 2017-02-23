@@ -41,11 +41,7 @@
 
             <!-- map -->
             <div id="map" style="height: 500px; width: 800px;"></div>
-            <button type="button" id="addVectorKml">Ajouter une couche vecteur kml</button>
-            <button type="button" id="addVectorGpx">Ajouter une couche vecteur gpx</button>
-            <button type="button" id="addWms">Ajouter une couche WMS</button>
-            <button type="button" id="addWtms">Ajouter une couche WTMS</button>
-            <button type="button" id="changeDefaultEvent">Changer l'événement par défaut</button>
+            <button type="button" id="hidedisplay">Hide/Display</button>
 
             <script>
                 var map;
@@ -135,113 +131,9 @@
                         map.addControl(getFeatureInfo);
 
                         // 5. Quelques évènements pour tester...
-                        document.getElementById("addVectorKml").onclick = function(e) {
-                            if ( !this.kmlUrls )
-                            {
-                              this.kmlUrls = [
-                                './../resources/KML/S_TOP100.kml',
-                                './../resources/KML/bassin_bleu.kml',
-                                './../resources/KML/croquis-simple.kml'
-                              ];
-                            }
-                            if ( !this.index )
-                            {
-                                this.index = 0;
-                            }
-                            ++this.index;
-                            if ( this.index ==  this.kmlUrls.length ) {
-                                this.index = 0;
-                            }
-                            map.addLayer(
-                                new ol.layer.Vector({
-                                    source: new ol.source.Vector({
-                                        url: this.kmlUrls[this.index],
-                                        format: new ol.format.KML()
-                                    })
-                                })
-                            );
-                        }
-                        document.getElementById("addVectorGpx").onclick = function(e) {
-                            if ( !this.gpxUrls )
-                            {
-                              this.gpxUrls = [
-                                './../resources/GPX/Campomoro-Tizzano-Sartene_3029.gpx',
-                              ];
-                            }
-                            if ( !this.index )
-                            {
-                                this.index = 0;
-                            }
-                            ++this.index;
-                            if ( this.index ==  this.gpxUrls.length ) {
-                                this.index = 0;
-                            }
-                            map.addLayer(
-                                new ol.layer.Vector({
-                                    source: new ol.source.Vector({
-                                        url: this.gpxUrls[this.index],
-                                        format: new ol.format.GPX()
-                                    })
-                                })
-                            );
-                        }
-                        document.getElementById("addWms").onclick = function(e) {
-                            if ( !this.wmsLayers )
-                            {
-                              this.wmsLayers = [
-                                "TN.RoadTransportNetwork",
-                                "HY.PhysicalWaters"
-                              ];
-                            }
-                            if ( !this.index )
-                            {
-                                this.index = 0;
-                            }
-                            ++this.index;
-                            if ( this.index ==  this.wmsLayers.length ) {
-                                this.index = 0;
-                            }
-                            map.addLayer(
-                                new LayerWMS({
-                                    layer : this.wmsLayers[this.index],
-                                })
-                            );
-                        }
-                        document.getElementById("addWtms").onclick = function(e) {
-                            if ( !this.wtmsLayers )
-                            {
-                              this.wtmsLayers = [
-                                "GEOGRAPHICALGRIDSYSTEMS.MAPS"
-                              ];
-                            }
-                            if ( !this.index )
-                            {
-                                this.index = 0;
-                            }
-                            ++this.index;
-                            if ( this.index ==  this.wtmsLayers.length ) {
-                                this.index = 0;
-                            }
-                            map.addLayer(
-                                new LayerWMTS({
-                                    layer : this.wtmsLayers[this.index]
-                                })
-                            );
-                        }
-                        document.getElementById("changeDefaultEvent").onclick = function(e) {
-                            if ( !this.events )
-                            {
-                              this.events = ["singleclick","dblclick","contextmenu"];
-                            }
-                            if ( !this.index )
-                            {
-                                this.index = 0;
-                            }
-                            ++this.index;
-                            if ( this.index ==  this.events.length ) {
-                                this.index = 0;
-                            }
-                            getFeatureInfo.setDefaultEvent(this.events[this.index]);
+                        document.getElementById("hidedisplay").onclick = function(e) {
+                            var hidden = getFeatureInfo.getHidden();
+                            getFeatureInfo.setHidden(!hidden);
                         }
                     }
 
