@@ -750,6 +750,7 @@ define([
      * and fills the container of the location list.
      * it creates a HTML Element per location
      *
+     * @param {Array} locations - Array of Gp.Services.AutoComplete.SuggestedLocation corresponding to autocomplete results list
      * @private
      */
     SearchEngine.prototype._fillAutoCompletedLocationListContainer = function (locations) {
@@ -772,8 +773,6 @@ define([
             this._createAutoCompletedLocationElement(locations[i], i);
         }
 
-        // sauvegarde de l'etat des locations
-        this._suggestedLocations = locations;
     };
 
     /**
@@ -1165,8 +1164,22 @@ define([
             onSuccess : function (results) {
                 logger.log(results);
                 if (results) {
-                    var locations = results.suggestedLocations;
-                    context._fillAutoCompletedLocationListContainer(locations);
+                    // on sauvegarde l'etat des résultats
+                    context._suggestedLocations = results.suggestedLocations;
+                    var locationsToBeDisplayed = [];
+                    // on vérifie qu'on n'a pas récupéré des coordonnées nulles (par ex recherche par code postal)
+                    for ( var i = 0; i < context._suggestedLocations.length; i++ ) {
+                        var ilocation = context._suggestedLocations[i];
+                        if ( ilocation.position && ilocation.position.x === 0 && ilocation.position.y === 0 && ilocation.fullText ) {
+                            // si les coordonnées sont nulles, il faut relancer une requête de géocodage avec l'attribut "fullText" récupéré
+                            context._getGeocodeCoordinatesFromFullText(ilocation, i);
+                        } else {
+                            // sinon on peut afficher normalement le résultat dans la liste
+                            locationsToBeDisplayed.push(ilocation);
+                        }
+                    };
+                    // on affiche les résultats qui n'ont pas des coordonnées nulles
+                    context._fillAutoCompletedLocationListContainer(locationsToBeDisplayed);
                 }
             },
             /** callback onFailure */
@@ -1190,6 +1203,48 @@ define([
             this._hideSuggestedLocation,
             this
         );
+    };
+
+    /**
+     * this method is called by Gp.Services.autoComplete callback in case of success
+     * (cf. this.onAutoCompleteSearchText), for suggested locations with null coordinates
+     * (case of postalCode research for instance).
+     * Send a geocode request with suggested location 'fullText' attribute, to get its coordinates and display it in autocomplete results list container.
+     *
+     * @param {Gp.Services.AutoCompleteResponse.SuggestedLocation} suggestedLocation - autocompletion result (with null coordinates) to be geocoded
+     * @param {Number} i - suggestedLocation position in Gp.Services.AutoCompleteResponse.suggestedLocations autocomplete results list
+     * @private
+     */
+    SearchEngine.prototype._getGeocodeCoordinatesFromFullText = function ( suggestedLocation, i ) {
+        var context = this;
+        Gp.Services.geocode({
+            apiKey : this.options.apiKey,
+            location : suggestedLocation.fullText,
+            filterOptions : {
+                type : suggestedLocation.type
+            },
+            /** callback onSuccess */
+            onSuccess : function (response) {
+                if ( response.locations && response.locations.length !== 0 && response.locations[0].position ) {
+                    // on modifie les coordonnées du résultat en EPSG:4326 donc lat,lon
+                    if ( context._suggestedLocations && context._suggestedLocations[i] ) {
+                        context._suggestedLocations[i].position = {
+                            x : response.locations[0].position.y,
+                            y : response.locations[0].position.x
+                        };
+                        // et on l'affiche dans la liste
+                        context._createAutoCompletedLocationElement(context._suggestedLocations[i], i);
+                    }
+                }
+            },
+            /** callback onFailure */
+            onFailure : function () {
+                // si on n'a pas réussi à récupérer les coordonnées, on affiche quand même le résultat
+                if ( context._suggestedLocations && context._suggestedLocations[i] ) {
+                    context._createAutoCompletedLocationElement(context._suggestedLocations[i], i);
+                }
+            }
+        });
     };
 
     /**
