@@ -43,8 +43,8 @@
 /* CSS : default */
 
 #profileElevationByDefault {
-  display:-webkit-box;
   display:-webkit-flex;
+  display:-webkit-box;
   display:-ms-flexbox;
   display:flex;
   -webkit-box-orient:vertical;
@@ -56,12 +56,12 @@
 }
 
 .profile-box {
-  display:-webkit-box;
   display:-webkit-flex;
+  display:-webkit-box;
   display:-ms-flexbox;
   display:flex;
-  -webkit-box-flex:1;
   -webkit-flex:1;
+  -webkit-box-flex:1;
       -ms-flex:1;
           flex:1;
   -webkit-box-orient:horizontal;
@@ -72,12 +72,12 @@
 }
 
 .profile-content {
-  -webkit-box-flex:1;
   -webkit-flex:1;
+  -webkit-box-flex:1;
       -ms-flex:1;
           flex:1;
-  -webkit-box-pack:center;
   -webkit-justify-content:center;
+  -webkit-box-pack:center;
       -ms-flex-pack:center;
           justify-content:center;
   -webkit-box-align:center;
@@ -90,13 +90,13 @@
 .profile-z-vertical ul,
 .profile-x-horizontal,
 .profile-x-horizontal ul {
-  display:-webkit-box;
   display:-webkit-flex;
+  display:-webkit-box;
   display:-ms-flexbox;
   display:flex;
   /*justify-content:center;*/
-  -webkit-box-align:center;
   -webkit-align-items:center;
+  -webkit-box-align:center;
       -ms-flex-align:center;
           align-items:center;
 }
@@ -123,16 +123,16 @@
 
 .profile-z-vertical{
   /*background:green;*/
-  -webkit-box-flex:0;
   -webkit-flex:0 1 auto;
+  -webkit-box-flex:0;
       -ms-flex:0 1 auto;
           flex:0 1 auto;
 
 }
 .profile-z-vertical ul{
   /*background:pink;*/
-  -webkit-box-pack:justify;
   -webkit-justify-content:space-between;
+  -webkit-box-pack:justify;
       -ms-flex-pack:justify;
           justify-content:space-between;
   padding:2px 5px 2px 2px;
@@ -151,18 +151,18 @@
 }
 .profile-content ul {
   background:white;
-  -webkit-box-flex:1;
   -webkit-flex:1 0 auto;
+  -webkit-box-flex:1;
       -ms-flex:1 0 auto;
           flex:1 0 auto;
   height:100%;
   width:100%;
-  -webkit-box-pack:start;
   -webkit-justify-content:flex-start;
+  -webkit-box-pack:start;
       -ms-flex-pack:start;
           justify-content:flex-start;
-  -webkit-box-align:end;
   -webkit-align-items:flex-end;
+  -webkit-box-align:end;
       -ms-flex-align:end;
           align-items:flex-end;
 
@@ -172,16 +172,16 @@
 }
 .profile-x-horizontal{
   /*background:blue;*/
-  -webkit-box-flex:0;
   -webkit-flex:0 1 auto;
+  -webkit-box-flex:0;
       -ms-flex:0 1 auto;
           flex:0 1 auto;;
   width:100%;
 }
 .profile-x-horizontal ul{
   /*background:orange;*/
-  -webkit-box-pack:justify;
   -webkit-justify-content:space-between;
+  -webkit-box-pack:justify;
       -ms-flex-pack:justify;
           justify-content:space-between;
   /*padding:5px 2px 2px 2px;*/
