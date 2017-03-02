@@ -56,6 +56,7 @@
 }
 
 .profile-box {
+  height: calc(100% - 15px);
   display:-webkit-flex;
   display:-webkit-box;
   display:-ms-flexbox;
@@ -177,6 +178,7 @@
       -ms-flex:0 1 auto;
           flex:0 1 auto;;
   width:100%;
+  height: 15px
 }
 .profile-x-horizontal ul{
   /*background:orange;*/
