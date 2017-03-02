@@ -354,6 +354,9 @@
             case "false":
                 showPointNamesChoice = false;
               break;
+            case "null":
+                showPointNamesChoice = null;
+              break;
             default:
               showPointNamesChoice = true;
           }
@@ -397,6 +400,7 @@
     <hr width="50%" align="left">
     <input type="radio" name="point" value="true" checked> showPointNames:true<br>
     <input type="radio" name="point" value="false"> showPointNames:false<br>
+    <input type="radio" name="point" value="null"> showPointNames:null<br>
     <hr width="50%" align="left">
     <input type="radio" name="kml" onclick="handleClickKmlChoice(this);" value="form1" checked> Form : Label étendu avec point <br>
     <input type="radio" name="kml" onclick="handleClickKmlChoice(this);" value="form2"> Form : Label étendu avec point (extendData)<br>

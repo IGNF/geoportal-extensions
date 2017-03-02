@@ -51,13 +51,14 @@
 
     //|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     //| ✓ Options
-    //| > usage : gulp [task] [--production] [--ol3] [--leaflet] [--vg]
+    //| > usage : gulp [task] [--production] [--ol3] [--leaflet] [--vg] [--mix]
     //'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     var opts = require("minimist")(process.argv.slice(2));
     var isProduction     = opts.production;
     var isExecuteOl3     = opts.ol3;
     var isExecuteLeaflet = opts.leaflet;
     var isExecuteVg      = opts.vg;
+    var isExecuteMix     = opts.mix;
 
     // conf variables
     var npmConf = require("./package.json");
@@ -67,15 +68,32 @@
     var leafletOutputNameBase = "GpPluginLeaflet" ;
     var ol3OutputNameBase = "GpPluginOl3" ;
     var vgOutputNameBase = "GpPluginVg" ;
+    var mixOutputNameBase = "GpPluginMix" ;
     var ol3BuildDir = path.join(_build, "Ol3");
     var leafletBuildDir = path.join(_build, "Leaflet");
     var vgBuildDir = path.join(_build, "Vg");
+    var mixBuildDir = path.join(_build, "Mix");
 
     // par contre, si aucune option est renseignée,
-    // on construit les bundles pour OpenLayers3 et Leaflet
-    if (!isExecuteOl3 && !isExecuteLeaflet && !isExecuteVg) {
-        isExecuteOl3 = isExecuteLeaflet = true;
+    // on construit les bundles pour OpenLayers3
+    if (!isExecuteOl3 && !isExecuteLeaflet && !isExecuteVg && !isExecuteMix) {
+        isExecuteOl3 = true;
     }
+
+    // var getDistDirName = function () {
+    //     var dirName = (isExecuteOl3) ? 'ol3' : (isExecuteLeaflet) ? 'leaflet' : (isExecuteVG) ? 'virtual' : (isExecuteMix) ? 'mix' : null;
+    //     return dirName;
+    // };
+    //
+    // var getBaseFileName = function () {
+    //     var baseFileName = (isExecuteOl3) ? 'GpPluginOl3' : (isExecuteLeaflet) ? 'GpPluginLeaflet' : (isExecuteVG) ? 'GpPluginVg' : (isExecuteMix) ? 'GpPluginMix' : null;
+    //     return baseFileName;
+    // };
+    //
+    // var getDistFileName = function () {
+    //     var distFileName = (isProduction ? getBaseFileName() + '.js' : getBaseFileName() + '-src.js') ;
+    //     return distFileName;
+    // };
 
     //|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     //| ✓ help
@@ -95,6 +113,7 @@
         $.util.log(" --ol3 : construction du bundle de OpenLayers3.");
         $.util.log(" --leaflet : construction du bundle de Leaflet.");
         $.util.log(" --vg : construction du bundle 3D de VirtualGeo.");
+        $.util.log(" --mix : construction du bundle 3D de VirtualGeo avec OpenLayers3.");
     });
 
     //|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -131,10 +150,8 @@
         var jscs = require("gulp-jscs");
 
         var src = [];
-        // (isExecuteOl3) ? src.push(_src.js.ol3) : (isExecuteLeaflet) ? src.push(_src.js.leaflet) : (isExecuteVg) ? src.push(_src.js.vg) : null;
         src.push(_src.js.ol3);
         src.push(_src.js.leaflet);
-        // plus souple sur vg...
         // src.push(_src.js.vg);
         src.push(_src.js.common);
         var exclude = "!" + path.join(_dir.src, "**", "__*.js");
@@ -142,7 +159,6 @@
 
         return gulp.src(src)
             .pipe($.plumber())
-            //.pipe($.jscs());
             .pipe(jscs())
             .pipe(jscs.reporter())
             .pipe(jscs.reporter("fail")); // or "failImmediately" ?
@@ -159,8 +175,13 @@
         var gmochaPhantomJS = require("gulp-mocha-phantomjs");
 
         var src = [];
-        var file = (isExecuteOl3) ? "index-ol3.html" : (isExecuteLeaflet) ? "index-leaflet.html" : (isExecuteVg) ? "index-vg.html" : $.util.log("Exception!");
-        src.push(path.join(_dir.test, file));
+        var file = (isExecuteOl3) ? "index-ol3.html" : (isExecuteLeaflet) ? "index-leaflet.html" : (isExecuteVg) ? "index-vg.html" : null;
+        if (isExecuteMix) {
+            src.push(path.join(_dir.test, "index-ol3.html"));
+            src.push(path.join(_dir.test, "index-vg.html"));
+        } else {
+            src.push(path.join(_dir.test, file));
+        }
         src.push(path.join(_dir.test, "index.html"));
 
         return gulp.src(src)
@@ -192,6 +213,8 @@
             srcdir = path.join(baseSrcDir, "Vg");
             builddir = path.join(vgBuildDir, _dir.src);
             $.shelljs.exec("node ./node_modules/woodman/precompile/precompiler.js " + srcdir + " " + path.join(builddir, "Vg"));
+        } else if (isExecuteMix) {
+            // TODO...
         } else {
             $.util.log("Exception !");
         }
@@ -284,6 +307,8 @@
             srcdir = path.join(_build, "Vg", _dir.src);
             plugin = vgOutputNameBase;
             input.push(path.join("Vg", plugin));
+        } else if (isExecuteMix) {
+            // TODO...
         } else {
             $.util.log("Exception !");
         }

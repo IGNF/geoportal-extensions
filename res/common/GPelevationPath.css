@@ -15,6 +15,8 @@
 
 .GPelevationPathCalcWaitingContainerVisible {
   display: -webkit-flex;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
 }
 
@@ -41,30 +43,62 @@
 /* CSS : default */
 
 #profileElevationByDefault {
+  display:-webkit-box;
+  display:-webkit-flex;
+  display:-ms-flexbox;
   display:flex;
-  flex-direction:column;
+  -webkit-box-orient:vertical;
+  -webkit-box-direction:normal;
+  -webkit-flex-direction:column;
+      -ms-flex-direction:column;
+          flex-direction:column;
   height:100%;
 }
 
 .profile-box {
+  display:-webkit-box;
+  display:-webkit-flex;
+  display:-ms-flexbox;
   display:flex;
-  flex:1;
-  flex-direction:row;
+  -webkit-box-flex:1;
+  -webkit-flex:1;
+      -ms-flex:1;
+          flex:1;
+  -webkit-box-orient:horizontal;
+  -webkit-box-direction:normal;
+  -webkit-flex-direction:row;
+      -ms-flex-direction:row;
+          flex-direction:row;
 }
 
 .profile-content {
-  flex:1;
-  justify-content:center;
-  align-items:center;
+  -webkit-box-flex:1;
+  -webkit-flex:1;
+      -ms-flex:1;
+          flex:1;
+  -webkit-box-pack:center;
+  -webkit-justify-content:center;
+      -ms-flex-pack:center;
+          justify-content:center;
+  -webkit-box-align:center;
+  -webkit-align-items:center;
+      -ms-flex-align:center;
+          align-items:center;
 }
 
 .profile-z-vertical,
 .profile-z-vertical ul,
 .profile-x-horizontal,
 .profile-x-horizontal ul {
+  display:-webkit-box;
+  display:-webkit-flex;
+  display:-ms-flexbox;
   display:flex;
   /*justify-content:center;*/
-  align-items:center;
+  -webkit-box-align:center;
+  -webkit-align-items:center;
+      -ms-flex-align:center;
+          align-items:center;
 }
 
 
@@ -72,7 +106,11 @@
 .profile-z-vertical ul,
 .profile-content
 {
-  flex-direction:column;
+  -webkit-box-orient:vertical;
+  -webkit-box-direction:normal;
+  -webkit-flex-direction:column;
+      -ms-flex-direction:column;
+          flex-direction:column;
   height:100%;
 }
 
@@ -85,12 +123,18 @@
 
 .profile-z-vertical{
   /*background:green;*/
-  flex:0 1 auto;
+  -webkit-box-flex:0;
+  -webkit-flex:0 1 auto;
+      -ms-flex:0 1 auto;
+          flex:0 1 auto;
 
 }
 .profile-z-vertical ul{
   /*background:pink;*/
-  justify-content:space-between;
+  -webkit-box-pack:justify;
+  -webkit-justify-content:space-between;
+      -ms-flex-pack:justify;
+          justify-content:space-between;
   padding:2px 5px 2px 2px;
   /*border-right:1px solid #888;*/
 }
@@ -107,11 +151,20 @@
 }
 .profile-content ul {
   background:white;
-  flex:1 0 auto;
+  -webkit-box-flex:1;
+  -webkit-flex:1 0 auto;
+      -ms-flex:1 0 auto;
+          flex:1 0 auto;
   height:100%;
   width:100%;
-  justify-content:flex-start;
-  align-items:flex-end;
+  -webkit-box-pack:start;
+  -webkit-justify-content:flex-start;
+      -ms-flex-pack:start;
+          justify-content:flex-start;
+  -webkit-box-align:end;
+  -webkit-align-items:flex-end;
+      -ms-flex-align:end;
+          align-items:flex-end;
 
   margin:0;
   padding:0;
@@ -119,12 +172,18 @@
 }
 .profile-x-horizontal{
   /*background:blue;*/
-  flex:0 1 auto;;
+  -webkit-box-flex:0;
+  -webkit-flex:0 1 auto;
+      -ms-flex:0 1 auto;
+          flex:0 1 auto;;
   width:100%;
 }
 .profile-x-horizontal ul{
   /*background:orange;*/
-  justify-content:space-between;
+  -webkit-box-pack:justify;
+  -webkit-justify-content:space-between;
+      -ms-flex-pack:justify;
+          justify-content:space-between;
   /*padding:5px 2px 2px 2px;*/
   width:100%;
   /*border-top:1px solid #888;*/
