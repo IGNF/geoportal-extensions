@@ -33,18 +33,21 @@
             ol3 : path.join(_dir.src, "Ol3","**/*.js"),
             leaflet : path.join(_dir.src, "Leaflet", "**/*.js"),
             vg : path.join(_dir.src, "Vg", "**/*.js"),
+            it : path.join(_dir.src, "Itowns", "**/*.js"),
             common : path.join(_dir.src, "Common", "**/*.js")
         },
         img : {
             ol3 : _dir.res + "/ol3/**/*",
             leaflet : _dir.res + "/leaflet/**/*.png",
             vg : _dir.res + "/vg/**/*.png",
+            it : _dir.res + "/itowns/**/*.png",
             common : _dir.res + "/common/**/*.gif"
         },
         css : {
             ol3 : _dir.res + "/ol3/**/*.css",
             leaflet : _dir.res + "/leaflet/**/*.css",
             vg : _dir.res + "/vg/**/*.css",
+            it : _dir.res + "/itowns/**/*.css",
             common : _dir.res + "/common/*.css"
         }
     };
@@ -58,6 +61,7 @@
     var isExecuteOl3     = opts.ol3;
     var isExecuteLeaflet = opts.leaflet;
     var isExecuteVg      = opts.vg;
+    var isExecuteItowns  = opts.it;
     var isExecuteMix     = opts.mix;
 
     // conf variables
@@ -68,15 +72,17 @@
     var leafletOutputNameBase = "GpPluginLeaflet" ;
     var ol3OutputNameBase = "GpPluginOl3" ;
     var vgOutputNameBase = "GpPluginVg" ;
+    var itownsOutputNameBase = "GpPluginItowns" ;
     var mixOutputNameBase = "GpPluginMix" ;
     var ol3BuildDir = path.join(_build, "Ol3");
     var leafletBuildDir = path.join(_build, "Leaflet");
     var vgBuildDir = path.join(_build, "Vg");
+    var itownsBuildDir = path.join(_build, "Itowns");
     var mixBuildDir = path.join(_build, "Mix");
 
     // par contre, si aucune option est renseignée,
     // on construit les bundles pour OpenLayers3
-    if (!isExecuteOl3 && !isExecuteLeaflet && !isExecuteVg && !isExecuteMix) {
+    if (!isExecuteOl3 && !isExecuteLeaflet && !isExecuteVg && !isExecuteItowns && !isExecuteMix) {
         isExecuteOl3 = true;
     }
 
@@ -113,7 +119,8 @@
         $.util.log(" --ol3 : construction du bundle de OpenLayers3.");
         $.util.log(" --leaflet : construction du bundle de Leaflet.");
         $.util.log(" --vg : construction du bundle 3D de VirtualGeo.");
-        $.util.log(" --mix : construction du bundle 3D de VirtualGeo avec OpenLayers3.");
+        $.util.log(" --it : construction du bundle 3D de iTowns.");
+        $.util.log(" --mix : construction du bundle 3D de iTowns avec OpenLayers3.");
     });
 
     //|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -129,6 +136,7 @@
         src.push(_src.js.ol3);
         src.push(_src.js.leaflet);
         // src.push(_src.js.vg);
+        // src.push(_src.js.it);
         src.push(_src.js.common);
         var exclude = "!" + path.join(_dir.src, "**", "__*.js");
         src.push(exclude);
@@ -153,6 +161,7 @@
         src.push(_src.js.ol3);
         src.push(_src.js.leaflet);
         // src.push(_src.js.vg);
+        // src.push(_src.js.it);
         src.push(_src.js.common);
         var exclude = "!" + path.join(_dir.src, "**", "__*.js");
         src.push(exclude);
@@ -175,10 +184,10 @@
         var gmochaPhantomJS = require("gulp-mocha-phantomjs");
 
         var src = [];
-        var file = (isExecuteOl3) ? "index-ol3.html" : (isExecuteLeaflet) ? "index-leaflet.html" : (isExecuteVg) ? "index-vg.html" : null;
+        var file = (isExecuteOl3) ? "index-ol3.html" : (isExecuteLeaflet) ? "index-leaflet.html" : (isExecuteVg) ? "index-vg.html" : (isExecuteItowns) ? "index-itowns.html" : null;
         if (isExecuteMix) {
             src.push(path.join(_dir.test, "index-ol3.html"));
-            src.push(path.join(_dir.test, "index-vg.html"));
+            src.push(path.join(_dir.test, "index-itowns.html"));
         } else {
             src.push(path.join(_dir.test, file));
         }
@@ -213,6 +222,10 @@
             srcdir = path.join(baseSrcDir, "Vg");
             builddir = path.join(vgBuildDir, _dir.src);
             $.shelljs.exec("node ./node_modules/woodman/precompile/precompiler.js " + srcdir + " " + path.join(builddir, "Vg"));
+        } else if (isExecuteItowns) {
+            srcdir = path.join(baseSrcDir, "Itowns");
+            builddir = path.join(itownsBuildDir, _dir.src);
+            $.shelljs.exec("node ./node_modules/woodman/precompile/precompiler.js " + srcdir + " " + path.join(builddir, "Itowns"));
         } else if (isExecuteMix) {
             // TODO...
         } else {
@@ -278,6 +291,7 @@
             ol : "empty:",
             leaflet : "empty:",
             vg : "empty:",
+            itowns : "empty:",
             request : "empty:", // depenance externe pour nodejs !
             xmldom : "empty:", // depenance externe pour nodejs !
             proj4 : "../../../../lib/proj4/proj4" + modeExt,
@@ -307,6 +321,11 @@
             srcdir = path.join(_build, "Vg", _dir.src);
             plugin = vgOutputNameBase;
             input.push(path.join("Vg", plugin));
+        } else if (isExecuteItowns) {
+            builddir =  path.join(_build, "Itowns", "js");
+            srcdir = path.join(_build, "Itowns", _dir.src);
+            plugin = itownsOutputNameBase;
+            input.push(path.join("Itowns", plugin));
         } else if (isExecuteMix) {
             // TODO...
         } else {
@@ -398,6 +417,12 @@
             // deps = [{name :"vg", amd :"vg", cjs :"vg", global :"VirtualGeo", param :"vg"}];
             output  = vgOutputNameBase;
         }
+        else if (isExecuteItowns) {
+            builddir = path.join(_build, "Itowns", "umd");
+            srcdir = path.join(_build, "Itowns", "js");
+            deps = [{name :"itowns", amd :"itowns", cjs :"itowns", global :"itowns", param :"itowns"}];
+            output  = itownsOutputNameBase;
+        }
         else {
             $.util.log("Exception !");
         }
@@ -452,6 +477,12 @@
             //  GC : skip compress images ...
             //  builddir  = path.join(_build, "Leaflet", "img");
             builddir  = path.join(_build, "Vg", "dist/vg/img");
+        }
+        else if (isExecuteItowns) {
+            srcdir.push(path.join(_dir.res, "itowns", "**", "*.png"));
+            //  GC : skip compress images ...
+            //  builddir  = path.join(_build, "Leaflet", "img");
+            builddir  = path.join(_build, "Itowns", "dist/itowns/img");
         }
         else {
             $.util.log("Exception !");
@@ -538,6 +569,12 @@
             builddir  = path.join(_build, "Vg", "dist/vg");
             output = vgOutputNameBase + modeExt ;
         }
+        else if (isExecuteItowns) {
+            srcdir = path.join(_dir.res, "itowns", "**", "*.css");
+            exceptsrcdir = "!" + path.join(_dir.res, "itowns", "**", "__*.css");
+            builddir  = path.join(_build, "Itowns", "dist/itowns");
+            output = itownsOutputNameBase + modeExt ;
+        }
         else {
             $.util.log("Exception !");
         }
@@ -594,6 +631,13 @@
             srcdir    = path.join(_build, "Vg", "dist/vg");
             builddir  = path.join(_build, "Vg", "dist/vg");
             output = vgOutputNameBase + modeExt ;
+            version = npmConf.vgExtVersion ;
+            brief = npmConf.vgExtName ;
+        }
+        else if (isExecuteItowns) {
+            srcdir    = path.join(_build, "Itowns", "dist/itowns");
+            builddir  = path.join(_build, "Itowns", "dist/itowns");
+            output = itownsOutputNameBase + modeExt ;
             version = npmConf.vgExtVersion ;
             brief = npmConf.vgExtName ;
         }
@@ -657,6 +701,13 @@
             version = npmConf.vgExtVersion ;
             brief = npmConf.vgExtName ;
         }
+        else if (isExecuteItowns) {
+            srcdir    = path.join(_build, "Itowns", "dist/itowns");
+            builddir  = path.join(_build, "Itowns", "dist/itowns");
+            output = itownsOutputNameBase + modeExt ;
+            version = npmConf.itownsExtVersion ;
+            brief = npmConf.itownsExtName ;
+        }
         else {
             $.util.log("Exception !");
         }
@@ -678,7 +729,11 @@
     //'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     gulp.task("copy-libjsdoc", function () {
 
-        var builddir = (isExecuteOl3) ? path.join(_build, "Ol3", "doc") : (isExecuteLeaflet) ? path.join(_build, "Leaflet", "doc") : (isExecuteVg) ? path.join(_build, "Vg", "doc") : $.util.log("Exception !");
+        var builddir = (isExecuteOl3) ? path.join(_build, "Ol3", "doc") :
+                            (isExecuteLeaflet) ? path.join(_build, "Leaflet", "doc") :
+                                (isExecuteVg) ? path.join(_build, "Vg", "doc") :
+                                    (isExecuteItowns) ? path.join(_build, "Itowns", "doc") :
+                                        $.util.log("Exception !");
 
         return gulp.src(path.join(_dir.doc, "**"))
                 .pipe(gulp.dest(builddir))
@@ -692,7 +747,11 @@
     //'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     gulp.task("copy-tutojsdoc", function () {
 
-        var builddir = (isExecuteOl3) ? path.join(_build, "Ol3", "doc", "tutorials") : (isExecuteLeaflet) ? path.join(_build, "Leaflet", "doc", "tutorials") : (isExecuteVg) ? path.join(_build, "Vg", "doc", "tutorials") : $.util.log("Exception !");
+        var builddir = (isExecuteOl3) ? path.join(_build, "Ol3", "doc", "tutorials") :
+                            (isExecuteLeaflet) ? path.join(_build, "Leaflet", "doc", "tutorials") :
+                                (isExecuteVg) ? path.join(_build, "Vg", "doc", "tutorials") :
+                                    (isExecuteItowns) ? path.join(_build, "Itowns", "doc", "tutorials") :
+                                        $.util.log("Exception !");
 
         var tmpl = require("gulp-template");
 
@@ -748,9 +807,9 @@
     //'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     gulp.task("copy-dist", function () {
 
-        var name    = (isExecuteOl3) ? ol3OutputNameBase : (isExecuteLeaflet) ? leafletOutputNameBase : (isExecuteVg) ? vgOutputNameBase : null;
-        var baseDir = (isExecuteOl3) ? "Ol3" : (isExecuteLeaflet) ? "Leaflet" : (isExecuteVg) ? "Vg" : null;
-        var srcDir  = (isExecuteOl3) ? "ol3" : (isExecuteLeaflet) ? "leaflet" : (isExecuteVg) ? "vg" : null;
+        var name    = (isExecuteOl3) ? ol3OutputNameBase : (isExecuteLeaflet) ? leafletOutputNameBase : (isExecuteVg) ? vgOutputNameBase : (isExecuteItowns) ? itownsOutputNameBase : null;
+        var baseDir = (isExecuteOl3) ? "Ol3" : (isExecuteLeaflet) ? "Leaflet" : (isExecuteVg) ? "Vg" : (isExecuteItowns) ? "Itowns" : null;
+        var srcDir  = (isExecuteOl3) ? "ol3" : (isExecuteLeaflet) ? "leaflet" : (isExecuteVg) ? "vg" : (isExecuteItowns) ? "itowns" : null;
         var src     = path.join(_build, baseDir, "umd", name + modeExt + ".js");
 
         return gulp.src(src)
@@ -763,8 +822,12 @@
     //'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     gulp.task("lib-external", function () {
 
-        var baseDir  = (isExecuteOl3) ? "ol3" : (isExecuteLeaflet) ? "leaflet" : (isExecuteVg) ? "vg" : null;
-        var buildDir = (isExecuteOl3) ? path.join(_build, "Ol3", "lib", baseDir) : (isExecuteLeaflet) ? path.join(_build, "Leaflet", "lib", baseDir) : (isExecuteVg) ? path.join(_build, "Vg", "lib", baseDir) : null;
+        var baseDir  = (isExecuteOl3) ? "ol3" : (isExecuteLeaflet) ? "leaflet" : (isExecuteVg) ? "vg" : (isExecuteItowns) ? "itowns" : null;
+        var buildDir = (isExecuteOl3) ? path.join(_build, "Ol3", "lib", baseDir) :
+                            (isExecuteLeaflet) ? path.join(_build, "Leaflet", "lib", baseDir) :
+                                (isExecuteVg) ? path.join(_build, "Vg", "lib", baseDir) :
+                                    (isExecuteItowns) ? path.join(_build, "Itowns", "lib", baseDir) :
+                                        null;
         var srcDir   = path.join(_dir.lib, baseDir, "**", "*.*");
 
         return gulp.src(srcDir)
@@ -777,12 +840,13 @@
     //'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     gulp.task("copy-sample", function () {
 
-        var bundle   = (isExecuteOl3) ? ol3OutputNameBase : (isExecuteLeaflet) ? leafletOutputNameBase : (isExecuteVg) ? vgOutputNameBase : null;
-        var baseDir  = (isExecuteOl3) ? "ol3" : (isExecuteLeaflet) ? "leaflet" : (isExecuteVg) ? "vg" : null;
+        var bundle   = (isExecuteOl3) ? ol3OutputNameBase : (isExecuteLeaflet) ? leafletOutputNameBase : (isExecuteVg) ? vgOutputNameBase : (isExecuteItowns) ? itownsOutputNameBase : null;
+        var baseDir  = (isExecuteOl3) ? "ol3" : (isExecuteLeaflet) ? "leaflet" : (isExecuteVg) ? "vg" : (isExecuteItowns) ? "itowns" : null;
         var buildDir = (isExecuteOl3) ? path.join(_build, "Ol3", "samples", baseDir) :
                             (isExecuteLeaflet) ? path.join(_build, "Leaflet", "samples", baseDir) :
                                 (isExecuteVg) ? path.join(_build, "Vg", "samples", baseDir) :
-                                    null;
+                                    (isExecuteItowns) ? path.join(_build, "Itowns", "samples", baseDir) :
+                                        null;
 
         var sources  = [];
         // includes : les bundles
@@ -806,11 +870,12 @@
     //'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     gulp.task("copy-resources-sample", function () {
 
-        var baseDir  = (isExecuteOl3) ? "ol3" : (isExecuteLeaflet) ? "leaflet" : (isExecuteVg) ? "vg" : null;
+        var baseDir  = (isExecuteOl3) ? "ol3" : (isExecuteLeaflet) ? "leaflet" : (isExecuteVg) ? "vg" : (isExecuteItowns) ? "itowns" : null;
         var buildDir = (isExecuteOl3) ? path.join(_build, "Ol3", "samples", baseDir, "resources") :
                             (isExecuteLeaflet) ? path.join(_build, "Leaflet", "samples", baseDir, "resources") :
                                 (isExecuteVg) ? path.join(_build, "Vg", "samples", baseDir, "resources") :
-                                    null;
+                                    (isExecuteItowns) ? path.join(_build, "Vg", "samples", baseDir, "resources") :
+                                        null;
 
         var sources  = [];
         // includes : les ressources
@@ -831,11 +896,12 @@
         var tmpl = require("gulp-template");
         var glob = require("glob");
 
-        var baseDir  = (isExecuteOl3) ? "ol3" : (isExecuteLeaflet) ? "leaflet" : (isExecuteVg) ? "vg" : null;
+        var baseDir  = (isExecuteOl3) ? "ol3" : (isExecuteLeaflet) ? "leaflet" : (isExecuteVg) ? "vg" : (isExecuteItowns) ? "itowns" : null;
         var buildDir = (isExecuteOl3) ? path.join(_build, "Ol3", "samples") :
                             (isExecuteLeaflet) ? path.join(_build, "Leaflet", "samples") :
                                 (isExecuteVg) ? path.join(_build, "Vg", "samples") :
-                                    null;
+                                    (isExecuteItowns) ? path.join(_build, "Itowns", "samples") :
+                                        null;
         var sources  = path.join(/*_dir.samples, */ baseDir, "**", "*");
         var index    = path.join(_dir.samples, "index-" + baseDir + ".html");
 
@@ -873,6 +939,10 @@
             srcdir.push(path.join(_build, "Vg", "dist", "**"));
         }
 
+        if (isExecuteItowns)  {
+            srcdir.push(path.join(_build, "Itowns", "dist", "**"));
+        }
+
         return gulp.src(srcdir)
                 .pipe(gulp.dest(_dir.dist))
                 .pipe($.plumber())
@@ -885,7 +955,7 @@
     //'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     gulp.task('connect', function() {
 
-        var baseDir = (isExecuteOl3) ? "Ol3" : (isExecuteLeaflet) ? "Leaflet" : (isExecuteVg) ? "Vg" : null;
+        var baseDir = (isExecuteOl3) ? "Ol3" : (isExecuteLeaflet) ? "Leaflet" : (isExecuteVg) ? "Vg" : (isExecuteItowns)? "Itowns" : null;
 
         $.connect.server({
             root: path.join(_build, baseDir),
@@ -902,7 +972,7 @@
 
         var open = require('open');
 
-        var baseName = (isExecuteOl3) ? "index-ol3.html" : (isExecuteLeaflet) ? "index-leaflet.html" : (isExecuteVg) ? "index-vg.html" : null;
+        var baseName = (isExecuteOl3) ? "index-ol3.html" : (isExecuteLeaflet) ? "index-leaflet.html" : (isExecuteVg) ? "index-vg.html" : (isExecuteItowns) ? "index-itowns.html" : null;
 
         open("http://localhost:9000/samples/" + baseName);
     });
@@ -959,6 +1029,9 @@
         else if (isExecuteVg) {
             gulp.start("build-vg");
         }
+        else if (isExecuteItowns) {
+            gulp.start("build-itowns");
+        }
         else {
             runSequence("build-ol3", "build-leaflet", cb);
         }
@@ -968,6 +1041,7 @@
         isExecuteOl3 = true;
         isExecuteLeaflet = !isExecuteOl3;
         isExecuteVg = !isExecuteOl3;
+        isExecuteItowns = !isExecuteOl3;
         $.util.log("# Run task for OpenLayers3...");
         runSequence("check", /*"test",*/ "dist", "doc", "lib", "sample", cb);
     });
@@ -976,6 +1050,7 @@
         isExecuteLeaflet = true;
         isExecuteOl3 = !isExecuteLeaflet;
         isExecuteVg = !isExecuteLeaflet;
+        isExecuteItowns = !isExecuteLeaflet;
         $.util.log("# Run task for Leaflet...");
         runSequence("check", /*"test",*/ "dist", "doc", "lib", "sample", cb);
     });
@@ -984,7 +1059,17 @@
         isExecuteVg = true;
         isExecuteOl3 = !isExecuteVg;
         isExecuteLeaflet = !isExecuteVg;
+        isExecuteItowns = !isExecuteVg;
         $.util.log("# Run task for VirtualGeo 3D...");
+        runSequence("check", /*"test",*/ "dist", /*"doc",*/ "lib", "sample", cb);
+    });
+
+    gulp.task("build-itowns", function(cb) {
+        isExecuteItowns = true;
+        isExecuteOl3 = !isExecuteItowns;
+        isExecuteLeaflet = !isExecuteItowns;
+        isExecuteVg = !isExecuteItowns;
+        $.util.log("# Run task for iTowns 3D...");
         runSequence("check", /*"test",*/ "dist", /*"doc",*/ "lib", "sample", cb);
     });
 

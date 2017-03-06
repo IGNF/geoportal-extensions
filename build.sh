@@ -43,7 +43,17 @@ function vg() {
   gulp publish --vg
 }
 
-while getopts "aolv" opts
+# vg
+function it() {
+  echo "####### IT production !"
+  gulp --it
+  gulp publish --it
+  echo "####### IT !"
+  gulp --production --it
+  gulp publish --it
+}
+
+while getopts "aolvi" opts
 do
    case $opts in
      o)
@@ -61,15 +71,21 @@ do
         echo "###### VirtualGeo bundle ! ######"
         vg
         ;;
+    i)
+       echo "#################################"
+       echo "###### Itowns bundle ! ######"
+       it
+       ;;
      a)
         echo "#################################"
         echo "########## ALL bundle ! #########"
         ol3
         leaflet
         vg
+        it
         ;;
      \?)
-        echo "$OPTARG : option invalide : a(all), o(openlayers), l(leaflet) ou v(virtualgeo) !"
+        echo "$OPTARG : option invalide : a(all), o(openlayers), l(leaflet), v(virtualgeo) ou i(itowns) !"
         exit -1
         ;;
    esac
