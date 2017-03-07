@@ -6,7 +6,8 @@ define([
     "Common/Utils/Config",
     "Common/Utils/CheckRightManagement",
     "Common/Utils/SelectorID",
-    "Common/Controls/MousePositionDOM"
+    "Common/Controls/MousePositionDOM",
+    "Itowns/Controls/Widget"
 ], function (
     itowns, // FIXME Global for browser only !
     proj4,
@@ -15,7 +16,8 @@ define([
     Config,
     RightManagement,
     SelectorID,
-    MousePositionDOM
+    MousePositionDOM,
+    Widget
 ) {
 
     "use strict";
@@ -88,6 +90,11 @@ define([
     // MousePosition.prototype = Object.create(itowns.Widget.prototype, {});
 
     /**
+     * @lends module:GeoportalMousePosition
+     */
+    MousePosition.prototype = Object.create(Widget.prototype, {});
+
+    /**
      * Copies all source object members to MousePosition prototype
      *
      * @param {Object} source - source object whose properties will be copied.
@@ -109,8 +116,18 @@ define([
     MousePosition.prototype.constructor = MousePosition;
 
 
-    MousePosition.prototype.getcurrentCoordinates = function() {
-        console.log(itowns.viewer.getCenter());
+    /**
+     * Surcharge de la méthode _setMap :
+     *
+     * @param {Object} map - source object whose properties will be copied.
+     * @param {Object} mapDiv - Div contenant la mapDiv
+     * @param {Function} f - fonction FIXME
+     *
+     */
+    MousePosition.prototype.setMap = function (map) {
+        // call original setMap method
+        Widget.prototype.setMap.call(map);
+        return map;
     };
 
     return MousePosition;
