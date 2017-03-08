@@ -43,6 +43,8 @@ and open the template in the editor.
             // iTowns namespace defined here
             const viewerDiv = document.getElementById('viewerDiv');
             itowns.viewer.createSceneGlobe(positionOnGlobe, viewerDiv);
+            var mousePosition = new itowns.control.MousePosition();
+            itowns.viewer.addControl( mousePosition );
 
             const wgs84TileLayer = {
                 protocol: 'tile',

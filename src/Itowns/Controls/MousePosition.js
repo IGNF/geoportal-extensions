@@ -6,7 +6,8 @@ define([
     "Common/Utils/Config",
     "Common/Utils/CheckRightManagement",
     "Common/Utils/SelectorID",
-    "Common/Controls/MousePositionDOM"
+    "Common/Controls/MousePositionDOM",
+    "Itowns/Controls/Control"
 ], function (
     itowns, // FIXME Global for browser only !
     proj4,
@@ -15,13 +16,14 @@ define([
     Config,
     RightManagement,
     SelectorID,
-    MousePositionDOM
+    MousePositionDOM,
+    Control
 ) {
 
     "use strict";
 
     woodman.load("console");
-    var logger = woodman.getLogger("GeoportalMousePosition");
+    var logger = woodman.getLogger("MousePosition");
 
     /**
      * @classdesc
@@ -79,8 +81,17 @@ define([
      *  });
      */
     function MousePosition (options) {
+        Control.call(
+            this,
+            {
+              pName : "mouseposition",
+              pElement : "",
+              options : options
+            });
         return options;
     };
+
+    MousePosition.prototype = new Control();
 
     /*
      * @lends module:GeoportalMousePosition

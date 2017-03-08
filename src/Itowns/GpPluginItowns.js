@@ -2,13 +2,15 @@ define([
     "itowns",
     "gp",
     "Common/Utils/LayerUtils",
-    "Itowns/Controls/MousePosition"
+    "Itowns/Controls/MousePosition",
+    "Itowns/ApiGlobe"
     // "Itowns/Controls/LayerSwitcher",
 ], function (
     itowns, // FIXME Global for browser only !
     Gp,
     LayerUtils,
-    MousePosition
+    MousePosition,
+    ApiGlobe
     //LayerSwitcher,
 ) {
 
@@ -21,7 +23,9 @@ define([
 
     // creation du namespace pour les extensions virtualGeo
     // itowns.Widget.LayerSwitcher = LayerSwitcher;
-    itowns.MousePosition = MousePosition;
+    itowns.control = {};
+    itowns.control.MousePosition = MousePosition;
+    itowns.viewer = new ApiGlobe();
 
     // FIXME : parce qu'il faut bien retourner quelque chose
     return Gp;
