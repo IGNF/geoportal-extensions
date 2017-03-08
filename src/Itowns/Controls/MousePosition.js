@@ -119,5 +119,10 @@ define([
      */
     MousePosition.prototype.constructor = MousePosition;
 
+
+    MousePosition.prototype.getcurrentCoordinates = function() {
+        console.log(itowns.viewer.getCenter());
+    };
+
     return MousePosition;
 });

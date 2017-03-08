@@ -70,6 +70,8 @@ and open the template in the editor.
 
             itowns.viewer.addEventListener('globe-loaded', () => {
                 itowns.viewer.setRealisticLightingOn(true);
+                var MousePosition = new itowns.Widget.MousePosition();
+                MousePosition.getcurrentCoordinates();
                 // eslint-disable-next-line no-console
                 console.info('Globe Loaded');
             });
