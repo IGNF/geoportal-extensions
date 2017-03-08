@@ -20,7 +20,7 @@ define([
     // Gp.ol3extVersion = "__GPOL3EXTVERSION__" ;
     // Gp.ol3extDate = "__GPDATE__";
     Gp.LayerUtils = LayerUtils ;
-
+    itowns.viewer = new ApiGlobe();
     // creation du namespace pour les extensions virtualGeo
     // itowns.Widget.LayerSwitcher = LayerSwitcher;
     itowns.control = {};
