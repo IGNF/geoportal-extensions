@@ -484,7 +484,7 @@ define([], function () {
                     altitudeTimeout = setTimeout( function () {
                         self.onRequestAltitude(coordinate, function (z) {
                             if ( minThreshold < z && z < maxThreshold ) {
-                                document.getElementById(self._addUID("GPmousePositionAlt")).innerHTML = "--- m";
+                                self.GPresetElevation();
                             } else {
                                 document.getElementById(self._addUID("GPmousePositionAlt")).innerHTML = z + " m";
                             }
@@ -492,6 +492,15 @@ define([], function () {
                     }, altitudeTimeoutDelay);
                 }
 
+            }
+        },
+
+        /**
+        * Function reseting altitude value
+        */
+        GPresetElevation : function () {
+            if (document.getElementById(this._addUID("GPmousePositionAltitude"))) {
+                document.getElementById(this._addUID("GPmousePositionAlt")).innerHTML = "--- m";
             }
         }
     };

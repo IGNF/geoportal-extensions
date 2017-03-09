@@ -62,7 +62,7 @@ define([
      * @param {callback} Callback - The callback that is called when the event is heard.
      */
     Control.prototype.listenToMap = function listenToMap(pEventName, pCallback) {
-        document.getElementById('viewerDiv').addEventListener(pEventName, pCallback, false);
+        this._map.viewerDiv.addEventListener(pEventName, pCallback, false);
     };
 
     /**
@@ -72,7 +72,7 @@ define([
      * @param {callback} Callback - The callback that is called when the event is heard.
      */
     Control.prototype.removeFromMap = function removeFromMap(pEventName, pCallback) {
-        document.getElementById('viewerDiv').removeEventListener(pEventName, pCallback, false);
+        this._map.viewerDiv.removeEventListener(pEventName, pCallback, false);
     };
 
     /**
