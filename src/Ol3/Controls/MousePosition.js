@@ -365,6 +365,9 @@ define([
         if ( displayAltitude === undefined ) {
             return;
         }
+        if( typeof this._noRightManagement === 'undefined' ) {
+            this._checkRightsManagement()
+        }
         this.options.displayAltitude = displayAltitude;
         this._setElevationPanel(displayAltitude);
     };
@@ -658,9 +661,7 @@ define([
             services : ["Elevation"]
         });
 
-        if ( !rightManagement ) {
-            this._noRightManagement = true;
-        }
+        this._noRightManagement = !rightManagement;
 
         // on recupère les informations utiles
         // sur ce controle, on ne s'occupe pas de la ressource car elle est unique...

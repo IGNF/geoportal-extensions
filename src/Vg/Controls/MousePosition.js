@@ -384,6 +384,9 @@ define([
         if ( displayAltitude === undefined ) {
             return;
         }
+        if( typeof this._noRightManagement === 'undefined' ) {
+            this._checkRightsManagement()
+        }
         this.options.displayAltitude = displayAltitude;
         this._setElevationPanel(displayAltitude);
     };
@@ -547,11 +550,11 @@ define([
                 label : "Lambert 93",
                 crs : "EPSG:2154",
                 type : "Metric",
-                geoBBox : { 
-                    left : -9.86, 
-                    bottom : 41.15, 
-                    right : 10.38, 
-                    top : 51.56 
+                geoBBox : {
+                    left : -9.86,
+                    bottom : 41.15,
+                    right : 10.38,
+                    top : 51.56
                 }
             },
             {
@@ -559,10 +562,10 @@ define([
                 crs : "EPSG:27572",
                 type : "Metric",
                 geoBBox : {
-                    left : -4.87, 
-                    bottom : 42.33, 
-                    right : 8.23, 
-                    top : 51.14 
+                    left : -4.87,
+                    bottom : 42.33,
+                    right : 8.23,
+                    top : 51.14
                 }
             }
         ];
@@ -719,9 +722,7 @@ define([
             services : ["Elevation"]
         });
 
-        if ( !rightManagement ) {
-            this._noRightManagement = true;
-        }
+        this._noRightManagement = !rightManagement;
 
         // on recupère les informations utiles
         // sur ce controle, on ne s'occupe pas de la ressource car elle est unique...

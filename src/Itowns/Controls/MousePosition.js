@@ -1,27 +1,25 @@
 define([
-    "itowns",
     "proj4",
     "woodman",
     "gp",
     "Common/Utils",
-    "Common/Utils/Config",
     "Common/Utils/CheckRightManagement",
     "Common/Utils/SelectorID",
     "Common/Controls/MousePositionDOM",
     "Itowns/Controls/Control",
     "Itowns/Controls/Utils/PositionFormater",
+    "Itowns/CRS/CRS"
 ], function (
-    itowns, // FIXME Global for browser only !
     proj4,
     woodman,
     Gp,
     Utils,
-    Config,
     RightManagement,
     SelectorID,
     MousePositionDOM,
     Control,
-    PositionFormater
+    PositionFormater,
+    CRS
 ) {
 
     "use strict";
@@ -36,7 +34,7 @@ define([
      *
      * @constructor
      * @alias VirtualGeo.GeoportalMousePosition
-     * @extends {VirtualGeo.Control}
+     * @extends {Control}
      * @param {Object} options - options for function call.
      * @param {Sting}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
      * @param {Boolean} [options.collapsed = false] - Specify if MousePosition control should be collapsed at startup. Default is true.
@@ -119,6 +117,54 @@ define([
      */
     MousePosition.prototype.constructor = MousePosition;
 
+    /**
+     * Bind map to control
+     */
+    MousePosition.prototype.setMap = function (map) {
+
+        if ( map ) { // dans le cas de l'ajout du contrôle à la map
+
+            // dans le cas de l'ajout du contrôle à la map
+            var center = this._createMapCenter();
+            map.getViewport().appendChild(center);
+
+            // on définie le callback sur la carte pour recuperer les coordonnées
+            this._callbacks.mouseMove = this.onMouseMove.bind(this);
+
+            // evenement valable pour le mode desktop !
+            if (this._isDesktop) {
+                map.getViewport().addEventListener(
+                    "pointermove",
+                    this._callbacks.mouseMove
+                );
+            } else {
+                map.addEventListener(
+                    "centerchanged",
+                    this.onMapMove
+                );
+            }
+        }
+
+        // call original setMap method
+        Control.prototype.setMap.call(this, map);
+
+        // nothing else to do if map == null
+        if (map == null) {
+            return ;
+        }
+
+        // mode "collapsed"
+        if (!this.collapsed) {
+            var inputShow = document.getElementById("GPshowMousePosition-" + this._uid);
+            inputShow.checked = "checked";
+            this._setElevationPanel(this.options.displayAltitude);
+            this._setCoordinatesPanel(this.options.displayCoordinates);
+            if ( !this.options.displayCoordinates ) {
+                this._setSettingsPanel(false);
+            }
+        }
+    };
+
     // ################################################################### //
     // #################### user interface methods ####################### //
     // ################################################################### //
@@ -173,45 +219,175 @@ define([
     };
 
     /**
-     * Surcharge de la méthode _setMap :
+     * Set additional projection systems
+     * FIXME feature not available with VG
      *
-     * @param {Object} map - source object whose properties will be copied.
-     * @param {Object} mapDiv - Div contenant la mapDiv
-     * @param {Function} f - fonction FIXME
-     *
+     * @param {Array} systems - Array of system object, with following properties :
+     * @param {String} systems.crs - Proj4 CRS alias (from proj4 defs) e.g. "EPSG:4326"
+     * @param {String} systems.label - CRS label (for coordinates conversion)
+     * @param {String} systems.type - CRS units type to be displayed in control (one of control options.units). Default is "Metric"
      */
-    MousePosition.prototype.setMap = function (map) {
+    MousePosition.prototype.addSystems = function (systems) {
+        if ( !systems ) {
+            return;
+        }
+        if ( !Array.isArray(systems) ) {
+            console.log("[ERROR] MousePosition:addSystems - systems parameter should be an array");
+            return;
+        }
+        for ( var i = 0 ; i < systems.length; i++ ) {
+            this.addSystem(systems[i]);
+        }
+    };
 
-        if ( map ) { // dans le cas de l'ajout du contrôle à la map
+    /**
+     * Remove projection system (in case there are several system with same code, only the first one will be removed)
+     *
+     * @param {String} systemCrs - CRS alias (from proj4 defs)
+     */
+    MousePosition.prototype.removeSystem = function (systemCrs) {
+        if ( !systemCrs || typeof systemCrs !== "string" ) {
+            console.log("[ERROR] MousePosition:removeSystem - systemCode parameter should be a string");
+            return;
+        }
 
-            // dans le cas de l'ajout du contrôle à la map
-            var center = this._createMapCenter();
-            map.getViewport().appendChild(center);
-
-            // on définie le callback sur la carte pour recuperer les coordonnées
-            this._callbacks.mouseMove = this.onMouseMove.bind(this);
-
-            // evenement valable pour le mode desktop !
-            if (this._isDesktop) {
-                map.getViewport().addEventListener(
-                    "pointermove",
-                    this._callbacks.mouseMove
-                );
-            } else {
-                map.addEventListener(
-                    "centerchanged",
-                    this.onMapMove
-                );
+        var systemCode = null;
+        // find system in control projection systems list
+        for ( var i = 0; i < this._projectionSystems.length; i++ ) {
+            var proj = this._projectionSystems[i];
+            if ( systemCrs === proj.crs ) {
+                systemCode = proj.code;
+                // remove system from control projection systems list
+                this._projectionSystems.splice(i, 1);
+                break;
             }
         }
 
-        // call original setMap method
-        Control.prototype.setMap.call(this, map);
-
-        // nothing else to do if map == null
-        if (map == null) {
-            return ;
+        if ( systemCode == null ) {
+            console.log("[WARN] MousePosition:removeSystem - system not found");
+            return;
         }
+
+        // re-initialization of codes
+        var oldNewCodeMap = [];
+        for ( var i = 0; i < this._projectionSystems.length; i++ ) {
+            oldNewCodeMap[ Number( this._projectionSystems[i].code ) ] = i;
+            this._projectionSystems[i].code = i;
+        }
+
+        // find system in control container systems list
+        var indexChildToRemove = null;
+        var systemList = document.getElementById(this._addUID("GPmousePositionProjectionSystem"));
+        for ( var j = 0; j < systemList.childNodes.length; j++) {
+            if ( systemCode == systemList.childNodes[j].value ) {
+                indexChildToRemove = j;
+                continue;
+            }
+            systemList.childNodes[j].value = oldNewCodeMap [ Number( systemList.childNodes[j].value ) ];
+        }
+        // remove system from control container systems list
+        if ( indexChildToRemove != null ) {
+            systemList.removeChild( systemList.childNodes[ indexChildToRemove ] );
+        }
+
+        // choose arbitrarily a new current system if needed
+        if ( this._currentProjectionSystems.code == systemCode ) {
+            systemList.childNodes[0].setAttribute( "selected", "selected");
+            this._setCurrentSystem( systemList.childNodes[0].value );
+        }
+    };
+
+    /**
+     * Set control units (to be displayed)
+     *
+     * @param {Array} units - list of all coordinates units, to be displayed in control units list.
+     *      Values may be "DEC" (decimal degrees), "DMS" (sexagecimal), "RAD" (radians) and "GON" (grades) for geographical coordinates,
+     *      and "M" or "KM" for metric coordinates
+     */
+    MousePosition.prototype.setUnits = function (units) {
+        if ( !units || !Array.isArray(units) ) {
+            return;
+        }
+        this.options.units = units;
+        this._projectionUnits = {};
+        this._initProjectionUnits();
+        if ( this._currentProjectionType ) {
+            this._setTypeUnitsPanel(this._currentProjectionType);
+        }
+    };
+
+    /**
+     * Set control altitude options (useless if displayAltitude == false)
+     *
+     * @param {Object} options - altitude options
+     * @param {Object}  [options.serviceOptions] - options of elevation service
+     * @param {Number}  [options.responseDelay] - latency for elevation request, 500 ms by default
+     * @param {Number}  [options.triggerDelay] - immobilisation time of movement on the map to trigger the elevation calculation, 200 ms by default
+     */
+    MousePosition.prototype.setAltitudeOptions = function (options) {
+        if ( !options || typeof options !== "object" ) {
+            return;
+        }
+        this.options.altitude.triggerDelay = options.triggerDelay;
+        this.options.altitude.responseDelay = options.responseDelay;
+        if ( options.serviceOptions ) {
+            for ( var opt in options.serviceOptions ) {
+                if ( options.serviceOptions.hasOwnProperty(opt) ) {
+                    this.options.altitude.serviceOptions[opt] = options.serviceOptions[opt];
+                }
+            }
+        }
+    };
+
+    /**
+     * Display or hide elevation panel
+     *
+     * @param {Boolean} displayAltitude - true to display elevation panel, false to hide it
+     */
+    MousePosition.prototype.displayAltitude = function (displayAltitude) {
+        if ( displayAltitude === undefined ) {
+            return;
+        }
+        if( typeof this._noRightManagement === 'undefined' ) {
+            this._checkRightsManagement()
+        }
+        this.options.displayAltitude = displayAltitude;
+        this._setElevationPanel(displayAltitude);
+    };
+
+    /**
+     * Display or hide coordinates panel
+     *
+     * @param {Boolean} displayCoordinates - true to display coordinates panel, false to hide it
+     */
+    MousePosition.prototype.displayCoordinates = function (displayCoordinates) {
+        if ( displayCoordinates === undefined ) {
+            return;
+        }
+        this.options.displayCoordinates = displayCoordinates;
+        this._setCoordinatesPanel(displayCoordinates);
+        this._setSettingsPanel(displayCoordinates);
+    };
+
+    /**
+     * Collapse or display control main container
+     *
+     * @param {Boolean} collapsed - True to collapse control, False to display it
+     */
+    MousePosition.prototype.setCollapsed = function (collapsed) {
+        if ( collapsed === undefined ) {
+            console.log("[ERROR] MousePosition:setCollapsed - missing collapsed parameter");
+            return;
+        }
+        if ( ( collapsed && this.collapsed) || ( !collapsed && !this.collapsed ) ) {
+            return;
+        }
+        if ( !this._isDesktop ) {
+            document.getElementById(this._addUID("GPmapCenter")).className = collapsed ? "" : "GPmapCenterVisible";
+        }
+        // on simule l'ouverture du panneau après un click
+        this.onShowMousePositionClick();
+        this._showMousePositionContainer.checked = !collapsed;
     };
 
     // ################################################################### //
@@ -357,7 +533,6 @@ define([
 
         var systems = this.options.systems;
         for (var i = 0; i < systems.length; i++) {
-
             // definition d'un systeme de reference
             var sys = systems[i];
             this.addSystem(sys);
@@ -469,9 +644,7 @@ define([
             services : ["Elevation"]
         });
 
-        if ( !rightManagement ) {
-            this._noRightManagement = true;
-        }
+        this._noRightManagement = !rightManagement;
 
         // on recupère les informations utiles
         // sur ce controle, on ne s'occupe pas de la ressource car elle est unique...
@@ -713,68 +886,6 @@ define([
     // ################################################################### //
 
     /**
-     * this method is an handler event to control. The event is 'mousemove' on
-     * the map. The handler sends the coordinates to the panel.
-     * (cf. this.GPdisplayCoords() into the DOM functions)
-     *
-     * @method onMouseMove
-     * @param {Object} e - HTMLElement
-     * @private
-     */
-    MousePosition.prototype.onMouseMove = function (e) {
-        var self = this;
-
-        var position = this.getMap().pickPosition(e);
-        if( !position ) {
-            this.GPdisplayCoords( { lon: "---", lat: "---"} );
-            this.GPresetElevation();
-            return;
-        }
-
-        var coordinate = {
-            lon: position.coordinate[0],
-            lat: position.coordinate[1]
-        }
-
-        this._setCoordinate(coordinate);
-
-        // calcul de l'altitude après un certain délai après l'arrêt du mouvement de la souris
-        clearTimeout(this._timer);
-        this._timer = setTimeout( function () {
-            self.onMoveStopped(coordinate);
-        }, this.options.altitude.triggerDelay);
-    };
-
-    /**
-     * this method is an handler event to control. The event is 'moveend' on
-     * the map. The handler sends the coordinates to the panel.
-     * (cf. this.GPdisplayCoords() into the DOM functions)
-     *
-     * @method onMapMove
-     * @param {Object} e - HTMLElement
-     * @private
-     */
-    MousePosition.prototype.onMapMove = function (e) {
-
-        // var self = this;
-
-        // info: coordinate = [x, y]
-        // var coordinate = e.coordinate;
-        // if ( !e.map || !e.map.getView() ) {
-        //     return;
-        // }
-        // var crs = e.map.getView().getProjection();
-        //
-        // this._setCoordinate(coordinate, crs);
-        //
-        // // calcul de l'altitude après un certain délai après l'arrêt du mouvement de la carte
-        // clearTimeout(this._timer);
-        // this._timer = setTimeout( function () {
-        //     self.onMoveStopped(coordinate, crs);
-        // }, this.options.altitude.triggerDelay);
-    };
-
-    /**
      * this sends the coordinates to the panel.
      * (cf. this.GPdisplayCoords() into the DOM functions)
      *
@@ -867,6 +978,68 @@ define([
      */
     MousePosition.prototype.onMoveStopped = function (coords) {
         this._setElevation(coords);
+    };
+
+    /**
+     * this method is an handler event to control. The event is 'mousemove' on
+     * the map. The handler sends the coordinates to the panel.
+     * (cf. this.GPdisplayCoords() into the DOM functions)
+     *
+     * @method onMouseMove
+     * @param {Object} e - HTMLElement
+     * @private
+     */
+    MousePosition.prototype.onMouseMove = function (e) {
+        var self = this;
+
+        var position = this.getMap().pickPosition(e);
+        if( !position ) {
+            this.GPdisplayCoords( { lon: "---", lat: "---"} );
+            this.GPresetElevation();
+            return;
+        }
+
+        var coordinate = {
+            lon: position.coordinate[0],
+            lat: position.coordinate[1]
+        }
+
+        this._setCoordinate(coordinate);
+
+        // calcul de l'altitude après un certain délai après l'arrêt du mouvement de la souris
+        clearTimeout(this._timer);
+        this._timer = setTimeout( function () {
+            self.onMoveStopped(coordinate);
+        }, this.options.altitude.triggerDelay);
+    };
+
+    /**
+     * this method is an handler event to control. The event is 'moveend' on
+     * the map. The handler sends the coordinates to the panel.
+     * (cf. this.GPdisplayCoords() into the DOM functions)
+     *
+     * @method onMapMove
+     * @param {Object} e - HTMLElement
+     * @private
+     */
+    MousePosition.prototype.onMapMove = function (e) {
+
+        // var self = this;
+
+        // info: coordinate = [x, y]
+        // var coordinate = e.coordinate;
+        // if ( !e.map || !e.map.getView() ) {
+        //     return;
+        // }
+        // var crs = e.map.getView().getProjection();
+        //
+        // this._setCoordinate(coordinate, crs);
+        //
+        // // calcul de l'altitude après un certain délai après l'arrêt du mouvement de la carte
+        // clearTimeout(this._timer);
+        // this._timer = setTimeout( function () {
+        //     self.onMoveStopped(coordinate, crs);
+        // }, this.options.altitude.triggerDelay);
     };
 
     // ################################################################### //
@@ -994,6 +1167,140 @@ define([
         if ( !this.options.displayCoordinates ) {
             this._setSettingsPanel(false);
         }
+    };
+
+    /**
+     * this method is called by event 'change' on 'GPmousePositionProjectionSystem'
+     * tag select (cf. this._createMousePositionSettingsElement),
+     * and selects the system projection.
+     *
+     * @method onMousePositionProjectionSystemChange
+     * @param {Object} e - HTMLElement
+     * @private
+     */
+    MousePosition.prototype.onMousePositionProjectionSystemChange = function (e) {
+
+          var idx   = e.target.selectedIndex;      // index
+          var value = e.target.options[idx].value; // crs
+
+          this._setCurrentSystem( value );
+    };
+
+    /**
+     * this method selects the current system projection.
+     *
+     * @method _setCurrentSystem
+     * @param {Object} systemCode - inner code (rank in array _projectionSystems)
+     * @private
+     */
+    MousePosition.prototype._setCurrentSystem = function ( systemCode ) {
+            // si on change de type de systeme, on doit aussi changer le type d'unités !
+            var type = null;
+            for (var i = 0 ; i < this._projectionSystems.length ; ++i) {
+                if ( this._projectionSystems[i].code == systemCode ) {
+                    type = this._projectionSystems[i].type;
+                    break;
+                }
+            }
+
+            if ( !type ) {
+                logger.log("system not found in projection systems container");
+                return;
+            }
+
+            if (type !== this._currentProjectionType) {
+                this._setTypeUnitsPanel(type);
+            }
+
+            // on enregistre le systeme courrant
+            this._currentProjectionSystems = this._projectionSystems[Number(systemCode)];
+
+            // on simule un deplacement en mode tactile pour mettre à jour les
+            // resultats
+            if (!this._isDesktop) {
+                this.onMapMove();
+            }
+            // FIXME : adapter le rechargement en mode tactile à OpenLayers !!
+    } ;
+
+    /**
+     * this method is called by event 'mouseover' on 'GPmousePositionProjectionSystem'
+     * tag select (cf. this._createMousePositionSettingsElement),
+     * and selects the system projection.
+     *
+     * @method onMousePositionProjectionSystemMouseOver
+     * @param {Object} e - HTMLElement
+     * @private
+     */
+    MousePosition.prototype.onMousePositionProjectionSystemMouseOver = function (e) {
+
+        // map infos
+        var map = this.getMap();
+        if ( !map ) {
+            return;
+        }
+
+        var mapExtent = map.getExtent(); // extent = [topLeft.lat, topLeft.lon, bottomRight.lat, bottomRight.lon]
+
+        // clear select
+        var systemList = document.getElementById(this._addUID("GPmousePositionProjectionSystem"));
+          systemList.innerHTML = "";
+
+        // add systems whose extent intersects the map extent
+        for (var j = 0; j < this._projectionSystems.length; j++) {
+            var proj = this._projectionSystems[j];
+            if ( proj.geoBBox ) {
+                // bboxes intersection test
+                if (   mapExtent[1] > proj.geoBBox.right ||
+                       mapExtent[2] > proj.geoBBox.top   ||
+                       mapExtent[3] < proj.geoBBox.left  ||
+                       mapExtent[0] < proj.geoBBox.bottom
+                 ) {
+                     if ( proj === this._currentProjectionSystems ) {
+                         var option = document.createElement("option");
+                         option.value = proj.code;
+                         option.text  = proj.label || j;
+                         option.setAttribute( "selected", "selected" );
+                         option.setAttribute( "disabled", "disabled" );
+
+                         systemList.appendChild(option);
+                     }
+                     continue; // do not intersect
+                  }
+              }
+              var option = document.createElement("option");
+              option.value = proj.code;
+              option.text  = proj.label || j;
+              if ( proj === this._currentProjectionSystems ) {
+                  option.setAttribute( "selected", "selected" );
+              }
+
+              systemList.appendChild(option);
+          }
+      };
+
+    /**
+     * this method is called by event 'change' on 'GPmousePositionProjectionUnits'
+     * tag select (cf. this._createMousePositionSettingsElement),
+     * and selects the units projection.
+     *
+     * @method onMousePositionProjectionUnitsChange
+     * @param {Object} e - HTMLElement
+     * @private
+     */
+    MousePosition.prototype.onMousePositionProjectionUnitsChange = function (e) {
+
+        var idx   = e.target.selectedIndex;
+        var value = e.target.options[idx].value;
+
+        this._currentProjectionUnits = value;
+
+        // on simule un deplacement en mode tactile pour mettre à jour les
+        // resultats
+        if (!this._isDesktop) {
+            this.onMapMove();
+        }
+        // FIXME : adapter le rechargement en mode tactile à OpenLayers !!
     };
 
     return MousePosition;

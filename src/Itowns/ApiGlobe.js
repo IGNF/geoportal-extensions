@@ -30,9 +30,9 @@ define([
      * Add a widget.
      */
     ApiGlobe.prototype.addControl = function addControl(control) {
-        control.setMap(this);
-        this.getControls().push(control);
         this.viewerDiv.appendChild(control.pElement);
+        this.getControls().push(control);
+        control.setMap(this);
     };
 
     /**
@@ -57,6 +57,22 @@ define([
      */
     ApiGlobe.prototype.getViewport = function getViewport() {
         return this.viewerDiv;
+    }
+
+    /**
+     * Get extent
+     */
+    ApiGlobe.prototype.getExtent = function getExtent() {
+        return [90, -180, -90, 180];
+    }
+
+    /**
+     * createSceneGlobe overload
+     */
+    ApiGlobe.prototype._parent_createSceneGlobe = ApiGlobe.prototype.createSceneGlobe;
+    ApiGlobe.prototype.createSceneGlobe = function createSceneGlobe(coordCarto, viewerDiv) {
+        viewerDiv.style.position = "relative";
+        return this._parent_createSceneGlobe(coordCarto, viewerDiv);
     }
 
     return ApiGlobe;
