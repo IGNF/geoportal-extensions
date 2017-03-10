@@ -96,15 +96,13 @@ define(["ol", "Common/Utils/LayerUtils"], function (ol, LayerUtils) {
     };
 
     /**
-     * Overload setMap function, that enables to catch map events, such as movend events.
+     * Update map layers attributions
      *
      * @param {ol.Map} map - Map.
      * @private
      */
     GeoportalAttribution.prototype._updateAttributions = function (map) {
         // get map parameters
-        var visibility;
-        var originators;
         var mapAttributions = {};
 
         var view = map.getView();
@@ -119,46 +117,81 @@ define(["ol", "Common/Utils/LayerUtils"], function (ol, LayerUtils) {
         // layers
         var layers = map.getLayers().getArray();
 
+        // info : This option suppresses warnings about functions inside of loops.
+        /* jshint loopfunc: true */
+
         // loop on layers to get their originators, if there is at least one originator, and if layer is visible.
         for (var i = 0; i < layers.length; i++ ) {
 
-            var src = layers[i].getSource();
-            src.setAttributions(); // clean
-
-            var attributions = [];
-
-            visibility = layers[i].getVisible();
-            originators = src._originators;
-
-            if ( originators && visibility ) {
-
-                // get layer's attributions array
-                var layerAttributions = LayerUtils.getAttributions({
-                    extent : standardExtent,
-                    crs : mapProjection,
-                    zoom : zoom,
-                    visibility : visibility,
-                    originators : originators
-                });
-
-                for ( var j = 0; j < layerAttributions.length; j++ ) {
-                    var attributionj = layerAttributions[j];
-                    // check that this attribution hasn't been added yet for another layer
-                    if ( !mapAttributions || !mapAttributions[attributionj] ) {
-                        // add attribution html
-                        attributions.push(new ol.Attribution({
-                            html : attributionj
-                        }));
-
-                        // add attribution to mapAttributions, to manage all layers attributions
-                        mapAttributions[attributionj] = true;
+            // distinguish case of ol.layer.Group (which is made up of layers with their own source)
+            // and other ol.layer (with their own source)
+            if ( layers[i].getSource ) {
+                // single ol.layer
+                this._updateLayerAttributions(layers[i], mapAttributions, standardExtent, mapProjection, zoom);
+            } else if ( layers[i].getLayers ) {
+                // ol.layer.Group
+                var lyrs = layers[i].getLayers();
+                var context = this;
+                lyrs.forEach(
+                    function (lyr) {
+                        if ( lyr.getSource ) {
+                            context._updateLayerAttributions(lyr, mapAttributions, standardExtent, mapProjection, zoom);
+                        } else {
+                            console.log("cannot find layer source in layergroup ", layers[i]);
+                        }
                     }
-                };
+                );
+            }
+        }
+    };
 
-                // update source attribution
-                if (attributions.length !== 0) {
-                    src.setAttributions(attributions);
+    /**
+     * Update a layer attributions
+     *
+     * @param {ol.layer} layer - layer
+     * @param {Object} mapAttributions - object recensing attributions already added, to prevent displaying twice the same producer
+     * @param {Array} mapExtent - map current extent
+     * @param {String} mapCrs - map current crs
+     * @param {Number} mapZoom - map current zoom
+     * @private
+     */
+    GeoportalAttribution.prototype._updateLayerAttributions = function (layer, mapAttributions, mapExtent, mapCrs, mapZoom) {
+        var src = layer.getSource();
+        src.setAttributions(); // clean
+
+        var attributions = [];
+
+        var visibility = layer.getVisible();
+        var originators = src._originators;
+
+        if ( originators && visibility ) {
+
+            // get layer's attributions array
+            var layerAttributions = LayerUtils.getAttributions({
+                extent : mapExtent,
+                crs : mapCrs,
+                zoom : mapZoom,
+                visibility : visibility,
+                originators : originators
+            });
+
+            for ( var j = 0; j < layerAttributions.length; j++ ) {
+                var attributionj = layerAttributions[j];
+                // check that this attribution hasn't been added yet for another layer
+                if ( !mapAttributions || !mapAttributions[attributionj] ) {
+                    // add attribution html
+                    attributions.push(new ol.Attribution({
+                        html : attributionj
+                    }));
+
+                    // add attribution to mapAttributions, to manage all layers attributions
+                    mapAttributions[attributionj] = true;
                 }
+            };
+
+            // update source attribution
+            if (attributions.length !== 0) {
+                src.setAttributions(attributions);
             }
         }
     };
