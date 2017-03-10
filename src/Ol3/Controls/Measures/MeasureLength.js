@@ -77,6 +77,7 @@ define([
                 render : options.render
             }
         );
+
     }
 
     // heritage avec ol.control.Control
