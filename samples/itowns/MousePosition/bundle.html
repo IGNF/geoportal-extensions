@@ -31,9 +31,9 @@ and open the template in the editor.
     <body>
         <div id="viewerDiv"></div>
         <!-- Library iTowns -->
-        <script src="../../lib/itowns/itowns.js"></script>
+        <script src="../../../lib/itowns/itowns.js"></script>
         <!-- Plugin iTowns IGN -->
-        <script src="../../dist/itowns/GpPluginItowns.js"></script>
+        <script src="../../../dist/itowns/GpPluginItowns.js"></script>
         <script type="text/javascript">
 
             /* global itowns,document,GuiTools*/
@@ -54,13 +54,13 @@ and open the template in the editor.
             const urlImageryLayers = [];
             const urlElevationLayers = [];
 
-            urlImageryLayers.push('Resources/JSONLayers/Ortho.json');
-            urlImageryLayers.push('Resources/JSONLayers/OrthosCRS.json');
-            urlImageryLayers.push('Resources/JSONLayers/ScanEX.json');
-            urlImageryLayers.push('Resources/JSONLayers/Region.json');
+            urlImageryLayers.push('../Resources/JSONLayers/Ortho.json');
+            urlImageryLayers.push('../Resources/JSONLayers/OrthosCRS.json');
+            urlImageryLayers.push('../Resources/JSONLayers/ScanEX.json');
+            urlImageryLayers.push('../Resources/JSONLayers/Region.json');
 
-            urlElevationLayers.push('Resources/JSONLayers/IGN_MNT.json');
-            urlElevationLayers.push('Resources/JSONLayers/IGN_MNT_HIGHRES.json');
+            urlElevationLayers.push('../Resources/JSONLayers/IGN_MNT.json');
+            urlElevationLayers.push('../Resources/JSONLayers/IGN_MNT_HIGHRES.json');
 
             itowns.viewer.addGeometryLayer(wgs84TileLayer);
             const imageryPromise = itowns.viewer.addImageryLayersFromJSONArray(urlImageryLayers);

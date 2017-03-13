@@ -90,6 +90,10 @@ define([
             throw new TypeError("ERROR CLASS_CONSTRUCTOR");
         }
 
+        if ( options && typeof options !== "object" ) {
+            throw new Error("ERROR WRONG_TYPE : options should be an object");
+        }
+
         this._initialize(options);
 
         this._callbacks = {};
@@ -102,7 +106,7 @@ define([
             "MousePosition",
             container,
             options
-            );
+        );
     };
 
     /**
@@ -1007,10 +1011,12 @@ define([
         this._setCoordinate(coordinate);
 
         // calcul de l'altitude après un certain délai après l'arrêt du mouvement de la souris
-        clearTimeout(this._timer);
-        this._timer = setTimeout( function () {
-            self.onMoveStopped(coordinate);
-        }, this.options.altitude.triggerDelay);
+        if( this.options.displayAltitude ) {
+            clearTimeout(this._timer);
+            this._timer = setTimeout( function () {
+              self.onMoveStopped(coordinate);
+            }, this.options.altitude.triggerDelay);
+        }
     };
 
     /**
@@ -1145,7 +1151,7 @@ define([
         if ( this._showMousePositionContainer.checked ) {
             // FIXME gérer ou non le cas mobile
             if (this._isDesktop) {
-                mapDiv.removeEventListener("pointermove", this._callbacks.callbackMouseMove);
+                mapDiv.removeEventListener("pointermove", this._callbacks.mouseMove);
             } else {
                 map.removeEventListener("centerchanged", this.onMapMove);
             }
@@ -1153,7 +1159,7 @@ define([
         } else {
             // FIXME gérer ou non le cas mobile
             if (this._isDesktop) {
-                mapDiv.addEventListener("pointermove", this._callbacks.callbackMouseMove);
+                mapDiv.addEventListener("pointermove", this._callbacks.mouseMove);
             } else {
                 map.addEventListener("centerchanged", this.onMapMove);
             }

@@ -8,11 +8,11 @@ and open the template in the editor.
     <head>
         <title>Setters</title>
         <!-- Library iTowns -->
-        <script src="../../lib/itowns/itowns.js"></script>
+        <script src="../../../lib/itowns/itowns.js"></script>
         <!-- requirejs -->
-        <script src="../../lib/require.js"></script>
+        <script src="../../../lib/require.js"></script>
 
-        <link rel="stylesheet" href="../../dist/itowns/GpPluginItowns-src.css" />
+        <link rel="stylesheet" href="../../../dist/itowns/GpPluginItowns-src.css" />
 
         <style type="text/css">
                 html {height: 100%}
@@ -110,7 +110,7 @@ and open the template in the editor.
             }
 
             requirejs.config({
-                "baseUrl" : "../../src/",
+                "baseUrl" : "../../../src/",
                 "paths": {
                     // lib external
                     "itowns" : "../lib/itowns/itowns",
@@ -150,13 +150,13 @@ and open the template in the editor.
                     const urlImageryLayers = [];
                     const urlElevationLayers = [];
 
-                    urlImageryLayers.push('Resources/JSONLayers/Ortho.json');
-                    urlImageryLayers.push('Resources/JSONLayers/OrthosCRS.json');
-                    urlImageryLayers.push('Resources/JSONLayers/ScanEX.json');
-                    urlImageryLayers.push('Resources/JSONLayers/Region.json');
+                    urlImageryLayers.push('../Resources/JSONLayers/Ortho.json');
+                    urlImageryLayers.push('../Resources/JSONLayers/OrthosCRS.json');
+                    urlImageryLayers.push('../Resources/JSONLayers/ScanEX.json');
+                    urlImageryLayers.push('../Resources/JSONLayers/Region.json');
 
-                    urlElevationLayers.push('Resources/JSONLayers/IGN_MNT.json');
-                    urlElevationLayers.push('Resources/JSONLayers/IGN_MNT_HIGHRES.json');
+                    urlElevationLayers.push('../Resources/JSONLayers/IGN_MNT.json');
+                    urlElevationLayers.push('../Resources/JSONLayers/IGN_MNT_HIGHRES.json');
 
                     itowns.viewer.addGeometryLayer(wgs84TileLayer);
                     const imageryPromise = itowns.viewer.addImageryLayersFromJSONArray(urlImageryLayers);

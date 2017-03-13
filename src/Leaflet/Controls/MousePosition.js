@@ -431,9 +431,7 @@ define([
                 services : ["Elevation"]
             });
 
-            if (! rightManagement) {
-                this._noRightManagement = true;
-            }
+            this._noRightManagement = !rightManagement;
 
             // on recupère les informations utiles
             // sur ce controle, on ne s'occupe pas de la ressource car elle est unique...

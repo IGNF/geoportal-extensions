@@ -3,6 +3,7 @@ define([
     "gp",
     "Common/Utils/LayerUtils",
     "Itowns/Controls/MousePosition",
+    "Itowns/Controls/LayerSwitcher",
     "Itowns/ApiGlobe"
     // "Itowns/Controls/LayerSwitcher",
 ], function (
@@ -10,6 +11,7 @@ define([
     Gp,
     LayerUtils,
     MousePosition,
+    LayerSwitcher,
     ApiGlobe
     //LayerSwitcher,
 ) {
@@ -21,6 +23,7 @@ define([
     // creation du namespace pour les extensions itowns
     itowns.control = {};
     itowns.control.MousePosition = MousePosition;
+    itowns.control.LayerSwitcher = LayerSwitcher;
     itowns.viewer = new ApiGlobe();
 
     // FIXME : parce qu'il faut bien retourner quelque chose

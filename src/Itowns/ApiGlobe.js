@@ -67,6 +67,28 @@ define([
     }
 
     /**
+     * Get extent
+     */
+    ApiGlobe.prototype.getLayerExtent = function getLayerExtent(layer) {
+        return [90, -180, -90, 180];
+    }
+
+    /**
+     * Has layer
+     */
+    ApiGlobe.prototype.hasLayer = function hasLayer(layerId) {
+        // return this.layersState[layerId]?1:0;
+        return true;
+    }
+
+    /**
+     * Has layer
+     */
+    ApiGlobe.prototype.getOrderedLayers = function getOrderedLayers() {
+        return this.getImageryLayers();
+    }
+
+    /**
      * createSceneGlobe overload
      */
     ApiGlobe.prototype._parent_createSceneGlobe = ApiGlobe.prototype.createSceneGlobe;
