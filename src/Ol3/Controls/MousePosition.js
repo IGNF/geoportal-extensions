@@ -362,11 +362,11 @@ define([
      * @param {Boolean} displayAltitude - true to display elevation panel, false to hide it
      */
     MousePosition.prototype.displayAltitude = function (displayAltitude) {
-        if ( displayAltitude === undefined ) {
+        if (displayAltitude === undefined) {
             return;
         }
-        if( typeof this._noRightManagement === 'undefined' ) {
-            this._checkRightsManagement()
+        if ( typeof this._noRightManagement === "undefined" ) {
+            this._checkRightsManagement();
         }
         this.options.displayAltitude = displayAltitude;
         this._setElevationPanel(displayAltitude);

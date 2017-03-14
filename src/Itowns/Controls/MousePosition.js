@@ -353,7 +353,7 @@ define([
             return;
         }
         if( typeof this._noRightManagement === 'undefined' ) {
-            this._checkRightsManagement()
+            this._checkRightsManagement();
         }
         this.options.displayAltitude = displayAltitude;
         this._setElevationPanel(displayAltitude);
@@ -951,7 +951,7 @@ define([
             coord = convert(coordinates);
         }
 
-        if (! coord || Object.keys(coord).length === 0) {
+        if (! coord || Object.keys(coord).length === 0) {
             return;
         }
 
@@ -1006,7 +1006,7 @@ define([
         var coordinate = {
             lon: position.coordinate[0],
             lat: position.coordinate[1]
-        }
+        };
 
         this._setCoordinate(coordinate);
 
@@ -1068,7 +1068,7 @@ define([
         // le resultat est affiché dans une balise du dom.
         // les messages d'erreurs sont affichés sur la console (?)
 
-        if ( !coordinate || Object.keys(coordinate).length === 0 ) {
+        if ( !coordinate || Object.keys(coordinate).length === 0 ) {
             return;
         }
 
