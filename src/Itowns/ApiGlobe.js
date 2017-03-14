@@ -89,6 +89,18 @@ define([
     }
 
     /**
+     * Get layer by id
+     */
+    ApiGlobe.prototype.getLayer = function getLayer(id) {
+        var layers = this.getImageryLayers();
+        for ( var i = 0 ; i < layers.length ; ++i ) {
+            if( layers[i].id === id ) {
+                return layers[i];
+            }
+        }
+    }
+
+    /**
      * createSceneGlobe overload
      */
     ApiGlobe.prototype._parent_createSceneGlobe = ApiGlobe.prototype.createSceneGlobe;

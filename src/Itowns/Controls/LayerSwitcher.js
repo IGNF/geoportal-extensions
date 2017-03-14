@@ -108,6 +108,35 @@ define([
         if ( map ) { // dans le cas de l'ajout du contrôle à la map
             var self = this;
 
+            // add options layers to layerlist.
+            // (seulement les couches configurées dans les options du layerSwitcher par l'utilisateur),
+            // les autres couches de la carte seront ajoutées dans la méthode setMap
+            for ( var i = 0; i < this._initLayers.length; i++ ) {
+                // recup la layer, son id,
+                var layer;
+                if (this._initLayers[i].id) {
+                    layer = map.getLayer(this._initLayers[i].id);
+                }
+
+                if ( layer ) {
+                    // et les infos de la conf si elles existent (title, description, legends, quicklook, metadata)
+                    var conf = this._initLayers[i].config || {};
+                    var layerOptions = {
+                        id : layer.id,
+                        ipr : layer.ipr || null,
+                        type : layer.type || null,
+                        opacity : layer.opacity || 1,
+                        visibility : layer.visible || true,
+                        title : conf.title || layer.title,
+                        description : conf.description || null,
+                        legends : conf.legends || [],
+                        metadata : conf.metadata || [],
+                        quicklookUrl : conf.quicklookUrl || null
+                    };
+                    this._layers[layer.id] = layerOptions;
+                }
+            }
+
             // on ajoute les couches
             this._addMapLayers(map);
 
@@ -126,13 +155,11 @@ define([
             /**
             * ajout du callback onlayeradded
             */
-            this._callbacks.onAddedLayerCallBack = function (addedLayer) {
-                if (addedLayer.type !== "elevation") {
-                    var layer = addedLayer;
-                    var id = layer.id;
-                    if (self) {
-                        self.addLayer(layer);
-                    }
+            this._callbacks.onAddedLayerCallBack = function (e) {
+                var id = e.detail.layerId;
+                if (self) {
+                    var layer = self.getMap().getLayer(id);
+                    self.addLayer(layer);
                 }
             };
             map.addEventListener("layeradded", this._callbacks.onAddedLayerCallBack);
@@ -163,7 +190,7 @@ define([
             /**
             * ajout du callback onlayerchanged:index
             */
-            this._callbacks.onIndexLayerCallBack = function (evt) {
+            this._callbacks.onIndexLayerCallBack = function () {
                 // if (changedLayer.type !== "elevation") {
                     if ( self._layerListContainer ) {
                         // on vide le container précédent
@@ -444,35 +471,7 @@ define([
         this._callbacks = {};
 
         this._options = options;
-
-        // add options layers to layerlist.
-        // (seulement les couches configurées dans les options du layerSwitcher par l'utilisateur),
-        // les autres couches de la carte seront ajoutées dans la méthode setMap
-        for ( var i = 0; i < layers.length; i++ ) {
-            // recup la layer, son id,
-            var layer;
-            if (layers[i].layer) {
-                layer = map.getLayer(layers[i].layer.id);
-            }
-
-            if ( layer !== undefined) {
-                // et les infos de la conf si elles existent (title, description, legends, quicklook, metadata)
-                var conf = layers[i].config || {};
-                var layerOptions = {
-                    id : layer.id,
-                    ipr : layer.ipr || null,
-                    type : layer.type || null,
-                    opacity : layer.opacity || 1,
-                    visibility : layer.visible || true,
-                    title : conf.title || layer.title,
-                    description : conf.description || null,
-                    legends : conf.legends || [],
-                    metadata : conf.metadata || [],
-                    quicklookUrl : conf.quicklookUrl || null
-                };
-                this._layers[layer.id] = layerOptions;
-            }
-        }
+        this._initLayers = layers;
     };
 
     /**
