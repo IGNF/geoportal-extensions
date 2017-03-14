@@ -138,7 +138,7 @@ define([
             // evenement valable pour le mode desktop !
             if (this._isDesktop) {
                 map.getViewport().addEventListener(
-                    "pointermove",
+                    "mousemove",
                     this._callbacks.mouseMove
                 );
             } else {
@@ -1151,7 +1151,7 @@ define([
         if ( this._showMousePositionContainer.checked ) {
             // FIXME gérer ou non le cas mobile
             if (this._isDesktop) {
-                mapDiv.removeEventListener("pointermove", this._callbacks.mouseMove);
+                mapDiv.removeEventListener("mousemove", this._callbacks.mouseMove);
             } else {
                 map.removeEventListener("centerchanged", this.onMapMove);
             }
@@ -1159,7 +1159,7 @@ define([
         } else {
             // FIXME gérer ou non le cas mobile
             if (this._isDesktop) {
-                mapDiv.addEventListener("pointermove", this._callbacks.mouseMove);
+                mapDiv.addEventListener("mousemove", this._callbacks.mouseMove);
             } else {
                 map.addEventListener("centerchanged", this.onMapMove);
             }

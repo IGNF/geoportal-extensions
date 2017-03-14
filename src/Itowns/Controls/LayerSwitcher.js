@@ -121,7 +121,7 @@ define([
             this._callbacks.onChangedCenterCallBack = function () {
                 self._onMapMoveEnd(map);
             };
-            map.addEventListener("centerchanged", this._callbacks.onChangedCenterCallBack, self);
+            map.addEventListener("centerchanged", this._callbacks.onChangedCenterCallBack);
 
             /**
             * ajout du callback onlayeradded
@@ -135,7 +135,30 @@ define([
                     }
                 }
             };
-            map.addEventListener("layeradded", this._callbacks.onAddedLayerCallBack, self);
+            map.addEventListener("layeradded", this._callbacks.onAddedLayerCallBack);
+
+            /**
+            * ajout du callback onlayerremoved
+            */
+            this._callbacks.onRemovedLayerCallBack = function (removedLayer) {
+                if (removedLayer.type !== "elevation") {
+                    var layer = removedLayer;
+                    var id = layer.id;
+
+                    // On met à jour le tableau des couches ordonnées
+                    for (var i = 0; i < self._layersOrder.length; i++) {
+                        if (self._layersOrder[i].id == removedLayer.id) {
+                            self._layersOrder.splice(i, 1);
+                        }
+                    }
+                    // On met à jour l'index max et on retire la couche du layerSwitcher
+                    if ( self && self._layers[id] ) {
+                        self.removeLayer(layer);
+                        self._lastZIndex--;
+                    }
+                }
+            };
+            map.addEventListener("layerremoved", this._callbacks.onRemovedLayerCallBack);
 
             /**
             * ajout du callback onlayerchanged:index
@@ -160,7 +183,7 @@ define([
                     }
                 // }
             };
-            map.addEventListener("layerchanged:index", this._callbacks.onIndexLayerCallBack, self);
+            map.addEventListener("layerchanged:index", this._callbacks.onIndexLayerCallBack);
 
             /**
             * ajout du callback onlayerchanged:opacity
@@ -171,7 +194,7 @@ define([
                     self._updateLayerOpacity(changedLayer);
                 }
             };
-            map.addEventListener("layerchanged:opacity", this._callbacks.onOpacityLayerCallBack, self);
+            map.addEventListener("layerchanged:opacity", this._callbacks.onOpacityLayerCallBack);
 
             /**
             * ajout du callback onlayerchanged:visible
@@ -182,7 +205,7 @@ define([
                     self._updateLayerVisibility(changedLayer);
                 }
             };
-            map.addEventListener("layerchanged:visible", this._callbacks.onVisibilityLayerCallBack, self);
+            map.addEventListener("layerchanged:visible", this._callbacks.onVisibilityLayerCallBack);
         }
 
         // call original setMap method
@@ -259,6 +282,8 @@ define([
             // A refactorer en une fonction indépendante sans passer par ce callback
             this._callbacks.onIndexLayerCallBack();
 
+            self._lastZIndex++;
+
         // user may also add a new configuration for an already added layer
         } else if ( this._layers[id] && config ) {
 
@@ -273,6 +298,8 @@ define([
                 var nameDiv = document.getElementById(this._addUID("GPname_ID_" + id));
                 if ( nameDiv ) {
                     nameDiv.innerHTML = config.title;
+                    // FIXME a ajouter?
+                    // nameDiv.title = config.description || config.title;
                 }
             }
             // add layer info picto if necessary
@@ -293,6 +320,91 @@ define([
                 infodiv.className === "GPlayerInfo";
             }
 
+        }
+    };
+
+    /**
+     * Remove a layer from control
+     *
+     * @param {Object} layer - layer.
+     */
+    LayerSwitcher.prototype.removeLayer = function (layer) {
+        var layerID = layer.id;
+        var layerList = document.getElementById(this._addUID("GPlayersList"));
+        // close layer info element if open.
+        var infodiv = document.getElementById(this._addUID("GPinfo_ID_" + layerID));
+        if ( infodiv && infodiv.className === "GPlayerInfoOpened" ) {
+            document.getElementById(this._addUID("GPlayerInfoPanel")).className = "GPlayerInfoPanelClosed";
+            infodiv.className === "GPlayerInfo";
+        }
+        // remove layer div
+        var layerDiv = document.getElementById(this._addUID("GPlayerSwitcher_ID_" + layerID));
+        layerList.removeChild(layerDiv);
+
+        // on retire la couche de la liste des layers
+        delete this._layers[layerID];
+
+        // FIXME remise a jour des indexes ?
+
+    };
+
+    /**
+     * Collapse or display control main container
+     *
+     * @param {Boolean} collapsed - True to collapse control, False to display it
+     */
+    LayerSwitcher.prototype.setCollapsed = function (collapsed) {
+        if ( collapsed === undefined ) {
+            console.log("[ERROR] LayerSwitcher:setCollapsed - missing collapsed parameter");
+            return;
+        }
+        var isCollapsed = !document.getElementById(this._addUID("GPshowLayersList")).checked;
+        if ( ( collapsed && isCollapsed) || ( !collapsed && !isCollapsed ) ) {
+            return;
+        }
+        // on simule l'ouverture du panneau après un click
+        if ( !isCollapsed ) {
+            var layers = document.getElementsByClassName("GPlayerInfoOpened");
+            for ( var i = 0; i < layers.length; i++ ) {
+                layers[i].className = "GPlayerInfo";
+            }
+            document.getElementById(this._addUID("GPlayerInfoPanel")).className = "GPlayerInfoPanelClosed";
+        }
+        document.getElementById(this._addUID("GPshowLayersList")).checked = !collapsed;
+    };
+
+    /**
+     * Returns true if widget is collapsed (minimize), false otherwise
+     */
+    LayerSwitcher.prototype.getCollapsed = function () {
+        return !document.getElementById(this._addUID("GPshowLayersList")).checked;
+    };
+
+    /**
+     * Display or hide removeLayerPicto from layerSwitcher for this layer
+     *
+     * @param {ol.layer.Layer} layer - ol.layer to be configured
+     * @param {Boolean} removable - specify if layer can be remove from layerSwitcher (true) or not (false). Default is true
+     */
+    LayerSwitcher.prototype.setRemovable = function (layer, removable) {
+        if ( !layer ) {
+            return;
+        }
+        var layerID = layer.gpLayerId;
+        if ( layerID == null ) { // on teste si layerID est null ou undefined
+            console.log("[LayerSwitcher:setRemovable] layer should be added to map before calling setRemovable method");
+            return;
+        }
+        var removalDiv = document.getElementById(this._addUID("GPremove_ID_" + layerID));
+        console.log(removalDiv.style.display);
+        if ( removalDiv ) {
+            if ( removable === false ) {
+                removalDiv.style.display = "none";
+            } else if ( removable === true ) {
+                removalDiv.style.display = "block";
+            } else {
+                return;
+            }
         }
     };
 
@@ -318,6 +430,7 @@ define([
         //FIXME a voir si a garder ou recupere directement depuis la map
         this._layersOrder = [];
         // [Object] associative array of layers ordered by zindex (keys are zindex values, and corresponding values are arrays of layers at this zindex)
+        // FIXME necessaire ?
         this._layersIndex = {};
         // {Number} layers max z index, to order layers using their z index
         this._lastZIndex = 0;
@@ -331,6 +444,35 @@ define([
         this._callbacks = {};
 
         this._options = options;
+
+        // add options layers to layerlist.
+        // (seulement les couches configurées dans les options du layerSwitcher par l'utilisateur),
+        // les autres couches de la carte seront ajoutées dans la méthode setMap
+        for ( var i = 0; i < layers.length; i++ ) {
+            // recup la layer, son id,
+            var layer;
+            if (layers[i].layer) {
+                layer = map.getLayer(layers[i].layer.id);
+            }
+
+            if ( layer !== undefined) {
+                // et les infos de la conf si elles existent (title, description, legends, quicklook, metadata)
+                var conf = layers[i].config || {};
+                var layerOptions = {
+                    id : layer.id,
+                    ipr : layer.ipr || null,
+                    type : layer.type || null,
+                    opacity : layer.opacity || 1,
+                    visibility : layer.visible || true,
+                    title : conf.title || layer.title,
+                    description : conf.description || null,
+                    legends : conf.legends || [],
+                    metadata : conf.metadata || [],
+                    quicklookUrl : conf.quicklookUrl || null
+                };
+                this._layers[layer.id] = layerOptions;
+            }
+        }
     };
 
     /**
@@ -417,6 +559,7 @@ define([
                         this._layers[id].visibility = layer.visible;
                         this._layers[id].inRange = this.isInRange(layer, map);
                     }
+                    this._lastZIndex++;
                 }
             },
             this
@@ -455,35 +598,6 @@ define([
     // ################################################################### //
     // ######################### DOM events ############################## //
     // ################################################################### //
-
-    /**
-     * check layers range on map movement
-     *
-     * @param {VirtualGeo.Map} map - virtualGeo map on which event occured
-     */
-    LayerSwitcher.prototype._onMapMoveEnd = function (map) {
-        map.getLayers().forEach(
-            function (layer) {
-                var id = layer.id;
-                if ( this._layers[id] ) {
-                    var layerOptions = this._layers[id];
-                    // Check if layer is out of range.
-                    var layerDiv;
-                    var bIsInRange = this.isInRange(layer, map);
-                    if ( bIsInRange && !layerOptions.inRange ) {
-                        layerOptions.inRange = true;
-                        layerDiv = document.getElementById(this._addUID("GPlayerSwitcher_ID_" + id));
-                        layerDiv.classList.remove("outOfRange");
-                    } else if ( !bIsInRange && layerOptions.inRange ) {
-                        layerOptions.inRange = false;
-                        layerDiv = document.getElementById(this._addUID("GPlayerSwitcher_ID_" + id));
-                        layerDiv.classList.add("outOfRange");
-                    }
-                }
-            },
-            this
-        );
-    };
 
     /**
      * Change layer opacity on layer opacity picto click
@@ -552,6 +666,167 @@ define([
         var visible = changedLayer.visible;
         var layerVisibilityInput = document.getElementById(this._addUID("GPvisibility_ID_" + id));
         layerVisibilityInput.checked = visible;
+    };
+
+    /**
+     * Open layer information panel on picto click
+     *
+     * @param {Event} e - MouseEvent
+     */
+    LayerSwitcher.prototype._onOpenLayerInfoClick = function (e) {
+
+        var divId    = e.target.id;  // ex GPvisibilityPicto_ID_26-564864564654564
+        var divName  = SelectorID.name(divId); // ex GPvisibilityPicto_ID_26
+        var layerID  = divName.substring(divName.indexOf("_ID_") + 4 );  // ex. 26
+
+        var layerOptions = this._layers[layerID];
+
+        var panel;
+        var info;
+
+        // Close layer info panel
+        divId = document.getElementById(e.target.id);
+        if (divId.className === "GPlayerInfoOpened") {
+            if ( divId.classList !== undefined ) {
+                divId.classList.remove("GPlayerInfoOpened");
+                divId.classList.add("GPlayerInfo");
+            }
+
+            panel = document.getElementById(this._addUID("GPlayerInfoPanel"));
+            if ( panel.classList !== undefined ) {
+                panel.classList.remove("GPpanel");
+                panel.classList.remove("GPlayerInfoPanelOpened");
+                panel.classList.add("GPlayerInfoPanelClosed");
+            }
+
+            info = document.getElementById(this._addUID("GPlayerInfoContent"));
+            panel.removeChild(info);
+            return;
+        }
+
+        var layers = document.getElementsByClassName("GPlayerInfoOpened");
+        for ( var i = 0; i < layers.length; i++ ) {
+            layers[i].className = "GPlayerInfo";
+        }
+
+        // Open layer info panel
+        if ( divId.classList !== undefined ) {
+            divId.classList.remove("GPlayerInfo");
+            divId.classList.add("GPlayerInfoOpened");
+        }
+
+        panel = document.getElementById(this._addUID("GPlayerInfoPanel"));
+        if ( panel.classList !== undefined ) {
+            panel.classList.add("GPpanel");
+            panel.classList.remove("GPlayerInfoPanelClosed");
+            panel.classList.add("GPlayerInfoPanelOpened");
+        }
+
+        info = document.getElementById(this._addUID("GPlayerInfoContent"));
+        if (info) {
+            panel.removeChild(info);
+        }
+
+        // on récupère les infos associées au layer pour mettre dynamiquement le contenu du panel d'informations
+        var obj = {
+            title : layerOptions.title,
+            description : layerOptions.description,
+            quicklookUrl : layerOptions.quicklookUrl,
+            metadata : layerOptions.metadata,
+            legends : layerOptions.legends
+        };
+
+        var infoLayer = this._createContainerLayerInfoElement(obj);
+        panel.appendChild(infoLayer);
+    };
+
+    /**
+     * remove layer from layer switcher and map on picto click
+     *
+     * @param {Event} e - MouseEvent
+     */
+    LayerSwitcher.prototype._onDropLayerClick = function (e) {
+        var map = this.getMap();
+
+        var divId    = e.target.id;  // ex GPvisibilityPicto_ID_26-564864564654564
+        var divName  = SelectorID.name(divId); // ex GPvisibilityPicto_ID_26
+        var layerID  = divName.substring(divName.indexOf("_ID_") + 4 );  // ex. 26
+
+        // le retrait de la couche va déclencher l'ecouteur d'évenement,
+        // et appeler this.removeLayer qui va supprimer la div.
+        map.removeImageryLayer(layerID)
+
+        this._updateLayersIndex();
+    };
+
+    /**
+     * change layers order on drag and drop
+     */
+    LayerSwitcher.prototype._onDragAndDropLayerClick = function () {
+        this._updateLayersIndex();
+        var map = this.getMap();
+        // mise à jour du tableau des couches ordonneés
+        this._layersOrder = map.getOrderedLayers();
+        // on appelle le callback sur le changement d'index manuellement
+        // pour forcer la reconstruction des div du layerSwitcher au cas où
+        // le nouvel index est le même que le précédent et pour forcer les
+        // couches vectorielles en haut du LS
+        this._callbacks.onIndexLayerCallBack();
+    };
+
+    /**
+    * Method which update the index of the layers after a layer is moved, added, or removed
+    */
+    LayerSwitcher.prototype._updateLayersIndex = function () {
+        var map = this.getMap();
+        var layerCount = map.getLayers().length;
+
+        // on récupère l'ordre des div dans le contrôle pour réordonner les couches (avec zindex)
+        var matchesLayers = document.querySelectorAll("div.GPlayerSwitcher_layer");
+        // var maxZIndex = matchesLayers.length;
+        var newIndex;
+
+        for (var i = 0; i < matchesLayers.length; i++) {
+            // newIndex = maxZIndex - i;
+            var tag = matchesLayers[i].id; // ex. GPlayerSwitcher_ID_ELEVATION.SLOPES-1481286391563
+            var name = SelectorID.name(tag); // ex. GPlayerSwitcher_ID_ELEVATION.SLOPES
+            var id = name.substring(name.indexOf("_ID_") + 4 ); // ex. ELEVATION.SLOPES
+
+            var layer = map.getLayer(id);
+
+            layerCount--;
+
+            map.moveLayerToIndex(id, layerCount);
+        }
+    }
+
+    /**
+     * check layers range on map movement
+     *
+     * @param {VirtualGeo.Map} map - virtualGeo map on which event occured
+     */
+    LayerSwitcher.prototype._onMapMoveEnd = function (map) {
+        map.getLayers().forEach(
+            function (layer) {
+                var id = layer.id;
+                if ( this._layers[id] ) {
+                    var layerOptions = this._layers[id];
+                    // Check if layer is out of range.
+                    var layerDiv;
+                    var bIsInRange = this.isInRange(layer, map);
+                    if ( bIsInRange && !layerOptions.inRange ) {
+                        layerOptions.inRange = true;
+                        layerDiv = document.getElementById(this._addUID("GPlayerSwitcher_ID_" + id));
+                        layerDiv.classList.remove("outOfRange");
+                    } else if ( !bIsInRange && layerOptions.inRange ) {
+                        layerOptions.inRange = false;
+                        layerDiv = document.getElementById(this._addUID("GPlayerSwitcher_ID_" + id));
+                        layerDiv.classList.add("outOfRange");
+                    }
+                }
+            },
+            this
+        );
     };
 
     // ################################################################### //
