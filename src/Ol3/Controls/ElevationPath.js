@@ -7,6 +7,7 @@ define([
     "Common/Utils/CheckRightManagement",
     "Ol3/Controls/Measures/Measures",
     "Ol3/Controls/MeasureToolBox",
+    "Ol3/Controls/Utils/Interactions",
     "Common/Controls/ElevationPathDOM",
     "Common/Utils/SelectorID"
 ], function (
@@ -17,6 +18,7 @@ define([
     RightManagement,
     Measures,
     MeasureToolBox,
+    Interactions,
     ElevationPathDOM,
     ID
 ) {
@@ -845,25 +847,29 @@ define([
     };
 
     /**
-     * Clear
-     *
-     * @private
+     * clean
      */
-    ElevationPath.prototype.clear = function () {
-        logger.trace("ElevationPath::clear");
+    ElevationPath.prototype.clean = function () {
+        logger.trace("ElevationPath::clean");
 
         var map = this.getMap();
 
-        // graph
-        this._profile = null;
+        // fenetre du profil
+        this._panelContainer.style.display = "none";
 
-        // on vide le container
-        if (this._profileContainer) {
-            while (this._profileContainer.firstChild) {
-                this._profileContainer.removeChild(this._profileContainer.firstChild);
-            }
-        }
+        // picto
+        this._showContainer.checked = false;
 
+        this._removeProfile();
+        this._removeMeasure();
+        this._removeMeasureInteraction(map);
+    };
+
+    /**
+     * Remove measure
+     * @private
+     */
+    ElevationPath.prototype._removeMeasure = function () {
         // sketch
         this._lastSketch = null;
         this._currentSketch = null;
@@ -881,8 +887,23 @@ define([
                 this._measureSource.removeFeature(_features[i]);
             }
         }
+    };
 
-        this._removeMeasureInteraction(map);
+    /**
+     * Remove profile
+     * @private
+     */
+    ElevationPath.prototype._removeProfile = function () {
+
+        // graph
+        this._profile = null;
+
+        // on vide le container
+        if (this._profileContainer) {
+            while (this._profileContainer.firstChild) {
+                this._profileContainer.removeChild(this._profileContainer.firstChild);
+            }
+        }
     };
 
     // ################################################################### //
@@ -1198,7 +1219,8 @@ define([
         });
 
         this._measureDraw.setProperties({
-            source : "ElevationPath"
+            name : "ElevationPath",
+            source : this
         });
 
         map.addInteraction(this._measureDraw);
@@ -1535,18 +1557,9 @@ define([
     ElevationPath.prototype.onShowElevationPathClick = function () {
 
         var map = this.getMap();
-        var interactions = map.getInteractions().getArray() ;
-        for (var i = 0 ; i < interactions.length ; i++ ) {
-            // FIXME
-            // on desactive les interactions parasites avec les mesures
-            if (interactions[i].getActive() && interactions[i] instanceof ol.interaction.Draw) {
-                var prop = interactions[i].getProperties();
-                var src  = prop.source;
-                if ( typeof src !== "undefined" && src === "Measure") {
-                    interactions[i].setActive(false);
-                }
-            }
-        }
+        Interactions.unset(map, {
+            current : "ElevationPath"
+        });
 
         // Activation/Desactivation des interactions de dessins
         if (!this._showContainer.checked) {
@@ -1560,8 +1573,9 @@ define([
         } else {
             this._panelContainer.style.display = "none";
             // this._panelContainer.style.visibility = "hidden";
+            this._removeMeasure();
+            this._removeProfile();
             this._removeMeasureInteraction(map);
-            this.clear();
         }
     };
 

@@ -3,6 +3,7 @@ define([
     "ol",
     "gp",
     "Common/Utils/SelectorID",
+    "Ol3/Controls/Utils/Interactions",
     "Common/Controls/DrawingDOM",
     "Ol3/Utils",
     "Ol3/Formats/KML"
@@ -11,6 +12,7 @@ define([
     ol,
     Gp,
     SelectorID,
+    Interactions,
     DrawingDOM,
     Utils,
     KMLExtended
@@ -1180,6 +1182,11 @@ define([
             logger.trace("Drawing control not attached to any map.") ;
             return ;
         }
+        // on supprime  les interactions des autres extensions
+        Interactions.unset(map, {
+            current : "Drawing"
+        });
+
         // on supprime  l'interaction courante s'il y en a une.
         if (context.interaction) {
             map.removeInteraction(context.interaction) ;
@@ -1388,6 +1395,10 @@ define([
                 logger.trace("unhandled tool type") ;
         }
         if (context.interaction) {
+            context.interaction.setProperties({
+                name : "Drawing",
+                source : this
+            });
             map.addInteraction(context.interaction) ;
         }
     } ;
@@ -1405,6 +1416,10 @@ define([
      * @private
      */
     Drawing.prototype.onShowDrawingClick = function () {
+
+        var map = this.getMap();
+        // on supprime toutes les interactions
+        Interactions.unset(map);
 
         // checked : true - panel close
         // checked : false - panel open
