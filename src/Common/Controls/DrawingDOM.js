@@ -48,11 +48,27 @@ define([], function () {
         */
         _createShowDrawingPictoElement : function () {
 
+            var self = this;
+
             var label = document.createElement("label");
             label.id  = this._addUID("GPshowDrawingPicto") ;
             label.className = "GPshowAdvancedToolPicto";
             label.htmlFor = this._addUID("GPshowDrawing");
             label.title = this.options.labels.control ;
+
+            // gestionnaire d'evenement :
+            // on ouvre le menu de saisie de saisie
+            // L'ouverture/Fermeture permet de faire le menage
+            // (reinitialisation)
+            if (label.addEventListener) {
+                label.addEventListener("click", function (e) {
+                    self.onShowDrawingClick(e);
+                });
+            } else if (label.attachEvent) {
+                label.attachEvent("onclick", function (e) {
+                    self.onShowDrawingClick(e);
+                });
+            }
 
             var spanOpen = document.createElement("span");
             spanOpen.id  = this._addUID("GPshowDrawingOpen") ;
