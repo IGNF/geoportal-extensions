@@ -231,7 +231,9 @@ and open the template in the editor.
                                             {
                                                 url : "lien/Vers/Une/MetaDonnee.xml"
                                             }
-                                        ]
+                                        ],
+                                        visibility: false,
+                                        opacity: 0.8
                                     }
                                 }
                             ]
@@ -243,7 +245,7 @@ and open the template in the editor.
                         urlImageryLayers.push('../Resources/JSONLayers/ScanEX.json');
                         urlImageryLayers.push('../Resources/JSONLayers/Region.json');
 
-                        itowns.viewer.addImageryLayersFromJSONArray(urlImageryLayers).then(() => itowns.viewer.init());;
+                        itowns.viewer.addImageryLayersFromJSONArray(urlImageryLayers).then(() => itowns.viewer.init());
 
                         itowns.viewer.addEventListener('globe-loaded', () => {
                             itowns.viewer.setRealisticLightingOn(true);

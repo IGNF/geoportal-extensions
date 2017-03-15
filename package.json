@@ -59,6 +59,7 @@
     "gulp-template": "^3.1.0",
     "gulp-umd": "^0.2.0",
     "gulp-util": "^3.0.7",
+    "itowns": "0.0.0-alpha",
     "minimist": "^1.2.0",
     "open": "0.0.5",
     "requirejs": "^2.1.22",

@@ -113,7 +113,7 @@ define([
             // les autres couches de la carte seront ajoutées dans la méthode setMap
             for ( var i = 0; i < this._initLayers.length; i++ ) {
                 // recup la layer, son id,
-                var layer;
+                var layer = null;
                 if (this._initLayers[i].id) {
                     layer = map.getLayer(this._initLayers[i].id);
                 }
@@ -122,17 +122,22 @@ define([
                     // et les infos de la conf si elles existent (title, description, legends, quicklook, metadata)
                     var conf = this._initLayers[i].config || {};
                     var layerOptions = {
-                        id : layer.id,
-                        ipr : layer.ipr || null,
-                        type : layer.type || null,
-                        opacity : layer.opacity || 1,
-                        visibility : layer.visible || true,
-                        title : conf.title || layer.title,
+                        title : conf.title || layer.title || this._initLayers[i].id,
                         description : conf.description || null,
                         legends : conf.legends || [],
                         metadata : conf.metadata || [],
-                        quicklookUrl : conf.quicklookUrl || null
+                        quicklookUrl : conf.quicklookUrl || null,
+                        inRange : this.isInRange(layer, map)
                     };
+                    if( typeof conf.ipr !== 'undefined' ) {
+                        layerOptions.ipr = conf.ipr;
+                    }
+                    if( typeof conf.opacity !== 'undefined' ) {
+                        layerOptions.opacity = conf.opacity;
+                    }
+                    if( typeof conf.visibility !== 'undefined' ) {
+                        layerOptions.visibility = conf.visibility;
+                    }
                     this._layers[layer.id] = layerOptions;
                 }
             }
@@ -167,23 +172,22 @@ define([
             /**
             * ajout du callback onlayerremoved
             */
-            this._callbacks.onRemovedLayerCallBack = function (removedLayer) {
-                if (removedLayer.type !== "elevation") {
-                    var layer = removedLayer;
-                    var id = layer.id;
+            this._callbacks.onRemovedLayerCallBack = function (e) {
 
-                    // On met à jour le tableau des couches ordonnées
-                    for (var i = 0; i < self._layersOrder.length; i++) {
-                        if (self._layersOrder[i].id == removedLayer.id) {
-                            self._layersOrder.splice(i, 1);
-                        }
-                    }
-                    // On met à jour l'index max et on retire la couche du layerSwitcher
-                    if ( self && self._layers[id] ) {
-                        self.removeLayer(layer);
-                        self._lastZIndex--;
+                var id = e.detail.layerId;
+
+                // On met à jour le tableau des couches ordonnées
+                for (var i = 0; i < self._layersOrder.length; i++) {
+                    if (self._layersOrder[i].id == id) {
+                        self._layersOrder.splice(i, 1);
                     }
                 }
+                // On met à jour l'index max et on retire la couche du layerSwitcher
+                if ( self && self._layers[id] ) {
+                    self.removeLayer(id);
+                    self._lastZIndex--;
+                }
+
             };
             map.addEventListener("layerremoved", this._callbacks.onRemovedLayerCallBack);
 
@@ -215,24 +219,28 @@ define([
             /**
             * ajout du callback onlayerchanged:opacity
             */
-            this._callbacks.onOpacityLayerCallBack = function (changedLayer) {
-                if (changedLayer.type !== "elevation") {
-                    // Si l'opacité a changé
-                    self._updateLayerOpacity(changedLayer);
-                }
+            this._callbacks.onOpacityLayerCallBack = function (e) {
+                self._updateLayerOpacity(e.detail.layerId, e.detail.newOpacity);
             };
             map.addEventListener("layerchanged:opacity", this._callbacks.onOpacityLayerCallBack);
 
             /**
             * ajout du callback onlayerchanged:visible
             */
-            this._callbacks.onVisibilityLayerCallBack = function (changedLayer) {
-                if (changedLayer.type !== "elevation") {
-                    // Si la visibilité a changé
-                    self._updateLayerVisibility(changedLayer);
-                }
+            this._callbacks.onVisibilityLayerCallBack = function (e) {
+                self._updateLayerVisibility(e.detail.layerId, e.detail.newVisibility);
             };
             map.addEventListener("layerchanged:visible", this._callbacks.onVisibilityLayerCallBack);
+
+        } else {
+            // On retire les listeners qui étaient liés au layerSwitcher supprimé
+            map.removeEventListener("centerchanged", this._callbacks.onChangedCenterCallBack);
+            map.removeEventListener("layeradded", this._callbacks.onAddedLayerCallBack);
+            map.removeEventListener("layerremoved", this._callbacks.onRemovedLayerCallBack);
+            map.removeEventListener("layerchanged:opacity", this._callbacks.onOpacityLayerCallBack);
+            map.removeEventListener("layerchanged:visible", this._callbacks.onVisibilityLayerCallBack);
+            map.removeEventListener("layerchanged:index", this._callbacks.onIndexLayerCallBack);
+            return ;
         }
 
         // call original setMap method
@@ -287,23 +295,29 @@ define([
             // 1. add layer to layers list
             var layerInfos = this.getLayerInfo(layer) || {};
             var layerOptions = {
-                id : id,
-                ipr : layer.ipr || null,
-                type : layer.type || null,
-                inRange : this.isInRange(layer, map) || true,
-                opacity : layer.opacity || 1,
-                visibility : layer.visible || true,
                 title : config.title || layerInfos._title || id,
                 description : config.description || layerInfos._description || null,
                 legends : config.legends || layerInfos._legends || [],
                 metadata : config.metadata || layerInfos._metadata || [],
-                quicklookUrl : config.quicklookUrl || layerInfos._quicklookUrl || null
+                quicklookUrl : config.quicklookUrl || layerInfos._quicklookUrl || null,
+                inRange : this.isInRange(layer, map)
             };
+            if( typeof config.ipr !== 'undefined' ) {
+                layerOptions.ipr = config.ipr;
+                map.setLayerIpr(id, layerOptions.ipr);
+            }
+            if( typeof config.opacity !== 'undefined' ) {
+                layerOptions.opacity = config.opacity;
+                map.setLayerOpacity(id, layerOptions.opacity);
+            }
+            if( typeof config.visibility !== 'undefined' ) {
+                layerOptions.visibility = config.visibility;
+                map.setLayerVisibility(id, layerOptions.visibility);
+            }
             this._layers[id] = layerOptions;
 
             // création de la div de la couche destinée à être ajoutée au LS
-            var layerDiv = this._createLayerDiv(layerOptions);
-            this._layers[id].div = layerDiv;
+            this._layers[id].div = this._createLayerDiv(id);
             // le callback sur le changement d'index permet de remettre en ordre
             // les div dans le LS (et au passage d'ajouter la div de la couche au DOM du control)
             // A refactorer en une fonction indépendante sans passer par ce callback
@@ -319,6 +333,15 @@ define([
                 if ( config.hasOwnProperty(prop) ) {
                     this._layers[id][prop] = config[prop];
                 }
+            }
+            if( typeof config.ipr !== 'undefined' ) {
+                map.setLayerIpr(id, config.ipr);
+            }
+            if( typeof config.opacity !== 'undefined' ) {
+                map.setLayerOpacity(id, config.opacity);
+            }
+            if( typeof config.visibility !== 'undefined' ) {
+                map.setLayerVisibility(id, config.visibility);
             }
             // set new title in layer div
             if ( config.title ) {
@@ -355,24 +378,22 @@ define([
      *
      * @param {Object} layer - layer.
      */
-    LayerSwitcher.prototype.removeLayer = function (layer) {
-        var layerID = layer.id;
+    LayerSwitcher.prototype.removeLayer = function (layerId) {
         var layerList = document.getElementById(this._addUID("GPlayersList"));
         // close layer info element if open.
-        var infodiv = document.getElementById(this._addUID("GPinfo_ID_" + layerID));
+        var infodiv = document.getElementById(this._addUID("GPinfo_ID_" + layerId));
         if ( infodiv && infodiv.className === "GPlayerInfoOpened" ) {
             document.getElementById(this._addUID("GPlayerInfoPanel")).className = "GPlayerInfoPanelClosed";
             infodiv.className === "GPlayerInfo";
         }
         // remove layer div
-        var layerDiv = document.getElementById(this._addUID("GPlayerSwitcher_ID_" + layerID));
+        var layerDiv = document.getElementById(this._addUID("GPlayerSwitcher_ID_" + layerId));
         layerList.removeChild(layerDiv);
 
         // on retire la couche de la liste des layers
-        delete this._layers[layerID];
+        delete this._layers[layerId];
 
         // FIXME remise a jour des indexes ?
-
     };
 
     /**
@@ -529,54 +550,51 @@ define([
         // on parcourt toutes les couches de la carte, pour les ajouter à la liste du controle si ce n'est pas déjà le cas.
         this._layersOrder.forEach(
             function (layer) {
-                // on ne traite pas les MNTs
-                if (layer.type !== "elevation") {
-                    // ajout des couches de la carte à la liste
-                    var id;
-                    id = layer.id;
-                    var layerInfos = this.getLayerInfo(layer) || {};
-                    if ( !this._layers[id] ) {
-
-                        // si la couche n'est pas encore dans la liste des layers (this._layers), on l'ajoute
-                        var layerOptions = {
-                            id : layer.id,
-                            ipr : layer.ipr || null,
-                            opacity : layer.opacity || 1,
-                            visibility : layer.visible || true,
-                            type : layer.type || null,
-                            inRange : this.isInRange(layer, map) || true,
-                            title : layerInfos._title || id,
-                            description : layerInfos._description || null,
-                            legends : layerInfos._legends || [],
-                            metadata : layerInfos._metadata || [],
-                            quicklookUrl : layerInfos._quicklookUrl || null
-                        };
-                        this._layers[id] = layerOptions;
-                    } else {
-                        // update layer informations (visibility, opacity, inRange)
-                        this._layers[id].opacity = layer.opacity;
-                        this._layers[id].visibility = layer.visible;
-                        this._layers[id].inRange = this.isInRange(layer, map);
+                // ajout des couches de la carte à la liste
+                var id;
+                id = layer.id;
+                var layerInfos = this.getLayerInfo(layer) || {};
+                if ( !this._layers[id] ) {
+                    // si la couche n'est pas encore dans la liste des layers (this._layers), on l'ajoute
+                    var layerOptions = {
+                        title : layerInfos._title || id,
+                        description : layerInfos._description || null,
+                        legends : layerInfos._legends || [],
+                        metadata : layerInfos._metadata || [],
+                        quicklookUrl : layerInfos._quicklookUrl || null,
+                        inRange : this.isInRange(layer, map)
+                    };
+                    this._layers[id] = layerOptions;
+                } else {
+                    var lsLayerConf = this._layers[id];
+                    if( typeof lsLayerConf.ipr !== 'undefined' ) {
+                        map.setLayerIpr( id, lsLayerConf.ipr );
                     }
-                    this._lastZIndex++;
+                    if( typeof lsLayerConf.opacity !== 'undefined' ) {
+                        map.setLayerOpacity( id, lsLayerConf.opacity );
+                    }
+                    if( typeof lsLayerConf.visibility !== 'undefined' ) {
+                        map.setLayerVisibility( id, lsLayerConf.visibility );
+                    }
                 }
+                this._lastZIndex++;
             },
             this
         );
         // on ajoute les couches au layerSwitcher dans le bon ordre
         for ( var i = 0; i < this._layersOrder.length; i++ ) {
-            if (this._layersOrder[i].type !== "elevation") {
-                var layerDiv = this._createLayerDiv(this._layers[this._layersOrder[i].id]);
-                this._layers[this._layersOrder[i].id].div = layerDiv;
-                elementLayersList.appendChild(layerDiv);
-            }
+            var layerId = this._layersOrder[i].id;
+            var layerDiv = this._createLayerDiv(layerId);
+            this._layers[layerId].div = layerDiv;
+            elementLayersList.appendChild(layerDiv);
         }
     };
 
     /**
      * create layer div (to append to control DOM element).
      */
-    LayerSwitcher.prototype._createLayerDiv = function (layerOptions) {
+    LayerSwitcher.prototype._createLayerDiv = function (layerId) {
+        var layerOptions = this._layers[layerId];
         var isLegends = layerOptions.legends && layerOptions.legends.length !== 0;
         var isMetadata = layerOptions.metadata && layerOptions.metadata.length !== 0;
         var isQuicklookUrl = layerOptions.quicklookUrl;
@@ -585,6 +603,7 @@ define([
         }
 
         // ajout d'une div pour cette layer dans le control
+        layerOptions.id = layerId;
         var layerDiv = this._createContainerLayerElement(layerOptions);
 
         if ( !layerOptions.inRange ) {
@@ -614,7 +633,6 @@ define([
         opacityId.innerHTML = opacityValue + "%";
 
         map.setLayerOpacity(layerID, opacityValue / 100);
-
     };
 
     /**
@@ -622,19 +640,18 @@ define([
      *
      * @param {Object} changedLayer - layer whom opacity changed
      */
-    LayerSwitcher.prototype._updateLayerOpacity = function (changedLayer) {
-        var opacity = changedLayer.opacity;
+    LayerSwitcher.prototype._updateLayerOpacity = function (layerId, opacity) {
         if ( opacity > 1 ) {
             opacity = 1;
         }
         if ( opacity < 0 ) {
             opacity = 0;
         }
-        var id = changedLayer.id;
-        var layerOpacityInput = document.getElementById(this._addUID("GPopacityValueDiv_ID_" + id));
+
+        var layerOpacityInput = document.getElementById(this._addUID("GPopacityValueDiv_ID_" + layerId));
         layerOpacityInput.value = Math.round(opacity * 100);
 
-        var layerOpacitySpan = document.getElementById(this._addUID("GPopacityValue_ID_" + id));
+        var layerOpacitySpan = document.getElementById(this._addUID("GPopacityValue_ID_" + layerId));
         layerOpacitySpan.innerHTML = Math.round(opacity * 100) + "%";
     };
 
@@ -659,12 +676,9 @@ define([
      * @param {Object} e - event
      * @private
      */
-    LayerSwitcher.prototype._updateLayerVisibility = function (changedLayer) {
-        // FIXME
-        var id = changedLayer.id;
-        var visible = changedLayer.visible;
-        var layerVisibilityInput = document.getElementById(this._addUID("GPvisibility_ID_" + id));
-        layerVisibilityInput.checked = visible;
+    LayerSwitcher.prototype._updateLayerVisibility = function (layerId, visibility) {
+        var layerVisibilityInput = document.getElementById(this._addUID("GPvisibility_ID_" + layerId));
+        layerVisibilityInput.checked = visibility;
     };
 
     /**
@@ -776,14 +790,13 @@ define([
     /**
     * Method which update the index of the layers after a layer is moved, added, or removed
     */
+    // FIXME utilité de la fonction ?
     LayerSwitcher.prototype._updateLayersIndex = function () {
         var map = this.getMap();
-        var layerCount = map.getLayers().length;
+        var layerCount = map.getImageryLayers().length;
 
         // on récupère l'ordre des div dans le contrôle pour réordonner les couches (avec zindex)
         var matchesLayers = document.querySelectorAll("div.GPlayerSwitcher_layer");
-        // var maxZIndex = matchesLayers.length;
-        var newIndex;
 
         for (var i = 0; i < matchesLayers.length; i++) {
             // newIndex = maxZIndex - i;
@@ -791,10 +804,7 @@ define([
             var name = SelectorID.name(tag); // ex. GPlayerSwitcher_ID_ELEVATION.SLOPES
             var id = name.substring(name.indexOf("_ID_") + 4 ); // ex. ELEVATION.SLOPES
 
-            var layer = map.getLayer(id);
-
             layerCount--;
-
             map.moveLayerToIndex(id, layerCount);
         }
     }
@@ -805,7 +815,7 @@ define([
      * @param {VirtualGeo.Map} map - virtualGeo map on which event occured
      */
     LayerSwitcher.prototype._onMapMoveEnd = function (map) {
-        map.getLayers().forEach(
+        map.getImageryLayers().forEach(
             function (layer) {
                 var id = layer.id;
                 if ( this._layers[id] ) {
@@ -875,11 +885,11 @@ define([
     LayerSwitcher.prototype.getLayerInfo = function (layer) {
         var layerInfo = {};
         if (layer) {
-            layerInfo._title = layer.title || "";
-            layerInfo._description = layer.description || "";
-            layerInfo._quicklookUrl = layer.quicklookUrl || "";
-            layerInfo._metadata = layer.metadata || [];
-            layerInfo._legends = layer.legends || [];
+            layerInfo._title = layer.title || null;
+            layerInfo._description = layer.description || null;
+            layerInfo._quicklookUrl = layer.quicklookUrl || null;
+            layerInfo._metadata = layer.metadata || null;
+            layerInfo._legends = layer.legends || null;
         }
         return layerInfo;
     };

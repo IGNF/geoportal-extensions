@@ -109,5 +109,21 @@ define([
         return this._parent_createSceneGlobe(coordCarto, viewerDiv);
     }
 
+    ApiGlobe.prototype.setLayerIpr = function setLayerIpr(layerId, value) {
+        return;
+    }
+
+    ApiGlobe.prototype.getLayerIpr = function getLayerIpr(layerId) {
+        return "test";
+    }
+
+    ApiGlobe.prototype.getLayerOpacity = function getLayerOpacity(layerId) {
+        return 1.;
+    }
+
+    ApiGlobe.prototype.getLayerVisibility = function getLayerVisibility(layerId) {
+        return true;
+    }
+
     return ApiGlobe;
 });
