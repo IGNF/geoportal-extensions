@@ -416,7 +416,6 @@ define([
                 document.getElementById(this._addUID("GPlayerInfoPanel")).className = "GPlayerInfoPanelClosed";
                 infodiv.className === "GPlayerInfo";
             }
-
         }
     };
 
@@ -440,7 +439,6 @@ define([
 
         // on retire la couche de la liste des layers
         delete this._layers[layerID];
-
     };
 
     /**
@@ -480,7 +478,6 @@ define([
      * Add control layers to control main container
      */
     LayerSwitcher.prototype._addMapLayers = function (map) {
-
         // Récupération de l'élément contenant les différentes couches.
         var elementLayersList;
         var childNodes = this._container.childNodes;

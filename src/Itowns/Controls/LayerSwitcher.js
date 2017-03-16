@@ -152,10 +152,14 @@ define([
             /**
             * ajout du callback oncenterchanged
             */
-            this._callbacks.onChangedCenterCallBack = function () {
-                self._onMapMoveEnd(map);
+            this._callbacks.onChangedViewCallBack = function () {
+                clearTimeout(this._inRangeTimer);
+                this._inRangeTimer = setTimeout( function () {
+                    self._inRangeUpdate();
+                }, 500);
             };
-            map.addEventListener("centerchanged", this._callbacks.onChangedCenterCallBack);
+            map.addEventListener("centerchanged", this._callbacks.onChangedViewCallBack);
+            map.addEventListener("zoomchanged", this._callbacks.onChangedViewCallBack);
 
             /**
             * ajout du callback onlayeradded
@@ -173,19 +177,11 @@ define([
             * ajout du callback onlayerremoved
             */
             this._callbacks.onRemovedLayerCallBack = function (e) {
-
                 var id = e.detail.layerId;
 
-                // On met à jour le tableau des couches ordonnées
-                for (var i = 0; i < self._layersOrder.length; i++) {
-                    if (self._layersOrder[i].id == id) {
-                        self._layersOrder.splice(i, 1);
-                    }
-                }
                 // On met à jour l'index max et on retire la couche du layerSwitcher
                 if ( self && self._layers[id] ) {
                     self.removeLayer(id);
-                    self._lastZIndex--;
                 }
 
             };
@@ -194,25 +190,10 @@ define([
             /**
             * ajout du callback onlayerchanged:index
             */
-            this._callbacks.onIndexLayerCallBack = function () {
-                // if (changedLayer.type !== "elevation") {
-                    if ( self._layerListContainer ) {
-                        // on vide le container précédent
-                        while ( self._layerListContainer.firstChild ) {
-                            self._layerListContainer.removeChild(self._layerListContainer.firstChild);
-                        }
-                        // on réordonne les couches dans l'ordre d'empilement (map.getLayers renvoie un tableau ordonné dans le sens inverse)
-                        self._layersOrder = map.getOrderedLayers();
-                        // et on rajoute les div correspondantes aux différentes couches, dans l'ordre décroissant des zindex
-                        for ( var j = 0; j < self._layersOrder.length; j++ ) {
-                            // récupération de la div de la couche, stockée dans le tableau _layers
-                            var layerDiv = self._layers[self._layersOrder[j].id].div;
-                            self._layerListContainer.appendChild(layerDiv);
-                        }
-                    } else {
-                        console.log("[Itowns.control.LayerSwitcher] _updateLayersOrder : layer list container not found to update layers order ?!");
-                    }
-                // }
+            this._callbacks.onIndexLayerCallBack = function (e) {
+                if(e.detail.newIndex && e.detail.newIndex !== e.detail.oldIndex) {
+                    self._updateLayerListContainer();
+                }
             };
             map.addEventListener("layerchanged:index", this._callbacks.onIndexLayerCallBack);
 
@@ -318,12 +299,8 @@ define([
 
             // création de la div de la couche destinée à être ajoutée au LS
             this._layers[id].div = this._createLayerDiv(id);
-            // le callback sur le changement d'index permet de remettre en ordre
-            // les div dans le LS (et au passage d'ajouter la div de la couche au DOM du control)
-            // A refactorer en une fonction indépendante sans passer par ce callback
-            this._callbacks.onIndexLayerCallBack();
 
-            self._lastZIndex++;
+            this._updateLayerListContainer();
 
         // user may also add a new configuration for an already added layer
         } else if ( this._layers[id] && config ) {
@@ -392,8 +369,6 @@ define([
 
         // on retire la couche de la liste des layers
         delete this._layers[layerId];
-
-        // FIXME remise a jour des indexes ?
     };
 
     /**
@@ -406,7 +381,7 @@ define([
             console.log("[ERROR] LayerSwitcher:setCollapsed - missing collapsed parameter");
             return;
         }
-        var isCollapsed = !document.getElementById(this._addUID("GPshowLayersList")).checked;
+        var isCollapsed = this.getCollapsed();
         if ( ( collapsed && isCollapsed) || ( !collapsed && !isCollapsed ) ) {
             return;
         }
@@ -428,34 +403,6 @@ define([
         return !document.getElementById(this._addUID("GPshowLayersList")).checked;
     };
 
-    /**
-     * Display or hide removeLayerPicto from layerSwitcher for this layer
-     *
-     * @param {ol.layer.Layer} layer - ol.layer to be configured
-     * @param {Boolean} removable - specify if layer can be remove from layerSwitcher (true) or not (false). Default is true
-     */
-    LayerSwitcher.prototype.setRemovable = function (layer, removable) {
-        if ( !layer ) {
-            return;
-        }
-        var layerID = layer.gpLayerId;
-        if ( layerID == null ) { // on teste si layerID est null ou undefined
-            console.log("[LayerSwitcher:setRemovable] layer should be added to map before calling setRemovable method");
-            return;
-        }
-        var removalDiv = document.getElementById(this._addUID("GPremove_ID_" + layerID));
-        console.log(removalDiv.style.display);
-        if ( removalDiv ) {
-            if ( removable === false ) {
-                removalDiv.style.display = "none";
-            } else if ( removable === true ) {
-                removalDiv.style.display = "block";
-            } else {
-                return;
-            }
-        }
-    };
-
     // ################################################################### //
     // ##################### init component ############################## //
     // ################################################################### //
@@ -468,29 +415,19 @@ define([
      * @private
      */
     LayerSwitcher.prototype._initialize = function (options, layers) {
-
         // identifiant du contrôle : utile pour suffixer les identifiants CSS (pour gérer le cas où il y en a plusieurs dans la même page)
         this._uid = SelectorID.generate();
 
         // {Object} control layers list. Each key is a layer id, and its value is an object of layers options (layer, id, opacity, visibility, title, description...)
         this._layers = {};
-        // [Array] array of ordered control layers
-        //FIXME a voir si a garder ou recupere directement depuis la map
-        this._layersOrder = [];
-        // [Object] associative array of layers ordered by zindex (keys are zindex values, and corresponding values are arrays of layers at this zindex)
-        // FIXME necessaire ?
-        this._layersIndex = {};
-        // {Number} layers max z index, to order layers using their z index
-        this._lastZIndex = 0;
-        // {Number} layers max id, incremented when a new layer is added
-        this._layerId = 0;
-        /** {Boolean} true if widget is collapsed, false otherwise */
-        this.collapsed = (options.collapsed !== undefined) ? options.collapsed : true;
+
         // div qui contiendra les div des listes.
         this._layerListContainer = null;
 
+        //callbacks
         this._callbacks = {};
 
+        // options
         this._options = options;
         this._initLayers = layers;
     };
@@ -545,10 +482,10 @@ define([
         }
 
         // on réordonne les couches dans l'ordre d'empilement (map.getLayers renvoie un tableau ordonné dans le sens inverse)
-        this._layersOrder = map.getOrderedLayers();
+        var orderedLayers = map.getOrderedLayers();
 
         // on parcourt toutes les couches de la carte, pour les ajouter à la liste du controle si ce n'est pas déjà le cas.
-        this._layersOrder.forEach(
+        orderedLayers.forEach(
             function (layer) {
                 // ajout des couches de la carte à la liste
                 var id;
@@ -577,13 +514,12 @@ define([
                         map.setLayerVisibility( id, lsLayerConf.visibility );
                     }
                 }
-                this._lastZIndex++;
             },
             this
         );
         // on ajoute les couches au layerSwitcher dans le bon ordre
-        for ( var i = 0; i < this._layersOrder.length; i++ ) {
-            var layerId = this._layersOrder[i].id;
+        for ( var i = 0; i < orderedLayers.length; i++ ) {
+            var layerId = orderedLayers[i].id;
             var layerDiv = this._createLayerDiv(layerId);
             this._layers[layerId].div = layerDiv;
             elementLayersList.appendChild(layerDiv);
@@ -624,9 +560,7 @@ define([
      */
     LayerSwitcher.prototype._onChangeLayerOpacity = function (e) {
         var map = this.getMap();
-        var divId    = e.target.id;  // ex GPvisibilityPicto_ID_26-564864564654564
-        var divName  = SelectorID.name(divId); // ex GPvisibilityPicto_ID_26
-        var layerID  = divName.substring(divName.indexOf("_ID_") + 4 );  // ex. 26
+        var layerID  = this._resolveLayerId(e.target.id);
 
         var opacityValue = e.target.value;
         var opacityId = document.getElementById(this._addUID("GPopacityValue_ID_" + layerID));
@@ -663,9 +597,7 @@ define([
     LayerSwitcher.prototype._onVisibilityLayerClick = function (e) {
         var map = this.getMap();
 
-        var divId    = e.target.id;  // ex GPvisibilityPicto_ID_26-564864564654564
-        var divName  = SelectorID.name(divId); // ex GPvisibilityPicto_ID_26
-        var layerID  = divName.substring(divName.indexOf("_ID_") + 4 );  // ex. 26
+        var layerID  = this._resolveLayerId(e.target.id);
 
         map.setLayerVisibility(layerID, e.target.checked);
     };
@@ -687,10 +619,7 @@ define([
      * @param {Event} e - MouseEvent
      */
     LayerSwitcher.prototype._onOpenLayerInfoClick = function (e) {
-
-        var divId    = e.target.id;  // ex GPvisibilityPicto_ID_26-564864564654564
-        var divName  = SelectorID.name(divId); // ex GPvisibilityPicto_ID_26
-        var layerID  = divName.substring(divName.indexOf("_ID_") + 4 );  // ex. 26
+        var layerID  = this._resolveLayerId(e.target.id);
 
         var layerOptions = this._layers[layerID];
 
@@ -761,30 +690,24 @@ define([
     LayerSwitcher.prototype._onDropLayerClick = function (e) {
         var map = this.getMap();
 
-        var divId    = e.target.id;  // ex GPvisibilityPicto_ID_26-564864564654564
-        var divName  = SelectorID.name(divId); // ex GPvisibilityPicto_ID_26
-        var layerID  = divName.substring(divName.indexOf("_ID_") + 4 );  // ex. 26
+        var layerID  = this._resolveLayerId(e.target.id);
 
         // le retrait de la couche va déclencher l'ecouteur d'évenement,
         // et appeler this.removeLayer qui va supprimer la div.
         map.removeImageryLayer(layerID)
 
-        this._updateLayersIndex();
+        this._updateLayerListContainer();
     };
 
     /**
      * change layers order on drag and drop
      */
-    LayerSwitcher.prototype._onDragAndDropLayerClick = function () {
-        this._updateLayersIndex();
+    LayerSwitcher.prototype._onDragAndDropLayerClick = function (e) {
         var map = this.getMap();
-        // mise à jour du tableau des couches ordonneés
-        this._layersOrder = map.getOrderedLayers();
-        // on appelle le callback sur le changement d'index manuellement
-        // pour forcer la reconstruction des div du layerSwitcher au cas où
-        // le nouvel index est le même que le précédent et pour forcer les
-        // couches vectorielles en haut du LS
-        this._callbacks.onIndexLayerCallBack();
+
+        var layerID  = this._resolveLayerId(e.item.id);
+
+        map.moveLayerToIndex(layerID, e.newIndex);
     };
 
     /**
@@ -793,28 +716,24 @@ define([
     // FIXME utilité de la fonction ?
     LayerSwitcher.prototype._updateLayersIndex = function () {
         var map = this.getMap();
-        var layerCount = map.getImageryLayers().length;
 
-        // on récupère l'ordre des div dans le contrôle pour réordonner les couches (avec zindex)
+        // on récupère l'ordre des div dans le contrôle pour réordonner les couches
         var matchesLayers = document.querySelectorAll("div.GPlayerSwitcher_layer");
 
         for (var i = 0; i < matchesLayers.length; i++) {
             // newIndex = maxZIndex - i;
-            var tag = matchesLayers[i].id; // ex. GPlayerSwitcher_ID_ELEVATION.SLOPES-1481286391563
-            var name = SelectorID.name(tag); // ex. GPlayerSwitcher_ID_ELEVATION.SLOPES
-            var id = name.substring(name.indexOf("_ID_") + 4 ); // ex. ELEVATION.SLOPES
+            var layerID  = this._resolveLayerId(matchesLayers[i].id);
 
-            layerCount--;
-            map.moveLayerToIndex(id, layerCount);
+            map.moveLayerToIndex(layerID, i);
         }
     }
 
     /**
-     * check layers range on map movement
-     *
-     * @param {VirtualGeo.Map} map - virtualGeo map on which event occured
+     * check layers range
      */
-    LayerSwitcher.prototype._onMapMoveEnd = function (map) {
+    LayerSwitcher.prototype._inRangeUpdate = function () {
+        var map = this.getMap();
+
         map.getImageryLayers().forEach(
             function (layer) {
                 var id = layer.id;
@@ -837,6 +756,31 @@ define([
             this
         );
     };
+
+    /**
+     * update the layer list container
+     *
+     */
+    LayerSwitcher.prototype._updateLayerListContainer = function () {
+        if ( this._layerListContainer ) {
+            var map = this.getMap();
+
+            // on vide le container précédent
+            while ( this._layerListContainer.firstChild ) {
+                this._layerListContainer.removeChild(this._layerListContainer.firstChild);
+            }
+            // on réordonne les couches dans l'ordre d'empilement (map.getLayers renvoie un tableau ordonné dans le sens inverse)
+            var orderedLayers = map.getOrderedLayers();
+            // et on rajoute les div correspondantes aux différentes couches, dans l'ordre décroissant des zindex
+            for ( var j = 0; j < orderedLayers.length; j++ ) {
+                // récupération de la div de la couche, stockée dans le tableau _layers
+                var layerDiv = this._layers[orderedLayers[j].id].div;
+                this._layerListContainer.appendChild(layerDiv);
+            }
+        } else {
+            console.log("[Itowns.control.LayerSwitcher] _updateLayerListContainer : layer list container not found to update layers order ?!");
+        }
+    }
 
     // ################################################################### //
     // ############################ Utils ################################ //
@@ -893,6 +837,14 @@ define([
         }
         return layerInfo;
     };
+
+    /**
+     * Get layer id from div id
+     */
+    LayerSwitcher.prototype._resolveLayerId = function (divId) {
+        var divName  = SelectorID.name(divId); // ex GPvisibilityPicto_ID_26
+        return divName.substring(divName.indexOf("_ID_") + 4 );  // ex. 26
+    }
 
     return LayerSwitcher;
 });

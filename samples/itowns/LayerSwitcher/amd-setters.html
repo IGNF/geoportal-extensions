@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Globe</title>
+        <!-- Library iTowns -->
+        <script src="../../../lib/itowns/itowns.js"></script>
+        <!-- requirejs -->
+        <script src="../../../lib/require.js"></script>
+
+        <link rel="stylesheet" href="../../../dist/itowns/GpPluginItowns-src.css" />
+
+        <style type="text/css">
+                html {height: 100%}
+            body { margin: 0; overflow:hidden; height:100%}
+
+                #viewerDiv {
+                    margin : auto auto;
+                    width: 100%;
+                    height: 70%;
+                    padding: 0;
+                    /*margin-top: 50vh;
+                    transform: translateY(-50%);*/
+                }
+                #menuDiv {
+                    width: 600px;
+                }
+          </style>
+
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    </head>
+    <body>
+        <div id="viewerDiv"></div>
+        </br>
+        <div id="menuDiv">
+            <input type="button" onclick="addLayer(0)" value ="Add layer 1"/>
+            <input type="button" onclick="removeLayer(0)" value ="Remove layer 1"/>
+            <input type="button" onclick="setOpacity(0)" value ="Change opacity 1"/>
+            <input type="button" onclick="setVisibity(0)" value ="Change visibility 1"/>
+            <input type="button" onclick="moveLayerUp(0)" value ="Up 1"/>
+            <input type="button" onclick="moveLayerDown(0)" value ="Down 1"/>
+
+            <input type="button" onclick="addLayer(1)" value ="Add layer 2"/>
+            <input type="button" onclick="removeLayer(1)" value ="Remove layer 2"/>
+            <input type="button" onclick="setOpacity(1)" value ="Change opacity 2"/>
+            <input type="button" onclick="setVisibity(1)" value ="Change visibility 2"/>
+            <input type="button" onclick="moveLayerUp(1)" value ="Up 2"/>
+            <input type="button" onclick="moveLayerDown(1)" value ="Down 2"/>
+
+            <input type="button" onclick="addLayer(2)" value ="Add layer 3"/>
+            <input type="button" onclick="removeLayer(2)" value ="Remove layer 3"/>
+            <input type="button" onclick="setOpacity(2)" value ="Change opacity 3"/>
+            <input type="button" onclick="setVisibity(2)" value ="Change visibility 3"/>
+            <input type="button" onclick="moveLayerUp(2)" value ="Up 3"/>
+            <input type="button" onclick="moveLayerDown(2)" value ="Down 3"/>
+
+            <input type="button" onclick="addLayer(3)" value ="Add layer 4"/>
+            <input type="button" onclick="removeLayer(3)" value ="Remove layer 4"/>
+            <input type="button" onclick="setOpacity(3)" value ="Change opacity 4"/>
+            <input type="button" onclick="setVisibity(3)" value ="Change visibility 4"/>
+            <input type="button" onclick="moveLayerUp(3)" value ="Up 4"/>
+            <input type="button" onclick="moveLayerDown(3)" value ="Down 4"/>
+        </div>
+
+        <script type="text/javascript">
+
+            var viewer = null;
+
+            const urlImageryLayers = [];
+            urlImageryLayers.push('../Resources/JSONLayers/OrthosCRS.json');
+            urlImageryLayers.push('../Resources/JSONLayers/Ortho.json');
+            urlImageryLayers.push('../Resources/JSONLayers/ScanEX.json');
+            urlImageryLayers.push('../Resources/JSONLayers/Region.json');
+
+            const layersId = ["OrthoCRS","Ortho","ScanEX","Region"];
+            var visibilities = [true,true,true,true];
+            var opacities = [1,1,1,1];
+
+            var addLayer = function (i) {
+                viewer.addImageryLayersFromJSONArray([urlImageryLayers[i]]);
+                viewer.init();
+            }
+            var removeLayer = function (i) {
+                viewer.removeImageryLayer(layersId[i]);
+            }
+            var setOpacity = function (i) {
+                opacities[i] -= 0.2;
+                if( opacities[i] < 0 ) {
+                    opacities[i] = 1.;
+                }
+                viewer.setLayerOpacity(layersId[i],opacities[i]);
+            }
+            var setVisibity = function (i) {
+                visibilities[i] = !visibilities[i];
+                viewer.setLayerVisibility(layersId[i],visibilities[i]);
+            }
+            var moveLayerUp = function (i) {
+              this.index = _getIndex(layersId[i])+1;
+              if( this.index > viewer.getImageryLayers().length-1 ) {
+                  this.index = 0;
+              }
+              viewer.moveLayerToIndex(layersId[i],this.index);
+            }
+            var moveLayerDown = function (i) {
+                this.index = _getIndex(layersId[i])-1;
+                if( this.index < 0 ) {
+                    this.index = viewer.getImageryLayers().length-1;
+                }
+                viewer.moveLayerToIndex(layersId[i],this.index);
+            }
+            var _getIndex = function (layerId) {
+                var imageryLayers = viewer.getImageryLayers();
+                for( var i = 0 ; i < imageryLayers.length ; ++i ) {
+                    if( imageryLayers[i].id == layerId ) {
+                        return i;
+                    }
+                }
+                return -1;
+            }
+
+            requirejs.config({
+                "baseUrl" : "../../../src/",
+                "paths": {
+                    // lib external
+                    "itowns" : "../lib/itowns/itowns",
+                    "proj4"   : "../lib/proj4/proj4-src",
+                    "gp"      : "../lib/gp/GpServices-src",
+                    "sortable" : "../lib/sortable/Sortable",
+                    "woodman" : "../lib/woodman/woodman-amd"
+                }
+            });
+            requirejs(
+                ["itowns", "proj4", "gp", "Itowns/ApiGlobe", "Itowns/Controls/LayerSwitcher"],
+                function (itowns, proj4, Gp, ApiGlobe, LayerSwitcher)
+            {
+                itowns.control = {};
+                itowns.control.LayerSwitcher = LayerSwitcher;
+                itowns.viewer = new ApiGlobe();
+                viewer = itowns.viewer;
+
+                var createMap = function() {
+                    /* global itowns,document,GuiTools*/
+                    const positionOnGlobe = { longitude: 2.3465, latitude: 48.88, altitude: 25000000 };
+
+                    // iTowns namespace defined here
+                    const viewerDiv = document.getElementById('viewerDiv');
+                    itowns.viewer.createSceneGlobe(positionOnGlobe, viewerDiv);
+
+                    const wgs84TileLayer = {
+                        protocol: 'tile',
+                        id: 'wgs84',
+                    };
+                    itowns.viewer.addGeometryLayer(wgs84TileLayer);
+
+                    const urlElevationLayers = [];
+                    urlElevationLayers.push('../Resources/JSONLayers/IGN_MNT.json');
+                    urlElevationLayers.push('../Resources/JSONLayers/IGN_MNT_HIGHRES.json');
+
+                    const imageryPromise = itowns.viewer.addImageryLayersFromJSONArray(urlImageryLayers);
+                    const elevationPromise = itowns.viewer.addElevationLayersFromJSONArray(urlElevationLayers);
+
+                    Promise.all([imageryPromise, elevationPromise]).then(() => itowns.viewer.init()).then( () => {
+                        // ajout du control
+                        var layerSwitcher = new itowns.control.LayerSwitcher({
+                            layers : [
+                                {
+                                    id : "Ortho",
+                                    config : {
+                                        title : "Couche de Photos IGNPO",
+                                        description : "Description de ma couche",
+                                        quicklookUrl : "lien/Vers/UnApercuRapide.png",
+                                        legends : [
+                                            {
+                                                url : "lien/Vers/UneLegende.png"
+                                            }
+                                        ],
+                                        metadata : [
+                                            {
+                                                url : "lien/Vers/Une/MetaDonnee.xml"
+                                            }
+                                        ],
+                                        visibility: false,
+                                        opacity: 0.8
+                                    }
+                                }
+                            ]
+                        });
+                        itowns.viewer.addControl( layerSwitcher );
+                    });
+                }
+
+                Gp.Services.getConfig({
+                    // serverUrl : "./../resources/AutoConf.js",
+                    // callbackSuffix : '',
+                    apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
+                    timeOut : 20000,
+                    onSuccess : createMap
+                });
+            });
+        </script>
+    </body>
+</html>

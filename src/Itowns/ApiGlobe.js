@@ -85,7 +85,13 @@ define([
      * Has layer
      */
     ApiGlobe.prototype.getOrderedLayers = function getOrderedLayers() {
-        return this.getImageryLayers();
+        const map = this.scene.getMap();
+        var orderedLayerNames = map.layersConfiguration.getColorLayersIdOrderedBySequence();
+        var orderedLayers = [];
+        for( var i = 0 ; i < orderedLayerNames.length ; ++i ) {
+            orderedLayers.push(this.getLayer(orderedLayerNames[i]));
+        }
+        return orderedLayers;
     }
 
     /**

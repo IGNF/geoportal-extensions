@@ -6,26 +6,25 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>Globe</title>
+        <title>Mouseposition-bundle</title>
 
-    <style type="text/css">
-            html {height: 100%}
-        body { margin: 0; overflow:hidden; height:100%}
+        <link rel="stylesheet" href="../../../dist/itowns/GpPluginItowns.css" />
 
-            #viewerDiv {
-                margin : auto auto;
-                width: 100%;
-                height: 100%;
-                padding: 0;
-                /*margin-top: 50vh;
-                transform: translateY(-50%);*/
-            }
-            #menuDiv {position: absolute; top:0px; margin-left: 0px;}
+        <style type="text/css">
+                html {height: 100%}
+            body { margin: 0; overflow:hidden; height:100%}
 
-
+                #viewerDiv {
+                    margin : auto auto;
+                    width: 100%;
+                    height: 100%;
+                    padding: 0;
+                    /*margin-top: 50vh;
+                    transform: translateY(-50%);*/
+                }
         </style>
-        <meta charset="UTF-8">
 
+        <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
@@ -36,44 +35,52 @@ and open the template in the editor.
         <script src="../../../dist/itowns/GpPluginItowns.js"></script>
         <script type="text/javascript">
 
-            /* global itowns,document,GuiTools*/
+            var createMap = function() {
+                /* global itowns,document,GuiTools*/
 
-            const positionOnGlobe = { longitude: 2.3465, latitude: 48.88, altitude: 25000000 };
+                const positionOnGlobe = { longitude: 2.3465, latitude: 48.88, altitude: 25000000 };
 
-            // iTowns namespace defined here
-            const viewerDiv = document.getElementById('viewerDiv');
-            itowns.viewer.createSceneGlobe(positionOnGlobe, viewerDiv);
-            var mousePosition = new itowns.control.MousePosition();
-            itowns.viewer.addControl( mousePosition );
+                // iTowns namespace defined here
+                const viewerDiv = document.getElementById('viewerDiv');
+                itowns.viewer.createSceneGlobe(positionOnGlobe, viewerDiv);
+                var mousePosition = new itowns.control.MousePosition();
+                itowns.viewer.addControl( mousePosition );
 
-            const wgs84TileLayer = {
-                protocol: 'tile',
-                id: 'wgs84',
-            };
+                const wgs84TileLayer = {
+                    protocol: 'tile',
+                    id: 'wgs84',
+                };
 
-            const urlImageryLayers = [];
-            const urlElevationLayers = [];
+                const urlImageryLayers = [];
+                const urlElevationLayers = [];
 
-            urlImageryLayers.push('../Resources/JSONLayers/Ortho.json');
-            urlImageryLayers.push('../Resources/JSONLayers/OrthosCRS.json');
-            urlImageryLayers.push('../Resources/JSONLayers/ScanEX.json');
-            urlImageryLayers.push('../Resources/JSONLayers/Region.json');
+                urlImageryLayers.push('../Resources/JSONLayers/Ortho.json');
+                urlImageryLayers.push('../Resources/JSONLayers/OrthosCRS.json');
+                urlImageryLayers.push('../Resources/JSONLayers/ScanEX.json');
+                urlImageryLayers.push('../Resources/JSONLayers/Region.json');
 
-            urlElevationLayers.push('../Resources/JSONLayers/IGN_MNT.json');
-            urlElevationLayers.push('../Resources/JSONLayers/IGN_MNT_HIGHRES.json');
+                urlElevationLayers.push('../Resources/JSONLayers/IGN_MNT.json');
+                urlElevationLayers.push('../Resources/JSONLayers/IGN_MNT_HIGHRES.json');
 
-            itowns.viewer.addGeometryLayer(wgs84TileLayer);
-            const imageryPromise = itowns.viewer.addImageryLayersFromJSONArray(urlImageryLayers);
-            const elevationPromise = itowns.viewer.addElevationLayersFromJSONArray(urlElevationLayers);
+                itowns.viewer.addGeometryLayer(wgs84TileLayer);
+                const imageryPromise = itowns.viewer.addImageryLayersFromJSONArray(urlImageryLayers);
+                const elevationPromise = itowns.viewer.addElevationLayersFromJSONArray(urlElevationLayers);
 
-            Promise.all([imageryPromise, elevationPromise]).then(() => itowns.viewer.init());
+                Promise.all([imageryPromise, elevationPromise]).then(() => itowns.viewer.init());
 
-            itowns.viewer.addEventListener('globe-loaded', () => {
-                itowns.viewer.setRealisticLightingOn(true);
-                var MousePosition = new itowns.MousePosition();
-                itowns.viewer.addWidget(MousePosition);
-                // eslint-disable-next-line no-console
-                console.info('Globe Loaded');
+                itowns.viewer.addEventListener('globe-loaded', () => {
+                    itowns.viewer.setRealisticLightingOn(true);
+                    // eslint-disable-next-line no-console
+                    console.info('Globe Loaded');
+                });
+            }
+
+            Gp.Services.getConfig({
+                // serverUrl : "./../resources/AutoConf.js",
+                // callbackSuffix : '',
+                apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
+                timeOut : 20000,
+                onSuccess : createMap
             });
 
 </script>
