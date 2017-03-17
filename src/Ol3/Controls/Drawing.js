@@ -242,7 +242,7 @@ define([
 
         // gestion des suppressions "externes" de la couche de dessin.
         this.eventKey = this.getMap().getLayers().on("remove", function (evtRm) {
-            if (Utils.getOL3ObjectId(evtRm.element) == Utils.getOL3ObjectId(this.layer)) {
+            if ( evtRm.element == this.layer) {
                 // found layer removed.
                 this.layer = null ;
                 // on supprime l'interaction en cours si besoin
