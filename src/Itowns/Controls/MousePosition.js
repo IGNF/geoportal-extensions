@@ -33,11 +33,10 @@ define([
      * MousePosition Control.
      *
      * @constructor
-     * @alias VirtualGeo.GeoportalMousePosition
-     * @extends {Control}
+     * @alias itowns.control.MousePosition
+     * @extends {itowns.control.Control}
      * @param {Object} options - options for function call.
-     * @param {Sting}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
-     * @param {Boolean} [options.collapsed = false] - Specify if MousePosition control should be collapsed at startup. Default is true.
+     * @param {Boolean} [options.collapsed = true] - Specify if MousePosition control should be collapsed at startup. Default is true.
      * @param {Array}   [options.systems] - list of projection systems, default are Geographical ("EPSG:4326"), Web Mercator ("EPSG:3857"), Lambert 93 ("EPSG:2154") and extended Lambert 2 ("EPSG:27572").
      *      Each array element (=system) is an object with following properties :
      * @param {String}  options.systems.crs - Proj4 crs alias (from proj4 defs). e.g. : "EPSG:4326". Required
@@ -58,7 +57,7 @@ define([
      * @param {Number}  [options.altitude.responseDelay] - latency for altitude request, 500 ms by default
      * @param {Number}  [options.altitude.triggerDelay] - immobilisation time of movement on the map to trigger the elevation calculation, 200 ms by default
      * @example
-     *  var MousePosition = new ol.control.GeoportalMousePosition({
+     *  var mousePosition = new itowns.control.MousePosition({
      *      collapsed : false,
      *      displayCoordinates : true,
      *      displayAltitude : true,
@@ -74,9 +73,15 @@ define([
      *          type : "Metric"
      *        },
      *       {
-     *          crs : "EPSG:4326",
-     *          label : "Géographiques",
-     *          type : "Geographical"
+     *          crs : "EPSG:32620",
+     *          label : "UTM 20N (Guadeloupe, Martinique)",
+     *          type : "Metric",
+     *          geoBBox : {
+     *              left: -66.00,
+     *              bottom : 0.00,
+     *              right : -60.00,
+     *              top : 84.00
+     *          }
      *        }
      *      ],
      *      units : ["DEC", "DMS"]
@@ -110,7 +115,7 @@ define([
     };
 
     /**
-     * @lends module:GeoportalMousePosition
+     * @lends module:MousePosition
      */
     MousePosition.prototype = Object.create(Control.prototype, {});
 
@@ -176,7 +181,7 @@ define([
     /**
      * Set additional projection system
      *
-     * @method use system defined in the vg/CRS/CRS.js class
+     * @method use system defined in the Itowns/CRS/CRS.js class
      * @param {Object} system - Projection system
      * @param {String} system.crs - Proj4 crs alias (from proj4 defs) e.g. "EPSG:4326"
      * @param {String} [system.label] - CRS label to be displayed in control. Default is system.crs alias
@@ -1025,7 +1030,7 @@ define([
      * (cf. this.GPdisplayCoords() into the DOM functions)
      *
      * @method onMapMove
-     * @param {Object} e - HTMLElement
+     * @param {Object} e - itowns event
      * @private
      */
     MousePosition.prototype.onMapMove = function (e) {
@@ -1232,7 +1237,7 @@ define([
     /**
      * this method is called by event 'mouseover' on 'GPmousePositionProjectionSystem'
      * tag select (cf. this._createMousePositionSettingsElement),
-     * and selects the system projection.
+     * and selects the system projection whose geoBBox interstects the current view extent.
      *
      * @method onMousePositionProjectionSystemMouseOver
      * @param {Object} e - HTMLElement

@@ -15,14 +15,14 @@ define([
 
     /**
      * @classdesc
-     * OpenLayers Control to manage map layers : their order, visibility and opacity, and display their informations (title, description, legends, metadata...)
+     * Control to manage map layers : their order, visibility and opacity, and display their informations (title, description, legends, metadata...)
      *
      * @constructor
-     * @extends {ol.control.Control}
-     * @alias ol.control.LayerSwitcher
+     * @extends {itowns.control.Control}
+     * @alias itowns.control.LayerSwitcher
      * @param {Object} lsOptions - control options
      * @param {Array} [lsOptions.layers] - list of layers to be configured. Each array element is an object, with following properties :
-     * @param {ol.layer.Layer} [lsOptions.layers.layer] - ol.layer.Layer layer to be configured (that has been added to map)
+     * @param {String} [lsOptions.layers.id] - ol.layer.Layer layer to be configured (that has been added to map)
      * @param {Object} [lsOptions.layers.config] - custom configuration object for layer information (title, description, legends, metadata, quicklook url), with following properties :
      * @param {String} [lsOptions.layers.config.title] - layer alias, to be displayed in widget layer list. E.g. : "Cartes IGN"
      * @param {String} [lsOptions.layers.config.description] - layer description, to be displayed on title hover, or in layer information panel.
@@ -31,21 +31,21 @@ define([
      *      - url (String, mandatory) : link to a legend
      *      - minScaleDenominator (Number, optional) : min scale denominator for legend validity.
      * @param {Array} [lsOptions.layers.config.metadata] - array of layer metadata. Each array element is an object, with property url (String, mandatory) : link to a metadata
-     * @param {Object} [lsOptions.options] - ol.control.Control options (see {@link http://openlayers.org/en/latest/apidoc/ol.control.Control.html ol.control.Control})
-     * @param {Boolean} [lsOptions.options.collapsed] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
+     * @param {Object} [lsOptions.options] - Itowns.control.Control options
+     * @param {Boolean} [lsOptions.options.collapsed = true] - Specify if widget has to be collapsed (true) or not (false) on map loading.
      * @example
-     * map.addControl(new ol.control.LayerSwitcher(
-     *  [
+     * var layerSwitcher = new itowns.control.LayerSwitcher({
+     *  layers : [
      *      {
-     *          layer : wms1,
+     *          id : "myLayer",
      *          config : {
      *              title : "test layer name 1",
      *              description : "test layer desc 1",
      *          }
      *      }
      *  ],
-     *  {
-     *      collapsed : true
+     *  options : {
+     *      collapsed : false
      *  }
      * ));
      */
@@ -274,7 +274,7 @@ define([
         if ( !this._layers[id] ) {
 
             // 1. add layer to layers list
-            var layerInfos = this.getLayerInfo(layer) || {};
+            var layerInfos = this._getLayerInfo(layer) || {};
             var layerOptions = {
                 title : config.title || layerInfos._title || id,
                 description : config.description || layerInfos._description || null,
@@ -353,7 +353,7 @@ define([
     /**
      * Remove a layer from control
      *
-     * @param {Object} layer - layer.
+     * @param {String} layerId - layer id.
      */
     LayerSwitcher.prototype.removeLayer = function (layerId) {
         var layerList = document.getElementById(this._addUID("GPlayersList"));
@@ -410,7 +410,7 @@ define([
     /**
      * Initialize LayerSwitcher control (called by constructor)
      *
-     * @param {Object} options - ol.control.Control options (see {@link http://openlayers.org/en/latest/apidoc/ol.control.Control.html ol.control.Control})
+     * @param {Object} options - Itowns.control.Control options
      * @param {Array} layers - list of layers to be configured. Each array element is an object, with following properties :
      * @private
      */
@@ -434,6 +434,10 @@ define([
 
     /**
      * Create control main container
+     *
+     * @method _initContainer
+     * @param {Object} options - control options
+     * @private
      */
     LayerSwitcher.prototype._initContainer = function (options) {
         // creation du container principal
@@ -467,6 +471,10 @@ define([
 
     /**
      * Add control layers to control main container
+     *
+     * @method _addMapLayers
+     * @param {Object} map - the Itowns.Map object
+     * @private
      */
     LayerSwitcher.prototype._addMapLayers = function (map) {
 
@@ -490,7 +498,7 @@ define([
                 // ajout des couches de la carte à la liste
                 var id;
                 id = layer.id;
-                var layerInfos = this.getLayerInfo(layer) || {};
+                var layerInfos = this._getLayerInfo(layer) || {};
                 if ( !this._layers[id] ) {
                     // si la couche n'est pas encore dans la liste des layers (this._layers), on l'ajoute
                     var layerOptions = {
@@ -528,6 +536,10 @@ define([
 
     /**
      * create layer div (to append to control DOM element).
+     *
+     * @method _createLayerDiv
+     * @param {String} layerId - layer id
+     * @private
      */
     LayerSwitcher.prototype._createLayerDiv = function (layerId) {
         var layerOptions = this._layers[layerId];
@@ -556,7 +568,9 @@ define([
     /**
      * Change layer opacity on layer opacity picto click
      *
-     * @param {Object} e - event
+     * @method _onChangeLayerOpacity
+     * @param {Object} e - HTML event
+     * @private
      */
     LayerSwitcher.prototype._onChangeLayerOpacity = function (e) {
         var map = this.getMap();
@@ -572,7 +586,10 @@ define([
     /**
      * Update picto opacity value on layer opacity change
      *
-     * @param {Object} changedLayer - layer whom opacity changed
+     * @method _updateLayerOpacity
+     * @param {String} layerId - layer id
+     * @param {Number} opacity - opacity value
+     * @private
      */
     LayerSwitcher.prototype._updateLayerOpacity = function (layerId, opacity) {
         if ( opacity > 1 ) {
@@ -592,7 +609,9 @@ define([
     /**
      * Change layer visibility on layer visibility picto click
      *
-     * @param {Object} e - event
+     * @method _onVisibilityLayerClick
+     * @param {Object} e - HTML event
+     * @private
      */
     LayerSwitcher.prototype._onVisibilityLayerClick = function (e) {
         var map = this.getMap();
@@ -605,7 +624,9 @@ define([
     /**
      * Change picto visibility on layer visibility change
      *
-     * @param {Object} e - event
+     * @method _updateLayerOpacity
+     * @param {String} layerId - layer id
+     * @param {Boolean} visibility - visible if true
      * @private
      */
     LayerSwitcher.prototype._updateLayerVisibility = function (layerId, visibility) {
@@ -616,7 +637,9 @@ define([
     /**
      * Open layer information panel on picto click
      *
+     * @method _onOpenLayerInfoClick
      * @param {Event} e - MouseEvent
+     * @private
      */
     LayerSwitcher.prototype._onOpenLayerInfoClick = function (e) {
         var layerID  = this._resolveLayerId(e.target.id);
@@ -685,7 +708,9 @@ define([
     /**
      * remove layer from layer switcher and map on picto click
      *
+     * @method _onDropLayerClick
      * @param {Event} e - MouseEvent
+     * @private
      */
     LayerSwitcher.prototype._onDropLayerClick = function (e) {
         var map = this.getMap();
@@ -701,6 +726,10 @@ define([
 
     /**
      * change layers order on drag and drop
+     *
+     * @method _onDropLayerClick
+     * @param {Event} e - HTML event
+     * @private
      */
     LayerSwitcher.prototype._onDragAndDropLayerClick = function (e) {
         var map = this.getMap();
@@ -712,6 +741,9 @@ define([
 
     /**
     * Method which update the index of the layers after a layer is moved, added, or removed
+    *
+    * @method _updateLayersIndex
+    * @private
     */
     // FIXME utilité de la fonction ?
     LayerSwitcher.prototype._updateLayersIndex = function () {
@@ -729,7 +761,10 @@ define([
     }
 
     /**
-     * check layers range
+     * Checks layers range
+     *
+     * @method _inRangeUpdate
+     * @private
      */
     LayerSwitcher.prototype._inRangeUpdate = function () {
         var map = this.getMap();
@@ -758,8 +793,10 @@ define([
     };
 
     /**
-     * update the layer list container
+     * Update the layer list container
      *
+     * @method _updateLayerListContainer
+     * @private
      */
     LayerSwitcher.prototype._updateLayerListContainer = function () {
         if ( this._layerListContainer ) {
@@ -793,7 +830,7 @@ define([
      * @memberof LayerSwitcher
      * @method isInRange
      * @param {Object} layer - the layer object
-     * @param {Object} map   - the VirtualGeo.Map object
+     * @param {Object} map   - the Itowns.Map object
      * @returns {Boolean} outOfRange - false if map view is out of layer range
      */
     LayerSwitcher.prototype.isInRange = function (layer, map) {
@@ -822,11 +859,11 @@ define([
      *
      * @private
      * @memberof LayerSwitcher
-     * @method getLayerInfo
+     * @method _getLayerInfo
      * @param {Object} layer - the layer object
      * @returns {Object} layerInfo - layer informations
      */
-    LayerSwitcher.prototype.getLayerInfo = function (layer) {
+    LayerSwitcher.prototype._getLayerInfo = function (layer) {
         var layerInfo = {};
         if (layer) {
             layerInfo._title = layer.title || null;
@@ -840,6 +877,10 @@ define([
 
     /**
      * Get layer id from div id
+     *
+     * @method _resolveLayerId
+     * @param {String} divId - HTML div id
+     * @private
      */
     LayerSwitcher.prototype._resolveLayerId = function (divId) {
         var divName  = SelectorID.name(divId); // ex GPvisibilityPicto_ID_26
