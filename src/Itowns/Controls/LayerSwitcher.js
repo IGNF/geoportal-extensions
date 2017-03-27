@@ -73,9 +73,10 @@ define([
 
         Control.call(
             this,
-            "LayerSwitcher",
-            container,
-            options
+            {
+                name : "LayerSwitcher",
+                element : container
+            }
         );
     }
 

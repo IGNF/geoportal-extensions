@@ -30,7 +30,7 @@ define([
      * Add a widget.
      */
     ApiGlobe.prototype.addControl = function addControl(control) {
-        this.viewerDiv.appendChild(control.pElement);
+        this.viewerDiv.appendChild(control.getElement());
         this.getControls().push(control);
         control.setMap(this);
     };

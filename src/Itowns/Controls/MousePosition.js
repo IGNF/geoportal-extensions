@@ -108,9 +108,10 @@ define([
 
         Control.call(
             this,
-            "MousePosition",
-            container,
-            options
+            {
+                name : "MousePosition",
+                element : container
+            }
         );
     };
 
