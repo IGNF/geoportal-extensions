@@ -43,11 +43,12 @@
             <p>Parmi les tests réalisables on a :<p>
             <ul>
               <li>Le changement du style du curseur au survol d'objets vecteurs</li>
-              <li>La modification de l'évenement par défaut déclenchant la requête GFI (valable seulement pour les couches dont l'évènement associé n'aura pas été défini à l'initialisation)</li>
+              <li>La modification de l'évènement par défaut déclenchant la requête GFI (valable seulement pour les couches dont l'évènement associé n'aura pas été défini à l'initialisation)</li>
               <li>L'activation/désactivation du widget. Vérifier lors de la désactivation qu'aucune requête n'est envoyée, que le curseur n'apparaît plus, que l'on a bien le menu contextuel au click droit, que le double click permet de zoomer...</li>
               <li>Pour les couches associées au même évènement, jouer, grâce à l'outil de gestion des couches, sur l'ordre d'empilement et vérifier que c'est bien la couche la plus haute qui répond prioritairement</li>
               <li>Pour les couches vecteurs ayant le même évènement associé, vérifier que si l'on click sur un pixel où sont situés les objets de plusieurs couches la fenêtre popup GFI affiche les propriétés de tous ces objets en respectant l'ordre d'empilement</li>
-              <li>Vérifier que la suppression de toutes les couches requétables entraine la désactivation des évenements, la disparition du curseur, le retour du zoom au double click, l'apparition du menu contextuel au click droit</li>
+              <li>Vérifier que la suppression de toutes les couches requétables entraîne la désactivation des évènements, la disparition du curseur, le retour du zoom au double click, l'apparition du menu contextuel au click droit</li>
+            </ul>
             <!-- map -->
             <div id="map" style="height: 500px; width: 800px;"></div>
             <button type="button" id="testRemoveLayer">Supprimer une couche</button>

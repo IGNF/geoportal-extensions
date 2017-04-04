@@ -318,8 +318,21 @@ define([
      * @param {Boolean} active - specify the value the active property must be set to.
      */
     GetFeatureInfo.prototype.setActive = function (active) {
+        this._setActive(active);
+        var element = document.getElementById(this._addUID("GPactivateGetFeatureInfo"));
+        if (element) {
+            element.checked = active;
+        }
+    };
+
+    /**
+     * Set active control property
+     *
+     * @param {Boolean} active - specify the value the active property must be set to.
+     */
+    GetFeatureInfo.prototype._setActive = function (active) {
         if ( typeof active !== "boolean" ) {
-            console.log("[ERROR] GetFeatureInfo:setActive - active parameter should be a boolean");
+            console.log("[ERROR] GetFeatureInfo:_setActive - active parameter should be a boolean");
             return;
         }
         this._active = active;
@@ -565,7 +578,7 @@ define([
      * @private
      */
     GetFeatureInfo.prototype.onActivateGetFeatureInfoElementChange = function (e) {
-        this.setActive(e.target.checked);
+        this._setActive(e.target.checked);
     };
 
     /**
