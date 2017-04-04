@@ -37,8 +37,17 @@
         </h3>
 
         <div>
-            <p>Ajout du widget GetFeatureInfo</p>
-
+            <p>Ajout du widget GetFeatureInfo.</p>
+            <p>Cet exemple permet de tester le widget de manière générale. La carte est initialisée avec des couches de différentes natures interrogeables via des actions différentes.<p>
+            <p>Pour certaines couches l'action déclenchant la requête GFI est définie explicitement à l'initialisation, pour d'autres c'est l'évènement par défaut qui déclenchera la requête.<p>
+            <p>Parmi les tests réalisables on a :<p>
+            <ul>
+              <li>Le changement du style du curseur au survol d'objets vecteurs</li>
+              <li>La modification de l'évenement par défaut déclenchant la requête GFI (valable seulement pour les couches dont l'évènement associé n'aura pas été défini à l'initialisation)</li>
+              <li>L'activation/désactivation du widget. Vérifier lors de la désactivation qu'aucune requête n'est envoyée, que le curseur n'apparaît plus, que l'on a bien le menu contextuel au click droit, que le double click permet de zoomer...</li>
+              <li>Pour les couches associées au même évènement, jouer, grâce à l'outil de gestion des couches, sur l'ordre d'empilement et vérifier que c'est bien la couche la plus haute qui répond prioritairement</li>
+              <li>Pour les couches vecteurs ayant le même évènement associé, vérifier que si l'on click sur un pixel où sont situés les objets de plusieurs couches la fenêtre popup GFI affiche les propriétés de tous ces objets en respectant l'ordre d'empilement</li>
+              <li>Vérifier que la suppression de toutes les couches requétables entraine la désactivation des évenements, la disparition du curseur, le retour du zoom au double click, l'apparition du menu contextuel au click droit</li>
             <!-- map -->
             <div id="map" style="height: 500px; width: 800px;"></div>
             <button type="button" id="testRemoveLayer">Supprimer une couche</button>
@@ -104,33 +113,33 @@
 
                         // 3. Ajout du GetFeatureInfo
                         var getFeatureInfo = new GetFeatureInfo({
-                                layers : [
-                                    {
-                                        obj : gpHydro,
-                                        infoFormat : "text/html",
-                                        event: "contextmenu"
-                                    },
-                                    {
-                                        obj : gpMyKml,
-                                        infoFormat : "text/html",
-                                        event: "dblclick"
-                                    },
-                                    {
-                                        obj : gpRoad,
-                                    },
-                                    {
-                                        obj : gpMaps //pour test : non interrogeable
-                                    }
-                                ],
-                                options : {
-                                    active: true,
-                                    defaultInfoFormat: "text/html",
-                                    defaultEvent: "singleclick",
-                                    cursorStyle: "pointer",
-                                    // noProxyDomains: [],
-                                    // proxyUrl: ""
+                            layers : [
+                                {
+                                    obj : gpHydro,
+                                    infoFormat : "text/html",
+                                    event: "contextmenu"
+                                },
+                                {
+                                    obj : gpMyKml,
+                                    infoFormat : "text/html",
+                                    event: "dblclick"
+                                },
+                                {
+                                    obj : gpRoad,
+                                },
+                                {
+                                    obj : gpMaps //pour test : non interrogeable
                                 }
-                            });
+                            ],
+                            options : {
+                                active: true,
+                                defaultInfoFormat: "text/html",
+                                defaultEvent: "singleclick",
+                                cursorStyle: "pointer",
+                                // noProxyDomains: [],
+                                // proxyUrl: ""
+                            }
+                        });
                         map.addControl(getFeatureInfo);
 
                         // 4. Ajout du contrôle de gestion de l'empilement des couches (layerSwitcher)
