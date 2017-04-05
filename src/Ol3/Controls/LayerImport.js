@@ -675,7 +675,7 @@ define([
             console.log("[ol.control.LayerImport] options.webServicesOptions.proxyUrl parameter is mandatory to request resources on another domain (cross-domain)");
             return;
         };
-        url = ProxyUtils.setProxy(url, this.options.webServicesOptions);
+        url = ProxyUtils.proxifyUrl(url, this.options.webServicesOptions);
 
         // FIXME pb de surcharge en mode UMD !? ça ne marche pas...
         // this._hideWaitingContainer();

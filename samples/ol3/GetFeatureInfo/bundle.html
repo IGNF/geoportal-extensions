@@ -66,12 +66,19 @@
                     });
 
                     // 2. Ajout de plusieurs couches différentes.
-                    var gpMaps = new ol.layer.Tile({
+                    // var gpMaps = new ol.layer.Tile({
+                    //     source : new ol.source.GeoportalWMTS({
+                    //         layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+                    //     })
+                    // });
+                    // map.addLayer(gpMaps);
+
+                    var gpOrthos = new ol.layer.Tile({
                         source : new ol.source.GeoportalWMTS({
-                            layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+                            layer: "ORTHOIMAGERY.ORTHOPHOTOS"
                         })
                     });
-                    map.addLayer(gpMaps);
+                    map.addLayer(gpOrthos);
 
                     var gpMyKml = new ol.layer.Vector({
                         source: new ol.source.Vector({
@@ -108,12 +115,15 @@
                                     infoFormat : "text/html",
                                     event: "dblclick"
                                 },
+                                // {
+                                //     obj : gpRoad,
+                                // },
                                 {
-                                    obj : gpRoad,
+                                    obj : gpOrthos,
                                 }
                             ],
                             options : {
-                                active: true,
+                                active: false,
                                 defaultInfoFormat: "text/html",
                                 defaultEvent: "singleclick",
                                 cursorStyle: "pointer",
@@ -163,12 +173,7 @@
                         getFeatureInfo.setDefaultEvent(this.events[this.index]);
                     }
                     document.getElementById("changeActive").onclick = function(e) {
-                        if ( !this.active )
-                        {
-                          this.active = false;
-                        }
-                        getFeatureInfo.setActive(this.active);
-                        this.active = !this.active;
+                        getFeatureInfo.setActive(!getFeatureInfo.isActive());
                     }
 
                 }

@@ -30,8 +30,8 @@ define([
      * @extends {ol.control.Control}
      * @param {Object} gfiOptions - control options
      * @param {Array.<Object>} [gfiOptions.layers] - list of layers which can be requested through the control. Each array element is an object, with following properties :
-     * @param {ol.layer.Layer} gfiOptions.layers.obj - ol.layer.Layer layer handled by the control (that has been added to map).
-     * @param {String} [gfiOptions.layers.event] - name of the mouse event triggering getFeatureInfo on this layer (that has been added to map). allowed values are : 'singleclick', 'dblclick' and 'contextmenu'
+     * @param {ol.layer.Layer} gfiOptions.layers.obj - {@link http://openlayers.org/en/latest/apidoc/ol.layer.Layer.html ol.layer.Layer} layer handled by the control (that has been added to map).
+     * @param {String} [gfiOptions.layers.event] - name of the mouse event triggering getFeatureInfo on this layer (that has been added to map). allowed values are : 'singleclick', 'dblclick' and 'contextmenu'. If not specified the triggering event is the current default event (see gfiOptions.options.defaultEvent).
      * @param {String} [gfiOptions.layers.infoFormat] - indicates the format mime-type of the response of GetFeatureInfo requests.
      * @param {Object} [gfiOptions.options] - custom options object to configure the control, with following properties :
      * @param {Boolean} [gfiOptions.options.auto=false] - specifies if the control run in automatic mode. In automatic mode all vector layers added on run time or added at map initialization can be requested through the control. The triggering event of those layers is the default event.
@@ -39,8 +39,8 @@ define([
      * @param {String} [gfiOptions.options.defaultEvent='singleclick'] - default triggering event chosen in the list ('singleclick', 'dblclick', 'contextmenu'). This is the triggering event of all layers added to the control without configured triggering event.
      * @param {String} [gfiOptions.options.defaultInfoFormat='text/html'] - indicates the default format mime-type of the response of GetFeatureInfo requests.
      * @param {String} [gfiOptions.options.cursorStyle='pointer'] - specifies the type of cursor to be displayed when pointing on vector feature of a layer previously added to the control. The value must be choosen in the possible values of the css cursor property.
-     * @param {String} [gfiOptions.options.proxyUrl] - Proxy URL to avoid cross-domain problems, if not already set in mapOptions. Mandatory to import WMS and WMTS layer.
-     * @param {Array.<String>} [gfiOptions.options.noProxyDomains] - Proxy will not be used for this list of domain names. Only use if you know what you're doing (if not already set in mapOptions).
+     * @param {String} [gfiOptions.options.proxyUrl] - Proxy URL to avoid cross-domain problems.
+     * @param {Array.<String>} [gfiOptions.options.noProxyDomains] - Proxy will not be used for this list of domain names. Only use if you know what you're doing.
      */
     function GetFeatureInfo (gfiOptions) {
 
@@ -191,7 +191,7 @@ define([
     };
 
     /**
-     * Overload setMap function, that enables to catch map events, such as movend events.
+     * Binds map to control.
      *
      * @param {ol.Map} map - Map.
      */
@@ -207,7 +207,7 @@ define([
             return ;
         }
 
-        if ( this._cursorStyle ) {
+        if ( this._cursorStyle && this._active ) {
             this._activateCursor(true);
         }
 
@@ -266,7 +266,10 @@ define([
     /**
      * Get the list of layers already added to the map and attached to the control.
      *
-     * @return {Array.<Object>} gfiLayers - list of layers
+     * @returns {Array.<Object>} gfiLayers List of layers.
+     * @returns {ol.layer.Layer} gfiLayers.obj {@link http://openlayers.org/en/latest/apidoc/ol.layer.Layer.html ol.layer.Layer} layer handled by the control (that has been added to map).
+     * @returns {String} gfiLayers.event Optional. Name of the mouse event triggering getFeatureInfo on this layer (that has been added to map). allowed values are : 'singleclick', 'dblclick' and 'contextmenu'.
+     * @returns {String} gfiLayers.infoFormat Optional. Indicates the format mime-type of the response of GetFeatureInfo requests.
      */
     GetFeatureInfo.prototype.getLayers = function () {
         return this._layers;
@@ -335,6 +338,9 @@ define([
             console.log("[ERROR] GetFeatureInfo:_setActive - active parameter should be a boolean");
             return;
         }
+        if ( this._active === active ) {
+            return;
+        }
         this._active = active;
         if ( this._cursorStyle ) {
             this._activateCursor(active);
@@ -346,7 +352,7 @@ define([
      *
      * @return {Boolean} active
      */
-    GetFeatureInfo.prototype.getActive = function () {
+    GetFeatureInfo.prototype.isActive = function () {
         return this._active;
     };
 
@@ -364,14 +370,16 @@ define([
      *
      * @return {Boolean} hidden
      */
-    GetFeatureInfo.prototype.getHidden = function () {
+    GetFeatureInfo.prototype.isHidden = function () {
         return this.element.style.visibility == "hidden";
     };
 
     /**
      * Set the layers list the control is attached to. Listened events are updated according to this list.
      * @param {Array.<Object>} gfiLayers - list of layers which can be requested through the control.
-     *
+     * @param {ol.layer.Layer} gfiLayers.obj - {@link http://openlayers.org/en/latest/apidoc/ol.layer.Layer.html ol.layer.Layer} layer handled by the control (that has been added to map).
+     * @param {String} [gfiLayers.event] - Name of the mouse event triggering getFeatureInfo on this layer (that has been added to map). allowed values are : 'singleclick', 'dblclick' and 'contextmenu'.
+     * @param {String} [gfiLayers.infoFormat] - Indicates the format mime-type of the response of GetFeatureInfo requests.
      */
     GetFeatureInfo.prototype.setLayers = function (gfiLayers) {
         this._setLayers(gfiLayers);
@@ -501,6 +509,10 @@ define([
         var map = this.getMap();
 
         if (activate) {
+            if ( this._eventsHandler.hasOwnProperty("pointermove") ) {
+                console.log("[ERROR] _activateCursor - inconsistent state: pointermove event handler already registered");
+                return;
+            }
             var gfiObj = this;
 
             /**
@@ -592,7 +604,7 @@ define([
         // creation du container principal
         var container = this._createMainContainerElement();
 
-        var inputActivate = this._activateGetFeatureInfoContainer = this._createActivateGetFeatureInfoElement(this.getActive());
+        var inputActivate = this._activateGetFeatureInfoContainer = this._createActivateGetFeatureInfoElement(this.isActive());
         container.appendChild(inputActivate);
 
         // ajout dans le container principal du picto du controle

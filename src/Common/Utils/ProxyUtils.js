@@ -4,15 +4,18 @@ define(["woodman"], function (woodman) {
 
     var ProxyUtils = {
         /**
-         * ajoute un proxy aux url des couches vecteurs si besoin.
+         * Ajoute un proxy aux url des couches vecteurs si besoin.
          *
-         * @private
+         * @param {String} url - Url to proxify.
+         * @param {Object} [proxyOptions] - Object defining proxy options.
+         * @param {String} proxyOptions.proxyUrl - Proxy URL.
+         * @param {Array.<String>} [proxyOptions.noProxyDomains] - Proxy will not be used for this list of domain names.
          */
-        setProxy : function (url, proxyOptions) {
+        proxifyUrl : function (url, proxyOptions) {
 
             // logger
             woodman.load("console");
-            var logger = woodman.getLogger("setProxy");
+            var logger = woodman.getLogger("proxifyUrl");
 
             if (  !proxyOptions ||
                   !proxyOptions.hasOwnProperty("proxyUrl") ||
@@ -24,9 +27,9 @@ define(["woodman"], function (woodman) {
                 Array.isArray(proxyOptions.noProxyDomains) &&
                 proxyOptions.noProxyDomains.length > 0 ) {
                 for (var i in proxyOptions.noProxyDomains) {
-                    logger.trace("[ProxyUtils] setProxy : analyzing " + proxyOptions.noProxyDomains[i]) ;
+                    logger.trace("[ProxyUtils] proxifyUrl : analyzing " + proxyOptions.noProxyDomains[i]) ;
                     if (url.indexOf(proxyOptions.noProxyDomains[i]) !== -1 ) {
-                        logger.info("[ProxyUtils] setProxy : " + url + " found in noProxyDomains list (" + proxyOptions.noProxyDomains[i] + ").") ;
+                        logger.info("[ProxyUtils] proxifyUrl : " + url + " found in noProxyDomains list (" + proxyOptions.noProxyDomains[i] + ").") ;
                         return url ;
                     }
                 }

@@ -2,14 +2,12 @@ define([
   "ol",
   "gp",
   "woodman",
-  "Common/Utils/ProxyUtils",
-  "Ol3/Utils"
+  "Common/Utils/ProxyUtils"
 ], function (
   ol,
   Gp,
   woodman,
-  ProxyUtils,
-  Utils
+  ProxyUtils
 ) {
 
     "use strict";
@@ -46,7 +44,7 @@ define([
          *
          * @param {ol.Map} map - map openlayers
          * @param {ol.Coordinate} coords - coordinates where to anchor popup.
-         * @param {HTMLElement} content - content to display
+         * @param {String} content - content to display
          * @param {String} [contentType='text/html'] - content mime-type
          * @return {Boolean} displayed - indicates if something has been displayed
          */
@@ -354,8 +352,7 @@ define([
                         var _res    = map.getView().getResolution();
                         var _url    = null;
                         if ( format == "wmts" ) {
-                            _url = this.getGetFeatureInfoUrl(
-                                l.getSource(),
+                            _url = l.getSource().getGetFeatureInfoUrl(
                                 olCoordinate,
                                 _res,
                                 map.getView().getProjection(),
@@ -377,7 +374,7 @@ define([
                         requests.push({
                             // id : _id,
                             format : infoFormat,
-                            url : ProxyUtils.setProxy(_url, proxyOptions),
+                            url : ProxyUtils.proxifyUrl(_url, proxyOptions),
                             scope : this,
                             coordinate : olCoordinate
                         });
@@ -491,7 +488,7 @@ define([
          * onDisplayFeatureInfo
          */
         onDisplayFeatureInfo : function (e,gfiObj) {
-            if (!gfiObj.getActive()) {
+            if (!gfiObj.isActive()) {
                 return;
             }
 
@@ -537,93 +534,6 @@ define([
             var coords = this.getPosition(e,map);
 
             this.displayFeatureInfo(map, coords, eventLayers, proxyOptions);
-        },
-
-        /**
-        * Return the GetFeatureInfo URL for the passed coordinate, resolution, and
-        * projection. Return `undefined` if the GetFeatureInfo URL cannot be
-        * constructed.
-        * @param {ol.Source.WMTS} source - Source.
-        * @param {ol.Coordinate} coordinate - Coordinate.
-        * @param {Number} resolution - Resolution.
-        * @param {ol.proj.Projection} projection - Projection.
-        * @param {!Object} params - GetFeatureInfo params. `INFOFORMAT` at least should
-        *     be provided.
-        * @return {String|undefined} GetFeatureInfo URL.
-        */
-        getGetFeatureInfoUrl : function (source, coordinate, resolution, projection, params) {
-
-            var pixelRatio = (source.option && source.options.tilePixelRatio) ? source.options.tilePixelRatio : 1;
-
-            var tileGrid = source.tileGrid;
-            var tileCoord = source.tileGrid.getTileCoordForCoordAndResolution(coordinate, resolution);
-
-            /**
-            * this code is duplicated from createFromWMTSTemplate function
-            */
-            var getTransformedTileCoord = function (tileCoord, tileGrid, projection) {
-                var tmpTileCoord = [0,0,0]; /*Note : [z(zoomLevel),x,y]*/
-                var tmpExtent = ol.extent.createEmpty();
-                var x = tileCoord[1];
-                var y = -tileCoord[2] - 1;
-                var tileExtent = tileGrid.getTileCoordExtent(tileCoord);
-                var projectionExtent = projection.getExtent();
-                var extent = projectionExtent;
-
-                if (  extent != null  && projection.isGlobal() && extent[0] === projectionExtent[0] && extent[2] === projectionExtent[2]) {
-                    var numCols = Math.ceil(ol.extent.getWidth(extent) / ol.extent.getWidth(tileExtent));
-                    x = x % numCols;
-                    tmpTileCoord[0] = tileCoord[0];
-                    tmpTileCoord[1] = x;
-                    tmpTileCoord[2] = tileCoord[2];
-                    tileExtent = tileGrid.getTileCoordExtent(tmpTileCoord, tmpExtent);
-                }
-                if (!ol.extent.intersects(tileExtent, extent) /*|| ol.extent.touches(tileExtent, extent) */) {
-                    return null;
-                }
-                return [tileCoord[0], x, y];
-            };
-
-            var tileExtent = tileGrid.getTileCoordExtent(tileCoord);
-            var transformedTileCoord = getTransformedTileCoord(tileCoord,tileGrid, projection);
-
-            if (tileGrid.getResolutions().length <= tileCoord[0]) {
-                return undefined;
-            }
-
-            var tileResolution = tileGrid.getResolution(tileCoord[0]);
-            var tileMatrix = tileGrid.getMatrixIds()[tileCoord[0]];
-
-            var baseParams = {
-                SERVICE : "WMTS",
-                VERSION : "1.0.0",
-                REQUEST : "GetFeatureInfo",
-                LAYER : source.getLayer(),
-                TILECOL : transformedTileCoord[1],
-                TILEROW : transformedTileCoord[2],
-                TILEMATRIX : tileMatrix,
-                TILEMATRIXSET : source.getMatrixSet(),
-                FORMAT : source.getFormat() || "image/png",
-                STYLE : source.getStyle() || "normal"
-            };
-
-            Utils.assign(baseParams, params);
-
-            /*var tileSize = tileGrid.getTileSize();
-            var x = Math.floor(tileSize*((coordinate[0]-tileExtent[0])/(tileExtent[2]-tileExtent[0])));
-            var y = Math.floor(tileSize*((tileExtent[3]-coordinate[1])/(tileExtent[3]-tileExtent[1])));*/
-
-            var x = Math.floor((coordinate[0] - tileExtent[0]) / (tileResolution / pixelRatio));
-            var y = Math.floor((tileExtent[3] - coordinate[1]) / (tileResolution / pixelRatio));
-
-            baseParams["I"] = x;
-            baseParams["J"] = y;
-
-            var url = source.urls[0];
-
-            var featureInfoUrl = Gp.Helper.normalyzeUrl(url, baseParams);
-
-            return featureInfoUrl;
         }
     };
     return GfiUtils;

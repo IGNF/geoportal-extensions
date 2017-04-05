@@ -7,6 +7,7 @@ define([
     "Ol3/GfiUtils",
     "Ol3/Utils",
     "Ol3/Formats/KML",
+    "Ol3/Sources/WMTS",
     "Ol3/CRS/CRS",
     "Ol3/Layers/SourceWMTS",
     "Ol3/Layers/SourceWMS",
@@ -36,6 +37,7 @@ define([
     GfiUtils,
     Utils,
     KML,
+    WMTS,
     CRS,
     SourceWMTS,
     SourceWMS,
@@ -68,10 +70,12 @@ define([
     // Classes utilitaires
     Gp.LayerUtils = LayerUtils;
     Gp.ProxyUtils = ProxyUtils;
-    Gp.GfiUtils = GfiUtils;
+    ol.gp = {};
+    ol.gp.GfiUtils = GfiUtils;
 
     // FIXME overload or not ? name Gp.format.kml ?
     ol.format.KMLExtended = KML;
+    ol.source.WMTSExtended = WMTS;
 
     // Surcharge sur les functions ol/proj4 par défaut
     CRS.overload();

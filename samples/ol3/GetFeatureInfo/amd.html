@@ -89,10 +89,15 @@
                         });
 
                         // 2. Ajout de plusieurs couches différentes.
-                        var gpMaps = new LayerWMTS({
-                            layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS",
+                        // var gpMaps = new LayerWMTS({
+                        //     layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS",
+                        // });
+                        // map.addLayer(gpMaps);
+
+                        var gpOrthos = new LayerWMTS({
+                            layer: "ORTHOIMAGERY.ORTHOPHOTOS",
                         });
-                        map.addLayer(gpMaps);
+                        map.addLayer(gpOrthos);
 
                         var gpMyKml = new ol.layer.Vector({
                             source: new ol.source.Vector({
@@ -128,12 +133,15 @@
                                 {
                                     obj : gpRoad,
                                 },
+                                // {
+                                //     obj : gpMaps //pour test : non interrogeable
+                                // },
                                 {
-                                    obj : gpMaps //pour test : non interrogeable
+                                    obj : gpOrthos
                                 }
                             ],
                             options : {
-                                active: true,
+                                active: false,
                                 defaultInfoFormat: "text/html",
                                 defaultEvent: "singleclick",
                                 cursorStyle: "pointer",
@@ -191,12 +199,7 @@
                             getFeatureInfo.setDefaultEvent(this.events[this.index]);
                         }
                         document.getElementById("changeActive").onclick = function(e) {
-                            if ( !this.active )
-                            {
-                              this.active = false;
-                            }
-                            getFeatureInfo.setActive(this.active);
-                            this.active = !this.active;
+                            getFeatureInfo.setActive(!getFeatureInfo.isActive());
                         }
                         document.getElementById("addVectorKml").onclick = function(e) {
                             if ( !this.kmlUrls )
