@@ -14,7 +14,7 @@
 
     //|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     //| ✓ Options
-    //| > usage : gulp [task] [--production]
+    //| > usage : gulp [task] [--production] [--mix]
     //| >              [--ol3] [--leaflet] [--vg] [--itowns]
     //'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     var opts = require("minimist")(process.argv.slice(2));
@@ -53,27 +53,22 @@
         isMix = false;
     }
 
-    var isExecuteOl3WithVg = isMix && isExecuteOl3 && isExecuteVg;
-    var isExecuteLeafletWithVg = isMix && isExecuteLeaflet && isExecuteVg;
-    var isExecuteOl3WithITowns = isMix && isExecuteOl3 && isExecuteITowns;
-    var isExecuteLeafletWithITowns = isMix && isExecuteLeaflet && isExecuteITowns;
+    var isExecuteOl3WithVg = false;
+    var isExecuteLeafletWithVg = false;
+    var isExecuteOl3WithITowns = false;
+    var isExecuteLeafletWithITowns = false;
 
     /* ex. GpPluginOl3 */
     var getBaseFileName = function () {
-        var baseFileName = null;
-        // if (isMix) {
-        //     baseFileName =
-        //     (isExecuteOl3WithVg) ? 'GpPluginOl3Vg' :
-        //     (isExecuteOl3WithITowns) ? 'GpPluginOl3ITowns' :
-        //     (isExecuteLeafletWithVg) ? 'GpPluginLeafletVg' :
-        //     (isExecuteLeafletWithITowns) ? 'GpPluginLeafletITowns' : null;
-        // } else {
-        baseFileName =
-            (isExecuteOl3) ? 'GpPluginOl3' :
-            (isExecuteLeaflet) ? 'GpPluginLeaflet' :
-            (isExecuteVg) ? 'GpPluginVg' :
-            (isExecuteITowns) ? 'GpPluginITowns' :null;
-        // }
+        var baseFileName =
+            (isExecuteOl3WithVg) ? 'GpPluginOl3Vg' :
+            (isExecuteOl3WithITowns) ? 'GpPluginOl3ITowns' :
+            (isExecuteLeafletWithVg) ? 'GpPluginLeafletVg' :
+            (isExecuteLeafletWithITowns) ? 'GpPluginLeafletITowns' :
+                (isExecuteOl3) ? 'GpPluginOl3' :
+                    (isExecuteLeaflet) ? 'GpPluginLeaflet' :
+                        (isExecuteVg) ? 'GpPluginVg' :
+                            (isExecuteITowns) ? 'GpPluginITowns' : null;
         return baseFileName;
     };
 
@@ -86,10 +81,10 @@
     /* ex. Ol3 */
     var getDistDirName = function () {
         var dirName =
-            // (isExecuteOl3WithVg ||
-            //  isExecuteOl3WithITowns ||
-            //  isExecuteLeafletWithVg ||
-            //  isExecuteLeafletWithITowns) ? 'Mix' :
+            (isExecuteOl3WithVg ||
+             isExecuteOl3WithITowns ||
+             isExecuteLeafletWithVg ||
+             isExecuteLeafletWithITowns) ? 'Mix' :
                 (isExecuteOl3) ? 'Ol3' :
                     (isExecuteLeaflet) ? 'Leaflet' :
                         (isExecuteVg) ? 'Vg' :
@@ -100,7 +95,7 @@
     // liste des répertoires sources (ex. dir.src)
     var _dir = {
         src :     "src",
-        clean :   "csrc", // src clean, sans logger !
+        clean :   "csrc", // clean des sources, cad sans logger !
         res :     "res",
         lib :     "lib",
         test :    "test",
@@ -237,7 +232,7 @@
     //| > Cleaning woodman logger.
     //| > http://joshfire.github.io/woodman/getstarted.html
     //'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-    gulp.task("clean-logger", ["source-js", "source-common"] , function () {
+    gulp.task("clean-logger", [] , function () {
 
         var builddir = path.join(_build, getDistDirName(), _dir.clean);
         var basedir  = path.join(_build, "src");
@@ -255,7 +250,7 @@
 
     gulp.task("clean-logger-mix", [] , function () {
 
-        var builddir = path.join(_build, "mix", _dir.clean);
+        var builddir = path.join(_build, getDistDirName(), _dir.clean);
         var srcdir  = path.join(_build, "src");
 
         $.shelljs.exec("node ./node_modules/woodman/precompile/precompiler.js " + srcdir + " " + builddir);
@@ -323,7 +318,7 @@
     //| > options  -> https://github.com/jrburke/r.js/blob/master/build/example.build.js
     //| > astuces  -> http://stackoverflow.com/questions/23978361/using-gulp-to-build-requirejs-project-gulp-requirejs
     //'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-    gulp.task("requirejs-amdclean", ["clean-logger"], function (taskReady) {
+    gulp.task("requirejs-amdclean", [], function (taskReady) {
 
         var requirejs = require("requirejs");
 
@@ -422,7 +417,7 @@
         });
     });
 
-    gulp.task("requirejs-amdclean-mix", ["clean-logger-mix"], function (taskReady) {
+    gulp.task("requirejs-amdclean-mix", [], function (taskReady) {
         var requirejs = require("requirejs");
 
         // Pour information,
@@ -434,9 +429,8 @@
             mode = "uglify2";
         }
 
-        var pluginName = "GpPlugin";
-        var builddir = path.join(_build, "mix", "tmp");
-        var srcdir   = path.join(_build, "mix", _dir.clean);
+        var builddir = path.join(_build, getDistDirName(), "js");
+        var srcdir   = path.join(_build, getDistDirName(), _dir.clean);
         var input    = []; // on place les modules qui ne sont pas appellés directement dans le code (dependances) !
 
 
@@ -453,7 +447,6 @@
         };
 
         if (isExecuteOl3WithVg) {
-            pluginName += "Ol3Vg";
             input.push(path.join("Common", "Utils", "AutoLoadConfig"));
             input.push(path.join("Ol3", "CRS", "CRS")); // FIXME ???
             input.push(path.join("Ol3", "GpPluginOl3"));
@@ -461,7 +454,6 @@
         }
 
         if (isExecuteLeafletWithVg) {
-            pluginName += "LeafletVg";
             input.push(path.join("Common", "Utils", "AutoLoadConfig"));
             input.push(path.join("Leaflet", "GpPluginLeaflet"));
             input.push(path.join("Vg", "GpPluginVg"));
@@ -472,7 +464,6 @@
         }
 
         if (isExecuteOl3WithITowns) {
-            pluginName += "Ol3ITowns";
             input.push(path.join("Common", "Utils", "AutoLoadConfig"));
             input.push(path.join("Ol3", "CRS", "CRS")); // FIXME ???
             input.push(path.join("Ol3", "GpPluginOl3"));
@@ -480,7 +471,6 @@
         }
 
         if (isExecuteLeafletWithITowns) {
-            pluginName += "LeafletITowns";
             input.push(path.join("Common", "Utils", "AutoLoadConfig"));
             input.push(path.join("Leaflet", "GpPluginLeaflet"));
             input.push(path.join("ITowns", "GpPluginITowns"));
@@ -503,7 +493,7 @@
                 mangle: (isProduction) ? true : false
             },
             include : input,
-            out : path.join(builddir, (isProduction) ? pluginName + ".js" : pluginName + "-src.js"),
+            out : path.join(builddir, getDistFileName()),
             findNestedDependencies : false,
             preserveLicenseComments : false,
             useStrict : true,
@@ -593,8 +583,8 @@
 
         var umd = require("gulp-umd");
 
-        var builddir= path.join(_build, "mix", "dist");
-        var srcdir  = path.join(_build, "mix", "tmp");
+        var builddir= path.join(_build, getDistDirName(), "umd");
+        var srcdir  = path.join(_build, getDistDirName(), "js");
         var deps    = null;
 
         if (isExecuteOl3WithVg || isExecuteOl3WithITowns) {
@@ -607,7 +597,7 @@
             $.util.log("Exception !");
         }
 
-        return gulp.src(path.join(srcdir, "*.js"))
+        return gulp.src(path.join(srcdir, getDistFileName()))
             .pipe(umd({
                 exports: function (file) {
                     return "Gp" ;
@@ -660,6 +650,38 @@
 
     });
 
+    gulp.task("copy-images-mix", function () {
+
+        var rename = require("gulp-rename");
+
+        var builddir  = path.join(_build, getDistDirName(), "dist", getDistDirName().toLowerCase(), "img");
+        var srcdir    = [];
+
+        if (isExecuteOl3WithVg) {
+            srcdir.push(path.join(_build, "Ol3", "dist", "ol3", "img", "*.*"));
+            srcdir.push(path.join(_build, "Vg", "dist", "vg", "img", "*.*"));
+        }
+        else if (isExecuteOl3WithITowns) {
+            srcdir.push(path.join(_build, "Ol3", "dist", "ol3", "img", "*.*"));
+            srcdir.push(path.join(_build, "ITowns", "dist", "itowns", "img", "*.*"));
+        }
+        else if (isExecuteLeafletWithVg) {
+            srcdir.push(path.join(_build, "Leaflet", "dist", "leaflet", "img", "*.*"));
+            srcdir.push(path.join(_build, "Vg", "dist", "vg", "img", "*.*"));
+        }
+        else if (isExecuteLeafletWithITowns) {
+            srcdir.push(path.join(_build, "Leaflet", "dist", "leaflet", "img", "*.*"));
+            srcdir.push(path.join(_build, "ITowns", "dist", "itowns", "img", "*.*"));
+        }
+
+        return gulp.src(srcdir)
+            .pipe(rename({dirname :""}))
+            .pipe(gulp.dest(builddir))
+            .pipe($.plumber())
+            .pipe($.size());
+
+    });
+
     //|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     //| ✓ compress images
     //| FIXME : tache desactivee (pb de build selon environnement)
@@ -702,9 +724,7 @@
         var exceptsrcdircommon = "!" + path.join(_dir.res, "Common", "__*.css");
         var output = getBaseFileName();
 
-        if (isExecuteOl3) {
-            // RAS...
-        }
+        if (isExecuteOl3) {}
         else if (isExecuteLeaflet) {
             // Plugins Leaflet !
             plugindir = path.join(_dir.lib, "leaflet", "plugins", "leaflet-draw", "**", "*.css");
@@ -724,6 +744,39 @@
         // return gulp.src([srcdircommon, srcdir, plugindir, exceptsrcdir, exceptsrcdircommon])
         return gulp.src(srcArray)
             .pipe((isProduction) ? minifyCss(/*{compatibility :"ie8"}*/) : $.util.noop())
+            .pipe((isProduction) ? concat(output + ".css") : concat(output + "-src.css"))
+            .pipe(gulp.dest(builddir))
+            .pipe($.plumber())
+            .pipe($.size());
+    });
+
+    gulp.task("copy-styles-mix", function () {
+
+        var concat    = require("gulp-concat");
+
+        var builddir = path.join(_build, getDistDirName(), "dist", getDistDirName().toLowerCase());
+        var srcdir   = [];
+
+        if (isExecuteOl3WithVg) {
+            srcdir.push(path.join(_build, "Ol3", "dist", "ol3", "*.css"));
+            srcdir.push(path.join(_build, "Vg", "dist", "vg", "*.css"));
+        }
+        else if (isExecuteOl3WithITowns) {
+            srcdir.push(path.join(_build, "Ol3", "dist", "ol3", "*.css"));
+            srcdir.push(path.join(_build, "ITowns", "dist", "itowns", "*.css"));
+        }
+        else if (isExecuteLeafletWithVg) {
+            srcdir.push(path.join(_build, "Leaflet", "dist", "leaflet", "*.css"));
+            srcdir.push(path.join(_build, "Vg", "dist", "vg", "*.css"));
+        }
+        else if (isExecuteLeafletWithITowns) {
+            srcdir.push(path.join(_build, "Leaflet", "dist", "leaflet", "*.css"));
+            srcdir.push(path.join(_build, "ITowns", "dist", "itowns", "*.css"));
+        }
+
+        var output = getBaseFileName();
+
+        return gulp.src(srcdir)
             .pipe((isProduction) ? concat(output + ".css") : concat(output + "-src.css"))
             .pipe(gulp.dest(builddir))
             .pipe($.plumber())
@@ -1078,9 +1131,9 @@
     gulp.task("res",     ["res-styles", "res-images"]); // raccourci !
     gulp.task("licence", ["licence-css", "licence-js"]);// raccourci !
     gulp.task("lib",     ["lib-external"]);             // raccourci !
-    gulp.task("dist",    ["task-dist"]);   //  tache sync. !
-    gulp.task("doc",     ["task-doc"]);    //  tache sync. !
-    gulp.task("sample",  ["task-sample"]); //  tache sync. !
+    gulp.task("dist",    ["task-dist"]);       //  tache sync. !
+    gulp.task("doc",     ["task-doc"]);        //  tache sync. !
+    gulp.task("sample",  ["task-sample"]);     //  tache sync. !
 
     //|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     //| ✓ synchronisation des tâches
@@ -1114,8 +1167,20 @@
             target.push("build-ol3");
         }
 
-        if (isMix) {
-            target.push("build-mix");
+        // gestion des flags mixtes
+        isExecuteOl3WithVg = isMix && isExecuteOl3 && isExecuteVg;
+        isExecuteLeafletWithVg = isMix && isExecuteLeaflet && isExecuteVg;
+        isExecuteOl3WithITowns = isMix && isExecuteOl3 && isExecuteITowns;
+        isExecuteLeafletWithITowns = isMix && isExecuteLeaflet && isExecuteITowns;
+
+        if (isExecuteOl3WithVg) {
+            target.push("build-ol3-vg");
+        } else if (isExecuteLeafletWithVg) {
+            $.util.log("[ERREUR] Execution des taches (mixte) entre Leaflet/VirtualGeo !!!");
+        } else if (isExecuteOl3WithITowns) {
+            $.util.log("[ERREUR] Execution des taches (mixte) entre OpenLayers/ITowns !!!");
+        } else if (isExecuteLeafletWithITowns) {
+            $.util.log("[ERREUR] Execution des taches (mixte) entre Leaflet/ITowns !!!");
         }
 
         // callback
@@ -1130,7 +1195,7 @@
         isExecuteLeaflet = !isExecuteOl3;
         isExecuteVg = !isExecuteOl3;
         isExecuteITowns = !isExecuteOl3;
-
+        isExecuteOl3WithVg = isExecuteLeafletWithVg = isExecuteOl3WithITowns = isExecuteLeafletWithITowns = false;
         $.util.log("[INFO] Execution des taches pour OpenLayers...");
         runSequence("check", /*"test",*/ "dist", "doc", "lib", "sample", cb);
     });
@@ -1140,6 +1205,7 @@
         isExecuteOl3 = !isExecuteLeaflet;
         isExecuteVg = !isExecuteLeaflet;
         isExecuteITowns = !isExecuteLeaflet;
+        isExecuteOl3WithVg = isExecuteLeafletWithVg = isExecuteOl3WithITowns = isExecuteLeafletWithITowns = false;
         $.util.log("[INFO] Execution des taches pour Leaflet...");
         runSequence("check", /*"test",*/ "dist", "doc", "lib", "sample", cb);
     });
@@ -1149,6 +1215,7 @@
         isExecuteOl3 = !isExecuteVg;
         isExecuteLeaflet = !isExecuteVg;
         isExecuteITowns = !isExecuteVg;
+        isExecuteOl3WithVg = isExecuteLeafletWithVg = isExecuteOl3WithITowns = isExecuteLeafletWithITowns = false;
         $.util.log("[INFO] Execution des taches pour VirtualGeo 3D...");
         runSequence("check", /*"test",*/ "dist", /*"doc",*/ "lib", "sample", cb);
     });
@@ -1158,21 +1225,26 @@
         isExecuteOl3 = !isExecuteITowns;
         isExecuteLeaflet = !isExecuteITowns;
         isExecuteVg = !isExecuteITowns;
+        isExecuteOl3WithVg = isExecuteLeafletWithVg = isExecuteOl3WithITowns = isExecuteLeafletWithITowns = false;
         $.util.log("[TODO] Execution des taches pour ITowns !!!");
         // runSequence("check", "test", "dist", "doc", "lib", "sample", cb);
     });
 
-    gulp.task("build-mix", function(cb) {
-        // FIXME
-        // le mode mixye est utile pour le geoportail.
-        // A t on besoin des licences ? des ressources CSS images ? ...
-        // Publication ?
-        $.util.log("[TODO] Execution des taches pour le mode mixte !!!");
-        runSequence("umd-mix", cb);
+    gulp.task("build-ol3-vg", function(cb) {
+        $.util.log("[INFO] Execution des taches (mixte) : OpenLayers/VirtualGeo !!!");
+        isExecuteOl3WithVg = true;
+        isExecuteLeafletWithVg = isExecuteOl3WithITowns = isExecuteLeafletWithITowns = false;
+        runSequence(
+            "clean-logger-mix",
+            "umd-mix",
+            "copy-dist",
+            "copy-images-mix",
+            "copy-styles-mix",
+            cb);
     });
 
     gulp.task("task-dist", function(cb) {
-        runSequence("umd", "copy-dist", "res", "licence", cb);
+        runSequence("source-js", "source-common", "clean-logger", "umd", "copy-dist", "res", "licence", cb);
     });
 
     gulp.task("task-doc", function(cb) {
