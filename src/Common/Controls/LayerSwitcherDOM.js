@@ -251,7 +251,7 @@ define(["sortable"], function (Sortable) {
 
             var list = [];
 
-            var checked = obj.visibility;
+            var checked = typeof obj.visibility !== "undefined" ? obj.visibility : true;
             var id = this._addUID("GPvisibility_ID_" + obj.id);
 
             var input = document.createElement("input");
@@ -450,7 +450,8 @@ define(["sortable"], function (Sortable) {
             divO.className = "GPlayerOpacity";
             divO.title = "Opacité";
 
-            var opacity = Math.round(obj.opacity * 100);
+            var opacity = typeof obj.opacity !== "undefined" ? obj.opacity : 1;
+            opacity = Math.round(opacity * 100);
 
             var input = document.createElement("input");
             input.id = this._addUID("GPopacityValueDiv_ID_" + obj.id);
