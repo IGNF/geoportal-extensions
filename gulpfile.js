@@ -438,8 +438,8 @@
             ol : "empty:",
             leaflet : "empty:",
             vg : "empty:",
-            request : "empty:", // depenance externe pour nodejs !
-            xmldom : "empty:",  // depenance externe pour nodejs !
+            request : "empty:", // dependance externe pour nodejs !
+            xmldom : "empty:",  // dependance externe pour nodejs !
             proj4 : "../../../../lib/proj4/proj4-src" /*+ modeExt*/,
             gp : "../../../../lib/gp/GpServices-src"  /*+ modeExt */,
             sortable : "../../../../lib/sortable/Sortable-src" /*+ modeExt */,
@@ -448,9 +448,9 @@
 
         if (isExecuteOl3WithVg) {
             input.push(path.join("Common", "Utils", "AutoLoadConfig"));
-            input.push(path.join("Ol3", "CRS", "CRS")); // FIXME ???
             input.push(path.join("Ol3", "GpPluginOl3"));
             input.push(path.join("Vg", "GpPluginVg"));
+            input.push(path.join("Ol3", "CRS", "CRS")); // FIXME ???
         }
 
         if (isExecuteLeafletWithVg) {
@@ -465,9 +465,9 @@
 
         if (isExecuteOl3WithITowns) {
             input.push(path.join("Common", "Utils", "AutoLoadConfig"));
-            input.push(path.join("Ol3", "CRS", "CRS")); // FIXME ???
             input.push(path.join("Ol3", "GpPluginOl3"));
             input.push(path.join("ITowns", "GpPluginITowns"));
+            input.push(path.join("Ol3", "CRS", "CRS")); // FIXME ???
         }
 
         if (isExecuteLeafletWithITowns) {
@@ -1217,7 +1217,7 @@
         isExecuteITowns = !isExecuteVg;
         isExecuteOl3WithVg = isExecuteLeafletWithVg = isExecuteOl3WithITowns = isExecuteLeafletWithITowns = false;
         $.util.log("[INFO] Execution des taches pour VirtualGeo 3D...");
-        runSequence("check", /*"test",*/ "dist", /*"doc",*/ "lib", "sample", cb);
+        runSequence(/*"check",*/ /*"test",*/ "dist", /*"doc",*/ "lib", "sample", cb);
     });
 
     gulp.task("build-itowns", function(cb) {
