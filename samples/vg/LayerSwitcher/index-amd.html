@@ -5,7 +5,7 @@
     <title>sample vg LayerSwitcher</title>
 
     <!-- Library VirtualGeo -->
-    <script src="../../../lib/vg/js/VirtualGeoWeb-5.0.9.js"></script>
+    <script src="../../../lib/vg/js/VirtualGeoWeb-5.0.11.js"></script>
     <!-- <script src="../../../lib/ol3/ol-debug.js"></script> -->
 
     <!-- Plugin VirtualGeo IGN -->
@@ -257,18 +257,22 @@ requirejs(
                                 }
                             });
 
-                            // pMap.addFeatureLayer({
-                            //    id: "myKmlLayer1",
-                            //    url: "http://localhost/Client3D/12_08_septembre/VirtualGeoWeb-5.0.6/Data/croquis.kml",
-                            // });
-                            //
-                            // pMap.addFeatureLayer({
-                            //    id: "myKmlLayer2",
-                            //    url: "http://localhost/Client3D/12_08_septembre/VirtualGeoWeb-5.0.6/Data/croquis.kml",
-                            // });
+                            // Ajout couche WMS EPSG:3857
+                            map.addImageryLayer({
+                                protocol: "wms",
+                                id: "Risques d'avalanches",
+                                url: "http://wxs.ign.fr/an7nvfzojv5wa96dsga5nk8w/proxy/",
+                                wmsOptions: {
+                                    name: "IRSTEA_CLPA.INTER",
+                                    projection: "EPSG:3857",
+                                    mimeType: "image/png",
+                                    width: 256,
+                                    height: 256
+                                }
+                            })
 
                             // MNT IGN Haute résolution - 5 m - WMS
-                            pMap.addElevationLayer({
+                            map.addElevationLayer({
                                 protocol : "wmts",
                                 id : "IGNDEM_HIGH",
                                 url : "http://wxs.ign.fr/j2bfkv9whnqpq04zpzlfz2ge/geoportail/wmts",
