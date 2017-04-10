@@ -17,20 +17,20 @@ echo "BEGIN"
 function leaflet() {
   echo "####### LEAFLET production !"
   gulp --production --leaflet
-  gulp publish
+  gulp publish --leaflet
   echo "####### LEAFLET !"
   gulp --leaflet
-  gulp publish
+  gulp publish --leaflet
 }
 
 # ol3
 function ol3() {
   echo "####### OL production !"
   gulp --production --ol3
-  gulp publish
+  gulp publish --ol3
   echo "####### OL !"
   gulp --ol3
-  gulp publish
+  gulp publish --ol3
 }
 
 # vg

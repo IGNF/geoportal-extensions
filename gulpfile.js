@@ -1077,7 +1077,7 @@
         else if (isExecuteITowns) {}
 
         console.log(srcdir);
-        
+
         return gulp.src(srcdir)
                 .pipe(gulp.dest(_dir.dist))
                 .pipe($.plumber())
