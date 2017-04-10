@@ -43,7 +43,17 @@ function vg() {
   gulp publish --vg
 }
 
-while getopts "aolv" opts
+# mix
+function mix() {
+  echo "####### Mixte OL/VG !"
+  gulp --ol3 --vg --mix
+  gulp publish --ol3 --vg --mix
+  echo "####### Mixte OL/VG production !"
+  gulp --production --ol3 --vg --mix
+  gulp publish --ol3 --vg --mix
+}
+
+while getopts "aolvm" opts
 do
    case $opts in
      o)
@@ -61,15 +71,21 @@ do
         echo "###### VirtualGeo bundle ! ######"
         vg
         ;;
+     m)
+        echo "#################################"
+        echo "###### Mixte bundle ! ######"
+        mix
+        ;;
      a)
         echo "#################################"
         echo "########## ALL bundle ! #########"
         ol3
         leaflet
         vg
+        mix
         ;;
      \?)
-        echo "$OPTARG : option invalide : a(all), o(openlayers), l(leaflet) ou v(virtualgeo) !"
+        echo "$OPTARG : option invalide : a(all), o(openlayers), l(leaflet), v(virtualgeo) ou m(mix) !"
         exit -1
         ;;
    esac

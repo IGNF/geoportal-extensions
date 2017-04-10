@@ -1061,17 +1061,23 @@
     gulp.task("publish", function () {
 
         var srcdir = [];
-        if (isExecuteOl3) {
+        // mode mixte
+        if (isMix) {
+            srcdir.push(path.join(_build, "Mix", "dist", "**"));
+        }
+        else if (isExecuteOl3) {
             srcdir.push(path.join(_build, "Ol3", "dist", "**"));
         }
-        if (isExecuteLeaflet) {
+        else if (isExecuteLeaflet) {
             srcdir.push(path.join(_build, "Leaflet", "dist", "**"));
         }
-        if (isExecuteVg) {
+        else if (isExecuteVg) {
             srcdir.push(path.join(_build, "Vg", "dist", "**"));
         }
-        if (isExecuteITowns) {}
+        else if (isExecuteITowns) {}
 
+        console.log(srcdir);
+        
         return gulp.src(srcdir)
                 .pipe(gulp.dest(_dir.dist))
                 .pipe($.plumber())
