@@ -239,25 +239,45 @@ define([
 
         var map = this.getMap();
 
+        var wgs84Sphere = new ol.Sphere(6378137);
+
         var sourceProj = map.getView().getProjection();
-        // on calcule sur des distances plus courtes !
+
         var c1 = ol.proj.transform(line.getFirstCoordinate(), sourceProj, "EPSG:4326");
-        var c2 = ol.proj.transform(line.getCoordinateAt(0.001), sourceProj, "EPSG:4326");
+        var c2 = ol.proj.transform(line.getLastCoordinate(),  sourceProj, "EPSG:4326");
+
+        var measure = wgs84Sphere.haversineDistance(c1, c2);
+        logger.trace(measure);
+
+        // FIXME doit on tooujours calculer sur des distances plus courtes ?
+        // cf. https://geographiclib.sourceforge.io/scripts/geod-google.html
+        // Si la distance est supérieur à 1500km, on passe en mode approximatif...
+        // (soit env. la distance entre le nord de la france et la corse)
+        if (measure > 1500000) {
+            c2 = ol.proj.transform(line.getCoordinateAt(0.001), sourceProj, "EPSG:4326");
+        }
+
+        // FIXME doit on utiliser l'algo sur la lattitude isometrique ?
+        // var con = 0.081 * Math.sin(c1[1]);
+        // var latiso1 = Math.log(Math.tan(( (Math.PI/2.0) + c1[1] ) / 2.0)) + 0.081 * Math.log( (1.0 - con) / (1.0 + con) )/2.0
+        // var latiso2 = Math.log(Math.tan(( (Math.PI/2.0) + c2[1] ) / 2.0)) + 0.081 * Math.log( (1.0 - con) / (1.0 + con) )/2.0
 
         var degrees2radians = Math.PI / 180;
         var radians2degrees = 180 / Math.PI;
+
         var lon1 = degrees2radians * c1[0];
         var lon2 = degrees2radians * c2[0];
-        var lat1 = degrees2radians * c1[1];
-        var lat2 = degrees2radians * c2[1];
+
+        var lat1 = degrees2radians * c1[1];// latiso1;
+        var lat2 = degrees2radians * c2[1];// latiso2;
+
         var a = Math.sin(lon2 - lon1) * Math.cos(lat2);
         var b = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1);
 
         var atan = Math.atan2(a, b);
-        logger.trace(atan);
 
         var azimut = radians2degrees * atan;
-        logger.trace(azimut);
+        logger.trace("azimut", azimut);
 
         if (azimut < 0) {
             azimut += 360;
