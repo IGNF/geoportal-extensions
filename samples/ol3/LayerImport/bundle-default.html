@@ -75,9 +75,22 @@
 
                       if (feature) {
 
+                          var type  = feature.getGeometry().GeometryType;
                           var coord = feature.getGeometry().getCoordinates();
+                          if (type !== "Point") {
+                            coord = ol.extent.getCenter(feature.getGeometry().getExtent());
+                          }
                           var props = feature.getProperties();
-                          var content = props["description"] || props["name"];
+                          var content = "";
+                          for (var variable in props) {
+                            if (props.hasOwnProperty(variable)) {
+                              if (variable !== "geometry") {
+                                content += "<br>";
+                                content += variable + " : ";
+                                content += props[variable];
+                              }
+                            }
+                          }
                           // Offset the popup so it points at the middle of the marker not the tip
                           popup.setOffset([0, -22]);
                           popup.show(coord, content);

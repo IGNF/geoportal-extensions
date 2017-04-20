@@ -191,6 +191,14 @@
 </Placemark>
 <Placemark>
     <styleUrl>#s_top100</styleUrl>
+    <ExtendedData>
+      <Data name="comment">
+        <value>commentaire</value>
+      </Data>
+    </ExtendedData>
+    <ExtendedData>
+      <Data name="another_comment">autre commentaire</Data>
+    </ExtendedData>
     <ExtendedData><SchemaData schemaUrl="#S_TOP100">
         <SimpleData name="TITRE_COMP">Strasbourg Forbach</SimpleData>
         <SimpleData name="CODE">TOP100012</SimpleData>
