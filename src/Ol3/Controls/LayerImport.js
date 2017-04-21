@@ -264,6 +264,10 @@ define([
         if ( options.vectorStyleOptions && options.vectorStyleOptions.KML && options.vectorStyleOptions.KML.extractStyles ) {
             this.options.vectorStyleOptions.KML.extractStyles = options.vectorStyleOptions.KML.extractStyles;
         }
+        // set showPointNames parameter
+        if ( options.vectorStyleOptions && options.vectorStyleOptions.KML && options.vectorStyleOptions.KML.showPointNames ) {
+            this.options.vectorStyleOptions.KML.showPointNames = options.vectorStyleOptions.KML.showPointNames;
+        }
 
         // set vector layers default styles (KML, GPX, GeoJSON)
         if ( options.vectorStyleOptions && options.vectorStyleOptions.KML && options.vectorStyleOptions.KML.defaultStyle ) {
@@ -858,7 +862,7 @@ define([
         if ( this._currentImportType === "KML" ) {
             // lecture du fichier KML : création d'un format ol.format.KML, qui possède une méthode readFeatures (et readProjection)
             format = new KMLExtended({
-                showPointNames : true, // FIXME options !
+                showPointNames : this.options.vectorStyleOptions.KML.showPointNames,
                 extractStyles : this.options.vectorStyleOptions.KML.extractStyles,
                 defaultStyle : [
                     this.options.vectorStyleOptions.KML.defaultStyle
