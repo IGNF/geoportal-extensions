@@ -260,6 +260,11 @@ define([
             }
         };
 
+        // set extractStyles parameter
+        if ( options.vectorStyleOptions && options.vectorStyleOptions.KML && options.vectorStyleOptions.KML.extractStyles ) {
+            this.options.vectorStyleOptions.KML.extractStyles = options.vectorStyleOptions.KML.extractStyles;
+        }
+
         // set vector layers default styles (KML, GPX, GeoJSON)
         if ( options.vectorStyleOptions && options.vectorStyleOptions.KML && options.vectorStyleOptions.KML.defaultStyle ) {
             // get from options if specified
