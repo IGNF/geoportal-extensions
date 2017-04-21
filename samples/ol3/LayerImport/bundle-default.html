@@ -52,60 +52,61 @@
                             proxyUrl : "http://localhost/proxy/php/proxy.php?url="
                         },
                         vectorStyleOptions : {
-                            // KML : {
-                            //     extractStyles : true,
-                            //     // defaultStyle : new ol.style.Style({
-                            //     //     image : new ol.style.Icon({
-                            //     //         src : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAmCAYAAABpuqMCAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAQxSURBVFiF3ZldaBxVFMd/d2ayTRtjQpo2mlilWBEMshoj+FAERZIHIdA3iw+V1icRREFIQAKNgsUHQfBFwZI2WgWxqYUiVTDBBj9ILC5Nu2tjdjemsR+mSZNNNvsxO8eHTTRuk+zMnQmCf9iHnXvO+Z//nDvn3rmjRIT/C6zAI4ZVFRbtKDpQNCM0AvXANIo/EC4inMbmLBFZDJJaBVaZJ9Sd2HQCrwDbXHikgfewOMKPMh9ECsGIeVx1IHxEsQJeMY3iEMNy2m8aht8AtKpOhH70hADUI/TTqjr9puKvMsUE3vabxCp0MSJHdJ31xRSnVj9BVPcfOCj26U45PTHFh30c/am1EaaxuF+nKejd1WLX2gwhAPXL8T3De2XCqooKbuCu/eoiTZ6dXtch75WxaMeNENOyOXx8kHOpGMPOIudSMQ4fH8S0bBcs25Z5PMF7ZVpVL3BgQxvTsvn6+kVq6sK3jc3NRGhraKZgl9t9HGNEXvCSmvfKKJrL2nQfHVpTCEBNXZjuo0OB8JTAu5jiXmtjPL3vLl/jbnlKoNPN6spaVFbt8jXulqcEOmKSZS0yi5O+xt3ylEBHTLSsxbf913yNu+UpgU4DKE/Sc3AvczORNcfmZiL0HNwbCE8JvItxWDvJ1SjYFm0NzZzpG2RpIYbIIksLMc70Dbpsy+54SqCzzlQAY8B9Xsk8YAJ4gBHJe3HyXpkRyaN407OfN7zlVQjobjTv4BgQ1/ItjzjV9Oo46okZEBuhS8u3PDoZEDf7t9vg903zBLBfP8C/4cAnD87teclIGyFlLoVyllWh8vmQYRgVAOI4OQmFciKSFZFsMpmck1UC/Il5VNViEgHu9StkQYyb7bNNH1wrmDm3PgqWUHLBhl+SyeRV/6czLepJDAbw8fos4HTNb+/9PFv9u3YMU/X6f38/L98B7/gJ8U2uasiPEADTcRqDOozoBn7WcbzqmFOvpnYM+uTPpvP5SDBiimvP8xRPKV3DFpV7fX7HyYyD44M96xicmpqaSgd3TDQsv6J4zYvLx5nqsz/kK29qcyq5kFpafD+RSMSKf4P+CvCY+hJFRzmzmB2KPTvb+JnX8CsdzDGM8/F4/PrqseC/AggvZlGXtyipXc8kLcbCy6mdrg/6lBIbR41DYXR8cjIqIoW17IIXc17+nHnEOnS3VfhiHQt5d7HmVMK2Nn6+DHLiOGMmRLdMVI+NymjZ9Sf4abaMqZbQp01G/rnS60P5rT8duNXw1TpuGaXksmMYlxKJxLiIt23NponhKVV5a874rdZwmlYuTTvmjWdmGj9Mifl3kkpJ2hGJGY4THb9yJS4i2p0t+Gm2ggHJxMNb94eNzIAJZgEKbyxsP5kS00ZJSkG0oFQ0mZyYkKDuqIhs6u/7hyt75luM2RMPVfft3rW7bU9T0z2bxbV50+w/wF8f81R5OpwBhwAAAABJRU5ErkJggg==",
-                            //     //         size : [51, 38],
-                            //     //         anchor : [25.5, 38],
-                            //     //         anchorOrigin : "top-left",
-                            //     //         anchorXUnits : "pixels",
-                            //     //         anchorYUnits : "pixels"
-                            //     //     }),
-                            //     //     stroke : new ol.style.Stroke({
-                            //     //         color : "#000000",
-                            //     //         width : 7
-                            //     //     }),
-                            //     //     fill : new ol.style.Fill({
-                            //     //         color : "rgba(255, 183, 152, 0.2)"
-                            //     //     })
-                            //     //     ,
-                            //     //     text : new ol.style.Text({
-                            //     //         font : "16px Sans",
-                            //     //         textAlign : "left",
-                            //     //         fill : new ol.style.Fill({
-                            //     //             color : "rgba(255, 255, 255, 1)"
-                            //     //         }),
-                            //     //         stroke : new ol.style.Stroke({
-                            //     //             color : "rgba(0, 0, 0, 1)",
-                            //     //             width : 2
-                            //     //         })
-                            //     //     })
-                            //     // })
-                            // }, GPX : {
-                            //      defaultStyle : new ol.style.Style({
-                            //          image : new ol.style.Icon({
-                            //               src : "./../resources/marker.png",
-                            //               size : [51, 38],
-                            //          }),
-                            //          stroke : new ol.style.Stroke({
-                            //               color : "#ffffff",
-                            //               width : 7
-                            //          })
-                            //      })
-                            //  }, GeoJSON : {
-                            //      defaultStyle : new ol.style.Style({
-                            //          image : new ol.style.Icon({
-                            //               src : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAmCAYAAABpuqMCAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAQ+SURBVFiF3ZlLaFxlGIaf/5zJpJNpaoxpYieoCxULEYK7Lqp0IWQhFLooKNKEtNIULxWlQoJgQQWLFMEg0lQMuXgD0dRSkNJFgoy0IrYNSTpj08xMmoxNYhLUyUwyt/O5mFbjmGTOLS58d3O+y/u95/vnvx0lIvxf4HE9Y7PyU0ETwl6gAQgANcA88AswhuIsKc7TJ0k3qZVrnTmqtpGhHeFloMJERArF+3g5Qaf84UYJ7og5rPai+JhCB6xiHuEQp+Ws0zI0pwloU+0oBrAnBKAGxQBtqt1pKc46UyjgHadFrEIHXXLCbrB9MYWhNYAb3f0bBsI+u0POnpijahtpJrA/tDbCPOU8aGdSsPdWM7SzOUIAam7ntwzrnWlWfnzMYW76tYsUy9RaXYesd6aCJswI0Tw5WvuG6EyEOWUk6UyEae0bQvPkTLEUeCzBupjCyl4iqyfHydkxdh3YQ/nWnSjlp3zrTnYd2MPJ2TFTgszwFNNaDaCwRdkYLd1B/NWNa9r81Y20dAdd4SmCHTGBkh6P7bvXkd0sTxHsiKku6eH13+fIbpanCHbExEp6ZJJTjuxmeYpgXYwiVNLnysCMI7tZniLYmc1Kk/Qe3E1ycXhNW3JxmN6Du13hKYIdMWsXuRpGzsOxugYu9Q+RXgojkiS9FOZS/xDH6howcqUPhWZ4imB9B9CmyoBx4AGrZBYwCTxMl2StBFnvTJdkUbxlOc4a3rYqBOxuNHfQC0RsxZZGhAA9dgLtiTkuOYQOW7Gl0c5xMbN/+xecnTQPq89QPGM/wT9hCJ8+MvjQ81pK8yp92ZvxeMpUNuvVNK0MQAwjI15vRkTSIpKOxWK/yyoBzsS0qiq8DAP3OxWylNMWmoL1XTMresZsjIJllIzk4GosFrvl/HbmiHoCYRAHx2cBo2Pknp4v45U3befQVY/z8/sp+Q5410mKC7P+oBMhALphBNy6jHgDxU92Am+t6PFXhrcPOeRPp7LZYXfEdEkWjWeBlJWwnKEyr41s/3rFwHDAnjY0zsTj8ZR710Qfys/Aq1ZCPrlZef7iwpYF25xKRhLLyQ+i0Wi48NPtrwBt6hsofeQNJ7zhp74PfGE1/Z0ZzNC0y5FIZHa1zf2vAFmeS2vqerkuVeu5pPLa0otXa01f9CklOQw1AfnRiampkIjk1/JzX0y3/LrY7Dm0w5f/ah0Pee/GXWeiSc/G/y+NjBjGuA6h8snK8VEZLbn+uD/MbiPe7P283pd9uvh5cMH3Q8uPdd+uE7ailFw3NO1aNBqdELG2rdk0MbSqLb8p7UZVmVF/59F8Wp97Mhg4ncjqfxWplKQMkbBmGKGJ6emIiNie2TZPDHB5v+/xxrtXBnWFnhfyL1yp/ejCXMUMShIKQnmlQrFYbFJcKmJTxQBc3O9789FtmZfOzfjPvT5S068bmWvj09PTm8G16WL+S/wJLybNu1V6htkAAAAASUVORK5CYII=",
-                            //               size : [51, 38],
-                            //          }),
-                            //          stroke : new ol.style.Stroke({
-                            //               color : "#000000",
-                            //               width : 7
-                            //          })
-                            //      })
-                            //  }
+                            KML : {
+                                extractStyles : true,
+                                defaultStyle : new ol.style.Style({
+                                    image : new ol.style.Icon({
+                                        src : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAmCAYAAABpuqMCAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAQxSURBVFiF3ZldaBxVFMd/d2ayTRtjQpo2mlilWBEMshoj+FAERZIHIdA3iw+V1icRREFIQAKNgsUHQfBFwZI2WgWxqYUiVTDBBj9ILC5Nu2tjdjemsR+mSZNNNvsxO8eHTTRuk+zMnQmCf9iHnXvO+Z//nDvn3rmjRIT/C6zAI4ZVFRbtKDpQNCM0AvXANIo/EC4inMbmLBFZDJJaBVaZJ9Sd2HQCrwDbXHikgfewOMKPMh9ECsGIeVx1IHxEsQJeMY3iEMNy2m8aht8AtKpOhH70hADUI/TTqjr9puKvMsUE3vabxCp0MSJHdJ31xRSnVj9BVPcfOCj26U45PTHFh30c/am1EaaxuF+nKejd1WLX2gwhAPXL8T3De2XCqooKbuCu/eoiTZ6dXtch75WxaMeNENOyOXx8kHOpGMPOIudSMQ4fH8S0bBcs25Z5PMF7ZVpVL3BgQxvTsvn6+kVq6sK3jc3NRGhraKZgl9t9HGNEXvCSmvfKKJrL2nQfHVpTCEBNXZjuo0OB8JTAu5jiXmtjPL3vLl/jbnlKoNPN6spaVFbt8jXulqcEOmKSZS0yi5O+xt3ylEBHTLSsxbf913yNu+UpgU4DKE/Sc3AvczORNcfmZiL0HNwbCE8JvItxWDvJ1SjYFm0NzZzpG2RpIYbIIksLMc70Dbpsy+54SqCzzlQAY8B9Xsk8YAJ4gBHJe3HyXpkRyaN407OfN7zlVQjobjTv4BgQ1/ItjzjV9Oo46okZEBuhS8u3PDoZEDf7t9vg903zBLBfP8C/4cAnD87teclIGyFlLoVyllWh8vmQYRgVAOI4OQmFciKSFZFsMpmck1UC/Il5VNViEgHu9StkQYyb7bNNH1wrmDm3PgqWUHLBhl+SyeRV/6czLepJDAbw8fos4HTNb+/9PFv9u3YMU/X6f38/L98B7/gJ8U2uasiPEADTcRqDOozoBn7WcbzqmFOvpnYM+uTPpvP5SDBiimvP8xRPKV3DFpV7fX7HyYyD44M96xicmpqaSgd3TDQsv6J4zYvLx5nqsz/kK29qcyq5kFpafD+RSMSKf4P+CvCY+hJFRzmzmB2KPTvb+JnX8CsdzDGM8/F4/PrqseC/AggvZlGXtyipXc8kLcbCy6mdrg/6lBIbR41DYXR8cjIqIoW17IIXc17+nHnEOnS3VfhiHQt5d7HmVMK2Nn6+DHLiOGMmRLdMVI+NymjZ9Sf4abaMqZbQp01G/rnS60P5rT8duNXw1TpuGaXksmMYlxKJxLiIt23NponhKVV5a874rdZwmlYuTTvmjWdmGj9Mifl3kkpJ2hGJGY4THb9yJS4i2p0t+Gm2ggHJxMNb94eNzIAJZgEKbyxsP5kS00ZJSkG0oFQ0mZyYkKDuqIhs6u/7hyt75luM2RMPVfft3rW7bU9T0z2bxbV50+w/wF8f81R5OpwBhwAAAABJRU5ErkJggg==",
+                                        size : [51, 38],
+                                        anchor : [25.5, 38],
+                                        anchorOrigin : "top-left",
+                                        anchorXUnits : "pixels",
+                                        anchorYUnits : "pixels"
+                                    }),
+                                    stroke : new ol.style.Stroke({
+                                        color : "#000000",
+                                        width : 7
+                                    }),
+                                    fill : new ol.style.Fill({
+                                        color : "rgba(255, 183, 152, 0.2)"
+                                    })
+                                    ,
+                                    text : new ol.style.Text({
+                                        font : "16px Sans",
+                                        textAlign : "left",
+                                        fill : new ol.style.Fill({
+                                            color : "rgba(255, 255, 255, 1)"
+                                        }),
+                                        stroke : new ol.style.Stroke({
+                                            color : "rgba(0, 0, 0, 1)",
+                                            width : 2
+                                        })
+                                    })
+                                })
+                            }, GPX : {
+                                 defaultStyle : new ol.style.Style({
+                                     image : new ol.style.Icon({
+                                          src : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAmCAYAAABpuqMCAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAQxSURBVFiF3ZldaBxVFMd/d2ayTRtjQpo2mlilWBEMshoj+FAERZIHIdA3iw+V1icRREFIQAKNgsUHQfBFwZI2WgWxqYUiVTDBBj9ILC5Nu2tjdjemsR+mSZNNNvsxO8eHTTRuk+zMnQmCf9iHnXvO+Z//nDvn3rmjRIT/C6zAI4ZVFRbtKDpQNCM0AvXANIo/EC4inMbmLBFZDJJaBVaZJ9Sd2HQCrwDbXHikgfewOMKPMh9ECsGIeVx1IHxEsQJeMY3iEMNy2m8aht8AtKpOhH70hADUI/TTqjr9puKvMsUE3vabxCp0MSJHdJ31xRSnVj9BVPcfOCj26U45PTHFh30c/am1EaaxuF+nKejd1WLX2gwhAPXL8T3De2XCqooKbuCu/eoiTZ6dXtch75WxaMeNENOyOXx8kHOpGMPOIudSMQ4fH8S0bBcs25Z5PMF7ZVpVL3BgQxvTsvn6+kVq6sK3jc3NRGhraKZgl9t9HGNEXvCSmvfKKJrL2nQfHVpTCEBNXZjuo0OB8JTAu5jiXmtjPL3vLl/jbnlKoNPN6spaVFbt8jXulqcEOmKSZS0yi5O+xt3ylEBHTLSsxbf913yNu+UpgU4DKE/Sc3AvczORNcfmZiL0HNwbCE8JvItxWDvJ1SjYFm0NzZzpG2RpIYbIIksLMc70Dbpsy+54SqCzzlQAY8B9Xsk8YAJ4gBHJe3HyXpkRyaN407OfN7zlVQjobjTv4BgQ1/ItjzjV9Oo46okZEBuhS8u3PDoZEDf7t9vg903zBLBfP8C/4cAnD87teclIGyFlLoVyllWh8vmQYRgVAOI4OQmFciKSFZFsMpmck1UC/Il5VNViEgHu9StkQYyb7bNNH1wrmDm3PgqWUHLBhl+SyeRV/6czLepJDAbw8fos4HTNb+/9PFv9u3YMU/X6f38/L98B7/gJ8U2uasiPEADTcRqDOozoBn7WcbzqmFOvpnYM+uTPpvP5SDBiimvP8xRPKV3DFpV7fX7HyYyD44M96xicmpqaSgd3TDQsv6J4zYvLx5nqsz/kK29qcyq5kFpafD+RSMSKf4P+CvCY+hJFRzmzmB2KPTvb+JnX8CsdzDGM8/F4/PrqseC/AggvZlGXtyipXc8kLcbCy6mdrg/6lBIbR41DYXR8cjIqIoW17IIXc17+nHnEOnS3VfhiHQt5d7HmVMK2Nn6+DHLiOGMmRLdMVI+NymjZ9Sf4abaMqZbQp01G/rnS60P5rT8duNXw1TpuGaXksmMYlxKJxLiIt23NponhKVV5a874rdZwmlYuTTvmjWdmGj9Mifl3kkpJ2hGJGY4THb9yJS4i2p0t+Gm2ggHJxMNb94eNzIAJZgEKbyxsP5kS00ZJSkG0oFQ0mZyYkKDuqIhs6u/7hyt75luM2RMPVfft3rW7bU9T0z2bxbV50+w/wF8f81R5OpwBhwAAAABJRU5ErkJggg==",
+                                          src : "./../resources/marker.png",
+                                          size : [51, 38],
+                                     }),
+                                     stroke : new ol.style.Stroke({
+                                          color : "#ffffff",
+                                          width : 7
+                                     })
+                                 })
+                             }, GeoJSON : {
+                                 defaultStyle : new ol.style.Style({
+                                     image : new ol.style.Icon({
+                                          src : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAmCAYAAABpuqMCAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAQ+SURBVFiF3ZlLaFxlGIaf/5zJpJNpaoxpYieoCxULEYK7Lqp0IWQhFLooKNKEtNIULxWlQoJgQQWLFMEg0lQMuXgD0dRSkNJFgoy0IrYNSTpj08xMmoxNYhLUyUwyt/O5mFbjmGTOLS58d3O+y/u95/vnvx0lIvxf4HE9Y7PyU0ETwl6gAQgANcA88AswhuIsKc7TJ0k3qZVrnTmqtpGhHeFloMJERArF+3g5Qaf84UYJ7og5rPai+JhCB6xiHuEQp+Ws0zI0pwloU+0oBrAnBKAGxQBtqt1pKc46UyjgHadFrEIHXXLCbrB9MYWhNYAb3f0bBsI+u0POnpijahtpJrA/tDbCPOU8aGdSsPdWM7SzOUIAam7ntwzrnWlWfnzMYW76tYsUy9RaXYesd6aCJswI0Tw5WvuG6EyEOWUk6UyEae0bQvPkTLEUeCzBupjCyl4iqyfHydkxdh3YQ/nWnSjlp3zrTnYd2MPJ2TFTgszwFNNaDaCwRdkYLd1B/NWNa9r81Y20dAdd4SmCHTGBkh6P7bvXkd0sTxHsiKku6eH13+fIbpanCHbExEp6ZJJTjuxmeYpgXYwiVNLnysCMI7tZniLYmc1Kk/Qe3E1ycXhNW3JxmN6Du13hKYIdMWsXuRpGzsOxugYu9Q+RXgojkiS9FOZS/xDH6howcqUPhWZ4imB9B9CmyoBx4AGrZBYwCTxMl2StBFnvTJdkUbxlOc4a3rYqBOxuNHfQC0RsxZZGhAA9dgLtiTkuOYQOW7Gl0c5xMbN/+xecnTQPq89QPGM/wT9hCJ8+MvjQ81pK8yp92ZvxeMpUNuvVNK0MQAwjI15vRkTSIpKOxWK/yyoBzsS0qiq8DAP3OxWylNMWmoL1XTMresZsjIJllIzk4GosFrvl/HbmiHoCYRAHx2cBo2Pknp4v45U3befQVY/z8/sp+Q5410mKC7P+oBMhALphBNy6jHgDxU92Am+t6PFXhrcPOeRPp7LZYXfEdEkWjWeBlJWwnKEyr41s/3rFwHDAnjY0zsTj8ZR710Qfys/Aq1ZCPrlZef7iwpYF25xKRhLLyQ+i0Wi48NPtrwBt6hsofeQNJ7zhp74PfGE1/Z0ZzNC0y5FIZHa1zf2vAFmeS2vqerkuVeu5pPLa0otXa01f9CklOQw1AfnRiampkIjk1/JzX0y3/LrY7Dm0w5f/ah0Pee/GXWeiSc/G/y+NjBjGuA6h8snK8VEZLbn+uD/MbiPe7P283pd9uvh5cMH3Q8uPdd+uE7ailFw3NO1aNBqdELG2rdk0MbSqLb8p7UZVmVF/59F8Wp97Mhg4ncjqfxWplKQMkbBmGKGJ6emIiNie2TZPDHB5v+/xxrtXBnWFnhfyL1yp/ejCXMUMShIKQnmlQrFYbFJcKmJTxQBc3O9789FtmZfOzfjPvT5S068bmWvj09PTm8G16WL+S/wJLybNu1V6htkAAAAASUVORK5CYII=",
+                                          size : [51, 38],
+                                     }),
+                                     stroke : new ol.style.Stroke({
+                                          color : "#000000",
+                                          width : 7
+                                     })
+                                 })
+                             }
                         }
                     });
                     map.addControl(layerImport);

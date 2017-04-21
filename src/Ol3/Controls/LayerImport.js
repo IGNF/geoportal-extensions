@@ -849,6 +849,7 @@ define([
         this.contentStatic = fileContent;
 
         var format;
+        var vectorStyle;
         if ( this._currentImportType === "KML" ) {
             // lecture du fichier KML : création d'un format ol.format.KML, qui possède une méthode readFeatures (et readProjection)
             format = new KMLExtended({
@@ -858,12 +859,15 @@ define([
                     this.options.vectorStyleOptions.KML.defaultStyle
                 ]
             });
+            vectorStyle = this.options.vectorStyleOptions.KML.defaultStyle;
         } else if ( this._currentImportType === "GPX" ) {
             // lecture du fichier GPX : création d'un format ol.format.GPX, qui possède une méthode readFeatures (et readProjection)
             format = new ol.format.GPX();
+            vectorStyle = this.options.vectorStyleOptions.GPX.defaultStyle;
         } else if ( this._currentImportType === "GeoJSON" ) {
             // lecture du fichier GeoJSON : création d'un format ol.format.GeoJSON, qui possède une méthode readFeatures (et readProjection)
             format = new ol.format.GeoJSON();
+            vectorStyle = this.options.vectorStyleOptions.GeoJSON.defaultStyle;
         }
 
         // lecture de la géométrie des entités à partir du fichier, pour éventuelle reprojection.
@@ -882,29 +886,6 @@ define([
         );
 
         logger.log("loaded features : ", features);
-
-        if ( this._currentImportType === "GPX" ) {
-            for (var i = 0 ; i < features.length; i++ ) {
-                // si aucun style n'est associé au feature
-                if ( features[i].getStyle() == null ) {
-                    logger.log("[ol.control.LayerImport] set default style for GPX feature");
-                    features[i].setStyle(
-                        this.options.vectorStyleOptions.GPX.defaultStyle
-                    );
-                }
-            }
-        }
-        if ( this._currentImportType === "GeoJSON" ) {
-            for (var j = 0 ; j < features.length; j++ ) {
-                // si aucun style n'est associé au feature
-                if ( features[j].getStyle() == null ) {
-                    logger.log("[ol.control.LayerImport] set default style for GeoJSON feature");
-                    features[j].setStyle(
-                        this.options.vectorStyleOptions.GeoJSON.defaultStyle
-                    );
-                }
-            }
-        }
 
         // création d'une couche vectorielle à partir de ces features
         var vectorSource = new ol.source.Vector({
@@ -927,7 +908,8 @@ define([
         }
 
         var vectorLayer = new ol.layer.Vector({
-            source : vectorSource
+            source : vectorSource,
+            style : vectorStyle
         });
 
         // on rajoute le champ gpResultLayerId permettant d'identifier une couche crée par le composant. (pour layerSwitcher par ex)
