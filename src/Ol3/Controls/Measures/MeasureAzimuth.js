@@ -33,6 +33,7 @@ define([
     * @alias ol.control.MeasureAzimuth
     * @extends {ol.control.Control}
     * @param {Object} options - options for function call.
+    * @param {Boolean} [options.geodesic = false] - If true, azimuth will be computed on the global sphere. Otherwise, it will be computed on the projected plane.
     * @param {Object} [options.styles = {}] - styles used when drawing. Specified with following properties.
     * @param {Object} [options.styles.pointer = {}] - Style for mouse pointer when drawing the line. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Image.html ol.style.Image} subclass object.
     * @param {Object} [options.styles.start = {}] - Line Style when drawing. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Style.html ol.style.Style} object.
@@ -40,6 +41,7 @@ define([
     * <!-- @param {Object} [options.tooltip = {}] - NOT YET IMPLEMENTED ! -->
     * @example
     * var measure = new ol.control.MeasureAzimuth({
+    *   geodesic : true
     * });
     */
     function MeasureAzimuth (options) {
@@ -165,8 +167,9 @@ define([
 
         // liste des options
         this.options = {};
-        this.options.target   = ( typeof options.target !== "undefined" ) ? options.target : null;
-        this.options.render   = ( typeof options.render !== "undefined" ) ? options.render : null;
+        this.options.geodesic = ( typeof options.geodesic !== "undefined" ) ? options.geodesic : false;
+        this.options.target   = ( typeof options.target   !== "undefined" ) ? options.target   : null;
+        this.options.render   = ( typeof options.render   !== "undefined" ) ? options.render   : null;
 
         // gestion des styles !
         this.createStylingMeasureInteraction(options.styles);
@@ -239,28 +242,19 @@ define([
 
         var map = this.getMap();
 
-        var wgs84Sphere = new ol.Sphere(6378137);
-
         var sourceProj = map.getView().getProjection();
 
         var c1 = ol.proj.transform(line.getFirstCoordinate(), sourceProj, "EPSG:4326");
         var c2 = ol.proj.transform(line.getLastCoordinate(),  sourceProj, "EPSG:4326");
 
-        var measure = wgs84Sphere.haversineDistance(c1, c2);
-        logger.trace(measure);
-
-        // FIXME doit on tooujours calculer sur des distances plus courtes ?
-        // cf. https://geographiclib.sourceforge.io/scripts/geod-google.html
-        // Si la distance est supérieur à 1500km, on passe en mode approximatif...
-        // (soit env. la distance entre le nord de la france et la corse)
-        if (measure > 1500000) {
+        if (!this.options.geodesic) {
+            // calcul sur une petite distance afin de simuler un cap !
             c2 = ol.proj.transform(line.getCoordinateAt(0.001), sourceProj, "EPSG:4326");
         }
 
-        // FIXME doit on utiliser l'algo sur la lattitude isometrique ?
-        // var con = 0.081 * Math.sin(c1[1]);
-        // var latiso1 = Math.log(Math.tan(( (Math.PI/2.0) + c1[1] ) / 2.0)) + 0.081 * Math.log( (1.0 - con) / (1.0 + con) )/2.0
-        // var latiso2 = Math.log(Math.tan(( (Math.PI/2.0) + c2[1] ) / 2.0)) + 0.081 * Math.log( (1.0 - con) / (1.0 + con) )/2.0
+        var wgs84Sphere = new ol.Sphere(6378137);
+        var measure = wgs84Sphere.haversineDistance(c1, c2);
+        logger.trace("measure/length", measure);
 
         var degrees2radians = Math.PI / 180;
         var radians2degrees = 180 / Math.PI;
@@ -268,8 +262,8 @@ define([
         var lon1 = degrees2radians * c1[0];
         var lon2 = degrees2radians * c2[0];
 
-        var lat1 = degrees2radians * c1[1];// latiso1;
-        var lat2 = degrees2radians * c2[1];// latiso2;
+        var lat1 = degrees2radians * c1[1];
+        var lat2 = degrees2radians * c2[1];
 
         var a = Math.sin(lon2 - lon1) * Math.cos(lat2);
         var b = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1);
