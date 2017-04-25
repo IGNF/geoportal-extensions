@@ -75,6 +75,7 @@
       ) {
 
         var map;
+        var measure;
 
         var createMap = function () {
           // on cache l'image de chargement du Géoportail.
@@ -95,7 +96,7 @@
             })
           });
 
-          var measure = new MeasureAzimuth({
+          measure = new MeasureAzimuth({
             element : null,
             target : null,
             render : null,
@@ -126,10 +127,29 @@
               messageContinue : "Click to continue drawing the line",
               messageStart : "Click to start drawing"
             },
-            geodesic : true
+            // geodesic : true
           });
           map.addControl(measure);
 
+          // get list of radio buttons with name 'size'
+          var points = document.getElementsByName("point");
+
+          // loop through list
+          for (var i=0, len=points.length; i<len; i++) {
+            points[i].onclick = function(e) {
+              var currentValue = e.target.value;
+              switch (currentValue) {
+                case "true":
+                   measure.setGeodesic(true);
+                  break;
+                case "false":
+                    measure.setGeodesic(false);
+                  break;
+                default:
+                  measure.setGeodesic(false);
+              }
+            };
+          }
         };
 
         Gp.Services.getConfig({
@@ -141,11 +161,14 @@
         });
 
       });
+
       </script>
 
       <!-- map -->
       <div id="map">
       </div>
+      <input type="radio" name="point" value="true"> geoddesic:true<br>
+      <input type="radio" name="point" value="false" checked> geodesic:false<br>
 
       <!-- Comment utiliser le plugin avec un exemple -->
       <p>EXEMPLE D'UTILISATION</p>
