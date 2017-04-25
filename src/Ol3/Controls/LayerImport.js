@@ -40,6 +40,7 @@ define([
      * @param {Object} [options.vectorStyleOptions] - Options for imported vector layer styling (KML, GPX, GeoJSON)
      * @param {Object} [options.vectorStyleOptions.KML] - Options for KML layer styling
      * @param {Boolean} [options.vectorStyleOptions.KML.extractStyles = true] - Extract styles from the KML. Default is true.
+     * @param {Boolean} [options.vectorStyleOptions.KML.showPointNames = true] - Show names as labels for KML placemarks which contain points. Default is true.
      * @param {Object} [options.vectorStyleOptions.KML.defaultStyle] - default style to be applied to KML imports in case no style is defined. defaultStyle is an {@link http://openlayers.org/en/latest/apidoc/ol.style.Style.html ol.style.Style} object.
      * @param {Object} [options.vectorStyleOptions.GPX] - Options for GPX layer styling
      * @param {Object} [options.vectorStyleOptions.GPX.defaultStyle] - default style to be applied to GPX imports in case no style is defined. defaultStyle is an {@link http://openlayers.org/en/latest/apidoc/ol.style.Style.html ol.style.Style} object.
@@ -56,7 +57,7 @@ define([
      *      vectorStyleOptions : {
      *          KML : {
      *              extractStyles : true,
-     *              defaultStyle : {
+     *              defaultStyle : new ol.style.Style({
      *                  image : new ol.style.Icon({
      *                       src : "data:image/png;base64....",
      *                       size : [51, 38],
@@ -64,20 +65,34 @@ define([
      *                  stroke : new ol.style.Stroke({
      *                       color : "#ffffff",
      *                       width : 7
+     *                  }),
+     *                  fill : new ol.style.Fill({
+     *                       color : "rgba(255, 183, 152, 0.2)""
+     *                  }),
+     *                  text : new ol.style.Text({
+     *                      font : "16px Sans",
+     *                      textAlign : "left",
+     *                      fill : new ol.style.Fill({
+     *                          color : "rgba(255, 255, 255, 1)"
+     *                      }),
+     *                      stroke : new ol.style.Stroke({
+     *                          color : "rgba(0, 0, 0, 1)",
+     *                          width : 2
+     *                      })
      *                  })
-     *              }
+     *              })
      *          },
      *          GPX : {
-     *              defaultStyle : {
+     *              defaultStyle : new ol.style.Style({
      *                  image : new ol.style.Icon({
-     *                       src : "data:image/png;base64....",
+     *                       src : "path/to/my/icon.png",
      *                       size : [51, 38],
      *                  }),
      *                  stroke : new ol.style.Stroke({
      *                       color : "#ffffff",
      *                       width : 7
      *                  })
-     *              }
+     *              })
      *          }
      *      }
      *  });
@@ -235,27 +250,60 @@ define([
                 KML : {
                     extractStyles : true,
                     showPointNames : true,
-                    defaultStyle : LayerImport.DefaultStyles
+                    defaultStyle : {}
                 },
                 GPX : {
-                    defaultStyle : LayerImport.DefaultStyles
+                    defaultStyle : {}
                 },
                 GeoJSON : {
-                    defaultStyle : LayerImport.DefaultStyles
+                    defaultStyle : {}
                 }
             }
         };
 
-        // merge default styles (KML, GPX and GeoJSON)
-        var defaultStyle;
-        if ( options.vectorStyleOptions ) {
-            for ( var format in options.vectorStyleOptions ) {
-                if ( options.vectorStyleOptions[format] && options.vectorStyleOptions[format].defaultStyle ) {
-                    defaultStyle = this.options.vectorStyleOptions[format].defaultStyle;
-                    Utils.mergeParams(defaultStyle, options.vectorStyleOptions[format].defaultStyle);
-                    options.vectorStyleOptions[format].defaultStyle = defaultStyle;
-                }
-            }
+        // set extractStyles parameter
+        if ( options.vectorStyleOptions && options.vectorStyleOptions.KML && options.vectorStyleOptions.KML.extractStyles ) {
+            this.options.vectorStyleOptions.KML.extractStyles = options.vectorStyleOptions.KML.extractStyles;
+        }
+        // set showPointNames parameter
+        if ( options.vectorStyleOptions && options.vectorStyleOptions.KML && options.vectorStyleOptions.KML.showPointNames ) {
+            this.options.vectorStyleOptions.KML.showPointNames = options.vectorStyleOptions.KML.showPointNames;
+        }
+
+        // set vector layers default styles (KML, GPX, GeoJSON)
+        if ( options.vectorStyleOptions && options.vectorStyleOptions.KML && options.vectorStyleOptions.KML.defaultStyle ) {
+            // get from options if specified
+            this.options.vectorStyleOptions.KML.defaultStyle = options.vectorStyleOptions.KML.defaultStyle;
+        } else {
+            // get from control default options otherwise
+            this.options.vectorStyleOptions.KML.defaultStyle = new ol.style.Style({
+                image : LayerImport.DefaultStyles.image,
+                stroke : LayerImport.DefaultStyles.stroke,
+                fill : LayerImport.DefaultStyles.fill,
+                text : LayerImport.DefaultStyles.text
+            });
+        }
+        if ( options.vectorStyleOptions && options.vectorStyleOptions.GPX && options.vectorStyleOptions.GPX.defaultStyle ) {
+            // get from options if specified
+            this.options.vectorStyleOptions.GPX.defaultStyle = options.vectorStyleOptions.GPX.defaultStyle;
+        } else {
+            // get from control default options otherwise
+            this.options.vectorStyleOptions.GPX.defaultStyle = new ol.style.Style({
+                image : LayerImport.DefaultStyles.image,
+                stroke : LayerImport.DefaultStyles.stroke,
+                fill : LayerImport.DefaultStyles.fill
+            });
+        }
+        if ( options.vectorStyleOptions && options.vectorStyleOptions.GeoJSON && options.vectorStyleOptions.GeoJSON.defaultStyle ) {
+            // get from options if specified
+            this.options.vectorStyleOptions.GeoJSON.defaultStyle = options.vectorStyleOptions.GeoJSON.defaultStyle;
+        } else {
+            // get from control default options otherwise
+            this.options.vectorStyleOptions.GeoJSON.defaultStyle = new ol.style.Style({
+                image : LayerImport.DefaultStyles.image,
+                stroke : LayerImport.DefaultStyles.stroke,
+                fill : LayerImport.DefaultStyles.fill
+            });
         }
 
         // merge layer types
@@ -811,21 +859,25 @@ define([
         this.contentStatic = fileContent;
 
         var format;
+        var vectorStyle;
         if ( this._currentImportType === "KML" ) {
             // lecture du fichier KML : création d'un format ol.format.KML, qui possède une méthode readFeatures (et readProjection)
             format = new KMLExtended({
-                showPointNames : true, // FIXME options !
+                showPointNames : this.options.vectorStyleOptions.KML.showPointNames,
                 extractStyles : this.options.vectorStyleOptions.KML.extractStyles,
                 defaultStyle : [
-                    this._defaultKMLStyle
+                    this.options.vectorStyleOptions.KML.defaultStyle
                 ]
             });
+            vectorStyle = this.options.vectorStyleOptions.KML.defaultStyle;
         } else if ( this._currentImportType === "GPX" ) {
             // lecture du fichier GPX : création d'un format ol.format.GPX, qui possède une méthode readFeatures (et readProjection)
             format = new ol.format.GPX();
+            vectorStyle = this.options.vectorStyleOptions.GPX.defaultStyle;
         } else if ( this._currentImportType === "GeoJSON" ) {
             // lecture du fichier GeoJSON : création d'un format ol.format.GeoJSON, qui possède une méthode readFeatures (et readProjection)
             format = new ol.format.GeoJSON();
+            vectorStyle = this.options.vectorStyleOptions.GeoJSON.defaultStyle;
         }
 
         // lecture de la géométrie des entités à partir du fichier, pour éventuelle reprojection.
@@ -844,29 +896,6 @@ define([
         );
 
         logger.log("loaded features : ", features);
-
-        if ( this._currentImportType === "GPX" ) {
-            for (var i = 0 ; i < features.length; i++ ) {
-                // si aucun style n'est associé au feature
-                if ( features[i].getStyle() == null ) {
-                    logger.log("[ol.control.LayerImport] set default style for GPX feature");
-                    features[i].setStyle(
-                        this._defaultGPXStyle
-                    );
-                }
-            }
-        }
-        if ( this._currentImportType === "GeoJSON" ) {
-            for (var j = 0 ; j < features.length; j++ ) {
-                // si aucun style n'est associé au feature
-                if ( features[j].getStyle() == null ) {
-                    logger.log("[ol.control.LayerImport] set default style for GeoJSON feature");
-                    features[j].setStyle(
-                        this._defaultGeoJSONStyle
-                    );
-                }
-            }
-        }
 
         // création d'une couche vectorielle à partir de ces features
         var vectorSource = new ol.source.Vector({
@@ -889,7 +918,8 @@ define([
         }
 
         var vectorLayer = new ol.layer.Vector({
-            source : vectorSource
+            source : vectorSource,
+            style : vectorStyle
         });
 
         // on rajoute le champ gpResultLayerId permettant d'identifier une couche crée par le composant. (pour layerSwitcher par ex)
@@ -929,7 +959,7 @@ define([
                 showPointNames : true, // FIXME option !
                 extractStyles : this.options.vectorStyleOptions.KML.extractStyles,
                 defaultStyle : [
-                    this._defaultKMLStyle
+                    this.options.vectorStyleOptions.KML.defaultStyle
                 ]
             });
 
@@ -954,7 +984,7 @@ define([
                     if ( feature.getStyle() == null ) {
                         logger.log("[ol.control.LayerImport] set default style for GPX feature");
                         feature.setStyle(
-                            this._defaultGPXStyle
+                            this.options.vectorStyleOptions.GPX.defaultStyle
                         );
                     }
                 }
@@ -967,7 +997,7 @@ define([
                     if ( feature.getStyle() == null ) {
                         logger.log("[ol.control.LayerImport] set default style for GeoJSON feature");
                         feature.setStyle(
-                            this._defaultGeoJSONStyle
+                            this.options.vectorStyleOptions.GeoJSON.defaultStyle
                         );
                     }
                 }
