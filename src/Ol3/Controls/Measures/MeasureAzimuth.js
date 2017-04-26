@@ -266,15 +266,16 @@ define([
         var c2 = ol.proj.transform(line.getLastCoordinate(),  sourceProj, "EPSG:4326");
 
         if (!this.options.geodesic) {
-            // calcul sur une petite distance afin de simuler un cap !
-            // c2 = ol.proj.transform(line.getCoordinateAtM(500), sourceProj, "EPSG:4326");
-            c2 = ol.proj.transform(line.getCoordinateAt(0.001), sourceProj, "EPSG:4326");
+            // TODO calcul sur une petite distance (>500m) afin de simuler un cap !
+            var wgs84Sphere = new ol.Sphere(6378137);
+            var lengthGeodesic = wgs84Sphere.haversineDistance(c1, c2);
+            logger.trace("measure between 2 points with geodesic method", lengthGeodesic);
+            if (lengthGeodesic > 500) {
+                var fraction = 500.0 / lengthGeodesic;
+                logger.trace("%", fraction);
+                c2 = ol.proj.transform(line.getCoordinateAt(fraction), sourceProj, "EPSG:4326");
+            }
         }
-
-        // it's just a test !
-        var wgs84Sphere = new ol.Sphere(6378137);
-        var measureGeodesic = wgs84Sphere.haversineDistance(c1, c2);
-        logger.trace("measure between 2 points with geodesic method", measureGeodesic);
 
         var degrees2radians = Math.PI / 180;
         var radians2degrees = 180 / Math.PI;
