@@ -5,8 +5,7 @@ define([
     "Ol3/Utils",
     "Ol3/GfiUtils",
     "Common/Utils/SelectorID",
-    "Common/Controls/GetFeatureInfoDOM",
-    "Ol3/CRS/CRS" // call autoload function !
+    "Common/Controls/GetFeatureInfoDOM"
 ], function (
     ol,
     proj4,
@@ -34,6 +33,7 @@ define([
      * @param {String} [gfiOptions.layers.event] - name of the mouse event triggering getFeatureInfo on this layer (that has been added to map). allowed values are : 'singleclick', 'dblclick' and 'contextmenu'. If not specified the triggering event is the current default event (see gfiOptions.options.defaultEvent).
      * @param {String} [gfiOptions.layers.infoFormat] - indicates the format mime-type of the response of GetFeatureInfo requests.
      * @param {Object} [gfiOptions.options] - custom options object to configure the control, with following properties :
+     * @param {Boolean} [gfiOptions.options.hidden=false] - specifies if the widget should be hidden.
      * @param {Boolean} [gfiOptions.options.auto=false] - specifies if the control run in automatic mode. In automatic mode all vector layers added on run time or added at map initialization can be requested through the control. The triggering event of those layers is the default event.
      * @param {Boolean} [gfiOptions.options.active=true] - specifies if the control is active or inactive. In inactive mode requests are not fired and no information are displayed.
      * @param {String} [gfiOptions.options.defaultEvent='singleclick'] - default triggering event chosen in the list ('singleclick', 'dblclick', 'contextmenu'). This is the triggering event of all layers added to the control without configured triggering event.
@@ -129,13 +129,13 @@ define([
         // identifiant du contrôle : utile pour suffixer les identifiants CSS (pour gérer le cas où il y en a plusieurs dans la même page)
         this._uid = SelectorID.generate();
 
-        if ( options.auto && typeof options.auto !== "boolean" ) {
+        if ( typeof options.auto !== "undefined" && typeof options.auto !== "boolean" ) {
             console.log("[ERROR] GetFeatureInfo:_initialize - auto parameter should be a boolean");
             return;
         }
         this._auto = options.auto || false;
 
-        if ( options.active && typeof options.active !== "boolean" ) {
+        if ( typeof options.active !== "undefined" && typeof options.active !== "boolean" ) {
             console.log("[ERROR] GetFeatureInfo:_initialize - active parameter should be a boolean");
             return;
         }
@@ -332,6 +332,8 @@ define([
      * Set active control property
      *
      * @param {Boolean} active - specify the value the active property must be set to.
+     *
+     * @private
      */
     GetFeatureInfo.prototype._setActive = function (active) {
         if ( typeof active !== "boolean" ) {
@@ -595,12 +597,14 @@ define([
 
     /**
      * Create control main container (called by GetFeatureInfo constructor)
+     * @param {Object} [options] - options object to configure the widget :
+     * @param {Boolean} [options.hidden] - specifies if the widget should be hidden.
      *
      * @method _initContainer
      *
      * @private
      */
-    GetFeatureInfo.prototype._initContainer = function () {
+    GetFeatureInfo.prototype._initContainer = function (options) {
         // creation du container principal
         var container = this._createMainContainerElement();
 
@@ -610,6 +614,16 @@ define([
         // ajout dans le container principal du picto du controle
         var picto = this._createMainPictoElement();
         container.appendChild(picto);
+
+        if ( typeof options.hidden !== "undefined" ) {
+            if ( typeof options.hidden !== "boolean"  ) {
+                console.log("[ERROR] GetFeatureInfo:_initContainer - hidden parameter should be a boolean");
+                return;
+            }
+            if ( options.hidden ) {
+                container.style.visibility = "hidden";
+            }
+        }
 
         return container;
     };

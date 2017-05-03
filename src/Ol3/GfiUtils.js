@@ -451,7 +451,7 @@ define([
                     }
                 },
                 function () {
-                    console.log("Finish sync to GFI !");
+                    logger.trace("Finish sync to GFI !");
                 }
             );
         },

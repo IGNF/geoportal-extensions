@@ -38,8 +38,10 @@
 
         <div>
             <p>Ajout du widget GetFeatureInfo.</p>
-            <p>L'exemple suivant permet de tester le mode auto. Dans ce mode toutes les couches vecteur ajoutées seront interrogeables via l'évènement par défaut.</p>
-            <p>Note: dans l'exemple une couche vecteur est créée à l'initialisation de la carte interrogeable via un double click sur la souris.</p>
+            <p>L'exemple suivant permet de tester le mode auto. Dans ce mode toutes les couches vecteur ajout&eacute;es seront interrogeables via l'&eacute;v&egrave;nement par d&eacute;faut.</p>
+            <p>Ici la couche vecteur pr&eacute;sente &agrave; l'initialisation peut &ecirc;tre requ&ecirc;t&eacute; par un double click (qui n'est pas ici l'&eacute;v&egrave;nement par d&eacute;fault).</p>
+            <p>Dans l'exemple, des couches autres que vecteur peuvent &ecirc;tre ajout&eacute;es afin de v&eacute;rifier qu'elles ne sont pas interrog&eacute;es (aucune requ&ecirc;te n'est lanc&eacute;e).</p>
+            <p>Note: dans l'exemple une couche vecteur est cr&eacute;&eacute;e &agrave; l'initialisation de la carte interrogeable via un double click sur la souris.</p>
 
             <!-- map -->
             <div id="map" style="height: 500px; width: 800px;"></div>
@@ -47,7 +49,7 @@
             <button type="button" id="addVectorGpx">Ajouter une couche vecteur gpx</button>
             <button type="button" id="addWms">Ajouter une couche WMS</button>
             <button type="button" id="addWtms">Ajouter une couche WTMS</button>
-            <button type="button" id="changeDefaultEvent">Changer l'événement par défaut</button>
+            <button type="button" id="changeDefaultEvent">Changer l'&eacute;v&eacute;nement par d&eacute;faut</button>
 
             <script>
                 var map;
@@ -64,8 +66,8 @@
                     }
                 });
                 requirejs(
-                    ["ol", "proj4", "gp", "Ol3/Layers/LayerWMS" , "Ol3/Layers/LayerWMTS", "Ol3/Controls/GetFeatureInfo"],
-                    function (ol, proj4, Gp, LayerWMS, LayerWMTS, GetFeatureInfo)
+                    ["ol", "proj4", "gp", "Ol3/Layers/LayerWMS" , "Ol3/Layers/LayerWMTS", "Ol3/Controls/GetFeatureInfo", "Ol3/Controls/LayerSwitcher"],
+                    function (ol, proj4, Gp, LayerWMS, LayerWMTS, GetFeatureInfo, LayerSwitcher)
                 {
                     var createMap = function() {
                         // on cache l'image de chargement du Géoportail.
@@ -139,7 +141,6 @@
                             {
                               this.kmlUrls = [
                                 './../resources/KML/S_TOP100.kml',
-                                './../resources/KML/bassin_bleu.kml',
                                 './../resources/KML/croquis-simple.kml'
                               ];
                             }
@@ -242,6 +243,14 @@
                             }
                             getFeatureInfo.setDefaultEvent(this.events[this.index]);
                         }
+
+                        // 5. Ajout du contrôle de gestion de l'empilement des couches (layerSwitcher)
+                        var layerSwitcher = new LayerSwitcher({
+                            options : {
+                                collapsed: false
+                            }
+                        });
+                        map.addControl(layerSwitcher);
                     }
 
                     Gp.Services.getConfig({

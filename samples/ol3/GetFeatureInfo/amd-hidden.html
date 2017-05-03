@@ -38,7 +38,7 @@
 
         <div>
             <p>Ajout du widget GetFeatureInfo.</p>
-            <p>Cet exemple permet de tester l'option d'affichage/désaffichage du wigdet.</p>
+            <p>Cet exemple permet de tester l'option d'affichage/d&eacute;saffichage du wigdet.</p>
 
             <!-- map -->
             <div id="map" style="height: 500px; width: 800px;"></div>
@@ -117,6 +117,7 @@
                                     // }
                                 ],
                                 options : {
+                                    hidden: true,
                                     auto : true,
                                     active: true,
                                     defaultInfoFormat: "text/html",
@@ -127,8 +128,7 @@
                                 }
                             });
 
-                        // 4. On cache le widget
-                        getFeatureInfo.element.style.visibility = "hidden";
+                        // 4. Ajout widget
                         map.addControl(getFeatureInfo);
 
                         // 5. Quelques évènements pour tester...

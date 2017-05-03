@@ -31,8 +31,8 @@
         <div>
             <!-- Faire une bréve description du plugin -->
             <p>Ajout du widget GetFeatureInfo.</p>
-            <p>L'exemple suivant permet de tester le mode auto. Dans ce mode toutes les couches vecteur ajoutées seront interrogeables via l'évènement par défaut.</p>
-            <p>Note: dans l'exemple une couche vecteur est créée à l'initialisation de la carte interrogeable via un double click sur la souris.</p>
+            <p>L'exemple suivant permet de tester le mode auto. Dans ce mode toutes les couches vecteur ajout&eacute;es seront interrogeables via l'&eacute;v&egrave;nement par d&eacute;faut.</p>
+            <p>Note: dans l'exemple une couche vecteur est cr&eacute;&eacute;e &agrave; l'initialisation de la carte interrogeable via un double click sur la souris.</p>
 
             <!-- map -->
             <div id="map" style="height: 500px; width: 800px;"></div>
@@ -116,13 +116,11 @@
                     map.addControl(getFeatureInfo);
 
                     // 4. Quelques évènements pour tester...
-                    // 4. Quelques évènements pour tester...
                     document.getElementById("addVectorKml").onclick = function(e) {
                         if ( !this.kmlUrls )
                         {
                           this.kmlUrls = [
                             './../resources/KML/S_TOP100.kml',
-                            './../resources/KML/bassin_bleu.kml',
                             './../resources/KML/croquis-simple.kml'
                           ];
                         }
@@ -215,6 +213,14 @@
                             })
                         );
                     }
+
+                    // 5. Ajout du contrôle de gestion de l'empilement des couches (layerSwitcher)
+                    var layerSwitcher = new ol.control.LayerSwitcher({
+                        options : {
+                            collapsed: false
+                        }
+                    });
+                    map.addControl(layerSwitcher);
                 }
             </script>
         </div>
