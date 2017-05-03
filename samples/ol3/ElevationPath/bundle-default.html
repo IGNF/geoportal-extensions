@@ -28,6 +28,7 @@
 
   <script>
   var map;
+  var profil;
 
   window.onload = function () {
     // on cache l'image de chargement du Géoportail.
@@ -47,7 +48,7 @@
       })
     });
 
-    var profil = new ol.control.ElevationPath();
+    profil = new ol.control.ElevationPath();
     map.addControl(profil);
 
   };

@@ -60,6 +60,7 @@
         "Ol3/Controls/Measures/MeasureAzimuth",
         "Ol3/Controls/Measures/MeasureLength",
         "Ol3/Controls/ElevationPath",
+        "Ol3/Controls/GeoportalAttribution",
         "Ol3/Controls/GetFeatureInfo"
       ],
       function (
@@ -69,7 +70,8 @@
         Drawing, Isocurve, Route, MousePosition,
         LayerImport, LayerSwitcher,
         ReverseGeocode, SearchEngine,
-        MeasureArea, MeasureAzimuth, MeasureLength, ElevationPath, GetFeatureInfo
+        MeasureArea, MeasureAzimuth, MeasureLength, ElevationPath,
+        GeoportalAttribution, GetFeatureInfo
       ) {
 
         var map;
@@ -122,6 +124,9 @@
           var measureProfil = new ElevationPath();
           map.addControl(measureProfil);
 
+          var attributions = new GeoportalAttribution();
+          map.addControl(attributions);
+
           var getFeatureInfo = new GetFeatureInfo(
             {
                 options: {
@@ -130,7 +135,6 @@
             }
           );
           map.addControl(getFeatureInfo);
-
         };
 
         Gp.Services.getConfig({

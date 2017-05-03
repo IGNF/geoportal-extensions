@@ -1018,7 +1018,7 @@ define([
         var foundId = null ;
 
         this.getMap().getLayers().forEach( function (layer) {
-            if (Utils.getOL3ObjectId(layer) == Utils.getOL3ObjectId(olLayer)) {
+            if (layer == olLayer) {
                 foundId = layer.hasOwnProperty("gpLayerId") ? layer.gpLayerId : null ;
             }
         },

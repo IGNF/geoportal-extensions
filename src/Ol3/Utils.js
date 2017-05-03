@@ -82,6 +82,7 @@ define([
 
         /**
          * Returns id of OL3 obj (based on closure_uid_xxx property)
+         * NOT USED ANYMORE ? (OL v4.0.1)
          *
          * @param {Object} ol3obj - OL3 object
          * @returns {String} - id of OL3 Object. Null if not found.

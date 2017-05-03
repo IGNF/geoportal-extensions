@@ -161,6 +161,7 @@ define([], function () {
             for (var index in resolutionsNatives) {
                 if (resolutionsNatives.hasOwnProperty(index)) {
                     if (resolutionsNatives[index] <= resolution) {
+                        index = parseInt(index, 10);
                         return index;
                     }
                 }
@@ -201,7 +202,7 @@ define([], function () {
                         drawLogo = true;
 
                         var minZoomLevel = this.getZoomLevelFromScaleDenominator(constraint.maxScaleDenominator, params.crs);
-                        var maxZoomLevel = this.getZoomLevelFromScaleDenominator(constraint.minScaleDenominator, params.crs);
+                        var maxZoomLevel = this.getZoomLevelFromScaleDenominator(constraint.minScaleDenominator, params.crs) || 21;
 
                         // min zoom constraints
                         if (minZoomLevel && (minZoomLevel > zoom)) {
@@ -209,7 +210,7 @@ define([], function () {
                         }
 
                         // max zoom constraints
-                        if (drawLogo && maxZoomLevel && (maxZoomLevel < zoom)) {
+                        if (drawLogo && maxZoomLevel !== null && (maxZoomLevel < zoom)) {
                             drawLogo = false;
                         }
 

@@ -44,12 +44,21 @@
             onSuccess : function () {
               var map = L.map('map').setView([48, 2], 0);
 
-              var layer = Layers.WMTS({
+              var layer0 = Layers.WMTS({
                   layer : "ORTHOIMAGERY.ORTHOPHOTOS",
                   apiKey : "jhyvi0fgmnuxvfv0zjzorvdn"
               });
 
-              layer.addTo(map);
+              layer0.addTo(map);
+
+              var layer1 = Layers.WMTS({
+                  layer : "GEOGRAPHICALGRIDSYSTEMS.MAPS",
+                  apiKey : "jhyvi0fgmnuxvfv0zjzorvdn"
+              },{
+                opacity : 0.5
+              });
+
+              layer1.addTo(map);
 
               L.marker([48, 2]).addTo(map).bindPopup('A pretty CSS3 popup.<br> Easily customizable.').openPopup();
             }

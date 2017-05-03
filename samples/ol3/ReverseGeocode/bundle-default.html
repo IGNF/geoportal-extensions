@@ -25,14 +25,14 @@
             <p>Ajout simple d'un widget de recherche inverse</p>
 
             <script>
-                // var map;
-                // var route;
+                var map;
+                var reverse;
                 window.onload = function () {
                     // on cache l'image de chargement du Géoportail.
                     document.getElementById("map").style.backgroundImage = "none";
 
                     // Création de la map
-                    var map = new ol.Map({
+                    map = new ol.Map({
                         target : "map",
                         layers : [
                             new ol.layer.GeoportalWMTS({
@@ -45,7 +45,7 @@
                         })
                     });
 
-                    var reverse = new ol.control.ReverseGeocode({});
+                    reverse = new ol.control.ReverseGeocode({});
                     map.addControl(reverse);
 
                 };

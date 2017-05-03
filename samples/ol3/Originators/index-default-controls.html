@@ -52,16 +52,16 @@
                         })
                     });
 
-                    var olLayer = new ol.layer.Tile({
-                        source: new ol.source.MapQuest({layer: 'sat'}),
+                    var osmLayer = new ol.layer.Tile({
+                        source: new ol.source.OSM(),
                         opacity: 0.5
                     });
 
                     var map = new ol.Map({
                         layers: [
-                            gpLayer
-                            // olLayer,
-                            // gpCartes
+                            gpLayer,
+                            osmLayer,
+                            gpCartes
                         ],
                         target: 'map',
                         view: new ol.View({

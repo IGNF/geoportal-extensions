@@ -3,6 +3,7 @@ define([
     "ol",
     "gp",
     "Common/Utils/SelectorID",
+    "Ol3/Controls/Utils/Interactions",
     "Common/Controls/DrawingDOM",
     "Ol3/Utils",
     "Ol3/Formats/KML"
@@ -11,6 +12,7 @@ define([
     ol,
     Gp,
     SelectorID,
+    Interactions,
     DrawingDOM,
     Utils,
     KMLExtended
@@ -240,7 +242,7 @@ define([
 
         // gestion des suppressions "externes" de la couche de dessin.
         this.eventKey = this.getMap().getLayers().on("remove", function (evtRm) {
-            if (Utils.getOL3ObjectId(evtRm.element) == Utils.getOL3ObjectId(this.layer)) {
+            if ( evtRm.element == this.layer) {
                 // found layer removed.
                 this.layer = null ;
                 // on supprime l'interaction en cours si besoin
@@ -322,6 +324,24 @@ define([
         this._showDrawingContainer.checked = !collapsed;
     };
 
+    /**
+     * Setter for Export Name.
+     *
+     * @param {String} name - Export Name. By default, "Croquis".
+     */
+    Drawing.prototype.setExportName = function (name) {
+        this._exportName = name;
+    };
+
+    /**
+     * getter for Export Name.
+     *
+     * @returns {String} - export name
+     */
+    Drawing.prototype.getExportName = function () {
+        return this._exportName;
+    };
+
     // ################################################################### //
     // ######################## initialize control ####################### //
     // ################################################################### //
@@ -380,6 +400,10 @@ define([
 
         // determination d'un uid
         this._uid = SelectorID.generate();
+
+        // export name / format / ...
+        this._exportName   = "Croquis";
+        this._exportFormat = ".kml";
 
         // Set default options
         this.options = options || {};
@@ -596,10 +620,17 @@ define([
      * @param {ol.layer.Vector} vlayer - vector layer
      */
     Drawing.prototype.setLayer = function (vlayer) {
-        if (!vlayer || !(vlayer instanceof ol.layer.Vector)) {
-            console.log("no valid layer given for hosting drawn features.") ;
-            return ;
+
+        if (!vlayer) {
+            this.layer = null;
+            return;
         }
+
+        if (!(vlayer instanceof ol.layer.Vector)) {
+            console.log("no valid layer given for hosting drawn features.");
+            return;
+        }
+
         // ajout du layer de dessin à la carte s'il n'y est pas déjà
         var layers = this.getMap().getLayers() ;
         if (layers) {
@@ -615,7 +646,17 @@ define([
             if (!found) {
                 this.getMap().addLayer(vlayer) ;
             }
-            // TODO : application des styles par défaut sur le layer
+            // TODO style par defaut du geoportail !
+            // application des styles ainsi que ceux par defaut de ol sur le layer
+            vlayer.getSource().getFeatures().forEach(function (feature) {
+                var featureStyleFunction = feature.getStyleFunction();
+                if (featureStyleFunction) {
+                    var styles = featureStyleFunction.call(feature, 0);
+                    if (styles && styles.length !== 0) {
+                        feature.setStyle(styles[0]);
+                    }
+                }
+            });
         }
         this.layer = vlayer ;
     };
@@ -811,20 +852,40 @@ define([
             if (!seEv || !seEv.selected || seEv.selected.length == 0) {
                 return ;
             }
+
+            var valuesColor = null;
+            var hexColor = null;
             var popupOvl = null ;
             var geomType = null ;
             var initValues = {} ;
             if (seEv.selected[0].getGeometry() instanceof ol.geom.Point) {
                 // on determine si c'est un marker ou un label.
-                if (seEv.selected[0].getStyle().getText()) {
+                var _label = seEv.selected[0].getProperties().name;
+                if (seEv.selected[0].getStyle().getText() && _label) {
                     geomType = "Text" ;
                     if ( seEv.selected[0].getStyle().getText().getStroke() &&
                          seEv.selected[0].getStyle().getText().getStroke().getColor()) {
-                        initValues.strokeColor = seEv.selected[0].getStyle().getText().getStroke().getColor() ;
+                        valuesColor = seEv.selected[0].getStyle().getText().getStroke().getColor() ;
+                        if ( Array.isArray(valuesColor) ) {
+                            valuesColor = "rgba(" + valuesColor.join() + ")";
+                            hexColor = this.rgbaToHex(valuesColor) ;
+                            initValues.strokeColor = hexColor.hex;
+                            initValues.strokeOpacity = hexColor.opacity ;
+                        } else {
+                            initValues.strokeColor = valuesColor;
+                        }
                     }
                     if ( seEv.selected[0].getStyle().getText().getFill() &&
                          seEv.selected[0].getStyle().getText().getFill().getColor()) {
-                        initValues.fillColor = seEv.selected[0].getStyle().getText().getFill().getColor() ;
+                        valuesColor = seEv.selected[0].getStyle().getText().getFill().getColor() ;
+                        if ( Array.isArray(valuesColor) ) {
+                            valuesColor = "rgba(" + valuesColor.join() + ")";
+                            hexColor = this.rgbaToHex(valuesColor) ;
+                            initValues.fillColor = hexColor.hex;
+                            initValues.fillOpacity = hexColor.opacity ;
+                        } else {
+                            initValues.fillColor = valuesColor;
+                        }
                     }
                     initValues.strokeColor = initValues.hasOwnProperty("strokeColor") ? initValues.strokeColor : this.options.defaultStyles.textStrokeColor ;
                     initValues.fillColor = initValues.hasOwnProperty("fillColor") ? initValues.fillColor : this.options.defaultStyles.textFillColor ;
@@ -846,7 +907,15 @@ define([
                         initValues.strokeWidth = seEv.selected[0].getStyle().getStroke().getWidth() ;
                     }
                     if (seEv.selected[0].getStyle().getStroke().getColor() ) {
-                        initValues.strokeColor = seEv.selected[0].getStyle().getStroke().getColor() ;
+                        valuesColor = seEv.selected[0].getStyle().getStroke().getColor() ;
+                        if ( Array.isArray(valuesColor) ) {
+                            valuesColor = "rgba(" + valuesColor.join() + ")";
+                            hexColor = this.rgbaToHex(valuesColor) ;
+                            initValues.strokeColor = hexColor.hex;
+                            initValues.fillOpacity = hexColor.opacity ;
+                        } else {
+                            initValues.strokeColor = valuesColor;
+                        }
                     }
                 }
                 initValues.strokeWidth = initValues.hasOwnProperty("strokeWidth") ? initValues.strokeWidth : this.options.defaultStyles.strokeWidth ;
@@ -859,16 +928,27 @@ define([
                         initValues.strokeWidth = seEv.selected[0].getStyle().getStroke().getWidth() ;
                     }
                     if (seEv.selected[0].getStyle().getStroke().getColor() ) {
-                        initValues.strokeColor = seEv.selected[0].getStyle().getStroke().getColor() ;
+                        valuesColor = seEv.selected[0].getStyle().getStroke().getColor() ;
+                        if ( Array.isArray(valuesColor) ) {
+                            valuesColor = "rgba(" + valuesColor.join() + ")";
+                            hexColor = this.rgbaToHex(valuesColor) ;
+                            initValues.strokeColor = hexColor.hex;
+                            initValues.strokeOpacity = hexColor.opacity ;
+                        } else {
+                            initValues.strokeColor = valuesColor;
+                        }
                     }
                 }
                 if (seEv.selected[0].getStyle() &&
                     seEv.selected[0].getStyle().getFill()) {
                     if (seEv.selected[0].getStyle().getFill().getColor() ) {
-                        var color = this.rgbaToHex(seEv.selected[0].getStyle().getFill().getColor()) ;
-
-                        initValues.fillColor = color.hex ;
-                        initValues.fillOpacity = color.opacity ;
+                        valuesColor = seEv.selected[0].getStyle().getFill().getColor();
+                        if ( Array.isArray(valuesColor) ) {
+                            valuesColor = "rgba(" + valuesColor.join() + ")";
+                        }
+                        hexColor = this.rgbaToHex(valuesColor) ;
+                        initValues.fillColor = hexColor.hex;
+                        initValues.fillOpacity = hexColor.opacity ;
                     }
                 }
                 initValues.strokeWidth = initValues.hasOwnProperty("strokeWidth") ? initValues.strokeWidth : this.options.defaultStyles.polyStrokeWidth ;
@@ -906,6 +986,7 @@ define([
                             seEv.selected[0].setStyle(new ol.style.Style({
                                 text : new ol.style.Text({
                                     font : "16px sans",
+                                    textAlign : "left",
                                     text : seEv.selected[0].getStyle().getText().getText(),
                                     fill : new ol.style.Fill({
                                         color : fillColorElem.value
@@ -1029,7 +1110,9 @@ define([
             var textValue = null ;
             if (seEv.selected[0].getGeometry() instanceof ol.geom.Point) {
                 // on determine si c'est un marker ou un label.
-                if (seEv.selected[0].getStyle().getText()) {
+                var _label = seEv.selected[0].getProperties().name;
+                if (seEv.selected[0].getStyle() &&
+                    seEv.selected[0].getStyle().getText() && _label) {
                     geomType = "Text" ;
                 } else if (seEv.selected[0].getStyle() &&
                     seEv.selected[0].getStyle().getImage()) {
@@ -1070,6 +1153,9 @@ define([
                 if (geomType == "Text") {
                     var style = feature.getStyle() ;
                     style.getText().setText(value) ;
+                    feature.setProperties({
+                        name : value
+                    }) ;
                     feature.setStyle(style) ;
                     return ;
                 }
@@ -1118,6 +1204,11 @@ define([
             logger.trace("Drawing control not attached to any map.") ;
             return ;
         }
+        // on supprime  les interactions des autres extensions
+        Interactions.unset(map, {
+            current : "Drawing"
+        });
+
         // on supprime  l'interaction courante s'il y en a une.
         if (context.interaction) {
             map.removeInteraction(context.interaction) ;
@@ -1243,6 +1334,11 @@ define([
                                 context.layer.getSource().removeFeature(deEv.feature) ;
                                 return ;
                             }
+
+                            deEv.feature.setProperties({
+                                name : value
+                            }) ;
+
                             deEv.feature.setStyle(new ol.style.Style({
                                 image : new ol.style.Icon(context._getIconStyleOptions(context.options.defaultStyles.textIcon1x1)),
                                 text : new ol.style.Text({
@@ -1321,6 +1417,10 @@ define([
                 logger.trace("unhandled tool type") ;
         }
         if (context.interaction) {
+            context.interaction.setProperties({
+                name : "Drawing",
+                source : this
+            });
             map.addInteraction(context.interaction) ;
         }
     } ;
@@ -1339,12 +1439,43 @@ define([
      */
     Drawing.prototype.onShowDrawingClick = function () {
 
+        var map = this.getMap();
+        // on supprime toutes les interactions
+        Interactions.unset(map);
+
         // checked : true - panel close
         // checked : false - panel open
         this.collapsed = this._showDrawingContainer.checked;
         // on génère nous même l'evenement OpenLayers de changement de propriété
         // (utiliser mousePosition.on("change:collapsed", function(e) ) pour s'abonner à cet évènement)
         this.dispatchEvent("change:collapsed");
+    };
+
+    /**
+     * this method is called by event 'click' on 'drawing-export' tag button.
+     *
+     * @method onExportFeatureClick
+     * @private
+     */
+    Drawing.prototype.onExportFeatureClick = function () {
+
+        // TODO
+        var content = this.exportFeatures();
+        if (!content) {
+            return ;
+        }
+        var link = document.createElement("a") ;
+        // FIXME : determiner le bon charset !
+        var charset = "utf-8" ;
+        link.setAttribute("href","data:application/vnd.google-earth.kml+xml;charset=" + charset + "," + encodeURIComponent(content)) ;
+        link.setAttribute("download", this.getExportName() + ".kml") ;
+        if (document.createEvent) {
+            var event = document.createEvent("MouseEvents");
+            event.initEvent("click", true, true);
+            link.dispatchEvent(event);
+        } else {
+            link.click();
+        }
     };
 
     return Drawing;

@@ -108,9 +108,12 @@ define([
                 }
                 for ( var i = 0; i < this._initLayers.length; i++ ) {
                     // recup la layer, son id,
-                    var layer = map.getLayer(layers[i].layer.id);
+                    var layer;
+                    if (layers[i].layer) {
+                        layer = map.getLayer(layers[i].layer.id);
+                    }
 
-                    if ( layer ) {
+                    if ( layer !== undefined) {
                         // et les infos de la conf si elles existent (title, description, legends, quicklook, metadata)
                         var conf = layers[i].config || {};
                         var layerOptions = {
@@ -226,7 +229,6 @@ define([
                             self._layersOrder = getOrderedLayers(map);
                             // et on rajoute les div correspondantes aux différentes couches, dans l'ordre décroissant des zindex
                             for ( var j = 0; j < self._layersOrder.length; j++ ) {
-                                var layerOptions = self._layersOrder[j];
                                 // récupération de la div de la couche, stockée dans le tableau _layers
                                 var layerDiv = self._layers[self._layersOrder[j].id].div;
                                 self._layerListContainer.appendChild(layerDiv);
@@ -357,8 +359,14 @@ define([
             };
             this._layers[id] = layerOptions;
 
+            // création de la div de la couche destinée à être ajoutée au LS
             var layerDiv = this._createLayerDiv(layerOptions);
             this._layers[id].div = layerDiv;
+            // le callback sur le changement d'index permet de remettre en ordre
+            // les div dans le LS (et au passage d'ajouter la div de la couche au DOM du control)
+            // A refactorer en une fonction indépendante sans passer par ce callback
+            this._callbacks.onIndexLayerCallBack();
+
             if (layer.type === "feature") {
                 // update the lastZIndex
                 this._lastZIndexFeature++;

@@ -48,11 +48,27 @@ define([], function () {
         */
         _createShowDrawingPictoElement : function () {
 
+            var self = this;
+
             var label = document.createElement("label");
             label.id  = this._addUID("GPshowDrawingPicto") ;
             label.className = "GPshowAdvancedToolPicto";
             label.htmlFor = this._addUID("GPshowDrawing");
             label.title = this.options.labels.control ;
+
+            // gestionnaire d'evenement :
+            // on ouvre le menu de saisie de saisie
+            // L'ouverture/Fermeture permet de faire le menage
+            // (reinitialisation)
+            if (label.addEventListener) {
+                label.addEventListener("click", function (e) {
+                    self.onShowDrawingClick(e);
+                });
+            } else if (label.attachEvent) {
+                label.attachEvent("onclick", function (e) {
+                    self.onShowDrawingClick(e);
+                });
+            }
 
             var spanOpen = document.createElement("span");
             spanOpen.id  = this._addUID("GPshowDrawingOpen") ;
@@ -289,23 +305,7 @@ define([], function () {
             var context = this ;
             /** export function */
             button.onclick = function () {
-                // TODO
-                var content = context.exportFeatures() ;
-                if (!content) {
-                    return ;
-                }
-                var link = document.createElement("a") ;
-                // FIXME : determiner le bon charset !
-                var charset = "utf-8" ;
-                link.setAttribute("href","data:application/vnd.google-earth.kml+xml;charset=" + charset + "," + encodeURIComponent(content)) ;
-                link.setAttribute("download","croquis.kml") ;
-                if (document.createEvent) {
-                    var event = document.createEvent("MouseEvents");
-                    event.initEvent("click", true, true);
-                    link.dispatchEvent(event);
-                } else {
-                    link.click();
-                }
+                context.onExportFeatureClick();
             } ;
             container.appendChild(button) ;
 

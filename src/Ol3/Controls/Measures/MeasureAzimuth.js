@@ -33,6 +33,7 @@ define([
     * @alias ol.control.MeasureAzimuth
     * @extends {ol.control.Control}
     * @param {Object} options - options for function call.
+    * @param {Boolean} [options.geodesic = false] - If true, azimuth will be computed on the global sphere. Otherwise, it will be computed on the projected plane.
     * @param {Object} [options.styles = {}] - styles used when drawing. Specified with following properties.
     * @param {Object} [options.styles.pointer = {}] - Style for mouse pointer when drawing the line. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Image.html ol.style.Image} subclass object.
     * @param {Object} [options.styles.start = {}] - Line Style when drawing. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Style.html ol.style.Style} object.
@@ -40,6 +41,7 @@ define([
     * <!-- @param {Object} [options.tooltip = {}] - NOT YET IMPLEMENTED ! -->
     * @example
     * var measure = new ol.control.MeasureAzimuth({
+    *   geodesic : true
     * });
     */
     function MeasureAzimuth (options) {
@@ -113,7 +115,7 @@ define([
      */
     MeasureAzimuth.prototype.setMap = function (map) {
         logger.trace("setMap()");
-        
+
         var className = this.CLASSNAME;
 
         // on fait le choix de ne pas activer les events sur la map à l'init de l'outil,
@@ -151,6 +153,24 @@ define([
 
     };
 
+    /**
+    * Setter for option Geodesic
+    *
+    * @param {Boolean} value - geodesic value
+    */
+    MeasureAzimuth.prototype.setGeodesic = function (value) {
+        this.options.geodesic = ( typeof value !== "undefined" ) ? value : false;
+    };
+
+    /**
+    * Getter for option Geodesic
+    *
+    * @return {Boolean} geodesic value
+    */
+    MeasureAzimuth.prototype.isGeodesic = function () {
+        return this.options.geodesic;
+    };
+
     // ################################################################### //
     // ##################### init component ############################## //
     // ################################################################### //
@@ -165,8 +185,9 @@ define([
 
         // liste des options
         this.options = {};
-        this.options.target   = ( typeof options.target !== "undefined" ) ? options.target : null;
-        this.options.render   = ( typeof options.render !== "undefined" ) ? options.render : null;
+        this.options.geodesic = ( typeof options.geodesic !== "undefined" ) ? options.geodesic : false;
+        this.options.target   = ( typeof options.target   !== "undefined" ) ? options.target   : null;
+        this.options.render   = ( typeof options.render   !== "undefined" ) ? options.render   : null;
 
         // gestion des styles !
         this.createStylingMeasureInteraction(options.styles);
@@ -240,24 +261,38 @@ define([
         var map = this.getMap();
 
         var sourceProj = map.getView().getProjection();
-        // on calcule sur des distances plus courtes !
+
         var c1 = ol.proj.transform(line.getFirstCoordinate(), sourceProj, "EPSG:4326");
-        var c2 = ol.proj.transform(line.getCoordinateAt(0.001), sourceProj, "EPSG:4326");
+        var c2 = ol.proj.transform(line.getLastCoordinate(),  sourceProj, "EPSG:4326");
+
+        if (!this.options.geodesic) {
+            // TODO calcul sur une petite distance (>500m) afin de simuler un cap !
+            var wgs84Sphere = new ol.Sphere(6378137);
+            var lengthGeodesic = wgs84Sphere.haversineDistance(c1, c2);
+            logger.trace("measure between 2 points with geodesic method", lengthGeodesic);
+            if (lengthGeodesic > 500) {
+                var fraction = 500.0 / lengthGeodesic;
+                logger.trace("%", fraction);
+                c2 = ol.proj.transform(line.getCoordinateAt(fraction), sourceProj, "EPSG:4326");
+            }
+        }
 
         var degrees2radians = Math.PI / 180;
         var radians2degrees = 180 / Math.PI;
+
         var lon1 = degrees2radians * c1[0];
         var lon2 = degrees2radians * c2[0];
+
         var lat1 = degrees2radians * c1[1];
         var lat2 = degrees2radians * c2[1];
+
         var a = Math.sin(lon2 - lon1) * Math.cos(lat2);
         var b = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1);
 
         var atan = Math.atan2(a, b);
-        logger.trace(atan);
 
         var azimut = radians2degrees * atan;
-        logger.trace(azimut);
+        logger.trace("azimut", azimut);
 
         if (azimut < 0) {
             azimut += 360;

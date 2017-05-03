@@ -1,9 +1,11 @@
 define([
     "ol",
-    "woodman"
+    "woodman",
+    "Ol3/Controls/Utils/Interactions"
 ], function (
     ol,
-    woodman
+    woodman,
+    Interactions
 ) {
 
     "use strict";
@@ -214,14 +216,11 @@ define([
                 }
             }
 
-            // FIXME desactivation des autres interactions parasites
+            // desactivation des autres interactions parasites
             var map = this.getMap();
-            var interactions = map.getInteractions().getArray() ;
-            for (var i = 0 ; i < interactions.length ; i++ ) {
-                if (interactions[i].getActive() && interactions[i] instanceof ol.interaction.Draw) {
-                    interactions[i].setActive(false);
-                }
-            }
+            Interactions.unset(map, {
+                current : "Measures"
+            });
 
             if (!this._showContainer.checked) {
 
@@ -278,7 +277,6 @@ define([
         * Clear all length, area or azimut object.
         */
         clearMeasure : function () {
-            logger.trace("call Measures::clear()");
 
             var map = this.getMap();
 
@@ -411,13 +409,25 @@ define([
             var map = this.getMap();
 
             // Creates and adds the interaction
+            var self = this;
             this.measureDraw = new ol.interaction.Draw({
                 source : this.measureSource,
+                /** condition : permet de gerer la suppression des derniers points saisis */
+                condition : function (event) {
+                    if (event.originalEvent.ctrlKey) {
+                        if (self.sketch) {
+                            this.removeLastPoint();
+                        }
+                        return false;
+                    }
+                    return true;
+                },
                 type : type,
                 style : this.options.styles.start || Measures.DEFAULT_DRAW_START_STYLE
             });
             this.measureDraw.setProperties({
-                source : "Measure"
+                name : "Measures",
+                source : this
             });
             map.addInteraction(this.measureDraw);
 
@@ -425,7 +435,6 @@ define([
             this.createMeasureTooltip(map);
 
             // Event start measuring
-            var self = this;
             this.measureDraw.on("drawstart", function (evt) {
                 // set sketch
                 self.sketch = evt.feature;

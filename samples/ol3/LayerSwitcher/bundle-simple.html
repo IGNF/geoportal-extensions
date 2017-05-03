@@ -75,18 +75,19 @@
                     });
                     map.addLayer(gpMaps);
 
-                    var olSat = new ol.layer.Tile({
-                        source: new ol.source.MapQuest({layer: 'sat'}),
+                    var osm = new ol.layer.Tile({
+                        source: new ol.source.OSM(),
                         opacity: 0.5,
                         visible: false
                     });
-                    map.addLayer(olSat);
+                    map.addLayer(osm);
 
                     var olStamen = new ol.layer.Tile({
                         source : new ol.source.Stamen({
                             layer : "watercolor"
                         }),
-                        opacity : 0.5
+                        opacity : 0.5,
+                        extent : [-635240, 4688265, 1204491, 6682415]
                     });
                     map.addLayer(olStamen);
 
@@ -101,16 +102,10 @@
                         {
                             layers : [
                                 {
-                                    layer : olSat,
+                                    layer : osm,
                                     config : {
-                                        title : "Images satellites MapQuest",
-                                        description : "Images satellites MapQuest",
-                                        quicklookUrl : "http://stamen.com/",
-                                        metadata : [
-                                            {
-                                                url : "http://stamen.com/"
-                                            }
-                                        ]
+                                        title : "OSM layer",
+                                        description : "OSM layer"
                                     }
                                 },{
                                     layer : olStamen,
@@ -133,7 +128,7 @@
                                 }
                             ],
                             options : {
-                                collapsed: true
+                                collapsed: false
                                 // ,
                                 // target : "outerLayerSwitcher"
                             }

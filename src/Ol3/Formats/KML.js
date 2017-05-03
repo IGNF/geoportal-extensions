@@ -1,13 +1,16 @@
 define([
     "woodman",
-    "ol"
+    "ol",
+    "Ol3/Utils"
 ], function (
     woodman,
-    ol
+    ol,
+    Utils
 ) {
 
     "use strict";
 
+    woodman.load("console");
     var logger = woodman.getLogger("extended KML format");
 
     /**
@@ -24,13 +27,7 @@ define([
     * cf. https://developers.google.com/kml/forum/advanced
     *
     * ISSUES
-    * cf. https://github.com/openlayers/ol3/issues/4829 :
-    *    I confirm that there's a problem with the positioning of the marker in OpenLayers 3.
-    *    If no tag '_hotspot_' is present in the KML, the marker is centered by default ...
-    *    On the other side, if we put in place this tag (_hotspot_), vertical positioning is drawn to the wrong place...
-    *    [jsfiddle - read kml] (http://jsfiddle.net/lowzonenose/1dnrn1hu/embedded/result,js,html,css/)
-    *    [jsfiddle - write kml] (http://jsfiddle.net/lowzonenose/yh4stufb/embedded/result,js,html,css/)
-    *
+    * cf. https://github.com/openlayers/ol3/issues/4829
     * cf. https://github.com/openlayers/ol3/issues/4460
     * cf. https://github.com/openlayers/ol3/pull/5590
     * cf. https://github.com/openlayers/ol3/issues/5229
@@ -51,6 +48,7 @@ define([
             options
         );
 
+        this.options = options || {};
     }
 
     // Inherits
@@ -63,6 +61,31 @@ define([
 
     /**
     * Constructor (alias)
+    *
+    * En lecture, on surcharge la méthode readFeatures.
+    * ✔️ In : kml string + features du format original
+    * ✔️ Out : features étendus avec des styles, et des metadatas (name ou extendData)
+    * > on modifie les features du format original avec les fonctionnalités non gérées.
+    *
+    * En écriture, on surcharge la méthode writeFearures.
+    * ✔️ In : kml du format original + features étendus
+    * ✔️ Out : kml étendu avec des styles, et des metadatas (name ou extendData)
+    * > on modifie le kml généré par le format original avec les fonctionnalités que nous avons ajoutées aux features.
+    *
+    * Le principe
+    * On parse le kml, et on lit (get) ou on ajoute (set) des fonctionnalités.
+    *
+    * Les getters vont lire le kml (ex. LabelExtendStyle), et ajouter le style ainsi que le nom du label dans le feature original.
+    * getLabelIconStyle (appel des 2 fonctions suivantes)
+    * getLabelExtendStyle (New)
+    * getHotSpotIconStyle (Bug sur la lecture du  hotspot)
+    * getExtendData (New)
+    *
+    * Les setters vont écrire dans le dom du kml original les fonctionnalités ajoutées dans les features.
+    * setLabelExtendStyle (New)
+    * setHotSpotIconStyle (Bug sur l'écriture du hotspot)
+    * setNameData (Bug suppression de cette balise du format par défaut).
+    *
     */
     KML.prototype.constructor = KML;
 
@@ -172,9 +195,6 @@ define([
     *  - creation de styles étendus ou correctifs sur le KML
     *  - ajout de styles étendus sur les features
     *
-    * FIXME : le traitement des styles KML en mode styleUrl n'est pas implémenté !
-    * indispensable pour lire les KMl de l'ancien portail...
-    *
     * @example
     * // ajoute des fonctionnalités dans le KML
     * _kmlRead(kmlDoc, {
@@ -201,6 +221,8 @@ define([
         }
 
         // On recherche les PlaceMark de type Point ayant un Style...
+        // Le style peut être placé directement dans le PlaceMark
+        // ou lié avec un id (share)
         var stylesUrl = {}; // listes des styles
         var index = -1; // index du features...
         for (var i = 0; i < nodes.length; i++) {
@@ -211,6 +233,7 @@ define([
                     // INFO
                     // pour le traitement des balises Styles liées avec styleUrl,
                     // elles doivent être toujours déclarées avant les PlaceMark !
+                    // On ne prend en compte que celles qui sont identifiées via un ID !
                     var id = node.attributes[0];
                     if (id.nodeName === "id") {
                         var _k = id.nodeValue;
@@ -226,6 +249,7 @@ define([
                     var point  = false;
                     var styles = null; // dom
                     var extend = null; // dom
+                    var name   = node;
                     for (var j = 0; j < types.length; j++) {
                         switch (types[j].nodeName) {
                             case "Point":
@@ -244,21 +268,37 @@ define([
                             case "ExtendedData":
                                 extend = types[j].childNodes;
                                 break;
+                            case "name":
+                                name = null;
+                                break;
                             default:
                             // on ne traite pas les autres informations ...
+                            // car elles seront gérées par defaut par le format standard...
                         }
                     }
 
                     // On traite les balises kml:extendedData pour tous les objets !
                     if (extend) {
-                        logger.log("(TODO) ExtendedData :", extend);
+                        logger.log("ExtendedData :", extend);
                         var fctExtend = process.extendedData;
                         if (fctExtend && typeof fctExtend === "function") {
                             fctExtend(features[index], extend);
                         }
                     }
 
-                    // On a un Marker ou un Label avec un Style
+                    //  On traite la balise kml:name
+                    // (si elle n'existe plus lors de l'ecriture...)
+                    if (name) {
+                        logger.log("Name :", name);
+                        var fctName = process.nameData;
+                        if (fctName && typeof fctName === "function") {
+                            fctName(features[index], name);
+                        }
+                    }
+
+                    // On a un Marker avec un Style.
+                    // Les markers sans styles seront gérées par defaut par le format standard...
+                    // Il peut être associé avec un Label !
                     if (point && styles) {
                         // Les Styles !
                         if (styles.length) {
@@ -278,21 +318,33 @@ define([
                                 }
                             }
 
-                            // C'est un Label !
-                            // On y ajoute qq fonctionnalités...
-                            if (labelStyle) {
+                            // Pour un label, il nous faut un titre !
+                            var labelName = features[index].getProperties().name;
+                            var labelDescription = features[index].getProperties().description;
+                            var value = labelName || labelDescription;
+                            logger.trace(value);
+
+                            // C'est uniquement un Label !
+                            if (!iconStyle && labelStyle) {
                                 var fctLabel = process.labelStyle;
                                 if (fctLabel && typeof fctLabel === "function") {
                                     fctLabel(features[index], labelStyle);
                                 }
                             }
 
-                            // C'est un marker !
-                            // On y ajoute qq fonctionnalités...
-                            else if (iconStyle) {
+                            // C'est uniquement un marker !
+                            else if (iconStyle && !labelStyle) {
                                 var fctIcon = process.iconStyle;
                                 if (fctIcon && typeof fctIcon === "function") {
                                     fctIcon(features[index], iconStyle);
+                                }
+                            }
+
+                            // C'est un marker avec un label !
+                            else if (iconStyle && labelStyle) {
+                                var fctIconLabel = process.iconLabelStyle;
+                                if (fctIconLabel && typeof fctIconLabel === "function") {
+                                    fctIconLabel(features[index], iconStyle, labelStyle);
                                 }
                             }
                         }
@@ -300,7 +352,7 @@ define([
 
                     break;
                 default:
-
+                    logger.trace("tag is not processing !");
             }
         }
     };
@@ -355,6 +407,11 @@ define([
                 return;
             }
 
+            var labelName = feature.getProperties().name;
+            if (!labelName) {
+                return;
+            }
+
             /** RGB Colors (RRGGBB) To KML Colors (AABBGGRR) */
             function __convertRGBColorsToKML (data) {
                 var strColor = data.toString(16);
@@ -370,37 +427,43 @@ define([
                 color = color + strColor.substr(4,2);
                 color = color + strColor.substr(2,2);
                 color = color + strColor.substr(0,2);
-                return color;
+                return color.toLowerCase();
             }
 
-            var _haloColor = __convertRGBColorsToKML("#FFFFFF"); // KML Colors : 64FFFFFF (blanc)
-            var _haloRadius = "3";
-            var _haloOpacity = "1"; // TODO
-            var _font = "Sans"; // TODO
+            // Si pas de style defini, c'est donc que l'on va utiliser celui par defaut...
+            if ( feature.getStyle() instanceof ol.style.Style ) {
 
-            var fTextStyle = feature.getStyle().getText().getStroke();
-            _haloColor  = __convertRGBColorsToKML(fTextStyle.getColor());
-            _haloRadius = fTextStyle.getWidth();
+                var fTextStyle = feature.getStyle().getText().getStroke();
 
-            if (style && style.getElementsByTagName("LabelStyleSimpleExtensionGroup").length === 0) {
-                var labelextend = kmlDoc.createElement("LabelStyleSimpleExtensionGroup");
-                labelextend.setAttribute("fontFamily", _font);
-                labelextend.setAttribute("haloColor", _haloColor);
-                labelextend.setAttribute("haloRadius", _haloRadius);
-                labelextend.setAttribute("haloOpacity", _haloOpacity);
-                style.appendChild(labelextend);
+                if (!fTextStyle) {
+                    return;
+                }
+
+                var _haloColor   = __convertRGBColorsToKML(fTextStyle.getColor()) || __convertRGBColorsToKML("#FFFFFF"); // KML Colors : 64FFFFFF (blanc)
+                var _haloRadius  = fTextStyle.getWidth() || "0";
+                var _haloOpacity = "1"; // TODO
+                var _font        = "Sans"; // TODO
+
+                if (style && style.getElementsByTagName("LabelStyleSimpleExtensionGroup").length === 0) {
+
+                    var labelextend = kmlDoc.createElement("LabelStyleSimpleExtensionGroup");
+                    labelextend.setAttribute("fontFamily", _font);
+                    labelextend.setAttribute("haloColor", _haloColor);
+                    labelextend.setAttribute("haloRadius", _haloRadius);
+                    labelextend.setAttribute("haloOpacity", _haloOpacity);
+                    style.appendChild(labelextend);
+                }
             }
+
         };
 
         /**
          * C'est un marker !
          * On va donc ajouter la balise hotspot :
          *  Traiter le cas où les unités sont de type
-         *   - FRACTION (TODO)
+         *   - FRACTION
          *   - PIXELS
          *  Insertion du correctif dans le noeud : <PlaceMark><Style>IconStyle
-         *
-         *  FIXME : BUG de lecture du KML dans OpenLayers
          *
          *  @example
          *  <Style><IconStyle>
@@ -408,49 +471,89 @@ define([
          *  </IconStyle></Style>
          */
         var __createHotSpotStyleIcon = function (feature, style) {
-            // FIXME BUG de lecture OL3 sur l'interpretation des properties :
-            // origin, anchor avec bottom-left et top-left ?
-            // Du coup, la propriété 'y' ne semble pas être correctement intérprétée !?
-            logger.trace("marker with style :", style);
+            logger.trace("marker with style (hotspot):", style);
 
             if (!feature) {
                 return;
             }
 
-            var x = 0;
-            var y = 0;
-            var xunits = "pixels";
-            var yunits = "pixels";
+            // FIXME EXPERIMENTAL : comment peut on deproxyfier l'url ?
+            var proxy = feature.getProperties().proxyUrl;
+            if (proxy) {
+                // TODO...
+                logger.warn("TODO deproxyfier les urls !");
+            }
 
-            var fImageStyle = feature.getStyle().getImage();
+            // Si pas de style defini, c'est donc que l'on va utiliser celui par defaut...
+            if ( feature.getStyle() instanceof ol.style.Style ) {
 
-            var size   = fImageStyle.getSize();
-            var anchor = fImageStyle.getAnchor(); // pixels ! but anchor_ in the current unit !
+                var fImageStyle = feature.getStyle().getImage();
 
-            if (anchor.length) {
-                x = anchor[0];
-                y = anchor[1];
-                if (yunits === "fraction") {
-                    y = (anchor[1] === 1) ? 0 : 1 - anchor[1]; // cf. fixme !
-                } else {
-                    y = (yunits === "pixels" && anchor[1] === size[1]) ? 0 : size[1] - anchor[1]; // cf. fixme !
+                if (!fImageStyle) {
+                    return;
+                }
+
+                var x = 0;
+                var y = 0;
+                var xunits = "pixels";
+                var yunits = "pixels";
+
+                var size   = fImageStyle.getSize();
+                var anchor = fImageStyle.getAnchor(); // pixels ! but anchor_ in the current unit !
+
+                if (anchor.length) {
+                    x = anchor[0];
+                    y = anchor[1];
+                    if (yunits === "fraction") {
+                        y = (anchor[1] === 1) ? 0 : 1 - anchor[1]; // cf. fixme contribution à faire !
+                    } else {
+                        y = (yunits === "pixels" && anchor[1] === size[1]) ? 0 : size[1] - anchor[1]; // cf. fixme contribution à faire !
+                    }
+                }
+
+                if (style && style.getElementsByTagName("hotSpot").length === 0) {
+                    var hotspot = kmlDoc.createElement("hotSpot");
+                    hotspot.setAttribute("x", x);
+                    hotspot.setAttribute("y", y);
+                    hotspot.setAttribute("xunits", xunits);
+                    hotspot.setAttribute("yunits", yunits);
+                    style.appendChild(hotspot);
+                }
+            }
+        };
+
+        /** TODO */
+        var __createStyleToFeatureIconLabel = function (feature, iconStyle, labelStyle) {
+            logger.trace("write an icon with a label");
+            __createHotSpotStyleIcon(feature, iconStyle);
+            __createExtensionStyleLabel(feature, labelStyle);
+
+        };
+
+        /** TODO */
+        var __setNameData = function (feature, tags) {
+
+            for (var i = 0; i < tags.length; i++) {
+                var tag = tags[i];
+                if (tag.nodeName === "name") {
+                    return;
                 }
             }
 
-            if (style && style.getElementsByTagName("hotSpot").length === 0) {
-                var hotspot = kmlDoc.createElement("hotSpot");
-                hotspot.setAttribute("x", x);
-                hotspot.setAttribute("y", y);
-                hotspot.setAttribute("xunits", xunits);
-                hotspot.setAttribute("yunits", yunits);
-                style.appendChild(hotspot);
+            var labelName = feature.getProperties().name;
+            if (labelName) {
+                var name = kmlDoc.createElement("name");
+                name.innerHTML = labelName;
+                tags.appendChild(name);
             }
         };
 
         // On ajoute les styles étendus dans le DOM
         _kmlRead(kmlDoc, features, {
             labelStyle : __createExtensionStyleLabel,
-            iconStyle : __createHotSpotStyleIcon
+            iconStyle : __createHotSpotStyleIcon,
+            iconLabelStyle : __createStyleToFeatureIconLabel,
+            nameData : __setNameData
         });
 
         // On convertit le DOM en String...
@@ -485,6 +588,21 @@ define([
         // KML.prototype._parentReadFeatures = ol.format.KML.prototype.readFeatures;
         logger.log("overload : ol.format.KML.readFeatures");
         var features = this._readExtendStylesFeatures(source, options);
+        logger.trace("Styles étendus", features);
+
+        // la gestion des styles est deplacée au niveau des extensions
+        // qui ont besoin de lire un KML (ex. Drawing) ...
+        //
+        // features.forEach(function (feature) {
+        //     var featureStyleFunction = feature.getStyleFunction();
+        //     if (featureStyleFunction) {
+        //         var styles = featureStyleFunction.call(feature, 0);
+        //         if (styles && styles.length !== 0) {
+        //             feature.setStyle(styles[0]);
+        //         }
+        //     }
+        // });
+
         return features;
     };
 
@@ -518,13 +636,40 @@ define([
             return features;
         }
 
+        // FIXME EXPERIMENTAL proxy ?
+        var proxy = this.options.proxyUrl || null;
+
         /**
         * Gestion des styles étendus sur le Label
         * - ajout d'un icone par defaut (1x1p transparent) sur les labels
         * s'il n'existe pas !
         * - lecture des styles étendus des labels
+        *
+        * @example
+        * <Placemark>
+        *  <description>Un label</description>
+        *  <name>C'est un label étendu !</name>
+        *  <Style>
+        *    <IconStyle>
+        *      <Icon>
+        *        <href>data:image/png;base64,...</href>
+        *      </Icon>
+        *    </IconStyle>
+        *    <LabelStyle>
+        *      <color>ffffffff</color>
+        *      <colorMode>normal</colorMode>
+        *      <scale>1.85</scale>
+        *      <LabelStyleSimpleExtensionGroup haloColor="16711680" haloRadius="5" haloOpacity="1"/>
+        *    </LabelStyle>
+        *  </Style>
+        *  <Point>
+        *    <coordinates>2,48</coordinates>
+        *  </Point>
+        * </Placemark>
         */
         var __getExtensionStyleToFeatureLabel = function (feature, style) {
+
+            logger.trace("label with style :", style);
 
             if (!feature) {
                 return;
@@ -549,11 +694,12 @@ define([
             var _text  = feature.getProperties().name || "---";
             var _color = __convertKMLColorsToRGB("ff000000"); // "#000000"
             var _colorHalo  = "#FFFFFF";
-            var _radiusHalo = 4;
+            var _radiusHalo = 0;
             var _font = "Sans"; // TODO
             var _fontSize = "16px"; // TODO
 
             // On recherche les balises du Style
+            var bLabelStyleSimpleExtensionGroup = false;
             var styles = style.childNodes;
             for (var k = 0; k < styles.length; k++) {
                 switch (styles[k].nodeName) {
@@ -567,6 +713,7 @@ define([
                         _color = __convertKMLColorsToRGB(styles[k].textContent);
                         break;
                     case "LabelStyleSimpleExtensionGroup":
+                        bLabelStyleSimpleExtensionGroup = true;
                         var attributs = styles[k].attributes;
                         for (var l = 0; l < attributs.length; l++) {
                             switch (attributs[l].nodeName) {
@@ -591,6 +738,12 @@ define([
                 }
             }
 
+            // Ce n'est pas un style étendu !
+            if (!bLabelStyleSimpleExtensionGroup) {
+                logger.trace("it's not a Label Style Simple Extension Group !");
+                return;
+            }
+
             // On reconstruit le style !
             feature.setStyle(new ol.style.Style({
                 image : new ol.style.Icon({
@@ -605,6 +758,7 @@ define([
                     font : _fontSize + " " + _font,
                     textAlign : "left",
                     text : _text,
+                    // offsetX : 5, // FIXME valeur arbitraire MAIS esthétique !
                     fill : new ol.style.Fill({
                         color : _color
                     }),
@@ -618,11 +772,136 @@ define([
         };
 
         /**
-        * TODO Gestion de la balise kml:hostSpot sur les styles d'un Marker
+        * Gestion de la balise kml:hostSpot sur les styles d'un Marker
         * - problème avec 'hotspot y === 0' (?)
+        *
+        * @example
+        * <Placemark>
+        *   <Style>
+        *     <IconStyle>
+        *       <Icon>
+        *         <href>data:image/png;base64,...</href>
+        *       </Icon>
+        *       <hotSpot x="25.5" y="0" xunits="pixels" yunits="pixels"/>
+        *     </IconStyle>
+        *   </Style>
+        *   <Point>
+        *     <coordinates>2,48</coordinates>
+        *   </Point>
+        * </Placemark>
         */
         var __getHotSpotStyleToFeatureIcon  = function (feature, style) {
-            logger.trace(feature, style);
+            logger.trace("hotspot :", style);
+
+            var _src = null;
+            var _scale = null;
+
+            var _bSizeIcon = false;
+            var _sizeW = 51;
+            var _sizeH = 38;
+
+            var _bHotSpot = false;
+            var _anchorX = 25.5;
+            var _anchorXUnits = "pixels";
+            var _anchorY = 38;
+            var _anchorYUnits = "pixels";
+
+            var styles = style.childNodes;
+            for (var k = 0; k < styles.length; k++) {
+                switch (styles[k].nodeName) {
+                    case "Icon":
+                        var nodes = styles[k].childNodes;
+                        for (var i = 0; i < nodes.length; i++) {
+                            switch (nodes[i].nodeName) {
+                                case "href" :
+                                    _src = nodes[i].textContent;
+                                    break;
+                                case "gx:w" :
+                                    _bSizeIcon = true;
+                                    _sizeW = parseFloat(nodes[i].textContent);
+                                    break;
+                                case "gx:h" :
+                                    _bSizeIcon = true;
+                                    _sizeH = parseFloat(nodes[i].textContent);
+                                    break;
+                                default:
+                            }
+                        }
+                        break;
+                    case "hotSpot":
+                        _bHotSpot = true;
+                        var attributs = styles[k].attributes;
+                        for (var l = 0; l < attributs.length; l++) {
+                            switch (attributs[l].nodeName) {
+                                case "x" :
+                                    _anchorX = parseFloat(attributs[l].nodeValue);
+                                    break;
+                                case "y" :
+                                    _anchorY = parseFloat(attributs[l].nodeValue);
+                                    break;
+                                case "yunits" :
+                                    _anchorXUnits = attributs[l].nodeValue;
+                                    break;
+                                case "xunits" :
+                                    _anchorYUnits = attributs[l].nodeValue;
+                                    break;
+                                default:
+                            }
+                        }
+                        break;
+                    case "scale" :
+                        _scale = parseFloat(styles[k].textContent);
+                        break;
+                    default:
+                    // on ne traite pas les autres informations ...
+                }
+            }
+
+            // FIXME EXPERIMENTAL doit on proxyfier l'url ?
+            if (proxy && /^https?:\/\//.test(_src)) {
+                if ( _src.indexOf(proxy) === -1 ) {
+                    _src = proxy + _src;
+                    // on devrait garder une trace de la proxyfication...
+                    feature.setProperties({
+                        proxyUrl : proxy
+                    });
+                }
+            }
+
+            var _options = {
+                src : _src,
+                crossOrigin : "anonymous", // cf. https://gis.stackexchange.com/questions/121555/wms-server-with-cors-enabled/147403#147403
+                scale : _scale || 1 // FIXME !?
+            };
+
+            if (_bSizeIcon) {
+                Utils.mergeParams(_options, {
+                    size : [_sizeW, _sizeH]
+                });
+            }
+
+            if (_bHotSpot) {
+                Utils.mergeParams(_options, {
+                    anchor : [_anchorX, _anchorY],
+                    anchorOrigin : "bottom-left",
+                    anchorXUnits : _anchorXUnits || "pixels",
+                    anchorYUnits : _anchorYUnits || "pixels"
+                });
+            }
+
+            // existe il déjà le style du label ?
+            var featureStyleFunction = feature.getStyleFunction();
+            if (featureStyleFunction) {
+                var _styles = featureStyleFunction.call(feature, 0);
+                if (_styles && _styles.length !== 0) {
+                    var _style = (_styles.length === 1) ? _styles[0] : _styles[_styles.length - 1];
+                    // on écrase l'icone magic du label !
+                    feature.setStyle(new ol.style.Style({
+                        image : new ol.style.Icon(_options),
+                        text : _style.getText()
+                    }));
+                }
+            }
         };
 
         /**
@@ -649,25 +928,28 @@ define([
         */
         var __getExtendedData = function (feature, extend) {
 
+            logger.trace("extendData :", extend);
+
             if (!feature) {
                 return;
             }
 
-            // Dans le cas où le noeud "ExtendedData" est vide,
-            // on ne prend pas en compte la valeur du tag "name" !
-            var _fname = /* feature.getProperties().name || */ "";
+            var _fname = feature.getProperties().name || "";
             var _fdescription = feature.getProperties().description || "";
             var _ftitle = null;
             for (var i = 0; i < extend.length; i++) {
-                var data = extend[i];
-                var name = data.attributes[0]; // 1 seul attribut !
+                var data  = extend[i];
+                var name  = data.attributes[0]; // 1 seul attribut !
+                var nodes = data.childNodes;
                 if (name.nodeName === "name") {
                     switch (name.nodeValue) {
+                        // compatibilité ancien geoportail !
                         case "label":
                             _fname = data.textContent;
                             break;
+                        // compatibilité ancien geoportail !
+                        case "title":
                         case "attributetitle":
-                            var nodes = data.childNodes;
                             for (var j = 0; j < nodes.length; j++) {
                                 if (nodes[j].nodeName === "value") {
                                     _ftitle = nodes[j].textContent;
@@ -675,7 +957,13 @@ define([
                             }
                             break;
                         default:
-                        // ...
+                        // for (var k = 0; k < nodes.length; k++) {
+                        //     if (nodes[k].nodeName === "value") {
+                        //         _fdescription += "<br>";
+                        //         _fdescription += nodes[k].textContent;
+                        //
+                        //     }
+                        // }
                     }
                 }
             }
@@ -691,10 +979,19 @@ define([
             });
         };
 
+        /** TODO */
+        var __getStyleToFeatureIconLabel = function (feature, iconStyle, labelStyle) {
+            logger.trace("display icon and label");
+            __getExtensionStyleToFeatureLabel(feature, labelStyle);
+            __getHotSpotStyleToFeatureIcon(feature, iconStyle);
+
+        };
+
         // On lit les styles étendus et on les ajoute aux features
         _kmlRead(kmlDoc, features, {
-            labelStyle : __getExtensionStyleToFeatureLabel,
+            labelStyle : this.options.showPointNames ? __getExtensionStyleToFeatureLabel : null,
             iconStyle : __getHotSpotStyleToFeatureIcon,
+            iconLabelStyle : this.options.showPointNames ? __getStyleToFeatureIconLabel : __getHotSpotStyleToFeatureIcon,
             extendedData : __getExtendedData
         });
 
