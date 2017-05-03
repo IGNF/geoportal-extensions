@@ -116,19 +116,19 @@ define([
     }
 
     ApiGlobe.prototype.setLayerIpr = function setLayerIpr(layerId, value) {
-        return;
+        this.getLayerById(layerId).attribution = value;
     }
 
     ApiGlobe.prototype.getLayerIpr = function getLayerIpr(layerId) {
-        return "test";
+        return this.getLayerById(layerId).attribution;
     }
 
     ApiGlobe.prototype.getLayerOpacity = function getLayerOpacity(layerId) {
-        return 1.;
+        return this.getLayerById(layerId).opacity;
     }
 
     ApiGlobe.prototype.getLayerVisibility = function getLayerVisibility(layerId) {
-        return true;
+        return this.getLayerById(layerId).visible;
     }
 
     return ApiGlobe;
