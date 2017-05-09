@@ -17,20 +17,20 @@ echo "BEGIN"
 function leaflet() {
   echo "####### LEAFLET production !"
   gulp --production --leaflet
-  gulp publish
+  gulp publish --leaflet
   echo "####### LEAFLET !"
   gulp --leaflet
-  gulp publish
+  gulp publish --leaflet
 }
 
 # ol3
 function ol3() {
   echo "####### OL production !"
   gulp --production --ol3
-  gulp publish
+  gulp publish --ol3
   echo "####### OL !"
   gulp --ol3
-  gulp publish
+  gulp publish --ol3
 }
 
 # vg
@@ -43,17 +43,37 @@ function vg() {
   gulp publish --vg
 }
 
-# vg
-function it() {
-  echo "####### IT production !"
-  gulp --it
-  gulp publish --it
-  echo "####### IT !"
-  gulp --production --it
-  gulp publish --it
+# itowns
+function itowns() {
+  echo "####### iTowns production !"
+  gulp --itowns
+  gulp publish --itowns
+  echo "####### iTowns !"
+  gulp --production --itowns
+  gulp publish --itowns
 }
 
-while getopts "aolvi" opts
+# mix
+function mix() {
+  echo "####### Mixte OL/VG !"
+  gulp --ol3 --vg --mix
+  gulp publish --ol3 --vg --mix
+  echo "####### Mixte OL/VG production !"
+  gulp --production --ol3 --vg --mix
+  gulp publish --ol3 --vg --mix
+}
+
+# mix itowns
+function mixIt() {
+  echo "####### Mixte OL/iTowns !"
+  gulp --ol3 --itowns --mix
+  gulp publish --ol3 --itowns --mix
+  echo "####### Mixte OL/iTowns production !"
+  gulp --production --ol3 --itowns --mix
+  gulp publish --ol3 --itowns --mix
+}
+
+while getopts "aolvim" opts
 do
    case $opts in
      o)
@@ -71,21 +91,29 @@ do
         echo "###### VirtualGeo bundle ! ######"
         vg
         ;;
-    i)
-       echo "#################################"
-       echo "###### Itowns bundle ! ######"
-       it
-       ;;
+     m)
+        echo "#################################"
+        echo "###### Mixte bundle ! ######"
+        mix
+        ;;
+     i)
+        echo "#################################"
+        echo "###### Mixte bundle ! ######"
+        itowns
+	    mixIt
+        ;;
      a)
         echo "#################################"
         echo "########## ALL bundle ! #########"
         ol3
         leaflet
         vg
-        it
+        mix
+	    itowns
+	    mixIt
         ;;
      \?)
-        echo "$OPTARG : option invalide : a(all), o(openlayers), l(leaflet), v(virtualgeo) ou i(itowns) !"
+        echo "$OPTARG : option invalide : a(all), o(openlayers), l(leaflet), v(virtualgeo), i(itowns) ou m(mix) !"
         exit -1
         ;;
    esac

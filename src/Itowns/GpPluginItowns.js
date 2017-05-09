@@ -5,7 +5,6 @@ define([
     "Itowns/Controls/MousePosition",
     "Itowns/Controls/LayerSwitcher",
     "Itowns/ApiGlobe"
-    // "Itowns/Controls/LayerSwitcher",
 ], function (
     itowns, // FIXME Global for browser only !
     Gp,
@@ -13,7 +12,6 @@ define([
     MousePosition,
     LayerSwitcher,
     ApiGlobe
-    //LayerSwitcher,
 ) {
 
     "use strict";
