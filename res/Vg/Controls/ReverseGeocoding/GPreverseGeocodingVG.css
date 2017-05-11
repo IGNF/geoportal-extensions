@@ -1,0 +1,21 @@
+/* REVERSE GEOCODING */
+
+#GPreverseGeocoding {
+  left: 10px;
+}
+
+/* Showing/hiding reverse geocoding panel */
+
+#GPshowReverseGeocodingOpen {
+  background-image: url("img/GPreverseGeocodingOpen.png");
+}
+
+/* General panels */
+
+#GPreverseGeocodingPanel {
+  left: 8px;
+}
+
+#GPreverseGeocodingPanelClose {
+  background-image: url("img/GPreverseGeocodingOpen.png");
+}

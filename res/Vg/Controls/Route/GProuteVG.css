@@ -1,0 +1,51 @@
+/* ROUTE */
+
+#GProute {
+  left: 10px;
+}
+
+/* Showing/hiding route panel */
+
+#GPshowRouteOpen {
+  background-image: url("img/GProuteOpen.png");
+}
+
+/* General panels */
+
+#GProutePanel {
+  left: 8px;
+}
+
+#GProutePanelClose {
+  background-image: url("img/GProuteOpen.png");
+}
+
+/* Route form */
+
+.GProuteOriginPointerImg,
+.GProuteStageRemove,
+#GProuteStageAdd,
+.GProuteTransportImg {
+  background-image: url("img/GProuteOptions.png");
+}
+
+.GProuteExclusionsOption {
+  background-image: url("img/GProuteCheck.png");
+}
+
+/* Results panel */
+
+#GProuteResultsValueDist,
+#GProuteResultsValueTime {
+  color: #366291;
+}
+
+#GProuteResultsNew {
+  background-color: #366291;
+  background-image: url("img/GProuteOptions.png");
+}
+
+#GProuteResultsShowDetails + label:hover,
+#GProuteResultsShowDetails + label + label:hover {
+  color: #366291;
+}

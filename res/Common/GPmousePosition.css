@@ -1,0 +1,113 @@
+/* MOUSE POSITION */
+
+/* Showing/hiding mouse position panel */
+
+label[id^=GPshowMousePositionPicto] {
+  display: inline-block;
+}
+
+input[id^=GPshowMousePosition-] + label {
+  display: block;
+}
+
+input[id^=GPshowMousePosition-]:checked + label {
+  display: none;
+}
+
+input[id^=GPshowMousePosition-] + label + div {
+  display: none;
+}
+
+input[id^=GPshowMousePosition-]:checked + label + div {
+  display: block;
+}
+
+/* General panels */
+
+div[id^=GPmousePositionPanel-] {
+  width: 240px;
+  overflow: hidden;
+}
+
+/* Basic infos */
+
+div[id^=GPmousePositionBasicPanel] {
+  padding: 10px 15px;
+}
+
+.GPmousePositionLabel,
+.GPmousePositionCoords {
+  display: inline-block;
+  line-height: 20px;
+}
+
+.GPmousePositionLabel {
+  width: 80px;
+  font-weight: bold;
+}
+
+.GPmousePositionCoords {
+  width: 110px;
+}
+
+/* Showing settings */
+
+.GPshowMousePositionSettingsPicto {
+  bottom: 5px;
+  right: 0;
+  transition: all 0.5s ease-out 0s;
+}
+
+div[id^=GPmousePosition-] input[type="checkbox"]:checked + .GPshowMousePositionSettingsPicto {
+  bottom: 100px;
+}
+
+div[id^=GPmousePositionSettings-] {
+  display: block;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.5s ease-out 0s, opacity 0.5s ease-out 0s;
+}
+
+div[id^=GPmousePosition-] input[type="checkbox"]:checked + label + div[id^=GPmousePositionSettings-] {
+  max-height: 95px;
+  opacity: 1;
+}
+
+/* Settings */
+
+div[id^=GPmousePositionSettings-] {
+  height: 95px;
+  padding-left: 0 15px;
+  overflow: hidden;
+}
+
+.GPmousePositionSettingsLabel {
+  display: block;
+  margin: auto;
+  text-align: center;
+  font-weight: bold;
+  line-height: 16px;
+}
+
+.GPmousePositionSettingsSelect {
+  width: 180px;
+  margin-top: 5px;
+}
+
+/* Map center localisation */
+
+#GPmapCenter {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50px;
+  height: 50px;
+  margin-top: -25px;
+  margin-left: -25px;
+}
+
+#GPmapCenter.GPmapCenterVisible {
+  display: block;
+}

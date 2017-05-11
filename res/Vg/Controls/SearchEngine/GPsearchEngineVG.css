@@ -1,0 +1,55 @@
+/* SEARCH ENGINE */
+
+#GPsearchEngine {
+  top: 8px;
+  left: 46px;
+}
+
+/* Showing/hiding search engine input */
+
+#GPshowSearchEngineOpen {
+  background-image: url("img/GPsearchEngineOpen.png");
+  transition: border-radius 0.5s ease-out 0s;
+}
+
+/* Simple search input */
+
+#GPsearchInput {
+  height: 32px;
+}
+
+#GPsearchInputReset {
+  background-image: url("img/GPsearchEngineClose.png");
+}
+
+/* General panels */
+
+#GPgeocodeResultsClose {
+  background-image: url("img/GPsearchEngineClose.png");
+}
+
+#GPadvancedSearchClose {
+  background-image: url("img/GPsearchEngineOpen.png");
+  background-position: -50px 3px;
+}
+
+/* Advanced search picto */
+
+#GPshowAdvancedSearchOpen {
+  background-image: url("img/GPsearchEngineOpen.png");
+  background-position: -26px 0;
+  transition: border-radius 0.5s ease-out 0s;
+}
+
+/* Autocomplete list / geocode results */
+
+#GPautoCompleteList,
+#GPgeocodeResultsList {
+  margin-left: 33px;
+  box-shadow: 0 0 6px #000;
+}
+
+#GPgeocodeResultsList {
+  top: 40px;
+  border-radius: 4px;
+}
