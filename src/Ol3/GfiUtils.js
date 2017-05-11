@@ -153,6 +153,7 @@ define([
             });
             map.addOverlay(map.featuresOverlay);
             map.featuresOverlay.setPosition(coords) ;
+            map.featuresOverlay.render();
 
             return true;
         },
