@@ -1,13 +1,17 @@
 
 define([
     "ol",
+    "Ol3/Sources/WMTS",
     "gp",
+    "Ol3/GfiUtils",
     "Ol3/Utils",
     "Common/Utils/Config",
     "Common/Utils/LayerUtils"
 ], function (
     ol,
+    WMTSExtended,
     Gp,
+    GfiUtils,
     Utils,
     Config,
     LayerUtils
@@ -21,7 +25,7 @@ define([
      *
      * @constructor
      * @alias ol.source.GeoportalWMTS
-     * @extends {ol.source.WMTS}
+     * @extends {WMTSExtended}
      * @param {Object} options            - options for function call.
      * @param {String} options.layer      - Layer name (e.g. "ORTHOIMAGERY.ORTHOPHOTOS")
      * @param {String} [options.apiKey]   - Access key to Geoportal platform
@@ -91,8 +95,8 @@ define([
             // récupération des autres paramètres passés par l'utilisateur
             Utils.mergeParams(wmtsSourceOptions, options.olParams);
 
-            // returns a WMTS object, that inherits from ol.source.WMTS.
-            ol.source.WMTS.call(this, wmtsSourceOptions);
+            // returns a WMTS object, that inherits from WMTSExtended.
+            WMTSExtended.call(this, wmtsSourceOptions);
 
             // add originators to layer source (to be updated by Originators control)
             this._originators = wmtsParams.originators;
@@ -107,37 +111,22 @@ define([
         } else {
             // If layer is not in Gp.Config
             console.log("[source WMTS] ERROR : " + options.layer + " cannot be found in Geoportal Configuration. Make sure that this resource is included in your contract key.");
-            return new ol.source.WMTS({});
+            return new WMTSExtended({});
         }
     }
 
     // Inherits from ol.source.WMTS
-    ol.inherits(SourceWMTS, ol.source.WMTS);
+    ol.inherits(SourceWMTS, WMTSExtended);
 
     /*
      * @lends module:SourceWMTS
      */
-    SourceWMTS.prototype = Object.create(ol.source.WMTS.prototype, {});
+    SourceWMTS.prototype = Object.create(WMTSExtended.prototype, {});
 
     /*
      * Constructor (alias)
      */
     SourceWMTS.prototype.constructor = SourceWMTS;
-
-    /**
-    * Return the GetFeatureInfo URL for the passed coordinate, resolution, and
-    * projection. Return `undefined` if the GetFeatureInfo URL cannot be
-    * constructed.
-    * @param {ol.Coordinate} coordinate - Coordinate.
-    * @param {Number} resolution - Resolution.
-    * @param {ol.proj.Projection} projection - Projection.
-    * @param {!Object} params - GetFeatureInfo params. `INFOFORMAT` at least should
-    *     be provided.
-    * @return {String|undefined} GetFeatureInfo URL.
-    */
-    SourceWMTS.prototype.getGetFeatureInfoUrl = function (coordinate, resolution, projection, params) {
-        return Utils.getGetFeatureInfoUrl(this, coordinate, resolution, projection, params);
-    };
 
     return SourceWMTS;
 });
