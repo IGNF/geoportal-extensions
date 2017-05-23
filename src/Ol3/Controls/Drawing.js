@@ -283,7 +283,9 @@ define([
             console.log("Impossible to export : no layer is hosting features.") ;
             return result ;
         }
-        if (!this.layer.getSource() || !this.layer.getSource().getFeatures()) {
+        if (!this.layer.getSource() ||
+            !this.layer.getSource().getFeatures() ||
+            !this.layer.getSource().getFeatures().length) {
             console.log("Impossible to export : no features found.") ;
             return result ;
         }
