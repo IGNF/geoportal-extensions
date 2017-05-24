@@ -12,14 +12,12 @@ define([
      * ApiGlobe
      *
      */
-    function ApiGlobe () {
-        this.controls = [];
-    };
+    function ApiGlobe () {};
 
     /**
      * Constructor (alias)
      */
-    ApiGlobe.prototype = itowns.viewer;
+    ApiGlobe.prototype = {};
 
     /**
      * Constructor (alias)
@@ -29,27 +27,30 @@ define([
     /**
      * Add a widget.
      */
-    ApiGlobe.prototype.addControl = function addControl(control) {
-        this.viewerDiv.appendChild(control.getElement());
-        this.getControls().push(control);
-        control.setMap(this);
+    ApiGlobe.prototype.addWidget = function addWidget(globe, widget) {
+        globe.viewerDiv.appendChild(widget.getElement());
+        if (!globe.widgets) {
+            globe.widgets = [];
+        }
+        this.getWidgets(globe).push(widget);
+        widget.setMap(globe);
     };
 
     /**
      * Returns all widgets.
      * @return     {array}  The array of widgets.
      */
-    ApiGlobe.prototype.getControls = function getControls() {
-        return this.controls;
+    ApiGlobe.prototype.getWidgets = function getWidgets(globe) {
+        return globe.widgets;
     };
 
     /**
      * Remove a widget.
      * @param {object} Widget - The Widget object.
      */
-    ApiGlobe.prototype.removeControl = function removeControl(control) {
-        control.setMap();
-        this.controls.delete(control);
+    ApiGlobe.prototype.removeWidget = function removeWidget(globe, widget) {
+        widget.setMap();
+        globe.widgets.delete(widget);
     };
 
     /**

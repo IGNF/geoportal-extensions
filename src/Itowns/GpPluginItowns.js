@@ -22,7 +22,7 @@ define([
     itowns.control = {};
     itowns.control.MousePosition = MousePosition;
     itowns.control.LayerSwitcher = LayerSwitcher;
-    itowns.viewer = new ApiGlobe();
+    itowns.control.WidgetAPI = new ApiGlobe();
 
     // FIXME : parce qu'il faut bien retourner quelque chose
     return Gp;
