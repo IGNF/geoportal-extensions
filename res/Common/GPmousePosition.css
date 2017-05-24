@@ -25,7 +25,7 @@ input[id^=GPshowMousePosition-]:checked + label + div {
 /* General panels */
 
 div[id^=GPmousePositionPanel-] {
-  width: 240px;
+  width: 300px;
   overflow: hidden;
 }
 

@@ -9,7 +9,7 @@
         <!-- <script src="../../../lib/ol3/ol-debug.js"></script> -->
 
         <!-- Plugin OpenLayers 3 IGN -->
-        <link rel="stylesheet" href="../../../dist/ol3/GpPluginOl3.css" />
+        <link rel="stylesheet" href="../../../dist/ol3/GpPluginOl3-src.css" />
         <!-- <script src="../../../dist/ol3/GpPluginOl3.js" data-url="./../resources/AutoConf.js"></script> -->
 
         <!-- requirejs -->
@@ -78,6 +78,7 @@
 
                         var mp = new MousePosition({
                             collapsed : false,
+							editCoordinates : true,
                             displayCoordinates : true,
                             displayAltitude : true,
                             altitude : {
@@ -158,7 +159,7 @@
                                  geoBBox : { left: 6.00, bottom : 0.00, right : 12.00, top : 84.00 }
                              }
                             ],
-                            units : ["DEC", "DMS"]
+                            units : ["DEC", "DMS", "RAD", "GON"]
                         });
                         map.addControl(mp);
                         var olmp = new ol.control.MousePosition({

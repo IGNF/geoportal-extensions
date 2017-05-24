@@ -17,6 +17,63 @@ div[id^=GPmousePositionPanelClose]  {
   background-image: url("img/GPmousePositionOpen.png");
 }
 
+.GPmousePositionEditCoordinatesPicto {
+	display: "inline-block";
+	position: absolute;
+	right: 0;
+	width: 28px;
+	height: 28px;
+	cursor: pointer;
+	background-image: url("img/GPmousePositionEditCoordinates.png");
+}
+
+input[id^="GPmousePositionEditCoordinates"]:checked + label.GPmousePositionEditCoordinatesPicto {
+	background-position: -28px 0;
+}
+
+/* edit coordinates panel */	
+input[id^="GPEditCoordinatesSubmit"] {
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+p[id^="GPmousePositionProjectionInformation-"] {
+	width: 250px;
+	margin: 0 0 10px 0;
+	padding: 2px;
+	font-weight: bold;
+	font-size: 0.8em;
+	color: #31708f;
+	background-color: #d9edf7;
+	border-color: #bce8f1;
+	text-overflow: ellipsis;
+}
+
+.GPSexagesimal, .GPSexagesimalsec, .GPmousePositionCoordsEdit {
+	margin:0;
+	border: 1px solid rgb(204, 204, 204);
+	border-radius: 4px;
+}
+.GPSexagesimal {
+	width: 30px;
+}
+.GPSexagesimalsec {
+	width: 50px;
+}
+.GPmousePositionSexagesimalLabel {
+	font-size: 1.2em;
+	vertical-align: middle;
+	padding: 2px;
+}
+
+.GPmousePositionDirection {
+	border: 1px solid #999;
+}
+
+.GPmousePositionDirection {
+	border-radius: none;
+}
+
 /* Map center localisation */
 
 #GPmapCenter {

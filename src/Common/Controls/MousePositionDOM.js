@@ -113,6 +113,9 @@ define([], function () {
             div.className = "GPpanel";
 
             div.appendChild(this._createMousePositionPanelHeaderElement());
+            if (this.options.editCoordinates) {
+                div.appendChild(this._createEditCoordinatesPanelElement());
+            }
             div.appendChild(this._createMousePositionPanelBasicElement(displayAltitude, displayCoordinates));
 
             var arraySettings = this._createShowMousePositionSettingsElement(displayCoordinates);
@@ -173,6 +176,34 @@ define([], function () {
             return container;
         },
 
+        /** ... */
+        _createEditCoordinatesPanelElement : function () {
+            // contexte d'execution
+            var context = this;
+            
+            var container = document.createElement("div");
+            container.id = "GPmousePositionEditCoordinatesPanel";
+
+            var input = document.createElement("input");
+            input.type = "checkbox";
+            input.id = this._addUID("GPmousePositionEditCoordinates");
+            container.appendChild(input);
+            
+            var label = document.createElement("label");
+            label.id = this._addUID("GPmousePositionEditCoordinatesPicto");
+            label.htmlFor = this._addUID("GPmousePositionEditCoordinates");
+            label.title = "Editer les coordonnées";
+            label.className = "GPmousePositionEditCoordinatesPicto";
+            container.appendChild(label);
+            
+            // activate/deactivate edit coordinates mode
+            input.addEventListener("change", function (e) {
+                context.onSwitchEditCoordinates(e);
+            });
+            
+            return container;
+        },
+        
         /**
         * coordinate panel
         *
@@ -203,30 +234,34 @@ define([], function () {
             div.id = this._addUID("GPmousePositionCoordinate");
             div.style.display = display ? "block" : "none";
 
+            var divLat = document.createElement("div");
             var spanLat = document.createElement("span");
             spanLat.className  = "GPmousePositionLabel";
             spanLat.id = this._addUID("GPmousePositionLatLabel");
             spanLat.innerHTML = "Latitude : ";
-            div.appendChild(spanLat);
+            divLat.appendChild(spanLat);
 
             var spanCLat = document.createElement("span");
             spanCLat.className  = "GPmousePositionCoords";
             spanCLat.id = this._addUID("GPmousePositionLat");
             spanCLat.innerHTML = "";
-            div.appendChild(spanCLat);
-
+            divLat.appendChild(spanCLat);
+            div.appendChild(divLat);
+            
+            var divLon = document.createElement("div");
             var spanLon = document.createElement("span");
             spanLon.className  = "GPmousePositionLabel";
             spanLon.id = this._addUID("GPmousePositionLonLabel");
             spanLon.innerHTML = "Longitude : ";
-            div.appendChild(spanLon);
+            divLon.appendChild(spanLon);
 
             var spanCLon = document.createElement("span");
             spanCLon.className  = "GPmousePositionCoords";
             spanCLon.id = this._addUID("GPmousePositionLon");
             spanCLon.innerHTML = "";
-            div.appendChild(spanCLon);
-
+            divLon.appendChild(spanCLon);
+            div.appendChild(divLon);
+            
             return div;
         },
 
@@ -249,6 +284,205 @@ define([], function () {
             div.appendChild(spanAlt);
 
             return div;
+        },
+        
+        /** ... */
+        _createEditCoordinatesSubmitElement : function () {
+
+            var input = document.createElement("input");
+            input.type = "submit";
+            input.id = this._addUID("GPEditCoordinatesSubmit");
+            input.className = "GPinputSubmit";
+            input.value = "Aller à ...";
+
+            return input;
+        },
+        
+        /** ... */
+        _createProjectionInformationElement : function(projectionInformation) {
+            var p = document.createElement("p");
+            p.innerHTML = projectionInformation;
+            p.id = this._addUID("GPmousePositionProjectionInformation");
+            
+            return p;
+        },
+        
+        /** ... */
+        _createBasicEditCoordinatesElement : function (coordType) {
+            var context = this;
+            
+            var form = document.createElement("form");
+            form.id = this._addUID("GPEditCoordinatesForm");
+            form.addEventListener("submit", function (e) {
+                e.preventDefault();
+                context.onSubmitBasicEditCoordinatesForm();
+            });
+            
+            var spanLon = document.createElement("span");
+            spanLon.id  = this._addUID("GPmousePositionLonLabel");
+            spanLon.className  = "GPmousePositionLabel";
+            spanLon.innerHTML = (coordType === "Geographical") ? "Longitude :" : "X :";
+            form.appendChild(spanLon);
+            
+            var inputLon = document.createElement("input");
+            inputLon.id = this._addUID("GPmousePositionLon");
+            form.appendChild(inputLon);
+            
+            var spanLat = document.createElement("span");
+            spanLat.id  = this._addUID("GPmousePositionLatLabel");
+            spanLat.className  = "GPmousePositionLabel";
+            spanLat.innerHTML = (coordType === "Geographical") ? "Latitude :" : "Y :";
+            form.appendChild(spanLat);
+            
+            var inputLat = document.createElement("input");
+            inputLat.id = this._addUID("GPmousePositionLat");
+            form.appendChild(inputLat);
+            
+            var input = this._createEditCoordinatesSubmitElement();
+            form.appendChild(input);
+            
+            return form;
+        },
+        
+        /** ... */
+        _createDMSEditCoordinatesElement : function () {
+            var context = this;
+            
+            var div = document.createElement("div");
+            
+            var form = document.createElement("form");
+            form.id = this._addUID("GPEditCoordinatesForm");
+            form.addEventListener("submit", function (e) {
+                e.preventDefault();
+                context.onSubmitDMSEditCoordinatesForm();
+            });
+            
+            // Longitude
+            var divLon = document.createElement("div");
+            
+            var span = document.createElement("span");
+            span.className  = "GPmousePositionLabel";
+            span.innerHTML = "Longitude :";
+            divLon.appendChild(span);
+            
+            var input = document.createElement("input");
+            input.id  = this._addUID("GPmousePositionLonDegrees");
+            input.className  = "GPSexagesimal";
+            input.dataset.min = 0;
+            input.dataset.max = 180;
+            divLon.appendChild(input);
+            
+            span = document.createElement("span");
+            span.className  = "GPmousePositionSexagesimalLabel";
+            span.innerHTML = "°";
+            divLon.appendChild(span);
+            
+            input = document.createElement("input");
+            input.id  = this._addUID("GPmousePositionLonMinutes");
+            input.className  = "GPSexagesimal";
+            input.dataset.min = 0;
+            input.dataset.max = 59;
+            divLon.appendChild(input);
+            
+            span = document.createElement("span");
+            span.className  = "GPmousePositionSexagesimalLabel";
+            span.innerHTML = "'";
+            divLon.appendChild(span);
+            
+            input = document.createElement("input");
+            input.id  = this._addUID("GPmousePositionLonSeconds");
+            input.className  = "GPSexagesimalsec";
+            input.dataset.min = 0;
+            input.dataset.max = 59;
+            divLon.appendChild(input);
+            
+            span = document.createElement("span");
+            span.className  = "GPmousePositionSexagesimalLabel";
+            span.innerHTML = "''";
+            divLon.appendChild(span);
+            
+            var select = document.createElement("select");
+            select.id = this._addUID("GPmousePositionLonDirection");
+            select.className = "GPmousePositionDirection";
+            
+            var option = document.createElement("option");
+            option.value = "E";
+            option.innerHTML = "E";
+            select.appendChild(option);
+            
+            option = document.createElement("option");
+            option.value = "O";
+            option.innerHTML = "O";
+            select.appendChild(option);
+            divLon.appendChild(select);
+            
+            form.appendChild(divLon);
+            
+            // Latitude
+            var divLat = document.createElement("div");
+            
+            span = document.createElement("span");
+            span.className  = "GPmousePositionLabel";
+            span.innerHTML = "Latitude :";
+            divLat.appendChild(span);
+            
+            var input = document.createElement("input");
+            input.id  = this._addUID("GPmousePositionLatDegrees");
+            input.className  = "GPSexagesimal";
+            input.dataset.min = 0;
+            input.dataset.max = 90;
+            divLat.appendChild(input);
+            
+            span = document.createElement("span");
+            span.className  = "GPmousePositionSexagesimalLabel";
+            span.innerHTML = "°";
+            divLat.appendChild(span);
+            
+            input = document.createElement("input");
+            input.id  = this._addUID("GPmousePositionLatMinutes");
+            input.className  = "GPSexagesimal";
+            input.dataset.min = 0;
+            input.dataset.max = 59;
+            divLat.appendChild(input);
+            
+            span = document.createElement("span");
+            span.className  = "GPmousePositionSexagesimalLabel";
+            span.innerHTML = "'";
+            divLat.appendChild(span);
+            
+            input = document.createElement("input");
+            input.id  = this._addUID("GPmousePositionLatSeconds");
+            input.className  = "GPSexagesimalsec";
+            input.dataset.min = 0;
+            input.dataset.max = 59;
+            divLat.appendChild(input);
+            
+            span = document.createElement("span");
+            span.className  = "GPmousePositionSexagesimalLabel";
+            span.innerHTML = "''";
+            divLat.appendChild(span);
+            
+            var select = document.createElement("select");
+            select.id = this._addUID("GPmousePositionLatDirection");
+            select.className = "GPmousePositionDirection";
+            
+            var option = document.createElement("option");
+            option.value = "N";
+            option.innerHTML = "N";
+            select.appendChild(option);
+            
+            option = document.createElement("option");
+            option.value = "S";
+            option.innerHTML = "S";
+            select.appendChild(option);
+            divLat.appendChild(select);
+            
+            form.appendChild(divLat);
+            
+            var input = this._createEditCoordinatesSubmitElement();
+            form.appendChild(input);
+            
+            return form;
         },
 
         // ################################################################### //
@@ -483,10 +717,13 @@ define([], function () {
                 if (document.getElementById(this._addUID("GPmousePositionAltitude"))) {
                     altitudeTimeout = setTimeout( function () {
                         self.onRequestAltitude(coordinate, function (z) {
-                            if ( minThreshold < z && z < maxThreshold ) {
-                                document.getElementById(self._addUID("GPmousePositionAlt")).innerHTML = "--- m";
-                            } else {
-                                document.getElementById(self._addUID("GPmousePositionAlt")).innerHTML = z + " m";
+                            var elt = document.getElementById(self._addUID("GPmousePositionAlt"));
+                            if (elt) {
+                                if ( minThreshold < z && z < maxThreshold ) {
+                                    elt.innerHTML = "--- m";
+                                } else {
+                                    elt.innerHTML = z + " m";
+                                }
                             }
                         });
                     }, altitudeTimeoutDelay);

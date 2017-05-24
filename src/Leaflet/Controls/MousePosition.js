@@ -354,34 +354,34 @@ define([
                     {
                         code : "DEC",
                         label : "degrés décimaux",
-                        convert : this._displayDEC
+                        format : this._displayDEC
                     },
                     {
                         code : "DMS",
                         label : "degrés sexagésimaux",
-                        convert : this._displayDMS
+                        format : this._displayDMS
                     },
                     {
                         code : "RAD",
                         label : "radians",
-                        convert : this._displayRAD
+                        format : this._displayRAD
                     },
                     {
                         code : "GON",
                         label : "grades",
-                        convert : this._displayGON
+                        format : this._displayGON
                     }
                 ],
                 Metric : [
                     {
                         code : "M",
                         label : "mètres",
-                        convert : this._displayMeter
+                        format : this._displayMeter
                     },
                     {
                         code : "KM",
                         label : "kilomètres",
-                        convert : this._displayKMeter
+                        format : this._displayKMeter
                     }
                 ]
             };
@@ -616,7 +616,7 @@ define([
         },
 
         // ################################################################### //
-        // ######################## method units convert ##################### //
+        // ######################## method units format ###################### //
         // ################################################################### //
 
         /**
@@ -784,11 +784,11 @@ define([
             var type = this._currentProjectionSystems.type;
 
             // on recherche la fonction de formatage dans l'unitée demandée
-            var convert = null;
+            var format = null;
             var units = this._projectionUnits[type];
             for (var i = 0; i < units.length; i++) {
                 if (units[i].code === this._currentProjectionUnits) {
-                    convert = units[i].convert;
+                    format = units[i].format;
                     break;
                 }
             }
@@ -802,7 +802,7 @@ define([
                 logger.error("crs not found !");
                 return;
             }
-            coordinate = convert(this._project(oLatLng, oSrs));
+            coordinate = format(this._project(oLatLng, oSrs));
 
             if (! coordinate || Object.keys(coordinate).lenght === 0) {
                 return;

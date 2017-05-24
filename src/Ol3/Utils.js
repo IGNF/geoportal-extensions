@@ -100,6 +100,42 @@ define([
                 return ol3obj[key] ;
             }
             return id ;
+        },
+        
+        /**
+         * Returns true if n is a number or can be parse to number
+         * 
+         * @param {integr,float or string} n
+         * @returns {Boolean} - true if n is a number, false otherwise.
+         */
+        isNumber : function (n) {
+            return !isNaN(parseFloat(n)) && isFinite(n);
+        },
+        
+        /**
+         * Converts s to integer
+         * 
+         * @param {} s
+         * @param {integer} base (between 2 and 36)
+         * @returns {null or integer}
+         */
+        toInteger : function(s, base) {
+            var _base = base || 10;
+            var n = parseInt(s, _base);
+            if (! isNaN(n) && isFinite(n)) return n;
+            return null;
+        },
+        
+        /**
+         * Converts s to float
+         * 
+         * @param {} s
+         * @returns {null or float}
+         */
+        toFloat : function(s) {
+            var n = parseFloat(s);
+            if (! isNaN(n) && isFinite(n)) return n;
+            return null;
         }
 
     };
