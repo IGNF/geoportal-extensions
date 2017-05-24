@@ -1336,13 +1336,22 @@ define([
         var keys = ["Lon", "Lat"];
         var parts = {
             "Degrees" : {
-                "convert" : Utils.toInteger
+                "convert" : function(v) {
+                    if (! v) return null;
+                    return Utils.toInteger(v);
+                }
             },
             "Minutes" : {
-                "convert" :  Utils.toInteger
+                "convert" :  function(v) {
+                    if (! v) return 0;
+                    return Utils.toInteger(v);
+                }
             }, 
             "Seconds": {
-                "convert" :  Utils.toFloat
+                "convert" :  function(v) {
+                    if (! v) return 0;
+                    return Utils.toFloat(v);
+                }
             }
         };
 
@@ -1357,11 +1366,15 @@ define([
                 var id = this._addUID("GPmousePosition" + keys[k] + part);
                 var element = document.getElementById(id);
                 
-                var v = element.value;
-                var value = v ? v : "0";
+                /*var v = element.value;
+                if (! v && part === "Degrees") {
+                    console.log("ERROR : La valeur " + part + " ne doit pas être vide");
+                    return false;
+                }
+                var value = v ? v : "0";*/
                 
                 /* conversion en entier ou flottant */
-                value = parts[part].convert(value);
+                var value = parts[part].convert(element.value);
                 if (value === null) {
                     console.log("ERROR : La valeur " + part + " n'est pas valide");
                     return false;
