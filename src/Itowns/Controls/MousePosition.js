@@ -6,7 +6,7 @@ define([
     "Common/Utils/CheckRightManagement",
     "Common/Utils/SelectorID",
     "Common/Controls/MousePositionDOM",
-    "Itowns/Controls/Control",
+    "Itowns/Controls/Widget",
     "Itowns/Controls/Utils/PositionFormater",
     "Itowns/CRS/CRS"
 ], function (
@@ -17,7 +17,7 @@ define([
     RightManagement,
     SelectorID,
     MousePositionDOM,
-    Control,
+    Widget,
     PositionFormater,
     CRS
 ) {
@@ -106,7 +106,7 @@ define([
         // init control DOM container
         var container = this._initContainer(options);
 
-        Control.call(
+        Widget.call(
             this,
             {
                 name : "MousePosition",
@@ -118,7 +118,7 @@ define([
     /**
      * @lends module:MousePosition
      */
-    MousePosition.prototype = Object.create(Control.prototype, {});
+    MousePosition.prototype = Object.create(Widget.prototype, {});
 
     Utils.assign(MousePositionDOM, MousePosition.prototype);
 
@@ -156,7 +156,7 @@ define([
         }
 
         // call original setMap method
-        Control.prototype.setMap.call(this, map);
+        Widget.prototype.setMap.call(this, map);
 
         // nothing else to do if map == null
         if (map == null) {
