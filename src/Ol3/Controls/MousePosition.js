@@ -1366,13 +1366,6 @@ define([
                 var id = this._addUID("GPmousePosition" + keys[k] + part);
                 var element = document.getElementById(id);
                 
-                /*var v = element.value;
-                if (! v && part === "Degrees") {
-                    console.log("ERROR : La valeur " + part + " ne doit pas être vide");
-                    return false;
-                }
-                var value = v ? v : "0";*/
-                
                 /* conversion en entier ou flottant */
                 var value = parts[part].convert(element.value);
                 if (value === null) {
