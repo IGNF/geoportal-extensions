@@ -3,13 +3,13 @@ define([
     "Common/Utils/LayerUtils",
     "Common/Utils/SelectorID",
     "Common/Controls/LayerSwitcherDOM",
-    "Itowns/Controls/Control"
+    "Itowns/Controls/Widget"
 ], function (
     Utils,
     LayerUtils,
     SelectorID,
     LayerSwitcherDOM,
-    Control
+    Widget
 ) {
     "use strict";
 
@@ -18,7 +18,7 @@ define([
      * Control to manage map layers : their order, visibility and opacity, and display their informations (title, description, legends, metadata...)
      *
      * @constructor
-     * @extends {itowns.control.Control}
+     * @extends {itowns.control.Widget}
      * @alias itowns.control.LayerSwitcher
      * @param {Object} lsOptions - control options
      * @param {Array} [lsOptions.layers] - list of layers to be configured. Each array element is an object, with following properties :
@@ -71,7 +71,7 @@ define([
 
         var container = this._initContainer(options);
 
-        Control.call(
+        Widget.call(
             this,
             {
                 name : "LayerSwitcher",
@@ -83,7 +83,7 @@ define([
     /*
      * @lends module:LayerSwitcher
      */
-    LayerSwitcher.prototype = Object.create(Control.prototype, {});
+    LayerSwitcher.prototype = Object.create(Widget.prototype, {});
 
     // on récupère les méthodes de la classe commune LayerSwitcherDOM
     Utils.assign(LayerSwitcherDOM, LayerSwitcher.prototype);
@@ -102,21 +102,26 @@ define([
     /**
      * Bind map to control
      */
-    LayerSwitcher.prototype.setMap = function (map) {
+    LayerSwitcher.prototype.setMap = function (globe) {
 
-        // info : cette méthode est appelée (entre autres?) après un map.addControl() ou map.removeControl()
+        // info : cette méthode est appelée (entre autres?) après un map.addWidget() ou map.removeWidget()
 
-        if ( map ) { // dans le cas de l'ajout du contrôle à la map
+        if ( globe ) { // dans le cas de l'ajout du contrôle à la map
             var self = this;
-
+            var layers = globe.getLayers();
             // add options layers to layerlist.
             // (seulement les couches configurées dans les options du layerSwitcher par l'utilisateur),
             // les autres couches de la carte seront ajoutées dans la méthode setMap
             for ( var i = 0; i < this._initLayers.length; i++ ) {
                 // recup la layer, son id,
                 var layer = null;
+
                 if (this._initLayers[i].id) {
-                    layer = map.getLayer(this._initLayers[i].id);
+                    for (var j = 0; j < layers.length; j++) {
+                        if (layers[j].id === this._initLayers[i].id) {
+                            layer = layers[j];
+                        }
+                    }
                 }
 
                 if ( layer ) {
@@ -128,7 +133,7 @@ define([
                         legends : conf.legends || [],
                         metadata : conf.metadata || [],
                         quicklookUrl : conf.quicklookUrl || null,
-                        inRange : this.isInRange(layer, map)
+                        inRange : this.isInRange(layer, globe)
                     };
                     if( typeof conf.ipr !== 'undefined' ) {
                         layerOptions.ipr = conf.ipr;
@@ -144,7 +149,7 @@ define([
             }
 
             // on ajoute les couches
-            this._addMapLayers(map);
+            this._addMapLayers(globe);
 
             // Ajout des listeners
 
@@ -159,8 +164,8 @@ define([
                     self._inRangeUpdate();
                 }, 500);
             };
-            map.addEventListener("centerchanged", this._callbacks.onChangedViewCallBack);
-            map.addEventListener("zoomchanged", this._callbacks.onChangedViewCallBack);
+            globe.controls.addEventListener("camera-target-changed", this._callbacks.onChangedViewCallBack);
+            globe.controls.addEventListener("range-changed", this._callbacks.onChangedViewCallBack);
 
             /**
             * ajout du callback onlayeradded
@@ -172,7 +177,7 @@ define([
                     self.addLayer(layer);
                 }
             };
-            map.addEventListener("layeradded", this._callbacks.onAddedLayerCallBack);
+            globe.addEventListener("layeradded", this._callbacks.onAddedLayerCallBack);
 
             /**
             * ajout du callback onlayerremoved
@@ -186,7 +191,7 @@ define([
                 }
 
             };
-            map.addEventListener("layerremoved", this._callbacks.onRemovedLayerCallBack);
+            globe.addEventListener("layerremoved", this._callbacks.onRemovedLayerCallBack);
 
             /**
             * ajout du callback onlayerchanged:index
@@ -196,7 +201,7 @@ define([
                     self._updateLayerListContainer();
                 }
             };
-            map.addEventListener("layerchanged:index", this._callbacks.onIndexLayerCallBack);
+            globe.addEventListener("layerchanged:index", this._callbacks.onIndexLayerCallBack);
 
             /**
             * ajout du callback onlayerchanged:opacity
@@ -204,7 +209,7 @@ define([
             this._callbacks.onOpacityLayerCallBack = function (e) {
                 self._updateLayerOpacity(e.detail.layerId, e.detail.newOpacity);
             };
-            map.addEventListener("layerchanged:opacity", this._callbacks.onOpacityLayerCallBack);
+            globe.addEventListener("layerchanged:opacity", this._callbacks.onOpacityLayerCallBack);
 
             /**
             * ajout du callback onlayerchanged:visible
@@ -212,21 +217,21 @@ define([
             this._callbacks.onVisibilityLayerCallBack = function (e) {
                 self._updateLayerVisibility(e.detail.layerId, e.detail.newVisibility);
             };
-            map.addEventListener("layerchanged:visible", this._callbacks.onVisibilityLayerCallBack);
+            globe.addEventListener("layerchanged:visible", this._callbacks.onVisibilityLayerCallBack);
 
         } else {
             // On retire les listeners qui étaient liés au layerSwitcher supprimé
-            map.removeEventListener("centerchanged", this._callbacks.onChangedCenterCallBack);
-            map.removeEventListener("layeradded", this._callbacks.onAddedLayerCallBack);
-            map.removeEventListener("layerremoved", this._callbacks.onRemovedLayerCallBack);
-            map.removeEventListener("layerchanged:opacity", this._callbacks.onOpacityLayerCallBack);
-            map.removeEventListener("layerchanged:visible", this._callbacks.onVisibilityLayerCallBack);
-            map.removeEventListener("layerchanged:index", this._callbacks.onIndexLayerCallBack);
+            globe.removeEventListener("centerchanged", this._callbacks.onChangedCenterCallBack);
+            globe.removeEventListener("layeradded", this._callbacks.onAddedLayerCallBack);
+            globe.removeEventListener("layerremoved", this._callbacks.onRemovedLayerCallBack);
+            globe.removeEventListener("layerchanged:opacity", this._callbacks.onOpacityLayerCallBack);
+            globe.removeEventListener("layerchanged:visible", this._callbacks.onVisibilityLayerCallBack);
+            globe.removeEventListener("layerchanged:index", this._callbacks.onIndexLayerCallBack);
             return ;
         }
 
         // call original setMap method
-        Control.prototype.setMap.call(this, map);
+        Widget.prototype.setMap.call(this, globe);
     };
 
     /**
@@ -252,7 +257,7 @@ define([
     LayerSwitcher.prototype.addLayer = function (layer, config) {
 
         config = config || {};
-        var map = this.getMap();
+        var globe = this.getMap();
 
         if ( !layer ) {
             console.log("[ERROR] LayerSwitcher:addLayer - missing layer parameter");
@@ -266,7 +271,13 @@ define([
         }
 
         // make sure layer is in map layers
-        if ( !map.hasLayer(id) ) {
+        var LayerInMap = globe.getLayers(function(layer) {
+            if (layer.id === "id") {
+                return layer;
+            }
+        });
+
+        if ( !LayerInMap ) {
             console.log("[ERROR] LayerSwitcher:addLayer - configuration cannot be set for ", layer, " layer (layer is not in map.getLayers() )");
             return;
         }
@@ -282,19 +293,19 @@ define([
                 legends : config.legends || layerInfos._legends || [],
                 metadata : config.metadata || layerInfos._metadata || [],
                 quicklookUrl : config.quicklookUrl || layerInfos._quicklookUrl || null,
-                inRange : this.isInRange(layer, map)
+                inRange : this.isInRange(layer, globe)
             };
             if( typeof config.ipr !== 'undefined' ) {
                 layerOptions.ipr = config.ipr;
-                map.setLayerIpr(id, layerOptions.ipr);
+                layer.attribution = layerOptions.ipr;
             }
             if( typeof config.opacity !== 'undefined' ) {
                 layerOptions.opacity = config.opacity;
-                map.setLayerOpacity(id, layerOptions.opacity);
+                layer.opacity = layerOptions.opacity;
             }
             if( typeof config.visibility !== 'undefined' ) {
                 layerOptions.visibility = config.visibility;
-                map.setLayerVisibility(id, layerOptions.visibility);
+                layer.visible = layerOptions.visibility;
             }
             this._layers[id] = layerOptions;
 
@@ -313,13 +324,13 @@ define([
                 }
             }
             if( typeof config.ipr !== 'undefined' ) {
-                map.setLayerIpr(id, config.ipr);
+                layer.attribution = config.ipr;
             }
             if( typeof config.opacity !== 'undefined' ) {
-                map.setLayerOpacity(id, config.opacity);
+                layer.opacity = config.opacity;
             }
             if( typeof config.visibility !== 'undefined' ) {
-                map.setLayerVisibility(id, config.visibility);
+                layer.visible = config.visibility;
             }
             // set new title in layer div
             if ( config.title ) {
@@ -477,7 +488,7 @@ define([
      * @param {Object} map - the Itowns.Map object
      * @private
      */
-    LayerSwitcher.prototype._addMapLayers = function (map) {
+    LayerSwitcher.prototype._addMapLayers = function (globe) {
 
         // Récupération de l'élément contenant les différentes couches.
         var elementLayersList;
@@ -491,7 +502,14 @@ define([
         }
 
         // on réordonne les couches dans l'ordre d'empilement (map.getLayers renvoie un tableau ordonné dans le sens inverse)
-        var orderedLayers = map.getOrderedLayers();
+        var layers = globe.getLayers(function(layer) {
+            if (layer.type === "color") {
+                return layer;
+            }
+        });
+        var orderedLayers = layers.sort(function (a, b) {
+            return a.sequence - b.sequence;
+        });
 
         // on parcourt toutes les couches de la carte, pour les ajouter à la liste du controle si ce n'est pas déjà le cas.
         orderedLayers.forEach(
@@ -508,19 +526,19 @@ define([
                         legends : layerInfos._legends || [],
                         metadata : layerInfos._metadata || [],
                         quicklookUrl : layerInfos._quicklookUrl || null,
-                        inRange : this.isInRange(layer, map)
+                        inRange : this.isInRange(layer, globe)
                     };
                     this._layers[id] = layerOptions;
                 } else {
                     var lsLayerConf = this._layers[id];
-                    if( typeof lsLayerConf.ipr !== 'undefined' ) {
-                        map.setLayerIpr( id, lsLayerConf.ipr );
+                    if ( typeof lsLayerConf.ipr !== 'undefined' ) {
+                        layer.options.attribution = lsLayerConf.ipr;
                     }
-                    if( typeof lsLayerConf.opacity !== 'undefined' ) {
-                        map.setLayerOpacity( id, lsLayerConf.opacity );
+                    if ( typeof lsLayerConf.opacity !== 'undefined' ) {
+                        layer.opacity = lsLayerConf.opacity;
                     }
-                    if( typeof lsLayerConf.visibility !== 'undefined' ) {
-                        map.setLayerVisibility( id, lsLayerConf.visibility );
+                    if ( typeof lsLayerConf.visibility !== 'undefined' ) {
+                        layer.visible = lsLayerConf.visibility;
                     }
                 }
             },
@@ -574,14 +592,19 @@ define([
      * @private
      */
     LayerSwitcher.prototype._onChangeLayerOpacity = function (e) {
-        var map = this.getMap();
+        var globe = this.getMap();
         var layerID  = this._resolveLayerId(e.target.id);
 
         var opacityValue = e.target.value;
         var opacityId = document.getElementById(this._addUID("GPopacityValue_ID_" + layerID));
         opacityId.innerHTML = opacityValue + "%";
-
-        map.setLayerOpacity(layerID, opacityValue / 100);
+        var layer = globe.getLayers(function(layer) {
+            if (layer.id === layerID) {
+                return layer;
+            }
+        });
+        layer[0].opacity = opacityValue / 100;
+        globe.notifyChange(0,true); // update viewer
     };
 
     /**
@@ -615,11 +638,16 @@ define([
      * @private
      */
     LayerSwitcher.prototype._onVisibilityLayerClick = function (e) {
-        var map = this.getMap();
+        var globe = this.getMap();
 
         var layerID  = this._resolveLayerId(e.target.id);
-
-        map.setLayerVisibility(layerID, e.target.checked);
+        var layer = globe.getLayers(function(layer) {
+            if (layer.id === layerID) {
+                return layer;
+            }
+        });
+        layer[0].visible = e.target.checked;
+        globe.notifyChange(0,true); // update viewer
     };
 
     /**
@@ -714,13 +742,14 @@ define([
      * @private
      */
     LayerSwitcher.prototype._onDropLayerClick = function (e) {
-        var map = this.getMap();
+        var globe = this.getMap();
 
         var layerID  = this._resolveLayerId(e.target.id);
 
         // le retrait de la couche va déclencher l'ecouteur d'évenement,
         // et appeler this.removeLayer qui va supprimer la div.
-        map.removeImageryLayer(layerID)
+        globe.removeLayer(layerID);
+        globe.notifyChange(0,true); // update viewer
 
         this._updateLayerListContainer();
     };
@@ -733,11 +762,11 @@ define([
      * @private
      */
     LayerSwitcher.prototype._onDragAndDropLayerClick = function (e) {
-        var map = this.getMap();
+        var globe = this.getMap();
 
         var layerID  = this._resolveLayerId(e.item.id);
 
-        map.moveLayerToIndex(layerID, e.newIndex);
+        itowns.ColorLayersOrdering.moveLayerToIndex(globe, layerID, e.newIndex);
     };
 
     /**
@@ -748,7 +777,7 @@ define([
     */
     // FIXME utilité de la fonction ?
     LayerSwitcher.prototype._updateLayersIndex = function () {
-        var map = this.getMap();
+        var globe = this.getMap();
 
         // on récupère l'ordre des div dans le contrôle pour réordonner les couches
         var matchesLayers = document.querySelectorAll("div.GPlayerSwitcher_layer");
@@ -757,7 +786,7 @@ define([
             // newIndex = maxZIndex - i;
             var layerID  = this._resolveLayerId(matchesLayers[i].id);
 
-            map.moveLayerToIndex(layerID, i);
+            itowns.moveLayerToIndex(globe, layerID, i);
         }
     }
 
@@ -770,7 +799,11 @@ define([
     LayerSwitcher.prototype._inRangeUpdate = function () {
         var map = this.getMap();
 
-        map.getImageryLayers().forEach(
+        map.getLayers(function(layer) {
+            if (layer.type === "color") {
+                return layer;
+            }
+        }).forEach(
             function (layer) {
                 var id = layer.id;
                 if ( this._layers[id] ) {
@@ -801,14 +834,21 @@ define([
      */
     LayerSwitcher.prototype._updateLayerListContainer = function () {
         if ( this._layerListContainer ) {
-            var map = this.getMap();
+            var globe = this.getMap();
 
             // on vide le container précédent
             while ( this._layerListContainer.firstChild ) {
                 this._layerListContainer.removeChild(this._layerListContainer.firstChild);
             }
             // on réordonne les couches dans l'ordre d'empilement (map.getLayers renvoie un tableau ordonné dans le sens inverse)
-            var orderedLayers = map.getOrderedLayers();
+            var layers = globe.getLayers(function(layer) {
+                if (layer.type === "color") {
+                    return layer;
+                }
+            });
+            var orderedLayers = layers.sort(function (a, b) {
+                return a.sequence - b.sequence;
+            });
             // et on rajoute les div correspondantes aux différentes couches, dans l'ordre décroissant des zindex
             for ( var j = 0; j < orderedLayers.length; j++ ) {
                 // récupération de la div de la couche, stockée dans le tableau _layers
@@ -818,7 +858,7 @@ define([
         } else {
             console.log("[Itowns.control.LayerSwitcher] _updateLayerListContainer : layer list container not found to update layers order ?!");
         }
-    }
+    };
 
     // ################################################################### //
     // ############################ Utils ################################ //
@@ -834,26 +874,26 @@ define([
      * @param {Object} map   - the Itowns.Map object
      * @returns {Boolean} outOfRange - false if map view is out of layer range
      */
-    LayerSwitcher.prototype.isInRange = function (layer, map) {
-        if (!map) {
+    LayerSwitcher.prototype.isInRange = function (layer, globe) {
+        if (!globe) {
             return;
         }
         // check if map zoom is in layer zoom range
-        var mapResolution = map.getZoomScale();
+    /*    var mapResolution = globe.controls.getScale();
 
         if ( (layer.maxScaleDenominator !== 0 || layer.minScaleDenominator !== 0) && (mapResolution > layer.maxScaleDenominator || mapResolution < layer.minScaleDenominator) ) {
             return false;
         }
 
-        var viewExtent = map.getExtent();
+        var viewExtent = globe.getExtent();
         // To get the same format of bbox array
-        var layerExtent = map.getLayerExtent(layer);
+        var layerExtent = globe.getLayerExtent(layer);
         if (!LayerUtils.intersects(viewExtent, layerExtent)) {
             return false;
         }
-
+    */
         return true;
-    }
+    };
 
     /**
      * Get layer informations : title, description, quicklookurl, legends, metadata
