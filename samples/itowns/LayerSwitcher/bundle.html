@@ -34,12 +34,14 @@ and open the template in the editor.
         <!-- Library openLayers -->
         <script src="../../../lib/ol3/ol.js"></script>
         <!-- Plugin iTowns IGN -->
-        <script src="../../../dist/mix/GpPluginOl3Itowns.js"></script>
+        <script src="../../../dist/mix/GpPluginOl3Itowns-src.js"></script>
         <script type="text/javascript">
 
             var orthoLayer = {
+                type: "color",
                 protocol:   "wmts",
                 id:         "Ortho",
+                visible: true,
                 url:        "http://wxs.ign.fr/va5orxd0pgzvq3jxutqfuy0b/geoportail/wmts",
                 updateStrategy: {
                     type: "0",
@@ -165,32 +167,51 @@ and open the template in the editor.
                 }
             };
 
-            /* global itowns,document,GuiTools*/
             const positionOnGlobe = { longitude: 2.3465, latitude: 48.88, altitude: 25000000 };
 
-            // iTowns namespace defined here
             const viewerDiv = document.getElementById('viewerDiv');
-            itowns.viewer.createSceneGlobe(positionOnGlobe, viewerDiv);
+            const globeView = new itowns.GlobeView(viewerDiv, positionOnGlobe);
+            /* global itowns,document,GuiTools*/
+            //globeView.addLayer(orthoLayer);
 
-            const wgs84TileLayer = {
-                protocol: 'tile',
-                id: 'wgs84',
-            };
-            itowns.viewer.addGeometryLayer(wgs84TileLayer);
+            itowns.Fetcher.json('../Resources/JSONLayers/OrthosCRS.json').then(result => globeView.addLayer(result));
+            itowns.Fetcher.json('../Resources/JSONLayers/Ortho.json').then(result => globeView.addLayer(result));
+            itowns.Fetcher.json('../Resources/JSONLayers/ScanEX.json').then(result => globeView.addLayer(result));
+            itowns.Fetcher.json('../Resources/JSONLayers/Region.json').then(result => globeView.addLayer(result));
 
-            var urlImageryLayers = [];
-            const urlElevationLayers = [];
+            itowns.Fetcher.json('../Resources/JSONLayers/IGN_MNT.json').then(result => globeView.addLayer(result));
+            itowns.Fetcher.json('../Resources/JSONLayers/IGN_MNT_HIGHRES.json').then(result => globeView.addLayer(result));
 
-            urlImageryLayers.push('../Resources/JSONLayers/OrthosCRS.json');
+            globeView.addEventListener(itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED, () => {
+                // eslint-disable-next-line no-console
+                console.info('Globe initialized');
+                var layerSwitcher = new itowns.control.LayerSwitcher({
+                    layers : [
+                        {
+                            id : "Ortho",
+                            config : {
+                                title : "Couche de Photos IGNPO",
+                                description : "Description de ma couche",
+                                quicklookUrl : "lien/Vers/UnApercuRapide.png",
+                                legends : [
+                                    {
+                                        url : "lien/Vers/UneLegende.png"
+                                    }
+                                ],
+                                metadata : [
+                                    {
+                                        url : "lien/Vers/Une/MetaDonnee.xml"
+                                    }
+                                ],
+                                opacity: 0.8
+                            }
+                        }
+                    ]
+                });
+                itowns.control.WidgetAPI.addWidget( globeView, layerSwitcher );
 
-            urlElevationLayers.push('../Resources/JSONLayers/IGN_MNT.json');
-            urlElevationLayers.push('../Resources/JSONLayers/IGN_MNT_HIGHRES.json');
-
-            // ajout des couches
-            itowns.viewer.addImageryLayer(orthoLayer);
-            const imageryPromise = itowns.viewer.addImageryLayersFromJSONArray(urlImageryLayers);
-            const elevationPromise = itowns.viewer.addElevationLayersFromJSONArray(urlElevationLayers);
-
+            });
+            /*
             Promise.all([imageryPromise, elevationPromise]).then(() => itowns.viewer.init()).then( () => {
                 // ajout du control
                 var layerSwitcher = new itowns.control.LayerSwitcher({
@@ -219,19 +240,11 @@ and open the template in the editor.
                 });
                 itowns.viewer.addControl( layerSwitcher );
 
-                // ajout de nouvelles couches
-                urlImageryLayers = [];
-                urlImageryLayers.push('../Resources/JSONLayers/ScanEX.json');
-                urlImageryLayers.push('../Resources/JSONLayers/Region.json');
-
-                itowns.viewer.addImageryLayersFromJSONArray(urlImageryLayers).then(() => itowns.viewer.init());
-
-                itowns.viewer.addEventListener('globe-loaded', () => {
-                    itowns.viewer.setRealisticLightingOn(true);
+                globeView.addEventListener(itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED, () => {
                     // eslint-disable-next-line no-console
-                    console.info('Globe Loaded');
+                    console.info('Globe initialized');
                 });
-            });
+            });*/
 
         </script>
     </body>
