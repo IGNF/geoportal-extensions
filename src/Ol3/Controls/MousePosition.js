@@ -26,7 +26,6 @@ define([
 
     /**
      * @classdesc
-     *
      * MousePosition Control.
      *
      * @constructor
@@ -51,7 +50,7 @@ define([
      * @param {Array}   [options.displayAltitude = true] - activate (true) or deactivate (false) the altitude panel. True by default
      * @param {Array}   [options.displayCoordinates = true] - activate (true) or deactivate (false) the coordinates panel. True by default
      * @param {Boolean}	[options.editCoordinates = false] - add edit coordinates options. False by default.
-	 * @param {Object}  [options.altitude] - elevation configuration
+     * @param {Object}  [options.altitude] - elevation configuration
      * @param {Object}  [options.altitude.serviceOptions] - options of elevation service
      * @param {Number}  [options.altitude.responseDelay] - latency for altitude request, 500 ms by default
      * @param {Number}  [options.altitude.triggerDelay] - immobilisation time of movement on the map to trigger the elevation calculation, 200 ms by default
@@ -59,7 +58,7 @@ define([
      * @param {Number}  [options.altitude.noDataValueTolerance] - tolerance for no data value :
      *                  values in [noDataValue + noDataValueTolerance ; noDataValue - noDataValueTolerance] interval will not be displayed, but "---m" will be displayed instead.
      *                  Default is 90000 (no data values = [-9999 ; -189999])
-     * @example
+     *  @example
      *  var MousePosition = new ol.control.GeoportalMousePosition({
      *      collapsed : false,
      *      displayCoordinates : true,
@@ -84,7 +83,7 @@ define([
      *        }
      *      ],
      *      units : ["DEC", "DMS"]
-     *  });
+     * });
      */
     function MousePosition (options) {
 
@@ -424,11 +423,11 @@ define([
         this.options.collapsed = ( options.collapsed !== undefined ) ? options.collapsed : true;
         /** {Boolean} specify if MousePosition control is collapsed (true) or not (false) */
         this.collapsed = this.options.collapsed;
-        
+
         this.options.editCoordinates = ( options.editCoordinates !== undefined ) ? options.editCoordinates : false;
         this.editCoordinates = this.options.editCoordinates;
         this.editing = false;
-        
+
         this.options.units = options.units || [];
         this.options.displayAltitude = ( options.displayAltitude !== undefined ) ? options.displayAltitude : true;
         this.options.displayCoordinates = ( options.displayCoordinates !== undefined ) ? options.displayCoordinates : true;
@@ -651,18 +650,18 @@ define([
 
     /**
      * this method get label from the current projection units
-     * 
+     *
      * @method _getCurrentProjectionInformation
      * @private
      */
-    MousePosition.prototype._getCurrentProjectionInformation = function() {
+    MousePosition.prototype._getCurrentProjectionInformation = function () {
         var systemInfo = [
             this._currentProjectionSystems.label,
             "en"
         ];
-        
+
         var units = this._projectionUnits[this._currentProjectionType];
-        for (var u=0; u<units.length; ++u) {
+        for (var u = 0; u < units.length; ++u) {
             if (units[u].code === this._currentProjectionUnits) {
                 systemInfo.push(units[u].label);
                 break;
@@ -670,7 +669,7 @@ define([
         }
         return systemInfo.join(" ");
     };
-    
+
     /**
      * this method is called by constructor
      * and check the rights to resources
@@ -1218,9 +1217,11 @@ define([
      * @param {Object} e - HTMLElement
      * @private
      */
-    MousePosition.prototype.onSwitchEditCoordinates = function(e) {
-        if (! this.editCoordinates) return;
-        
+    MousePosition.prototype.onSwitchEditCoordinates = function (e) {
+        if (! this.editCoordinates) {
+            return;
+        }
+
         this.editing = e.target.checked;
 
         // Suppression de tous les enfants de GPmousePositionBasicPanel
@@ -1228,12 +1229,12 @@ define([
         while (container.firstChild) {
             container.removeChild(container.firstChild);
         }
-       
+
         var map = this.getMap();
         if (this.editing) {
             var coordType = this._currentProjectionSystems.type;
             var projectionInfo = this._getCurrentProjectionInformation();
-            
+
             // Unlisten for 'pointermove' and 'moveend' events
             if (this._isDesktop) {
                 map.un("pointermove", this.onMouseMove, this);
@@ -1242,9 +1243,9 @@ define([
             }
             // les informations de la projection courante (label + unité)
             container.appendChild(this._createProjectionInformationElement(projectionInfo));
-            
+
             var element = null;
-            if (this._currentProjectionUnits === 'DMS') {
+            if (this._currentProjectionUnits === "DMS") {
                 element = this._createDMSEditCoordinatesElement();
             } else {
                 element = this._createBasicEditCoordinatesElement(coordType);
@@ -1259,41 +1260,44 @@ define([
                 // on simule un deplacement en mode tactile
                 this.onMapMove();
             }
-            
+
             container.appendChild(this._createMousePositionPanelBasicCoordinateElement(this.options.displayCoordinates));
             container.appendChild(this._createMousePositionPanelBasicAltitudeElement(this.options.displayAltitude));
         }
     };
-    
+
     /**
      * this method is called by event 'submit' on BasicEditCoordinatesForm
      * @method onSubmitBasicEditCoordinatesForm
      * @param {Object} e - HTMLElement
      * @private
      */
-    MousePosition.prototype.onSubmitBasicEditCoordinatesForm = function(e) {
+    MousePosition.prototype.onSubmitBasicEditCoordinatesForm = function (e) {
+
+        logger.trace("onSubmitBasicEditCoordinatesForm", e);
+
         var lon = document.getElementById(this._addUID("GPmousePositionLon")).value;
         lon = Utils.toFloat(lon);
         if (! lon) {
             console.log("ERROR : lon must be a float number");
             return false;
         }
-        
+
         var lat = document.getElementById(this._addUID("GPmousePositionLat")).value;
         lat = Utils.toFloat(lat);
         if (! lat) {
             console.log("ERROR : lat must be a float number");
             return false;
         }
-        
+
         var oSrs = this._currentProjectionSystems.crs;
         if (! oSrs) {
             console.log("ERROR : system crs not found");
             return false;
         }
-        
+
         var view = this.getMap().getView();
-     
+
         var lonlat = null;
         switch (this._currentProjectionUnits) {
             case "M" :
@@ -1301,108 +1305,123 @@ define([
                 lonlat = [lon, lat];
                 break;
             case "KM" :
-                lonlat = [lon*1000, lat*1000];
+                lonlat = [lon * 1000, lat * 1000];
                 break;
             case "RAD" :
-                var rd = (180/Math.PI).toFixed(20);
+                var rd = (180 / Math.PI).toFixed(20);
                 lonlat = [
-                    (lon*rd).toFixed(20),
-                    (lat*rd).toFixed(20)
+                    (lon * rd).toFixed(20),
+                    (lat * rd).toFixed(20)
                 ];
                 break;
             case "GON" :
-                var d = (9/10).toFixed(20);
+                var d = (9 / 10).toFixed(20);
                 lonlat = [
-                    (lon*d).toFixed(20),
-                    (lat*d).toFixed(20)
+                    (lon * d).toFixed(20),
+                    (lat * d).toFixed(20)
                 ];
                 break;
-            default: return false;;
+            default:
+                return false;
         }
-        
+
         var coordinate = ol.proj.transform(lonlat, oSrs, view.getProjection());
         view.setCenter(coordinate);
         return false;
     };
-    
+
     /**
      * this method is called by event 'submit' on DMSEditCoordinatesForm
      * @method onSubmitDMSEditCoordinatesForm
      * @param {Object} e - HTMLElement
      * @private
      */
-    MousePosition.prototype.onSubmitDMSEditCoordinatesForm = function(e) {   
-        var coordinateDMS = {"Lon" : {},"Lat" : {} };
-        
+    MousePosition.prototype.onSubmitDMSEditCoordinatesForm = function (e) {
+        logger.trace("onSubmitDMSEditCoordinatesForm", e);
+
+        var coordinateDMS = {
+            Lon : {},
+            Lat : {}
+        };
+
         var keys = ["Lon", "Lat"];
         var parts = {
-            "Degrees" : {
-                "convert" : function(v) {
-                    if (! v) return null;
+            Degrees : {
+                /** ... */
+                convert : function (v) {
+                    if (! v) {
+                        return null;
+                    }
                     return Utils.toInteger(v);
                 }
             },
-            "Minutes" : {
-                "convert" :  function(v) {
-                    if (! v) return 0;
+            Minutes : {
+                /** ... */
+                convert :  function (v) {
+                    if (! v) {
+                        return 0;
+                    }
                     return Utils.toInteger(v);
                 }
-            }, 
-            "Seconds": {
-                "convert" :  function(v) {
-                    if (! v) return 0;
+            },
+            Seconds : {
+                /** ... */
+                convert :  function (v) {
+                    if (! v) {
+                        return 0;
+                    }
                     return Utils.toFloat(v);
                 }
             }
         };
 
         var lonlat = [];
-        for (var k=0; k<keys.length; ++k) {
+        for (var k = 0; k < keys.length; ++k) {
             /* la direction N,S,E,O */
-            var idDirection = this._addUID("GPmousePosition" + keys[k] + "Direction"); 
+            var idDirection = this._addUID("GPmousePosition" + keys[k] + "Direction");
             var select = document.getElementById(idDirection);
             var direction = select.options[select.selectedIndex].value;
-                    
+
             for (var part in parts) {
                 var id = this._addUID("GPmousePosition" + keys[k] + part);
                 var element = document.getElementById(id);
-                
+
                 /* conversion en entier ou flottant */
                 var value = parts[part].convert(element.value);
                 if (value === null) {
                     console.log("ERROR : value " + part + " is not valid");
                     return false;
                 }
-                
+
                 /* la valeur est-elle bien dans le bon intervalle */
                 var min = Number(element.dataset.min);
                 var max = Number(element.dataset.max);
-                if (value<min || value>max) {
+                if (value < min || value > max) {
                     console.log("ERROR : value " + part + " must be between " + min + " and " + max);
                     return false;
                 }
-                
+
                 if (direction === "O" || direction === "S") {
                     value = -value;
                 }
                 coordinateDMS[keys[k]][part] = value;
             }
-            lonlat[k] = coordinateDMS[keys[k]]["Degrees"] + coordinateDMS[keys[k]]["Minutes"]/60 + coordinateDMS[keys[k]]["Seconds"]/3600;
+            lonlat[k] = coordinateDMS[keys[k]]["Degrees"] + coordinateDMS[keys[k]]["Minutes"] / 60 + coordinateDMS[keys[k]]["Seconds"] / 3600;
         }
-        
+
         var oSrs = this._currentProjectionSystems.crs;
         if (! oSrs) {
             console.log("ERROR : system crs not found");
             return false;
         }
-        
+
         var view = this.getMap().getView();
-        
+
         var coordinate = ol.proj.transform(lonlat, oSrs, view.getProjection());
         view.setCenter(coordinate);
         return false;
     };
-    
+
     /**
      * this method is called by event 'change' on 'GPmousePositionProjectionSystem'
      * tag select (cf. this._createMousePositionSettingsElement),
@@ -1454,16 +1473,16 @@ define([
             var labelLon = (this._currentProjectionType === "Geographical") ? "Longitude :" : "X :";
             var spanLon = document.getElementById(this._addUID("GPmousePositionLonLabel"));
             spanLon.innerHTML = labelLon;
-            
+
             var labelLat = (this._currentProjectionType === "Geographical") ? "Latitude :" : "Y :";
             var spanLat = document.getElementById(this._addUID("GPmousePositionLatLabel"));
             spanLat.innerHTML = labelLat;
-            
+
             // Mise a jour des informations sur la projection courante
             var p = document.getElementById(this._addUID("GPmousePositionProjectionInformation"));
             p.innerHTML = this._getCurrentProjectionInformation();
         }
-        
+
         // on simule un deplacement en mode tactile pour mettre à jour les
         // resultats
         if (!this._isDesktop) {
@@ -1555,7 +1574,7 @@ define([
         if (this.editCoordinates && this.editing) {
             var coordType = this._currentProjectionSystems.type;
             var projectionInfo = this._getCurrentProjectionInformation();
-            
+
             // Suppression de tous les enfants de GPmousePositionBasicPanel
             var container = document.getElementById(this._addUID("GPmousePositionBasicPanel"));
             while (container.firstChild) {
@@ -1564,16 +1583,16 @@ define([
 
             // les informations de la projection courante (label + unité)
             container.appendChild(this._createProjectionInformationElement(projectionInfo));
-            
+
             var element = null;
-            if (this._currentProjectionUnits === 'DMS') {
+            if (this._currentProjectionUnits === "DMS") {
                 element = this._createDMSEditCoordinatesElement();
             } else {
                 element = this._createBasicEditCoordinatesElement(coordType);
             }
             container.appendChild(element);
         }
-        
+
         // on simule un deplacement en mode tactile pour mettre à jour les
         // resultats
         if (!this._isDesktop) {

@@ -101,40 +101,44 @@ define([
             }
             return id ;
         },
-        
+
         /**
          * Returns true if n is a number or can be parse to number
-         * 
-         * @param {integr,float or string} n
+         *
+         * @param {Numeric} n - number
          * @returns {Boolean} - true if n is a number, false otherwise.
          */
         isNumber : function (n) {
             return !isNaN(parseFloat(n)) && isFinite(n);
         },
-        
+
         /**
-         * Converts s to integer
-         * 
-         * @param {} s
-         * @param {integer} base (between 2 and 36)
-         * @returns {null or integer}
+         * Converts s to Numeric
+         *
+         * @param {String} s - string number
+         * @param {Numeric} base - between 2 and 36
+         * @returns {null|Numeric}
          */
-        toInteger : function(s, base) {
+        toNumeric : function (s, base) {
             var _base = base || 10;
             var n = parseInt(s, _base);
-            if (! isNaN(n) && isFinite(n)) return n;
+            if (! isNaN(n) && isFinite(n)) {
+                return n;
+            }
             return null;
         },
-        
+
         /**
          * Converts s to float
-         * 
-         * @param {} s
-         * @returns {null or float}
+         *
+         * @param {String} s - string number
+         * @returns {null|Numeric}
          */
-        toFloat : function(s) {
+        toFloat : function (s) {
             var n = parseFloat(s);
-            if (! isNaN(n) && isFinite(n)) return n;
+            if (! isNaN(n) && isFinite(n)) {
+                return n;
+            }
             return null;
         }
 
