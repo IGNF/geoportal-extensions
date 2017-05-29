@@ -50,7 +50,8 @@ define([
      *      and "M" or "KM" for metric coordinates
      * @param {Array}   [options.displayAltitude = true] - activate (true) or deactivate (false) the altitude panel. True by default
      * @param {Array}   [options.displayCoordinates = true] - activate (true) or deactivate (false) the coordinates panel. True by default
-     * @param {Object}  [options.altitude] - elevation configuration
+     * @param {Boolean}	[options.editCoordinates = false] - add edit coordinates options. False by default.
+	 * @param {Object}  [options.altitude] - elevation configuration
      * @param {Object}  [options.altitude.serviceOptions] - options of elevation service
      * @param {Number}  [options.altitude.responseDelay] - latency for altitude request, 500 ms by default
      * @param {Number}  [options.altitude.triggerDelay] - immobilisation time of movement on the map to trigger the elevation calculation, 200 ms by default
@@ -1369,7 +1370,7 @@ define([
                 /* conversion en entier ou flottant */
                 var value = parts[part].convert(element.value);
                 if (value === null) {
-                    console.log("ERROR : La valeur " + part + " n'est pas valide");
+                    console.log("ERROR : value " + part + " is not valid");
                     return false;
                 }
                 
@@ -1377,7 +1378,7 @@ define([
                 var min = Number(element.dataset.min);
                 var max = Number(element.dataset.max);
                 if (value<min || value>max) {
-                    console.log("ERROR : La valeur " + part + " n'est pas dans le bon intervalle");
+                    console.log("ERROR : value " + part + " must be between " + min + " and " + max);
                     return false;
                 }
                 
