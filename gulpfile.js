@@ -1203,7 +1203,7 @@
         isExecuteITowns = !isExecuteOl3;
         isExecuteOl3WithVg = isExecuteLeafletWithVg = isExecuteOl3WithITowns = isExecuteLeafletWithITowns = false;
         $.util.log("[INFO] Execution des taches pour OpenLayers...");
-        runSequence(/*"check",*/ /*"test",*/ "dist", "doc", "lib", "sample", cb);
+        runSequence("check", /*"test",*/ "dist", "doc", "lib", "sample", cb);
     });
 
     gulp.task("build-leaflet", function(cb) {
