@@ -1524,7 +1524,7 @@ define([
 
         // mise a jour des inputs pour les coordonnees
         this.updateCoordinateElements();
-        
+
         // on simule un deplacement en mode tactile pour mettre à jour les
         // resultats
         if (!this._isDesktop) {
@@ -1598,7 +1598,7 @@ define([
         
         // trigger an event
         var event = new Event('change');
-        systemList.dispatchEvent(event); 
+        systemList.dispatchEvent(event);
     };
 
     /**
@@ -1615,10 +1615,13 @@ define([
         var idx   = e.target.selectedIndex;
         var value = e.target.options[idx].value;
 
+        var oldProjectionUnits = this._currentProjectionUnits;
         this._currentProjectionUnits = value;
 
         // mise a jour des inputs pour les coordonnees
-        this.updateCoordinateElements();
+        if (oldProjectionUnits === "DMS" || this._currentProjectionUnits === "DMS") {
+            this.updateCoordinateElements();
+        }
 
         // on simule un deplacement en mode tactile pour mettre à jour les
         // resultats
