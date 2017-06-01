@@ -70,8 +70,8 @@ p[id^="GPmousePositionProjectionInformation-"] {
 	border: 1px solid #999;
 }
 
-.GPmousePositionDirection {
-	border-radius: none;
+.GPmousePositionUnits {
+    margin-left: 5px;
 }
 
 /* Map center localisation */

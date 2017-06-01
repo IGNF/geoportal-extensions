@@ -101,17 +101,7 @@ define([
             }
             return id ;
         },
-
-        /**
-         * Returns true if n is a number or can be parse to number
-         *
-         * @param {Numeric} n - number
-         * @returns {Boolean} - true if n is a number, false otherwise.
-         */
-        isNumber : function (n) {
-            return !isNaN(parseFloat(n)) && isFinite(n);
-        },
-
+        
         /**
          * Converts s to Numeric
          *
@@ -141,9 +131,7 @@ define([
             }
             return null;
         }
-
     };
-
+    
     return Utils;
-
 });

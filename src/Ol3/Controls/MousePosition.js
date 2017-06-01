@@ -6,6 +6,7 @@ define([
     "Ol3/Utils",
     "Common/Utils/CheckRightManagement",
     "Common/Utils/SelectorID",
+    "Common/Utils/MathUtils",
     "Common/Controls/MousePositionDOM",
     "Ol3/CRS/CRS" // call autoload function !
 ], function (
@@ -16,6 +17,7 @@ define([
     Utils,
     RightManagement,
     SelectorID,
+    MathUtils,
     MousePositionDOM
 ) {
 
@@ -719,7 +721,12 @@ define([
         var picto = this._createShowMousePositionPictoElement(this._isDesktop);
         container.appendChild(picto);
 
-        var panel    = this._createMousePositionPanelElement();
+        var panel    = this._createMousePositionPanelElement(
+            this.options.displayAltitude,
+            this.options.displayCoordinates,
+            this.options.editCoordinates,
+            this._currentProjectionUnits
+        );
         var settings = this._createMousePositionSettingsElement();
         var systems  = this._projectionSystemsContainer = this._createMousePositionSettingsSystemsElement(this._projectionSystems);
         var units    = this._projectionUnitsContainer = this._createMousePositionSettingsUnitsElement(this._projectionUnits[this._currentProjectionType]);
@@ -855,15 +862,11 @@ define([
      * @private
      */
     MousePosition.prototype._displayDMS = function (olCoordinate) {
-        var coordinate = {};
-        var regex = /(.*)([NS])\s(.*)([EW])/;
-        var subst = "$1$2 | $3$4";
-        var str = ol.coordinate.toStringHDMS(olCoordinate, 2).replace(regex, subst);
-        var coords = str.split("|");
-        // coords est du type : "48° 00′ 00″ N 2° 00′ 00″ E". On veut récupérer les 2 coordonnées séparément.
-        coordinate.lat = coords[0];
-        coordinate.lng = coords[1];
-        return coordinate;
+        return {
+            lng : MathUtils.decimalToDMS(olCoordinate[0], "EO", 2),
+            lat : MathUtils.decimalToDMS(olCoordinate[1], "NS", 2),
+            unit: "DMS"
+        };
     };
 
     /**
@@ -1440,6 +1443,57 @@ define([
     };
 
     /**
+     * Update all inputs for coordinates
+     * @private
+     */
+    MousePosition.prototype.updateCoordinateElements = function() {
+        // Changement des labels dans le formulaire de saisie
+        var spanLat = document.getElementById(this._addUID("GPmousePositionLatLabel"));
+        var spanLon = document.getElementById(this._addUID("GPmousePositionLonLabel"));
+        
+        if (this._currentProjectionType === "Geographical") {
+            spanLat.innerHTML = "Latitude :";
+            spanLon.innerHTML = "Longitude :";
+        } else {
+            spanLat.innerHTML = "X :";
+            spanLon.innerHTML = "Y :";
+        }
+
+        // Suppression de tous les enfants de GPmousePositionLatCoordinate
+        var spanLat = document.getElementById(this._addUID("GPmousePositionLatCoordinate"));
+        while (spanLat.firstChild) {
+            spanLat.removeChild(spanLat.firstChild);
+        }
+        
+        var arrayCoords;
+        if (this._currentProjectionUnits === "DMS") {
+            arrayCoords = this._createDMSCoordinateElement("Lat");
+        } else {
+            arrayCoords = this._createCoordinateElement("Lat");
+        }
+        for (var j = 0; j < arrayCoords.length; j++) {
+            spanLat.appendChild(arrayCoords[j]);
+        } 
+            
+        // Suppression de tous les enfants de GPmousePositionLonCoordinate
+        var spanLon = document.getElementById(this._addUID("GPmousePositionLonCoordinate"));
+        while (spanLon.firstChild) {
+            spanLon.removeChild(spanLon.firstChild);
+        }
+        
+        var arrayCoords1;
+        if (this._currentProjectionUnits === "DMS") {
+            arrayCoords1 = this._createDMSCoordinateElement("Lon");
+        } else {
+            arrayCoords1 = this._createCoordinateElement("Lon");
+        }
+        for (var j = 0; j < arrayCoords1.length; j++) {
+            spanLon.appendChild(arrayCoords1[j]);
+        } 
+    };
+    
+    
+    /**
      * this method selects the current system projection.
      *
      * @method _setCurrentSystem
@@ -1465,24 +1519,12 @@ define([
             this._setTypeUnitsPanel(type);
         }
 
-        // on enregistre le systeme courrant
+        // on enregistre le systeme courant
         this._currentProjectionSystems = this._projectionSystems[Number(systemCode)];
 
-        // Changement des labels dans le formulaire de saisie
-        if (this.editCoordinates && this.editing) {
-            var labelLon = (this._currentProjectionType === "Geographical") ? "Longitude :" : "X :";
-            var spanLon = document.getElementById(this._addUID("GPmousePositionLonLabel"));
-            spanLon.innerHTML = labelLon;
-
-            var labelLat = (this._currentProjectionType === "Geographical") ? "Latitude :" : "Y :";
-            var spanLat = document.getElementById(this._addUID("GPmousePositionLatLabel"));
-            spanLat.innerHTML = labelLat;
-
-            // Mise a jour des informations sur la projection courante
-            var p = document.getElementById(this._addUID("GPmousePositionProjectionInformation"));
-            p.innerHTML = this._getCurrentProjectionInformation();
-        }
-
+        // mise a jour des inputs pour les coordonnees
+        this.updateCoordinateElements();
+        
         // on simule un deplacement en mode tactile pour mettre à jour les
         // resultats
         if (!this._isDesktop) {
@@ -1553,6 +1595,10 @@ define([
             }
             systemList.appendChild(optionElement);
         }
+        
+        // trigger an event
+        var event = new Event('change');
+        systemList.dispatchEvent(event); 
     };
 
     /**
@@ -1571,27 +1617,8 @@ define([
 
         this._currentProjectionUnits = value;
 
-        if (this.editCoordinates && this.editing) {
-            var coordType = this._currentProjectionSystems.type;
-            var projectionInfo = this._getCurrentProjectionInformation();
-
-            // Suppression de tous les enfants de GPmousePositionBasicPanel
-            var container = document.getElementById(this._addUID("GPmousePositionBasicPanel"));
-            while (container.firstChild) {
-                container.removeChild(container.firstChild);
-            }
-
-            // les informations de la projection courante (label + unité)
-            container.appendChild(this._createProjectionInformationElement(projectionInfo));
-
-            var element = null;
-            if (this._currentProjectionUnits === "DMS") {
-                element = this._createDMSEditCoordinatesElement();
-            } else {
-                element = this._createBasicEditCoordinatesElement(coordType);
-            }
-            container.appendChild(element);
-        }
+        // mise a jour des inputs pour les coordonnees
+        this.updateCoordinateElements();
 
         // on simule un deplacement en mode tactile pour mettre à jour les
         // resultats
