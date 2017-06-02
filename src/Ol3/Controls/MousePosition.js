@@ -1470,6 +1470,8 @@ define([
         
         if (type !== this._currentProjectionType) {
             this._setTypeUnitsPanel(type);
+			
+			// On simule un "change" sur le select des unites
             this._triggerChangeEventOnUnitsElement();
         }
 
@@ -1564,11 +1566,7 @@ define([
 
         // mise a jour des inputs pour les coordonnees
         if (oldProjectionUnits === "DMS" || this._currentProjectionUnits === "DMS") {
-            this._resetCoordinateElements(
-                this.options.editCoordinates,
-                this._currentProjectionType,
-                this._currentProjectionUnits
-            );
+            this._resetCoordinateElements(this.options.editCoordinates, this._currentProjectionType, this._currentProjectionUnits);
         }
 
         // on simule un deplacement en mode tactile pour mettre à jour les
