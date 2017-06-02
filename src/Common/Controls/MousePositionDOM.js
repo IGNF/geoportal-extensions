@@ -520,14 +520,6 @@ define([], function () {
             return selectUnits;
         },
 
-        /** ... */
-        _triggerChangeEventOnUnitsElement : function() {
-            selectUnits = document.getElementById(this._addUID("GPmousePositionProjectionUnits"));
-            
-            var event = new Event('change');
-            selectUnits.dispatchEvent(event);
-        },
-        
         /**
          * Update all inputs for coordinates
          * @private
