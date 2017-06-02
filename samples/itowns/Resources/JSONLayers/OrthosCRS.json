@@ -3,7 +3,7 @@
 	"protocol":   "wmts",
 	"id":         "OrthoCRS",
 	"url":        "http://wxs.ign.fr/va5orxd0pgzvq3jxutqfuy0b/geoportail/wmts",
-	"fx" :        1.0,
+	"fx" :        2.5,
 	"updateStrategy": {
 		"type": 0,
 		"options": {}
@@ -11,6 +11,12 @@
 	"options": {
 		"name": "ORTHOIMAGERY.ORTHOPHOTOS.CRS84",
 		"mimetype": "image/jpeg",
+    "extent": {
+        "east": 8,
+        "west": -5,
+        "north": 51.1,
+        "south": 41
+    },
 		"tileMatrixSet": "WGS84G",
 		"tileMatrixSetLimits": {
 

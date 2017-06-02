@@ -54,13 +54,6 @@ define([
     };
 
     /**
-     * Get the element that serves as the map viewport.
-     */
-    ApiGlobe.prototype.getViewport = function getViewport() {
-        return this.viewerDiv;
-    }
-
-    /**
      * Get extent
      */
     ApiGlobe.prototype.getExtent = function getExtent() {

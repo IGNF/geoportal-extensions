@@ -120,12 +120,13 @@ and open the template in the editor.
                 }
             });
             requirejs(
-                ["itowns", "proj4", "gp", "Itowns/ApiGlobe", "Itowns/Controls/MousePosition"],
-                function (itowns, proj4, Gp, ApiGlobe, MousePosition)
+                ["itowns", "proj4", "gp", "Itowns/WidgetAPI", "Itowns/GlobeViewExtended", "Itowns/Controls/MousePosition"],
+                function (itowns, proj4, Gp, WidgetAPI, GlobeViewExtended, MousePosition)
             {
                 itowns.control = {};
                 itowns.control.MousePosition = MousePosition;
-                itowns.viewer = new ApiGlobe();
+                itowns.control.WidgetAPI = new WidgetAPI();
+                itowns.GlobeViewExtended = GlobeViewExtended;
 
                 var createMap = function() {
                     /* global itowns,document,GuiTools*/
@@ -133,41 +134,24 @@ and open the template in the editor.
 
                     // iTowns namespace defined here
                     const viewerDiv = document.getElementById('viewerDiv');
-                    itowns.viewer.createSceneGlobe(positionOnGlobe, viewerDiv);
-                    mousePosition = new itowns.control.MousePosition({
-                        collapsed: false,
-                        displayCoordinates: true,
-                        displayAltitude: false
+                    const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
+
+                    globeView.addEventListener(itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED, () => {
+                        mousePosition = new itowns.control.MousePosition({
+                            collapsed: false,
+                            displayCoordinates: true,
+                            displayAltitude: false
+                        });
+                        itowns.control.WidgetAPI.addWidget( globeView, mousePosition );
                     });
-                    itowns.viewer.addControl( mousePosition );
 
-                    const wgs84TileLayer = {
-                        protocol: 'tile',
-                        id: 'wgs84',
-                    };
+                    itowns.Fetcher.json('../Resources/JSONLayers/Ortho.json').then(result => globeView.addLayer(result));
+                    itowns.Fetcher.json('../Resources/JSONLayers/OrthosCRS.json').then(result => globeView.addLayer(result));
+                    itowns.Fetcher.json('../Resources/JSONLayers/ScanEX.json').then(result => globeView.addLayer(result));
+                    itowns.Fetcher.json('../Resources/JSONLayers/Region.json').then(result => globeView.addLayer(result));
 
-                    const urlImageryLayers = [];
-                    const urlElevationLayers = [];
-
-                    urlImageryLayers.push('../Resources/JSONLayers/Ortho.json');
-                    urlImageryLayers.push('../Resources/JSONLayers/OrthosCRS.json');
-                    urlImageryLayers.push('../Resources/JSONLayers/ScanEX.json');
-                    urlImageryLayers.push('../Resources/JSONLayers/Region.json');
-
-                    urlElevationLayers.push('../Resources/JSONLayers/IGN_MNT.json');
-                    urlElevationLayers.push('../Resources/JSONLayers/IGN_MNT_HIGHRES.json');
-
-                    itowns.viewer.addGeometryLayer(wgs84TileLayer);
-                    const imageryPromise = itowns.viewer.addImageryLayersFromJSONArray(urlImageryLayers);
-                    const elevationPromise = itowns.viewer.addElevationLayersFromJSONArray(urlElevationLayers);
-
-                    Promise.all([imageryPromise, elevationPromise]).then(() => itowns.viewer.init());
-
-                    itowns.viewer.addEventListener('globe-loaded', () => {
-                        itowns.viewer.setRealisticLightingOn(true);
-                        // eslint-disable-next-line no-console
-                        console.info('Globe Loaded');
-                    });
+                    itowns.Fetcher.json('../Resources/JSONLayers/IGN_MNT.json').then(result => globeView.addLayer(result));
+                    itowns.Fetcher.json('../Resources/JSONLayers/IGN_MNT_HIGHRES.json').then(result => globeView.addLayer(result));
                 }
 
                 Gp.Services.getConfig({

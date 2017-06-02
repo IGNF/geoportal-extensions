@@ -11,6 +11,12 @@
 	"options": {
 		"name": "GEOGRAPHICALGRIDSYSTEMS.MAPS.SCAN-EXPRESS.STANDARD",
 		"mimetype": "image/jpeg",
+    "extent": {
+        "east": 8,
+        "west": -5,
+        "north": 51.1,
+        "south": 41
+    },
 		"tileMatrixSet": "PM",
 		"tileMatrixSetLimits": {
 		  "6" : {

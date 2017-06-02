@@ -15,7 +15,7 @@ and open the template in the editor.
         <link rel="stylesheet" href="../../../dist/itowns/GpPluginItowns-src.css" />
 
         <style type="text/css">
-                html {height: 100%}
+            html {height: 100%}
             body { margin: 0; overflow:hidden; height:100%}
 
                 #viewerDiv {
@@ -70,7 +70,7 @@ and open the template in the editor.
 
         <script type="text/javascript">
 
-            var viewer = null;
+            var globeView = null;
 
             const urlImageryLayers = [];
             urlImageryLayers.push('../Resources/JSONLayers/OrthosCRS.json');
@@ -79,49 +79,44 @@ and open the template in the editor.
             urlImageryLayers.push('../Resources/JSONLayers/Region.json');
 
             const layersId = ["OrthoCRS","Ortho","ScanEX","Region"];
-            var visibilities = [true,true,true,true];
-            var opacities = [1,1,1,1];
 
             var addLayer = function (i) {
-                viewer.addImageryLayersFromJSONArray([urlImageryLayers[i]]);
-                viewer.init();
+                itowns.Fetcher.json(urlImageryLayers[i]).then(result => { globeView.addLayer(result);globeView.notifyChange(true); });
             }
             var removeLayer = function (i) {
-                viewer.removeImageryLayer(layersId[i]);
+                globeView.removeLayer(layersId[i]);
             }
             var setOpacity = function (i) {
-                opacities[i] -= 0.2;
-                if( opacities[i] < 0 ) {
-                    opacities[i] = 1.;
+                var layerToChange = globeView.getLayers(layer => layer.id == layersId[i])[0];
+                var newOpacity = layerToChange.opacity - 0.2;
+                if( newOpacity < 0 ) {
+                    newOpacity = 1.;
                 }
-                viewer.setLayerOpacity(layersId[i],opacities[i]);
+                layerToChange.opacity = newOpacity;
+                globeView.notifyChange(true);
             }
             var setVisibity = function (i) {
-                visibilities[i] = !visibilities[i];
-                viewer.setLayerVisibility(layersId[i],visibilities[i]);
+                var layerToChange = globeView.getLayers(layer => layer.id == layersId[i])[0];
+                layerToChange.visible = !layerToChange.visible;
+                globeView.notifyChange(true);
             }
             var moveLayerUp = function (i) {
-              this.index = _getIndex(layersId[i])+1;
-              if( this.index > viewer.getImageryLayers().length-1 ) {
-                  this.index = 0;
+              var index = _getIndex(layersId[i])+1;
+              if( index > globeView.getLayers(layer => layer.type == "color").length-1 ) {
+                  index = 0;
               }
-              viewer.moveLayerToIndex(layersId[i],this.index);
+              itowns.ColorLayersOrdering.moveLayerToIndex(globeView,layersId[i],index);
             }
             var moveLayerDown = function (i) {
-                this.index = _getIndex(layersId[i])-1;
-                if( this.index < 0 ) {
-                    this.index = viewer.getImageryLayers().length-1;
+                var index = _getIndex(layersId[i])-1;
+                if( index < 0 ) {
+                    index = globeView.getLayers(layer => layer.type == "color").length-1;
                 }
-                viewer.moveLayerToIndex(layersId[i],this.index);
+                itowns.ColorLayersOrdering.moveLayerToIndex(globeView,layersId[i],index);
             }
             var _getIndex = function (layerId) {
-                var imageryLayers = viewer.getImageryLayers();
-                for( var i = 0 ; i < imageryLayers.length ; ++i ) {
-                    if( imageryLayers[i].id == layerId ) {
-                        return i;
-                    }
-                }
-                return -1;
+                var layerToChange = globeView.getLayers(layer => layer.id == layerId)[0];
+                return layerToChange.sequence;
             }
 
             requirejs.config({
@@ -136,14 +131,13 @@ and open the template in the editor.
                 }
             });
             requirejs(
-                ["itowns", "proj4", "gp", "Itowns/ApiGlobe", "Itowns/Controls/LayerSwitcher"],
-                function (itowns, proj4, Gp, ApiGlobe, LayerSwitcher)
+                ["itowns", "proj4", "gp", "Itowns/WidgetAPI", "Itowns/GlobeViewExtended", "Itowns/Controls/LayerSwitcher"],
+                function (itowns, proj4, Gp, WidgetAPI, GlobeViewExtended, LayerSwitcher)
             {
                 itowns.control = {};
                 itowns.control.LayerSwitcher = LayerSwitcher;
-                itowns.viewer = new ApiGlobe();
-                // debug
-                viewer = itowns.viewer;
+                itowns.control.WidgetAPI = new WidgetAPI();
+                itowns.GlobeViewExtended = GlobeViewExtended;
 
                 var createMap = function() {
                     /* global itowns,document,GuiTools*/
@@ -151,48 +145,45 @@ and open the template in the editor.
 
                     // iTowns namespace defined here
                     const viewerDiv = document.getElementById('viewerDiv');
-                    itowns.viewer.createSceneGlobe(positionOnGlobe, viewerDiv);
+                    globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
 
-                    const wgs84TileLayer = {
-                        protocol: 'tile',
-                        id: 'wgs84',
-                    };
-                    itowns.viewer.addGeometryLayer(wgs84TileLayer);
+                    globeView.addEventListener(itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED, () => {
+                        // ajout des couches
+                        var promises = [];
+                        promises.push( itowns.Fetcher.json('../Resources/JSONLayers/IGN_MNT.json').then(result => globeView.addLayer(result)) );
+                        promises.push( itowns.Fetcher.json('../Resources/JSONLayers/IGN_MNT_HIGHRES.json').then(result => globeView.addLayer(result)) );
+                        for ( var i = 0 ; i < urlImageryLayers.length ; ++i ) {
+                            promises.push( itowns.Fetcher.json(urlImageryLayers[i]).then(result => globeView.addLayer(result) ) );
+                        }
 
-                    const urlElevationLayers = [];
-                    urlElevationLayers.push('../Resources/JSONLayers/IGN_MNT.json');
-                    urlElevationLayers.push('../Resources/JSONLayers/IGN_MNT_HIGHRES.json');
-
-                    const imageryPromise = itowns.viewer.addImageryLayersFromJSONArray(urlImageryLayers);
-                    const elevationPromise = itowns.viewer.addElevationLayersFromJSONArray(urlElevationLayers);
-
-                    Promise.all([imageryPromise, elevationPromise]).then(() => itowns.viewer.init()).then( () => {
-                        // ajout du control
-                        var layerSwitcher = new itowns.control.LayerSwitcher({
-                            layers : [
-                                {
-                                    id : "Ortho",
-                                    config : {
-                                        title : "Couche de Photos IGNPO",
-                                        description : "Description de ma couche",
-                                        quicklookUrl : "lien/Vers/UnApercuRapide.png",
-                                        legends : [
-                                            {
-                                                url : "lien/Vers/UneLegende.png"
-                                            }
-                                        ],
-                                        metadata : [
-                                            {
-                                                url : "lien/Vers/Une/MetaDonnee.xml"
-                                            }
-                                        ],
-                                        visibility: false,
-                                        opacity: 0.8
+                        Promise.all(promises).then( () => {
+                            // ajout du control
+                            var layerSwitcher = new itowns.control.LayerSwitcher({
+                                layers : [
+                                    {
+                                        id : "Ortho",
+                                        config : {
+                                            title : "Couche de Photos IGNPO",
+                                            description : "Description de ma couche",
+                                            quicklookUrl : "lien/Vers/UnApercuRapide.png",
+                                            legends : [
+                                                {
+                                                    url : "lien/Vers/UneLegende.png"
+                                                }
+                                            ],
+                                            metadata : [
+                                                {
+                                                    url : "lien/Vers/Une/MetaDonnee.xml"
+                                                }
+                                            ],
+                                            visibility: false,
+                                            opacity: 0.8
+                                        }
                                     }
-                                }
-                            ]
+                                ]
+                            });
+                            itowns.control.WidgetAPI.addWidget( globeView, layerSwitcher );
                         });
-                        itowns.viewer.addControl( layerSwitcher );
                     });
                 }
 

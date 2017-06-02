@@ -211,40 +211,6 @@ and open the template in the editor.
                 itowns.control.WidgetAPI.addWidget( globeView, layerSwitcher );
 
             });
-            /*
-            Promise.all([imageryPromise, elevationPromise]).then(() => itowns.viewer.init()).then( () => {
-                // ajout du control
-                var layerSwitcher = new itowns.control.LayerSwitcher({
-                    layers : [
-                        {
-                            id : "Ortho",
-                            config : {
-                                title : "Couche de Photos IGNPO",
-                                description : "Description de ma couche",
-                                quicklookUrl : "lien/Vers/UnApercuRapide.png",
-                                legends : [
-                                    {
-                                        url : "lien/Vers/UneLegende.png"
-                                    }
-                                ],
-                                metadata : [
-                                    {
-                                        url : "lien/Vers/Une/MetaDonnee.xml"
-                                    }
-                                ],
-                                visibility: false,
-                                opacity: 0.8
-                            }
-                        }
-                    ]
-                });
-                itowns.viewer.addControl( layerSwitcher );
-
-                globeView.addEventListener(itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED, () => {
-                    // eslint-disable-next-line no-console
-                    console.info('Globe initialized');
-                });
-            });*/
 
         </script>
     </body>

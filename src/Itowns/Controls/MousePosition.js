@@ -130,36 +130,38 @@ define([
     /**
      * Bind map to control
      */
-    MousePosition.prototype.setMap = function (map) {
+    MousePosition.prototype.setMap = function (globe) {
 
-        if ( map ) { // dans le cas de l'ajout du contrôle à la map
+        if ( globe ) { // dans le cas de l'ajout du contrôle à la map
 
             // dans le cas de l'ajout du contrôle à la map
             var center = this._createMapCenter();
-            map.getViewport().appendChild(center);
+            globe.viewerDiv.appendChild(center);
 
             // on définie le callback sur la carte pour recuperer les coordonnées
             this._callbacks.mouseMove = this.onMouseMove.bind(this);
 
             // evenement valable pour le mode desktop !
-            if (this._isDesktop) {
-                map.getViewport().addEventListener(
-                    "mousemove",
-                    this._callbacks.mouseMove
-                );
-            } else {
-                map.addEventListener(
-                    "centerchanged",
-                    this.onMapMove
-                );
+            if (!this.collapsed) {
+                if (this._isDesktop) {
+                    globe.viewerDiv.addEventListener(
+                        "mousemove",
+                        this._callbacks.mouseMove
+                    );
+                } else {
+                    globe.controls.addEventListener(
+                        "centerchanged",
+                        this.onMapMove
+                    );
+                }
             }
         }
 
         // call original setMap method
-        Widget.prototype.setMap.call(this, map);
+        Widget.prototype.setMap.call(this, globe);
 
         // nothing else to do if map == null
-        if (map == null) {
+        if (globe == null) {
             return ;
         }
 
@@ -1002,7 +1004,7 @@ define([
     MousePosition.prototype.onMouseMove = function (e) {
         var self = this;
 
-        var position = this.getMap().pickPosition(e);
+        var position = this.getMap().controls.pickGeoPosition(e);
         if( !position ) {
             this.GPdisplayCoords( { lon: "---", lat: "---"} );
             this.GPresetElevation();
@@ -1010,8 +1012,8 @@ define([
         }
 
         var coordinate = {
-            lon: position.coordinate[0],
-            lat: position.coordinate[1]
+            lon: position.longitude(),
+            lat: position.latitude()
         };
 
         this._setCoordinate(coordinate);
@@ -1144,8 +1146,7 @@ define([
     MousePosition.prototype.onShowMousePositionClick = function () {
         // checked : true - panel close
         // checked : false - panel open
-        var map = this.getMap();
-        var mapDiv = map.getViewport();
+        var globe = this.getMap();
 
         this.collapsed = this._showMousePositionContainer.checked;
         // on génère nous même l'evenement OpenLayers de changement de propriété
@@ -1157,17 +1158,17 @@ define([
         if ( this._showMousePositionContainer.checked ) {
             // FIXME gérer ou non le cas mobile
             if (this._isDesktop) {
-                mapDiv.removeEventListener("mousemove", this._callbacks.mouseMove);
+                globe.viewerDiv.removeEventListener("mousemove", this._callbacks.mouseMove);
             } else {
-                map.removeEventListener("centerchanged", this.onMapMove);
+                globe.controls.removeEventListener("centerchanged", this.onMapMove);
             }
 
         } else {
             // FIXME gérer ou non le cas mobile
             if (this._isDesktop) {
-                mapDiv.addEventListener("mousemove", this._callbacks.mouseMove);
+                globe.viewerDiv.addEventListener("mousemove", this._callbacks.mouseMove);
             } else {
-                map.addEventListener("centerchanged", this.onMapMove);
+                globe.controls.addEventListener("centerchanged", this.onMapMove);
             }
         }
 

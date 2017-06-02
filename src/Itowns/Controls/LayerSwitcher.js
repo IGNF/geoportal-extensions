@@ -108,20 +108,15 @@ define([
 
         if ( globe ) { // dans le cas de l'ajout du contrôle à la map
             var self = this;
-            var layers = globe.getLayers();
             // add options layers to layerlist.
             // (seulement les couches configurées dans les options du layerSwitcher par l'utilisateur),
             // les autres couches de la carte seront ajoutées dans la méthode setMap
             for ( var i = 0; i < this._initLayers.length; i++ ) {
-                // recup la layer, son id,
+                // recup le layer, son id,
                 var layer = null;
 
                 if (this._initLayers[i].id) {
-                    for (var j = 0; j < layers.length; j++) {
-                        if (layers[j].id === this._initLayers[i].id) {
-                            layer = layers[j];
-                        }
-                    }
+                    var layer = globe.getLayers(lay => lay.id === this._initLayers[i].id)[0];
                 }
 
                 if ( layer ) {
@@ -156,34 +151,39 @@ define([
             // At every map movement, layer switcher may be updated,
             // according to layers on map, and their range.
             /**
-            * ajout du callback oncenterchanged
+            * ajout du callback onChangedViewCallBack
             */
             this._callbacks.onChangedViewCallBack = function () {
                 clearTimeout(this._inRangeTimer);
                 this._inRangeTimer = setTimeout( function () {
                     self._inRangeUpdate();
-                }, 500);
+                }, 100);
             };
-            globe.controls.addEventListener("camera-target-changed", this._callbacks.onChangedViewCallBack);
-            globe.controls.addEventListener("range-changed", this._callbacks.onChangedViewCallBack);
+            globe.addEventListener(itowns.GLOBE_VIEW_EVENTS.UPDATED, this._callbacks.onChangedViewCallBack);
 
             /**
             * ajout du callback onlayeradded
             */
             this._callbacks.onAddedLayerCallBack = function (e) {
-                var id = e.detail.layerId;
+                // var id = e.layerId;
+                var id = "Ortho";
                 if (self) {
-                    var layer = self.getMap().getLayer(id);
-                    self.addLayer(layer);
+                    var layer = self.getMap().getLayers(layer => layer.id === id)[0];
+                    var layerConf = self._getLayerConf(id);
+                    if ( layerConf ) {
+                        self.addLayer(layer, layerConf);
+                    } else {
+                        self.addLayer(layer);
+                    }
                 }
             };
-            globe.addEventListener("layeradded", this._callbacks.onAddedLayerCallBack);
+            globe.addEventListener(itowns.GLOBE_VIEW_EVENTS.LAYER_ADDED, this._callbacks.onAddedLayerCallBack);
 
             /**
             * ajout du callback onlayerremoved
             */
             this._callbacks.onRemovedLayerCallBack = function (e) {
-                var id = e.detail.layerId;
+                var id = e.layerId;
 
                 // On met à jour l'index max et on retire la couche du layerSwitcher
                 if ( self && self._layers[id] ) {
@@ -191,42 +191,62 @@ define([
                 }
 
             };
-            globe.addEventListener("layerremoved", this._callbacks.onRemovedLayerCallBack);
+            globe.addEventListener(itowns.GLOBE_VIEW_EVENTS.LAYER_REMOVED, this._callbacks.onRemovedLayerCallBack);
 
             /**
             * ajout du callback onlayerchanged:index
             */
             this._callbacks.onIndexLayerCallBack = function (e) {
-                if(e.detail.newIndex && e.detail.newIndex !== e.detail.oldIndex) {
+
+                var arraysEquals = function (a1, a2) {
+                    if (a1.length !== a2.length) {
+                        return false;
+                    }
+                    for( var i = 0 ; i < a1.length ; ++i ) {
+                        if ( a1[i] !== a2[i] ) {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+
+                if( !arraysEquals(e.new.sequence, e.previous.sequence)) {
                     self._updateLayerListContainer();
                 }
             };
-            globe.addEventListener("layerchanged:index", this._callbacks.onIndexLayerCallBack);
+            globe.addEventListener(itowns.GLOBE_VIEW_EVENTS.COLOR_LAYERS_ORDER_CHANGED, this._callbacks.onIndexLayerCallBack);
 
             /**
             * ajout du callback onlayerchanged:opacity
             */
             this._callbacks.onOpacityLayerCallBack = function (e) {
-                self._updateLayerOpacity(e.detail.layerId, e.detail.newOpacity);
+                self._updateLayerOpacity(e.target.id, e.new.opacity);
             };
-            globe.addEventListener("layerchanged:opacity", this._callbacks.onOpacityLayerCallBack);
 
             /**
             * ajout du callback onlayerchanged:visible
             */
             this._callbacks.onVisibilityLayerCallBack = function (e) {
-                self._updateLayerVisibility(e.detail.layerId, e.detail.newVisibility);
+                self._updateLayerVisibility(e.target.id, e.new.visible);
             };
-            globe.addEventListener("layerchanged:visible", this._callbacks.onVisibilityLayerCallBack);
+
+            var layers = globe.getLayers(layer => layer.type == "color");
+            for ( var i = 0 ; i < layers.length ; ++i ) {
+                layers[i].addEventListener("opacity-property-changed", this._callbacks.onOpacityLayerCallBack);
+                layers[i].addEventListener("visible-property-changed", this._callbacks.onVisibilityLayerCallBack);
+            }
 
         } else {
             // On retire les listeners qui étaient liés au layerSwitcher supprimé
-            globe.removeEventListener("centerchanged", this._callbacks.onChangedCenterCallBack);
-            globe.removeEventListener("layeradded", this._callbacks.onAddedLayerCallBack);
-            globe.removeEventListener("layerremoved", this._callbacks.onRemovedLayerCallBack);
-            globe.removeEventListener("layerchanged:opacity", this._callbacks.onOpacityLayerCallBack);
-            globe.removeEventListener("layerchanged:visible", this._callbacks.onVisibilityLayerCallBack);
-            globe.removeEventListener("layerchanged:index", this._callbacks.onIndexLayerCallBack);
+            globe.controls.removeEventListener(itowns.GLOBE_VIEW_EVENTS.UPDATED, this._callbacks.onChangedViewCallBack);
+            globe.removeEventListener(itowns.GLOBE_VIEW_EVENTS.LAYER_ADDED, this._callbacks.onAddedLayerCallBack);
+            globe.removeEventListener(itowns.GLOBE_VIEW_EVENTS.LAYER_REMOVED, this._callbacks.onRemovedLayerCallBack);
+            globe.removeEventListener(itowns.GLOBE_VIEW_EVENTS.COLOR_LAYERS_ORDER_CHANGED, this._callbacks.onIndexLayerCallBack);
+            var layers = globe.getLayers(layer => layer.type == "color");
+            for ( var i = 0 ; i < layers.length ; ++i ) {
+                layers[i].removeEventListener("opacity-property-changed", this._callbacks.onOpacityLayerCallBack);
+                layers[i].removeEventListener("visible-property-changed", this._callbacks.onVisibilityLayerCallBack);
+            }
             return ;
         }
 
@@ -445,6 +465,23 @@ define([
     };
 
     /**
+     * Return the layer configuration defined at widget initialization
+     *
+     * @method _getLayerConf
+     * @param {String} layerId - layer id
+     * @return {Object} layerConfig - layer configuration
+     * @private
+     */
+    LayerSwitcher.prototype._getLayerConf = function ( layerId ) {
+        for ( var i = 0 ; i < this._initLayers.length ; ++i ) {
+            if ( this._initLayers[i].id === layerId ) {
+                return this._initLayers[i].config;
+            }
+        }
+        return null;
+    };
+
+    /**
      * Create control main container
      *
      * @method _initContainer
@@ -508,7 +545,7 @@ define([
             }
         });
         var orderedLayers = layers.sort(function (a, b) {
-            return a.sequence - b.sequence;
+            return b.sequence - a.sequence;
         });
 
         // on parcourt toutes les couches de la carte, pour les ajouter à la liste du controle si ce n'est pas déjà le cas.
@@ -604,7 +641,7 @@ define([
             }
         });
         layer[0].opacity = opacityValue / 100;
-        globe.notifyChange(0,true); // update viewer
+        globe.notifyChange(true); // update viewer
     };
 
     /**
@@ -647,13 +684,13 @@ define([
             }
         });
         layer[0].visible = e.target.checked;
-        globe.notifyChange(0,true); // update viewer
+        globe.notifyChange(true); // update viewer
     };
 
     /**
      * Change picto visibility on layer visibility change
      *
-     * @method _updateLayerOpacity
+     * @method _updateLayerVisibility
      * @param {String} layerId - layer id
      * @param {Boolean} visibility - visible if true
      * @private
@@ -749,7 +786,7 @@ define([
         // le retrait de la couche va déclencher l'ecouteur d'évenement,
         // et appeler this.removeLayer qui va supprimer la div.
         globe.removeLayer(layerID);
-        globe.notifyChange(0,true); // update viewer
+        globe.notifyChange(true); // update viewer
 
         this._updateLayerListContainer();
     };
@@ -764,9 +801,11 @@ define([
     LayerSwitcher.prototype._onDragAndDropLayerClick = function (e) {
         var globe = this.getMap();
 
+        var nbLayers = globe.getLayers( (layer) => layer.type === "color" ).length;
+
         var layerID  = this._resolveLayerId(e.item.id);
 
-        itowns.ColorLayersOrdering.moveLayerToIndex(globe, layerID, e.newIndex);
+        itowns.ColorLayersOrdering.moveLayerToIndex(globe, layerID, nbLayers - e.newIndex - 1);
     };
 
     /**
@@ -847,7 +886,7 @@ define([
                 }
             });
             var orderedLayers = layers.sort(function (a, b) {
-                return a.sequence - b.sequence;
+                return b.sequence - a.sequence;
             });
             // et on rajoute les div correspondantes aux différentes couches, dans l'ordre décroissant des zindex
             for ( var j = 0; j < orderedLayers.length; j++ ) {
@@ -875,24 +914,26 @@ define([
      * @returns {Boolean} outOfRange - false if map view is out of layer range
      */
     LayerSwitcher.prototype.isInRange = function (layer, globe) {
+
         if (!globe) {
             return;
         }
-        // check if map zoom is in layer zoom range
-    /*    var mapResolution = globe.controls.getScale();
 
-        if ( (layer.maxScaleDenominator !== 0 || layer.minScaleDenominator !== 0) && (mapResolution > layer.maxScaleDenominator || mapResolution < layer.minScaleDenominator) ) {
+        const tilesLayer = globeView.getLayers(l => l.type === "geometry")[0];
+
+        const displayedExtent = tilesLayer.displayed.extent;
+        const zoomTilesGlobe = tilesLayer.displayed.zoom.max;
+
+        const tileMatrixSet = layer.options.tileMatrixSet || "WGS84";
+        const currentZoomLayer = zoomTilesGlobe + (tileMatrixSet == "PM" ? 1 : 0);
+
+        if ((layer.options.zoom && layer.options.zoom.min > currentZoomLayer)) {
             return false;
         }
-
-        var viewExtent = globe.getExtent();
-        // To get the same format of bbox array
-        var layerExtent = globe.getLayerExtent(layer);
-        if (!LayerUtils.intersects(viewExtent, layerExtent)) {
-            return false;
+        if( !layer.extent ) {
+            return true;
         }
-    */
-        return true;
+        return displayedExtent.intersect(layer.extent);
     };
 
     /**
