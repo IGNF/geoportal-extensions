@@ -829,6 +829,7 @@ define([
 
         // le nouveau type de system ...
         this._currentProjectionType = type;
+        
         // et comme on a changé de type de systeme,
         // il faut changer aussi d'unité !
         this._currentProjectionUnits = this._projectionUnits[type][0].code;
@@ -1443,57 +1444,6 @@ define([
     };
 
     /**
-     * Update all inputs for coordinates
-     * @private
-     */
-    MousePosition.prototype.updateCoordinateElements = function() {
-        // Changement des labels dans le formulaire de saisie
-        var spanLat = document.getElementById(this._addUID("GPmousePositionLatLabel"));
-        var spanLon = document.getElementById(this._addUID("GPmousePositionLonLabel"));
-        
-        if (this._currentProjectionType === "Geographical") {
-            spanLat.innerHTML = "Latitude :";
-            spanLon.innerHTML = "Longitude :";
-        } else {
-            spanLat.innerHTML = "X :";
-            spanLon.innerHTML = "Y :";
-        }
-
-        // Suppression de tous les enfants de GPmousePositionLatCoordinate
-        var spanLat = document.getElementById(this._addUID("GPmousePositionLatCoordinate"));
-        while (spanLat.firstChild) {
-            spanLat.removeChild(spanLat.firstChild);
-        }
-        
-        var arrayCoords;
-        if (this._currentProjectionUnits === "DMS") {
-            arrayCoords = this._createDMSCoordinateElement("Lat");
-        } else {
-            arrayCoords = this._createCoordinateElement("Lat");
-        }
-        for (var j = 0; j < arrayCoords.length; j++) {
-            spanLat.appendChild(arrayCoords[j]);
-        } 
-            
-        // Suppression de tous les enfants de GPmousePositionLonCoordinate
-        var spanLon = document.getElementById(this._addUID("GPmousePositionLonCoordinate"));
-        while (spanLon.firstChild) {
-            spanLon.removeChild(spanLon.firstChild);
-        }
-        
-        var arrayCoords1;
-        if (this._currentProjectionUnits === "DMS") {
-            arrayCoords1 = this._createDMSCoordinateElement("Lon");
-        } else {
-            arrayCoords1 = this._createCoordinateElement("Lon");
-        }
-        for (var j = 0; j < arrayCoords1.length; j++) {
-            spanLon.appendChild(arrayCoords1[j]);
-        } 
-    };
-    
-    
-    /**
      * this method selects the current system projection.
      *
      * @method _setCurrentSystem
@@ -1514,16 +1464,14 @@ define([
             logger.log("system not found in projection systems container");
             return;
         }
-
-        if (type !== this._currentProjectionType) {
-            this._setTypeUnitsPanel(type);
-        }
-
+ 
         // on enregistre le systeme courant
         this._currentProjectionSystems = this._projectionSystems[Number(systemCode)];
-
-        // mise a jour des inputs pour les coordonnees
-        this.updateCoordinateElements();
+        
+        if (type !== this._currentProjectionType) {
+            this._setTypeUnitsPanel(type);
+            this._triggerChangeEventOnUnitsElement();
+        }
 
         // on simule un deplacement en mode tactile pour mettre à jour les
         // resultats
@@ -1595,10 +1543,6 @@ define([
             }
             systemList.appendChild(optionElement);
         }
-        
-        // trigger an event
-        var event = new Event('change');
-        systemList.dispatchEvent(event);
     };
 
     /**
@@ -1620,7 +1564,11 @@ define([
 
         // mise a jour des inputs pour les coordonnees
         if (oldProjectionUnits === "DMS" || this._currentProjectionUnits === "DMS") {
-            this.updateCoordinateElements();
+            this._resetCoordinateElements(
+                this.options.editCoordinates,
+                this._currentProjectionType,
+                this._currentProjectionUnits
+            );
         }
 
         // on simule un deplacement en mode tactile pour mettre à jour les

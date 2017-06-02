@@ -520,6 +520,64 @@ define([], function () {
             return selectUnits;
         },
 
+        /** ... */
+        _triggerChangeEventOnUnitsElement : function() {
+            selectUnits = document.getElementById(this._addUID("GPmousePositionProjectionUnits"));
+            
+            var event = new Event('change');
+            selectUnits.dispatchEvent(event);
+        },
+        
+        /**
+         * Update all inputs for coordinates
+         * @private
+        */
+       _resetCoordinateElements : function(editCoordinates, currentProjectionType, currentProjectionUnits) {
+            // Changement des labels dans le formulaire de saisie
+            var spanLat = document.getElementById(this._addUID("GPmousePositionLatLabel"));
+            var spanLon = document.getElementById(this._addUID("GPmousePositionLonLabel"));
+
+            if (currentProjectionType === "Geographical") {
+                spanLat.innerHTML = "Latitude :";
+                spanLon.innerHTML = "Longitude :";
+            } else {
+                spanLat.innerHTML = "X :";
+                spanLon.innerHTML = "Y :";
+            }
+
+            // Suppression de tous les enfants de GPmousePositionLatCoordinate
+            var spanLat = document.getElementById(this._addUID("GPmousePositionLatCoordinate"));
+            while (spanLat.firstChild) {
+                spanLat.removeChild(spanLat.firstChild);
+            }
+
+            var arrayCoords;
+            if (currentProjectionUnits === "DMS") {
+                arrayCoords = this._createDMSCoordinateElement("Lat", editCoordinates);
+            } else {
+                arrayCoords = this._createCoordinateElement("Lat", editCoordinates);
+            }
+            for (var j = 0; j < arrayCoords.length; j++) {
+                spanLat.appendChild(arrayCoords[j]);
+            } 
+
+            // Suppression de tous les enfants de GPmousePositionLonCoordinate
+            var spanLon = document.getElementById(this._addUID("GPmousePositionLonCoordinate"));
+            while (spanLon.firstChild) {
+                spanLon.removeChild(spanLon.firstChild);
+            }
+
+            var arrayCoords1;
+            if (currentProjectionUnits === "DMS") {
+                arrayCoords1 = this._createDMSCoordinateElement("Lon", editCoordinates);
+            } else {
+                arrayCoords1 = this._createCoordinateElement("Lon", editCoordinates);
+            }
+            for (var j = 0; j < arrayCoords1.length; j++) {
+                spanLon.appendChild(arrayCoords1[j]);
+            } 
+        },
+    
         // ################################################################### //
         // ####################### handlers Event ############################ //
         // ################################################################### //
