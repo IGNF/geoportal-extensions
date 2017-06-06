@@ -827,12 +827,17 @@ define([
             container.appendChild(option);
         }
 
+        var projectionUnits = this._projectionUnits[type][0].code;
+        if (this._currentProjectionUnits === "DMS" || projectionUnits === "DMS") {
+            this._resetCoordinateElements(this.options.editCoordinates, type, projectionUnits);
+        }
+        
         // le nouveau type de system ...
         this._currentProjectionType = type;
         
         // et comme on a changé de type de systeme,
         // il faut changer aussi d'unité !
-        this._currentProjectionUnits = this._projectionUnits[type][0].code;
+        this._currentProjectionUnits = projectionUnits;
     };
 
     // ################################################################### //
@@ -1565,7 +1570,9 @@ define([
         this._currentProjectionUnits = value;
 
         // mise a jour des inputs pour les coordonnees
-		this._resetCoordinateElements(this.options.editCoordinates, this._currentProjectionType, this._currentProjectionUnits);
+        if (oldProjectionUnits === "DMS" || this._currentProjectionUnits === "DMS") {
+            this._resetCoordinateElements(this.options.editCoordinates, this._currentProjectionType, this._currentProjectionUnits);
+        }
 
         // on simule un deplacement en mode tactile pour mettre à jour les
         // resultats
