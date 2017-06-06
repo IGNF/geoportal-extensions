@@ -1099,9 +1099,17 @@ define([
         // on recupere les options du service
         var options = this.options.altitude.serviceOptions || {};
 
+        // gestion du protocole et du timeout
+        // le timeout est indispensable sur le protocole JSONP.
+        var _protocol = options.protocol || "XHR";
+        var _timeout  = options.timeOut  || 0;
+        if (_protocol === "JSONP" && _timeout === 0) {
+            _timeout = 15000;
+        }
+
         // ainsi que les coordonnées
-        options.zonly = true;
-        options.positions = [
+        var _zonly = true;
+        var _positions = [
             {
                 lon : coordinate[0],
                 lat : coordinate[1]
@@ -1109,33 +1117,46 @@ define([
         ];
 
         // et les callbacks
-        options.scope = this;
+        var _scope = this;
+        var _rawResponse = options.rawResponse || false;
+        var _onSuccess = null;
+        var _onFailure = null;
 
-        if ( !options.rawResponse ) {
+        if ( !_rawResponse ) {
             // dans le cas général
             /** callback onSuccess */
-            options.onSuccess = function (results) {
+            _onSuccess = function (results) {
                 if (results && Object.keys(results)) {
                     callback.call(this, results.elevations[0].z);
                 }
             };
         } else {
             /** callback onSuccess */
-            options.onSuccess = function (results) {
+            _onSuccess = function (results) {
                 console.log("alti service raw response : ", results);
             };
         }
 
         /** callback onFailure */
-        options.onFailure = function (error) {
+        _onFailure = function (error) {
             console.log("[getAltitude] ERROR : " + error.message);
         };
 
         // cas où la clef API n'est pas renseignée dans les options du service,
         // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
-        options.apiKey = options.apiKey || this.options.apiKey;
+        var _apiKey = options.apiKey || this.options.apiKey;
 
-        Gp.Services.getAltitude(options);
+        Gp.Services.getAltitude({
+            apiKey : _apiKey,
+            protocol : _protocol,
+            timeOut : _timeout,
+            scope : _scope,
+            rawResponse : _rawResponse,
+            onSuccess : _onSuccess,
+            onFailure : _onFailure,
+            zonly : _zonly,
+            positions : _positions
+        });
     };
 
     /**
