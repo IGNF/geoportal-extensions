@@ -195,11 +195,12 @@ define([], function () {
         },        
                 
         /**
-         * 
-         * @param {String} mesure ("Lon" ou "Lat")
+         * create coordinate elements
+         *
+         * @param {String} measure - ("Lon" ou "Lat")
          * @returns {Array}
          */
-        _createCoordinateElement : function(measure, editCoordinates) {
+        _createCoordinateElement : function (measure, editCoordinates) {
             if (["Lon", "Lat"].indexOf(measure) === -1) {
                 return [];
             }
@@ -221,10 +222,10 @@ define([], function () {
         
         /**
          * 
-         * @param {String} mesure ("Lon" ou "Lat")
+         * @param {String} measure - ("Lon" ou "Lat")
          * @returns {Array}
          */
-        _createDMSCoordinateElement : function(measure, editCoordinates) {
+        _createDMSCoordinateElement : function (measure, editCoordinates) {
             if (["Lon", "Lat"].indexOf(measure) === -1) {
                 return [];
             }
@@ -317,8 +318,8 @@ define([], function () {
             } else {
                 arrayCoords = this._createCoordinateElement("Lat", editCoordinates);
             }
-            for (var j = 0; j < arrayCoords.length; j++) {
-                span.appendChild(arrayCoords[j]);
+            for (var i = 0; i < arrayCoords.length; i++) {
+                span.appendChild(arrayCoords[i]);
             } 
             div.appendChild(span);
             
@@ -524,7 +525,7 @@ define([], function () {
          * Update all inputs for coordinates
          * @private
         */
-       _resetCoordinateElements : function(editCoordinates, currentProjectionType, currentProjectionUnits) {
+        _resetCoordinateElements : function (editCoordinates, currentProjectionType, currentProjectionUnits) {
             // Changement des labels dans le formulaire de saisie
             var spanLat = document.getElementById(this._addUID("GPmousePositionLatLabel"));
             var spanLon = document.getElementById(this._addUID("GPmousePositionLonLabel"));
@@ -538,9 +539,9 @@ define([], function () {
             }
 
             // Suppression de tous les enfants de GPmousePositionLatCoordinate
-            var spanLat = document.getElementById(this._addUID("GPmousePositionLatCoordinate"));
-            while (spanLat.firstChild) {
-                spanLat.removeChild(spanLat.firstChild);
+            var latElt = document.getElementById(this._addUID("GPmousePositionLatCoordinate"));
+            while (latElt.firstChild) {
+                latElt.removeChild(latElt.firstChild);
             }
 
             var arrayCoords;
@@ -549,14 +550,14 @@ define([], function () {
             } else {
                 arrayCoords = this._createCoordinateElement("Lat", editCoordinates);
             }
-            for (var j = 0; j < arrayCoords.length; j++) {
-                spanLat.appendChild(arrayCoords[j]);
+            for (var i = 0; i < arrayCoords.length; i++) {
+                spanLat.appendChild(arrayCoords[i]);
             } 
 
             // Suppression de tous les enfants de GPmousePositionLonCoordinate
-            var spanLon = document.getElementById(this._addUID("GPmousePositionLonCoordinate"));
-            while (spanLon.firstChild) {
-                spanLon.removeChild(spanLon.firstChild);
+            var lonElt = document.getElementById(this._addUID("GPmousePositionLonCoordinate"));
+            while (lonElt.firstChild) {
+                lonElt.removeChild(lonElt.firstChild);
             }
 
             var arrayCoords1;
@@ -604,7 +605,7 @@ define([], function () {
                     };
                     var units = ["Degrees", "Minutes", "Seconds"];
                     for (var p in parts) {
-                        for (var u=0; u < units.length; ++u) {
+                        for (var u = 0; u < units.length; ++u) {
                             var selector = "GPmousePosition" + parts[p] + units[u];
                             var elt = document.getElementById(this._addUID(selector));
                             var key = units[u].charAt(0).toLowerCase();
@@ -624,7 +625,7 @@ define([], function () {
                     // les unites
                     var unit = (coordinate.unit === undefined) ? "" : coordinate.unit;
                     var elements = document.getElementsByClassName("GPmousePositionUnits");
-                    for (var n=0; n < elements.length; ++n) {
+                    for (var n = 0; n < elements.length; ++n) {
                         elements[n].innerHTML = unit;
                     }
                 }

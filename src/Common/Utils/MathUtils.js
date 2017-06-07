@@ -4,29 +4,29 @@ define([], function () {
 
     var MathUtils = {
         /**
-         * 
+         * Reste de la division euclidienne
          * @param {Number} a
          * @param {Number} b
          * @returns {Number}
          */
-        modulo : function(a, b) {
+        modulo : function (a, b) {
             var r = a % b;
             return r * b < 0 ? r + b : r;
         },
         
         /**
-         * Transform degrees, minutes, seconds form decimal degrees
+         * Transform degrees, minutes, seconds form decimal degrees -
          * Largely inspired by the private function degreesToStringHDMS from ol/coordinate.js
          * 
-         * @param {Number} degrees decimal degrees
-         * @param {Array} hemispheres "NS" ou "EO"
-         * @param {Number} opt_fractionDigits (number of digits for seconds)
+         * @param {Number} degrees - decimal degrees
+         * @param {Array} hemispheres - "NS" ou "EO"
+         * @param {Number} numDigits - number of digits for seconds
          * @returns {Object}
          */
-        decimalToDMS : function(degrees, hemispheres, opt_fractionDigits) {
+        decimalToDMS : function (degrees, hemispheres, numDigits) {
             var normalizedDegrees = this.modulo(degrees + 180, 360) - 180;
             var x = Math.abs(3600 * normalizedDegrees);
-            var dflPrecision = opt_fractionDigits || 0;
+            var dflPrecision = numDigits || 0;
             var precision = Math.pow(10, dflPrecision);
 
             var deg = Math.floor(x / 3600);
@@ -47,8 +47,8 @@ define([], function () {
             var direction = hemispheres.charAt(normalizedDegrees < 0 ? 1 : 0);
             return {
                 d : deg,
-                m: min,
-                s: sec,
+                m : min,
+                s : sec,
                 direction : direction
             };
         }

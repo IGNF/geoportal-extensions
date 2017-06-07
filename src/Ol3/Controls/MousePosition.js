@@ -871,7 +871,7 @@ define([
         return {
             lng : MathUtils.decimalToDMS(olCoordinate[0], "EO", 2),
             lat : MathUtils.decimalToDMS(olCoordinate[1], "NS", 2),
-            unit: "DMS"
+            unit : "DMS"
         };
     };
 
@@ -1477,8 +1477,8 @@ define([
             this._setTypeUnitsPanel(type);
         }
 
-		// mise a jour des inputs pour les coordonnees
-		this._resetCoordinateElements(this.options.editCoordinates, this._currentProjectionType, this._currentProjectionUnits);
+        // mise a jour des inputs pour les coordonnees
+        this._resetCoordinateElements(this.options.editCoordinates, this._currentProjectionType, this._currentProjectionUnits);
 
         // on simule un deplacement en mode tactile pour mettre à jour les
         // resultats
