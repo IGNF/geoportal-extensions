@@ -15,14 +15,14 @@ define([
 
     /**
      * @classdesc
-     * Control to manage map layers : their order, visibility and opacity, and display their informations (title, description, legends, metadata...)
+     * Control to manage globe layers : their order, visibility and opacity, and display their informations (title, description, legends, metadata...)
      *
      * @constructor
      * @extends {itowns.control.Widget}
      * @alias itowns.control.LayerSwitcher
      * @param {Object} lsOptions - control options
      * @param {Array} [lsOptions.layers] - list of layers to be configured. Each array element is an object, with following properties :
-     * @param {String} [lsOptions.layers.id] - ol.layer.Layer layer to be configured (that has been added to map)
+     * @param {String} [lsOptions.layers.id] - ol.layer.Layer layer to be configured (that has been added to globe)
      * @param {Object} [lsOptions.layers.config] - custom configuration object for layer information (title, description, legends, metadata, quicklook url), with following properties :
      * @param {String} [lsOptions.layers.config.title] - layer alias, to be displayed in widget layer list. E.g. : "Cartes IGN"
      * @param {String} [lsOptions.layers.config.description] - layer description, to be displayed on title hover, or in layer information panel.
@@ -32,7 +32,7 @@ define([
      *      - minScaleDenominator (Number, optional) : min scale denominator for legend validity.
      * @param {Array} [lsOptions.layers.config.metadata] - array of layer metadata. Each array element is an object, with property url (String, mandatory) : link to a metadata
      * @param {Object} [lsOptions.options] - Itowns.control.Control options
-     * @param {Boolean} [lsOptions.options.collapsed = true] - Specify if widget has to be collapsed (true) or not (false) on map loading.
+     * @param {Boolean} [lsOptions.options.collapsed = true] - Specify if widget has to be collapsed (true) or not (false) on globe loading.
      * @example
      * var layerSwitcher = new itowns.control.LayerSwitcher({
      *  layers : [
@@ -100,13 +100,11 @@ define([
     // ################################################################### //
 
     /**
-     * Bind map to control
+     * Bind globe to control
      */
     LayerSwitcher.prototype.setMap = function (globe) {
 
-        // info : cette méthode est appelée (entre autres?) après un map.addWidget() ou map.removeWidget()
-
-        if ( globe ) { // dans le cas de l'ajout du contrôle à la map
+        if ( globe ) { // dans le cas de l'ajout du contrôle au globe
             var self = this;
             // add options layers to layerlist.
             // (seulement les couches configurées dans les options du layerSwitcher par l'utilisateur),
@@ -127,8 +125,7 @@ define([
                         description : conf.description || null,
                         legends : conf.legends || [],
                         metadata : conf.metadata || [],
-                        quicklookUrl : conf.quicklookUrl || null,
-                        inRange : this.isInRange(layer, globe)
+                        quicklookUrl : conf.quicklookUrl || null
                     };
                     if( typeof conf.ipr !== 'undefined' ) {
                         layerOptions.ipr = conf.ipr;
@@ -148,8 +145,8 @@ define([
 
             // Ajout des listeners
 
-            // At every map movement, layer switcher may be updated,
-            // according to layers on map, and their range.
+            // At every globe movement, layer switcher may be updated,
+            // according to layers on globe, and their range.
             /**
             * ajout du callback onChangedViewCallBack
             */
@@ -165,8 +162,7 @@ define([
             * ajout du callback onlayeradded
             */
             this._callbacks.onAddedLayerCallBack = function (e) {
-                // var id = e.layerId;
-                var id = "Ortho";
+                var id = e.layerId;
                 if (self) {
                     var layer = self.getMap().getLayers(layer => layer.id === id)[0];
                     var layerConf = self._getLayerConf(id);
@@ -255,7 +251,7 @@ define([
     };
 
     /**
-     * Add a new layer to control (when added to map) or add new layer configuration
+     * Add a new layer to control (when added to globe) or add new layer configuration
      *
      * @param {Object} layer - layer to add to layer switcher
      * @param {Object} [config] - additional options for layer configuration
@@ -290,7 +286,7 @@ define([
             return;
         }
 
-        // make sure layer is in map layers
+        // make sure layer is in globe layers
         var LayerInMap = globe.getLayers(function(layer) {
             if (layer.id === "id") {
                 return layer;
@@ -298,7 +294,7 @@ define([
         });
 
         if ( !LayerInMap ) {
-            console.log("[ERROR] LayerSwitcher:addLayer - configuration cannot be set for ", layer, " layer (layer is not in map.getLayers() )");
+            console.log("[ERROR] LayerSwitcher:addLayer - configuration cannot be set for ", layer, " layer (layer is not in globe.getLayers() )");
             return;
         }
 
@@ -312,8 +308,7 @@ define([
                 description : config.description || layerInfos._description || null,
                 legends : config.legends || layerInfos._legends || [],
                 metadata : config.metadata || layerInfos._metadata || [],
-                quicklookUrl : config.quicklookUrl || layerInfos._quicklookUrl || null,
-                inRange : this.isInRange(layer, globe)
+                quicklookUrl : config.quicklookUrl || layerInfos._quicklookUrl || null
             };
             if( typeof config.ipr !== 'undefined' ) {
                 layerOptions.ipr = config.ipr;
@@ -522,7 +517,7 @@ define([
      * Add control layers to control main container
      *
      * @method _addMapLayers
-     * @param {Object} map - the Itowns.Map object
+     * @param {Object} globe - the Itowns.Map object
      * @private
      */
     LayerSwitcher.prototype._addMapLayers = function (globe) {
@@ -538,7 +533,7 @@ define([
             }
         }
 
-        // on réordonne les couches dans l'ordre d'empilement (map.getLayers renvoie un tableau ordonné dans le sens inverse)
+        // on réordonne les couches dans l'ordre d'empilement (globe.getLayers renvoie un tableau ordonné dans le sens inverse)
         var layers = globe.getLayers(function(layer) {
             if (layer.type === "color") {
                 return layer;
@@ -562,8 +557,7 @@ define([
                         description : layerInfos._description || null,
                         legends : layerInfos._legends || [],
                         metadata : layerInfos._metadata || [],
-                        quicklookUrl : layerInfos._quicklookUrl || null,
-                        inRange : this.isInRange(layer, globe)
+                        quicklookUrl : layerInfos._quicklookUrl || null
                     };
                     this._layers[id] = layerOptions;
                 } else {
@@ -772,7 +766,7 @@ define([
     };
 
     /**
-     * remove layer from layer switcher and map on picto click
+     * remove layer from layer switcher and globe on picto click
      *
      * @method _onDropLayerClick
      * @param {Event} e - MouseEvent
@@ -836,33 +830,26 @@ define([
      * @private
      */
     LayerSwitcher.prototype._inRangeUpdate = function () {
-        var map = this.getMap();
 
-        map.getLayers(function(layer) {
-            if (layer.type === "color") {
-                return layer;
+        var globe = this.getMap();
+
+        var layersDisplayed = globe.getLayersColorVisible();
+
+        for (var layerKey in this._layers) {
+            var layer = this._layers[layerKey];
+            // Check if layer is displayed.
+            var layerDiv;
+            var bInRange = layersDisplayed.indexOf(layer.id) >= 0;
+            if ( bInRange && !layer.inRange ) {
+                layer.inRange = true;
+                layerDiv = document.getElementById(this._addUID("GPlayerSwitcher_ID_" + layer.id));
+                layerDiv.classList.remove("outOfRange");
+            } else if ( !bInRange && layer.inRange ) {
+                layer.inRange = false;
+                layerDiv = document.getElementById(this._addUID("GPlayerSwitcher_ID_" + layer.id));
+                layerDiv.classList.add("outOfRange");
             }
-        }).forEach(
-            function (layer) {
-                var id = layer.id;
-                if ( this._layers[id] ) {
-                    var layerOptions = this._layers[id];
-                    // Check if layer is out of range.
-                    var layerDiv;
-                    var bIsInRange = this.isInRange(layer, map);
-                    if ( bIsInRange && !layerOptions.inRange ) {
-                        layerOptions.inRange = true;
-                        layerDiv = document.getElementById(this._addUID("GPlayerSwitcher_ID_" + id));
-                        layerDiv.classList.remove("outOfRange");
-                    } else if ( !bIsInRange && layerOptions.inRange ) {
-                        layerOptions.inRange = false;
-                        layerDiv = document.getElementById(this._addUID("GPlayerSwitcher_ID_" + id));
-                        layerDiv.classList.add("outOfRange");
-                    }
-                }
-            },
-            this
-        );
+        }
     };
 
     /**
@@ -879,7 +866,7 @@ define([
             while ( this._layerListContainer.firstChild ) {
                 this._layerListContainer.removeChild(this._layerListContainer.firstChild);
             }
-            // on réordonne les couches dans l'ordre d'empilement (map.getLayers renvoie un tableau ordonné dans le sens inverse)
+            // on réordonne les couches dans l'ordre d'empilement (globe.getLayers renvoie un tableau ordonné dans le sens inverse)
             var layers = globe.getLayers(function(layer) {
                 if (layer.type === "color") {
                     return layer;
@@ -904,36 +891,19 @@ define([
     // ################################################################### //
 
     /**
-     * Check if map view is out of layer range (in terms of extent and zoom)
+     * Check if globe view is out of layer range (in terms of extent and zoom)
      *
      * @private
      * @memberof LayerSwitcher
      * @method isInRange
      * @param {Object} layer - the layer object
-     * @param {Object} map   - the Itowns.Map object
-     * @returns {Boolean} outOfRange - false if map view is out of layer range
+     * @param {Object} globe   - the Itowns.GlobeView object
+     * @returns {Boolean} outOfRange - false if globe view is out of layer range
      */
-    LayerSwitcher.prototype.isInRange = function (layer, globe) {
+    LayerSwitcher.prototype.isInRange = function (layerId, globe) {
+        var layersDisplayed = globe.getLayersColorVisible();
 
-        if (!globe) {
-            return;
-        }
-
-        const tilesLayer = globeView.getLayers(l => l.type === "geometry")[0];
-
-        const displayedExtent = tilesLayer.displayed.extent;
-        const zoomTilesGlobe = tilesLayer.displayed.zoom.max;
-
-        const tileMatrixSet = layer.options.tileMatrixSet || "WGS84";
-        const currentZoomLayer = zoomTilesGlobe + (tileMatrixSet == "PM" ? 1 : 0);
-
-        if ((layer.options.zoom && layer.options.zoom.min > currentZoomLayer)) {
-            return false;
-        }
-        if( !layer.extent ) {
-            return true;
-        }
-        return displayedExtent.intersect(layer.extent);
+        return layersDisplayed.indexOf(layerId) >= 0;
     };
 
     /**
