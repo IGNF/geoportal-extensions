@@ -17,7 +17,7 @@ div[id^=GPmousePositionPanelClose]  {
   background-image: url("img/GPmousePositionOpen.png");
 }
 
-.GPmousePositionEditCoordinatesPicto {
+/*.GPmousePositionEditCoordinatesPicto {
 	display: "inline-block";
 	position: absolute;
 	right: 0;
@@ -29,10 +29,10 @@ div[id^=GPmousePositionPanelClose]  {
 
 input[id^="GPmousePositionEditCoordinates"]:checked + label.GPmousePositionEditCoordinatesPicto {
 	background-position: -28px 0;
-}
+}*/
 
 /* edit coordinates panel */	
-input[id^="GPEditCoordinatesSubmit"] {
+/*input[id^="GPEditCoordinatesSubmit"] {
     margin-top: 10px;
     margin-bottom: 15px;
 }
@@ -47,6 +47,10 @@ p[id^="GPmousePositionProjectionInformation-"] {
 	background-color: #d9edf7;
 	border-color: #bce8f1;
 	text-overflow: ellipsis;
+}*/
+
+input[id^=GPmousePositionLat-], input[id^=GPmousePositionLon-] {
+    width: 140px;
 }
 
 .GPSexagesimal, .GPSexagesimalsec, .GPmousePositionCoordsEdit {
