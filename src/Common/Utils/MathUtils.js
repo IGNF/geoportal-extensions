@@ -5,8 +5,8 @@ define([], function () {
     var MathUtils = {
         /**
          * Reste de la division euclidienne
-         * @param {Number} a
-         * @param {Number} b
+         * @param {Number} a - divisor
+         * @param {Number} b - quotient
          * @returns {Number}
          */
         modulo : function (a, b) {
@@ -56,6 +56,3 @@ define([], function () {
 
     return MathUtils;
 });
-
-
-
