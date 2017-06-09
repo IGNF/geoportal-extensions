@@ -1476,10 +1476,7 @@ define([
         if (type !== this._currentProjectionType) {
             this._setTypeUnitsPanel(type);
         }
-
-        // mise a jour des inputs pour les coordonnees
-        this._resetCoordinateElements(this.options.editCoordinates, this._currentProjectionType, this._currentProjectionUnits);
-
+        
         // on simule un deplacement en mode tactile pour mettre à jour les
         // resultats
         if (!this._isDesktop) {

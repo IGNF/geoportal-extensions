@@ -551,7 +551,7 @@ define([], function () {
                 arrayCoords = this._createCoordinateElement("Lat", editCoordinates);
             }
             for (var i = 0; i < arrayCoords.length; i++) {
-                spanLat.appendChild(arrayCoords[i]);
+                latElt.appendChild(arrayCoords[i]);
             } 
 
             // Suppression de tous les enfants de GPmousePositionLonCoordinate
@@ -567,7 +567,7 @@ define([], function () {
                 arrayCoords1 = this._createCoordinateElement("Lon", editCoordinates);
             }
             for (var j = 0; j < arrayCoords1.length; j++) {
-                spanLon.appendChild(arrayCoords1[j]);
+                lonElt.appendChild(arrayCoords1[j]);
             } 
         },
     
