@@ -245,7 +245,7 @@ define([
             this._layers[id].div = layerDiv;
 
             // 3. réorganisation des couches si un zIndex est spécifié
-            if ( layer.getZIndex && layer.getZIndex() !== 0 ) {
+            if ( (layer.getZIndex && layer.getZIndex() !== 0) || layer._forceNullzIndex ) {
                 // réorganisation des couches si un zIndex est spécifié
                 this._updateLayersOrder(map);
             } else {
