@@ -106,6 +106,7 @@ define([
 
         if ( globe ) { // dans le cas de l'ajout du contrôle au globe
             var self = this;
+            globe.fetchVisibleLayers(true);
             // add options layers to layerlist.
             // (seulement les couches configurées dans les options du layerSwitcher par l'utilisateur),
             // les autres couches de la carte seront ajoutées dans la méthode setMap
@@ -150,13 +151,13 @@ define([
             /**
             * ajout du callback onChangedViewCallBack
             */
-            this._callbacks.onChangedViewCallBack = function () {
+            this._callbacks.onChangedViewCallBack = function (e) {
                 clearTimeout(this._inRangeTimer);
                 this._inRangeTimer = setTimeout( function () {
-                    self._inRangeUpdate();
+                    self._inRangeUpdate(e.layers.id);
                 }, 100);
             };
-            globe.addEventListener(itowns.GLOBE_VIEW_EVENTS.UPDATED, this._callbacks.onChangedViewCallBack);
+            globe.addEventListener("PRERENDER", this._callbacks.onChangedViewCallBack);
 
             /**
             * ajout du callback onlayeradded
@@ -829,11 +830,9 @@ define([
      * @method _inRangeUpdate
      * @private
      */
-    LayerSwitcher.prototype._inRangeUpdate = function () {
+    LayerSwitcher.prototype._inRangeUpdate = function (layersDisplayed) {
 
         var globe = this.getMap();
-
-        var layersDisplayed = globe.getLayersColorVisible();
 
         for (var layerKey in this._layers) {
             var layer = this._layers[layerKey];
