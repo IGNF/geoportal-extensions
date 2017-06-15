@@ -106,7 +106,7 @@ define([
 
         if ( globe ) { // dans le cas de l'ajout du contrôle au globe
             var self = this;
-            globe.fetchVisibleLayers(true);
+
             // add options layers to layerlist.
             // (seulement les couches configurées dans les options du layerSwitcher par l'utilisateur),
             // les autres couches de la carte seront ajoutées dans la méthode setMap
@@ -115,7 +115,7 @@ define([
                 var layer = null;
 
                 if (this._initLayers[i].id) {
-                    var layer = globe.getLayers(lay => lay.id === this._initLayers[i].id)[0];
+                    var layer = globe.getLayerById(this._initLayers[i].id);
                 }
 
                 if ( layer ) {
@@ -152,12 +152,11 @@ define([
             * ajout du callback onChangedViewCallBack
             */
             this._callbacks.onChangedViewCallBack = function (e) {
-                clearTimeout(this._inRangeTimer);
-                this._inRangeTimer = setTimeout( function () {
-                    self._inRangeUpdate(e.layers.id);
-                }, 100);
+                self._inRangeUpdate(e.layers.id);
             };
             globe.addEventListener("PRERENDER", this._callbacks.onChangedViewCallBack);
+            // pour que l'evenement PRERENDER renvoie les couches visibles
+            globe.fetchVisibleLayers(true);
 
             /**
             * ajout du callback onlayeradded
@@ -165,7 +164,7 @@ define([
             this._callbacks.onAddedLayerCallBack = function (e) {
                 var id = e.layerId;
                 if (self) {
-                    var layer = self.getMap().getLayers(layer => layer.id === id)[0];
+                    var layer = self.getMap().getLayerById(id);
                     var layerConf = self._getLayerConf(id);
                     if ( layerConf ) {
                         self.addLayer(layer, layerConf);
@@ -227,7 +226,7 @@ define([
                 self._updateLayerVisibility(e.target.id, e.new.visible);
             };
 
-            var layers = globe.getLayers(layer => layer.type == "color");
+            var layers = globe.getColorLayers();
             for ( var i = 0 ; i < layers.length ; ++i ) {
                 layers[i].addEventListener("opacity-property-changed", this._callbacks.onOpacityLayerCallBack);
                 layers[i].addEventListener("visible-property-changed", this._callbacks.onVisibilityLayerCallBack);
@@ -239,7 +238,7 @@ define([
             globe.removeEventListener(itowns.GLOBE_VIEW_EVENTS.LAYER_ADDED, this._callbacks.onAddedLayerCallBack);
             globe.removeEventListener(itowns.GLOBE_VIEW_EVENTS.LAYER_REMOVED, this._callbacks.onRemovedLayerCallBack);
             globe.removeEventListener(itowns.GLOBE_VIEW_EVENTS.COLOR_LAYERS_ORDER_CHANGED, this._callbacks.onIndexLayerCallBack);
-            var layers = globe.getLayers(layer => layer.type == "color");
+            var layers = globe.getColorLayers();
             for ( var i = 0 ; i < layers.length ; ++i ) {
                 layers[i].removeEventListener("opacity-property-changed", this._callbacks.onOpacityLayerCallBack);
                 layers[i].removeEventListener("visible-property-changed", this._callbacks.onVisibilityLayerCallBack);
@@ -288,14 +287,10 @@ define([
         }
 
         // make sure layer is in globe layers
-        var LayerInMap = globe.getLayers(function(layer) {
-            if (layer.id === "id") {
-                return layer;
-            }
-        });
+        var LayerInMap = globe.getLayerById(id);
 
         if ( !LayerInMap ) {
-            console.log("[ERROR] LayerSwitcher:addLayer - configuration cannot be set for ", layer, " layer (layer is not in globe.getLayers() )");
+            console.log("[ERROR] LayerSwitcher:addLayer - configuration cannot be set for ", layer, " layer (layer is not in globe layers )");
             return;
         }
 
@@ -535,11 +530,7 @@ define([
         }
 
         // on réordonne les couches dans l'ordre d'empilement (globe.getLayers renvoie un tableau ordonné dans le sens inverse)
-        var layers = globe.getLayers(function(layer) {
-            if (layer.type === "color") {
-                return layer;
-            }
-        });
+        var layers = globe.getColorLayers();
         var orderedLayers = layers.sort(function (a, b) {
             return b.sequence - a.sequence;
         });
@@ -630,12 +621,8 @@ define([
         var opacityValue = e.target.value;
         var opacityId = document.getElementById(this._addUID("GPopacityValue_ID_" + layerID));
         opacityId.innerHTML = opacityValue + "%";
-        var layer = globe.getLayers(function(layer) {
-            if (layer.id === layerID) {
-                return layer;
-            }
-        });
-        layer[0].opacity = opacityValue / 100;
+        var layer = globe.getLayerById(layerID);
+        layer.opacity = opacityValue / 100;
         globe.notifyChange(true); // update viewer
     };
 
@@ -673,12 +660,8 @@ define([
         var globe = this.getMap();
 
         var layerID  = this._resolveLayerId(e.target.id);
-        var layer = globe.getLayers(function(layer) {
-            if (layer.id === layerID) {
-                return layer;
-            }
-        });
-        layer[0].visible = e.target.checked;
+        var layer = globe.getLayerById(layerID);
+        layer.visible = e.target.checked;
         globe.notifyChange(true); // update viewer
     };
 
@@ -796,7 +779,7 @@ define([
     LayerSwitcher.prototype._onDragAndDropLayerClick = function (e) {
         var globe = this.getMap();
 
-        var nbLayers = globe.getLayers( (layer) => layer.type === "color" ).length;
+        var nbLayers = globe.getColorLayers().length;
 
         var layerID  = this._resolveLayerId(e.item.id);
 
@@ -866,11 +849,7 @@ define([
                 this._layerListContainer.removeChild(this._layerListContainer.firstChild);
             }
             // on réordonne les couches dans l'ordre d'empilement (globe.getLayers renvoie un tableau ordonné dans le sens inverse)
-            var layers = globe.getLayers(function(layer) {
-                if (layer.type === "color") {
-                    return layer;
-                }
-            });
+            var layers = globe.getColorLayers();
             var orderedLayers = layers.sort(function (a, b) {
                 return b.sequence - a.sequence;
             });
@@ -888,22 +867,6 @@ define([
     // ################################################################### //
     // ############################ Utils ################################ //
     // ################################################################### //
-
-    /**
-     * Check if globe view is out of layer range (in terms of extent and zoom)
-     *
-     * @private
-     * @memberof LayerSwitcher
-     * @method isInRange
-     * @param {Object} layer - the layer object
-     * @param {Object} globe   - the Itowns.GlobeView object
-     * @returns {Boolean} outOfRange - false if globe view is out of layer range
-     */
-    LayerSwitcher.prototype.isInRange = function (layerId, globe) {
-        var layersDisplayed = globe.getLayersColorVisible();
-
-        return layersDisplayed.indexOf(layerId) >= 0;
-    };
 
     /**
      * Get layer informations : title, description, quicklookurl, legends, metadata

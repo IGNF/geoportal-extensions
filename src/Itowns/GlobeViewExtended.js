@@ -5,31 +5,6 @@ define([
 ) {
 
     "use strict";
-    /**
-    * _getLayersColorVisible
-    *
-    * @private
-    */
-     function _getLayersColorVisible(node, options) {
-        if (!node || !node.visible) {
-            return;
-        }
-        if (node.level) {
-            if (node.material.visible) {
-                if (options.layers.id) {
-                    options.layers.id = [...new Set(options.layers.id.concat(node.materials[0].colorLayersId))];
-                }
-                if (options.extent) {
-                    options.extent.merge(node.extent);
-                }
-            }
-        }
-        if (node.children) {
-            for (const child of node.children) {
-                _getLayersColorVisible(child, options);
-            }
-        }
-    }
 
     /**
     * @classdesc
@@ -46,28 +21,26 @@ define([
         // call constructor
         itowns.GlobeView.call(this, viewerDiv, coordCarto, options);
 
-        this.extentGlobe = new itowns.Extent('EPSG:4326', 0, 0, 0, 0);
-
         var parent_preRender = this.preRender;
         this.preRender = function () {
             parent_preRender();
 
             var self = this;
-            clearTimeout(this.preRenderTimer);
-            this.preRenderTimer = setTimeout( function () {
+            clearTimeout(this._preRenderTimer);
+            this._preRenderTimer = setTimeout( function () {
                 if( self._fetchVisibleLayers || self._fetchExtent ) {
 
                     var event = {
                         type : "PRERENDER",
                     };
                     if( self._fetchExtent ) {
-                        event.extent = itowns.Extent('EPSG:4326', 180, -180, 90, -90);
+                        event.extent = new itowns.Extent('EPSG:4326', 180, -180, 90, -90);
                     }
                     if( self._fetchVisibleLayers ) {
                         event.layers = { id: [] };
                     }
 
-                    _getLayersColorVisible( self.scene, event );
+                    self._getCurrentSceneInfos( self.scene, event );
 
                     self.dispatchEvent(event);
                 }
@@ -95,16 +68,6 @@ define([
     }
 
     /**
-    * getLayersColorVisible
-    *
-    */
-    GlobeViewExtended.prototype.getLayersColorVisible = function () {
-        const layersDisplayed = { id: [] };
-        this._getLayersColorVisible(this.scene,layersDisplayed);
-        return layersDisplayed.id;
-    }
-
-    /**
     * fetchExtent
     */
     GlobeViewExtended.prototype.fetchExtent = function (b) {
@@ -116,6 +79,73 @@ define([
     */
     GlobeViewExtended.prototype.fetchVisibleLayers = function (b) {
         this._fetchVisibleLayers = b;
+    }
+
+    /**
+    * getLayerById
+    */
+    GlobeViewExtended.prototype.getLayerById = function (id) {
+        return this.getLayers( function(layer) {
+            if (layer.id === id) {
+                return layer;
+            }
+        })[0];
+    };
+
+    /**
+    * getColorLayers
+    */
+    GlobeViewExtended.prototype.getColorLayers = function () {
+        return this.getLayers( function(layer) {
+            if (layer.type === "color") {
+                return layer;y
+            }
+        });
+    };
+
+    /**
+    * getExtent
+    *
+    * @private
+    */
+    GlobeViewExtended.prototype.getExtent = function () {
+        var options = {
+            extent : new itowns.Extent('EPSG:4326', 180, -180, 90, -90)
+        };
+
+        this._getCurrentSceneInfos( this.scene, options );
+
+        return options.extent;
+    }
+
+    /**
+    * _getCurrentSceneInfos
+    *
+    * @private
+    */
+    GlobeViewExtended.prototype._getCurrentSceneInfos = function (node, options) {
+        if (!node || !node.visible) {
+            return;
+        }
+        if (node.level) {
+            if (node.material.visible) {
+                if (options.layers && options.layers.id) {
+                    for( var i in node.materials[0].colorLayersId ) {
+                        if( options.layers.id.indexOf(node.materials[0].colorLayersId[i]) < 0 ) {
+                            options.layers.id.push(node.materials[0].colorLayersId[i]);
+                        }
+                    }
+                }
+                if (options.extent) {
+                    options.extent.merge(node.extent);
+                }
+            }
+        }
+        if (node.children) {
+            for (var child in node.children) {
+                this._getCurrentSceneInfos(node.children[child], options);
+            }
+        }
     }
 
     return GlobeViewExtended;

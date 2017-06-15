@@ -49,12 +49,13 @@ and open the template in the editor.
                 }
             });
             requirejs(
-                ["itowns", "proj4", "gp", "Itowns/WidgetAPI", "Itowns/Controls/MousePosition"],
-                function (itowns, proj4, Gp, WidgetAPI, MousePosition)
+                ["itowns", "proj4", "gp", "Itowns/WidgetAPI", "Itowns/GlobeViewExtended", "Itowns/Controls/MousePosition"],
+                function (itowns, proj4, Gp, WidgetAPI, GlobeViewExtended, MousePosition)
             {
                 itowns.control = {};
                 itowns.control.MousePosition = MousePosition;
                 itowns.control.WidgetAPI = new WidgetAPI();
+                itowns.GlobeViewExtended = GlobeViewExtended;
 
                 var createMap = function() {
                     /* global itowns,document,GuiTools*/
@@ -62,7 +63,7 @@ and open the template in the editor.
 
                     // iTowns namespace defined here
                     const viewerDiv = document.getElementById('viewerDiv');
-                    const globeView = new itowns.GlobeView(viewerDiv, positionOnGlobe);
+                    const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
 
                     globeView.addEventListener(itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED, () => {
                         var mousePosition = new itowns.control.MousePosition({

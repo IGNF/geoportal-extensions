@@ -1247,27 +1247,27 @@ define([
      */
     MousePosition.prototype.onMousePositionProjectionSystemMouseOver = function (e) {
 
-        // map infos
-        var map = this.getMap();
-        if ( !map ) {
+        // globe infos
+        var globe = this.getMap();
+        if ( !globe ) {
             return;
         }
 
-        var mapExtent = map.getExtent(); // extent = [topLeft.lat, topLeft.lon, bottomRight.lat, bottomRight.lon]
+        var globeExtent = globe.getExtent();
 
         // clear select
         var systemList = document.getElementById(this._addUID("GPmousePositionProjectionSystem"));
           systemList.innerHTML = "";
 
-        // add systems whose extent intersects the map extent
+        // add systems whose extent intersects the globe extent
         for (var j = 0; j < this._projectionSystems.length; j++) {
             var proj = this._projectionSystems[j];
             if ( proj.geoBBox ) {
                 // bboxes intersection test
-                if (   mapExtent[1] > proj.geoBBox.right ||
-                       mapExtent[2] > proj.geoBBox.top   ||
-                       mapExtent[3] < proj.geoBBox.left  ||
-                       mapExtent[0] < proj.geoBBox.bottom
+                if (   globeExtent.west() > proj.geoBBox.right ||
+                       globeExtent.south() > proj.geoBBox.top  ||
+                       globeExtent.east() < proj.geoBBox.left  ||
+                       globeExtent.north() < proj.geoBBox.bottom
                  ) {
                      if ( proj === this._currentProjectionSystems ) {
                          var option = document.createElement("option");

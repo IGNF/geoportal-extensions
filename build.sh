@@ -100,7 +100,7 @@ do
         echo "#################################"
         echo "###### Mixte bundle ! ######"
         itowns
-	    mixIt
+	      mixIt
         ;;
      a)
         echo "#################################"
@@ -109,8 +109,8 @@ do
         leaflet
         vg
         mix
-	    itowns
-	    mixIt
+	      itowns
+	      mixIt
         ;;
      \?)
         echo "$OPTARG : option invalide : a(all), o(openlayers), l(leaflet), v(virtualgeo), i(itowns) ou m(mix) !"
