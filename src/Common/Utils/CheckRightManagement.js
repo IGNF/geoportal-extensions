@@ -78,7 +78,7 @@ define([
                     // aucune vérification des droits est possible...
 
                     console.log("WARNING : " +
-                        "parameter 'apiKey' has not been parametered, " +
+                        "The 'apiKey' parameter is missing, " +
                         "and the contract key configuration has not been loaded, " +
                         "so impossible to check yours rights !");
 
@@ -149,7 +149,7 @@ define([
                             var params = Config.getServiceParams(_resource, _service, _key);
                             if (!params || Object.keys(params).length === 0) {
                                 console.log("WARNING : " +
-                                    "contract key configuration has no rights to load this geoportal " +
+                                    "The contract key configuration has no rights to load this geoportal " +
                                     "resource (" + _resource + ") " +
                                     "for this service (" + _service + ") ");
                                 continue;
@@ -165,8 +165,8 @@ define([
 
                     if (! _rightManagement || Object.keys(_rightManagement).length === 0) {
                         console.log("WARNING : " +
-                            "the contract key configuration has been loaded, " +
-                            "and the parameter 'apiKey' has been parametered, " +
+                            "The contract key configuration has been loaded, " +
+                            "and the 'apiKey' parameter has been set, " +
                             "but, there is a problem on the mapping between the contract and the key !");
                         return;
                     }
