@@ -486,6 +486,9 @@ define([
                 style : this.options.styles.finish || Measures.DEFAULT_DRAW_FINISH_STYLE
             });
 
+            // on rajoute le champ gpResultLayerId permettant d'identifier une couche crée par le composant.
+            this.measureVector.gpResultLayerId = "measure" ;
+
             map.addLayer(this.measureVector);
         }
     };
