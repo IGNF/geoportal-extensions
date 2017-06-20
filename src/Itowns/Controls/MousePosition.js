@@ -155,26 +155,30 @@ define([
                     );
                 }
             }
+            // mode "collapsed"
+            if (!this.collapsed) {
+                var inputShow = document.getElementById("GPshowMousePosition-" + this._uid);
+                inputShow.checked = "checked";
+                this._setElevationPanel(this.options.displayAltitude);
+                this._setCoordinatesPanel(this.options.displayCoordinates);
+                if ( !this.options.displayCoordinates ) {
+                    this._setSettingsPanel(false);
+                }
+            }
+        } else if (globe == null) { // if map == null we remove the MP control
+            // on supprime le listener associé au MP
+            this.getMap().viewerDiv.removeEventListener(
+                "mousemove",
+                this._callbacks.mouseMove
+            );
+            // on supprime le DOM du mousePosition
+            while (this.element.hasChildNodes()) {
+                this.element.removeChild(this.element.lastChild);
+            }
+            this.element.parentNode.removeChild(this.element);
         }
-
         // call original setMap method
         Widget.prototype.setMap.call(this, globe);
-
-        // nothing else to do if map == null
-        if (globe == null) {
-            return ;
-        }
-
-        // mode "collapsed"
-        if (!this.collapsed) {
-            var inputShow = document.getElementById("GPshowMousePosition-" + this._uid);
-            inputShow.checked = "checked";
-            this._setElevationPanel(this.options.displayAltitude);
-            this._setCoordinatesPanel(this.options.displayCoordinates);
-            if ( !this.options.displayCoordinates ) {
-                this._setSettingsPanel(false);
-            }
-        }
     };
 
     // ################################################################### //

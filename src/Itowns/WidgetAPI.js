@@ -26,8 +26,11 @@ define([
 
     /**
      * Add a widget.
+     *
+     * @param {Object} globe - The globe onto we add the widget
+     * @param {Object} widget - The Widget object to add
      */
-    WidgetAPI.prototype.addWidget = function addWidget(globe, widget) {
+    WidgetAPI.prototype.addWidget = function addWidget (globe, widget) {
         globe.viewerDiv.appendChild(widget.getElement());
         if (!globe.widgets) {
             globe.widgets = [];
@@ -38,19 +41,26 @@ define([
 
     /**
      * Returns all widgets.
-     * @return     {array}  The array of widgets.
+     *
+     * @return {Object} globe - The array of widgets.
      */
-    WidgetAPI.prototype.getWidgets = function getWidgets(globe) {
+    WidgetAPI.prototype.getWidgets = function getWidgets (globe) {
         return globe.widgets;
     };
 
     /**
-     * Remove a widget.
-     * @param {object} Widget - The Widget object.
+     * Removes a widget.
+     *
+     * @param {Object} globe - The globe onto we remove the widget
+     * @param {Object} widget - The Widget object to remove
      */
-    WidgetAPI.prototype.removeWidget = function removeWidget(globe, widget) {
+    WidgetAPI.prototype.removeWidget = function removeWidget (globe, widget) {
         widget.setMap();
-        globe.widgets.delete(widget);
+        for (var idx = 0; idx < globe.widgets.length; idx++) {
+            if (globe.widgets[idx] === widget) {
+                globe.widgets.splice(idx,1);
+            }
+        }
     };
 
     return WidgetAPI;

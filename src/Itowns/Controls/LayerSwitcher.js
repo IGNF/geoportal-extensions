@@ -234,15 +234,21 @@ define([
 
         } else {
             // On retire les listeners qui étaient liés au layerSwitcher supprimé
-            globe.controls.removeEventListener(itowns.GLOBE_VIEW_EVENTS.UPDATED, this._callbacks.onChangedViewCallBack);
-            globe.removeEventListener(itowns.GLOBE_VIEW_EVENTS.LAYER_ADDED, this._callbacks.onAddedLayerCallBack);
-            globe.removeEventListener(itowns.GLOBE_VIEW_EVENTS.LAYER_REMOVED, this._callbacks.onRemovedLayerCallBack);
-            globe.removeEventListener(itowns.GLOBE_VIEW_EVENTS.COLOR_LAYERS_ORDER_CHANGED, this._callbacks.onIndexLayerCallBack);
-            var layers = globe.getColorLayers();
+            this.getMap().removeEventListener("PRERENDER", this._callbacks.onChangedViewCallBack);
+            this.getMap().removeEventListener(itowns.GLOBE_VIEW_EVENTS.LAYER_ADDED, this._callbacks.onAddedLayerCallBack);
+            this.getMap().removeEventListener(itowns.GLOBE_VIEW_EVENTS.LAYER_REMOVED, this._callbacks.onRemovedLayerCallBack);
+            this.getMap().removeEventListener(itowns.GLOBE_VIEW_EVENTS.COLOR_LAYERS_ORDER_CHANGED, this._callbacks.onIndexLayerCallBack);
+            var layers = this.getMap().getColorLayers();
             for ( var i = 0 ; i < layers.length ; ++i ) {
                 layers[i].removeEventListener("opacity-property-changed", this._callbacks.onOpacityLayerCallBack);
                 layers[i].removeEventListener("visible-property-changed", this._callbacks.onVisibilityLayerCallBack);
             }
+            // On supprime le DOM du layerSwitcher
+            while (this.element.hasChildNodes()) {
+                this.element.removeChild(this.element.lastChild);
+            }
+            this.element.parentNode.removeChild(this.element);
+
             return ;
         }
 

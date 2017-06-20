@@ -36,39 +36,41 @@ and open the template in the editor.
         <!-- Plugin iTowns IGN -->
         <script src="../../../dist/mix/GpPluginOl3Itowns-src.js"></script>
         <script type="text/javascript">
+            /* global itowns,document,GuiTools*/
 
-            var createMap = function() {
-                /* global itowns,document,GuiTools*/
+            const positionOnGlobe = { longitude : 2.3465, latitude : 48.88, altitude : 25000000 };
 
-                const positionOnGlobe = { longitude: 2.3465, latitude: 48.88, altitude: 25000000 };
+            // iTowns namespace defined here
+            const viewerDiv = document.getElementById('viewerDiv');
+            const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
 
-                // iTowns namespace defined here
-                const viewerDiv = document.getElementById('viewerDiv');
-                const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
-
-                globeView.addEventListener(itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED, () => {
-                    // eslint-disable-next-line no-console
-                    console.info('Globe initialized');
-                    var mousePosition = new itowns.control.MousePosition();
-                    itowns.control.WidgetAPI.addWidget( globeView, mousePosition );
-                });
-
-                itowns.Fetcher.json('../Resources/JSONLayers/Ortho.json').then(result => globeView.addLayer(result));
-                itowns.Fetcher.json('../Resources/JSONLayers/OrthosCRS.json').then(result => globeView.addLayer(result));
-                itowns.Fetcher.json('../Resources/JSONLayers/ScanEX.json').then(result => globeView.addLayer(result));
-                itowns.Fetcher.json('../Resources/JSONLayers/Region.json').then(result => globeView.addLayer(result));
-
-                itowns.Fetcher.json('../Resources/JSONLayers/IGN_MNT.json').then(result => globeView.addLayer(result));
-                itowns.Fetcher.json('../Resources/JSONLayers/IGN_MNT_HIGHRES.json').then(result => globeView.addLayer(result));
-            }
-
-            Gp.Services.getConfig({
-                // serverUrl : "./../resources/AutoConf.js",
-                // callbackSuffix : '',
-                apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
-                timeOut : 20000,
-                onSuccess : createMap
+            globeView.addEventListener(itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED, () => {
+                // eslint-disable-next-line no-console
+                console.info('Globe initialized');
+                var mousePosition = new itowns.control.MousePosition({
+                    apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
+                    collapsed : false,
+                    units : ["m", "dec"]
+                }
+                );
+                itowns.control.WidgetAPI.addWidget( globeView, mousePosition );
             });
+
+            itowns.Fetcher.json('../Resources/JSONLayers/Ortho.json').then(result => globeView.addLayer(result));
+            itowns.Fetcher.json('../Resources/JSONLayers/OrthosCRS.json').then(result => globeView.addLayer(result));
+            itowns.Fetcher.json('../Resources/JSONLayers/ScanEX.json').then(result => globeView.addLayer(result));
+            itowns.Fetcher.json('../Resources/JSONLayers/Region.json').then(result => globeView.addLayer(result));
+
+            itowns.Fetcher.json('../Resources/JSONLayers/IGN_MNT.json').then(result => globeView.addLayer(result));
+            itowns.Fetcher.json('../Resources/JSONLayers/IGN_MNT_HIGHRES.json').then(result => globeView.addLayer(result));
+
+            // Gp.Services.getConfig({
+            //     // serverUrl : "./../resources/AutoConf.js",
+            //     // callbackSuffix : '',
+            //     apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
+            //     timeOut : 20000,
+            //     onSuccess : createMap
+            // });
 
 </script>
     </body>
