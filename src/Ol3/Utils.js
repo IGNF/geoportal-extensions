@@ -103,13 +103,13 @@ define([
         },
         
         /**
-         * Converts s to Numeric
+         * Converts string to Integer
          *
          * @param {String} s - string number
          * @param {Numeric} base - between 2 and 36
          * @returns {null|Numeric}
          */
-        toNumeric : function (s, base) {
+        toInteger : function (s, base) {
             var _base = base || 10;
             var n = parseInt(s, _base);
             if (! isNaN(n) && isFinite(n)) {
@@ -118,6 +118,21 @@ define([
             return null;
         },
 
+        /**
+         * check if s represents an integer
+         * 
+         * @param {String} s - string number
+         * @returns {Boolean}
+         */
+        isInteger : function (s) {
+            if (isNaN(s)) {
+                return false;
+            }
+            
+            var v = parseFloat(s);
+            return ((v | 0) === v);
+        },
+        
         /**
          * Converts s to float
          *

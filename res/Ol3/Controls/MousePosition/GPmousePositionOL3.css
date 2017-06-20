@@ -17,64 +17,96 @@ div[id^=GPmousePositionPanelClose]  {
   background-image: url("img/GPmousePositionOpen.png");
 }
 
-/*.GPmousePositionEditCoordinatesPicto {
-	display: "inline-block";
-	position: absolute;
-	right: 0;
-	width: 28px;
-	height: 28px;
-	cursor: pointer;
-	background-image: url("img/GPmousePositionEditCoordinates.png");
+div[id^=GPmousePositionCoordinate-] input.error {
+    border: 1px solid rgb(255, 0, 0);
 }
-
-input[id^="GPmousePositionEditCoordinates"]:checked + label.GPmousePositionEditCoordinatesPicto {
-	background-position: -28px 0;
-}*/
-
-/* edit coordinates panel */	
-/*input[id^="GPEditCoordinatesSubmit"] {
-    margin-top: 10px;
-    margin-bottom: 15px;
+div[id^=GPmousePositionCoordinate-] input[readonly] {
+    border: 1px solid transparent;
+    padding: 2px;
+    text-align: right;
 }
-
-p[id^="GPmousePositionProjectionInformation-"] {
-	width: 250px;
-	margin: 0 0 10px 0;
-	padding: 2px;
-	font-weight: bold;
-	font-size: 0.8em;
-	color: #31708f;
-	background-color: #d9edf7;
-	border-color: #bce8f1;
-	text-overflow: ellipsis;
-}*/
 
 input[id^=GPmousePositionLat-], input[id^=GPmousePositionLon-] {
-    width: 140px;
+    width: 90px;
 }
 
-.GPSexagesimal, .GPSexagesimalsec, .GPmousePositionCoordsEdit {
+span[id^=GPmousePositionAlt-] {
+    display: inline-block;
+    width: 90px;
+    line-height: 20px;
+    text-align: right;
+}
+
+/* sexagesimal coordinates */
+
+.GPSexagesimal, .GPSexagesimalsec {
 	margin:0;
 	border: 1px solid rgb(204, 204, 204);
 	border-radius: 4px;
 }
-.GPSexagesimal {
-	width: 30px;
+
+input:read-only.GPSexagesimal, input:read-only.GPSexagesimalsec {
+    text-align: right;
 }
+
+.GPSexagesimal {
+	width: 25px;
+}
+
 .GPSexagesimalsec {
-	width: 50px;
+	width: 38px;
 }
 .GPmousePositionSexagesimalLabel {
 	font-size: 1.2em;
 	vertical-align: middle;
-	padding: 2px;
+	padding: 0;
 }
 
-.GPmousePositionDirection {
-	border: 1px solid #999;
+/* direction N/S ou E/O */
+select.GPmousePositionDirection {
+    border: 1px solid #999;
+    margin-left: 2px;
 }
 
-.GPmousePositionUnits {
+select.GPmousePositionDirection:disabled{
+    border: none;
+    background: transparent;
+    color: black;
+    /*For FireFox*/
+   -webkit-appearance: none;
+   /*For Chrome*/
+   -moz-appearance: none;
+}
+
+/*For IE10+*/
+select.GPmousePositionDirection:disabled::-ms-expand {
+    display: none;
+}
+select.GPmousePositionDirection:disabled::-ms-value {
+    color: black;
+}
+
+.GPmousePositionUnits,
+.GPmousePositionAltitudeUnits {
+    margin-left: 5px;
+}
+
+/* EDIT COORDINATES TOOLS */
+.GPmousePositionEditTools {
+    position: absolute;
+    top: 20px;
+    right: 5px;
+}
+
+.GPmousePositionEditClose, .GPmousePositionEditLocate {
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    cursor: pointer;
+    background-image: url("img/GPmousePositionEditCoordinates.png");
+}
+.GPmousePositionEditClose {
+    background-position: -18px 0;
     margin-left: 5px;
 }
 
