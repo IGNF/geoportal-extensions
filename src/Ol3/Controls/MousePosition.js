@@ -828,19 +828,19 @@ define([
         }
 
         var projectionUnits = this._projectionUnits[type][0].code;
-          
+
         if (this._currentProjectionUnits === "DMS" || projectionUnits === "DMS") {
             this._resetCoordinateElements(this.editCoordinates, type, projectionUnits);
             this._setEditMode(this.editing);
         }
-        
+
         // le nouveau type de system ...
         this._currentProjectionType = type;
-         
+
         // Mise a jour des elements labels et unites
         this._resetLabelElements(type);
         this._resetUnitElements(projectionUnits);
-              
+
         // et comme on a changé de type de systeme,
         // il faut changer aussi d'unité !
         this._currentProjectionUnits = projectionUnits;
@@ -1227,24 +1227,24 @@ define([
     };
 
     /**
-     * this method is called by event 'click' on 'GPmousePositionEditLocate' span
-     * 
-     * @method switchToEditMode
+     * this method is called by event 'click' on input coordinate
+     *
+     * @method onMousePositionEditModeClick
      * @param {Boolean} editing - editing mode
      */
-    MousePosition.prototype.switchToEditMode = function (editing) {
-        if (! this.editCoordinates) { 
-            return; 
+    MousePosition.prototype.onMousePositionEditModeClick = function (editing) {
+        if (! this.editCoordinates) {
+            return;
         }
         if (this.editing === editing) {
-            return; 
+            return;
         }
-        
+
         this.editing = editing;
-        
+
         // Affichage des outils, input en ecriture
         this._setEditMode(this.editing);
-        
+
         var map = this.getMap();
         if (this._isDesktop) {
             if (this.editing) { // Unlisten for 'pointermove' events
@@ -1253,7 +1253,7 @@ define([
                 map.on("pointermove", this.onMouseMove, this);
                 // on simule un deplacement
                 this.onMapMove();
-            }     
+            }
         } else {
             if (this.editing) { // Unlisten for 'moveend' events
                 map.un("moveend", this.onMapMove, this);
@@ -1264,10 +1264,10 @@ define([
             }
         }
     };
-    
+
     /**
      * Get coordinate from inputs and select in decimal degrees
-     * 
+     *
      * @method getCoordinate
      * @param {String} coordType - "Lon" or "Lat"
      * @returns {undefined}
@@ -1276,22 +1276,22 @@ define([
     MousePosition.prototype.getCoordinate = function (coordType) {
         var inputDegrees = document.getElementById(this._addUID("GPmousePosition" + coordType + "Degrees"));
         var degrees = inputDegrees.value;
-        if (! degrees) { 
-            return null; 
+        if (! degrees) {
+            return null;
         }
-        
+
         degrees = degrees.replace(",", ".");
         if (! Utils.isInteger(degrees)) {
             return null;
         }
-        
+
         var result = Utils.toInteger(degrees);
         if (result < Number(inputDegrees.dataset.min) || result > Number(inputDegrees.dataset.max)) {
             return null;
         }
-        
+
         var direction = document.getElementById(this._addUID("GPmousePosition" + coordType + "Direction")).value;
-                
+
         var inputMinutes = document.getElementById(this._addUID("GPmousePosition" + coordType + "Minutes"));
         var minutes = inputMinutes.value;
         if (minutes) {
@@ -1303,7 +1303,7 @@ define([
                 }
             }
         }
-           
+
         var inputSeconds = document.getElementById(this._addUID("GPmousePosition" + coordType + "Seconds"));
         var seconds = inputSeconds.value;
         if (seconds) {
@@ -1313,17 +1313,17 @@ define([
                 result += (secs / 3600);
             }
         }
-        
+
         if (direction === "O" || direction === "S") {
             result = -result;
         }
-        
+
         return result;
     };
-    
+
     /**
      * locate DMS coordinates on map
-     * 
+     *
      * @method locateDMSCoordinates
      * @private
      */
@@ -1332,32 +1332,32 @@ define([
             this.getCoordinate("Lon"),
             this.getCoordinate("Lat")
         ];
-        
+
         if (lonlat[0] === null || lonlat[1] === null) {
             return;
         }
-        
+
         var oSrs = this._currentProjectionSystems.crs;
         if (! oSrs) {
             console.log("ERROR : system crs not found");
             return;
         }
-        
+
         var view = this.getMap().getView();
-        
+
         var coordinate = ol.proj.transform(lonlat, oSrs, view.getProjection());
         view.setCenter(coordinate);
     };
-    
+
     /**
      * locate coordinates on map (not DMS)
-     * 
+     *
      * @method locateCoordinates
      * @private
      */
     MousePosition.prototype.locateCoordinates = function () {
         var lon = document.getElementById(this._addUID("GPmousePositionLon")).value;
-        
+
         lon = lon.replace(",", ".");
         lon = Utils.toFloat(lon);
         if (! lon) {
@@ -1383,7 +1383,7 @@ define([
             this.convert(lon)  // metric units
         ];
         var xyWGS84 = ol.proj.transform(xy, this._currentProjectionSystems.crs, "EPSG:4326");
-        
+
         var geoBBox = this._currentProjectionSystems.geoBBox;
         if (geoBBox) {  // check if coordinates are in the extent
             var extent = [geoBBox.left, geoBBox.bottom, geoBBox.right, geoBBox.top];
@@ -1394,35 +1394,35 @@ define([
                 return;
             }
         }
-        
+
         var view = this.getMap().getView();
-        
+
         var coordinate = ol.proj.transform(xy, oSrs, view.getProjection());
         view.setCenter(coordinate);
     };
-    
+
     /**
      * locate coordinates on map
-     * 
+     *
      * @method locate
      * @private
      */
-    MousePosition.prototype.locate = function () {
+    MousePosition.prototype.onMousePositionEditModeLocateClick = function () {
         if (! this.editCoordinates) {
             return;
         }
         if (! this.editing) {
-            this.switchToEditMode(true);
+            this.onMousePositionEditModeClick(true);
             return;
         }
-        
+
         if (this._currentProjectionUnits === "DMS") {
             this.locateDMSCoordinates();
         } else {
             this.locateCoordinates();
         }
     };
-    
+
     /**
      * this method is called by event 'change' on 'GPmousePositionProjectionSystem'
      * tag select (cf. this._createMousePositionSettingsElement),
@@ -1461,14 +1461,14 @@ define([
             logger.log("system not found in projection systems container");
             return;
         }
- 
+
         // on enregistre le systeme courant
         this._currentProjectionSystems = this._projectionSystems[Number(systemCode)];
-        
+
         if (type !== this._currentProjectionType) {
             this._setTypeUnitsPanel(type);
         }
-        
+
         // on simule un deplacement en mode tactile pour mettre à jour les
         // resultats
         if (!this._isDesktop) {
@@ -1561,7 +1561,7 @@ define([
         // Mise a jour des elements lebels et unites
         this._resetLabelElements(this._currentProjectionType);
         this._resetUnitElements(this._currentProjectionUnits);
-            
+
         // mise a jour des inputs pour les coordonnees
         if (oldProjectionUnits === "DMS" || this._currentProjectionUnits === "DMS") {
             this._resetCoordinateElements(this.editCoordinates, this._currentProjectionType, this._currentProjectionUnits);
@@ -1576,7 +1576,7 @@ define([
     };
 
     /**
-     * 
+     *
      * @param {Number} value - value to convert (km to meters, radians, grades to decimal degrees)
      * @returns {undefined}
      * @private
@@ -1594,10 +1594,10 @@ define([
             var d = (9 / 10).toFixed(20);
             result = (value * d).toFixed(20);
         }
-        
+
         return result;
     };
-    
+
     /**
      * @param {String} coordType - "Lon" or "Lat"
      * @param {String} value - input value
@@ -1608,25 +1608,25 @@ define([
         if (["Lon", "Lat"].indexOf(coordType) === -1) {
             return false;
         }
-        
+
         var v = value.replace(",", ".");
         v = Utils.toFloat(v);
-        if (v === null) { 
-            return false; 
+        if (v === null) {
+            return false;
         }
-        
-        // convert depending on _currentProjectionUnits 
+
+        // convert depending on _currentProjectionUnits
         v = this.convert(v);
-        
+
         var geoBBox = this._currentProjectionSystems.geoBBox;
-        if (geoBBox === undefined) { 
-            return true; 
+        if (geoBBox === undefined) {
+            return true;
         }
-  
+
         // convert to current projection system
         var extent = [geoBBox.left, geoBBox.bottom, geoBBox.right, geoBBox.top];
         extent = ol.proj.transformExtent(extent, "EPSG:4326", this._currentProjectionSystems.crs);
-        
+
         // checking if value is in the right interval
         if (coordType === "Lat" && (value < extent[0] || value > extent[2])) {
             return false;
@@ -1634,9 +1634,9 @@ define([
         if (coordType === "Lon" && (value < extent[1] || value > extent[3])) {
             return false;
         }
-        
+
         return true;
     };
-    
+
     return MousePosition;
 });
