@@ -11,10 +11,12 @@ span[id^=GPshowMousePositionOpen] {
   background-image: url("img/GPmousePositionOpen.png");
 }
 
-/* General panels */
-
-div[id^=GPmousePositionPanelClose] {
+div[id^=GPmousePositionPanelClose]  {
   background-image: url("img/GPmousePositionOpen.png");
+}
+
+.GPmousePositionEditTool {
+    background-image: url("img/GPmousePositionEditCoordinates.png");
 }
 
 /* Map center localisation */
