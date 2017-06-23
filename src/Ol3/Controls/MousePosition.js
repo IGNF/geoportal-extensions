@@ -721,7 +721,7 @@ define([
         var picto = this._createShowMousePositionPictoElement(this._isDesktop);
         container.appendChild(picto);
 
-        var panel    = this._createMousePositionPanelElement(
+        var panel = this._createMousePositionPanelElement(
             this.options.displayAltitude,
             this.options.displayCoordinates,
             this.options.editCoordinates,
@@ -828,11 +828,7 @@ define([
         }
 
         var projectionUnits = this._projectionUnits[type][0].code;
-        
-        // Mise a jour des elements labels et unites
-        this._resetLabelElements(this._currentProjectionType);
-        this._resetUnitElements(projectionUnits);
-            
+          
         if (this._currentProjectionUnits === "DMS" || projectionUnits === "DMS") {
             this._resetCoordinateElements(this.editCoordinates, type, projectionUnits);
             this._setEditMode(this.editing);
@@ -840,7 +836,11 @@ define([
         
         // le nouveau type de system ...
         this._currentProjectionType = type;
-        
+         
+        // Mise a jour des elements labels et unites
+        this._resetLabelElements(type);
+        this._resetUnitElements(projectionUnits);
+              
         // et comme on a changé de type de systeme,
         // il faut changer aussi d'unité !
         this._currentProjectionUnits = projectionUnits;
@@ -1357,14 +1357,15 @@ define([
      */
     MousePosition.prototype.locateCoordinates = function () {
         var lon = document.getElementById(this._addUID("GPmousePositionLon")).value;
-        lon.replace(",", ".");
+        
+        lon = lon.replace(",", ".");
         lon = Utils.toFloat(lon);
         if (! lon) {
             return;
         }
 
         var lat = document.getElementById(this._addUID("GPmousePositionLat")).value;
-        lat.replace(",", ".");
+        lat = lat.replace(",", ".");
         lat = Utils.toFloat(lat);
         if (! lat) {
             return;
@@ -1376,31 +1377,27 @@ define([
             return;
         }
 
-        var lonlat = [
-            this.convert(lon),  // metric units
-            this.convert(lat)   // metric units
+        // Lon correspond to Y and Lat to X
+        var xy = [
+            this.convert(lat), // metric units
+            this.convert(lon)  // metric units
         ];
+        var xyWGS84 = ol.proj.transform(xy, this._currentProjectionSystems.crs, "EPSG:4326");
         
-        var extent = null;
         var geoBBox = this._currentProjectionSystems.geoBBox;
         if (geoBBox) {  // check if coordinates are in the extent
-            extent = ol.extent.boundingExtent([
-                [geoBBox.left, geoBBox.top],
-                [geoBBox.right, geoBBox.bottom]
-            ]);
-            extent = ol.proj.transformExtent(extent, this._currentProjectionSystems.crs, "EPSG:4326");
-        
-            if (lonlat[0] < extent.getTopLeft()[0] || lonlat[0] > extent.getTopRight()[0]) {
+            var extent = [geoBBox.left, geoBBox.bottom, geoBBox.right, geoBBox.top];
+            if (xyWGS84[0] < extent[0] || xyWGS84[0] > extent[2]) {
                 return;
             }
-            if (lonlat[1] < extent.getBottomLeft()[1] || lonlat[1] > extent.getTopRight()[1]) {
+            if (xyWGS84[1] < extent[1] || xyWGS84[1] > extent[3]) {
                 return;
             }
         }
         
         var view = this.getMap().getView();
         
-        var coordinate = ol.proj.transform(lonlat, oSrs, view.getProjection());
+        var coordinate = ol.proj.transform(xy, oSrs, view.getProjection());
         view.setCenter(coordinate);
     };
     
@@ -1411,6 +1408,14 @@ define([
      * @private
      */
     MousePosition.prototype.locate = function () {
+        if (! this.editCoordinates) {
+            return;
+        }
+        if (! this.editing) {
+            this.switchToEditMode(true);
+            return;
+        }
+        
         if (this._currentProjectionUnits === "DMS") {
             this.locateDMSCoordinates();
         } else {
@@ -1618,18 +1623,18 @@ define([
             return true; 
         }
   
-        var extent = ol.extent.boundingExtent([
-            [geoBBox.left, geoBBox.top],
-            [geoBBox.right, geoBBox.bottom]
-        ]);
-        extent = ol.proj.transformExtent(extent, this._currentProjectionSystems.crs, "EPSG:4326");
+        // convert to current projection system
+        var extent = [geoBBox.left, geoBBox.bottom, geoBBox.right, geoBBox.top];
+        extent = ol.proj.transformExtent(extent, "EPSG:4326", this._currentProjectionSystems.crs);
         
-        if (coordType === "Lon" && (value < extent.getTopLeft()[0] || value > extent.getTopRight()[0])) {
+        // checking if value is in the right interval
+        if (coordType === "Lat" && (value < extent[0] || value > extent[2])) {
             return false;
         }
-        if (coordType === "Lat" && (value < extent.getBottomLeft()[1] || value > extent.getTopRight()[1])) {
+        if (coordType === "Lon" && (value < extent[1] || value > extent[3])) {
             return false;
         }
+        
         return true;
     };
     

@@ -92,20 +92,21 @@ select.GPmousePositionDirection:disabled::-ms-value {
 }
 
 /* EDIT COORDINATES TOOLS */
-.GPmousePositionEditTools {
+.GPmousePositionPanelEditTools {
     position: absolute;
     top: 20px;
     right: 5px;
 }
 
-.GPmousePositionEditClose, .GPmousePositionEditLocate {
+.GPmousePositionEditTool {
     width: 18px;
     height: 18px;
     display: inline-block;
     cursor: pointer;
     background-image: url("img/GPmousePositionEditCoordinates.png");
 }
-.GPmousePositionEditClose {
+
+span[id^=GPmousePositionCloseEdit] {
     background-position: -18px 0;
     margin-left: 5px;
 }

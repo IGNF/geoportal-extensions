@@ -188,11 +188,10 @@ define([], function () {
             // FIXME on devrait decomposer la fonction pour les besoins du controle,
             // on ajoutera ces childs à la main...
             container.appendChild(this._createMousePositionPanelBasicCoordinateElement(displayCoordinates, editCoordinates, currentProjectionUnits));
-            container.appendChild(this._createMousePositionPanelEditToolsElement());
+            container.appendChild(this._createMousePositionPanelEditToolsElement(editCoordinates));
             container.appendChild(this._createMousePositionPanelBasicAltitudeElement(displayAltitude));
 
             return container;
-
         },        
                 
         /**
@@ -211,6 +210,7 @@ define([], function () {
             var list = [];
             var input = document.createElement("input");
             input.id = this._addUID("GPmousePosition" + coordType);
+            input.title = "Cliquer pour saisir des coordonnées";
             input.readOnly = true;
             
             if (editCoordinates) {
@@ -250,6 +250,7 @@ define([], function () {
             input.id = this._addUID("GPmousePosition" + coordType + "Degrees");
             input.className = "GPSexagesimal";
             input.setAttribute("name", "degrees");
+            input.title = "Cliquer pour saisir des coordonnées";
             input.readOnly = true;
             input.dataset.min = 0;
             input.dataset.max = (coordType === "Lon") ? 180 : 90;
@@ -274,6 +275,7 @@ define([], function () {
             input1.id  = this._addUID("GPmousePosition" + coordType + "Minutes");
             input1.className  = "GPSexagesimal";
             input1.setAttribute("name", "minutes");
+            input1.title = "Cliquer pour saisir des coordonnées";
             input1.readOnly = true;
             input1.dataset.min = 0;
             input1.dataset.max = 59;
@@ -298,6 +300,7 @@ define([], function () {
             input2.id  = this._addUID("GPmousePosition" + coordType + "Seconds");
             input2.className  = "GPSexagesimalsec";
             input2.setAttribute("name", "seconds");
+            input2.title = "Cliquer pour saisir des coordonnées";
             input2.readOnly = true;
             input2.dataset.min = 0;
             input2.dataset.max = 59;
@@ -422,28 +425,37 @@ define([], function () {
         },
 
         /** ... */
-        _createMousePositionPanelEditToolsElement : function () {
+        _createMousePositionPanelEditToolsElement : function (editCoordinates) {
             var context = this;
             
             var div = document.createElement("div");
-            div.className = "GPmousePositionEditTools";
-            div.id = this._addUID("GPmousePositionEditTools");
-            div.style.display = "none";
+            div.className = "GPmousePositionPanelEditTools";
+            div.id = this._addUID("GPmousePositionPanelEditTools");
+            if (! editCoordinates) {
+                div.style.display = "none";
+            }
             
             var span1 = document.createElement("span");
-            span1.className = "GPmousePositionEditLocate";
-            span1.title = "Aller à la position ...";
-            span1.addEventListener("click", function () {
-                context.locate();
-            });
+            span1.className = "GPmousePositionEditTool";
+            span1.id = this._addUID("GPmousePositionLocate");
+            span1.title = "Cliquer pour saisir des coordonnées";
+            if (editCoordinates) {
+                span1.addEventListener("click", function () {
+                    context.locate();
+                });
+            }
             div.appendChild(span1);
             
             var span2 = document.createElement("span");
-            span2.className = "GPmousePositionEditClose";
-            span2.title = "Quitter le mode édition";
-            span2.addEventListener("click", function () {
-                context.switchToEditMode(false);
-            });
+            span2.className = "GPmousePositionEditTool";
+            span2.id = this._addUID("GPmousePositionCloseEdit");
+            span2.title = "Quitter la saisie des coordonnées";
+            span2.style.display = "none";
+            if (editCoordinates) {
+                span2.addEventListener("click", function () {
+                    context.switchToEditMode(false);
+                });
+            }
             div.appendChild(span2);
             
             return div;
@@ -675,9 +687,12 @@ define([], function () {
          * @param {Boolean} editing - active edit coordinates mode
          */
         _setEditMode : function (editing) {
-            var divEdit = document.getElementById(this._addUID("GPmousePositionEditTools"));
-            divEdit.style.display = editing ? "block" : "none"; 
+            var locateElt = document.getElementById(this._addUID("GPmousePositionLocate"));
+            locateElt.title = editing ? "Aller à la position ..." : "Cliquer pour saisir des coordonnées";
             
+            var closeEditElt = document.getElementById(this._addUID("GPmousePositionCloseEdit"));
+            closeEditElt.style.display = editing ? "inline-block" : "none";
+
             var selector = "div[id^=" + this._addUID("GPmousePositionCoordinate") + "]";
             var inputs  = document.querySelectorAll(selector + " input");
             for (var i = 0; i < inputs.length; i++) {
