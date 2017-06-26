@@ -4,6 +4,7 @@ define([
     "woodman",
     "gp",
     "Ol3/Utils",
+	"Ol3/Controls/Utils/Markers",
     "Common/Utils/CheckRightManagement",
     "Common/Utils/SelectorID",
     "Common/Utils/MathUtils",
@@ -15,6 +16,7 @@ define([
     woodman,
     Gp,
     Utils,
+    Markers,
     RightManagement,
     SelectorID,
     MathUtils,
@@ -51,7 +53,11 @@ define([
      *      and "M" or "KM" for metric coordinates
      * @param {Array}   [options.displayAltitude = true] - activate (true) or deactivate (false) the altitude panel. True by default
      * @param {Array}   [options.displayCoordinates = true] - activate (true) or deactivate (false) the coordinates panel. True by default
-     * @param {Boolean}	[options.editCoordinates = false] - add edit coordinates options. False by default.
+     * @param {Boolean} [options.editCoordinates = false] - add edit coordinates options. False by default.
+     * @param {Object} [options.positionMarker] - options for position marker
+     * @param {String} options.positionMarker.src - Marker url (define in src/Ol3/Controls/Utils/Markers.js)
+     * @param {Array} options.positionMarker.offset - offset of marker. Overlay positionning is top-left.
+     * @param {Boolean} options.positionMarker.hide - if true, marker is not displayed, otherwise displayed (False by default.)
      * @param {Object}  [options.altitude] - elevation configuration
      * @param {Object}  [options.altitude.serviceOptions] - options of elevation service
      * @param {Number}  [options.altitude.responseDelay] - latency for altitude request, 500 ms by default
@@ -132,6 +138,7 @@ define([
      * Overload ol.control.Control setMap method, called when
      */
     MousePosition.prototype.setMap = function (map) {
+        var context = this;
 
         if ( map ) { // dans le cas de l'ajout du contrôle à la map
             var center = this._createMapCenter();
@@ -157,6 +164,25 @@ define([
                         this
                     );
                 }
+            }
+
+            // add overlay only if option editCoordinates is true
+            if (this.options.editCoordinates) {
+                // création de l'élément DOM
+                var markerDiv = document.createElement("img");
+                markerDiv.id = this._addUID("GPmousePositionMarker");
+                markerDiv.src = this._markerUrl;
+                markerDiv.title = "Cliquer pour supprimer";
+                markerDiv.addEventListener("click", function () {
+                    context._markerOverlay.setPosition(undefined);
+                });
+
+                this._markerOverlay = new ol.Overlay({
+                    offset : this._markerOffset,
+                    element : markerDiv,
+                    stopEvent : false
+                });
+                map.addOverlay(this._markerOverlay);
             }
         }
 
@@ -427,8 +453,14 @@ define([
         this.collapsed = this.options.collapsed;
 
         this.options.editCoordinates = ( options.editCoordinates !== undefined ) ? options.editCoordinates : false;
-        this.editCoordinates = this.options.editCoordinates;
         this.editing = false;
+
+        // position marker
+        this._markerOverlay = null;
+        this._markerUrl = null;
+        this._markerOffset = [0, 0];
+        this._hideMarker = false;
+        this._initMarker(options.positionMarker);
 
         this.options.units = options.units || [];
         this.options.displayAltitude = ( options.displayAltitude !== undefined ) ? options.displayAltitude : true;
@@ -498,6 +530,43 @@ define([
         // si l'on souhaite un calcul d'altitude, on verifie les droits sur les ressources d'alti...
         if ( this.options.displayAltitude ) {
             this._checkRightsManagement();
+        }
+    };
+
+    /**
+     *
+     * @param {Object} option - positionMarker option
+     */
+    MousePosition.prototype._initMarker = function (option) {
+        if (! this.options.editCoordinates) {
+            return;
+        }
+
+        if (! option) {
+            this._markerUrl = Markers["lightOrange"];
+            this._markerOffset = Markers.defaultOffset;
+            return;
+        }
+
+        // hide
+        this._hideMarker = (option.hide !== undefined) ? option.hide : false;
+
+        // offset
+        if (option.offset) {
+            if (Array.isArray(option.offset) && option.offset.length === 2) {
+                this._markerOffset = option.offset;
+            } else {
+                console.log("positionMarker.offset should be an array. e.g. : [0,0]");
+            }
+        }
+
+        var url = option.url;
+        if (! url) {
+            this._markerUrl = Markers["lightOrange"];
+        } else if (url.match(/^[a-zA-Z]+$/)) {	// un seul mot
+            this._markerUrl = (Markers[url] !== undefined) ? Markers[url] : Markers["lightOrange"];
+        } else {
+            this._markerUrl = url;
         }
     };
 
@@ -830,7 +899,7 @@ define([
         var projectionUnits = this._projectionUnits[type][0].code;
 
         if (this._currentProjectionUnits === "DMS" || projectionUnits === "DMS") {
-            this._resetCoordinateElements(this.editCoordinates, type, projectionUnits);
+            this._resetCoordinateElements(this.options.editCoordinates, type, projectionUnits);
             this._setEditMode(this.editing);
         }
 
@@ -1233,7 +1302,7 @@ define([
      * @param {Boolean} editing - editing mode
      */
     MousePosition.prototype.onMousePositionEditModeClick = function (editing) {
-        if (! this.editCoordinates) {
+        if (! this.options.editCoordinates) {
             return;
         }
         if (this.editing === editing) {
@@ -1262,6 +1331,11 @@ define([
                 // on simule un deplacement
                 this.onMapMove();
             }
+        }
+
+        // clear _markerOverlay
+        if (! this.editing && this._markerOverlay) {
+            this._markerOverlay.setPosition(undefined);
         }
     };
 
@@ -1308,7 +1382,7 @@ define([
         var seconds = inputSeconds.value;
         if (seconds) {
             seconds = seconds.replace(",", ".");
-            var secs = Utils.toFloat(seconds);
+            var secs = MathUtils.toFloat(seconds);
             if (secs && secs >= Number(inputSeconds.dataset.min) && secs <= Number(inputSeconds.dataset.max)) {
                 result += (secs / 3600);
             }
@@ -1359,15 +1433,15 @@ define([
         var lon = document.getElementById(this._addUID("GPmousePositionLon")).value;
 
         lon = lon.replace(",", ".");
-        lon = Utils.toFloat(lon);
-        if (! lon) {
+        lon = MathUtils.toFloat(lon);
+        if (lon === null) {
             return;
         }
 
         var lat = document.getElementById(this._addUID("GPmousePositionLat")).value;
         lat = lat.replace(",", ".");
-        lat = Utils.toFloat(lat);
-        if (! lat) {
+        lat = MathUtils.toFloat(lat);
+        if (lat === null) {
             return;
         }
 
@@ -1377,11 +1451,12 @@ define([
             return;
         }
 
-        // Lon correspond to Y and Lat to X
-        var xy = [
-            this.convert(lat), // metric units
-            this.convert(lon)  // metric units
-        ];
+        var xy;
+        if (this._currentProjectionSystems.type === "Geographical") {
+            xy = [this.convert(lon), this.convert(lat)];
+        } else {
+            xy = [this.convert(lat), this.convert(lon)];
+        }
         var xyWGS84 = ol.proj.transform(xy, this._currentProjectionSystems.crs, "EPSG:4326");
 
         var geoBBox = this._currentProjectionSystems.geoBBox;
@@ -1399,6 +1474,10 @@ define([
 
         var coordinate = ol.proj.transform(xy, oSrs, view.getProjection());
         view.setCenter(coordinate);
+
+        if (this._markerOverlay && ! this._hideMarker) {
+            this._markerOverlay.setPosition(coordinate);
+        }
     };
 
     /**
@@ -1408,7 +1487,7 @@ define([
      * @private
      */
     MousePosition.prototype.onMousePositionEditModeLocateClick = function () {
-        if (! this.editCoordinates) {
+        if (! this.options.editCoordinates) {
             return;
         }
         if (! this.editing) {
@@ -1564,7 +1643,7 @@ define([
 
         // mise a jour des inputs pour les coordonnees
         if (oldProjectionUnits === "DMS" || this._currentProjectionUnits === "DMS") {
-            this._resetCoordinateElements(this.editCoordinates, this._currentProjectionType, this._currentProjectionUnits);
+            this._resetCoordinateElements(this.options.editCoordinates, this._currentProjectionType, this._currentProjectionUnits);
             this._setEditMode(this.editing);
         }
 
@@ -1610,7 +1689,7 @@ define([
         }
 
         var v = value.replace(",", ".");
-        v = Utils.toFloat(v);
+        v = MathUtils.toFloat(v);
         if (v === null) {
             return false;
         }

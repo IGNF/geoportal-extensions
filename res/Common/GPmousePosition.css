@@ -191,6 +191,11 @@ span[id^=GPmousePositionCloseEdit] {
     margin-left: 5px;
 }
 
+img[id^=GPmousePositionMarker]:hover {
+    cursor: pointer;
+    opacity: 0.7;
+}
+
 /* Map center localisation */
 
 #GPmapCenter {

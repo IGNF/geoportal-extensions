@@ -78,7 +78,12 @@
 
                         var mp = new MousePosition({
                             collapsed : false,
-							              editCoordinates : true,
+                            editCoordinates : true,
+                            positionMarker : {
+                              // url : "turquoiseBlue"
+                              url : "http://api.ign.fr/api/images/api/markers/marker_01.png",
+                              offset : [-12.5, -12.5]
+                            },
                             displayCoordinates : true,
                             displayAltitude : true,
                             altitude : {
