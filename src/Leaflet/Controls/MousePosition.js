@@ -621,19 +621,19 @@ define([
                 container.appendChild(option);
             }
 
-            // var projectionUnits = this._projectionUnits[type][0].code;
+            var projectionUnits = this._projectionUnits[type][0].code;
 
-            // if (this._currentProjectionUnits === "DMS" || projectionUnits === "DMS") {
-            //     this._resetCoordinateElements(this.editCoordinates, type, projectionUnits);
-            //     this._setEditMode(this.editing);
-            // }
+            if (this._currentProjectionUnits === "DMS" || projectionUnits === "DMS") {
+                this._resetCoordinateElements(this.options.editCoordinates, type, projectionUnits);
+                this._setEditMode(this._isEditing);
+            }
 
             // le nouveau type de system ...
             this._currentProjectionType = type;
 
             // Mise a jour des elements labels et unites
-            // this._resetLabelElements(type);
-            // this._resetUnitElements(projectionUnits);
+            this._resetLabelElements(type);
+            this._resetUnitElements(projectionUnits);
 
             // et comme on a changé de type de systeme,
             // il faut changer aussi d'unité !
@@ -653,6 +653,7 @@ define([
             var coordinate = {};
             coordinate.lat = PositionFormater.roundToDecimal(oLatLng.lat, 6);
             coordinate.lng = PositionFormater.roundToDecimal(oLatLng.lng, 6);
+            // Sans unité... coordinate.unit = "deg";
             return coordinate;
         },
 
@@ -663,8 +664,8 @@ define([
         */
         _displayDMS : function (oLatLng) {
             var coordinate = {};
-            coordinate.lat = PositionFormater.decimalLatToDMS(oLatLng.lat);
-            coordinate.lng = PositionFormater.decimalLongToDMS(oLatLng.lng);
+            coordinate.lat = PositionFormater.decimalLatToDMS(oLatLng.lat, true);
+            coordinate.lng = PositionFormater.decimalLonToDMS(oLatLng.lng, true);
             return coordinate;
 
         },
@@ -678,6 +679,7 @@ define([
             var coordinate = {};
             coordinate.lat = PositionFormater.decimalToRadian(oLatLng.lat);
             coordinate.lng = PositionFormater.decimalToRadian(oLatLng.lng);
+            // Sans unité... coordinate.unit = "rad";
             return coordinate;
 
         },
@@ -691,6 +693,7 @@ define([
             var coordinate = {};
             coordinate.lat = PositionFormater.decimalToGrade(oLatLng.lat);
             coordinate.lng = PositionFormater.decimalToGrade(oLatLng.lng);
+            // Sans unité... coordinate.unit = "gon";
             return coordinate;
 
         },
@@ -734,7 +737,7 @@ define([
         *
         * @param {Object} oLatLng - geographic coordinate (L.LatLng)
         * @param {Object} crs - projection system (ex. GEOGRAPHIC, LAMB93, LAMB2E, MERCATOR, ...)
-        *
+        * @returns {Object} oXY - coordinate
         * @private
         */
         _project : function (oLatLng, crs) {
@@ -784,6 +787,65 @@ define([
             }
 
             return oPoint;
+        },
+
+        /**
+        * this method unprojects a coordinate to a geographic projection.
+        *
+        * @param {Object} oXY - coordinate
+        * @returns {Object} oLatLng - geographic coordinate (L.LatLng)
+        * @private
+        */
+        _unproject : function (oXY) {
+
+            // cf. http://leafletjs.com/reference.html#iprojection
+            // notre carte est dans la projection par defaut :
+            // Spherical Mercator projection (EPSG:3857)
+            // - GEOGRAPHIC : conversion native, L.CRS.Simple ou L.Projection.LngLat.project(latlng)
+            // - LAMB93 : L.GeoportalCRS.EPSG2154 ou projection.project(latlng)
+            // - LAMB2E : L.GeoportalCRS.EPSG27572 ou projection.project(latlng)
+            // - MERCATOR ou EPSG:3395 : L.CRS.EPSG3395 ou L.Projection.Mercator.project(latlng)
+
+            var oSrs = this._currentProjectionSystems.crs;
+            if (! oSrs) {
+                logger.log("system crs not found");
+                return;
+            }
+
+            if ( typeof oSrs === "function" ) {
+                // "crs is an function !"... en mode AMD !
+                oSrs = oSrs();
+            }
+
+            if ( typeof oSrs !== "object" ) {
+                logger.log("crs is not an object !");
+                return;
+            }
+
+            // pas de reprojection pour le systeme de projection natif !
+            if (oSrs === L.CRS.Simple) {
+                return oXY;
+            }
+
+            if (this._currentProjectionType === "Geographical") {
+                return {
+                    lat : oXY.y,
+                    lng : oXY.x
+                };
+            }
+
+            if (! oSrs.projection || typeof oSrs.projection !== "object") {
+                logger.error("projection is not an object !");
+                return;
+            }
+
+            var oLatLng = oSrs.projection.unproject(oXY);
+
+            if (! oLatLng || Object.keys(oLatLng).length === 0) {
+                logger.error("Failed to unproject coordinate");
+            }
+
+            return oLatLng;
         },
 
         // ################################################################### //
@@ -1070,8 +1132,82 @@ define([
             }
         },
 
-        /** TODO ... */
-        validateCoordinate : function () {},
+        /**
+        * Convert Coordinate value : km to meters, radians, grades to decimal degrees
+        * @param {Number} value - value to convert
+        * @param {String} unit - unit
+        * @returns {Number}
+        * @private
+        */
+        _convertCoordinate : function (value, unit) {
+            var result;
+            if (unit === "DEC" || unit === "DMS") { // DMS est converti en DEC !
+                result = value;
+            } else if (unit === "M") {
+                result = value;
+            } else if (unit === "KM") {
+                result = value * 1000;
+            } else if (unit === "RAD") {
+                var rd = (180 / Math.PI).toFixed(20);
+                result = (value * rd).toFixed(20);
+            } else if (unit === "GON") {
+                var d = (9 / 10).toFixed(20);
+                result = (value * d).toFixed(20);
+            }
+
+            return result;
+        },
+
+        /**
+        * Validate Extend coordinate
+        *
+        * @param {String} coordType - Lat or Lon
+        * @param {String} value - coordinate
+        * @param {Event} e - event
+        * @returns {Boolean}
+        */
+        validateExtentCoordinate : function (coordType, value, e) {
+
+            // FIXME pas de validation...
+            if (e !== undefined) {
+                return true;
+            }
+
+            if (["Lon", "Lat"].indexOf(coordType) === -1) {
+                return false;
+            }
+
+            var geoBBox = this._currentProjectionSystems.geoBBox;
+
+            if (geoBBox === undefined) {
+                return true;
+            }
+
+            if (geoBBox) {  // check if coordinates are in the extent
+
+                var extent = [geoBBox.left, geoBBox.bottom, geoBBox.right, geoBBox.top];
+                var unit   = this._currentProjectionUnits;
+
+                // on convertit un point..., mais on n'a pas de fonction
+                // de conversion comme pour ol3...
+                var oLatLon = this._unproject({
+                    x : (coordType === "Lon") ? this._convertCoordinate(value, unit) : 0,
+                    y : (coordType === "Lat") ? this._convertCoordinate(value, unit) : 0
+
+                });
+
+                if (coordType === "Lon" && (oLatLon.lng < extent[0] || oLatLon.lng > extent[2])) {
+                    logger.warn("coordinates (lon) out of extent !?");
+                    return false;
+                }
+                if (coordType === "Lat" && (oLatLon.lat < extent[1] || oLatLon.lat > extent[3])) {
+                    logger.warn("coordinates (lat) out of extent !?");
+                    return false;
+                }
+            }
+
+            return true;
+        },
 
         /**
         * Get coordinate from inputs and select in decimal degrees
@@ -1081,7 +1217,8 @@ define([
         * @private
         */
         _getCoordinate : function (coordType) {
-            var inputDegrees = document.getElementById(this._addUID("GPmousePosition" + coordType + "Degrees"));
+
+            var inputDegrees = L.DomUtil.get(this._addUID("GPmousePosition" + coordType + "Degrees"));
             var degrees = inputDegrees.value;
             if (! degrees) {
                 return null;
@@ -1097,9 +1234,9 @@ define([
                 return null;
             }
 
-            var direction = document.getElementById(this._addUID("GPmousePosition" + coordType + "Direction")).value;
+            var direction = L.DomUtil.get(this._addUID("GPmousePosition" + coordType + "Direction")).value;
 
-            var inputMinutes = document.getElementById(this._addUID("GPmousePosition" + coordType + "Minutes"));
+            var inputMinutes = L.DomUtil.get(this._addUID("GPmousePosition" + coordType + "Minutes"));
             var minutes = inputMinutes.value;
             if (minutes) {
                 minutes = minutes.replace(",", ".");
@@ -1111,7 +1248,7 @@ define([
                 }
             }
 
-            var inputSeconds = document.getElementById(this._addUID("GPmousePosition" + coordType + "Seconds"));
+            var inputSeconds = L.DomUtil.get(this._addUID("GPmousePosition" + coordType + "Seconds"));
             var seconds = inputSeconds.value;
             if (seconds) {
                 seconds = seconds.replace(",", ".");
@@ -1135,11 +1272,21 @@ define([
         */
         _locateDMSCoordinates : function () {
 
+            // on est toujours en coordonnées geographiques...
             var oLatLon = {
                 lat : this._getCoordinate("Lat"),
                 lng : this._getCoordinate("Lon")
             };
 
+            if (! this.validateExtentCoordinate("Lon", oLatLon.lng)) {
+                return;
+            }
+
+            if (! this.validateExtentCoordinate("Lat", oLatLon.lat)) {
+                return;
+            }
+
+            // FIXME https://github.com/Leaflet/Leaflet/issues/922
             var map = this._map;
             map.panTo(oLatLon);
         },
@@ -1150,77 +1297,51 @@ define([
          * @private
          */
         _locateCoordinates : function () {
-            var lon = document.getElementById(this._addUID("GPmousePositionLon")).value;
 
-            lon = lon.replace(",", ".");
-            lon = parseFloat(lon);
-            if (isNaN(lon)) {
+            // soit longitude ou soit y
+            var lonYDom = L.DomUtil.get(this._addUID("GPmousePositionLon")).value;
+            lonYDom = lonYDom.replace(",", ".");
+            lonYDom = parseFloat(lonYDom);
+            if (isNaN(lonYDom)) {
                 return;
             }
 
-            var lat = document.getElementById(this._addUID("GPmousePositionLat")).value;
-            lat = lat.replace(",", ".");
-            lat = parseFloat(lat);
-            if (isNaN(lat)) {
+            // soit lattitude ou soit x
+            var latXDom = L.DomUtil.get(this._addUID("GPmousePositionLat")).value;
+            latXDom = latXDom.replace(",", ".");
+            latXDom = parseFloat(latXDom);
+            if (isNaN(latXDom)) {
                 return;
             }
 
-            var oSrs = this._currentProjectionSystems.crs;
-            if (! oSrs) {
-                console.log("ERROR : system crs not found");
+            var lon = null;
+            var lat = null;
+            var x = null;
+            var y = null;
+
+            if (this._currentProjectionType === "Geographical") {
+                lon = lonYDom;
+                lat = latXDom;
+            } else {
+                x = latXDom;
+                y = lonYDom;
+            }
+
+            if (! this.validateExtentCoordinate("Lon", lon || x)) {
                 return;
             }
 
-            if ( typeof oSrs === "function" ) {
-                // "crs is an function !"... en mode AMD !
-                oSrs = oSrs();
-            }
-
-            if ( typeof oSrs !== "object" ) {
-                console.log("ERROR : crs is not an object !");
+            if (! this.validateExtentCoordinate("Lat", lat || y)) {
                 return;
             }
 
-            /** convert */
-            var __convert = function (value, unit) {
-                var result;
-                if (unit === "DEC") {
-                    result = value;
-                } else if (unit === "M") {
-                    result = value;
-                } else if (unit === "KM") {
-                    result = value * 1000;
-                } else if (unit === "RAD") {
-                    var rd = (180 / Math.PI).toFixed(20);
-                    result = (value * rd).toFixed(20);
-                } else if (unit === "GON") {
-                    var d = (9 / 10).toFixed(20);
-                    result = (value * d).toFixed(20);
-                }
-
-                return result;
-            };
-
-            // Lon correspond to Y and Lat to X
             var unit = this._currentProjectionUnits;
-            var oLatLon = oSrs.projection.unproject({
-                y : __convert(lat, unit),
-                x : __convert(lon, unit)
+            var oLatLon = this._unproject({
+                x : this._convertCoordinate(lon || x, unit),
+                y : this._convertCoordinate(lat || y, unit)
             });
 
-            var geoBBox = this._currentProjectionSystems.geoBBox;
-            if (geoBBox) {  // check if coordinates are in the extent
-                var extent = [geoBBox.left, geoBBox.bottom, geoBBox.right, geoBBox.top];
-                if (oLatLon.lng < extent[0] || oLatLon.lng > extent[2]) {
-                    logger.warn("coordinates (lon) out of extent !?");
-                    return;
-                }
-                if (oLatLon.lat < extent[1] || oLatLon.lat > extent[3]) {
-                    logger.warn("coordinates (lat) out of extent !?");
-                    return;
-                }
-            }
-
+            // FIXME https://github.com/Leaflet/Leaflet/issues/922
             var map = this._map;
             map.panTo(oLatLon);
 
@@ -1322,7 +1443,7 @@ define([
             }
 
             // clear select
-            var systemList = document.getElementById( this._addUID("GPmousePositionProjectionSystem") );
+            var systemList = L.DomUtil.get(this._addUID("GPmousePositionProjectionSystem"));
 
             systemList.innerHTML = "";
 
@@ -1378,18 +1499,19 @@ define([
 
             logger.log(idx, value, label);
 
-            // var oldProjectionUnits = this._currentProjectionUnits;
-            this._currentProjectionUnits = value;
+            var oldProjectionUnits = this._currentProjectionUnits;
+            var newProjectionUnits = this._currentProjectionUnits = value;
+            var newProjectionType  = this._currentProjectionType;
 
             // Mise a jour des elements lebels et unites
-            // this._resetLabelElements(this._currentProjectionType);
-            // this._resetUnitElements(this._currentProjectionUnits);
+            this._resetLabelElements(newProjectionType);
+            this._resetUnitElements(newProjectionUnits);
 
             // mise a jour des inputs pour les coordonnees
-            // if (oldProjectionUnits === "DMS" || this._currentProjectionUnits === "DMS") {
-            //     this._resetCoordinateElements(this.editCoordinates, this._currentProjectionType, this._currentProjectionUnits);
-            //     this._setEditMode(this.editing);
-            // }
+            if (oldProjectionUnits === "DMS" || newProjectionUnits === "DMS") {
+                this._resetCoordinateElements(this.options.editCoordinates, newProjectionType, newProjectionUnits);
+                this._setEditMode(this._isEditing);
+            }
 
             // on simule un deplacement en mode tactile pour mettre à jour les
             // resultats

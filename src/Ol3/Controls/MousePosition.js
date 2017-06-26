@@ -1285,7 +1285,7 @@ define([
             return null;
         }
 
-        var result = Utils.toInteger(degrees);
+        var result = MathUtils.toInteger(degrees);
         if (result < Number(inputDegrees.dataset.min) || result > Number(inputDegrees.dataset.max)) {
             return null;
         }
@@ -1297,7 +1297,7 @@ define([
         if (minutes) {
             minutes = minutes.replace(",", ".");
             if (Utils.isInteger(minutes)) {
-                var mins = Utils.toInteger(minutes);
+                var mins = MathUtils.toInteger(minutes);
                 if (mins >= Number(inputMinutes.dataset.min) && mins <= Number(inputMinutes.dataset.max)) {
                     result += (mins / 60);
                 }
@@ -1604,7 +1604,7 @@ define([
      * @returns {Boolean}
      * @private
      */
-    MousePosition.prototype.validateCoordinate = function (coordType, value) {
+    MousePosition.prototype.validateExtentCoordinate = function (coordType, value) {
         if (["Lon", "Lat"].indexOf(coordType) === -1) {
             return false;
         }

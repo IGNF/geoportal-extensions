@@ -97,8 +97,14 @@
                     },
                     {
                       crs : CRS.EPSG4326, // L.CRS.EPSG4326
-                      label : "Géographiques (overload)",
-                      type : "Geographical"
+                      label : "Géographiques (overload+extend)",
+                      type : "Geographical",
+                      geoBBox : {
+                          left : -5,
+                          bottom : -20,
+                          right : 5,
+                          top : 20
+                      }
                     },
                     {
                       crs : new L.Proj.CRS("IGNF:RGF93G"),
@@ -113,7 +119,7 @@
                     {
                       code : "LAMB93",
                       crs : CRS.EPSG2154,
-                      label : "Lambert 93 (overload)",
+                      label : "Lambert 93 (overload+extend)",
                       type : "Metric",
                       geoBBox : { left: -9.86, bottom : 41.15, right : 10.38, top : 51.56 }
                     },
@@ -129,7 +135,7 @@
                     },
                     {
                       crs : CRS.EPSG27572,
-                      label : "Lambert 2 étendu (overload)",
+                      label : "Lambert 2 étendu (overload+extend)",
                       type : "Metric",
                       geoBBox : { left: -4.87, bottom : 42.33, right : 8.23, top : 51.14 }
                     },

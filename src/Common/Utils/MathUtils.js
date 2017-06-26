@@ -13,11 +13,11 @@ define([], function () {
             var r = a % b;
             return r * b < 0 ? r + b : r;
         },
-        
+
         /**
          * Transform degrees, minutes, seconds form decimal degrees -
          * Largely inspired by the private function degreesToStringHDMS from ol/coordinate.js
-         * 
+         *
          * @param {Number} degrees - decimal degrees
          * @param {Array} hemispheres - "NS" ou "EO"
          * @param {Number} numDigits - number of digits for seconds
@@ -51,6 +51,51 @@ define([], function () {
                 s : sec,
                 direction : direction
             };
+        },
+
+        /**
+         * Converts string to Integer
+         *
+         * @param {String} s - string number
+         * @param {Numeric} base - between 2 and 36
+         * @returns {null|Numeric}
+         */
+        toInteger : function (s, base) {
+            var _base = base || 10;
+            var n = parseInt(s, _base);
+            if (! isNaN(n) && isFinite(n)) {
+                return n;
+            }
+            return null;
+        },
+
+        /**
+         * check if s represents an integer
+         *
+         * @param {String} s - string number
+         * @returns {Boolean}
+         */
+        isInteger : function (s) {
+            if (isNaN(s)) {
+                return false;
+            }
+
+            var v = parseFloat(s);
+            return ((v | 0) === v);
+        },
+
+        /**
+         * Converts s to float
+         *
+         * @param {String} s - string number
+         * @returns {null|Numeric}
+         */
+        toFloat : function (s) {
+            var n = parseFloat(s);
+            if (! isNaN(n) && isFinite(n)) {
+                return n;
+            }
+            return null;
         }
     };
 

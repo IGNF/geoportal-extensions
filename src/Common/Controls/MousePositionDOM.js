@@ -218,9 +218,9 @@ define([], function () {
                 input.addEventListener("click", function () {
                     context.onMousePositionEditModeClick(true);
                 });
-                input.addEventListener("change", function () {
+                input.addEventListener("change", function (e) {
                     this.classList.remove("error");
-                    var valid = context.validateCoordinate(coordType, this.value);
+                    var valid = context.validateExtentCoordinate(coordType, this.value, e);
                     valid ? this.classList.remove("error") : this.classList.add("error");
                 });
             }
@@ -798,7 +798,7 @@ define([], function () {
                     labelLon.innerHTML = "Longitude : ";
                 }
 
-                if (coordinate.unit === "DMS") {
+                if ( typeof coordinate.lat === "object" && typeof coordinate.lng === "object") {
                     var parts = {
                         lng : "Lon",
                         lat : "Lat"
