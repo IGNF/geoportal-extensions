@@ -31,12 +31,43 @@ define([
      * @param {Object} widget - The Widget object to add
      */
     WidgetAPI.prototype.addWidget = function addWidget (globe, widget) {
-        globe.viewerDiv.appendChild(widget.getElement());
+        // If the widget element is not created, we stop
+        if (!widget.getElement()) {
+            console.log("[ERROR] WidgetAPI:addWidget - widget object given not created");
+            return;
+        }
         if (!globe.widgets) {
             globe.widgets = [];
         }
+        // put the widget element into the target div if specified
+        if (widget.getTarget()) {
+            widget.getElement().style.position = "relative";
+            widget.getTarget().appendChild(widget.getElement());
+        } else {
+            widget.setTarget(globe.viewerDiv);
+            globe.viewerDiv.appendChild(widget.getElement());
+        }
         this.getWidgets(globe).push(widget);
         widget.setMap(globe);
+    };
+
+    /**
+     * Moves the widget to the given target div
+     *
+     * @param {Object} widget - The Widget object to move
+     * @param {HTMLElement} targetDiv - The div into we want to move the widget
+     */
+    WidgetAPI.prototype.moveWidget = function moveWidget (widget, targetDiv) {
+        var globeDiv = widget.getMap().viewerDiv;
+        // put the widget element into the target div if specified
+        if (targetDiv !== globeDiv) {
+            widget.getElement().style.position = "relative";
+            widget.getTarget().appendChild(widget.getElement());
+        } else {
+            widget.getElement().style.position = "absolute";
+            globeDiv.appendChild(widget.getElement());
+        }
+        widget.setTarget(targetDiv);
     };
 
     /**

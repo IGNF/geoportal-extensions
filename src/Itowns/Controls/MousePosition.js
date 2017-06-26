@@ -105,12 +105,13 @@ define([
 
         // init control DOM container
         var container = this._initContainer(options);
-
+        var targetDiv = document.getElementById(options.div) || null;
         Widget.call(
             this,
             {
                 name : "MousePosition",
-                element : container
+                element : container,
+                target : targetDiv
             }
         );
     };

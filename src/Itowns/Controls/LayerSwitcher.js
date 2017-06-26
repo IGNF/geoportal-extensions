@@ -70,12 +70,14 @@ define([
         this._initialize(options, layers);
 
         var container = this._initContainer(options);
+        var targetDiv = document.getElementById(options.div) || null;
 
         Widget.call(
             this,
             {
                 name : "LayerSwitcher",
-                element : container
+                element : container,
+                target : targetDiv
             }
         );
     }
