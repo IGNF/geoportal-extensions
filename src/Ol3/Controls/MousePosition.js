@@ -16,7 +16,7 @@ define([
     woodman,
     Gp,
     Utils,
-	Markers,
+    Markers,
     RightManagement,
     SelectorID,
     MathUtils,
@@ -53,10 +53,10 @@ define([
      *      and "M" or "KM" for metric coordinates
      * @param {Array}   [options.displayAltitude = true] - activate (true) or deactivate (false) the altitude panel. True by default
      * @param {Array}   [options.displayCoordinates = true] - activate (true) or deactivate (false) the coordinates panel. True by default
-     * @param {Boolean}	[options.editCoordinates = false] - add edit coordinates options. False by default.
-	 * @param {Object} [options.positionMarker] - options for position marker
-	 * @param {String} options.positionMarker.src - Marker url (define in src/Ol3/Controls/Utils/Markers.js)
-	 * @param {Array} options.positionMarker.offset - offset of marker. Overlay positionning is top-left.
+     * @param {Boolean} [options.editCoordinates = false] - add edit coordinates options. False by default.
+     * @param {Object} [options.positionMarker] - options for position marker
+     * @param {String} options.positionMarker.src - Marker url (define in src/Ol3/Controls/Utils/Markers.js)
+     * @param {Array} options.positionMarker.offset - offset of marker. Overlay positionning is top-left.
      * @param {Boolean} options.positionMarker.hide - if true, marker is not displayed, otherwise displayed (False by default.)
      * @param {Object}  [options.altitude] - elevation configuration
      * @param {Object}  [options.altitude.serviceOptions] - options of elevation service
@@ -173,7 +173,7 @@ define([
                 markerDiv.id = this._addUID("GPmousePositionMarker");
                 markerDiv.src = this._markerUrl;
                 markerDiv.title = "Cliquer pour supprimer";
-                markerDiv.addEventListener("click", function() {
+                markerDiv.addEventListener("click", function () {
                     context._markerOverlay.setPosition(undefined);
                 });
                 
@@ -455,13 +455,13 @@ define([
         this.options.editCoordinates = ( options.editCoordinates !== undefined ) ? options.editCoordinates : false;
         this.editing = false;
 
-		// position marker
-		this._markerOverlay = null;
-		this._markerUrl = null;
-		this._markerOffset = [0, 0];
-		this._hideMarker = false;
-		this._initMarker(options.positionMarker);
-		
+        // position marker
+        this._markerOverlay = null;
+        this._markerUrl = null;
+        this._markerOffset = [0, 0];
+        this._hideMarker = false;
+        this._initMarker(options.positionMarker);
+
         this.options.units = options.units || [];
         this.options.displayAltitude = ( options.displayAltitude !== undefined ) ? options.displayAltitude : true;
         this.options.displayCoordinates = ( options.displayCoordinates !== undefined ) ? options.displayCoordinates : true;
@@ -536,13 +536,12 @@ define([
     /**
      * 
      * @param {Object} option - positionMarker option
-     * @returns {undefined}
      */
-	MousePosition.prototype._initMarker = function(option) { 
-		if (! this.options.editCoordinates) {
+    MousePosition.prototype._initMarker = function (option) { 
+        if (! this.options.editCoordinates) {
             return;
         }
-			
+
         if (! option) {
             this._markerUrl = Markers["lightOrange"];
             this._markerOffset = Markers.defaultOffset;
@@ -560,15 +559,17 @@ define([
                 console.log("positionMarker.offset should be an array. e.g. : [0,0]");
             }
         }
-			
+
         var url = option.url;
         if (! url) {
             this._markerUrl = Markers["lightOrange"];
         } else if (url.match(/^[a-zA-Z]+$/)) {	// un seul mot
             this._markerUrl = (Markers[url] !== undefined) ? Markers[url] : Markers["lightOrange"];
-        } else this._markerUrl = url;
-	};
-	
+        } else {
+            this._markerUrl = url;
+        }
+    };
+
     /**
      * this method is called by the constructor and initialize the projection
      * systems.
@@ -1450,12 +1451,12 @@ define([
             return;
         }
 
-		var xy;
-		if (this._currentProjectionSystems.type === "Geographical") {
-			xy = [this.convert(lon), this.convert(lat)]; 
-		} else {
-			xy = [this.convert(lat), this.convert(lon)]; 
-		}
+        var xy;
+        if (this._currentProjectionSystems.type === "Geographical") {
+            xy = [this.convert(lon), this.convert(lat)]; 
+        } else {
+            xy = [this.convert(lat), this.convert(lon)]; 
+        }
         var xyWGS84 = ol.proj.transform(xy, this._currentProjectionSystems.crs, "EPSG:4326");
         
         var geoBBox = this._currentProjectionSystems.geoBBox;
