@@ -35,6 +35,7 @@ define([
                     };
                     if( self._fetchExtent ) {
                         event.extent = new itowns.Extent('EPSG:4326', 180, -180, 90, -90);
+                        // event.layers = { id: [] };
                     }
                     if( self._fetchVisibleLayers ) {
                         event.layers = { id: [] };
@@ -85,7 +86,7 @@ define([
     * getLayerById
     */
     GlobeViewExtended.prototype.getLayerById = function (id) {
-        return this.getLayers( function(layer) {
+        return this.getLayers( function (layer) {
             if (layer.id === id) {
                 return layer;
             }
@@ -96,9 +97,20 @@ define([
     * getColorLayers
     */
     GlobeViewExtended.prototype.getColorLayers = function () {
-        return this.getLayers( function(layer) {
+        return this.getLayers( function (layer) {
             if (layer.type === "color") {
-                return layer;y
+                return layer;
+            }
+        });
+    };
+
+    /**
+    * getElevetionLayers
+    */
+    GlobeViewExtended.prototype.getElevationLayers = function () {
+        return this.getLayers( function (layer) {
+            if (layer.type === "elevation") {
+                return layer;
             }
         });
     };
@@ -133,6 +145,13 @@ define([
                     for( var i in node.materials[0].colorLayersId ) {
                         if( options.layers.id.indexOf(node.materials[0].colorLayersId[i]) < 0 ) {
                             options.layers.id.push(node.materials[0].colorLayersId[i]);
+                        }
+                    }
+                    if (this._fetchExtent) {
+                        for ( var j in node.materials[0].elevationLayersId ) {
+                            if ( options.layers.id.indexOf(node.materials[0].elevationLayersId[j]) < 0 ) {
+                                options.layers.id.push(node.materials[0].elevationLayersId[j]);
+                            }
                         }
                     }
                 }
