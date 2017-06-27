@@ -1355,7 +1355,7 @@ define([
         }
 
         degrees = degrees.replace(",", ".");
-        if (! Utils.isInteger(degrees)) {
+        if (! MathUtils.isInteger(degrees)) {
             return null;
         }
 
@@ -1370,7 +1370,7 @@ define([
         var minutes = inputMinutes.value;
         if (minutes) {
             minutes = minutes.replace(",", ".");
-            if (Utils.isInteger(minutes)) {
+            if (MathUtils.isInteger(minutes)) {
                 var mins = MathUtils.toInteger(minutes);
                 if (mins >= Number(inputMinutes.dataset.min) && mins <= Number(inputMinutes.dataset.max)) {
                     result += (mins / 60);
@@ -1421,6 +1421,10 @@ define([
 
         var coordinate = ol.proj.transform(lonlat, oSrs, view.getProjection());
         view.setCenter(coordinate);
+        
+        if (this._markerOverlay && ! this._hideMarker) {
+            this._markerOverlay.setPosition(coordinate);
+        }
     };
 
     /**
