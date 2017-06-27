@@ -39,16 +39,14 @@ define([
         if (!globe.widgets) {
             globe.widgets = [];
         }
+        widget.setMap(globe);
         // put the widget element into the target div if specified
         if (widget.getTarget()) {
-            widget.getElement().style.position = "relative";
-            widget.getTarget().appendChild(widget.getElement());
+            this.moveWidget(widget, widget.getTarget());
         } else {
-            widget.setTarget(globe.viewerDiv);
-            globe.viewerDiv.appendChild(widget.getElement());
+            this.moveWidget(widget, globe.viewerDiv);
         }
         this.getWidgets(globe).push(widget);
-        widget.setMap(globe);
     };
 
     /**
@@ -62,7 +60,7 @@ define([
         // put the widget element into the target div if specified
         if (targetDiv !== globeDiv) {
             widget.getElement().style.position = "relative";
-            widget.getTarget().appendChild(widget.getElement());
+            targetDiv.appendChild(widget.getElement());
         } else {
             widget.getElement().style.position = "absolute";
             globeDiv.appendChild(widget.getElement());
