@@ -9,10 +9,14 @@
         "options": {}
     },
     "options": {
-        "attribution" : {
-            "name":"IGN",
-            "url":"http://www.ign.fr/"
-        },
+        "originators" :  [{
+          "name" : "IGNEX",
+          "attribution" : "IGN Grandes Echelles",
+          "url" : "http://www.ign.fr",
+          "constraints" : [{
+              "crs":"EPSG:4326"
+          }]
+      }],
         "name": "GEOGRAPHICALGRIDSYSTEMS.MAPS.SCAN-EXPRESS.STANDARD",
         "mimetype": "image/jpeg",
         "tileMatrixSet": "PM",

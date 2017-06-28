@@ -24,6 +24,14 @@
     },
     "options": {
         "mimetype"  : "image/png",
+        "originators" :  [{
+            "name" : "IGNRegion",
+            "attribution" : "IGN Grandes Echelles",
+            "url" : "http://www.ign.fr",
+            "constraints" : [{
+                "crs":"EPSG:4326"
+            }]
+        }],
         "attribution" : {
             "name":"IGN",
             "url":"http://www.ign.fr/"

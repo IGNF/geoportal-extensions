@@ -12,6 +12,14 @@
 	},
 	"options": {
 		"name": "ELEVATION.ELEVATIONGRIDCOVERAGE.HIGHRES",
+        "originators" :  [{
+            "name" : "IGN",
+            "attribution" : "IGN Grandes Echelles",
+            "url" : "http://www.ign.fr",
+            "constraints" : [{
+                "crs":"EPSG:4326"
+            }]
+        }],
 		"mimetype": "image/x-bil;bits=32",
 		"tileMatrixSet": "WGS84G",
 		"tileMatrixSetLimits": {
