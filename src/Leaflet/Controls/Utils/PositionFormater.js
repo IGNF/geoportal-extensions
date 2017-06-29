@@ -24,7 +24,7 @@ define([], function () {
         EAST : "E",
 
         /** ... */
-        WEST : "W",
+        WEST : "O",
 
         /** ... */
         digitSecond : 2,
@@ -54,7 +54,7 @@ define([], function () {
         },
 
         /** ... */
-        decimalToDMS : function ( location, hemisphere ) {
+        decimalToDMS : function ( location, hemisphere, obj) {
             if ( location < 0 ) {
                 location *= -1; // strip dash '-'
             }
@@ -70,19 +70,28 @@ define([], function () {
                 dms += hemisphere;
             }
 
+            if (obj) {
+                return {
+                    d : degrees,
+                    m : minutes,
+                    s : seconds,
+                    direction : hemisphere
+                };
+            }
+
             return dms;
         },
 
         /** ... */
-        decimalLatToDMS : function ( location ) {
+        decimalLatToDMS : function ( location, obj ) {
             var hemisphere = ( location < 0 ) ? this.SOUTH : this.NORTH; // south if negative
-            return this.decimalToDMS( location, hemisphere );
+            return this.decimalToDMS( location, hemisphere, obj );
         },
 
         /** ... */
-        decimalLongToDMS : function ( location ) {
+        decimalLonToDMS : function ( location, obj ) {
             var hemisphere = ( location < 0 ) ? this.WEST : this.EAST;  // west if negative
-            return this.decimalToDMS( location, hemisphere );
+            return this.decimalToDMS( location, hemisphere, obj );
         },
 
         /** ... */

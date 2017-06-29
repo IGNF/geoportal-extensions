@@ -101,9 +101,7 @@ define([
             }
             return id ;
         }
-
     };
 
     return Utils;
-
 });
