@@ -4,7 +4,7 @@ define([
     "woodman",
     "gp",
     "Ol3/Utils",
-	"Ol3/Controls/Utils/Markers",
+    "Ol3/Controls/Utils/Markers",
     "Common/Utils/CheckRightManagement",
     "Common/Utils/SelectorID",
     "Common/Utils/MathUtils",
@@ -55,8 +55,11 @@ define([
      * @param {Array}   [options.displayCoordinates = true] - activate (true) or deactivate (false) the coordinates panel. True by default
      * @param {Boolean} [options.editCoordinates = false] - add edit coordinates options. False by default.
      * @param {Object} [options.positionMarker] - options for position marker
-     * @param {String} options.positionMarker.src - Marker url (define in src/Ol3/Controls/Utils/Markers.js)
-     * @param {Array} options.positionMarker.offset - offset of marker. Overlay positionning is top-left.
+     * @param {String} options.positionMarker.url - Marker url (define in src/Ol3/Controls/Utils/Markers.js)
+     * @param {Array} options.positionMarker.offset - Offsets in pixels used when positioning the marker towards targeted point.
+     *      The first element in the array is the horizontal offset. A positive value shifts the marker right.
+     *      The second element in the array is the vertical offset. A positive value shifts the marker down. [0,0] value positions the top-left corner of the marker image to the targeted point.
+     *      Default is offset associated to default marker image.
      * @param {Boolean} options.positionMarker.hide - if true, marker is not displayed, otherwise displayed (False by default.)
      * @param {Object}  [options.altitude] - elevation configuration
      * @param {Object}  [options.altitude.serviceOptions] - options of elevation service
@@ -557,13 +560,16 @@ define([
                 this._markerOffset = option.offset;
             } else {
                 console.log("positionMarker.offset should be an array. e.g. : [0,0]");
+                this._markerOffset = Markers.defaultOffset;
             }
+        } else {
+            this._markerOffset = Markers.defaultOffset;
         }
 
         var url = option.url;
         if (! url) {
             this._markerUrl = Markers["lightOrange"];
-        } else if (url.match(/^[a-zA-Z]+$/)) {	// un seul mot
+        } else if (url.match(/^[a-zA-Z]+$/)) {// un seul mot
             this._markerUrl = (Markers[url] !== undefined) ? Markers[url] : Markers["lightOrange"];
         } else {
             this._markerUrl = url;
