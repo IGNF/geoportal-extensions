@@ -17,7 +17,7 @@ define(["sortable"], function () {
         /**
          * Creation du container principal (DOM)
          *
-         * @returns {DOMElement} container - layer switcher DOM element
+         * @returns {DOMElement} div DOM
          */
         _createMainContainerElement : function () {
 
@@ -29,34 +29,66 @@ define(["sortable"], function () {
         },
 
         /**
-         * Creation du container principal des layers (DOM)
+         * Creation du selecteur (caché) pour l'affichage/masquage des attributions (DOM)
+         *
+         * @returns {DOMElement} checkbox DOM
          */
-        _createMainAttributionElement : function () {
-            // ajout de la liste des layers dans le container principal
-            // <div id="GPlayersList" class="GPpanel">
-            //   (...)
-            // </div>
+        _createMainAttributionsShowElement : function () {
+            var input  = document.createElement("input");
+            input.id   = this._addUID("GPshowAttributionsList");
+            input.type = "checkbox";
+            return input;
+        },
+
+        /**
+         * Création de l'élément liste des attributions (DOM)
+         *
+         * @returns {DOMElement} liste DOM
+         */
+        _createAttributionsList : function () {
+            var ul = document.createElement("ul");
+            ul.id   = this._addUID("GPAttributionsList");
+            return ul;
+        },
+
+        /**
+         * Création du conteneur principal des attributions (DOM)
+         *
+         * @returns {DOMElement} div DOM
+         */
+        _createMainAttributionsListContainer : function () {
             var div = document.createElement("div");
-            div.id  = this._addUID("GPAttributionsList");
-            // div.className = "GPpanel";
+            div.id  = this._addUID("GPAttributionsListContainer");
+
             return div;
         },
 
         /**
-         * Creation du nom du layer (DOM)
+         * Création du container du picto du controle (DOM)
          *
-         * @param {Object} obj - options de la couche à ajouter dans le layer switcher
+         * @returns {DOMElement} label DOM
          */
-        _createBasicToolNameElement : function (obj) {
-            // exemple :
-            // <span id="GPname_ID_Layer1" class="GPlayerName" title="Quartiers prioritaires de la ville">Quartiers prioritaires de la ville</span>
-            var span = document.createElement("span");
-            span.id  = this._addUID("GPname_ID_" + obj.id);
-            span.className = "GPAttributionName";
-            span.title = obj.description || obj.title;
-            span.innerHTML = obj.title;
+        _createMainPictoElement : function (collapsed) {
 
-            return span;
+            var self = this;
+
+            var label = document.createElement("label");
+            label.id  = this._addUID("GPshowAttributionsListPicto");
+            label.className = "GPshowAdvancedToolPicto";
+            label.htmlFor = this._addUID("GPshowAttributionsList");
+            label.title = "Afficher/masquer les attributions";
+
+            var spanOpen = document.createElement("span");
+            spanOpen.id  = this._addUID("GPshowAttributionsListOpenClose");
+            spanOpen.className  = "GPshowAdvancedToolOpen";
+            spanOpen.innerHTML = collapsed? "i" : "»";
+            spanOpen.addEventListener("click", function () {
+                spanOpen.innerHTML = (document.getElementById(self._addUID("GPshowAttributionsList")).checked) ? "i" : "»";
+            });
+
+            label.appendChild(spanOpen);
+
+            return label;
         }
 
     };

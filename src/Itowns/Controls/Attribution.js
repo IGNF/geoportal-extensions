@@ -1,12 +1,10 @@
 define([
     "Common/Utils",
-    "Common/Utils/LayerUtils",
     "Common/Utils/SelectorID",
     "Common/Controls/AttributionDOM",
     "Itowns/Controls/Widget"
 ], function (
     Utils,
-    LayerUtils,
     SelectorID,
     AttributionDOM,
     Widget
@@ -22,19 +20,17 @@ define([
      * @alias itowns.control.Attribution
      * @param {Object} aOptions - control options
      * @param {Object} [aOptions.options] - Itowns.control.Control options
-     * @param {Boolean} [aOptions.options.id] - Target HTML element container or its id. Default is chosen by map implementation.
-     * @param {Boolean} [aOptions.options.maximised = true] - Specify if the control has to be opened or not.
+     * @param {Boolean} [aOptions.options.collapsed = false] - Specify if the control has to be opened or not.
      * @example
      * var attribution = new itowns.control.Attritbution({
      *  options : {
-     *      id : footer,
-     *      maximised: true
+     *      collapsed: true
      *  }
      * ));
      */
     function Attribution (aOptions) {
 
-        aOptions   = aOptions || {};
+        aOptions = aOptions || {};
         var options = aOptions.options || {};
 
         if (!(this instanceof Attribution)) {
@@ -54,17 +50,17 @@ define([
             {
                 name : "Attribution",
                 element : container,
-                target : aOptions.div
+                target : aOptions.target
             }
         );
     }
 
     /*
-     * @lends module:LayerSwitcher
+     * @lends module:Attribution
      */
     Attribution.prototype = Object.create(Widget.prototype, {});
 
-    // on récupère les méthodes de la classe commune LayerSwitcherDOM
+    // on récupère les méthodes de la classe commune AttributionDOM
     Utils.assign(AttributionDOM, Attribution.prototype);
 
     /**
@@ -82,15 +78,10 @@ define([
      * Bind map to control
      */
     Attribution.prototype.setMap = function (globe) {
+        // info : cette méthode est appelée (entre autres?) après un globe.addWidget() ou globe.removeWidget()
 
-        // info : cette méthode est appelée (entre autres?) après un map.addWidget() ou map.removeWidget()
-
-        if ( globe ) { // dans le cas de l'ajout du contrôle à la map
+        if ( globe ) { // dans le cas de l'ajout du contrôle au globe
             var self = this;
-            // globe.fetchExtent(true);
-
-            // on ajoute les couches
-            this._addAttributions();
 
             // Ajout des listeners
 
@@ -115,6 +106,33 @@ define([
 
         // call original setMap method
         Widget.prototype.setMap.call(this, globe);
+    };
+
+    /**
+     * Collapse or display control main container
+     *
+     * @param {Boolean} collapsed - True to collapse control, False to display it
+     */
+    Attribution.prototype.setCollapsed = function (collapsed) {
+        if ( collapsed === undefined ) {
+            console.log("[ERROR] Attribution:setCollapsed - missing collapsed parameter");
+            return;
+        }
+        var isCollapsed = this.getCollapsed();
+        if ( ( collapsed && isCollapsed) || ( !collapsed && !isCollapsed ) ) {
+            return;
+        }
+
+        document.getElementById(this._addUID("GPshowAttributionsList")).checked = !collapsed;
+    };
+
+    /**
+     * Returns true if widget is collapsed (minimize), false otherwise
+     *
+     * @return {Boolean} collapsed
+     */
+    Attribution.prototype.getCollapsed = function () {
+        return !document.getElementById(this._addUID("GPshowAttributionsList")).checked;
     };
 
     // ################################################################### //
@@ -149,37 +167,29 @@ define([
      * @private
      */
     Attribution.prototype._initContainer = function (options) {
-        // creation du container principal
-        if (options.maximised) {
-            var container = this._createMainContainerElement();
 
-            // ajout dans le container principal de la liste des layers
-            var divA = this._attributionListContainer = this._createMainAttributionElement();
-            container.appendChild(divA);
+        var container = this._createMainContainerElement();
 
-            return container;
-        }
-    };
+        // ajout dans le container principal du selecteur d'affichage des layers
+        var inputShow = this._createMainAttributionsShowElement();
+        container.appendChild(inputShow);
 
-    /**
-     * Add control attribution to control main container
-     *
-     * @method _addAttributions
-     * @private
-     */
-    Attribution.prototype._addAttributions = function () {
-        // Récupération de l'élément contenant les différentes couches.
-        var elementAttributionList;
-        var childNodes = this.getElement().childNodes;
-
-        for ( var i = 0; i < childNodes.length; i ++ ) {
-            if ( childNodes[i].id === this._addUID("GPAttributionsList") ) {
-                elementAttributionList = childNodes[i];
-                break;
-            }
+        // gestion du mode "collapsed"
+        if (!options.collapsed) {
+            inputShow.checked = "checked";
         }
 
-        return elementAttributionList;
+        // ajout dans le container principal de la liste des layers
+        var divA = this._attributionListContainer = this._createMainAttributionsListContainer();
+        var ulA = this._createAttributionsList();
+        divA.appendChild(ulA);
+        container.appendChild(divA);
+
+        // ajout dans le container principal du picto du controle
+        var picto = this._createMainPictoElement(options.collapsed);
+        container.appendChild(picto);
+
+        return container;
     };
 
     /**
@@ -187,61 +197,56 @@ define([
      *
      * @method _inRangeUpdate
      * @param {Array} layersDisplayed - Id of the layers diplayed on screen
-     * @param {Object} extent - Extents of the attributions
+     * @param {Object} extent - The globe view extent
      * @private
      */
 
     Attribution.prototype._inRangeUpdate = function (layersDisplayed, extent) {
-
         var globe = this.getMap();
-        var elementAttributionList = this._addAttributions();
+        var elementAttributionList = document.getElementById(this._addUID("GPAttributionsListContainer"));
 
         var scaleDenominator = 1 / globe.controls.getScale();
 
         var attributions = new Map();
-        var layers = globe.getLayers(function (layer) {
-            if (layer.type === "color" || layer.type === "elevation") {
-                return layer;
-            }
-        });
-        for (var h = 0; h < layers.length; h++) {
-            if (layers[h].visible == false) {
+
+        for (var h = 0; h < layersDisplayed.length; h++) {
+
+            var layer = globe.getLayerById(layersDisplayed[h]);
+
+            if (!layer.visible) {
                 continue;
             }
-            if (layers[h].type === "color" || layers[h].type === "elevation") {
-                if (layers[h].options.originators) {
-                    var ori = layers[h].options.originators;
-                    for (var i = 0; i < layersDisplayed.length; i++) {
-                        for (var j = 0; j < ori.length; j++) {
-                            if (attributions.has(layers[h].options.originators[j].name)) {
-                                continue;
-                            };
-                            if (layers[h].id === layersDisplayed[i]) {
-                                // si l'attribut minScaleDenominator existe
-                                if (ori[j].constraints[0].minScaleDenominator) {
-                                    // on vérifie qu'on se situe bien entre minScaleDenominator et maxScaleDenominator
-                                    if (!(ori[j].constraints[0].minScaleDenominator < scaleDenominator && scaleDenominator < ori[j].constraints[0].maxScaleDenominator)) {
-                                        continue;
-                                    }
-                                }
-                                // on vérifie si l'attribut 'bbox' existe bien
-                                if (ori[j].constraints[0].bbox) {
-                                    // on vérifie que l'on se trouve bien dans les limites de la bbox
-                                    if (ori[j].constraints[0].bbox.left < extent.west() && ori[j].constraints[0].bbox.right > extent.east() && ori[j].constraints[0].bbox.top > extent.north() && ori[j].constraints[0].bbox.bottom < extent.south()) {
-                                        // on ajoute l'attribution dans la Map() 'attributions'
-                                        attributions.set(layers[h].options.originators[j].name, layers[h].options.originators[j]);
-                                    }
-                                    // si l'attribut 'bbox' n'est pas renseigné
-                                } else if (!ori[j].constraints[0].bbox) {
-                                    attributions.set(layers[h].options.originators[j].name, layers[h].options.originators[j]);
-                                }
-                            }
+
+            var ori = layer.options.originators;
+
+            if (ori) {
+                for (var j = 0; j < ori.length; j++) {
+                    if (attributions.has(ori[j].name)) {
+                        continue;
+                    };
+
+                    // si l'attribut minScaleDenominator existe
+                    if (ori[j].constraints[0].minScaleDenominator) {
+                        // on vérifie qu'on se situe bien entre minScaleDenominator et maxScaleDenominator
+                        if (!(ori[j].constraints[0].minScaleDenominator < scaleDenominator && scaleDenominator < ori[j].constraints[0].maxScaleDenominator)) {
+                            continue;
                         }
+                    }
+                    // on vérifie si l'attribut 'bbox' existe bien
+                    if (ori[j].constraints[0].bbox) {
+                        // on vérifie que l'on se trouve bien dans les limites de la bbox
+                        if (ori[j].constraints[0].bbox.left < extent.west() && ori[j].constraints[0].bbox.right > extent.east() && ori[j].constraints[0].bbox.top > extent.north() && ori[j].constraints[0].bbox.bottom < extent.south()) {
+                            // on ajoute l'attribution dans la Map() 'attributions'
+                            attributions.set(ori[j].name, ori[j]);
+                        }
+                        // si l'attribut 'bbox' n'est pas renseigné
+                    } else if (!ori[j].constraints[0].bbox) {
+                        attributions.set(ori[j].name, ori[j]);
                     }
                 }
             }
         }
-        this._updateAttributionListContainer(elementAttributionList, attributions);
+        this._updateAttributionListContainer(attributions);
     };
 
     // ################################################################### //
@@ -251,36 +256,26 @@ define([
     /**
      * Update the layer list container
      *
-     * @method _updateLayerListContainer
+     * @method _updateAttributionListContainer
      * @private
      */
-    Attribution.prototype._updateAttributionListContainer = function (elementAttributionList, attributions) {
-        if ( this._attributionListContainer ) {
-            if (document.getElementById("listAttribution")) {
-                var element = document.getElementById("listAttribution");
-                document.getElementById("listAttribution").parentNode.removeChild(element);
-            }
-            var ul = document.createElement("ul");
-            ul.id = "listAttribution";
-            attributions.forEach(function (a) {
-                var li = document.createElement("li");
-                var link = document.createElement("a");
-                link.href = a.url;
-                link.innerHTML = a.name + "&nbsp";
-                link.target = "_blank";
-                li.id = a.name.replace(/\s/g,"");
-                li.appendChild(link);
-                ul.appendChild(li);
-            });
-            elementAttributionList.appendChild(ul);
-        } else {
-            console.log("[Itowns.control.Attribution] _updateAttributionListContainer : attributions list container not found to update layers order ?!");
-        }
-    };
+    Attribution.prototype._updateAttributionListContainer = function (attributions) {
+        var element = document.getElementById(this._addUID("GPAttributionsList"));
+        document.getElementById(this._addUID("GPAttributionsList")).parentNode.removeChild(element);
 
-    // ################################################################### //
-    // ############################ Utils ################################ //
-    // ################################################################### //
+        var ul = this._createAttributionsList();
+        attributions.forEach(function (a) {
+            var li = document.createElement("li");
+            var link = document.createElement("a");
+            link.href = a.url;
+            link.innerHTML = a.name + "&nbsp";
+            link.target = "_blank";
+            li.id = a.name.replace(/\s/g,"");
+            li.appendChild(link);
+            ul.appendChild(li);
+        });
+        this._attributionListContainer.appendChild(ul);
+    };
 
     return Attribution;
 });

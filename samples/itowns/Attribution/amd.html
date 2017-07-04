@@ -13,7 +13,6 @@ and open the template in the editor.
         <script src="../../../lib/require.js"></script>
 
         <link rel="stylesheet" href="../../../dist/itowns/GpPluginItowns-src.css" />
-        <link rel="stylesheet" href="../../../res/Itowns/Controls/Attribution/GpattributionItowns.css" />
 
         <style type="text/css">
             html {height: 100%}
@@ -27,21 +26,6 @@ and open the template in the editor.
                     /*margin-top: 50vh;
                     transform: translateY(-50%);*/
                 }
-
-                #footer-attributions {
-                    display: flex;
-                    flex-direction: row;
-                    position: absolute;
-                    bottom: 0px;
-                    width:100%;
-                    height:20px;
-                    background-color: white;
-                }
-                .footer-attributions-label {
-                    display: flex;
-                    position: absolute;
-                    bottom: -14px;
-                }
           </style>
 
           <meta charset="UTF-8">
@@ -49,12 +33,7 @@ and open the template in the editor.
 
     </head>
     <body>
-        <div id="viewerDiv">
-            <div id="footer-attributions">
-                <div class="footer-attributions-label"><p>Données cartographiques © : </p></div>
-            </div>
-
-        </div>
+        <div id="viewerDiv"></div>
 
         <script type="text/javascript">
 
@@ -102,7 +81,7 @@ and open the template in the editor.
                     console.info("Globe initialized");
                     var attribution = new itowns.control.Attribution({
                         options : {
-                            maximised : true
+                            // collapsed : true
                         }
                     });
                     itowns.control.WidgetAPI.addWidget( globeView, attribution );
