@@ -1281,7 +1281,7 @@ define([
             } else {
                 map.un("moveend", this.onMapMove, this);
             }
-        } else {
+        } else if (! this.editing) {
             if (this._isDesktop) {
                 map.on("pointermove", this.onMouseMove, this);
             } else {
@@ -1698,14 +1698,14 @@ define([
             return false;
         }
 
-        var v = value.replace(",", ".");
-        v = MathUtils.toFloat(v);
-        if (v === null) {
+        var coord = value.replace(",", ".");
+        coord = MathUtils.toFloat(coord);
+        if (coord === null) {
             return false;
         }
 
         // convert depending on _currentProjectionUnits
-        v = this.convert(v);
+        coord = this.convert(coord);
 
         var geoBBox = this._currentProjectionSystems.geoBBox;
         if (geoBBox === undefined) {
@@ -1717,10 +1717,10 @@ define([
         extent = ol.proj.transformExtent(extent, "EPSG:4326", this._currentProjectionSystems.crs);
 
         // checking if value is in the right interval
-        if (coordType === "Lat" && (value < extent[0] || value > extent[2])) {
+        if (coordType === "Lat" && (coord < extent[0] || coord > extent[2])) {
             return false;
         }
-        if (coordType === "Lon" && (value < extent[1] || value > extent[3])) {
+        if (coordType === "Lon" && (coord < extent[1] || coord > extent[3])) {
             return false;
         }
 
