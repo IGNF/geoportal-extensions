@@ -113,7 +113,8 @@ input[id^=GPmousePositionLat-], input[id^=GPmousePositionLon-] {
 
 span[id^=GPmousePositionAlt-] {
     display: inline-block;
-    width: 90px;
+    padding: 2px;
+    width: 120px;
     line-height: 20px;
     text-align: right;
 }
@@ -121,9 +122,9 @@ span[id^=GPmousePositionAlt-] {
 /* sexagesimal coordinates */
 
 .GPSexagesimal, .GPSexagesimalsec {
-	margin:0;
-	border: 1px solid rgb(204, 204, 204);
-	border-radius: 4px;
+    margin:0;
+    border: 1px solid rgb(204, 204, 204);
+    border-radius: 4px;
 }
 
 input:read-only.GPSexagesimal, input:read-only.GPSexagesimalsec {
@@ -131,16 +132,16 @@ input:read-only.GPSexagesimal, input:read-only.GPSexagesimalsec {
 }
 
 .GPSexagesimal {
-	width: 25px;
+    width: 25px;
 }
 
 .GPSexagesimalsec {
-	width: 38px;
+    width: 38px;
 }
 .GPmousePositionSexagesimalLabel {
-	font-size: 1.2em;
-	vertical-align: middle;
-	padding: 0;
+    font-size: 1.2em;
+    vertical-align: middle;
+    padding: 0;
 }
 
 /* direction N/S ou E/O */
