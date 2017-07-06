@@ -183,10 +183,21 @@ Enregistrez ce fichier sur votre plateforme et paramétrez l'extension Géoporta
 
 ### Versions de Leaflet supportées
 
-L'extension Géoportail pour Leaflet peut s'utiliser avec la [version 0.7](http://leafletjs.com/reference.html) de Leaflet ainsi qu'avec la [version 1.0] (http://leafletjs.com/2016/09/27/leaflet-1.0-final.html) sortie le 27 septembre 2016. 
+L'extension Géoportail pour Leaflet peut s'utiliser avec les versions de Leaflet suivantes :
+* [version 0.7.X](http://leafletjs.com/reference-0.7.7.html)
+* [version 1.0.X](http://leafletjs.com/reference-1.0.3.html)
+* [version 1.1.X](http://leafletjs.com/reference-1.1.0.html) (incompatibilité avec leaflet-draw)
 
-La compatibilité avec les versions antérieures n'a pas été testée.
+Des tests de compatibilité entre les versions de **leaflet/proj4leaflet/leaflet-draw** ont été realisé :
 
+|leaflet      |proj4leaflet   |leaflet-draw |validation  |
+|---          |---            |---          |---         |
+|0.7.x        | 0.7.x         | 0.3.0       | ok         |
+|1.0.0-beta.X | 1.0.0-beta.X  | 0.4.10      | ok         |
+|1.0.1        | 1.0.0 - 1.0.1 | 0.4.10      | ok         |
+|1.0.2        | 1.0.0 - 1.0.1 | 0.4.10      | ok         |
+|1.0.3        | 1.0.0 - 1.0.1 | 0.4.10      | ok  version embarqée par defaut |
+|1.1.0        | 1.0.1         | 0.4.10      | KO  incompatibilité leaflet/leaflet-draw |
 
 ### Navigateurs supportés
 
@@ -654,4 +665,3 @@ map.addControl(ep);
 ```
 
 **Exemple d'utilisation** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/L5ctL3nq/embedded/result,js,html,css/)
-

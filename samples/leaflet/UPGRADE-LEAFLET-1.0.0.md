@@ -46,8 +46,8 @@ mais il faut gerer les versions compatibles avec Leaflet
 |leaflet      |proj4leaflet   |
 |---          |---            |
 |0.7.x        | 0.7.x         |
-|1.0.3        | 1.0.0 - 1.0.1 |
-|1.0.2        | 1.0.0 - 1.0.1 |
-|1.0.1        | 1.0.0 - 1.0.1 |
 |1.0.0-beta.X | 1.0.0-beta.X  |
-|1.1.0        | 1.0.1         | ! version embarqée dans le bundle !
+|1.0.1        | 1.0.0 - 1.0.1 |
+|1.0.2        | 1.0.0 - 1.0.1 |
+|1.0.3        | 1.0.0 - 1.0.1 | ! version embarqée dans le bundle !
+|1.1.0        | 1.0.1         | 
