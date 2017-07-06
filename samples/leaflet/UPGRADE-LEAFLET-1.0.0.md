@@ -22,21 +22,32 @@ Pour des reprojections de coordonnées, il n'est pas necessaire de prendre la li
 **ok**, [an example SEARCHENGINE](SearchEngine/amd-default-1.0.0.html)
 
 ## ROUTE
-**KO**, [an example ROUTE](Route/amd-default-1.0.0.html)
-
-PB d'accès aux markers. Sinon, semble OK.
+**ok**, [an example ROUTE](Route/amd-default-1.0.0.html)
 
 ## ISOCHRONE
-**KO**, [an example ISOCHRONE](Iso/amd-default-1.0.0.html)
+**ok**, [an example ISOCHRONE](Iso/amd-default-1.0.0.html)
 
-PB d'accès aux markers. Sinon, semble OK.
+## REVERSE
+**ok**, [an example REVERSE](Reverse/amd-default-1.0.0.html)
+
+## ELEVATIONPATH
+**ok**, [an example ELEVATIONPATH](ElevationPath/amd-default-1.0.0.html)
+
+Avec test du plugin Leaflet.Draw en version last release 0.4.10
 
 ## AUTOCOMPLETION
-
-**KO**, [an example AUTOCOMPLETION](AutoCompletion/amd-default-1.0.0.html)
-
-=> PB d'accès à l'image du marker
+**ok**, [an example AUTOCOMPLETION](AutoCompletion/amd-default-1.0.0.html)
 
 ## CRS
 **ok**, [an example CRS ](CRS/amd-wmts-l93-1.0.0.html),
-mais il faut la lib. la version 1.0.0-beta.2 compatible avec Leaflet 1.0.0-RC (Sources à compiler).
+
+mais il faut gerer les versions compatibles avec Leaflet
+
+|leaflet      |proj4leaflet   |
+|---          |---            |
+|0.7.x        | 0.7.x         |
+|1.0.3        | 1.0.0 - 1.0.1 |
+|1.0.2        | 1.0.0 - 1.0.1 |
+|1.0.1        | 1.0.0 - 1.0.1 |
+|1.0.0-beta.X | 1.0.0-beta.X  |
+|1.1.0        | 1.0.1         | ! version embarqée dans le bundle !
