@@ -81,7 +81,7 @@ define(["sortable"], function () {
             var spanOpen = document.createElement("span");
             spanOpen.id  = this._addUID("GPshowAttributionsListOpenClose");
             spanOpen.className  = "GPshowAdvancedToolOpen";
-            spanOpen.innerHTML = collapsed? "i" : "»";
+            spanOpen.innerHTML = collapsed ? "i" : "»";
             spanOpen.addEventListener("click", function () {
                 spanOpen.innerHTML = (document.getElementById(self._addUID("GPshowAttributionsList")).checked) ? "i" : "»";
             });

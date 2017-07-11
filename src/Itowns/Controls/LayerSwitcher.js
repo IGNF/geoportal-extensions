@@ -104,14 +104,14 @@ define([
     /**
      * Bind globe to control
      */
-    LayerSwitcher.prototype.setMap = function (globe) {
+    LayerSwitcher.prototype.setGlobe = function (globe) {
 
         if ( globe ) { // dans le cas de l'ajout du contrôle au globe
             var self = this;
 
             // add options layers to layerlist.
             // (seulement les couches configurées dans les options du layerSwitcher par l'utilisateur),
-            // les autres couches de la carte seront ajoutées dans la méthode setMap
+            // les autres couches de la carte seront ajoutées dans la méthode setGlobe
             for ( var i = 0; i < this._initLayers.length; i++ ) {
                 // recup le layer, son id,
                 var layer = null;
@@ -144,9 +144,23 @@ define([
             }
 
             // on ajoute les couches
-            this._addMapLayers(globe);
+            this._addGlobeLayers(globe);
 
             // Ajout des listeners
+
+            /**
+            * ajout du callback onlayerchanged:opacity
+            */
+            this._callbacks.onOpacityLayerCallBack = function (e) {
+                self._updateLayerOpacity(e.target.id, e.new.opacity);
+            };
+
+            /**
+            * ajout du callback onlayerchanged:visible
+            */
+            this._callbacks.onVisibilityLayerCallBack = function (e) {
+                self._updateLayerVisibility(e.target.id, e.new.visible);
+            };
 
             // At every globe movement, layer switcher may be updated,
             // according to layers on globe, and their range.
@@ -156,9 +170,9 @@ define([
             this._callbacks.onChangedViewCallBack = function (e) {
                 self._inRangeUpdate(e.layers.id);
             };
-            globe.addEventListener("PRERENDER", this._callbacks.onChangedViewCallBack);
-            // pour que l'evenement PRERENDER renvoie les couches visibles
-            globe.fetchVisibleLayers(true);
+            globe.addEventListener("prerender", this._callbacks.onChangedViewCallBack);
+            // pour que l'evenement prerender renvoie les couches visibles
+            globe.preRenderEventFetchLayersDisplayed(true);
 
             /**
             * ajout du callback onlayeradded
@@ -166,7 +180,7 @@ define([
             this._callbacks.onAddedLayerCallBack = function (e) {
                 var id = e.layerId;
                 if (self) {
-                    var layer = self.getMap().getLayerById(id);
+                    var layer = self.getGlobe().getLayerById(id);
                     var layerConf = self._getLayerConf(id);
                     if ( layerConf ) {
                         self.addLayer(layer, layerConf);
@@ -184,7 +198,7 @@ define([
                 var id = e.layerId;
 
                 // On met à jour l'index max et on retire la couche du layerSwitcher
-                if ( self && self._layers[id] ) {
+                if ( self ) {
                     self.removeLayer(id);
                 }
 
@@ -214,20 +228,6 @@ define([
             };
             globe.addEventListener(itowns.GLOBE_VIEW_EVENTS.COLOR_LAYERS_ORDER_CHANGED, this._callbacks.onIndexLayerCallBack);
 
-            /**
-            * ajout du callback onlayerchanged:opacity
-            */
-            this._callbacks.onOpacityLayerCallBack = function (e) {
-                self._updateLayerOpacity(e.target.id, e.new.opacity);
-            };
-
-            /**
-            * ajout du callback onlayerchanged:visible
-            */
-            this._callbacks.onVisibilityLayerCallBack = function (e) {
-                self._updateLayerVisibility(e.target.id, e.new.visible);
-            };
-
             var layers = globe.getColorLayers();
             for ( var i = 0 ; i < layers.length ; ++i ) {
                 layers[i].addEventListener("opacity-property-changed", this._callbacks.onOpacityLayerCallBack);
@@ -236,11 +236,11 @@ define([
 
         } else {
             // On retire les listeners qui étaient liés au layerSwitcher supprimé
-            this.getMap().removeEventListener("PRERENDER", this._callbacks.onChangedViewCallBack);
-            this.getMap().removeEventListener(itowns.GLOBE_VIEW_EVENTS.LAYER_ADDED, this._callbacks.onAddedLayerCallBack);
-            this.getMap().removeEventListener(itowns.GLOBE_VIEW_EVENTS.LAYER_REMOVED, this._callbacks.onRemovedLayerCallBack);
-            this.getMap().removeEventListener(itowns.GLOBE_VIEW_EVENTS.COLOR_LAYERS_ORDER_CHANGED, this._callbacks.onIndexLayerCallBack);
-            var layers = this.getMap().getColorLayers();
+            globe.removeEventListener("prerender", this._callbacks.onChangedViewCallBack);
+            globe.removeEventListener(itowns.GLOBE_VIEW_EVENTS.LAYER_ADDED, this._callbacks.onAddedLayerCallBack);
+            globe.removeEventListener(itowns.GLOBE_VIEW_EVENTS.LAYER_REMOVED, this._callbacks.onRemovedLayerCallBack);
+            globe.removeEventListener(itowns.GLOBE_VIEW_EVENTS.COLOR_LAYERS_ORDER_CHANGED, this._callbacks.onIndexLayerCallBack);
+            var layers = globe.getColorLayers();
             for ( var i = 0 ; i < layers.length ; ++i ) {
                 layers[i].removeEventListener("opacity-property-changed", this._callbacks.onOpacityLayerCallBack);
                 layers[i].removeEventListener("visible-property-changed", this._callbacks.onVisibilityLayerCallBack);
@@ -254,8 +254,8 @@ define([
             return ;
         }
 
-        // call original setMap method
-        Widget.prototype.setMap.call(this, globe);
+        // call original setGlobe method
+        Widget.prototype.setGlobe.call(this, globe);
     };
 
     /**
@@ -281,7 +281,7 @@ define([
     LayerSwitcher.prototype.addLayer = function (layer, config) {
 
         config = config || {};
-        var globe = this.getMap();
+        var globe = this.getGlobe();
 
         if ( !layer ) {
             console.log("[ERROR] LayerSwitcher:addLayer - missing layer parameter");
@@ -294,10 +294,14 @@ define([
             return;
         }
 
-        // make sure layer is in globe layers
-        var LayerInMap = globe.getLayerById(id);
+        //abonnement aux evenements
+        layer.addEventListener("opacity-property-changed", this._callbacks.onOpacityLayerCallBack);
+        layer.addEventListener("visible-property-changed", this._callbacks.onVisibilityLayerCallBack);
 
-        if ( !LayerInMap ) {
+        // make sure layer is in globe layers
+        var LayerInGlobe = globe.getLayerById(id);
+
+        if ( !LayerInGlobe ) {
             console.log("[ERROR] LayerSwitcher:addLayer - configuration cannot be set for ", layer, " layer (layer is not in globe layers )");
             return;
         }
@@ -384,7 +388,7 @@ define([
     /**
      * Remove a layer from control
      *
-     * @param {String} layerId - layer id.
+     * @param {Object} layer - layer to remove to layer switcher
      */
     LayerSwitcher.prototype.removeLayer = function (layerId) {
         var layerList = document.getElementById(this._addUID("GPlayersList"));
@@ -520,11 +524,11 @@ define([
     /**
      * Add control layers to control main container
      *
-     * @method _addMapLayers
-     * @param {Object} globe - the Itowns.Map object
+     * @method _addGlobeLayers
+     * @param {Object} globe - the Itowns.GlobeViewExtended object
      * @private
      */
-    LayerSwitcher.prototype._addMapLayers = function (globe) {
+    LayerSwitcher.prototype._addGlobeLayers = function (globe) {
 
         // Récupération de l'élément contenant les différentes couches.
         var elementLayersList;
@@ -623,15 +627,14 @@ define([
      * @private
      */
     LayerSwitcher.prototype._onChangeLayerOpacity = function (e) {
-        var globe = this.getMap();
+        var globe = this.getGlobe();
         var layerID  = this._resolveLayerId(e.target.id);
 
         var opacityValue = e.target.value;
         var opacityId = document.getElementById(this._addUID("GPopacityValue_ID_" + layerID));
         opacityId.innerHTML = opacityValue + "%";
         var layer = globe.getLayerById(layerID);
-        layer.opacity = opacityValue / 100;
-        globe.notifyChange(true); // update viewer
+        globe.setLayerOpacity(layer, opacityValue / 100);
     };
 
     /**
@@ -651,10 +654,14 @@ define([
         }
 
         var layerOpacityInput = document.getElementById(this._addUID("GPopacityValueDiv_ID_" + layerId));
-        layerOpacityInput.value = Math.round(opacity * 100);
+        if( layerOpacityInput ) {
+            layerOpacityInput.value = Math.round(opacity * 100);
+        }
 
         var layerOpacitySpan = document.getElementById(this._addUID("GPopacityValue_ID_" + layerId));
-        layerOpacitySpan.innerHTML = Math.round(opacity * 100) + "%";
+        if( layerOpacitySpan ) {
+            layerOpacitySpan.innerHTML = Math.round(opacity * 100) + "%";
+        }
     };
 
     /**
@@ -665,12 +672,11 @@ define([
      * @private
      */
     LayerSwitcher.prototype._onVisibilityLayerClick = function (e) {
-        var globe = this.getMap();
+        var globe = this.getGlobe();
 
         var layerID  = this._resolveLayerId(e.target.id);
         var layer = globe.getLayerById(layerID);
-        layer.visible = e.target.checked;
-        globe.notifyChange(true); // update viewer
+        globe.setLayerVisibility(layer, e.target.checked); // update viewer
     };
 
     /**
@@ -683,7 +689,9 @@ define([
      */
     LayerSwitcher.prototype._updateLayerVisibility = function (layerId, visibility) {
         var layerVisibilityInput = document.getElementById(this._addUID("GPvisibility_ID_" + layerId));
-        layerVisibilityInput.checked = visibility;
+        if( layerVisibilityInput ) {
+            layerVisibilityInput.checked = visibility;
+        }
     };
 
     /**
@@ -765,14 +773,13 @@ define([
      * @private
      */
     LayerSwitcher.prototype._onDropLayerClick = function (e) {
-        var globe = this.getMap();
+        var globe = this.getGlobe();
 
         var layerID  = this._resolveLayerId(e.target.id);
 
         // le retrait de la couche va déclencher l'ecouteur d'évenement,
         // et appeler this.removeLayer qui va supprimer la div.
         globe.removeLayer(layerID);
-        globe.notifyChange(true); // update viewer
 
         this._updateLayerListContainer();
     };
@@ -785,13 +792,13 @@ define([
      * @private
      */
     LayerSwitcher.prototype._onDragAndDropLayerClick = function (e) {
-        var globe = this.getMap();
+        var globe = this.getGlobe();
 
         var nbLayers = globe.getColorLayers().length;
 
         var layerID  = this._resolveLayerId(e.item.id);
 
-        itowns.ColorLayersOrdering.moveLayerToIndex(globe, layerID, nbLayers - e.newIndex - 1);
+        globe.moveLayerToIndex(layerID, nbLayers - e.newIndex - 1);
     };
 
     /**
@@ -802,7 +809,7 @@ define([
     */
     // FIXME utilité de la fonction ?
     LayerSwitcher.prototype._updateLayersIndex = function () {
-        var globe = this.getMap();
+        var globe = this.getGlobe();
 
         // on récupère l'ordre des div dans le contrôle pour réordonner les couches
         var matchesLayers = document.querySelectorAll("div.GPlayerSwitcher_layer");
@@ -811,7 +818,7 @@ define([
             // newIndex = maxZIndex - i;
             var layerID  = this._resolveLayerId(matchesLayers[i].id);
 
-            itowns.moveLayerToIndex(globe, layerID, i);
+            globe.moveLayerToIndex(layerID, i);
         }
     }
 
@@ -823,7 +830,7 @@ define([
      */
     LayerSwitcher.prototype._inRangeUpdate = function (layersDisplayed) {
 
-        var globe = this.getMap();
+        var globe = this.getGlobe();
 
         for (var layerKey in this._layers) {
             var layer = this._layers[layerKey];
@@ -850,7 +857,7 @@ define([
      */
     LayerSwitcher.prototype._updateLayerListContainer = function () {
         if ( this._layerListContainer ) {
-            var globe = this.getMap();
+            var globe = this.getGlobe();
 
             // on vide le container précédent
             while ( this._layerListContainer.firstChild ) {

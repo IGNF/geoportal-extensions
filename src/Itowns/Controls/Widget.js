@@ -10,7 +10,11 @@ define([
      * @constructor
      */
     function Widget (options) {
-        this.map = null;
+        this._name = null;
+        this._element = null;
+        this._target = null;
+        this._globe = null;
+
         this.setOptions(options);
     }
 
@@ -26,7 +30,7 @@ define([
      * @return {String} Widget name.
      */
     Widget.prototype.getName = function getName () {
-        return this.name;
+        return this._name;
     };
 
     /**
@@ -36,17 +40,40 @@ define([
      * @return {HTMLElement} widget's container element.
     */
     Widget.prototype.getElement = function getElement () {
-        return this.element;
+        return this._element;
     };
 
     /**
-     * associate the widget to a specified target div.
+     * Associates the widget to a specified target div.
      *
      * @method
-     * @return {HTMLElement} widget target div.
+     * @param {HTMLElement} targetDiv widget target div.
+     * @param {String} position html position attribute.
     */
-    Widget.prototype.setTarget = function setTarget (targetDiv) {
-        this.target = targetDiv;
+    Widget.prototype.setTarget = function setTarget (targetDiv, position) {
+        if (!targetDiv) {
+            return;
+        }
+
+        if (position && position !== "absolute" && postion !== "relative") {
+            console.log("[ERROR] Widget:setTarget - position value should be 'absolute' or 'relative'");
+            return;
+        }
+
+        if( this._target && this._element ) {
+            this._target.removeChild(this._element);
+        }
+
+        this._target = targetDiv;
+
+        if (!this._element) {
+            console.log("[ERROR] Widget:setTarget - widget element not created");
+            return;
+        }
+
+        this._element.style.position =  position || "relative";
+
+        targetDiv.appendChild(this._element);
     };
 
     /**
@@ -56,62 +83,39 @@ define([
      * @return {HTMLElement} widget's target div.
     */
     Widget.prototype.getTarget = function getTarget () {
-        return this.target;
+        return this._target;
     };
 
     /**
      * Change the options of the widget.
      *
      * @method
-     * @param {Object} options - The new options of the conrtol.
+     * @param {Object} options - The new options of the control.
      */
     Widget.prototype.setOptions = function setOptions (options) {
-        this.name = options.name;
-        this.element = options.element;
-        this.target = options.target;
-        this.map = null;
+        this._name = options.name;
+        this._element = options.element;
+        this.setTarget(options.target);
     };
 
     /**
-     * Listen to an event linked to the map.
+     * Get the globe associated with the widget. Undefined if the widget is not added to a globe.
      *
      * @method
-     * @param {String} eventName - The name of the event.
-     * @param {Callback} callback - The callback that is called when the event is heard.
+     * @return {Object} globe
      */
-    Widget.prototype.listenToMap = function listenToMap (eventName, callback) {
-        this._map.viewerDiv.addEventListener(eventName, callback, false);
+    Widget.prototype.getGlobe = function getGlobe () {
+        return this._globe;
     };
 
     /**
-     * Remove an event linked to the map.
+     * Associate a globe to the widget.
      *
      * @method
-     * @param {String} eventName - The name of the event.
-     * @param {callback} callback - The callback that is called when the event is heard.
+     * @param {Object} globe - Globe to associate to the widget.
      */
-    Widget.prototype.removeFromMap = function removeFromMap (eventName, callback) {
-        this._map.viewerDiv.removeEventListener(eventName, callback, false);
-    };
-
-    /**
-     * Get the Map associated with the widget. Undefined if the widget is not added to a map.
-     *
-     * @method
-     * @return {Object} map
-     */
-    Widget.prototype.getMap = function getMap () {
-        return this.map;
-    };
-
-    /**
-     * Associate a map to the widget.
-     *
-     * @method
-     * @param {Object} map - Map to associate to the widget.
-     */
-    Widget.prototype.setMap = function setMap (map) {
-        this.map = map;
+    Widget.prototype.setGlobe = function setGlobe (globe) {
+        this._globe = globe;
     };
 
     return Widget;

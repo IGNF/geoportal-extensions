@@ -51,27 +51,22 @@ and open the template in the editor.
                 }
             });
             requirejs(
-                ["itowns", "proj4", "gp", "Itowns/WidgetAPI", "Itowns/GlobeViewExtended", "Itowns/Controls/Attribution"],
-                function (itowns, proj4, Gp,  WidgetAPI, GlobeViewExtended, Attribution)
+                ["itowns", "proj4", "gp", "Itowns/GlobeViewExtended", "Itowns/Controls/Attribution"],
+                function (itowns, proj4, Gp, GlobeViewExtended, Attribution)
             {
                 itowns.control = {};
                 itowns.control.Attribution = Attribution;
-                itowns.control.WidgetAPI = new WidgetAPI();
                 itowns.GlobeViewExtended = GlobeViewExtended;
 
                 const positionOnGlobe = { longitude: 2.3465, latitude: 48.88, altitude: 25000000 };
 
                 const viewerDiv = document.getElementById('viewerDiv');
                 globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
-                /* global itowns,document,GuiTools*/
-                //globeView.addLayer(orthoLayer);
 
                 itowns.Fetcher.json("../Resources/JSONLayers/Ortho.json").then(result => globeView.addLayer(result));
                 itowns.Fetcher.json("../Resources/JSONLayers/OrthosCRS.json").then(result => globeView.addLayer(result));
                 itowns.Fetcher.json("../Resources/JSONLayers/ScanEX.json").then(result => globeView.addLayer(result));
                 itowns.Fetcher.json("../Resources/JSONLayers/Region.json").then(result => globeView.addLayer(result));
-                // itowns.Fetcher.json('../Resources/JSONLayers/DARK.json').then(result => globeView.addLayer(result));
-                // itowns.Fetcher.json('../Resources/JSONLayers/OPENSM.json').then(result => globeView.addLayer(result));
 
                 itowns.Fetcher.json("../Resources/JSONLayers/IGN_MNT.json").then(result => globeView.addLayer(result));
                 itowns.Fetcher.json("../Resources/JSONLayers/IGN_MNT_HIGHRES.json").then(result => globeView.addLayer(result));
@@ -84,7 +79,7 @@ and open the template in the editor.
                             // collapsed : true
                         }
                     });
-                    itowns.control.WidgetAPI.addWidget( globeView, attribution );
+                    globeView.addWidget( attribution );
                 });
             });
         </script>

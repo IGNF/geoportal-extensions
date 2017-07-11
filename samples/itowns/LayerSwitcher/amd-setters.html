@@ -81,41 +81,39 @@ and open the template in the editor.
             const layersId = ["OrthoCRS","Ortho","ScanEX","Region"];
 
             var addLayer = function (i) {
-                itowns.Fetcher.json(urlImageryLayers[i]).then(result => { globeView.addLayer(result);globeView.notifyChange(true); });
+                itowns.Fetcher.json(urlImageryLayers[i]).then(result => { globeView.addLayer(result) });
             }
             var removeLayer = function (i) {
                 globeView.removeLayer(layersId[i]);
             }
             var setOpacity = function (i) {
-                var layerToChange = globeView.getLayers(layer => layer.id == layersId[i])[0];
+                var layerToChange = globeView.getLayerById(layersId[i]);
                 var newOpacity = layerToChange.opacity - 0.2;
                 if( newOpacity < 0 ) {
                     newOpacity = 1.;
                 }
-                layerToChange.opacity = newOpacity;
-                globeView.notifyChange(true);
+                globeView.setLayerOpacity(layerToChange,newOpacity);
             }
             var setVisibity = function (i) {
-                var layerToChange = globeView.getLayers(layer => layer.id == layersId[i])[0];
-                layerToChange.visible = !layerToChange.visible;
-                globeView.notifyChange(true);
+                var layerToChange = globeView.getLayerById(layersId[i]);
+                globeView.setLayerVisibility(layerToChange,!layerToChange.visible);
             }
             var moveLayerUp = function (i) {
               var index = _getIndex(layersId[i])+1;
-              if( index > globeView.getLayers(layer => layer.type == "color").length-1 ) {
+              if( index > globeView.getColorLayers().length-1 ) {
                   index = 0;
               }
-              itowns.ColorLayersOrdering.moveLayerToIndex(globeView,layersId[i],index);
+              globeView.moveLayerToIndex(layersId[i],index);
             }
             var moveLayerDown = function (i) {
                 var index = _getIndex(layersId[i])-1;
                 if( index < 0 ) {
-                    index = globeView.getLayers(layer => layer.type == "color").length-1;
+                    index = globeView.getColorLayers().length-1;
                 }
-                itowns.ColorLayersOrdering.moveLayerToIndex(globeView,layersId[i],index);
+                globeView.moveLayerToIndex(layersId[i],index);
             }
             var _getIndex = function (layerId) {
-                var layerToChange = globeView.getLayers(layer => layer.id == layerId)[0];
+                var layerToChange = globeView.getLayerById(layerId);
                 return layerToChange.sequence;
             }
 
@@ -131,12 +129,11 @@ and open the template in the editor.
                 }
             });
             requirejs(
-                ["itowns", "proj4", "gp", "Itowns/WidgetAPI", "Itowns/GlobeViewExtended", "Itowns/Controls/LayerSwitcher"],
-                function (itowns, proj4, Gp, WidgetAPI, GlobeViewExtended, LayerSwitcher)
+                ["itowns", "proj4", "gp", "Itowns/GlobeViewExtended", "Itowns/Controls/LayerSwitcher"],
+                function (itowns, proj4, Gp, GlobeViewExtended, LayerSwitcher)
             {
                 itowns.control = {};
                 itowns.control.LayerSwitcher = LayerSwitcher;
-                itowns.control.WidgetAPI = new WidgetAPI();
                 itowns.GlobeViewExtended = GlobeViewExtended;
 
                 var createMap = function() {
@@ -157,8 +154,6 @@ and open the template in the editor.
                         }
 
                         Promise.all(promises).then( () => {
-                            // globeView.notifyChange(true); //necessaire si on ajoute les couches apres initialisation du globe
-
                             // ajout du control
                             var layerSwitcher = new itowns.control.LayerSwitcher({
                                 layers : [
@@ -184,7 +179,7 @@ and open the template in the editor.
                                     }
                                 ]
                             });
-                            itowns.control.WidgetAPI.addWidget( globeView, layerSwitcher );
+                            globeView.addWidget( layerSwitcher );
                         });
                     });
                 }

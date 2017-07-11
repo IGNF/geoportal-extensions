@@ -4,7 +4,6 @@ define([
     "Common/Utils/LayerUtils",
     "Itowns/Controls/MousePosition",
     "Itowns/Controls/LayerSwitcher",
-    "Itowns/WidgetAPI",
     "Itowns/GlobeViewExtended"
 ], function (
     itowns, // FIXME Global for browser only !
@@ -12,7 +11,6 @@ define([
     LayerUtils,
     MousePosition,
     LayerSwitcher,
-    WidgetAPI,
     GlobeViewExtended
 ) {
 
@@ -24,7 +22,6 @@ define([
     itowns.control = {};
     itowns.control.MousePosition = MousePosition;
     itowns.control.LayerSwitcher = LayerSwitcher;
-    itowns.control.WidgetAPI = new WidgetAPI();
     itowns.GlobeViewExtended = GlobeViewExtended;
 
     // FIXME : parce qu'il faut bien retourner quelque chose

@@ -55,7 +55,7 @@ define([
      * @param {Object}  [options.altitude] - elevation configuration
      * @param {Object}  [options.altitude.serviceOptions] - options of elevation service
      * @param {Number}  [options.altitude.responseDelay] - latency for altitude request, 500 ms by default
-     * @param {Number}  [options.altitude.triggerDelay] - immobilisation time of movement on the map to trigger the elevation calculation, 200 ms by default
+     * @param {Number}  [options.altitude.triggerDelay] - immobilisation time of movement on the globe to trigger the elevation calculation, 200 ms by default
      * @example
      *  var mousePosition = new itowns.control.MousePosition({
      *      collapsed : false,
@@ -129,15 +129,15 @@ define([
     MousePosition.prototype.constructor = MousePosition;
 
     /**
-     * Bind map to control
+     * Bind globe to control
      */
-    MousePosition.prototype.setMap = function (globe) {
+    MousePosition.prototype.setGlobe = function (globe) {
 
-        if ( globe ) { // dans le cas de l'ajout du contrôle à la map
+        if ( globe ) { // dans le cas de l'ajout du contrôle au globe
 
-            // dans le cas de l'ajout du contrôle à la map
+            // dans le cas de l'ajout du contrôle au globe
             var center = this._createMapCenter();
-            globe.viewerDiv.appendChild(center);
+            globe.getTargetElement().appendChild(center);
 
             // on définie le callback sur la carte pour recuperer les coordonnées
             this._callbacks.mouseMove = this.onMouseMove.bind(this);
@@ -145,15 +145,9 @@ define([
             // evenement valable pour le mode desktop !
             if (!this.collapsed) {
                 if (this._isDesktop) {
-                    globe.viewerDiv.addEventListener(
-                        "mousemove",
-                        this._callbacks.mouseMove
-                    );
+                    globe.addEventListener( "mousemove", this._callbacks.mouseMove );
                 } else {
-                    globe.controls.addEventListener(
-                        "centerchanged",
-                        this.onMapMove
-                    );
+                    globe.addEventListener( "centerchanged", this.onGlobeMove );
                 }
             }
             // mode "collapsed"
@@ -166,20 +160,17 @@ define([
                     this._setSettingsPanel(false);
                 }
             }
-        } else if (globe == null) { // if map == null we remove the MP control
+        } else if (globe == null) { // if globe == null we remove the MP control
             // on supprime le listener associé au MP
-            this.getMap().viewerDiv.removeEventListener(
-                "mousemove",
-                this._callbacks.mouseMove
-            );
+            globe.removeEventListener( "mousemove", this._callbacks.mouseMove );
             // on supprime le DOM du mousePosition
             while (this.element.hasChildNodes()) {
                 this.element.removeChild(this.element.lastChild);
             }
             this.element.parentNode.removeChild(this.element);
         }
-        // call original setMap method
-        Widget.prototype.setMap.call(this, globe);
+        // call original setGlobe method
+        Widget.prototype.setGlobe.call(this, globe);
     };
 
     // ################################################################### //
@@ -286,9 +277,9 @@ define([
         }
 
         // re-initialization of codes
-        var oldNewCodeMap = [];
+        var oldNewCodeGlobe = [];
         for ( var i = 0; i < this._projectionSystems.length; i++ ) {
-            oldNewCodeMap[ Number( this._projectionSystems[i].code ) ] = i;
+            oldNewCodeGlobe[ Number( this._projectionSystems[i].code ) ] = i;
             this._projectionSystems[i].code = i;
         }
 
@@ -300,7 +291,7 @@ define([
                 indexChildToRemove = j;
                 continue;
             }
-            systemList.childNodes[j].value = oldNewCodeMap [ Number( systemList.childNodes[j].value ) ];
+            systemList.childNodes[j].value = oldNewCodeGlobe [ Number( systemList.childNodes[j].value ) ];
         }
         // remove system from control container systems list
         if ( indexChildToRemove != null ) {
@@ -339,7 +330,7 @@ define([
      * @param {Object} options - altitude options
      * @param {Object}  [options.serviceOptions] - options of elevation service
      * @param {Number}  [options.responseDelay] - latency for elevation request, 500 ms by default
-     * @param {Number}  [options.triggerDelay] - immobilisation time of movement on the map to trigger the elevation calculation, 200 ms by default
+     * @param {Number}  [options.triggerDelay] - immobilisation time of movement on the globe to trigger the elevation calculation, 200 ms by default
      */
     MousePosition.prototype.setAltitudeOptions = function (options) {
         if ( !options || typeof options !== "object" ) {
@@ -986,8 +977,8 @@ define([
     };
 
     /**
-     * this method is triggered when the mouse or the map is stopped.
-     * (cf. onMouseMove and onMapMove)
+     * this method is triggered when the mouse or the globe is stopped.
+     * (cf. onMouseMove and onGlobeMove)
      *
      * @method onMoveStopped
      * @param {Object} coords - Coordinate position object {lon, lat}
@@ -999,7 +990,7 @@ define([
 
     /**
      * this method is an handler event to control. The event is 'mousemove' on
-     * the map. The handler sends the coordinates to the panel.
+     * the globe. The handler sends the coordinates to the panel.
      * (cf. this.GPdisplayCoords() into the DOM functions)
      *
      * @method onMouseMove
@@ -1009,7 +1000,7 @@ define([
     MousePosition.prototype.onMouseMove = function (e) {
         var self = this;
 
-        var position = this.getMap().controls.pickGeoPosition(e);
+        var position = this.getGlobe().controls.pickGeoPosition(e);
         if( !position ) {
             this.GPdisplayCoords( { lon: "---", lat: "---"} );
             this.GPresetElevation();
@@ -1034,14 +1025,14 @@ define([
 
     /**
      * this method is an handler event to control. The event is 'moveend' on
-     * the map. The handler sends the coordinates to the panel.
+     * the globe. The handler sends the coordinates to the panel.
      * (cf. this.GPdisplayCoords() into the DOM functions)
      *
-     * @method onMapMove
+     * @method onGlobeMove
      * @param {Object} e - itowns event
      * @private
      */
-    MousePosition.prototype.onMapMove = function (e) {
+    MousePosition.prototype.onGlobeMove = function (e) {
 
         // var self = this;
 
@@ -1143,7 +1134,7 @@ define([
     /**
      * this method is called by event 'click' on 'GPshowMousePositionPicto' tag label
      * (cf. this._createShowMousePositionPictoElement),
-     * and toggles event 'mousemove' on map.
+     * and toggles event 'mousemove' on globe.
      *
      * @method onShowMousePositionClick
      * @private
@@ -1151,7 +1142,7 @@ define([
     MousePosition.prototype.onShowMousePositionClick = function () {
         // checked : true - panel close
         // checked : false - panel open
-        var globe = this.getMap();
+        var globe = this.getGlobe();
 
         this.collapsed = this._showMousePositionContainer.checked;
         // on génère nous même l'evenement OpenLayers de changement de propriété
@@ -1163,17 +1154,17 @@ define([
         if ( this._showMousePositionContainer.checked ) {
             // FIXME gérer ou non le cas mobile
             if (this._isDesktop) {
-                globe.viewerDiv.removeEventListener("mousemove", this._callbacks.mouseMove);
+                globe.removeEventListener("mousemove", this._callbacks.mouseMove);
             } else {
-                globe.controls.removeEventListener("centerchanged", this.onMapMove);
+                globe.removeEventListener("centerchanged", this.onGlobeMove);
             }
 
         } else {
             // FIXME gérer ou non le cas mobile
             if (this._isDesktop) {
-                globe.viewerDiv.addEventListener("mousemove", this._callbacks.mouseMove);
+                globe.addEventListener("mousemove", this._callbacks.mouseMove);
             } else {
-                globe.controls.addEventListener("centerchanged", this.onMapMove);
+                globe.addEventListener("centerchanged", this.onGlobeMove);
             }
         }
 
@@ -1236,7 +1227,7 @@ define([
             // on simule un deplacement en mode tactile pour mettre à jour les
             // resultats
             if (!this._isDesktop) {
-                this.onMapMove();
+                this.onGlobeMove();
             }
             // FIXME : adapter le rechargement en mode tactile à OpenLayers !!
     } ;
@@ -1253,7 +1244,7 @@ define([
     MousePosition.prototype.onMousePositionProjectionSystemMouseOver = function (e) {
 
         // globe infos
-        var globe = this.getMap();
+        var globe = this.getGlobe();
         if ( !globe ) {
             return;
         }
@@ -1316,7 +1307,7 @@ define([
         // on simule un deplacement en mode tactile pour mettre à jour les
         // resultats
         if (!this._isDesktop) {
-            this.onMapMove();
+            this.onGlobeMove();
         }
         // FIXME : adapter le rechargement en mode tactile à OpenLayers !!
     };

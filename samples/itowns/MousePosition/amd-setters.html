@@ -120,12 +120,11 @@ and open the template in the editor.
                 }
             });
             requirejs(
-                ["itowns", "proj4", "gp", "Itowns/WidgetAPI", "Itowns/GlobeViewExtended", "Itowns/Controls/MousePosition"],
-                function (itowns, proj4, Gp, WidgetAPI, GlobeViewExtended, MousePosition)
+                ["itowns", "proj4", "gp", "Itowns/GlobeViewExtended", "Itowns/Controls/MousePosition"],
+                function (itowns, proj4, Gp, GlobeViewExtended, MousePosition)
             {
                 itowns.control = {};
                 itowns.control.MousePosition = MousePosition;
-                itowns.control.WidgetAPI = new WidgetAPI();
                 itowns.GlobeViewExtended = GlobeViewExtended;
 
                 var createMap = function() {
@@ -142,7 +141,7 @@ and open the template in the editor.
                             displayCoordinates: true,
                             displayAltitude: false
                         });
-                        itowns.control.WidgetAPI.addWidget( globeView, mousePosition );
+                        globeView.addWidget( mousePosition );
                     });
 
                     itowns.Fetcher.json('../Resources/JSONLayers/Ortho.json').then(result => globeView.addLayer(result));

@@ -177,12 +177,11 @@ and open the template in the editor.
                 }
             });
             requirejs(
-                ["itowns", "proj4", "gp", "Itowns/WidgetAPI", "Itowns/GlobeViewExtended", "Itowns/Controls/LayerSwitcher"],
-                function (itowns, proj4, Gp, WidgetAPI, GlobeViewExtended, LayerSwitcher)
+                ["itowns", "proj4", "gp", "Itowns/GlobeViewExtended", "Itowns/Controls/LayerSwitcher"],
+                function (itowns, proj4, Gp, GlobeViewExtended, LayerSwitcher)
             {
                 itowns.control = {};
                 itowns.control.LayerSwitcher = LayerSwitcher;
-                itowns.control.WidgetAPI = new WidgetAPI();
                 itowns.GlobeViewExtended = GlobeViewExtended;
 
                 var createMap = function() {
@@ -230,9 +229,8 @@ and open the template in the editor.
                                 ]
                             });
 
-                            itowns.control.WidgetAPI.addWidget( globeView, layerSwitcher );
+                            globeView.addWidget( layerSwitcher );
                             globeView.addLayer(orthoLayer);
-
 
                             // ajout de nouvelles couches
                             itowns.Fetcher.json('../Resources/JSONLayers/ScanEX.json').then(result => globeView.addLayer(result));

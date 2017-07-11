@@ -75,9 +75,9 @@ define([
     // ################################################################### //
 
     /**
-     * Bind map to control
+     * Bind globe to control
      */
-    Attribution.prototype.setMap = function (globe) {
+    Attribution.prototype.setGlobe = function (globe) {
         // info : cette méthode est appelée (entre autres?) après un globe.addWidget() ou globe.removeWidget()
 
         if ( globe ) { // dans le cas de l'ajout du contrôle au globe
@@ -93,19 +93,19 @@ define([
             this._callbacks.onChangedViewCallBack = function (e) {
                 clearTimeout(this._inRangeTimer);
                 this._inRangeTimer = setTimeout( function () {
-                    if (e.type === "PRERENDER") {
+                    if (e.type === "prerender") {
                         self._inRangeUpdate(e.layers.id, e.extent);
                     }
                 }, 100);
             };
 
-            globe.addEventListener("PRERENDER", this._callbacks.onChangedViewCallBack);
-            globe.fetchExtent(true);
-            globe.fetchVisibleLayers(true);
+            globe.addEventListener("prerender", this._callbacks.onChangedViewCallBack);
+            globe.preRenderEventFetchViewExtent(true);
+            globe.preRenderEventFetchLayersDisplayed(true);
         }
 
-        // call original setMap method
-        Widget.prototype.setMap.call(this, globe);
+        // call original setGlobe method
+        Widget.prototype.setGlobe.call(this, globe);
     };
 
     /**
@@ -202,10 +202,10 @@ define([
      */
 
     Attribution.prototype._inRangeUpdate = function (layersDisplayed, extent) {
-        var globe = this.getMap();
+        var globe = this.getGlobe();
         var elementAttributionList = document.getElementById(this._addUID("GPAttributionsListContainer"));
 
-        var scaleDenominator = 1 / globe.controls.getScale();
+        var scaleDenominator = 1 / globe.getScale();
 
         var attributions = new Map();
 
