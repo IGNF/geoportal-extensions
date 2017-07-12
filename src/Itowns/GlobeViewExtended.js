@@ -18,7 +18,7 @@ define([
 
         viewerDiv.style.position = "relative";
 
-        //stockage de l'élément html porteur du globe
+        // stockage de l'élément html porteur du globe
         this.viewerDiv = viewerDiv;
 
         // widget container
@@ -39,10 +39,10 @@ define([
                     var event = {
                         type : "prerender",
                     };
-                    if( self._fetchExtent ) {
+                    if ( self._fetchExtent ) {
                         event.extent = new itowns.Extent('EPSG:4326', 180, -180, 90, -90);
                     }
-                    if( self._fetchVisibleLayers ) {
+                    if ( self._fetchVisibleLayers ) {
                         event.layers = { id: [] };
                     }
 
@@ -71,7 +71,7 @@ define([
     GlobeViewExtended.prototype.addLayer = function (layer) {
         this.parent_addLayer(layer);
         this.notifyChange(true);
-    }
+    };
 
     /**
     * Overload itowns.GlobeView removeLayer method
@@ -80,40 +80,39 @@ define([
     GlobeViewExtended.prototype.removeLayer = function (layerId) {
         this.parent_removeLayer(layerId);
         this.notifyChange(true);
-    }
+    };
 
     /**
     * Set layer opacity
     *
     * @param {String} layer - Layer object
-    * @param {Number} opacity - opacity value in [0 1]
+    * @param {Number} opacityValue - opacity value in [0 1]
     */
     GlobeViewExtended.prototype.setLayerOpacity = function (layer, opacityValue) {
         layer.opacity = opacityValue;
         this.notifyChange(true);
-    }
+    };
 
     /**
     * Set layer visibility
     *
     * @param {String} layer - Layer object
-    * @param {Boolean} visible
+    * @param {Boolean} visible - New visibility of the layer
     */
     GlobeViewExtended.prototype.setLayerVisibility = function (layer, visible) {
         layer.visible = visible;
         this.notifyChange(true);
-    }
+    };
 
     /**
     * Move layer to the specified index
     *
     * @param {String} layerID - Layer id
-    * @param {Boolean} index
+    * @param {Boolean} index - new index of the layer
     */
     GlobeViewExtended.prototype.moveLayerToIndex = function (layerID, index) {
         itowns.ColorLayersOrdering.moveLayerToIndex(this, layerID, index);
-    }
-
+    };
 
     /**
     * Add event listener to the globe
@@ -134,7 +133,7 @@ define([
                 this.parent_addEventListener( type, callback );
                 break;
         }
-    }
+    };
 
     /**
     * Remove event listener from the globe
@@ -155,21 +154,21 @@ define([
                 this.parent_removeEventListener( type, callback );
                 break;
         }
-    }
+    };
 
     /**
     * Defines if the current view extent have to be computed on pre-render event
     */
     GlobeViewExtended.prototype.preRenderEventFetchViewExtent = function (b) {
         this._fetchExtent = b;
-    }
+    };
 
     /**
     * Defines if the list of the layers displayed have to be computed on pre-render event
     */
     GlobeViewExtended.prototype.preRenderEventFetchLayersDisplayed = function (b) {
         this._fetchVisibleLayers = b;
-    }
+    };
 
     /**
     * Get layer by its id
@@ -218,13 +217,13 @@ define([
     */
     GlobeViewExtended.prototype.getExtent = function () {
         var options = {
-            extent : new itowns.Extent('EPSG:4326', 180, -180, 90, -90)
+            extent : new itowns.Extent("EPSG:4326", 180, -180, 90, -90)
         };
 
         this._getCurrentSceneInfos( this.scene, options );
 
         return options.extent;
-    }
+    };
 
     /**
     * Recursive method to fetch information about the current view (extent, layers displayed...)
@@ -238,8 +237,8 @@ define([
         if (node.level) {
             if (node.material.visible) {
                 if (options.layers && options.layers.id) {
-                    for( var i in node.material.colorLayersId ) {
-                        if( options.layers.id.indexOf(node.material.colorLayersId[i]) < 0 ) {
+                    for ( var i in node.material.colorLayersId ) {
+                        if ( options.layers.id.indexOf(node.material.colorLayersId[i]) < 0 ) {
                             options.layers.id.push(node.material.colorLayersId[i]);
                         }
                     }
@@ -261,7 +260,7 @@ define([
                 this._getCurrentSceneInfos(node.children[child], options);
             }
         }
-    }
+    };
 
     /**
      * Add a widget to the globe
@@ -270,7 +269,7 @@ define([
      */
     GlobeViewExtended.prototype.addWidget = function addWidget (widget) {
         widget.setGlobe(this);
-        if( !widget.getTarget() ) {
+        if ( !widget.getTarget() ) {
             widget.setTarget(this.viewerDiv, "absolute");
         }
         this._widgets.push(widget);
@@ -306,17 +305,17 @@ define([
     * @return {HTMLElement} Globe container element
     */
     GlobeViewExtended.prototype.getTargetElement = function getTargetElement () {
-        return viewerDiv;
-    }
+        return this.viewerDiv;
+    };
 
     /**
      * Returns current view scale
      *
      * @return {Number} Scale
      */
-     GlobeViewExtended.prototype.getScale = function getScale() {
-         return this.controls.getScale();
-     }
+    GlobeViewExtended.prototype.getScale = function getScale () {
+        return this.controls.getScale();
+    };
 
     return GlobeViewExtended;
 });
