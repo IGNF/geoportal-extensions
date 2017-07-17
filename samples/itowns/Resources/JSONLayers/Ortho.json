@@ -7,6 +7,9 @@
         "type": "0",
         "options": {}
     },
+    "networkOptions" : {
+        "crossOrigin" : "omit"
+    },
     "options": {
 		"originators" :  [{
             "name" : "IGN GE",

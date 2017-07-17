@@ -10,6 +10,9 @@
 			"groups": [3, 7, 11, 14]
 		}
 	},
+    "networkOptions" : {
+        "crossOrigin" : "omit"
+    },
 	"options": {
 		"name": "ELEVATION.ELEVATIONGRIDCOVERAGE",
         "originators" :  [{

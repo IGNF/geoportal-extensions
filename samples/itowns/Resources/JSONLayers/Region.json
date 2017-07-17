@@ -16,6 +16,9 @@
         "type": 0,
         "options": {}
     },
+    "networkOptions" : {
+        "crossOrigin" : "omit"
+    },
     "extent": {
         "west": "-61.80983300000002",
         "east": "55.83665389999998",

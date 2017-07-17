@@ -8,6 +8,9 @@
         "type": 0,
         "options": {}
     },
+    "networkOptions" : {
+        "crossOrigin" : "omit"
+    },
     "options": {
         "name": "ORTHOIMAGERY.ORTHOPHOTOS.CRS84",
         "originators" :  [{
