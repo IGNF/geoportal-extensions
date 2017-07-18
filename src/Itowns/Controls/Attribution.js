@@ -44,13 +44,14 @@ define([
         this._initialize(options);
 
         var container = this._initContainer(options);
+        var targetDiv = document.getElementById(options.target) || null;
 
         Widget.call(
             this,
             {
                 name : "Attribution",
                 element : container,
-                target : aOptions.target
+                target : targetDiv
             }
         );
     }
