@@ -120,7 +120,7 @@ define([
                     var layer = globe.getLayerById(this._initLayers[i].id);
                 }
 
-                if ( layer ) {
+                if ( layer && this._initLayers[i].displayed ) {
                     // et les infos de la conf si elles existent (title, description, legends, quicklook, metadata)
                     var conf = this._initLayers[i].config || {};
                     var layerOptions = {
@@ -180,6 +180,9 @@ define([
             this._callbacks.onAddedLayerCallBack = function (e) {
                 var id = e.layerId;
                 if (self) {
+                    if( !self._layerDisplayedInLayerSwitcher(id) ) {
+                        return;
+                    }
                     var layer = self.getGlobe().getLayerById(id);
                     var layerConf = self._getLayerConf(id);
                     if ( layerConf ) {
@@ -485,6 +488,25 @@ define([
     };
 
     /**
+     * Indicates if the layer must be displayed in the layerSwitcher
+     *
+     * @method _layerDisplayedInLayerSwitcher
+     * @param {String} layerId - layer id
+     * @return {Boolean} displayed
+     * @private
+     */
+    LayerSwitcher.prototype._layerDisplayedInLayerSwitcher = function ( layerId ) {
+        for ( var i = 0 ; i < this._initLayers.length ; ++i ) {
+            if ( this._initLayers[i].id === layerId ) {
+                return ( typeof this._initLayers[i].displayed === "undefined" || this._initLayers[i].displayed );
+            }
+        }
+        return true;
+    };
+
+
+
+    /**
      * Create control main container
      *
      * @method _initContainer
@@ -553,6 +575,9 @@ define([
                 // ajout des couches de la carte à la liste
                 var id;
                 id = layer.id;
+                if ( !this._layerDisplayedInLayerSwitcher(id) ) {
+                    return;
+                }
                 var layerInfos = this._getLayerInfo(layer) || {};
                 if ( !this._layers[id] ) {
                     // si la couche n'est pas encore dans la liste des layers (this._layers), on l'ajoute
@@ -576,16 +601,13 @@ define([
                         layer.visible = lsLayerConf.visibility;
                     }
                 }
+
+                var layerDiv = this._createLayerDiv(id);
+                this._layers[id].div = layerDiv;
+                elementLayersList.appendChild(layerDiv);
             },
             this
         );
-        // on ajoute les couches au layerSwitcher dans le bon ordre
-        for ( var i = 0; i < orderedLayers.length; i++ ) {
-            var layerId = orderedLayers[i].id;
-            var layerDiv = this._createLayerDiv(layerId);
-            this._layers[layerId].div = layerDiv;
-            elementLayersList.appendChild(layerDiv);
-        }
     };
 
     /**
@@ -794,11 +816,17 @@ define([
     LayerSwitcher.prototype._onDragAndDropLayerClick = function (e) {
         var globe = this.getGlobe();
 
-        var nbLayers = globe.getColorLayers().length;
+        var targetIndex = null;
+        if( e.newIndex === 0 ) {
+            targetIndex = globe.getColorLayers().length - 1;
+        } else {
+            var layerTargetID  = this._resolveLayerId( e.from.childNodes[e.newIndex + (e.newIndex === e.from.childNodes.length-1?-1:1)].id);
+            targetIndex = globe.getLayerById(layerTargetID).sequence;
+        }
 
         var layerID  = this._resolveLayerId(e.item.id);
 
-        globe.moveLayerToIndex(layerID, nbLayers - e.newIndex - 1);
+        globe.moveLayerToIndex(layerID, targetIndex);
     };
 
     /**
@@ -834,6 +862,9 @@ define([
 
         for (var layerKey in this._layers) {
             var layer = this._layers[layerKey];
+            if ( !layer ) {
+                continue;
+            }
             // Check if layer is displayed.
             var layerDiv;
             var bInRange = layersDisplayed.indexOf(layer.id) >= 0;
@@ -870,6 +901,9 @@ define([
             });
             // et on rajoute les div correspondantes aux différentes couches, dans l'ordre décroissant des zindex
             for ( var j = 0; j < orderedLayers.length; j++ ) {
+                if ( !this._layers[orderedLayers[j].id] ) {
+                    continue;
+                }
                 // récupération de la div de la couche, stockée dans le tableau _layers
                 var layerDiv = this._layers[orderedLayers[j].id].div;
                 this._layerListContainer.appendChild(layerDiv);
