@@ -210,7 +210,12 @@ and open the template in the editor.
                                 },
                                 layers : [
                                     {
+                                        id : "ScanEX",
+                                        displayed : true
+                                    },
+                                    {
                                         id : "Ortho",
+                                        displayed : false,
                                         config : {
                                             title : "Couche de Photos IGNPO",
                                             description : "Description de ma couche",
@@ -225,7 +230,7 @@ and open the template in the editor.
                                                     url : "lien/Vers/Une/MetaDonnee.xml"
                                                 }
                                             ],
-                                            visibility: false,
+                                            visibility: true,
                                             opacity: 0.8
                                         }
                                     }

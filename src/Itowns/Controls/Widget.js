@@ -10,7 +10,7 @@ define([
      * @constructor
      */
     function Widget (options) {
-        this._name = null;
+        this.name = null;
         this._element = null;
         this._target = null;
         this._globe = null;
@@ -22,16 +22,6 @@ define([
      * Constructor (alias)
      */
     Widget.prototype.constructor = Widget;
-
-    /**
-     * Return the name of the widget.
-     *
-     * @method
-     * @return {String} Widget name.
-     */
-    Widget.prototype.getName = function getName () {
-        return this._name;
-    };
 
     /**
      * Return the widget's container element.
@@ -55,7 +45,7 @@ define([
             return;
         }
 
-        if (position && position !== "absolute" && postion !== "relative") {
+        if (position && position !== "absolute" && position !== "relative") {
             console.log("[ERROR] Widget:setTarget - position value should be 'absolute' or 'relative'");
             return;
         }
@@ -93,7 +83,7 @@ define([
      * @param {Object} options - The new options of the control.
      */
     Widget.prototype.setOptions = function setOptions (options) {
-        this._name = options.name;
+        this.name = options.name;
         this._element = options.element;
         this.setTarget(options.target);
     };
