@@ -16,6 +16,7 @@ define([
      * Control to manage layers attributions
      *
      * @constructor
+     * @alias itowns.control.MousePosition
      * @extends {itowns.control.Widget}
      * @alias itowns.control.Attribution
      * @param {Object} aOptions - control options
@@ -208,7 +209,7 @@ define([
 
         var scaleDenominator = 1 / globe.getScale();
 
-        var attributions = new Map();
+        var attributions = new window.Map();
 
         for (var h = 0; h < layersDisplayed.length; h++) {
 

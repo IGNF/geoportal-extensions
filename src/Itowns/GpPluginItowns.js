@@ -4,6 +4,7 @@ define([
     "Common/Utils/LayerUtils",
     "Itowns/Controls/MousePosition",
     "Itowns/Controls/LayerSwitcher",
+    "Itowns/Controls/Attribution",
     "Itowns/GlobeViewExtended"
 ], function (
     itowns, // FIXME Global for browser only !
@@ -11,6 +12,7 @@ define([
     LayerUtils,
     MousePosition,
     LayerSwitcher,
+    Attribution,
     GlobeViewExtended
 ) {
 
@@ -22,6 +24,7 @@ define([
     itowns.control = {};
     itowns.control.MousePosition = MousePosition;
     itowns.control.LayerSwitcher = LayerSwitcher;
+    itowns.control.Attribution = Attribution;
     itowns.GlobeViewExtended = GlobeViewExtended;
 
     // FIXME : parce qu'il faut bien retourner quelque chose
