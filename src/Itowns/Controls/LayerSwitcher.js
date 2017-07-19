@@ -237,22 +237,24 @@ define([
                 layers[i].addEventListener("visible-property-changed", this._callbacks.onVisibilityLayerCallBack);
             }
 
+            this._globe = globe;
+
         } else {
             // On retire les listeners qui étaient liés au layerSwitcher supprimé
-            globe.removeEventListener("prerender", this._callbacks.onChangedViewCallBack);
-            globe.removeEventListener(itowns.GLOBE_VIEW_EVENTS.LAYER_ADDED, this._callbacks.onAddedLayerCallBack);
-            globe.removeEventListener(itowns.GLOBE_VIEW_EVENTS.LAYER_REMOVED, this._callbacks.onRemovedLayerCallBack);
-            globe.removeEventListener(itowns.GLOBE_VIEW_EVENTS.COLOR_LAYERS_ORDER_CHANGED, this._callbacks.onIndexLayerCallBack);
-            var layers = globe.getColorLayers();
+            this._globe.removeEventListener("prerender", this._callbacks.onChangedViewCallBack);
+            this._globe.removeEventListener(itowns.GLOBE_VIEW_EVENTS.LAYER_ADDED, this._callbacks.onAddedLayerCallBack);
+            this._globe.removeEventListener(itowns.GLOBE_VIEW_EVENTS.LAYER_REMOVED, this._callbacks.onRemovedLayerCallBack);
+            this._globe.removeEventListener(itowns.GLOBE_VIEW_EVENTS.COLOR_LAYERS_ORDER_CHANGED, this._callbacks.onIndexLayerCallBack);
+            var layers = this._globe.getColorLayers();
             for ( var i = 0 ; i < layers.length ; ++i ) {
                 layers[i].removeEventListener("opacity-property-changed", this._callbacks.onOpacityLayerCallBack);
                 layers[i].removeEventListener("visible-property-changed", this._callbacks.onVisibilityLayerCallBack);
             }
             // On supprime le DOM du layerSwitcher
-            while (this.element.hasChildNodes()) {
-                this.element.removeChild(this.element.lastChild);
+            while (this._element.hasChildNodes()) {
+                this._element.removeChild(this._element.lastChild);
             }
-            this.element.parentNode.removeChild(this.element);
+            this._element.parentNode.removeChild(this._element);
 
             return ;
         }
