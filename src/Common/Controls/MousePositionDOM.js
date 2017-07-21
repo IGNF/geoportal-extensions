@@ -103,10 +103,10 @@ define([], function () {
         * @returns {DOMElement} DOM element
         */
         _createMousePositionPanelElement : function (displayAltitude, displayCoordinates, editCoordinates, currentProjectionUnits) {
-            // valeurs par defaut
-            displayAltitude     = displayAltitude   ? true : ( typeof displayAltitude === "undefined") ? true : false;
-            displayCoordinates  = displayCoordinates ? true : ( typeof displayCoordinates === "undefined") ? true : false;
-            editCoordinates     = editCoordinates ? true : ( typeof editCoordinates === "undefined") ? false : true;
+            // default Values
+            displayAltitude = ( typeof displayAltitude === "undefined") ? true : displayAltitude ;
+            displayCoordinates = ( typeof displayCoordinates === "undefined") ? true : displayCoordinates ;
+            editCoordinates = ( typeof editCoordinates === "undefined") ? false : editCoordinates ;
 
             var div = document.createElement("div");
             div.id  = this._addUID("GPmousePositionPanel");
