@@ -1255,10 +1255,10 @@ define([
      */
     MousePosition.prototype.onMousePositionProjectionSystemChange = function (e) {
 
-          var idx   = e.target.selectedIndex;      // index
-          var value = e.target.options[idx].value; // crs
+        var idx   = e.target.selectedIndex;      // index
+        var value = e.target.options[idx].value; // crs
 
-          this._setCurrentSystem( value );
+        this._setCurrentSystem( value );
     };
 
     /**
@@ -1269,33 +1269,33 @@ define([
      * @private
      */
     MousePosition.prototype._setCurrentSystem = function ( systemCode ) {
-            // si on change de type de systeme, on doit aussi changer le type d'unités !
-            var type = null;
-            for (var i = 0 ; i < this._projectionSystems.length ; ++i) {
-                if ( this._projectionSystems[i].code == systemCode ) {
-                    type = this._projectionSystems[i].type;
-                    break;
-                }
+        // si on change de type de systeme, on doit aussi changer le type d'unités !
+        var type = null;
+        for (var i = 0 ; i < this._projectionSystems.length ; ++i) {
+            if ( this._projectionSystems[i].code == systemCode ) {
+                type = this._projectionSystems[i].type;
+                break;
             }
+        }
 
-            if ( !type ) {
-                logger.log("system not found in projection systems container");
-                return;
-            }
+        if ( !type ) {
+            logger.log("system not found in projection systems container");
+            return;
+        }
 
-            if (type !== this._currentProjectionType) {
-                this._setTypeUnitsPanel(type);
-            }
+        if (type !== this._currentProjectionType) {
+            this._setTypeUnitsPanel(type);
+        }
 
-            // on enregistre le systeme courrant
-            this._currentProjectionSystems = this._projectionSystems[Number(systemCode)];
+        // on enregistre le systeme courrant
+        this._currentProjectionSystems = this._projectionSystems[Number(systemCode)];
 
-            // on simule un deplacement en mode tactile pour mettre à jour les
-            // resultats
-            if (!this._isDesktop) {
-                this.onMapMove();
-            }
-            // FIXME : adapter le rechargement en mode tactile à OpenLayers !!
+        // on simule un deplacement en mode tactile pour mettre à jour les
+        // resultats
+        if (!this._isDesktop) {
+            this.onMapMove();
+        }
+        // FIXME : adapter le rechargement en mode tactile à OpenLayers !!
     } ;
 
     /**
@@ -1319,7 +1319,7 @@ define([
 
         // clear select
         var systemList = document.getElementById(this._addUID("GPmousePositionProjectionSystem"));
-          systemList.innerHTML = "";
+        systemList.innerHTML = "";
 
         // add systems whose extent intersects the map extent
         for (var j = 0; j < this._projectionSystems.length; j++) {
@@ -1331,28 +1331,28 @@ define([
                        mapExtent[3] < proj.geoBBox.left  ||
                        mapExtent[0] < proj.geoBBox.bottom
                  ) {
-                     if ( proj === this._currentProjectionSystems ) {
-                         var option = document.createElement("option");
-                         option.value = proj.code;
-                         option.text  = proj.label || j;
-                         option.setAttribute( "selected", "selected" );
-                         option.setAttribute( "disabled", "disabled" );
+                    if ( proj === this._currentProjectionSystems ) {
+                        var option = document.createElement("option");
+                        option.value = proj.code;
+                        option.text  = proj.label || j;
+                        option.setAttribute( "selected", "selected" );
+                        option.setAttribute( "disabled", "disabled" );
 
-                         systemList.appendChild(option);
-                     }
-                     continue; // do not intersect
-                  }
-              }
-              var option = document.createElement("option");
-              option.value = proj.code;
-              option.text  = proj.label || j;
-              if ( proj === this._currentProjectionSystems ) {
-                  option.setAttribute( "selected", "selected" );
-              }
+                        systemList.appendChild(option);
+                    }
+                    continue; // do not intersect
+                }
+            }
+            var option = document.createElement("option");
+            option.value = proj.code;
+            option.text  = proj.label || j;
+            if ( proj === this._currentProjectionSystems ) {
+                option.setAttribute( "selected", "selected" );
+            }
 
-              systemList.appendChild(option);
-          }
-      };
+            systemList.appendChild(option);
+        }
+    };
 
     /**
      * this method is called by event 'change' on 'GPmousePositionProjectionUnits'

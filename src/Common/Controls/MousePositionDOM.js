@@ -106,7 +106,7 @@ define([], function () {
             // valeurs par defaut
             displayAltitude     = displayAltitude   ? true : ( typeof displayAltitude === "undefined") ? true : false;
             displayCoordinates  = displayCoordinates ? true : ( typeof displayCoordinates === "undefined") ? true : false;
-            editCoordinates     = editCoordinates ? true : ( typeof editCoordinates === "undefined") ? true : false;
+            editCoordinates     = editCoordinates ? true : ( typeof editCoordinates === "undefined") ? false : true;
 
             var div = document.createElement("div");
             div.id  = this._addUID("GPmousePositionPanel");
