@@ -150,16 +150,6 @@ define([
                     globe.addEventListener( "centerchanged", this.onGlobeMove );
                 }
             }
-            // mode "collapsed"
-            if (!this.collapsed) {
-                var inputShow = document.getElementById("GPshowMousePosition-" + this._uid);
-                inputShow.checked = "checked";
-                this._setElevationPanel(this.options.displayAltitude);
-                this._setCoordinatesPanel(this.options.displayCoordinates);
-                if ( !this.options.displayCoordinates ) {
-                    this._setSettingsPanel(false);
-                }
-            }
         } else if (globe == null) { // if globe == null we remove the MP control
             // on supprime le listener associé au MP
             globe.removeEventListener( "mousemove", this._callbacks.mouseMove );
@@ -674,18 +664,21 @@ define([
      * @method _initContainer
      * @private
      */
-    MousePosition.prototype._initContainer = function () {
+    MousePosition.prototype._initContainer = function (options) {
         // creation du container principal
         var container = this._createMainContainerElement();
 
         var inputShow = this._showMousePositionContainer = this._createShowMousePositionElement();
+        if (!options.collapsed) {
+            inputShow.checked = "checked";
+        }
         container.appendChild(inputShow);
 
         var picto = this._createShowMousePositionPictoElement(this._isDesktop);
         container.appendChild(picto);
 
-        var panel    = this._createMousePositionPanelElement();
-        var settings = this._createMousePositionSettingsElement();
+        var panel    = this._createMousePositionPanelElement(options.displayAltitude, options.displayCoordinates);
+        var settings = this._createMousePositionSettingsElement(options.displayCoordinates);
         var systems  = this._projectionSystemsContainer = this._createMousePositionSettingsSystemsElement(this._projectionSystems);
         var units    = this._projectionUnitsContainer = this._createMousePositionSettingsUnitsElement(this._projectionUnits[this._currentProjectionType]);
 

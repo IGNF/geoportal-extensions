@@ -818,8 +818,13 @@ define([
     LayerSwitcher.prototype._onDragAndDropLayerClick = function (e) {
         var globe = this.getGlobe();
 
+        // gestion des indexes de telle manière que les couches non visibles dans le ls (displayed: false)
+        // se voient affecter les indexes les plus petits (couche basse) lors du changement d'index de couches
+        // visibles. Déplacement systématique des couches non visibles en couches de fond (pour ne pas occulter
+        // les couches visibles).
+
         var targetIndex = null;
-        if( e.newIndex === 0 ) {
+        if( !e.newIndex || e.newIndex === 0 ) {
             targetIndex = globe.getColorLayers().length - 1;
         } else {
             var layerTargetID  = this._resolveLayerId( e.from.childNodes[e.newIndex + (e.newIndex === e.from.childNodes.length-1?-1:1)].id);

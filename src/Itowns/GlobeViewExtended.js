@@ -268,10 +268,10 @@ define([
      * @param {Object} widget - The Widget object to add
      */
     GlobeViewExtended.prototype.addWidget = function addWidget (widget) {
-        widget.setGlobe(this);
         if ( !widget.getTarget() ) {
             widget.setTarget(this.viewerDiv, "absolute");
         }
+        widget.setGlobe(this);
         this._widgets.push(widget);
     };
 

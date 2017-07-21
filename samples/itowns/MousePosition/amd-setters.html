@@ -33,6 +33,9 @@ and open the template in the editor.
 
     </head>
     <body>
+        <h3>Itowns</h3>
+        <p>Ajout d'un contrôle d'affichage des coordonnées de la souris : MousePosition</p>
+
         <div id="viewerDiv"></div>
 
         <input type="button" onclick="addSystems()" value ="Add new systems"/>
@@ -139,7 +142,7 @@ and open the template in the editor.
                         mousePosition = new itowns.control.MousePosition({
                             collapsed: false,
                             displayCoordinates: true,
-                            displayAltitude: false
+                            displayAltitude: true
                         });
                         globeView.addWidget( mousePosition );
                     });
