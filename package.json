@@ -67,6 +67,7 @@
   "devDependencies": {
     "chai": "^3.4.1",
     "easy-amdtest": "^0.1.0",
+    "geoportal-access-lib": "^1.0.0",
     "gulp-mocha-phantomjs": "^0.7.0",
     "gulp-replace": "^0.5.4",
     "gulp-strip-comments": "^2.2.1",
