@@ -749,7 +749,7 @@
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     gulp.task("res-styles", function () {
 
-        var minifyCss = require("gulp-minify-css");
+        var cleanCSS = require("gulp-clean-css");
         var concat    = require("gulp-concat");
 
         var builddir = path.join(_build, getDistDirName(), "dist", getDistDirName().toLowerCase());
@@ -791,7 +791,10 @@
         }
         // return gulp.src([srcdircommon, srcdir, plugindir, exceptsrcdir, exceptsrcdircommon])
         return gulp.src(srcArray)
-            .pipe((isProduction) ? minifyCss(/*{compatibility :"ie8"}*/) : $.util.noop())
+            .pipe((isProduction) ? cleanCSS({ 
+                rebase : false,
+                level : 2
+            }) : $.util.noop())
             .pipe((isProduction) ? concat(output + ".css") : concat(output + "-src.css"))
             .pipe(gulp.dest(builddir))
             .pipe($.plumber())
