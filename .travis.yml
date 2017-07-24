@@ -1,6 +1,9 @@
 before_script:
   - npm install
 script: gulp build
-# cache:
-#  directories:
-#    - node_modules
+cache:
+  directories:
+    - node_modules
+# FIXME : build fails with trusty env
+# see : https://blog.travis-ci.com/2017-07-11-trusty-as-default-linux-is-coming?utm_source=web&utm_medium=banner&&utm_campaign=trusty-default
+dist: precise
