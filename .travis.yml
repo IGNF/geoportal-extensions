@@ -1,6 +1,6 @@
 before_script:
   - npm install
 script: gulp build
-cache:
-  directories:
-    - node_modules
+# cache:
+#  directories:
+#    - node_modules
