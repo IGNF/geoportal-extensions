@@ -347,10 +347,10 @@
             ol : "empty:",
             leaflet : "empty:",
             vg : "empty:",
-            request : "empty:", // depenance externe pour nodejs !
-            xmldom : "empty:",  // depenance externe pour nodejs !
+            request : "empty:", // dependance externe pour nodejs !
+            xmldom : "empty:",  // dependance externe pour nodejs !
             proj4 : "../../../../lib/proj4/proj4-src" /*+ modeExt*/,
-            gp : "../../../../lib/gp/GpServices-src"  /*+ modeExt */,
+            gp : "../../../../node_modules/geoportal-access-lib/dist/GpServices-src"  /*+ modeExt */,
             sortable : "../../../../lib/sortable/Sortable-src" /*+ modeExt */
         };
 
@@ -447,7 +447,7 @@
             request : "empty:", // dependance externe pour nodejs !
             xmldom : "empty:",  // dependance externe pour nodejs !
             proj4 : "../../../../lib/proj4/proj4-src" /*+ modeExt*/,
-            gp : "../../../../lib/gp/GpServices-src"  /*+ modeExt */,
+            gp : "../../../../node_modules/geoportal-access-lib/dist/GpServices-src"  /*+ modeExt */,
             sortable : "../../../../lib/sortable/Sortable-src" /*+ modeExt */,
             woodman : "empty:"
         };
