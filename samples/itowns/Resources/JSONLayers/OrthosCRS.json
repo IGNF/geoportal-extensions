@@ -16,10 +16,7 @@
         "originators" :  [{
             "name" : "IGNCRS",
             "attribution" : "IGN Grandes Echelles",
-            "url" : "http://www.ign.fr",
-            "constraints" : [{
-                "crs":"EPSG:4326"
-            }]
+            "url" : "http://www.ign.fr"
         }],
         "attribution" : {
             "name":"IGN",
