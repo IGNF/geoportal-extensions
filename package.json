@@ -77,8 +77,5 @@
     "should": "^7.1.1",
     "sinon": "^1.17.2",
     "woodman": "^1.1.0"
-  },
-  "optionalDependencies": {
-    "bower": "^1.7.0"
   }
 }
