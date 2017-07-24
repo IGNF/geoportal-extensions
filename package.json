@@ -38,7 +38,11 @@
     "url": "https://github.com/IGNF/geoportal-extensions/issues"
   },
   "homepage": "https://github.com/IGNF/geoportal-extensions#readme",
-  "dependencies": {
+  "dependencies": {},
+  "optionalDependencies": {
+    "geoportal-access-lib": "^1.0.0"
+  },
+  "devDependencies": {
     "amdclean": "^2.7.0",
     "glob": "^7.0.3",
     "gulp": "^3.9.1",
@@ -47,10 +51,8 @@
     "gulp-connect": "^3.1.0",
     "gulp-header": "^1.7.1",
     "gulp-jscs": "~3.0.0",
-    "gulp-jsdoc3": "^0.1.1",
     "gulp-jshint": "~1.5.0",
     "gulp-load-plugins": "^1.1.0",
-    "gulp-minify-css": "^1.2.2",
     "gulp-plumber": "^1.0.1",
     "gulp-rename": "^1.2.2",
     "gulp-size": "^2.0.0",
@@ -62,23 +64,17 @@
     "requirejs": "^2.1.22",
     "rimraf": "^2.4.4",
     "run-sequence": "^1.1.5",
-    "shelljs": "^0.5.3"
-  },
-  "devDependencies": {
-    "chai": "^3.4.1",
+    "shelljs": "^0.5.3",
     "easy-amdtest": "^0.1.0",
-    "geoportal-access-lib": "^1.0.0",
-    "gulp-mocha-phantomjs": "^0.7.0",
+    "gulp-clean-css": "^3.7.0",
+    "gulp-mocha-phantomjs": "^0.12.1",
     "gulp-replace": "^0.5.4",
     "gulp-strip-comments": "^2.2.1",
-    "jaguarjs-jsdoc": "0.0.1",
     "jsdoc": "^3.3.1",
-    "mocha": "^2.3.4",
+    "mocha": "^3.2.0",
+    "chai": "^3.4.1",
     "should": "^7.1.1",
     "sinon": "^1.17.2",
     "woodman": "^1.1.0"
-  },
-  "optionalDependencies": {
-    "bower": "^1.7.0"
   }
 }
