@@ -184,6 +184,9 @@ define([
                         return;
                     }
                     var layer = self.getGlobe().getLayerById(id);
+                    if( layer.type === "elevation" ) {
+                        return;
+                    }
                     var layerConf = self._getLayerConf(id);
                     if ( layerConf ) {
                         self.addLayer(layer, layerConf);
