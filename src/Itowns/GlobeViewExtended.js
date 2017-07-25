@@ -26,32 +26,6 @@ define([
 
         // call constructor
         itowns.GlobeView.call(this, viewerDiv, coordCarto, options);
-
-        var parent_preRender = this.preRender;
-        this.preRender = function () {
-            parent_preRender();
-
-            var self = this;
-            clearTimeout(this._preRenderTimer);
-            this._preRenderTimer = setTimeout( function () {
-                if ( self._fetchVisibleColorLayers || self._fetchVisibleElevationLayers || self._fetchExtent ) {
-
-                    var event = {
-                        type : "prerender",
-                    };
-                    if ( self._fetchExtent ) {
-                        event.extent = new itowns.Extent('EPSG:4326', 180, -180, 90, -90);
-                    }
-                    if ( self._fetchVisibleColorLayers || self._fetchVisibleElevationLayers ) {
-                        event.layers = { id: [] };
-                    }
-
-                    self._getCurrentSceneInfos( self.scene, event );
-
-                    self.dispatchEvent(event);
-                }
-            }, 100);
-        };
     }
 
     /*
@@ -59,26 +33,57 @@ define([
     */
     GlobeViewExtended.prototype = Object.create(itowns.GlobeView.prototype, {});
 
+    GlobeViewExtended.prototype.parentPreRender = this.preRender;
+    /**
+    * Overload itowns.GlobeView preRender method
+    */
+    GlobeViewExtended.prototype.preRender = function () {
+        this.parentPreRender();
+
+        var self = this;
+        clearTimeout(this._preRenderTimer);
+        this._preRenderTimer = setTimeout( function () {
+            if ( self._fetchVisibleColorLayers || self._fetchVisibleElevationLayers || self._fetchExtent ) {
+
+                var event = {
+                    type : "prerender"
+                };
+                if ( self._fetchExtent ) {
+                    event.extent = new itowns.Extent("EPSG:4326", 180, -180, 90, -90);
+                }
+                if ( self._fetchVisibleColorLayers || self._fetchVisibleElevationLayers ) {
+                    event.layers = {
+                        id : []
+                    };
+                }
+
+                self._getCurrentSceneInfos( self.scene, event );
+
+                self.dispatchEvent(event);
+            }
+        }, 100);
+    };
+
     /**
     * Constructor (alias)
     */
     GlobeViewExtended.prototype.constructor = GlobeViewExtended;
 
+    GlobeViewExtended.prototype.parentAddLayer = GlobeViewExtended.prototype.addLayer;
     /**
     * Overload itowns.GlobeView addLayer method
     */
-    GlobeViewExtended.prototype.parent_addLayer = GlobeViewExtended.prototype.addLayer;
     GlobeViewExtended.prototype.addLayer = function (layer) {
-        this.parent_addLayer(layer);
+        this.parentAddLayer(layer);
         this.notifyChange(true);
     };
 
+    GlobeViewExtended.prototype.parentRemoveLayer = GlobeViewExtended.prototype.removeLayer;
     /**
     * Overload itowns.GlobeView removeLayer method
     */
-    GlobeViewExtended.prototype.parent_removeLayer = GlobeViewExtended.prototype.removeLayer;
     GlobeViewExtended.prototype.removeLayer = function (layerId) {
-        this.parent_removeLayer(layerId);
+        this.parentRemoveLayer(layerId);
         this.notifyChange(true);
     };
 
@@ -114,13 +119,13 @@ define([
         itowns.ColorLayersOrdering.moveLayerToIndex(this, layerID, index);
     };
 
+    GlobeViewExtended.prototype.parentAddEventListener = GlobeViewExtended.prototype.addEventListener;
     /**
     * Add event listener to the globe
     *
     * @param {String} type - event type
-    * @param {Boolean} callback
+    * @param {Boolean} callback - event handler
     */
-    GlobeViewExtended.prototype.parent_addEventListener = GlobeViewExtended.prototype.addEventListener;
     GlobeViewExtended.prototype.addEventListener = function (type, callback) {
         switch ( type ) {
             case "mousemove" :
@@ -130,18 +135,18 @@ define([
                 this.controls.addEventListener( type, callback );
                 break;
             default :
-                this.parent_addEventListener( type, callback );
+                this.parentAddEventListener( type, callback );
                 break;
         }
     };
 
+    GlobeViewExtended.prototype.parentRemoveEventListener = GlobeViewExtended.prototype.addEventListener;
     /**
     * Remove event listener from the globe
     *
     * @param {String} type - event type
-    * @param {Boolean} callback
+    * @param {Boolean} callback - event handler
     */
-    GlobeViewExtended.prototype.parent_removeEventListener = GlobeViewExtended.prototype.addEventListener;
     GlobeViewExtended.prototype.removeEventListener = function (type, callback) {
         switch ( type ) {
             case "mousemove" :
@@ -151,7 +156,7 @@ define([
                 this.controls.removeEventListener( type, callback );
                 break;
             default :
-                this.parent_removeEventListener( type, callback );
+                this.parentRemoveEventListener( type, callback );
                 break;
         }
     };
@@ -160,7 +165,7 @@ define([
     * Defines if the current view extent have to be computed on pre-render event
     */
     GlobeViewExtended.prototype.preRenderEventFetchViewExtent = function (b) {
-        if( typeof b === "undefined" ) {
+        if ( typeof b === "undefined" ) {
             b = true;
         }
         this._fetchExtent = b;
@@ -170,7 +175,7 @@ define([
     * Defines if the list of the color layers displayed have to be computed on pre-render event
     */
     GlobeViewExtended.prototype.preRenderEventFetchColorLayersDisplayed = function (b) {
-        if( typeof b === "undefined" ) {
+        if ( typeof b === "undefined" ) {
             b = true;
         }
         this._fetchVisibleColorLayers = b;
@@ -180,7 +185,7 @@ define([
     * Defines if the list of the elevation layers displayed have to be computed on pre-render event
     */
     GlobeViewExtended.prototype.preRenderEventFetchElevationLayersDisplayed = function (b) {
-        if( typeof b === "undefined" ) {
+        if ( typeof b === "undefined" ) {
             b = true;
         }
         this._fetchVisibleElevationLayers = b;
@@ -190,7 +195,7 @@ define([
     * Defines if the list of the layers of all types displayed have to be computed on pre-render event
     */
     GlobeViewExtended.prototype.preRenderEventFetchLayersDisplayed = function (b) {
-        if( typeof b === "undefined" ) {
+        if ( typeof b === "undefined" ) {
             b = true;
         }
         this._fetchVisibleColorLayers = b;

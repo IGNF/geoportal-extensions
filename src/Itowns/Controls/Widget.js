@@ -37,8 +37,8 @@ define([
      * Associates the widget to a specified target div.
      *
      * @method
-     * @param {HTMLElement} targetDiv widget target div.
-     * @param {String} position html position attribute.
+     * @param {HTMLElement} targetDiv - widget target div.
+     * @param {String} position - html position attribute.
     */
     Widget.prototype.setTarget = function setTarget (targetDiv, position) {
         if (!targetDiv) {
@@ -50,7 +50,7 @@ define([
             return;
         }
 
-        if( this._target && this._element ) {
+        if ( this._target && this._element ) {
             this._target.removeChild(this._element);
         }
 

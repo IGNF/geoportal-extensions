@@ -117,7 +117,7 @@ define([
                 var layer = null;
 
                 if (this._initLayers[i].id) {
-                    var layer = globe.getLayerById(this._initLayers[i].id);
+                    layer = globe.getLayerById(this._initLayers[i].id);
                 }
 
                 if ( layer && this._initLayers[i].displayed ) {
@@ -130,13 +130,13 @@ define([
                         metadata : conf.metadata || [],
                         quicklookUrl : conf.quicklookUrl || null
                     };
-                    if( typeof conf.ipr !== 'undefined' ) {
+                    if ( typeof conf.ipr !== "undefined" ) {
                         layerOptions.ipr = conf.ipr;
                     }
-                    if( typeof conf.opacity !== 'undefined' ) {
+                    if ( typeof conf.opacity !== "undefined" ) {
                         layerOptions.opacity = conf.opacity;
                     }
-                    if( typeof conf.visibility !== 'undefined' ) {
+                    if ( typeof conf.visibility !== "undefined" ) {
                         layerOptions.visibility = conf.visibility;
                     }
                     this._layers[layer.id] = layerOptions;
@@ -180,11 +180,11 @@ define([
             this._callbacks.onAddedLayerCallBack = function (e) {
                 var id = e.layerId;
                 if (self) {
-                    if( !self._layerDisplayedInLayerSwitcher(id) ) {
+                    if ( !self._layerDisplayedInLayerSwitcher(id) ) {
                         return;
                     }
                     var layer = self.getGlobe().getLayerById(id);
-                    if( layer.type === "elevation" ) {
+                    if ( layer.type === "elevation" ) {
                         return;
                     }
                     var layerConf = self._getLayerConf(id);
@@ -216,28 +216,29 @@ define([
             */
             this._callbacks.onIndexLayerCallBack = function (e) {
 
+                /** arraysEquals */
                 var arraysEquals = function (a1, a2) {
                     if (a1.length !== a2.length) {
                         return false;
                     }
-                    for( var i = 0 ; i < a1.length ; ++i ) {
+                    for ( var i = 0 ; i < a1.length ; ++i ) {
                         if ( a1[i] !== a2[i] ) {
                             return false;
                         }
                     }
                     return true;
-                }
+                };
 
-                if( !arraysEquals(e.new.sequence, e.previous.sequence)) {
+                if ( !arraysEquals(e.new.sequence, e.previous.sequence)) {
                     self._updateLayerListContainer();
                 }
             };
             globe.addEventListener(itowns.GLOBE_VIEW_EVENTS.COLOR_LAYERS_ORDER_CHANGED, this._callbacks.onIndexLayerCallBack);
 
             var layers = globe.getColorLayers();
-            for ( var i = 0 ; i < layers.length ; ++i ) {
-                layers[i].addEventListener("opacity-property-changed", this._callbacks.onOpacityLayerCallBack);
-                layers[i].addEventListener("visible-property-changed", this._callbacks.onVisibilityLayerCallBack);
+            for ( var ii = 0 ; ii < layers.length ; ++ii ) {
+                layers[ii].addEventListener("opacity-property-changed", this._callbacks.onOpacityLayerCallBack);
+                layers[ii].addEventListener("visible-property-changed", this._callbacks.onVisibilityLayerCallBack);
             }
 
             this._globe = globe;
@@ -249,9 +250,9 @@ define([
             this._globe.removeEventListener(itowns.GLOBE_VIEW_EVENTS.LAYER_REMOVED, this._callbacks.onRemovedLayerCallBack);
             this._globe.removeEventListener(itowns.GLOBE_VIEW_EVENTS.COLOR_LAYERS_ORDER_CHANGED, this._callbacks.onIndexLayerCallBack);
             var layers = this._globe.getColorLayers();
-            for ( var i = 0 ; i < layers.length ; ++i ) {
-                layers[i].removeEventListener("opacity-property-changed", this._callbacks.onOpacityLayerCallBack);
-                layers[i].removeEventListener("visible-property-changed", this._callbacks.onVisibilityLayerCallBack);
+            for ( var j = 0 ; j < layers.length ; ++j ) {
+                layers[j].removeEventListener("opacity-property-changed", this._callbacks.onOpacityLayerCallBack);
+                layers[j].removeEventListener("visible-property-changed", this._callbacks.onVisibilityLayerCallBack);
             }
             // On supprime le DOM du layerSwitcher
             while (this._element.hasChildNodes()) {
@@ -302,7 +303,7 @@ define([
             return;
         }
 
-        //abonnement aux evenements
+        // abonnement aux evenements
         layer.addEventListener("opacity-property-changed", this._callbacks.onOpacityLayerCallBack);
         layer.addEventListener("visible-property-changed", this._callbacks.onVisibilityLayerCallBack);
 
@@ -326,15 +327,15 @@ define([
                 metadata : config.metadata || layerInfos._metadata || [],
                 quicklookUrl : config.quicklookUrl || layerInfos._quicklookUrl || null
             };
-            if( typeof config.ipr !== 'undefined' ) {
+            if ( typeof config.ipr !== "undefined" ) {
                 layerOptions.ipr = config.ipr;
                 layer.attribution = layerOptions.ipr;
             }
-            if( typeof config.opacity !== 'undefined' ) {
+            if ( typeof config.opacity !== "undefined" ) {
                 layerOptions.opacity = config.opacity;
                 layer.opacity = layerOptions.opacity;
             }
-            if( typeof config.visibility !== 'undefined' ) {
+            if ( typeof config.visibility !== "undefined" ) {
                 layerOptions.visibility = config.visibility;
                 layer.visible = layerOptions.visibility;
             }
@@ -354,13 +355,13 @@ define([
                     this._layers[id][prop] = config[prop];
                 }
             }
-            if( typeof config.ipr !== 'undefined' ) {
+            if ( typeof config.ipr !== "undefined" ) {
                 layer.attribution = config.ipr;
             }
-            if( typeof config.opacity !== 'undefined' ) {
+            if ( typeof config.opacity !== "undefined" ) {
                 layer.opacity = config.opacity;
             }
-            if( typeof config.visibility !== 'undefined' ) {
+            if ( typeof config.visibility !== "undefined" ) {
                 layer.visible = config.visibility;
             }
             // set new title in layer div
@@ -396,7 +397,7 @@ define([
     /**
      * Remove a layer from control
      *
-     * @param {Object} layer - layer to remove to layer switcher
+     * @param {Object} layerId - layer to remove to layer switcher
      */
     LayerSwitcher.prototype.removeLayer = function (layerId) {
         var layerList = document.getElementById(this._addUID("GPlayersList"));
@@ -467,7 +468,7 @@ define([
         // div qui contiendra les div des listes.
         this._layerListContainer = null;
 
-        //callbacks
+        // callbacks
         this._callbacks = {};
 
         // options
@@ -508,8 +509,6 @@ define([
         }
         return true;
     };
-
-
 
     /**
      * Create control main container
@@ -596,13 +595,13 @@ define([
                     this._layers[id] = layerOptions;
                 } else {
                     var lsLayerConf = this._layers[id];
-                    if ( typeof lsLayerConf.ipr !== 'undefined' ) {
+                    if ( typeof lsLayerConf.ipr !== "undefined" ) {
                         layer.options.attribution = lsLayerConf.ipr;
                     }
-                    if ( typeof lsLayerConf.opacity !== 'undefined' ) {
+                    if ( typeof lsLayerConf.opacity !== "undefined" ) {
                         layer.opacity = lsLayerConf.opacity;
                     }
-                    if ( typeof lsLayerConf.visibility !== 'undefined' ) {
+                    if ( typeof lsLayerConf.visibility !== "undefined" ) {
                         layer.visible = lsLayerConf.visibility;
                     }
                 }
@@ -681,12 +680,12 @@ define([
         }
 
         var layerOpacityInput = document.getElementById(this._addUID("GPopacityValueDiv_ID_" + layerId));
-        if( layerOpacityInput ) {
+        if ( layerOpacityInput ) {
             layerOpacityInput.value = Math.round(opacity * 100);
         }
 
         var layerOpacitySpan = document.getElementById(this._addUID("GPopacityValue_ID_" + layerId));
-        if( layerOpacitySpan ) {
+        if ( layerOpacitySpan ) {
             layerOpacitySpan.innerHTML = Math.round(opacity * 100) + "%";
         }
     };
@@ -716,7 +715,7 @@ define([
      */
     LayerSwitcher.prototype._updateLayerVisibility = function (layerId, visibility) {
         var layerVisibilityInput = document.getElementById(this._addUID("GPvisibility_ID_" + layerId));
-        if( layerVisibilityInput ) {
+        if ( layerVisibilityInput ) {
             layerVisibilityInput.checked = visibility;
         }
     };
@@ -737,7 +736,7 @@ define([
         var info;
 
         // Close layer info panel
-        divId = document.getElementById(e.target.id);
+        var divId = document.getElementById(e.target.id);
         if (divId.className === "GPlayerInfoOpened") {
             if ( divId.classList !== undefined ) {
                 divId.classList.remove("GPlayerInfoOpened");
@@ -827,10 +826,10 @@ define([
         // les couches visibles).
 
         var targetIndex = null;
-        if( !e.newIndex || e.newIndex === 0 ) {
+        if ( !e.newIndex || e.newIndex === 0 ) {
             targetIndex = globe.getColorLayers().length - 1;
         } else {
-            var layerTargetID  = this._resolveLayerId( e.from.childNodes[e.newIndex + (e.newIndex === e.from.childNodes.length-1?-1:1)].id);
+            var layerTargetID  = this._resolveLayerId( e.from.childNodes[e.newIndex + (e.newIndex === e.from.childNodes.length - 1 ? -1 : 1)].id);
             targetIndex = globe.getLayerById(layerTargetID).sequence;
         }
 
@@ -840,35 +839,12 @@ define([
     };
 
     /**
-    * Method which update the index of the layers after a layer is moved, added, or removed
-    *
-    * @method _updateLayersIndex
-    * @private
-    */
-    // FIXME utilité de la fonction ?
-    LayerSwitcher.prototype._updateLayersIndex = function () {
-        var globe = this.getGlobe();
-
-        // on récupère l'ordre des div dans le contrôle pour réordonner les couches
-        var matchesLayers = document.querySelectorAll("div.GPlayerSwitcher_layer");
-
-        for (var i = 0; i < matchesLayers.length; i++) {
-            // newIndex = maxZIndex - i;
-            var layerID  = this._resolveLayerId(matchesLayers[i].id);
-
-            globe.moveLayerToIndex(layerID, i);
-        }
-    }
-
-    /**
      * Checks layers range
      *
      * @method _inRangeUpdate
      * @private
      */
     LayerSwitcher.prototype._inRangeUpdate = function (layersDisplayed) {
-
-        var globe = this.getGlobe();
 
         for (var layerKey in this._layers) {
             var layer = this._layers[layerKey];
@@ -958,7 +934,7 @@ define([
     LayerSwitcher.prototype._resolveLayerId = function (divId) {
         var divName  = SelectorID.name(divId); // ex GPvisibilityPicto_ID_26
         return divName.substring(divName.indexOf("_ID_") + 4 );  // ex. 26
-    }
+    };
 
     return LayerSwitcher;
 });

@@ -268,9 +268,9 @@ define([
 
         // re-initialization of codes
         var oldNewCodeGlobe = [];
-        for ( var i = 0; i < this._projectionSystems.length; i++ ) {
-            oldNewCodeGlobe[ Number( this._projectionSystems[i].code ) ] = i;
-            this._projectionSystems[i].code = i;
+        for ( var ii = 0; ii < this._projectionSystems.length; ii++ ) {
+            oldNewCodeGlobe[ Number( this._projectionSystems[ii].code ) ] = ii;
+            this._projectionSystems[ii].code = ii;
         }
 
         // find system in control container systems list
@@ -346,7 +346,7 @@ define([
         if ( displayAltitude === undefined ) {
             return;
         }
-        if( typeof this._noRightManagement === 'undefined' ) {
+        if ( typeof this._noRightManagement === "undefined" ) {
             this._checkRightsManagement();
         }
         this.options.displayAltitude = displayAltitude;
@@ -538,8 +538,8 @@ define([
 
         if ( this._projectionSystems.length === 0 ) {
             // on ajoute les systèmes de projections par défaut
-            for (var i = 0; i < projectionSystemsByDefault.length; i++ ) {
-                this.addSystem(projectionSystemsByDefault[i]);
+            for (var ii = 0; ii < projectionSystemsByDefault.length; ii++ ) {
+                this.addSystem(projectionSystemsByDefault[ii]);
             }
         }
     };
@@ -994,24 +994,27 @@ define([
         var self = this;
 
         var position = this.getGlobe().controls.pickGeoPosition(e);
-        if( !position ) {
-            this.GPdisplayCoords( { lon: "---", lat: "---"} );
+        if ( !position ) {
+            this.GPdisplayCoords({
+                lon : "---",
+                lat : "---"
+            });
             this.GPresetElevation();
             return;
         }
 
         var coordinate = {
-            lon: position.longitude(),
-            lat: position.latitude()
+            lon : position.longitude(),
+            lat : position.latitude()
         };
 
         this._setCoordinate(coordinate);
 
         // calcul de l'altitude après un certain délai après l'arrêt du mouvement de la souris
-        if( this.options.displayAltitude ) {
+        if ( this.options.displayAltitude ) {
             clearTimeout(this._timer);
             this._timer = setTimeout( function () {
-              self.onMoveStopped(coordinate);
+                self.onMoveStopped(coordinate);
             }, this.options.altitude.triggerDelay);
         }
     };
@@ -1022,10 +1025,9 @@ define([
      * (cf. this.GPdisplayCoords() into the DOM functions)
      *
      * @method onGlobeMove
-     * @param {Object} e - itowns event
      * @private
      */
-    MousePosition.prototype.onGlobeMove = function (e) {
+    MousePosition.prototype.onGlobeMove = function () {
 
         // var self = this;
 
@@ -1182,10 +1184,10 @@ define([
      */
     MousePosition.prototype.onMousePositionProjectionSystemChange = function (e) {
 
-          var idx   = e.target.selectedIndex;      // index
-          var value = e.target.options[idx].value; // crs
+        var idx   = e.target.selectedIndex;      // index
+        var value = e.target.options[idx].value; // crs
 
-          this._setCurrentSystem( value );
+        this._setCurrentSystem( value );
     };
 
     /**
@@ -1223,7 +1225,7 @@ define([
                 this.onGlobeMove();
             }
             // FIXME : adapter le rechargement en mode tactile à OpenLayers !!
-    } ;
+        } ;
 
     /**
      * this method is called by event 'mouseover' on 'GPmousePositionProjectionSystem'
@@ -1231,10 +1233,9 @@ define([
      * and selects the system projection whose geoBBox interstects the current view extent.
      *
      * @method onMousePositionProjectionSystemMouseOver
-     * @param {Object} e - HTMLElement
      * @private
      */
-    MousePosition.prototype.onMousePositionProjectionSystemMouseOver = function (e) {
+    MousePosition.prototype.onMousePositionProjectionSystemMouseOver = function () {
 
         // globe infos
         var globe = this.getGlobe();
@@ -1246,7 +1247,7 @@ define([
 
         // clear select
         var systemList = document.getElementById(this._addUID("GPmousePositionProjectionSystem"));
-          systemList.innerHTML = "";
+        systemList.innerHTML = "";
 
         // add systems whose extent intersects the globe extent
         for (var j = 0; j < this._projectionSystems.length; j++) {
@@ -1258,28 +1259,28 @@ define([
                        globeExtent.east() < proj.geoBBox.left  ||
                        globeExtent.north() < proj.geoBBox.bottom
                  ) {
-                     if ( proj === this._currentProjectionSystems ) {
-                         var option = document.createElement("option");
-                         option.value = proj.code;
-                         option.text  = proj.label || j;
-                         option.setAttribute( "selected", "selected" );
-                         option.setAttribute( "disabled", "disabled" );
+                    if ( proj === this._currentProjectionSystems ) {
+                        var option = document.createElement("option");
+                        option.value = proj.code;
+                        option.text  = proj.label || j;
+                        option.setAttribute( "selected", "selected" );
+                        option.setAttribute( "disabled", "disabled" );
 
-                         systemList.appendChild(option);
-                     }
-                     continue; // do not intersect
-                  }
-              }
-              var option = document.createElement("option");
-              option.value = proj.code;
-              option.text  = proj.label || j;
-              if ( proj === this._currentProjectionSystems ) {
-                  option.setAttribute( "selected", "selected" );
-              }
+                        systemList.appendChild(option);
+                    }
+                    continue; // do not intersect
+                }
+            }
+            var option = document.createElement("option");
+            option.value = proj.code;
+            option.text  = proj.label || j;
+            if ( proj === this._currentProjectionSystems ) {
+                option.setAttribute( "selected", "selected" );
+            }
 
-              systemList.appendChild(option);
-          }
-      };
+            systemList.appendChild(option);
+        }
+    };
 
     /**
      * this method is called by event 'change' on 'GPmousePositionProjectionUnits'

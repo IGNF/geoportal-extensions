@@ -207,7 +207,6 @@ define([
 
     Attribution.prototype._inRangeUpdate = function (layersDisplayed, extent) {
         var globe = this.getGlobe();
-        var elementAttributionList = document.getElementById(this._addUID("GPAttributionsListContainer"));
 
         var scaleDenominator = 1 / globe.getScale();
 
