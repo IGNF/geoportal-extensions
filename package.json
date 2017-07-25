@@ -40,7 +40,7 @@
   "homepage": "https://github.com/IGNF/geoportal-extensions#readme",
   "dependencies": {},
   "optionalDependencies": {
-    "geoportal-access-lib": "^1.0.0"
+    "geoportal-access-lib": "^1.0.1"
   },
   "devDependencies": {
     "amdclean": "^2.7.0",
