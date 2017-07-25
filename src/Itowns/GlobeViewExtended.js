@@ -34,7 +34,7 @@ define([
             var self = this;
             clearTimeout(this._preRenderTimer);
             this._preRenderTimer = setTimeout( function () {
-                if ( self._fetchVisibleLayers || self._fetchExtent ) {
+                if ( self._fetchVisibleColorLayers || self._fetchVisibleElevationLayers || self._fetchExtent ) {
 
                     var event = {
                         type : "prerender",
@@ -42,7 +42,7 @@ define([
                     if ( self._fetchExtent ) {
                         event.extent = new itowns.Extent('EPSG:4326', 180, -180, 90, -90);
                     }
-                    if ( self._fetchVisibleLayers ) {
+                    if ( self._fetchVisibleColorLayers || self._fetchVisibleElevationLayers ) {
                         event.layers = { id: [] };
                     }
 
@@ -160,14 +160,41 @@ define([
     * Defines if the current view extent have to be computed on pre-render event
     */
     GlobeViewExtended.prototype.preRenderEventFetchViewExtent = function (b) {
+        if( typeof b === "undefined" ) {
+            b = true;
+        }
         this._fetchExtent = b;
     };
 
     /**
-    * Defines if the list of the layers displayed have to be computed on pre-render event
+    * Defines if the list of the color layers displayed have to be computed on pre-render event
+    */
+    GlobeViewExtended.prototype.preRenderEventFetchColorLayersDisplayed = function (b) {
+        if( typeof b === "undefined" ) {
+            b = true;
+        }
+        this._fetchVisibleColorLayers = b;
+    };
+
+    /**
+    * Defines if the list of the elevation layers displayed have to be computed on pre-render event
+    */
+    GlobeViewExtended.prototype.preRenderEventFetchElevationLayersDisplayed = function (b) {
+        if( typeof b === "undefined" ) {
+            b = true;
+        }
+        this._fetchVisibleElevationLayers = b;
+    };
+
+    /**
+    * Defines if the list of the layers of all types displayed have to be computed on pre-render event
     */
     GlobeViewExtended.prototype.preRenderEventFetchLayersDisplayed = function (b) {
-        this._fetchVisibleLayers = b;
+        if( typeof b === "undefined" ) {
+            b = true;
+        }
+        this._fetchVisibleColorLayers = b;
+        this._fetchVisibleElevationLayers = b;
     };
 
     /**
@@ -237,12 +264,14 @@ define([
         if (node.level) {
             if (node.material.visible) {
                 if (options.layers && options.layers.id) {
-                    for ( var i in node.material.colorLayersId ) {
-                        if ( options.layers.id.indexOf(node.material.colorLayersId[i]) < 0 ) {
-                            options.layers.id.push(node.material.colorLayersId[i]);
+                    if (this._fetchVisibleColorLayers) {
+                        for ( var i in node.material.colorLayersId ) {
+                            if ( options.layers.id.indexOf(node.material.colorLayersId[i]) < 0 ) {
+                                options.layers.id.push(node.material.colorLayersId[i]);
+                            }
                         }
                     }
-                    if (this._fetchExtent) {
+                    if (this._fetchVisibleElevationLayers) {
                         for ( var j in node.material.elevationLayersId ) {
                             if ( options.layers.id.indexOf(node.material.elevationLayersId[j]) < 0 ) {
                                 options.layers.id.push(node.material.elevationLayersId[j]);

@@ -104,8 +104,8 @@ define([
             };
 
             globe.addEventListener("prerender", this._callbacks.onChangedViewCallBack);
-            globe.preRenderEventFetchViewExtent(true);
-            globe.preRenderEventFetchLayersDisplayed(true);
+            globe.preRenderEventFetchViewExtent();
+            globe.preRenderEventFetchLayersDisplayed();
         }
 
         // call original setGlobe method
@@ -216,11 +216,6 @@ define([
         for (var h = 0; h < layersDisplayed.length; h++) {
 
             var layer = globe.getLayerById(layersDisplayed[h]);
-
-            if (!layer.visible) {
-                continue;
-            }
-
             var ori = layer.options.originators;
 
             if (ori) {
@@ -239,7 +234,7 @@ define([
                     if (ori[j].constraints[0].minScaleDenominator) {
                         // si min/maxScaleDenominator sont égaux, on veut afficher l'attribution pour le niveau de zoom associé au scale dénominator
                         if (ori[j].constraints[0].minScaleDenominator === ori[j].constraints[0].maxScaleDenominator) {
-                            // on récupère le niveau de zoom 
+                            // on récupère le niveau de zoom
                             var attributionZoomLevel = LayerUtils.getZoomLevelFromScaleDenominator(ori[j].constraints[0].minScaleDenominator);
                             // on sélectionne une fourchette de scaledenominators autour du niveau de zoom qui correspond
                             var maxAttributionScaleDenominator = (this._resolutionsWGS84[attributionZoomLevel] + this._resolutionsWGS84[attributionZoomLevel - 1]) / (0.00028 * 2);

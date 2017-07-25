@@ -172,7 +172,7 @@ define([
             };
             globe.addEventListener("prerender", this._callbacks.onChangedViewCallBack);
             // pour que l'evenement prerender renvoie les couches visibles
-            globe.preRenderEventFetchLayersDisplayed(true);
+            globe.preRenderEventFetchColorLayersDisplayed();
 
             /**
             * ajout du callback onlayeradded
