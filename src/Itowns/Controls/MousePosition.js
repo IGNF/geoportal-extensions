@@ -150,14 +150,15 @@ define([
                     globe.addEventListener( "centerchanged", this.onGlobeMove );
                 }
             }
+            this._globe = globe;
         } else if (globe == null) { // if globe == null we remove the MP control
             // on supprime le listener associé au MP
-            globe.removeEventListener( "mousemove", this._callbacks.mouseMove );
+            this._globe.removeEventListener( "mousemove", this._callbacks.mouseMove );
             // on supprime le DOM du mousePosition
-            while (this.element.hasChildNodes()) {
-                this.element.removeChild(this.element.lastChild);
+            while (this.getElement().hasChildNodes()) {
+                this.getElement().removeChild(this.getElement().lastChild);
             }
-            this.element.parentNode.removeChild(this.element);
+            this.getElement().parentNode.removeChild(this.getElement());
         }
         // call original setGlobe method
         Widget.prototype.setGlobe.call(this, globe);
