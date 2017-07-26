@@ -1,5 +1,5 @@
 before_script:
-  - npm install
+  - npm install -g
 script: gulp build
 cache:
   directories:
