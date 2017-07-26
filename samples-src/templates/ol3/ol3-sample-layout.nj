@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% include "ol3/partials/ol3-head.nj" %}
+
+        {% block head %}{% endblock %}
+        {% block style %}{% endblock %}
+
+    </head>
+    <body>
+        <h1>Extension Géoportail pour OpenLayers</h1>
+        {% block body %}{% endblock  %}
+
+        {% block js %}{% endblock  %}
+    </body>
+</html>
