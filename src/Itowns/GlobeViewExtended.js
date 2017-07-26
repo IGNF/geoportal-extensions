@@ -26,43 +26,43 @@ define([
 
         // call constructor
         itowns.GlobeView.call(this, viewerDiv, coordCarto, options);
+
+        var parentPreRender = this.preRender;
+        /**
+        * Overload itowns.GlobeView preRender method
+        */
+        this.preRender = function () {
+            parentPreRender();
+
+            var self = this;
+            clearTimeout(this._preRenderTimer);
+            this._preRenderTimer = setTimeout( function () {
+                if ( self._fetchVisibleColorLayers || self._fetchVisibleElevationLayers || self._fetchExtent ) {
+
+                    var event = {
+                        type : "prerender"
+                    };
+                    if ( self._fetchExtent ) {
+                        event.extent = new itowns.Extent("EPSG:4326", 180, -180, 90, -90);
+                    }
+                    if ( self._fetchVisibleColorLayers || self._fetchVisibleElevationLayers ) {
+                        event.layers = {
+                            id : []
+                        };
+                    }
+
+                    self._getCurrentSceneInfos( self.scene, event );
+
+                    self.dispatchEvent(event);
+                }
+            }, 100);
+        };
     }
 
     /*
     * @lends
     */
     GlobeViewExtended.prototype = Object.create(itowns.GlobeView.prototype, {});
-
-    GlobeViewExtended.prototype.parentPreRender = this.preRender;
-    /**
-    * Overload itowns.GlobeView preRender method
-    */
-    GlobeViewExtended.prototype.preRender = function () {
-        this.parentPreRender();
-
-        var self = this;
-        clearTimeout(this._preRenderTimer);
-        this._preRenderTimer = setTimeout( function () {
-            if ( self._fetchVisibleColorLayers || self._fetchVisibleElevationLayers || self._fetchExtent ) {
-
-                var event = {
-                    type : "prerender"
-                };
-                if ( self._fetchExtent ) {
-                    event.extent = new itowns.Extent("EPSG:4326", 180, -180, 90, -90);
-                }
-                if ( self._fetchVisibleColorLayers || self._fetchVisibleElevationLayers ) {
-                    event.layers = {
-                        id : []
-                    };
-                }
-
-                self._getCurrentSceneInfos( self.scene, event );
-
-                self.dispatchEvent(event);
-            }
-        }, 100);
-    };
 
     /**
     * Constructor (alias)
