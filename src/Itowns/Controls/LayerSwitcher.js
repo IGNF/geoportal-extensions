@@ -168,7 +168,7 @@ define([
             * ajout du callback onChangedViewCallBack
             */
             this._callbacks.onChangedViewCallBack = function (e) {
-                self._inRangeUpdate(e.layers.id);
+                self._inRangeUpdate(e.colorLayersId);
             };
             globe.addEventListener("prerender", this._callbacks.onChangedViewCallBack);
             // pour que l'evenement prerender renvoie les couches visibles

@@ -45,10 +45,11 @@ define([
                     if ( self._fetchExtent ) {
                         event.extent = new itowns.Extent("EPSG:4326", 180, -180, 90, -90);
                     }
-                    if ( self._fetchVisibleColorLayers || self._fetchVisibleElevationLayers ) {
-                        event.layers = {
-                            id : []
-                        };
+                    if ( self._fetchVisibleColorLayers ) {
+                        event.colorLayersId = [];
+                    }
+                    if ( self._fetchVisibleElevationLayers ) {
+                        event.elevationLayersId = [];
                     }
 
                     self._getCurrentSceneInfos( self.scene, event );
@@ -140,7 +141,7 @@ define([
         }
     };
 
-    GlobeViewExtended.prototype.parentRemoveEventListener = GlobeViewExtended.prototype.addEventListener;
+    GlobeViewExtended.prototype.parentRemoveEventListener = GlobeViewExtended.prototype.removeEventListener;
     /**
     * Remove event listener from the globe
     *
@@ -268,19 +269,17 @@ define([
         }
         if (node.level) {
             if (node.material.visible) {
-                if (options.layers && options.layers.id) {
-                    if (this._fetchVisibleColorLayers) {
-                        for ( var i in node.material.colorLayersId ) {
-                            if ( options.layers.id.indexOf(node.material.colorLayersId[i]) < 0 ) {
-                                options.layers.id.push(node.material.colorLayersId[i]);
-                            }
+                if (options.colorLayersId) {
+                    for ( var i = 0 ; i < node.material.colorLayersId.length ; ++i ) {
+                        if ( options.colorLayersId.indexOf(node.material.colorLayersId[i]) < 0 ) {
+                            options.colorLayersId.push(node.material.colorLayersId[i]);
                         }
                     }
-                    if (this._fetchVisibleElevationLayers) {
-                        for ( var j in node.material.elevationLayersId ) {
-                            if ( options.layers.id.indexOf(node.material.elevationLayersId[j]) < 0 ) {
-                                options.layers.id.push(node.material.elevationLayersId[j]);
-                            }
+                }
+                if (options.elevationLayersId) {
+                    for ( var j = 0 ; j < node.material.elevationLayersId.length ; ++j ) {
+                        if ( options.elevationLayersId.indexOf(node.material.elevationLayersId[j]) < 0 ) {
+                            options.elevationLayersId.push(node.material.elevationLayersId[j]);
                         }
                     }
                 }

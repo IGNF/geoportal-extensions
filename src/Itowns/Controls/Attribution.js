@@ -98,7 +98,8 @@ define([
                 clearTimeout(this._inRangeTimer);
                 this._inRangeTimer = setTimeout( function () {
                     if (e.type === "prerender") {
-                        self._inRangeUpdate(e.layers.id, e.extent);
+                        var allLayers = e.colorLayersId.concat(e.elevationLayersId);
+                        self._inRangeUpdate(allLayers, e.extent);
                     }
                 }, 100);
             };
@@ -215,6 +216,12 @@ define([
         for (var h = 0; h < layersDisplayed.length; h++) {
 
             var layer = globe.getLayerById(layersDisplayed[h]);
+
+            // bug de itowns : ne devrait retourner que les layers visibles
+            if( !layer.visible ) {
+                continue;
+            }
+
             var ori = layer.options.originators;
 
             if (ori) {
