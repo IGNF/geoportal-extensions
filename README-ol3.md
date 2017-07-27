@@ -46,7 +46,7 @@ L'utilisation de l'extension Géoportail pour OpenLayers 3 se fait via les étap
 
 ### Téléchargement
 
-Vous pouvez récupérer l'extension Géoportail pour OpenLayers 3 [ici](https://github.com/IGNF/geoportal-extensions/releases/download/ol3-0.11.0/GpOpenLayers3.zip).
+Vous pouvez récupérer l'extension Géoportail pour OpenLayers 3 [ici](https://github.com/IGNF/geoportal-extensions/releases/download/ol3-0.12.0/GpOpenLayers.zip).
 Elle contient l'arborescence suivante :
 
     ol3/
