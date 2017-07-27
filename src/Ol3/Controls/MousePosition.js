@@ -539,6 +539,7 @@ define([
     /**
      *
      * @param {Object} option - positionMarker option
+     * @private
      */
     MousePosition.prototype._initMarker = function (option) {
         if (! this.options.editCoordinates) {
