@@ -937,6 +937,7 @@ define([
         var coordinate = {};
         coordinate.lat = olCoordinate[1].toFixed(6);
         coordinate.lng = olCoordinate[0].toFixed(6);
+        coordinate.unit = "°";
         return coordinate;
     };
 
@@ -971,6 +972,7 @@ define([
         coordinate.lng = coordinate.lng.toFixed(8);
         coordinate.lat = olCoordinate[1] * d;
         coordinate.lat = coordinate.lat.toFixed(8);
+        coordinate.unit = "rad";
         return coordinate;
     };
 
@@ -989,6 +991,7 @@ define([
         coordinate.lng = coordinate.lng.toFixed(8);
         coordinate.lat = olCoordinate[1] * d;
         coordinate.lat = coordinate.lat.toFixed(8);
+        coordinate.unit = "gon";
         return coordinate;
     };
 
@@ -1448,7 +1451,7 @@ define([
 
         var coordinate = ol.proj.transform(lonlat, oSrs, view.getProjection());
         view.setCenter(coordinate);
-        
+
         if (this._markerOverlay && ! this._hideMarker) {
             this._markerOverlay.setPosition(coordinate);
         }

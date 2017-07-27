@@ -653,7 +653,7 @@ define([
             var coordinate = {};
             coordinate.lat = PositionFormater.roundToDecimal(oLatLng.lat, 6);
             coordinate.lng = PositionFormater.roundToDecimal(oLatLng.lng, 6);
-            // Sans unité... coordinate.unit = "deg";
+            coordinate.unit = "°";
             return coordinate;
         },
 
@@ -679,7 +679,7 @@ define([
             var coordinate = {};
             coordinate.lat = PositionFormater.decimalToRadian(oLatLng.lat);
             coordinate.lng = PositionFormater.decimalToRadian(oLatLng.lng);
-            // Sans unité... coordinate.unit = "rad";
+            coordinate.unit = "rad";
             return coordinate;
 
         },
@@ -693,7 +693,7 @@ define([
             var coordinate = {};
             coordinate.lat = PositionFormater.decimalToGrade(oLatLng.lat);
             coordinate.lng = PositionFormater.decimalToGrade(oLatLng.lng);
-            // Sans unité... coordinate.unit = "gon";
+            coordinate.unit = "gon";
             return coordinate;
 
         },

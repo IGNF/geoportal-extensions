@@ -547,11 +547,11 @@ define([
                 label : "Lambert 93",
                 crs : "EPSG:2154",
                 type : "Metric",
-                geoBBox : { 
-                    left : -9.86, 
-                    bottom : 41.15, 
-                    right : 10.38, 
-                    top : 51.56 
+                geoBBox : {
+                    left : -9.86,
+                    bottom : 41.15,
+                    right : 10.38,
+                    top : 51.56
                 }
             },
             {
@@ -559,10 +559,10 @@ define([
                 crs : "EPSG:27572",
                 type : "Metric",
                 geoBBox : {
-                    left : -4.87, 
-                    bottom : 42.33, 
-                    right : 8.23, 
-                    top : 51.14 
+                    left : -4.87,
+                    bottom : 42.33,
+                    right : 8.23,
+                    top : 51.14
                 }
             }
         ];
@@ -877,6 +877,7 @@ define([
         var coordinate = {};
         coordinate.lat = PositionFormater.roundToDecimal(coords.lat, 6);
         coordinate.lng = PositionFormater.roundToDecimal(coords.lon, 6);
+        coordinate.unit = "°";
         return coordinate;
     };
 
@@ -907,6 +908,7 @@ define([
         var coordinate = {};
         coordinate.lat = PositionFormater.decimalToRadian(coords.lat);
         coordinate.lng = PositionFormater.decimalToRadian(coords.lon);
+        coordinate.unit = "rad";
         return coordinate;
     };
 
@@ -922,6 +924,7 @@ define([
         var coordinate = {};
         coordinate.lat = PositionFormater.decimalToGrade(coords.lat);
         coordinate.lng = PositionFormater.decimalToGrade(coords.lon);
+        coordinate.unit = "gon";
         return coordinate;
     };
 
