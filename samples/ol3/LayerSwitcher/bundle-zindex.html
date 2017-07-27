@@ -168,9 +168,10 @@
                             source : new ol.source.Stamen({
                                 layer : "watercolor"
                             }),
-                            zIndex : index
+                            // zIndex : index
                         });
                         map.addLayer(olStamen);
+                        olStamen.setZIndex(index);
                         var stamenOption = addOption("Stamen (index initial =" + index +")", olStamen.gpLayerId);
                         document.getElementById("selectLayer").appendChild(stamenOption);
                         layerSwitcher.addLayer(

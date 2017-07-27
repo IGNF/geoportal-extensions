@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+        <!-- Library OpenLayers 3 -->
+        <link rel="stylesheet" href="../../../lib/ol3/ol.css" />
+        <script src="../../../lib/ol3/ol-debug.js"></script>
+
+        <!-- Plugin OpenLayers 3 IGN -->
+        <link rel="stylesheet" href="../../../dist/ol3/GpPluginOl3.css" />
+        <script src="../../../dist/ol3/GpPluginOl3-src.js" data-url="./../resources/AutoConf.js"></script>
+
+        <!-- load geoportail-waiting image -->
+        <style>
+            div#map {
+                background-image:url(../resources/geoportail-waiting.gif);
+                background-position:center center;
+                background-repeat:no-repeat;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>
+            <a href="http://openlayers.org/"><img src="../resources/logo-ol3.png" alt="OpenLayers3" width="100" /></a>
+            <a href="http://www.ign.fr"><img src="../resources/logo-ign.jpg" alt="IGN" width="100" /></a>
+        </h1>
+        <h3>
+            OpenLayers3 - A high-performance, feature-packed library for all your mapping needs.
+        </h3>
+        <div>
+            <!-- Faire une bréve description du plugin -->
+            <p>Ajout du widget GetFeatureInfo.</p>
+            <p>Cet exemple permet de tester le widget de mani&egrave;re g&eacute;n&eacute;rale. La carte est initialis&eacute;e avec des couches de diff&eacute;rentes natures interrogeables via des actions diff&eacute;rentes.<p>
+            <p>Pour certaines couches l'action d&eacute;clenchant la requ&ecirc;te GFI est d&eacute;finie explicitement &agrave; l'initialisation, pour d'autres c'est l'&eacute;v&egrave;nement par d&eacute;faut qui d&eacute;clenchera la requ&ecirc;te.<p>
+            <p>Parmi les tests r&eacute;alisables on a :<p>
+            <ul>
+              <li>Le changement du style du curseur au survol d'objets vecteurs</li>
+              <li>La modification de l'&eacute;v&egrave;nement par d&eacute;faut d&eacute;clenchant la requ&ecirc;te GFI (valable seulement pour les couches dont l'&eacute;v&egrave;nement associ&eacute; n'aura pas &eacute;t&eacute; d&eacute;fini &agrave; l'initialisation)</li>
+              <li>L'activation/d&eacute;sactivation du widget. V&eacute;rifier lors de la d&eacute;sactivation qu'aucune requ&ecirc;te n'est envoy&eacute;e, que le curseur n'appara&icirc;t plus, que l'on a bien le menu contextuel au click droit, que le double click permet de zoomer...</li>
+              <li>Pour les couches associ&eacute;es au m&ecirc;me &eacute;v&egrave;nement, jouer, grâce &agrave; l'outil de gestion des couches, sur l'ordre d'empilement et v&eacute;rifier que c'est bien la couche la plus haute qui r&eacute;pond prioritairement</li>
+              <li>Pour les couches vecteurs ayant le m&ecirc;me &eacute;v&egrave;nement associ&eacute;, v&eacute;rifier que si l'on click sur un pixel o&ugrave; sont situ&eacute;s les objets de plusieurs couches la fen&ecirc;tre popup GFI affiche les propri&eacute;t&eacute;s de tous ces objets en respectant l'ordre d'empilement</li>
+              <li>V&eacute;rifier que la suppression de toutes les couches requ&eacute;tables entra&icirc;ne la d&eacute;sactivation des &eacute;v&egrave;nements, la disparition du curseur, le retour du zoom au double click, l'apparition du menu contextuel au click droit</li>
+            </ul>
+
+            <!-- map -->
+            <div id="map" style="height: 500px; width: 800px;"></div>
+            <button type="button" id="testRemoveLayer">Supprimer une couche</button>
+            <button type="button" id="changeCursorStyle">Changer le style du cursor</button>
+            <button type="button" id="changeDefaultEvent">Changer l'&eacute;v&eacute;nement par d&eacute;faut</button>
+            <button type="button" id="changeActive">Activer/d&eacute;sactiver</button>
+
+            <!-- Mettre le code source de l'exemple -->
+            <script>
+                var map;
+                window.onload = function () {
+                    document.getElementById('map').style.backgroundImage = 'none';
+
+                    // 1. Création de la map
+                    map = new ol.Map({
+                        target : "map",
+                        view : new ol.View({
+                            center : [288074.8449901076, 6247982.515792289],
+                            zoom : 6
+                        })
+                    });
+
+                    // 2. Ajout de plusieurs couches différentes.
+                    // var gpMaps = new ol.layer.Tile({
+                    //     source : new ol.source.GeoportalWMTS({
+                    //         layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+                    //     })
+                    // });
+                    // map.addLayer(gpMaps);
+
+                    var gpOrthos = new ol.layer.Tile({
+                        source : new ol.source.GeoportalWMTS({
+                            layer: "ORTHOIMAGERY.ORTHOPHOTOS"
+                        })
+                    });
+                    map.addLayer(gpOrthos);
+
+                    var gpMyKml = new ol.layer.Vector({
+                        source: new ol.source.Vector({
+                            url: './../resources/KML/S_TOP100.kml',
+                            format: new ol.format.KML()
+                        })
+                    });
+                    map.addLayer(gpMyKml);
+
+                    var gpRoad = new ol.layer.Tile({
+                        source : new ol.source.GeoportalWMS({
+                            layer: "TN.RoadTransportNetwork"
+                        })
+                    });
+                    map.addLayer(gpRoad);
+
+                    var gpHydro = new ol.layer.Tile({
+                        source : new ol.source.GeoportalWMS({
+                            layer: "HY.PhysicalWaters"
+                        })
+                    });
+                    map.addLayer(gpHydro);
+
+                    // 3. Ajout du GetFeatureInfo
+                    var getFeatureInfo = new ol.control.GetFeatureInfo({
+                            layers : [
+                                {
+                                    obj : gpHydro,
+                                    infoFormat : "text/html",
+                                    event: "contextmenu"
+                                },
+                                {
+                                    obj : gpMyKml,
+                                    infoFormat : "text/html",
+                                    event: "dblclick"
+                                },
+                                // {
+                                //     obj : gpRoad,
+                                // },
+                                {
+                                    obj : gpOrthos,
+                                }
+                            ],
+                            options : {
+                                active: false,
+                                defaultInfoFormat: "text/html",
+                                defaultEvent: "singleclick",
+                                cursorStyle: "pointer",
+                                // noProxyDomains: [],
+                                // proxyUrl: ""
+                            }
+                        });
+                    map.addControl(getFeatureInfo);
+
+                    // 4. Quelques évènements pour tester...
+                    document.getElementById("testRemoveLayer").onclick = function(e) {
+                        if ( map.getLayers() && map.getLayers().getLength() > 0 )
+                        {
+                            map.removeLayer(map.getLayers().item(0));
+                        }
+                    }
+
+                    document.getElementById("changeCursorStyle").onclick = function(e) {
+                        if ( !this.styles )
+                        {
+                          this.styles = ["cell","crosshair","none","pointer","progress"];
+                        }
+                        if ( !this.index )
+                        {
+                            this.index = 0;
+                        }
+
+                        ++this.index;
+                        if ( this.index ==  this.styles.length ) {
+                            this.index = 0;
+                        }
+                        getFeatureInfo.setCursorStyle(this.styles[this.index]);
+                    }
+                    document.getElementById("changeDefaultEvent").onclick = function(e) {
+                        if ( !this.events )
+                        {
+                          this.events = ["singleclick","dblclick","contextmenu"];
+                        }
+                        if ( !this.index )
+                        {
+                            this.index = 0;
+                        }
+                        ++this.index;
+                        if ( this.index ==  this.events.length ) {
+                            this.index = 0;
+                        }
+                        getFeatureInfo.setDefaultEvent(this.events[this.index]);
+                    }
+                    document.getElementById("changeActive").onclick = function(e) {
+                        getFeatureInfo.setActive(!getFeatureInfo.isActive());
+                    }
+                    
+                    // 5. Ajout du contrôle de gestion de l'empilement des couches (layerSwitcher)
+                    var layerSwitcher = new ol.control.LayerSwitcher({
+                        options : {
+                            collapsed: false
+                        }
+                    });
+                    map.addControl(layerSwitcher);
+                }
+            </script>
+        </div>
+    </body>
+</html>

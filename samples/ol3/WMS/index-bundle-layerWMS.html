@@ -7,7 +7,7 @@
 
           <!-- Plugin OpenLayers 3 IGN -->
           <link rel="stylesheet" href="../../../dist/ol3/GpPluginOl3.css" />
-          <script src="../../../dist/ol3/GpPluginOl3.js" data-url="./../resources/AutoConf.js"></script>
+          <script src="../../../dist/ol3/GpPluginOl3-src.js" data-url="./../resources/AutoConf.js"></script>
 
           <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
 
@@ -42,13 +42,16 @@
                         layer : "ORTHOIMAGERY.ORTHOPHOTOS"
                     });
                     var map = new ol.Map({
-                        layers: [gpLayer],
+                        layers: [gpLayer,
+                        new ol.layer.GeoportalWMTS({layer:"ORTHOIMAGERY.ORTHOPHOTOS"})],
                         target: 'map',
                         view: new ol.View({
                             center: [288074.8449901076, 6247982.515792289],
                             zoom: 10
                         })
                     });
+                    var layerSwitcher = new ol.control.LayerSwitcher();
+                    map.addControl(layerSwitcher);
 
                     // Ajout des originators (à la main)
                     map.addControl(

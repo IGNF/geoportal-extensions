@@ -19,8 +19,9 @@
          */
         /* 
          * This option prohibits the use of bitwise operators such as ^ (XOR), | (OR) and others. Bitwise operators are very rare in JavaScript programs and quite often & is simply a mistyped &&.
+         * Modified by PPrevautel (used in Utils isInteger function)
         */
-	"bitwise": true,
+	"bitwise": false,
 
         /* 
          * This option allows you to force all variable names to use either camelCase style or UPPER_CASE with underscores.

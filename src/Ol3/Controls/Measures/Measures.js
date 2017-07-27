@@ -409,8 +409,19 @@ define([
             var map = this.getMap();
 
             // Creates and adds the interaction
+            var self = this;
             this.measureDraw = new ol.interaction.Draw({
                 source : this.measureSource,
+                /** condition : permet de gerer la suppression des derniers points saisis */
+                condition : function (event) {
+                    if (event.originalEvent.ctrlKey) {
+                        if (self.sketch) {
+                            this.removeLastPoint();
+                        }
+                        return false;
+                    }
+                    return true;
+                },
                 type : type,
                 style : this.options.styles.start || Measures.DEFAULT_DRAW_START_STYLE
             });
@@ -424,7 +435,6 @@ define([
             this.createMeasureTooltip(map);
 
             // Event start measuring
-            var self = this;
             this.measureDraw.on("drawstart", function (evt) {
                 // set sketch
                 self.sketch = evt.feature;
@@ -475,6 +485,9 @@ define([
                 source : this.measureSource,
                 style : this.options.styles.finish || Measures.DEFAULT_DRAW_FINISH_STYLE
             });
+
+            // on rajoute le champ gpResultLayerId permettant d'identifier une couche crée par le composant.
+            this.measureVector.gpResultLayerId = "measure" ;
 
             map.addLayer(this.measureVector);
         }

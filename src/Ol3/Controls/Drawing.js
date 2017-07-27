@@ -242,7 +242,7 @@ define([
 
         // gestion des suppressions "externes" de la couche de dessin.
         this.eventKey = this.getMap().getLayers().on("remove", function (evtRm) {
-            if (Utils.getOL3ObjectId(evtRm.element) == Utils.getOL3ObjectId(this.layer)) {
+            if ( evtRm.element == this.layer) {
                 // found layer removed.
                 this.layer = null ;
                 // on supprime l'interaction en cours si besoin
@@ -283,7 +283,9 @@ define([
             console.log("Impossible to export : no layer is hosting features.") ;
             return result ;
         }
-        if (!this.layer.getSource() || !this.layer.getSource().getFeatures()) {
+        if (!this.layer.getSource() ||
+            !this.layer.getSource().getFeatures() ||
+            !this.layer.getSource().getFeatures().length) {
             console.log("Impossible to export : no features found.") ;
             return result ;
         }
@@ -322,6 +324,24 @@ define([
         // on simule l'ouverture du panneau après un click
         this.onShowDrawingClick();
         this._showDrawingContainer.checked = !collapsed;
+    };
+
+    /**
+     * Setter for Export Name.
+     *
+     * @param {String} name - Export Name. By default, "Croquis".
+     */
+    Drawing.prototype.setExportName = function (name) {
+        this._exportName = name;
+    };
+
+    /**
+     * getter for Export Name.
+     *
+     * @returns {String} - export name
+     */
+    Drawing.prototype.getExportName = function () {
+        return this._exportName;
     };
 
     // ################################################################### //
@@ -382,6 +402,10 @@ define([
 
         // determination d'un uid
         this._uid = SelectorID.generate();
+
+        // export name / format / ...
+        this._exportName   = "Croquis";
+        this._exportFormat = ".kml";
 
         // Set default options
         this.options = options || {};
@@ -1446,7 +1470,7 @@ define([
         // FIXME : determiner le bon charset !
         var charset = "utf-8" ;
         link.setAttribute("href","data:application/vnd.google-earth.kml+xml;charset=" + charset + "," + encodeURIComponent(content)) ;
-        link.setAttribute("download","croquis.kml") ;
+        link.setAttribute("download", this.getExportName() + ".kml") ;
         if (document.createEvent) {
             var event = document.createEvent("MouseEvents");
             event.initEvent("click", true, true);

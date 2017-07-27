@@ -86,6 +86,9 @@ define([
             // save legends and metadata (to be added to LayerSwitcher control)
             this._legends = wmsParams.legends;
             this._metadata = wmsParams.metadata;
+            this._title = wmsParams.title;
+            this._description = wmsParams.description;
+            this._quicklookUrl = wmsParams.quicklookUrl;
 
         } else {
             // If layer is not in Gp.Config

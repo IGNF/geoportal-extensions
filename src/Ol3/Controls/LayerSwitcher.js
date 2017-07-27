@@ -245,7 +245,7 @@ define([
             this._layers[id].div = layerDiv;
 
             // 3. réorganisation des couches si un zIndex est spécifié
-            if ( layer.getZIndex && layer.getZIndex() !== 0 ) {
+            if ( (layer.getZIndex && layer.getZIndex() !== 0) || layer._forceNullzIndex ) {
                 // réorganisation des couches si un zIndex est spécifié
                 this._updateLayersOrder(map);
             } else {
@@ -1018,7 +1018,7 @@ define([
         var foundId = null ;
 
         this.getMap().getLayers().forEach( function (layer) {
-            if (Utils.getOL3ObjectId(layer) == Utils.getOL3ObjectId(olLayer)) {
+            if (layer == olLayer) {
                 foundId = layer.hasOwnProperty("gpLayerId") ? layer.gpLayerId : null ;
             }
         },

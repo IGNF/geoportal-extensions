@@ -934,21 +934,22 @@ define([
                 return;
             }
 
-            // Dans le cas où le noeud "ExtendedData" est vide,
-            // on ne prend pas en compte la valeur du tag "name" !
-            var _fname = /* feature.getProperties().name || */ "";
+            var _fname = feature.getProperties().name || "";
             var _fdescription = feature.getProperties().description || "";
             var _ftitle = null;
             for (var i = 0; i < extend.length; i++) {
-                var data = extend[i];
-                var name = data.attributes[0]; // 1 seul attribut !
+                var data  = extend[i];
+                var name  = data.attributes[0]; // 1 seul attribut !
+                var nodes = data.childNodes;
                 if (name.nodeName === "name") {
                     switch (name.nodeValue) {
+                        // compatibilité ancien geoportail !
                         case "label":
                             _fname = data.textContent;
                             break;
+                        // compatibilité ancien geoportail !
+                        case "title":
                         case "attributetitle":
-                            var nodes = data.childNodes;
                             for (var j = 0; j < nodes.length; j++) {
                                 if (nodes[j].nodeName === "value") {
                                     _ftitle = nodes[j].textContent;
@@ -956,7 +957,13 @@ define([
                             }
                             break;
                         default:
-                        // ...
+                        // for (var k = 0; k < nodes.length; k++) {
+                        //     if (nodes[k].nodeName === "value") {
+                        //         _fdescription += "<br>";
+                        //         _fdescription += nodes[k].textContent;
+                        //
+                        //     }
+                        // }
                     }
                 }
             }

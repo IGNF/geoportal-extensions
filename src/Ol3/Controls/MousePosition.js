@@ -4,8 +4,10 @@ define([
     "woodman",
     "gp",
     "Ol3/Utils",
+    "Ol3/Controls/Utils/Markers",
     "Common/Utils/CheckRightManagement",
     "Common/Utils/SelectorID",
+    "Common/Utils/MathUtils",
     "Common/Controls/MousePositionDOM",
     "Ol3/CRS/CRS" // call autoload function !
 ], function (
@@ -14,8 +16,10 @@ define([
     woodman,
     Gp,
     Utils,
+    Markers,
     RightManagement,
     SelectorID,
+    MathUtils,
     MousePositionDOM
 ) {
 
@@ -26,7 +30,6 @@ define([
 
     /**
      * @classdesc
-     *
      * MousePosition Control.
      *
      * @constructor
@@ -50,6 +53,14 @@ define([
      *      and "M" or "KM" for metric coordinates
      * @param {Array}   [options.displayAltitude = true] - activate (true) or deactivate (false) the altitude panel. True by default
      * @param {Array}   [options.displayCoordinates = true] - activate (true) or deactivate (false) the coordinates panel. True by default
+     * @param {Boolean} [options.editCoordinates = false] - add edit coordinates options. False by default.
+     * @param {Object} [options.positionMarker] - options for position marker
+     * @param {String} options.positionMarker.url - Marker url (define in src/Ol3/Controls/Utils/Markers.js)
+     * @param {Array} options.positionMarker.offset - Offsets in pixels used when positioning the marker towards targeted point.
+     *      The first element in the array is the horizontal offset. A positive value shifts the marker right.
+     *      The second element in the array is the vertical offset. A positive value shifts the marker down. [0,0] value positions the top-left corner of the marker image to the targeted point.
+     *      Default is offset associated to default marker image.
+     * @param {Boolean} options.positionMarker.hide - if true, marker is not displayed, otherwise displayed (False by default.)
      * @param {Object}  [options.altitude] - elevation configuration
      * @param {Object}  [options.altitude.serviceOptions] - options of elevation service
      * @param {Number}  [options.altitude.responseDelay] - latency for altitude request, 500 ms by default
@@ -58,7 +69,7 @@ define([
      * @param {Number}  [options.altitude.noDataValueTolerance] - tolerance for no data value :
      *                  values in [noDataValue + noDataValueTolerance ; noDataValue - noDataValueTolerance] interval will not be displayed, but "---m" will be displayed instead.
      *                  Default is 90000 (no data values = [-9999 ; -189999])
-     * @example
+     *  @example
      *  var MousePosition = new ol.control.GeoportalMousePosition({
      *      collapsed : false,
      *      displayCoordinates : true,
@@ -83,7 +94,7 @@ define([
      *        }
      *      ],
      *      units : ["DEC", "DMS"]
-     *  });
+     * });
      */
     function MousePosition (options) {
 
@@ -130,6 +141,7 @@ define([
      * Overload ol.control.Control setMap method, called when
      */
     MousePosition.prototype.setMap = function (map) {
+        var context = this;
 
         if ( map ) { // dans le cas de l'ajout du contrôle à la map
             var center = this._createMapCenter();
@@ -155,6 +167,25 @@ define([
                         this
                     );
                 }
+            }
+
+            // add overlay only if option editCoordinates is true
+            if (this.options.editCoordinates) {
+                // création de l'élément DOM
+                var markerDiv = document.createElement("img");
+                markerDiv.id = this._addUID("GPmousePositionMarker");
+                markerDiv.src = this._markerUrl;
+                markerDiv.title = "Cliquer pour supprimer";
+                markerDiv.addEventListener("click", function () {
+                    context._markerOverlay.setPosition(undefined);
+                });
+
+                this._markerOverlay = new ol.Overlay({
+                    offset : this._markerOffset,
+                    element : markerDiv,
+                    stopEvent : false
+                });
+                map.addOverlay(this._markerOverlay);
             }
         }
 
@@ -426,6 +457,17 @@ define([
         this.options.collapsed = ( options.collapsed !== undefined ) ? options.collapsed : true;
         /** {Boolean} specify if MousePosition control is collapsed (true) or not (false) */
         this.collapsed = this.options.collapsed;
+
+        this.options.editCoordinates = ( options.editCoordinates !== undefined ) ? options.editCoordinates : false;
+        this.editing = false;
+
+        // position marker
+        this._markerOverlay = null;
+        this._markerUrl = null;
+        this._markerOffset = [0, 0];
+        this._hideMarker = false;
+        this._initMarker(options.positionMarker);
+
         this.options.units = options.units || [];
         this.options.displayAltitude = ( options.displayAltitude !== undefined ) ? options.displayAltitude : true;
         this.options.displayCoordinates = ( options.displayCoordinates !== undefined ) ? options.displayCoordinates : true;
@@ -494,6 +536,47 @@ define([
         // si l'on souhaite un calcul d'altitude, on verifie les droits sur les ressources d'alti...
         if ( this.options.displayAltitude ) {
             this._checkRightsManagement();
+        }
+    };
+
+    /**
+     *
+     * @param {Object} option - positionMarker option
+     * @private
+     */
+    MousePosition.prototype._initMarker = function (option) {
+        if (! this.options.editCoordinates) {
+            return;
+        }
+
+        if (! option) {
+            this._markerUrl = Markers["lightOrange"];
+            this._markerOffset = Markers.defaultOffset;
+            return;
+        }
+
+        // hide
+        this._hideMarker = (option.hide !== undefined) ? option.hide : false;
+
+        // offset
+        if (option.offset) {
+            if (Array.isArray(option.offset) && option.offset.length === 2) {
+                this._markerOffset = option.offset;
+            } else {
+                console.log("positionMarker.offset should be an array. e.g. : [0,0]");
+                this._markerOffset = Markers.defaultOffset;
+            }
+        } else {
+            this._markerOffset = Markers.defaultOffset;
+        }
+
+        var url = option.url;
+        if (! url) {
+            this._markerUrl = Markers["lightOrange"];
+        } else if (url.match(/^[a-zA-Z]+$/)) {// un seul mot
+            this._markerUrl = (Markers[url] !== undefined) ? Markers[url] : Markers["lightOrange"];
+        } else {
+            this._markerUrl = url;
         }
     };
 
@@ -584,34 +667,34 @@ define([
                 {
                     code : "DEC",
                     label : "degrés décimaux",
-                    convert : this._displayDEC
+                    format : this._displayDEC
                 },
                 {
                     code : "DMS",
                     label : "degrés sexagésimaux",
-                    convert : this._displayDMS
+                    format : this._displayDMS
                 },
                 {
                     code : "RAD",
                     label : "radians",
-                    convert : this._displayRAD
+                    format : this._displayRAD
                 },
                 {
                     code : "GON",
                     label : "grades",
-                    convert : this._displayGON
+                    format : this._displayGON
                 }
             ],
             Metric : [
                 {
                     code : "M",
                     label : "mètres",
-                    convert : this._displayMeter
+                    format : this._displayMeter
                 },
                 {
                     code : "KM",
                     label : "kilomètres",
-                    convert : this._displayKMeter
+                    format : this._displayKMeter
                 }
             ]
         };
@@ -644,6 +727,28 @@ define([
         if ( typeof this._projectionUnits === "object" && Object.keys(this._projectionUnits).length === 0 ) {
             this._projectionUnits = projectionUnitsByDefault;
         }
+    };
+
+    /**
+     * this method get label from the current projection units
+     *
+     * @method _getCurrentProjectionInformation
+     * @private
+     */
+    MousePosition.prototype._getCurrentProjectionInformation = function () {
+        var systemInfo = [
+            this._currentProjectionSystems.label,
+            "en"
+        ];
+
+        var units = this._projectionUnits[this._currentProjectionType];
+        for (var u = 0; u < units.length; ++u) {
+            if (units[u].code === this._currentProjectionUnits) {
+                systemInfo.push(units[u].label);
+                break;
+            }
+        }
+        return systemInfo.join(" ");
     };
 
     /**
@@ -693,7 +798,12 @@ define([
         var picto = this._createShowMousePositionPictoElement(this._isDesktop);
         container.appendChild(picto);
 
-        var panel    = this._createMousePositionPanelElement();
+        var panel = this._createMousePositionPanelElement(
+            this.options.displayAltitude,
+            this.options.displayCoordinates,
+            this.options.editCoordinates,
+            this._currentProjectionUnits
+        );
         var settings = this._createMousePositionSettingsElement();
         var systems  = this._projectionSystemsContainer = this._createMousePositionSettingsSystemsElement(this._projectionSystems);
         var units    = this._projectionUnitsContainer = this._createMousePositionSettingsUnitsElement(this._projectionUnits[this._currentProjectionType]);
@@ -794,15 +904,27 @@ define([
             container.appendChild(option);
         }
 
+        var projectionUnits = this._projectionUnits[type][0].code;
+
+        if (this._currentProjectionUnits === "DMS" || projectionUnits === "DMS") {
+            this._resetCoordinateElements(this.options.editCoordinates, type, projectionUnits);
+            this._setEditMode(this.editing);
+        }
+
         // le nouveau type de system ...
         this._currentProjectionType = type;
+
+        // Mise a jour des elements labels et unites
+        this._resetLabelElements(type);
+        this._resetUnitElements(projectionUnits);
+
         // et comme on a changé de type de systeme,
         // il faut changer aussi d'unité !
-        this._currentProjectionUnits = this._projectionUnits[type][0].code;
+        this._currentProjectionUnits = projectionUnits;
     };
 
     // ################################################################### //
-    // ######################## method units convert ##################### //
+    // ######################## method units format ###################### //
     // ################################################################### //
 
     /**
@@ -817,6 +939,7 @@ define([
         var coordinate = {};
         coordinate.lat = olCoordinate[1].toFixed(6);
         coordinate.lng = olCoordinate[0].toFixed(6);
+        coordinate.unit = "°";
         return coordinate;
     };
 
@@ -829,15 +952,11 @@ define([
      * @private
      */
     MousePosition.prototype._displayDMS = function (olCoordinate) {
-        var coordinate = {};
-        var regex = /(.*)([NS])\s(.*)([EW])/;
-        var subst = "$1$2 | $3$4";
-        var str = ol.coordinate.toStringHDMS(olCoordinate, 2).replace(regex, subst);
-        var coords = str.split("|");
-        // coords est du type : "48° 00′ 00″ N 2° 00′ 00″ E". On veut récupérer les 2 coordonnées séparément.
-        coordinate.lat = coords[0];
-        coordinate.lng = coords[1];
-        return coordinate;
+        return {
+            lng : MathUtils.decimalToDMS(olCoordinate[0], "EO", 2),
+            lat : MathUtils.decimalToDMS(olCoordinate[1], "NS", 2),
+            unit : "DMS"
+        };
     };
 
     /**
@@ -855,6 +974,7 @@ define([
         coordinate.lng = coordinate.lng.toFixed(8);
         coordinate.lat = olCoordinate[1] * d;
         coordinate.lat = coordinate.lat.toFixed(8);
+        coordinate.unit = "rad";
         return coordinate;
     };
 
@@ -873,6 +993,7 @@ define([
         coordinate.lng = coordinate.lng.toFixed(8);
         coordinate.lat = olCoordinate[1] * d;
         coordinate.lat = coordinate.lat.toFixed(8);
+        coordinate.unit = "gon";
         return coordinate;
     };
 
@@ -947,19 +1068,19 @@ define([
         var type = this._currentProjectionSystems.type;
 
         // on recherche la fonction de formatage dans l'unité demandée
-        var convert = null;
+        var format = null;
         var units = this._projectionUnits[type];
         for (var i = 0; i < units.length; i++) {
             if (units[i].code === this._currentProjectionUnits) {
-                convert = units[i].convert;
+                format = units[i].format;
                 break;
             }
         }
-        if ( !convert || typeof convert !== "function" ) {
+        if ( !format || typeof format !== "function" ) {
             console.log("WARNING : coordinates format function not found");
             return;
         } else {
-            coordinate = convert(olCoordinate);
+            coordinate = format(olCoordinate);
         }
 
         if (! coordinate || Object.keys(coordinate).length === 0) {
@@ -1100,9 +1221,17 @@ define([
         // on recupere les options du service
         var options = this.options.altitude.serviceOptions || {};
 
+        // gestion du protocole et du timeout
+        // le timeout est indispensable sur le protocole JSONP.
+        var _protocol = options.protocol || "XHR";
+        var _timeout  = options.timeOut  || 0;
+        if (_protocol === "JSONP" && _timeout === 0) {
+            _timeout = 15000;
+        }
+
         // ainsi que les coordonnées
-        options.zonly = true;
-        options.positions = [
+        var _zonly = true;
+        var _positions = [
             {
                 lon : coordinate[0],
                 lat : coordinate[1]
@@ -1110,33 +1239,46 @@ define([
         ];
 
         // et les callbacks
-        options.scope = this;
+        var _scope = this;
+        var _rawResponse = options.rawResponse || false;
+        var _onSuccess = null;
+        var _onFailure = null;
 
-        if ( !options.rawResponse ) {
+        if ( !_rawResponse ) {
             // dans le cas général
             /** callback onSuccess */
-            options.onSuccess = function (results) {
+            _onSuccess = function (results) {
                 if (results && Object.keys(results)) {
                     callback.call(this, results.elevations[0].z);
                 }
             };
         } else {
             /** callback onSuccess */
-            options.onSuccess = function (results) {
+            _onSuccess = function (results) {
                 console.log("alti service raw response : ", results);
             };
         }
 
         /** callback onFailure */
-        options.onFailure = function (error) {
+        _onFailure = function (error) {
             console.log("[getAltitude] ERROR : " + error.message);
         };
 
         // cas où la clef API n'est pas renseignée dans les options du service,
         // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
-        options.apiKey = options.apiKey || this.options.apiKey;
+        var _apiKey = options.apiKey || this.options.apiKey;
 
-        Gp.Services.getAltitude(options);
+        Gp.Services.getAltitude({
+            apiKey : _apiKey,
+            protocol : _protocol,
+            timeOut : _timeout,
+            scope : _scope,
+            rawResponse : _rawResponse,
+            onSuccess : _onSuccess,
+            onFailure : _onFailure,
+            zonly : _zonly,
+            positions : _positions
+        });
     };
 
     /**
@@ -1165,7 +1307,7 @@ define([
             } else {
                 map.un("moveend", this.onMapMove, this);
             }
-        } else {
+        } else if (! this.editing) {
             if (this._isDesktop) {
                 map.on("pointermove", this.onMouseMove, this);
             } else {
@@ -1182,6 +1324,217 @@ define([
         this._setCoordinatesPanel(this.options.displayCoordinates);
         if ( !this.options.displayCoordinates ) {
             this._setSettingsPanel(false);
+        }
+    };
+
+    /**
+     * this method is called by event 'click' on input coordinate
+     *
+     * @method onMousePositionEditModeClick
+     * @param {Boolean} editing - editing mode
+     */
+    MousePosition.prototype.onMousePositionEditModeClick = function (editing) {
+        if (! this.options.editCoordinates) {
+            return;
+        }
+        if (this.editing === editing) {
+            return;
+        }
+
+        this.editing = editing;
+
+        // Affichage des outils, input en ecriture
+        this._setEditMode(this.editing);
+
+        var map = this.getMap();
+        if (this._isDesktop) {
+            if (this.editing) { // Unlisten for 'pointermove' events
+                map.un("pointermove", this.onMouseMove, this);
+            } else {    // Listen for 'pointermove' events
+                map.on("pointermove", this.onMouseMove, this);
+                // on simule un deplacement
+                this.onMapMove();
+            }
+        } else {
+            if (this.editing) { // Unlisten for 'moveend' events
+                map.un("moveend", this.onMapMove, this);
+            } else {    // Listen for moveend' events
+                map.on("moveend", this.onMapMove, this);
+                // on simule un deplacement
+                this.onMapMove();
+            }
+        }
+
+        // clear _markerOverlay
+        if (! this.editing && this._markerOverlay) {
+            this._markerOverlay.setPosition(undefined);
+        }
+    };
+
+    /**
+     * Get coordinate from inputs and select in decimal degrees
+     *
+     * @method getCoordinate
+     * @param {String} coordType - "Lon" or "Lat"
+     * @returns {undefined}
+     * @private
+     */
+    MousePosition.prototype.getCoordinate = function (coordType) {
+        var inputDegrees = document.getElementById(this._addUID("GPmousePosition" + coordType + "Degrees"));
+        var degrees = inputDegrees.value;
+        if (! degrees) {
+            return null;
+        }
+
+        degrees = degrees.replace(",", ".");
+        if (! MathUtils.isInteger(degrees)) {
+            return null;
+        }
+
+        var result = MathUtils.toInteger(degrees);
+        if (result < Number(inputDegrees.dataset.min) || result > Number(inputDegrees.dataset.max)) {
+            return null;
+        }
+
+        var direction = document.getElementById(this._addUID("GPmousePosition" + coordType + "Direction")).value;
+
+        var inputMinutes = document.getElementById(this._addUID("GPmousePosition" + coordType + "Minutes"));
+        var minutes = inputMinutes.value;
+        if (minutes) {
+            minutes = minutes.replace(",", ".");
+            if (MathUtils.isInteger(minutes)) {
+                var mins = MathUtils.toInteger(minutes);
+                if (mins >= Number(inputMinutes.dataset.min) && mins <= Number(inputMinutes.dataset.max)) {
+                    result += (mins / 60);
+                }
+            }
+        }
+
+        var inputSeconds = document.getElementById(this._addUID("GPmousePosition" + coordType + "Seconds"));
+        var seconds = inputSeconds.value;
+        if (seconds) {
+            seconds = seconds.replace(",", ".");
+            var secs = MathUtils.toFloat(seconds);
+            if (secs && secs >= Number(inputSeconds.dataset.min) && secs <= Number(inputSeconds.dataset.max)) {
+                result += (secs / 3600);
+            }
+        }
+
+        if (direction === "O" || direction === "S") {
+            result = -result;
+        }
+
+        return result;
+    };
+
+    /**
+     * locate DMS coordinates on map
+     *
+     * @method locateDMSCoordinates
+     * @private
+     */
+    MousePosition.prototype.locateDMSCoordinates = function () {
+        var lonlat = [
+            this.getCoordinate("Lon"),
+            this.getCoordinate("Lat")
+        ];
+
+        if (lonlat[0] === null || lonlat[1] === null) {
+            return;
+        }
+
+        var oSrs = this._currentProjectionSystems.crs;
+        if (! oSrs) {
+            console.log("ERROR : system crs not found");
+            return;
+        }
+
+        var view = this.getMap().getView();
+
+        var coordinate = ol.proj.transform(lonlat, oSrs, view.getProjection());
+        view.setCenter(coordinate);
+
+        if (this._markerOverlay && ! this._hideMarker) {
+            this._markerOverlay.setPosition(coordinate);
+        }
+    };
+
+    /**
+     * locate coordinates on map (not DMS)
+     *
+     * @method locateCoordinates
+     * @private
+     */
+    MousePosition.prototype.locateCoordinates = function () {
+        var lon = document.getElementById(this._addUID("GPmousePositionLon")).value;
+
+        lon = lon.replace(",", ".");
+        lon = MathUtils.toFloat(lon);
+        if (lon === null) {
+            return;
+        }
+
+        var lat = document.getElementById(this._addUID("GPmousePositionLat")).value;
+        lat = lat.replace(",", ".");
+        lat = MathUtils.toFloat(lat);
+        if (lat === null) {
+            return;
+        }
+
+        var oSrs = this._currentProjectionSystems.crs;
+        if (! oSrs) {
+            console.log("ERROR : system crs not found");
+            return;
+        }
+
+        var xy;
+        if (this._currentProjectionSystems.type === "Geographical") {
+            xy = [this.convert(lon), this.convert(lat)];
+        } else {
+            xy = [this.convert(lat), this.convert(lon)];
+        }
+        var xyWGS84 = ol.proj.transform(xy, this._currentProjectionSystems.crs, "EPSG:4326");
+
+        var geoBBox = this._currentProjectionSystems.geoBBox;
+        if (geoBBox) {  // check if coordinates are in the extent
+            var extent = [geoBBox.left, geoBBox.bottom, geoBBox.right, geoBBox.top];
+            if (xyWGS84[0] < extent[0] || xyWGS84[0] > extent[2]) {
+                return;
+            }
+            if (xyWGS84[1] < extent[1] || xyWGS84[1] > extent[3]) {
+                return;
+            }
+        }
+
+        var view = this.getMap().getView();
+
+        var coordinate = ol.proj.transform(xy, oSrs, view.getProjection());
+        view.setCenter(coordinate);
+
+        if (this._markerOverlay && ! this._hideMarker) {
+            this._markerOverlay.setPosition(coordinate);
+        }
+    };
+
+    /**
+     * locate coordinates on map
+     *
+     * @method locate
+     * @private
+     */
+    MousePosition.prototype.onMousePositionEditModeLocateClick = function () {
+        if (! this.options.editCoordinates) {
+            return;
+        }
+        if (! this.editing) {
+            this.onMousePositionEditModeClick(true);
+            return;
+        }
+
+        if (this._currentProjectionUnits === "DMS") {
+            this.locateDMSCoordinates();
+        } else {
+            this.locateCoordinates();
         }
     };
 
@@ -1224,12 +1577,12 @@ define([
             return;
         }
 
+        // on enregistre le systeme courant
+        this._currentProjectionSystems = this._projectionSystems[Number(systemCode)];
+
         if (type !== this._currentProjectionType) {
             this._setTypeUnitsPanel(type);
         }
-
-        // on enregistre le systeme courrant
-        this._currentProjectionSystems = this._projectionSystems[Number(systemCode)];
 
         // on simule un deplacement en mode tactile pour mettre à jour les
         // resultats
@@ -1317,13 +1670,87 @@ define([
         var idx   = e.target.selectedIndex;
         var value = e.target.options[idx].value;
 
+        var oldProjectionUnits = this._currentProjectionUnits;
         this._currentProjectionUnits = value;
+
+        // Mise a jour des elements lebels et unites
+        this._resetLabelElements(this._currentProjectionType);
+        this._resetUnitElements(this._currentProjectionUnits);
+
+        // mise a jour des inputs pour les coordonnees
+        if (oldProjectionUnits === "DMS" || this._currentProjectionUnits === "DMS") {
+            this._resetCoordinateElements(this.options.editCoordinates, this._currentProjectionType, this._currentProjectionUnits);
+            this._setEditMode(this.editing);
+        }
 
         // on simule un deplacement en mode tactile pour mettre à jour les
         // resultats
         if (!this._isDesktop) {
             this.onMapMove();
         }
+    };
+
+    /**
+     *
+     * @param {Number} value - value to convert (km to meters, radians, grades to decimal degrees)
+     * @returns {undefined}
+     * @private
+     */
+    MousePosition.prototype.convert = function (value) {
+        var result;
+        if (this._currentProjectionUnits === "M" || this._currentProjectionUnits === "DEC") {
+            result = value;
+        } else if (this._currentProjectionUnits === "KM") {
+            result = value * 1000;
+        } else if (this._currentProjectionUnits === "RAD") {
+            var rd = (180 / Math.PI).toFixed(20);
+            result = (value * rd).toFixed(20);
+        } else if (this._currentProjectionUnits === "GON") {
+            var d = (9 / 10).toFixed(20);
+            result = (value * d).toFixed(20);
+        }
+
+        return result;
+    };
+
+    /**
+     * @param {String} coordType - "Lon" or "Lat"
+     * @param {String} value - input value
+     * @returns {Boolean}
+     * @private
+     */
+    MousePosition.prototype.validateExtentCoordinate = function (coordType, value) {
+        if (["Lon", "Lat"].indexOf(coordType) === -1) {
+            return false;
+        }
+
+        var coord = value.replace(",", ".");
+        coord = MathUtils.toFloat(coord);
+        if (coord === null) {
+            return false;
+        }
+
+        // convert depending on _currentProjectionUnits
+        coord = this.convert(coord);
+
+        var geoBBox = this._currentProjectionSystems.geoBBox;
+        if (geoBBox === undefined) {
+            return true;
+        }
+
+        // convert to current projection system
+        var extent = [geoBBox.left, geoBBox.bottom, geoBBox.right, geoBBox.top];
+        extent = ol.proj.transformExtent(extent, "EPSG:4326", this._currentProjectionSystems.crs);
+
+        // checking if value is in the right interval
+        if (coordType === "Lat" && (coord < extent[0] || coord > extent[2])) {
+            return false;
+        }
+        if (coordType === "Lon" && (coord < extent[1] || coord > extent[3])) {
+            return false;
+        }
+
+        return true;
     };
 
     return MousePosition;

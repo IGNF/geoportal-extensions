@@ -60,7 +60,8 @@
         "Ol3/Controls/Measures/MeasureAzimuth",
         "Ol3/Controls/Measures/MeasureLength",
         "Ol3/Controls/ElevationPath",
-        "Ol3/Controls/GeoportalAttribution"
+        "Ol3/Controls/GeoportalAttribution",
+        "Ol3/Controls/GetFeatureInfo"
       ],
       function (
         ol,
@@ -70,7 +71,7 @@
         LayerImport, LayerSwitcher,
         ReverseGeocode, SearchEngine,
         MeasureArea, MeasureAzimuth, MeasureLength, ElevationPath,
-        GeoportalAttribution
+        GeoportalAttribution, GetFeatureInfo
       ) {
 
         var map;
@@ -125,6 +126,15 @@
 
           var attributions = new GeoportalAttribution();
           map.addControl(attributions);
+
+          var getFeatureInfo = new GetFeatureInfo(
+            {
+                options: {
+                    active : false
+                }
+            }
+          );
+          map.addControl(getFeatureInfo);
         };
 
         Gp.Services.getConfig({
