@@ -1,45 +1,26 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta content="IE=edge,chrome=1; charset=UTF-8" http-equiv="X-UA-Compatible">
-        <title>sample ol3 MousePosition</title>
+{% extends "ol3/ol3-sample-amd-layout.html" %}
 
-        <!-- Library OpenLayers 3 -->
-        <link rel="stylesheet" href="../../../lib/ol3/ol.css" />
-        <!-- <script src="../../../lib/ol3/ol-debug.js"></script> -->
+{% block head %}
+        <title>Sample ol3 Drawing</title>
+{% endblock %}
 
-        <!-- Plugin OpenLayers 3 IGN -->
-        <link rel="stylesheet" href="../../../dist/ol3/GpPluginOl3.css" />
-        <!-- <script src="../../../dist/ol3/GpPluginOl3.js" data-url="./../resources/AutoConf.js"></script> -->
-
-        <!-- requirejs -->
-        <script src="../../../lib/require.js"></script>
-
-        <!-- load geoportail-waiting image -->
+{% block style %}
         <style>
             div#map {
-                background-image:url(../resources/geoportail-waiting.gif);
-                background-position:center center;
-                background-repeat:no-repeat;
-                max-width: 800px;
-                height: 300px;
-                margin: 10px;
+                max-width: 100%;
+                height: 500px;
             }
         </style>
+{% endblock %}
 
-    </head>
-    <body>
-        <h1>
-            <a href="http://openlayers.org/"><img src="../resources/logo-ol3.png" alt="OpenLayers3" width="100" /></a>
-            <a href="http://www.ign.fr"><img src="../resources/logo-ign.jpg" alt="IGN" width="100" /></a>
-        </h1>
-        <h3>
-            OpenLayers3 - A high-performance, feature-packed library for all your mapping needs.
-        </h3>
+{% block body %}
+            <h2>Ajout des outils de dessin en mode AMD</h2>
+            <!-- map -->
+            <div id="map">
+            </div>
+{% endblock  %}
 
-        <div>
-            <p>Ajout d'un widget d'affichage des coordonnées de la souris (x, y et H)</p>
-
+{% block js %}
             <script>
                 var map;
                 /* global requirejs */
@@ -132,43 +113,5 @@
                   });
                 });
             </script>
+{% endblock  %}
 
-            <!-- map -->
-            <div id="map">
-            </div>
-
-            <!-- Comment utiliser le plugin avec un exemple -->
-            <p>EXEMPLE D'UTILISATION</p>
-            <pre>
-                <code>
-                    window.onload = function () {
-                        var map = new ol.Map({
-                            layers: [
-                                new LayerWMTS({
-                                    layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS",
-                                })
-                            ],
-                            target: 'map',
-                            view: new ol.View({
-                                center: [288074.8449901076, 6247982.515792289],
-                                zoom: 5
-                            })
-                        });
-                        map.addControl(new MousePosition({}));
-                    }
-                </code>
-            </pre>
-
-            <!-- Toutes les informations utiles sur ol3 -->
-            <p>
-                <ul>
-                    <li>En savoir plus avec le <a href="http://openlayers.org/en/v3.11.2/doc/quickstart.html">quick start guide</a>,</li>
-                    <li>d'autres informations avec <a href="http://openlayers.org/en/v3.11.2/examples/">les exemples</a>,</li>
-                    <li>ou aller directement à l'<a href="http://openlayers.org/en/v3.11.2/apidoc/">API documentation</a>.</li>
-                </ul>
-                Si vous avez des questions, jetez un oeil à la
-                <a href="http://stackoverflow.com/questions/tagged/openlayers-3">FAQ</a>.
-            </p>
-        </div>
-    </body>
-</html>
