@@ -12,12 +12,13 @@
     // gestion des paths
     var path  = require("path");
 
-    //|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    //| ✓ Options
-    //| > usage : gulp [task] [--production] [--mix]
-    //| >              [--ol3] [--leaflet] [--vg] [--itowns]
-    //'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+    // |**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // | ✓ Options
+    // | > usage : gulp [task] [--production] [--mix]
+    // | >              [--ol3] [--leaflet] [--vg] [--itowns]
+    // '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     var opts = require("minimist")(process.argv.slice(2));
+    var fs = require("fs");
 
     // options de commandes
     var isProduction = opts.production;
@@ -33,7 +34,7 @@
     var npmConf = require("./package.json");
     var buildDate = new Date().toISOString().split("T")[0];
 
-    // si aucune option est renseignée,
+    // si aucune option n'est renseignée,
     // on construit les bundles pour OpenLayers3
     if (!isExecuteOl3 && !isExecuteLeaflet && !isExecuteVg && !isExecuteITowns) {
         isExecuteOl3 = true;
@@ -58,37 +59,37 @@
     var isExecuteOl3WithITowns = false;
     var isExecuteLeafletWithITowns = false;
 
-    /* ex. GpPluginOl3 */
+    /** ex. GpPluginOl3 */
     var getBaseFileName = function () {
         var baseFileName =
-            (isExecuteOl3WithVg) ? 'GpPluginOl3Vg' :
-            (isExecuteOl3WithITowns) ? 'GpPluginOl3Itowns' :
-            (isExecuteLeafletWithVg) ? 'GpPluginLeafletVg' :
-            (isExecuteLeafletWithITowns) ? 'GpPluginLeafletItowns' :
-                (isExecuteOl3) ? 'GpPluginOl3' :
-                    (isExecuteLeaflet) ? 'GpPluginLeaflet' :
-                        (isExecuteVg) ? 'GpPluginVg' :
-                            (isExecuteITowns) ? 'GpPluginItowns' : null;
+            (isExecuteOl3WithVg) ? "GpPluginOl3Vg" :
+            (isExecuteOl3WithITowns) ? "GpPluginOl3Itowns" :
+            (isExecuteLeafletWithVg) ? "GpPluginLeafletVg" :
+            (isExecuteLeafletWithITowns) ? "GpPluginLeafletItowns" :
+                (isExecuteOl3) ? "GpPluginOl3" :
+                    (isExecuteLeaflet) ? "GpPluginLeaflet" :
+                        (isExecuteVg) ? "GpPluginVg" :
+                            (isExecuteITowns) ? "GpPluginItowns" : null;
         return baseFileName;
     };
 
-    /* ex. GpPluginOl3-src.js */
+    /** ex. GpPluginOl3-src.js */
     var getDistFileName = function () {
-        var distFileName = (isProduction) ? getBaseFileName() + '.js' : getBaseFileName() + '-src.js';
+        var distFileName = (isProduction) ? getBaseFileName() + ".js" : getBaseFileName() + "-src.js";
         return distFileName;
     };
 
-    /* ex. Ol3 */
+    /** ex. Ol3 */
     var getDistDirName = function () {
         var dirName =
             (isExecuteOl3WithVg ||
              isExecuteOl3WithITowns ||
              isExecuteLeafletWithVg ||
-             isExecuteLeafletWithITowns) ? 'Mix' :
-                (isExecuteOl3) ? 'Ol3' :
-                    (isExecuteLeaflet) ? 'Leaflet' :
-                        (isExecuteVg) ? 'Vg' :
-                            (isExecuteITowns) ? 'Itowns' : null;
+             isExecuteLeafletWithITowns) ? "Mix" :
+                (isExecuteOl3) ? "Ol3" :
+                    (isExecuteLeaflet) ? "Leaflet" :
+                        (isExecuteVg) ? "Vg" :
+                            (isExecuteITowns) ? "Itowns" : null;
         return dirName;
     };
 
@@ -124,9 +125,9 @@
         }
     };
 
-    //|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    //| ✓ info
-    //'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+    // |**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // | ✓ info
+    // '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     gulp.task("info", function () {
 
         $.util.log("###########################################");
@@ -140,9 +141,9 @@
 
     });
 
-    //|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    //| ✓ help
-    //'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+    // |**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // | ✓ help
+    // '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     gulp.task("help", function () {
         $.util.log("###########################################");
         $.util.log("# Liste des target principales :");
@@ -162,11 +163,11 @@
         $.util.log("###########################################");
     });
 
-    //|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    //| ✓ jshint
-    //| > Helps to detect errors and potential problems in code.
-    //| > http://jscs.info/rules.html
-    //'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+    // |**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // | ✓ jshint
+    // | > Helps to detect errors and potential problems in code.
+    // | > http://jscs.info/rules.html
+    // '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     gulp.task("jshint", function () {
 
         var jshint = require("gulp-jshint");
@@ -174,21 +175,24 @@
         var src = [];
         src.push(_src.js.lib);
         src.push(_src.js.common);
+        src.push("gulpfile.js");
         var exclude = "!" + path.join(_dir.src, "**", "__*.js");
         src.push(exclude);
 
         return gulp.src(src)
             .pipe($.plumber())
             .pipe(jshint(".jshintrc"))
-            .pipe(jshint.reporter("default", { verbose : true }))
+            .pipe(jshint.reporter("default", {
+                verbose : true
+            }))
             .pipe(jshint.reporter("fail"));
     });
 
-    //|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    //| ✓ jscs
-    //| > Coding conventions respect
-    //| > http://jscs.info/rules.html
-    //'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+    // |**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // | ✓ jscs
+    // | > Coding conventions respect
+    // | > http://jscs.info/rules.html
+    // '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     gulp.task("jscs", function () {
 
         var jscs = require("gulp-jscs");
@@ -196,6 +200,7 @@
         var src = [];
         src.push(_src.js.lib);
         src.push(_src.js.common);
+        src.push("gulpfile.js");
         var exclude = "!" + path.join(_dir.src, "**", "__*.js");
         src.push(exclude);
 
@@ -206,12 +211,12 @@
             .pipe(jscs.reporter("fail")); // or "failImmediately" ?
     });
 
-    //|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    //| ✓ mocha with phantomJS
-    //| > JavaScript test framework running on node.js and the browser
-    //| > http://mochajs.org/
-    //| > https://www.npmjs.com/package/gulp-mocha-phantomjs
-    //'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+    // |**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // | ✓ mocha with phantomJS
+    // | > JavaScript test framework running on node.js and the browser
+    // | > http://mochajs.org/
+    // | > https://www.npmjs.com/package/gulp-mocha-phantomjs
+    // '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     gulp.task("mocha-phantomjs", function () {
 
         var gmochaPhantomJS = require("gulp-mocha-phantomjs");
@@ -227,11 +232,11 @@
             }));
     });
 
-    //|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    //| ✓ woodman
-    //| > Cleaning woodman logger.
-    //| > http://joshfire.github.io/woodman/getstarted.html
-    //'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+    // |**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // | ✓ woodman
+    // | > Cleaning woodman logger.
+    // | > http://joshfire.github.io/woodman/getstarted.html
+    // '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     gulp.task("clean-logger", [] , function () {
 
         var builddir = path.join(_build, getDistDirName(), _dir.clean);
@@ -310,14 +315,14 @@
                .pipe($.size()) ;
     });
 
-    //|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    //| ✓ requirejs avec optimisation avec amdclean
-    //| > Framework RequireJS
-    //| > https://github.com/gfranko/amdclean
-    //| > principe -> http://requirejs.org/docs/optimization.html
-    //| > options  -> https://github.com/jrburke/r.js/blob/master/build/example.build.js
-    //| > astuces  -> http://stackoverflow.com/questions/23978361/using-gulp-to-build-requirejs-project-gulp-requirejs
-    //'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+    // |**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // | ✓ requirejs avec optimisation avec amdclean
+    // | > Framework RequireJS
+    // | > https://github.com/gfranko/amdclean
+    // | > principe -> http://requirejs.org/docs/optimization.html
+    // | > options  -> https://github.com/jrburke/r.js/blob/master/build/example.build.js
+    // | > astuces  -> http://stackoverflow.com/questions/23978361/using-gulp-to-build-requirejs-project-gulp-requirejs
+    // '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     gulp.task("requirejs-amdclean", [], function (taskReady) {
 
         var requirejs = require("requirejs");
@@ -354,16 +359,16 @@
             // FIXME on ajoute cette classe pour ol3,
             // mais pourquoi ce module n'est pas une dependance dans le code ?
             input.push(path.join(getDistDirName(), "CRS", "CRS"));
-        }
-        else if (isExecuteLeaflet) {
+        } else if (isExecuteLeaflet) {
             // on ajoute ce projet pour leaflet
             deps["proj4leaflet-0.7.x"] = "../../../../lib/proj4leaflet/proj4leaflet-src"  /*+ modeExt*/;
             deps["proj4leaflet-1.0.x"] = "../../../../lib/proj4leaflet/1.0.0-beta.2/proj4leaflet-src"  /*+ modeExt*/;
             deps["leaflet-draw" ] = "../../../../lib/leaflet/plugins/leaflet-draw/leaflet.draw-src" /*+ modeExt*/;
-        }
-        else if (isExecuteVg) {}
-        else if (isExecuteITowns) {}
-        else {
+        } else if (isExecuteVg) {
+            $.util.log("executVg : nothing to do");
+        } else if (isExecuteITowns) {
+            $.util.log("executITowns : nothing to do");
+        } else {
             $.util.log("Exception !");
         }
 
@@ -373,25 +378,25 @@
             baseUrl : srcdir,
             optimize : mode,
             uglify2 : {
-                output: {
-                    beautify: false
+                output : {
+                    beautify : false
                 },
-                warnings: false,
-                mangle: (isProduction) ? true : false
+                warnings : false,
+                mangle : (isProduction) ? true : false
             },
             include : input,
             out : path.join(builddir, getDistFileName()),
             findNestedDependencies : false,
             preserveLicenseComments : false,
             useStrict : true,
+            /** TODO : jsdoc*/
             onModuleBundleComplete : function (data) {
 
-                var fs = require("fs"),
-                         amdclean = require("amdclean"),
-                         outputFile = data.path;
+                var amdclean = require("amdclean");
+                var outputFile = data.path;
 
                 fs.writeFileSync(outputFile, amdclean.clean({
-                    globalModules : ['proj4'], // module globale !
+                    globalModules : ["proj4"], // module globale !
                     filePath : outputFile,
                     prefixMode : "camelCase",
                     wrap : {
@@ -399,16 +404,16 @@
                         // même si le bundle n'est compatible nodejs...
                         start : "\n/* BEGIN CODE */\nvar request, xmldom;\n",
                         end : "\n/* END CODE   */\n"
-                       },
-                    "escodegen" : {
-                         "comment" :false,
-                         "format" : {
-                           "indent" : {
-                             "style" : "    ",
-                             "adjustMultilineComment" :true
-                           }
-                         }
-                     }
+                    },
+                    escodegen : {
+                        comment : false,
+                        format : {
+                            indent : {
+                                style : "    ",
+                                adjustMultilineComment : true
+                            }
+                        }
+                    }
                 }));
             }
         }, function () {
@@ -433,8 +438,8 @@
 
         var builddir = path.join(_build, getDistDirName(), "js");
         var srcdir   = path.join(_build, getDistDirName(), _dir.clean);
-        var input    = []; // on place les modules qui ne sont pas appellés directement dans le code (dependances) !
-
+        var input    = []; // on place les modules qui ne sont pas
+        // appellés directement dans le code (dependances) !
 
         var deps = {
             ol : "empty:",
@@ -489,25 +494,25 @@
             baseUrl : srcdir,
             optimize : mode,
             uglify2 : {
-                output: {
-                    beautify: false
+                output : {
+                    beautify : false
                 },
-                warnings: false,
-                mangle: (isProduction) ? true : false
+                warnings : false,
+                mangle : (isProduction) ? true : false
             },
             include : input,
             out : path.join(builddir, getDistFileName()),
             findNestedDependencies : false,
             preserveLicenseComments : false,
             useStrict : true,
+            /** TODO : jsdoc*/
             onModuleBundleComplete : function (data) {
 
-                var fs = require("fs"),
-                         amdclean = require("amdclean"),
-                         outputFile = data.path;
+                var amdclean = require("amdclean");
+                var outputFile = data.path;
 
                 fs.writeFileSync(outputFile, amdclean.clean({
-                    globalModules : ['proj4'], // module globale !
+                    globalModules : ["proj4"], // module globale !
                     filePath : outputFile,
                     prefixMode : "camelCase",
                     wrap : {
@@ -515,16 +520,16 @@
                         // même si le bundle n'est compatible nodejs...
                         start : "\n/* BEGIN CODE */\nvar request, xmldom;\n",
                         end : "\n/* END CODE   */\n"
-                       },
-                    "escodegen" : {
-                         "comment" :false,
-                         "format" : {
-                           "indent" : {
-                             "style" : "    ",
-                             "adjustMultilineComment" :true
-                           }
-                         }
-                     }
+                    },
+                    escodegen : {
+                        comment : false,
+                        format : {
+                            indent : {
+                                style : "    ",
+                                adjustMultilineComment : true
+                            }
+                        }
+                    }
                 }));
             }
         }, function () {
@@ -535,48 +540,72 @@
         });
     });
 
-    //|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    //| ✓ umd
-    //| > Framework UMD
-    //| > https://github.com/umdjs/umd
-    //| > https://www.npmjs.com/package/gulp-umd
-    //'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+    // |**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // | ✓ umd
+    // | > Framework UMD
+    // | > https://github.com/umdjs/umd
+    // | > https://www.npmjs.com/package/gulp-umd
+    // '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     gulp.task("umd", ["requirejs-amdclean"], function () {
 
         var umd = require("gulp-umd");
 
-        var builddir= path.join(_build, getDistDirName(), "umd");
+        var builddir = path.join(_build, getDistDirName(), "umd");
         var srcdir  = path.join(_build, getDistDirName(), "js");
         var deps    = null;
 
         if (isExecuteOl3) {
-            deps = [{name :"ol", amd :"ol", cjs :"ol", global :"ol", param :"ol"}];
-        }
-        else if (isExecuteLeaflet) {
-            deps = [{name :"leaflet", amd :"leaflet", cjs :"leaflet", global :"L", param :"leaflet"}];
-        }
-        else if (isExecuteVg) {
+            deps = [
+                {
+                    name : "ol",
+                    amd : "ol",
+                    cjs : "ol",
+                    global : "ol",
+                    param : "ol"
+                }
+            ];
+        } else if (isExecuteLeaflet) {
+            deps = [
+                {
+                    name : "leaflet",
+                    amd : "leaflet",
+                    cjs : "leaflet",
+                    global : "L",
+                    param : "leaflet"
+                }
+            ];
+        } else if (isExecuteVg) {
+            $.util.log("executVg : nothing to do");
             // FIXME VirtualGeo est global en mode browser uniquement !
             // Pas de mode AMD...
             // deps = [{name :"vg", amd :"vg", cjs :"vg", global :"VirtualGeo", param :"vg"}];
-        }
-        else if (isExecuteITowns) {
-            deps = [{name :"itowns", amd :"itowns", cjs :"itowns", global :"itowns", param :"itowns"}];
-        }
-        else {
+        } else if (isExecuteITowns) {
+            deps = [
+                {
+                    name : "itowns",
+                    amd : "itowns",
+                    cjs : "itowns",
+                    global : "itowns",
+                    param : "itowns"
+                }
+            ];
+        } else {
             $.util.log("Exception !");
         }
 
         return gulp.src(path.join(srcdir, getDistFileName()))
             .pipe(umd({
-                exports: function (file) {
+                /** exports function */
+                exports : function () {
                     return "Gp" ;
                 },
-                namespace: function (file) {
+                /** exports function */
+                namespace : function () {
                     return "Gp" ;
                 },
-                dependencies: function(file) {
-                  return deps || [];
+                /** exports function */
+                dependencies : function () {
+                    return deps || [];
                 }
             }))
             .pipe(gulp.dest(builddir))
@@ -588,38 +617,81 @@
 
         var umd = require("gulp-umd");
 
-        var builddir= path.join(_build, getDistDirName(), "umd");
+        var builddir = path.join(_build, getDistDirName(), "umd");
         var srcdir  = path.join(_build, getDistDirName(), "js");
         var deps    = null;
 
         if (isExecuteOl3WithVg) {
-            deps = [{name :"ol", amd :"ol", cjs :"ol", global :"ol", param :"ol"}];
-        }
-        else if (isExecuteOl3WithITowns) {
-            deps = [{name :"ol", amd :"ol", cjs :"ol", global :"ol", param :"ol"},
-                {name :"itowns", amd :"itowns", cjs :"itowns", global :"itowns", param :"itowns"}];
-        }
-        else if (isExecuteLeafletWithVg) {
-            deps = [{name :"leaflet", amd :"leaflet", cjs :"leaflet", global :"L", param :"leaflet"}];
-        }
-        else if (isExecuteLeafletWithITowns) {
-            deps = [{name :"leaflet", amd :"leaflet", cjs :"leaflet", global :"L", param :"leaflet"},
-                {name :"itowns", amd :"itowns", cjs :"itowns", global :"itowns", param :"itowns"}];
-        }
-        else {
+            deps = [
+                {
+                    name : "ol",
+                    amd : "ol",
+                    cjs : "ol",
+                    global : "ol",
+                    param : "ol"
+                }
+            ];
+        } else if (isExecuteOl3WithITowns) {
+            deps = [
+                {
+                    name : "ol",
+                    amd : "ol",
+                    cjs : "ol",
+                    global : "ol",
+                    param : "ol"
+                },
+                {
+                    name : "itowns",
+                    amd : "itowns",
+                    cjs : "itowns",
+                    global : "itowns",
+                    param : "itowns"
+                }
+            ];
+        } else if (isExecuteLeafletWithVg) {
+            deps = [
+                {
+                    name : "leaflet",
+                    amd : "leaflet",
+                    cjs : "leaflet",
+                    global : "L",
+                    param : "leaflet"
+                }
+            ];
+        } else if (isExecuteLeafletWithITowns) {
+            deps = [
+                {
+                    name : "leaflet",
+                    amd : "leaflet",
+                    cjs : "leaflet",
+                    global : "L",
+                    param : "leaflet"
+                },
+                {
+                    name : "itowns",
+                    amd : "itowns",
+                    cjs : "itowns",
+                    global : "itowns",
+                    param : "itowns"
+                }
+            ];
+        } else {
             $.util.log("Exception !");
         }
 
         return gulp.src(path.join(srcdir, getDistFileName()))
             .pipe(umd({
-                exports: function (file) {
+                /** exports function */
+                exports : function () {
                     return "Gp" ;
                 },
-                namespace: function (file) {
+                /** namespace function */
+                namespace : function () {
                     return "Gp" ;
                 },
-                dependencies: function(file) {
-                  return deps || [];
+                /** dependencies function */
+                dependencies : function () {
+                    return deps || [];
                 }
             }))
             .pipe(gulp.dest(builddir))
@@ -627,10 +699,10 @@
             .pipe($.size());
     });
 
-    //|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    //| ✓ copy images
-    //| > https://github.com/hparra/gulp-rename
-    //'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+    // |**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // | ✓ copy images
+    // | > https://github.com/hparra/gulp-rename
+    // '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     gulp.task("res-images", function () {
 
         var rename = require("gulp-rename");
@@ -644,19 +716,21 @@
         if (isExecuteOl3) {
             // format SVG !
             srcdir.push(path.join(_dir.res, getDistDirName(), "**", "*.svg"));
-        }
-        else if (isExecuteLeaflet) {
+        } else if (isExecuteLeaflet) {
             var plugindir = path.join(_dir.lib, getDistDirName().toLowerCase(), "plugins", "leaflet-draw", "**", "*.png");
             srcdir.push(plugindir);
-        }
-        else if (isExecuteVg) {}
-        else if (isExecuteITowns) {}
-        else {
+        } else if (isExecuteVg) {
+            $.util.log("Nothing to do in Vg mode");
+        } else if (isExecuteITowns) {
+            $.util.log("Nothing to do in iTowns mode");
+        } else {
             $.util.log("Exception !");
         }
 
         return gulp.src(srcdir)
-            .pipe(rename({dirname :""}))
+            .pipe(rename({
+                dirname : ""
+            }))
             .pipe(gulp.dest(builddir))
             .pipe($.plumber())
             .pipe($.size());
@@ -673,34 +747,33 @@
         if (isExecuteOl3WithVg) {
             srcdir.push(path.join(_build, "Ol3", "dist", "ol3", "img", "*.*"));
             srcdir.push(path.join(_build, "Vg", "dist", "vg", "img", "*.*"));
-        }
-        else if (isExecuteOl3WithITowns) {
+        } else if (isExecuteOl3WithITowns) {
             srcdir.push(path.join(_build, "Ol3", "dist", "ol3", "img", "*.*"));
             srcdir.push(path.join(_build, "Itowns", "dist", "itowns", "img", "*.*"));
-        }
-        else if (isExecuteLeafletWithVg) {
+        } else if (isExecuteLeafletWithVg) {
             srcdir.push(path.join(_build, "Leaflet", "dist", "leaflet", "img", "*.*"));
             srcdir.push(path.join(_build, "Vg", "dist", "vg", "img", "*.*"));
-        }
-        else if (isExecuteLeafletWithITowns) {
+        } else if (isExecuteLeafletWithITowns) {
             srcdir.push(path.join(_build, "Leaflet", "dist", "leaflet", "img", "*.*"));
             srcdir.push(path.join(_build, "Itowns", "dist", "itowns", "img", "*.*"));
         }
 
         return gulp.src(srcdir)
-            .pipe(rename({dirname :""}))
+            .pipe(rename({
+                dirname : ""
+            }))
             .pipe(gulp.dest(builddir))
             .pipe($.plumber())
             .pipe($.size());
 
     });
 
-    //|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    //| ✓ compress images
-    //| FIXME : tache desactivee (pb de build selon environnement)
-    //| > https://github.com/sindresorhus/gulp-imagemin
-    //| > https://github.com/imagemin/imagemin-optipng
-    //'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+    // |**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // | ✓ compress images
+    // | FIXME : tache desactivee (pb de build selon environnement)
+    // | > https://github.com/sindresorhus/gulp-imagemin
+    // | > https://github.com/imagemin/imagemin-optipng
+    // '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     gulp.task("images", ["res-images"], function () {
 
         var imagemin = require("gulp-imagemin");
@@ -711,22 +784,26 @@
 
         return gulp.src(srcdir)
             .pipe(imagemin({
-                progressive: true,
-                svgoPlugins: [{removeViewBox: false}],
-                use: [pngquant()]
+                progressive : true,
+                svgoPlugins : [
+                    {
+                        removeViewBox : false
+                    }
+                ],
+                use : [pngquant()]
             }))
             .pipe(gulp.dest(builddir))
             .pipe($.plumber())
             .pipe($.size());
     });
 
-    //|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    //| ✓ minify css with clean-css
-    //| > https://www.npmjs.com/package/gulp-minify-css
-    //'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+    // |**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // | ✓ minify css with clean-css
+    // | > https://www.npmjs.com/package/gulp-minify-css
+    // '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     gulp.task("res-styles", function () {
 
-        var minifyCss = require("gulp-minify-css");
+        var cleanCSS = require("gulp-clean-css");
         var concat    = require("gulp-concat");
 
         var builddir = path.join(_build, getDistDirName(), "dist", getDistDirName().toLowerCase());
@@ -737,26 +814,41 @@
         var exceptsrcdircommon = "!" + path.join(_dir.res, "Common", "__*.css");
         var output = getBaseFileName();
 
-        if (isExecuteOl3) {}
-        else if (isExecuteLeaflet) {
+        if (isExecuteOl3) {
+            $.util.log("Nothing to do in Ol3 mode");
+        } else if (isExecuteLeaflet) {
             // Plugins Leaflet !
             plugindir = path.join(_dir.lib, "leaflet", "plugins", "leaflet-draw", "**", "*.css");
-        }
-        else if (isExecuteVg) {}
-        else if (isExecuteITowns) {}
-        else {
+        } else if (isExecuteVg) {
+            $.util.log("Nothing to do in Vg mode");
+        } else if (isExecuteITowns) {
+            $.util.log("Nothing to do in iTowns mode");
+        } else {
             $.util.log("Exception !");
         }
 
         var srcArray =  [] ;
-        if (srcdircommon) srcArray.push(srcdircommon) ;
-        if (srcdir) srcArray.push(srcdir) ;
-        if (plugindir) srcArray.push(plugindir) ;
-        if (exceptsrcdir) srcArray.push(exceptsrcdir) ;
-        if (exceptsrcdircommon) srcArray.push(exceptsrcdircommon) ;
+        if (srcdircommon) {
+            srcArray.push(srcdircommon) ;
+        }
+        if (srcdir) {
+            srcArray.push(srcdir) ;
+        }
+        if (plugindir) {
+            srcArray.push(plugindir) ;
+        }
+        if (exceptsrcdir) {
+            srcArray.push(exceptsrcdir) ;
+        }
+        if (exceptsrcdircommon) {
+            srcArray.push(exceptsrcdircommon) ;
+        }
         // return gulp.src([srcdircommon, srcdir, plugindir, exceptsrcdir, exceptsrcdircommon])
         return gulp.src(srcArray)
-            .pipe((isProduction) ? minifyCss(/*{compatibility :"ie8"}*/) : $.util.noop())
+            .pipe((isProduction) ? cleanCSS({
+                rebase : false,
+                level : 2
+            }) : $.util.noop())
             .pipe((isProduction) ? concat(output + ".css") : concat(output + "-src.css"))
             .pipe(gulp.dest(builddir))
             .pipe($.plumber())
@@ -773,16 +865,13 @@
         if (isExecuteOl3WithVg) {
             srcdir.push(path.join(_build, "Ol3", "dist", "ol3", "*.css"));
             srcdir.push(path.join(_build, "Vg", "dist", "vg", "*.css"));
-        }
-        else if (isExecuteOl3WithITowns) {
+        } else if (isExecuteOl3WithITowns) {
             srcdir.push(path.join(_build, "Ol3", "dist", "ol3", "*.css"));
             srcdir.push(path.join(_build, "Itowns", "dist", "itowns", "*.css"));
-        }
-        else if (isExecuteLeafletWithVg) {
+        } else if (isExecuteLeafletWithVg) {
             srcdir.push(path.join(_build, "Leaflet", "dist", "leaflet", "*.css"));
             srcdir.push(path.join(_build, "Vg", "dist", "vg", "*.css"));
-        }
-        else if (isExecuteLeafletWithITowns) {
+        } else if (isExecuteLeafletWithITowns) {
             srcdir.push(path.join(_build, "Leaflet", "dist", "leaflet", "*.css"));
             srcdir.push(path.join(_build, "Itowns", "dist", "itowns", "*.css"));
         }
@@ -796,19 +885,18 @@
             .pipe($.size());
     });
 
-    //|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    //| ✓ licence-js
-    //| > ajout d"une licence au bundle js
-    //| > https://www.npmjs.com/package/gulp-header
-    //'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+    // |**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // | ✓ licence-js
+    // | > ajout d"une licence au bundle js
+    // | > https://www.npmjs.com/package/gulp-header
+    // '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     gulp.task("licence-js", function () {
 
         // pour information,
         // le fichier de licence peut être un template,
         // les balises en nottion ES6-style : ${date}
-        var fs      = require("fs");
         var header  = require("gulp-header");
-        var strip   = require('gulp-strip-comments');
+        var strip   = require("gulp-strip-comments");
 
         var builddir = path.join(_build, getDistDirName(), "dist", getDistDirName().toLowerCase());
         var srcdir   = path.join(_build, getDistDirName(), "dist", getDistDirName().toLowerCase());
@@ -818,22 +906,22 @@
         if (isExecuteOl3) {
             version = npmConf.ol3ExtVersion ;
             brief = npmConf.ol3ExtName ;
-        }
-        else if (isExecuteLeaflet) {
+        } else if (isExecuteLeaflet) {
             version = npmConf.leafletExtVersion ;
             brief = npmConf.leafletExtName ;
-        }
-        else if (isExecuteVg) {
+        } else if (isExecuteVg) {
             version = npmConf.vgExtVersion ;
             brief = npmConf.vgExtName ;
-        }
-        else if (isExecuteITowns) {}
-        else {
+        } else if (isExecuteITowns) {
+            $.util.log("Nothing to do in iTowns mode");
+        } else {
             $.util.log("Exception !");
         }
 
         return gulp.src([path.join(srcdir, getDistFileName())])
-                .pipe(strip({safe : false})) // first remove old headers comments
+                .pipe(strip({
+                    safe : false
+                })) // first remove old headers comments
                 .pipe(header( (isExecuteLeaflet) ? fs.readFileSync("utils/licence-proj4Leaflet.txt" , "utf8") : ""))
                 .pipe(header( (isExecuteLeaflet) ? fs.readFileSync("utils/licence-plugin-leaflet-draw.txt" , "utf8") : ""))
                 .pipe(header(fs.readFileSync("utils/licence-proj4js.txt", "utf8")))
@@ -853,13 +941,12 @@
     // | ✓ licence-css
     // | > ajout d"une licence au bundle css
     // | > https://www.npmjs.com/package/gulp-header
-    //'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+    // '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     gulp.task("licence-css", function () {
 
         //  pour information,
         //  le fichier de licence peut être un template,
         //  les balises en nottion ES6-style : ${date}
-        var fs      = require("fs");
         var header  = require("gulp-header");
 
         var builddir = path.join(_build, getDistDirName(), "dist", getDistDirName().toLowerCase()) ;
@@ -871,17 +958,15 @@
         if (isExecuteOl3) {
             version = npmConf.ol3ExtVersion ;
             brief = npmConf.ol3ExtName ;
-        }
-        else if (isExecuteLeaflet) {
+        } else if (isExecuteLeaflet) {
             version = npmConf.leafletExtVersion ;
             brief = npmConf.leafletExtName ;
-        }
-        else if (isExecuteVg) {
+        } else if (isExecuteVg) {
             version = npmConf.vgExtVersion ;
             brief = npmConf.vgExtName ;
-        }
-        else if (isExecuteITowns) {}
-        else {
+        } else if (isExecuteITowns) {
+            $.util.log("Nothing to do in iTowns mode");
+        } else {
             $.util.log("Exception !");
         }
 
@@ -896,10 +981,10 @@
                 .pipe($.size()) ;
     });
 
-    //|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    //| ✓ copy-libjsdoc
-    //| > copie du template jaguarjs-jsdoc
-    //'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+    // |**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // | ✓ copy-libjsdoc
+    // | > copie du template jaguarjs-jsdoc
+    // '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     gulp.task("copy-libjsdoc", function () {
 
         var builddir = path.join(_build, getDistDirName(), "doc");
@@ -910,10 +995,10 @@
                 .pipe($.size());
     });
 
-    //|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    //| ✓ copy-tutojsdoc
-    //| > copie du template jaguarjs-jsdoc
-    //'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+    // |**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // | ✓ copy-tutojsdoc
+    // | > copie du template jaguarjs-jsdoc
+    // '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     gulp.task("copy-tutojsdoc", function () {
 
         var builddir = path.join(_build, getDistDirName(), "doc", "tutorials");
@@ -930,12 +1015,12 @@
                 .pipe($.size());
     });
 
-    //|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    //| ✓ jsdoc
-    //| > Documenting JavaScript with JSDoc.
-    //| > http://usejsdoc.org
-    //| > FIXME trouver un plugin capable de realiser la même chose que jsdoc-cli
-    //'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+    // |**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // | ✓ jsdoc
+    // | > Documenting JavaScript with JSDoc.
+    // | > http://usejsdoc.org
+    // | > FIXME trouver un plugin capable de realiser la même chose que jsdoc-cli
+    // '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     gulp.task("jsdoc", function () {
 
         var configfile = "jsdoc-" + getDistDirName().toLowerCase() + ".json";
@@ -967,7 +1052,7 @@
     // |**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // | ✓ copy-dist
     // | > copie du bundle dans dist/
-    //'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+    // '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     gulp.task("copy-dist", function () {
 
         var filename = getDistFileName();
@@ -976,13 +1061,13 @@
         var src      = path.join(_build, basedir, "umd", filename);
 
         return gulp.src(src)
-            .pipe(gulp.dest(path.join(_build, basedir, "dist", srcdir)))
+            .pipe(gulp.dest(path.join(_build, basedir, "dist", srcdir)));
     });
 
     // |**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // | ✓ lib-external
     // | > copie des lib externes leaflet ou ol3 dans lib/
-    //'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+    // '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     gulp.task("lib-external", function () {
 
         var basedir  = getDistDirName().toLowerCase();
@@ -995,7 +1080,7 @@
     // |**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // | ✓ copy-sample
     // | > copie des exemples leaflet ou ol3 dans samples/
-    //'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+    // '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     gulp.task("copy-sample", function () {
 
         var bundle   = getBaseFileName();
@@ -1021,7 +1106,7 @@
     // |**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // | ✓ copy-resources-sample
     // | > copie des ressources des exemples leaflet ou ol3 dans samples/
-    //'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+    // '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     gulp.task("copy-resources-sample", function () {
 
         var basedir  = getDistDirName().toLowerCase();
@@ -1040,7 +1125,7 @@
     // | > construction de la page principale des exemples leaflet ou ol3
     // | > https://www.npmjs.com/package/gulp-template
     // | > FIXME les dependances des exemples !
-    //'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+    // '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     gulp.task("template-sample", function () {
 
         var tmpl = require("gulp-template");
@@ -1060,33 +1145,29 @@
 
         return gulp.src(index)
             .pipe(tmpl({
-                'files' : lstSources,
-                'mode' : (isProduction) ? "" : "-src" // FIXME !
+                files : lstSources,
+                mode : (isProduction) ? "" : "-src" // FIXME !
             }))
             .pipe(gulp.dest(path.join(builddir)));
     });
 
-    //|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    //| ✓ publish
-    //| > copie du bundle pour distribution
-    //'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+    // |**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // | ✓ publish
+    // | > copie du bundle pour distribution
+    // '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     gulp.task("publish", function () {
 
         var srcdir = [];
         // mode mixte
         if (isMix) {
             srcdir.push(path.join(_build, "Mix", "dist", "**"));
-        }
-        else if (isExecuteOl3) {
+        } else if (isExecuteOl3) {
             srcdir.push(path.join(_build, "Ol3", "dist", "**"));
-        }
-        else if (isExecuteLeaflet) {
+        } else if (isExecuteLeaflet) {
             srcdir.push(path.join(_build, "Leaflet", "dist", "**"));
-        }
-        else if (isExecuteVg) {
+        } else if (isExecuteVg) {
             srcdir.push(path.join(_build, "Vg", "dist", "**"));
-        }
-        else if (isExecuteITowns) {
+        } else if (isExecuteITowns) {
             srcdir.push(path.join(_build, "Itowns", "dist", "**"));
         }
 
@@ -1096,54 +1177,56 @@
                 .pipe($.size()) ;
     });
 
-    //|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    //| ✓ connect
-    //| > https://www.npmjs.com/package/gulp-connect
-    //'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-    gulp.task('connect', function() {
+    // |**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // | ✓ connect
+    // | > https://www.npmjs.com/package/gulp-connect
+    // '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+    gulp.task("connect", function () {
 
         $.connect.server({
-            root: path.join(_build, getDistDirName()),
-            port: 9000,
-            livereload: false
+            root : path.join(_build, getDistDirName()),
+            port : 9000,
+            livereload : false
         });
     });
 
-    //|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    //| ✓ open
-    //| > https://www.npmjs.com/package/open
-    //'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-    gulp.task('server', ['connect'], function() {
+    // |**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // | ✓ open
+    // | > https://www.npmjs.com/package/open
+    // '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+    gulp.task("server", ["connect"], function () {
 
-        var open = require('open');
+        var open = require("open");
         open("http://localhost:9000/samples/" + "index-" + getDistDirName().toLowerCase() + ".html");
     });
 
-    //|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    //| ✓ clean
-    //| > nettoyage
-    //'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+    // |**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // | ✓ clean
+    // | > nettoyage
+    // '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     gulp.task("clean", [], function () {
 
         var stream = gulp.src([
             _build
-        ], {force: true});
+        ], {
+            force : true
+        });
         return stream.pipe($.clean());
     });
 
-    //|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    //| ✓ clean
-    //| > nettoyage brutal
-    //| > https://github.com/robrich/gulp-rimraf
-    //'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+    // |**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // | ✓ clean
+    // | > nettoyage brutal
+    // | > https://github.com/robrich/gulp-rimraf
+    // '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     gulp.task("clean-rimraf", [], function (cb) {
         var rimraf = require("rimraf");
         rimraf(_build, cb);
     });
 
-    //|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    //| ✓ tâche = alias
-    //'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+    // |**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // | ✓ tâche = alias
+    // '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     gulp.task("test",    ["mocha-phantomjs"]);          // raccourci !
     gulp.task("check",   ["jshint", "jscs"]);           // raccourci !
     gulp.task("res",     ["res-styles", "res-images"]); // raccourci !
@@ -1153,12 +1236,12 @@
     gulp.task("doc",     ["task-doc"]);        //  tache sync. !
     gulp.task("sample",  ["task-sample"]);     //  tache sync. !
 
-    //|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    //| ✓ synchronisation des tâches
-    //'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+    // |**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // | ✓ synchronisation des tâches
+    // '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     var runSequence = require("run-sequence");
 
-    gulp.task("build", function(cb) {
+    gulp.task("build", function (cb) {
 
         var target = [];
 
@@ -1207,7 +1290,7 @@
 
     });
 
-    gulp.task("build-ol3", function(cb) {
+    gulp.task("build-ol3", function (cb) {
         isExecuteOl3 = true;
         isExecuteLeaflet = !isExecuteOl3;
         isExecuteVg = !isExecuteOl3;
@@ -1217,7 +1300,7 @@
         runSequence("check", /*"test",*/ "dist", "doc", "lib", "sample", cb);
     });
 
-    gulp.task("build-leaflet", function(cb) {
+    gulp.task("build-leaflet", function (cb) {
         isExecuteLeaflet = true;
         isExecuteOl3 = !isExecuteLeaflet;
         isExecuteVg = !isExecuteLeaflet;
@@ -1227,7 +1310,7 @@
         runSequence("check", /*"test",*/ "dist", "doc", "lib", "sample", cb);
     });
 
-    gulp.task("build-vg", function(cb) {
+    gulp.task("build-vg", function (cb) {
         isExecuteVg = true;
         isExecuteOl3 = !isExecuteVg;
         isExecuteLeaflet = !isExecuteVg;
@@ -1237,7 +1320,7 @@
         runSequence(/*"check",*/ /*"test",*/ "dist", /*"doc",*/ "lib", "sample", cb);
     });
 
-    gulp.task("build-itowns", function(cb) {
+    gulp.task("build-itowns", function (cb) {
         isExecuteITowns = true;
         isExecuteOl3 = !isExecuteITowns;
         isExecuteLeaflet = !isExecuteITowns;
@@ -1247,7 +1330,7 @@
         runSequence(/*"check",*/ /*"test",*/ "dist", "lib", /*"doc",*/ "sample", cb);
     });
 
-    gulp.task("build-ol3-vg", function(cb) {
+    gulp.task("build-ol3-vg", function (cb) {
         $.util.log("[INFO] Execution des taches (mixte) : OpenLayers/VirtualGeo !!!");
         isExecuteOl3WithVg = true;
         isExecuteLeafletWithVg = isExecuteOl3WithITowns = isExecuteLeafletWithITowns = false;
@@ -1260,7 +1343,7 @@
             cb);
     });
 
-    gulp.task("build-ol3-it", function(cb) {
+    gulp.task("build-ol3-it", function (cb) {
         $.util.log("[INFO] Execution des taches (mixte) : OpenLayers/ITowns !!!");
         isExecuteOl3WithITowns = true;
         isExecuteLeafletWithITowns = isExecuteOl3WithVg = isExecuteLeafletWithVg = false;
@@ -1273,21 +1356,21 @@
             cb);
     });
 
-    gulp.task("task-dist", function(cb) {
+    gulp.task("task-dist", function (cb) {
         runSequence("source-js", "source-common", "clean-logger", "umd", "copy-dist", "res", "licence", cb);
     });
 
-    gulp.task("task-doc", function(cb) {
+    gulp.task("task-doc", function (cb) {
         runSequence("copy-libjsdoc", "copy-tutojsdoc", "jsdoc", cb);
     });
 
-    gulp.task("task-sample", function(cb) {
+    gulp.task("task-sample", function (cb) {
         runSequence("copy-sample", "copy-resources-sample", "template-sample", cb);
     });
 
-    //|**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    //| ✓ tâche par default
-    //'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+    // |**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // | ✓ tâche par default
+    // '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     gulp.task("default", ["clean"], function () {
         gulp.start("build");
     });
