@@ -2,8 +2,8 @@
 <html>
     <head>
         {% include "partials/common-head.html" %}
-        {% include "partials/ol3/ol3-common-head.html" %}
-        {% include "partials/ol3/ol3-amd-head.html" %}
+        {% include "partials/ol/ol-common-head.html" %}
+        {% include "partials/ol/ol-bundle-head.html" %}
 
         {% block head %}{% endblock %}
         {% block style %}{% endblock %}
@@ -11,6 +11,7 @@
     </head>
     <body>
         <h1>Extension Géoportail pour OpenLayers</h1>
+
         {% block body %}{% endblock  %}
 
         {% block js %}{% endblock  %}
