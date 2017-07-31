@@ -23,18 +23,6 @@
 {% block js %}
             <script>
                 var map;
-                /* global requirejs */
-                requirejs.config({
-                    "baseUrl" : "../../../src/",
-                    "paths": {
-                        // lib external
-                        "ol" : "../lib/ol3/ol-debug",
-                        "proj4"   : "../lib/proj4/proj4",
-                        "gp"      : "../lib/gp/GpServices-src",
-                        "sortable" : "../lib/sortable/Sortable",
-                        "woodman" : "../lib/woodman/woodman-amd"
-                    }
-                });
                 requirejs(
                     ["ol", "gp",
                     "Ol3/Layers/LayerWMTS",
