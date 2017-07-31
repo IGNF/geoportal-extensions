@@ -70,6 +70,8 @@ define([
         this._initialize(options, layers);
 
         var container = this._initContainer(options);
+        // property to save layers conf added after the LS is initialized
+        this._addedLayerConf = {};
         var targetDiv = document.getElementById(options.target) || null;
 
         Widget.call(
@@ -187,7 +189,7 @@ define([
                     if ( layer.type === "elevation" ) {
                         return;
                     }
-                    var layerConf = self._getLayerConf(id);
+                    var layerConf = self._getLayerConf(id) || self._addedLayerConf[id];
                     if ( layerConf ) {
                         self.addLayer(layer, layerConf);
                     } else {
