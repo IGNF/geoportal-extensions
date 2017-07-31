@@ -176,6 +176,11 @@ define([
                 this.options.displayCoordinates = true;
             }
 
+            if ( !this.options.displayCoordinates ) {
+                // si les coordonnées ne sont pas affichées : pas besoin de les éditer...
+                this.options.editCoordinates = false;
+            }
+
             /** Edition des coordonnées en cours ou non */
             this._isEditing = false;
 
