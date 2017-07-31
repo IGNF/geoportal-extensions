@@ -1,0 +1,18 @@
+        <!-- requirejs -->
+        <script src="{{ baseurl }}/lib/require.js"></script>
+        <script>
+            /* global requirejs */
+            requirejs.config({
+                'baseUrl' : "{{ baseurl }}/src/",
+                'paths': {
+                    // lib external
+                    "leaflet" : "../lib/leaflet/leaflet-src",
+                    "gp"      : "../lib/gp/GpServices-src",
+                    "proj4" : "../lib/proj4/proj4-src",
+                    "proj4leaflet-0.7.x" : "../lib/proj4leaflet/proj4leaflet-src",
+                    "proj4leaflet-1.0.x" : "../lib/proj4leaflet/1.0.0-beta.2/proj4leaflet-src",
+                    "woodman" : "../lib/woodman/woodman-amd",
+                    "sortable": "../lib/sortable/Sortable"
+                }
+            });
+        </script>

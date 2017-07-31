@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% include "partials/common-head.html" %}
+        {% include "partials/leaflet/leaflet-common-head.html" %}
+        {% include "partials/leaflet/leaflet-bundle-head.html" %}
+
+        {% block head %}{% endblock %}
+        {% block style %}{% endblock %}
+
+    </head>
+    <body>
+        <h1>Extension Géoportail pour Leaflet (mode bundle)</h1>
+
+        {% block body %}{% endblock  %}
+
+        {% block js %}{% endblock  %}
+    </body>
+</html>
