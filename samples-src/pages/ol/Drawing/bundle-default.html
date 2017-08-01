@@ -1,32 +1,30 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta content="IE=edge,chrome=1; charset=UTF-8" http-equiv="X-UA-Compatible">
-        <title>sample ol3 MousePosition</title>
-        <!-- Library OpenLayers 3 -->
-        <link rel="stylesheet" href="../../../lib/ol3/ol.css" />
-        <link rel="stylesheet" href="https://rawgit.com/walkermatt/ol3-popup/master/src/ol3-popup.css" />
-        <script src="../../../lib/ol3/ol.js"></script>
+{% extends "ol/ol-sample-bundle-layout.html" %}
+
+{% block head %}
+        <title>Sample ol3 Drawing</title>
+        <!-- FIXME : utilite de ces dependances pour l'exemple ? -->
         <script src="https://rawgit.com/walkermatt/ol3-popup/master/src/ol3-popup.js"></script>
-        <!-- Plugin OpenLayers 3 IGN -->
-        <link rel="stylesheet" href="../../../dist/ol3/GpPluginOl3-src.css" />
-        <script src="../../../dist/ol3/GpPluginOl3-src.js" data-url="./../resources/AutoConf.js"></script>
-        <!-- load geoportail-waiting image -->
+        <link rel="stylesheet" href="https://rawgit.com/walkermatt/ol3-popup/master/src/ol3-popup.css" />
+{% endblock %}
+
+{% block style %}
         <style>
             div#map {
-                background-image:url(../resources/geoportail-waiting.gif);
-                background-position:center center;
-                background-repeat:no-repeat;
-                max-width: 800px;
+                width: 100%;
                 height: 500px;
-                margin: 10px;
             }
         </style>
-    </head>
-    <body>
-            <p>Ajout des outils de dessin</p>
+{% endblock %}
 
-            <script>
+{% block body %}
+            <h2>Ajout des outils de dessin</h2>
+            <!-- map -->
+            <div id="map">
+            </div>
+{% endblock  %}
+
+{% block js %}
+            <script type="text/javascript">
                 var map;
                 window.onload = function() {
                     // on cache l'image de chargement du Géoportail.
@@ -80,6 +78,7 @@
                     map.addControl(drawing);
                     map.addControl(mp);
 
+                    /*
                     var popup = new ol.Overlay.Popup();
                     map.addOverlay(popup);
 
@@ -105,37 +104,7 @@
 
                       }
                     });
+                    */
                 };
-            </script>
-
-            <!-- map -->
-            <div id="map">
-            </div>
-
-            <!-- Comment utiliser le plugin avec un exemple -->
-            <p>EXEMPLE D'UTILISATION</p>
-            <pre>
-                <code>
-                    window.onload = function () {
-                        var map = new ol.Map({
-                            layers: [
-                                new LayerWMTS({
-                                    layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS",
-                                })
-                            ],
-                            target: 'map',
-                            view: new ol.View({
-                                center: [288074.8449901076, 6247982.515792289],
-                                zoom: 5
-                            })
-                        });
-                        var mp = new ol.control.Drawing({
-                            collapsed : false
-                        });
-                        map.addControl(mp);
-                    }
-                </code>
-            </pre>
-        </div>
-    </body>
-</html>
+           </script>
+{% endblock  %}

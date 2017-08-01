@@ -5,7 +5,7 @@ requirejs.config({
     // FIXME les lib. sont déposées manuellement !
     // en mode 'production' : "empty:" cf. gulpfile.js
     paths : {
-        gp : "../lib/gp/GpServices-src",
+        gp : "../node_modules/geoportal-access-lib/dist/GpServices-src",
         leaflet : "../lib/leaflet/leaflet-src",
         "leaflet-draw" : "../lib/leaflet/plugins/leaflet-draw/leaflet.draw-src",
         proj4 : "../lib/proj4/proj4-src",

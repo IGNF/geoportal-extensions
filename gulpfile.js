@@ -347,10 +347,10 @@
             ol : "empty:",
             leaflet : "empty:",
             vg : "empty:",
-            request : "empty:", // depenance externe pour nodejs !
-            xmldom : "empty:",  // depenance externe pour nodejs !
+            request : "empty:", // dependance externe pour nodejs !
+            xmldom : "empty:",  // dependance externe pour nodejs !
             proj4 : "../../../../lib/proj4/proj4-src" /*+ modeExt*/,
-            gp : "../../../../lib/gp/GpServices-src"  /*+ modeExt */,
+            gp : "../../../../node_modules/geoportal-access-lib/dist/GpServices-src"  /*+ modeExt */,
             sortable : "../../../../lib/sortable/Sortable-src" /*+ modeExt */
         };
 
@@ -447,7 +447,7 @@
             request : "empty:", // dependance externe pour nodejs !
             xmldom : "empty:",  // dependance externe pour nodejs !
             proj4 : "../../../../lib/proj4/proj4-src" /*+ modeExt*/,
-            gp : "../../../../lib/gp/GpServices-src"  /*+ modeExt */,
+            gp : "../../../../node_modules/geoportal-access-lib/dist/GpServices-src"  /*+ modeExt */,
             sortable : "../../../../lib/sortable/Sortable-src" /*+ modeExt */,
             woodman : "empty:"
         };
@@ -1025,10 +1025,45 @@
     });
 
     // |**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // | ✓ copy-resources-sample-nj
+    // | > copie des ressources des exemples leaflet ou ol3 dans samples/
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+    gulp.task("copy-resources-samples-nj", function () {
+
+        var basedir  = getDistDirName().toLowerCase();
+        var builddir = path.join("samples", "resources");
+
+        var sources  = [];
+        // includes : les ressources
+        sources.push(path.join("samples-src", "resources", "**"));
+
+        return gulp.src(sources)
+            .pipe(gulp.dest(builddir));
+    });
+
+    // |**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // | ✓ nunjucks
+    // | > gestion des exemples à base de templates
+    // | > https://www.npmjs.com/package/gulp-nunjucks-render
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+    gulp.task("nunjucks", ["copy-resources-samples-nj"], function () {
+        var data = require("gulp-data");
+        var render = require("gulp-nunjucks-render");
+        return gulp.src("samples-src/pages/**/*.html")
+              .pipe(data(function () {
+                  return require("./samples-src/config.json") ;
+              }))
+              .pipe(render({
+                  path : ["samples-src/templates"]
+              }))
+              .pipe(gulp.dest("samples")) ;
+    });
+
+    // |**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // | ✓ copy-sample
     // | > copie des exemples leaflet ou ol3 dans samples/
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-    gulp.task("copy-sample", function () {
+    gulp.task("copy-sample", ["nunjucks"],  function () {
 
         var bundle   = getBaseFileName();
         var basedir  = getDistDirName().toLowerCase();
@@ -1066,7 +1101,6 @@
         return gulp.src(sources)
             .pipe(gulp.dest(builddir));
     });
-
     // |**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // | ✓ template-sample
     // | > construction de la page principale des exemples leaflet ou ol3

@@ -6,7 +6,7 @@
   <script src="../../../lib/leaflet/leaflet.js"></script>
 
   <!-- Plugin leaflet IGN -->
-  <link rel="stylesheet" href="../../../dist/leaflet/GpPluginLeaflet-src.css" />
+  <link rel="stylesheet" href="../../../dist/leaflet/GpPluginLeaflet.css" />
   <script src="../../../dist/leaflet/GpPluginLeaflet-src.js" data-key="jhyvi0fgmnuxvfv0zjzorvdn"></script>
 
 </head>
@@ -24,23 +24,29 @@
 
     <!-- Mettre le code source de l'exemple -->
     <script>
-    window.onload = function () {
 
-      var layer = L.geoportalLayer.WMS({
-        layer : "ORTHOIMAGERY.ORTHOPHOTOS"
-      });
+          window.onload = function () {
 
-      var map  = L.map('map', {
-        zoom : 2,
-        center : L.latLng(48, 2)
-      });
+              var wms = L.geoportalLayer.WMTS({
+                layer : "ORTHOIMAGERY.ORTHOPHOTOS",
+              });
 
-      layer.addTo(map);
+              var wmts = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                  attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+                  opacity : 0.5
+              });
 
-      var mouse = L.geoportalControl.MousePosition();
+              var map  = L.map('map', {
+                zoom : 6,
+                center : L.latLng(48, 2),
+                layers : [wms, wmts]
+              });
 
-      map.addControl(mouse);
-    }
+              // options par defaut
+              var layerSwitcher = L.geoportalControl.LayerSwitcher();
+              map.addControl(layerSwitcher);
+
+        }
     </script>
 
     <!-- map -->
