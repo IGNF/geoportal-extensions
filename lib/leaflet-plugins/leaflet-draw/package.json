@@ -1,0 +1,49 @@
+{
+  "name": "leaflet-draw",
+  "version": "0.4.10",
+  "description": "Vector drawing plugin for Leaflet",
+  "main": "dist/leaflet.draw.js",
+  "style": "dist/leaflet.draw.css",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Leaflet/Leaflet.draw.git"
+  },
+  "keywords": [
+    "maps",
+    "leaflet",
+    "client",
+    "vector",
+    "drawing",
+    "draw"
+  ],
+  "contributors": [
+    {
+      "name": "Jon West",
+      "email": "ddproxy@gmail.com"
+    },
+    {
+      "name": "Jacob Toye"
+    }
+  ],
+  "license": "MIT",
+  "gitHead": "2ec02e821166a0014bfef17853d16509ccfea1c9",
+  "bugs": {
+    "url": "https://github.com/Leaflet/Leaflet.draw/issues"
+  },
+  "homepage": "https://github.com/Leaflet/Leaflet.draw#readme",
+  "dist": {
+    "integrity": "sha512-TYKF7KkLk17PB2M0yg+8VcICC9dEr8x+R6rcavsdTkchP5UPoWaidVSbaVYruh5+FRL46xHwN2t/mDbflISOeA==",
+    "shasum": "a611a29925a32cde63638e891c3bfc93163e2f43",
+    "tarball": "https://registry.npmjs.org/leaflet-draw/-/leaflet-draw-0.4.10.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "ddproxy",
+      "email": "ddproxy@gmail.com"
+    },
+    {
+      "name": "jacobtoye",
+      "email": "jacob.toye@gmail.com"
+    }
+  ]
+}

@@ -20,11 +20,11 @@ define(['chai'], function (chai) {
         describe('#getZoomLevelFromScaleDenominator', function () {
 
             it("with parameter scale in level, return a zoom level", function () {
-                expect(Utils.getZoomLevelFromScaleDenominator(1091957)).to.be.equal("10");
+                expect(Utils.getZoomLevelFromScaleDenominator(1091957)).to.be.equal(10);
             });
 
             it("with parameter scale out level, return a zoom level", function () {
-                expect(Utils.getZoomLevelFromScaleDenominator(100000000000)).to.be.equal("0");
+                expect(Utils.getZoomLevelFromScaleDenominator(100000000000)).to.be.equal(0);
             });
 
             it("with parameter scale empty, return 0!", function () {

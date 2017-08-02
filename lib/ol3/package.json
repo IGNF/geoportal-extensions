@@ -1,6 +1,6 @@
 {
-  "name": "openlayers-3.14.2",
-  "version": "3.14.2",
+  "name": "openlayers-4.0.1",
+  "version": "4.0.1",
   "description": "OpenLayers 3 is a high-performance, feature-packed library for creating interactive maps on the web.",
   "main": "ol.js",
   "style": [
@@ -21,6 +21,6 @@
   },
   "homepage": "http://openlayers.org/",
   "dependencies": {
-    "openlayers": "^3.14.2"
+    "openlayers": "^4.0.1"
   }
 }

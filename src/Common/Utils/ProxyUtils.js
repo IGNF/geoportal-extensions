@@ -19,6 +19,7 @@ define(["woodman"], function (woodman) {
 
             if (  !proxyOptions ||
                   !proxyOptions.hasOwnProperty("proxyUrl") ||
+                  proxyOptions.proxyUrl === null ||
                   proxyOptions.proxyUrl.trim().length == 0 ) {
                 return url ;
             }

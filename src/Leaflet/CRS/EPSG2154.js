@@ -1,15 +1,15 @@
 define([
-    "Common/Utils/Config",
-    "Common/Utils/Register",
-    "leaflet"
+    "leaflet",
     // "proj4",
-    // "proj4leaflet"
+    // "proj4leaflet",
+    "Common/Utils/Config",
+    "Common/Utils/Register"
 ], function (
+    L,
+    // Proj4,
+    // Proj4leaflet,
     Config,
-    Register,
-    L
-    // proj4,
-    // proj4leaflet
+    Register
 ) {
 
     "use strict";

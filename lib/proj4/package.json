@@ -1,0 +1,60 @@
+{
+  "name": "proj4",
+  "version": "2.2.1",
+  "description": "Proj4js is a JavaScript library to transform point coordinates from one coordinate system to another, including datum transformations.",
+  "main": "proj4.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/proj4js/proj4js.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "jam": {
+    "main": "proj4.js"
+  },
+  "contributors": [
+    {
+      "name": "Mike Adair",
+      "email": "madair@dmsolutions.ca"
+    },
+    {
+      "name": "Richard Greenwood",
+      "email": "rich@greenwoodmap.com"
+    },
+    {
+      "name": "Calvin Metcalf",
+      "email": "calvin.metcalf@gmail.com"
+    },
+    {
+      "name": "Richard Marsden",
+      "url": "http://www.winwaed.com"
+    },
+    {
+      "name": "T. Mittan"
+    },
+    {
+      "name": "D. Steinwand"
+    },
+    {
+      "name": "S. Nelson"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/proj4js/proj4js/issues"
+  },
+  "homepage": "https://github.com/proj4js/proj4js",
+  "dist": {
+    "shasum": "ac415cd7d4b258530502d8b06f29eda5d4d01f06",
+    "tarball": "https://registry.npmjs.org/proj4/-/proj4-2.2.1.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "cwmma",
+      "email": "calvin.metcalf@gmail.com"
+    },
+    {
+      "name": "ahocevar",
+      "email": "andreas.hocevar@gmail.com"
+    }
+  ]
+}
