@@ -3,7 +3,7 @@ node_js:
   - "4.0.0"
 before_script:
   - npm install
-script: gulp build
+script: ./node_modules/.bin/gulp build
 cache:
   directories:
     - node_modules

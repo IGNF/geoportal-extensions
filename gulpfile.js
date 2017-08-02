@@ -356,7 +356,7 @@
 
         if (isExecuteOl3) {
             // FIXME on ajoute cette classe pour ol3,
-            // mais pourquoi ce module n'est pas une dependance dans le code ?
+            // mais pourquoi ce module n"est pas une dependance dans le code ?
             input.push(path.join(getDistDirName(), "CRS", "CRS"));
         } else if (isExecuteLeaflet) {
             // on ajoute ce projet pour leaflet
@@ -970,7 +970,7 @@
 
         $.shelljs.exec("./node_modules/.bin/jsdoc -c " + configfile);
 
-        // cf. https://www.npmjs.com/package/gulp-jsdoc3
+        // cf. https:// ww.npmjs.com/package/gulp-jsdoc3
         // var jsdoc = require("gulp-jsdoc3");
         //
         // // liste des sources
@@ -1067,7 +1067,7 @@
     // |**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // | ✓ template-sample
     // | > construction de la page principale des exemples leaflet ou ol3
-    // | > https://www.npmjs.com/package/gulp-template
+    // | > https:// ww.npmjs.com/package/gulp-template
     // | > FIXME les dependances des exemples !
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     gulp.task("template-sample", function () {
