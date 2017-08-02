@@ -455,9 +455,6 @@ define([
         /** {Boolean} specify if MousePosition control is collapsed (true) or not (false) */
         this.collapsed = this.options.collapsed;
 
-        this.options.editCoordinates = ( options.editCoordinates !== undefined ) ? options.editCoordinates : false;
-        this.editing = false;
-
         // position marker
         this._markerOverlay = null;
         this._markerUrl = null;
@@ -468,6 +465,14 @@ define([
         this.options.units = options.units || [];
         this.options.displayAltitude = ( options.displayAltitude !== undefined ) ? options.displayAltitude : true;
         this.options.displayCoordinates = ( options.displayCoordinates !== undefined ) ? options.displayCoordinates : true;
+        if ( this.options.displayCoordinates ) {
+            this.options.editCoordinates = ( options.editCoordinates !== undefined ) ? options.editCoordinates : false;
+        } else {
+            // si les coordonnées ne sont pas affichées : pas besoin de les éditer...
+            this.options.editCoordinates = false;
+        }
+        this.editing = false;
+
         this.options.systems = options.systems || [];
         if ( options.altitude ) {
             var altitude = options.altitude;
@@ -539,6 +544,7 @@ define([
     /**
      *
      * @param {Object} option - positionMarker option
+     * @private
      */
     MousePosition.prototype._initMarker = function (option) {
         if (! this.options.editCoordinates) {
@@ -937,6 +943,7 @@ define([
         var coordinate = {};
         coordinate.lat = olCoordinate[1].toFixed(6);
         coordinate.lng = olCoordinate[0].toFixed(6);
+        coordinate.unit = "°";
         return coordinate;
     };
 
@@ -971,6 +978,7 @@ define([
         coordinate.lng = coordinate.lng.toFixed(8);
         coordinate.lat = olCoordinate[1] * d;
         coordinate.lat = coordinate.lat.toFixed(8);
+        coordinate.unit = "rad";
         return coordinate;
     };
 
@@ -989,6 +997,7 @@ define([
         coordinate.lng = coordinate.lng.toFixed(8);
         coordinate.lat = olCoordinate[1] * d;
         coordinate.lat = coordinate.lat.toFixed(8);
+        coordinate.unit = "gon";
         return coordinate;
     };
 
@@ -1448,7 +1457,7 @@ define([
 
         var coordinate = ol.proj.transform(lonlat, oSrs, view.getProjection());
         view.setCenter(coordinate);
-        
+
         if (this._markerOverlay && ! this._hideMarker) {
             this._markerOverlay.setPosition(coordinate);
         }

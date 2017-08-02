@@ -103,10 +103,10 @@ define([], function () {
         * @returns {DOMElement} DOM element
         */
         _createMousePositionPanelElement : function (displayAltitude, displayCoordinates, editCoordinates, currentProjectionUnits) {
-            // valeurs par defaut
-            displayAltitude     = displayAltitude   ? true : ( typeof displayAltitude === "undefined") ? true : false;
-            displayCoordinates  = displayCoordinates ? true : ( typeof displayCoordinates === "undefined") ? true : false;
-            editCoordinates     = editCoordinates ? true : ( typeof editCoordinates === "undefined") ? true : false;
+            // default Values
+            displayAltitude = ( typeof displayAltitude === "undefined") ? true : displayAltitude ;
+            displayCoordinates = ( typeof displayCoordinates === "undefined") ? true : displayCoordinates ;
+            editCoordinates = ( typeof editCoordinates === "undefined") ? false : editCoordinates ;
 
             var div = document.createElement("div");
             div.id  = this._addUID("GPmousePositionPanel");
@@ -211,7 +211,7 @@ define([], function () {
             var list = [];
             var input = document.createElement("input");
             input.id = this._addUID("GPmousePosition" + coordType);
-            input.title = "Cliquer pour saisir des coordonnées";
+            input.title = editCoordinates === true ? "Cliquer pour saisir des coordonnées" : "";
             input.readOnly = true;
 
             if (editCoordinates) {
@@ -251,7 +251,7 @@ define([], function () {
             input.id = this._addUID("GPmousePosition" + coordType + "Degrees");
             input.className = "GPSexagesimal";
             input.setAttribute("name", "degrees");
-            input.title = "Cliquer pour saisir des coordonnées";
+            input.title = editCoordinates === true ? "Cliquer pour saisir des coordonnées" : "";
             input.readOnly = true;
             input.dataset.min = 0;
             input.dataset.max = (coordType === "Lon") ? 180 : 90;
@@ -276,7 +276,7 @@ define([], function () {
             input1.id  = this._addUID("GPmousePosition" + coordType + "Minutes");
             input1.className  = "GPSexagesimal";
             input1.setAttribute("name", "minutes");
-            input1.title = "Cliquer pour saisir des coordonnées";
+            input1.title = editCoordinates === true ? "Cliquer pour saisir des coordonnées" : "";
             input1.readOnly = true;
             input1.dataset.min = 0;
             input1.dataset.max = 59;
@@ -301,7 +301,7 @@ define([], function () {
             input2.id  = this._addUID("GPmousePosition" + coordType + "Seconds");
             input2.className  = "GPSexagesimalsec";
             input2.setAttribute("name", "seconds");
-            input2.title = "Cliquer pour saisir des coordonnées";
+            input2.title = editCoordinates === true ? "Cliquer pour saisir des coordonnées" : "";
             input2.readOnly = true;
             input2.dataset.min = 0;
             input2.dataset.max = 59;
@@ -439,7 +439,7 @@ define([], function () {
             var span1 = document.createElement("span");
             span1.className = "GPmousePositionEditTool";
             span1.id = this._addUID("GPmousePositionLocate");
-            span1.title = "Cliquer pour saisir des coordonnées";
+            span1.title = editCoordinates === true ? "Cliquer pour saisir des coordonnées" : "";
             if (editCoordinates) {
                 span1.addEventListener("click", function () {
                     context.onMousePositionEditModeLocateClick();

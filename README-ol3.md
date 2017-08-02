@@ -1,7 +1,7 @@
 # Extension Géoportail pour OpenLayers 3
 
 
-L'extension Géoportail pour OpenLayers 3 propose les fonctionnalités suivantes à utiliser en complément de la biblothèque [OpenLayers 3](http://openlayers.org/) :
+L'extension Géoportail pour OpenLayers 3 propose les fonctionnalités suivantes à utiliser en complément de la bibliothèque [OpenLayers 3](http://openlayers.org/) :
 
 * [affichage des couches WMTS Géoportail](#WMTS)
 
@@ -19,7 +19,7 @@ L'extension Géoportail pour OpenLayers 3 propose les fonctionnalités suivantes
 
 * [calculs d'isochrones / isodistances à partir du service de la plateforme Géoportail](#isocurve)
 
-* [altitude en un point de la carte à l'aide du service d'altimétrie de la plateforme Géoportail](#mp)
+* [coordonnées et altitude en un point de la carte à l'aide du service d'altimétrie de la plateforme Géoportail](#mp)
 
 * [outils de croquis](#drawing)
 
@@ -28,6 +28,8 @@ L'extension Géoportail pour OpenLayers 3 propose les fonctionnalités suivantes
 * [profil altimétrique d'un traçé à l'aide du service d'altimétrie de la plateforme Géoportail](#ep)
 
 * [outils de mesures](#measure)
+
+* [accès aux informations attributaires des couches](#getfeatureinfo)
 
 
 ## Mise en oeuvre
@@ -46,7 +48,7 @@ L'utilisation de l'extension Géoportail pour OpenLayers 3 se fait via les étap
 
 ### Téléchargement
 
-Vous pouvez récupérer l'extension Géoportail pour OpenLayers 3 [ici](https://github.com/IGNF/geoportal-extensions/releases/download/ol3-0.11.0/GpOpenLayers3.zip).
+Vous pouvez récupérer l'extension Géoportail pour OpenLayers 3 [ici](https://github.com/IGNF/geoportal-extensions/releases/download/ol3-0.12.0/GpOpenLayers.zip).
 Elle contient l'arborescence suivante :
 
     ol3/
@@ -697,9 +699,10 @@ map.addControl(isoControl);
 
 <a id="mp"/>
 
-### Altitude en un point de la carte
+### Coordonnées et altitude en un point de la carte
 
 Ce widget permet d'afficher les coordonnées d'un point choisi par l'internaute sur une carte OpenLayers 3 dans un ou plusieurs systèmes de coordonnées. Ces coordonnées peuvent comprendre l'altitude obtenue à l'aide du service d'altimétrie de la plateforme Géoportail.
+Un mode "édition" permet de localiser des coordonnées sur la carte en éditant les coordonnées affichées dans le widget.
 
 Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe [ol.control.GeoportalMousePosition](http://ignf.github.io/geoportal-extensions/ol3-latest/jsdoc/ol.control.GeoportalMousePosition.html), que l'on peut ensuite ajouter à la carte comme [les autres contrôles OpenLayers 3](http://openlayers.org/en/latest/apidoc/ol.Map.html#addControl), de la manière suivante :
 
@@ -740,6 +743,8 @@ map.addControl(mpControl);
 **Exemple d'utilisation avec affichage unique de l'altitude** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/jhg5fhor/embedded/result,js,html,css/)
 
 **Exemple d'utilisation avec paramétrage des systèmes de coordonnées** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/myg4t6qo/embedded/result,js,html,css/)
+
+**Exemple d'utilisation avec activation de l'édition de coordonnées pour localisation** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/jrL59w29/embedded/result,js,html,css/)
 
 <a id="attributions"/>
 
@@ -1011,3 +1016,59 @@ map.addControl(length);
 ```
 
 **Exemple d'utilisation** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/cwfsLge7/embedded/result,js,html,css/)
+
+
+<a id="getfeatureinfo"/>
+
+### Accès aux informations attributaires des couches
+
+Ce widget permet, au clic sur la carte, d'afficher dans une popup les informations attributaires des couches présentes dans la carte et spécifiées dans le widget.
+Dans le cas des couches vecteur, ces informations correspondent aux informations attributaires des objets localisés au point cliqué.
+Dans le cas des couches raster (WMS et WMTS), c'est le contenu de la réponse d'une requête GetFeatureInfo sur la première couche qui est affiché.
+Lorsque le contrôle est activé pour plusieurs couches, les informations affichées seront celles de la première couche visible rencontrée dans la carte (en partant du haut de la pile des couches).
+
+Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe [ol.control.GetFeatureInfo](http://ignf.github.io/geoportal-extensions/ol3-latest/jsdoc/ol.control.GetFeatureInfo.html), que l'on peut ensuite ajouter à la carte comme [les autres contrôles OpenLayers 3](http://openlayers.org/en/latest/apidoc/ol.Map.html#addControl), de la manière suivante :
+
+``` javascript
+var getFeatureInfo = new ol.control.GetFeatureInfo(opts);
+map.addControl(getFeatureInfo);
+```
+
+#### Exemples d'utilisation
+
+##### Utilisation simple pour une seule couche
+
+Ajout du widget sans paramétrage particulier.
+
+``` javascript
+// Création de la couche que l'on souhaite interroger
+var orthos = new ol.layer.GeoportalWMTS({
+    layer: "ORTHOIMAGERY.ORTHOPHOTOS"
+});
+
+// Création de la carte
+var map = new ol.Map({
+    target: 'map',
+    layers: [
+        orthos
+    ],
+    view: new ol.View({
+        center: [288074.8449901076, 6247982.515792289],
+        zoom: 12
+    })
+});
+
+// Création du contrôle, et activation pour la couche orthos créée ci-dessus
+var getfeatureinfo = new ol.control.GetFeatureInfo({
+    layers : [
+        {
+            obj : orthos
+        }
+    ]
+});
+
+// Ajout à la carte
+map.addControl(getfeatureinfo);
+```
+
+**Exemple d'utilisation** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/vg6dz7bn/embedded/result,js,html,css/)
