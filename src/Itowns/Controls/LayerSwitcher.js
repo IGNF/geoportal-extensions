@@ -584,15 +584,16 @@ define([
                 if ( !this._layerDisplayedInLayerSwitcher(id) ) {
                     return;
                 }
+                var layerConf = this._getLayerConf(id) || this._addedLayerConf[id] || {};
                 var layerInfos = this._getLayerInfo(layer) || {};
                 if ( !this._layers[id] ) {
                     // si la couche n'est pas encore dans la liste des layers (this._layers), on l'ajoute
                     var layerOptions = {
-                        title : layerInfos._title || id,
-                        description : layerInfos._description || null,
-                        legends : layerInfos._legends || [],
-                        metadata : layerInfos._metadata || [],
-                        quicklookUrl : layerInfos._quicklookUrl || null
+                        title : layerConf.title || layerInfos._title || id,
+                        description : layerConf.description || layerInfos._description || null,
+                        legends : layerConf.legends || layerInfos._legends || [],
+                        metadata : layerConf.metadata || layerInfos._metadata || [],
+                        quicklookUrl : layerConf.quicklookUrl || layerInfos._quicklookUrl || null
                     };
                     this._layers[id] = layerOptions;
                 } else {
