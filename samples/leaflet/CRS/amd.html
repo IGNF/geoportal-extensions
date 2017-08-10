@@ -31,8 +31,7 @@
                 // lib external
                 "leaflet" : "../lib/leaflet/leaflet-src",
                 "proj4" : "../lib/proj4/proj4-amd",
-                "proj4leaflet-0.7.x" : "../lib/proj4leaflet/proj4leaflet-src",
-                "proj4leaflet-1.0.x" : "../lib/proj4leaflet/1.0.0-beta.2/proj4leaflet-src",
+                "proj4leaflet" : "../lib/proj4leaflet/proj4leaflet-src",
                 "gp"      : "../lib/gp/GpServices",
                 "woodman" : "../lib/woodman/woodman-amd"
             }
@@ -103,19 +102,19 @@
               marker.addTo(map);
               marker.bindPopup('A pretty CSS3 popup.<br> Easily customizable.').openPopup();
 
-              var canvasTiles = L.tileLayer.canvas();
-              canvasTiles.drawTile = function(canvas, tilePoint, zoom) {
-                   var latLon  = map.layerPointToLatLng(tilePoint);
-                   var ctx = canvas.getContext('2d');
-                   ctx.strokeStyle = ctx.fillStyle = "red";
-                   ctx.rect(0,0, 256,256);
-                   ctx.stroke();
-                   ctx.fillText('(' + tilePoint.x + ', ' + tilePoint.y + ')',5,10);
-                   ctx.fillText('(' + latLon.lng + ', ' + latLon.lat + ')',5,20);
-               };
+              // var canvasTiles = L.tileLayer.canvas();
+              // canvasTiles.drawTile = function(canvas, tilePoint, zoom) {
+              //      var latLon  = map.layerPointToLatLng(tilePoint);
+              //      var ctx = canvas.getContext('2d');
+              //      ctx.strokeStyle = ctx.fillStyle = "red";
+              //      ctx.rect(0,0, 256,256);
+              //      ctx.stroke();
+              //      ctx.fillText('(' + tilePoint.x + ', ' + tilePoint.y + ')',5,10);
+              //      ctx.fillText('(' + latLon.lng + ', ' + latLon.lat + ')',5,20);
+              //  };
 
           		var overlays = {
-                "Canavas" : canvasTiles,
+                // "Canavas" : canvasTiles,
           			"Marker": marker
 
           		};

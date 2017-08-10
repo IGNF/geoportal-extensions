@@ -361,9 +361,8 @@
             input.push(path.join(getDistDirName(), "CRS", "CRS"));
         } else if (isExecuteLeaflet) {
             // on ajoute ce projet pour leaflet
-            deps["proj4leaflet-0.7.x"] = "../../../../lib/proj4leaflet/proj4leaflet-src"  /*+ modeExt*/;
-            deps["proj4leaflet-1.0.x"] = "../../../../lib/proj4leaflet/1.0.0-beta.2/proj4leaflet-src"  /*+ modeExt*/;
-            deps["leaflet-draw" ] = "../../../../lib/leaflet/plugins/leaflet-draw/leaflet.draw-src" /*+ modeExt*/;
+            deps["proj4leaflet"] = "../../../../lib/proj4leaflet/proj4leaflet-src"  /*+ modeExt*/;
+            deps["leaflet-draw" ] = "../../../../lib/leaflet-plugins/leaflet-draw/leaflet.draw-src" /*+ modeExt*/;
         } else if (isExecuteVg) {
             $.util.log("executVg : nothing to do");
         } else if (isExecuteITowns) {
@@ -466,9 +465,8 @@
             input.push(path.join("Leaflet", "GpPluginLeaflet"));
             input.push(path.join("Vg", "GpPluginVg"));
             // on ajoute ce projet pour leaflet
-            deps["proj4leaflet-0.7.x"] = "../../../../lib/proj4leaflet/proj4leaflet-src"  /*+ modeExt*/;
-            deps["proj4leaflet-1.0.x"] = "../../../../lib/proj4leaflet/1.0.0-beta.2/proj4leaflet-src"  /*+ modeExt*/;
-            deps["leaflet-draw" ] = "../../../../lib/leaflet/plugins/leaflet-draw/leaflet.draw-src" /*+ modeExt*/;
+            deps["proj4leaflet"] = "../../../../lib/proj4leaflet/proj4leaflet-src"  /*+ modeExt*/;
+            deps["leaflet-draw" ] = "../../../../lib/leaflet-plugins/leaflet-draw/leaflet.draw-src" /*+ modeExt*/;
         }
 
         if (isExecuteOl3WithITowns) {
@@ -483,9 +481,8 @@
             input.push(path.join("Leaflet", "GpPluginLeaflet"));
             input.push(path.join("Itowns", "GpPluginItowns"));
             // on ajoute ce projet pour leaflet
-            deps["proj4leaflet-0.7.x"] = "../../../../lib/proj4leaflet/proj4leaflet-src"  /*+ modeExt*/;
-            deps["proj4leaflet-1.0.x"] = "../../../../lib/proj4leaflet/1.0.0-beta.2/proj4leaflet-src"  /*+ modeExt*/;
-            deps["leaflet-draw" ] = "../../../../lib/leaflet/plugins/leaflet-draw/leaflet.draw-src" /*+ modeExt*/;
+            deps["proj4leaflet"] = "../../../../lib/proj4leaflet/proj4leaflet-src"  /*+ modeExt*/;
+            deps["leaflet-draw" ] = "../../../../lib/leaflet-plugins/leaflet-draw/leaflet.draw-src" /*+ modeExt*/;
         }
 
         requirejs.optimize({

@@ -176,6 +176,11 @@ define([
                 this.options.displayCoordinates = true;
             }
 
+            if ( !this.options.displayCoordinates ) {
+                // si les coordonnées ne sont pas affichées : pas besoin de les éditer...
+                this.options.editCoordinates = false;
+            }
+
             /** Edition des coordonnées en cours ou non */
             this._isEditing = false;
 
@@ -822,7 +827,10 @@ define([
 
             // pas de reprojection pour le systeme de projection natif !
             if (oSrs === L.CRS.Simple) {
-                return oXY;
+                return {
+                    lat : oXY.y,
+                    lng : oXY.x
+                };
             }
 
             if (this._currentProjectionType === "Geographical") {
@@ -1335,8 +1343,8 @@ define([
 
             var unit = this._currentProjectionUnits;
             var oLatLon = this._unproject({
-                x : this._convertCoordinate(lon || x, unit),
-                y : this._convertCoordinate(lat || y, unit)
+                x : this._convertCoordinate(lon !== null ? lon : x, unit),
+                y : this._convertCoordinate(lat !== null ? lat : y, unit)
             });
 
             // FIXME https://github.com/Leaflet/Leaflet/issues/922

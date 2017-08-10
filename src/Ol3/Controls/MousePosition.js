@@ -458,9 +458,6 @@ define([
         /** {Boolean} specify if MousePosition control is collapsed (true) or not (false) */
         this.collapsed = this.options.collapsed;
 
-        this.options.editCoordinates = ( options.editCoordinates !== undefined ) ? options.editCoordinates : false;
-        this.editing = false;
-
         // position marker
         this._markerOverlay = null;
         this._markerUrl = null;
@@ -471,6 +468,14 @@ define([
         this.options.units = options.units || [];
         this.options.displayAltitude = ( options.displayAltitude !== undefined ) ? options.displayAltitude : true;
         this.options.displayCoordinates = ( options.displayCoordinates !== undefined ) ? options.displayCoordinates : true;
+        if ( this.options.displayCoordinates ) {
+            this.options.editCoordinates = ( options.editCoordinates !== undefined ) ? options.editCoordinates : false;
+        } else {
+            // si les coordonnées ne sont pas affichées : pas besoin de les éditer...
+            this.options.editCoordinates = false;
+        }
+        this.editing = false;
+
         this.options.systems = options.systems || [];
         if ( options.altitude ) {
             var altitude = options.altitude;

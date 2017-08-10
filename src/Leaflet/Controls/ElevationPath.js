@@ -12,7 +12,7 @@ define([
     "Common/Controls/ElevationPathDOM"
 ], function (
     L,
-    P, // loading plugin leaflet-draw (0.3.0)
+    Draw, // loading plugin leaflet-draw
     woodman,
     Gp,
     RightManagement,
