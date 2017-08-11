@@ -85,7 +85,7 @@ define([
     Widget.prototype.setOptions = function setOptions (options) {
         this.name = options.name;
         this._element = options.element;
-        this.setTarget(options.target);
+        this.setTarget(options.target, options.position);
     };
 
     /**
