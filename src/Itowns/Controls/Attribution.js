@@ -18,7 +18,7 @@ define([
      * Control to manage layers attributions
      *
      * @constructor
-     * @alias itowns.control.MousePosition
+     * @alias itowns.control.Attribution
      * @extends {itowns.control.Widget}
      * @alias itowns.control.Attribution
      * @param {Object} aOptions - control options
