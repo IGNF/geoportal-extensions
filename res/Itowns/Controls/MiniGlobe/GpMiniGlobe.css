@@ -1,10 +1,8 @@
 div[id^=GPminiglobeContainer-] {
     display: block;
-    margin-bottom: 20px;
-    margin-right: 20px;
     width:100px;
     height:100px;
     left: 20px;
-    bottom: 0;
+    bottom: 20px;
     color: white;
 }
