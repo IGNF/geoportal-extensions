@@ -37,7 +37,7 @@ L'utilisation de l'extension Géoportail pour Leaflet se fait via les étapes su
 
 ### Téléchargement
 
-Vous pouvez récupérer l'extension Géoportail pour Leaflet [ici](https://github.com/IGNF/geoportal-extensions/releases/download/leaflet-0.9.0/GpLeaflet.zip).
+Vous pouvez récupérer l'extension Géoportail pour Leaflet [ici](https://github.com/IGNF/geoportal-extensions/releases/download/leaflet-0.9.1/GpLeaflet.zip).
 
 Elle contient l'arborescence suivante :
 
@@ -187,7 +187,8 @@ L'extension Géoportail pour Leaflet peut s'utiliser avec les versions de Leafle
 * [version 0.7.X](http://leafletjs.com/reference-0.7.7.html)
 * [version 1.0.X](http://leafletjs.com/reference-1.0.3.html)
 
-La dernière release Leaflet [version 1.1.0](http://leafletjs.com/reference-1.1.0.html) est incompatible avec l'utilisation du plugin [Leaflet-Draw](https://github.com/Leaflet/Leaflet.draw). 
+La release Leaflet [version 1.1.0](http://leafletjs.com/reference-1.1.0.html) est incompatible avec l'utilisation du plugin [Leaflet-Draw](https://github.com/Leaflet/Leaflet.draw).
+Pour profiter de toutes les fonctionnalités, il faut utiliser la dernière release Leaflet [version 1.2.0](http://leafletjs.com/reference-1.2.0.html).
 
 ### Navigateurs supportés
 

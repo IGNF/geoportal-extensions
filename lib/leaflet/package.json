@@ -1,6 +1,6 @@
 {
-  "name": "leaflet-1.0.3",
-  "version": "1.0.3",
+  "name": "leaflet-1.2.0",
+  "version": "1.2.0",
   "description": "An open-source JavaScript library for mobile-friendly interactive maps. Stable version, released on November 18, 2013 and last updated on October 26, 2015.",
   "main": "leaflet.js",
   "repository": {
@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/Leaflet/Leaflet#readme",
   "dependencies": {
-    "leaflet": "^1.0.3"
+    "leaflet": "^1.2.0"
   }
 }

@@ -4,7 +4,7 @@
   "ol3ExtName": "Geoportal Extension for OpenLayers 3",
   "vgExtName": "Geoportal Extension for VirtualGeo",
   "version": "0.1.0",
-  "leafletExtVersion": "0.10.0-dev",
+  "leafletExtVersion": "0.9.1",
   "ol3ExtVersion": "0.13.0-dev",
   "vgExtVersion": "5.0.0",
   "description": "French Geoportal Extensions for OpenLayers 3 and Leaflet libraries",
