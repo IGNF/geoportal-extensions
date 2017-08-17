@@ -37,7 +37,7 @@ L'utilisation de l'extension Géoportail pour Leaflet se fait via les étapes su
 
 ### Téléchargement
 
-Vous pouvez récupérer l'extension Géoportail pour Leaflet [ici](https://github.com/IGNF/geoportal-extensions/releases/download/leaflet-0.9.1/GpPluginLeaflet.zip).
+Vous pouvez récupérer l'extension Géoportail pour Leaflet [ici](https://github.com/IGNF/geoportal-extensions/releases/download/leaflet-0.9.1/GpPluginLeaflet-0.9.1.zip).
 
 Elle contient l'arborescence suivante :
 
