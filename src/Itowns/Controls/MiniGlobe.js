@@ -46,7 +46,7 @@ define([
         Widget.call(
             this,
             {
-                name : "MiniGlobe",
+                name : "Overview",
                 element : container,
                 target : targetDiv,
                 position : options.position
@@ -121,6 +121,13 @@ define([
               */
             var miniGlobeLayer = this._options.layer || this._baseLayer;
             miniView.addLayer(miniGlobeLayer);
+        } else if (globe == null) {
+            // if globe == null we remove the overview control
+            // on supprime le DOM de  l'overviewcontrol
+            while (this.getElement().hasChildNodes()) {
+                this.getElement().removeChild(this.getElement().lastChild);
+            }
+            this.getElement().parentNode.removeChild(this.getElement());
         }
 
         // call original setGlobe method
