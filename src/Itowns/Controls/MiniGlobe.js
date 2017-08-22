@@ -171,7 +171,7 @@ define([
             "type": "color",
             "protocol":   "wmts",
             "id":         "Ortho",
-            "url":        "http://wxs.ign.fr/va5orxd0pgzvq3jxutqfuy0b/geoportail/wmts",
+            "url":        "https://wxs.ign.fr/an7nvfzojv5wa96dsga5nk8w/geoportail/wmts",
             "updateStrategy": {
                 "type": "0",
                 "options": {}
