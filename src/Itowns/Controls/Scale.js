@@ -46,7 +46,7 @@ define([
         Widget.call(
             this,
             {
-                name : "Scale",
+                name : "GraphicScale",
                 element : container,
                 target : targetDiv,
                 position : options.position
@@ -81,12 +81,41 @@ define([
 
         if ( globe ) { // dans le cas de l'ajout du contrôle au globe
             var self = this;
-
+            /**
+              * Definition du callback du scaleControl :
+              * quand la vue change, on recalcule l'echelle graphique
+              */
+            this._callbacks.onChangedViewCallback = function () {
+                var value = self.getGlobe().controls.pixelsToMeters(200);
+                value = Math.floor(value);
+                var digit = Math.pow(10, value.toString().length - 1);
+                value = Math.round(value / digit) * digit;
+                var pix = self.getGlobe().controls.metersToPixels(value);
+                var unit = "m";
+                if (value >= 1000) {
+                    value /= 1000;
+                    unit = "km";
+                }
+                self.getElement().innerHTML = value + " " + unit;
+                self.getElement().style.width = pix + "px";
+            };
             // Ajout des listeners
             // Listen for globe full initialisation event
-            globe.addEventListener(itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED, self._updateScaleWidget.bind(this));
-            // At every globe range movement, scale bar may be updated,
-            globe.controls.addEventListener(itowns.CONTROL_EVENTS.RANGE_CHANGED, self._updateScaleWidget.bind(this));
+            globe.addEventListener(itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED, this._callbacks.onChangedViewCallback);
+            // // At every globe range movement, scale bar may be updated,
+            globe.controls.addEventListener(itowns.CONTROL_EVENTS.RANGE_CHANGED, this._callbacks.onChangedViewCallback);
+            this._globe = globe;
+        } else if (globe == null) {
+            // On retire les listeners qui étaient liés au scalecontrol supprimé
+            this._globe.removeEventListener(itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED, this._callbacks.onChangedViewCallback);
+            this._globe.controls.removeEventListener(itowns.CONTROL_EVENTS.RANGE_CHANGED, this._callbacks.onChangedViewCallback);
+
+            // if globe == null we remove the scale control
+            // on supprime le DOM du scale control
+            while (this.getElement().hasChildNodes()) {
+                this.getElement().removeChild(this.getElement().lastChild);
+            }
+            this.getElement().parentNode.removeChild(this.getElement());
         }
 
         // call original setGlobe method
@@ -124,27 +153,6 @@ define([
         var container = this._createMainContainerElement();
 
         return container;
-    };
-
-    /**
-     * update the display of the scalebar
-     *
-     * @method _updateScaleWidget
-     * @private
-     */
-    Scale.prototype._updateScaleWidget = function () {
-        var value = this.getGlobe().controls.pixelsToMeters(200);
-        value = Math.floor(value);
-        var digit = Math.pow(10, value.toString().length - 1);
-        value = Math.round(value / digit) * digit;
-        var pix = this.getGlobe().controls.metersToPixels(value);
-        var unit = "m";
-        if (value >= 1000) {
-            value /= 1000;
-            unit = "km";
-        }
-        this.getElement().innerHTML = value + " " + unit;
-        this.getElement().style.width = pix + "px";
     };
 
     return Scale;
