@@ -80,7 +80,7 @@ define([
         // info : cette méthode est appelée (entre autres?) après un globe.addWidget() ou globe.removeWidget()
 
         if ( globe ) { // dans le cas de l'ajout du contrôle au globe
-            var minDistance = 10000000;
+            var minDistance = 6650000;
             var maxDistance = 30000000;
             var positionOnGlobe = {
                 longitude : globe.controls.getCameraTargetGeoPosition().longitude(),
@@ -91,7 +91,7 @@ define([
                 // `limit globe' subdivision level:
                 // we're don't need a precise globe model
                 // since the mini globe will always be seen from a far point of view (see minDistance above)
-                maxSubdivisionLevel : 2,
+                maxSubdivisionLevel : 6,
                 // Don't instance default controls since miniview's camera will be synced
                 // on the main view's one (see globeView.onAfterRender)
                 noControls : true
@@ -107,8 +107,8 @@ define([
               */
             globe.onAfterRender = function onAfterRender () {
                 // clamp distance camera from globe
-                var distanceCamera = globe.camera.camera3D.position.length();
-                var distance = Math.min(Math.max(distanceCamera * 1.5, minDistance), maxDistance);
+                var range = globeView.controls.getRange();
+                var distance = Math.min(Math.max(range * 1.5, minDistance), maxDistance);
                 var camera = miniView.camera.camera3D;
                 // Update target miniview's camera
                 camera.position.copy(globe.controls.moveTarget()).setLength(distance);
@@ -168,139 +168,139 @@ define([
     };
 
     MiniGlobe.prototype._baseLayer = {
-            "type": "color",
-            "protocol":   "wmts",
-            "id":         "Ortho",
-            "url":        "https://wxs.ign.fr/an7nvfzojv5wa96dsga5nk8w/geoportail/wmts",
-            "updateStrategy": {
-                "type": "0",
-                "options": {}
+            type : "color",
+            protocol :   "wmts",
+            id :         "Maps",
+            url :        "https://wxs.ign.fr/an7nvfzojv5wa96dsga5nk8w/geoportail/wmts",
+            updateStrategy : {
+                type : "0",
+                options : {}
             },
-            "networkOptions" : {
-                "crossOrigin" : "omit"
+            networkOptions : {
+                crossOrigin : "omit"
             },
-            "options": {
-                "name": "ORTHOIMAGERY.ORTHOPHOTOS",
-                "mimetype": "image/jpeg",
-                "tileMatrixSet": "PM",
-                "tileMatrixSetLimits": {
-                    "2": {
-                        "minTileRow": 0,
-                        "maxTileRow": 4,
-                        "minTileCol": 0,
-                        "maxTileCol": 4
+            options : {
+                name : "GEOGRAPHICALGRIDSYSTEMS.MAPS",
+                mimetype : "image/jpeg",
+                tileMatrixSet : "PM",
+                tileMatrixSetLimits : {
+                    0 : {
+                        minTileRow : "0",
+                        maxTileRow : "0",
+                        minTileCol : "0",
+                        maxTileCol : "1"
                     },
-                    "3": {
-                        "minTileRow": 0,
-                        "maxTileRow": 8,
-                        "minTileCol": 0,
-                        "maxTileCol": 8
+                    1 : {
+                        minTileRow : "0",
+                        maxTileRow : "1",
+                        minTileCol : "0",
+                        maxTileCol : "2"
                     },
-                    "4": {
-                        "minTileRow": 0,
-                        "maxTileRow": 16,
-                        "minTileCol": 0,
-                        "maxTileCol": 16
+                    2 : {
+                        minTileRow : "0",
+                        maxTileRow : "2",
+                        minTileCol : "0",
+                        maxTileCol : "4"
                     },
-                    "5": {
-                        "minTileRow": 0,
-                        "maxTileRow": 32,
-                        "minTileCol": 0,
-                        "maxTileCol": 32
+                    3 : {
+                        minTileRow : "0",
+                        maxTileRow : "5",
+                        minTileCol : "0",
+                        maxTileCol : "8"
                     },
-                    "6": {
-                        "minTileRow": 1,
-                        "maxTileRow": 64,
-                        "minTileCol": 0,
-                        "maxTileCol": 64
+                    4 : {
+                        minTileRow : "1",
+                        maxTileRow : "11",
+                        minTileCol : "0",
+                        maxTileCol : "16"
                     },
-                    "7": {
-                        "minTileRow": 3,
-                        "maxTileRow": 128,
-                        "minTileCol": 0,
-                        "maxTileCol": 128
+                    5 : {
+                        minTileRow : "3",
+                        maxTileRow : "22",
+                        minTileCol : "0",
+                        maxTileCol : "32"
                     },
-                    "8": {
-                        "minTileRow": 7,
-                        "maxTileRow": 256,
-                        "minTileCol": 0,
-                        "maxTileCol": 256
+                    6 : {
+                        minTileRow : "7",
+                        maxTileRow : "45",
+                        minTileCol : "0",
+                        maxTileCol : "64"
                     },
-                    "9": {
-                        "minTileRow": 15,
-                        "maxTileRow": 512,
-                        "minTileCol": 0,
-                        "maxTileCol": 512
+                    7 : {
+                        minTileRow : "42",
+                        maxTileRow : "97",
+                        minTileCol : "0",
+                        maxTileCol : "115"
                     },
-                    "10": {
-                        "minTileRow": 31,
-                        "maxTileRow": 1024,
-                        "minTileCol": 0,
-                        "maxTileCol": 1024
+                    8 : {
+                        minTileRow : "84",
+                        maxTileRow : "195",
+                        minTileCol : "1",
+                        maxTileCol : "247"
                     },
-                    "11": {
-                        "minTileRow": 62,
-                        "maxTileRow": 2048,
-                        "minTileCol": 0,
-                        "maxTileCol": 2048
+                    9 : {
+                        minTileRow : "170",
+                        maxTileRow : "390",
+                        minTileCol : "2",
+                        maxTileCol : "495"
                     },
-                    "12": {
-                        "minTileRow": 125,
-                        "maxTileRow": 4096,
-                        "minTileCol": 0,
-                        "maxTileCol": 4096
+                    10 : {
+                        minTileRow : "340",
+                        maxTileRow : "780",
+                        minTileCol : "5",
+                        maxTileCol : "990"
                     },
-                    "13": {
-                        "minTileRow": 2739,
-                        "maxTileRow": 4628,
-                        "minTileCol": 41,
-                        "maxTileCol": 7917
+                    11 : {
+                        minTileRow : "681",
+                        maxTileRow : "1544",
+                        minTileCol : "10",
+                        maxTileCol : "1981"
                     },
-                    "14": {
-                        "minTileRow": 5478,
-                        "maxTileRow": 9256,
-                        "minTileCol": 82,
-                        "maxTileCol": 15835
+                    12 : {
+                        minTileRow : "1363",
+                        maxTileRow : "3088",
+                        minTileCol : "20",
+                        maxTileCol : "3962"
                     },
-                    "15": {
-                        "minTileRow": 10956,
-                        "maxTileRow": 18513,
-                        "minTileCol": 165,
-                        "maxTileCol": 31670
+                    13 : {
+                        minTileRow : "2726",
+                        maxTileRow : "6177",
+                        minTileCol : "40",
+                        maxTileCol : "7924"
                     },
-                    "16": {
-                        "minTileRow": 21912,
-                        "maxTileRow": 37026,
-                        "minTileCol": 330,
-                        "maxTileCol": 63341
+                    14 : {
+                        minTileRow : "5452",
+                        maxTileRow : "12355",
+                        minTileCol : "81",
+                        maxTileCol : "15847"
                     },
-                    "17": {
-                        "minTileRow": 43825,
-                        "maxTileRow": 74052,
-                        "minTileCol": 660,
-                        "maxTileCol": 126683
+                    15 : {
+                        minTileRow : "10944",
+                        maxTileRow : "21176",
+                        minTileCol : "163",
+                        maxTileCol : "31695"
                     },
-                    "18": {
-                        "minTileRow": 87651,
-                        "maxTileRow": 148105,
-                        "minTileCol": 1320,
-                        "maxTileCol": 253366
+                    16 : {
+                        minTileRow : "21889",
+                        maxTileRow : "42353",
+                        minTileCol : "326",
+                        maxTileCol : "63382"
                     },
-                    "19": {
-                        "minTileRow": 175302,
-                        "maxTileRow": 294060,
-                        "minTileCol": 170159,
-                        "maxTileCol": 343473
+                    17 : {
+                        minTileRow : "43776",
+                        maxTileRow : "73526",
+                        minTileCol : "42528",
+                        maxTileCol : "85869"
                     },
-                    "20": {
-                        "minTileRow": 376733,
-                        "maxTileRow": 384679,
-                        "minTileCol": 530773,
-                        "maxTileCol": 540914
+                    18 : {
+                        minTileRow : "87557",
+                        maxTileRow : "147052",
+                        minTileCol : "85058",
+                        maxTileCol : "171738"
                     }
                 }
             }
-    };
+        };
 
     return MiniGlobe;
 });
