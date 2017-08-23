@@ -107,7 +107,7 @@ define([
               */
             globe.onAfterRender = function onAfterRender () {
                 // clamp distance camera from globe
-                var range = globeView.controls.getRange();
+                var range = globe.controls.getRange();
                 var distance = Math.min(Math.max(range * 1.5, minDistance), maxDistance);
                 var camera = miniView.camera.camera3D;
                 // Update target miniview's camera
