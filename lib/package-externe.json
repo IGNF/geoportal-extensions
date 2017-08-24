@@ -25,8 +25,8 @@
     "version" : "2.2.1"
   },
   "openlayers" : {
-    "desc" : "OpenLayers 3 is a high-performance, feature-packed library for creating interactive maps on the web.",
-    "url" : "https://github.com/openlayers/ol3/",
+    "desc" : "OpenLayers is a high-performance, feature-packed library for creating interactive maps on the web.",
+    "url" : "https://github.com/openlayers/openlayers",
     "version" : "4.0.1"
   },
   "gp" : {

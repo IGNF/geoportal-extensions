@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="IE=edge,chrome=1; charset=UTF-8" http-equiv="X-UA-Compatible">
+  <title>sample ol3 KML styleUrl</title>
+
+  <!-- Library OpenLayers 3 -->
+  <link rel="stylesheet" href="../../../lib/openlayers/ol.css" />
+  <!-- <script src="../../../lib/openlayers/ol-debug.js"></script> -->
+
+  <!-- Plugin OpenLayers 3 IGN -->
+  <link rel="stylesheet" href="../../../dist/openlayers/GpPluginOL.css" />
+  <!-- <script src="../../../dist/openlayers/GpPluginOL.js" data-url="./../resources/AutoConf.js"></script> -->
+
+  <!-- requirejs -->
+  <script src="../../../lib/require.js"></script>
+
+  <!-- load geoportail-waiting image -->
+  <style>
+  div#map {
+    background-image:url(../resources/geoportail-waiting.gif);
+    background-position:center center;
+    background-repeat:no-repeat;
+    max-width: 800px;
+    height: 300px;
+    margin: 10px;
+  }
+  </style>
+
+</head>
+<body>
+  <h1>
+    <a href="http://openlayers.org/"><img src="../resources/logo-openlayers.png" alt="OpenLayers" width="100" /></a>
+    <a href="http://www.ign.fr"><img src="../resources/logo-ign.jpg" alt="IGN" width="100" /></a>
+  </h1>
+  <h3>
+    OpenLayers - A high-performance, feature-packed library for all your mapping needs.
+  </h3>
+
+  <div>
+    <p>...</p>
+
+    <script>
+
+    var map;
+    var vectorLayer;
+    var vectorSource;
+    var FormatChoice, kmlChoice;
+    var kmlStringOut, kmlStringIn1, kmlStringIn2, kmlStringIn3, kmlStringIn4, kmlStringIn5;
+    var kmlProj;
+
+    /* global requirejs */
+    requirejs.config({
+      "baseUrl" : "../../../src/",
+      "paths": {
+        // lib external
+        // "ol" : "../lib/openlayers/v3.18.1/ol-debug",
+        // "ol" : "../lib/openlayers/v3.20.1/ol-debug",
+        "ol" : "../lib/openlayers/ol-debug",
+        "proj4"   : "../lib/proj4/proj4",
+        "gp"      : "../lib/gp/GpServices-src",
+        "sortable" : "../lib/sortable/Sortable",
+        "woodman" : "../lib/woodman/woodman-amd"
+      }
+    });
+
+    requirejs(["ol", "Openlayers/Formats/KML"], function (ol, KMLExtended) {
+
+      kmlStringIn1 = "<kml \
+      xmlns=\"http://www.opengis.net/kml/2.2\" \
+      xmlns:gx=\"http://www.google.com/kml/ext/2.2\" \
+      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" \
+      xsi:schemaLocation=\"http://www.opengis.net/kml/2.2 https://developers.google.com/kml/schema/kml22gx.xsd\">\
+      <Document>\
+      <Style id=\"point\">\
+        <IconStyle>\
+          <Icon>\
+            <href>data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAmCAYAAABpuqMCAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAARfSURBVFiF3ZhfbBRVGMV/d2Z3212tbSkCbuNaqzaRiL6QyAMPjSFoYqgx4oOiRmMFUzQG479o2lQ0QXk1EhYFgmlD2mIRkYhRwqLEaA2GiKWV7rZLQ0sLwbZId7t/Zq4PFK1125m5s/vCedz7nXO+M9/N3jsD1xFEvgXlTkrI8hBQBywFbgEqgEvAMHAayZcYHBYbuZJP77yFkdsoR+ct4GXAb4OSQPARXj4QzzGejx7yEkZuZy2CMLBAgf4nkhfEi3S67UNzQ5YSIXfQhKAdtSAACxDsk2EapXT3cF2FYQdNSN7F/YQFsJkw77gVUcL01mp3o5EDJoK1Yj37VchKjcjdlJEmhvrWmg9jGNwhGhhzSlTbZmnepjBBAMrReF2F6Hgy0+fIKPb+flWRIMtip+eQ88lcPRCtg3gCCVZ3RqhPDbJepqlPDbJ6XwSvP2nDJYCXB522prLN6iwrPIEETw33U/VoLZovBPjQfCGqHqtl3XDUZiBrn1lQCXO3ZcUDLV34Su/JueYrW0btnp8tNSRLnTamEiZoWRF6uHre9dseuT0vPrOgEqbCWtW3xNX6VSy02c+/sk4JwF+WFWZ6xGL9vA2fyzb7+QcqYUYtKwYP9s+7PrA/bsNn/geSA87DSLosa44+fT/p8VM511Jjp4g8u8KGk7XPLKhM5qhlRSbppzV4JwMdEcz0WSCNmT5LrC1CS/AujKliSw1BxGljzm8AH3MjHs4BpU65DjCBn0rxDJNOSI4nM33F2O2U58yEnU6DgOpF02AzcEGJa40LZHlfhagUZvp6vkmFawObVK7/4PLFSoZpBZ50ozEThsne6i2hjZqmFRVJ6U8JUeSVUmQNzQvg0c1MVtNMIUTSl0pNLhsaGu8A4xrfbZhS4CRQ5SoFcCWtja/5NBg+N+GZsu0vhSEkcY8mf+iNx+OuX3llmJVABNCVNUA2fl3xWdvJkriqRBb2uPugAYgNHEey1Y3Gt3/ccNxFEAChm2al6zAAjNAEWF/rc1Ev6+ffOLTwmBt7E0xD02J5CSOayQLrsHMJnYGMITJvHrr588mUMKyr54CUaaHrnfF4fCQ/kwHEBmLAa044rb+WHP4xXnxJ0VJK6CkyjO2xWOx3KMSH8zDtwONWdb2jvt41u4JtChZJKeVveDwnYrHYfw5uj4KYFRpSWbGqyCPL5ypIpMTkKwcWfWVXUEqRRcio1LTuUCjUE4lEsrnq8j4ZgKEP9bpgmfHFHPpyy3fle3f9Uto3n4aUIqNhDghN6zZ1vTcajaasfAsSBmBwq7f11tLM/24Hx2L+n+rbF38zBy2JEP0anPEGAj3d3d1pJ56F2GYAGInM82M+bWW53wxd++3ipH7x1QMLj8ysk5BAyj6Ppp2+d/nyaEdHh/I/W8EmA3Ci2b/iviVT3+tCerMmxkudiz450hcYBSYQIqrDmScGBvqawSxkH3lDV2Pxe6ltItnWcFNLTXX1qpqamkoK/BCvC/wNB+l5MdQKNHsAAAAASUVORK5CYII=</href>\
+          </Icon>\
+        </IconStyle>\
+      </Style>\
+      <Placemark>\
+        <description>PARIS</description>\
+        <styleUrl>#point</styleUrl>\
+        <Point>\
+          <coordinates>0,0</coordinates>\
+        </Point>\
+      </Placemark>\
+      </Document>\
+      </kml>";
+
+      kmlStringIn3 = "<kml \
+      xmlns=\"http://www.opengis.net/kml/2.2\" \
+      xmlns:gx=\"http://www.google.com/kml/ext/2.2\" \
+      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" \
+      xsi:schemaLocation=\"http://www.opengis.net/kml/2.2 https://developers.google.com/kml/schema/kml22gx.xsd\">\
+      <Document>\
+      <Style id=\"point\">\
+        <IconStyle>\
+          <Icon>\
+            <href>data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAmCAYAAABpuqMCAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAARfSURBVFiF3ZhfbBRVGMV/d2Z3212tbSkCbuNaqzaRiL6QyAMPjSFoYqgx4oOiRmMFUzQG479o2lQ0QXk1EhYFgmlD2mIRkYhRwqLEaA2GiKWV7rZLQ0sLwbZId7t/Zq4PFK1125m5s/vCedz7nXO+M9/N3jsD1xFEvgXlTkrI8hBQBywFbgEqgEvAMHAayZcYHBYbuZJP77yFkdsoR+ct4GXAb4OSQPARXj4QzzGejx7yEkZuZy2CMLBAgf4nkhfEi3S67UNzQ5YSIXfQhKAdtSAACxDsk2EapXT3cF2FYQdNSN7F/YQFsJkw77gVUcL01mp3o5EDJoK1Yj37VchKjcjdlJEmhvrWmg9jGNwhGhhzSlTbZmnepjBBAMrReF2F6Hgy0+fIKPb+flWRIMtip+eQ88lcPRCtg3gCCVZ3RqhPDbJepqlPDbJ6XwSvP2nDJYCXB522prLN6iwrPIEETw33U/VoLZovBPjQfCGqHqtl3XDUZiBrn1lQCXO3ZcUDLV34Su/JueYrW0btnp8tNSRLnTamEiZoWRF6uHre9dseuT0vPrOgEqbCWtW3xNX6VSy02c+/sk4JwF+WFWZ6xGL9vA2fyzb7+QcqYUYtKwYP9s+7PrA/bsNn/geSA87DSLosa44+fT/p8VM511Jjp4g8u8KGk7XPLKhM5qhlRSbppzV4JwMdEcz0WSCNmT5LrC1CS/AujKliSw1BxGljzm8AH3MjHs4BpU65DjCBn0rxDJNOSI4nM33F2O2U58yEnU6DgOpF02AzcEGJa40LZHlfhagUZvp6vkmFawObVK7/4PLFSoZpBZ50ozEThsne6i2hjZqmFRVJ6U8JUeSVUmQNzQvg0c1MVtNMIUTSl0pNLhsaGu8A4xrfbZhS4CRQ5SoFcCWtja/5NBg+N+GZsu0vhSEkcY8mf+iNx+OuX3llmJVABNCVNUA2fl3xWdvJkriqRBb2uPugAYgNHEey1Y3Gt3/ccNxFEAChm2al6zAAjNAEWF/rc1Ev6+ffOLTwmBt7E0xD02J5CSOayQLrsHMJnYGMITJvHrr588mUMKyr54CUaaHrnfF4fCQ/kwHEBmLAa044rb+WHP4xXnxJ0VJK6CkyjO2xWOx3KMSH8zDtwONWdb2jvt41u4JtChZJKeVveDwnYrHYfw5uj4KYFRpSWbGqyCPL5ypIpMTkKwcWfWVXUEqRRcio1LTuUCjUE4lEsrnq8j4ZgKEP9bpgmfHFHPpyy3fle3f9Uto3n4aUIqNhDghN6zZ1vTcajaasfAsSBmBwq7f11tLM/24Hx2L+n+rbF38zBy2JEP0anPEGAj3d3d1pJ56F2GYAGInM82M+bWW53wxd++3ipH7x1QMLj8ysk5BAyj6Ppp2+d/nyaEdHh/I/W8EmA3Ci2b/iviVT3+tCerMmxkudiz450hcYBSYQIqrDmScGBvqawSxkH3lDV2Pxe6ltItnWcFNLTXX1qpqamkoK/BCvC/wNB+l5MdQKNHsAAAAASUVORK5CYII=</href>\
+          </Icon>\
+        </IconStyle>\
+      </Style>\
+      <Placemark>\
+        <styleUrl>#point</styleUrl>\
+        <Point>\
+          <coordinates>0,0</coordinates>\
+        </Point>\
+      </Placemark>\
+      <Placemark>\
+        <styleUrl>#point</styleUrl>\
+        <name>POINT</name>\
+        <Point>\
+          <coordinates>10,10</coordinates>\
+        </Point>\
+      </Placemark>\
+      </Document>\
+      </kml>";
+
+      kmlStringIn2 = "<kml \
+      xmlns=\"http://www.opengis.net/kml/2.2\" \
+      xmlns:gx=\"http://www.google.com/kml/ext/2.2\" \
+      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" \
+      xsi:schemaLocation=\"http://www.opengis.net/kml/2.2 https://developers.google.com/kml/schema/kml22gx.xsd\">\
+      <Document>\
+      <Style id=\"point\">\
+        <IconStyle>\
+          <Icon>\
+            <href>data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAmCAYAAABpuqMCAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAARfSURBVFiF3ZhfbBRVGMV/d2Z3212tbSkCbuNaqzaRiL6QyAMPjSFoYqgx4oOiRmMFUzQG479o2lQ0QXk1EhYFgmlD2mIRkYhRwqLEaA2GiKWV7rZLQ0sLwbZId7t/Zq4PFK1125m5s/vCedz7nXO+M9/N3jsD1xFEvgXlTkrI8hBQBywFbgEqgEvAMHAayZcYHBYbuZJP77yFkdsoR+ct4GXAb4OSQPARXj4QzzGejx7yEkZuZy2CMLBAgf4nkhfEi3S67UNzQ5YSIXfQhKAdtSAACxDsk2EapXT3cF2FYQdNSN7F/YQFsJkw77gVUcL01mp3o5EDJoK1Yj37VchKjcjdlJEmhvrWmg9jGNwhGhhzSlTbZmnepjBBAMrReF2F6Hgy0+fIKPb+flWRIMtip+eQ88lcPRCtg3gCCVZ3RqhPDbJepqlPDbJ6XwSvP2nDJYCXB522prLN6iwrPIEETw33U/VoLZovBPjQfCGqHqtl3XDUZiBrn1lQCXO3ZcUDLV34Su/JueYrW0btnp8tNSRLnTamEiZoWRF6uHre9dseuT0vPrOgEqbCWtW3xNX6VSy02c+/sk4JwF+WFWZ6xGL9vA2fyzb7+QcqYUYtKwYP9s+7PrA/bsNn/geSA87DSLosa44+fT/p8VM511Jjp4g8u8KGk7XPLKhM5qhlRSbppzV4JwMdEcz0WSCNmT5LrC1CS/AujKliSw1BxGljzm8AH3MjHs4BpU65DjCBn0rxDJNOSI4nM33F2O2U58yEnU6DgOpF02AzcEGJa40LZHlfhagUZvp6vkmFawObVK7/4PLFSoZpBZ50ozEThsne6i2hjZqmFRVJ6U8JUeSVUmQNzQvg0c1MVtNMIUTSl0pNLhsaGu8A4xrfbZhS4CRQ5SoFcCWtja/5NBg+N+GZsu0vhSEkcY8mf+iNx+OuX3llmJVABNCVNUA2fl3xWdvJkriqRBb2uPugAYgNHEey1Y3Gt3/ccNxFEAChm2al6zAAjNAEWF/rc1Ev6+ffOLTwmBt7E0xD02J5CSOayQLrsHMJnYGMITJvHrr588mUMKyr54CUaaHrnfF4fCQ/kwHEBmLAa044rb+WHP4xXnxJ0VJK6CkyjO2xWOx3KMSH8zDtwONWdb2jvt41u4JtChZJKeVveDwnYrHYfw5uj4KYFRpSWbGqyCPL5ypIpMTkKwcWfWVXUEqRRcio1LTuUCjUE4lEsrnq8j4ZgKEP9bpgmfHFHPpyy3fle3f9Uto3n4aUIqNhDghN6zZ1vTcajaasfAsSBmBwq7f11tLM/24Hx2L+n+rbF38zBy2JEP0anPEGAj3d3d1pJ56F2GYAGInM82M+bWW53wxd++3ipH7x1QMLj8ysk5BAyj6Ppp2+d/nyaEdHh/I/W8EmA3Ci2b/iviVT3+tCerMmxkudiz450hcYBSYQIqrDmScGBvqawSxkH3lDV2Pxe6ltItnWcFNLTXX1qpqamkoK/BCvC/wNB+l5MdQKNHsAAAAASUVORK5CYII=</href>\
+          </Icon>\
+        </IconStyle>\
+      </Style>\
+      <Placemark>\
+        <name>POINT</name>\
+        <styleUrl>#point</styleUrl>\
+        <Point>\
+          <coordinates>0,0</coordinates>\
+        </Point>\
+      </Placemark>\
+      </Document>\
+      </kml>";
+
+      kmlStringIn4 = "<kml \
+      xmlns=\"http://www.opengis.net/kml/2.2\" \
+      xmlns:gx=\"http://www.google.com/kml/ext/2.2\" \
+      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" \
+      xsi:schemaLocation=\"http://www.opengis.net/kml/2.2 https://developers.google.com/kml/schema/kml22gx.xsd\">\
+      <Document>\
+      <Style id=\"ligne\">\
+        <LineStyle>\
+					<color>ffff0000</color>\
+					<width>5</width>\
+				</LineStyle>\
+      </Style>\
+      <Placemark>\
+        <styleUrl>#ligne</styleUrl>\
+          <LineString>\
+				      <coordinates>4,0 8,0 8,-10</coordinates>\
+			    </LineString>\
+      </Placemark>\
+      <Placemark>\
+        <styleUrl>#ligne</styleUrl>\
+          <LineString>\
+				      <coordinates>-10,-10 0,-10 0,0</coordinates>\
+			    </LineString>\
+      </Placemark>\
+      </Document>\
+      </kml>";
+
+      kmlStringIn5 = "<kml \
+      xmlns=\"http://www.opengis.net/kml/2.2\" \
+      xmlns:gx=\"http://www.google.com/kml/ext/2.2\" \
+      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" \
+      xsi:schemaLocation=\"http://www.opengis.net/kml/2.2 https://developers.google.com/kml/schema/kml22gx.xsd\">\
+      <Document>\
+      <Style id=\"surface\">\
+        <LineStyle>\
+					<color>ff33ccff</color>\
+					<width>4</width>\
+				</LineStyle>\
+				<PolyStyle>\
+					<color>ccff00ff</color>\
+				</PolyStyle>\
+      </Style>\
+      <Placemark>\
+        <styleUrl>#surface</styleUrl>\
+        <Polygon>\
+				  <outerBoundaryIs>\
+					  <LinearRing>\
+						  <coordinates>-3,2 -3,6 -7,6 -3,2</coordinates>\
+					  </LinearRing>\
+				  </outerBoundaryIs>\
+			  </Polygon>\
+      </Placemark>\
+      <Placemark>\
+        <styleUrl>#surface</styleUrl>\
+        <Polygon>\
+				  <outerBoundaryIs>\
+					  <LinearRing>\
+						  <coordinates>3,-2 3,-6 7,-6 3,-2</coordinates>\
+					  </LinearRing>\
+				  </outerBoundaryIs>\
+			  </Polygon>\
+      </Placemark>\
+      </Document>\
+      </kml>";
+
+      // layer
+      var rasterLayer = new ol.layer.Tile({
+        source: new ol.source.TileJSON({
+          url: 'https://api.tiles.mapbox.com/v3/mapbox.geography-class.json?secure',
+          crossOrigin: 'anonymous'
+        })
+      });
+
+      // map
+      map = new ol.Map({
+        target: 'map',
+        layers: [
+          rasterLayer
+        ],
+        view: new ol.View({
+          center: [0,0],
+          zoom: 3
+        })
+      });
+
+      var addKMLToMap = function (features) {
+
+        if (vectorLayer) {
+          map.removeLayer(vectorLayer);
+        }
+
+        // add KML into the map
+        vectorSource =  new ol.source.Vector({
+            features : features
+        });
+
+        vectorLayer = new ol.layer.Vector({
+          source : vectorSource
+        });
+
+        map.addLayer(vectorLayer);
+      };
+
+      document.getElementById("loadKml").onclick = function (e) {
+
+        if (!kmlChoice) {
+          kmlChoice = kmlStringIn1;
+        }
+
+        if (!FormatChoice) {
+          FormatChoice = ol.format.KML;
+        }
+
+        // read KML string
+        var format = new FormatChoice ({ // ol.format.KML
+          showPointNames : true
+        });
+        kmlProj = format.readProjection(kmlChoice);
+        var mapProj = map.getView().getProjection().getCode();
+        var features = format.readFeatures(
+          kmlChoice,
+          {
+            dataProjection : kmlProj,
+            featureProjection : mapProj
+          }
+        );
+
+        console.log("loadKml", features);
+        addKMLToMap(features);
+      };
+
+      document.getElementById("writeKml").onclick = function (e) {
+
+        // write KML string
+        var format = new FormatChoice ({ // ol.format.KML
+          writeStyles : true
+        });
+
+        kmlStringOut = format.writeFeatures(
+          vectorLayer.getSource().getFeatures(), {
+            dataProjection : kmlProj,
+            featureProjection : "EPSG:3857"
+          }
+        );
+
+        console.log(kmlStringOut);
+      };
+
+      document.getElementById("readKml").onclick = function (e) {
+
+        // read KML string
+        var format = new FormatChoice ({ // ol.format.KML
+          showPointNames : true
+        });
+
+        var features = format.readFeatures(
+          kmlStringOut,
+          {
+            dataProjection : kmlProj,
+            featureProjection : "EPSG:3857"
+          }
+        );
+
+        console.log("readKml", features);
+        addKMLToMap(features);
+
+      };
+
+      // get list of radio buttons with name 'size'
+      var formats = document.getElementsByName("format");
+
+      // loop through list
+      for (var i=0, len=formats.length; i<len; i++) {
+        formats[i].onclick = function(e) {
+          var currentValue = e.target.value;
+          switch (currentValue) {
+            case "form1":
+               FormatChoice = ol.format.KML;
+              break;
+            case "form2":
+                FormatChoice = KMLExtended;
+              break;
+            default:
+              FormatChoice = KMLExtended;
+          }
+        };
+      }
+    });
+
+    function handleClickKmlChoice (myRadio) {
+        var currentValue = myRadio.value;
+        switch (currentValue) {
+          case "form1":
+             kmlChoice = kmlStringIn1;
+            break;
+          case "form2":
+              kmlChoice = kmlStringIn2;
+            break;
+          case "form3":
+              kmlChoice = kmlStringIn3;
+            break;
+          case "form4":
+              kmlChoice = kmlStringIn4;
+            break;
+          case "form5":
+              kmlChoice = kmlStringIn5;
+            break;
+          default:
+            kmlChoice = kmlStringIn1;
+        }
+    }
+
+    </script>
+
+    <!-- map -->
+    <div id="map">
+    </div>
+    <input type="radio" name="format" value="form1" checked> Format KML<br>
+    <input type="radio" name="format" value="form2"> Format KMLExtended<br>
+    <hr width="50%" align="left">
+    <input type="radio" name="kml" onclick="handleClickKmlChoice(this);" value="form1" checked> Form : only a point<br>
+    <input type="radio" name="kml" onclick="handleClickKmlChoice(this);" value="form2"> Form : only a point with name<br>
+    <input type="radio" name="kml" onclick="handleClickKmlChoice(this);" value="form3"> Form : points<br>
+    <input type="radio" name="kml" onclick="handleClickKmlChoice(this);" value="form4"> Form : lines<br>
+    <input type="radio" name="kml" onclick="handleClickKmlChoice(this);" value="form5"> Form : polys<br>
+    <hr width="50%" align="left">
+    <button type="button" id="loadKml">Load KML</button> -->
+    <button type="button" id="writeKml">Write KML</button> -->
+    <button type="button" id="readKml">Reload KML</button>
+
+
+    <!-- Comment utiliser le plugin avec un exemple -->
+    <p>EXEMPLE D'UTILISATION</p>
+    <pre>
+      <code>
+        window.onload = function () {}
+      </code>
+    </pre>
+
+    <!-- Toutes les informations utiles sur ol3 -->
+    <p>
+      <ul>
+        <li>En savoir plus avec le <a href="http://openlayers.org/en/v3.11.2/doc/quickstart.html">quick start guide</a>,</li>
+        <li>d'autres informations avec <a href="http://openlayers.org/en/v3.11.2/examples/">les exemples</a>,</li>
+        <li>ou aller directement à l'<a href="http://openlayers.org/en/v3.11.2/apidoc/">API documentation</a>.</li>
+      </ul>
+      Si vous avez des questions, jetez un oeil à la
+      <a href="http://stackoverflow.com/questions/tagged/openlayers-3">FAQ</a>.
+    </p>
+  </div>
+</body>
+</html>

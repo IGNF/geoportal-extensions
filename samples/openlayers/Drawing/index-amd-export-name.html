@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta content="IE=edge,chrome=1; charset=UTF-8" http-equiv="X-UA-Compatible">
+        <title>sample ol3 Drawing</title>
+
+        <!-- Library OpenLayers 3 -->
+        <link rel="stylesheet" href="../../../lib/openlayers/ol.css" />
+        <!-- <script src="../../../lib/openlayers/ol-debug.js"></script> -->
+
+        <!-- Plugin OpenLayers 3 IGN -->
+        <link rel="stylesheet" href="../../../dist/openlayers/GpPluginOL.css" />
+        <!-- <script src="../../../dist/openlayers/GpPluginOL.js" data-url="./../resources/AutoConf.js"></script> -->
+
+        <!-- requirejs -->
+        <script src="../../../lib/require.js"></script>
+
+        <!-- load geoportail-waiting image -->
+        <style>
+            div#map {
+                background-image:url(../resources/geoportail-waiting.gif);
+                background-position:center center;
+                background-repeat:no-repeat;
+                max-width: 800px;
+                height: 300px;
+                margin: 10px;
+            }
+        </style>
+
+    </head>
+    <body>
+        <h1>
+            <a href="http://openlayers.org/"><img src="../resources/logo-openlayers.png" alt="OpenLayers" width="100" /></a>
+            <a href="http://www.ign.fr"><img src="../resources/logo-ign.jpg" alt="IGN" width="100" /></a>
+        </h1>
+        <h3>
+            OpenLayers - A high-performance, feature-packed library for all your mapping needs.
+        </h3>
+
+        <div>
+            <p>Ajout d'un widget de dessin</p>
+
+            <script>
+                var map;
+                /* global requirejs */
+                requirejs.config({
+                    "baseUrl" : "../../../src/",
+                    "paths": {
+                        // lib external
+                        "ol" : "../lib/openlayers/ol-debug",
+                        "proj4"   : "../lib/proj4/proj4",
+                        "gp"      : "../lib/gp/GpServices-src",
+                        "sortable" : "../lib/sortable/Sortable",
+                        "woodman" : "../lib/woodman/woodman-amd"
+                    }
+                });
+                requirejs(
+                    ["ol", "gp",
+                    "Openlayers/Layers/LayerWMTS",
+                    "Openlayers/Controls/Drawing"],
+                    function (ol, Gp,
+                      LayerWMTS,
+                      Drawing) {
+
+                  var createMap = function () {
+
+                    // Création de la map
+                    map = new ol.Map({
+                        target : "map",
+                        layers : [new LayerWMTS({
+                            layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS",
+                        })],
+                        view : new ol.View({
+                            center : [288074.8449901076, 6247982.515792289],
+                            zoom : 8
+                        })
+                    });
+
+                    // creation du controle
+                    var drawing = new Drawing({});
+                    map.addControl(drawing);
+
+                    document.getElementById('kml').addEventListener('input', function (e) {
+                        drawing.setExportName(e.target.value);
+                    });
+                  };
+
+                  Gp.Services.getConfig({
+                      serverUrl : "./../resources/AutoConf.js",
+                      callbackSuffix : "",
+                      // apiKey: "jhyvi0fgmnuxvfv0zjzorvdn",
+                      timeOut : 20000,
+                      onSuccess : createMap
+                  });
+                });
+            </script>
+
+            <!-- map -->
+            <div id="map">
+            </div>
+            <input type="text" id="kml" name="kml" placeholder="Croquis" >
+
+            <!-- Comment utiliser le plugin avec un exemple -->
+            <p>EXEMPLE D'UTILISATION</p>
+            <pre>
+                <code>
+                    window.onload = function () {
+                        var map = new ol.Map({
+                            layers: [
+                                new LayerWMTS({
+                                    layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS",
+                                })
+                            ],
+                            target: 'map',
+                            view: new ol.View({
+                                center: [288074.8449901076, 6247982.515792289],
+                                zoom: 5
+                            })
+                        });
+                        map.addControl(new MousePosition({}));
+                    }
+                </code>
+            </pre>
+
+            <!-- Toutes les informations utiles sur ol3 -->
+            <p>
+                <ul>
+                    <li>En savoir plus avec le <a href="http://openlayers.org/en/v3.11.2/doc/quickstart.html">quick start guide</a>,</li>
+                    <li>d'autres informations avec <a href="http://openlayers.org/en/v3.11.2/examples/">les exemples</a>,</li>
+                    <li>ou aller directement à l'<a href="http://openlayers.org/en/v3.11.2/apidoc/">API documentation</a>.</li>
+                </ul>
+                Si vous avez des questions, jetez un oeil à la
+                <a href="http://stackoverflow.com/questions/tagged/openlayers-3">FAQ</a>.
+            </p>
+        </div>
+    </body>
+</html>

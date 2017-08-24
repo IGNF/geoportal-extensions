@@ -23,14 +23,14 @@ function leaflet() {
   gulp publish --leaflet
 }
 
-# ol3
-function ol3() {
+# ol
+function ol() {
   echo "####### OL production !"
-  gulp --production --ol3
-  gulp publish --ol3
+  gulp --production --ol
+  gulp publish --ol
   echo "####### OL !"
-  gulp --ol3
-  gulp publish --ol3
+  gulp --ol
+  gulp publish --ol
 }
 
 # vg
@@ -46,11 +46,11 @@ function vg() {
 # mix
 function mix() {
   echo "####### Mixte OL/VG !"
-  gulp --ol3 --vg --mix
-  gulp publish --ol3 --vg --mix
+  gulp --ol --vg --mix
+  gulp publish --ol --vg --mix
   echo "####### Mixte OL/VG production !"
-  gulp --production --ol3 --vg --mix
-  gulp publish --ol3 --vg --mix
+  gulp --production --ol --vg --mix
+  gulp publish --ol --vg --mix
 }
 
 while getopts "aolvm" opts
@@ -59,7 +59,7 @@ do
      o)
         echo "#################################"
         echo "###### OpenLayers bundle ! ######"
-        ol3
+        ol
         ;;
      l)
         echo "#################################"
@@ -79,7 +79,7 @@ do
      a)
         echo "#################################"
         echo "########## ALL bundle ! #########"
-        ol3
+        ol
         leaflet
         vg
         mix

@@ -14,7 +14,7 @@ define(['chai'], function (chai) {
         var ol;
 
         before(function (done) {
-            require(['Common/Utils/Register', "Ol3/CRS/CRS", 'proj4', 'ol'], function (_Register, _CRS, _proj4, _ol) {
+            require(['Common/Utils/Register', "Openlayers/CRS/CRS", 'proj4', 'ol'], function (_Register, _CRS, _proj4, _ol) {
                 Register = _Register;
                 CRS = _CRS;
                 proj4 = _proj4;

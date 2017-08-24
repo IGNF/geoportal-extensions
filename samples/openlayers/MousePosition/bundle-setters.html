@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta content="IE=edge,chrome=1; charset=UTF-8" http-equiv="X-UA-Compatible">
+        <title>sample ol3 MousePosition</title>
+        <!-- Library OpenLayers 3 -->
+        <link rel="stylesheet" href="../../../lib/openlayers/ol.css" />
+        <script src="../../../lib/openlayers/ol-debug.js"></script>
+        <!-- Plugin OpenLayers 3 IGN -->
+        <link rel="stylesheet" href="../../../dist/openlayers/GpPluginOL.css" />
+        <script src="../../../dist/openlayers/GpPluginOL-src.js" data-key="jhyvi0fgmnuxvfv0zjzorvdn"></script>
+        <!-- load geoportail-waiting image -->
+        <style>
+            div#map {
+                background-image:url(../resources/geoportail-waiting.gif);
+                background-position:center center;
+                background-repeat:no-repeat;
+                max-width: 800px;
+                height: 300px;
+                margin: 10px;
+            }
+        </style>
+    </head>
+    <body>
+            <p>Ajout simple d'un widget d'affichage des coordonnées de la souris (x, y et H)</p>
+
+            <script>
+                var map;
+                var MousePosition;
+                var addSystems, removeSystem;
+                var displayCoordinates, displayAltitude, increaseTriggerDelay;
+                var collapsed = false, setCollapsed;
+                var CoordsDisplayed = true;
+                var altiDisplayed = true;
+                var triggerDelay = 100;
+                var addUnits;
+
+                window.onload = function() {
+                    // on cache l'image de chargement du Géoportail.
+                    document.getElementById('map').style.backgroundImage = 'none';
+
+                    //Création de la map
+                    map = new ol.Map({
+                        target : "map",
+                        layers : [new ol.layer.GeoportalWMTS({
+                            layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS",
+                        })],
+                        view : new ol.View({
+                            center : [288074.8449901076, 6247982.515792289],
+                            zoom : 8
+                        })
+                    });
+
+                    MousePosition = new ol.control.GeoportalMousePosition({
+                        // collapsed : collapsed,
+                        displayCoordinates : CoordsDisplayed,
+                        displayAltitude : altiDisplayed,
+                        altitude : {
+                           triggerDelay : triggerDelay,
+                           responseDelay : 500,
+                           serviceOptions : {}
+                        },
+                        systems : [
+                            // {
+                            //     crs : ol.proj.get("EPSG:3950"),
+                            //     label : "RGF93 / CC50",
+                            //     type : "Metric"
+                            // }
+                        ],
+                        // units : ["DEC", "DMS"]
+                    });
+                    map.addControl(MousePosition);
+
+                    MousePosition.on(
+                        "change:collapsed",
+                        function (e) {
+                            console.log("mousePosition change:collapsed : collapsed =", e.target.collapsed);
+                        }
+                    );
+
+                    addUnits = function() {
+                        MousePosition.setUnits(["DEC", "DMS"]);
+                    }
+
+                    addSystems = function() {
+                        MousePosition.addSystems([
+                            {
+                                crs : "EPSG:2154",
+                                label : "RGF93 / Lambert-93",
+                                type : "Metric"
+                            },
+                            {
+                              crs : "EPSG:4326",
+                              label : "Geographiques2",
+                              type : "Geographical"
+                            }
+                        ]);
+                    }
+
+                    removeSystem = function() {
+                        MousePosition.removeSystem("EPSG:4326");
+                    }
+
+                    displayCoordinates = function () {
+                        CoordsDisplayed = !CoordsDisplayed;
+                        MousePosition.displayCoordinates(CoordsDisplayed);
+                    }
+                    displayAltitude = function () {
+                        altiDisplayed = !altiDisplayed;
+                        MousePosition.displayAltitude(altiDisplayed);
+                    }
+                    increaseTriggerDelay = function () {
+                        triggerDelay += 1000;
+                        MousePosition.setAltitudeOptions({
+                            triggerDelay : triggerDelay
+                        });
+                    }
+                    setCollapsed = function () {
+                        collapsed = !collapsed;
+                        console.log("setCollapsed("+collapsed+")");
+                        MousePosition.setCollapsed(collapsed);
+                    }
+
+                };
+            </script>
+
+            <!-- map -->
+            <div id="map">
+            </div>
+            <input type="button" onclick="addSystems()" value ="Add new systems"/>
+            <input type="button" onclick="removeSystem()" value ="Remove 'EPSG:4326' system"/>
+            <input type="button" onclick="displayCoordinates()" value ="Add/hide coordinates panel"/>
+            <input type="button" onclick="displayAltitude()" value ="Add/hide elevation panel"/>
+            <input type="button" onclick="increaseTriggerDelay()" value ="Increase altitude triggerDelay"/>
+            <input type="button" onclick="addUnits()" value ="Set units 'DEC' and 'DMS' only"/>
+            <input type="button" onclick="setCollapsed()" value ="Collapse MousePosition control"/>
+
+            <!-- Comment utiliser le plugin avec un exemple -->
+            <p>EXEMPLE D'UTILISATION</p>
+            <pre>
+                <code>
+                    window.onload = function () {
+                        var map = new ol.Map({
+                            layers: [
+                                new LayerWMTS({
+                                    layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS",
+                                })
+                            ],
+                            target: 'map',
+                            view: new ol.View({
+                                center: [288074.8449901076, 6247982.515792289],
+                                zoom: 5
+                            })
+                        });
+                        var mp = new ol.control.MousePosition({
+                            collapsed : false
+                        });
+                        map.addControl(mp);
+                    }
+                </code>
+            </pre>
+    </body>
+</html>

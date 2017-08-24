@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Library Leaflet -->
+  <link rel="stylesheet" href="../lib/openlayers/ol.css" />
+  <script src="../lib/openlayers/ol-debug.js"></script>
+
+  <!-- Plugin leaflet IGN -->
+  <link rel="stylesheet" href="../dist/openlayers/GpPluginOL<%- mode %>.css" />
+  <script src="../dist/openlayers/GpPluginOL<%- mode %>.js" data-key="jhyvi0fgmnuxvfv0zjzorvdn"></script>
+
+</head>
+<body>
+  <h3>
+    OpenLayers - A high-performance, feature-packed library for all your mapping needs.
+  </h3>
+  <div>
+
+    <!-- liste des fichiers -->
+    <p>LISTE DES EXEMPLES</p>
+    <ul>
+    <% files.forEach(function(path) {
+        var split  = path.split('/');
+        var plugin = split.slice(-2)[0];
+        var file   = split.slice(-1)[0];
+      %>
+      <li><a href="<%- path %>"> <%- plugin %> -- <%- file %></a></li>
+      <% });
+    %>
+    </ul>
+
+    <!-- Comment utiliser le plugin avec un exemple -->
+    <p>TODO : EXEMPLE D'UTILISATION DU PLUGIN</p>
+    <pre>
+      <code>TODO : CODE DE L'EXEMPLE</code>
+    </pre>
+
+    <!-- Toutes les informations utiles sur openlayers -->
+    <p>
+      <ul>
+        <li>En savoir plus avec le <a href="http://openlayers.org/en/v3.11.2/doc/quickstart.html">quick start guide</a>,</li>
+        <li>d'autres informations avec <a href="http://openlayers.org/en/v3.11.2/examples/">les exemples</a>,</li>
+        <li>ou aller directement à l'<a href="http://openlayers.org/en/v3.11.2/apidoc/">API documentation</a>.</li>
+      </ul>
+      Si vous avez des questions, jetez un oeil à la
+      <a href="http://stackoverflow.com/questions/tagged/openlayers-3">FAQ</a>.
+    </p>
+  </div>
+</body>
+</html>

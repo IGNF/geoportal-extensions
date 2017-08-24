@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+    <head>
+          <!-- Library OpenLayers 3 -->
+          <link rel="stylesheet" href="../../../lib/openlayers/ol.css" />
+
+          <!-- Plugin OpenLayers 3 IGN -->
+          <link rel="stylesheet" href="../../../dist/openlayers/GpPluginOL.css" />
+
+          <!-- requirejs -->
+          <script src="../../../lib/require.js"></script>
+
+          <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+          <!-- load geoportail-waiting image -->
+          <style>
+            div#map {
+                background-image:url(../resources/geoportail-waiting.gif);
+                background-position:center center;
+                background-repeat:no-repeat;
+            }
+          </style>
+
+    </head>
+    <body>
+        <h1>
+            <a href="http://openlayers.org/"><img src="../resources/logo-openlayers.png" alt="OpenLayers" width="100" /></a>
+            <a href="http://www.ign.fr"><img src="../resources/logo-ign.jpg" alt="IGN" width="100" /></a>
+        </h1>
+        <h3>
+            OpenLayers - A high-performance, feature-packed library for all your mapping needs.
+        </h3>
+        <div>
+            <!-- Faire une bréve description du plugin -->
+            <p>Ajout simplifié de couche WMTS Géoportail</p>
+
+            <!-- Mettre le code source de l'exemple -->
+            <script>
+                /* global requirejs */
+                requirejs.config({
+                    'baseUrl' : "../../../src",
+                    'paths': {
+                          gp : "../lib/gp/GpServices-src",
+                          proj4 : "../lib/proj4/proj4-src",
+                          // ol : "../lib/openlayers/v3.20.1/ol",
+                          // ol : "../lib/openlayers/v3.18.1/ol",
+                          // ol : "../lib/openlayers/v3.17.1/ol",
+                          ol : "../lib/openlayers/ol-debug",
+                          woodman : "../lib/woodman/woodman-amd"
+                    }
+                });
+
+                var map;
+
+                requirejs(['gp', 'ol', 'Openlayers/Layers/SourceWMTS', 'Openlayers/Controls/GeoportalAttribution'],
+                function (Gp, ol, SourceWMTS, GeoportalAttribution) {
+
+                    Gp.Services.getConfig({
+                        apiKey: "0pc8wopu0q520etd77qi619k",
+                        onSuccess: function(response) {
+                            loadMap();
+                        }
+                    })
+
+                    function loadMap() {
+                        document.getElementById('map').style.backgroundImage = 'none';
+
+                        var wmts0 =  new SourceWMTS({
+                            layer: "ORTHOIMAGERY.ORTHOPHOTOS",
+                            apiKey: "0pc8wopu0q520etd77qi619k"
+                        });
+                        console.log("wmts : ",wmts0);
+
+                        var gpLayer0 = new ol.layer.Tile({
+                            source : wmts0
+                        });
+
+                        var wmts1 =  new SourceWMTS({
+                            layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS",
+                            apiKey: "0pc8wopu0q520etd77qi619k"
+                        });
+                        console.log("wmts : ",wmts1);
+
+                        var gpLayer1 = new ol.layer.Tile({
+                            source : wmts1
+                        });
+
+                        map = new ol.Map({
+                            layers: [gpLayer0, gpLayer1],
+                            target: 'map',
+                            view: new ol.View({
+                                center: [288074.8449901076, 6247982.515792289],
+                                zoom: 5
+                            })
+                        });
+                        map.addControl(new GeoportalAttribution());
+
+                    }
+
+                });
+            </script>
+
+            <!-- map -->
+            <div id="map" style="height: 400px;"></div>
+
+            <!-- Comment utiliser le plugin avec un exemple -->
+            <p>EXEMPLE D'UTILISATION</p>
+            <pre>
+                <code>
+                    var layers = [
+                        new ol.layer.Tile({
+                            source: ol.GeoportalSource.WMTS({
+                                layer: "ORTHOIMAGERY.ORTHOPHOTOS",
+                                apiKey: "0pc8wopu0q520etd77qi619k"
+                            })
+                        })
+                    ];
+                    var map = new ol.Map({
+                        layers: layers,
+                        target: 'map',
+                        view: new ol.View({
+                            center: [288074.8449901076, 6247982.515792289],
+                            zoom: 5
+                        })
+                    });
+                </code>
+            </pre>
+
+            <!-- Toutes les informations utiles sur ol3 -->
+            <p>
+                <ul>
+                    <li>En savoir plus avec le <a href="http://openlayers.org/en/v3.11.2/doc/quickstart.html">quick start guide</a>,</li>
+                    <li>d'autres informations avec <a href="http://openlayers.org/en/v3.11.2/examples/">les exemples</a>,</li>
+                    <li>ou aller directement à l'<a href="http://openlayers.org/en/v3.11.2/apidoc/">API documentation</a>.</li>
+                </ul>
+                Si vous avez des questions, jetez un oeil à la
+                <a href="http://stackoverflow.com/questions/tagged/openlayers-3">FAQ</a>.
+            </p>
+        </div>
+    </body>
+</html>

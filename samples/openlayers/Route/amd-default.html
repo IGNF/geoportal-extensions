@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta content="IE=edge,chrome=1; charset=UTF-8" http-equiv="X-UA-Compatible">
+        <title>sample ol3 Route default (amd)</title>
+
+        <!-- Library OpenLayers 3 -->
+        <link rel="stylesheet" href="../../../lib/openlayers/ol.css" />
+
+        <!-- Plugin OpenLayers 3 IGN -->
+        <link rel="stylesheet" href="../../../dist/openlayers/GpPluginOL-src.css" />
+
+        <!-- requirejs -->
+        <script src="../../../lib/require.js"></script>
+
+        <!-- load geoportail-waiting image -->
+        <style>
+            body {
+                background-color: #A4A4A4;
+            }
+            div#map {
+                background-image:url(../resources/geoportail-waiting.gif);
+                background-position:center center;
+                background-repeat:no-repeat;
+                max-width: 800px;
+                height: 500px;
+                margin: 10px;
+            }
+            /*div[class*="test1"]{
+                background-color: #009688!important;
+            }*/
+        </style>
+    </head>
+    <body>
+        <h1>
+            <a href="http://openlayers.org/"><img src="../resources/logo-openlayers.png" alt="OpenLayers" width="100" /></a>
+            <a href="http://www.ign.fr"><img src="../resources/logo-ign.jpg" alt="IGN" width="100" /></a>
+        </h1>
+        <h3>
+            OpenLayers - A high-performance, feature-packed library for all your mapping needs.
+        </h3>
+
+        <div>
+            <p>Ajout d'un widget de calcul d'itinéraire</p>
+
+            <script>
+                var map;
+                var route = null;
+                var collapsed = false, setCollapsed;
+                /* global requirejs */
+                requirejs.config({
+                    "baseUrl" : "../../../src/",
+                    "paths": {
+                        // lib external
+                        "ol" : "../lib/openlayers/ol-debug",
+                        "proj4"   : "../lib/proj4/proj4",
+                        "gp"      : "../lib/gp/GpServices-src",
+                        "sortable" : "../lib/sortable/Sortable",
+                        "woodman" : "../lib/woodman/woodman-amd"
+                    }
+                });
+                requirejs(
+                    ["ol", "gp", "Openlayers/Layers/LayerWMTS", "Openlayers/Controls/Route"],
+                    function (ol, Gp, LayerWMTS, Route) {
+                    // var map;
+
+                    var createMap = function () {
+                        // on cache l'image de chargement du Géoportail.
+                        document.getElementById("map").style.backgroundImage = "none";
+
+                        // Création de la map
+                        map = new ol.Map({
+                            target : "map",
+                            layers : [
+                                new ol.layer.Tile({
+                                    source: new ol.source.OSM()
+                                })
+                                // ,
+                                // new LayerWMTS({
+                                //     // layer : "ORTHOIMAGERY.ORTHOPHOTOS"
+                                //     layer : "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+                                // })
+                            ],
+                            view : new ol.View({
+                                center : [288074.8449901076, 6247982.515792289],
+                                zoom : 12
+                            })
+                        });
+
+                        route = new Route({
+                            collapsed : false
+                            // apiKey : "jhyvi0fgmnuxvfv0zjzorvdn"
+                            // routeOptions : {
+                            //     protocol : "JSONP",
+                            //     apiKey : "jhyvi0fgmnuxvfv0zjzorvdn"
+                            // }
+                            // autocompleteOptions : {
+                            //     apiKey : "jhyvi0fgmnuxvfv0zjzorvdn"
+                            // }
+                        });
+                        map.addControl(route);
+
+                        setCollapsed = function () {
+                            collapsed = !route.collapsed;
+                            console.log("setCollapsed("+collapsed+")");
+                            route.setCollapsed(collapsed);
+                        }
+
+                        document.getElementById("removeControl").onclick = function(e) {
+                            map.removeControl(route);
+                            route = null;
+                        }
+
+                        document.getElementById("addControl").onclick = function(e) {
+                            if (route !== null) {
+                              return;
+                            }
+                            route = new Route({
+                              collapsed : false
+                            });
+                            map.addControl(route);
+                        }
+                    };
+
+                    Gp.Services.getConfig({
+                        serverUrl : "./../resources/AutoConf.js",
+                        callbackSuffix : "",
+                        // apiKey: "jhyvi0fgmnuxvfv0zjzorvdn",
+                        timeOut : 20000,
+                        onSuccess : createMap
+                    });
+
+                });
+            </script>
+
+            <!-- map -->
+            <div id="map">
+            </div>
+            <button type="button" id="removeControl">Supprimer le controle "route"</button>
+            <button type="button" id="addControl">Ajouter le controle "route"</button>
+            <!-- <div class="test1 couleur">
+                <p>blabla</p>
+            </div> -->
+            <input type="button" onclick="setCollapsed()" value ="Collapse route control"></input>
+
+            <!-- Comment utiliser le plugin avec un exemple -->
+            <p>EXEMPLE D'UTILISATION</p>
+            <pre>
+                <code>
+                    window.onload = function () {
+                        var map = new ol.Map({
+                            layers: [
+                                new LayerWMTS({
+                                    layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS",
+                                })
+                            ],
+                            target: 'map',
+                            view: new ol.View({
+                                center: [288074.8449901076, 6247982.515792289],
+                                zoom: 5
+                            })
+                        });
+                        var route = new ol.control.Route({
+                            collapsed : false
+                        });
+                        map.addControl(route);
+                    }
+                </code>
+            </pre>
+
+            <!-- Toutes les informations utiles sur ol3 -->
+            <p>
+                <ul>
+                    <li>En savoir plus avec le <a href="http://openlayers.org/en/v3.11.2/doc/quickstart.html">quick start guide</a>,</li>
+                    <li>d'autres informations avec <a href="http://openlayers.org/en/v3.11.2/examples/">les exemples</a>,</li>
+                    <li>ou aller directement à l'<a href="http://openlayers.org/en/v3.11.2/apidoc/">API documentation</a>.</li>
+                </ul>
+                Si vous avez des questions, jetez un oeil à la
+                <a href="http://stackoverflow.com/questions/tagged/openlayers-3">FAQ</a>.
+            </p>
+        </div>
+    </body>
+</html>
