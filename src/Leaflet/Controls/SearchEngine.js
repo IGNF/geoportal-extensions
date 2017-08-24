@@ -812,6 +812,7 @@ define([
         * it creates a HTML Element per location
         * (cf. this. ...)
         *
+        * @param {Array} locations - Array of Gp.Services.AutoComplete.SuggestedLocation corresponding to autocomplete results list
         * @private
         */
         _fillAutoCompletedLocationListContainer : function (locations) {
@@ -833,8 +834,6 @@ define([
                 this._createAutoCompletedLocationElement(locations[i], i);
             }
 
-            // sauvegarde de l'etat des locations
-            this._suggestedLocations = locations;
         },
 
         /**
@@ -1290,8 +1289,27 @@ define([
                 onSuccess : function (results) {
                     logger.log(results);
                     if (results) {
-                        var locations = results.suggestedLocations;
-                        context._fillAutoCompletedLocationListContainer(locations);
+                        // on sauvegarde l'etat des résultats
+                        context._suggestedLocations = results.suggestedLocations;
+                        context._locationsToBeDisplayed = [];
+                        if ( context._servicesRightManagement["Geocode"] && context._servicesRightManagement["Geocode"]["key"] ) {
+                            // on vérifie qu'on n'a pas récupéré des coordonnées nulles (par ex recherche par code postal)
+                            for ( var i = 0; i < context._suggestedLocations.length; i++ ) {
+                                var ilocation = context._suggestedLocations[i];
+                                if ( ilocation.position && ilocation.position.x === 0 && ilocation.position.y === 0 && ilocation.fullText ) {
+                                    // si les coordonnées sont nulles, il faut relancer une requête de géocodage avec l'attribut "fullText" récupéré
+                                    context._getGeocodeCoordinatesFromFullText(ilocation, i);
+                                } else {
+                                    // sinon on peut afficher normalement le résultat dans la liste
+                                    context._locationsToBeDisplayed.push(ilocation);
+                                }
+                            };
+                        } else {
+                            // si on n'a aucun droit d'accès au géocodage, on affiche la liste telle quelle (pas d'autre option pour les coordonnées nulles)
+                            context._locationsToBeDisplayed = context._suggestedLocations;
+                        }
+                        // on affiche les résultats qui n'ont pas des coordonnées nulles
+                        context._fillAutoCompletedLocationListContainer(context._locationsToBeDisplayed);
                     }
                 },
                 /** callback onFailure */
@@ -1301,6 +1319,49 @@ define([
                     // doit on nettoyer la liste des suggestions dernierement enregistrée :
                     context._clearSuggestedLocation();
                     logger.log(error.message);
+                }
+            });
+        },
+
+        /**
+         * this method is called by Gp.Services.autoComplete callback in case of success
+         * (cf. this.onAutoCompleteSearchText), for suggested locations with null coordinates
+         * (case of postalCode research for instance).
+         * Send a geocode request with suggested location 'fullText' attribute, to get its coordinates and display it in autocomplete results list container.
+         *
+         * @param {Gp.Services.AutoCompleteResponse.SuggestedLocation} suggestedLocation - autocompletion result (with null coordinates) to be geocoded
+         * @param {Number} i - suggestedLocation position in Gp.Services.AutoCompleteResponse.suggestedLocations autocomplete results list
+         * @private
+         */
+        _getGeocodeCoordinatesFromFullText : function ( suggestedLocation, i ) {
+            var context = this;
+            Gp.Services.geocode({
+                apiKey : context._servicesRightManagement["Geocode"]["key"],
+                location : suggestedLocation.fullText,
+                filterOptions : {
+                    type : suggestedLocation.type
+                },
+                /** callback onSuccess */
+                onSuccess : function (response) {
+                    if ( response.locations && response.locations.length !== 0 && response.locations[0].position ) {
+                        // on modifie les coordonnées du résultat en EPSG:4326 donc lat,lon
+                        if ( context._suggestedLocations && context._suggestedLocations[i] ) {
+                            context._suggestedLocations[i].position = {
+                                x : response.locations[0].position.y,
+                                y : response.locations[0].position.x
+                            };
+                            // et on l'affiche dans la liste
+                            context._locationsToBeDisplayed.push(context._suggestedLocations[i]);
+                            context._fillAutoCompletedLocationListContainer(context._locationsToBeDisplayed);
+                        }
+                    }
+                },
+                /** callback onFailure */
+                onFailure : function () {
+                    // si on n'a pas réussi à récupérer les coordonnées, on affiche quand même le résultat
+                    if ( context._suggestedLocations && context._suggestedLocations[i] ) {
+                        context._createAutoCompletedLocationElement(context._suggestedLocations[i], i);
+                    }
                 }
             });
         },
