@@ -1166,7 +1166,7 @@ define([
                 if (results) {
                     // on sauvegarde l'etat des résultats
                     context._suggestedLocations = results.suggestedLocations;
-                    var locationsToBeDisplayed = [];
+                    context._locationsToBeDisplayed = [];
                     // on vérifie qu'on n'a pas récupéré des coordonnées nulles (par ex recherche par code postal)
                     for ( var i = 0; i < context._suggestedLocations.length; i++ ) {
                         var ilocation = context._suggestedLocations[i];
@@ -1175,11 +1175,11 @@ define([
                             context._getGeocodeCoordinatesFromFullText(ilocation, i);
                         } else {
                             // sinon on peut afficher normalement le résultat dans la liste
-                            locationsToBeDisplayed.push(ilocation);
+                            context._locationsToBeDisplayed.push(ilocation);
                         }
                     };
                     // on affiche les résultats qui n'ont pas des coordonnées nulles
-                    context._fillAutoCompletedLocationListContainer(locationsToBeDisplayed);
+                    context._fillAutoCompletedLocationListContainer(context._locationsToBeDisplayed);
                 }
             },
             /** callback onFailure */
@@ -1233,7 +1233,8 @@ define([
                             y : response.locations[0].position.x
                         };
                         // et on l'affiche dans la liste
-                        context._createAutoCompletedLocationElement(context._suggestedLocations[i], i);
+                        context._locationsToBeDisplayed.push(context._suggestedLocations[i]);
+                        context._fillAutoCompletedLocationListContainer(context._locationsToBeDisplayed);
                     }
                 }
             },
