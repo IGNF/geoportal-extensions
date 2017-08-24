@@ -4,12 +4,12 @@
 
 ### options de compilation
 
-> gulp [--production] [--leaflet] [--ol3]
+> gulp [--production] [--leaflet] [--ol]
 
 ### compilation du projet
 
 ```
-> gulp [--production] [--leaflet] [--ol3]
+> gulp [--production] [--leaflet] [--ol]
 > gulp publish
 > tree dist/
 dist/
@@ -25,11 +25,11 @@ dist/
 │       ├── GPopacitySlider.png
 │       ├── GPshowLayersList.png
 │       └── ...
-└── ol3
-    ├── GpPluginOl3.css
-    ├── GpPluginOl3.js
-    ├── GpPluginOl3-src.css
-    ├── GpPluginOl3-src.js
+└── openlayers
+    ├── GpPluginOL.css
+    ├── GpPluginOL.js
+    ├── GpPluginOL-src.css
+    ├── GpPluginOL-src.js
     └── img
         ├── GPlayerInfoClose.png
         ├── GPlayerInfo.png
@@ -46,10 +46,10 @@ La target par defaut : 'build'
 ou
 > gulp build
 
-La target pour la lib. ol3 : 'build-ol3'
-> gulp build-ol3
+La target pour la lib. openlayers : 'build-ol'
+> gulp build-ol
 ou
-> gulp --ol3
+> gulp --ol
 
 La target pour la lib. leaflet : 'build-leaflet'
 > gulp build-leaflet
@@ -79,7 +79,7 @@ les targets sont :
           |
         clean
          _|_
-build-ol3  build-leaflet
+build-ol  build-leaflet
     |            |
    test         test
    check        check

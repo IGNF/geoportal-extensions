@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta content="IE=edge,chrome=1; charset=UTF-8" http-equiv="X-UA-Compatible">
+        <title>sample ol3 Route default</title>
+        <!-- Library OpenLayers 3 -->
+        <link rel="stylesheet" href="http://openlayers.org/en/v3.12.1/css/ol.css" />
+        <script src="http://openlayers.org/en/v3.12.1/build/ol.js"></script>
+        <!-- Plugin OpenLayers 3 IGN -->
+        <link rel="stylesheet" href="../../../dist/openlayers/GpPluginOL-src.css" />
+        <script src="../../../dist/openlayers/GpPluginOL-src.js"></script>
+        <!-- load geoportail-waiting image -->
+        <style>
+            div#map {
+                background-image:url(../resources/geoportail-waiting.gif);
+                background-position:center center;
+                background-repeat:no-repeat;
+                max-width: 800px;
+                height: 600px;
+                margin: 10px;
+            }
+        </style>
+    </head>
+    <body>
+            <p>Ajout simple d'un widget de calcul d'itinéraire</p>
+
+            <script>
+            // var map;
+                function go() {
+                    // on cache l'image de chargement du Géoportail.
+                    document.getElementById("map").style.backgroundImage = "none";
+
+                    var cartesLyr = new ol.layer.GeoportalWMTS({
+                        layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS",
+                    }) ;
+                    var map = new ol.Map({
+                        target: 'map',
+                        layers: [
+                            cartesLyr
+                        ],
+                        view: new ol.View({
+                            center: [288074.8449901076, 6247982.515792289],
+                            zoom: 12
+                        })
+                    });
+                    var routeControl = new ol.control.Route({
+                        collapsed : true
+                    });
+                    map.addControl(routeControl);
+
+                };
+                Gp.Services.getConfig({
+                    apiKey: "jhyvi0fgmnuxvfv0zjzorvdn",
+                    onSuccess: go
+                });
+            </script>
+
+            <!-- map -->
+            <div id="map"></div>
+            <div id="info"></div>
+        </div>
+    </body>
+</html>
