@@ -183,8 +183,8 @@
         return gulp.src(src)
             .pipe($.plumber())
             .pipe(jshint(".jshintrc"))
-            .pipe(jshint.reporter("default", { 
-                verbose : true 
+            .pipe(jshint.reporter("default", {
+                verbose : true
             }))
             .pipe(jshint.reporter("fail"));
     });
@@ -244,8 +244,8 @@
         var basedir  = path.join(_build, "src");
         var srcdir   = path.join(basedir, getDistDirName());
 
-        $.shelljs.exec("node ./node_modules/woodman/precompile/precompiler.js " + srcdir + " " + path.join(builddir, getDistDirName()));
-        $.shelljs.exec("node ./node_modules/woodman/precompile/precompiler.js " + path.join(basedir, "Common") + " " + path.join(builddir, "Common"));
+        $.shelljs.exec("node " + path.join("node_modules", "woodman", "precompile", "precompiler.js") + " " + srcdir + " " + path.join(builddir, getDistDirName()));
+        $.shelljs.exec("node " + path.join("node_modules", "woodman", "precompile", "precompiler.js") + " " + path.join(basedir, "Common") + " " + path.join(builddir, "Common"));
 
         // on retourne la config
         return gulp.src(path.join(basedir, "*.js"))
@@ -259,7 +259,7 @@
         var builddir = path.join(_build, getDistDirName(), _dir.clean);
         var srcdir  = path.join(_build, "src");
 
-        $.shelljs.exec("node ./node_modules/woodman/precompile/precompiler.js " + srcdir + " " + builddir);
+        $.shelljs.exec("node " + path.join("node_modules", "woodman", "precompile", "precompiler.js") + " " + srcdir + " " + builddir);
 
         // on retourne la config
         return gulp.src(path.join(srcdir, "*.js"))
@@ -278,9 +278,9 @@
 
         var builddir = path.join(_build, "src", getDistDirName());
         var srcdir   = [];
-        srcdir.push(path.join(_dir.src, getDistDirName(), "**/*.js"));
+        srcdir.push(path.join(_dir.src, getDistDirName(), "**", "*.js"));
 
-        var except = "!" + path.join(_dir.src, "**/__*.js");
+        var except = "!" + path.join(_dir.src, "**", "__*.js");
         srcdir.push(except);
 
         return gulp.src(srcdir)
@@ -302,9 +302,9 @@
 
         var builddir = path.join(_build, "src", "Common");
         var srcdir   = [];
-        srcdir.push(path.join(_dir.src, "Common", "**/*.js"));
+        srcdir.push(path.join(_dir.src, "Common", "**", "*.js"));
 
-        var except = "!" + path.join(_dir.src, "**/__*.js");
+        var except = "!" + path.join(_dir.src, "**", "__*.js");
         srcdir.push(except);
 
         return gulp.src(srcdir)
@@ -340,8 +340,10 @@
         var builddir = path.join(_build, getDistDirName(), "js");
         var srcdir   = path.join(_build, getDistDirName(), _dir.clean);
         var input    = []; // on place les modules qui ne sont pas appellés directement dans le code (dependances) !
-        input.push("Common/Utils/AutoLoadConfig");
+        input.push(path.join("Common", "Utils", "AutoLoadConfig"));
         input.push(path.join(getDistDirName(), getBaseFileName()));
+
+        var rellibdir = path.join("..", "..", "..", "..", "lib");
 
         var deps = {
             ol : "empty:",
@@ -349,9 +351,9 @@
             vg : "empty:",
             request : "empty:", // depenance externe pour nodejs !
             xmldom : "empty:",  // depenance externe pour nodejs !
-            proj4 : "../../../../lib/proj4/proj4-src" /*+ modeExt*/,
-            gp : "../../../../lib/gp/GpServices-src"  /*+ modeExt */,
-            sortable : "../../../../lib/sortable/Sortable-src" /*+ modeExt */
+            proj4 : path.join(rellibdir, "proj4", "proj4-src") /*+ modeExt*/,
+            gp : path.join(rellibdir, "gp", "GpServices-src")  /*+ modeExt */,
+            sortable : path.join(rellibdir, "sortable", "Sortable-src") /*+ modeExt */
         };
 
         if (isExecuteOl3) {
@@ -360,8 +362,8 @@
             input.push(path.join(getDistDirName(), "CRS", "CRS"));
         } else if (isExecuteLeaflet) {
             // on ajoute ce projet pour leaflet
-            deps["proj4leaflet"] = "../../../../lib/proj4leaflet/proj4leaflet-src"  /*+ modeExt*/;
-            deps["leaflet-draw" ] = "../../../../lib/leaflet-plugins/leaflet-draw/leaflet.draw-src" /*+ modeExt*/;
+            deps["proj4leaflet"] = path.join(rellibdir, "proj4leaflet", "proj4leaflet-src")  /*+ modeExt*/;
+            deps["leaflet-draw" ] = path.join(rellibdir, "leaflet-plugins", "leaflet-draw", "leaflet.draw-src") /*+ modeExt*/;
         } else if (isExecuteVg) {
             // do nothing
             $.util.log("executVg : nothing to do");
@@ -439,15 +441,17 @@
         var srcdir   = path.join(_build, getDistDirName(), _dir.clean);
         var input    = []; // on place les modules qui ne sont pas appellés directement dans le code (dependances) !
 
+        var rellibdir = path.join("..", "..", "..", "..", "lib");
+
         var deps = {
             ol : "empty:",
             leaflet : "empty:",
             vg : "empty:",
             request : "empty:", // dependance externe pour nodejs !
             xmldom : "empty:",  // dependance externe pour nodejs !
-            proj4 : "../../../../lib/proj4/proj4-src" /*+ modeExt*/,
-            gp : "../../../../lib/gp/GpServices-src"  /*+ modeExt */,
-            sortable : "../../../../lib/sortable/Sortable-src" /*+ modeExt */,
+            proj4 : path.join(rellibdir, "proj4", "proj4-src") /*+ modeExt*/,
+            gp : path.join(rellibdir, "gp", "GpServices-src")  /*+ modeExt */,
+            sortable : path.join(rellibdir, "sortable", "Sortable-src") /*+ modeExt */,
             woodman : "empty:"
         };
 
@@ -463,8 +467,8 @@
             input.push(path.join("Leaflet", "GpPluginLeaflet"));
             input.push(path.join("Vg", "GpPluginVg"));
             // on ajoute ce projet pour leaflet
-            deps["proj4leaflet"] = "../../../../lib/proj4leaflet/proj4leaflet-src"  /*+ modeExt*/;
-            deps["leaflet-draw" ] = "../../../../lib/leaflet-plugins/leaflet-draw/leaflet.draw-src" /*+ modeExt*/;
+            deps["proj4leaflet"]  = path.join(rellibdir, "proj4leaflet", "proj4leaflet-src")  /*+ modeExt*/;
+            deps["leaflet-draw" ] = path.join(rellibdir, "leaflet-plugins", "leaflet-draw", "leaflet.draw-src") /*+ modeExt*/;
         }
 
         if (isExecuteOl3WithITowns) {
@@ -479,8 +483,8 @@
             input.push(path.join("Leaflet", "GpPluginLeaflet"));
             input.push(path.join("ITowns", "GpPluginITowns"));
             // on ajoute ce projet pour leaflet
-            deps["proj4leaflet"] = "../../../../lib/proj4leaflet/proj4leaflet-src"  /*+ modeExt*/;
-            deps["leaflet-draw" ] = "../../../../lib/leaflet-plugins/leaflet-draw/leaflet.draw-src" /*+ modeExt*/;
+            deps["proj4leaflet"] = path.join(rellibdir, "proj4leaflet", "proj4leaflet-src")  /*+ modeExt*/;
+            deps["leaflet-draw" ] = path.join(rellibdir, "leaflet-plugins", "leaflet-draw", "leaflet.draw-src") /*+ modeExt*/;
         }
 
         requirejs.optimize({
@@ -551,10 +555,10 @@
 
         if (isExecuteOl3) {
             deps = [{
-                name : "ol", 
-                amd : "ol", 
-                cjs : "ol", 
-                global : "ol", 
+                name : "ol",
+                amd : "ol",
+                cjs : "ol",
+                global : "ol",
                 param : "ol"
             }];
         } else if (isExecuteLeaflet) {
@@ -788,7 +792,7 @@
         }
         // return gulp.src([srcdircommon, srcdir, plugindir, exceptsrcdir, exceptsrcdircommon])
         return gulp.src(srcArray)
-            .pipe((isProduction) ? cleanCSS({ 
+            .pipe((isProduction) ? cleanCSS({
                 rebase : false,
                 level : 2
             }) : $.util.noop())
@@ -865,12 +869,12 @@
                 .pipe(strip({
                     safe : false
                 })) // first remove old headers comments
-                .pipe(header( (isExecuteLeaflet) ? fs.readFileSync("utils/licence-proj4Leaflet.txt" , "utf8") : ""))
-                .pipe(header( (isExecuteLeaflet) ? fs.readFileSync("utils/licence-plugin-leaflet-draw.txt" , "utf8") : ""))
-                .pipe(header(fs.readFileSync("utils/licence-proj4js.txt", "utf8")))
-                .pipe(header(fs.readFileSync("utils/licence-sortable.txt", "utf8")))
-                .pipe(header(fs.readFileSync("utils/licence-es6promise.txt", "utf8")))
-                .pipe(header(fs.readFileSync("utils/licence-template.txt" , "utf8"), {
+                .pipe(header( (isExecuteLeaflet) ? fs.readFileSync(path.join("utils", "licence-proj4Leaflet.txt") , "utf8") : ""))
+                .pipe(header( (isExecuteLeaflet) ? fs.readFileSync(path.join("utils", "licence-plugin-leaflet-draw.txt") , "utf8") : ""))
+                .pipe(header(fs.readFileSync(path.join("utils", "licence-proj4js.txt"), "utf8")))
+                .pipe(header(fs.readFileSync(path.join("utils", "licence-sortable.txt"), "utf8")))
+                .pipe(header(fs.readFileSync(path.join("utils", "licence-es6promise.txt"), "utf8")))
+                .pipe(header(fs.readFileSync(path.join("utils", "licence-template.txt"), "utf8"), {
                     date : buildDate,
                     version : version,
                     brief : brief
@@ -914,7 +918,7 @@
         }
 
         return gulp.src([path.join(srcdir, output)])
-                .pipe(header(fs.readFileSync("utils/licence-template.txt" , "utf8"), {
+                .pipe(header(fs.readFileSync(path.join("utils", "licence-template.txt") , "utf8"), {
                     date : buildDate,
                     version : version,
                     brief : brief
@@ -949,7 +953,7 @@
         var tmpl = require("gulp-template");
 
         // FIXME copie uniquement des tuto du framework !
-        return gulp.src(path.join(_dir.doc, "tutorials/*.md"))
+        return gulp.src(path.join(_dir.doc, "tutorials", "*.md"))
                 .pipe(tmpl({
                     mode : (isProduction) ? "" : "-src"
                 }))
@@ -967,8 +971,8 @@
     gulp.task("jsdoc", function () {
 
         var configfile = "jsdoc-" + getDistDirName().toLowerCase() + ".json";
-
-        $.shelljs.exec("./node_modules/.bin/jsdoc -c " + configfile);
+        var jsdoc = ["node_modules", ".bin", "jsdoc"].join(path.sep);
+        $.shelljs.exec(jsdoc + " -c " + configfile);
 
         // cf. https:// ww.npmjs.com/package/gulp-jsdoc3
         // var jsdoc = require("gulp-jsdoc3");
@@ -1037,7 +1041,7 @@
         sources.push(path.join(_dir.samples, basedir, "**", "index-bundle*.html"));
         // excludes : les tests (amd)
         sources.push("!" + path.join(_dir.samples, basedir, "Test"));
-        sources.push("!" + path.join(_dir.samples, basedir, "Test/**"));
+        sources.push("!" + path.join(_dir.samples, basedir, "Test", "**"));
 
         var bundleToReplace  = bundle + "-src";
 
