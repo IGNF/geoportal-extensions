@@ -666,7 +666,7 @@
             // format SVG !
             srcdir.push(path.join(_dir.res, getDistDirName(), "**", "*.svg"));
         } else if (isExecuteLeaflet) {
-            var plugindir = path.join(_dir.lib, getDistDirName().toLowerCase(), "plugins", "leaflet-draw", "**", "*.png");
+            var plugindir = path.join(_dir.lib, "leaflet-plugins", "leaflet-draw", "images", "*.png");
             srcdir.push(plugindir);
         } else if (isExecuteVg) {
             $.util.log("Nothing to do in Vg mode");
@@ -765,7 +765,7 @@
             $.util.log("Nohing to do in Ol3 mode");
         } else if (isExecuteLeaflet) {
             // Plugins Leaflet !
-            plugindir = path.join(_dir.lib, "leaflet", "plugins", "leaflet-draw", "**", "*.css");
+            plugindir = path.join(_dir.lib, "leaflet-plugins", "leaflet-draw", "*.css");
         } else if (isExecuteVg) {
             $.util.log("Nohing to do in Vg mode");
         } else if (isExecuteITowns) {
