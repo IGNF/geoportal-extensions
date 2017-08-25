@@ -1,19 +1,19 @@
 /* global requirejs */
 
-var path  = require("path");
 requirejs.config({
     baseUrl : "",
-    // FIXME les lib. sont déposées manuellement !
-    // en mode 'production' : "empty:" cf. gulpfile.js
+    // Attention, les lib. peuvent être redefinies dans le fichier "gulpfile.js" !
+    // En mode 'production', les paths "ol" et "leaflet" sont remplacés par le mot clef "empty:"
+    // car ce sont des dependances externes (injectées par une balise "script")
     paths : {
-        "gp" : path.join("..", "lib", "gp", "GpServices-src"),
-        "leaflet" : path.join("..", "lib", "leaflet", "leaflet-src"),
-        "leaflet-draw" : path.join("..", "lib", "leaflet-plugins", "leaflet-draw", "leaflet.draw-src"),
-        "proj4" : path.join("..", "lib", "proj4", "proj4-src"),
-        "proj4leaflet" : path.join("..", "lib", "proj4leaflet", "proj4leaflet-src"),
-        "ol" : path.join("..", "lib", "ol3", "ol"),
-        // "vg" : path.join("..", "lib", "vg", js", "VirtualGeoWeb-1.1.min"), // FIXME not use beacause of browser compatibility only !
-        "woodman" : path.join("..", "lib", "woodman", "woodman-amd"),
-        "sortable" : path.join("..", "lib", "sortable", "Sortable")
+        "gp"           : "../lib/gp/GpServices-src",
+        "leaflet"      : "../lib/leaflet/leaflet-src",
+        "leaflet-draw" : "../lib/leaflet-plugins/leaflet-draw/leaflet.draw-src",
+        "proj4"        : "../lib/proj4/proj4-src",
+        "proj4leaflet" : "../lib/proj4leaflet/proj4leaflet-src",
+        "ol"           : "../lib/ol3/ol",
+        "woodman"      : "../lib/woodman/woodman-amd",
+        "sortable"     : "../lib/sortable/Sortable"
+        // "vg"        : "../lib/vg/js/VirtualGeoWeb-1.1.min", // not use beacause of browser compatibility only !
     }
 });

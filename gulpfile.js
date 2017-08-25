@@ -326,6 +326,12 @@
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     gulp.task("requirejs-amdclean", [], function (taskReady) {
 
+        // Pour information, (https://github.com/requirejs/r.js/pull/907)
+        // Config like name, include, exclude, insertRequire, stubModules,
+        // rawText, these deal with module IDs.
+        // File path configs like appDir, baseUrl, dir, out, those are all paths
+        // since they deal with the file system.
+
         var requirejs = require("requirejs");
 
         // Pour information,
@@ -340,10 +346,8 @@
         var builddir = path.join(_build, getDistDirName(), "js");
         var srcdir   = path.join(_build, getDistDirName(), _dir.clean);
         var input    = []; // on place les modules qui ne sont pas appellés directement dans le code (dependances) !
-        input.push(path.join("Common", "Utils", "AutoLoadConfig"));
-        input.push(path.join(getDistDirName(), getBaseFileName()));
-
-        var rellibdir = path.join("..", "..", "..", "..", "lib");
+        input.push("Common/Utils/AutoLoadConfig");
+        input.push(getDistDirName() + "/" + getBaseFileName());
 
         var deps = {
             ol : "empty:",
@@ -351,9 +355,9 @@
             vg : "empty:",
             request : "empty:", // depenance externe pour nodejs !
             xmldom : "empty:",  // depenance externe pour nodejs !
-            proj4 : path.join(rellibdir, "proj4", "proj4-src") /*+ modeExt*/,
-            gp : path.join(rellibdir, "gp", "GpServices-src")  /*+ modeExt */,
-            sortable : path.join(rellibdir, "sortable", "Sortable-src") /*+ modeExt */
+            proj4 : "../../../../lib/proj4/proj4-src" /*+ modeExt*/,
+            gp : "../../../../lib/gp/GpServices-src"  /*+ modeExt */,
+            sortable : "../../../../lib/sortable/Sortable-src" /*+ modeExt */
         };
 
         if (isExecuteOl3) {
@@ -362,8 +366,8 @@
             input.push(path.join(getDistDirName(), "CRS", "CRS"));
         } else if (isExecuteLeaflet) {
             // on ajoute ce projet pour leaflet
-            deps["proj4leaflet"] = path.join(rellibdir, "proj4leaflet", "proj4leaflet-src")  /*+ modeExt*/;
-            deps["leaflet-draw" ] = path.join(rellibdir, "leaflet-plugins", "leaflet-draw", "leaflet.draw-src") /*+ modeExt*/;
+            deps["proj4leaflet"]  = "../../../../lib/proj4leaflet/proj4leaflet-src"  /*+ modeExt*/;
+            deps["leaflet-draw" ] = "../../../../lib/leaflet-plugins/leaflet-draw/leaflet.draw-src" /*+ modeExt*/;
         } else if (isExecuteVg) {
             // do nothing
             $.util.log("executVg : nothing to do");
@@ -441,50 +445,47 @@
         var srcdir   = path.join(_build, getDistDirName(), _dir.clean);
         var input    = []; // on place les modules qui ne sont pas appellés directement dans le code (dependances) !
 
-        var rellibdir = path.join("..", "..", "..", "..", "lib");
-
         var deps = {
             ol : "empty:",
             leaflet : "empty:",
             vg : "empty:",
-            request : "empty:", // dependance externe pour nodejs !
-            xmldom : "empty:",  // dependance externe pour nodejs !
-            proj4 : path.join(rellibdir, "proj4", "proj4-src") /*+ modeExt*/,
-            gp : path.join(rellibdir, "gp", "GpServices-src")  /*+ modeExt */,
-            sortable : path.join(rellibdir, "sortable", "Sortable-src") /*+ modeExt */,
-            woodman : "empty:"
+            request : "empty:", // depenance externe pour nodejs !
+            xmldom : "empty:",  // depenance externe pour nodejs !
+            proj4 : "../../../../lib/proj4/proj4-src" /*+ modeExt*/,
+            gp : "../../../../lib/gp/GpServices-src"  /*+ modeExt */,
+            sortable : "../../../../lib/sortable/Sortable-src" /*+ modeExt */
         };
 
         if (isExecuteOl3WithVg) {
-            input.push(path.join("Common", "Utils", "AutoLoadConfig"));
-            input.push(path.join("Ol3", "GpPluginOl3"));
-            input.push(path.join("Vg", "GpPluginVg"));
-            input.push(path.join("Ol3", "CRS", "CRS")); // FIXME ???
+            input.push("Common/Utils/AutoLoadConfig");
+            input.push("Ol3/GpPluginOl3");
+            input.push("Vg/GpPluginVg");
+            input.push("Ol3/CRS/CRS"); // FIXME ???
         }
 
         if (isExecuteLeafletWithVg) {
-            input.push(path.join("Common", "Utils", "AutoLoadConfig"));
-            input.push(path.join("Leaflet", "GpPluginLeaflet"));
-            input.push(path.join("Vg", "GpPluginVg"));
+            input.push("Common/Utils/AutoLoadConfig");
+            input.push("Leaflet/GpPluginLeaflet");
+            input.push("Vg/GpPluginVg");
             // on ajoute ce projet pour leaflet
-            deps["proj4leaflet"]  = path.join(rellibdir, "proj4leaflet", "proj4leaflet-src")  /*+ modeExt*/;
-            deps["leaflet-draw" ] = path.join(rellibdir, "leaflet-plugins", "leaflet-draw", "leaflet.draw-src") /*+ modeExt*/;
+            deps["proj4leaflet"] = "../../../../lib/proj4leaflet/proj4leaflet-src"  /*+ modeExt*/;
+            deps["leaflet-draw" ] = "../../../../lib/leaflet-plugins/leaflet-draw/leaflet.draw-src" /*+ modeExt*/;
         }
 
         if (isExecuteOl3WithITowns) {
-            input.push(path.join("Common", "Utils", "AutoLoadConfig"));
-            input.push(path.join("Ol3", "GpPluginOl3"));
-            input.push(path.join("ITowns", "GpPluginITowns"));
-            input.push(path.join("Ol3", "CRS", "CRS")); // FIXME ???
+            input.push("Common/Utils/AutoLoadConfig");
+            input.push("Ol3/GpPluginOl3");
+            input.push("ITowns/GpPluginITowns");
+            input.push("Ol3/CRS/CRS"); // FIXME ???
         }
 
         if (isExecuteLeafletWithITowns) {
-            input.push(path.join("Common", "Utils", "AutoLoadConfig"));
-            input.push(path.join("Leaflet", "GpPluginLeaflet"));
-            input.push(path.join("ITowns", "GpPluginITowns"));
+            input.push("Common/Utils/AutoLoadConfig");
+            input.push("Leaflet/GpPluginLeaflet");
+            input.push("ITowns/GpPluginITowns");
             // on ajoute ce projet pour leaflet
-            deps["proj4leaflet"] = path.join(rellibdir, "proj4leaflet", "proj4leaflet-src")  /*+ modeExt*/;
-            deps["leaflet-draw" ] = path.join(rellibdir, "leaflet-plugins", "leaflet-draw", "leaflet.draw-src") /*+ modeExt*/;
+            deps["proj4leaflet"] = "../../../../lib/proj4leaflet/proj4leaflet-src"  /*+ modeExt*/;
+            deps["leaflet-draw" ] = "../../../../lib/leaflet-plugins/leaflet-draw/leaflet.draw-src" /*+ modeExt*/;
         }
 
         requirejs.optimize({
