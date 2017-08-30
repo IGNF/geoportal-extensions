@@ -121,6 +121,8 @@ define([
               */
             var miniGlobeLayer = this._options.layer || this._baseLayer;
             miniView.addLayer(miniGlobeLayer);
+            // save as property of the control the globe created for the overview
+            this._globeObj = miniView;
         } else if (globe == null) {
             // if globe == null we remove the overview control
             // on supprime le DOM de  l'overviewcontrol
