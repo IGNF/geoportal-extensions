@@ -157,12 +157,16 @@ define(["ol", "Common/Utils/LayerUtils"], function (ol, LayerUtils) {
      */
     GeoportalAttribution.prototype._updateLayerAttributions = function (layer, mapAttributions, mapExtent, mapCrs, mapZoom) {
         var src = layer.getSource();
-        src.setAttributions(); // clean
 
         var attributions = [];
 
         var visibility = layer.getVisible();
         var originators = src._originators;
+
+        // info : clean previous attributions ONLY for Geoportal Layers (when src._originators is defined)
+        if ( typeof originators !== "undefined" ) {
+            src.setAttributions(); // clean
+        }
 
         if ( originators && visibility ) {
 
