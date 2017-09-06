@@ -284,7 +284,7 @@ define([
                     }
                 }
                 if (options.extent) {
-                    options.extent.merge(node.extent);
+                    options.extent.union(node.extent);
                 }
             }
         }
