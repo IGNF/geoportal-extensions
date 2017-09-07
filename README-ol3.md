@@ -1,6 +1,5 @@
 # Extension Géoportail pour OpenLayers 3
 
-
 L'extension Géoportail pour OpenLayers 3 propose les fonctionnalités suivantes à utiliser en complément de la bibliothèque [OpenLayers 3](http://openlayers.org/) :
 
 * [affichage des couches WMTS Géoportail](#WMTS)
@@ -305,7 +304,7 @@ var map = new ol.Map({
     });
 ```
 
-**Exemple d'utilisation** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/j5rdjt2z/embedded/result,js,html,css/)
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/j5rdjt2z/embedded/result,js,html,css/)
 
 ##### Affichage en Lambert 93 (EPSG:2154)
 
@@ -329,7 +328,7 @@ var map = new ol.Map({
 });
 ```
 
-**Exemple d'utilisation** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/bw0za4a8/embedded/result,js,html,css/)
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/bw0za4a8/embedded/result,js,html,css/)
 
 
 NB : D'autres systèmes de coordonnées peuvent être définis et utilisés : [plus d'informations...](#crs)
@@ -374,7 +373,7 @@ var map = new ol.Map({
 });
 ```
 
-**Exemple d'utilisation** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/sdktaf9r/embedded/result,js,html,css/)
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/sdktaf9r/embedded/result,js,html,css/)
 
 ##### Affichage en Lambert 93 (EPSG:2154)
 
@@ -401,7 +400,7 @@ var map = new ol.Map({
 });
 ```
 
-**Exemple d'utilisation** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/o6tnhpnd/embedded/result,js,html,css/)
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/o6tnhpnd/embedded/result,js,html,css/)
 
 
 NB : D'autres systèmes de coordonnées peuvent être définis et utilisés : [plus d'informations...](#crs)
@@ -451,7 +450,7 @@ var map = new ol.Map({
 });
 ```
 
-**Exemple d'utilisation** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/jnfwc7k6/embedded/result,js,html,css/)
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/jnfwc7k6/embedded/result,js,html,css/)
 
 <a id="sourceWMS"/>
 
@@ -493,7 +492,7 @@ var map = new ol.Map({
 });
 ```
 
-**Exemple d'utilisation** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/e36ur78k/embedded/result,js,html,css/)
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/e36ur78k/embedded/result,js,html,css/)
 
 
 <a id="layerswitcher"/>
@@ -560,7 +559,7 @@ var lsControl = new ol.control.LayerSwitcher({
 map.addControl(lsControl);
 ```
 
-**Exemple d'utilisation** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/5f9wxsof/embedded/result,js,html,css/)
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/5f9wxsof/embedded/result,js,html,css/)
 
 <a id="geocode"/>
 
@@ -606,7 +605,7 @@ var searchControl = new ol.control.SearchEngine({
 map.addControl(searchControl);
 ```
 
-**Exemple d'utilisation** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/qpcyp8nr/embedded/result,js,html,css/)
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/qpcyp8nr/embedded/result,js,html,css/)
 
 
 <a id="route"/>
@@ -651,7 +650,7 @@ var routeControl = new ol.control.Route({
 map.addControl(routeControl);
 ```
 
-**Exemple d'utilisation** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/1ngLrhuj/embedded/result,js,html,css/)
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/1ngLrhuj/embedded/result,js,html,css/)
 
 <a id="isocurve"/>
 
@@ -695,7 +694,7 @@ var isoControl = new ol.control.Isocurve({
 map.addControl(isoControl);
 ```
 
-**Exemple d'utilisation** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/jpwf385t/embedded/result,js,html,css/)
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/jpwf385t/embedded/result,js,html,css/)
 
 <a id="mp"/>
 
@@ -740,11 +739,11 @@ var mpControl = new ol.control.GeoportalMousePosition({
 map.addControl(mpControl);
 ```
 
-**Exemple d'utilisation avec affichage unique de l'altitude** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/jhg5fhor/embedded/result,js,html,css/)
+**Exemple d'utilisation avec affichage unique de l'altitude** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/jhg5fhor/embedded/result,js,html,css/)
 
-**Exemple d'utilisation avec paramétrage des systèmes de coordonnées** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/myg4t6qo/embedded/result,js,html,css/)
+**Exemple d'utilisation avec paramétrage des systèmes de coordonnées** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/myg4t6qo/embedded/result,js,html,css/)
 
-**Exemple d'utilisation avec activation de l'édition de coordonnées pour localisation** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/jrL59w29/embedded/result,js,html,css/)
+**Exemple d'utilisation avec activation de l'édition de coordonnées pour localisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/jrL59w29/embedded/result,js,html,css/)
 
 <a id="attributions"/>
 
@@ -790,7 +789,7 @@ var attControl = new ol.control.GeoportalAttribution({
 map.addControl(attControl);
 ```
 
-**Exemple d'utilisation** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/x1jrLavb/embedded/result,js,html,css/)
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/x1jrLavb/embedded/result,js,html,css/)
 
 <a id="reverse"/>
 
@@ -834,7 +833,7 @@ var rvControl = new ol.control.ReverseGeocode({
 map.addControl(rvControl);
 ```
 
-**Exemple d'utilisation** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/9y6dgq15/embedded/result,js,html,css/)
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/9y6dgq15/embedded/result,js,html,css/)
 
 <a id="drawing"/>
 
@@ -878,7 +877,7 @@ var drawControl = new ol.control.Drawing({
 map.addControl(drawControl);
 ```
 
-**Exemple d'utilisation** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/2Lj85jf1/embedded/result,js,html,css/)
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/2Lj85jf1/embedded/result,js,html,css/)
 
 
 <a id="layerimport"/>
@@ -924,7 +923,7 @@ var lyrImport = new ol.control.LayerImport({
 map.addControl(lyrImport);
 ```
 
-**Exemple d'utilisation** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/u04nvno2/embedded/result,js,html,css/)
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/u04nvno2/embedded/result,js,html,css/)
 
 
 <a id="ep"/>
@@ -970,7 +969,7 @@ var ep = new ol.control.ElevationPath({
 map.addControl(ep);
 ```
 
-**Exemple d'utilisation** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/cwfsLge7/embedded/result,js,html,css/)
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/cwfsLge7/embedded/result,js,html,css/)
 
 <a id="measure"/>
 
@@ -1015,7 +1014,7 @@ var length = new ol.control.MeasureLength({
 map.addControl(length);
 ```
 
-**Exemple d'utilisation** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/cwfsLge7/embedded/result,js,html,css/)
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/cwfsLge7/embedded/result,js,html,css/)
 
 
 <a id="getfeatureinfo"/>
@@ -1071,4 +1070,4 @@ var getfeatureinfo = new ol.control.GetFeatureInfo({
 map.addControl(getfeatureinfo);
 ```
 
-**Exemple d'utilisation** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/vg6dz7bn/embedded/result,js,html,css/)
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/vg6dz7bn/embedded/result,js,html,css/)
