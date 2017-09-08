@@ -241,6 +241,8 @@ define([
             for ( var ii = 0 ; ii < layers.length ; ++ii ) {
                 layers[ii].addEventListener("opacity-property-changed", this._callbacks.onOpacityLayerCallBack);
                 layers[ii].addEventListener("visible-property-changed", this._callbacks.onVisibilityLayerCallBack);
+                self._updateLayerVisibility(layers[ii].id, layers[ii].visible);
+                self._updateLayerOpacity(layers[ii].id, layers[ii].opacity);
             }
 
             this._globe = globe;
