@@ -343,6 +343,10 @@
         input.push("Common/Utils/AutoLoadConfig");
         input.push(path.join(getDistDirName(), getBaseFileName()));
 
+        // module global en fonction du bundle
+        var _globalModules = [];
+        _globalModules.push("proj4");
+
         var deps = {
             ol : "empty:",
             leaflet : "empty:",
@@ -395,7 +399,7 @@
                 var outputFile = data.path;
 
                 fs.writeFileSync(outputFile, amdclean.clean({
-                    globalModules : ["proj4"], // module globale !
+                    globalModules : _globalModules, // module globale !
                     filePath : outputFile,
                     prefixMode : "camelCase",
                     wrap : {
@@ -453,6 +457,10 @@
             woodman : "empty:"
         };
 
+        // module global en fonction du bundle
+        var _globalModules = [];
+        _globalModules.push("proj4");
+
         if (isExecuteOl3WithVg) {
             input.push(path.join("Common", "Utils", "AutoLoadConfig"));
             input.push(path.join("Ol3", "GpPluginOl3"));
@@ -509,7 +517,7 @@
                 var outputFile = data.path;
 
                 fs.writeFileSync(outputFile, amdclean.clean({
-                    globalModules : ["proj4"], // module globale !
+                    globalModules : _globalModules, // module globale !
                     filePath : outputFile,
                     prefixMode : "camelCase",
                     wrap : {

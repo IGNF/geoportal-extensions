@@ -1,4 +1,5 @@
 define([
+    "itowns",
     "proj4",
     "woodman",
     "gp",
@@ -10,6 +11,7 @@ define([
     "Itowns/Controls/Utils/PositionFormater",
     "Itowns/CRS/CRS"
 ], function (
+    Itowns,
     proj4,
     woodman,
     Gp,
@@ -994,7 +996,7 @@ define([
     MousePosition.prototype.onMouseMove = function (e) {
         var self = this;
 
-        var position = this.getGlobe().controls.pickGeoPosition(e);
+        var position = this.getGlobe().getGlobeView().controls.pickGeoPosition(e);
         if ( !position ) {
             this.GPdisplayCoords({
                 lon : "---",

@@ -1,7 +1,7 @@
 define([
     "itowns"
 ], function (
-    itowns
+    Itowns
 ) {
 
     "use strict";
@@ -19,20 +19,18 @@ define([
         viewerDiv.style.position = "relative";
 
         // stockage de l'élément html porteur du globe
-        this.viewerDiv = viewerDiv;
+        this._viewerDiv = viewerDiv;
 
         // widget container
         this._widgets = [];
 
         // call constructor
-        itowns.GlobeView.call(this, viewerDiv, coordCarto, options);
+        this._globeView = new Itowns.GlobeView(viewerDiv, coordCarto, options);
 
-        var parentPreRender = this.preRender;
         /**
         * Overload itowns.GlobeView preRender method
         */
-        this.preRender = function () {
-            parentPreRender();
+        this._globeView.preRender = function () {
 
             var self = this;
             clearTimeout(this._preRenderTimer);
@@ -43,7 +41,7 @@ define([
                         type : "prerender"
                     };
                     if ( self._fetchExtent ) {
-                        event.extent = new itowns.Extent("EPSG:4326", 180, -180, 90, -90);
+                        event.extent = new Itowns.Extent("EPSG:4326", 180, -180, 90, -90);
                     }
                     if ( self._fetchVisibleColorLayers ) {
                         event.colorLayersId = [];
@@ -60,32 +58,32 @@ define([
         };
     }
 
-    /*
-    * @lends
-    */
-    GlobeViewExtended.prototype = Object.create(itowns.GlobeView.prototype, {});
-
     /**
     * Constructor (alias)
     */
     GlobeViewExtended.prototype.constructor = GlobeViewExtended;
 
-    GlobeViewExtended.prototype.parentAddLayer = GlobeViewExtended.prototype.addLayer;
+    /**
+     * Get GlobeViex Object (parent)
+     */
+    GlobeViewExtended.prototype.getGlobeView = function () {
+        return this._globeView
+    };
+
     /**
     * Overload itowns.GlobeView addLayer method
     */
     GlobeViewExtended.prototype.addLayer = function (layer) {
-        this.parentAddLayer(layer);
-        this.notifyChange(true);
+        this.getGlobeView().addLayer(layer);
+        this.getGlobeView().notifyChange(true);
     };
 
-    GlobeViewExtended.prototype.parentRemoveLayer = GlobeViewExtended.prototype.removeLayer;
     /**
     * Overload itowns.GlobeView removeLayer method
     */
     GlobeViewExtended.prototype.removeLayer = function (layerId) {
-        this.parentRemoveLayer(layerId);
-        this.notifyChange(true);
+        this.getGlobeView().removeLayer(layerId);
+        this.getGlobeView().notifyChange(true);
     };
 
     /**
@@ -96,7 +94,7 @@ define([
     */
     GlobeViewExtended.prototype.setLayerOpacity = function (layer, opacityValue) {
         layer.opacity = opacityValue;
-        this.notifyChange(true);
+        this.getGlobeView().notifyChange(true);
     };
 
     /**
@@ -107,7 +105,7 @@ define([
     */
     GlobeViewExtended.prototype.setLayerVisibility = function (layer, visible) {
         layer.visible = visible;
-        this.notifyChange(true);
+        this.getGlobeView().notifyChange(true);
     };
 
     /**
@@ -117,10 +115,9 @@ define([
     * @param {Boolean} index - new index of the layer
     */
     GlobeViewExtended.prototype.moveLayerToIndex = function (layerID, index) {
-        itowns.ColorLayersOrdering.moveLayerToIndex(this, layerID, index);
+        Itowns.ColorLayersOrdering.moveLayerToIndex(this.getGlobeView(), layerID, index);
     };
 
-    GlobeViewExtended.prototype.parentAddEventListener = GlobeViewExtended.prototype.addEventListener;
     /**
     * Add event listener to the globe
     *
@@ -130,18 +127,17 @@ define([
     GlobeViewExtended.prototype.addEventListener = function (type, callback) {
         switch ( type ) {
             case "mousemove" :
-                this.viewerDiv.addEventListener( type, callback );
+                this._viewerDiv.addEventListener( type, callback );
                 break;
             case "centerchanged" :
-                this.controls.addEventListener( type, callback );
+                this.getGlobeView().controls.addEventListener( type, callback );
                 break;
             default :
-                this.parentAddEventListener( type, callback );
+                this.getGlobeView().addEventListener( type, callback );
                 break;
         }
     };
 
-    GlobeViewExtended.prototype.parentRemoveEventListener = GlobeViewExtended.prototype.removeEventListener;
     /**
     * Remove event listener from the globe
     *
@@ -151,13 +147,13 @@ define([
     GlobeViewExtended.prototype.removeEventListener = function (type, callback) {
         switch ( type ) {
             case "mousemove" :
-                this.viewerDiv.removeEventListener( type, callback );
+                this._viewerDiv.removeEventListener( type, callback );
                 break;
             case "centerchanged" :
-                this.controls.removeEventListener( type, callback );
+                this.getGlobeView().controls.removeEventListener( type, callback );
                 break;
             default :
-                this.parentRemoveEventListener( type, callback );
+                this.getGlobeView().removeEventListener( type, callback );
                 break;
         }
     };
@@ -210,7 +206,7 @@ define([
     * @return {Object} layer Object
     */
     GlobeViewExtended.prototype.getLayerById = function (id) {
-        return this.getLayers( function (layer) {
+        return this.getGlobeView().getLayers( function (layer) {
             if (layer.id === id) {
                 return layer;
             }
@@ -223,7 +219,7 @@ define([
     * @return {Array} imagery layers
     */
     GlobeViewExtended.prototype.getColorLayers = function () {
-        return this.getLayers( function (layer) {
+        return this.getGlobeView().getLayers( function (layer) {
             if (layer.type === "color") {
                 return layer;
             }
@@ -236,7 +232,7 @@ define([
     * @return {Array} elevation layers
     */
     GlobeViewExtended.prototype.getElevationLayers = function () {
-        return this.getLayers( function (layer) {
+        return this.getGlobeView().getLayers( function (layer) {
             if (layer.type === "elevation") {
                 return layer;
             }
@@ -250,7 +246,7 @@ define([
     */
     GlobeViewExtended.prototype.getExtent = function () {
         var options = {
-            extent : new itowns.Extent("EPSG:4326", 180, -180, 90, -90)
+            extent : new Itowns.Extent("EPSG:4326", 180, -180, 90, -90)
         };
 
         this._getCurrentSceneInfos( this.scene, options );
@@ -302,7 +298,7 @@ define([
      */
     GlobeViewExtended.prototype.addWidget = function addWidget (widget) {
         if ( !widget.getTarget() ) {
-            widget.setTarget(this.viewerDiv, "absolute");
+            widget.setTarget(this._viewerDiv, "absolute");
         }
         widget.setGlobe(this);
         this._widgets.push(widget);
@@ -338,7 +334,7 @@ define([
     * @return {HTMLElement} Globe container element
     */
     GlobeViewExtended.prototype.getTargetElement = function getTargetElement () {
-        return this.viewerDiv;
+        return this._viewerDiv;
     };
 
     /**
@@ -347,7 +343,7 @@ define([
      * @return {Number} Scale
      */
     GlobeViewExtended.prototype.getScale = function getScale () {
-        return this.controls.getScale();
+        return this.getGlobeView().controls.getScale();
     };
 
     return GlobeViewExtended;

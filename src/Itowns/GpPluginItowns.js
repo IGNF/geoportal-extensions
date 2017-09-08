@@ -1,6 +1,7 @@
 define([
     "itowns",
     "gp",
+    "Common/Utils",
     "Common/Utils/LayerUtils",
     "Itowns/Controls/MousePosition",
     "Itowns/Controls/LayerSwitcher",
@@ -9,8 +10,9 @@ define([
     "Itowns/Controls/MiniGlobe",
     "Itowns/GlobeViewExtended"
 ], function (
-    itowns, // FIXME Global for browser only !
+    Itowns,
     Gp,
+    Utils,
     LayerUtils,
     MousePosition,
     LayerSwitcher,
@@ -24,15 +26,25 @@ define([
 
     // Rajout des propriétés de l'extension dans le namespace Gp
     Gp.LayerUtils = LayerUtils ;
-    // creation du namespace pour les extensions itowns
-    itowns.control = {};
-    itowns.control.MousePosition = MousePosition;
-    itowns.control.LayerSwitcher = LayerSwitcher;
-    itowns.control.Attribution = Attribution;
-    itowns.control.Scale = Scale;
-    itowns.control.MiniGlobe = MiniGlobe;
-    itowns.GlobeViewExtended = GlobeViewExtended;
 
-    // FIXME : parce qu'il faut bien retourner quelque chose
+    // on determine l'environnement d'execution : browser ou non ?
+    var scope = typeof window !== "undefined" ? window : {};
+
+    // on voit s'il existe déjà cette variable, sinon on la met en place
+    var _itowns = Itowns || {};
+
+    // creation du namespace pour les extensions itowns
+    _itowns.control = {};
+    _itowns.control.MousePosition = MousePosition;
+    _itowns.control.LayerSwitcher = LayerSwitcher;
+    _itowns.control.Attribution = Attribution;
+    _itowns.control.Scale = Scale;
+    _itowns.control.MiniGlobe = MiniGlobe;
+    _itowns.GlobeViewExtended = GlobeViewExtended;
+
+    // on sauvegarde dans la variable globale !
+    scope.itowns = scope.itowns || {};
+    Utils.assign(_itowns, scope.itowns);
+
     return Gp;
 });

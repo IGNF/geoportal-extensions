@@ -1,10 +1,12 @@
 define([
+    "itowns",
     "Common/Utils",
     "Common/Utils/LayerUtils",
     "Common/Utils/SelectorID",
     "Common/Controls/LayerSwitcherDOM",
     "Itowns/Controls/Widget"
 ], function (
+    Itowns,
     Utils,
     LayerUtils,
     SelectorID,
@@ -197,7 +199,7 @@ define([
                     }
                 }
             };
-            globe.addEventListener(itowns.GLOBE_VIEW_EVENTS.LAYER_ADDED, this._callbacks.onAddedLayerCallBack);
+            globe.addEventListener(Itowns.GLOBE_VIEW_EVENTS.LAYER_ADDED, this._callbacks.onAddedLayerCallBack);
 
             /**
             * ajout du callback onlayerremoved
@@ -211,7 +213,7 @@ define([
                 }
 
             };
-            globe.addEventListener(itowns.GLOBE_VIEW_EVENTS.LAYER_REMOVED, this._callbacks.onRemovedLayerCallBack);
+            globe.addEventListener(Itowns.GLOBE_VIEW_EVENTS.LAYER_REMOVED, this._callbacks.onRemovedLayerCallBack);
 
             /**
             * ajout du callback onlayerchanged:index
@@ -235,7 +237,7 @@ define([
                     self._updateLayerListContainer();
                 }
             };
-            globe.addEventListener(itowns.GLOBE_VIEW_EVENTS.COLOR_LAYERS_ORDER_CHANGED, this._callbacks.onIndexLayerCallBack);
+            globe.addEventListener(Itowns.GLOBE_VIEW_EVENTS.COLOR_LAYERS_ORDER_CHANGED, this._callbacks.onIndexLayerCallBack);
 
             var layers = globe.getColorLayers();
             for ( var ii = 0 ; ii < layers.length ; ++ii ) {
@@ -248,9 +250,9 @@ define([
         } else {
             // On retire les listeners qui étaient liés au layerSwitcher supprimé
             this._globe.removeEventListener("prerender", this._callbacks.onChangedViewCallBack);
-            this._globe.removeEventListener(itowns.GLOBE_VIEW_EVENTS.LAYER_ADDED, this._callbacks.onAddedLayerCallBack);
-            this._globe.removeEventListener(itowns.GLOBE_VIEW_EVENTS.LAYER_REMOVED, this._callbacks.onRemovedLayerCallBack);
-            this._globe.removeEventListener(itowns.GLOBE_VIEW_EVENTS.COLOR_LAYERS_ORDER_CHANGED, this._callbacks.onIndexLayerCallBack);
+            this._globe.removeEventListener(Itowns.GLOBE_VIEW_EVENTS.LAYER_ADDED, this._callbacks.onAddedLayerCallBack);
+            this._globe.removeEventListener(Itowns.GLOBE_VIEW_EVENTS.LAYER_REMOVED, this._callbacks.onRemovedLayerCallBack);
+            this._globe.removeEventListener(Itowns.GLOBE_VIEW_EVENTS.COLOR_LAYERS_ORDER_CHANGED, this._callbacks.onIndexLayerCallBack);
             var layers = this._globe.getColorLayers();
             for ( var j = 0 ; j < layers.length ; ++j ) {
                 layers[j].removeEventListener("opacity-property-changed", this._callbacks.onOpacityLayerCallBack);

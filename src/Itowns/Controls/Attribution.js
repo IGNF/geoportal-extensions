@@ -1,10 +1,12 @@
 define([
+    "itowns",
     "Common/Utils",
     "Common/Utils/SelectorID",
     "Common/Utils/LayerUtils",
     "Common/Controls/AttributionDOM",
     "Itowns/Controls/Widget"
 ], function (
+    Itowns,
     Utils,
     SelectorID,
     LayerUtils,

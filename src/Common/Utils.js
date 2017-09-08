@@ -46,6 +46,31 @@ define([], function () {
                     target[prop] = source[prop];
                 }
             }
+        },
+
+        /**
+         * Merge two objects parameters (deeper than assign)
+         *
+         * @param {Object} dest   - destination object where properties and method will be merge
+         * @param {Object} source - source object from which properties and method will be merge
+         */
+        merge : function (dest, source) {
+            if ( !dest || !source ) {
+                return;
+            }
+            for ( var param in source ) {
+                if ( source.hasOwnProperty(param) ) {
+                    if ( typeof source[param] === "object" ) {
+                        if ( dest.hasOwnProperty(param) ) {
+                            this.merge( dest[param], source[param] );
+                        } else {
+                            dest[param] = source[param];
+                        }
+                    } else {
+                        dest[param] = source[param];
+                    }
+                }
+            }
         }
     };
 
