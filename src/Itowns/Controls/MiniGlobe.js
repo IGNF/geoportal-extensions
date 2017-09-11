@@ -1,9 +1,11 @@
 define([
+    "itowns",
     "Common/Utils",
     "Common/Utils/SelectorID",
     "Common/Controls/MiniGlobeDOM",
     "Itowns/Controls/Widget"
 ], function (
+    Itowns,
     Utils,
     SelectorID,
     MiniGlobeDOM,
@@ -83,11 +85,11 @@ define([
             var minDistance = 6650000;
             var maxDistance = 30000000;
             var positionOnGlobe = {
-                longitude : globe.controls.getCameraTargetGeoPosition().longitude(),
-                latitude : globe.controls.getCameraTargetGeoPosition().latitude(),
-                altitude : globe.controls.getCameraTargetGeoPosition().altitude()
+                longitude : globe.getGlobeView().controls.getCameraTargetGeoPosition().longitude(),
+                latitude : globe.getGlobeView().controls.getCameraTargetGeoPosition().latitude(),
+                altitude : globe.getGlobeView().controls.getCameraTargetGeoPosition().altitude()
             };
-            var miniView = new itowns.GlobeView(this._element, positionOnGlobe, {
+            var miniView = new Itowns.GlobeView(this._element, positionOnGlobe, {
                 // `limit globe' subdivision level:
                 // we're don't need a precise globe model
                 // since the mini globe will always be seen from a far point of view (see minDistance above)
@@ -105,14 +107,14 @@ define([
             /**
               * update miniview's camera with the globeView's camera position
               */
-            globe.onAfterRender = function onAfterRender () {
+            globe.getGlobeView().onAfterRender = function onAfterRender () {
                 // clamp distance camera from globe
-                var range = globe.controls.getRange();
+                var range = globe.getGlobeView().controls.getRange();
                 var distance = Math.min(Math.max(range * 1.5, minDistance), maxDistance);
                 var camera = miniView.camera.camera3D;
                 // Update target miniview's camera
-                camera.position.copy(globe.controls.moveTarget()).setLength(distance);
-                camera.lookAt(globe.controls.moveTarget());
+                camera.position.copy(globe.getGlobeView().controls.moveTarget()).setLength(distance);
+                camera.lookAt(globe.getGlobeView().controls.moveTarget());
                 miniView.notifyChange(true);
             };
 
