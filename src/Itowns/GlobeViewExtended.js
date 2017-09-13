@@ -30,7 +30,7 @@ define([
         /**
         * Overload itowns.GlobeView preRender method
         */
-        this._globeView.preRender = function () {
+        this._globeView.preRender = (function () {
 
             var self = this;
             clearTimeout(this._preRenderTimer);
@@ -50,12 +50,12 @@ define([
                         event.elevationLayersId = [];
                     }
 
-                    self._getCurrentSceneInfos( self.scene, event );
+                    self._getCurrentSceneInfos( self._globeView.scene, event );
 
-                    self.dispatchEvent(event);
+                    self._globeView.dispatchEvent(event);
                 }
             }, 100);
-        };
+        }).bind(this);
     }
 
     /**
