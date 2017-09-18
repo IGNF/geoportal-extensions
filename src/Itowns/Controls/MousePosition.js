@@ -1002,7 +1002,7 @@ define([
                 lon : "---",
                 lat : "---"
             });
-            this.GPresetElevation();
+            this._setElevation(0,0,0);
             return;
         }
 
