@@ -32,13 +32,13 @@ proj4 compatible avec Leaflet.
 **ok**, [an example REVERSE](Reverse/amd-default-1.1.0.html)
 
 cf. Issue #121 sur le Plugin Leaflet.Draw (https://github.com/Leaflet/Leaflet.draw/issues/739)
-Patch sur la branche master..., en attente d'une release...
+Patch sur la branche master..., et en attente de la release 1.2.0...
 
 ## ELEVATIONPATH
 **ok**, [an example ELEVATIONPATH](ElevationPath/amd-default-1.1.0.html)
 
 cf. Issue #121 sur le Plugin Leaflet.Draw (https://github.com/Leaflet/Leaflet.draw/issues/739)
-Patch sur la branche master..., en attente d'une release...
+Patch sur la branche master..., et en attente de la release 1.2.0...
 
 ## AUTOCOMPLETION
 **ok**, [an example AUTOCOMPLETION](AutoCompletion/amd-default-1.1.0.html)

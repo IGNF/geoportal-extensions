@@ -37,7 +37,7 @@ L'utilisation de l'extension Géoportail pour Leaflet se fait via les étapes su
 
 ### Téléchargement
 
-Vous pouvez récupérer l'extension Géoportail pour Leaflet [ici](https://github.com/IGNF/geoportal-extensions/releases/download/leaflet-0.9.0/GpLeaflet.zip).
+Vous pouvez récupérer l'extension Géoportail pour Leaflet [ici](https://github.com/IGNF/geoportal-extensions/releases/download/leaflet-0.9.1/GpPluginLeaflet-0.9.1.zip).
 
 Elle contient l'arborescence suivante :
 
@@ -187,7 +187,8 @@ L'extension Géoportail pour Leaflet peut s'utiliser avec les versions de Leafle
 * [version 0.7.X](http://leafletjs.com/reference-0.7.7.html)
 * [version 1.0.X](http://leafletjs.com/reference-1.0.3.html)
 
-La dernière release Leaflet [version 1.1.0](http://leafletjs.com/reference-1.1.0.html) est incompatible avec l'utilisation du plugin [Leaflet-Draw](https://github.com/Leaflet/Leaflet.draw). 
+La release Leaflet [version 1.1.0](http://leafletjs.com/reference-1.1.0.html) est incompatible avec l'utilisation du plugin [Leaflet-Draw](https://github.com/Leaflet/Leaflet.draw).
+Pour profiter de toutes les fonctionnalités, il faut utiliser la dernière release Leaflet [version 1.2.0](http://leafletjs.com/reference-1.2.0.html).
 
 ### Navigateurs supportés
 
@@ -283,7 +284,7 @@ var lyr = L.geoportalLayer.WMTS({
 lyr.addTo(map); // ou map.addLayer(lyr);
 ```
 
-**Exemple d'utilisation** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/nqz6xmpa/embedded/result,js,html,css/)
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/nqz6xmpa/embedded/result,js,html,css/)
 
 #### Affichage en Lambert 93 (EPSG:2154)
 
@@ -309,7 +310,7 @@ var lyr = L.geoportalLayer.WMTS({
 lyr.addTo(map); // ou map.addLayer(lyr);
 ```
 
-**Exemple d'utilisation** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/kss0j1yp/embedded/result,js,html,css/)
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/kss0j1yp/embedded/result,js,html,css/)
 
 
 NB : D'autres systèmes de coordonnées peuvent être définis : [plus d'informations...](#crs)
@@ -346,7 +347,7 @@ L.geoportalLayer.WMS({
 }).addTo(map);
 ```
 
-**Exemple d'utilisation** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/d9402Lba/embedded/result,js,html,css/)
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/d9402Lba/embedded/result,js,html,css/)
 
 
 <a id="layerswitcher"/>
@@ -425,7 +426,7 @@ map.addControl(
 );
 ```
 
-**Exemple d'utilisation** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/0t1nLra7/embedded/result,js,html,css/)
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/0t1nLra7/embedded/result,js,html,css/)
 
 <a id="geocode"/>
 
@@ -464,7 +465,7 @@ var searchCtrl = L.geoportalControl.SearchEngine({
 map.addControl(searchCtrl);
 ```
 
-**Exemple d'utilisation** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/uLokwebc/embedded/result,js,html,css/)
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/uLokwebc/embedded/result,js,html,css/)
 
 <a id="reverse"/>
 
@@ -501,7 +502,7 @@ var revCtrl = L.geoportalControl.ReverseGeocode({
 map.addControl(revCtrl);
 ```
 
-**Exemple d'utilisation** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/7tohyehs/embedded/result,js,html,css/)
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/7tohyehs/embedded/result,js,html,css/)
 
 <a id="route"/>
 
@@ -538,7 +539,7 @@ var routeCtrl = L.geoportalControl.Route({
 map.addControl(routeCtrl);
 ```
 
-**Exemple d'utilisation** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/s30zo9eo/embedded/result,js,html,css/)
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/s30zo9eo/embedded/result,js,html,css/)
 
 <a id="isocurve"/>
 
@@ -575,7 +576,7 @@ var isoCtrl = L.geoportalControl.Isocurve({
 map.addControl(isoCtrl);
 ```
 
-**Exemple d'utilisation** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/z85j92hv/embedded/result,js,html,css/)
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/z85j92hv/embedded/result,js,html,css/)
 
 <a id="mp"/>
 
@@ -612,11 +613,11 @@ var mpCtrl = L.geoportalControl.MousePosition({
 map.addControl(mpCtrl);
 ```
 
-**Exemple d'utilisation avec affichage unique de l'altitude** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/cenwojqe/embedded/result,js,html,css/)
+**Exemple d'utilisation avec affichage unique de l'altitude** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/cenwojqe/embedded/result,js,html,css/)
 
-**Exemple d'utilisation avec paramétrage des systèmes de coordonnées** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/oy601s3c/embedded/result,js,html,css/)
+**Exemple d'utilisation avec paramétrage des systèmes de coordonnées** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/oy601s3c/embedded/result,js,html,css/)
 
-**Exemple d'utilisation avec appel d'un système de coordonnées défini** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/ggx4u7n8/embedded/result,js,html,css/)
+**Exemple d'utilisation avec appel d'un système de coordonnées défini** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/ggx4u7n8/embedded/result,js,html,css/)
 
 
 <a id="ep"/>
@@ -654,4 +655,5 @@ var ep = L.geoportalControl.ElevationPath({
 map.addControl(ep);
 ```
 
-**Exemple d'utilisation** [![jsFiddle](http://jsfiddle.net/img/embeddable/logo-dark.png)](http://jsfiddle.net/ignfgeoportail/L5ctL3nq/embedded/result,js,html,css/)
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/L5ctL3nq/embedded/result,js,html,css/)
+

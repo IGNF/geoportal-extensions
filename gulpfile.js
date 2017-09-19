@@ -1,4 +1,5 @@
 /* global process */
+/*jshint -W098 */
 
 (function (gulp, gulpLoadPlugins) {
     "use strict";
@@ -325,6 +326,12 @@
     // '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     gulp.task("requirejs-amdclean", [], function (taskReady) {
 
+        // Pour information, (https://github.com/requirejs/r.js/pull/907)
+        // Config like name, include, exclude, insertRequire, stubModules,
+        // rawText, these deal with module IDs.
+        // File path configs like appDir, baseUrl, dir, out, those are all paths
+        // since they deal with the file system.
+
         var requirejs = require("requirejs");
 
         // Pour information,
@@ -510,7 +517,7 @@
             findNestedDependencies : false,
             preserveLicenseComments : false,
             useStrict : true,
-            /** TODO : jsdoc*/
+            /** onModuleBundleComplete */
             onModuleBundleComplete : function (data) {
 
                 var amdclean = require("amdclean");

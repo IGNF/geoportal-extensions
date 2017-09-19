@@ -1,8 +1,21 @@
 # Change Log
 
-## [ol3-0.11.0-dev](https://github.com/IGNF/geoportal-extensions/tree/ol3-0.11.0-dev) (2016-09-02)
-[Full Changelog](https://github.com/IGNF/geoportal-extensions/compare/leaflet-0.8.1-dev...ol3-0.11.0-dev)
+## [ol3-0.12.0-dev](https://github.com/IGNF/geoportal-extensions/tree/ol3-0.12.0-dev) (2017-07-27)
+[Full Changelog](https://github.com/IGNF/geoportal-extensions/compare/leaflet-0.9.0-dev...ol3-0.12.0-dev)
 
+- Edition des coordonnées \(MousePosition\) : infobulle à n'afficher qu'en mode édition [\#134](https://github.com/IGNF/geoportal-extensions/issues/134)
+- Edition des coordonnées \(MousePosition\) : gestion du cas où displayCoordinates = false [\#140](https://github.com/IGNF/geoportal-extensions/issues/140)
+- Edition des coordonnées \(MousePosition\) ne fonctionne pas bien [\#138](https://github.com/IGNF/geoportal-extensions/issues/138)
+- Menage dans les dependances NPM [\#130](https://github.com/IGNF/geoportal-extensions/issues/130)
+- fix \#107 : ol.control.SearchEngine : postalcode autocompletion returns null coordinates \[0,0\] [\#107](https://github.com/IGNF/geoportal-extensions/issues/107)
+- Extension OL3 : paramétrage de la méthode de mesure d'azimuth [\#114](https://github.com/IGNF/geoportal-extensions/issues/114)
+- Attribut "data-key" non reconnu ? [\#113](https://github.com/IGNF/geoportal-extensions/issues/113)
+- Extension OL3: Evénement IGN disponible après l'ajout d'une annotation ? [\#111](https://github.com/IGNF/geoportal-extensions/issues/111)
+- Création d'un processus de build d'extensions "mixtes" [\#105](https://github.com/IGNF/geoportal-extensions/issues/105)
+- Error in GeoportalAttribution when adding a ol.layer.Group [\#102](https://github.com/IGNF/geoportal-extensions/issues/102)
+- Création d'un widget permettant de faire des requêtes GetFeatureInfo ou d'interagir avec les features de la carte [\#100](https://github.com/IGNF/geoportal-extensions/issues/100)
+- Extension OL3 : Gestion des interactions de dessin entre chaque extension [\#99](https://github.com/IGNF/geoportal-extensions/issues/99)
+- \[Extension Route\] Problème d'affichage du tracé du calcul d'itinéraire sur un petit parcours... [\#95](https://github.com/IGNF/geoportal-extensions/issues/95)
 - Préfixage CSS des styles sur les tooltips de mesures : GPmeasureToolTip.css
 [\#96](https://github.com/IGNF/geoportal-extensions/issues/96)
 - fix \#58 : ménage à la suppression du controle du geocodage inverse
@@ -53,9 +66,11 @@
 - Support IE9 envisageable pour OL3 ? [\#13](https://github.com/IGNF/geoportal-extensions/issues/13)
 - fix issue\#29 : LayerSwitcher - addLayer with zIndex param [\#33](https://github.com/IGNF/geoportal-extensions/pull/33)
 
-## [leaflet-0.8.1-dev](https://github.com/IGNF/geoportal-extensions/tree/leaflet-0.8.1-dev) (2016-07-21)
-[Full Changelog](https://github.com/IGNF/geoportal-extensions/compare/ol3-0.10.0...leaflet-0.8.1-dev)
+## [leaflet-0.9.0-dev](https://github.com/IGNF/geoportal-extensions/tree/leaflet-0.9.0-dev) (2017-08-17)
+[Full Changelog](https://github.com/IGNF/geoportal-extensions/compare/ol3-0.12.0...leaflet-0.9.0-dev)
 
+- Extension leaflet : formulation et orthographe du message d'erreur missing apiKey [\#118](https://github.com/IGNF/geoportal-extensions/issues/118)
+- Compatibilité des extensions Leaflet avec la version 1.1.0 de Leaflet [\#121](https://github.com/IGNF/geoportal-extensions/issues/121)
 - L.geoportalControl.Route : compatibilité des markers avec leaflet 1.0.X
 [\#68](https://github.com/IGNF/geoportal-extensions/issues/68)
 - L.geoportalControl.ElevationPath : proposer un outil de calcul de profil altimétrique

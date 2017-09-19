@@ -78,6 +78,11 @@
                             // className : "gp-attribution"
                         }
                     ));
+                    map.addControl(
+                        new ol.control.LayerSwitcher({
+                            collapsed : false
+                        })
+                    );
                 }
             </script>
 
