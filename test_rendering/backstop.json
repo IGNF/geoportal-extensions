@@ -1,0 +1,102 @@
+{
+  "id": "leaflet_backstop",
+  "viewports": [
+    {
+      "label": "phone",
+      "width": 320,
+      "height": 480
+    },
+    {
+      "label": "tablet",
+      "width": 1024,
+      "height": 768
+    }
+  ],
+  "onBeforeScript": "chromy/onBefore.js",
+  "onReadyScript": "chromy/onReady.js",
+  "delay": 0,
+  "scenarios": [
+    {
+      "label": "MousePosition : default",
+      "cookiePath": "backstop_data/engine_scripts/cookies.json",
+      "url": "leaflet/mouseposition.html",
+      "referenceUrl": "",
+      "readyEvent": "",
+      "readySelector": "",
+      "delay": 100,
+      "hideSelectors": [],
+      "removeSelectors": [],
+      "hoverSelector": "",
+      "clickSelector": "label[id^=GPshowMousePositionPicto]",
+      "postInteractionWait": 100,
+      "selectors": [],
+      "selectorExpansion": true,
+      "misMatchThreshold" : 0.1,
+      "requireSameDimensions": true
+    },
+    {
+      "label": "MousePosition : show settings",
+      "url": "leaflet/mouseposition-1.html",
+      "clickSelector": "label[id^=GPshowMousePositionSettingsPicto]"
+    },
+    {
+      "label": "IsoChrone : default",
+      "url": "leaflet/isochrone.html",
+      "clickSelector": "label[id^=GPshowIsochronPicto]"
+    },
+    {
+      "label": "IsoChrone : open exclusions",
+      "url": "leaflet/isochrone-1.html",
+      "clickSelector": "label[id^=GPshowIsoExclusionsPicto]"
+    },
+    {
+      "label": "IsoDistance : default",
+      "url": "leaflet/isodistance.html",
+      "clickSelector": "span[id^=GPisochronChoiceAltDistTxt]"
+    },
+    {
+      "label": "LayerSwitcher : default",
+      "url": "leaflet/layerswitcher.html",
+      "clickSelector": "label[id^=GPshowLayersListPicto]"
+    },
+    {
+      "label": "Reverse : default",
+      "url": "leaflet/reverse.html",
+      "clickSelector": "label[id^=GPshowReverseGeocodingPicto]"
+    },
+    {
+      "label": "Route : default",
+      "url": "leaflet/route.html",
+      "clickSelector": "label[id^=GPshowRoutePicto]"
+    },
+    {
+      "label": "Route : open exclusions",
+      "url": "leaflet/route-1.html",
+      "clickSelector": "label[id^=GPshowRouteExclusionsPicto]"
+    },
+    {
+      "label": "SearchEngine : default",
+      "url": "leaflet/searchengine.html",
+      "clickSelector": "label[id^=GPshowSearchEnginePicto]"
+    },
+    {
+      "label": "SearchEngine : show advanced search",
+      "url": "leaflet/searchengine-1.html",
+      "clickSelector": "span[id^=GPshowAdvancedSearchOpen]"
+    }
+  ],
+  "paths": {
+    "bitmaps_reference": "backstop_data/bitmaps_reference",
+    "bitmaps_test": "backstop_data/bitmaps_test",
+    "engine_scripts": "backstop_data/engine_scripts",
+    "html_report": "backstop_data/html_report",
+    "ci_report": "backstop_data/ci_report"
+  },
+  "report": ["browser"],
+  "engine": "chrome",
+  "engineFlags": [],
+  "asyncCaptureLimit": 5,
+  "asyncCompareLimit": 50,
+  "debug": false,
+  "debugWindow": false
+}

@@ -43,3 +43,6 @@ nb-configuration.xml
 /node_modules/
 /dist/
 /lib/vg/
+/test_rendering/node_modules/
+/test_rendering/bitmaps_reference/**
+/test_rendering/bitmaps_test/**
