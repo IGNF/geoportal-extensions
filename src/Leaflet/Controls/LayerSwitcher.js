@@ -286,7 +286,7 @@ define([
 
             // pas d'ID !?
             // le layer n'est pas chargé dans la carte...
-            if (!id) {
+            if ( typeof id === "undefined" ) {
                 return;
             }
 
@@ -563,6 +563,10 @@ define([
         */
         _updateVisibilityLayer :  function (layer) {
 
+            if (!this._map) {
+                return;
+            }
+            
             this._handlingClick = true;
 
             var visibility = this._layers[L.stamp(layer)].visibility;
