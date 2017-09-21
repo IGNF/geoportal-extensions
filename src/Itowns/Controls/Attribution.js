@@ -94,19 +94,15 @@ define([
             // At every globe movement, attributions may be updated,
             // according to layers on globe, and their visibility.
             /**
-            * ajout du callback onChangedViewCallBack
+            * ajout du callback onPreRenderCallBack
             */
-            this._callbacks.onChangedViewCallBack = function (e) {
-                clearTimeout(this._inRangeTimer);
-                this._inRangeTimer = setTimeout( function () {
-                    if (e.type === "prerender") {
-                        var allLayers = e.colorLayersId.concat(e.elevationLayersId);
-                        self._inRangeUpdate(allLayers, e.extent);
-                    }
-                }, 100);
+            this._callbacks.onPreRenderCallBack = function (e) {
+                var allLayers = e.colorLayersId.concat(e.elevationLayersId);
+
+                self._inRangeUpdate(allLayers, e.extent);
             };
 
-            globe.addEventListener("prerender", this._callbacks.onChangedViewCallBack);
+            globe.addEventListener("prerender", this._callbacks.onPreRenderCallBack);
             globe.preRenderEventFetchViewExtent();
             globe.preRenderEventFetchLayersDisplayed();
         }

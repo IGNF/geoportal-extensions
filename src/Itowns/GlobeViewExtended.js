@@ -27,10 +27,12 @@ define([
         // call constructor
         this._globeView = new Itowns.GlobeView(viewerDiv, coordCarto, options);
 
+        var parentPreRender = this._globeView.preRender;
         /**
         * Overload itowns.GlobeView preRender method
         */
         this._globeView.preRender = (function () {
+            parentPreRender();
 
             var self = this;
             clearTimeout(this._preRenderTimer);
