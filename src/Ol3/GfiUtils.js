@@ -326,7 +326,7 @@ define([
                 var p = positions[k];
                 for ( var h = 0 ; h < layersOrdered[p].length ; ++h ) {
                     var l = layersOrdered[p][h].obj;
-                    var infoFormat = layersOrdered[p].infoFormat || "text/html";
+                    var infoFormat = layersOrdered[p][h].infoFormat || "text/html";
                     var minMaxResolutionOk = true ;
                     if (  l.minResolution  &&
                           l.minResolution > map.getResolution()) {
