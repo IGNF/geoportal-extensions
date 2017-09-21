@@ -47,16 +47,16 @@
             timeOut : 20000,
             onSuccess : function () {
 
-              var wms = Layers.WMS({
-                layer : "ORTHOIMAGERY.ORTHOPHOTOS",
+              var wmts = Layers.WMTS({
+                layer : "GEOGRAPHICALGRIDSYSTEMS.MAPS",
               });
 
               var map  = L.map('map', {
-                zoom : 2,
+                zoom : 17,
                 center : L.latLng(48, 2)
               });
 
-              wms.addTo(map);
+              wmts.addTo(map);
 
               // OK
               // avec les options par defaut

@@ -1382,7 +1382,7 @@ define([
             var idx = ID.index(e.target.id);
             var label = e.target.innerHTML;
             logger.log(idx, label);
-            logger.log(this._suggestedLocations[idx]);
+            logger.log(this._locationsToBeDisplayed[idx]);
 
             if (!idx) {
                 return;
@@ -1393,13 +1393,13 @@ define([
             // AutoCompletion : lon/lat
             // Geocoding : lat/lon
             var position = {
-                x : this._suggestedLocations[idx].position.y,
-                y : this._suggestedLocations[idx].position.x
+                x : this._locationsToBeDisplayed[idx].position.y,
+                y : this._locationsToBeDisplayed[idx].position.x
             };
             var info = {
                 service : "SuggestedLocation",
-                type : this._suggestedLocations[idx].type,
-                fields : this._suggestedLocations[idx]
+                type : this._locationsToBeDisplayed[idx].type,
+                fields : this._locationsToBeDisplayed[idx]
             };
 
             var zoom = this._getZoom(info);
