@@ -1351,7 +1351,7 @@ define([
                                 y : response.locations[0].position.x
                             };
                             // et on l'affiche dans la liste
-                            context._locationsToBeDisplayed.push(context._suggestedLocations[i]);
+                            context._locationsToBeDisplayed.unshift(context._suggestedLocations[i]);
                             context._fillAutoCompletedLocationListContainer(context._locationsToBeDisplayed);
                         }
                     }
