@@ -35,6 +35,13 @@
       "requireSameDimensions": true
     },
     {
+      "label": "MousePosition : move to",
+      "url": "http://localhost/api-v3-plugins/test_rendering/leaflet/interactions/mouseposition.html",
+      "delay": 100,
+      "clickSelector": "#moveTo",
+      "postInteractionWait": 100
+    },
+    {
       "label": "MousePosition : show settings",
       "url": "leaflet/mouseposition-1.html",
       "clickSelector": "label[id^=GPshowMousePositionSettingsPicto]"
@@ -57,7 +64,20 @@
     {
       "label": "LayerSwitcher : default",
       "url": "leaflet/layerswitcher.html",
-      "clickSelector": "label[id^=GPshowLayersListPicto]"
+      "clickSelector": "label[id^=GPshowLayersListPicto]",
+      "postInteractionWait": 1000
+    },
+    {
+      "label": "LayerSwitcher : add a layer",
+      "url": "http://localhost/api-v3-plugins/test_rendering/leaflet/interactions/layerswitcher.html",
+      "clickSelector": "#addLayer",
+      "postInteractionWait": 1000
+    },
+    {
+      "label": "LayerSwitcher : remove a layer",
+      "url": "http://localhost/api-v3-plugins/test_rendering/leaflet/interactions/layerswitcher.html",
+      "clickSelector": "#removeLayer",
+      "postInteractionWait": 1000
     },
     {
       "label": "Reverse : default",
@@ -83,6 +103,18 @@
       "label": "SearchEngine : show advanced search",
       "url": "leaflet/searchengine-1.html",
       "clickSelector": "span[id^=GPshowAdvancedSearchOpen]"
+    },
+    {
+      "label": "SearchEngine : search with autocompletion",
+      "url": "http://localhost/api-v3-plugins/test_rendering/leaflet/interactions/searchengine.html",
+      "clickSelector": "#searchWithAutoComplete",
+      "postInteractionWait": "div[id^=AutoCompletedLocation_0-]"
+    },
+    {
+      "label": "SearchEngine : search with geocoding (postalCode)",
+      "url": "http://localhost/api-v3-plugins/test_rendering/leaflet/interactions/searchengine.html",
+      "clickSelector": "#searchWithGeocoding",
+      "postInteractionWait": "div[id^=GeocodedLocation_0-]"
     }
   ],
   "paths": {

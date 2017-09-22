@@ -9,6 +9,9 @@ API :
 
 # Commandes
 
+Installation des dependances
+> npm install
+
 Images ref.
 > npm run reference
 
@@ -35,7 +38,7 @@ Choix de placer les tests leaflet / openlayers séparés.
 
 ## Choix du type de moteur
 
-*casper* ou *chrome* ou *phantomjs* :
+*casper* ou *chrome* ou *phantom* :
 ```
 "engine": "chrome"
 ```
@@ -70,6 +73,10 @@ Comment selectionner uniquement le composant sans la carte ?
 > **TODO**
 *Simulating user interactions* - Use Casper (or Chrome) scripting inside your
 scenarios to simulate interactions with your on-screen components.
+
+> **FIXME**
+Howto with *Cross Dommain* ???
+*Solution* : ne pas mettre de chemin relatif mais des URLs !!!
 
 # plan de recette
 

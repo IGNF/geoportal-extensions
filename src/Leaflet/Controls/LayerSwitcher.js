@@ -566,7 +566,7 @@ define([
             if (!this._map) {
                 return;
             }
-            
+
             this._handlingClick = true;
 
             var visibility = this._layers[L.stamp(layer)].visibility;
@@ -810,6 +810,7 @@ define([
 
             if (! map.hasLayer(layer)) {
                 console.log("[WARN] LayerSwitcher:addLayer - layer has not been added on map !");
+                map.addLayer(layer);
             }
 
             var id = L.stamp(layer);
