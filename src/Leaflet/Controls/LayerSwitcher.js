@@ -236,7 +236,8 @@ define([
             // - _initLayout
             // - _update
             // - evenements sur la carte : layeradd + layerremove
-            // L.Control.Layers.prototype.onAdd.call(this, map);
+            // this._container = L.Control.Layers.prototype.onAdd.call(this, map);
+
             this._initLayout();
             this._update();
             map.on("layeradd", this._onLayerChange, this);
@@ -338,6 +339,10 @@ define([
             if (!_visibility) {
                 // on met à jour la liste des layers à afficher !
                 this._updateVisibilityLayer(layer);
+            }
+
+            if ( typeof this._expandIfNotCollapsed === "function" ) {
+                this._expandIfNotCollapsed();
             }
 
         },

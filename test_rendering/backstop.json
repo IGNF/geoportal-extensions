@@ -57,9 +57,23 @@
       "clickSelector": "label[id^=GPshowIsoExclusionsPicto]"
     },
     {
+      "label": "IsoChrone : compute time",
+      "url": "http://localhost/api-v3-plugins/test_rendering/leaflet/interactions/isochrone.html",
+      "delay": 100,
+      "clickSelector": "#computeTime",
+      "postInteractionWait": 2000
+    },
+    {
       "label": "IsoDistance : default",
       "url": "leaflet/isodistance.html",
       "clickSelector": "span[id^=GPisochronChoiceAltDistTxt]"
+    },
+    {
+      "label": "IsoDistance : compute distance",
+      "url": "http://localhost/api-v3-plugins/test_rendering/leaflet/interactions/isochrone.html",
+      "delay": 100,
+      "clickSelector": "#computeDistance",
+      "postInteractionWait": 2000
     },
     {
       "label": "LayerSwitcher : default",
@@ -93,6 +107,13 @@
       "label": "Route : open exclusions",
       "url": "leaflet/route-1.html",
       "clickSelector": "label[id^=GPshowRouteExclusionsPicto]"
+    },
+    {
+      "label": "Route : compute",
+      "url": "http://localhost/api-v3-plugins/test_rendering/leaflet/interactions/route.html",
+      "delay": 100,
+      "clickSelector": "#compute",
+      "postInteractionWait": 2000
     },
     {
       "label": "SearchEngine : default",
