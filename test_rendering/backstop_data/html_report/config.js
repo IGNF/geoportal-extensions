@@ -4,7 +4,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_MousePosition__default_0_document_0_phone.png",
-        "test": "../bitmaps_test/20170926-155131/leaflet_backstop_MousePosition__default_0_document_0_phone.png",
+        "test": "../bitmaps_test/20170926-224622/leaflet_backstop_MousePosition__default_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_MousePosition__default_0_document_0_phone.png",
         "label": "MousePosition : default",
@@ -25,7 +25,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_MousePosition__default_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20170926-155131/leaflet_backstop_MousePosition__default_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20170926-224622/leaflet_backstop_MousePosition__default_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_MousePosition__default_0_document_1_tablet.png",
         "label": "MousePosition : default",
@@ -46,7 +46,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_MousePosition__move_to_0_document_0_phone.png",
-        "test": "../bitmaps_test/20170926-155131/leaflet_backstop_MousePosition__move_to_0_document_0_phone.png",
+        "test": "../bitmaps_test/20170926-224622/leaflet_backstop_MousePosition__move_to_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_MousePosition__move_to_0_document_0_phone.png",
         "label": "MousePosition : move to",
@@ -66,7 +66,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_MousePosition__move_to_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20170926-155131/leaflet_backstop_MousePosition__move_to_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20170926-224622/leaflet_backstop_MousePosition__move_to_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_MousePosition__move_to_0_document_1_tablet.png",
         "label": "MousePosition : move to",
@@ -86,7 +86,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_MousePosition__show_settings_0_document_0_phone.png",
-        "test": "../bitmaps_test/20170926-155131/leaflet_backstop_MousePosition__show_settings_0_document_0_phone.png",
+        "test": "../bitmaps_test/20170926-224622/leaflet_backstop_MousePosition__show_settings_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_MousePosition__show_settings_0_document_0_phone.png",
         "label": "MousePosition : show settings",
@@ -106,7 +106,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_MousePosition__show_settings_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20170926-155131/leaflet_backstop_MousePosition__show_settings_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20170926-224622/leaflet_backstop_MousePosition__show_settings_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_MousePosition__show_settings_0_document_1_tablet.png",
         "label": "MousePosition : show settings",
@@ -126,7 +126,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_IsoChrone__default_0_document_0_phone.png",
-        "test": "../bitmaps_test/20170926-155131/leaflet_backstop_IsoChrone__default_0_document_0_phone.png",
+        "test": "../bitmaps_test/20170926-224622/leaflet_backstop_IsoChrone__default_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_IsoChrone__default_0_document_0_phone.png",
         "label": "IsoChrone : default",
@@ -146,7 +146,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_IsoChrone__default_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20170926-155131/leaflet_backstop_IsoChrone__default_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20170926-224622/leaflet_backstop_IsoChrone__default_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_IsoChrone__default_0_document_1_tablet.png",
         "label": "IsoChrone : default",
@@ -166,7 +166,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_IsoChrone__open_exclusions_0_document_0_phone.png",
-        "test": "../bitmaps_test/20170926-155131/leaflet_backstop_IsoChrone__open_exclusions_0_document_0_phone.png",
+        "test": "../bitmaps_test/20170926-224622/leaflet_backstop_IsoChrone__open_exclusions_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_IsoChrone__open_exclusions_0_document_0_phone.png",
         "label": "IsoChrone : open exclusions",
@@ -186,7 +186,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_IsoChrone__open_exclusions_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20170926-155131/leaflet_backstop_IsoChrone__open_exclusions_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20170926-224622/leaflet_backstop_IsoChrone__open_exclusions_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_IsoChrone__open_exclusions_0_document_1_tablet.png",
         "label": "IsoChrone : open exclusions",
@@ -206,7 +206,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_IsoChrone__compute_time_0_document_0_phone.png",
-        "test": "../bitmaps_test/20170926-155131/leaflet_backstop_IsoChrone__compute_time_0_document_0_phone.png",
+        "test": "../bitmaps_test/20170926-224622/leaflet_backstop_IsoChrone__compute_time_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_IsoChrone__compute_time_0_document_0_phone.png",
         "label": "IsoChrone : compute time",
@@ -226,7 +226,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_IsoChrone__compute_time_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20170926-155131/leaflet_backstop_IsoChrone__compute_time_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20170926-224622/leaflet_backstop_IsoChrone__compute_time_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_IsoChrone__compute_time_0_document_1_tablet.png",
         "label": "IsoChrone : compute time",
@@ -246,7 +246,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_IsoDistance__default_0_document_0_phone.png",
-        "test": "../bitmaps_test/20170926-155131/leaflet_backstop_IsoDistance__default_0_document_0_phone.png",
+        "test": "../bitmaps_test/20170926-224622/leaflet_backstop_IsoDistance__default_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_IsoDistance__default_0_document_0_phone.png",
         "label": "IsoDistance : default",
@@ -266,7 +266,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_IsoDistance__default_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20170926-155131/leaflet_backstop_IsoDistance__default_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20170926-224622/leaflet_backstop_IsoDistance__default_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_IsoDistance__default_0_document_1_tablet.png",
         "label": "IsoDistance : default",
@@ -286,7 +286,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_IsoDistance__compute_distance_0_document_0_phone.png",
-        "test": "../bitmaps_test/20170926-155131/leaflet_backstop_IsoDistance__compute_distance_0_document_0_phone.png",
+        "test": "../bitmaps_test/20170926-224622/leaflet_backstop_IsoDistance__compute_distance_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_IsoDistance__compute_distance_0_document_0_phone.png",
         "label": "IsoDistance : compute distance",
@@ -306,7 +306,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_IsoDistance__compute_distance_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20170926-155131/leaflet_backstop_IsoDistance__compute_distance_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20170926-224622/leaflet_backstop_IsoDistance__compute_distance_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_IsoDistance__compute_distance_0_document_1_tablet.png",
         "label": "IsoDistance : compute distance",
@@ -326,7 +326,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_LayerSwitcher__default_0_document_0_phone.png",
-        "test": "../bitmaps_test/20170926-155131/leaflet_backstop_LayerSwitcher__default_0_document_0_phone.png",
+        "test": "../bitmaps_test/20170926-224622/leaflet_backstop_LayerSwitcher__default_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_LayerSwitcher__default_0_document_0_phone.png",
         "label": "LayerSwitcher : default",
@@ -346,7 +346,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_LayerSwitcher__default_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20170926-155131/leaflet_backstop_LayerSwitcher__default_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20170926-224622/leaflet_backstop_LayerSwitcher__default_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_LayerSwitcher__default_0_document_1_tablet.png",
         "label": "LayerSwitcher : default",
@@ -366,7 +366,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_LayerSwitcher__add_a_layer_0_document_0_phone.png",
-        "test": "../bitmaps_test/20170926-155131/leaflet_backstop_LayerSwitcher__add_a_layer_0_document_0_phone.png",
+        "test": "../bitmaps_test/20170926-224622/leaflet_backstop_LayerSwitcher__add_a_layer_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_LayerSwitcher__add_a_layer_0_document_0_phone.png",
         "label": "LayerSwitcher : add a layer",
@@ -386,7 +386,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_LayerSwitcher__add_a_layer_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20170926-155131/leaflet_backstop_LayerSwitcher__add_a_layer_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20170926-224622/leaflet_backstop_LayerSwitcher__add_a_layer_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_LayerSwitcher__add_a_layer_0_document_1_tablet.png",
         "label": "LayerSwitcher : add a layer",
@@ -406,7 +406,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_LayerSwitcher__remove_a_layer_0_document_0_phone.png",
-        "test": "../bitmaps_test/20170926-155131/leaflet_backstop_LayerSwitcher__remove_a_layer_0_document_0_phone.png",
+        "test": "../bitmaps_test/20170926-224622/leaflet_backstop_LayerSwitcher__remove_a_layer_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_LayerSwitcher__remove_a_layer_0_document_0_phone.png",
         "label": "LayerSwitcher : remove a layer",
@@ -426,7 +426,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_LayerSwitcher__remove_a_layer_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20170926-155131/leaflet_backstop_LayerSwitcher__remove_a_layer_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20170926-224622/leaflet_backstop_LayerSwitcher__remove_a_layer_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_LayerSwitcher__remove_a_layer_0_document_1_tablet.png",
         "label": "LayerSwitcher : remove a layer",
@@ -446,7 +446,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_Reverse__default_0_document_0_phone.png",
-        "test": "../bitmaps_test/20170926-155131/leaflet_backstop_Reverse__default_0_document_0_phone.png",
+        "test": "../bitmaps_test/20170926-224622/leaflet_backstop_Reverse__default_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_Reverse__default_0_document_0_phone.png",
         "label": "Reverse : default",
@@ -466,7 +466,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_Reverse__default_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20170926-155131/leaflet_backstop_Reverse__default_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20170926-224622/leaflet_backstop_Reverse__default_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_Reverse__default_0_document_1_tablet.png",
         "label": "Reverse : default",
@@ -486,7 +486,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_Route__default_0_document_0_phone.png",
-        "test": "../bitmaps_test/20170926-155131/leaflet_backstop_Route__default_0_document_0_phone.png",
+        "test": "../bitmaps_test/20170926-224622/leaflet_backstop_Route__default_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_Route__default_0_document_0_phone.png",
         "label": "Route : default",
@@ -506,7 +506,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_Route__default_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20170926-155131/leaflet_backstop_Route__default_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20170926-224622/leaflet_backstop_Route__default_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_Route__default_0_document_1_tablet.png",
         "label": "Route : default",
@@ -526,7 +526,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_Route__open_exclusions_0_document_0_phone.png",
-        "test": "../bitmaps_test/20170926-155131/leaflet_backstop_Route__open_exclusions_0_document_0_phone.png",
+        "test": "../bitmaps_test/20170926-224622/leaflet_backstop_Route__open_exclusions_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_Route__open_exclusions_0_document_0_phone.png",
         "label": "Route : open exclusions",
@@ -546,7 +546,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_Route__open_exclusions_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20170926-155131/leaflet_backstop_Route__open_exclusions_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20170926-224622/leaflet_backstop_Route__open_exclusions_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_Route__open_exclusions_0_document_1_tablet.png",
         "label": "Route : open exclusions",
@@ -566,7 +566,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_Route__compute_0_document_0_phone.png",
-        "test": "../bitmaps_test/20170926-155131/leaflet_backstop_Route__compute_0_document_0_phone.png",
+        "test": "../bitmaps_test/20170926-224622/leaflet_backstop_Route__compute_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_Route__compute_0_document_0_phone.png",
         "label": "Route : compute",
@@ -586,7 +586,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_Route__compute_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20170926-155131/leaflet_backstop_Route__compute_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20170926-224622/leaflet_backstop_Route__compute_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_Route__compute_0_document_1_tablet.png",
         "label": "Route : compute",
@@ -606,7 +606,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_SearchEngine__default_0_document_0_phone.png",
-        "test": "../bitmaps_test/20170926-155131/leaflet_backstop_SearchEngine__default_0_document_0_phone.png",
+        "test": "../bitmaps_test/20170926-224622/leaflet_backstop_SearchEngine__default_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_SearchEngine__default_0_document_0_phone.png",
         "label": "SearchEngine : default",
@@ -626,7 +626,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_SearchEngine__default_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20170926-155131/leaflet_backstop_SearchEngine__default_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20170926-224622/leaflet_backstop_SearchEngine__default_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_SearchEngine__default_0_document_1_tablet.png",
         "label": "SearchEngine : default",
@@ -646,7 +646,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_SearchEngine__show_advanced_search_0_document_0_phone.png",
-        "test": "../bitmaps_test/20170926-155131/leaflet_backstop_SearchEngine__show_advanced_search_0_document_0_phone.png",
+        "test": "../bitmaps_test/20170926-224622/leaflet_backstop_SearchEngine__show_advanced_search_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_SearchEngine__show_advanced_search_0_document_0_phone.png",
         "label": "SearchEngine : show advanced search",
@@ -666,7 +666,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_SearchEngine__show_advanced_search_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20170926-155131/leaflet_backstop_SearchEngine__show_advanced_search_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20170926-224622/leaflet_backstop_SearchEngine__show_advanced_search_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_SearchEngine__show_advanced_search_0_document_1_tablet.png",
         "label": "SearchEngine : show advanced search",
@@ -686,7 +686,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_SearchEngine__search_with_autocompletion_0_document_0_phone.png",
-        "test": "../bitmaps_test/20170926-155131/leaflet_backstop_SearchEngine__search_with_autocompletion_0_document_0_phone.png",
+        "test": "../bitmaps_test/20170926-224622/leaflet_backstop_SearchEngine__search_with_autocompletion_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_SearchEngine__search_with_autocompletion_0_document_0_phone.png",
         "label": "SearchEngine : search with autocompletion",
@@ -706,7 +706,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_SearchEngine__search_with_autocompletion_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20170926-155131/leaflet_backstop_SearchEngine__search_with_autocompletion_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20170926-224622/leaflet_backstop_SearchEngine__search_with_autocompletion_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_SearchEngine__search_with_autocompletion_0_document_1_tablet.png",
         "label": "SearchEngine : search with autocompletion",
@@ -726,7 +726,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_SearchEngine__search_with_geocoding_postalCode_0_document_0_phone.png",
-        "test": "../bitmaps_test/20170926-155131/leaflet_backstop_SearchEngine__search_with_geocoding_postalCode_0_document_0_phone.png",
+        "test": "../bitmaps_test/20170926-224622/leaflet_backstop_SearchEngine__search_with_geocoding_postalCode_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_SearchEngine__search_with_geocoding_postalCode_0_document_0_phone.png",
         "label": "SearchEngine : search with geocoding (postalCode)",
@@ -738,7 +738,6 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "analysisTime": 34,
           "getDiffImage": null
         }
       },
@@ -747,7 +746,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_SearchEngine__search_with_geocoding_postalCode_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20170926-155131/leaflet_backstop_SearchEngine__search_with_geocoding_postalCode_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20170926-224622/leaflet_backstop_SearchEngine__search_with_geocoding_postalCode_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_SearchEngine__search_with_geocoding_postalCode_0_document_1_tablet.png",
         "label": "SearchEngine : search with geocoding (postalCode)",
