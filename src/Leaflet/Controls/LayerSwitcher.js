@@ -348,6 +348,15 @@ define([
         },
 
         /**
+        * Method 'addTo'
+        * (overwritten : L.Control.Layers because of exception with _expandIfNotCollapsed())
+        */
+        addTo : function (map) {
+            L.Control.prototype.addTo.call(this, map);
+            return this;
+        },
+
+        /**
         * Creation of layers of container
         * (extend to L.Control.Layers)
         *
