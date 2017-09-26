@@ -16,70 +16,83 @@
     <!-- code -->
     <script>
 
-      var layerSwitcher, ign, osm;
+      var layerSwitcher, wmts0, wmts1;
           window.onload = function () {
 
 
-              ign = L.geoportalLayer.WMTS({
-                layer : "ORTHOIMAGERY.ORTHOPHOTOS",
-              });
+            wmts0 = L.geoportalLayer.WMTS({
+              layer : "ORTHOIMAGERY.ORTHOPHOTOS",
+            });
 
-              osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-                  attribution: 'OpenStreetMap',
-                  opacity : 1
-              });
+            wmts1 = L.geoportalLayer.WMTS({
+                layer : "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+            },{
+              opacity : 0.5
+            });
 
-              var map  = L.map('map', {
-                zoom : 8,
-                center : L.latLng(48, 2),
-                // layers : [osm, ign],
-                // minZoom : 3,
-                // maxZoom : 18,
-                // cf. http://leafletjs.com/reference.html#map-usage
-                // bounceAtZoomLimits
-                // fadeAnimation : true,
-                // zoomAnimation,
-                // zoomAnimationThreshold,
-                // markerZoomAnimation,
-              });
+            var map  = L.map('map', {
+              zoom : 8,
+              center : L.latLng(48, 2),
+              // layers : [wmts0],
+              // minZoom : 3,
+              // maxZoom : 18,
+              // cf. http://leafletjs.com/reference.html#map-usage
+              // bounceAtZoomLimits
+              fadeAnimation : true,
+              // zoomAnimation,
+              // zoomAnimationThreshold,
+              // markerZoomAnimation,
+            });
 
-              // map.addLayer(wmts);
-              // map.addLayer(wms);
+            map.addLayer(wmts0);
 
-              var layers = [
-                {
-                  layer : osm,
-                  display : true,
-                  config : {
-                     title : "Couche OSM",
-                     description : "OpenStreetMap",
-                     visibility : true
-                  }
+            var layers = [
+              {
+                layer : wmts0,
+                display : true,
+                config : {
+                   title : "Les photos IGN",
+                   description : "IGN",
+                   visibility : true,
+                   legends : [{
+                     minScaleDenominator: 1067,
+                     url: "http://localhost/"
+                   }],
+                   quicklookUrl : "http://localhost/"
                 }
-              ];
+              }
+            ];
 
               layerSwitcher = L.geoportalControl.LayerSwitcher({
                 layers : layers,
-                collapsed : true // FIXME BUG avec collapsed:false lorsque l'on ajoute
-                // une couche (cf. Leaflet et _expandIfNotCollapsed())
+                collapsed : false
               });
               map.addControl(layerSwitcher);
 
               document.getElementById("addLayer").onclick = function (e) {
 
-                layerSwitcher.addLayer(ign, {
+                layerSwitcher.addLayer(wmts1, {
                   display : true,
                   config : {
-                    title : "Couche IGN",
-                    description : "Images IGN",
+                    title : "Les cartes IGN",
+                    description : "IGN",
                     visibility : true
                   }
                 });
-                layerSwitcher.setOpacity(ign, 0.5);
+                layerSwitcher.setOpacity(wmts1, 0.5);
               }
 
               document.getElementById("removeLayer").onclick = function (e) {
-                layerSwitcher.removeLayer(osm);
+                layerSwitcher.addLayer(wmts1, {
+                  display : true,
+                  config : {
+                    title : "Les cartes IGN",
+                    description : "IGN",
+                    visibility : true
+                  }
+                });
+                layerSwitcher.setOpacity(wmts1, 0.5);
+                layerSwitcher.removeLayer(wmts0);
               }
         }
 

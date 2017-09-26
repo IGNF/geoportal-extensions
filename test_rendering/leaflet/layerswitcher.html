@@ -19,22 +19,20 @@
           window.onload = function () {
 
 
-              var wms = L.geoportalLayer.WMTS({
+              var wmts0 = L.geoportalLayer.WMTS({
                 layer : "ORTHOIMAGERY.ORTHOPHOTOS",
-              },
-              {
-                opacity : 0.3
               });
 
-              var wmts = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-                  attribution: 'OpenStreetMap',
-                  opacity : 1
+              var wmts1 = L.geoportalLayer.WMTS({
+                  layer : "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+              },{
+                opacity : 0.5
               });
 
               var map  = L.map('map', {
                 zoom : 8,
                 center : L.latLng(48, 2),
-                layers : [wmts, wms],
+                layers : [wmts0, wmts1],
                 // minZoom : 3,
                 // maxZoom : 18,
                 // cf. http://leafletjs.com/reference.html#map-usage
@@ -45,16 +43,16 @@
                 // markerZoomAnimation,
               });
 
-              map.addLayer(wmts);
-              map.addLayer(wms);
+              map.addLayer(wmts0);
+              map.addLayer(wmts1);
 
               var layers = [
                 {
-                  layer : wmts,
+                  layer : wmts0,
                   display : true,
                   config : {
-                     title : "Layer OSM",
-                     description : "OpenStreetMap",
+                     title : "IGN Photo",
+                     description : "IGN",
                      visibility : true,
                      legends : [{
                        minScaleDenominator: 1067,
@@ -62,10 +60,13 @@
                      }],
                      quicklookUrl : "http://localhost/"
                   }
+                },
+                {
+                  layer : wmts1
                 }
               ];
 
-              var layerSwitcher = L.geoportalControl.LayerSwitcher({layers : layers, collapsed : true});
+              var layerSwitcher = L.geoportalControl.LayerSwitcher({layers : layers, collapsed : false});
               map.addControl(layerSwitcher);
         }
     </script>

@@ -341,10 +341,6 @@ define([
                 this._updateVisibilityLayer(layer);
             }
 
-            if ( typeof this._expandIfNotCollapsed === "function" ) {
-                this._expandIfNotCollapsed();
-            }
-
         },
 
         /**

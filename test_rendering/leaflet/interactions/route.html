@@ -22,7 +22,7 @@
 
               var map  = L.map('map', {
                 zoom : 12,
-                center : L.latLng(49.5, 2.5),
+                center : L.latLng(49.15, 3.10),
                 // layers : [wmts] // , wms1, wms2, wms3
                 // minZoom : 3,
                 // maxZoom : 18,
@@ -44,8 +44,8 @@
               document.getElementById("compute").onclick = function(e) {
                 route.compute([
                   L.latLng(49, 3),
-                  L.latLng(49.75, 2.5),
-                  L.latLng(50, 2)
+                  L.latLng(49.15, 3.15),
+                  L.latLng(49.25, 3.05)
                 ], {
                   computation : "shortest",
                   transport : "Pieton",

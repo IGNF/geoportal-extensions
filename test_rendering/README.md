@@ -130,9 +130,6 @@ boites de dialogue, clic sur un bouton,...) possibles sur chaque extension sont
 * test d'ajout d'une couche
 * test de suppression d'une couche
 
-> **FIXME**
-Probleme avec l'option collapsed depuis la migration sur leaflet 1.2.0...
-
 ### ElevationPath
 TODO
 
