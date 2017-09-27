@@ -39,7 +39,7 @@
       "url": "http://localhost/api-v3-plugins/test_rendering/leaflet/interactions/mouseposition.html",
       "delay": 100,
       "clickSelector": "#moveTo",
-      "postInteractionWait": 100
+      "postInteractionWait": 1000
     },
     {
       "label": "MousePosition : show settings",
@@ -136,6 +136,56 @@
       "url": "http://localhost/api-v3-plugins/test_rendering/leaflet/interactions/searchengine.html",
       "clickSelector": "#searchWithGeocoding",
       "postInteractionWait": "div[id^=GeocodedLocation_0-]"
+    },
+    {
+      "label": "MousePosition : extension only",
+      "url": "leaflet/mouseposition.html",
+      "clickSelector": "label[id^=GPshowMousePositionPicto]",
+      "postInteractionWait": 100,
+      "selectors": [
+        "div[id^=GPmousePosition-]"
+      ],
+      "requireSameDimensions": true
+    },
+    {
+      "label": "IsoChrone : extension only",
+      "url": "leaflet/isochrone.html",
+      "clickSelector": "label[id^=GPshowIsochronPicto]",
+      "postInteractionWait": 100,
+      "selectors": [
+        "div[id^=GPisochron-]"
+      ],
+      "requireSameDimensions": true
+    },
+    {
+      "label": "Reverse : extension only",
+      "url": "leaflet/reverse.html",
+      "clickSelector": "label[id^=GPshowReverseGeocodingPicto]",
+      "postInteractionWait": 100,
+      "selectors": [
+        "div[id^=GPreverseGeocoding-]"
+      ],
+      "requireSameDimensions": true
+    },
+    {
+      "label": "Route : extension only",
+      "url": "leaflet/route.html",
+      "clickSelector": "label[id^=GPshowRoutePicto]",
+      "postInteractionWait": 100,
+      "selectors": [
+        "div[id^=GProute-]"
+      ],
+      "requireSameDimensions": true
+    },
+    {
+      "label": "SearchEngine : extension only",
+      "url": "leaflet/searchengine.html",
+      "clickSelector": "label[id^=GPshowSearchEnginePicto]",
+      "postInteractionWait": 100,
+      "selectors": [
+        "div[id^=GPsearchEngine-]"
+      ],
+      "requireSameDimensions": true
     }
   ],
   "paths": {

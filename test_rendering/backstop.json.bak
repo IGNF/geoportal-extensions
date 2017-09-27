@@ -1,5 +1,5 @@
 {
-  "id": "leaflet_backstop",
+  "id": "leaflet_elements_backstop",
   "viewports": [
     {
       "label": "phone",
@@ -17,20 +17,53 @@
   "delay": 0,
   "scenarios": [
     {
-      "label": "MousePosition : move to",
-      "url": "http://localhost/api-v3-plugins/test_rendering/leaflet/interactions/mouseposition.html",
-      "referenceUrl": "",
-      "readyEvent": "",
-      "readySelector": "",
-      "delay": 100,
-      "hideSelectors": [],
-      "removeSelectors": [],
-      "hoverSelector": "",
-      "clickSelector": "#moveTo",
+      "label": "MousePosition : extension only",
+      "url": "leaflet/mouseposition.html",
+      "clickSelector": "label[id^=GPshowMousePositionPicto]",
       "postInteractionWait": 100,
-      "selectors": [],
-      "selectorExpansion": true,
-      "misMatchThreshold" : 0.1,
+      "selectors": [
+        "div[id^=GPmousePosition-]"
+      ],
+      "requireSameDimensions": true
+    },
+    {
+      "label": "IsoChrone : extension only",
+      "url": "leaflet/isochrone.html",
+      "clickSelector": "label[id^=GPshowIsochronPicto]",
+      "postInteractionWait": 100,
+      "selectors": [
+        "div[id^=GPisochron-]"
+      ],
+      "requireSameDimensions": true
+    },
+    {
+      "label": "Reverse : extension only",
+      "url": "leaflet/reverse.html",
+      "clickSelector": "label[id^=GPshowReverseGeocodingPicto]",
+      "postInteractionWait": 100,
+      "selectors": [
+        "div[id^=GPreverseGeocoding-]"
+      ],
+      "requireSameDimensions": true
+    },
+    {
+      "label": "Route : extension only",
+      "url": "leaflet/route.html",
+      "clickSelector": "label[id^=GPshowRoutePicto]",
+      "postInteractionWait": 100,
+      "selectors": [
+        "div[id^=GProute-]"
+      ],
+      "requireSameDimensions": true
+    },
+    {
+      "label": "SearchEngine : extension only",
+      "url": "leaflet/searchengine.html",
+      "clickSelector": "label[id^=GPshowSearchEnginePicto]",
+      "postInteractionWait": 100,
+      "selectors": [
+        "div[id^=GPsearchEngine-]"
+      ],
       "requireSameDimensions": true
     }
   ],
@@ -47,5 +80,5 @@
   "asyncCaptureLimit": 5,
   "asyncCompareLimit": 50,
   "debug": false,
-  "debugWindow": true
+  "debugWindow": false
 }

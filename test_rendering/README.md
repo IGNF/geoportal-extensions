@@ -62,9 +62,6 @@ Exemple de selecteurs :
 > **Notes**
 Par defaut, c'est tout le document que l'on capture (screenshot) !
 
-> **FIXME**
-Comment selectionner uniquement le composant sans la carte ?
-
 ## Choix des evenements déclencheurs de la capture
 
 > **TODO**
