@@ -265,8 +265,6 @@ define([
                 this._element.removeChild(this._element.lastChild);
             }
             this._element.parentNode.removeChild(this._element);
-
-            return ;
         }
 
         // call original setGlobe method

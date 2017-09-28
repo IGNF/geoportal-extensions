@@ -20,9 +20,9 @@ define([
      * Control to manage layers attributions
      *
      * @constructor
-     * @alias itowns.control.Attribution
+     * @alias itowns.control.Attributions
      * @extends {itowns.control.Widget}
-     * @alias itowns.control.Attribution
+     * @alias itowns.control.Attributions
      * @param {Object} aOptions - control options
      * @param {Object} [aOptions.options] - Itowns.control.Control options
      * @param {Boolean} [aOptions.options.collapsed = false] - Specify if the control has to be opened or not.
@@ -33,12 +33,12 @@ define([
      *  }
      * ));
      */
-    function Attribution (aOptions) {
+    function Attributions (aOptions) {
 
         aOptions = aOptions || {};
         var options = aOptions.options || {};
 
-        if (!(this instanceof Attribution)) {
+        if (!(this instanceof Attributions)) {
             throw new TypeError("ERROR CLASS_CONSTRUCTOR");
         }
 
@@ -54,7 +54,7 @@ define([
         Widget.call(
             this,
             {
-                name : "Attribution",
+                name : "Attributions",
                 element : container,
                 target : targetDiv
             }
@@ -62,19 +62,19 @@ define([
     }
 
     /*
-     * @lends module:Attribution
+     * @lends module:Attributions
      */
-    Attribution.prototype = Object.create(Widget.prototype, {});
+    Attributions.prototype = Object.create(Widget.prototype, {});
 
     // on récupère les méthodes de la classe commune AttributionDOM
-    Utils.assign(AttributionDOM, Attribution.prototype);
+    Utils.assign(AttributionDOM, Attributions.prototype);
 
     /**
      * Constructor (alias)
      *
      * @private
      */
-    Attribution.prototype.constructor = Attribution;
+    Attributions.prototype.constructor = Attributions;
 
     // ################################################################### //
     // ############## public methods (getters, setters) ################## //
@@ -83,7 +83,7 @@ define([
     /**
      * Bind globe to control
      */
-    Attribution.prototype.setGlobe = function (globe) {
+    Attributions.prototype.setGlobe = function (globe) {
         // info : cette méthode est appelée (entre autres?) après un globe.addWidget() ou globe.removeWidget()
 
         if ( globe ) { // dans le cas de l'ajout du contrôle au globe
@@ -105,6 +105,15 @@ define([
             globe.addEventListener("prerender", this._callbacks.onPreRenderCallBack);
             globe.preRenderEventFetchViewExtent();
             globe.preRenderEventFetchLayersDisplayed();
+        } else {
+            // suppression listener
+            this._globe.removeEventListener( "prerender", this._callbacks.onPreRenderCallBack );
+
+            // suppression DOM
+            while (this._element.hasChildNodes()) {
+                this._element.removeChild(this._element.lastChild);
+            }
+            this._element.parentNode.removeChild(this._element);
         }
 
         // call original setGlobe method
@@ -116,9 +125,9 @@ define([
      *
      * @param {Boolean} collapsed - True to collapse control, False to display it
      */
-    Attribution.prototype.setCollapsed = function (collapsed) {
+    Attributions.prototype.setCollapsed = function (collapsed) {
         if ( collapsed === undefined ) {
-            console.log("[ERROR] Attribution:setCollapsed - missing collapsed parameter");
+            console.log("[ERROR] Attributions:setCollapsed - missing collapsed parameter");
             return;
         }
         var isCollapsed = this.getCollapsed();
@@ -134,7 +143,7 @@ define([
      *
      * @return {Boolean} collapsed
      */
-    Attribution.prototype.getCollapsed = function () {
+    Attributions.prototype.getCollapsed = function () {
         return !document.getElementById(this._addUID("GPshowAttributionsList")).checked;
     };
 
@@ -143,12 +152,12 @@ define([
     // ################################################################### //
 
     /**
-     * Initialize Attribution control (called by constructor)
+     * Initialize Attributions control (called by constructor)
      *
      * @param {Object} options - Itowns.control.Control options
      * @private
      */
-    Attribution.prototype._initialize = function (options) {
+    Attributions.prototype._initialize = function (options) {
         // identifiant du contrôle : utile pour suffixer les identifiants CSS (pour gérer le cas où il y en a plusieurs dans la même page)
         this._uid = SelectorID.generate();
 
@@ -169,7 +178,7 @@ define([
      * @param {Object} options - control options
      * @private
      */
-    Attribution.prototype._initContainer = function (options) {
+    Attributions.prototype._initContainer = function (options) {
 
         var container = this._createMainContainerElement();
 
@@ -204,7 +213,7 @@ define([
      * @private
      */
 
-    Attribution.prototype._inRangeUpdate = function (layersDisplayed, extent) {
+    Attributions.prototype._inRangeUpdate = function (layersDisplayed, extent) {
         var globe = this.getGlobe();
 
         var scaleDenominator = 1 / globe.getScale();
@@ -279,7 +288,7 @@ define([
      * @method _updateAttributionListContainer
      * @private
      */
-    Attribution.prototype._updateAttributionListContainer = function (attributions) {
+    Attributions.prototype._updateAttributionListContainer = function (attributions) {
         var element = document.getElementById(this._addUID("GPAttributionsList"));
         document.getElementById(this._addUID("GPAttributionsList")).parentNode.removeChild(element);
 
@@ -297,7 +306,7 @@ define([
         this._attributionListContainer.appendChild(ul);
     };
 
-    Attribution.prototype._resolutionsWGS84 = {
+    Attributions.prototype._resolutionsWGS84 = {
         0 : 156543.033928041,
         1 : 78271.51696402048,
         2 : 39135.758482010235,
@@ -322,5 +331,5 @@ define([
         21 : 0.0746455354347424
     };
 
-    return Attribution;
+    return Attributions;
 });

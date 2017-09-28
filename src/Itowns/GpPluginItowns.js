@@ -5,7 +5,7 @@ define([
     "Common/Utils/LayerUtils",
     "Itowns/Controls/MousePosition",
     "Itowns/Controls/LayerSwitcher",
-    "Itowns/Controls/Attribution",
+    "Itowns/Controls/Attributions",
     "Itowns/Controls/Scale",
     "Itowns/Controls/MiniGlobe",
     "Itowns/GlobeViewExtended"
@@ -16,7 +16,7 @@ define([
     LayerUtils,
     MousePosition,
     LayerSwitcher,
-    Attribution,
+    Attributions,
     Scale,
     MiniGlobe,
     GlobeViewExtended
@@ -37,7 +37,7 @@ define([
     _itowns.control = {};
     _itowns.control.MousePosition = MousePosition;
     _itowns.control.LayerSwitcher = LayerSwitcher;
-    _itowns.control.Attribution = Attribution;
+    _itowns.control.Attributions = Attributions;
     _itowns.control.Scale = Scale;
     _itowns.control.MiniGlobe = MiniGlobe;
     _itowns.GlobeViewExtended = GlobeViewExtended;
