@@ -95,6 +95,8 @@ define([
             this._initComputation();
 
             /** container principaux */
+            this._showRouteContainer = null;
+            this._pictoRouteContainer = null;
             this._waitingContainer = null;
             this._formRouteContainer = null;
             this._resultsRouteContainer = null;
@@ -399,7 +401,7 @@ define([
                 inputShow.checked = true;
             }
 
-            var picto = this._createShowRoutePictoElement();
+            var picto = this._pictoRouteContainer = this._createShowRoutePictoElement();
             container.appendChild(picto);
 
             var routePanel = this._createRoutePanelElement();
@@ -1390,6 +1392,72 @@ define([
             }
 
             return d;
+        },
+
+        // ################################################################### //
+        // ###### METHODES PUBLIQUES (INTERFACE AVEC LE CONTROLE) ############ //
+        // ################################################################### //
+
+        /**
+        * This method is public.
+        * It allows to control the execution of a traitment.
+        *
+        * @param {Object} positions - positions = [{lng: , lat: }]
+        * @param {Object} options - options = {...}
+        */
+        compute : function (positions, options) {
+
+            if (!this._showRouteContainer.checked) {
+                this._pictoRouteContainer.click();
+            }
+
+            var map = this._map;
+            if ( !map ) {
+                return;
+            }
+
+            // Les options par defauts
+            var settings = {
+                computation : "fastest",
+                transport : "Voiture",
+                exclusions : []
+            };
+
+            // On recupere les options
+            L.Util.extend(settings, options);
+
+            // Liste des points !
+            var points = this._currentPoints;
+
+            var start = 0;
+            points[start].setCoordinate(positions[start]);
+            var startInput = L.DomUtil.get("GPlocationOrigin_" + 1 + "-" + this._uid);
+            startInput.value = positions[start].lng + " , " + positions[start].lat;
+
+            var end = positions.length - 1;
+            points[6].setCoordinate(positions[end]);
+            var endInput = L.DomUtil.get("GPlocationOrigin_" + 7 + "-" + this._uid);
+            endInput.value = positions[end].lng + " , " + positions[end].lat;
+
+            for (var i = 1; i < positions.length - 1; i++) {
+                points[i].setCoordinate(positions[i]);
+                var stepInput = L.DomUtil.get("GPlocationOrigin_" + i + "-" + this._uid);
+                stepInput.value = positions[i].lng + " , " + positions[i].lat;
+            }
+
+            (settings.transport === "Voiture") ?
+                L.DomUtil.get("GProuteTransportCar-" + this._uid).checked = true :
+                L.DomUtil.get("GProuteTransportPedestrian-" + this._uid).checked = true;
+
+            (settings.computation === "fastest") ?
+                L.DomUtil.get("GProuteComputationSelect-" + this._uid).selectedIndex = 0 :
+                L.DomUtil.get("GProuteComputationSelect-" + this._uid).selectedIndex = 1;
+
+            // TODO exclusion !
+
+            // Calcul
+            this.onRouteComputationSubmit(settings);
+
         }
     });
 

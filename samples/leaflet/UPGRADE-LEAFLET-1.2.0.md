@@ -12,6 +12,8 @@ Les exemples sont suffixés de la version de leaflet :
 
 ## LAYERSWITCHER
 **ok**, [an example LAYERSWITCHER](LayerSwitcher/amd-default-1.2.0.html)
+>**NOTE**
+Il reste des problèmes d'heritage. Il va falloir revoir le code...
 
 ## MOUSEPOSITION
 **ok**, [an example MOUSEPOSITION](MousePosition/amd-default-1.2.0.html)

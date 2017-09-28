@@ -236,7 +236,8 @@ define([
             // - _initLayout
             // - _update
             // - evenements sur la carte : layeradd + layerremove
-            // L.Control.Layers.prototype.onAdd.call(this, map);
+            // this._container = L.Control.Layers.prototype.onAdd.call(this, map);
+
             this._initLayout();
             this._update();
             map.on("layeradd", this._onLayerChange, this);
@@ -286,7 +287,7 @@ define([
 
             // pas d'ID !?
             // le layer n'est pas chargé dans la carte...
-            if (!id) {
+            if ( typeof id === "undefined" ) {
                 return;
             }
 
@@ -340,6 +341,15 @@ define([
                 this._updateVisibilityLayer(layer);
             }
 
+        },
+
+        /**
+        * Method 'addTo'
+        * (overwritten : L.Control.Layers because of exception with _expandIfNotCollapsed())
+        */
+        addTo : function (map) {
+            L.Control.prototype.addTo.call(this, map);
+            return this;
         },
 
         /**
@@ -562,6 +572,10 @@ define([
         * @param {Object} layer - layer
         */
         _updateVisibilityLayer :  function (layer) {
+
+            if (!this._map) {
+                return;
+            }
 
             this._handlingClick = true;
 
@@ -806,6 +820,7 @@ define([
 
             if (! map.hasLayer(layer)) {
                 console.log("[WARN] LayerSwitcher:addLayer - layer has not been added on map !");
+                map.addLayer(layer);
             }
 
             var id = L.stamp(layer);

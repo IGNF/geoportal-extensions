@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <meta charset="UTF-8">
+  <!-- Library Leaflet -->
+  <link rel="stylesheet" href="../../../lib/leaflet/leaflet.css" />
+  <script src="../../../lib/leaflet/leaflet.js"></script>
+
+  <!-- Plugin leaflet IGN -->
+  <link rel="stylesheet" href="../../../dist/leaflet/GpPluginLeaflet.css" />
+  <script src="../../../dist/leaflet/GpPluginLeaflet-src.js"></script>
+
+</head>
+<body>
+    <!-- code -->
+    <script>
+
+      var map, search;
+
+          window.onload = function () {
+
+              map  = L.map('map', {
+                zoom : 6,
+                center : L.latLng(48, 2),
+                // layers : [wmts, wms1, wms2, wms3]
+                // minZoom : 3,
+                // maxZoom : 18,
+                // cf. http://leafletjs.com/reference.html#map-usage
+                // bounceAtZoomLimits
+                // fadeAnimation,
+                // zoomAnimation,
+                // zoomAnimationThreshold,
+                // markerZoomAnimation,
+              });
+
+              // map.addLayer(wmts);
+              search = L.geoportalControl.SearchEngine({
+                apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
+                collapsed : true
+              });
+              map.addControl(search);
+
+              document.getElementById("searchWithAutoComplete").onclick = function (e) {
+                search.setText("Saint Mandé", false, {
+                  autocompleteOptions : {
+                    filterOptions : {
+                      type : ["PositionOfInterest"]
+                    }
+                  }
+                });
+              }
+
+              document.getElementById("searchWithGeocoding").onclick = function (e) {
+                search.setText("75000 Paris", true, {
+                  geocodeOptions : {
+                    filterOptions : {
+                      type : ["PositionOfInterest"]
+                    }
+                  }
+                });
+              }
+
+
+        }
+    </script>
+
+    <!-- map -->
+    <div id="map" style="height: 400px;"></div>
+    <button type="button" id="searchWithAutoComplete">Recherche avec l'autocompletion</button>
+    <button type="button" id="searchWithGeocoding">Recherche avec le geocodage</button>
+
+</body>
+</html>

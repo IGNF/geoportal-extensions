@@ -1233,7 +1233,7 @@ define([
                             y : response.locations[0].position.x
                         };
                         // et on l'affiche dans la liste
-                        context._locationsToBeDisplayed.push(context._suggestedLocations[i]);
+                        context._locationsToBeDisplayed.unshift(context._suggestedLocations[i]);
                         context._fillAutoCompletedLocationListContainer(context._locationsToBeDisplayed);
                     }
                 }
@@ -1269,24 +1269,24 @@ define([
 
         var idx = SelectorID.index(e.target.id);
         logger.log(idx);
-        logger.log(this._suggestedLocations[idx]);
+        logger.log(this._locationsToBeDisplayed[idx]);
 
         if (!idx) {
             return;
         }
 
         var position = [
-            this._suggestedLocations[idx].position.x,
-            this._suggestedLocations[idx].position.y
+            this._locationsToBeDisplayed[idx].position.x,
+            this._locationsToBeDisplayed[idx].position.y
         ];
         var info = {
             service : "SuggestedLocation",
-            type : this._suggestedLocations[idx].type,
-            fields : this._suggestedLocations[idx]
+            type : this._locationsToBeDisplayed[idx].type,
+            fields : this._locationsToBeDisplayed[idx]
         };
 
         // on ajoute le texte de l'autocomplétion dans l'input
-        var label = this._suggestedLocations[idx].fullText;
+        var label = this._locationsToBeDisplayed[idx].fullText;
         this._setLabel(label);
         info.label = label;
 

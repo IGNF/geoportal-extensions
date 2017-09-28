@@ -200,6 +200,12 @@ define([
         },
 
         /**
+        * set coordinate : {lon,lat || x,y || N,E}
+        */
+        setCoordinate : function (coordinate) {
+            this._displayResultOfCoordinate(coordinate);
+        },
+        /**
         * get coordinate inverse (EPSG:4326)
         */
         getCoordinateInverse : function () {

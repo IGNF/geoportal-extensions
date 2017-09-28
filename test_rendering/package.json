@@ -1,0 +1,18 @@
+{
+  "name": "test_rendering_backstopjs",
+  "version": "0.0.0",
+  "description": "",
+  "main": "",
+  "author": "",
+  "license": "",
+  "scripts": {
+    "echo": "node ./node_modules/backstopjs/cli/index.js echo",
+    "genConfig": "node ./node_modules/backstopjs/cli/index.js genConfig",
+    "openReport": "node ./node_modules/backstopjs/cli/index.js openReport",
+    "reference": "node ./node_modules/backstopjs/cli/index.js reference",
+    "test": "node ./node_modules/backstopjs/cli/index.js test"
+  },
+  "dependencies": {
+    "backstopjs": "^3.0.25"
+  }
+}
