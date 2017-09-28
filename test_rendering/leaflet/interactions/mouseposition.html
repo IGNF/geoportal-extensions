@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <meta charset="UTF-8">
+  <!-- Library Leaflet -->
+  <link rel="stylesheet" href="../../../lib/leaflet/leaflet.css" />
+  <script src="../../../lib/leaflet/leaflet.js"></script>
+
+  <!-- Plugin leaflet IGN -->
+  <link rel="stylesheet" href="../../../dist/leaflet/GpPluginLeaflet.css" />
+  <script src="../../../dist/leaflet/GpPluginLeaflet-src.js"></script>
+
+</head>
+<body>
+    <!-- code -->
+    <script>
+
+      var mouse;
+
+          window.onload = function () {
+
+            var map  = L.map('map', {
+                zoom : 6,
+                center : L.latLng(48, 2),
+                // layers : [wmts, wms1, wms2, wms3]
+                // minZoom : 3,
+                // maxZoom : 18,
+                // cf. http://leafletjs.com/reference.html#map-usage
+                // bounceAtZoomLimits
+                // fadeAnimation,
+                // zoomAnimation,
+                // zoomAnimationThreshold,
+                // markerZoomAnimation,
+              });
+
+              // map.addLayer(wmts);
+              mouse = L.geoportalControl.MousePosition({
+                apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
+                collapsed : false
+              });
+              map.addControl(mouse);
+
+              document.getElementById("moveTo").onclick = function(e) {
+                mouse.moveTo(L.latLng(49, 3), 15);
+              }
+        }
+    </script>
+
+    <!-- map -->
+    <div id="map" style="height: 400px;"></div>
+    <button type="button" id="moveTo">Deplacement</button>
+
+</body>
+</html>

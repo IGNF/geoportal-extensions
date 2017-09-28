@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <meta charset="UTF-8">
+  <!-- Library Leaflet -->
+  <link rel="stylesheet" href="../../../lib/leaflet/leaflet.css" />
+  <script src="../../../lib/leaflet/leaflet.js"></script>
+
+  <!-- Plugin leaflet IGN -->
+  <link rel="stylesheet" href="../../../dist/leaflet/GpPluginLeaflet.css" />
+  <script src="../../../dist/leaflet/GpPluginLeaflet-src.js" data-key="jhyvi0fgmnuxvfv0zjzorvdn"></script>
+
+</head>
+<body>
+    <!-- code -->
+    <script>
+
+      var layerSwitcher, wmts0, wmts1;
+          window.onload = function () {
+
+
+            wmts0 = L.geoportalLayer.WMTS({
+              layer : "ORTHOIMAGERY.ORTHOPHOTOS",
+            });
+
+            wmts1 = L.geoportalLayer.WMTS({
+                layer : "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+            },{
+              opacity : 0.5
+            });
+
+            var map  = L.map('map', {
+              zoom : 8,
+              center : L.latLng(48, 2),
+              // layers : [wmts0],
+              // minZoom : 3,
+              // maxZoom : 18,
+              // cf. http://leafletjs.com/reference.html#map-usage
+              // bounceAtZoomLimits
+              fadeAnimation : true,
+              // zoomAnimation,
+              // zoomAnimationThreshold,
+              // markerZoomAnimation,
+            });
+
+            map.addLayer(wmts0);
+
+            var layers = [
+              {
+                layer : wmts0,
+                display : true,
+                config : {
+                   title : "Les photos IGN",
+                   description : "IGN",
+                   visibility : true,
+                   legends : [{
+                     minScaleDenominator: 1067,
+                     url: "http://localhost/"
+                   }],
+                   quicklookUrl : "http://localhost/"
+                }
+              }
+            ];
+
+              layerSwitcher = L.geoportalControl.LayerSwitcher({
+                layers : layers,
+                collapsed : false
+              });
+              map.addControl(layerSwitcher);
+
+              document.getElementById("addLayer").onclick = function (e) {
+
+                layerSwitcher.addLayer(wmts1, {
+                  display : true,
+                  config : {
+                    title : "Les cartes IGN",
+                    description : "IGN",
+                    visibility : true
+                  }
+                });
+                layerSwitcher.setOpacity(wmts1, 0.5);
+              }
+
+              document.getElementById("removeLayer").onclick = function (e) {
+                layerSwitcher.addLayer(wmts1, {
+                  display : true,
+                  config : {
+                    title : "Les cartes IGN",
+                    description : "IGN",
+                    visibility : true
+                  }
+                });
+                layerSwitcher.setOpacity(wmts1, 0.5);
+                layerSwitcher.removeLayer(wmts0);
+              }
+        }
+
+    </script>
+
+    <!-- map -->
+    <div id="map" style="height: 400px;"></div>
+    <button type="button" id="addLayer">Ajouter une couche</button>
+    <button type="button" id="removeLayer">Supprimer une couche</button>
+
+</body>
+</html>

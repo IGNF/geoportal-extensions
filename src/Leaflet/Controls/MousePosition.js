@@ -168,7 +168,8 @@ define([
             this._projectionUnitsContainer = null;
 
             /** Container de visualisation du panneau du composant */
-            this._showMousePositionContainer = null;
+            this._showContainer = null;
+            this._pictoContainer = null;
 
             // gestion de l'affichage du panneau de l'altitude / coordonnées
             if (!this.options.displayAltitude && !this.options.displayCoordinates) {
@@ -510,7 +511,7 @@ define([
             // create main container
             var container = this._createMainContainerElement();
 
-            var inputShow = this._showMousePositionContainer = this._createShowMousePositionElement();
+            var inputShow = this._showContainer = this._createShowMousePositionElement();
             container.appendChild(inputShow);
 
             // mode "collapsed"
@@ -518,7 +519,7 @@ define([
                 inputShow.checked = true;
             }
 
-            var picto = this._createShowMousePositionPictoElement(this._isDesktop);
+            var picto = this._pictoContainer = this._createShowMousePositionPictoElement(this._isDesktop);
             container.appendChild(picto);
 
             var panel    = this._createMousePositionPanelElement(
@@ -1087,7 +1088,7 @@ define([
 
             // evenement declenché à l'ouverture/fermeture du panneau,
             // et en fonction du mode : desktop ou tactile !
-            if (this._showMousePositionContainer.checked) {
+            if (this._showContainer.checked) {
                 (this._isDesktop) ?
                     map.off("mousemove", this.onMouseMove, this) :
                     map.off("move", this.onMapMove, this);
@@ -1526,6 +1527,37 @@ define([
             if (!this._isDesktop) {
                 this.onMapMove();
             }
+        },
+
+        // ################################################################### //
+        // ###### METHODES PUBLIQUES (INTERFACE AVEC LE CONTROLE) ############ //
+        // ################################################################### //
+
+        /**
+        * This method is public.
+        * It allows to control the execution of a movement.
+        *
+        * @param {Object} position - position = {lon: , lat: }
+        * @param {Number} zoom - zoom
+        * @param {Object} options - Zoom/pan options
+        */
+        moveTo : function (position, zoom, options) {
+
+            if (!this._showContainer.checked) {
+                this._pictoContainer.click();
+            }
+
+            var map = this._map;
+            if ( !map ) {
+                return;
+            }
+
+            this.onMouseMove({
+                latlng : position
+            });
+
+            map.flyTo(position, zoom || 10, options || {});
+
         }
     });
 

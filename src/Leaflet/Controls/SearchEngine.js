@@ -1,3 +1,4 @@
+/* global KeyboardEvent */
 define([
     "leaflet",
     "woodman",
@@ -107,6 +108,10 @@ define([
 
             /** uuid */
             this._uid = ID.generate();
+
+            /** affichage du container de saisie */
+            this._showContainer = null;
+            this._pictoContainer = null;
 
             /** container de la saisie du la recherche */
             this._inputContainer = null;
@@ -333,7 +338,7 @@ define([
             var container = this._createMainContainerElement();
 
             // create show search engine element
-            var inputShow = this._createShowSearchEngineElement();
+            var inputShow =  this._showContainer = this._createShowSearchEngineElement();
             container.appendChild(inputShow);
 
             // mode "collapsed"
@@ -342,7 +347,7 @@ define([
             }
 
             // create search engine picto
-            var picto = this._createShowSearchEnginePictoElement();
+            var picto = this._pictoContainer = this._createShowSearchEnginePictoElement();
             container.appendChild(picto);
 
             var search = this._createSearchInputElement();
@@ -1628,6 +1633,40 @@ define([
                 }
             });
 
+        },
+
+        // ################################################################### //
+        // ###### METHODES PUBLIQUES (INTERFACE AVEC LE CONTROLE) ############ //
+        // ################################################################### //
+
+        /**
+        * This method is public.
+        * It allows to control the execution of a geocoding or an autocompletion.
+        *
+        * @param {String} text - location
+        * @param {Boolean} type - true (geocoding) / false (autocompletion)
+        * @param {Object} options - options
+        */
+        setText : function (text, type, options) {
+
+            if (!this._showContainer.checked) {
+                this._pictoContainer.click();
+            }
+
+            // on récupere les options des services
+            L.Util.extend(this.options, options);
+
+            var element = L.DomUtil.get("GPsearchInputText-" + this._uid);
+            element.value = text;
+            if (type) {
+                var form = L.DomUtil.get("GPsearchInput-" + this._uid);
+                form.dispatchEvent(new Event("submit", {
+                    bubbles    : true,
+                    cancelable : true
+                }));
+            } else {
+                element.dispatchEvent(new KeyboardEvent("keyup"));
+            }
         }
     });
 

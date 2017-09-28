@@ -236,7 +236,8 @@ define([
             // - _initLayout
             // - _update
             // - evenements sur la carte : layeradd + layerremove
-            // L.Control.Layers.prototype.onAdd.call(this, map);
+            // this._container = L.Control.Layers.prototype.onAdd.call(this, map);
+
             this._initLayout();
             this._update();
             map.on("layeradd", this._onLayerChange, this);
@@ -819,6 +820,7 @@ define([
 
             if (! map.hasLayer(layer)) {
                 console.log("[WARN] LayerSwitcher:addLayer - layer has not been added on map !");
+                map.addLayer(layer);
             }
 
             var id = L.stamp(layer);

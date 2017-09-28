@@ -104,6 +104,7 @@ define([
             /** container principaux */
             this._waitingContainer = null;
             this._showContainer   = null;
+            this._pictoContainer  = null;
             this._formContainer   = null;
             this._submitContainer = null;
 
@@ -464,7 +465,7 @@ define([
                 inputShow.checked = true;
             }
 
-            var picto = this._createShowIsoPictoElement();
+            var picto = this._pictoContainer = this._createShowIsoPictoElement();
             container.appendChild(picto);
 
             // panneau
@@ -1068,6 +1069,78 @@ define([
                 clearTimeout(this._timer);
                 this._timer = null;
             }
+        },
+
+        // ################################################################### //
+        // ###### METHODES PUBLIQUES (INTERFACE AVEC LE CONTROLE) ############ //
+        // ################################################################### //
+
+        /**
+        * This method is public.
+        * It allows to control the execution of a traitment.
+        *
+        * @param {Object} position - position = {lon: , lat: }
+        * @param {Object} value - distance en km ou heures-minutes
+        * @param {Object} options - options = {...}
+        */
+        compute : function (position, value, options) {
+
+            if (!this._showContainer.checked) {
+                this._pictoContainer.click();
+            }
+
+            var map = this._map;
+            if ( !map ) {
+                return;
+            }
+
+            // Les options par defauts
+            var settings = {
+                direction : "departure",
+                method : "time",
+                transport : "Voiture",
+                exclusions : []
+            };
+
+            // On recupere les options
+            L.Util.extend(settings, options);
+
+            this._currentPoint.setCoordinate(position);
+            var input = L.DomUtil.get("GPlocationOrigin_" + 0 + "-" + this._uid);
+            input.value = position.lng + " , " + position.lat;
+
+            this._currentTransport = settings.transport;
+            if (settings.transport === "Voiture") {
+                L.DomUtil.get("GPisochronTransportCar-" + this._uid).checked = true;
+            } else {
+                L.DomUtil.get("GPisochronTransportPedestrian-" + this._uid).checked = true;
+            }
+
+            this._currentExclusions = settings.exclusions;
+
+            this._currentComputation = settings.method;
+            if (settings.method === "time") {
+                var time = value.split(".");
+                this._currentTimeHour = time[0] || 0;
+                L.DomUtil.get("GPisochronValueChronInput1-" + this._uid).value = this._currentTimeHour;
+                this._currentTimeMinute = time[1] || 0;
+                L.DomUtil.get("GPisochronValueChronInput2-" + this._uid).value = this._currentTimeMinute;
+                L.DomUtil.get("GPisochronChoiceAltChron-" + this._uid).click();
+            } else {
+                this._currentDistance = value;
+                L.DomUtil.get("GPisochronValueDistInput-" + this._uid).value = this._currentDistance;
+                L.DomUtil.get("GPisochronChoiceAltDist-" + this._uid).click();
+            }
+
+            this._currentDirection = settings.direction;
+            (settings.direction === "departure") ?
+                L.DomUtil.get("GPisochronDirectionSelect-" + this._uid).selectedIndex = 0 :
+                L.DomUtil.get("GPisochronDirectionSelect-" + this._uid).selectedIndex = 1;
+
+            this.onIsoComputationSubmit();
+
+            map.flyTo(position);
+
         }
 
     });
