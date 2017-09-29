@@ -870,7 +870,7 @@ define([], function () {
                             if ( minThreshold < z && z < maxThreshold ) {
                                 self.GPresetElevation();
                             } else {
-                                document.getElementById(self._addUID("GPmousePositionAlt")).innerHTML = z + " m";
+                                document.getElementById(self._addUID("GPmousePositionAlt")).innerHTML = z;
                             }
                         });
                     }, altitudeTimeoutDelay);
@@ -884,7 +884,7 @@ define([], function () {
         */
         GPresetElevation : function () {
             if (document.getElementById(this._addUID("GPmousePositionAltitude"))) {
-                document.getElementById(this._addUID("GPmousePositionAlt")).innerHTML = "--- m";
+                document.getElementById(this._addUID("GPmousePositionAlt")).innerHTML = "---";
             }
         }
     };

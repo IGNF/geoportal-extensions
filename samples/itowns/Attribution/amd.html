@@ -54,10 +54,10 @@ and open the template in the editor.
                 }
             });
             requirejs(
-                ["itowns", "proj4", "gp", "Itowns/GlobeViewExtended", "Itowns/Controls/Attribution"],
-                function (itowns, proj4, Gp, GlobeViewExtended, Attribution) {
+                ["itowns", "proj4", "gp", "Itowns/GlobeViewExtended", "Itowns/Controls/Attributions"],
+                function (itowns, proj4, Gp, GlobeViewExtended, Attributions) {
                 itowns.control = {};
-                itowns.control.Attribution = Attribution;
+                itowns.control.Attributions = Attributions;
                 itowns.GlobeViewExtended = GlobeViewExtended;
 
                 const positionOnGlobe = {
@@ -80,7 +80,7 @@ and open the template in the editor.
                 globeView.addEventListener(itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED, () => {
                     // eslint-disable-next-line no-console
                     console.info("Globe initialized");
-                    var attribution = new itowns.control.Attribution({
+                    var attribution = new itowns.control.Attributions({
                         options : {
                             // collapsed : true
                         }
