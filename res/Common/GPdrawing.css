@@ -24,14 +24,14 @@ input[id^=GPshowDrawing-]:checked + label + div {
 
 /* General panels */
 
-div[^=GPdrawingPanel-] {
+div[id^=GPdrawingPanel-] {
   width: 240px;
   overflow: hidden;
 }
 
 /* Basic infos */
 
-div[^=GPdrawingBasicPanel-] {
+div[id^=GPdrawingBasicPanel-] {
   padding: 10px 15px;
 }
 
