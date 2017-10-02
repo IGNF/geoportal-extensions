@@ -477,13 +477,6 @@ define([
                 return;
             }
 
-            // FIXME EXPERIMENTAL : comment peut on deproxyfier l'url ?
-            var proxy = feature.getProperties().proxyUrl;
-            if (proxy) {
-                // TODO...
-                logger.warn("TODO deproxyfier les urls !");
-            }
-
             // Si pas de style defini, c'est donc que l'on va utiliser celui par defaut...
             if ( feature.getStyle() instanceof ol.style.Style ) {
 
@@ -635,9 +628,6 @@ define([
             // au cas où...
             return features;
         }
-
-        // FIXME EXPERIMENTAL proxy ?
-        var proxy = this.options.proxyUrl || null;
 
         /**
         * Gestion des styles étendus sur le Label
@@ -854,17 +844,6 @@ define([
                         break;
                     default:
                     // on ne traite pas les autres informations ...
-                }
-            }
-
-            // FIXME EXPERIMENTAL doit on proxyfier l'url ?
-            if (proxy && /^https?:\/\//.test(_src)) {
-                if ( _src.indexOf(proxy) === -1 ) {
-                    _src = proxy + _src;
-                    // on devrait garder une trace de la proxyfication...
-                    feature.setProperties({
-                        proxyUrl : proxy
-                    });
                 }
             }
 

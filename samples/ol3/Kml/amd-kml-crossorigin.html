@@ -45,7 +45,7 @@
     var map;
     var vectorLayer;
     var vectorSource;
-    var FormatChoice, kmlChoice, proxyUrl = "http://localhost/proxy/php/proxy.php?url=";
+    var FormatChoice, kmlChoice;
     var kmlStringOut, kmlStringIn;
     var kmlProj;
 
@@ -64,7 +64,12 @@
       }
     });
 
-    requirejs(["ol", "Ol3/Formats/KML"], function (ol, KMLExtended) {
+    requirejs([
+      "ol",
+      "Ol3/Formats/KML",
+      "../samples/ol3/Kml/overload/__StyleIconOverload"
+    ],
+    function (ol, KMLExtended) {
 
       kmlStringIn = "<kml \
       xmlns=\"http://www.opengis.net/kml/2.2\" \
@@ -172,7 +177,6 @@
 
         // read KML string
         var format = new FormatChoice ({ // ol.format.KML
-          proxyUrl : proxyUrl,
           showPointNames : true
         });
         kmlProj = format.readProjection(kmlStringIn);
@@ -211,7 +215,6 @@
 
         // read KML string
         var format = new FormatChoice ({ // ol.format.KML
-          proxyUrl : proxyUrl,
           showPointNames : true
         });
 
@@ -247,27 +250,6 @@
         };
       }
 
-      // get list of radio buttons with name 'size'
-      var proxy = document.getElementsByName("proxy");
-
-      // loop through list
-      for (var i=0, len=proxy.length; i<len; i++) {
-        proxy[i].onclick = function(e) {
-          var currentValue = e.target.value;
-          switch (currentValue) {
-            case "true":
-               proxyUrl = "http://localhost/proxy/php/proxy.php?url=";
-              break;
-            case "false":
-                proxyUrl = null;
-              break;
-            default:
-              proxyUrl = "http://localhost/proxy/php/proxy.php?url=";
-          }
-        };
-      }
-    });
-
     function handleClickKmlChoice (myRadio) {
         var currentValue = myRadio.value;
         switch (currentValue) {
@@ -294,6 +276,8 @@
         }
     }
 
+  });
+
     </script>
 
     <!-- map -->
@@ -301,9 +285,6 @@
     </div>
     <input type="radio" name="format" value="form1" checked> Format KML<br>
     <input type="radio" name="format" value="form2"> Format KMLExtended<br>
-    <hr width="50%" align="left">
-    <input type="radio" name="proxy" value="true" checked> proxy:true<br>
-    <input type="radio" name="proxy" value="false"> proxy:false<br>
     <hr width="50%" align="left">
     <input type="radio" name="kml" onclick="handleClickKmlChoice(this);" value="form1" checked> Form : Label étendu avec point <br>
     <!-- input type="radio" name="kml" onclick="handleClickKmlChoice(this);" value="form2"> Form : Label étendu avec point (extendData)<br>
