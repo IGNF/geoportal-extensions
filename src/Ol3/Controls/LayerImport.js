@@ -39,6 +39,8 @@ define([
      * @param {Object} [options.webServicesOptions = {}] - Options to import WMS or WMTS layers
      * @param {String} [options.webServicesOptions.proxyUrl] - Proxy URL to avoid cross-domain problems. Mandatory to import WMS and WMTS layer.
      * @param {Array.<String>} [options.webServicesOptions.noProxyDomains] - Proxy will not be used for this list of domain names. Only use if you know what you're doing.
+     * @param {Boolean} [options.webServicesOptions.cors] - active CORS to avoid cross-domain problems.
+     * @param {String} [options.webServicesOptions.corsUrl] - Reverse proxy URL to avoid cross-domain problems.
      * @param {Object} [options.vectorStyleOptions] - Options for imported vector layer styling (KML, GPX, GeoJSON)
      * @param {Object} [options.vectorStyleOptions.KML] - Options for KML layer styling
      * @param {Boolean} [options.vectorStyleOptions.KML.extractStyles = true] - Extract styles from the KML. Default is true.
@@ -849,6 +851,8 @@ define([
         if ( this._currentImportType === "KML" ) {
             // lecture du fichier KML : création d'un format ol.format.KML, qui possède une méthode readFeatures (et readProjection)
             format = new KMLExtended({
+                cors : this.options.webServicesOptions.cors,
+                corsUrl : this.options.webServicesOptions.corsUrl,
                 showPointNames : this.options.vectorStyleOptions.KML.showPointNames,
                 extractStyles : this.options.vectorStyleOptions.KML.extractStyles,
                 defaultStyle : [

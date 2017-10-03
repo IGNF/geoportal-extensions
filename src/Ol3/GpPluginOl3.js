@@ -65,13 +65,13 @@ define([
     // Rajout des propriétés de l'extension dans le namespace Gp
     Gp.ol3extVersion = "__GPOL3EXTVERSION__" ;
     Gp.ol3extDate = "__GPDATE__";
-    Gp.olUtils = Utils;
+    Gp.olUtils = Utils; // FIXME manque de coherence avec ci dessous !?
 
     // Classes utilitaires
     Gp.LayerUtils = LayerUtils;
     Gp.ProxyUtils = ProxyUtils;
     ol.gp = {};
-    ol.gp.GfiUtils = GfiUtils;
+    ol.gp.GfiUtils = GfiUtils; // FIXME manque de coherence avec ci dessus !?
 
     // FIXME overload or not ? name Gp.format.kml ?
     ol.format.KMLExtended = KML;

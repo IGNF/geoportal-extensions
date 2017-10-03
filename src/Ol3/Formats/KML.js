@@ -605,6 +605,8 @@ define([
      * @private
      */
     KML.prototype._readExtendStylesFeatures = function (source, options) {
+
+        Utils.mergeParams(options, this.options);
         var features = ol.format.KML.prototype.readFeatures.call(this, source, options);
 
         var kmlDoc = null;
@@ -847,8 +849,13 @@ define([
                 }
             }
 
+            var _corsUrl = "";
+            if (options.cors && _src.indexOf("data") !== 0) {
+                _corsUrl = options.corsUrl || "https://cors-anywhere.herokuapp.com/";
+            }
+
             var _options = {
-                src : _src,
+                src : _corsUrl + _src,
                 crossOrigin : "anonymous", // cf. https://gis.stackexchange.com/questions/121555/wms-server-with-cors-enabled/147403#147403
                 scale : _scale || 1 // FIXME !?
             };
