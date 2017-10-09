@@ -11,9 +11,7 @@ gulp.task("build", [], function () {
     .partials('./templates/partials/leaflet/*.hbs')
     .partials('./templates/leaflet/*.hbs')
     .helpers(require('handlebars-layouts'))
-    .data({
-        baseurl : '../../..'
-    });
+    .data('./config.json');
 
     return gulp
         .src('./pages/leaflet/**/*.html')

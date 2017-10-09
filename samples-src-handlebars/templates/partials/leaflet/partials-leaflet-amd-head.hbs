@@ -1,9 +1,9 @@
         <!-- requirejs -->
-        <script src="{{ baseurl }}/lib/require.js"></script>
+        <script src="{{ config.baseurl }}/lib/require.js"></script>
         <script>
             /* global requirejs */
             requirejs.config({
-                'baseUrl' : "{{ baseurl }}/src/",
+                'baseUrl' : "{{ config.baseurl }}/src/",
                 'paths': {
                     // lib external
                     "leaflet" : "../lib/leaflet/leaflet-src",
