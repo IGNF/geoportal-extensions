@@ -183,7 +183,12 @@ define([
         ElevationPath.__removeProfilMarker(self);
 
         var _coordinate = ol.proj.transform([d.lon, d.lat], "EPSG:4326", proj);
-        var _geometry   = new ol.geom.Point(_coordinate);
+        var _coordinateProj = self._measureSource
+            .getFeatures()[0]
+            .getGeometry()
+            .getClosestPoint(_coordinate);
+
+        var _geometry = new ol.geom.Point(_coordinateProj);
 
         self._marker = new ol.Feature({
             geometry : _geometry
