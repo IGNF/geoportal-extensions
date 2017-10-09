@@ -1,0 +1,16 @@
+        <!-- requirejs -->
+        <script src="{{ config.baseurl }}/lib/require.js"></script>
+        <script>
+                /* global requirejs */
+                requirejs.config({
+                    "baseUrl" : "{{ config.baseurl }}/src/",
+                    "paths": {
+                        // lib external
+                        "ol" : "../lib/ol3/ol-debug",
+                        "proj4"   : "../lib/proj4/proj4",
+                        "gp"      : "../lib/gp/GpServices-src",
+                        "sortable" : "../lib/sortable/Sortable",
+                        "woodman" : "../lib/woodman/woodman-amd"
+                    }
+                });
+        </script>
