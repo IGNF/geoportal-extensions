@@ -1036,7 +1036,6 @@
         var hb = require("gulp-hb");
 
         var dir = getDistDirName().toLowerCase();
-        var builddir = path.join(_build, getDistDirName(), "samples");
 
         var hbStream = hb({
             cwd : process.cwd(),
@@ -1048,30 +1047,17 @@
         .helpers(require("handlebars-layouts"))
         .data({ // .data(path.join(_dir.samples, "config.json"));
             config : {
-                baseurl : "../../../../..",
-                mode : (isProduction) ? "" : "-src"
+                baseurl : "../../..",
+                mode : (isProduction) ? "" : "-src",
+                resources : "../../resources",
+                apikey : "jhyvi0fgmnuxvfv0zjzorvdn"
             }
         });
 
         return gulp
             .src(path.join(_dir.samples, "pages", dir, "**", "*.html"))
             .pipe(hbStream)
-            .pipe(gulp.dest(builddir));
-    });
-
-    // |**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    // | ✓ copy-demo
-    // | > copie des exemples leaflet ou ol3 dans demo/
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-    gulp.task("copy-demo", function () {
-
-        var builddir = path.join(_build, getDistDirName(), "demo");
-
-        var sources  = [];
-        sources.push(path.join("demo", "**"));
-
-        return gulp.src(sources)
-            .pipe(gulp.dest(builddir));
+            .pipe(gulp.dest(path.join("samples", dir)));
     });
 
     // |**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1080,7 +1066,7 @@
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     gulp.task("copy-resources-sample", function () {
 
-        var builddir = path.join(_build, getDistDirName(), "samples", "resources");
+        var builddir = path.join("samples", "resources");
 
         var sources  = [];
         sources.push(path.join(_dir.samples, "resources", "**"));
@@ -1293,7 +1279,7 @@
     });
 
     gulp.task("task-sample", function (cb) {
-        runSequence("copy-sample", "copy-resources-sample", "copy-demo", cb);
+        runSequence("copy-sample", "copy-resources-sample", cb);
     });
 
     // **~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

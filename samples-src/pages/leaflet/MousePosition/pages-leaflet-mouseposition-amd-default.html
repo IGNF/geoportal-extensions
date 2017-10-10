@@ -21,11 +21,19 @@
 
 {{#content "js"}}
         <script type="text/javascript">
-          requirejs(['gp', 'Leaflet/Layers/Layers', 'Leaflet/Controls/MousePosition'], function (Gp, Layers, MousePosition) {
+          requirejs([
+            'gp',
+            'Leaflet/Layers/Layers',
+            'Leaflet/Controls/MousePosition'
+          ], function (
+            Gp,
+            Layers,
+            MousePosition
+          ) {
 
             Gp.Services.getConfig({
-              // serverUrl : "../resources/autoconf/callback-autoconf-xml-light-more",
-              apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
+              serverUrl : "{{ config.resources }}/AutoConf.js",
+              // apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
               timeOut : 20000,
               onSuccess : function () {
 

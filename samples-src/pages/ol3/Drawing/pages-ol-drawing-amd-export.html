@@ -25,10 +25,13 @@
             <script>
                 var map;
                 requirejs(
-                    ["ol", "gp",
+                    ["ol",
+                    "gp",
                     "Ol3/Layers/LayerWMTS",
                     "Ol3/Controls/Drawing"],
-                    function (ol, Gp,
+                    function (
+                      ol,
+                      Gp,
                       LayerWMTS,
                       Drawing) {
 
@@ -74,7 +77,7 @@
                   };
 
                   Gp.Services.getConfig({
-                      serverUrl : "./../../resources/ol/AutoConf.js",
+                      serverUrl : "{{ config.resources }}/AutoConf.js",
                       callbackSuffix : "",
                       // apiKey: "jhyvi0fgmnuxvfv0zjzorvdn",
                       timeOut : 20000,
