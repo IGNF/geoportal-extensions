@@ -1040,7 +1040,7 @@
 
         var hbStream = hb({
             cwd : process.cwd(),
-            debug : true
+            debug : false
         })
         .partials(path.join(_dir.samples, "templates", "partials", "*.hbs"))
         .partials(path.join(_dir.samples, "templates", "partials", dir, "*.hbs"))
