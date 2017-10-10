@@ -102,7 +102,8 @@
         lib :     "lib",
         test :    "test",
         doc :     "doc",
-        samples : "samples",
+        samples : "samples-src", // templates des exemples
+        demo :    "demo",
         dist :    "dist"
     };
 
@@ -183,8 +184,8 @@
         return gulp.src(src)
             .pipe($.plumber())
             .pipe(jshint(".jshintrc"))
-            .pipe(jshint.reporter("default", { 
-                verbose : true 
+            .pipe(jshint.reporter("default", {
+                verbose : true
             }))
             .pipe(jshint.reporter("fail"));
     });
@@ -554,10 +555,10 @@
 
         if (isExecuteOl3) {
             deps = [{
-                name : "ol", 
-                amd : "ol", 
-                cjs : "ol", 
-                global : "ol", 
+                name : "ol",
+                amd : "ol",
+                cjs : "ol",
+                global : "ol",
                 param : "ol"
             }];
         } else if (isExecuteLeaflet) {
@@ -791,7 +792,7 @@
         }
         // return gulp.src([srcdircommon, srcdir, plugindir, exceptsrcdir, exceptsrcdircommon])
         return gulp.src(srcArray)
-            .pipe((isProduction) ? cleanCSS({ 
+            .pipe((isProduction) ? cleanCSS({
                 rebase : false,
                 level : 2
             }) : $.util.noop())
@@ -1025,63 +1026,51 @@
     });
 
     // |**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    // | ✓ copy-resources-sample-nj
-    // | > copie des ressources des exemples leaflet ou ol3 dans samples/
+    // | ✓ handlebars
+    // | > gestion des exemples à base de templates
+    // | > https://github.com/shannonmoeller/gulp-hb
+    // | > https://github.com/shannonmoeller/handlebars-layouts
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-    gulp.task("copy-resources-samples-nj", function () {
+    gulp.task("copy-sample", function () {
 
-        var basedir  = getDistDirName().toLowerCase();
-        var builddir = path.join("samples", "resources");
+        var hb = require("gulp-hb");
 
-        var sources  = [];
-        // includes : les ressources
-        sources.push(path.join("samples-src", "resources", "**"));
+        var dir = getDistDirName().toLowerCase();
+        var builddir = path.join(_build, getDistDirName(), "samples");
 
-        return gulp.src(sources)
+        var hbStream = hb({
+            cwd : process.cwd(),
+            debug : true
+        })
+        .partials(path.join(_dir.samples, "templates", "partials", "*.hbs"))
+        .partials(path.join(_dir.samples, "templates", "partials", dir, "*.hbs"))
+        .partials(path.join(_dir.samples, "templates", dir, "*.hbs"))
+        .helpers(require("handlebars-layouts"))
+        .data({ // .data(path.join(_dir.samples, "config.json"));
+            config : {
+                baseurl : "../../../../..",
+                mode : (isProduction) ? "" : "-src"
+            }
+        });
+
+        return gulp
+            .src(path.join(_dir.samples, "pages", dir, "**", "*.html"))
+            .pipe(hbStream)
             .pipe(gulp.dest(builddir));
     });
 
     // |**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    // | ✓ nunjucks
-    // | > gestion des exemples à base de templates
-    // | > https://www.npmjs.com/package/gulp-nunjucks-render
+    // | ✓ copy-demo
+    // | > copie des exemples leaflet ou ol3 dans demo/
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-    gulp.task("nunjucks", ["copy-resources-samples-nj"], function () {
-        var data = require("gulp-data");
-        var render = require("gulp-nunjucks-render");
-        return gulp.src("samples-src/pages/**/*.html")
-              .pipe(data(function () {
-                  return require("./samples-src/config.json") ;
-              }))
-              .pipe(render({
-                  path : ["samples-src/templates"]
-              }))
-              .pipe(gulp.dest("samples")) ;
-    });
+    gulp.task("copy-demo", function () {
 
-    // |**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    // | ✓ copy-sample
-    // | > copie des exemples leaflet ou ol3 dans samples/
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-    gulp.task("copy-sample", ["nunjucks"],  function () {
-
-        var bundle   = getBaseFileName();
-        var basedir  = getDistDirName().toLowerCase();
-        var builddir = path.join(_build, getDistDirName(), "samples", basedir);
+        var builddir = path.join(_build, getDistDirName(), "demo");
 
         var sources  = [];
-        // includes : les bundles
-        sources.push(path.join(_dir.samples, basedir, "**", "bundle*.html"));
-        sources.push(path.join(_dir.samples, basedir, "**", "index-bundle*.html"));
-        // excludes : les tests (amd)
-        sources.push("!" + path.join(_dir.samples, basedir, "Test"));
-        sources.push("!" + path.join(_dir.samples, basedir, "Test/**"));
-
-        var bundleToReplace  = bundle + "-src";
+        sources.push(path.join("demo", "**"));
 
         return gulp.src(sources)
-            .pipe((isProduction) ? $.replace(bundleToReplace, bundle) : $.util.noop())
-            .pipe((isProduction) ? $.replace(bundleToReplace, bundle) : $.util.noop())
             .pipe(gulp.dest(builddir));
     });
 
@@ -1091,45 +1080,13 @@
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     gulp.task("copy-resources-sample", function () {
 
-        var basedir  = getDistDirName().toLowerCase();
-        var builddir = path.join(_build, getDistDirName(), "samples", basedir, "resources");
+        var builddir = path.join(_build, getDistDirName(), "samples", "resources");
 
         var sources  = [];
-        // includes : les ressources
-        sources.push(path.join(_dir.samples, basedir, "resources", "**"));
+        sources.push(path.join(_dir.samples, "resources", "**"));
 
         return gulp.src(sources)
             .pipe(gulp.dest(builddir));
-    });
-    // |**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    // | ✓ template-sample
-    // | > construction de la page principale des exemples leaflet ou ol3
-    // | > https:// ww.npmjs.com/package/gulp-template
-    // | > FIXME les dependances des exemples !
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-    gulp.task("template-sample", function () {
-
-        var tmpl = require("gulp-template");
-        var glob = require("glob");
-
-        var basedir  = getDistDirName().toLowerCase();
-        var builddir = path.join(_build, getDistDirName(), "samples");
-        var sources  = path.join(/*_dir.samples, */ basedir, "**", "*");
-        var index    = path.join(_dir.samples, "index-" + basedir + ".html");
-
-        var lstSources = glob.sync(sources , {
-            cwd : builddir,
-            nodir : true
-        });
-
-        console.log(lstSources);
-
-        return gulp.src(index)
-            .pipe(tmpl({
-                files : lstSources,
-                mode : (isProduction) ? "" : "-src" // FIXME !
-            }))
-            .pipe(gulp.dest(path.join(builddir)));
     });
 
     // **~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1336,7 +1293,7 @@
     });
 
     gulp.task("task-sample", function (cb) {
-        runSequence("copy-sample", "copy-resources-sample", "template-sample", cb);
+        runSequence("copy-sample", "copy-resources-sample", "copy-demo", cb);
     });
 
     // **~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
