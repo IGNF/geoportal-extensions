@@ -34,7 +34,7 @@
                 "gp"      : "../lib/gp/GpServices-src",
                 "proj4" : "../lib/proj4/proj4-src",
                 "proj4leaflet" : "../lib/proj4leaflet/proj4leaflet-src",
-                
+
                 "woodman" : "../lib/woodman/woodman-amd",
                 "sortable": "../lib/sortable/Sortable"
             }
@@ -68,7 +68,11 @@
                 position : "bottomleft",
                 // TODO
                 routeOptions : {
-                  protocol : "XHR",
+                  startPoint : {
+                    x : 2.5,
+                    y : 48.3
+                  }
+                  // protocol : "XHR",
                   // outputFormat : "xml",
                   // routePreference : "fastest",
                   // graph : "Pieton",

@@ -93,8 +93,8 @@ function (
         * @param {Array}   [options.directions] - list of directions to be displayed, by default : ["departure", "arrival"]. The first element is selected by default.
         *      Directions enable to specify if input location point will be used as a departure point ("departure") or as an arrival point ("arrival")
         * @param {Boolean} [options.disableReverse = false] - whether to enable/disable the reverse geocoding
-        * @param {Object} [options.isocurveOptions] - isocurve service options.
-        * @param {Object} [options.autocompleteOptions] - autocomplete service options.
+        * @param {Object} [options.isocurveOptions] - isocurve service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~isoCurve Gp.Services.isoCurve}
+        * @param {Object} [options.autocompleteOptions] - autocomplete service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~autoComplete Gp.Services.autoComplete}
         * @returns {L.geoportalControl.Isocurve}
         * @example
         *  var iso = L.geoportalControl.Isocurve({
@@ -140,7 +140,7 @@ function (
         * @param {Boolean} [options.displayAltitude] - active/desactivate the altitude panel, if desactivate, have just the coordinate panel, true by default
         * @param {Boolean} [options.displayCoordinates] - active/desactivate the coordinate panel, if desactivate, have just the altitude panel, true by default
         * @param {Object}  [options.altitude] - elevation configuration
-        * @param {Object}  [options.altitude.serviceOptions] - options of elevation service
+        * @param {Object}  [options.altitude.serviceOptions] - options of elevation service. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~getAltitude Gp.Services.getAltitude}
         * @param {Number}  [options.altitude.responseDelay] - latency for altitude request, 500 ms by default
         * @param {Number}  [options.altitude.triggerDelay] - immobilisation time of movement on the map to trigger the elevation calculation, 200 ms by default
         * @param {Number}  [options.altitude.noDataValue] - value used for altitude service no data (default is -99999). In this case, "---m" will be displayed instead of "-99999m"
@@ -192,7 +192,7 @@ function (
         * @param {Boolean} [options.collapsed] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
         * @param {Array}  [options.resources] - resources for geocoding, by default : ["StreetAddress", "PositionOfInterest"]
         * @param {Array}  [options.delimitations] - delimitations for reverse geocoding, by default : ["Point", "Circle", "Extent"]
-        * @param {Object}  [options.ReverseGeocodeOptions] - reverse geocode service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~ReverseGeocode Gp.Services.reverseGeocode} to know all reverse geocode options.
+        * @param {Object}  [options.ReverseGeocodeOptions] - reverse geocode service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~reverseGeocode Gp.Services.reverseGeocode} to know all reverse geocode options.
         * @returns {L.geoportalControl.ReverseGeocode}
         * @example
         *  var iso = L.geoportalControl.ReverseGeocode({
@@ -222,8 +222,8 @@ function (
         *   Active by default. But, you can disable it when entering with the "ctrl" key on the keyboard
         * @param {Object}  [options.exclusions] - list of exclusions with status
         * @param {Array}   [options.graphs] - list of resources, by default : ["Voiture", "Pieton"], and the first element is selected.
-        * @param {Object}  [options.autocompleteOptions] - options of autocomplete service
-        * @param {Object}  [options.routeOptions] - options of route service
+        * @param {Object}  [options.autocompleteOptions] - options of autocomplete service. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~autoComplete Gp.Services.autoComplete}
+        * @param {Object}  [options.routeOptions] - options of route service. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~route Gp.Services.route}
         * @returns {L.geoportalControl.Route}
         * @example
         *  var route = L.geoportalControl.Route({
@@ -274,8 +274,8 @@ function (
         * @param {Object}  [options.resources] - resources to be used by geocode and autocompletion services, by default : ["StreetAddress", "PositionOfInterest"]
         * @param {Boolean} [options.displayAdvancedSearch] - False to disable advanced search tools (it will not be displayed). Default is true (displayed)
         * @param {Object}  [options.advancedSearch] - advanced search for geocoding (filters)
-        * @param {Object}  [options.geocodeOptions] - options of geocode service
-        * @param {Object}  [options.autocompleteOptions] - options of autocomplete service
+        * @param {Object}  [options.geocodeOptions] - options of geocode service. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~geocode Gp.Services.geocode}
+        * @param {Object}  [options.autocompleteOptions] - options of autocomplete service. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~autoComplete Gp.Services.autoComplete}
         * @returns {L.geoportalControl.SearchEngine}
         * @example
         *  var SearchEngine = L.geoportalControl.SearchEngine({
