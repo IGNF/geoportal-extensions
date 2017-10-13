@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Liste des exemples Leaflet</title>
+</head>
+<body>
+  <h3>
+    Leaflet - une bibliothèque JavaScript open-source <br>
+    pour des cartes interactives mobile-friendly.
+  </h3>
+  <div>
+
+    <!-- liste des fichiers -->
+    <p>LISTE DES EXEMPLES</p>
+    <ul>
+    <% files.forEach(function(path) {
+        var split  = path.split('/');
+        var plugin = split.slice(-2)[0];
+        var file   = split.slice(-1)[0];
+      %>
+      <li><a href="<%- path %>"> <%- plugin %> -- <%- file %></a></li>
+      <% });
+    %>
+    </ul>
+
+    <!-- Comment utiliser le plugin avec un exemple -->
+    <p>EXEMPLE D'UTILISATION DU PLUGIN</p>
+    <pre>
+      <code>
+          var map = L.map('map').setView([48, 2], 6);
+
+          var wms = L.geoportalLayer.WMS({
+              layer : "ORTHOIMAGERY.ORTHOPHOTOS"
+          });
+
+          wms.addTo(map);
+
+          var wmts = L.geoportalLayer.WMTS({
+              layer : "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+          },
+          {
+              opacity : 0.5
+          });
+
+          wmts.addTo(map);
+
+          var mouse = L.geoportalControl.MousePosition({position:"topleft"});
+          map.addControl(mouse);
+
+          var search = L.geoportalControl.SearchEngine();
+          map.addControl(search);
+
+          var iso = L.geoportalControl.Isocurve();
+          map.addControl(iso);
+
+          var switcher = L.geoportalControl.LayerSwitcher();
+          map.addControl(switcher);
+
+          L.marker([48, 2]).addTo(map)
+            .bindPopup('...')
+            .openPopup();
+      </code>
+    </pre>
+
+    <!-- Toutes les informations utiles sur Leaflet -->
+    <p>
+      <ul>
+        <li>En savoir plus avec le <a href="http://leafletjs.com/examples/quick-start.html">quick start guide</a>,</li>
+        <li>d'autres informations avec <a href="http://leafletjs.com/examples.html">les exemples</a>,</li>
+        <li>ou aller directement à l'<a href="http://leafletjs.com/reference.html">API documentation</a>.</li>
+      </ul>
+      Si vous avez des questions, jetez un oeil à la
+      <a href="https://github.com/Leaflet/Leaflet/blob/master/FAQ.md">FAQ</a>.
+    </p>
+  </div>
+</body>
+</html>
