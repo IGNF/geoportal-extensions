@@ -2,13 +2,13 @@
 <html>
 <head>
   <!-- Library Leaflet -->
-  <link rel="stylesheet" href="../../../lib/leaflet/leaflet.css" />
+  <link rel="stylesheet" href="../../../node_modules/leaflet/dist/leaflet.css" />
 
   <!-- Plugin leaflet IGN -->
   <link rel="stylesheet" href="../../../dist/leaflet/GpPluginLeaflet-src.css" />
 
   <!-- requirejs -->
-  <script src="../../../lib/require.js"></script>
+  <script src="../../../node_modules/requirejs/require.js"></script>
 
 </head>
 <body>
@@ -30,10 +30,10 @@
             'baseUrl' : "../../../src/",
             'paths': {
                 // lib external
-                "leaflet" : "../lib/leaflet/leaflet-src",
-                "gp"      : "../lib/gp/GpServices-src",
-                "woodman" : "../lib/woodman/woodman-amd",
-                "sortable": "../lib/sortable/Sortable"
+                "leaflet" : "../node_modules/leaflet/dist/leaflet-src",
+                "gp"      : "../node_modules/geoportal-access-lib/dist/GpServices-src",
+                "woodman" : "../node_modules/woodman/dist/woodman-amd",
+                "sortable": "../node_modules/sortablejs/Sortable"
             }
         });
 

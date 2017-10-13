@@ -355,9 +355,9 @@
             vg : "empty:",
             request : "empty:", // depenance externe pour nodejs !
             xmldom : "empty:",  // depenance externe pour nodejs !
-            proj4 : "../../../../lib/proj4/proj4-src" /*+ modeExt*/,
-            gp : "../../../../lib/gp/GpServices-src"  /*+ modeExt */,
-            sortable : "../../../../lib/sortable/Sortable-src" /*+ modeExt */
+            proj4 : "../../../../node_modules/proj4/dist/proj4-src" /*+ modeExt*/,
+            gp : "../../../../node_modules/geoportal-access-lib/dist/GpServices-src"  /*+ modeExt */,
+            sortable : "../../../../node_modules/sortablejs/Sortable" /*+ modeExt */
         };
 
         if (isExecuteOl3) {
@@ -366,8 +366,8 @@
             input.push(path.join(getDistDirName(), "CRS", "CRS"));
         } else if (isExecuteLeaflet) {
             // on ajoute ce projet pour leaflet
-            deps["proj4leaflet"]  = "../../../../lib/proj4leaflet/proj4leaflet-src"  /*+ modeExt*/;
-            deps["leaflet-draw" ] = "../../../../lib/leaflet-plugins/leaflet-draw/leaflet.draw-src" /*+ modeExt*/;
+            deps["proj4leaflet"]  = "../../../../node_modules/proj4leaflet/src/proj4leaflet"  /*+ modeExt*/;
+            deps["leaflet-draw" ] = "../../../../node_modules/leaflet-draw/dist/leaflet.draw-src" /*+ modeExt*/;
         } else if (isExecuteVg) {
             // do nothing
             $.util.log("executVg : nothing to do");
@@ -451,9 +451,9 @@
             vg : "empty:",
             request : "empty:", // depenance externe pour nodejs !
             xmldom : "empty:",  // depenance externe pour nodejs !
-            proj4 : "../../../../lib/proj4/proj4-src" /*+ modeExt*/,
-            gp : "../../../../lib/gp/GpServices-src"  /*+ modeExt */,
-            sortable : "../../../../lib/sortable/Sortable-src" /*+ modeExt */
+            proj4 : "../../../../node_modules/proj4/dist/proj4-src" /*+ modeExt*/,
+            gp : "../../../../node_modules/geoportal-access-lib/dist/GpServices-src"  /*+ modeExt */,
+            sortable : "../../../../node_modules/sortablejs/Sortable" /*+ modeExt */
         };
 
         if (isExecuteOl3WithVg) {
@@ -468,8 +468,8 @@
             input.push("Leaflet/GpPluginLeaflet");
             input.push("Vg/GpPluginVg");
             // on ajoute ce projet pour leaflet
-            deps["proj4leaflet"] = "../../../../lib/proj4leaflet/proj4leaflet-src"  /*+ modeExt*/;
-            deps["leaflet-draw" ] = "../../../../lib/leaflet-plugins/leaflet-draw/leaflet.draw-src" /*+ modeExt*/;
+            deps["proj4leaflet"] = "../../../../node_modules/proj4leaflet/src/proj4leaflet"  /*+ modeExt*/;
+            deps["leaflet-draw" ] = "../../../../node_modules/leaflet-draw/dist/leaflet.draw-src" /*+ modeExt*/;
         }
 
         if (isExecuteOl3WithITowns) {
@@ -484,8 +484,8 @@
             input.push("Leaflet/GpPluginLeaflet");
             input.push("ITowns/GpPluginITowns");
             // on ajoute ce projet pour leaflet
-            deps["proj4leaflet"] = "../../../../lib/proj4leaflet/proj4leaflet-src"  /*+ modeExt*/;
-            deps["leaflet-draw" ] = "../../../../lib/leaflet-plugins/leaflet-draw/leaflet.draw-src" /*+ modeExt*/;
+            deps["proj4leaflet"] = "../../../../node_modules/proj4leaflet/src/proj4leaflet"  /*+ modeExt*/;
+            deps["leaflet-draw" ] = "../../../../node_modules/leaflet-draw/dist/leaflet.draw-src" /*+ modeExt*/;
         }
 
         requirejs.optimize({

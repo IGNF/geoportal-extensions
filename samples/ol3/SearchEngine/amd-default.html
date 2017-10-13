@@ -5,15 +5,15 @@
         <title>sample ol3 SearchEngine AMD</title>
 
         <!-- Library OpenLayers 3 -->
-        <link rel="stylesheet" href="../../../lib/ol3/ol.css" />
-        <!-- <script src="../../../lib/ol3/ol-debug.js"></script> -->
+        <link rel="stylesheet" href="../../../node_modules/openlayers/dist/ol.css" />
+        <!-- <script src="../../../node_modules/openlayers/dist/ol-debug.js"></script> -->
 
         <!-- Plugin OpenLayers 3 IGN -->
         <link rel="stylesheet" href="../../../dist/ol3/GpPluginOl3-src.css" />
         <!-- <script src="../../../dist/ol3/GpPluginOl3.js" data-url="./../resources/AutoConf.js"></script> -->
 
         <!-- requirejs -->
-        <script src="../../../lib/require.js"></script>
+        <script src="../../../node_modules/requirejs/require.js"></script>
 
         <!-- load geoportail-waiting image -->
         <style>
@@ -47,9 +47,9 @@
                     "baseUrl" : "../../../src/",
                     "paths": {
                         // lib external
-                        "ol" : "../lib/ol3/ol-debug",
-                        "gp"      : "../lib/gp/GpServices-src",
-                        woodman : "../lib/woodman/woodman-amd"
+                        "ol" : "../node_modules/openlayers/dist/ol-debug",
+                        "gp"      : "../node_modules/geoportal-access-lib/dist/GpServices-src",
+                        woodman : "../node_modules/woodman/dist/woodman-amd"
                     }
                 });
                 requirejs(

@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="../../../dist/leaflet/GpPluginLeaflet-src.css" />
 
   <!-- requirejs -->
-  <script src="../../../lib/require.js"></script>
+  <script src="../../../node_modules/requirejs/require.js"></script>
 
 </head>
 <body>
@@ -31,9 +31,9 @@
             'paths': {
                 // lib external
                 "leaflet" : "../lib/leaflet/1.2.0/leaflet-src",
-                "gp"      : "../lib/gp/GpServices",
-                "woodman" : "../lib/woodman/woodman-amd",
-                "sortable": "../lib/sortable/Sortable"
+                "gp"      : "../node_modules/geoportal-access-lib/dist/GpServices-src",
+                "woodman" : "../node_modules/woodman/dist/woodman-amd",
+                "sortable": "../node_modules/sortablejs/Sortable"
             }
         });
 

@@ -6,14 +6,14 @@ requirejs.config({
     // En mode 'production', les paths "ol" et "leaflet" sont remplacés par le mot clef "empty:"
     // car ce sont des dependances externes (injectées par une balise "script")
     paths : {
-        "gp"           : "../lib/gp/GpServices-src",
-        "leaflet"      : "../lib/leaflet/leaflet-src",
-        "leaflet-draw" : "../lib/leaflet-plugins/leaflet-draw/leaflet.draw-src",
-        "proj4"        : "../lib/proj4/proj4-src",
-        "proj4leaflet" : "../lib/proj4leaflet/proj4leaflet-src",
-        "ol"           : "../lib/ol3/ol",
-        "woodman"      : "../lib/woodman/woodman-amd",
-        "sortable"     : "../lib/sortable/Sortable"
+        "gp"           : "../node_modules/geoportal-access-lib/dist/GpServices-src",
+        "leaflet"      : "../node_modules/leaflet/dist/leaflet-src",
+        "leaflet-draw" : "../node_modules/leaflet-draw/dist/leaflet.draw-src",
+        "proj4"        : "../node_modules/proj4/dist/proj4-src",
+        "proj4leaflet" : "../node_modules/proj4leaflet/src/proj4leaflet",
+        "ol"           : "../node_modules/openlayers/dist/ol",
+        "woodman"      : "../node_modules/woodman/dist/woodman-amd",
+        "sortable"     : "../node_modules/sortablejs/Sortable"
         // "vg"        : "../lib/vg/js/VirtualGeoWeb-1.1.min", // not use beacause of browser compatibility only !
     }
 });

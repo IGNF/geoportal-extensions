@@ -4,13 +4,13 @@
 
 
   <!-- Library Leaflet -->
-  <link rel="stylesheet" href="../../../lib/leaflet/leaflet.css" />
+  <link rel="stylesheet" href="../../../node_modules/leaflet/dist/leaflet.css" />
 
   <!-- Plugin leaflet IGN -->
   <link rel="stylesheet" href="../../../dist/leaflet/GpPluginLeaflet-src.css" />
 
   <!-- requirejs -->
-  <script src="../../../lib/require.js"></script>
+  <script src="../../../node_modules/requirejs/require.js"></script>
   <script src="amCharts-min.js"></script>
 
 </head>
@@ -33,13 +33,13 @@
             'baseUrl' : "../../../src/",
             'paths': {
                 // lib external
-                "leaflet" : "../lib/leaflet/leaflet-src",
-                "leaflet-draw" : "../lib/leaflet-plugins/leaflet-draw/leaflet.draw-src",
-                "gp"      : "../lib/gp/GpServices-src",
-                "proj4" : "../lib/proj4/proj4-src",
-                "proj4leaflet" : "../lib/proj4leaflet/proj4leaflet-src",
-                "woodman" : "../lib/woodman/woodman-amd",
-                "sortable": "../lib/sortable/Sortable"
+                "leaflet" : "../node_modules/leaflet/dist/leaflet-src",
+                "leaflet-draw" : "../node_modules/leaflet-draw/dist/leaflet.draw-src",
+                "gp"      : "../node_modules/geoportal-access-lib/dist/GpServices-src",
+                "proj4" : "../node_modules/proj4/dist/proj4-src",
+                "proj4leaflet" : "../node_modules/proj4leaflet/src/proj4leaflet",
+                "woodman" : "../node_modules/woodman/dist/woodman-amd",
+                "sortable": "../node_modules/sortablejs/Sortable"
             },
             shim : {
               "leaflet-draw" : ["leaflet"]

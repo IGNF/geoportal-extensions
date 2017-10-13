@@ -13,7 +13,7 @@
      <!-- <script src="../../../dist/ol3/GpPluginOl3.js" data-url="./../resources/AutoConf.js"></script> -->
 
      <!-- requirejs -->
-     <script src="../../../lib/require.js"></script>
+     <script src="../../../node_modules/requirejs/require.js"></script>
 
      <!-- load geoportail-waiting image -->
      <style>
@@ -49,10 +49,10 @@ requirejs.config({
              paths : {
                  // lib external
                  vg : "../lib/vg/js/VirtualGeoWeb-1.1.min",
-                 proj4 : "../lib/proj4/proj4",
-                 gp : "../lib/gp/GpServices-src",
-                 sortable : "../lib/sortable/Sortable",
-                 woodman : "../lib/woodman/woodman-amd"
+                 proj4 : "../node_modules/proj4/dist/proj4-src",
+                 gp : "../node_modules/geoportal-access-lib/dist/GpServices-src",
+                 sortable : "../node_modules/sortablejs/Sortable",
+                 woodman : "../node_modules/woodman/dist/woodman-amd"
              }
          });
  requirejs(
