@@ -397,12 +397,16 @@
             /** TODO : jsdoc*/
             onModuleBundleComplete : function (data) {
 
+                console.log("onModuleBundleComplete", data);
                 var amdclean = require("amdclean") ;
                 var outputFile = data.path;
 
+                var content = fs.readFileSync(outputFile, "utf8", function (err, data) {});
+
                 fs.writeFileSync(outputFile, amdclean.clean({
                     globalModules : ["proj4"], // module globale !
-                    filePath : outputFile,
+                    // filePath : outputFile,
+                    code : content.replace("var L, proj4;", ""),
                     prefixMode : "camelCase",
                     wrap : {
                         // FIXME petite bidouille interne avec les dependances nodejs...
@@ -411,14 +415,14 @@
                         end : "\n/* END CODE   */\n"
                     },
                     escodegen : {
-                         comment : false,
-                         format : {
-                             indent : {
-                                 style : "    ",
-                                 adjustMultilineComment : true
-                             }
-                         }
-                     }
+                        comment : false,
+                        format : {
+                            indent : {
+                                style : "    ",
+                                adjustMultilineComment : true
+                            }
+                        }
+                    }
                 }));
             }
         }, function () {
@@ -667,7 +671,7 @@
             // format SVG !
             srcdir.push(path.join(_dir.res, getDistDirName(), "**", "*.svg"));
         } else if (isExecuteLeaflet) {
-            var plugindir = path.join(_dir.lib, "leaflet-plugins", "leaflet-draw", "images", "*.png");
+            var plugindir = path.join("node_modules/leaflet-draw/dist/" , "images", "*.png");
             srcdir.push(plugindir);
         } else if (isExecuteVg) {
             $.util.log("Nothing to do in Vg mode");
@@ -766,7 +770,7 @@
             $.util.log("Nohing to do in Ol3 mode");
         } else if (isExecuteLeaflet) {
             // Plugins Leaflet !
-            plugindir = path.join(_dir.lib, "leaflet-plugins", "leaflet-draw", "*.css");
+            plugindir = path.join("node_modules/leaflet-draw/dist/", "leaflet.draw-src.css");
         } else if (isExecuteVg) {
             $.util.log("Nohing to do in Vg mode");
         } else if (isExecuteITowns) {

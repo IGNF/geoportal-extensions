@@ -2,18 +2,11 @@
 
 * openlayers
 
-└─┬ ol@4.4.1
-  ├─┬ pbf@3.1.0
-  │ ├── ieee754@1.1.8
-  │ └─┬ resolve-protobuf-schema@2.0.0
-  │   └── protocol-buffers-schema@2.2.0
-  ├── pixelworks@1.1.0
-  └─┬ rbush@2.0.1
-    └── quickselect@1.0.0
+last
+└── openlayers@4.4.1
 
-> **FIXME**
-Les binaires ne sont pas presents sur le npm !?
-On utilise **bower** afin d'obtenir le projet, et on le compile :
+> **HOWTO avec Bower**
+On peut utiliser **bower** afin d'obtenir le projet, et on le compile manuellement :
 ```
 > bower install --save openlayers
 > cd bower_components/openlayers
@@ -28,30 +21,13 @@ On utilise **bower** afin d'obtenir le projet, et on le compile :
 
 * proj4
 
-last
 └─┬ proj4@2.4.4
   ├── mgrs@1.0.0
   └── wkt-parser@1.2.0
 
-> **FIXME**
-BUG avec proj4leaflet pour leaflet !?
-
-├─┬ proj4@2.2.1
-│ └── mgrs@0.0.0
-└─┬ proj4leaflet@1.0.1
-  └─┬ proj4@2.4.4
-    ├── mgrs@1.0.0
-    └── wkt-parser@1.2.0
-
 * proj4leaflet
 
-last
 └── proj4leaflet@1.0.2
-
-> **FIXME**
-BUG avec proj4 pour leaflet !?
-
-└── proj4leaflet@1.0.1
 
 * Sortable
 
