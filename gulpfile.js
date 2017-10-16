@@ -347,7 +347,7 @@
         var srcdir   = path.join(_build, getDistDirName(), _dir.clean);
         var input    = []; // on place les modules qui ne sont pas appellés directement dans le code (dependances) !
         input.push("Common/Utils/AutoLoadConfig");
-        input.push(getDistDirName() + "/" + getBaseFileName());
+        input.push(path.join(getDistDirName(), getBaseFileName()));
 
         var deps = {
             ol : "empty:",
@@ -397,7 +397,6 @@
             /** TODO : jsdoc*/
             onModuleBundleComplete : function (data) {
 
-                console.log("onModuleBundleComplete", data);
                 var amdclean = require("amdclean") ;
                 var outputFile = data.path;
 
@@ -457,36 +456,37 @@
             xmldom : "empty:",  // depenance externe pour nodejs !
             proj4 : "../../../../node_modules/proj4/dist/proj4-src" /*+ modeExt*/,
             gp : "../../../../node_modules/geoportal-access-lib/dist/GpServices-src"  /*+ modeExt */,
-            sortable : "../../../../node_modules/sortablejs/Sortable" /*+ modeExt */
+            sortable : "../../../../node_modules/sortablejs/Sortable" /*+ modeExt */,
+            woodman : "empty:"
         };
 
         if (isExecuteOl3WithVg) {
-            input.push("Common/Utils/AutoLoadConfig");
-            input.push("Ol3/GpPluginOl3");
-            input.push("Vg/GpPluginVg");
-            input.push("Ol3/CRS/CRS"); // FIXME ???
+            input.push(path.join("Common", "Utils", "AutoLoadConfig"));
+            input.push(path.join("Ol3", "GpPluginOl3"));
+            input.push(path.join("Vg", "GpPluginVg"));
+            input.push(path.join("Ol3", "CRS", "CRS")); // FIXME ???
         }
 
         if (isExecuteLeafletWithVg) {
-            input.push("Common/Utils/AutoLoadConfig");
-            input.push("Leaflet/GpPluginLeaflet");
-            input.push("Vg/GpPluginVg");
+            input.push(path.join("Common", "Utils", "AutoLoadConfig"));
+            input.push(path.join("Leaflet", "GpPluginLeaflet"));
+            input.push(path.join("Vg", "GpPluginVg"));
             // on ajoute ce projet pour leaflet
             deps["proj4leaflet"] = "../../../../node_modules/proj4leaflet/src/proj4leaflet"  /*+ modeExt*/;
             deps["leaflet-draw" ] = "../../../../node_modules/leaflet-draw/dist/leaflet.draw-src" /*+ modeExt*/;
         }
 
         if (isExecuteOl3WithITowns) {
-            input.push("Common/Utils/AutoLoadConfig");
-            input.push("Ol3/GpPluginOl3");
-            input.push("ITowns/GpPluginITowns");
-            input.push("Ol3/CRS/CRS"); // FIXME ???
+            input.push(path.join("Common", "Utils", "AutoLoadConfig"));
+            input.push(path.join("Ol3", "GpPluginOl3"));
+            input.push(path.join("ITowns", "GpPluginITowns"));
+            input.push(path.join("Ol3", "CRS", "CRS")); // FIXME ???
         }
 
         if (isExecuteLeafletWithITowns) {
-            input.push("Common/Utils/AutoLoadConfig");
-            input.push("Leaflet/GpPluginLeaflet");
-            input.push("ITowns/GpPluginITowns");
+            input.push(path.join("Common", "Utils", "AutoLoadConfig"));
+            input.push(path.join("Leaflet", "GpPluginLeaflet"));
+            input.push(path.join("ITowns", "GpPluginITowns"));
             // on ajoute ce projet pour leaflet
             deps["proj4leaflet"] = "../../../../node_modules/proj4leaflet/src/proj4leaflet"  /*+ modeExt*/;
             deps["leaflet-draw" ] = "../../../../node_modules/leaflet-draw/dist/leaflet.draw-src" /*+ modeExt*/;
