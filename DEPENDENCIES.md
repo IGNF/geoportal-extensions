@@ -5,18 +5,9 @@
 last
 └── openlayers@4.4.1
 
-> **HOWTO avec Bower**
-On peut utiliser **bower** afin d'obtenir le projet, et on le compile manuellement :
+> **Utilisation de la version suivante**
 ```
-> bower install --save openlayers
-> cd bower_components/openlayers
-> make build
-> ls build/
-    ol.css  
-    ol-debug.js  
-    ol.js
-    ol.js.map
-
+└── openlayers@4.0.1
 ```
 
 * proj4
