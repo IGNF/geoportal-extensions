@@ -1139,7 +1139,7 @@
     gulp.task("connect", function () {
 
         $.connect.server({
-            root : path.join(_build, getDistDirName()),
+            root : [path.join(_build, getDistDirName()), "."],
             port : 9000,
             livereload : false
         });
