@@ -48,6 +48,7 @@ avec les lignes suivantes :
 ou
 
 sous *Windows*, déclarer les variables d'environnement suivantes :
+
     HTTP_PROXY
     HTTPS_PROXY
 
