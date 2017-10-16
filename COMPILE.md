@@ -45,6 +45,12 @@ avec les lignes suivantes :
     https-proxy=http://proxy.company.com:8080
     https_proxy=http://proxy.company.com:8080
 
+ou
+
+sous *Windows*, déclarer les variables d'environnement suivantes :
+    HTTP_PROXY
+    HTTPS_PROXY
+
 ### Utilisation du terminal (Console Git ou NodeJS)
 
 --*Windows only!*--
@@ -54,7 +60,7 @@ L'utilisation de ces consoles permet d'avoir un environnement complet (ex. varia
 
 > **Note :**
 Possibilité d'utiliser le terminal de _Visual Studio Code_ dans le menu
-_Afficahge > Integred Terminal_
+_Affichage > Integred Terminal_
 Pour plus d'information, cf. https://code.visualstudio.com/docs/editor/integrated-terminal
 
 ## Commande de compilation
