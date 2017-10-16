@@ -42,7 +42,7 @@
     "geoportal-access-lib": "^1.0.1",
     "leaflet": "^1.2.0",
     "leaflet-draw": "^0.4.12",
-    "openlayers": "^4.4.1",
+    "openlayers": "^4.0.1",
     "proj4": "^2.4.4",
     "proj4leaflet": "^1.0.2",
     "requirejs": "^2.3.5",
