@@ -71,7 +71,6 @@ Le dépôt est à initialiser manuellement pour une 1ere utilisation !
     https://gist.github.com/foca/38d82e93e32610f5241709f8d5720156
     https://github.com/aktau/github-release
     https://kaspars.net/blog/web-development/create-release-zip-git-tags
-    https://github.com/Esri/esri-leaflet/blob/master/scripts/release.sh
 
 **Synopsys**
 
