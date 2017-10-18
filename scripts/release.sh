@@ -1,8 +1,12 @@
 #!/bin/bash
 
 # FIXME
-# authentification github pour 'git push'
-# https://help.github.com/articles/which-remote-url-should-i-use/#cloning-with-ssh-urls
+# authentification github pour 'git push' via SSH ou Token
+# https://help.github.com/articles/connecting-to-github-with-ssh/
+#   https://help.github.com/articles/which-remote-url-should-i-use/#cloning-with-ssh-urls
+#   https://docs.microsoft.com/en-us/vsts/git/use-ssh-keys-to-authenticate
+#   https://developer.github.com/v3/guides/basics-of-authentication/ && https://developer.github.com/v3/guides/managing-deploy-keys/
+# https://help.github.com/articles/git-automation-with-oauth-tokens/
 
 # FIXME
 # authentification npm pour 'npm publish'
@@ -102,15 +106,17 @@ source ${_PROPERTIES}
 # git
 GIT_COMMIT_MESSAGE=${_GIT_COMMIT_MESSAGE}
 GIT_FILES_ADD=${_GIT_FILES_ADD}
+GIT_USERNAME=${_GIT_USERNAME}
+GIT_TOKEN=${_GIT_TOKEN}
 
 [ ${_LIBRARY} == "leaflet" ] && {
   GIT_DIR_PUBLISH=${_GIT_DIR_PUBLISH_LEAFLET}
-  GIT_REPOSITORY=${_GIT_REPOSITORY_LEAFLET}
+  GIT_REPOSITORY="https://github.com/${GIT_USERNAME}/${_GIT_NAME_REPOSITORY_LEAFLET}.git"
 }
 
 [ ${_LIBRARY} == "ol3" ] && {
   GIT_DIR_PUBLISH=${_GIT_DIR_PUBLISH_OPENLAYERS}
-  GIT_REPOSITORY=${_GIT_REPOSITORY_OPENLAYERS}
+  GIT_REPOSITORY="https://github.com/${GIT_USERNAME}/${_GIT_NAME_REPOSITORY_OPENLAYERS}.git"
 }
 
 ##########
@@ -260,6 +266,12 @@ then
         sed -e "s@%version%@${_PACKAGE_VERSION}@g" |
         sed -e "s@%library%@${_LIBRARY}@g")
     doCmd "git commit -m \"$message\""
+
+    if [ -n ${GIT_TOKEN} ]; then
+      _GIT_REPOSITORY_TOKEN=$(echo ${GIT_REPOSITORY} | sed -e "s/github.com/${GIT_USERNAME}:${GIT_TOKEN}@github.com/")
+      doCmd "git remote set-url origin ${_GIT_REPOSITORY_TOKEN}"
+    fi
+
     doCmd "git push"
   }
 fi
