@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # FIXME
-# authentification github pour 'git push' via SSH ou Token
+# authentification github pour 'git push' via SSH ou Token ?
 # https://help.github.com/articles/connecting-to-github-with-ssh/
 #   https://help.github.com/articles/which-remote-url-should-i-use/#cloning-with-ssh-urls
 #   https://docs.microsoft.com/en-us/vsts/git/use-ssh-keys-to-authenticate
@@ -15,6 +15,9 @@
 # TODO
 # impl. les options longues
 # Ex. --leaflet
+
+# TODO
+# tagger les changements !
 
 # set -x
 
@@ -107,7 +110,7 @@ source ${_PROPERTIES}
 GIT_COMMIT_MESSAGE=${_GIT_COMMIT_MESSAGE}
 GIT_FILES_ADD=${_GIT_FILES_ADD}
 GIT_USERNAME=${_GIT_USERNAME}
-GIT_TOKEN=${_GIT_TOKEN}
+GIT_OAUTH_TOKEN=${_GIT_OAUTH_TOKEN}
 
 [ ${_LIBRARY} == "leaflet" ] && {
   GIT_DIR_PUBLISH=${_GIT_DIR_PUBLISH_LEAFLET}
@@ -161,7 +164,8 @@ info () {
 --    publish : ${_OPTS_RUN_PUBLISH}
 --    clean   : ${_OPTS_RUN_CLEAN}
 -- Information   : ...
---    depot Git : ${GIT_REPOSITORY}
+--    depot GitHub : ${GIT_REPOSITORY}
+--    token GitHub : ${GIT_OAUTH_TOKEN}
 ----------------------------------------------------------
 
 EOF
@@ -256,7 +260,7 @@ fi
 ################################################################################
 printTo "--> git"
 
-# FIXME git push : authentification ?
+# FIXME git push : authentification SSH ou Token ?
 if [ ${_OPTS_RUN_COMMIT} == true ]
 then
   [ -d ${GIT_DIR_PUBLISH} ] && {
@@ -267,8 +271,8 @@ then
         sed -e "s@%library%@${_LIBRARY}@g")
     doCmd "git commit -m \"$message\""
 
-    if [ -n ${GIT_TOKEN} ]; then
-      _GIT_REPOSITORY_TOKEN=$(echo ${GIT_REPOSITORY} | sed -e "s/github.com/${GIT_USERNAME}:${GIT_TOKEN}@github.com/")
+    if [ -n ${GIT_OAUTH_TOKEN} ]; then
+      _GIT_REPOSITORY_TOKEN=$(echo ${GIT_REPOSITORY} | sed -e "s/github.com/${GIT_USERNAME}:${GIT_OAUTH_TOKEN}@github.com/")
       doCmd "git remote set-url origin ${_GIT_REPOSITORY_TOKEN}"
     fi
 

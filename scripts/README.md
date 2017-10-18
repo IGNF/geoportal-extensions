@@ -74,7 +74,20 @@ Le dépôt est à initialiser manuellement pour une 1ere utilisation !
 
 **Synopsys**
 
-> Ex. releases.sh [--leaflet][--ol] --user= --password=
+> release.sh -h
+Usage :
+    release.sh -h    Affiche cette aide.
+    l (--leaflet)     Execution de la publication Leaflet (par defaut),
+    o (--ol3)         Execution de la publication Openlayers,
+    b (--run-build)   Execution de la tache de compilation,
+    d (--run-data)    Execution de la tache de git-clone,
+    j (--run-json)    Execution de la tache de creation des json,
+    i (--run-info)    Execution de la tache de creation du fichier d'info,
+    c (--run-commit)  Execution de la tache de git-push,
+    p (--run-publish) Execution de la tache de publication npm et bower,
+    C (--run-clean)   Execution de la tache de nettoyage.
+Ex. release.sh -bdjicpC
+
 
 Ce script consiste à executer les étapes suivantes :
 
@@ -83,22 +96,24 @@ avec la commande *gulp*.
 
 * json - création des fichiers de configuration json (package et bower)
 
-* copy - copie des fichiers utiles dans le dépôt de publication avec *git*.
-  * copie des sources, des binaires, README, COMPILE, LICENCE
-  * copie du CHANGELOG mais mis à jour au préalable
+* data - copie des fichiers utiles dans le dépôt de publication avec *git*.
+  * copie des sources,
+  * copie des binaires,
+  * copie des README, COMPILE, LICENCE
+  * copie du CHANGELOG_DRAFT mais ne pas oublier de le mettre à jour au préalable
 
-* tag - mise en place du *tag* de publication avec *git*.
+* commit - *commit* des modifications de la publication avec *git*.
+  * tag - mise en place du *tag* de publication avec *git*.
 
 * info - création d'un fichier d'information
 
 * publish - publication via *npm* et *bower*
 
-> **FIXME**
-A t on besoin de générer un changelog automatique ?
+* clean - nettoyage du répertoire
 
 ## Scripts de publication des releases sur le gitHub
 
-> Ex. publish.sh [--leaflet][--ol]
+> Ex. release-github.sh
 
 Ce script sert à mettre en place les releases dans le dépôt central.
 
@@ -117,3 +132,12 @@ on dépose les archives et le changelog sur le gitHub.
 > **Note**
 Le contenu du changelog est extrait du fichier *CHANGELOG.md* ou *CHANGELOG_DRAFT.md*.
 Il faut donc au préalable le mettre à jour...
+
+## Authentification sur le GitHub
+
+On utilise l'authentification via Token Personal Access.
+Comment creer un token :
+    https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/
+
+Ensuite, ce token est stocké dans une variable d'environnement du systeme :
+> export RELEASE_GITHUB_TOKEN="grsgz5r4gzr5g4er654er54er4tyer5646y"
