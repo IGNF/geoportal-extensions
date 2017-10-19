@@ -2,7 +2,12 @@ define(["woodman"], function (woodman) {
 
     "use strict";
 
+    // logger
+    woodman.load("console");
+    var logger = woodman.getLogger("ProxyUtils");
+
     var ProxyUtils = {
+
         /**
          * Ajoute un proxy aux url des couches vecteurs si besoin.
          *
@@ -13,9 +18,7 @@ define(["woodman"], function (woodman) {
          */
         proxifyUrl : function (url, proxyOptions) {
 
-            // logger
-            woodman.load("console");
-            var logger = woodman.getLogger("proxifyUrl");
+            logger.trace("proxifyUrl");
 
             if (  !proxyOptions ||
                   !proxyOptions.hasOwnProperty("proxyUrl") ||

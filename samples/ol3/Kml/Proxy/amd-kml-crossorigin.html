@@ -5,15 +5,15 @@
   <title>sample ol3 KML crossOrigin</title>
 
   <!-- Library OpenLayers 3 -->
-  <link rel="stylesheet" href="../../../node_modules/openlayers/dist/ol.css" />
-  <!-- <script src="../../../node_modules/openlayers/dist/ol-debug.js"></script> -->
+  <link rel="stylesheet" href="../../../../lib/ol3/ol.css" />
+  <!-- <script src="../../../lib/ol3/ol-debug.js"></script> -->
 
   <!-- Plugin OpenLayers 3 IGN -->
-  <link rel="stylesheet" href="../../../dist/ol3/GpPluginOl3.css" />
+  <link rel="stylesheet" href="../../../../dist/ol3/GpPluginOl3.css" />
   <!-- <script src="../../../dist/ol3/GpPluginOl3.js" data-url="./../resources/AutoConf.js"></script> -->
 
   <!-- requirejs -->
-  <script src="../../../node_modules/requirejs/require.js"></script>
+  <script src="../../../../lib/require.js"></script>
 
   <!-- load geoportail-waiting image -->
   <style>
@@ -30,8 +30,8 @@
 </head>
 <body>
   <h1>
-    <a href="http://openlayers.org/"><img src="../resources/logo-ol3.png" alt="OpenLayers3" width="100" /></a>
-    <a href="http://www.ign.fr"><img src="../resources/logo-ign.jpg" alt="IGN" width="100" /></a>
+    <a href="http://openlayers.org/"><img src="../../resources/logo-ol3.png" alt="OpenLayers3" width="100" /></a>
+    <a href="http://www.ign.fr"><img src="../../resources/logo-ign.jpg" alt="IGN" width="100" /></a>
   </h1>
   <h3>
     OpenLayers3 - A high-performance, feature-packed library for all your mapping needs.
@@ -45,30 +45,28 @@
     var map;
     var vectorLayer;
     var vectorSource;
-    var FormatChoice, kmlChoice;
     var kmlStringOut, kmlStringIn;
     var kmlProj;
     var cors;
 
     /* global requirejs */
     requirejs.config({
-      "baseUrl" : "../../../src/",
+      "baseUrl" : "../../../../src/",
       "paths": {
         // lib external
         // "ol" : "../lib/ol3/v3.18.1/ol-debug",
         // "ol" : "../lib/ol3/v3.20.1/ol-debug",
-        "ol" : "../node_modules/openlayers/dist/ol-debug",
-        "proj4"   : "../node_modules/proj4/dist/proj4-src",
-        "gp"      : "../node_modules/geoportal-access-lib/dist/GpServices-src",
-        "sortable" : "../node_modules/sortablejs/Sortable",
-        "woodman" : "../node_modules/woodman/dist/woodman-amd"
+        "ol" : "../lib/ol3/ol-debug",
+        "proj4"   : "../lib/proj4/proj4",
+        "gp"      : "../lib/gp/GpServices-src",
+        "sortable" : "../lib/sortable/Sortable",
+        "woodman" : "../lib/woodman/woodman-amd"
       }
     });
 
     requirejs([
       "ol",
-      "Ol3/Formats/KML",
-      // "../samples/ol3/Kml/overload/__StyleIconOverload"
+      "Ol3/Formats/KML"
     ],
     function (ol, KMLExtended) {
 
@@ -166,13 +164,10 @@
 
       document.getElementById("loadKml").onclick = function (e) {
 
-        if (!FormatChoice) {
-          FormatChoice = ol.format.KML;
-        }
-
         // read KML string
-        var format = new FormatChoice ({ // ol.format.KML
+        var format = new KMLExtended ({ // ol.format.KML
           cors : cors,
+          corsUrl : "http://localhost:8089/",
           showPointNames : true
         });
         kmlProj = format.readProjection(kmlStringIn);
@@ -193,7 +188,7 @@
       document.getElementById("writeKml").onclick = function (e) {
 
         // write KML string
-        var format = new FormatChoice ({ // ol.format.KML
+        var format = new KMLExtended ({ // ol.format.KML
           writeStyles : true
         });
 
@@ -210,7 +205,7 @@
       document.getElementById("readKml").onclick = function (e) {
 
         // read KML string
-        var format = new FormatChoice ({ // ol.format.KML
+        var format = new KMLExtended ({ // ol.format.KML
           showPointNames : true
         });
 
@@ -225,26 +220,6 @@
         addKMLToMap(features);
 
       };
-
-      // get list of radio buttons with name 'size'
-      var formats = document.getElementsByName("format");
-
-      // loop through list
-      for (var i=0, len=formats.length; i<len; i++) {
-        formats[i].onclick = function(e) {
-          var currentValue = e.target.value;
-          switch (currentValue) {
-            case "form1":
-               FormatChoice = ol.format.KML;
-              break;
-            case "form2":
-                FormatChoice = KMLExtended;
-              break;
-            default:
-              FormatChoice = KMLExtended;
-          }
-        };
-      }
 
       // get list of radio buttons with name 'size'
       var corsDiv = document.getElementsByName("cors");
@@ -266,32 +241,6 @@
       };
     }
 
-    function handleClickKmlChoice (myRadio) {
-        var currentValue = myRadio.value;
-        switch (currentValue) {
-          case "form1":
-             kmlChoice = kmlStringIn1;
-            break;
-          case "form2":
-              kmlChoice = kmlStringIn2;
-            break;
-          case "form3":
-              kmlChoice = kmlStringIn3;
-            break;
-          case "form4":
-              kmlChoice = kmlStringIn4;
-            break;
-          case "form5":
-              kmlChoice = kmlStringIn5;
-            break;
-          case "form6":
-                kmlChoice = kmlStringIn6;
-              break;
-          default:
-            kmlChoice = kmlStringIn1;
-        }
-    }
-
   });
 
     </script>
@@ -299,18 +248,12 @@
     <!-- map -->
     <div id="map">
     </div>
-    <input type="radio" name="format" value="form1" checked> Format KML<br>
-    <input type="radio" name="format" value="form2"> Format KMLExtended<br>
+    <input type="radio" name="format" value="form2"checked> Format KMLExtended<br>
     <hr width="50%" align="left">
     <input type="radio" name="cors" value="false" checked> cors:false<br>
     <input type="radio" name="cors" value="true"> cors:true<br>
     <hr width="50%" align="left">
     <input type="radio" name="kml" onclick="handleClickKmlChoice(this);" value="form1" checked> Form : Label étendu avec point <br>
-    <!-- input type="radio" name="kml" onclick="handleClickKmlChoice(this);" value="form2"> Form : Label étendu avec point (extendData)<br>
-    <input type="radio" name="kml" onclick="handleClickKmlChoice(this);" value="form3"> Form : Label normal avec un point<br>
-    <input type="radio" name="kml" onclick="handleClickKmlChoice(this);" value="form4"> Form : Label étendu<br>
-    <input type="radio" name="kml" onclick="handleClickKmlChoice(this);" value="form5"> Form : Label normal avec style<br>
-    <input type="radio" name="kml" onclick="handleClickKmlChoice(this);" value="form6"> Form : Label sans style (par defaut)<br -->
     <hr width="50%" align="left">
     <button type="button" id="loadKml">Load KML</button> -->
     <button type="button" id="writeKml">Write KML</button> -->
