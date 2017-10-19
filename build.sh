@@ -43,8 +43,18 @@ function vg() {
   gulp publish --vg
 }
 
+# itowns
+function itowns() {
+  echo "####### iTowns production !"
+  gulp --itowns
+  gulp publish --itowns
+  echo "####### iTowns !"
+  gulp --production --itowns
+  gulp publish --itowns
+}
+
 # mix
-function mix() {
+function mixVg() {
   echo "####### Mixte OL/VG !"
   gulp --ol3 --vg --mix
   gulp publish --ol3 --vg --mix
@@ -53,7 +63,17 @@ function mix() {
   gulp publish --ol3 --vg --mix
 }
 
-while getopts "aolvm" opts
+# mix itowns
+function mixIt() {
+  echo "####### Mixte OL/iTowns !"
+  gulp --ol3 --itowns --mix
+  gulp publish --ol3 --itowns --mix
+  echo "####### Mixte OL/iTowns production !"
+  gulp --production --ol3 --itowns --mix
+  gulp publish --ol3 --itowns --mix
+}
+
+while getopts "aolviVI" opts
 do
    case $opts in
      o)
@@ -71,10 +91,20 @@ do
         echo "###### VirtualGeo bundle ! ######"
         vg
         ;;
-     m)
-        echo "#################################"
-        echo "###### Mixte bundle ! ######"
-        mix
+     i)
+        echo "#############################"
+        echo "###### Itowns bundle ! ######"
+        itowns
+        ;;
+     V)
+        echo "###############################"
+        echo "###### Mixte VG bundle ! ######"
+        mixVg
+        ;;
+     I)
+        echo "###################################"
+        echo "###### Mixte Itowns bundle ! ######"
+        mixIt
         ;;
      a)
         echo "#################################"
@@ -82,10 +112,12 @@ do
         ol3
         leaflet
         vg
-        mix
+        itowns
+        mixVg
+        mixIt
         ;;
      \?)
-        echo "$OPTARG : option invalide : a(all), o(openlayers), l(leaflet), v(virtualgeo) ou m(mix) !"
+        echo "$OPTARG : option invalide : a(all), o(openlayers), l(leaflet), i(itowns), v(virtualgeo) I(ol/itowns) ou V(ol/virtualgeo) !"
         exit -1
         ;;
    esac

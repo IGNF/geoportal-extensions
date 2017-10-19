@@ -79,19 +79,19 @@
       "label": "LayerSwitcher : default",
       "url": "leaflet/layerswitcher.html",
       "clickSelector": "label[id^=GPshowLayersListPicto]",
-      "postInteractionWait": 1000
+      "postInteractionWait": 2000
     },
     {
       "label": "LayerSwitcher : add a layer",
       "url": "http://localhost/api-v3-plugins/test_rendering/leaflet/interactions/layerswitcher.html",
       "clickSelector": "#addLayer",
-      "postInteractionWait": 1000
+      "postInteractionWait": 2000
     },
     {
       "label": "LayerSwitcher : remove a layer",
       "url": "http://localhost/api-v3-plugins/test_rendering/leaflet/interactions/layerswitcher.html",
       "clickSelector": "#removeLayer",
-      "postInteractionWait": 1000
+      "postInteractionWait": 2000
     },
     {
       "label": "Reverse : default",

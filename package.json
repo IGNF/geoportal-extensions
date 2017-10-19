@@ -38,15 +38,22 @@
     "url": "https://github.com/IGNF/geoportal-extensions/issues"
   },
   "homepage": "https://github.com/IGNF/geoportal-extensions#readme",
-  "dependencies": {},
-  "optionalDependencies": {
-    "geoportal-access-lib": "^1.0.1"
+  "dependencies": {
+    "geoportal-access-lib": "^1.0.1",
+    "leaflet": "1.2.0",
+    "leaflet-draw": "0.4.12",
+    "openlayers": "4.0.1",
+    "proj4": "2.4.4",
+    "proj4leaflet": "1.0.2",
+    "requirejs": "^2.3.5",
+    "sortablejs": "^1.6.1"
   },
   "devDependencies": {
     "amdclean": "^2.7.0",
     "glob": "^7.0.3",
     "gulp": "^3.9.1",
     "gulp-clean": "^0.3.1",
+    "gulp-cli": "^1.4.0",
     "gulp-concat": "^2.6.0",
     "gulp-connect": "^3.1.0",
     "gulp-header": "^1.7.1",
@@ -61,7 +68,6 @@
     "gulp-util": "^3.0.7",
     "minimist": "^1.2.0",
     "open": "0.0.5",
-    "requirejs": "^2.1.22",
     "rimraf": "^2.4.4",
     "run-sequence": "^1.1.5",
     "shelljs": "^0.5.3",

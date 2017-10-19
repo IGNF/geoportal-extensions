@@ -2,13 +2,13 @@
 <html>
     <head>
           <!-- Library OpenLayers 3 -->
-          <link rel="stylesheet" href="../../../lib/ol3/ol.css" />
+          <link rel="stylesheet" href="../../../node_modules/openlayers/dist/ol.css" />
 
           <!-- Plugin OpenLayers 3 IGN -->
           <link rel="stylesheet" href="../../../dist/ol3/GpPluginOl3.css" />
 
           <!-- requirejs -->
-          <script src="../../../lib/require.js"></script>
+          <script src="../../../node_modules/requirejs/require.js"></script>
 
           <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
 
@@ -40,13 +40,13 @@
                 requirejs.config({
                     'baseUrl' : "../../../src",
                     'paths': {
-                          gp : "../lib/gp/GpServices-src",
-                          proj4 : "../lib/proj4/proj4-src",
+                          gp : "../node_modules/geoportal-access-lib/dist/GpServices-src",
+                          proj4 : "../node_modules/proj4/dist/proj4-src",
                           // ol : "../lib/ol3/v3.20.1/ol",
                           // ol : "../lib/ol3/v3.18.1/ol",
                           // ol : "../lib/ol3/v3.17.1/ol",
-                          ol : "../lib/ol3/ol-debug",
-                          woodman : "../lib/woodman/woodman-amd"
+                          ol : "../node_modules/openlayers/dist/ol-debug",
+                          woodman : "../node_modules/woodman/dist/woodman-amd"
                     }
                 });
 

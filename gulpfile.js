@@ -64,13 +64,13 @@
     var getBaseFileName = function () {
         var baseFileName =
             (isExecuteOl3WithVg) ? "GpPluginOl3Vg" :
-            (isExecuteOl3WithITowns) ? "GpPluginOl3ITowns" :
+            (isExecuteOl3WithITowns) ? "GpPluginOl3Itowns" :
             (isExecuteLeafletWithVg) ? "GpPluginLeafletVg" :
-            (isExecuteLeafletWithITowns) ? "GpPluginLeafletITowns" :
+            (isExecuteLeafletWithITowns) ? "GpPluginLeafletItowns" :
                 (isExecuteOl3) ? "GpPluginOl3" :
                     (isExecuteLeaflet) ? "GpPluginLeaflet" :
                         (isExecuteVg) ? "GpPluginVg" :
-                            (isExecuteITowns) ? "GpPluginITowns" : null;
+                            (isExecuteITowns) ? "GpPluginItowns" : null;
         return baseFileName;
     };
 
@@ -90,7 +90,7 @@
                 (isExecuteOl3) ? "Ol3" :
                     (isExecuteLeaflet) ? "Leaflet" :
                         (isExecuteVg) ? "Vg" :
-                            (isExecuteITowns) ? "ITowns" : null;
+                            (isExecuteITowns) ? "Itowns" : null;
         return dirName;
     };
 
@@ -137,7 +137,7 @@
         $.util.log("# Contruction du bundle \"Leaflet\" ?    : " + ((isExecuteLeaflet) ? "OUI" : "non"));
         $.util.log("# Contruction du bundle \"OpenLayers\" ? : " + ((isExecuteOl3) ? "OUI (par défaut)" : "non"));
         $.util.log("# Contruction du bundle \"VirtualGeo\" ? : " + ((isExecuteVg) ? "OUI" : "non"));
-        $.util.log("# Contruction du bundle \"ITowns\" ?     : " + ((isExecuteITowns) ? "OUI" : "non"));
+        $.util.log("# Contruction du bundle \"Itowns\" ?     : " + ((isExecuteITowns) ? "OUI" : "non"));
         $.util.log("###########################################");
 
     });
@@ -160,7 +160,7 @@
         $.util.log("# --ol3 : construction du bundle de OpenLayers3.");
         $.util.log("# --leaflet : construction du bundle de Leaflet.");
         $.util.log("# --vg : construction du bundle 3D de VirtualGeo.");
-        $.util.log("# --itowns : construction du bundle 3D de ITowns.");
+        $.util.log("# --itowns : construction du bundle 3D de Itowns.");
         $.util.log("###########################################");
     });
 
@@ -347,17 +347,18 @@
         var srcdir   = path.join(_build, getDistDirName(), _dir.clean);
         var input    = []; // on place les modules qui ne sont pas appellés directement dans le code (dependances) !
         input.push("Common/Utils/AutoLoadConfig");
-        input.push(getDistDirName() + "/" + getBaseFileName());
+        input.push(path.join(getDistDirName(), getBaseFileName()));
 
         var deps = {
             ol : "empty:",
             leaflet : "empty:",
             vg : "empty:",
+            itowns : "empty:",
             request : "empty:", // depenance externe pour nodejs !
             xmldom : "empty:",  // depenance externe pour nodejs !
-            proj4 : "../../../../lib/proj4/proj4-src" /*+ modeExt*/,
-            gp : "../../../../lib/gp/GpServices-src"  /*+ modeExt */,
-            sortable : "../../../../lib/sortable/Sortable-src" /*+ modeExt */
+            proj4 : "../../../../node_modules/proj4/dist/proj4-src" /*+ modeExt*/,
+            gp : "../../../../node_modules/geoportal-access-lib/dist/GpServices-src"  /*+ modeExt */,
+            sortable : "../../../../node_modules/sortablejs/Sortable" /*+ modeExt */
         };
 
         if (isExecuteOl3) {
@@ -366,8 +367,8 @@
             input.push(path.join(getDistDirName(), "CRS", "CRS"));
         } else if (isExecuteLeaflet) {
             // on ajoute ce projet pour leaflet
-            deps["proj4leaflet"]  = "../../../../lib/proj4leaflet/proj4leaflet-src"  /*+ modeExt*/;
-            deps["leaflet-draw" ] = "../../../../lib/leaflet-plugins/leaflet-draw/leaflet.draw-src" /*+ modeExt*/;
+            deps["proj4leaflet"]  = "../../../../node_modules/proj4leaflet/src/proj4leaflet"  /*+ modeExt*/;
+            deps["leaflet-draw" ] = "../../../../node_modules/leaflet-draw/dist/leaflet.draw-src" /*+ modeExt*/;
         } else if (isExecuteVg) {
             // do nothing
             $.util.log("executVg : nothing to do");
@@ -400,9 +401,12 @@
                 var amdclean = require("amdclean") ;
                 var outputFile = data.path;
 
+                var content = fs.readFileSync(outputFile, "utf8", function (err, data) {});
+
                 fs.writeFileSync(outputFile, amdclean.clean({
                     globalModules : ["proj4"], // module globale !
-                    filePath : outputFile,
+                    // filePath : outputFile,
+                    code : content.replace("var L, proj4;", ""),
                     prefixMode : "camelCase",
                     wrap : {
                         // FIXME petite bidouille interne avec les dependances nodejs...
@@ -411,14 +415,14 @@
                         end : "\n/* END CODE   */\n"
                     },
                     escodegen : {
-                         comment : false,
-                         format : {
-                             indent : {
-                                 style : "    ",
-                                 adjustMultilineComment : true
-                             }
-                         }
-                     }
+                        comment : false,
+                        format : {
+                            indent : {
+                                style : "    ",
+                                adjustMultilineComment : true
+                            }
+                        }
+                    }
                 }));
             }
         }, function () {
@@ -449,43 +453,45 @@
             ol : "empty:",
             leaflet : "empty:",
             vg : "empty:",
+            itowns : "empty:",
             request : "empty:", // depenance externe pour nodejs !
             xmldom : "empty:",  // depenance externe pour nodejs !
-            proj4 : "../../../../lib/proj4/proj4-src" /*+ modeExt*/,
-            gp : "../../../../lib/gp/GpServices-src"  /*+ modeExt */,
-            sortable : "../../../../lib/sortable/Sortable-src" /*+ modeExt */
+            proj4 : "../../../../node_modules/proj4/dist/proj4-src" /*+ modeExt*/,
+            gp : "../../../../node_modules/geoportal-access-lib/dist/GpServices-src"  /*+ modeExt */,
+            sortable : "../../../../node_modules/sortablejs/Sortable" /*+ modeExt */,
+            woodman : "empty:"
         };
 
         if (isExecuteOl3WithVg) {
-            input.push("Common/Utils/AutoLoadConfig");
-            input.push("Ol3/GpPluginOl3");
-            input.push("Vg/GpPluginVg");
-            input.push("Ol3/CRS/CRS"); // FIXME ???
+            input.push(path.join("Common", "Utils", "AutoLoadConfig"));
+            input.push(path.join("Ol3", "GpPluginOl3"));
+            input.push(path.join("Vg", "GpPluginVg"));
+            input.push(path.join("Ol3", "CRS", "CRS")); // FIXME ???
         }
 
         if (isExecuteLeafletWithVg) {
-            input.push("Common/Utils/AutoLoadConfig");
-            input.push("Leaflet/GpPluginLeaflet");
-            input.push("Vg/GpPluginVg");
+            input.push(path.join("Common", "Utils", "AutoLoadConfig"));
+            input.push(path.join("Leaflet", "GpPluginLeaflet"));
+            input.push(path.join("Vg", "GpPluginVg"));
             // on ajoute ce projet pour leaflet
-            deps["proj4leaflet"] = "../../../../lib/proj4leaflet/proj4leaflet-src"  /*+ modeExt*/;
-            deps["leaflet-draw" ] = "../../../../lib/leaflet-plugins/leaflet-draw/leaflet.draw-src" /*+ modeExt*/;
+            deps["proj4leaflet"] = "../../../../node_modules/proj4leaflet/src/proj4leaflet"  /*+ modeExt*/;
+            deps["leaflet-draw" ] = "../../../../node_modules/leaflet-draw/dist/leaflet.draw-src" /*+ modeExt*/;
         }
 
         if (isExecuteOl3WithITowns) {
-            input.push("Common/Utils/AutoLoadConfig");
-            input.push("Ol3/GpPluginOl3");
-            input.push("ITowns/GpPluginITowns");
-            input.push("Ol3/CRS/CRS"); // FIXME ???
+            input.push(path.join("Common", "Utils", "AutoLoadConfig"));
+            input.push(path.join("Ol3", "GpPluginOl3"));
+            input.push(path.join("Itowns", "GpPluginItowns"));
+            input.push(path.join("Ol3", "CRS", "CRS")); // FIXME ???
         }
 
         if (isExecuteLeafletWithITowns) {
-            input.push("Common/Utils/AutoLoadConfig");
-            input.push("Leaflet/GpPluginLeaflet");
-            input.push("ITowns/GpPluginITowns");
+            input.push(path.join("Common", "Utils", "AutoLoadConfig"));
+            input.push(path.join("Leaflet", "GpPluginLeaflet"));
+            input.push(path.join("Itowns", "GpPluginItowns"));
             // on ajoute ce projet pour leaflet
-            deps["proj4leaflet"] = "../../../../lib/proj4leaflet/proj4leaflet-src"  /*+ modeExt*/;
-            deps["leaflet-draw" ] = "../../../../lib/leaflet-plugins/leaflet-draw/leaflet.draw-src" /*+ modeExt*/;
+            deps["proj4leaflet"] = "../../../../node_modules/proj4leaflet/src/proj4leaflet"  /*+ modeExt*/;
+            deps["leaflet-draw" ] = "../../../../node_modules/leaflet-draw/dist/leaflet.draw-src" /*+ modeExt*/;
         }
 
         requirejs.optimize({
@@ -667,7 +673,7 @@
             // format SVG !
             srcdir.push(path.join(_dir.res, getDistDirName(), "**", "*.svg"));
         } else if (isExecuteLeaflet) {
-            var plugindir = path.join(_dir.lib, "leaflet-plugins", "leaflet-draw", "images", "*.png");
+            var plugindir = path.join("node_modules/leaflet-draw/dist/" , "images", "*.png");
             srcdir.push(plugindir);
         } else if (isExecuteVg) {
             $.util.log("Nothing to do in Vg mode");
@@ -699,13 +705,13 @@
             srcdir.push(path.join(_build, "Vg", "dist", "vg", "img", "*.*"));
         } else if (isExecuteOl3WithITowns) {
             srcdir.push(path.join(_build, "Ol3", "dist", "ol3", "img", "*.*"));
-            srcdir.push(path.join(_build, "ITowns", "dist", "itowns", "img", "*.*"));
+            srcdir.push(path.join(_build, "Itowns", "dist", "itowns", "img", "*.*"));
         } else if (isExecuteLeafletWithVg) {
             srcdir.push(path.join(_build, "Leaflet", "dist", "leaflet", "img", "*.*"));
             srcdir.push(path.join(_build, "Vg", "dist", "vg", "img", "*.*"));
         } else if (isExecuteLeafletWithITowns) {
             srcdir.push(path.join(_build, "Leaflet", "dist", "leaflet", "img", "*.*"));
-            srcdir.push(path.join(_build, "ITowns", "dist", "itowns", "img", "*.*"));
+            srcdir.push(path.join(_build, "Itowns", "dist", "itowns", "img", "*.*"));
         }
 
         return gulp.src(srcdir)
@@ -766,7 +772,7 @@
             $.util.log("Nohing to do in Ol3 mode");
         } else if (isExecuteLeaflet) {
             // Plugins Leaflet !
-            plugindir = path.join(_dir.lib, "leaflet-plugins", "leaflet-draw", "*.css");
+            plugindir = path.join("node_modules/leaflet-draw/dist/", "leaflet.draw-src.css");
         } else if (isExecuteVg) {
             $.util.log("Nohing to do in Vg mode");
         } else if (isExecuteITowns) {
@@ -815,13 +821,13 @@
             srcdir.push(path.join(_build, "Vg", "dist", "vg", "*.css"));
         } else if (isExecuteOl3WithITowns) {
             srcdir.push(path.join(_build, "Ol3", "dist", "ol3", "*.css"));
-            srcdir.push(path.join(_build, "ITowns", "dist", "itowns", "*.css"));
+            srcdir.push(path.join(_build, "Itowns", "dist", "itowns", "*.css"));
         } else if (isExecuteLeafletWithVg) {
             srcdir.push(path.join(_build, "Leaflet", "dist", "leaflet", "*.css"));
             srcdir.push(path.join(_build, "Vg", "dist", "vg", "*.css"));
         } else if (isExecuteLeafletWithITowns) {
             srcdir.push(path.join(_build, "Leaflet", "dist", "leaflet", "*.css"));
-            srcdir.push(path.join(_build, "ITowns", "dist", "itowns", "*.css"));
+            srcdir.push(path.join(_build, "Itowns", "dist", "itowns", "*.css"));
         }
 
         var output = getBaseFileName();
@@ -1135,7 +1141,7 @@
     gulp.task("connect", function () {
 
         $.connect.server({
-            root : path.join(_build, getDistDirName()),
+            root : [path.join(_build, getDistDirName()), "."],
             port : 9000,
             livereload : false
         });
@@ -1230,9 +1236,9 @@
         } else if (isExecuteLeafletWithVg) {
             $.util.log("[ERREUR] Execution des taches (mixte) entre Leaflet/VirtualGeo !!!");
         } else if (isExecuteOl3WithITowns) {
-            $.util.log("[ERREUR] Execution des taches (mixte) entre OpenLayers/ITowns !!!");
+            $.util.log("[ERREUR] Execution des taches (mixte) entre OpenLayers/Itowns !!!");
         } else if (isExecuteLeafletWithITowns) {
-            $.util.log("[ERREUR] Execution des taches (mixte) entre Leaflet/ITowns !!!");
+            $.util.log("[ERREUR] Execution des taches (mixte) entre Leaflet/Itowns !!!");
         }
 
         // callback

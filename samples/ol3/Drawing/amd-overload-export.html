@@ -5,15 +5,15 @@
         <title>sample ol3 MousePosition</title>
 
         <!-- Library OpenLayers 3 -->
-        <link rel="stylesheet" href="../../../lib/ol3/ol.css" />
-        <!-- <script src="../../../lib/ol3/ol-debug.js"></script> -->
+        <link rel="stylesheet" href="../../../node_modules/openlayers/dist/ol.css" />
+        <!-- <script src="../../../node_modules/openlayers/dist/ol-debug.js"></script> -->
 
         <!-- Plugin OpenLayers 3 IGN -->
         <link rel="stylesheet" href="../../../dist/ol3/GpPluginOl3.css" />
         <!-- <script src="../../../dist/ol3/GpPluginOl3.js" data-url="./../resources/AutoConf.js"></script> -->
 
         <!-- requirejs -->
-        <script src="../../../lib/require.js"></script>
+        <script src="../../../node_modules/requirejs/require.js"></script>
 
         <!-- load geoportail-waiting image -->
         <style>
@@ -47,11 +47,11 @@
                     "baseUrl" : "../../../src/",
                     "paths": {
                         // lib external
-                        "ol" : "../lib/ol3/ol-debug",
-                        "proj4"   : "../lib/proj4/proj4",
-                        "gp"      : "../lib/gp/GpServices-src",
-                        "sortable" : "../lib/sortable/Sortable",
-                        "woodman" : "../lib/woodman/woodman-amd"
+                        "ol" : "../node_modules/openlayers/dist/ol-debug",
+                        "proj4"   : "../node_modules/proj4/dist/proj4-src",
+                        "gp"      : "../node_modules/geoportal-access-lib/dist/GpServices-src",
+                        "sortable" : "../node_modules/sortablejs/Sortable",
+                        "woodman" : "../node_modules/woodman/dist/woodman-amd"
                     }
                 });
                 requirejs(
