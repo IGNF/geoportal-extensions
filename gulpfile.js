@@ -1236,7 +1236,7 @@
         } else if (isExecuteLeafletWithVg) {
             $.util.log("[ERREUR] Execution des taches (mixte) entre Leaflet/VirtualGeo !!!");
         } else if (isExecuteOl3WithITowns) {
-            $.util.log("[ERREUR] Execution des taches (mixte) entre OpenLayers/Itowns !!!");
+            target.push("build-ol3-it");
         } else if (isExecuteLeafletWithITowns) {
             $.util.log("[ERREUR] Execution des taches (mixte) entre Leaflet/Itowns !!!");
         }
