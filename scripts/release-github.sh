@@ -4,7 +4,7 @@
 # authentification github pour l'API
 # cf. https://developer.github.com/v3/auth/
 
-set -x
+# set -x
 
 # répertoire d'execution
 _PWD=`pwd`
@@ -210,19 +210,20 @@ then
 
   _CHANGELOG_CONTENT=`cat ${GIT_DIR_PUBLISH}/CHANGELOG.md`
 
-  [ -n ${_CHANGELOG_CONTENT} ] && {
+  if [ -n "${_CHANGELOG_CONTENT}" ] && [ ${_OPTS_RUN_TAG} == true ]
+  then
 
-    # # https://developer.github.com/v3/repos/releases/#create-a-release
-    # _REQUEST_RELEASE_URL=$(echo "${GITHUB_API_URL}/${GITHUB_API_CREATE_RELEASE_URL}" |
-    #     sed -e "s@%git_user_name%@${GIT_USER_NAME}@g" |
-    #     sed -e "s@%git_repository_name%@${GIT_REPOSITORY_NAME}@g")
-    #
-    # _REQUEST_RELEASE_DATA=$(echo "${GITHUB_API_CREATE_RELEASE_DATA}" |
-    #     sed -e "s@%tag_name%@${_PACKAGE_TAG}@g" |
-    #     sed -e "s@%content%@${_CHANGELOG_CONTENT}@g")
-    #
-    # doCmd "curl -u ${GIT_USER_NAME}:${GIT_OAUTH_TOKEN} -X POST -H \"Content-Type: application/json\" -d ${_REQUEST_RELEASE_DATA} ${_REQUEST_RELEASE_URL}"
-  }
+    # https://developer.github.com/v3/repos/releases/#create-a-release
+    _REQUEST_RELEASE_URL=$(echo "${GITHUB_API_URL}/${GITHUB_API_CREATE_RELEASE_URL}" |
+        sed -e "s@%git_user_name%@${GIT_USER_NAME}@g" |
+        sed -e "s@%git_repository_name%@${GIT_REPOSITORY_NAME}@g")
+
+    _REQUEST_RELEASE_DATA=$(echo "${GITHUB_API_CREATE_RELEASE_DATA}" |
+        sed -e "s@%tag_name%@${_PACKAGE_TAG}@g" |
+        sed -e "s@%content%@${_CHANGELOG_CONTENT}@g")
+
+    doCmd "curl -u ${GIT_USER_NAME}:${GIT_OAUTH_TOKEN} -X POST -H \"Content-Type: application/json\" -d ${_REQUEST_RELEASE_DATA} ${_REQUEST_RELEASE_URL}"
+  fi
 
   ##############################################################################
   printTo "--> zip"
@@ -241,22 +242,23 @@ then
   ##############################################################################
   printTo "--> TODO : sendZip"
 
-  [ -f ${_ZIP_NAME} ] && {
+  if [ -f ${_ZIP_NAME} ] && [ ${_OPTS_RUN_TAG} == true ]
+  then
 
     # FIXME
     # '_RELEASE_ID' issu de la requete de creation de la release ?
 
-    # doCmd "cd ${GIT_DIR_PUBLISH}"
+    doCmd "cd ${GIT_DIR_PUBLISH}"
 
-    # # https://developer.github.com/v3/repos/releases/#upload-a-release-asset
-    # _REQUEST_UPLOAD_URL==$(echo "${GITHUB_API_URL}/${GITHUB_API_UPLOAD_RELEASE_URL}" |
-    #     sed -e "s@%git_user_name%@${GIT_USER_NAME}@g" |
-    #     sed -e "s@%git_repository_name%@${GIT_REPOSITORY_NAME}@g"|
-    #     sed -e "s@%release_id%@${_RELEASE_ID}@g"|
-    #     sed -e "s@%zip_name%@${_ZIP_NAME}@g")
-    #
-    # doCmd "curl -u ${GIT_USER_NAME}:${GIT_OAUTH_TOKEN} -X POST -H \"Content-Type: application/zip\" ${_REQUEST_UPLOAD_URL}"
-  }
+    # https://developer.github.com/v3/repos/releases/#upload-a-release-asset
+    _REQUEST_UPLOAD_URL==$(echo "${GITHUB_API_URL}/${GITHUB_API_UPLOAD_RELEASE_URL}" |
+        sed -e "s@%git_user_name%@${GIT_USER_NAME}@g" |
+        sed -e "s@%git_repository_name%@${GIT_REPOSITORY_NAME}@g"|
+        sed -e "s@%release_id%@${_RELEASE_ID}@g"|
+        sed -e "s@%zip_name%@${_ZIP_NAME}@g")
+
+    doCmd "curl -u ${GIT_USER_NAME}:${GIT_OAUTH_TOKEN} -X POST -H \"Content-Type: application/zip\" ${_REQUEST_UPLOAD_URL}"
+  fi
 
 fi
 
@@ -271,6 +273,6 @@ fi
 
 printTo "END"
 
-set +x
+# set +x
 
 exit 0
