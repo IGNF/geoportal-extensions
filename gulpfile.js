@@ -64,13 +64,13 @@
     var getBaseFileName = function () {
         var baseFileName =
             (isExecuteOl3WithVg) ? "GpPluginOl3Vg" :
-            (isExecuteOl3WithITowns) ? "GpPluginOl3ITowns" :
+            (isExecuteOl3WithITowns) ? "GpPluginOl3Itowns" :
             (isExecuteLeafletWithVg) ? "GpPluginLeafletVg" :
-            (isExecuteLeafletWithITowns) ? "GpPluginLeafletITowns" :
+            (isExecuteLeafletWithITowns) ? "GpPluginLeafletItowns" :
                 (isExecuteOl3) ? "GpPluginOl3" :
                     (isExecuteLeaflet) ? "GpPluginLeaflet" :
                         (isExecuteVg) ? "GpPluginVg" :
-                            (isExecuteITowns) ? "GpPluginITowns" : null;
+                            (isExecuteITowns) ? "GpPluginItowns" : null;
         return baseFileName;
     };
 
@@ -90,7 +90,7 @@
                 (isExecuteOl3) ? "Ol3" :
                     (isExecuteLeaflet) ? "Leaflet" :
                         (isExecuteVg) ? "Vg" :
-                            (isExecuteITowns) ? "ITowns" : null;
+                            (isExecuteITowns) ? "Itowns" : null;
         return dirName;
     };
 
@@ -137,7 +137,7 @@
         $.util.log("# Contruction du bundle \"Leaflet\" ?    : " + ((isExecuteLeaflet) ? "OUI" : "non"));
         $.util.log("# Contruction du bundle \"OpenLayers\" ? : " + ((isExecuteOl3) ? "OUI (par défaut)" : "non"));
         $.util.log("# Contruction du bundle \"VirtualGeo\" ? : " + ((isExecuteVg) ? "OUI" : "non"));
-        $.util.log("# Contruction du bundle \"ITowns\" ?     : " + ((isExecuteITowns) ? "OUI" : "non"));
+        $.util.log("# Contruction du bundle \"Itowns\" ?     : " + ((isExecuteITowns) ? "OUI" : "non"));
         $.util.log("###########################################");
 
     });
@@ -160,7 +160,7 @@
         $.util.log("# --ol3 : construction du bundle de OpenLayers3.");
         $.util.log("# --leaflet : construction du bundle de Leaflet.");
         $.util.log("# --vg : construction du bundle 3D de VirtualGeo.");
-        $.util.log("# --itowns : construction du bundle 3D de ITowns.");
+        $.util.log("# --itowns : construction du bundle 3D de Itowns.");
         $.util.log("###########################################");
     });
 
@@ -353,6 +353,7 @@
             ol : "empty:",
             leaflet : "empty:",
             vg : "empty:",
+            itowns : "empty:",
             request : "empty:", // depenance externe pour nodejs !
             xmldom : "empty:",  // depenance externe pour nodejs !
             proj4 : "../../../../node_modules/proj4/dist/proj4-src" /*+ modeExt*/,
@@ -452,6 +453,7 @@
             ol : "empty:",
             leaflet : "empty:",
             vg : "empty:",
+            itowns : "empty:",
             request : "empty:", // depenance externe pour nodejs !
             xmldom : "empty:",  // depenance externe pour nodejs !
             proj4 : "../../../../node_modules/proj4/dist/proj4-src" /*+ modeExt*/,
@@ -479,14 +481,14 @@
         if (isExecuteOl3WithITowns) {
             input.push(path.join("Common", "Utils", "AutoLoadConfig"));
             input.push(path.join("Ol3", "GpPluginOl3"));
-            input.push(path.join("ITowns", "GpPluginITowns"));
+            input.push(path.join("Itowns", "GpPluginItowns"));
             input.push(path.join("Ol3", "CRS", "CRS")); // FIXME ???
         }
 
         if (isExecuteLeafletWithITowns) {
             input.push(path.join("Common", "Utils", "AutoLoadConfig"));
             input.push(path.join("Leaflet", "GpPluginLeaflet"));
-            input.push(path.join("ITowns", "GpPluginITowns"));
+            input.push(path.join("Itowns", "GpPluginItowns"));
             // on ajoute ce projet pour leaflet
             deps["proj4leaflet"] = "../../../../node_modules/proj4leaflet/src/proj4leaflet"  /*+ modeExt*/;
             deps["leaflet-draw" ] = "../../../../node_modules/leaflet-draw/dist/leaflet.draw-src" /*+ modeExt*/;
@@ -703,13 +705,13 @@
             srcdir.push(path.join(_build, "Vg", "dist", "vg", "img", "*.*"));
         } else if (isExecuteOl3WithITowns) {
             srcdir.push(path.join(_build, "Ol3", "dist", "ol3", "img", "*.*"));
-            srcdir.push(path.join(_build, "ITowns", "dist", "itowns", "img", "*.*"));
+            srcdir.push(path.join(_build, "Itowns", "dist", "itowns", "img", "*.*"));
         } else if (isExecuteLeafletWithVg) {
             srcdir.push(path.join(_build, "Leaflet", "dist", "leaflet", "img", "*.*"));
             srcdir.push(path.join(_build, "Vg", "dist", "vg", "img", "*.*"));
         } else if (isExecuteLeafletWithITowns) {
             srcdir.push(path.join(_build, "Leaflet", "dist", "leaflet", "img", "*.*"));
-            srcdir.push(path.join(_build, "ITowns", "dist", "itowns", "img", "*.*"));
+            srcdir.push(path.join(_build, "Itowns", "dist", "itowns", "img", "*.*"));
         }
 
         return gulp.src(srcdir)
@@ -819,13 +821,13 @@
             srcdir.push(path.join(_build, "Vg", "dist", "vg", "*.css"));
         } else if (isExecuteOl3WithITowns) {
             srcdir.push(path.join(_build, "Ol3", "dist", "ol3", "*.css"));
-            srcdir.push(path.join(_build, "ITowns", "dist", "itowns", "*.css"));
+            srcdir.push(path.join(_build, "Itowns", "dist", "itowns", "*.css"));
         } else if (isExecuteLeafletWithVg) {
             srcdir.push(path.join(_build, "Leaflet", "dist", "leaflet", "*.css"));
             srcdir.push(path.join(_build, "Vg", "dist", "vg", "*.css"));
         } else if (isExecuteLeafletWithITowns) {
             srcdir.push(path.join(_build, "Leaflet", "dist", "leaflet", "*.css"));
-            srcdir.push(path.join(_build, "ITowns", "dist", "itowns", "*.css"));
+            srcdir.push(path.join(_build, "Itowns", "dist", "itowns", "*.css"));
         }
 
         var output = getBaseFileName();
@@ -1234,9 +1236,9 @@
         } else if (isExecuteLeafletWithVg) {
             $.util.log("[ERREUR] Execution des taches (mixte) entre Leaflet/VirtualGeo !!!");
         } else if (isExecuteOl3WithITowns) {
-            $.util.log("[ERREUR] Execution des taches (mixte) entre OpenLayers/ITowns !!!");
+            $.util.log("[ERREUR] Execution des taches (mixte) entre OpenLayers/Itowns !!!");
         } else if (isExecuteLeafletWithITowns) {
-            $.util.log("[ERREUR] Execution des taches (mixte) entre Leaflet/ITowns !!!");
+            $.util.log("[ERREUR] Execution des taches (mixte) entre Leaflet/Itowns !!!");
         }
 
         // callback
