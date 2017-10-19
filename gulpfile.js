@@ -353,6 +353,7 @@
             ol : "empty:",
             leaflet : "empty:",
             vg : "empty:",
+            itowns : "empty:",
             request : "empty:", // depenance externe pour nodejs !
             xmldom : "empty:",  // depenance externe pour nodejs !
             proj4 : "../../../../node_modules/proj4/dist/proj4-src" /*+ modeExt*/,
@@ -479,14 +480,14 @@
         if (isExecuteOl3WithITowns) {
             input.push(path.join("Common", "Utils", "AutoLoadConfig"));
             input.push(path.join("Ol3", "GpPluginOl3"));
-            input.push(path.join("ITowns", "GpPluginITowns"));
+            input.push(path.join("Itowns", "GpPluginItowns"));
             input.push(path.join("Ol3", "CRS", "CRS")); // FIXME ???
         }
 
         if (isExecuteLeafletWithITowns) {
             input.push(path.join("Common", "Utils", "AutoLoadConfig"));
             input.push(path.join("Leaflet", "GpPluginLeaflet"));
-            input.push(path.join("ITowns", "GpPluginITowns"));
+            input.push(path.join("Itowns", "GpPluginItowns"));
             // on ajoute ce projet pour leaflet
             deps["proj4leaflet"] = "../../../../node_modules/proj4leaflet/src/proj4leaflet"  /*+ modeExt*/;
             deps["leaflet-draw" ] = "../../../../node_modules/leaflet-draw/dist/leaflet.draw-src" /*+ modeExt*/;
