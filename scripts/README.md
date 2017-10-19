@@ -103,7 +103,7 @@ avec la commande *gulp*.
   * copie du CHANGELOG_DRAFT mais ne pas oublier de le mettre à jour au préalable
 
 * commit - *commit* des modifications de la publication avec *git*.
-  * tag - mise en place du *tag* de publication avec *git*.
+  * **TODO** : tag - mise en place du *tag* de publication avec *git*.
 
 * info - création d'un fichier d'information
 
@@ -122,12 +122,13 @@ Les étapes consistent à :
 * build - construction des binaires dans le répertoire *dist*
 avec la commande *gulp*.
 
-* zip - construire les archives au format zip.
-
 * tag - mise en place du *tag* de publication avec *git*.
 
-* publish - via l'API **Github** (https://developer.github.com/v3/repos/releases/),
-on dépose les archives et le changelog sur le gitHub.
+* publish/upload - via l'API **Github** (https://developer.github.com/v3/repos/releases/),
+on dépose l'archive et le changelog sur le gitHub.
+  * create - creation du répertoire temporaire de publication.
+  * zip - construire les archives au format zip.
+  * data - copie du CHANGELOG_DRAFT mais ne pas oublier de le mettre à jour au préalable
 
 > **Note**
 Le contenu du changelog est extrait du fichier *CHANGELOG.md* ou *CHANGELOG_DRAFT.md*.

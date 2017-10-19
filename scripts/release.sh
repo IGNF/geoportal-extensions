@@ -9,7 +9,7 @@
 # https://help.github.com/articles/git-automation-with-oauth-tokens/
 
 # FIXME
-# authentification npm pour 'npm publish'
+# authentification npm pour 'npm publish' mais sur le compte IGNF !
 # idem avec bower...
 
 # TODO
@@ -31,9 +31,9 @@ _VERSION=0.0.1
 _LIBRARY="leaflet"
 
 # options
-#   -leaflet
-#   (-debug )
-#   -no-build |b, -no-data |d, -no-json |j, -no-info |i, -no-commit |o, -no-publish |p, -no-clean |c
+#   --leaflet |l
+#   (--debug )
+#   --build |b, --data |d, --json |j, --info |i, --commit |o, --publish |p, --clean |C
 _OPTS_RUN_BUILD=false
 _OPTS_RUN_DATA=false
 _OPTS_RUN_JSON=false
@@ -43,7 +43,7 @@ _OPTS_RUN_PUBLISH=false
 _OPTS_RUN_CLEAN=false
 
 # parse options
-while getopts "lhbdjicpC" opt; do
+while getopts "lohbdjicpC" opt; do
   case ${opt} in
     h|help )
       echo "Usage :"
@@ -66,8 +66,6 @@ while getopts "lhbdjicpC" opt; do
      ;;
    l|leaflet )
       _LIBRARY="leaflet"
-      GIT_DIR_PUBLISH=${_GIT_DIR_PUBLISH_LEAFLET}
-      GIT_REPOSITORY=${_GIT_REPOSITORY_LEAFLET}
      ;;
    o|ol3 )
       _LIBRARY="ol3"
@@ -109,17 +107,17 @@ source ${_PROPERTIES}
 # git
 GIT_COMMIT_MESSAGE=${_GIT_COMMIT_MESSAGE}
 GIT_FILES_ADD=${_GIT_FILES_ADD}
-GIT_USERNAME=${_GIT_USERNAME}
+GIT_USER_NAME=${_GIT_USER_NAME}
 GIT_OAUTH_TOKEN=${_GIT_OAUTH_TOKEN}
 
 [ ${_LIBRARY} == "leaflet" ] && {
   GIT_DIR_PUBLISH=${_GIT_DIR_PUBLISH_LEAFLET}
-  GIT_REPOSITORY="https://github.com/${GIT_USERNAME}/${_GIT_NAME_REPOSITORY_LEAFLET}.git"
+  GIT_REPOSITORY="https://github.com/${GIT_USER_NAME}/${_GIT_REPOSITORY_NAME_LEAFLET}.git"
 }
 
 [ ${_LIBRARY} == "ol3" ] && {
   GIT_DIR_PUBLISH=${_GIT_DIR_PUBLISH_OPENLAYERS}
-  GIT_REPOSITORY="https://github.com/${GIT_USERNAME}/${_GIT_NAME_REPOSITORY_OPENLAYERS}.git"
+  GIT_REPOSITORY="https://github.com/${GIT_USER_NAME}/${_GIT_REPOSITORY_NAME_OPENLAYERS}.git"
 }
 
 ##########
@@ -181,6 +179,9 @@ printTo "BEGIN"
 ################################################################################
 printTo "--> build..."
 
+# date du build
+export _PACKAGE_BUILD=`date '+%d/%m/%y - %H:%M:%S'`
+
 if [ ${_OPTS_RUN_BUILD} == true ]
 then
   doCmd "cd ${_PWD}"
@@ -212,7 +213,7 @@ fi
 printTo "--> json"
 
 # version API
-_PACKAGE_VERSION=$(cat package.json | perl -MJSON -0ne 'my $DS = decode_json $_;print $DS->{version};')
+export _PACKAGE_VERSION=$(cat package.json | perl -MJSON -0ne 'my $DS = decode_json $_;print $DS->{version};')
 
 if [ ${_OPTS_RUN_JSON} == true ]
 then
@@ -221,27 +222,27 @@ then
     _PACKAGE_CONTENT=$(cat ${GIT_DIR_PUBLISH}/package.json |
         perl -MJSON -0ne '
           my $DS = decode_json $_;
-          $DS->{version} = ${_PACKAGE_VERSION};
+          $DS->{version} = $ENV{_PACKAGE_VERSION};
           print encode_json $DS
-          ')
+        ')
     # contenu du bower.json avec version API
     _BOWER_CONTENT=$(cat ${GIT_DIR_PUBLISH}/bower.json |
         perl -MJSON -0ne '
           my $DS = decode_json $_;
-          $DS->{version} = ${_PACKAGE_VERSION};
+          $DS->{version} = $ENV{_PACKAGE_VERSION};
           print encode_json $DS
-          ')
+        ')
 
     doCmd "cd ${_PWD}"
-    doCmd "echo ${_PACKAGE_CONTENT} > ${GIT_DIR_PUBLISH}/package.json"
-    doCmd "echo ${_BOWER_CONTENT} > ${GIT_DIR_PUBLISH}/bower.json"
+    echo ${_PACKAGE_CONTENT} > "${GIT_DIR_PUBLISH}/package.json"
+    echo ${_BOWER_CONTENT} > "${GIT_DIR_PUBLISH}/bower.json"
   }
 fi
 
 ################################################################################
 printTo "--> info"
 
-# TODO informations sur la construcion des binaires
+# informations sur la construcion des binaires
 # Ex. date, version, size, md5, ...
 if [ ${_OPTS_RUN_INFO} == true ]
 then
@@ -249,8 +250,8 @@ then
     _INFO_CONTENT=$(cat ${GIT_DIR_PUBLISH}/summary.json |
     perl -MJSON -0ne '
       my $DS = decode_json $_;
-      $DS->{version} = "...";
-      $DS->{date} = "...";
+      $DS->{version} = $ENV{_PACKAGE_VERSION};
+      $DS->{date} = $ENV{_PACKAGE_BUILD};
       print encode_json $DS
     ')
     echo ${_INFO_CONTENT} > "${GIT_DIR_PUBLISH}/summary.json"
@@ -260,7 +261,7 @@ fi
 ################################################################################
 printTo "--> git"
 
-# FIXME git push : authentification SSH ou Token ?
+# TODO tag !
 if [ ${_OPTS_RUN_COMMIT} == true ]
 then
   [ -d ${GIT_DIR_PUBLISH} ] && {
@@ -272,7 +273,7 @@ then
     doCmd "git commit -m \"$message\""
 
     if [ -n ${GIT_OAUTH_TOKEN} ]; then
-      _GIT_REPOSITORY_TOKEN=$(echo ${GIT_REPOSITORY} | sed -e "s/github.com/${GIT_USERNAME}:${GIT_OAUTH_TOKEN}@github.com/")
+      _GIT_REPOSITORY_TOKEN=$(echo ${GIT_REPOSITORY} | sed -e "s/github.com/${GIT_USER_NAME}:${GIT_OAUTH_TOKEN}@github.com/")
       doCmd "git remote set-url origin ${_GIT_REPOSITORY_TOKEN}"
     fi
 
@@ -281,9 +282,9 @@ then
 fi
 
 ###############################################################################
-printTo "--> publish"
+printTo "--> TODO : publish"
 
-# FIXME npm / bower : authentification ?
+# TODO !
 if [ ${_OPTS_RUN_PUBLISH} == true ]
 then
   [ -d ${GIT_DIR_PUBLISH} ] && {
