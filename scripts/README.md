@@ -39,6 +39,29 @@ avec la configuration dans le **package.json**
       "url": "https://github.com/IGNF/geoportal-extensions-openlayers.git"
     },
 
+> **Note**
+Mettre à jour un package :
+    https://docs.npmjs.com/getting-started/publishing-npm-packages#updating-the-package
+
+> **Erreur de publication**
+```
+    npm ERR! code ENEEDAUTH
+    npm ERR! need auth auth required for publishing
+    npm ERR! need auth You need to authorize this machine using `npm adduser`
+    npm ERR! A complete log of this run can be found in:
+    npm ERR!     /home/jpbazonnais/.npm/_logs/2017-10-20T13_35_32_337Z-debug.log
+```
+Ajouter l'utilisateur de publication :
+```
+npm adduser or login
+Username: lowzonenose
+Password:
+Email: (this IS public) jpbazonnais@gmail.com
+```
+> **Depublication du package (complete)**
+npm unpublish --force
+
+
 ## Depot de publication
 
 Les publications sont déposées dans des dépôts séparés :

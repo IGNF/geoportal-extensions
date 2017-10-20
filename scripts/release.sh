@@ -1,26 +1,5 @@
 #!/bin/bash
 
-# FIXME
-# authentification github pour 'git push' via SSH ou Token ?
-# https://help.github.com/articles/connecting-to-github-with-ssh/
-#   https://help.github.com/articles/which-remote-url-should-i-use/#cloning-with-ssh-urls
-#   https://docs.microsoft.com/en-us/vsts/git/use-ssh-keys-to-authenticate
-#   https://developer.github.com/v3/guides/basics-of-authentication/ && https://developer.github.com/v3/guides/managing-deploy-keys/
-# https://help.github.com/articles/git-automation-with-oauth-tokens/
-
-# FIXME
-# authentification npm pour 'npm publish' mais sur le compte IGNF !
-# idem avec bower...
-
-# TODO
-# impl. les options longues
-# Ex. --leaflet
-
-# TODO
-# tagger les changements !
-
-# set -x
-
 # répertoire d'execution
 _PWD=`pwd`
 
@@ -43,11 +22,14 @@ _OPTS_RUN_PUBLISH=false
 _OPTS_RUN_CLEAN=false
 
 # parse options
-while getopts "lohbdjicpC" opt; do
+_OPTS_VERBOSE=false
+
+while getopts "lovhbdjicpC" opt; do
   case ${opt} in
     h|help )
       echo "Usage :"
       echo "    `basename $0` -h    Affiche cette aide."
+      echo "    v (--verbose)     mode verbose,"
       echo "    l (--leaflet)     Execution de la publication Leaflet (par defaut),"
       echo "    o (--ol3)         Execution de la publication Openlayers,"
       echo "    b (--run-build)   Execution de la tache de compilation,"
@@ -63,6 +45,9 @@ while getopts "lohbdjicpC" opt; do
    \? )
      echo "Invalid Option: -$OPTARG" 1>&2
      exit 1
+     ;;
+   v|verbose )
+     _OPTS_VERBOSE=true
      ;;
    l|leaflet )
       _LIBRARY="leaflet"
@@ -94,6 +79,10 @@ while getopts "lohbdjicpC" opt; do
   esac
   shift $((OPTIND -1))
 done
+
+[ ${_OPTS_VERBOSE} == true ] && {
+  set -x
+}
 
 # chemins des répertoires
 _DIR_SCRIPTS="${_PWD}/scripts"
@@ -204,7 +193,7 @@ then
   # cp LICENCE.md geoportal-extensions-leaflet/
   doCmd "cp LICENCE.md ${GIT_DIR_PUBLISH}"
   # cp README-leaflet.md geoportal-extensions-leaflet/README.md
-  doCmd "cp README-leaflet.md ${GIT_DIR_PUBLISH}/README.md"
+  doCmd "cp README-${_LIBRARY}.md ${GIT_DIR_PUBLISH}/README.md"
   # cp CHANGELOG_DRAFT.md geoportal-extensions-leaflet/CHANGELOG.md
   doCmd "cp CHANGELOG_DRAFT.md ${GIT_DIR_PUBLISH}/CHANGELOG.md"
 fi
@@ -213,7 +202,13 @@ fi
 printTo "--> json"
 
 # version API
-export _PACKAGE_VERSION=$(cat package.json | perl -MJSON -0ne 'my $DS = decode_json $_;print $DS->{version};')
+export _PACKAGE_VERSION_NAME="${_LIBRARY}ExtVersion"
+export _PACKAGE_VERSION=$(cat package.json |
+  perl -MJSON -0ne '
+    my $DS = decode_json $_;
+    my $field = $ENV{_PACKAGE_VERSION_NAME};
+    print $DS->{$field};
+  ')
 
 if [ ${_OPTS_RUN_JSON} == true ]
 then
@@ -282,15 +277,16 @@ then
 fi
 
 ###############################################################################
-printTo "--> TODO : publish"
+printTo "--> publish"
 
-# TODO !
+# TODO bower !
+# FIXME authentification !
 if [ ${_OPTS_RUN_PUBLISH} == true ]
 then
   [ -d ${GIT_DIR_PUBLISH} ] && {
     doCmd "cd ${GIT_DIR_PUBLISH}"
     # npm publish
-    doCmd ""
+    doCmd "npm publish"
     # npm install bower
     doCmd ""
     # bower register geoportal-extensions-leaflet http://github.com/IGNF/geoportal-extensions-leaflet.git
@@ -309,6 +305,8 @@ fi
 
 printTo "END"
 
-# set +x
+[ ${_OPTS_VERBOSE} == true ] && {
+  set +x
+}
 
 exit 0

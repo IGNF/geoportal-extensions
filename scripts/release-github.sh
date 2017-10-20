@@ -1,11 +1,5 @@
 #!/bin/bash
 
-# FIXME
-# authentification github pour l'API
-# cf. https://developer.github.com/v3/auth/
-
-# set -x
-
 # répertoire d'execution
 _PWD=`pwd`
 
@@ -25,11 +19,14 @@ _OPTS_RUN_PUBLISH=false
 _OPTS_RUN_CLEAN=false
 
 # parse options
-while getopts "hlobtpC" opt; do
+_OPTS_VERBOSE=false
+
+while getopts "hvlobtpC" opt; do
   case ${opt} in
     h|help )
       echo "Usage :"
       echo "    `basename $0` -h    Affiche cette aide."
+      echo "    v (--verbose)     mode verbose,"
       echo "    l (--leaflet)     Execution de la publication Leaflet (par defaut),"
       echo "    o (--ol3)         Execution de la publication Openlayers,"
       echo "    b (--run-build)   Execution de la tache de compilation,"
@@ -42,6 +39,9 @@ while getopts "hlobtpC" opt; do
    \? )
      echo "Invalid Option: -$OPTARG" 1>&2
      exit 1
+     ;;
+   v|verbose )
+     _OPTS_VERBOSE=true
      ;;
    l|leaflet )
       _LIBRARY="leaflet"
@@ -64,6 +64,10 @@ while getopts "hlobtpC" opt; do
   esac
   shift $((OPTIND -1))
 done
+
+[ ${_OPTS_VERBOSE} == true ] && {
+  set -x
+}
 
 # chemins des répertoires
 _DIR_SCRIPTS="${_PWD}/scripts"
@@ -153,7 +157,13 @@ printTo "--> build..."
 # date build
 export _PACKAGE_BUILD=`date '+%d/%m/%y - %H:%M:%S'`
 # version package
-export _PACKAGE_VERSION=$(cat package.json | perl -MJSON -0ne 'my $DS = decode_json $_;print $DS->{version};')
+export _PACKAGE_VERSION_NAME="${_LIBRARY}ExtVersion"
+export _PACKAGE_VERSION=$(cat package.json |
+  perl -MJSON -0ne '
+    my $DS = decode_json $_;
+    my $field = $ENV{_PACKAGE_VERSION_NAME};
+    print $DS->{$field};
+  ')
 
 if [ ${_OPTS_RUN_BUILD} == true ]
 then
@@ -245,7 +255,7 @@ then
   if [ -f ${_ZIP_NAME} ] && [ ${_OPTS_RUN_TAG} == true ]
   then
 
-    # FIXME
+    # TODO
     # '_RELEASE_ID' issu de la requete de creation de la release ?
 
     doCmd "cd ${GIT_DIR_PUBLISH}"
@@ -273,6 +283,8 @@ fi
 
 printTo "END"
 
-# set +x
+[ ${_OPTS_VERBOSE} == true ] && {
+  set +x
+}
 
 exit 0
