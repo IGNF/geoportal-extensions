@@ -10,19 +10,19 @@
 
 ## Installation
 
-> npm install --save handlebars handlebars-layouts gulp-hb gulp
-
-ou
+Depuis le répertoire racine geoportal-extensions :
 
 > npm install
 
 ## Execution
 
-> gulp
+> gulp sample
 
 ## Résultats
 
-> ./build/**/*.html
+> ./samples/*.html
+
+
 
 ## Evolutions possibles
 
