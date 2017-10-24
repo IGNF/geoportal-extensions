@@ -102,7 +102,7 @@
         lib :     "lib",
         test :    "test",
         doc :     "doc",
-        samples : "samples",
+        samples : "samples-src",
         dist :    "dist"
     };
 
@@ -1033,43 +1033,50 @@
     });
 
     // |**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    // | ✓ copy-sample
-    // | > copie des exemples leaflet ou ol3 dans samples/
+    // | ✓ handlebars
+    // | > gestion des exemples à base de templates
+    // | > https://github.com/shannonmoeller/gulp-hb
+    // | > https://github.com/shannonmoeller/handlebars-layouts
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-    gulp.task("copy-sample", function () {
+    gulp.task("template-samples", function () {
 
-        var bundle   = getBaseFileName();
-        var basedir  = getDistDirName().toLowerCase();
-        var builddir = path.join(_build, getDistDirName(), "samples", basedir);
+        var hb = require("gulp-hb");
 
-        var sources  = [];
-        // includes : les bundles
-        sources.push(path.join(_dir.samples, basedir, "**", "bundle*.html"));
-        sources.push(path.join(_dir.samples, basedir, "**", "index-bundle*.html"));
-        // excludes : les tests (amd)
-        sources.push("!" + path.join(_dir.samples, basedir, "Test"));
-        sources.push("!" + path.join(_dir.samples, basedir, "Test", "**"));
+        var dir = getDistDirName().toLowerCase();
 
-        var bundleToReplace  = bundle + "-src";
+        var hbStream = hb({
+            cwd : process.cwd(),
+            debug : false
+        })
+        .partials(path.join(_dir.samples, "templates", "partials", "*.hbs"))
+        .partials(path.join(_dir.samples, "templates", "partials", dir, "*.hbs"))
+        .partials(path.join(_dir.samples, "templates", dir, "*.hbs"))
+        .helpers(require("handlebars-layouts"))
+        .data({ // .data(path.join(_dir.samples, "config.json"));
+            config : {
+                baseurl : "../../..",
+                mode : (isProduction) ? "" : "-src",
+                resources : "../../resources",
+                apikey : "jhyvi0fgmnuxvfv0zjzorvdn"
+            }
+        });
 
-        return gulp.src(sources)
-            .pipe((isProduction) ? $.replace(bundleToReplace, bundle) : $.util.noop())
-            .pipe((isProduction) ? $.replace(bundleToReplace, bundle) : $.util.noop())
-            .pipe(gulp.dest(builddir));
+        return gulp
+            .src(path.join(_dir.samples, "pages", dir, "**", "*.html"))
+            .pipe(hbStream)
+            .pipe(gulp.dest(path.join("samples", dir)));
     });
 
     // |**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // | ✓ copy-resources-sample
     // | > copie des ressources des exemples leaflet ou ol3 dans samples/
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-    gulp.task("copy-resources-sample", function () {
+    gulp.task("copy-resources-samples", function () {
 
-        var basedir  = getDistDirName().toLowerCase();
-        var builddir = path.join(_build, getDistDirName(), "samples", basedir, "resources");
+        var builddir = path.join("samples", "resources");
 
         var sources  = [];
-        // includes : les ressources
-        sources.push(path.join(_dir.samples, basedir, "resources", "**"));
+        sources.push(path.join(_dir.samples, "resources", "**"));
 
         return gulp.src(sources)
             .pipe(gulp.dest(builddir));
@@ -1081,15 +1088,15 @@
     // | > https:// ww.npmjs.com/package/gulp-template
     // | > FIXME les dependances des exemples !
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-    gulp.task("template-sample", function () {
+    gulp.task("template-samples-index", function () {
 
         var tmpl = require("gulp-template");
         var glob = require("glob");
 
         var basedir  = getDistDirName().toLowerCase();
-        var builddir = path.join(_build, getDistDirName(), "samples");
-        var sources  = path.join(/*_dir.samples, */ basedir, "**", "*");
-        var index    = path.join(_dir.samples, "index-" + basedir + ".html");
+        var builddir = "samples";
+        var sources  = path.join(basedir, "**", "*");
+        var index    = path.join(_dir.samples, "pages", "index-" + basedir + ".html");
 
         var lstSources = glob.sync(sources , {
             cwd : builddir,
@@ -1103,7 +1110,7 @@
                 files : lstSources,
                 mode : (isProduction) ? "" : "-src" // FIXME !
             }))
-            .pipe(gulp.dest(path.join(builddir)));
+            .pipe(gulp.dest(builddir));
     });
 
     // **~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1236,7 +1243,9 @@
         } else if (isExecuteLeafletWithVg) {
             $.util.log("[ERREUR] Execution des taches (mixte) entre Leaflet/VirtualGeo !!!");
         } else if (isExecuteOl3WithITowns) {
-            target.push("build-ol3-it");
+            // à réactiver lors du merge avec iTowns
+            // target.push("build-ol3-it");
+            $.util.log("[ERREUR] Execution des taches (mixte) entre OpenLayers/Itowns !!!");
         } else if (isExecuteLeafletWithITowns) {
             $.util.log("[ERREUR] Execution des taches (mixte) entre Leaflet/Itowns !!!");
         }
@@ -1310,7 +1319,7 @@
     });
 
     gulp.task("task-sample", function (cb) {
-        runSequence("copy-sample", "copy-resources-sample", "template-sample", cb);
+        runSequence("template-samples", "copy-resources-samples", "template-samples-index", cb);
     });
 
     // **~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -1,0 +1,86 @@
+{{#extend "layout-leaflet-sample-amd"}}
+
+{{#content "head"}}
+        <title>Sample Leaflet</title>
+{{/content}}
+
+{{#content "style"}}
+        <style>
+          div#map {
+            width: 100%;
+            height: 500px;
+          }
+        </style>
+{{/content}}
+
+{{#content "body"}}
+        <h2>Ajout de tous les Widget</h2>
+        <!-- map -->
+        <div id="map"></div>
+{{/content}}
+
+{{#content "js"}}
+        <script type="text/javascript">
+          var map;
+          requirejs(
+            [
+              'gp',
+              'Leaflet/Layers/Layers',
+              'Leaflet/Controls/Route',
+              'Leaflet/Controls/LayerSwitcher',
+              'Leaflet/Controls/ReverseGeocoding',
+              'Leaflet/Controls/MousePosition',
+              'Leaflet/Controls/Isocurve',
+              'Leaflet/Controls/ElevationPath',
+              'Leaflet/Controls/SearchEngine'
+            ],
+            function (
+              Gp,
+              Layers,
+              Route,
+              LayerSwitcher,
+              ReverseGeocoding,
+              MousePosition,
+              Isocurve,
+              ElevationPath,
+              SearchEngine
+            ) {
+
+              Gp.Services.getConfig({
+                serverUrl : "{{ config.resources }}/AutoConf.js",
+                callbackSuffix : "",
+                // apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
+                timeOut : 20000,
+                onSuccess : function () {
+
+                  var wms = Layers.WMS({
+                    layer : "ORTHOIMAGERY.ORTHOPHOTOS",
+                  });
+
+                  var map  = L.map('map', {
+                    zoom : 2,
+                    center : L.latLng(48, 2)
+                  });
+
+                  wms.addTo(map);
+
+                  var switcher = new LayerSwitcher();
+                  map.addControl(switcher);
+                  var route = new Route();
+                  map.addControl(route);
+                  var search = new SearchEngine();
+                  map.addControl(search);
+                  var rev = new ReverseGeocoding();
+                  map.addControl(rev);
+                  var mouse = new MousePosition();
+                  map.addControl(mouse);
+                  var iso = new Isocurve();
+                  map.addControl(iso);
+                  var el = new ElevationPath();
+                  map.addControl(el);
+                }
+              });
+          });
+        </script>
+{{/content}}
+{{/extend}}
