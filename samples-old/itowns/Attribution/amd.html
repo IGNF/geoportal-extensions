@@ -10,7 +10,7 @@ and open the template in the editor.
         <!-- Library iTowns -->
         <script src="../../../lib/itowns/js/itowns.js"></script>
         <!-- requirejs -->
-        <script src="../../../lib/require.js"></script>
+        <script src="../../../node_modules/requirejs/require.js"></script>
 
         <link rel="stylesheet" href="../../../dist/itowns/GpPluginItowns-src.css" />
 
@@ -47,10 +47,10 @@ and open the template in the editor.
                 paths : {
                     // lib external
                     itowns  : "../lib/itowns/js/itowns",
-                    proj4   : "../lib/proj4/proj4-src",
-                    gp      : "../lib/gp/GpServices-src",
-                    sortable : "../lib/sortable/Sortable",
-                    woodman : "../lib/woodman/woodman-amd"
+                    proj4   : "../node_modules/proj4/dist/proj4",
+                    gp      : "../node_modules/geoportal-access-lib/dist/GpServices-src",
+                    sortable : "../node_modules/sortablejs/Sortable",
+                    woodman : "../node_modules/woodman/dist/woodman-amd"
                 }
             });
             requirejs(

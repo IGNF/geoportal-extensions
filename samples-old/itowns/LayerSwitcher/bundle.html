@@ -6,17 +6,14 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>Globe</title>
-        <!-- Library iTowns -->
-        <script src="../../../lib/itowns/js/itowns.js"></script>
-        <!-- requirejs -->
-        <script src="../../../lib/require.js"></script>
+        <title>Layerswitcher-bundle</title>
 
-        <link rel="stylesheet" href="../../../dist/itowns/GpPluginItowns-src.css" />
+        <link rel="stylesheet" href="../../../dist/itowns/GpPluginItowns.css" />
 
         <style type="text/css">
-            html {height: 100%}
+                html {height: 100%}
             body { margin: 0; overflow:hidden; height:100%}
+
                 #viewerDiv {
                     margin : auto auto;
                     width: 100%;
@@ -29,20 +26,26 @@ and open the template in the editor.
 
           <meta charset="UTF-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     </head>
     <body>
         <h3>Itowns</h3>
         <p>Ajout d'un contrôle de gestionnaire de couches : LayerSwitcher</p>
 
         <div id="viewerDiv"></div>
-
+        <!-- Library iTowns -->
+        <script src="../../../lib/itowns/js/itowns.js"></script>
+        <!-- Library OpenLayers 3 -->
+        <link rel="stylesheet" href="../../../node_modules/openlayers/dist/ol.css" />
+        <script src="../../../node_modules/openlayers/dist/ol-debug.js"></script>
+        <!-- Plugin iTowns IGN -->
+        <script src="../../../dist/mix/GpPluginOl3Itowns-src.js"></script>
         <script type="text/javascript">
 
             var orthoLayer = {
-                type:       "color",
+                type: "color",
                 protocol:   "wmts",
                 id:         "Ortho",
+                visible: true,
                 url:        "http://wxs.ign.fr/va5orxd0pgzvq3jxutqfuy0b/geoportail/wmts",
                 updateStrategy: {
                     type: "0",
@@ -171,93 +174,51 @@ and open the template in the editor.
                 }
             };
 
-            requirejs.config({
-                "baseUrl" : "../../../src/",
-                "paths": {
-                    // lib external
-                    "itowns" : "../lib/itowns/js/itowns",
-                    "proj4"   : "../lib/proj4/proj4-src",
-                    "gp"      : "../lib/gp/GpServices-src",
-                    "sortable" : "../lib/sortable/Sortable",
-                    "woodman" : "../lib/woodman/woodman-amd"
-                }
-            });
-            requirejs(
-                ["itowns", "proj4", "gp", "Itowns/GlobeViewExtended", "Itowns/Controls/LayerSwitcher"],
-                function (itowns, proj4, Gp, GlobeViewExtended, LayerSwitcher)
-            {
-                itowns.control = {};
-                itowns.control.LayerSwitcher = LayerSwitcher;
-                itowns.GlobeViewExtended = GlobeViewExtended;
+            const positionOnGlobe = { longitude: 2.3465, latitude: 48.88, altitude: 25000000 };
 
-                var createMap = function() {
-                    /* global itowns,document,GuiTools*/
-                    const positionOnGlobe = { longitude: 2.3465, latitude: 48.88, altitude: 25000000 };
+            const viewerDiv = document.getElementById('viewerDiv');
+            const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
+            /* global itowns,document,GuiTools*/
+            //globeView.addLayer(orthoLayer);
 
-                    // iTowns namespace defined here
-                    const viewerDiv = document.getElementById('viewerDiv');
-                    const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
+            itowns.Fetcher.json('../Resources/JSONLayers/OrthosCRS.json').then(result => globeView.addLayer(result));
+            itowns.Fetcher.json('../Resources/JSONLayers/Ortho.json').then(result => globeView.addLayer(result));
+            itowns.Fetcher.json('../Resources/JSONLayers/ScanEX.json').then(result => globeView.addLayer(result));
+            itowns.Fetcher.json('../Resources/JSONLayers/Region.json').then(result => globeView.addLayer(result));
 
-                    globeView.addEventListener(itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED, () => {
+            itowns.Fetcher.json('../Resources/JSONLayers/IGN_MNT.json').then(result => globeView.addLayer(result));
+            itowns.Fetcher.json('../Resources/JSONLayers/IGN_MNT_HIGHRES.json').then(result => globeView.addLayer(result));
 
-                        // ajout des couches
-                        var p1 = itowns.Fetcher.json('../Resources/JSONLayers/OrthosCRS.json').then(result => globeView.addLayer(result));
-                        var p2 = itowns.Fetcher.json('../Resources/JSONLayers/IGN_MNT.json').then(result => globeView.addLayer(result));
-                        var p3 = itowns.Fetcher.json('../Resources/JSONLayers/IGN_MNT_HIGHRES.json').then(result => globeView.addLayer(result));
-
-                        Promise.all([p1, p2, p3]).then( () => {
-                            // ajout du control
-                            var layerSwitcher = new itowns.control.LayerSwitcher({
-                                options : {
-                                    collapsed: true
-                                },
-                                layers : [
+            globeView.addEventListener(itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED, () => {
+                // eslint-disable-next-line no-console
+                console.info('Globe initialized');
+                var layerSwitcher = new itowns.control.LayerSwitcher({
+                    layers : [
+                        {
+                            id : "Ortho",
+                            config : {
+                                title : "Couche de Photos IGNPO",
+                                description : "Description de ma couche",
+                                quicklookUrl : "lien/Vers/UnApercuRapide.png",
+                                legends : [
                                     {
-                                        id : "ScanEX",
-                                        displayed : true
-                                    },
-                                    {
-                                        id : "Ortho",
-                                        displayed : true,
-                                        config : {
-                                            title : "Couche de Photos IGNPO",
-                                            description : "Description de ma couche",
-                                            quicklookUrl : "lien/Vers/UnApercuRapide.png",
-                                            legends : [
-                                                {
-                                                    url : "lien/Vers/UneLegende.png"
-                                                }
-                                            ],
-                                            metadata : [
-                                                {
-                                                    url : "lien/Vers/Une/MetaDonnee.xml"
-                                                }
-                                            ],
-                                            visibility: true,
-                                            opacity: 0.8
-                                        }
+                                        url : "lien/Vers/UneLegende.png"
                                     }
-                                ]
-                            });
-
-                            globeView.addWidget(layerSwitcher);
-                            globeView.addLayer(orthoLayer);
-
-                            // ajout de nouvelles couches
-                            itowns.Fetcher.json('../Resources/JSONLayers/ScanEX.json').then(result => globeView.addLayer(result));
-                            itowns.Fetcher.json('../Resources/JSONLayers/Region.json').then(result => globeView.addLayer(result));
-                        });
-                    });
-                }
-
-                Gp.Services.getConfig({
-                    // serverUrl : "./../resources/AutoConf.js",
-                    // callbackSuffix : '',
-                    apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
-                    timeOut : 20000,
-                    onSuccess : createMap
+                                ],
+                                metadata : [
+                                    {
+                                        url : "lien/Vers/Une/MetaDonnee.xml"
+                                    }
+                                ],
+                                opacity: 0.8
+                            }
+                        }
+                    ]
                 });
+                globeView.addWidget( layerSwitcher );
+
             });
+
         </script>
     </body>
 </html>

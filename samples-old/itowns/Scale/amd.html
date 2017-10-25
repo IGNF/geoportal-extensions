@@ -10,7 +10,7 @@ and open the template in the editor.
         <!-- Library iTowns -->
         <script src="../../../lib/itowns/js/itowns.js"></script>
         <!-- requirejs -->
-        <script src="../../../lib/require.js"></script>
+        <script src="../../../node_modules/requirejs/require.js"></script>
 
         <link rel="stylesheet" href="../../../dist/itowns/GpPluginItowns-src.css" />
 
@@ -34,7 +34,7 @@ and open the template in the editor.
     </head>
     <body>
         <h3>Itowns</h3>
-        <p>Ajout d'un contrôle d'affichage de la minivue : MiniGlobe</p>
+        <p>Ajout d'un contrôle d'affichage de l'echelle : Scale</p>
 
         <div id="viewerDiv"></div>
 
@@ -47,17 +47,17 @@ and open the template in the editor.
                 paths : {
                     // lib external
                     itowns  : "../lib/itowns/js/itowns",
-                    proj4   : "../lib/proj4/proj4-src",
-                    gp      : "../lib/gp/GpServices-src",
-                    sortable : "../lib/sortable/Sortable",
-                    woodman : "../lib/woodman/woodman-amd"
+                    proj4   : "../node_modules/proj4/dist/proj4",
+                    gp      : "../node_modules/geoportal-access-lib/dist/GpServices-src",
+                    sortable : "../node_modules/sortablejs/Sortable",
+                    woodman : "../node_modules/woodman/dist/woodman-amd"
                 }
             });
             requirejs(
-                ["itowns", "proj4", "gp", "Itowns/GlobeViewExtended", "Itowns/Controls/MiniGlobe"],
-                function (itowns, proj4, Gp, GlobeViewExtended, MiniGlobe) {
+                ["itowns", "proj4", "gp", "Itowns/GlobeViewExtended", "Itowns/Controls/Scale"],
+                function (itowns, proj4, Gp, GlobeViewExtended, Scale) {
                 itowns.control = {};
-                itowns.control.MiniGlobe = MiniGlobe;
+                itowns.control.Scale = Scale;
                 itowns.GlobeViewExtended = GlobeViewExtended;
 
                 const positionOnGlobe = {
@@ -80,11 +80,11 @@ and open the template in the editor.
                 globeView.addEventListener(itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED, () => {
                     // eslint-disable-next-line no-console
                     console.info("Globe initialized");
-                    var miniglobe = new itowns.control.MiniGlobe({
+                    var scalebar = new itowns.control.Scale({
                         target : viewerDiv,
                         position : "absolute"
                     });
-                    globeView.addWidget( miniglobe );
+                    globeView.addWidget( scalebar );
                 });
             });
         </script>
