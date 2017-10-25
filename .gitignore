@@ -42,7 +42,8 @@ nb-configuration.xml
 /bower_dependencies/
 /node_modules/
 /dist/
-/lib/vg/
+/samples/
+/lib/
 /test_rendering/node_modules/
 /test_rendering/bitmaps_reference/**
 /test_rendering/bitmaps_test/**

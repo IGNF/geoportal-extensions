@@ -1,0 +1,279 @@
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta http-equiv="edit-Type" edit="text/html; charset=utf-8">
+        <title>Test LayerSwitcher pour JSFiddle</title>
+        <!-- Library OpenLayers 3 -->
+        <link rel="stylesheet" href="../../../node_modules/openlayers/dist/ol.css" />
+        <script src="../../../node_modules/openlayers/dist/ol-debug.js"></script>
+        <!-- <script src="http://openlayers.org/en/v3.12.1/build/ol.js"></script> -->
+        <!-- Plugin OpenLayers 3 IGN -->
+        <link rel="stylesheet" href="../../../dist/ol3/GpPluginOl3.css" />
+        <script src="../../../dist/ol3/GpPluginOl3-src.js"></script>
+        <!-- Google's closure library -->
+        <!-- <script src="closure-library/closure/goog/base.js"></script> -->
+
+    </head>
+    <body>
+        <p>Ajout d'un contrôle de gestionnaire de couches : LayerSwitcher</p>
+        <!-- map -->
+        <div id="map" style="height: 500px; width: 800px;"></div>
+        <script>
+
+        // COUCHES WMTS
+            //
+            // function go() {
+            //     var map = new ol.Map({
+            //         target: 'map',
+            //         layers: [
+            //             // new ol.layer.GeoportalWMTS({
+            //             //     layer: "ORTHOIMAGERY.ORTHOPHOTOS"
+            //             // }),
+            //             new ol.layer.Tile({
+            //                 source: new ol.source.GeoportalWMTS({
+            //                     layer : "ORTHOIMAGERY.ORTHOPHOTOS"
+            //                 })
+            //             })
+            //             // new ol.layer.GeoportalWMTS({
+            //             //     layer: "ORTHOIMAGERY.ORTHOPHOTOS.NORIGHTS"
+            //             // })
+            //
+            //         ],
+            //         view: new ol.View({
+            //             center: [288074.8449901076, 6247982.515792289],
+            //             zoom: 12
+            //         })
+            //     });
+            // }
+            //
+            // Gp.Services.getConfig({
+            //     apiKey: "jhyvi0fgmnuxvfv0zjzorvdn",
+            //     onSuccess: go
+            // });
+
+
+
+
+        // Test source WMS sans les droits
+
+        // function go() {
+
+        //     // Projection UTM 20N
+            // proj4.defs("EPSG:4559","+proj=utm +zone=20 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
+            // proj4.defs("EPSG:4558","+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs");
+
+        //     var map = new ol.Map({
+        //         target: 'map',
+        //         layers: [
+        //             // new ol.layer.GeoportalWMS({
+        //             //     layer : "NORIGHTS"
+        //             //     // layer : "ORTHOIMAGERY.ORTHOPHOTOS"
+        //             // })
+        //             new ol.layer.Tile({
+        //                 source: new ol.source.GeoportalWMS({
+        //                     layer: "toto",
+        //                     // olParams : {
+        //                     //     projection : "EPSG:4559",
+        //                     //     params : {
+        //                     //         STYLES : "inspire_common:DEFAULT"
+        //                     //     }
+        //                     // }
+        //                 })
+        //             })
+        //             ,
+        //             new ol.layer.Tile({
+        //                 source: new ol.source.GeoportalWMS({
+        //                     layer: "HY.PhysicalWaters",
+        //                     olParams : {
+        //                         projection : "EPSG:4559",
+        //                         params : {
+        //                             STYLES : "inspire_common:DEFAULT"
+        //                         }
+        //                     }
+        //                 })
+        //             })
+        //         ],
+        //         view: new ol.View({
+        //             center: ol.proj.transform([-6850199, 1832377],"EPSG:3857","EPSG:4559"),
+        //             zoom: 12,
+        //             projection : "EPSG:4559"
+        //         })
+        //     });
+        // }
+
+        // Gp.Services.getConfig({
+        //     apiKey: "jhyvi0fgmnuxvfv0zjzorvdn",
+        //     onSuccess: go
+        // });
+
+
+
+
+        // COUCHES INSPIRE WMS
+
+            var map;
+            var orthoInspire;
+            var epsg4326 = ol.proj.get("EPSG:4326");
+            function go() {
+
+                var map = new ol.Map({
+                   target: 'map',
+                   layers: [
+                     new ol.layer.GeoportalWMS({
+                       layer: "OI.OrthoimageCoverage",
+                     }),
+                     new ol.layer.GeoportalWMS({
+                       layer: "HY.PhysicalWaters",
+                       // pour le service INSPIRE vecteur : les styles annoncés dans l'autoconf ne sont pas bons.
+                       // => il faut les surcharcher en attendant le correctif de l'autoconf.
+                       olParams: {
+                         sourceParams: {
+                           params: {
+                             STYLES: "inspire_common:DEFAULT"
+                           }
+                         }
+                       }
+                     }),
+                     new ol.layer.GeoportalWMS({
+                       layer: "BU.Building",
+                       olParams: {
+                         sourceParams: {
+                           params: {
+                             STYLES: "inspire_common:DEFAULT"
+                           }
+                         }
+                       }
+                     }),
+                     new ol.layer.GeoportalWMS({
+                       layer: "TN.RoadTransportNetwork",
+                       olParams: {
+                         sourceParams: {
+                           params: {
+                             STYLES: "inspire_common:DEFAULT"
+                           }
+                         }
+                       }
+                     }),
+                     new ol.layer.GeoportalWMS({
+                       layer: "GN.GeographicalNames",
+                       olParams: {
+                         sourceParams: {
+                           params: {
+                             STYLES: "inspire_common:DEFAULT"
+                           }
+                         }
+                       }
+                     })
+                   ],
+                   view: new ol.View({
+                     center: [2, 46],
+                     zoom: 12,
+                     projection: "EPSG:4326"
+                   })
+                });
+            }
+            // function go() {
+
+            //     // orthoInspire = new ol.layer.Tile({
+            //     //     source : new ol.source.TileWMS({
+            //     //         url : "http://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/inspire/r/wms",
+            //     //         params : {
+            //     //             SERVICE : "WMS",
+            //     //             LAYERS : "OI.OrthoimageCoverage",
+            //     //             VERSION : "1.3.0",
+            //     //             STYLES : "inspire_common:DEFAULT",
+            //     //             FORMAT : "image/jpeg"
+            //     //             // ,
+            //     //             // CRS : "EPSG:4558"
+            //     //         },
+            //     //         // projection : "EPSG:4558"
+            //     //         // maxZoom : 20
+            //     //     }),
+            //     //     // extent : undefined,
+            //     //     // maxResolution : 2445.98508,
+            //     //     // minResolution : 0.0000026
+            //     // })
+
+                // orthoInspire = new ol.layer.GeoportalWMS({
+                //     layer: "OI.OrthoimageCoverage",
+                //     olParams : {
+                //         sourceParams : {
+                //             // projection : "EPSG:4559",
+                //             // projection : epsg4326,
+                //             projection : "EPSG:4326",
+                //         //     params : {
+                //         //         CRS : "EPSG:4326",
+                //         //         STYLES : "inspire_common:DEFAULT"
+                //         //     }
+                //         }
+                //         // extent : [-180,-80,180,80]
+                //     }
+            //     });
+
+            //     map = new ol.Map({
+            //         target: 'map',
+            //         layers: [
+            //             orthoInspire,
+            //                 // new ol.layer.GeoportalWMS({
+            //                 //     layer: "HY.PhysicalWaters",
+            //                 //     // layer: "HY.NORIGHTS",
+            //                 //     olParams: {
+            //                 //         sourceParams: {
+            //                 //             params : {
+            //                 //                 STYLES: "inspire_common:DEFAULT"
+            //                 //             },
+            //                 //             // projection : "EPSG:3857"
+            //                 //         },
+            //                 //         // extent : [-180,-80,180,80]
+            //                 //     }
+            //                 // }),
+            //                 // new ol.layer.GeoportalWMS({
+            //                 //     layer: "BU.Building",
+            //                 //     olParams: {
+            //                 //         params: {
+            //                 //             STYLES: "inspire_common:DEFAULT"
+            //                 //         }
+            //                 //     }
+            //                 // }),
+            //                 // new ol.layer.GeoportalWMS({
+            //                 //     layer: "TN.RoadTransportNetwork",
+            //                 //     olParams: {
+            //                 //         params: {
+            //                 //             STYLES: "inspire_common:DEFAULT"
+            //                 //         }
+            //                 //     }
+            //                 // }),
+            //                 // new ol.layer.GeoportalWMS({
+            //                 //     layer: "GN.GeographicalNames",
+            //                 //     olParams: {
+            //                 //         params: {
+            //                 //             STYLES: "inspire_common:DEFAULT"
+            //                 //         }
+            //                 //     }
+            //                 // })
+                //     ],
+                //     view: new ol.View({
+                //         // center: ol.proj.transform([-6850199, 1832377],"EPSG:3857","EPSG:4558"),
+                //         // zoom: 12,
+                //         // projection : "EPSG:4558"
+                //         projection : "EPSG:4326",
+                //         center: [-61.57, 16.25],
+                //         // // center: [-6850199, 1832377],
+                //         // // center: [288074, 6247982],
+                //         zoom: 12,
+                //     })
+                // });
+            // }
+
+            Gp.Services.getConfig({
+              apiKey: "jhyvi0fgmnuxvfv0zjzorvdn",
+              onSuccess: go
+            });
+
+
+        </script>
+    </body>
+</html>

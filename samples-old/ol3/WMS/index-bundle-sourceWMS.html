@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+          <!-- Library Leaflet -->
+          <link rel="stylesheet" href="../../../node_modules/openlayers/dist/ol.css" />
+          <script src="../../../node_modules/openlayers/dist/ol-debug.js"></script>
+
+          <!-- Plugin leaflet IGN -->
+          <link rel="stylesheet" href="../../../dist/ol3/GpPluginOl3.css" />
+          <script src="../../../dist/ol3/GpPluginOl3.js" data-url="./../resources/AutoConf.js"></script>
+
+          <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+          <!-- load geoportail-waiting image -->
+          <style>
+            div#map {
+                background-image:url(../resources/geoportail-waiting.gif);
+                background-position:center center;
+                background-repeat:no-repeat;
+            }
+          </style>
+
+    </head>
+    <body>
+        <h1>
+            <a href="http://openlayers.org/"><img src="../resources/logo-ol3.png" alt="OpenLayers3" width="100" /></a>
+            <a href="http://www.ign.fr"><img src="../resources/logo-ign.jpg" alt="IGN" width="100" /></a>
+        </h1>
+        <h3>
+            OpenLayers3 - A high-performance, feature-packed library for all your mapping needs.
+        </h3>
+        <div>
+            <!-- Faire une bréve description du plugin -->
+            <p>Ajout simplifié de couche WMS Géoportail - en mode bundle avec auto-appel à l'autoconf</p>
+
+            <!-- Mettre le code source de l'exemple -->
+            <script>
+                window.onload = function () {
+                    document.getElementById('map').style.backgroundImage = 'none';
+
+                    var gpLayer = new ol.layer.Tile({
+                        source : new ol.source.GeoportalWMS({
+                            layer : "ORTHOIMAGERY.ORTHOPHOTOS"
+                        })
+                    });
+                    var map = new ol.Map({
+                        layers: [gpLayer],
+                        target: 'map',
+                        view: new ol.View({
+                            center: [288074.8449901076, 6247982.515792289],
+                            zoom: 10
+                        })
+                    });
+
+                    // Ajout des originators (à la main)
+                    map.addControl(
+                        new ol.control.GeoportalAttribution({
+                            collapsed : false
+                        }
+                    ));
+                }
+            </script>
+
+            <!-- map -->
+            <div id="map" style="height: 500px; width: 1000px;"></div>
+
+            <!-- Comment utiliser le plugin avec un exemple -->
+            <p>EXEMPLE D'UTILISATION</p>
+            <pre>
+                <code>
+                    window.onload = function () {
+                        var gpLayer = new ol.layer.Tile({
+                            source: ol.source.GeoportalWMS({
+                                layer: "ORTHOIMAGERY.ORTHOPHOTOS"
+                            })
+                        });
+                        var map = new ol.Map({
+                            layers: [gpLayer],
+                            target: 'map',
+                            view: new ol.View({
+                                center: [288074.8449901076, 6247982.515792289],
+                                zoom: 10
+                            })
+                        });
+                        map.addControl(
+                            new ol.control.GeoportalAttribution({
+                                collapsed : false
+                            }
+                        ));
+                    }
+                </code>
+            </pre>
+
+            <!-- Toutes les informations utiles sur ol3 -->
+            <p>
+                <ul>
+                    <li>En savoir plus avec le <a href="http://openlayers.org/en/v3.11.2/doc/quickstart.html">quick start guide</a>,</li>
+                    <li>d'autres informations avec <a href="http://openlayers.org/en/v3.11.2/examples/">les exemples</a>,</li>
+                    <li>ou aller directement à l'<a href="http://openlayers.org/en/v3.11.2/apidoc/">API documentation</a>.</li>
+                </ul>
+                Si vous avez des questions, jetez un oeil à la
+                <a href="http://stackoverflow.com/questions/tagged/openlayers-3">FAQ</a>.
+            </p>
+        </div>
+    </body>
+</html>

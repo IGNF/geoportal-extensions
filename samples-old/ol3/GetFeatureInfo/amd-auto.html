@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta content="IE=edge,chrome=1; charset=UTF-8" http-equiv="X-UA-Compatible">
+        <title>sample ol3 GetFeatureInfo</title>
+
+        <!-- Library OpenLayers 3 -->
+        <link rel="stylesheet" href="../../../node_modules/openlayers/dist/ol.css" />
+        <!-- <script src="../../../node_modules/openlayers/dist/ol-debug.js"></script> -->
+
+        <!-- Plugin OpenLayers 3 IGN -->
+        <link rel="stylesheet" href="../../../dist/ol3/GpPluginOl3.css" />
+        <!-- <script src="../../../dist/ol3/GpPluginOl3.js" data-url="./../resources/AutoConf.js"></script> -->
+
+        <!-- requirejs -->
+        <script src="../../../node_modules/requirejs/require.js"></script>
+
+        <!-- load geoportail-waiting image -->
+        <style>
+            div#map {
+                background-image:url(../resources/geoportail-waiting.gif);
+                background-position:center center;
+                background-repeat:no-repeat;
+                max-width: 800px;
+                height: 300px;
+                margin: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>
+            <a href="http://openlayers.org/"><img src="../resources/logo-ol3.png" alt="OpenLayers3" width="100" /></a>
+            <a href="http://www.ign.fr"><img src="../resources/logo-ign.jpg" alt="IGN" width="100" /></a>
+        </h1>
+        <h3>
+            OpenLayers3 - A high-performance, feature-packed library for all your mapping needs.
+        </h3>
+
+        <div>
+            <p>Ajout du widget GetFeatureInfo.</p>
+            <p>L'exemple suivant permet de tester le mode auto. Dans ce mode toutes les couches vecteur ajout&eacute;es seront interrogeables via l'&eacute;v&egrave;nement par d&eacute;faut.</p>
+            <p>Ici la couche vecteur pr&eacute;sente &agrave; l'initialisation peut &ecirc;tre requ&ecirc;t&eacute; par un double click (qui n'est pas ici l'&eacute;v&egrave;nement par d&eacute;fault).</p>
+            <p>Dans l'exemple, des couches autres que vecteur peuvent &ecirc;tre ajout&eacute;es afin de v&eacute;rifier qu'elles ne sont pas interrog&eacute;es (aucune requ&ecirc;te n'est lanc&eacute;e).</p>
+            <p>Note: dans l'exemple une couche vecteur est cr&eacute;&eacute;e &agrave; l'initialisation de la carte interrogeable via un double click sur la souris.</p>
+
+            <!-- map -->
+            <div id="map" style="height: 500px; width: 800px;"></div>
+            <button type="button" id="addVectorKml">Ajouter une couche vecteur kml</button>
+            <button type="button" id="addVectorGpx">Ajouter une couche vecteur gpx</button>
+            <button type="button" id="addWms">Ajouter une couche WMS</button>
+            <button type="button" id="addWtms">Ajouter une couche WTMS</button>
+            <button type="button" id="changeDefaultEvent">Changer l'&eacute;v&eacute;nement par d&eacute;faut</button>
+
+            <script>
+                var map;
+                /* global requirejs */
+                requirejs.config({
+                    "baseUrl" : "../../../src/",
+                    "paths": {
+                        // lib external
+                        "ol" : "../node_modules/openlayers/dist/ol-debug",
+                        "proj4"   : "../node_modules/proj4/dist/proj4-src",
+                        "gp"      : "../node_modules/geoportal-access-lib/dist/GpServices-src",
+                        "sortable" : "../node_modules/sortablejs/Sortable",
+                        "woodman" : "../node_modules/woodman/dist/woodman-amd"
+                    }
+                });
+                requirejs(
+                    ["ol", "proj4", "gp", "Ol3/Layers/LayerWMS" , "Ol3/Layers/LayerWMTS", "Ol3/Controls/GetFeatureInfo", "Ol3/Controls/LayerSwitcher"],
+                    function (ol, proj4, Gp, LayerWMS, LayerWMTS, GetFeatureInfo, LayerSwitcher)
+                {
+                    var createMap = function() {
+                        // on cache l'image de chargement du Géoportail.
+                        document.getElementById('map').style.backgroundImage = 'none';
+
+                        // 1. Création de la map
+                        map = new ol.Map({
+                            target : "map",
+                            view : new ol.View({
+                                center : [288074.8449901076, 6247982.515792289],
+                                zoom : 6
+                            })
+                        });
+
+                        // 2. Ajout de plusieurs couches différentes.
+                        // var gpMaps = new LayerWMTS({
+                        //     layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS",
+                        // });
+                        // map.addLayer(gpMaps);
+                        //
+                        var gpMyKml = new ol.layer.Vector({
+                            source: new ol.source.Vector({
+                                url: './../resources/KML/S_TOP100.kml',
+                                format: new ol.format.KML()
+                            })
+                        });
+                        map.addLayer(gpMyKml);
+                        //
+                        // var gpRoad = new LayerWMS({
+                        //   layer : "TN.RoadTransportNetwork",
+                        // });
+                        // map.addLayer(gpRoad);
+                        //
+                        // var gpHydro = new LayerWMS({
+                        //   layer : "HY.PhysicalWaters",
+                        // });
+                        // map.addLayer(gpHydro);
+
+                        // 3. Ajout du GetFeatureInfo
+                        var getFeatureInfo = new GetFeatureInfo({
+                                layers : [
+                                    // {
+                                    //     obj : gpHydro,
+                                    //     infoFormat : "text/html",
+                                    //     event: "contextmenu"
+                                    // },
+                                    {
+                                        obj : gpMyKml,
+                                        infoFormat : "text/html",
+                                        event: "dblclick"
+                                    },
+                                    // {
+                                    //     obj : gpRoad,
+                                    // }
+                                ],
+                                options : {
+                                    auto : true,
+                                    active: true,
+                                    defaultInfoFormat: "text/html",
+                                    defaultEvent: "singleclick",
+                                    cursorStyle: "pointer",
+                                    // noProxyDomains: [],
+                                    // proxyUrl: ""
+                                }
+                            });
+                        map.addControl(getFeatureInfo);
+
+                        // 4. Quelques évènements pour tester...
+                        document.getElementById("addVectorKml").onclick = function(e) {
+                            if ( !this.kmlUrls )
+                            {
+                              this.kmlUrls = [
+                                './../resources/KML/S_TOP100.kml',
+                                './../resources/KML/croquis-simple.kml'
+                              ];
+                            }
+                            if ( !this.index )
+                            {
+                                this.index = 0;
+                            }
+                            ++this.index;
+                            if ( this.index ==  this.kmlUrls.length ) {
+                                this.index = 0;
+                            }
+                            map.addLayer(
+                                new ol.layer.Vector({
+                                    source: new ol.source.Vector({
+                                        url: this.kmlUrls[this.index],
+                                        format: new ol.format.KML()
+                                    })
+                                })
+                            );
+                        }
+                        document.getElementById("addVectorGpx").onclick = function(e) {
+                            if ( !this.gpxUrls )
+                            {
+                              this.gpxUrls = [
+                                './../resources/GPX/Campomoro-Tizzano-Sartene_3029.gpx',
+                              ];
+                            }
+                            if ( !this.index )
+                            {
+                                this.index = 0;
+                            }
+                            ++this.index;
+                            if ( this.index ==  this.gpxUrls.length ) {
+                                this.index = 0;
+                            }
+                            map.addLayer(
+                                new ol.layer.Vector({
+                                    source: new ol.source.Vector({
+                                        url: this.gpxUrls[this.index],
+                                        format: new ol.format.GPX()
+                                    })
+                                })
+                            );
+                        }
+                        document.getElementById("addWms").onclick = function(e) {
+                            if ( !this.wmsLayers )
+                            {
+                              this.wmsLayers = [
+                                "TN.RoadTransportNetwork",
+                                "HY.PhysicalWaters"
+                              ];
+                            }
+                            if ( !this.index )
+                            {
+                                this.index = 0;
+                            }
+                            ++this.index;
+                            if ( this.index ==  this.wmsLayers.length ) {
+                                this.index = 0;
+                            }
+                            map.addLayer(
+                                new LayerWMS({
+                                    layer : this.wmsLayers[this.index],
+                                })
+                            );
+                        }
+                        document.getElementById("addWtms").onclick = function(e) {
+                            if ( !this.wtmsLayers )
+                            {
+                              this.wtmsLayers = [
+                                "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+                              ];
+                            }
+                            if ( !this.index )
+                            {
+                                this.index = 0;
+                            }
+                            ++this.index;
+                            if ( this.index ==  this.wtmsLayers.length ) {
+                                this.index = 0;
+                            }
+                            map.addLayer(
+                                new LayerWMTS({
+                                    layer : this.wtmsLayers[this.index]
+                                })
+                            );
+                        }
+                        document.getElementById("changeDefaultEvent").onclick = function(e) {
+                            if ( !this.events )
+                            {
+                              this.events = ["singleclick","dblclick","contextmenu"];
+                            }
+                            if ( !this.index )
+                            {
+                                this.index = 0;
+                            }
+                            ++this.index;
+                            if ( this.index ==  this.events.length ) {
+                                this.index = 0;
+                            }
+                            getFeatureInfo.setDefaultEvent(this.events[this.index]);
+                        }
+
+                        // 5. Ajout du contrôle de gestion de l'empilement des couches (layerSwitcher)
+                        var layerSwitcher = new LayerSwitcher({
+                            options : {
+                                collapsed: false
+                            }
+                        });
+                        map.addControl(layerSwitcher);
+                    }
+
+                    Gp.Services.getConfig({
+                        serverUrl : "./../resources/AutoConf.js",
+                        callbackSuffix : '',
+                        // apiKey: "jhyvi0fgmnuxvfv0zjzorvdn",
+                        timeOut : 20000,
+                        onSuccess : createMap
+                    });
+
+                });
+            </script>
+            </div>
+        </div>
+    </body>
+</html>

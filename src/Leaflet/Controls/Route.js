@@ -482,6 +482,17 @@ define([
                 autocompleteOptions : this.options.autocompleteOptions || null
             });
             start.setMap(map);
+
+            var opts = this.options.routeOptions;
+
+            if (opts.startPoint) {
+                start._inputAutoCompleteContainer.value = opts.startPoint.x + " , " + opts.startPoint.y;
+                start.setCoordinate({
+                    lng : opts.startPoint.x,
+                    lat : opts.startPoint.y
+                });
+            }
+
             points.push(start.getContainer());
             this._currentPoints.push(start);
             // points intermediaires
@@ -519,6 +530,15 @@ define([
                 autocompleteOptions : this.options.autocompleteOptions || null
             });
             end.setMap(map);
+
+            if (opts.endPoint) {
+                end._inputAutoCompleteContainer.value = opts.endPoint.x + " , " + opts.endPoint.y;
+                end.setCoordinate({
+                    lng : opts.endPoint.x,
+                    lat : opts.endPoint.y
+                });
+            }
+
             points.push(end.getContainer());
             this._currentPoints.push(end);
 

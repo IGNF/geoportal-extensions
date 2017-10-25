@@ -186,8 +186,10 @@ Enregistrez ce fichier sur votre plateforme et paramétrez l'extension Géoporta
 L'extension Géoportail pour Leaflet peut s'utiliser avec les versions de Leaflet suivantes :
 * [version 0.7.X](http://leafletjs.com/reference-0.7.7.html)
 * [version 1.0.X](http://leafletjs.com/reference-1.0.3.html)
+* [version 1.2.X](http://leafletjs.com/reference-1.2.0.html)
 
 La release Leaflet [version 1.1.0](http://leafletjs.com/reference-1.1.0.html) est incompatible avec l'utilisation du plugin [Leaflet-Draw](https://github.com/Leaflet/Leaflet.draw).
+
 Pour profiter de toutes les fonctionnalités, il faut utiliser la dernière release Leaflet [version 1.2.0](http://leafletjs.com/reference-1.2.0.html).
 
 ### Navigateurs supportés
@@ -656,4 +658,3 @@ map.addControl(ep);
 ```
 
 **Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/L5ctL3nq/embedded/result,js,html,css/)
-

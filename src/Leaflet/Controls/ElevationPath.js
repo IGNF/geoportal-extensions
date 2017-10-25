@@ -773,7 +773,12 @@ define([
                 logger.trace(e);
                 var obj = e.chart.dataProvider[e.index];
 
-                self._marker.setLatLng(L.latLng(obj.lat, obj.lon));
+                var srs = L.CRS.EPSG4326;
+                var _pointA = srs.latLngToPoint(L.latLng(self._geometry[0].lat, self._geometry[0].lon));
+                var _pointB = srs.latLngToPoint(L.latLng(self._geometry[self._geometry.length - 1].lat, self._geometry[self._geometry.length - 1].lon));
+                var _point = L.LineUtil.closestPointOnSegment( srs.latLngToPoint(L.latLng(obj.lat, obj.lon)), _pointA, _pointB );
+                self._marker.setLatLng( srs.pointToLatLng(_point));
+                // self._marker.setLatLng( L.latLng(obj.lat, obj.lon));
                 self._marker.update();
 
             };
@@ -926,8 +931,13 @@ define([
 
             if (_lon && _lat) {
 
+                var srs = L.CRS.EPSG4326;
+                var _pointA = srs.latLngToPoint(L.latLng(self._geometry[0].lat, self._geometry[0].lon));
+                var _pointB = srs.latLngToPoint(L.latLng(self._geometry[self._geometry.length - 1].lat, self._geometry[self._geometry.length - 1].lon));
+                var _point = L.LineUtil.closestPointOnSegment( srs.latLngToPoint(L.latLng(_lat, _lon)), _pointA, _pointB );
+                
                 // creation d"un marker
-                self._marker = L.marker(L.latLng(_lat, _lon), {
+                self._marker = L.marker(srs.pointToLatLng(_point), {
                     icon : new IconDefault("orange"),
                     draggable : false,
                     clickable : false,
@@ -1267,7 +1277,11 @@ define([
                     .attr("x2", x(xDomain[1])).attr("y2", yc);
 
                 // mise à jour du marker
-                self._marker.setLatLng(L.latLng(d.lat, d.lon));
+                var srs = L.CRS.EPSG4326;
+                var _pointA = srs.latLngToPoint(L.latLng(self._geometry[0].lat, self._geometry[0].lon));
+                var _pointB = srs.latLngToPoint(L.latLng(self._geometry[self._geometry.length - 1].lat, self._geometry[self._geometry.length - 1].lon));
+                var _point = L.LineUtil.closestPointOnSegment( srs.latLngToPoint(L.latLng(d.lat, d.lon)), _pointA, _pointB );
+                self._marker.setLatLng( srs.pointToLatLng(_point));
                 self._marker.update();
 
                 // tooltips

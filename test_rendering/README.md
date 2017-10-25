@@ -19,16 +19,23 @@ Images ref.
 Test à partir des images ref.
 > npm run test
 
-> **Information :**
+> **TODO : clean des tests**
 Le ménage est à faire en production !
 Un répertoire d'images est généré après chaque test...
 Il faut donc prévoir une target de nettoyage en production...
 
 # Manipulation du fichier de Configuration
 
+## Les fichiers de scenarios
+
+> **TODO : utiliser plusieurs fichiers de configurations**
+Possibilité d'utiliser plusieurs fichiers de configurations afin de structurer nos tests
+par fonctionnalités, viewport, ...
+
 ## Répertoires de résultats
 
-Choix de placer les tests leaflet / openlayers séparés.
+> **TODO : structurer les images réferences**
+Choix de placer les tests leaflet / openlayers dans des répertoires séparés.
 
 ```
 "paths": {
@@ -70,7 +77,7 @@ Par defaut, c'est tout le document que l'on capture (screenshot) !
  (e.g. after API responses, after CSS animation completion, or wait for any other
  watchable async process).
 
-> **Solution Trigger** :
+> **>>>>>**
 On utilise principalement les declencheurs suivants :
 ```
 "clickSelector": "#id", // Clic sur l'element
@@ -81,21 +88,25 @@ On utilise principalement les declencheurs suivants :
 *Simulating user interactions* - Use Casper (or Chrome) scripting inside your
 scenarios to simulate interactions with your on-screen components.
 
+> **>>>>>**
+Dans le cadre de la *cucumberisation* des tests de rendu, on va devoir realiser
+des actions scriptées avec *cucumberjs*.
+
 > **FIXME**
 *Cross Domain* - Howto ???
 
-> **Solution Cross Domain** :
+> **>>>>>**
 Ne pas mettre de chemin relatif mais des URLs (Ex. http://localhost/).
-> **Information** : Pour un deploiement en production, on utilisera un serveur web interne type *phantomjs*
+Pour un deploiement en production, on utilisera un serveur web interne type *phantomjs*
 
-# plan de recette
+# Plan de recette
 
 > **Test de rendu :**
 toutes les actions qui declenchent un changement d'état visuel (les fenetres,
 boites de dialogue, clic sur un bouton,...) possibles sur chaque extension sont
 à capturer.
 
-**Liste des extensions**
+**Liste des tests sur les extensions leaflet**
 
 ### MousePosition
 * test avec option par defaut
@@ -128,16 +139,26 @@ boites de dialogue, clic sur un bouton,...) possibles sur chaque extension sont
 * test de suppression d'une couche
 
 ### ElevationPath
-TODO
+> **TODO**
 
 ### MeasureLength
 (only OpenLayers)
-TODO
+> **TODO**
 
 ### MeasureAera
 (only OpenLayers)
-TODO
+> **TODO**
 
 ### MeasureAzimuth
 (only OpenLayers)
-TODO
+> **TODO**
+
+
+## cucumberjs
+
+> **TODO : cucumberisation du plan de recette**
+Ecriture du plan de recette sous la formalisme cucumber
+
+
+> **POC : cucumberisation des tests**
+Ecriture d'un test avec cucumberjs

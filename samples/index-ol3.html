@@ -1,49 +1,58 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!-- Library Leaflet -->
-  <link rel="stylesheet" href="../lib/ol3/ol.css" />
-  <script src="../lib/ol3/ol-debug.js"></script>
-
-  <!-- Plugin leaflet IGN -->
-  <link rel="stylesheet" href="../dist/ol3/GpPluginOl3<%- mode %>.css" />
-  <script src="../dist/ol3/GpPluginOl3<%- mode %>.js" data-key="jhyvi0fgmnuxvfv0zjzorvdn"></script>
-
+  <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+  <meta charset="UTF-8"> 
+  <title>Liste des exemples Openlayers</title>0
 </head>
 <body>
-  <h3>
-    OpenLayers3 - A high-performance, feature-packed library for all your mapping needs.
-  </h3>
+  <h1>Exemples d'utilisation de l'extension Géoportail pour OpenLayers</h1>
+  </h1>
   <div>
 
     <!-- liste des fichiers -->
-    <p>LISTE DES EXEMPLES</p>
+    <h2>Liste des exemples</h2>
     <ul>
-    <% files.forEach(function(path) {
-        var split  = path.split('/');
-        var plugin = split.slice(-2)[0];
-        var file   = split.slice(-1)[0];
-      %>
-      <li><a href="<%- path %>"> <%- plugin %> -- <%- file %></a></li>
-      <% });
-    %>
+    
+      <li><a href="ol3/Default/pages-ol-amd.html"> Default -- pages-ol-amd.html</a></li>
+      
+      <li><a href="ol3/Default/pages-ol-bundle.html"> Default -- pages-ol-bundle.html</a></li>
+      
+      <li><a href="ol3/Drawing/pages-ol-drawing-amd-default.html"> Drawing -- pages-ol-drawing-amd-default.html</a></li>
+      
+      <li><a href="ol3/Drawing/pages-ol-drawing-amd-export.html"> Drawing -- pages-ol-drawing-amd-export.html</a></li>
+      
+      <li><a href="ol3/Drawing/pages-ol-drawing-bundle-all-options.html"> Drawing -- pages-ol-drawing-bundle-all-options.html</a></li>
+      
+      <li><a href="ol3/Drawing/pages-ol-drawing-bundle-default.html"> Drawing -- pages-ol-drawing-bundle-default.html</a></li>
+      
+      <li><a href="ol3/LayerImport/pages-ol-layerimport-bundle-default.html"> LayerImport -- pages-ol-layerimport-bundle-default.html</a></li>
+      
+      <li><a href="ol3/LayerImport/pages-ol-layerimport-bundle-target.html"> LayerImport -- pages-ol-layerimport-bundle-target.html</a></li>
+      
+      <li><a href="ol3/LayerSwitcher/pages-ol-layerswitcher-amd-default.html"> LayerSwitcher -- pages-ol-layerswitcher-amd-default.html</a></li>
+      
+      <li><a href="ol3/LayerSwitcher/pages-ol-layerswitcher-bundle-config-layers.html"> LayerSwitcher -- pages-ol-layerswitcher-bundle-config-layers.html</a></li>
+      
+      <li><a href="ol3/LayerSwitcher/pages-ol-layerswitcher-bundle-default.html"> LayerSwitcher -- pages-ol-layerswitcher-bundle-default.html</a></li>
+      
     </ul>
 
-    <!-- Comment utiliser le plugin avec un exemple -->
-    <p>TODO : EXEMPLE D'UTILISATION DU PLUGIN</p>
+    <!-- Comment utiliser l'extension avec un exemple -->
+    <!--h2>Exemple d'utilisation de l'extension</h2>
     <pre>
       <code>TODO : CODE DE L'EXEMPLE</code>
-    </pre>
+    </pre-->
 
-    <!-- Toutes les informations utiles sur ol3 -->
+    <!-- Toutes les informations utiles sur OL -->
+    <h2>Ressources OpenLayers</h2>
     <p>
       <ul>
-        <li>En savoir plus avec le <a href="http://openlayers.org/en/v3.11.2/doc/quickstart.html">quick start guide</a>,</li>
-        <li>d'autres informations avec <a href="http://openlayers.org/en/v3.11.2/examples/">les exemples</a>,</li>
-        <li>ou aller directement à l'<a href="http://openlayers.org/en/v3.11.2/apidoc/">API documentation</a>.</li>
+        <li><a href="http://openlayers.org/en/latest/doc/quickstart.html" target="_blank" >OpenLayers Quick start guide</a></li>
+        <li><a href="http://openlayers.org/en/latest/examples/" target="_blank" >Galerie d'exemples OpenLayers</a></li>
+        <li><a href="http://openlayers.org/en/latest/apidoc/" target="_blank" >OpenLayers API documentation</a></li>
+        <li><a href="http://stackoverflow.com/questions/tagged/openlayers-3" target="_blank">OpenLayers FAQ</a></li>
       </ul>
-      Si vous avez des questions, jetez un oeil à la
-      <a href="http://stackoverflow.com/questions/tagged/openlayers-3">FAQ</a>.
     </p>
   </div>
 </body>

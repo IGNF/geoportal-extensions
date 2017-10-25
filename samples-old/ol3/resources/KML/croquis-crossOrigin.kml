@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/kml/2.2 https://developers.google.com/kml/schema/kml22gx.xsd">
+<Placemark>
+  <description>Un Point avec label</description>
+  <name>C'est un label simple avec un point !</name>
+  <Style>
+    <IconStyle>
+      <Icon>
+        <href>http://zoom-guadeloupe.fr/Randos/icon_wp.png</href>
+        <!-- href>https://cors-anywhere.herokuapp.com/http://zoom-guadeloupe.fr/Randos/icon_wp.png</href -->
+        <!-- href>http://localhost/proxy/php/proxy.php?url=http://zoom-guadeloupe.fr/Randos/icon_wp.png</href -->
+      </Icon>
+    </IconStyle>
+    <LabelStyle>
+      <color>ffffffff</color>
+      <colorMode>normal</colorMode>
+      <scale>1.85</scale>
+      <LabelStyleSimpleExtensionGroup haloColor="16711680" haloRadius="5" haloOpacity="1"/>
+    </LabelStyle>
+  </Style>
+  <Point>
+    <coordinates>2.2,48.2</coordinates>
+  </Point>
+</Placemark>
+</kml>
