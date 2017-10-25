@@ -497,10 +497,11 @@ define([], function () {
         *
         * @returns {DOMElement} DOM element
         */
-        _createMousePositionSettingsElement : function () {
+        _createMousePositionSettingsElement : function (display) {
 
             var container = document.createElement("div");
             container.id  = this._addUID("GPmousePositionSettings");
+            container.style.display = (display === "undefined" ||  display) ? "block" : "none";
 
             var span = document.createElement("span");
             span.className  = "GPmousePositionSettingsLabel";
@@ -866,18 +867,24 @@ define([], function () {
                 if (document.getElementById(this._addUID("GPmousePositionAltitude"))) {
                     altitudeTimeout = setTimeout( function () {
                         self.onRequestAltitude(coordinate, function (z) {
-                            var elt = document.getElementById(self._addUID("GPmousePositionAlt"));
-                            if (elt) {
-                                if ( minThreshold < z && z < maxThreshold ) {
-                                    elt.innerHTML = "---";
-                                } else {
-                                    elt.innerHTML = z;
-                                }
+                            if ( minThreshold < z && z < maxThreshold ) {
+                                self.GPresetElevation();
+                            } else {
+                                document.getElementById(self._addUID("GPmousePositionAlt")).innerHTML = z;
                             }
                         });
                     }, altitudeTimeoutDelay);
                 }
 
+            }
+        },
+
+        /**
+        * Function reseting altitude value
+        */
+        GPresetElevation : function () {
+            if (document.getElementById(this._addUID("GPmousePositionAltitude"))) {
+                document.getElementById(this._addUID("GPmousePositionAlt")).innerHTML = "---";
             }
         }
     };

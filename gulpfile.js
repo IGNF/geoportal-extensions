@@ -1244,7 +1244,7 @@
             $.util.log("[ERREUR] Execution des taches (mixte) entre Leaflet/VirtualGeo !!!");
         } else if (isExecuteOl3WithITowns) {
             // à réactiver lors du merge avec iTowns
-            // target.push("build-ol3-it");
+            target.push("build-ol3-it");
             $.util.log("[ERREUR] Execution des taches (mixte) entre OpenLayers/Itowns !!!");
         } else if (isExecuteLeafletWithITowns) {
             $.util.log("[ERREUR] Execution des taches (mixte) entre Leaflet/Itowns !!!");
@@ -1301,6 +1301,19 @@
         $.util.log("[INFO] Execution des taches (mixte) : OpenLayers/VirtualGeo !!!");
         isExecuteOl3WithVg = true;
         isExecuteLeafletWithVg = isExecuteOl3WithITowns = isExecuteLeafletWithITowns = false;
+        runSequence(
+            "clean-logger-mix",
+            "umd-mix",
+            "copy-dist",
+            "copy-images-mix",
+            "copy-styles-mix",
+            cb);
+    });
+
+    gulp.task("build-ol3-it", function (cb) {
+        $.util.log("[INFO] Execution des taches (mixte) : OpenLayers/ITowns !!!");
+        isExecuteOl3WithITowns = true;
+        isExecuteLeafletWithITowns = isExecuteOl3WithVg = isExecuteLeafletWithVg = false;
         runSequence(
             "clean-logger-mix",
             "umd-mix",

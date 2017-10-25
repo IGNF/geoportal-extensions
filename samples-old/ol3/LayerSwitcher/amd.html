@@ -94,19 +94,19 @@
                         });
                         map.addLayer(gpMaps);
 
-                        var olSat = new ol.layer.Tile({
-                            source: new ol.source.MapQuest({layer: 'sat'}),
-                            // zIndex : 4,
-                            opacity: 0.5,
-                            visible : false
-                        });
-                        map.addLayer(olSat);
+                        // var olSat = new ol.layer.Tile({
+                        //     source: new ol.source.MapQuest({layer: 'sat'}),
+                        //     // zIndex : 4,
+                        //     opacity: 0.5,
+                        //     visible : false
+                        // });
+                        // map.addLayer(olSat);
 
                         // Ajout du contrôle de gestion de l'empilement des couches (layerSwitcher)
                         layerSwitcher = new LayerSwitcher({
                             layers : [
                                 {
-                                    layer : olSat,
+                                    layer : gpMaps,
                                     config : {
                                         title : "Images satellites MapQuest",
                                         description : "Images satellites MapQuest",
@@ -138,7 +138,7 @@
                         });
                         map.addControl(layerSwitcher);
                         layerSwitcher.setRemovable(gpOrthos, false);
-                        layerSwitcher.setRemovable(olSat, false);
+                        // layerSwitcher.setRemovable(olSat, false);
 
                         // Ajout d'un écouteur d'évènements
                         layerSwitcher.on(
@@ -149,21 +149,21 @@
                         );
 
                         // ajout de boutons pour changer l'opacité
-                        document.getElementById("testChangeOpacity").onclick = function(e) {
-                            var olSat = map.getLayers().item(2);
-                            var opacity = olSat.getOpacity();
-                            olSat.setOpacity(opacity - 0.1);
-                        }
-                        document.getElementById("testChangeOpacity2").onclick = function(e) {
-                            var olSat = map.getLayers().item(2);
-                            var opacity = olSat.getOpacity();
-                            olSat.setOpacity(opacity + 0.1);
-                        }
-                        document.getElementById("testChangeVisibility").onclick = function(e) {
-                            var olSat = map.getLayers().item(2);
-                            var visible = !olSat.getVisible();
-                            olSat.setVisible(visible);
-                        }
+                        // document.getElementById("testChangeOpacity").onclick = function(e) {
+                        //     var olSat = map.getLayers().item(2);
+                        //     var opacity = olSat.getOpacity();
+                        //     olSat.setOpacity(opacity - 0.1);
+                        // }
+                        // document.getElementById("testChangeOpacity2").onclick = function(e) {
+                        //     var olSat = map.getLayers().item(2);
+                        //     var opacity = olSat.getOpacity();
+                        //     olSat.setOpacity(opacity + 0.1);
+                        // }
+                        // document.getElementById("testChangeVisibility").onclick = function(e) {
+                        //     var olSat = map.getLayers().item(2);
+                        //     var visible = !olSat.getVisible();
+                        //     olSat.setVisible(visible);
+                        // }
                         document.getElementById("addLayerElevation").onclick = function(e) {
                             var olStamen = new ol.layer.Tile({
                                 source : new ol.source.Stamen({
