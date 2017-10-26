@@ -346,7 +346,7 @@
         var builddir = path.join(_build, getDistDirName(), "js");
         var srcdir   = path.join(_build, getDistDirName(), _dir.clean);
         var input    = []; // on place les modules qui ne sont pas appellés directement dans le code (dependances) !
-        input.push("Common/Utils/AutoLoadConfig");
+        input.push(path.join("Common", "Utils", "AutoLoadConfig"));
         input.push(path.join(getDistDirName(), getBaseFileName()));
 
         var deps = {
@@ -395,6 +395,7 @@
             findNestedDependencies : false,
             preserveLicenseComments : false,
             useStrict : true,
+            logLevel : 0,
             /** TODO : jsdoc*/
             onModuleBundleComplete : function (data) {
 
