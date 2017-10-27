@@ -78,7 +78,7 @@
     "handlebars": "^4.0.10",
     "handlebars-helpers": "^0.9.8",
     "handlebars-layouts": "^3.1.4",
-    "jsdoc": "^3.3.1",
+    "jsdoc": "^3.5.5",
     "minimist": "^1.2.0",
     "mocha": "^3.2.0",
     "open": "0.0.5",
