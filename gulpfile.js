@@ -583,7 +583,13 @@
             // deps = [{name :"vg", amd :"vg", cjs :"vg", global :"VirtualGeo", param :"vg"}];
             $.util.log("Nothing to do in VG mode");
         } else if (isExecuteITowns) {
-            $.util.log("Nothing to do in iTowns mode");
+            deps = [{
+                name : "itowns",
+                amd : "itowns",
+                cjs : "itowns",
+                global : "itowns",
+                param : "itowns"
+            }];
         } else {
             $.util.log("Exception !");
         }
@@ -616,22 +622,60 @@
         var srcdir   = path.join(_build, getDistDirName(), "js");
         var deps     = null;
 
-        if (isExecuteOl3WithVg || isExecuteOl3WithITowns) {
-            deps = [{
-                name : "ol",
-                amd : "ol",
-                cjs : "ol",
-                global : "ol",
-                param : "ol"
-            }];
-        } else if (isExecuteLeafletWithVg || isExecuteLeafletWithITowns) {
-            deps = [{
-                name : "leaflet",
-                amd : "leaflet",
-                cjs : "leaflet",
-                global : "L",
-                param : "leaflet"
-            }];
+        if (isExecuteOl3WithVg) {
+            deps = [
+                {
+                    name : "ol",
+                    amd : "ol",
+                    cjs : "ol",
+                    global : "ol",
+                    param : "ol"
+                }
+            ];
+        } else if (isExecuteOl3WithITowns) {
+            deps = [
+                {
+                    name : "ol",
+                    amd : "ol",
+                    cjs : "ol",
+                    global : "ol",
+                    param : "ol"
+                },
+                {
+                    name : "itowns",
+                    amd : "itowns",
+                    cjs : "itowns",
+                    global : "itowns",
+                    param : "itowns"
+                }
+            ];
+        } else if (isExecuteLeafletWithVg) {
+            deps = [
+                {
+                    name : "leaflet",
+                    amd : "leaflet",
+                    cjs : "leaflet",
+                    global : "L",
+                    param : "leaflet"
+                }
+            ];
+        } else if (isExecuteLeafletWithITowns) {
+            deps = [
+                {
+                    name : "leaflet",
+                    amd : "leaflet",
+                    cjs : "leaflet",
+                    global : "L",
+                    param : "leaflet"
+                },
+                {
+                    name : "itowns",
+                    amd : "itowns",
+                    cjs : "itowns",
+                    global : "itowns",
+                    param : "itowns"
+                }
+            ];
         } else {
             $.util.log("Exception !");
         }
