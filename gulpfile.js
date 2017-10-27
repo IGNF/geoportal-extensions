@@ -1130,7 +1130,7 @@
         } else if (isExecuteVg) {
             srcdir.push(path.join(_build, "Vg", "dist", "**"));
         } else if (isExecuteITowns) {
-            $.util.log("Nothing to do in iTowns mode");
+            srcdir.push(path.join(_build, "Itowns", "dist", "**"));
         }
 
         $.util.log(srcdir) ;
@@ -1294,7 +1294,7 @@
         isExecuteVg = !isExecuteITowns;
         isExecuteOl3WithVg = isExecuteLeafletWithVg = isExecuteOl3WithITowns = isExecuteLeafletWithITowns = false;
         $.util.log("[TODO] Execution des taches pour ITowns !!!");
-        // runSequence("check", "test", "dist", "doc", "lib", "sample", cb);
+        runSequence(/*"check",*/ /*"test",*/ "dist", /*"doc",*/ "lib", "sample", cb);
     });
 
     gulp.task("build-ol3-vg", function (cb) {

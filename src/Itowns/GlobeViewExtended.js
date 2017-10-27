@@ -69,7 +69,7 @@ define([
      * Get GlobeViex Object (parent)
      */
     GlobeViewExtended.prototype.getGlobeView = function () {
-        return this._globeView
+        return this._globeView;
     };
 
     /**
