@@ -501,7 +501,7 @@ define([], function () {
 
             var container = document.createElement("div");
             container.id  = this._addUID("GPmousePositionSettings");
-            container.style.display = (display === "undefined" ||  display) ? "block" : "none";
+            container.style.display = ( display === undefined || display ) ? "block" : "none";
 
             var span = document.createElement("span");
             span.className  = "GPmousePositionSettingsLabel";
