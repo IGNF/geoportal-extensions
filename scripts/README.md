@@ -101,10 +101,10 @@ Le dépôt est à initialiser manuellement pour une 1ere utilisation !
 Usage :
     release.sh
     h (--help)        Affiche cette aide.
-    v (--verbose)     Mode verbose.
+    --verbose         Mode verbose.
     l (--leaflet)     Publication Leaflet (par defaut),
     o (--ol3)         Publication Openlayers,
-    V (--version)     Numero de version du package à publier
+    v (--version)     Numero de version du package à publier
     b (--build)   Execution de la tache de compilation,
     d (--data)    Execution de la tache de git-clone,
     j (--json)    Execution de la tache de creation des json,
@@ -163,9 +163,23 @@ Il faut donc au préalable le mettre à jour...
 
 ## Authentification sur le GitHub
 
+
 On utilise l'authentification via Token Personal Access.
 Comment creer un token :
     https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/
 
 Ensuite, ce token est stocké dans une variable d'environnement du systeme :
 > export RELEASE_GITHUB_TOKEN="grsgz5r4gzr5g4er654er54er4tyer5646y"
+
+## Authentification sur le NPM
+
+On utilise l'authentification basique avec les informations suivantes :
+* Username
+* Password
+* Email
+
+La valeur du *Password* est stocké dans une variable d'environnement du systeme :
+> export RELEASE_NPM_PASSWORD="f&&"544"
+
+> **TODO**
+Authentification par Token

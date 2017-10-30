@@ -7,67 +7,7 @@ _PWD=`pwd`
 _VERSION=0.0.1
 
 # librairie par defaut
-_LIBRARY="leaflet"
-
-# options
-#   --leaflet |l
-#   (--debug )
-#   --build |b, --tag |t, --publish |p, --clean |C
-_OPTS_RUN_BUILD=false
-_OPTS_RUN_TAG=false
-_OPTS_RUN_PUBLISH=false
-_OPTS_RUN_CLEAN=false
-
-# parse options
-_OPTS_VERBOSE=false
-
-while getopts "hvlobtpC" opt; do
-  case ${opt} in
-    h|help )
-      echo "Usage :"
-      echo "    `basename $0` -h    Affiche cette aide."
-      echo "    v (--verbose)     mode verbose,"
-      echo "    l (--leaflet)     Execution de la publication Leaflet (par defaut),"
-      echo "    o (--ol3)         Execution de la publication Openlayers,"
-      echo "    b (--run-build)   Execution de la tache de compilation,"
-      echo "    t (--run-tag)     Execution de la tache de git-tag,"
-      echo "    p (--run-publish) Execution de la tache de publication gitHub,"
-      echo "    C (--run-clean)   Execution de la tache de nettoyage."
-      echo "Ex. `basename $0` -btpC"
-      exit 0
-      ;;
-   \? )
-     echo "Invalid Option: -$OPTARG" 1>&2
-     exit 1
-     ;;
-   v|verbose )
-     _OPTS_VERBOSE=true
-     ;;
-   l|leaflet )
-      _LIBRARY="leaflet"
-     ;;
-   o|ol3 )
-      _LIBRARY="ol3"
-     ;;
-   b|build )
-      _OPTS_RUN_BUILD=true
-     ;;
-   t|tag )
-     _OPTS_RUN_TAG=true
-     ;;
-   p|publish )
-      _OPTS_RUN_PUBLISH=true
-     ;;
-   C|clean )
-      _OPTS_RUN_CLEAN=true
-     ;;
-  esac
-  shift $((OPTIND -1))
-done
-
-[ ${_OPTS_VERBOSE} == true ] && {
-  set -x
-}
+_PACKAGE_LIBRARY="leaflet"
 
 # chemins des répertoires
 _DIR_SCRIPTS="${_PWD}/scripts"
@@ -84,18 +24,116 @@ GIT_USER_NAME=${_GIT_USER_NAME}
 GIT_REPOSITORY_URL="https://github.com/${GIT_USER_NAME}/${GIT_REPOSITORY_NAME}.git"
 GIT_OAUTH_TOKEN=${_GIT_OAUTH_TOKEN}
 
-[ ${_LIBRARY} == "leaflet" ] && {
-  GIT_DIR_PUBLISH=${_GIT_DIR_PUBLISH_LEAFLET}
-}
-
-[ ${_LIBRARY} == "ol3" ] && {
-  GIT_DIR_PUBLISH=${_GIT_DIR_PUBLISH_OPENLAYERS}
-}
-
 GITHUB_API_URL=${_GITHUB_API_URL}
 GITHUB_API_UPLOAD_RELEASE_URL=${_GITHUB_API_UPLOAD_RELEASE_URL}
 GITHUB_API_CREATE_RELEASE_URL=${_GITHUB_API_CREATE_RELEASE_URL}
 GITHUB_API_CREATE_RELEASE_DATA=${_GITHUB_API_CREATE_RELEASE_DATA}
+
+# options
+#   --leaflet |l
+#   --build |b, --tag |t, --publish |p, --clean |C
+OPTS_RUN_BUILD=${_OPTS_RUN_BUILD}
+OPTS_RUN_TAG=${_OPTS_RUN_TAG}
+OPTS_RUN_PUBLISH=${_OPTS_RUN_PUBLISH}
+OPTS_RUN_CLEAN=${_OPTS_RUN_CLEAN}
+
+# parse options
+OPTS_VERBOSE=${_OPTS_VERBOSE}
+
+while true; do
+  case "$1" in
+
+    -h|--help)
+        echo "Usage :"
+        echo "    `basename $0` "
+        echo "    -h            Affiche cette aide."
+        echo "    --verbose     Mode verbose,"
+        echo "    --leaflet|l   Publication Leaflet (par defaut),"
+        echo "    --ol3|o       Publication Openlayers,"
+        echo "    --version|v   [TODO] Numero de version du package à publier,"
+        echo "    --build|b     Execution de la tache de compilation,"
+        echo "    --tag|t       Execution de la tache de git-tag,"
+        echo "    --publish|p   Execution de la tache de publication npm et bower,"
+        echo "    --clean|C     Execution de la tache de nettoyage."
+        echo "Ex. Options longues : `basename $0` --leaflet --version='1.0.0-test'"
+        echo "                  --build"
+        echo "                  --tag=false --publish=false"
+        echo "                  --clean=true"
+        echo "Ex. Options courtes : `basename $0` -l -v '1.0.0-test'"
+        echo "                  -b"
+        echo "                  -t false -p false"
+        echo "                  -C true"
+        exit 0 ;;
+
+    --verbose)
+        OPTS_VERBOSE=true
+        shift ;;
+
+    -l|--leaflet)
+         # par defaut...
+         _PACKAGE_LIBRARY="leaflet"
+         shift ;;
+
+    -o|--ol3)
+          _PACKAGE_LIBRARY="ol3"
+          shift ;;
+
+    # TODO
+    # -v|--version)
+    #     # on surcharge la version du package !
+    #     # par defaut, elle est extraite du fichier package.json...
+    #     case "$2" in
+    #       "") shift 2 ;;
+    #       *) _PACKAGE_VERSION=$2 ; shift 2 ;;
+    #     esac ;;
+
+    -b|--build)
+        case "$2" in
+          "") OPTS_RUN_BUILD=true ; shift 2 ;;
+          *) OPTS_RUN_BUILD=$2 ; shift 2 ;;
+        esac ;;
+
+    -y|--tag)
+        case "$2" in
+          "") OPTS_RUN_TAG=true ; shift 2 ;;
+          *) OPTS_RUN_TAG=$2 ; shift 2 ;;
+        esac ;;
+
+    -p|--publish)
+        case "$2" in
+          "") OPTS_RUN_PUBLISH=true ; shift 2 ;;
+          *) OPTS_RUN_PUBLISH=$2 ; shift 2 ;;
+        esac ;;
+
+    -C|--clean)
+        case "$2" in
+          "") OPTS_RUN_CLEAN=true ; shift 2 ;;
+          *) OPTS_RUN_CLEAN=$2 ; shift 2 ;;
+        esac ;;
+
+    --)
+        shift
+        break ;;
+
+    *)
+        echo "Invalid Option: -$OPTARG" 1>&2
+        exit 1 ;;
+  esac
+done
+
+# authentification github
+[ ${_PACKAGE_LIBRARY} == "leaflet" ] && {
+  GIT_DIR_PUBLISH=${_GIT_DIR_PUBLISH_LEAFLET}
+}
+
+# authentification github
+[ ${_PACKAGE_LIBRARY} == "ol3" ] && {
+  GIT_DIR_PUBLISH=${_GIT_DIR_PUBLISH_OPENLAYERS}
+}
+
+[ ${OPTS_VERBOSE} == true ] && {
+  set -x
+}
 
 ##########
 # doCmd()
@@ -128,13 +166,13 @@ info () {
 ----------------------------------------------------------
 `basename $0`, version ${_VERSION}
 ----------------------------------------------------------
---> Publication des releases sur le GitHub pour ${_LIBRARY} <--
+--> Publication des releases sur le GitHub pour ${_PACKAGE_LIBRARY} <--
 -- Configuration : ${_PROPERTIES}
 -- Parametres : ...
---    build   : ${_OPTS_RUN_BUILD}
---    tag     : ${_OPTS_RUN_TAG}
---    publish : ${_OPTS_RUN_PUBLISH}
---    clean   : ${_OPTS_RUN_CLEAN}
+--    build   : ${OPTS_RUN_BUILD}
+--    tag     : ${OPTS_RUN_TAG}
+--    publish : ${OPTS_RUN_PUBLISH}
+--    clean   : ${OPTS_RUN_CLEAN}
 -- Information   : ...
 --    depot GitHub : ${GIT_REPOSITORY_URL}
 --    user GitHub  : ${GIT_USER_NAME}
@@ -157,7 +195,7 @@ printTo "--> build..."
 # date build
 export _PACKAGE_BUILD=`date '+%d/%m/%y - %H:%M:%S'`
 # version package
-export _PACKAGE_VERSION_NAME="${_LIBRARY}ExtVersion"
+export _PACKAGE_VERSION_NAME="${_PACKAGE_LIBRARY}ExtVersion"
 export _PACKAGE_VERSION=$(cat package.json |
   perl -MJSON -0ne '
     my $DS = decode_json $_;
@@ -165,24 +203,24 @@ export _PACKAGE_VERSION=$(cat package.json |
     print $DS->{$field};
   ')
 
-if [ ${_OPTS_RUN_BUILD} == true ]
+if [ ${OPTS_RUN_BUILD} == true ]
 then
   doCmd "cd ${_PWD}"
-  doCmd "gulp --${_LIBRARY}" > /dev/null 2>&1
-  doCmd "gulp publish --${_LIBRARY}" > /dev/null 2>&1
-  doCmd "gulp --production --${_LIBRARY}" > /dev/null 2>&1
-  doCmd "gulp publish --${_LIBRARY}" > /dev/null 2>&1
+  doCmd "gulp --${_PACKAGE_LIBRARY}" > /dev/null 2>&1
+  doCmd "gulp publish --${_PACKAGE_LIBRARY}" > /dev/null 2>&1
+  doCmd "gulp --production --${_PACKAGE_LIBRARY}" > /dev/null 2>&1
+  doCmd "gulp publish --${_PACKAGE_LIBRARY}" > /dev/null 2>&1
 fi
 
 ################################################################################
 printTo "--> tag"
 
-if [ ${_OPTS_RUN_TAG} == true ]
+if [ ${OPTS_RUN_TAG} == true ]
 then
 
   _PACKAGE_TAG=$(echo ${GIT_TAG_NAME} |
         sed -e "s@%version%@${_PACKAGE_VERSION}@g" |
-        sed -e "s@%library%@${_LIBRARY}@g")
+        sed -e "s@%library%@${_PACKAGE_LIBRARY}@g")
 
   doCmd "git tag ${_PACKAGE_TAG}"
 
@@ -198,7 +236,7 @@ fi
 ################################################################################
 printTo "--> TODO : publish"
 
-if [ ${_OPTS_RUN_PUBLISH} == true ]
+if [ ${OPTS_RUN_PUBLISH} == true ]
 then
 
   ##############################################################################
@@ -220,7 +258,7 @@ then
 
   _CHANGELOG_CONTENT=`cat ${GIT_DIR_PUBLISH}/CHANGELOG.md`
 
-  if [ -n "${_CHANGELOG_CONTENT}" ] && [ ${_OPTS_RUN_TAG} == true ]
+  if [ -n "${_CHANGELOG_CONTENT}" ] && [ ${OPTS_RUN_TAG} == true ]
   then
 
     # https://developer.github.com/v3/repos/releases/#create-a-release
@@ -240,19 +278,19 @@ then
 
   _ZIP_NAME=""
   _ZIP_NAME+="GpPlugin"
-  _ZIP_NAME+=${_LIBRARY^}
+  _ZIP_NAME+=${_PACKAGE_LIBRARY^}
   _ZIP_NAME+="-"
   _ZIP_NAME+=${_PACKAGE_VERSION}
   _ZIP_NAME+=".zip"
 
-  [ -d "${_DIR_DIST}/${_LIBRARY}" ] && {
-    doCmd "zip -r ${GIT_DIR_PUBLISH}/${_ZIP_NAME} dist/${_LIBRARY}"
+  [ -d "${_DIR_DIST}/${_PACKAGE_LIBRARY}" ] && {
+    doCmd "zip -r ${GIT_DIR_PUBLISH}/${_ZIP_NAME} dist/${_PACKAGE_LIBRARY}"
   }
 
   ##############################################################################
   printTo "--> TODO : sendZip"
 
-  if [ -f ${_ZIP_NAME} ] && [ ${_OPTS_RUN_TAG} == true ]
+  if [ -f ${_ZIP_NAME} ] && [ ${OPTS_RUN_TAG} == true ]
   then
 
     # TODO
@@ -275,7 +313,7 @@ fi
 ################################################################################
 printTo "--> clean"
 
-if [ ${_OPTS_RUN_CLEAN} == true ]
+if [ ${OPTS_RUN_CLEAN} == true ]
 then
   doCmd "cd ${_PWD}"
   doCmd "rm -rf ${GIT_DIR_PUBLISH}"
@@ -283,7 +321,7 @@ fi
 
 printTo "END"
 
-[ ${_OPTS_VERBOSE} == true ] && {
+[ ${OPTS_VERBOSE} == true ] && {
   set +x
 }
 

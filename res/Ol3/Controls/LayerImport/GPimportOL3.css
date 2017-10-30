@@ -51,7 +51,7 @@ div[id^="GPimportGetCapPanel-"]
 
 div[id^="GPimportPanelClose-"],
 div[id^="GPimportGetCapPanelClose-"] {
-  background-image: url("../ol3/img/GPimportOpen.png");
+  background-image: url("img/GPimportOpen.png");
 }
 
 div[id^="GPimportGetCapPanel-"] {

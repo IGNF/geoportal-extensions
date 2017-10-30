@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="IE=edge,chrome=1; charset=UTF-8" http-equiv="X-UA-Compatible">
+  <title>sample ol3 KML crossOrigin</title>
+
+  <!-- Library OpenLayers 3 -->
+  <link rel="stylesheet" href="../../../node_modules/openlayers/dist/ol.css" />
+  <!-- <script src="../../../node_modules/openlayers/dist/ol-debug.js"></script> -->
+
+  <!-- Plugin OpenLayers 3 IGN -->
+  <link rel="stylesheet" href="../../../dist/ol3/GpPluginOl3.css" />
+  <!-- <script src="../../../dist/ol3/GpPluginOl3.js" data-url="./../resources/AutoConf.js"></script> -->
+
+  <!-- requirejs -->
+  <script src="../../../node_modules/requirejs/require.js"></script>
+
+  <!-- load geoportail-waiting image -->
+  <style>
+  div#map {
+    background-image:url(../resources/geoportail-waiting.gif);
+    background-position:center center;
+    background-repeat:no-repeat;
+    max-width: 800px;
+    height: 300px;
+    margin: 10px;
+  }
+  </style>
+
+</head>
+<body>
+  <h1>
+    <a href="http://openlayers.org/"><img src="../resources/logo-ol3.png" alt="OpenLayers3" width="100" /></a>
+    <a href="http://www.ign.fr"><img src="../resources/logo-ign.jpg" alt="IGN" width="100" /></a>
+  </h1>
+  <h3>
+    OpenLayers3 - A high-performance, feature-packed library for all your mapping needs.
+  </h3>
+
+  <div>
+    <p>...</p>
+
+    <script>
+
+    var map;
+    var vectorLayer;
+    var vectorSource;
+    var FormatChoice, kmlChoice;
+    var kmlStringOut, kmlStringIn;
+    var kmlProj;
+
+    /* global requirejs */
+    requirejs.config({
+      "baseUrl" : "../../../src/",
+      "paths": {
+        // lib external
+        // "ol" : "../lib/ol3/v3.18.1/ol-debug",
+        // "ol" : "../lib/ol3/v3.20.1/ol-debug",
+        "ol" : "../node_modules/openlayers/dist/ol-debug",
+        "proj4"   : "../node_modules/proj4/dist/proj4-src",
+        "gp"      : "../node_modules/geoportal-access-lib/dist/GpServices-src",
+        "sortable" : "../node_modules/sortablejs/Sortable",
+        "woodman" : "../node_modules/woodman/dist/woodman-amd"
+      }
+    });
+
+    requirejs([
+      "ol",
+      "Ol3/Formats/KML",
+      "../samples/ol3/Kml/overload/__StyleIconOverload"
+    ],
+    function (ol, KMLExtended) {
+
+      kmlStringIn = "<kml \
+      xmlns=\"http://www.opengis.net/kml/2.2\" \
+      xmlns:gx=\"http://www.google.com/kml/ext/2.2\" \
+      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" \
+      xsi:schemaLocation=\"http://www.opengis.net/kml/2.2 https://developers.google.com/kml/schema/kml22gx.xsd\">\
+      <Document>\
+      <Style id=\"roadStyle2\"><LineStyle><color>ffff0000</color><width>5</width></LineStyle></Style><open>1</open>\
+      <Placemark>\
+      <styleUrl>#roadStyle2</styleUrl>\
+      <MultiGeometry><LineString><coordinates>\
+      -61.671494,16.010906,0 -61.671321,16.011153,0 -61.671312,16.011424,0 -61.671258,16.011616,0 -61.671035,16.011794,0 -61.670893,16.012019,0 -61.670719,16.012245,0 -61.670553,16.012509,0 -61.670187,16.012821,0 -61.670107,16.013015,0 -61.670004,16.013340,0 -61.669790,16.013484,0 -61.669604,16.013605,0 -61.669243,16.013779,0 -61.669040,16.013841,0 -61.668883,16.013843,0 -61.668631,16.013916,0 -61.668454,16.013891,0 -61.668146,16.013879,0 -61.667971,16.013932,0 -61.667757,16.014006,0 -61.667591,16.014118,0 -61.667663,16.014108,0 -61.667542,16.014106,0 -61.667410,16.014218,0 -61.667282,16.014394,0 -61.667149,16.014352,0 -61.667127,16.014411,0 -61.666980,16.014571,0 -61.666797,16.014780,0 -61.666858,16.015152,0 -61.666801,16.015423,0 -61.666705,16.015679,0 -61.666695,16.015928,0 -61.666663,16.016018,0 -61.666408,16.016114,0 -61.666430,16.016288,0 -61.666528,16.016444,0 -61.666645,16.016524,0 -61.666547,16.016727,0 -61.666453,16.016888,0 -61.666502,16.016922,0 -61.666406,16.017142,0 -61.666240,16.017415,0 -61.666145,16.017569,0 -61.666064,16.017713,0 -61.666160,16.017864,0 -61.666131,16.017757,0 -61.666181,16.018001,0 -61.666222,16.018045,0 -61.666201,16.018100,0 -61.666346,16.018163,0 -61.666189,16.018044,0 -61.666286,16.018149,0 -61.666157,16.018074,0 -61.666107,16.017996,0 -61.666283,16.018122,0 -61.666170,16.018024,0 -61.666058,16.017910,0 -61.666212,16.018009,0 -61.666123,16.017971,0 -61.665956,16.018108,0 -61.666102,16.018279,0 -61.665975,16.018312,0 -61.665958,16.018427,0 -61.665834,16.018516,0 -61.665787,16.018643,0 -61.665706,16.018668,0 -61.665568,16.018724,0 -61.665652,16.018884,0 -61.665707,16.018834,0 -61.665573,16.018861,0 -61.665554,16.019080,0 -61.665599,16.019136,0 -61.665490,16.019093,0 -61.665487,16.019183,0 -61.665528,16.019198,0 -61.665542,16.019217,0 -61.665558,16.019160,0</coordinates></LineString></MultiGeometry>\
+      </Placemark>\
+      <Style id=\"waypoint\">\
+      <IconStyle>\
+      <Icon>\
+      <href>http://zoom-guadeloupe.fr/Randos/icon_wp.png</href>\
+      </Icon>\
+      </IconStyle>\
+      </Style>\
+      <name>Waypoints</name>\
+      <Placemark>\
+      <name>Panneau d'informations</name>\
+      <description><![CDATA[<img src=\"http://zoom-guadeloupe.fr/images/stories/Randos/BasseTerre/BassinBleu/Paysages/10-DSC06769M.jpg\" width=240 height=180> ]]></description>\
+      <styleUrl>#waypoint</styleUrl>\
+      <Point><coordinates>-61.67135,16.01125,0</coordinates></Point>\
+      </Placemark>\
+      <Placemark>\
+      <name>Gommier blanc</name>\
+      <description><![CDATA[<img src=\"http://zoom-guadeloupe.fr/images/stories/Randos/BasseTerre/BassinBleu/Paysages/21-DSC06796M.jpg\" width=180 height=240> ]]></description>\
+      <styleUrl>#waypoint</styleUrl>\
+      <Point><coordinates>-61.66906,16.01388,0</coordinates></Point>\
+      </Placemark>\
+      <Placemark>\
+      <name>Le Bassin Bleu</name>\
+      <description><![CDATA[<img src=\"http://zoom-guadeloupe.fr/images/stories/Randos/BasseTerre/BassinBleu/Paysages/41-IMG_2850M.jpg\" width=240 height=180> ]]></description>\
+      <styleUrl>#waypoint</styleUrl>\
+      <Point><coordinates>-61.66616,16.01820,0</coordinates></Point>\
+      </Placemark>\
+      <Placemark>\
+      <name>Les Carbets</name>\
+      <description><![CDATA[<img src=\"http://zoom-guadeloupe.fr/images/stories/Randos/BasseTerre/BassinBleu/Paysages/35-DSC06859M.jpg\" width=240 height=180> ]]></description>\
+      <styleUrl>#waypoint</styleUrl>\
+      <Point><coordinates>-61.66650,16.01696,0</coordinates></Point>\
+      </Placemark>\
+      <Placemark>\
+      <name>Cascade de Ravine Chaude</name>\
+      <description><![CDATA[<img src=\"http://zoom-guadeloupe.fr/images/stories/Randos/BasseTerre/BassinBleu/Paysages/75-IMG_1751M.jpg\" width=180 height=240> ]]></description>\
+      <styleUrl>#waypoint</styleUrl>\
+      <Point><coordinates>-61.66548,16.01937,0</coordinates></Point>\
+      </Placemark>\
+      <Placemark>\
+      <name>Fougère Arborescentes</name>\
+      <description><![CDATA[<img src=\"http://zoom-guadeloupe.fr/images/stories/Randos/BasseTerre/BassinBleu/Paysages/24-DSC06811M.jpg\" width=180 height=240> ]]></description>\
+      <styleUrl>#waypoint</styleUrl>\
+      <Point><coordinates>-61.66768,16.01412,0</coordinates></Point>\
+      </Placemark>\
+      </Document>\
+      </kml>";
+
+      // layer
+      var rasterLayer = new ol.layer.Tile({
+        source: new ol.source.TileJSON({
+          url: 'https://api.tiles.mapbox.com/v3/mapbox.geography-class.json?secure',
+          crossOrigin: 'anonymous'
+        })
+      });
+
+      // map
+      map = new ol.Map({
+        target: 'map',
+        layers: [
+          rasterLayer
+        ],
+        view: new ol.View({
+          projection : "EPSG:4326",
+          center: [-61.6,16.2],
+          zoom: 10
+        })
+      });
+
+      var addKMLToMap = function (features) {
+
+        if (vectorLayer) {
+          map.removeLayer(vectorLayer);
+        }
+
+        // add KML into the map
+        vectorSource =  new ol.source.Vector({
+            features : features
+        });
+
+        vectorLayer = new ol.layer.Vector({
+          source : vectorSource
+        });
+
+        map.addLayer(vectorLayer);
+      };
+
+      document.getElementById("loadKml").onclick = function (e) {
+
+        if (!FormatChoice) {
+          FormatChoice = ol.format.KML;
+        }
+
+        // read KML string
+        var format = new FormatChoice ({ // ol.format.KML
+          showPointNames : true
+        });
+        kmlProj = format.readProjection(kmlStringIn);
+        var mapProj = map.getView().getProjection().getCode();
+        var features = format.readFeatures(
+          kmlStringIn,
+          {
+            dataProjection : kmlProj,
+            featureProjection : mapProj
+          }
+        );
+
+        console.log(features);
+
+        addKMLToMap(features);
+      };
+
+      document.getElementById("writeKml").onclick = function (e) {
+
+        // write KML string
+        var format = new FormatChoice ({ // ol.format.KML
+          writeStyles : true
+        });
+
+        kmlStringOut = format.writeFeatures(
+          vectorLayer.getSource().getFeatures(), {
+            dataProjection : kmlProj,
+            featureProjection : "EPSG:3857"
+          }
+        );
+
+        console.log(kmlStringOut);
+      };
+
+      document.getElementById("readKml").onclick = function (e) {
+
+        // read KML string
+        var format = new FormatChoice ({ // ol.format.KML
+          showPointNames : true
+        });
+
+        var features = format.readFeatures(
+          kmlStringOut,
+          {
+            dataProjection : kmlProj,
+            featureProjection : "EPSG:3857"
+          }
+        );
+
+        addKMLToMap(features);
+
+      };
+
+      // get list of radio buttons with name 'size'
+      var formats = document.getElementsByName("format");
+
+      // loop through list
+      for (var i=0, len=formats.length; i<len; i++) {
+        formats[i].onclick = function(e) {
+          var currentValue = e.target.value;
+          switch (currentValue) {
+            case "form1":
+               FormatChoice = ol.format.KML;
+              break;
+            case "form2":
+                FormatChoice = KMLExtended;
+              break;
+            default:
+              FormatChoice = KMLExtended;
+          }
+        };
+      }
+
+    function handleClickKmlChoice (myRadio) {
+        var currentValue = myRadio.value;
+        switch (currentValue) {
+          case "form1":
+             kmlChoice = kmlStringIn1;
+            break;
+          case "form2":
+              kmlChoice = kmlStringIn2;
+            break;
+          case "form3":
+              kmlChoice = kmlStringIn3;
+            break;
+          case "form4":
+              kmlChoice = kmlStringIn4;
+            break;
+          case "form5":
+              kmlChoice = kmlStringIn5;
+            break;
+          case "form6":
+                kmlChoice = kmlStringIn6;
+              break;
+          default:
+            kmlChoice = kmlStringIn1;
+        }
+    }
+
+  });
+
+    </script>
+
+    <!-- map -->
+    <div id="map">
+    </div>
+    <input type="radio" name="format" value="form1" checked> Format KML<br>
+    <input type="radio" name="format" value="form2"> Format KMLExtended<br>
+    <hr width="50%" align="left">
+    <input type="radio" name="kml" onclick="handleClickKmlChoice(this);" value="form1" checked> Form : Label étendu avec point <br>
+    <!-- input type="radio" name="kml" onclick="handleClickKmlChoice(this);" value="form2"> Form : Label étendu avec point (extendData)<br>
+    <input type="radio" name="kml" onclick="handleClickKmlChoice(this);" value="form3"> Form : Label normal avec un point<br>
+    <input type="radio" name="kml" onclick="handleClickKmlChoice(this);" value="form4"> Form : Label étendu<br>
+    <input type="radio" name="kml" onclick="handleClickKmlChoice(this);" value="form5"> Form : Label normal avec style<br>
+    <input type="radio" name="kml" onclick="handleClickKmlChoice(this);" value="form6"> Form : Label sans style (par defaut)<br -->
+    <hr width="50%" align="left">
+    <button type="button" id="loadKml">Load KML</button> -->
+    <button type="button" id="writeKml">Write KML</button> -->
+    <button type="button" id="readKml">Reload KML</button>
+
+
+    <!-- Comment utiliser le plugin avec un exemple -->
+    <p>EXEMPLE D'UTILISATION</p>
+    <pre>
+      <code>
+        window.onload = function () {}
+      </code>
+    </pre>
+
+    <!-- Toutes les informations utiles sur ol3 -->
+    <p>
+      <ul>
+        <li>En savoir plus avec le <a href="http://openlayers.org/en/v3.11.2/doc/quickstart.html">quick start guide</a>,</li>
+        <li>d'autres informations avec <a href="http://openlayers.org/en/v3.11.2/examples/">les exemples</a>,</li>
+        <li>ou aller directement à l'<a href="http://openlayers.org/en/v3.11.2/apidoc/">API documentation</a>.</li>
+      </ul>
+      Si vous avez des questions, jetez un oeil à la
+      <a href="http://stackoverflow.com/questions/tagged/openlayers-3">FAQ</a>.
+    </p>
+  </div>
+</body>
+</html>

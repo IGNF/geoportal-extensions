@@ -27,16 +27,6 @@ GIT_FILES_ADD=${_GIT_FILES_ADD}
 GIT_USER_NAME=${_GIT_USER_NAME}
 GIT_OAUTH_TOKEN=${_GIT_OAUTH_TOKEN}
 
-[ ${_PACKAGE_LIBRARY} == "leaflet" ] && {
-  GIT_DIR_PUBLISH=${_GIT_DIR_PUBLISH_LEAFLET}
-  GIT_REPOSITORY="https://github.com/${GIT_USER_NAME}/${_GIT_REPOSITORY_NAME_LEAFLET}.git"
-}
-
-[ ${_PACKAGE_LIBRARY} == "ol3" ] && {
-  GIT_DIR_PUBLISH=${_GIT_DIR_PUBLISH_OPENLAYERS}
-  GIT_REPOSITORY="https://github.com/${GIT_USER_NAME}/${_GIT_REPOSITORY_NAME_OPENLAYERS}.git"
-}
-
 # npm properties
 NPM_OAUTH_TOKEN=${_NPM_OAUTH_TOKEN}
 NPM_OAUTH_USER=${_NPM_OAUTH_USER}
@@ -183,6 +173,18 @@ while true; do
   esac
 done
 
+# authentification github
+[ ${_PACKAGE_LIBRARY} == "leaflet" ] && {
+  GIT_DIR_PUBLISH=${_GIT_DIR_PUBLISH_LEAFLET}
+  GIT_REPOSITORY="https://github.com/${GIT_USER_NAME}/${_GIT_REPOSITORY_NAME_LEAFLET}.git"
+}
+
+# authentification github
+[ ${_PACKAGE_LIBRARY} == "ol3" ] && {
+  GIT_DIR_PUBLISH=${_GIT_DIR_PUBLISH_OPENLAYERS}
+  GIT_REPOSITORY="https://github.com/${GIT_USER_NAME}/${_GIT_REPOSITORY_NAME_OPENLAYERS}.git"
+}
+
 [ ${OPTS_VERBOSE} == true ] && {
   set -x
 }
@@ -231,6 +233,7 @@ info () {
 --    clean   : ${OPTS_RUN_CLEAN}
 -- Information GitHub : ...
 --    depot GitHub : ${GIT_REPOSITORY}
+--    user GitHub  : ${GIT_USER_NAME}
 --    token GitHub : ${GIT_OAUTH_TOKEN} (ENV)
 -- Information NPM : ...
 --    user npm  : ${NPM_OAUTH_USER}

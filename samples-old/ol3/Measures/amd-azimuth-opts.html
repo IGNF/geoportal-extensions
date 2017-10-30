@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="IE=edge,chrome=1; charset=UTF-8" http-equiv="X-UA-Compatible">
+  <title>sample ol3 measure azimut default (amd)</title>
+
+  <!-- Library OpenLayers 3 -->
+  <link rel="stylesheet" href="../../../node_modules/openlayers/dist/ol.css" />
+
+  <!-- Plugin OpenLayers 3 IGN -->
+  <link rel="stylesheet" href="../../../res/Common/GPgeneralWidget.css" />
+  <link rel="stylesheet" href="../../../res/Common/GPmeasureToolTip.css" />
+  <link rel="stylesheet" href="../../../res/Common/GPmeasureAzimuth.css" />
+  <link rel="stylesheet" href="../../../res/Ol3/GPgeneralWidgetOL3.css" />
+  <link rel="stylesheet" href="../../../res/Ol3/Controls/Measures/GPmeasureAzimuthOL3.css" />
+  <link rel="stylesheet" href="../../../res/Ol3/Controls/ToolBoxMeasure/GPtoolBoxMeasureOL3.css" />
+
+  <!-- requirejs -->
+  <script src="../../../node_modules/requirejs/require.js"></script>
+
+  <!-- load geoportail-waiting image -->
+  <style>
+  body {
+    /* background-color: #A4A4A4; */
+  }
+  div#map {
+    background-image:url(../resources/geoportail-waiting.gif);
+    background-position:center center;
+    background-repeat:no-repeat;
+    max-width: 800px;
+    height: 500px;
+    margin: 10px;
+  }
+  </style>
+</head>
+<body>
+  <h1>
+    <a href="http://openlayers.org/"><img src="../resources/logo-ol3.png" alt="OpenLayers3" width="100" /></a>
+    <a href="http://www.ign.fr"><img src="../resources/logo-ign.jpg" alt="IGN" width="100" /></a>
+  </h1>
+  <h3>
+    OpenLayers3 - A high-performance, feature-packed library for all your mapping needs.
+  </h3>
+
+  <div>
+    <p>Ajout d'un widget d'import de couches'</p>
+
+    <script>
+    var map;
+    var layerimport;
+    /* global requirejs */
+    requirejs.config({
+      "baseUrl" : "../../../src/",
+      "paths": {
+        // lib external
+        "ol" : "../node_modules/openlayers/dist/ol-debug",
+        "proj4"   : "../node_modules/proj4/dist/proj4-src",
+        "gp"      : "../node_modules/geoportal-access-lib/dist/GpServices-src",
+        "sortable" : "../node_modules/sortablejs/Sortable",
+        "woodman" : "../node_modules/woodman/dist/woodman-amd"
+      }
+    });
+    requirejs(
+      [
+        "ol",
+        "gp",
+        "Ol3/Layers/LayerWMTS",
+        "Ol3/Controls/Measures/MeasureAzimuth"
+      ],
+      function (
+        ol,
+        Gp,
+        LayerWMTS,
+        MeasureAzimuth
+      ) {
+
+        var map;
+        var measure;
+
+        var createMap = function () {
+          // on cache l'image de chargement du Géoportail.
+          document.getElementById("map").style.backgroundImage = "none";
+
+          // Création de la map
+          var osm = new ol.layer.Tile({
+            source : new ol.source.OSM()
+          });
+          map = new ol.Map({
+            target : "map",
+            layers : [
+              osm
+            ],
+            view : new ol.View({
+              center : [288074.8449901076, 6247982.515792289],
+              zoom : 6
+            })
+          });
+
+          measure = new MeasureAzimuth({
+            element : null,
+            target : null,
+            render : null,
+            styles : {
+              pointer : new ol.style.Circle({
+                  fill : new ol.style.Fill({
+                      color : "rgba(255, 255, 255, 0.5)"
+                  }),
+                  stroke : new ol.style.Stroke({
+                      color : "rgba(0, 0, 0, 0.7)"
+                  }),
+                  radius : 5
+              }),
+              start : new ol.style.Style({
+                  stroke : new ol.style.Stroke({
+                      color : "rgba(0, 0, 0, 0.5)",
+                      lineDash : [10, 10]
+                  })
+              }),
+              finish : new ol.style.Style({
+                  stroke : new ol.style.Stroke({
+                      color : "rgba(0, 0, 0, 1)"
+                  })
+              })
+            },
+            unit : "km", // not yet implemented !
+            tooltip : {  // not yet implemented !
+              messageContinue : "Click to continue drawing the line",
+              messageStart : "Click to start drawing"
+            },
+            // geodesic : true
+          });
+          map.addControl(measure);
+
+          // get list of radio buttons with name 'size'
+          var points = document.getElementsByName("point");
+
+          // loop through list
+          for (var i=0, len=points.length; i<len; i++) {
+            points[i].onclick = function(e) {
+              var currentValue = e.target.value;
+              switch (currentValue) {
+                case "true":
+                   measure.setGeodesic(true);
+                  break;
+                case "false":
+                    measure.setGeodesic(false);
+                  break;
+                default:
+                  measure.setGeodesic(false);
+              }
+            };
+          }
+        };
+
+        Gp.Services.getConfig({
+          serverUrl : "./../resources/AutoConf.js",
+          callbackSuffix : "",
+          // apiKey: "jhyvi0fgmnuxvfv0zjzorvdn",
+          timeOut : 20000,
+          onSuccess : createMap
+        });
+
+      });
+
+      </script>
+
+      <!-- map -->
+      <div id="map">
+      </div>
+      <input type="radio" name="point" value="true"> geoddesic:true<br>
+      <input type="radio" name="point" value="false" checked> geodesic:false<br>
+
+      <!-- Comment utiliser le plugin avec un exemple -->
+      <p>EXEMPLE D'UTILISATION</p>
+      <pre>
+        <code>
+          window.onload = function () {
+            var map = new ol.Map({
+              layers: [
+              new LayerWMTS({
+                layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS",
+              })
+              ],
+              target: 'map',
+              view: new ol.View({
+                center: [288074.8449901076, 6247982.515792289],
+                zoom: 5
+              })
+            });
+            var measureLength = new ol.control.MeasureLength({});
+            map.addControl(measureLength);
+          }
+        </code>
+      </pre>
+
+      <!-- Toutes les informations utiles sur ol3 -->
+      <p>
+        <ul>
+          <li>Exemple :  <a href="http://openlayers.org/en/latest/examples/measure.html"</a>measure,</li>
+          <li>En savoir plus avec le <a href="http://openlayers.org/en/latest/doc/quickstart.html">quick start guide</a>,</li>
+          <li>d'autres informations avec <a href="http://openlayers.org/en/latest/examples/">les exemples</a>,</li>
+          <li>ou aller directement à l'<a href="http://openlayers.org/en/latest/apidoc/">API documentation</a>.</li>
+        </ul>
+        Si vous avez des questions, jetez un oeil à la
+        <a href="http://stackoverflow.com/questions/tagged/openlayers-3">FAQ</a>.
+      </p>
+    </div>
+  </body>
+  </html>

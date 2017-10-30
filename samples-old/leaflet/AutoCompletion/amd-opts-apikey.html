@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Library Leaflet -->
+  <link rel="stylesheet" href="../../../node_modules/leaflet/dist/leaflet.css" />
+
+  <!-- Plugin leaflet IGN -->
+  <link rel="stylesheet" href="../../../dist/leaflet/GpPluginLeaflet-src.css" />
+
+  <!-- requirejs -->
+  <script src="../../../node_modules/requirejs/require.js"></script>
+
+</head>
+<body>
+  <h1>
+    <a href="http://leafletjs.com"><img src="../resources/logo-leaflet.png" alt="Leaflet" width="300" /></a>
+    <a href="http://www.ign.fr"><img src="../resources/logo-ign.jpg" alt="IGN" width="100" /></a>
+  </h1>
+  <h3>
+    Leaflet - une bibliothèque JavaScript open-source pour des cartes interactives mobile-friendly
+  </h3>
+  <div>
+    <!-- Faire une bréve description du plugin -->
+    <p>TODO : DESCRIPTION DU PLUGIN</p>
+
+    <!-- Mettre le code source de l'exemple -->
+    <script>
+        /* global requirejs */
+        requirejs.config({
+            'baseUrl' : "../../../src/",
+            'paths': {
+                // lib external
+                "leaflet" : "../node_modules/leaflet/dist/leaflet-src",
+                "gp"      : "../node_modules/geoportal-access-lib/dist/GpServices-src",
+                "proj4" : "../node_modules/proj4/dist/proj4-src",
+                "proj4leaflet" : "../node_modules/proj4leaflet/src/proj4leaflet",
+                "woodman" : "../node_modules/woodman/dist/woodman-amd",
+                "sortable": "../node_modules/sortablejs/Sortable"
+            }
+        });
+
+        requirejs(['gp', 'Leaflet/Layers/Layers', 'Leaflet/Controls/LocationSelector'],
+        function (Gp, Layers, LocationSelector) {
+
+          // Gp.Services.getConfig({
+          //   // serverUrl : "../resources/autoconf/callback-autoconf-xml-light-more",
+          //   apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
+          //   timeOut : 20000,
+          //   onSuccess : function () {
+
+              var wms = Layers.WMS({
+                apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
+                layer : "ORTHOIMAGERY.ORTHOPHOTOS",
+              });
+
+              var map  = L.map('map', {
+                zoom : 2,
+                center : L.latLng(48, 2)
+              });
+
+              wms.addTo(map);
+
+              var p = new LocationSelector({apiKey : "jhyvi0fgmnuxvfv0zjzorvdn"});
+
+              map.addControl(p);
+
+        //   }
+        // })
+      });
+    </script>
+
+    <!-- map -->
+    <div id="map" style="height: 400px;"></div>
+
+    <!-- Comment utiliser le plugin avec un exemple -->
+    <p>TODO : EXEMPLE D'UTILISATION DU PLUGIN</p>
+    <pre>
+      <code>TODO : CODE DE L'EXEMPLE</code>
+    </pre>
+
+    <!-- Toutes les informations utiles sur Leaflet -->
+    <p>
+      <ul>
+        <li>En savoir plus avec le <a href="http://leafletjs.com/examples/quick-start.html">quick start guide</a>,</li>
+        <li>d'autres informations avec <a href="http://leafletjs.com/examples.html">les exemples</a>,</li>
+        <li>ou aller directement à l'<a href="http://leafletjs.com/reference.html">API documentation</a>.</li>
+      </ul>
+      Si vous avez des questions, jetez un oeil à la
+      <a href="https://github.com/Leaflet/Leaflet/blob/master/FAQ.md">FAQ</a>.
+    </p>
+  </div>
+</body>
+</html>

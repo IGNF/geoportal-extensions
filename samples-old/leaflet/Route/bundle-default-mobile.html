@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Library Leaflet -->
+  <link rel="stylesheet" href="../../../node_modules/leaflet/dist/leaflet.css" />
+  <script src="../../../node_modules/leaflet/dist/leaflet.js"></script>
+
+  <!-- Plugin leaflet IGN -->
+  <link rel="stylesheet" href="../../../dist/leaflet/GpPluginLeaflet-src.css" />
+  <script src="../../../dist/leaflet/GpPluginLeaflet-src.js" data-key="jhyvi0fgmnuxvfv0zjzorvdn"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+       body {
+           padding: 0;
+           margin: 0;
+       }
+       html, body, #map {
+           height: 100%;
+           width: 100%;
+       }
+   </style>
+
+</head>
+<body>
+    <!-- Mettre le code source de l'exemple -->
+    <script>
+    window.onload = function () {
+
+      var layer = L.geoportalLayer.WMS({
+        layer : "ORTHOIMAGERY.ORTHOPHOTOS"
+      });
+
+      var map  = L.map('map', {
+        zoom : 2,
+        center : L.latLng(48, 2)
+      });
+
+      layer.addTo(map);
+
+      var r = L.geoportalControl.Route();
+
+      map.addControl(r);
+    }
+    </script>
+
+    <!-- map -->
+    <div id="map"></div>
+
+</body>
+</html>

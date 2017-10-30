@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Globe</title>
+        <!-- Library iTowns -->
+        <script src="../../../lib/itowns/js/itowns.js"></script>
+        <!-- requirejs -->
+        <script src="../../../node_modules/requirejs/require.js"></script>
+
+        <link rel="stylesheet" href="../../../dist/itowns/GpPluginItowns-src.css" />
+
+        <style type="text/css">
+            html {height: 100%}
+            body { margin: 0; overflow:hidden; height:100%}
+                #viewerDiv {
+                    position:relative;
+                    margin : auto auto;
+                    width: 100%;
+                    height: 70%;
+                    padding: 0;
+                    /*margin-top: 50vh;
+                    transform: translateY(-50%);*/
+                }
+          </style>
+
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    </head>
+    <body>
+        <h3>Itowns</h3>
+        <p>Ajout d'un contrôle d'affichage des attributions : Attribution</p>
+
+        <div id="viewerDiv"></div>
+
+        <script type="text/javascript">
+
+            var globeView = null;
+
+            requirejs.config({
+                baseUrl : "../../../src/",
+                paths : {
+                    // lib external
+                    itowns  : "../lib/itowns/js/itowns",
+                    proj4   : "../node_modules/proj4/dist/proj4",
+                    gp      : "../node_modules/geoportal-access-lib/dist/GpServices-src",
+                    sortable : "../node_modules/sortablejs/Sortable",
+                    woodman : "../node_modules/woodman/dist/woodman-amd"
+                }
+            });
+            requirejs(
+                ["itowns", "proj4", "gp", "Itowns/GlobeViewExtended", "Itowns/Controls/Attributions"],
+                function (itowns, proj4, Gp, GlobeViewExtended, Attributions) {
+                itowns.control = {};
+                itowns.control.Attributions = Attributions;
+                itowns.GlobeViewExtended = GlobeViewExtended;
+
+                const positionOnGlobe = {
+                    longitude : 2.3465,
+                    latitude : 48.88,
+                    altitude : 25000000
+                };
+
+                const viewerDiv = document.getElementById("viewerDiv");
+                globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
+
+                itowns.Fetcher.json("../Resources/JSONLayers/Ortho.json").then(result => globeView.addLayer(result));
+                itowns.Fetcher.json("../Resources/JSONLayers/OrthosCRS.json").then(result => globeView.addLayer(result));
+                itowns.Fetcher.json("../Resources/JSONLayers/ScanEX.json").then(result => globeView.addLayer(result));
+                itowns.Fetcher.json("../Resources/JSONLayers/Region.json").then(result => globeView.addLayer(result));
+
+                itowns.Fetcher.json("../Resources/JSONLayers/IGN_MNT.json").then(result => globeView.addLayer(result));
+                itowns.Fetcher.json("../Resources/JSONLayers/IGN_MNT_HIGHRES.json").then(result => globeView.addLayer(result));
+
+                globeView.addEventListener(itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED, () => {
+                    // eslint-disable-next-line no-console
+                    console.info("Globe initialized");
+                    var attribution = new itowns.control.Attributions({
+                        options : {
+                            // collapsed : true
+                        }
+                    });
+                    globeView.addWidget( attribution );
+                });
+            });
+        </script>
+    </body>
+</html>

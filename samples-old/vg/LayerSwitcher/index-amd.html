@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta content="IE=edge,chrome=1; charset=UTF-8" http-equiv="X-UA-Compatible">
+    <title>sample vg LayerSwitcher</title>
+
+    <!-- Library VirtualGeo -->
+    <script src="../../../lib/vg/js/VirtualGeoWeb-5.0.11.js"></script>
+    <!-- <script src="../../../lib/ol3/ol-debug.js"></script> -->
+
+    <!-- Plugin VirtualGeo IGN -->
+    <link rel="stylesheet" href="../../../dist/vg/GpPluginVg-src.css" />
+    <!-- <script src="../../../dist/ol3/GpPluginOl3.js" data-url="./../resources/AutoConf.js"></script> -->
+
+    <!-- requirejs -->
+    <script src="../../../node_modules/requirejs/require.js"></script>
+
+    <!-- load geoportail-waiting image -->
+    <style>
+    div#map {
+         background-image:url(../resources/geoportail-waiting.gif);
+         background-position:center center;
+         background-repeat:no-repeat;
+         max-width: 800px;
+         height: 500px;
+         margin: 0px;
+         z-index: 0;
+         position: relative;
+     }
+    </style>
+</head>
+<body>
+    <h3>
+        VirtualGeo
+    </h3>
+    <div id="maDivTest">
+    </div>
+
+    <div>
+        <p>Ajout d'un contrôle de gestionnaire de couches : LayerSwitcher</p>
+
+        <script>
+        var map;
+/* global requirejs */
+requirejs.config({
+            baseUrl : "../../../src/",
+            paths : {
+                // lib external
+                // vg : "../lib/vg/js/VirtualGeoWeb-1.1",
+                proj4 : "../node_modules/proj4/dist/proj4-src",
+                gp : "../node_modules/geoportal-access-lib/dist/GpServices-src",
+                sortable : "../node_modules/sortablejs/Sortable",
+                woodman : "../node_modules/woodman/dist/woodman-amd"
+            }
+        });
+requirejs(
+            ["gp", "Vg/Controls/LayerSwitcher", "Vg/Layers/Layers"],
+            function (Gp, LayerSwitcher, GeoportalLayers) {
+                /**
+                * Creation de la map
+                */
+                var createMap = function () {
+                    map = new VirtualGeo.Map({
+                        target : "map",
+                        // The first parameter is the ID of the map
+                        licenseKey : "aYiISRmYJscMAt2dfooROdTl7iktDWFGKHIc5qMYA89PNpr8lURHGtKA7GlACI6kSZN2QXLZTMoOXAOrCZHQ067K",
+                        /**
+                        * Actions à mener lorsque le globe est créé
+                        */
+                        whenLoaded : function (pMap) {
+
+                            pMap.addTileMatrixSet({
+                                id : "WGS84G_PO",
+                                projection :  "EPSG:4326",
+                                tileMatrices : [
+                                    {
+                                        "matrixId": "0",
+                                        "matrixHeight": 1,
+                                        "matrixWidth": 2,
+                                        "scaleDenominator": 279541132.0143589,
+                                        "tileHeight": 256,
+                                        "tileWidth": 256,
+                                        "topLeftCorner": [90, -180]
+                                    },
+                                    {
+                                        "matrixId": "1",
+                                        "matrixHeight": 2,
+                                        "matrixWidth": 4,
+                                        "scaleDenominator": 133247939.59351106,
+                                        "tileHeight": 256,
+                                        "tileWidth": 256,
+                                        "topLeftCorner": [90, -180]
+                                    },
+                                    {
+                                        "matrixId": "2",
+                                        "matrixHeight": 4,
+                                        "matrixWidth": 8,
+                                        "scaleDenominator": 69885283.00358972,
+                                        "tileHeight": 256,
+                                        "tileWidth": 256,
+                                        "topLeftCorner": [90, -180]
+                                    },
+                                    {
+                                        "matrixId": "3",
+                                        "matrixHeight": 8,
+                                        "matrixWidth": 16,
+                                        "scaleDenominator": 34942641.50179486,
+                                        "tileHeight": 256,
+                                        "tileWidth": 256,
+                                        "topLeftCorner": [90, -180]
+                                    },
+                                    {
+                                        "matrixId": "4",
+                                        "matrixHeight": 16,
+                                        "matrixWidth": 32,
+                                        "scaleDenominator": 17471320.75089743,
+                                        "tileHeight": 256,
+                                        "tileWidth": 256,
+                                        "topLeftCorner": [90, -180]
+                                    },
+                                    {
+                                        "matrixId": "5",
+                                        "matrixHeight": 32,
+                                        "matrixWidth": 64,
+                                        "scaleDenominator": 8735660.375448715,
+                                        "tileHeight": 256,
+                                        "tileWidth": 256,
+                                        "topLeftCorner": [90, -180]
+                                    },
+                                    {
+                                        "matrixId": "6",
+                                        "matrixHeight": 64,
+                                        "matrixWidth": 128,
+                                        "scaleDenominator": 4367830.1877243575,
+                                        "tileHeight": 256,
+                                        "tileWidth": 256,
+                                        "topLeftCorner": [90, -180]
+                                    },
+                                    {
+                                        "matrixId": "7",
+                                        "matrixHeight": 128,
+                                        "matrixWidth": 256,
+                                        "scaleDenominator": 2183915.0938621787,
+                                        "tileHeight": 256,
+                                        "tileWidth": 256,
+                                        "topLeftCorner": [90, -180]
+                                    },
+                                    {
+                                        "matrixId": "8",
+                                        "matrixHeight": 256,
+                                        "matrixWidth": 512,
+                                        "scaleDenominator": 1091957.5469310894,
+                                        "tileHeight": 256,
+                                        "tileWidth": 256,
+                                        "topLeftCorner": [90, -180]
+                                    },
+                                    {
+                                        "matrixId": "9",
+                                        "matrixHeight": 512,
+                                        "matrixWidth": 1024,
+                                        "scaleDenominator": 545978.7734655447,
+                                        "tileHeight": 256,
+                                        "tileWidth": 256,
+                                        "topLeftCorner": [90, -180]
+                                    },
+                                    {
+                                        "matrixId": "10",
+                                        "matrixHeight": 1024,
+                                        "matrixWidth": 2048,
+                                        "scaleDenominator": 272989.38673277234,
+                                        "tileHeight": 256,
+                                        "tileWidth": 256,
+                                        "topLeftCorner": [90, -180]
+                                    },
+                                    {
+                                        "matrixId": "11",
+                                        "matrixHeight": 2048,
+                                        "matrixWidth": 4096,
+                                        "scaleDenominator": 136494.69336638617,
+                                        "tileHeight": 256,
+                                        "tileWidth": 256,
+                                        "topLeftCorner": [90, -180]
+                                    },
+                                    {
+                                        "matrixId": "12",
+                                        "matrixHeight": 4096,
+                                        "matrixWidth": 8192,
+                                        "scaleDenominator": 68247.34668319309,
+                                        "tileHeight": 256,
+                                        "tileWidth": 256,
+                                        "topLeftCorner": [90, -180]
+
+                                    }
+                                ]
+                            });
+
+                            var IGNPO_HIGH = GeoportalLayers.WMTS({
+                                layer : "ORTHOIMAGERY.ORTHOPHOTOS.CRS84",
+                                apiKey : "j2bfkv9whnqpq04zpzlfz2ge"
+                            });
+
+                            // On ajoute les paramètres virtualGeo pour rendre transparent le blanc
+                            IGNPO_HIGH.processingOptions = {
+                                mode : "threshold",
+                                factor : 0.1,
+                                color : "white"
+                            };
+
+                            var IGNPO = GeoportalLayers.WMTS({
+                                layer : "ORTHOIMAGERY.ORTHOPHOTOS.LOW_RES.CRS84",
+                                apiKey : "j2bfkv9whnqpq04zpzlfz2ge"
+                            });
+
+
+                            var FOURRIERE_WMS = GeoportalLayers.WMS({
+                                layer : "UTILITYANDGOVERNMENTALSERVICES.PREFECTUREPOLICEPARIS.FOURRIERES",
+                                apiKey : "j2bfkv9whnqpq04zpzlfz2ge"
+                            });
+
+                            var ELEV_SLOPES = GeoportalLayers.WMTS({
+                                layer : "ELEVATION.SLOPES",
+                                apiKey : "j2bfkv9whnqpq04zpzlfz2ge"
+                            });
+
+                            // On ajoute les paramètres virtualGeo pour rendre transparent le blanc
+                            ELEV_SLOPES.processingOptions = {
+                                mode : "threshold",
+                                factor : 0.1,
+                                color : "white"
+                            };
+
+                            map.addImageryLayer(IGNPO_HIGH);
+                            map.addImageryLayer(IGNPO);
+                            map.addImageryLayer(FOURRIERE_WMS);
+                            map.addImageryLayer(ELEV_SLOPES);
+
+                            // Ajout des MNTs
+                            // MNT IGN - 25m - WMTS
+                            var MNT_IGN = GeoportalLayers.WMTS({
+                                layer : "ELEVATION.ELEVATIONGRIDCOVERAGE",
+                                apiKey : "j2bfkv9whnqpq04zpzlfz2ge"
+                            });
+
+                            map.addElevationLayer(MNT_IGN);
+
+                            // SRTM - MNT mondial - WMTS
+                            map.addElevationLayer({
+                                protocol : "wms",
+                                id : "SRTM3-MNT_PYR-ZIP_WLD_WGS84G_WMS_20160108",
+                                url : "http://gpp3-wxs-v-ign-fr.aw.atosorigin.com/geoportail/r/wms",
+                                noDataValue : "-99999",
+                                maxScaleDenominator : 20000,
+                                wmtsOptions : {
+                                    name : "SRTM3-MNT_PYR-ZIP_WLD_WGS84G_WMS_20160108",
+                                    style : "normal",
+                                    mimeType : "image/x-bil;bits=32"
+                                }
+                            });
+
+                            // Ajout couche WMS EPSG:3857
+                            map.addImageryLayer({
+                                protocol: "wms",
+                                id: "Risques d'avalanches",
+                                url: "http://wxs.ign.fr/an7nvfzojv5wa96dsga5nk8w/proxy/",
+                                wmsOptions: {
+                                    name: "IRSTEA_CLPA.INTER",
+                                    projection: "EPSG:3857",
+                                    mimeType: "image/png",
+                                    width: 256,
+                                    height: 256
+                                }
+                            })
+
+                            // MNT IGN Haute résolution - 5 m - WMS
+                            map.addElevationLayer({
+                                protocol : "wmts",
+                                id : "IGNDEM_HIGH",
+                                url : "http://wxs.ign.fr/j2bfkv9whnqpq04zpzlfz2ge/geoportail/wmts",
+                                noDataValue : "-99999",
+                                wmtsOptions : {
+                                    name : "ELEVATION.ELEVATIONGRIDCOVERAGE.HIGHRES",
+                                    tileMatrixSet : "WGS84G",
+                                    tileMatrixSetLimits : {
+                                        "6" : {
+                                            "minTileRow": "13",
+                                            "maxTileRow": "36",
+                                            "minTileCol": "62",
+                                            "maxTileCol": "80"
+                                        },
+                                        "7": {
+                                            "minTileRow": "27",
+                                            "maxTileRow": "73",
+                                            "minTileCol": "124",
+                                            "maxTileCol": "160"
+                                        },
+                                        "8": {
+                                            "minTileRow": "55",
+                                            "maxTileRow": "146",
+                                            "minTileCol": "248",
+                                            "maxTileCol": "320"
+                                        },
+                                        "9": {
+                                            "minTileRow": "110",
+                                            "maxTileRow": "292",
+                                            "minTileCol": "497",
+                                            "maxTileCol": "640"
+                                        },
+                                        "10": {
+                                            "minTileRow": "221",
+                                            "maxTileRow": "585",
+                                            "minTileCol": "994",
+                                            "maxTileCol": "1281"
+                                        },
+                                        "11": {
+                                            "minTileRow": "442",
+                                            "maxTileRow": "1171",
+                                            "minTileCol": "1989",
+                                            "maxTileCol": "2563"
+                                        },
+                                        "12": {
+                                            "minTileRow": "885",
+                                            "maxTileRow": "2343",
+                                            "minTileCol": "3978",
+                                            "maxTileCol": "5126"
+                                        },
+                                        "13": {
+                                            "minTileRow": "1770",
+                                            "maxTileRow": "4687",
+                                            "minTileCol": "7957",
+                                            "maxTileCol": "10253"
+                                        },
+                                        "14": {
+                                            "minTileRow": "3540",
+                                            "maxTileRow": "9375",
+                                            "minTileCol": "15914",
+                                            "maxTileCol": "20507"
+                                        }
+                                    }
+                                }
+                            });
+
+                            // Ajout du contrôle de gestion de l'empilement des couches (layerSwitcher)
+                            var layerSwitcher = new LayerSwitcher({
+                                div: "maDivTest",
+                                layers : [
+                                    {
+                                        layer : IGNPO,
+                                        config : {
+                                            title : IGNPO.title,
+                                            description : IGNPO.description,
+                                            quicklookUrl : IGNPO.quicklookUrl,
+                                            legends : IGNPO.legends,
+                                            metadata : IGNPO.metadata
+                                        }
+                                    },
+                                    {
+                                        layer : IGNPO_HIGH,
+                                        config : {
+                                            title : IGNPO_HIGH.title,
+                                            description : IGNPO_HIGH.description,
+                                            quicklookUrl : IGNPO_HIGH.quicklookUrl,
+                                            legends : IGNPO_HIGH.legends,
+                                            metadata : IGNPO_HIGH.metadata
+                                        }
+                                    },
+                                    {
+                                        layer : ELEV_SLOPES,
+                                        config : {
+                                            title : ELEV_SLOPES.title,
+                                            description : ELEV_SLOPES.description,
+                                            quicklookUrl : ELEV_SLOPES.quicklookUrl,
+                                            legends : ELEV_SLOPES.legends,
+                                            metadata : ELEV_SLOPES.metadata
+                                        }
+                                    },
+                                    {
+                                        layer : FOURRIERE_WMS,
+                                        config : {
+                                            title : FOURRIERE_WMS.title,
+                                            description : FOURRIERE_WMS.description,
+                                            quicklookUrl : FOURRIERE_WMS.quicklookUrl,
+                                            legends : FOURRIERE_WMS.legends,
+                                            metadata : FOURRIERE_WMS.metadata
+                                        }
+                                    }
+                                ]
+                            });
+                            // var layerSwitcher = new LayerSwitcher();
+                            map.addControl(layerSwitcher);
+                        }
+                    });
+                };
+
+                /**
+                * Ajout de plusieurs couches différentes.
+                */
+                var loadLayers = function (map) {
+
+                };
+
+                Gp.Services.getConfig({
+                    apiKey : "j2bfkv9whnqpq04zpzlfz2ge",
+                    timeOut : 20000,
+                    onSuccess : createMap
+                });
+
+            });
+            </script>
+
+            <!-- map -->
+            <div id="map">
+            </div>
+
+    </body>
+    </html>
