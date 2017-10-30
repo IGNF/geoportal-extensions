@@ -7,7 +7,9 @@
     https://help.github.com/articles/git-automation-with-oauth-tokens/
 
 
-> authentification npm pour 'npm publish'
+> authentification pour 'npm publish (login ou adduser)' : basique ou token ?
+    https://github.com/bravissimolabs/docker-generate-npm-authtoken
+    https://stackoverflow.com/questions/24143973/npm-adduser-via-bash
 
 > persistence de l'authentification pour 'npm publish' ?
 

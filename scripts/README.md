@@ -99,16 +99,20 @@ Le dépôt est à initialiser manuellement pour une 1ere utilisation !
 
 > release.sh -h
 Usage :
-    release.sh -h    Affiche cette aide.
-    l (--leaflet)     Execution de la publication Leaflet (par defaut),
-    o (--ol3)         Execution de la publication Openlayers,
-    b (--run-build)   Execution de la tache de compilation,
-    d (--run-data)    Execution de la tache de git-clone,
-    j (--run-json)    Execution de la tache de creation des json,
-    i (--run-info)    Execution de la tache de creation du fichier d'info,
-    c (--run-commit)  Execution de la tache de git-push,
-    p (--run-publish) Execution de la tache de publication npm et bower,
-    C (--run-clean)   Execution de la tache de nettoyage.
+    release.sh
+    h (--help)        Affiche cette aide.
+    v (--verbose)     Mode verbose.
+    l (--leaflet)     Publication Leaflet (par defaut),
+    o (--ol3)         Publication Openlayers,
+    V (--version)     Numero de version du package à publier
+    b (--build)   Execution de la tache de compilation,
+    d (--data)    Execution de la tache de git-clone,
+    j (--json)    Execution de la tache de creation des json,
+    i (--info)    Execution de la tache de creation du fichier d'info,
+    c (--commit)  Execution de la tache de git-push,
+    t (--tag)     Execution de la tache de git-tag,
+    p (--publish) Execution de la tache de publication npm et bower,
+    C (--clean)   Execution de la tache de nettoyage.
 Ex. release.sh -bdjicpC
 
 
@@ -126,7 +130,7 @@ avec la commande *gulp*.
   * copie du CHANGELOG_DRAFT mais ne pas oublier de le mettre à jour au préalable
 
 * commit - *commit* des modifications de la publication avec *git*.
-  * **TODO** : tag - mise en place du *tag* de publication avec *git*.
+  * tag - mise en place du *tag* de publication avec *git*.
 
 * info - création d'un fichier d'information
 

@@ -225,8 +225,8 @@ then
 
     # https://developer.github.com/v3/repos/releases/#create-a-release
     _REQUEST_RELEASE_URL=$(echo "${GITHUB_API_URL}/${GITHUB_API_CREATE_RELEASE_URL}" |
-        sed -e "s@%git_user_name%@${GIT_USER_NAME}@g" |
-        sed -e "s@%git_repository_name%@${GIT_REPOSITORY_NAME}@g")
+        sed -e "s@%GIT_USER_NAME%@${GIT_USER_NAME}@g" |
+        sed -e "s@%GIT_REPOSITORY_NAME%@${GIT_REPOSITORY_NAME}@g")
 
     _REQUEST_RELEASE_DATA=$(echo "${GITHUB_API_CREATE_RELEASE_DATA}" |
         sed -e "s@%tag_name%@${_PACKAGE_TAG}@g" |
@@ -262,8 +262,8 @@ then
 
     # https://developer.github.com/v3/repos/releases/#upload-a-release-asset
     _REQUEST_UPLOAD_URL==$(echo "${GITHUB_API_URL}/${GITHUB_API_UPLOAD_RELEASE_URL}" |
-        sed -e "s@%git_user_name%@${GIT_USER_NAME}@g" |
-        sed -e "s@%git_repository_name%@${GIT_REPOSITORY_NAME}@g"|
+        sed -e "s@%GIT_USER_NAME%@${GIT_USER_NAME}@g" |
+        sed -e "s@%GIT_REPOSITORY_NAME%@${GIT_REPOSITORY_NAME}@g"|
         sed -e "s@%release_id%@${_RELEASE_ID}@g"|
         sed -e "s@%zip_name%@${_ZIP_NAME}@g")
 

@@ -1,6 +1,3 @@
-> impl. les options de type "longues"
-    Ex. --leaflet
+> impl. option --version=1.0.0 pour la publication (-v)
 
-> tagger les publications !
-
-> avec l'API gitHub, comment recuperer l'ID de la release aprs la creation ?
+> avec l'API gitHub, comment recuperer l'ID de la release après la creation ?
