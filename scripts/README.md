@@ -121,7 +121,8 @@ Ce script consiste à executer les étapes suivantes :
 * build - construction des binaires dans le répertoire *dist*
 avec la commande *gulp*.
 
-* json - création des fichiers de configuration json (package et bower)
+* json - création  des fichiers de configuration json (package et bower)
+(copie avec maj de la version)
 
 * data - copie des fichiers utiles dans le dépôt de publication avec *git*.
   * copie des sources,
@@ -171,6 +172,17 @@ Comment creer un token :
 Ensuite, ce token est stocké dans une variable d'environnement du systeme :
 > export RELEASE_GITHUB_TOKEN="grsgz5r4gzr5g4er654er54er4tyer5646y"
 
+> **TODO** authentification github pour 'git push' : SSH ou Token ?
+    https://help.github.com/articles/connecting-to-github-with-ssh/
+    https://help.github.com/articles/which-remote-url-should-i-use/#cloning-with-ssh-urls
+    https://docs.microsoft.com/en-us/vsts/git/use-ssh-keys-to-authenticate
+    https://developer.github.com/v3/guides/basics-of-authentication/
+    https://developer.github.com/v3/guides/managing-deploy-keys/
+    https://help.github.com/articles/git-automation-with-oauth-tokens/
+
+> **TODO** authentification github pour l'API ?
+   https://developer.github.com/v3/auth/
+
 ## Authentification sur le NPM
 
 On utilise l'authentification basique avec les informations suivantes :
@@ -181,5 +193,6 @@ On utilise l'authentification basique avec les informations suivantes :
 La valeur du *Password* est stocké dans une variable d'environnement du systeme :
 > export RELEASE_NPM_PASSWORD="f&&"544"
 
-> **TODO**
-Authentification par Token
+> **TODO** authentification par Token ou basique ?
+
+> **TODO** persistence de l'authentification pour 'npm publish' ?

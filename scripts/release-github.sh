@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# TODO
+# > impl. option --version=1.0.0 pour la publication (?)
+# > tester l'authentification via token sur l'API gitHub...
+# > cf. FIXME
+
 # répertoire d'execution
 _PWD=`pwd`
 
@@ -270,6 +275,8 @@ then
         sed -e "s@%tag_name%@${_PACKAGE_TAG}@g" |
         sed -e "s@%content%@${_CHANGELOG_CONTENT}@g")
 
+    # FIXME
+    # Stocker le resultat de la requête dans la variable _RELEASE_ID !
     doCmd "curl -u ${GIT_USER_NAME}:${GIT_OAUTH_TOKEN} -X POST -H \"Content-Type: application/json\" -d ${_REQUEST_RELEASE_DATA} ${_REQUEST_RELEASE_URL}"
   fi
 
@@ -293,8 +300,9 @@ then
   if [ -f ${_ZIP_NAME} ] && [ ${OPTS_RUN_TAG} == true ]
   then
 
-    # TODO
-    # '_RELEASE_ID' issu de la requete de creation de la release ?
+    # FIXME
+    # '_RELEASE_ID' issu de la requete de creation de la release est à mettre en
+    # parametre !
 
     doCmd "cd ${GIT_DIR_PUBLISH}"
 

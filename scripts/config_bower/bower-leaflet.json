@@ -1,0 +1,24 @@
+{
+   "dependencies":{
+
+   },
+   "keywords":[
+      "geoportail",
+      "plugin",
+      "javascript",
+      "Leaflet",
+      "publish"
+   ],
+   "license":"CECILL-B",
+   "author":"geoportal-api-dev",
+   "version":"0.10.0-dev",
+   "homepage":"https://github.com/lowzonenose/geoportal-extensions-leaflet.git",
+   "name":"geoportal-extensions-leaflet",
+   "optionalDependencies":{
+
+   },
+   "ignore":[
+
+   ],
+   "description":"French Geoportal Extensions for Leaflet libraries"
+}

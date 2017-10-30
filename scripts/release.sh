@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# TODO
+# > impl. la surcharge de l'option version
+# > bower !
+# > tester l'authentification via token/basic NPM...
+# > cf. FIXME
+
 # répertoire d'execution
 _PWD=`pwd`
 
@@ -14,6 +20,8 @@ _PACKAGE_VERSION=""
 
 # chemins des répertoires
 _DIR_SCRIPTS="${_PWD}/scripts"
+_DIR_CONFIG_NPM="${_PWD}/scripts/config_npm"
+_DIR_CONFIG_NPM="${_PWD}/scripts/config_bower"
 _DIR_SRC="${_PWD}/src"
 _DIR_DIST="${_PWD}/dist"
 
@@ -255,7 +263,7 @@ printTo "BEGIN"
 ################################################################################
 printTo "--> build..."
 
-# date du build
+# export de la date du build pour Perl
 export _PACKAGE_BUILD=`date '+%d/%m/%y - %H:%M:%S'`
 
 if [ ${OPTS_RUN_BUILD} == true ]
@@ -288,40 +296,47 @@ fi
 ################################################################################
 printTo "--> json"
 
-# version API
-export _PACKAGE_VERSION_NAME="${_PACKAGE_LIBRARY}ExtVersion"
-
-[ -z "${_PACKAGE_VERSION}" ] && {
-  _PACKAGE_VERSION=$(cat package.json |
+# la version est elle surchargée ?
+if [ -z "${_PACKAGE_VERSION}" ]
+then
+  # on recupere la version du package
+  _PACKAGE_VERSION=$(cat ${_DIR_CONFIG_NPM}/package-${_PACKAGE_LIBRARY}.json |
     perl -MJSON -0ne '
       my $DS = decode_json $_;
-      my $field = $ENV{_PACKAGE_VERSION_NAME};
+      my $field = "version";
       print $DS->{$field};
     ')
-}
+fi
+
+# export de la version pour Perl
 export _PACKAGE_VERSION=${_PACKAGE_VERSION}
 
 if [ ${OPTS_RUN_JSON} == true ]
 then
   [ -d ${GIT_DIR_PUBLISH} ] && {
+
+    doCmd "cd ${_PWD}"
+
     # contenu du package.json avec version API
-    _PACKAGE_CONTENT=$(cat ${GIT_DIR_PUBLISH}/package.json |
+    _PACKAGE_CONTENT=$(cat "${_DIR_CONFIG_NPM}/package-${_PACKAGE_LIBRARY}.json" |
         perl -MJSON -0ne '
           my $DS = decode_json $_;
           $DS->{version} = $ENV{_PACKAGE_VERSION};
           print encode_json $DS
         ')
     # contenu du bower.json avec version API
-    _BOWER_CONTENT=$(cat ${GIT_DIR_PUBLISH}/bower.json |
+    _BOWER_CONTENT=$(cat ${_DIR_CONFIG_BOWER}/bower-${_PACKAGE_LIBRARY}.json |
         perl -MJSON -0ne '
           my $DS = decode_json $_;
           $DS->{version} = $ENV{_PACKAGE_VERSION};
           print encode_json $DS
         ')
 
-    doCmd "cd ${_PWD}"
-    echo ${_PACKAGE_CONTENT} > "${GIT_DIR_PUBLISH}/package.json"
-    echo ${_BOWER_CONTENT} > "${GIT_DIR_PUBLISH}/bower.json"
+    echo ${_BOWER_CONTENT}   > "${_DIR_CONFIG_BOWER}/bower-${_PACKAGE_LIBRARY}.json"
+    echo ${_PACKAGE_CONTENT} > "${_DIR_CONFIG_NPM}/package-${_PACKAGE_LIBRARY}.json"
+
+    doCmd "cp ${_DIR_CONFIG_NPM}/package-${_PACKAGE_LIBRARY}.json ${GIT_DIR_PUBLISH}/package.json"
+    doCmd "cp ${_DIR_CONFIG_BOWER}/bower-${_PACKAGE_LIBRARY}.json ${GIT_DIR_PUBLISH}/bower.json"
   }
 fi
 
@@ -333,6 +348,9 @@ printTo "--> info"
 if [ ${OPTS_RUN_INFO} == true ]
 then
   [ -d ${GIT_DIR_PUBLISH} ] && {
+
+    doCmd "cd ${_PWD}"
+
     _INFO_CONTENT=$(cat ${GIT_DIR_PUBLISH}/summary.json |
     perl -MJSON -0ne '
       my $DS = decode_json $_;
