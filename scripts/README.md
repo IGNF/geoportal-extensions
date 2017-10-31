@@ -182,6 +182,7 @@ Ensuite, ce token est stocké dans une variable d'environnement du systeme :
 
 > **TODO** authentification github pour l'API ?
    https://developer.github.com/v3/auth/
+   https://developer.github.com/v3/repos/releases/#create-a-release
 
 ## Authentification sur le NPM
 
@@ -191,8 +192,9 @@ On utilise l'authentification basique avec les informations suivantes :
 * Email
 
 La valeur du *Password* est stocké dans une variable d'environnement du systeme :
-> export RELEASE_NPM_PASSWORD="f&&"544"
+> export RELEASE_NPMJS_PASSWORD="f&&"544"
 
-> **TODO** authentification par Token ou basique ?
+> **TODO** authentification par Token ?
+export RELEASE_NPMJS_TOKEN="00000000-0000-0000-0000-000000000000"
 
 > **TODO** persistence de l'authentification pour 'npm publish' ?

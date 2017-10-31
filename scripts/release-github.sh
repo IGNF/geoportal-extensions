@@ -2,8 +2,8 @@
 
 # TODO
 # > impl. option --version=1.0.0 pour la publication (?)
+# > zip des sources ?
 # > tester l'authentification via token sur l'API gitHub...
-# > cf. FIXME
 
 # répertoire d'execution
 _PWD=`pwd`
@@ -259,7 +259,7 @@ then
   }
 
   ##############################################################################
-  printTo "--> TODO : sendData"
+  printTo "--> sendData"
 
   _CHANGELOG_CONTENT=`cat ${GIT_DIR_PUBLISH}/CHANGELOG.md`
 
@@ -275,34 +275,37 @@ then
         sed -e "s@%tag_name%@${_PACKAGE_TAG}@g" |
         sed -e "s@%content%@${_CHANGELOG_CONTENT}@g")
 
-    # FIXME
-    # Stocker le resultat de la requête dans la variable _RELEASE_ID !
-    doCmd "curl -u ${GIT_USER_NAME}:${GIT_OAUTH_TOKEN} -X POST -H \"Content-Type: application/json\" -d ${_REQUEST_RELEASE_DATA} ${_REQUEST_RELEASE_URL}"
+    # Stocker le resultat de la requête
+    _REQUEST_RELEASE_RESPONSE=$(curl -u ${GIT_USER_NAME}:${GIT_OAUTH_TOKEN} -X POST -H \"Content-Type: application/json\" -d ${_REQUEST_RELEASE_DATA} ${_REQUEST_RELEASE_URL})
+
+    # Recuperation de l'ID de creation de la release
+    _REQUEST_RELEASE_ID=$(echo "${_REQUEST_RELEASE_RESPONSE}" |
+      perl -MJSON -0ne '
+        my $DS = decode_json $_;
+        my $field = "id";
+        print $DS->{$field};
+      ')
   fi
 
   ##############################################################################
   printTo "--> zip"
 
-  _ZIP_NAME=""
-  _ZIP_NAME+="GpPlugin"
-  _ZIP_NAME+=${_PACKAGE_LIBRARY^}
-  _ZIP_NAME+="-"
-  _ZIP_NAME+=${_PACKAGE_VERSION}
-  _ZIP_NAME+=".zip"
+  _REQUEST_ZIP_NAME=""
+  _REQUEST_ZIP_NAME+="GpPlugin"
+  _REQUEST_ZIP_NAME+=${_PACKAGE_LIBRARY^}
+  _REQUEST_ZIP_NAME+="-"
+  _REQUEST_ZIP_NAME+=${_PACKAGE_VERSION}
+  _REQUEST_ZIP_NAME+=".zip"
 
   [ -d "${_DIR_DIST}/${_PACKAGE_LIBRARY}" ] && {
-    doCmd "zip -r ${GIT_DIR_PUBLISH}/${_ZIP_NAME} dist/${_PACKAGE_LIBRARY}"
+    doCmd "zip -r ${GIT_DIR_PUBLISH}/${_REQUEST_ZIP_NAME} dist/${_PACKAGE_LIBRARY}"
   }
 
   ##############################################################################
-  printTo "--> TODO : sendZip"
+  printTo "--> sendZip"
 
-  if [ -f ${_ZIP_NAME} ] && [ ${OPTS_RUN_TAG} == true ]
+  if [ -f ${_REQUEST_ZIP_NAME} ] && [ ${OPTS_RUN_TAG} == true ]
   then
-
-    # FIXME
-    # '_RELEASE_ID' issu de la requete de creation de la release est à mettre en
-    # parametre !
 
     doCmd "cd ${GIT_DIR_PUBLISH}"
 
@@ -310,8 +313,8 @@ then
     _REQUEST_UPLOAD_URL==$(echo "${GITHUB_API_URL}/${GITHUB_API_UPLOAD_RELEASE_URL}" |
         sed -e "s@%GIT_USER_NAME%@${GIT_USER_NAME}@g" |
         sed -e "s@%GIT_REPOSITORY_NAME%@${GIT_REPOSITORY_NAME}@g"|
-        sed -e "s@%release_id%@${_RELEASE_ID}@g"|
-        sed -e "s@%zip_name%@${_ZIP_NAME}@g")
+        sed -e "s@%release_id%@${_REQUEST_RELEASE_ID}@g"|
+        sed -e "s@%zip_name%@${_REQUEST_ZIP_NAME}@g")
 
     doCmd "curl -u ${GIT_USER_NAME}:${GIT_OAUTH_TOKEN} -X POST -H \"Content-Type: application/zip\" ${_REQUEST_UPLOAD_URL}"
   fi
