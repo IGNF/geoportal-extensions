@@ -10,19 +10,24 @@ API :
 
 # Commandes
 
-Installation des dependances
+1. Installation des dependances
 > npm install
 
-Images ref.
-> npm run reference
+2. Lancer le serveur de tests
+> node server.js
 
-Test à partir des images ref.
+3. Executer les tests
 > npm run test
 
 > **TODO : clean des tests**
 Le ménage est à faire en production !
 Un répertoire d'images est généré après chaque test...
 Il faut donc prévoir une target de nettoyage en production...
+
+4. Recalculer les images references
+> npm run reference
+
+>  **uniquement** si l'on souhaite ajouter de nouveaux tests !
 
 # Manipulation du fichier de Configuration
 

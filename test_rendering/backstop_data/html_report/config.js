@@ -4,7 +4,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_MousePosition__default_0_document_0_phone.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_MousePosition__default_0_document_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_MousePosition__default_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_MousePosition__default_0_document_0_phone.png",
         "label": "MousePosition : default",
@@ -16,8 +16,7 @@ report({
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "misMatchPercentage": "0.00"
         }
       },
       "status": "pass"
@@ -25,7 +24,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_MousePosition__default_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_MousePosition__default_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_MousePosition__default_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_MousePosition__default_0_document_1_tablet.png",
         "label": "MousePosition : default",
@@ -38,7 +37,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "analysisTime": 509
         }
       },
       "status": "pass"
@@ -46,7 +45,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_MousePosition__move_to_0_document_0_phone.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_MousePosition__move_to_0_document_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_MousePosition__move_to_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_MousePosition__move_to_0_document_0_phone.png",
         "label": "MousePosition : move to",
@@ -58,7 +57,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "analysisTime": 239
         }
       },
       "status": "pass"
@@ -66,7 +65,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_MousePosition__move_to_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_MousePosition__move_to_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_MousePosition__move_to_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_MousePosition__move_to_0_document_1_tablet.png",
         "label": "MousePosition : move to",
@@ -78,7 +77,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "analysisTime": 309
         }
       },
       "status": "pass"
@@ -86,7 +85,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_MousePosition__show_settings_0_document_0_phone.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_MousePosition__show_settings_0_document_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_MousePosition__show_settings_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_MousePosition__show_settings_0_document_0_phone.png",
         "label": "MousePosition : show settings",
@@ -97,8 +96,7 @@ report({
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "misMatchPercentage": "0.00"
         }
       },
       "status": "pass"
@@ -106,7 +104,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_MousePosition__show_settings_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_MousePosition__show_settings_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_MousePosition__show_settings_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_MousePosition__show_settings_0_document_1_tablet.png",
         "label": "MousePosition : show settings",
@@ -118,7 +116,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "analysisTime": 660
         }
       },
       "status": "pass"
@@ -126,7 +124,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_IsoChrone__default_0_document_0_phone.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_IsoChrone__default_0_document_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_IsoChrone__default_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_IsoChrone__default_0_document_0_phone.png",
         "label": "IsoChrone : default",
@@ -137,8 +135,7 @@ report({
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "misMatchPercentage": "0.00"
         }
       },
       "status": "pass"
@@ -146,7 +143,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_IsoChrone__default_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_IsoChrone__default_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_IsoChrone__default_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_IsoChrone__default_0_document_1_tablet.png",
         "label": "IsoChrone : default",
@@ -158,7 +155,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "analysisTime": 136
         }
       },
       "status": "pass"
@@ -166,7 +163,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_IsoChrone__open_exclusions_0_document_0_phone.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_IsoChrone__open_exclusions_0_document_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_IsoChrone__open_exclusions_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_IsoChrone__open_exclusions_0_document_0_phone.png",
         "label": "IsoChrone : open exclusions",
@@ -177,8 +174,7 @@ report({
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "misMatchPercentage": "0.00"
         }
       },
       "status": "pass"
@@ -186,7 +182,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_IsoChrone__open_exclusions_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_IsoChrone__open_exclusions_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_IsoChrone__open_exclusions_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_IsoChrone__open_exclusions_0_document_1_tablet.png",
         "label": "IsoChrone : open exclusions",
@@ -198,7 +194,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "analysisTime": 278
         }
       },
       "status": "pass"
@@ -206,7 +202,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_IsoChrone__compute_time_0_document_0_phone.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_IsoChrone__compute_time_0_document_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_IsoChrone__compute_time_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_IsoChrone__compute_time_0_document_0_phone.png",
         "label": "IsoChrone : compute time",
@@ -218,7 +214,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "analysisTime": 383
         }
       },
       "status": "pass"
@@ -226,7 +222,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_IsoChrone__compute_time_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_IsoChrone__compute_time_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_IsoChrone__compute_time_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_IsoChrone__compute_time_0_document_1_tablet.png",
         "label": "IsoChrone : compute time",
@@ -238,8 +234,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "analysisTime": 54,
-          "getDiffImage": null
+          "analysisTime": 261
         }
       },
       "status": "pass"
@@ -247,7 +242,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_IsoDistance__default_0_document_0_phone.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_IsoDistance__default_0_document_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_IsoDistance__default_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_IsoDistance__default_0_document_0_phone.png",
         "label": "IsoDistance : default",
@@ -258,8 +253,7 @@ report({
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "misMatchPercentage": "0.00"
         }
       },
       "status": "pass"
@@ -267,7 +261,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_IsoDistance__default_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_IsoDistance__default_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_IsoDistance__default_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_IsoDistance__default_0_document_1_tablet.png",
         "label": "IsoDistance : default",
@@ -279,7 +273,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "analysisTime": 371
         }
       },
       "status": "pass"
@@ -287,7 +281,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_IsoDistance__compute_distance_0_document_0_phone.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_IsoDistance__compute_distance_0_document_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_IsoDistance__compute_distance_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_IsoDistance__compute_distance_0_document_0_phone.png",
         "label": "IsoDistance : compute distance",
@@ -299,7 +293,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "analysisTime": 346
         }
       },
       "status": "pass"
@@ -307,7 +301,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_IsoDistance__compute_distance_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_IsoDistance__compute_distance_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_IsoDistance__compute_distance_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_IsoDistance__compute_distance_0_document_1_tablet.png",
         "label": "IsoDistance : compute distance",
@@ -319,7 +313,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "analysisTime": 148
         }
       },
       "status": "pass"
@@ -327,7 +321,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_LayerSwitcher__default_0_document_0_phone.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_LayerSwitcher__default_0_document_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_LayerSwitcher__default_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_LayerSwitcher__default_0_document_0_phone.png",
         "label": "LayerSwitcher : default",
@@ -338,8 +332,7 @@ report({
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "misMatchPercentage": "0.00"
         }
       },
       "status": "pass"
@@ -347,7 +340,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_LayerSwitcher__default_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_LayerSwitcher__default_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_LayerSwitcher__default_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_LayerSwitcher__default_0_document_1_tablet.png",
         "label": "LayerSwitcher : default",
@@ -358,8 +351,7 @@ report({
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "misMatchPercentage": "0.00"
         }
       },
       "status": "pass"
@@ -367,7 +359,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_LayerSwitcher__add_a_layer_0_document_0_phone.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_LayerSwitcher__add_a_layer_0_document_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_LayerSwitcher__add_a_layer_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_LayerSwitcher__add_a_layer_0_document_0_phone.png",
         "label": "LayerSwitcher : add a layer",
@@ -379,7 +371,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "analysisTime": 301
         }
       },
       "status": "pass"
@@ -387,7 +379,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_LayerSwitcher__add_a_layer_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_LayerSwitcher__add_a_layer_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_LayerSwitcher__add_a_layer_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_LayerSwitcher__add_a_layer_0_document_1_tablet.png",
         "label": "LayerSwitcher : add a layer",
@@ -399,7 +391,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "analysisTime": 94
         }
       },
       "status": "pass"
@@ -407,7 +399,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_LayerSwitcher__remove_a_layer_0_document_0_phone.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_LayerSwitcher__remove_a_layer_0_document_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_LayerSwitcher__remove_a_layer_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_LayerSwitcher__remove_a_layer_0_document_0_phone.png",
         "label": "LayerSwitcher : remove a layer",
@@ -419,7 +411,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "analysisTime": 164
         }
       },
       "status": "pass"
@@ -427,7 +419,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_LayerSwitcher__remove_a_layer_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_LayerSwitcher__remove_a_layer_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_LayerSwitcher__remove_a_layer_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_LayerSwitcher__remove_a_layer_0_document_1_tablet.png",
         "label": "LayerSwitcher : remove a layer",
@@ -439,7 +431,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "analysisTime": 98
         }
       },
       "status": "pass"
@@ -447,7 +439,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_Reverse__default_0_document_0_phone.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_Reverse__default_0_document_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_Reverse__default_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_Reverse__default_0_document_0_phone.png",
         "label": "Reverse : default",
@@ -458,8 +450,7 @@ report({
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "misMatchPercentage": "0.00"
         }
       },
       "status": "pass"
@@ -467,7 +458,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_Reverse__default_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_Reverse__default_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_Reverse__default_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_Reverse__default_0_document_1_tablet.png",
         "label": "Reverse : default",
@@ -479,7 +470,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "analysisTime": 259
         }
       },
       "status": "pass"
@@ -487,7 +478,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_Route__default_0_document_0_phone.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_Route__default_0_document_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_Route__default_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_Route__default_0_document_0_phone.png",
         "label": "Route : default",
@@ -498,8 +489,7 @@ report({
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "misMatchPercentage": "0.00"
         }
       },
       "status": "pass"
@@ -507,7 +497,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_Route__default_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_Route__default_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_Route__default_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_Route__default_0_document_1_tablet.png",
         "label": "Route : default",
@@ -519,7 +509,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "analysisTime": 160
         }
       },
       "status": "pass"
@@ -527,7 +517,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_Route__open_exclusions_0_document_0_phone.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_Route__open_exclusions_0_document_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_Route__open_exclusions_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_Route__open_exclusions_0_document_0_phone.png",
         "label": "Route : open exclusions",
@@ -538,8 +528,7 @@ report({
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "misMatchPercentage": "0.00"
         }
       },
       "status": "pass"
@@ -547,7 +536,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_Route__open_exclusions_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_Route__open_exclusions_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_Route__open_exclusions_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_Route__open_exclusions_0_document_1_tablet.png",
         "label": "Route : open exclusions",
@@ -559,7 +548,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "analysisTime": 84
         }
       },
       "status": "pass"
@@ -567,7 +556,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_Route__compute_0_document_0_phone.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_Route__compute_0_document_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_Route__compute_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_Route__compute_0_document_0_phone.png",
         "label": "Route : compute",
@@ -579,7 +568,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "analysisTime": 184
         }
       },
       "status": "pass"
@@ -587,7 +576,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_Route__compute_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_Route__compute_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_Route__compute_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_Route__compute_0_document_1_tablet.png",
         "label": "Route : compute",
@@ -599,7 +588,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "analysisTime": 165
         }
       },
       "status": "pass"
@@ -607,7 +596,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_SearchEngine__default_0_document_0_phone.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_SearchEngine__default_0_document_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_SearchEngine__default_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_SearchEngine__default_0_document_0_phone.png",
         "label": "SearchEngine : default",
@@ -618,8 +607,7 @@ report({
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "misMatchPercentage": "0.00"
         }
       },
       "status": "pass"
@@ -627,7 +615,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_SearchEngine__default_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_SearchEngine__default_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_SearchEngine__default_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_SearchEngine__default_0_document_1_tablet.png",
         "label": "SearchEngine : default",
@@ -638,8 +626,7 @@ report({
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "misMatchPercentage": "0.00"
         }
       },
       "status": "pass"
@@ -647,7 +634,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_SearchEngine__show_advanced_search_0_document_0_phone.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_SearchEngine__show_advanced_search_0_document_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_SearchEngine__show_advanced_search_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_SearchEngine__show_advanced_search_0_document_0_phone.png",
         "label": "SearchEngine : show advanced search",
@@ -658,8 +645,7 @@ report({
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "misMatchPercentage": "0.00"
         }
       },
       "status": "pass"
@@ -667,7 +653,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_SearchEngine__show_advanced_search_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_SearchEngine__show_advanced_search_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_SearchEngine__show_advanced_search_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_SearchEngine__show_advanced_search_0_document_1_tablet.png",
         "label": "SearchEngine : show advanced search",
@@ -679,7 +665,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "analysisTime": 46
         }
       },
       "status": "pass"
@@ -687,7 +673,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_SearchEngine__search_with_autocompletion_0_document_0_phone.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_SearchEngine__search_with_autocompletion_0_document_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_SearchEngine__search_with_autocompletion_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_SearchEngine__search_with_autocompletion_0_document_0_phone.png",
         "label": "SearchEngine : search with autocompletion",
@@ -699,7 +685,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "analysisTime": 77
         }
       },
       "status": "pass"
@@ -707,7 +693,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_SearchEngine__search_with_autocompletion_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_SearchEngine__search_with_autocompletion_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_SearchEngine__search_with_autocompletion_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_SearchEngine__search_with_autocompletion_0_document_1_tablet.png",
         "label": "SearchEngine : search with autocompletion",
@@ -719,7 +705,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "analysisTime": 81
         }
       },
       "status": "pass"
@@ -727,7 +713,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_SearchEngine__search_with_geocoding_postalCode_0_document_0_phone.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_SearchEngine__search_with_geocoding_postalCode_0_document_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_SearchEngine__search_with_geocoding_postalCode_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_SearchEngine__search_with_geocoding_postalCode_0_document_0_phone.png",
         "label": "SearchEngine : search with geocoding (postalCode)",
@@ -739,7 +725,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "analysisTime": 78
         }
       },
       "status": "pass"
@@ -747,7 +733,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_SearchEngine__search_with_geocoding_postalCode_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_SearchEngine__search_with_geocoding_postalCode_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_SearchEngine__search_with_geocoding_postalCode_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_SearchEngine__search_with_geocoding_postalCode_0_document_1_tablet.png",
         "label": "SearchEngine : search with geocoding (postalCode)",
@@ -759,7 +745,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "analysisTime": 68
         }
       },
       "status": "pass"
@@ -767,7 +753,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_MousePosition__extension_only_0_dividGPmousePosition-_0_phone.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_MousePosition__extension_only_0_dividGPmousePosition-_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_MousePosition__extension_only_0_dividGPmousePosition-_0_phone.png",
         "selector": "div[id^=GPmousePosition-]",
         "fileName": "leaflet_backstop_MousePosition__extension_only_0_dividGPmousePosition-_0_phone.png",
         "label": "MousePosition : extension only",
@@ -779,8 +765,7 @@ report({
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "misMatchPercentage": "0.00"
         }
       },
       "status": "pass"
@@ -788,7 +773,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_MousePosition__extension_only_0_dividGPmousePosition-_1_tablet.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_MousePosition__extension_only_0_dividGPmousePosition-_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_MousePosition__extension_only_0_dividGPmousePosition-_1_tablet.png",
         "selector": "div[id^=GPmousePosition-]",
         "fileName": "leaflet_backstop_MousePosition__extension_only_0_dividGPmousePosition-_1_tablet.png",
         "label": "MousePosition : extension only",
@@ -800,8 +785,7 @@ report({
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "misMatchPercentage": "0.00"
         }
       },
       "status": "pass"
@@ -809,7 +793,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_IsoChrone__extension_only_0_dividGPisochron-_0_phone.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_IsoChrone__extension_only_0_dividGPisochron-_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_IsoChrone__extension_only_0_dividGPisochron-_0_phone.png",
         "selector": "div[id^=GPisochron-]",
         "fileName": "leaflet_backstop_IsoChrone__extension_only_0_dividGPisochron-_0_phone.png",
         "label": "IsoChrone : extension only",
@@ -821,8 +805,7 @@ report({
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "misMatchPercentage": "0.00"
         }
       },
       "status": "pass"
@@ -830,7 +813,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_IsoChrone__extension_only_0_dividGPisochron-_1_tablet.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_IsoChrone__extension_only_0_dividGPisochron-_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_IsoChrone__extension_only_0_dividGPisochron-_1_tablet.png",
         "selector": "div[id^=GPisochron-]",
         "fileName": "leaflet_backstop_IsoChrone__extension_only_0_dividGPisochron-_1_tablet.png",
         "label": "IsoChrone : extension only",
@@ -842,8 +825,7 @@ report({
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "misMatchPercentage": "0.00"
         }
       },
       "status": "pass"
@@ -851,7 +833,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_Reverse__extension_only_0_dividGPreverseGeocoding-_0_phone.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_Reverse__extension_only_0_dividGPreverseGeocoding-_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_Reverse__extension_only_0_dividGPreverseGeocoding-_0_phone.png",
         "selector": "div[id^=GPreverseGeocoding-]",
         "fileName": "leaflet_backstop_Reverse__extension_only_0_dividGPreverseGeocoding-_0_phone.png",
         "label": "Reverse : extension only",
@@ -863,8 +845,7 @@ report({
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "misMatchPercentage": "0.00"
         }
       },
       "status": "pass"
@@ -872,7 +853,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_Reverse__extension_only_0_dividGPreverseGeocoding-_1_tablet.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_Reverse__extension_only_0_dividGPreverseGeocoding-_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_Reverse__extension_only_0_dividGPreverseGeocoding-_1_tablet.png",
         "selector": "div[id^=GPreverseGeocoding-]",
         "fileName": "leaflet_backstop_Reverse__extension_only_0_dividGPreverseGeocoding-_1_tablet.png",
         "label": "Reverse : extension only",
@@ -884,8 +865,7 @@ report({
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "misMatchPercentage": "0.00"
         }
       },
       "status": "pass"
@@ -893,7 +873,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_Route__extension_only_0_dividGProute-_0_phone.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_Route__extension_only_0_dividGProute-_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_Route__extension_only_0_dividGProute-_0_phone.png",
         "selector": "div[id^=GProute-]",
         "fileName": "leaflet_backstop_Route__extension_only_0_dividGProute-_0_phone.png",
         "label": "Route : extension only",
@@ -905,8 +885,7 @@ report({
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "misMatchPercentage": "0.00"
         }
       },
       "status": "pass"
@@ -914,7 +893,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_Route__extension_only_0_dividGProute-_1_tablet.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_Route__extension_only_0_dividGProute-_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_Route__extension_only_0_dividGProute-_1_tablet.png",
         "selector": "div[id^=GProute-]",
         "fileName": "leaflet_backstop_Route__extension_only_0_dividGProute-_1_tablet.png",
         "label": "Route : extension only",
@@ -926,8 +905,7 @@ report({
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "misMatchPercentage": "0.00"
         }
       },
       "status": "pass"
@@ -935,7 +913,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_SearchEngine__extension_only_0_dividGPsearchEngine-_0_phone.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_SearchEngine__extension_only_0_dividGPsearchEngine-_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_SearchEngine__extension_only_0_dividGPsearchEngine-_0_phone.png",
         "selector": "div[id^=GPsearchEngine-]",
         "fileName": "leaflet_backstop_SearchEngine__extension_only_0_dividGPsearchEngine-_0_phone.png",
         "label": "SearchEngine : extension only",
@@ -947,8 +925,7 @@ report({
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "misMatchPercentage": "0.00"
         }
       },
       "status": "pass"
@@ -956,7 +933,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_SearchEngine__extension_only_0_dividGPsearchEngine-_1_tablet.png",
-        "test": "../bitmaps_test/20171013-135135/leaflet_backstop_SearchEngine__extension_only_0_dividGPsearchEngine-_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_SearchEngine__extension_only_0_dividGPsearchEngine-_1_tablet.png",
         "selector": "div[id^=GPsearchEngine-]",
         "fileName": "leaflet_backstop_SearchEngine__extension_only_0_dividGPsearchEngine-_1_tablet.png",
         "label": "SearchEngine : extension only",
@@ -968,8 +945,7 @@ report({
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.00",
-          "getDiffImage": null
+          "misMatchPercentage": "0.00"
         }
       },
       "status": "pass"

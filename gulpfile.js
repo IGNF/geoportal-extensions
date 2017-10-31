@@ -1190,7 +1190,7 @@
     //  ✓ connect
     //  > https://www.npmjs.com/package/gulp-connect
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-    gulp.task("connect", function () {
+    gulp.task("connect-build", function () {
 
         $.connect.server({
             root : [path.join(_build, getDistDirName()), "."],
@@ -1203,7 +1203,7 @@
     //  ✓ open
     //  > https://www.npmjs.com/package/open
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-    gulp.task("server", ["connect"], function () {
+    gulp.task("server-sample", ["connect-build"], function () {
 
         var open = require("open");
         open("http://localhost:9000/samples/" + "index-" + getDistDirName().toLowerCase() + ".html");

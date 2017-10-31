@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # TODO
-# > impl. la surcharge de l'option version
 # > bower !
 # > tester l'authentification via token/basic NPM...
 # > cf. FIXME
@@ -283,6 +282,11 @@ then
   doCmd "cd ${_PWD}"
   # git clone https://github.com/lowzonenose/geoportal-extensions-leaflet.git
   doCmd "git clone ${GIT_REPOSITORY} ${GIT_DIR_PUBLISH}"
+
+  # dist ?
+  [ ! -d "${GIT_DIR_PUBLISH}/dist" ] && {
+    doCmd "mkdir ${GIT_DIR_PUBLISH}/dist"
+  }
   # cp -r dist/leaflet geoportal-extensions-leaflet/dist
   doCmd "cp -r ${_DIR_DIST}/${_PACKAGE_LIBRARY}/. ${GIT_DIR_PUBLISH}/dist"
   # cp LICENCE.md geoportal-extensions-leaflet/
@@ -291,6 +295,17 @@ then
   doCmd "cp README-${_PACKAGE_LIBRARY}.md ${GIT_DIR_PUBLISH}/README.md"
   # cp CHANGELOG_DRAFT.md geoportal-extensions-leaflet/CHANGELOG.md
   doCmd "cp CHANGELOG_DRAFT.md ${GIT_DIR_PUBLISH}/CHANGELOG.md"
+
+  # src ?
+  [ ! -d "${GIT_DIR_PUBLISH}/src" ] && {
+    doCmd "mkdir ${GIT_DIR_PUBLISH}/src"
+  }
+  # cp src/Config.js geoportal-extensions-leaflet/src
+  doCmd "cp ${_DIR_SRC}/Config.js ${GIT_DIR_PUBLISH}/src"
+  # cp -r src/Common geoportal-extensions-leaflet/src
+  doCmd "cp -r ${_DIR_SRC}/Common ${GIT_DIR_PUBLISH}/src"
+  # cp -r src/Leaflet geoportal-extensions-leaflet/src
+  doCmd "cp -r ${_DIR_SRC}/${_PACKAGE_LIBRARY^} ${GIT_DIR_PUBLISH}/src"
 fi
 
 ################################################################################
