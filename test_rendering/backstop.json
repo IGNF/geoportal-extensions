@@ -36,7 +36,7 @@
     },
     {
       "label": "MousePosition : move to",
-      "url": "http://localhost/api-v3-plugins/test_rendering/leaflet/interactions/mouseposition.html",
+      "url": "http://localhost:8087/test_rendering/leaflet/interactions/mouseposition.html",
       "delay": 100,
       "clickSelector": "#moveTo",
       "postInteractionWait": 1000
@@ -58,7 +58,7 @@
     },
     {
       "label": "IsoChrone : compute time",
-      "url": "http://localhost/api-v3-plugins/test_rendering/leaflet/interactions/isochrone.html",
+      "url": "http://localhost:8087/test_rendering/leaflet/interactions/isochrone.html",
       "delay": 100,
       "clickSelector": "#computeTime",
       "postInteractionWait": 2000
@@ -70,7 +70,7 @@
     },
     {
       "label": "IsoDistance : compute distance",
-      "url": "http://localhost/api-v3-plugins/test_rendering/leaflet/interactions/isochrone.html",
+      "url": "http://localhost:8087/test_rendering/leaflet/interactions/isochrone.html",
       "delay": 100,
       "clickSelector": "#computeDistance",
       "postInteractionWait": 2000
@@ -83,13 +83,13 @@
     },
     {
       "label": "LayerSwitcher : add a layer",
-      "url": "http://localhost/api-v3-plugins/test_rendering/leaflet/interactions/layerswitcher.html",
+      "url": "http://localhost:8087/test_rendering/leaflet/interactions/layerswitcher.html",
       "clickSelector": "#addLayer",
       "postInteractionWait": 2000
     },
     {
       "label": "LayerSwitcher : remove a layer",
-      "url": "http://localhost/api-v3-plugins/test_rendering/leaflet/interactions/layerswitcher.html",
+      "url": "http://localhost:8087/test_rendering/leaflet/interactions/layerswitcher.html",
       "clickSelector": "#removeLayer",
       "postInteractionWait": 2000
     },
@@ -110,7 +110,7 @@
     },
     {
       "label": "Route : compute",
-      "url": "http://localhost/api-v3-plugins/test_rendering/leaflet/interactions/route.html",
+      "url": "http://localhost:8087/test_rendering/leaflet/interactions/route.html",
       "delay": 100,
       "clickSelector": "#compute",
       "postInteractionWait": 3000
@@ -127,13 +127,13 @@
     },
     {
       "label": "SearchEngine : search with autocompletion",
-      "url": "http://localhost/api-v3-plugins/test_rendering/leaflet/interactions/searchengine.html",
+      "url": "http://localhost:8087/test_rendering/leaflet/interactions/searchengine.html",
       "clickSelector": "#searchWithAutoComplete",
       "postInteractionWait": "div[id^=AutoCompletedLocation_0-]"
     },
     {
       "label": "SearchEngine : search with geocoding (postalCode)",
-      "url": "http://localhost/api-v3-plugins/test_rendering/leaflet/interactions/searchengine.html",
+      "url": "http://localhost:8087/test_rendering/leaflet/interactions/searchengine.html",
       "clickSelector": "#searchWithGeocoding",
       "postInteractionWait": "div[id^=GeocodedLocation_0-]"
     },
