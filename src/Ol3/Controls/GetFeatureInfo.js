@@ -93,26 +93,6 @@ define([
      */
     GetFeatureInfo.prototype.constructor = GetFeatureInfo;
 
-    /**
-     * List of triggering events associated to a boolean indicating if the event is listened (there must be
-     * almost one layer having this triggering event configured)
-     *
-     * @private
-     */
-    GetFeatureInfo.prototype._events = {
-        dblclick : false,
-        singleclick : false,
-        contextmenu : false
-    };
-
-    /**
-     * Object associating a event (key) to his handler (value) in order to unlisten events which have
-     * no more layers related to.
-     *
-     * @private
-     */
-    GetFeatureInfo.prototype._eventsHandler = {};
-
     // ################################################################### //
     // ######################## initialize control ####################### //
     // ################################################################### //
@@ -128,6 +108,18 @@ define([
 
         // identifiant du contrôle : utile pour suffixer les identifiants CSS (pour gérer le cas où il y en a plusieurs dans la même page)
         this._uid = SelectorID.generate();
+
+        // List of triggering events associated to a boolean indicating if the event is listened (there must be
+        // almost one layer having this triggering event configured)
+        this._events = {
+            dblclick : false,
+            singleclick : false,
+            contextmenu : false
+        };
+
+        // Object associating a event (key) to his handler (value) in order to unlisten events which have
+        // no more layers related to.
+        this._eventsHandler = {};
 
         if ( typeof options.auto !== "undefined" && typeof options.auto !== "boolean" ) {
             console.log("[ERROR] GetFeatureInfo:_initialize - auto parameter should be a boolean");
