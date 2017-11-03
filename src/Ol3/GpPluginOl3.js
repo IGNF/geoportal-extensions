@@ -5,7 +5,7 @@ define([
     "Common/Utils/Register",
     "Common/Utils/ProxyUtils",
     "Ol3/GfiUtils",
-    "Ol3/Utils",
+    "Common/Utils",
     "Ol3/Formats/KML",
     "Ol3/Sources/WMTS",
     "Ol3/CRS/CRS",

@@ -1,6 +1,6 @@
 define([
     "ol",
-    "Ol3/Utils",
+    "Common/Utils",
     "Common/Utils/SelectorID",
     "Common/Controls/LayerSwitcherDOM"
 ], function (

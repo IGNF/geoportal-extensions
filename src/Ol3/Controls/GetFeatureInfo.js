@@ -2,7 +2,7 @@ define([
     "ol",
     "proj4",
     "gp",
-    "Ol3/Utils",
+    "Common/Utils",
     "Ol3/GfiUtils",
     "Common/Utils/SelectorID",
     "Common/Controls/GetFeatureInfoDOM"

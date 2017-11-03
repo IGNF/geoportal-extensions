@@ -123,7 +123,7 @@ define([
      */
     MousePosition.prototype = Object.create(Widget.prototype, {});
 
-    Utils.assign(MousePositionDOM, MousePosition.prototype);
+    Utils.assign(MousePosition.prototype, MousePositionDOM);
 
     /**
      * Constructor (alias)

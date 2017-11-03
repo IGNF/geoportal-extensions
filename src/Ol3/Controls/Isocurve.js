@@ -1,7 +1,7 @@
 define([
     "ol",
     "gp",
-    "Ol3/Utils",
+    "Common/Utils",
     "woodman",
     "Common/Utils/CheckRightManagement",
     "Common/Utils/SelectorID",

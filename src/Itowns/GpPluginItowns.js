@@ -44,7 +44,7 @@ define([
 
     // on sauvegarde dans la variable globale !
     scope.itowns = scope.itowns || {};
-    Utils.assign(_itowns, scope.itowns);
+    Utils.assign(scope.itowns, _itowns);
 
     return Gp;
 });

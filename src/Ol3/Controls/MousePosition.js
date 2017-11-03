@@ -3,7 +3,7 @@ define([
     "proj4",
     "woodman",
     "gp",
-    "Ol3/Utils",
+    "Common/Utils",
     "Ol3/Controls/Utils/Markers",
     "Common/Utils/CheckRightManagement",
     "Common/Utils/SelectorID",

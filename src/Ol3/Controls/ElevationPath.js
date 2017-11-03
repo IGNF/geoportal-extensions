@@ -3,7 +3,7 @@ define([
     "ol",
     "woodman",
     "gp",
-    "Ol3/Utils",
+    "Common/Utils",
     "Common/Utils/CheckRightManagement",
     "Ol3/Controls/Measures/Measures",
     "Ol3/Controls/MeasureToolBox",

@@ -62,7 +62,7 @@ define([
     MiniGlobe.prototype = Object.create(Widget.prototype, {});
 
     // on récupère les méthodes de la classe commune MiniGlobeDOM
-    Utils.assign(MiniGlobeDOM, MiniGlobe.prototype);
+    Utils.assign(MiniGlobe.prototype, MiniGlobeDOM);
 
     /**
      * Constructor (alias)

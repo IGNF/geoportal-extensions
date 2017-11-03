@@ -67,7 +67,7 @@ define([
     Attributions.prototype = Object.create(Widget.prototype, {});
 
     // on récupère les méthodes de la classe commune AttributionDOM
-    Utils.assign(AttributionDOM, Attributions.prototype);
+    Utils.assign(Attributions.prototype, AttributionDOM);
 
     /**
      * Constructor (alias)

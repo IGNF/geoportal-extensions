@@ -5,14 +5,13 @@ define([], function () {
     var Utils = {
 
         /**
+         * this method is called by the constructor.
+         * this information is useful to switch to touch mode.
          * Detection : test for desktop or tactile
+         *
+         * @returns {Boolean} isDesktop - true for desktop userAgent, false for mobile
          */
         detectSupport : function () {
-
-            // TODO
-            // Choix de gérer la détection dans le code du composant au lieu du DOM car :
-            // Utilisation de l'implémentation Leaflet
-            // http://leafletjs.com/reference.html#browser
 
             var isDesktop = true;
             var userAgent = window.navigator.userAgent.toLowerCase();
@@ -38,14 +37,20 @@ define([], function () {
         },
 
         /**
-         * Copies all source object members to target object
+         *  Copies all source object members to dest
+         *
+         * @param {Object} dest - destination object where properties and method will be copied
+         * @param {Object} source - source object from which properties and method will be copied
+         * @returns {Object} dest
          */
-        assign : function ( source, target ) {
+        assign : function (dest, source) {
+            dest = dest || {};
             for ( var prop in source ) {
                 if ( source.hasOwnProperty(prop) ) {
-                    target[prop] = source[prop];
+                    dest[prop] = source[prop];
                 }
             }
+            return dest;
         },
 
         /**
@@ -54,7 +59,7 @@ define([], function () {
          * @param {Object} dest   - destination object where properties and method will be merge
          * @param {Object} source - source object from which properties and method will be merge
          */
-        merge : function (dest, source) {
+        mergeParams : function (dest, source) {
             if ( !dest || !source ) {
                 return;
             }
@@ -62,7 +67,7 @@ define([], function () {
                 if ( source.hasOwnProperty(param) ) {
                     if ( typeof source[param] === "object" ) {
                         if ( dest.hasOwnProperty(param) ) {
-                            this.merge( dest[param], source[param] );
+                            this.mergeParams( dest[param], source[param] );
                         } else {
                             dest[param] = source[param];
                         }
