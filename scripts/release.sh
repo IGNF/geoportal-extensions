@@ -43,11 +43,10 @@ NPM_OAUTH_MAIL=${_NPM_OAUTH_MAIL}
 # options properties
 #   --leaflet |l
 #   (--debug )
-#   --build |b, --data |d, --json |j, --info |i, --commit |o, --publish |p, --clean |C
+#   --build |b, --data |d, --json |j, --commit |o, --publish |p, --clean |C
 OPTS_RUN_BUILD=${_OPTS_RUN_BUILD}
 OPTS_RUN_DATA=${_OPTS_RUN_DATA}
 OPTS_RUN_JSON=${_OPTS_RUN_JSON}
-OPTS_RUN_INFO=${_OPTS_RUN_INFO}
 OPTS_RUN_COMMIT=${_OPTS_RUN_COMMIT}
 OPTS_RUN_TAG=${_OPTS_RUN_TAG}
 OPTS_RUN_PUBLISH=${_OPTS_RUN_PUBLISH}
@@ -59,17 +58,15 @@ OPTS_VERBOSE=${_OPTS_VERBOSE}
 # read option
 # l (--leaflet) Publication Leaflet (par defaut),
 # o (--ol3)     Publication Openlayers,
-# V (--version) Numero de version du package à publier,
 # b (--build)   Execution de la tache de compilation,
 # d (--data)    Execution de la tache de git-clone,
 # j (--json)    Execution de la tache de creation des json,
-# i (--info)    Execution de la tache de creation du fichier d'info,
 # c (--commit)  Execution de la tache de git-push,
 # t (--tag)     Execution de la tache de git-tag,
 # p (--publish) Execution de la tache de publication npm et bower,
 # C (--clean)   Execution de la tache de nettoyage.
 
-_OPTS=`getopt -o hlov:b::d::j::i::c::t::p::C:: --long help,verbose,leaflet,ol3,version:,build::,data::,json::,info::,commit::,tag::,publish::,clean:: -n 'release.sh' -- "$@"`
+_OPTS=`getopt -o hlob::d::j::c::t::p::C:: --long help,verbose,leaflet,ol3,build::,data::,json::,commit::,tag::,publish::,clean:: -n 'release.sh' -- "$@"`
 eval set -- "${_OPTS}"
 
 while true; do
@@ -82,21 +79,19 @@ while true; do
         echo "    --verbose     Mode verbose,"
         echo "    --leaflet|l   Publication Leaflet (par defaut),"
         echo "    --ol3|o       Publication Openlayers,"
-        echo "    --version|v   Numero de version du package à publier,"
         echo "    --build|b     Execution de la tache de compilation,"
         echo "    --data|d      Execution de la tache de git-clone,"
         echo "    --json|j      Execution de la tache de creation des json,"
-        echo "    --info|i      Execution de la tache de creation du fichier d'info,"
         echo "    --commit|c    Execution de la tache de git-push,"
         echo "    --tag|t       Execution de la tache de git-tag,"
         echo "    --publish|p   Execution de la tache de publication npm et bower,"
         echo "    --clean|C     Execution de la tache de nettoyage."
-        echo "Ex. Options longues : `basename $0` --leaflet --version='1.0.0-test'"
-        echo "                  --build --data --json --info"
+        echo "Ex. Options longues : `basename $0` --leaflet"
+        echo "                  --build --data --json"
         echo "                  --commit=false --tag=false --publish=false"
         echo "                  --clean=true"
-        echo "Ex. Options courtes : `basename $0` -l -v '1.0.0-test'"
-        echo "                  -bdji"
+        echo "Ex. Options courtes : `basename $0` -l"
+        echo "                  -bdj"
         echo "                  -c false -t false -p false"
         echo "                  -C true"
         exit 0 ;;
@@ -114,14 +109,6 @@ while true; do
           _PACKAGE_LIBRARY="ol3"
           shift ;;
 
-    -v|--version)
-        # on surcharge la version du package !
-        # par defaut, elle est extraite du fichier package.json...
-        case "$2" in
-          "") shift 2 ;;
-          *) _PACKAGE_VERSION=$2 ; shift 2 ;;
-        esac ;;
-
     -b|--build)
         case "$2" in
           "") OPTS_RUN_BUILD=true ; shift 2 ;;
@@ -138,12 +125,6 @@ while true; do
         case "$2" in
           "") OPTS_RUN_JSON=true ; shift 2 ;;
           *) OPTS_RUN_JSON=$2 ; shift 2 ;;
-        esac ;;
-
-    -i|--info)
-        case "$2" in
-          "") OPTS_RUN_INFO=true ; shift 2 ;;
-          *) OPTS_RUN_INFO=$2 ; shift 2 ;;
         esac ;;
 
     -c|--commit)
@@ -233,7 +214,6 @@ info () {
 --    build   : ${OPTS_RUN_BUILD}
 --    data    : ${OPTS_RUN_DATA}
 --    json    : ${OPTS_RUN_JSON}
---    info    : ${OPTS_RUN_INFO}
 --    git     : ${OPTS_RUN_COMMIT}
 --    tag     : ${OPTS_RUN_TAG}
 --    publish : ${OPTS_RUN_PUBLISH}
@@ -258,6 +238,18 @@ EOF
 info
 
 printTo "BEGIN"
+
+################################################################################
+printTo "--> version..."
+
+# on recupere la version du package
+export _PACKAGE_VERSION_NAME="${_PACKAGE_LIBRARY}ExtVersion"
+export _PACKAGE_VERSION=$(cat package.json |
+    perl -MJSON -0ne '
+      my $DS = decode_json $_;
+      my $field = $ENV{_PACKAGE_VERSION_NAME};
+      print $DS->{$field};
+    ')
 
 ################################################################################
 printTo "--> build..."
@@ -296,35 +288,21 @@ then
   # cp CHANGELOG_DRAFT.md geoportal-extensions-leaflet/CHANGELOG.md
   doCmd "cp CHANGELOG_DRAFT.md ${GIT_DIR_PUBLISH}/CHANGELOG.md"
 
-  # src ?
-  [ ! -d "${GIT_DIR_PUBLISH}/src" ] && {
-    doCmd "mkdir ${GIT_DIR_PUBLISH}/src"
-  }
-  # cp src/Config.js geoportal-extensions-leaflet/src
-  doCmd "cp ${_DIR_SRC}/Config.js ${GIT_DIR_PUBLISH}/src"
-  # cp -r src/Common geoportal-extensions-leaflet/src
-  doCmd "cp -r ${_DIR_SRC}/Common ${GIT_DIR_PUBLISH}/src"
-  # cp -r src/Leaflet geoportal-extensions-leaflet/src
-  doCmd "cp -r ${_DIR_SRC}/${_PACKAGE_LIBRARY^} ${GIT_DIR_PUBLISH}/src"
+  # FIXME
+  # les sources font elles parties de la publication ?
+  # [ ! -d "${GIT_DIR_PUBLISH}/src" ] && {
+  #   doCmd "mkdir ${GIT_DIR_PUBLISH}/src"
+  # }
+  # # cp src/Config.js geoportal-extensions-leaflet/src
+  # doCmd "cp ${_DIR_SRC}/Config.js ${GIT_DIR_PUBLISH}/src"
+  # # cp -r src/Common geoportal-extensions-leaflet/src
+  # doCmd "cp -r ${_DIR_SRC}/Common ${GIT_DIR_PUBLISH}/src"
+  # # cp -r src/Leaflet geoportal-extensions-leaflet/src
+  # doCmd "cp -r ${_DIR_SRC}/${_PACKAGE_LIBRARY^} ${GIT_DIR_PUBLISH}/src"
 fi
 
 ################################################################################
 printTo "--> json"
-
-# la version est elle surchargée ?
-if [ -z "${_PACKAGE_VERSION}" ]
-then
-  # on recupere la version du package
-  _PACKAGE_VERSION=$(cat ${_DIR_CONFIG_NPM}/package-${_PACKAGE_LIBRARY}.json |
-    perl -MJSON -0ne '
-      my $DS = decode_json $_;
-      my $field = "version";
-      print $DS->{$field};
-    ')
-fi
-
-# export de la version pour Perl
-export _PACKAGE_VERSION=${_PACKAGE_VERSION}
 
 if [ ${OPTS_RUN_JSON} == true ]
 then
@@ -352,28 +330,6 @@ then
 
     doCmd "cp ${_DIR_CONFIG_NPM}/package-${_PACKAGE_LIBRARY}.json ${GIT_DIR_PUBLISH}/package.json"
     doCmd "cp ${_DIR_CONFIG_BOWER}/bower-${_PACKAGE_LIBRARY}.json ${GIT_DIR_PUBLISH}/bower.json"
-  }
-fi
-
-################################################################################
-printTo "--> info"
-
-# informations sur la construcion des binaires
-# Ex. date, version, size, md5, ...
-if [ ${OPTS_RUN_INFO} == true ]
-then
-  [ -d ${GIT_DIR_PUBLISH} ] && {
-
-    doCmd "cd ${_PWD}"
-
-    _INFO_CONTENT=$(cat ${GIT_DIR_PUBLISH}/summary.json |
-    perl -MJSON -0ne '
-      my $DS = decode_json $_;
-      $DS->{version} = $ENV{_PACKAGE_VERSION};
-      $DS->{date} = $ENV{_PACKAGE_BUILD};
-      print encode_json $DS
-    ')
-    echo ${_INFO_CONTENT} > "${GIT_DIR_PUBLISH}/summary.json"
   }
 fi
 

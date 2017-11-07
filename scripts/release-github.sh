@@ -83,15 +83,6 @@ while true; do
           _PACKAGE_LIBRARY="ol3"
           shift ;;
 
-    # TODO
-    # -v|--version)
-    #     # on surcharge la version du package !
-    #     # par defaut, elle est extraite du fichier package.json...
-    #     case "$2" in
-    #       "") shift 2 ;;
-    #       *) _PACKAGE_VERSION=$2 ; shift 2 ;;
-    #     esac ;;
-
     -b|--build)
         case "$2" in
           "") OPTS_RUN_BUILD=true ; shift 2 ;;

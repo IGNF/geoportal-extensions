@@ -20,14 +20,6 @@
   "license": "CECILL-B",
   "bugs": {},
   "homepage": "https://github.com/lowzonenose/geoportal-extensions-leaflet#readme",
-  "dependencies": {
-    "geoportal-access-lib": "^1.0.1",
-    "leaflet": "1.2.0",
-    "leaflet-draw": "0.4.12",
-    "proj4": "2.4.4",
-    "proj4leaflet": "1.0.2",
-    "requirejs": "^2.3.5",
-    "sortablejs": "^1.6.1"
-  },
+  "dependencies": {},
   "devDependencies": {}
 }

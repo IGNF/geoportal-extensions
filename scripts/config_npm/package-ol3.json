@@ -20,12 +20,6 @@
   "license": "CECILL-B",
   "bugs": {},
   "homepage": "https://github.com/lowzonenose/geoportal-extensions-openlayers#readme",
-  "dependencies": {
-    "geoportal-access-lib": "^1.0.1",
-    "openlayers": "4.0.1",
-    "proj4": "2.4.4",
-    "requirejs": "^2.3.5",
-    "sortablejs": "^1.6.1"
-  },
+  "dependencies": {},
   "devDependencies": {}
 }
