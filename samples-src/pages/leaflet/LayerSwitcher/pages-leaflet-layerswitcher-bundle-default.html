@@ -1,0 +1,54 @@
+{{#extend "layout-leaflet-sample-bundle"}}
+
+{{#content "head"}}
+        <title>Sample leaflet LayerSwitcher</title>
+{{/content}}
+
+{{#content "style"}}
+        <style>
+            div#map {
+                width: 100%;
+                height: 500px;
+            }
+        </style>
+{{/content}}
+
+{{#content "body"}}
+            <h2>Ajout du gestionnaire de couches avec les options par défaut</h2>
+            <!-- map -->
+            <div id="map">
+            </div>
+{{/content}}
+
+{{#content "js"}}
+            <script type="text/javascript">
+                window.onload = function () {
+
+                    var wmts1 = L.geoportalLayer.WMTS({
+                      layer : "ORTHOIMAGERY.ORTHOPHOTOS"
+                    });
+
+                    var wmts2 = L.geoportalLayer.WMTS({
+                      layer : "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+                    });
+
+                    var wmts3 = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+                        opacity : 0.5
+                    });
+
+                    var map  = L.map('map', {
+                      zoom : 6,
+                      center : L.latLng(48, 2),
+                      layers : [wmts1, wmts2, wmts3]
+                    });
+
+                    // options par defaut
+                    var layerSwitcher = L.geoportalControl.LayerSwitcher();
+                    map.addControl(layerSwitcher);
+
+              }
+           </script>
+{{/content}}
+
+{{/extend}}
