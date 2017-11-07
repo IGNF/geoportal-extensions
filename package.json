@@ -48,7 +48,7 @@
     "proj4": "2.4.4",
     "proj4leaflet": "1.0.2",
     "requirejs": "^2.3.5",
-    "sortablejs": "^1.4.0"
+    "sortablejs": "1.4.0"
   },
   "devDependencies": {
     "amdclean": "^2.7.0",
