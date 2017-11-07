@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # TODO
-# > bower !
+# > mettre en place bower !
 # > tester l'authentification via token/basic NPM...
 # > cf. FIXME
 
@@ -161,16 +161,24 @@ while true; do
   esac
 done
 
-# authentification github
+# type de protocole ssh par defaut
+_GIT_REPOSITORY_PREFIX="git@github.com:"
+
+# sauf si authentification via token, on passe en https
+if [ -n ${GIT_OAUTH_TOKEN} ]; then
+  _GIT_REPOSITORY_PREFIX="https://github.com/"
+fi
+
+# depot github
 [ ${_PACKAGE_LIBRARY} == "leaflet" ] && {
   GIT_DIR_PUBLISH=${_GIT_DIR_PUBLISH_LEAFLET}
-  GIT_REPOSITORY="https://github.com/${GIT_USER_NAME}/${_GIT_REPOSITORY_NAME_LEAFLET}.git"
+  GIT_REPOSITORY="${_GIT_REPOSITORY_PREFIX}${GIT_USER_NAME}/${_GIT_REPOSITORY_NAME_LEAFLET}.git"
 }
 
-# authentification github
+# depot github
 [ ${_PACKAGE_LIBRARY} == "ol3" ] && {
   GIT_DIR_PUBLISH=${_GIT_DIR_PUBLISH_OPENLAYERS}
-  GIT_REPOSITORY="https://github.com/${GIT_USER_NAME}/${_GIT_REPOSITORY_NAME_OPENLAYERS}.git"
+  GIT_REPOSITORY="${_GIT_REPOSITORY_PREFIX}${GIT_USER_NAME}/${_GIT_REPOSITORY_NAME_OPENLAYERS}.git"
 }
 
 [ ${OPTS_VERBOSE} == true ] && {
@@ -347,6 +355,7 @@ then
         sed -e "s@%library%@${_PACKAGE_LIBRARY}@g")
     doCmd "git commit -m \"$message\""
 
+    # authentification githun via token si renseignée, sinon via SSH
     if [ -n ${GIT_OAUTH_TOKEN} ]; then
       _GIT_REPOSITORY_TOKEN=$(echo ${GIT_REPOSITORY} | sed -e "s/github.com/${GIT_USER_NAME}:${GIT_OAUTH_TOKEN}@github.com/")
       doCmd "git remote set-url origin ${_GIT_REPOSITORY_TOKEN}"
@@ -373,7 +382,7 @@ fi
 printTo "--> publish"
 
 # TODO bower !
-# FIXME authentification token !
+# FIXME authentification token pour npm !
 if [ ${OPTS_RUN_PUBLISH} == true ]
 then
   [ -d ${GIT_DIR_PUBLISH} ] && {

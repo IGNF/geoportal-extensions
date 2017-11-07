@@ -1,17 +1,17 @@
 # Publication des releases
 
 A partir de ce depot (central), on va publier sur **npm** ainsi que sur **bower**,
-les **binaires** et les **sources** pour **OpenLayers** et **Leaflet**.
+les **binaires** pour **OpenLayers** et **Leaflet**.
 
 Les publications sont déposées dans des dépôts séparés. Et ils contiennent les
-fichiers binaires, les sources ainsi que des fichiers d'information (LICENCE, README, ...)
+fichiers binaires ainsi que des fichiers d'information (LICENCE, README, ...)
 
-La publication est gérée par un script (bash ou node).
+La publication est gérée par un script (bash).
 
 Ce script consiste à *construire* les binaires, *copier* les fichiers utiles dans le depot,
 *tagger* la publication et enfin, *publier*...
 
-## Notes sur la Publication via bower
+## Notes sur la Publication via bower (howto)
 
 **Liens utiles**
 
@@ -22,7 +22,7 @@ Ce script consiste à *construire* les binaires, *copier* les fichiers utiles da
 > **Commande**
 bower register geoportal-extensions-openlayers http://github.com/IGNF/geoportal-extensions-openlayers.git
 
-## Notes sur la Publication via npm
+## Notes sur la Publication via npm (howto)
 
 **Liens utiles**
 
@@ -85,13 +85,6 @@ Le dépôt est à initialiser manuellement pour une 1ere utilisation !
 
 ## Scripts de construction des releases (+ publication)
 
-**Liens utiles**
-
-    https://gist.github.com/bclinkinbeard/1331790
-    https://gist.github.com/foca/38d82e93e32610f5241709f8d5720156
-    https://github.com/aktau/github-release
-    https://kaspars.net/blog/web-development/create-release-zip-git-tags
-
 **Synopsys**
 
 > release.sh -h
@@ -137,13 +130,17 @@ avec la commande *gulp*.
 
 * clean - nettoyage du répertoire
 
-> **Note**
-Le contenu du changelog est extrait du fichier *CHANGELOG.md* ou *CHANGELOG_DRAFT.md*.
-Il faut donc au préalable le mettre à jour...
+> **A faire au préalable**
+>   - Le contenu du changelog est extrait du fichier *CHANGELOG_DRAFT.md*.
+>   - La version de la publication est extraite du fichier *package.json*.
+>   - Pour l'authentification, il faut renseigner soit des *variable d'environnement*, ou
+>   soit mettre à disposition des *clefs SSH* (cf. authentification)
 
 ## Scripts de publication des releases sur le gitHub
 
-> Ex. release-github.sh
+**Synopsys**
+
+> release-github.sh -h
 
 Ce script sert à mettre en place les releases dans le dépôt central.
 
@@ -160,28 +157,40 @@ on dépose l'archive et le changelog sur le gitHub.
   * zip - construire les archives au format zip.
   * data - copie du CHANGELOG_DRAFT (**INFO** : ne pas oublier de le mettre à jour au préalable)
 
-> **Note**
-Le contenu du changelog est extrait du fichier *CHANGELOG.md* ou *CHANGELOG_DRAFT.md*.
-Il faut donc au préalable le mettre à jour...
+> **A faire au préalable**
+>   - Le contenu du changelog est extrait du fichier *CHANGELOG_DRAFT.md*.
+>   - La version de la publication est extraite du fichier *package.json*.
+>   - Pour l'authentification, il faut renseigner soit des *variable d'environnement*, ou
+>   soit mettre à disposition des *clefs SSH* (cf. authentification)
 
 ## Notes sur l'Authentification sur le GitHub
 
+Pour/Contre :
+    https://developer.github.com/v3/guides/managing-deploy-keys/
+
+### Token Personal Access.
+
 On utilise l'authentification via Token Personal Access.
+    https://help.github.com/articles/git-automation-with-oauth-tokens/
+
 Comment creer un token :
     https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/
 
 Ensuite, ce token est stocké dans une variable d'environnement du systeme :
 > export RELEASE_GITHUB_TOKEN="grsgz5r4gzr5g4er654er54er4tyer5646y"
 
-> **TODO** authentification github pour 'git push' : SSH ou Token ?
-    https://help.github.com/articles/connecting-to-github-with-ssh/
-    https://help.github.com/articles/which-remote-url-should-i-use/#cloning-with-ssh-urls
-    https://docs.microsoft.com/en-us/vsts/git/use-ssh-keys-to-authenticate
-    https://developer.github.com/v3/guides/basics-of-authentication/
-    https://developer.github.com/v3/guides/managing-deploy-keys/
-    https://help.github.com/articles/git-automation-with-oauth-tokens/
+### SSH
 
-> **TODO** authentification github pour l'API ?
+Authentification github SSH pour 'git push' (**procedure de creation des clefs**):
+    http://www.linux-france.org/prj/edu/archinet/systeme/ch13s03.html
+    https://help.github.com/articles/connecting-to-github-with-ssh/
+    https://help.github.com/articles/which-remote-url-should-i-use/#cloning-with-ssh-urls    
+
+### Authentification API github
+
+On utilise l'authentification via Token Personal Access.
+
+> **TODO** utilisation de l'authentification github pour l'API via SSH ?
    https://developer.github.com/v3/auth/
    https://developer.github.com/v3/repos/releases/#create-a-release
 
@@ -197,5 +206,3 @@ La valeur du *Password* est stocké dans une variable d'environnement du systeme
 
 > **TODO** authentification par Token ?
 export RELEASE_NPMJS_TOKEN="00000000-0000-0000-0000-000000000000"
-
-> **TODO** persistence de l'authentification pour 'npm publish' ?

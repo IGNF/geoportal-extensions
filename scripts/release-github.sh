@@ -5,6 +5,9 @@
 # > zip des sources ?
 # > tester l'authentification via token sur l'API gitHub...
 
+# FIXME
+# > basculer en authentification via SSH
+
 # répertoire d'execution
 _PWD=`pwd`
 
