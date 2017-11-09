@@ -1,7 +1,7 @@
 define([
     "ol",
     "woodman",
-    "Ol3/Utils"
+    "Common/Utils"
 ], function (
     ol,
     woodman,

@@ -1,7 +1,7 @@
 
 define([
     "ol",
-    "Ol3/Utils",
+    "Common/Utils",
     "Common/Utils/Config",
     "Common/Utils/LayerUtils",
     "Ol3/Layers/SourceWMTS"

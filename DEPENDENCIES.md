@@ -22,7 +22,12 @@ last
 
 * Sortable
 
-└── sortablejs@1.6.1
+└── sortablejs@1.7.0
+
+> **Utilisation de la version suivante**
+```
+└── sortablejs@1.4.0
+```
 
 * woodman
 

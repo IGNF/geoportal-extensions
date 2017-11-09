@@ -1,6 +1,6 @@
 define([
     "ol",
-    "Ol3/Utils",
+    "Common/Utils",
     "Common/Utils/SelectorID",
     "Common/Controls/LayerSwitcherDOM"
 ], function (
@@ -117,7 +117,7 @@ define([
 
             // At every map movement, layer switcher may be updated,
             // according to layers on map, and their range.
-            map.on(
+            this._listeners.onMoveListener = map.on(
                 "moveend",
                 function () {
                     this._onMapMoveEnd.call(this, map);
@@ -126,7 +126,7 @@ define([
             );
 
             // add event listeners when a new layer is added to map, to add it in LayerSwitcher control (and DOM)
-            map.getLayers().on(
+            this._listeners.onAddListener = map.getLayers().on(
                 "add",
                 function (evt) {
                     var layer = evt.element;
@@ -148,7 +148,7 @@ define([
             );
 
             // add event listeners when a layer is removed from map, to remove it from LayerSwitcher control (and DOM)
-            map.getLayers().on(
+            this._listeners.onRemoveListener = map.getLayers().on(
                 "remove",
                 function (evt) {
                     var layer = evt.element;
@@ -159,6 +159,18 @@ define([
                 },
                 this
             );
+        } else {
+            // we are in a setMap(null) case
+            // we forget the listeners linked to the layerSwitcher
+            ol.Observable.unByKey(this._listeners.onMoveListener);
+            ol.Observable.unByKey(this._listeners.onAddListener);
+            ol.Observable.unByKey(this._listeners.onRemoveListener);
+
+            // we put all the layers at Zindex = 0, without changing the visual order
+            // in order that the next added layers are not hidden by layers with Zindex > 0
+            for (var i = this._layersOrder.length - 1; i >= 0;  i--) {
+                this._layersOrder[i].layer.setZIndex(0);
+            }
         }
 
         // on appelle la méthode setMap originale d'OpenLayers
@@ -440,6 +452,8 @@ define([
         this.collapsed = (options.collapsed !== undefined) ? options.collapsed : true;
         // div qui contiendra les div des listes.
         this._layerListContainer = null;
+        // [Object] listeners added to the layerSwitcher saved here in order to delete them if we remove the control from the map)
+        this._listeners = {};
 
         // add options layers to layerlist.
         // (seulement les couches configurées dans les options du layerSwitcher par l'utilisateur),

@@ -1,7 +1,7 @@
 define([
     "gp",
     "ol",
-    "Ol3/Utils"
+    "Common/Utils"
 ], function (
     Gp,
     ol,

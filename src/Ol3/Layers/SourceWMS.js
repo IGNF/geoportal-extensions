@@ -2,7 +2,7 @@
 define([
     "ol",
     "gp",
-    "Ol3/Utils",
+    "Common/Utils",
     "Common/Utils/Config"
 ], function (
     ol,

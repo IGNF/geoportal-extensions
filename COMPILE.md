@@ -141,7 +141,7 @@ Sous *Windows*, il est possible que la *JSDoc* ne soit pas compilée correctemen
 
 **ouvrir une console :**
 
-    gulp server-sample --leaflet
+    gulp server --leaflet
 
 Le navigateur s'ouvre sur la page des exemples sur l'URL suivante :
 http://localhost:9001/samples/index-leaflet.html
@@ -150,7 +150,7 @@ http://localhost:9001/samples/index-leaflet.html
 
 **ouvrir une console :**
 
-    gulp server-sample --ol3
+    gulp server --ol3
 
 Le navigateur s'ouvre sur la page des exemples sur l'URL suivante :
 http://localhost:9001/samples/index-ol3.html

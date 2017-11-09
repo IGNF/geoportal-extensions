@@ -20,7 +20,7 @@ _PACKAGE_VERSION=""
 # chemins des répertoires
 _DIR_SCRIPTS="${_PWD}/scripts"
 _DIR_CONFIG_NPM="${_PWD}/scripts/config_npm"
-_DIR_CONFIG_NPM="${_PWD}/scripts/config_bower"
+_DIR_CONFIG_BOWER="${_PWD}/scripts/config_bower"
 _DIR_SRC="${_PWD}/src"
 _DIR_DIST="${_PWD}/dist"
 
@@ -30,9 +30,11 @@ source ${_PROPERTIES}
 
 # git properties
 GIT_COMMIT_MESSAGE=${_GIT_COMMIT_MESSAGE}
+GIT_TAG_NAME=${_GIT_TAG_NAME}
 GIT_FILES_ADD=${_GIT_FILES_ADD}
 GIT_USER_NAME=${_GIT_USER_NAME}
 GIT_OAUTH_TOKEN=${_GIT_OAUTH_TOKEN}
+GIT_OAUTH_SSHKEY="non"
 
 # npm properties
 NPM_OAUTH_TOKEN=${_NPM_OAUTH_TOKEN}
@@ -161,26 +163,6 @@ while true; do
   esac
 done
 
-# type de protocole ssh par defaut
-_GIT_REPOSITORY_PREFIX="git@github.com:"
-
-# sauf si authentification via token, on passe en https
-if [ -n ${GIT_OAUTH_TOKEN} ]; then
-  _GIT_REPOSITORY_PREFIX="https://github.com/"
-fi
-
-# depot github
-[ ${_PACKAGE_LIBRARY} == "leaflet" ] && {
-  GIT_DIR_PUBLISH=${_GIT_DIR_PUBLISH_LEAFLET}
-  GIT_REPOSITORY="${_GIT_REPOSITORY_PREFIX}${GIT_USER_NAME}/${_GIT_REPOSITORY_NAME_LEAFLET}.git"
-}
-
-# depot github
-[ ${_PACKAGE_LIBRARY} == "ol3" ] && {
-  GIT_DIR_PUBLISH=${_GIT_DIR_PUBLISH_OPENLAYERS}
-  GIT_REPOSITORY="${_GIT_REPOSITORY_PREFIX}${GIT_USER_NAME}/${_GIT_REPOSITORY_NAME_OPENLAYERS}.git"
-}
-
 [ ${OPTS_VERBOSE} == true ] && {
   set -x
 }
@@ -227,17 +209,48 @@ info () {
 --    publish : ${OPTS_RUN_PUBLISH}
 --    clean   : ${OPTS_RUN_CLEAN}
 -- Information GitHub : ...
---    depot GitHub : ${GIT_REPOSITORY}
---    user GitHub  : ${GIT_USER_NAME}
---    token GitHub : ${GIT_OAUTH_TOKEN} (ENV)
+--    depot GitHub   : ${GIT_REPOSITORY}
+--    user GitHub    : ${GIT_USER_NAME}
+--    token GitHub   : ${GIT_OAUTH_TOKEN} (ENV)
+--    ssh-key GitHub : ${GIT_OAUTH_SSHKEY}
 -- Information NPM : ...
 --    user npm  : ${NPM_OAUTH_USER}
---    pwd npm   : ${NPM_OAUTH_PWD}   (ENV)
---    token npm : ${NPM_OAUTH_TOKEN} (ENV)
+--    pwd npm   : ${NPM_OAUTH_PWD_MSQ} (ENV)
 --    email npm : ${NPM_OAUTH_MAIL}
+--  [ token npm : ${NPM_OAUTH_TOKEN} ] (ENV : not yet used !)
 ----------------------------------------------------------
 
 EOF
+}
+
+# type d'authentification pour le github
+if [ -n ${GIT_OAUTH_TOKEN} ]; then
+  # si authentification via token, on passe en https
+  _GIT_REPOSITORY_PREFIX="https://github.com/"
+  printTo "L'authentification par token va être utilisée sur le dépôt gitHub."
+else
+  # utilisation du protocole ssh par defaut
+  _GIT_REPOSITORY_PREFIX="git@github.com:"
+  printTo "L'authentification par clef SSH va être utilisée sur le dépôt gitHub."
+  GIT_OAUTH_SSHKEY="oui"
+fi
+
+# depot github leaflet
+[ ${_PACKAGE_LIBRARY} == "leaflet" ] && {
+  GIT_DIR_PUBLISH=${_GIT_DIR_PUBLISH_LEAFLET}
+  GIT_REPOSITORY="${_GIT_REPOSITORY_PREFIX}${GIT_USER_NAME}/${_GIT_REPOSITORY_NAME_LEAFLET}.git"
+}
+
+# depot github ol
+[ ${_PACKAGE_LIBRARY} == "ol3" ] && {
+  GIT_DIR_PUBLISH=${_GIT_DIR_PUBLISH_OPENLAYERS}
+  GIT_REPOSITORY="${_GIT_REPOSITORY_PREFIX}${GIT_USER_NAME}/${_GIT_REPOSITORY_NAME_OPENLAYERS}.git"
+}
+
+# authentification pour npm
+[ -z ${NPM_OAUTH_PWD} ] && {
+  printTo "Veuillez renseigner la variable d'environement 'RELEASE_NPMJS_PASSWORD' pour l'authentification NPM de publication."
+  exit 2
 }
 
 ##########
@@ -259,14 +272,15 @@ export _PACKAGE_VERSION=$(cat package.json |
       print $DS->{$field};
     ')
 
-################################################################################
-printTo "--> build..."
-
 # export de la date du build pour Perl
 export _PACKAGE_BUILD=`date '+%d/%m/%y - %H:%M:%S'`
 
+################################################################################
 if [ ${OPTS_RUN_BUILD} == true ]
 then
+  ##############################################################################
+  printTo "--> build..."
+
   doCmd "cd ${_PWD}"
   doCmd "gulp --${_PACKAGE_LIBRARY}" > /dev/null 2>&1
   doCmd "gulp publish --${_PACKAGE_LIBRARY}" > /dev/null 2>&1
@@ -275,10 +289,12 @@ then
 fi
 
 ################################################################################
-printTo "--> data"
-
+# FIXME les sources font elles parties de la publication ?
 if [ ${OPTS_RUN_DATA} == true ]
 then
+  ##############################################################################
+  printTo "--> data"
+
   doCmd "cd ${_PWD}"
   # git clone https://github.com/lowzonenose/geoportal-extensions-leaflet.git
   doCmd "git clone ${GIT_REPOSITORY} ${GIT_DIR_PUBLISH}"
@@ -296,8 +312,6 @@ then
   # cp CHANGELOG_DRAFT.md geoportal-extensions-leaflet/CHANGELOG.md
   doCmd "cp CHANGELOG_DRAFT.md ${GIT_DIR_PUBLISH}/CHANGELOG.md"
 
-  # FIXME
-  # les sources font elles parties de la publication ?
   # [ ! -d "${GIT_DIR_PUBLISH}/src" ] && {
   #   doCmd "mkdir ${GIT_DIR_PUBLISH}/src"
   # }
@@ -310,10 +324,12 @@ then
 fi
 
 ################################################################################
-printTo "--> json"
-
+# FIXME pretty format json !?
 if [ ${OPTS_RUN_JSON} == true ]
 then
+  ##############################################################################
+  printTo "--> json"
+
   [ -d ${GIT_DIR_PUBLISH} ] && {
 
     doCmd "cd ${_PWD}"
@@ -342,10 +358,11 @@ then
 fi
 
 ################################################################################
-printTo "--> git"
-
 if [ ${OPTS_RUN_COMMIT} == true ]
 then
+  ################################################################################
+  printTo "--> git"
+
   [ -d ${GIT_DIR_PUBLISH} ] && {
     doCmd "cd ${GIT_DIR_PUBLISH}"
     doCmd "git add -Af"
@@ -363,32 +380,48 @@ then
 
     doCmd "git push"
 
+    ############################################################################
     if [ ${OPTS_RUN_TAG} == true ]
     then
       ##########################################################################
       printTo "--> tag"
 
-      message=$(echo ${GIT_TAG_NAME} |
+      _tag_name=$(echo ${GIT_TAG_NAME} |
           sed -e "s@%version%@${_PACKAGE_VERSION}@g" |
           sed -e "s@%library%@${_PACKAGE_LIBRARY}@g")
-      doCmd "git tag ${message}"
+      doCmd "git tag ${_tag_name}"
 
-      doCmd "git push"
+      doCmd "git push origin ${_tag_name}"
     fi
+
+    doCmd "cd ${_PWD}"
   }
 fi
 
-###############################################################################
-printTo "--> publish"
-
+################################################################################
 # TODO bower !
-# FIXME authentification token pour npm !
+# FIXME authentification token pour npm !?
 if [ ${OPTS_RUN_PUBLISH} == true ]
 then
+  ##############################################################################
+  printTo "--> publish"
+
   [ -d ${GIT_DIR_PUBLISH} ] && {
     doCmd "cd ${GIT_DIR_PUBLISH}"
     # npm login
-    doCmd "printf '${NPM_OAUTH_USER}\n${NPM_OAUTH_PWD}\n${NPM_OAUTH_MAIL}\n' | npm login"
+    # printf '${NPM_OAUTH_USER}\n${NPM_OAUTH_PWD}\n${NPM_OAUTH_MAIL}\n' | npm login  !?
+    /usr/bin/expect << HEREDOC
+    spawn npm login
+    expect "Username:"
+    send "${NPM_OAUTH_USER}\n"
+    expect "Password:"
+    send "${NPM_OAUTH_PWD}\n"
+    expect Email:
+    send "${NPM_OAUTH_MAIL}\n"
+    expect eof
+HEREDOC
+    # wait
+    sleep 2
     # npm publish
     doCmd "npm publish"
     # npm install bower
@@ -398,11 +431,12 @@ then
   }
 fi
 
-###############################################################################
-printTo "--> clean"
-
+################################################################################
 if [ ${OPTS_RUN_CLEAN} == true ]
 then
+  ##############################################################################
+  printTo "--> clean"
+
   doCmd "cd ${_PWD}"
   doCmd "rm -rf ${GIT_DIR_PUBLISH}"
 fi

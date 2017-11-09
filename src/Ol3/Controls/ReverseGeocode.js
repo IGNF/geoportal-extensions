@@ -2,7 +2,7 @@ define([
     "woodman",
     "ol",
     "gp",
-    "Ol3/Utils",
+    "Common/Utils",
     "Ol3/Controls/Utils/Markers",
     "Ol3/Controls/LayerSwitcher",
     "Common/Utils/CheckRightManagement",
@@ -1721,7 +1721,7 @@ define([
         if (this._inputFeatures) {
             this._inputFeatures.clear();
         }
-        
+
         // on supprime les valeurs stockées (filtres, position)
         this._requestPosition = null;
         this._requestCircleFilter = null;

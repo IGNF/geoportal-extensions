@@ -1,7 +1,7 @@
 define([
     "ol",
     "woodman",
-    "Ol3/Utils",
+    "Common/Utils",
     "Ol3/Controls/MeasureToolBox",
     "Ol3/Controls/Measures/Measures",
     "Common/Controls/MeasureAreaDOM",

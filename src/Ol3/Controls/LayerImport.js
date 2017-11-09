@@ -2,7 +2,7 @@ define([
     "ol",
     "gp",
     "woodman",
-    "Ol3/Utils",
+    "Common/Utils",
     "Ol3/Controls/Utils/Markers",
     "Common/Controls/LayerImportDOM",
     "Common/Utils/SelectorID",

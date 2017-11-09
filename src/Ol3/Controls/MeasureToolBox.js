@@ -1,7 +1,7 @@
 define([
     "ol",
     "woodman",
-    "Ol3/Utils",
+    "Common/Utils",
     "Common/Utils/SelectorID",
     "Common/Controls/MeasureToolBoxDOM"
 ], function (

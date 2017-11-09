@@ -1,7 +1,7 @@
 define([
     "woodman",
     "ol",
-    "Ol3/Utils"
+    "Common/Utils"
 ], function (
     woodman,
     ol,
@@ -235,7 +235,7 @@ define([
                     // elles doivent être toujours déclarées avant les PlaceMark !
                     // On ne prend en compte que celles qui sont identifiées via un ID !
                     var id = node.attributes[0];
-                    if (id.nodeName === "id") {
+                    if (id && id.nodeName === "id") {
                         var _k = id.nodeValue;
                         var _v = node;
                         stylesUrl[_k] = _v;

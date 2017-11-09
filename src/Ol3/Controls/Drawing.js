@@ -5,7 +5,7 @@ define([
     "Common/Utils/SelectorID",
     "Ol3/Controls/Utils/Interactions",
     "Common/Controls/DrawingDOM",
-    "Ol3/Utils",
+    "Common/Utils",
     "Ol3/Formats/KML"
 ], function (
     woodman,

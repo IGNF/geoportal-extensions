@@ -62,7 +62,7 @@ define([
     Scale.prototype = Object.create(Widget.prototype, {});
 
     // on récupère les méthodes de la classe commune ScaleDOM
-    Utils.assign(ScaleDOM, Scale.prototype);
+    Utils.assign(Scale.prototype, ScaleDOM);
 
     /**
      * Constructor (alias)

@@ -4,7 +4,7 @@ define([
     "Ol3/Sources/WMTS",
     "gp",
     "Ol3/GfiUtils",
-    "Ol3/Utils",
+    "Common/Utils",
     "Common/Utils/Config",
     "Common/Utils/LayerUtils"
 ], function (

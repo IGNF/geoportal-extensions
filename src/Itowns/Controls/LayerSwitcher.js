@@ -92,7 +92,7 @@ define([
     LayerSwitcher.prototype = Object.create(Widget.prototype, {});
 
     // on récupère les méthodes de la classe commune LayerSwitcherDOM
-    Utils.assign(LayerSwitcherDOM, LayerSwitcher.prototype);
+    Utils.assign(LayerSwitcher.prototype, LayerSwitcherDOM);
 
     /**
      * Constructor (alias)
