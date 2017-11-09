@@ -138,8 +138,8 @@ define([
         if ( globe ) { // dans le cas de l'ajout du contrôle au globe
 
             // dans le cas de l'ajout du contrôle au globe
-            var center = this._createMapCenter();
-            globe.getTargetElement().appendChild(center);
+            this._centerElement = this._createMapCenter();
+            globe.getTargetElement().appendChild(this._centerElement);
 
             // on définie le callback sur la carte pour recuperer les coordonnées
             this._callbacks.mouseMove = this.onMouseMove.bind(this);
@@ -161,6 +161,7 @@ define([
                 this.getElement().removeChild(this.getElement().lastChild);
             }
             this.getElement().parentNode.removeChild(this.getElement());
+            this._globe.getTargetElement().removeChild(this._centerElement);
         }
         // call original setGlobe method
         Widget.prototype.setGlobe.call(this, globe);
