@@ -36,6 +36,7 @@ GIT_COMMIT_MESSAGE=${_GIT_COMMIT_MESSAGE}
 GIT_TAG_NAME=${_GIT_TAG_NAME}
 GIT_FILES_ADD=${_GIT_FILES_ADD}
 GIT_USER_NAME=${_GIT_USER_NAME}
+GIT_USER_MAIL=${_GIT_USER_MAIL}
 GIT_OAUTH_TOKEN=${_GIT_OAUTH_TOKEN}
 GIT_OAUTH_SSHKEY="non"
 
@@ -44,6 +45,7 @@ NPM_OAUTH_TOKEN=${_NPM_OAUTH_TOKEN}
 NPM_OAUTH_USER=${_NPM_OAUTH_USER}
 NPM_OAUTH_PWD=${_NPM_OAUTH_PWD}
 NPM_OAUTH_MAIL=${_NPM_OAUTH_MAIL}
+NPM_OAUTH_PWD_MSQ="XXXXXX"
 
 # options properties
 #   --leaflet |l
@@ -235,6 +237,7 @@ info () {
 -- Information GitHub : ...
 --    depot GitHub   : ${GIT_REPOSITORY}
 --    user GitHub    : ${GIT_USER_NAME}
+--    mail GitHub    : ${GIT_USER_MAIL}
 --    token GitHub   : ${GIT_OAUTH_TOKEN} (ENV)
 --    ssh-key GitHub : ${GIT_OAUTH_SSHKEY}
 -- Information NPM : ...
@@ -388,7 +391,12 @@ then
   printTo "--> git"
 
   [ -d ${GIT_DIR_PUBLISH} ] && {
+
     doCmd "cd ${GIT_DIR_PUBLISH}"
+
+    doCmd "git config user.email \"${GIT_USER_MAIL}\""
+    doCmd "git config user.name \"${GIT_USER_NAME}\""
+
     doCmd "git add -Af"
 
     message=$(echo ${GIT_COMMIT_MESSAGE} |
@@ -396,7 +404,7 @@ then
         sed -e "s@%library%@${_PACKAGE_LIBRARY}@g")
     doCmd "git commit -m \"$message\""
 
-    # authentification githun via token si renseignée, sinon via SSH
+    # authentification github via token si renseignée, sinon via SSH
     if [ -n ${GIT_OAUTH_TOKEN} ]; then
       _GIT_REPOSITORY_TOKEN=$(echo ${GIT_REPOSITORY} | sed -e "s/github.com/${GIT_USER_NAME}:${GIT_OAUTH_TOKEN}@github.com/")
       doCmd "git remote set-url origin ${_GIT_REPOSITORY_TOKEN}"

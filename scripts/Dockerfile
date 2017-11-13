@@ -4,24 +4,35 @@ WORKDIR /root
 RUN mkdir geoportal-extensions
 WORKDIR /root/geoportal-extensions
 
-RUN export HTTP_PROXY=http://proxy.ign.fr:3128 && \
+ENV PROXY=http://proxy.ign.fr:3128 \
+    USERNAME= \
+		PASSWORD= \
+		TOKEN=
+
+RUN export HTTPS_PROXY=$PROXY && \
+  export HTTP_PROXY=$PROXY && \
 	apk update && \
 	apk upgrade && \
 	apk add openssl && \
 	apk add expect && \
 	apk add bash && \
-	apk add perl  perl-dev perl-json && \
+	apk add perl perl-dev perl-json && \
 	apk add git
 
-RUN export HTTPS_PROXY=http://proxy.ign.fr:3128 && \
-  export HTTP_PROXY=http://proxy.ign.fr:3128 && \
+RUN export HTTPS_PROXY=$PROXY && \
+  export HTTP_PROXY=$PROXY && \
   git clone https://github.com/IGNF/geoportal-extensions.git . && \
-	git checkout feature-publish-release && \
-	npm config set proxy http://proxy.ign.fr:3128 && \
-	npm config set https-proxy http://proxy.ign.fr:3128 && \
+	git checkout feature-publish-release
+
+RUN export HTTPS_PROXY=$PROXY && \
+  export HTTP_PROXY=$PROXY && \
+	npm config set proxy $PROXY && \
+	npm config set https-proxy $PROXY && \
 	npm install
 
-CMD	 ./scripts/release.sh \
+CMD	 export HTTPS_PROXY=$PROXY && \
+  export HTTP_PROXY=$PROXY && \
+	./scripts/release.sh \
 			--verbose \
-			--username="" --password="" --token="" \
+			--username=$USERNAME --password=$PASSWORD --token=$TOKEN \
 			--leaflet --build --data --json --commit --tag --publish=false
