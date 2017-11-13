@@ -5,9 +5,9 @@ RUN mkdir geoportal-extensions
 WORKDIR /root/geoportal-extensions
 
 ENV PROXY=http://proxy.ign.fr:3128 \
-    USERNAME= \
-		PASSWORD= \
-		TOKEN=
+    USERNAME=..................... \
+		PASSWORD=..................... \
+		TOKEN=........................
 
 RUN export HTTPS_PROXY=$PROXY && \
   export HTTP_PROXY=$PROXY && \
