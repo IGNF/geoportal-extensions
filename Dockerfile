@@ -4,9 +4,6 @@ WORKDIR /root
 RUN mkdir geoportal-extensions
 WORKDIR /root/geoportal-extensions
 
-ADD CHANGELOG_DRAFT.md CHANGELOG_DRAFT.md
-ADD package.json package.json
-
 ENV PROXY=http://proxy.ign.fr:3128 \
     USERNAME=..................... \
 		PASSWORD=..................... \
@@ -26,6 +23,9 @@ RUN export HTTPS_PROXY=$PROXY && \
   export HTTP_PROXY=$PROXY && \
   git clone https://github.com/IGNF/geoportal-extensions.git . && \
 	git checkout feature-publish-release
+
+ADD CHANGELOG_DRAFT.md CHANGELOG_DRAFT.md
+ADD package.json package.json
 
 RUN export HTTPS_PROXY=$PROXY && \
   export HTTP_PROXY=$PROXY && \
