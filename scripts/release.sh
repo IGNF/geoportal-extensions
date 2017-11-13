@@ -24,6 +24,9 @@ _DIR_CONFIG_BOWER="${_PWD}/scripts/config_bower"
 _DIR_SRC="${_PWD}/src"
 _DIR_DIST="${_PWD}/dist"
 
+# gulp
+_BIN_GULP="${_PWD}/node_modules/.bin/gulp"
+
 # chargement des properties
 _PROPERTIES="${_DIR_SCRIPTS}/release.ini"
 source ${_PROPERTIES}
@@ -68,7 +71,7 @@ OPTS_VERBOSE=${_OPTS_VERBOSE}
 # p (--publish) Execution de la tache de publication npm et bower,
 # C (--clean)   Execution de la tache de nettoyage.
 
-_OPTS=`getopt -o hlob::d::j::c::t::p::C:: --long help,verbose,leaflet,ol3,build::,data::,json::,commit::,tag::,publish::,clean:: -n 'release.sh' -- "$@"`
+_OPTS=`getopt -o hlob::d::j::c::t::p::C:: --long help,verbose,leaflet,ol3,password:,username:,token:,build::,data::,json::,commit::,tag::,publish::,clean:: -n 'release.sh' -- "$@"`
 eval set -- "${_OPTS}"
 
 while true; do
@@ -81,6 +84,9 @@ while true; do
         echo "    --verbose     Mode verbose,"
         echo "    --leaflet|l   Publication Leaflet (par defaut),"
         echo "    --ol3|o       Publication Openlayers,"
+        echo "    --username    [private][surcharge] compte de publication NPM,"
+        echo "    --password    [private][surcharge] password de publication NPM,"
+        echo "    --token       [private][surcharge] token du github,"
         echo "    --build|b     Execution de la tache de compilation,"
         echo "    --data|d      Execution de la tache de git-clone,"
         echo "    --json|j      Execution de la tache de creation des json,"
@@ -110,6 +116,24 @@ while true; do
     -o|--ol3)
           _PACKAGE_LIBRARY="ol3"
           shift ;;
+
+    --username)
+        case "$2" in
+          "") shift 2 ;;
+          *) NPM_OAUTH_USER=$2 ; shift 2 ;;
+        esac ;;
+
+    --password)
+        case "$2" in
+          "") shift 2 ;;
+          *) NPM_OAUTH_PWD=$2 ; shift 2 ;;
+        esac ;;
+
+    --token)
+        case "$2" in
+          "") shift 2 ;;
+          *) GIT_OAUTH_TOKEN=$2 ; shift 2 ;;
+        esac ;;
 
     -b|--build)
         case "$2" in
@@ -282,10 +306,10 @@ then
   printTo "--> build..."
 
   doCmd "cd ${_PWD}"
-  doCmd "gulp --${_PACKAGE_LIBRARY}" > /dev/null 2>&1
-  doCmd "gulp publish --${_PACKAGE_LIBRARY}" > /dev/null 2>&1
-  doCmd "gulp --production --${_PACKAGE_LIBRARY}" > /dev/null 2>&1
-  doCmd "gulp publish --${_PACKAGE_LIBRARY}" > /dev/null 2>&1
+  doCmd "${_BIN_GULP} --${_PACKAGE_LIBRARY}" > /dev/null 2>&1
+  doCmd "${_BIN_GULP} publish --${_PACKAGE_LIBRARY}" > /dev/null 2>&1
+  doCmd "${_BIN_GULP} --production --${_PACKAGE_LIBRARY}" > /dev/null 2>&1
+  doCmd "${_BIN_GULP} publish --${_PACKAGE_LIBRARY}" > /dev/null 2>&1
 fi
 
 ################################################################################

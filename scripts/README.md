@@ -136,6 +136,26 @@ avec la commande *gulp*.
 >   - Pour l'authentification, il faut renseigner soit des *variable d'environnement*, ou
 >   soit mettre à disposition des *clefs SSH* (cf. authentification)
 
+### Dockerfile
+
+**Construction de l'image**
+
+> docker build -t geoportal-extensions .
+
+> **Note**
+> le proxy est en dur dans le fichier Dockerfile
+
+**Execution de l'image**
+
+Par defaut :
+> docker run -it --rm geoportal-extensions
+
+Avec un acces au shell :
+> docker run -it --rm geoportal-extensions bash
+
+> **Note**
+> les params d'authentification sont en dur dans le fichier Dockerfile
+
 ## Scripts de publication des releases sur le gitHub
 
 **Synopsys**
