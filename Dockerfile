@@ -6,8 +6,8 @@ WORKDIR /root/geoportal-extensions
 
 ENV PROXY=http://proxy.ign.fr:3128 \
     USERNAME=..................... \
-		PASSWORD=..................... \
-		TOKEN=........................
+    PASSWORD=..................... \
+    TOKEN=........................
 
 RUN export HTTPS_PROXY=$PROXY && \
   export HTTP_PROXY=$PROXY && \
@@ -19,13 +19,13 @@ RUN export HTTPS_PROXY=$PROXY && \
 	apk add perl perl-dev perl-json && \
 	apk add git
 
+ADD CHANGELOG_DRAFT.md CHANGELOG_DRAFT.md
+ADD package.json package.json
+
 RUN export HTTPS_PROXY=$PROXY && \
   export HTTP_PROXY=$PROXY && \
   git clone https://github.com/IGNF/geoportal-extensions.git . && \
 	git checkout feature-publish-release
-
-ADD CHANGELOG_DRAFT.md CHANGELOG_DRAFT.md
-ADD package.json package.json
 
 RUN export HTTPS_PROXY=$PROXY && \
   export HTTP_PROXY=$PROXY && \
@@ -38,4 +38,4 @@ CMD	 export HTTPS_PROXY=$PROXY && \
 	./scripts/release.sh \
 			--verbose \
 			--username=$USERNAME --password=$PASSWORD --token=$TOKEN \
-			--leaflet --build --data --json --commit --tag --publish=false
+			--leaflet --build --data --json --commit --tag --publish
