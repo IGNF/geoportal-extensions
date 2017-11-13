@@ -4,6 +4,9 @@ WORKDIR /root
 RUN mkdir geoportal-extensions
 WORKDIR /root/geoportal-extensions
 
+ADD CHANGELOG_DRAFT.md CHANGELOG_DRAFT.md
+ADD package.json package.json
+
 ENV PROXY=http://proxy.ign.fr:3128 \
     USERNAME=..................... \
 		PASSWORD=..................... \
