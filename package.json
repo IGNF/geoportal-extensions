@@ -1,16 +1,15 @@
 {
   "name": "geoportal-extensions",
-  "leafletExtName": "Geoportal Extension for Leaflet",
-  "ol3ExtName": "Geoportal Extension for OpenLayers 3",
-  "vgExtName": "Geoportal Extension for VirtualGeo",
-  "itownsExtName": "Geoportal Extension for Itowns",
+  "leafletExtName": "French Geoportal Extension for Leaflet",
+  "ol3ExtName": "French Geoportal Extension for OpenLayers 3",
+  "itownsExtName": "French Geoportal Extension for Itowns",
   "version": "0.1.0",
   "leafletExtVersion": "0.10.0-dev",
   "ol3ExtVersion": "0.13.0-dev",
   "vgExtVersion": "5.0.0",
-  "itownsExtVersion": "2.0",
-  "description": "French Geoportal Extensions for OpenLayers 3 and Leaflet libraries",
-  "main": "dist/leaflet/GpPluginLeaflet.js,dist/ol3/GpPluginOl3.js,",
+  "itownsExtVersion": "2.1",
+  "description": "French Geoportal Extensions for OpenLayers, Leaflet and iTowns libraries",
+  "main": "dist/leaflet/GpPluginLeaflet.js, dist/ol3/GpPluginOl3.js,",
   "directories": {
     "doc": "doc",
     "test": "test",
@@ -27,12 +26,11 @@
     "type": "git",
     "url": "https://github.com/IGNF/geoportal-extensions.git"
   },
-  "author": "geoportal-api-dev",
+  "author": "IGNF",
   "keywords": [
     "geoportail",
-    "plugin",
     "javascript",
-    "OpenLayers3",
+    "OpenLayers",
     "Leaflet"
   ],
   "license": "CECILL-B",

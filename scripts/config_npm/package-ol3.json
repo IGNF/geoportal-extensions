@@ -1,25 +1,24 @@
 {
   "name": "geoportal-extensions-openlayers",
   "version": "0.13.0-dev",
-  "description": "French Geoportal Extensions for OpenLayers 3 librarie",
+  "description": "French Geoportal Extensions for OpenLayers",
   "main": "dist/ol3/GpPluginOl3.js",
   "directories": {},
   "scripts": {},
   "repository": {
     "type": "git",
-    "url": "https://github.com/lowzonenose/geoportal-extensions-openlayers.git"
+    "url": "https://github.com/IGNF/geoportal-extensions.git"
   },
-  "author": "geoportal-api-dev",
+  "author": "IGNF",
   "keywords": [
     "geoportail",
     "plugin",
     "javascript",
-    "OpenLayers3",
-    "publish"
+    "OpenLayers"
   ],
   "license": "CECILL-B",
   "bugs": {},
-  "homepage": "https://github.com/lowzonenose/geoportal-extensions-openlayers#readme",
+  "homepage": "https://geoservices.ign.fr/documentation/utilisation_web/extension-ol3.html",
   "dependencies": {},
   "devDependencies": {}
 }
