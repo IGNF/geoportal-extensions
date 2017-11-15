@@ -44,8 +44,8 @@ GIT_OAUTH_SSHKEY="non"
 NPM_OAUTH_TOKEN=${_NPM_OAUTH_TOKEN}
 NPM_OAUTH_USER=${_NPM_OAUTH_USER}
 NPM_OAUTH_PWD=${_NPM_OAUTH_PWD}
-NPM_OAUTH_MAIL=${_NPM_OAUTH_MAIL}
 NPM_OAUTH_PWD_MSQ="XXXXXX"
+NPM_OAUTH_MAIL=${_NPM_OAUTH_MAIL}
 
 # options properties
 #   --leaflet |l
@@ -276,8 +276,11 @@ fi
 
 # authentification pour npm
 [ -z ${NPM_OAUTH_PWD} ] && {
-  printTo "Veuillez renseigner la variable d'environement 'RELEASE_NPMJS_PASSWORD' pour l'authentification NPM de publication."
-  exit 2
+  if [ ${OPTS_RUN_PUBLISH} == true ]
+  then
+    printTo "Veuillez renseigner la variable d'environement 'RELEASE_NPMJS_PASSWORD' pour l'authentification NPM de publication."
+    exit 2
+  fi
 }
 
 ##########
@@ -351,7 +354,6 @@ then
 fi
 
 ################################################################################
-# FIXME pretty format json !?
 if [ ${OPTS_RUN_JSON} == true ]
 then
   ##############################################################################
@@ -362,25 +364,36 @@ then
     doCmd "cd ${_PWD}"
 
     # contenu du package.json avec version API
-    _PACKAGE_CONTENT=$(cat "${_DIR_CONFIG_NPM}/package-${_PACKAGE_LIBRARY}.json" |
+    _PACKAGE_CONTENT=`cat "${_DIR_CONFIG_NPM}/package-${_PACKAGE_LIBRARY}.json" |
         perl -MJSON -0ne '
-          my $DS = decode_json $_;
-          $DS->{version} = $ENV{_PACKAGE_VERSION};
-          print encode_json $DS
-        ')
+        my $DS = decode_json $_;
+        $DS->{version} = $ENV{_PACKAGE_VERSION};
+        print to_json($DS, {
+          utf8 => 1,
+          pretty => 1,
+          indent => 1,
+          space_before => 1,
+          space_after => 1})
+        ' > "${_DIR_CONFIG_NPM}/package-${_PACKAGE_LIBRARY}-pretty.json"`
+
     # contenu du bower.json avec version API
-    _BOWER_CONTENT=$(cat ${_DIR_CONFIG_BOWER}/bower-${_PACKAGE_LIBRARY}.json |
+    _BOWER_CONTENT=`cat ${_DIR_CONFIG_BOWER}/bower-${_PACKAGE_LIBRARY}.json |
         perl -MJSON -0ne '
           my $DS = decode_json $_;
           $DS->{version} = $ENV{_PACKAGE_VERSION};
-          print encode_json $DS
-        ')
+          print to_json($DS, {
+            utf8 => 1,
+            pretty => 1,
+            indent => 1,
+            space_before => 1,
+            space_after => 1})
+        ' > "${_DIR_CONFIG_BOWER}/bower-${_PACKAGE_LIBRARY}-pretty.json"`
 
-    echo ${_BOWER_CONTENT}   > "${_DIR_CONFIG_BOWER}/bower-${_PACKAGE_LIBRARY}.json"
-    echo ${_PACKAGE_CONTENT} > "${_DIR_CONFIG_NPM}/package-${_PACKAGE_LIBRARY}.json"
+    doCmd "cp ${_DIR_CONFIG_NPM}/package-${_PACKAGE_LIBRARY}-pretty.json  ${GIT_DIR_PUBLISH}/package.json"
+    doCmd "rm ${_DIR_CONFIG_NPM}/package-${_PACKAGE_LIBRARY}-pretty.json"
 
-    doCmd "cp ${_DIR_CONFIG_NPM}/package-${_PACKAGE_LIBRARY}.json ${GIT_DIR_PUBLISH}/package.json"
-    doCmd "cp ${_DIR_CONFIG_BOWER}/bower-${_PACKAGE_LIBRARY}.json ${GIT_DIR_PUBLISH}/bower.json"
+    doCmd "cp ${_DIR_CONFIG_BOWER}/bower-${_PACKAGE_LIBRARY}-pretty.json  ${GIT_DIR_PUBLISH}/bower.json"
+    doCmd "rm ${_DIR_CONFIG_BOWER}/bower-${_PACKAGE_LIBRARY}-pretty.json"
   }
 fi
 
