@@ -1,8 +1,7 @@
 #!/bin/bash
 
 # TODO
-# > mettre en place bower !
-# > tester l'authentification via token/basic NPM...
+# > authentification via token/basic NPM...
 # > cf. FIXME
 
 # répertoire d'execution
@@ -20,7 +19,6 @@ _PACKAGE_VERSION=""
 # chemins des répertoires
 _DIR_SCRIPTS="${_PWD}/scripts"
 _DIR_CONFIG_NPM="${_PWD}/scripts/config_npm"
-_DIR_CONFIG_BOWER="${_PWD}/scripts/config_bower"
 _DIR_SRC="${_PWD}/src"
 _DIR_DIST="${_PWD}/dist"
 
@@ -37,15 +35,15 @@ GIT_TAG_NAME=${_GIT_TAG_NAME}
 GIT_FILES_ADD=${_GIT_FILES_ADD}
 GIT_USER_NAME=${_GIT_USER_NAME} # surchargé par la config client !
 GIT_USER_MAIL=${_GIT_USER_MAIL} # surchargé par la config client !
-GIT_OAUTH_TOKEN=${_GIT_OAUTH_TOKEN}
+GIT_OAUTH_TOKEN=${_GIT_OAUTH_TOKEN} # issue de l'env. sys.
 GIT_OAUTH_SSHKEY="non"
 
 # npm properties
-NPM_OAUTH_TOKEN=${_NPM_OAUTH_TOKEN}
+NPM_OAUTH_TOKEN=${_NPM_OAUTH_TOKEN} # issue de l'env. sys. mais ne marche pas !?
 NPM_OAUTH_USER=${_NPM_OAUTH_USER}
-NPM_OAUTH_PWD=${_NPM_OAUTH_PWD}
-NPM_OAUTH_PWD_MSQ="XXXXXX"
 NPM_OAUTH_MAIL=${_NPM_OAUTH_MAIL}
+NPM_OAUTH_PWD=${_NPM_OAUTH_PWD} # issue de l'env. sys.
+NPM_OAUTH_PWD_MSQ="XXXXXX"
 
 # options properties
 #   --leaflet |l
@@ -70,7 +68,7 @@ OPTS_VERBOSE=${_OPTS_VERBOSE}
 # j (--json)    Execution de la tache de creation des json,
 # c (--commit)  Execution de la tache de git-push,
 # t (--tag)     Execution de la tache de git-tag,
-# p (--publish) Execution de la tache de publication npm et bower,
+# p (--publish) Execution de la tache de publication npm,
 # C (--clean)   Execution de la tache de nettoyage.
 
 _OPTS=`getopt -o hlob::d::j::c::t::p::C:: --long help,verbose,leaflet,ol3,password:,username:,token:,build::,data::,json::,commit::,tag::,publish::,clean:: -n 'release.sh' -- "$@"`
@@ -94,7 +92,7 @@ while true; do
         echo "    --json|j      Execution de la tache de creation des json,"
         echo "    --commit|c    Execution de la tache de git-push,"
         echo "    --tag|t       Execution de la tache de git-tag,"
-        echo "    --publish|p   Execution de la tache de publication npm et bower,"
+        echo "    --publish|p   Execution de la tache de publication npm,"
         echo "    --clean|C     Execution de la tache de nettoyage."
         echo "Ex. Options longues : `basename $0` --leaflet"
         echo "                  --build --data --json"
@@ -389,24 +387,9 @@ then
           space_after => 1})
         ' > "${_DIR_CONFIG_NPM}/package-${_PACKAGE_LIBRARY}-pretty.json"`
 
-    # contenu du bower.json avec version API
-    _BOWER_CONTENT=`cat ${_DIR_CONFIG_BOWER}/bower-${_PACKAGE_LIBRARY}.json |
-        perl -MJSON -0ne '
-          my $DS = decode_json $_;
-          $DS->{version} = $ENV{_PACKAGE_VERSION};
-          print to_json($DS, {
-            utf8 => 1,
-            pretty => 1,
-            indent => 1,
-            space_before => 1,
-            space_after => 1})
-        ' > "${_DIR_CONFIG_BOWER}/bower-${_PACKAGE_LIBRARY}-pretty.json"`
-
     doCmd "cp ${_DIR_CONFIG_NPM}/package-${_PACKAGE_LIBRARY}-pretty.json  ${GIT_DIR_PUBLISH}/package.json"
     doCmd "rm ${_DIR_CONFIG_NPM}/package-${_PACKAGE_LIBRARY}-pretty.json"
 
-    doCmd "cp ${_DIR_CONFIG_BOWER}/bower-${_PACKAGE_LIBRARY}-pretty.json  ${GIT_DIR_PUBLISH}/bower.json"
-    doCmd "rm ${_DIR_CONFIG_BOWER}/bower-${_PACKAGE_LIBRARY}-pretty.json"
   }
 fi
 
@@ -457,7 +440,6 @@ then
 fi
 
 ################################################################################
-# TODO bower !
 # FIXME authentification token pour npm !?
 if [ ${OPTS_RUN_PUBLISH} == true ]
 then
@@ -482,10 +464,10 @@ HEREDOC
     sleep 2
     # npm publish
     doCmd "npm publish"
-    # npm install bower
-    doCmd ""
-    # bower register geoportal-extensions-leaflet http://github.com/IGNF/geoportal-extensions-leaflet.git
-    doCmd ""
+    # INFO
+    # la publication sous npm met en place automatiquement la publication sous Yarn !
+    #   doCmd "npm install yarn --no-save"
+    #   doCmd "yarn publish"
   }
 fi
 

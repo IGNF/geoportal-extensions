@@ -1,6 +1,6 @@
 # Publication des releases
 
-A partir de ce depot (central), on va publier sur **npm** ainsi que sur **bower**,
+A partir de ce depot (central), on va publier sur **npm** ainsi que sur **bower (obselète)**,
 les **binaires** pour **OpenLayers** et **Leaflet**.
 
 Les publications sont déposées dans des dépôts séparés. Et ils contiennent les
@@ -11,7 +11,7 @@ La publication est gérée par un script (bash).
 Ce script consiste à *construire* les binaires, *copier* les fichiers utiles dans le depot,
 *tagger* la publication et enfin, *publier*...
 
-## Notes sur la Publication via bower (howto)
+## Notes sur la Publication via bower (howto) !!!DEPRECIATE!!!
 
 **Liens utiles**
 
@@ -21,6 +21,22 @@ Ce script consiste à *construire* les binaires, *copier* les fichiers utiles da
 
 > **Commande**
 bower register geoportal-extensions-openlayers http://github.com/IGNF/geoportal-extensions-openlayers.git
+
+## Notes sur la Publication via Yarn (howto)
+
+**Liens utiles**
+
+    accueil - https://yarnpkg.com/fr/
+    installation - https://yarnpkg.com/fr/docs/install
+    commande publish - https://yarnpkg.com/fr/docs/cli/publish
+    publication - https://yarnpkg.com/fr/docs/publishing-a-package
+
+> **Commande**
+yarn publish
+
+> **Note**
+> La publication sous Yarn est inutile car elle se base sur la publication du
+registre NPM ! C'est donc automatique...
 
 ## Notes sur la Publication via npm (howto)
 
@@ -71,7 +87,7 @@ Les publications sont déposées dans des dépôts séparés :
 
 Ces depots contiennent les fichiers suivants :
 
-    bower.json
+    bower.js (obselète)
     dist/.js
     dist/.css
     dist/images
@@ -99,7 +115,7 @@ Usage :
     j (--json)    Execution de la tache de creation des json,
     c (--commit)  Execution de la tache de git-push,
     t (--tag)     Execution de la tache de git-tag,
-    p (--publish) Execution de la tache de publication npm et bower,
+    p (--publish) Execution de la tache de publication npm et bower (obselète),
     C (--clean)   Execution de la tache de nettoyage.
     Ex. Options longues : release.sh --leaflet
                       --build --data --json
@@ -115,7 +131,7 @@ Ce script consiste à executer les étapes suivantes :
 * build - construction des binaires dans le répertoire *dist*
 avec la commande *gulp*.
 
-* json - mise à jour des fichiers de configuration json (package et bower)
+* json - mise à jour des fichiers de configuration json (package et bower (obselète))
 (**INFO** : maj de la version via le package.json)
 
 * data - copie des fichiers utiles dans le dépôt de publication avec *git*.
@@ -126,7 +142,7 @@ avec la commande *gulp*.
 * commit - *commit* des modifications de la publication avec *git*.
   * tag - mise en place du *tag* de publication avec *git*.
 
-* publish - publication via *npm* et *bower*
+* publish - publication via *npm* et *bower (obselète)*
 
 * clean - nettoyage du répertoire
 
