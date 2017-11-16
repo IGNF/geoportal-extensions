@@ -1,8 +1,6 @@
 #!/bin/bash
 
 # TODO
-# > impl. option --version=1.0.0 pour la publication (?)
-# > zip des sources ?
 # > tester l'authentification via token sur l'API gitHub...
 
 # FIXME
@@ -21,17 +19,23 @@ _PACKAGE_LIBRARY="leaflet"
 _DIR_SCRIPTS="${_PWD}/scripts"
 _DIR_DIST="${_PWD}/dist"
 
+# gulp
+_BIN_GULP="${_PWD}/node_modules/.bin/gulp"
+
 # chargement des properties
 _PROPERTIES="${_DIR_SCRIPTS}/release.ini"
 source ${_PROPERTIES}
 
 # git
 GIT_REPOSITORY_NAME=${_GIT_REPOSITORY_NAME}
-GIT_TAG_NAME=${_GIT_TAG_NAME}
-GIT_USER_NAME=${_GIT_USER_NAME}
 GIT_REPOSITORY_URL="https://github.com/${GIT_USER_NAME}/${GIT_REPOSITORY_NAME}.git"
-GIT_OAUTH_TOKEN=${_GIT_OAUTH_TOKEN}
+GIT_TAG_NAME=${_GIT_TAG_NAME}
+GIT_USER_NAME=${_GIT_USER_NAME} # surchargé par la config client !
+GIT_USER_MAIL=${_GIT_USER_MAIL} # surchargé par la config client !
+GIT_OAUTH_TOKEN=${_GIT_OAUTH_TOKEN} # issue de l'env. sys
+GIT_OAUTH_SSHKEY="non"
 
+# github
 GITHUB_API_URL=${_GITHUB_API_URL}
 GITHUB_API_UPLOAD_RELEASE_URL=${_GITHUB_API_UPLOAD_RELEASE_URL}
 GITHUB_API_CREATE_RELEASE_URL=${_GITHUB_API_CREATE_RELEASE_URL}
@@ -58,16 +62,15 @@ while true; do
         echo "    --verbose     Mode verbose,"
         echo "    --leaflet|l   Publication Leaflet (par defaut),"
         echo "    --ol3|o       Publication Openlayers,"
-        echo "    --version|v   [TODO] Numero de version du package à publier,"
         echo "    --build|b     Execution de la tache de compilation,"
         echo "    --tag|t       Execution de la tache de git-tag,"
         echo "    --publish|p   Execution de la tache de publication npm et bower,"
         echo "    --clean|C     Execution de la tache de nettoyage."
-        echo "Ex. Options longues : `basename $0` --leaflet --version='1.0.0-test'"
+        echo "Ex. Options longues : `basename $0` --leaflet"
         echo "                  --build"
         echo "                  --tag=false --publish=false"
         echo "                  --clean=true"
-        echo "Ex. Options courtes : `basename $0` -l -v '1.0.0-test'"
+        echo "Ex. Options courtes : `basename $0` -l"
         echo "                  -b"
         echo "                  -t false -p false"
         echo "                  -C true"
@@ -120,16 +123,6 @@ while true; do
   esac
 done
 
-# authentification github
-[ ${_PACKAGE_LIBRARY} == "leaflet" ] && {
-  GIT_DIR_PUBLISH=${_GIT_DIR_PUBLISH_LEAFLET}
-}
-
-# authentification github
-[ ${_PACKAGE_LIBRARY} == "ol3" ] && {
-  GIT_DIR_PUBLISH=${_GIT_DIR_PUBLISH_OPENLAYERS}
-}
-
 [ ${OPTS_VERBOSE} == true ] && {
   set -x
 }
@@ -181,6 +174,44 @@ info () {
 EOF
 }
 
+# git : utilise le mail de l'utilisateur courant ?
+_GIT_USER_MAIL=$(git config --get user.email)
+if [ -n ${_GIT_USER_MAIL} ]; then
+  printTo "Utilisation du 'email' de l'utilisateur courant (git config)"
+  GIT_USER_MAIL=${_GIT_USER_MAIL}
+fi
+
+# git : compte de l'utilisateur courant ?
+_GIT_USER_NAME=$(git config --get user.name)
+if [ -n ${_GIT_USER_NAME} ]; then
+  printTo "Utilisation du 'username' de l'utilisateur courant (git config)"
+  GIT_USER_NAME=${_GIT_USER_NAME}
+fi
+
+# type d'authentification pour le github ?
+if [ -n ${GIT_OAUTH_TOKEN} ]; then
+  # si authentification via token, on passe en https
+  _GIT_REPOSITORY_PREFIX="https://github.com/"
+  printTo "L'authentification par token va être utilisée sur le dépôt gitHub."
+else
+  # utilisation du protocole ssh par defaut
+  _GIT_REPOSITORY_PREFIX="git@github.com:"
+  printTo "L'authentification par clef SSH va être utilisée sur le dépôt gitHub."
+  GIT_OAUTH_SSHKEY="oui"
+fi
+
+# depot github
+[ ${_PACKAGE_LIBRARY} == "leaflet" ] && {
+  GIT_DIR_PUBLISH=${_GIT_DIR_PUBLISH_LEAFLET}
+  GIT_REPOSITORY_URL="${_GIT_REPOSITORY_PREFIX}${GIT_USER_NAME}/${_GIT_REPOSITORY_NAME_LEAFLET}.git"
+}
+
+# depot github
+[ ${_PACKAGE_LIBRARY} == "ol3" ] && {
+  GIT_DIR_PUBLISH=${_GIT_DIR_PUBLISH_OPENLAYERS}
+  GIT_REPOSITORY_URL="${_GIT_REPOSITORY_PREFIX}${GIT_USER_NAME}/${_GIT_REPOSITORY_NAME_OPENLAYERS}.git"
+}
+
 ##########
 # main ()
 
@@ -189,7 +220,7 @@ info
 printTo "BEGIN"
 
 ################################################################################
-printTo "--> build..."
+printTo "--> version..."
 
 # date build
 export _PACKAGE_BUILD=`date '+%d/%m/%y - %H:%M:%S'`
@@ -204,25 +235,27 @@ export _PACKAGE_VERSION=$(cat package.json |
 
 if [ ${OPTS_RUN_BUILD} == true ]
 then
+  ################################################################################
+  printTo "--> build..."
+
   doCmd "cd ${_PWD}"
-  doCmd "gulp --${_PACKAGE_LIBRARY}" > /dev/null 2>&1
-  doCmd "gulp publish --${_PACKAGE_LIBRARY}" > /dev/null 2>&1
-  doCmd "gulp --production --${_PACKAGE_LIBRARY}" > /dev/null 2>&1
-  doCmd "gulp publish --${_PACKAGE_LIBRARY}" > /dev/null 2>&1
+  doCmd "${_BIN_GULP} --${_PACKAGE_LIBRARY}" > /dev/null 2>&1
+  doCmd "${_BIN_GULP} publish --${_PACKAGE_LIBRARY}" > /dev/null 2>&1
+  doCmd "${_BIN_GULP} --production --${_PACKAGE_LIBRARY}" > /dev/null 2>&1
+  doCmd "${_BIN_GULP} publish --${_PACKAGE_LIBRARY}" > /dev/null 2>&1
 fi
 
-################################################################################
-printTo "--> tag"
 
 if [ ${OPTS_RUN_TAG} == true ]
 then
+  ################################################################################
+  printTo "--> tag"
 
   _PACKAGE_TAG=$(echo ${GIT_TAG_NAME} |
         sed -e "s@%version%@${_PACKAGE_VERSION}@g" |
         sed -e "s@%library%@${_PACKAGE_LIBRARY}@g")
 
   doCmd "git tag ${_PACKAGE_TAG}"
-
 
   if [ -n ${GIT_OAUTH_TOKEN} ]; then
     GIT_REPOSITORY_URL=$(echo ${GIT_REPOSITORY_URL} | sed -e "s/github.com/${GIT_USER_NAME}:${GIT_OAUTH_TOKEN}@github.com/")
@@ -232,19 +265,16 @@ then
 
 fi
 
-################################################################################
-printTo "--> TODO : publish"
 
 if [ ${OPTS_RUN_PUBLISH} == true ]
 then
-
-  ##############################################################################
-  printTo "--> create"
+  ################################################################################
+  printTo "--> publish"
 
   doCmd "mkdir ${GIT_DIR_PUBLISH}"
 
   ##############################################################################
-  printTo "--> data"
+  printTo "--> >>> data"
 
   _CHANGELOG_FILE="CHANGELOG_DRAFT.md"
 
@@ -253,7 +283,7 @@ then
   }
 
   ##############################################################################
-  printTo "--> sendData"
+  printTo "--> >>> sendData"
 
   _CHANGELOG_CONTENT=`cat ${GIT_DIR_PUBLISH}/CHANGELOG.md`
 
@@ -282,7 +312,7 @@ then
   fi
 
   ##############################################################################
-  printTo "--> zip"
+  printTo "--> >>> zip"
 
   _REQUEST_ZIP_NAME=""
   _REQUEST_ZIP_NAME+="GpPlugin"
@@ -296,7 +326,7 @@ then
   }
 
   ##############################################################################
-  printTo "--> sendZip"
+  printTo "--> >>> sendZip"
 
   if [ -f ${_REQUEST_ZIP_NAME} ] && [ ${OPTS_RUN_TAG} == true ]
   then

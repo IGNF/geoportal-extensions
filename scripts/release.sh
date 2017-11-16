@@ -47,7 +47,7 @@ NPM_OAUTH_PWD_MSQ="XXXXXX"
 
 # options properties
 #   --leaflet |l
-#   (--debug )
+#   (--verbose )
 #   --build |b, --data |d, --json |j, --commit |o, --publish |p, --clean |C
 OPTS_RUN_BUILD=${_OPTS_RUN_BUILD}
 OPTS_RUN_DATA=${_OPTS_RUN_DATA}
@@ -330,7 +330,9 @@ then
 fi
 
 ################################################################################
-# FIXME les sources font elles parties de la publication ?
+# FIXME
+# - les sources font elles parties de la publication ? non, uniquement les binaires...
+# - CHANGELOG ?
 if [ ${OPTS_RUN_DATA} == true ]
 then
   ##############################################################################
@@ -344,23 +346,17 @@ then
   [ ! -d "${GIT_DIR_PUBLISH}/dist" ] && {
     doCmd "mkdir ${GIT_DIR_PUBLISH}/dist"
   }
-  # cp -r dist/leaflet geoportal-extensions-leaflet/dist
+
   doCmd "cp -r ${_DIR_DIST}/${_PACKAGE_LIBRARY}/. ${GIT_DIR_PUBLISH}/dist"
-  # cp LICENCE.md geoportal-extensions-leaflet/
   doCmd "cp LICENCE.md ${GIT_DIR_PUBLISH}"
-  # cp README-leaflet.md geoportal-extensions-leaflet/README.md
   doCmd "cp README-${_PACKAGE_LIBRARY}.md ${GIT_DIR_PUBLISH}/README.md"
-  # cp CHANGELOG_DRAFT.md geoportal-extensions-leaflet/CHANGELOG.md
-  doCmd "cp CHANGELOG_DRAFT.md ${GIT_DIR_PUBLISH}/CHANGELOG.md"
+  # doCmd "cp CHANGELOG_DRAFT.md ${GIT_DIR_PUBLISH}/CHANGELOG.md"
 
   # [ ! -d "${GIT_DIR_PUBLISH}/src" ] && {
   #   doCmd "mkdir ${GIT_DIR_PUBLISH}/src"
   # }
-  # # cp src/Config.js geoportal-extensions-leaflet/src
   # doCmd "cp ${_DIR_SRC}/Config.js ${GIT_DIR_PUBLISH}/src"
-  # # cp -r src/Common geoportal-extensions-leaflet/src
   # doCmd "cp -r ${_DIR_SRC}/Common ${GIT_DIR_PUBLISH}/src"
-  # # cp -r src/Leaflet geoportal-extensions-leaflet/src
   # doCmd "cp -r ${_DIR_SRC}/${_PACKAGE_LIBRARY^} ${GIT_DIR_PUBLISH}/src"
 fi
 
@@ -448,7 +444,7 @@ then
 
   [ -d ${GIT_DIR_PUBLISH} ] && {
     doCmd "cd ${GIT_DIR_PUBLISH}"
-    # npm login
+    # npm login :
     # printf '${NPM_OAUTH_USER}\n${NPM_OAUTH_PWD}\n${NPM_OAUTH_MAIL}\n' | npm login  !?
     /usr/bin/expect << HEREDOC
     spawn npm login
@@ -462,7 +458,6 @@ then
 HEREDOC
     # wait
     sleep 2
-    # npm publish
     doCmd "npm publish"
     # INFO
     # la publication sous npm met en place automatiquement la publication sous Yarn !

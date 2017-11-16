@@ -35,8 +35,8 @@ bower register geoportal-extensions-openlayers http://github.com/IGNF/geoportal-
 yarn publish
 
 > **Note**
-> La publication sous Yarn est inutile car elle se base sur la publication du
-registre NPM ! C'est donc automatique...
+> La publication sous Yarn est automatique car elle se base sur la publication du
+registre NPM !
 
 ## Notes sur la Publication via npm (howto)
 
@@ -91,13 +91,14 @@ Ces depots contiennent les fichiers suivants :
     dist/.js
     dist/.css
     dist/images
-    CHANGELOG.md
+    CHANGELOG.md (obselète)
     LICENCE.md
     package.json
     README.md
 
 > **TODO**
 Le dépôt est à initialiser manuellement pour une 1ere utilisation !
+Le dépôt est à mettre vide, puis modifier les settings (no issues, ...)
 
 ## Scripts de construction des releases (+ publication)
 
@@ -137,17 +138,16 @@ avec la commande *gulp*.
 * data - copie des fichiers utiles dans le dépôt de publication avec *git*.
   * copie des binaires,
   * copie des README, COMPILE, LICENCE
-  * copie du CHANGELOG_DRAFT (**INFO** : ne pas oublier de le mettre à jour au préalable)
 
 * commit - *commit* des modifications de la publication avec *git*.
-  * tag - mise en place du *tag* de publication avec *git*.
+
+* tag - mise en place du *tag* de publication avec *git*.
 
 * publish - publication via *npm* et *bower (obselète)*
 
 * clean - nettoyage du répertoire
 
 > **A faire au préalable**
->   - Le contenu du changelog est extrait du fichier *CHANGELOG_DRAFT.md*.
 >   - La version de la publication est extraite du fichier *package.json*.
 >   - Pour l'authentification, il faut renseigner soit des *variable d'environnement*, ou
 >   soit mettre à disposition des *clefs SSH* (cf. authentification)
