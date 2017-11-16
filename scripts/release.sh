@@ -32,6 +32,7 @@ source ${_PROPERTIES}
 # git properties
 GIT_COMMIT_MESSAGE=${_GIT_COMMIT_MESSAGE}
 GIT_TAG_NAME=${_GIT_TAG_NAME}
+GIT_ORGANIZATION=${_GIT_ORGANIZATION}
 GIT_FILES_ADD=${_GIT_FILES_ADD}
 GIT_USER_NAME=${_GIT_USER_NAME} # surchargé par la config client !
 GIT_USER_MAIL=${_GIT_USER_MAIL} # surchargé par la config client !
@@ -273,16 +274,22 @@ if [ -n ${_GIT_USER_NAME} ]; then
   GIT_USER_NAME=${_GIT_USER_NAME}
 fi
 
+# organisation ou compte utilisateur ?
+GIT_REPOSITORY_USER_NAME=${GIT_USER_NAME}
+if [ -n "${GIT_ORGANIZATION}" ]; then
+  GIT_REPOSITORY_USER_NAME=${GIT_ORGANIZATION}
+fi
+
 # depot github leaflet
 [ ${_PACKAGE_LIBRARY} == "leaflet" ] && {
   GIT_DIR_PUBLISH=${_GIT_DIR_PUBLISH_LEAFLET}
-  GIT_REPOSITORY="${_GIT_REPOSITORY_PREFIX}${GIT_USER_NAME}/${_GIT_REPOSITORY_NAME_LEAFLET}.git"
+  GIT_REPOSITORY="${_GIT_REPOSITORY_PREFIX}${GIT_REPOSITORY_USER_NAME}/${_GIT_REPOSITORY_NAME_LEAFLET}.git"
 }
 
 # depot github ol
 [ ${_PACKAGE_LIBRARY} == "ol3" ] && {
   GIT_DIR_PUBLISH=${_GIT_DIR_PUBLISH_OPENLAYERS}
-  GIT_REPOSITORY="${_GIT_REPOSITORY_PREFIX}${GIT_USER_NAME}/${_GIT_REPOSITORY_NAME_OPENLAYERS}.git"
+  GIT_REPOSITORY="${_GIT_REPOSITORY_PREFIX}${GIT_REPOSITORY_USER_NAME}/${_GIT_REPOSITORY_NAME_OPENLAYERS}.git"
 }
 
 # authentification pour npm si besoin...
@@ -411,6 +418,7 @@ then
 
     # authentification github via token si renseignée, sinon via SSH
     if [ -n ${GIT_OAUTH_TOKEN} ]; then
+      # FIXME organisation ?
       _GIT_REPOSITORY_TOKEN=$(echo ${GIT_REPOSITORY} | sed -e "s/github.com/${GIT_USER_NAME}:${GIT_OAUTH_TOKEN}@github.com/")
       doCmd "git remote set-url origin ${_GIT_REPOSITORY_TOKEN}"
     fi
