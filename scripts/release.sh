@@ -35,8 +35,8 @@ source ${_PROPERTIES}
 GIT_COMMIT_MESSAGE=${_GIT_COMMIT_MESSAGE}
 GIT_TAG_NAME=${_GIT_TAG_NAME}
 GIT_FILES_ADD=${_GIT_FILES_ADD}
-GIT_USER_NAME=${_GIT_USER_NAME}
-GIT_USER_MAIL=${_GIT_USER_MAIL}
+GIT_USER_NAME=${_GIT_USER_NAME} # surchargé par la config client !
+GIT_USER_MAIL=${_GIT_USER_MAIL} # surchargé par la config client !
 GIT_OAUTH_TOKEN=${_GIT_OAUTH_TOKEN}
 GIT_OAUTH_SSHKEY="non"
 
@@ -250,7 +250,7 @@ info () {
 EOF
 }
 
-# type d'authentification pour le github
+# type d'authentification pour le github ?
 if [ -n ${GIT_OAUTH_TOKEN} ]; then
   # si authentification via token, on passe en https
   _GIT_REPOSITORY_PREFIX="https://github.com/"
@@ -260,6 +260,19 @@ else
   _GIT_REPOSITORY_PREFIX="git@github.com:"
   printTo "L'authentification par clef SSH va être utilisée sur le dépôt gitHub."
   GIT_OAUTH_SSHKEY="oui"
+fi
+
+# utilisateur courant pour le github ?
+_GIT_USER_MAIL=$(git config --get user.email)
+if [ -n ${_GIT_USER_MAIL} ]; then
+  printTo "Utilisation du 'email' de l'utilisateur courant (git config)"
+  GIT_USER_MAIL=${_GIT_USER_MAIL}
+fi
+
+_GIT_USER_NAME=$(git config --get user.name)
+if [ -n ${_GIT_USER_NAME} ]; then
+  printTo "Utilisation du 'username' de l'utilisateur courant (git config)"
+  GIT_USER_NAME=${_GIT_USER_NAME}
 fi
 
 # depot github leaflet
@@ -274,7 +287,7 @@ fi
   GIT_REPOSITORY="${_GIT_REPOSITORY_PREFIX}${GIT_USER_NAME}/${_GIT_REPOSITORY_NAME_OPENLAYERS}.git"
 }
 
-# authentification pour npm
+# authentification pour npm si besoin...
 [ -z ${NPM_OAUTH_PWD} ] && {
   if [ ${OPTS_RUN_PUBLISH} == true ]
   then
