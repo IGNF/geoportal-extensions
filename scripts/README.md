@@ -70,9 +70,9 @@ Mettre à jour un package :
 Ajouter l'utilisateur de publication :
 ```
 npm adduser or login
-Username: lowzonenose
+Username: ignf
 Password:
-Email: (this IS public) jpbazonnais@gmail.com
+Email: (this IS public) contact.geoservices@ign.fr
 ```
 > **Depublication du package (complete)**
 npm unpublish --force
