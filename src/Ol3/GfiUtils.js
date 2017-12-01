@@ -147,6 +147,10 @@ define([
             map.featuresOverlay = new ol.Overlay({
                 // id : id,
                 element : element,
+                autoPan : true,
+                autoPanAnimation : {
+                    duration : 250
+                },
                 positioning : "bottom-center",
                 insertFirst : false, // popup appears on top of other overlays if any
                 stopEvent : true
