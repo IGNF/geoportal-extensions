@@ -46,9 +46,12 @@ define([
          * @param {ol.Coordinate} coords - coordinates where to anchor popup.
          * @param {String} content - content to display
          * @param {String} [contentType='text/html'] - content mime-type
+         * @param {Object} autoPanOptions - Auto-pan pop-up options
+         * @param {Boolean} [autoPanOptions.autoPan = true] - Specifies whether the map should auto-pan if the pop-up is rendered outside of the canvas. Defaults to true.
+         * @param {Object} [autoPanOptions.autoPanAnimation] - Used to customize the auto-pan animation. See {@link https://openlayers.org/en/latest/apidoc/olx.html#.OverlayPanOptions olx.OverlayPanOptions}.
          * @return {Boolean} displayed - indicates if something has been displayed
          */
-        displayInfo : function (map, coords, content, contentType) {
+        displayInfo : function (map, coords, content, contentType, autoPanOptions) {
             logger.trace("[GfiUtils] : displayInfo...") ;
 
             if ( !contentType ) {
@@ -65,6 +68,12 @@ define([
             var _content = content;
             _content = _content.replace(/\n/g, "");
             _content = _content.replace(/(>)\s*(<)/g, "$1$2");
+
+            if ( autoPanOptions === undefined ) {
+                autoPanOptions = {
+                    autoPan : true
+                };
+            }
 
             var scope  = typeof window !== "undefined" ? window : null;
 
@@ -147,10 +156,8 @@ define([
             map.featuresOverlay = new ol.Overlay({
                 // id : id,
                 element : element,
-                autoPan : true,
-                autoPanAnimation : {
-                    duration : 250
-                },
+                autoPan : autoPanOptions.autoPan,
+                autoPanAnimation : autoPanOptions.autoPanAnimation,
                 positioning : "bottom-center",
                 insertFirst : false, // popup appears on top of other overlays if any
                 stopEvent : true
