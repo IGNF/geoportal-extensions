@@ -179,7 +179,7 @@ define([
                 console.log("[ERROR] GetFeatureInfo:_initialize - autoPan parameter should be a boolean");
                 return;
             }
-            this._autoPan = options.autoPan;
+            this._autoPan = typeof options.autoPan === "undefined" ? true : options.autoPan;
         }
 
         if ( options.autoPanAnimation ) {
