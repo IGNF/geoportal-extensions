@@ -41,6 +41,9 @@ define([
      * @param {String} [gfiOptions.options.cursorStyle='pointer'] - specifies the type of cursor to be displayed when pointing on vector feature of a layer previously added to the control. The value must be choosen in the possible values of the css cursor property.
      * @param {String} [gfiOptions.options.proxyUrl] - Proxy URL to avoid cross-domain problems.
      * @param {Array.<String>} [gfiOptions.options.noProxyDomains] - Proxy will not be used for this list of domain names. Only use if you know what you're doing.
+     * @param {Boolean} [gfiOptions.options.autoPan = true] - Specifies whether the map should auto-pan if the pop-up is rendered outside of the canvas. Defaults to true.
+     * @param {olx.OverlayPanOptions} [gfiOptions.options.autoPanAnimation] - Used to customize the auto-pan animation. See {@link https://openlayers.org/en/latest/apidoc/olx.html#.OverlayPanOptions olx.OverlayPanOptions}.
+     * @param {Number} [gfiOptions.options.autoPanMargin] - Margin (in pixels) between the pop-up and the border of the map when autopanning. Default is 20.
      */
     function GetFeatureInfo (gfiOptions) {
 
@@ -169,6 +172,39 @@ define([
                 return;
             }
             this._noProxyDomains = options.noProxyDomains;
+        }
+
+        if ( options.autoPan ) {
+            if ( typeof options.boolean !== "undefined" &&  typeof options.autoPan !== "boolean" ) {
+                console.log("[ERROR] GetFeatureInfo:_initialize - autoPan parameter should be a string");
+                return;
+            }
+            this._autoPan = options.autoPan;
+        }
+
+        if ( options.autoPanAnimation ) {
+            if (options.autoPanAnimation.duration) {
+                if ( typeof options.autoPanAnimation.duration !== "number" ) {
+                    console.log("[ERROR] GetFeatureInfo:_initialize - autoPanAnimation parameter is invalid : duration should be a number.");
+                    return;
+                }
+            }
+
+            if ( options.autoPanAnimation.easing) {
+                if ( typeof options.autoPanAnimation.easing !== "function" ) {
+                    console.log("[ERROR] GetFeatureInfo:_initialize - autoPanAnimation parameter is invalid : easing should be a ol.easing function or a custom function.");
+                    return;
+                }
+            }
+            this._autoPanAnimation = options.autoPanAnimation;
+        }
+
+        if ( options.autoPanMargin ) {
+            if ( typeof options.autoPanMargin !== "number" ) {
+                console.log("[ERROR] GetFeatureInfo:_initialize - autoPanMargin parameter should be a number");
+                return;
+            }
+            this._autoPanMargin = options.autoPanMargin;
         }
 
         // {Object} control layers list.

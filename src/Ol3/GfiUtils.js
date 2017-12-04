@@ -266,7 +266,7 @@ define([
          * @param {Array.<ol.layer.Layer>} olLayers - layers requested
          *
          */
-        displayVectorFeatureInfo : function (map, olCoordinate, olLayers) {
+        displayVectorFeatureInfo : function (map, olCoordinate, olLayers, autoPanOptions) {
             var pixel = map.getPixelFromCoordinate(olCoordinate);
 
             // couches vecteur : on remplit un tableau avec les features à proximité.
@@ -286,7 +286,7 @@ define([
                 return false;
             }
             // Affichage des features.
-            this.displayInfo(map, olCoordinate, content.innerHTML) ;
+            this.displayInfo(map, olCoordinate, content.innerHTML, "text/html", autoPanOptions) ;
             // this._displayInfo(evt.coordinate,content,"text/html") ;
             return true;
         },
@@ -308,9 +308,13 @@ define([
          * @param {Object} [proxyOptions] - options for poxy configuration :
          * @param {String} [proxyOptions.proxyUrl] - Proxy URL to avoid cross-domain problems, if not already set in mapOptions. Mandatory to import WMS and WMTS layer.
          * @param {Array.<String>} [proxyOptions.noProxyDomains] - Proxy will not be used for this list of domain names. Only use if you know what you're doing (if not already set in mapOptions).
+         * @param {Object} [autoPanOptions] - Auto-pan pop-up options
+         * @param {Boolean} [autoPanOptions.autoPan = true] - Specifies whether the map should auto-pan if the pop-up is rendered outside of the canvas. Defaults to true.
+         * @param {olx.OverlayPanOptions} [autoPanOptions.autoPanAnimation] - Used to customize the auto-pan animation. See {@link https://openlayers.org/en/latest/apidoc/olx.html#.OverlayPanOptions olx.OverlayPanOptions}.
+         * @param {Number} [autoPanOptions.autoPanMargin] - Margin (in pixels) between the pop-up and the border of the map when autopanning. Default is 20.
          *
          */
-        displayFeatureInfo : function (map, olCoordinate, gfiLayers, proxyOptions) {
+        displayFeatureInfo : function (map, olCoordinate, gfiLayers, proxyOptions, autoPanOptions) {
             // Layers orders
             var layersOrdered = {};
             for ( var j = 0; j < gfiLayers.length; j++ ) {
@@ -436,7 +440,7 @@ define([
                                 }
                             }
                         }
-                        report( data.scope.displayVectorFeatureInfo(map, data.coordinate, vectorLayersOrdered) );
+                        report( data.scope.displayVectorFeatureInfo(map, data.coordinate, vectorLayersOrdered, autoPanOptions) );
                     } else {
                         // var self = data.scope;
                         Gp.Protocols.XHR.call({
@@ -456,7 +460,7 @@ define([
                                 }
 
                                 // on affiche la popup GFI !
-                                var displayed = !exception && context.displayInfo(map, data.coordinate, resp);
+                                var displayed = !exception && context.displayInfo(map, data.coordinate, resp, "text/html", autoPanOptions);
                                 // on reporte sur la prochaine requête...
                                 report(displayed);
                             },
@@ -538,6 +542,17 @@ define([
                 proxyOptions.noProxyDomains = gfiObj._noProxyDomains;
             }
 
+            var autoPanOptions = {};
+            if ( gfiObj._autoPan ) {
+                autoPanOptions.autoPan = gfiObj._autoPan;
+            }
+            if ( gfiObj._autoPanAnimation ) {
+                autoPanOptions.autoPanAnimation = gfiObj._autoPanAnimation;
+            }
+            if ( gfiObj._autoPanMargin ) {
+                autoPanOptions.autoPanMargin = gfiObj._autoPanMargin;
+            }
+
             var eventLayers = [];
             for ( var j = 0 ; j < gfiObj._layers.length ; ++j ) {
                 var event = (gfiObj._layers[j].event) ? gfiObj._layers[j].event : gfiObj._defaultEvent;
@@ -551,7 +566,7 @@ define([
 
             var coords = this.getPosition(e,map);
 
-            this.displayFeatureInfo(map, coords, eventLayers, proxyOptions);
+            this.displayFeatureInfo(map, coords, eventLayers, proxyOptions, autoPanOptions);
         }
     };
     return GfiUtils;
