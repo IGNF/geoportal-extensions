@@ -175,8 +175,8 @@ define([
         }
 
         if ( options.autoPan ) {
-            if ( typeof options.boolean !== "undefined" &&  typeof options.autoPan !== "boolean" ) {
-                console.log("[ERROR] GetFeatureInfo:_initialize - autoPan parameter should be a string");
+            if ( typeof options.autoPan !== "undefined" &&  typeof options.autoPan !== "boolean" ) {
+                console.log("[ERROR] GetFeatureInfo:_initialize - autoPan parameter should be a boolean");
                 return;
             }
             this._autoPan = options.autoPan;
