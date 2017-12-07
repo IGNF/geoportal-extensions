@@ -47,7 +47,7 @@ define([
          * @param {String} content - content to display
          * @param {String} [contentType='text/html'] - content mime-type
          * @param {Object} autoPanOptions - Auto-pan pop-up options
-         * @param {Boolean} [autoPanOptions.autoPan = true] - Specifies whether the map should auto-pan if the pop-up is rendered outside of the canvas. Defaults to true.
+         * @param {Boolean} [autoPanOptions.autoPan] - Specifies whether the map should auto-pan if the pop-up is rendered outside of the canvas
          * @param {olx.OverlayPanOptions} [autoPanOptions.autoPanAnimation] - Used to customize the auto-pan animation. See {@link https://openlayers.org/en/latest/apidoc/olx.html#.OverlayPanOptions olx.OverlayPanOptions}.
          * @param {Number} [autoPanOptions.autoPanMargin] - Margin (in pixels) between the pop-up and the border of the map when autopanning. Default is 20.
          * @return {Boolean} displayed - indicates if something has been displayed
@@ -69,12 +69,6 @@ define([
             var _content = content;
             _content = _content.replace(/\n/g, "");
             _content = _content.replace(/(>)\s*(<)/g, "$1$2");
-
-            if ( autoPanOptions === undefined ) {
-                autoPanOptions = {
-                    autoPan : true
-                };
-            }
 
             var scope  = typeof window !== "undefined" ? window : null;
 

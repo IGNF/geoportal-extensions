@@ -174,13 +174,11 @@ define([
             this._noProxyDomains = options.noProxyDomains;
         }
 
-        if ( options.autoPan ) {
-            if ( typeof options.autoPan !== "undefined" &&  typeof options.autoPan !== "boolean" ) {
-                console.log("[ERROR] GetFeatureInfo:_initialize - autoPan parameter should be a boolean");
-                return;
-            }
-            this._autoPan = typeof options.autoPan === "undefined" ? true : options.autoPan;
+        if ( typeof options.autoPan !== "undefined" &&  typeof options.autoPan !== "boolean" ) {
+            console.log("[ERROR] GetFeatureInfo:_initialize - autoPan parameter should be a boolean");
+            return;
         }
+        this._autoPan = ( typeof options.autoPan === "undefined" ) ? true : options.autoPan;
 
         if ( options.autoPanAnimation ) {
             if (options.autoPanAnimation.duration) {
