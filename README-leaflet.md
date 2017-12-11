@@ -37,18 +37,44 @@ L'utilisation de l'extension Géoportail pour Leaflet se fait via les étapes su
 
 ### Téléchargement
 
-Vous pouvez récupérer l'extension Géoportail pour Leaflet [ici](https://github.com/IGNF/geoportal-extensions/releases/download/leaflet-0.9.1/GpPluginLeaflet-0.9.1.zip).
+Vous pouvez récupérer l'extension Géoportail pour Leaflet soit par [téléchargement direct](#download-direct), soit en utilisant le [gestionnaire de dépendances javascript NPM](#download-npm).
 
-Elle contient l'arborescence suivante :
+L'extension Géoportail pour Leaflet comprend l'arborescence de fichiers suivante :
+
 
 ```
- leaflet/
+  <Extension Géoportail pour Leaflet>/
     GpPluginLeaflet.js         (version minifiée du code javascript pour une utilisation en production)
     GpPluginLeaflet.css        (version minifiée des css pour une utilisation en production)
     GpPluginLeaflet-src.js     (version non minifiée du code javascript pour une utilisation en développement)
     GpPluginLeaflet-src.css    (version non minifiée des css pour une utilisation en développement)
     img/                       (resources images utilisées par les fichiers CSS)
 ```
+
+Les scripts de Leaflet s'obtiennent sur [la page de téléchargement de Leaflet](http://leafletjs.com/download.html).
+
+<a id="download-direct"/>
+
+### Téléchargement direct
+
+Vous pouvez télécharger la dernière version de l'extension Géoportail pour Leaflet directement sur [la page des releases des extensions Géoportail](https://github.com/IGNF/geoportal-extensions/releases).
+
+L'archive téléchargée (GpLeaflet.zip) comprend l'arborescence décrite ci-dessus.
+
+
+<a id="download-npm"/>
+
+### Récupération avec NPM
+
+L'extension Géoportail pour Leaflet est aussi disponible dans les dépôts [NPM](https://www.npmjs.com/package/geoportal-extensions-leaflet).
+
+Prérequis : [NodeJS](https://nodejs.org/en/) et [npm](https://www.npmjs.com/) installés.
+
+```
+npm i geoportal-extensions-leaflet
+```
+
+L'arborescence décrite ci-dessus sera alors accessible dans le répertoire `node_modules/geoportal-extensions-leaflet/dist/` de votre projet.
 
 
 <a id="integration"/>
