@@ -39,7 +39,7 @@
   },
   "homepage": "https://github.com/IGNF/geoportal-extensions#readme",
   "dependencies": {
-    "geoportal-access-lib": "^1.0.1",
+    "geoportal-access-lib": "^1.1.0",
     "leaflet": "1.2.0",
     "leaflet-draw": "0.4.12",
     "openlayers": "4.0.1",
