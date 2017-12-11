@@ -1,4 +1,4 @@
-# Extensions Géoportail pour Leaflet
+# Extension Géoportail pour Leaflet
 
 L'extension Géoportail pour Leaflet propose les fonctionnalités suivantes à utiliser en complément de la biblothèque [Leaflet](http://leafletjs.com/) :
 

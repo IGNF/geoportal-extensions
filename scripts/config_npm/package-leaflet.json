@@ -1,0 +1,25 @@
+{
+    "name":"geoportal-extensions-leaflet",
+    "license":"CECILL-B",
+    "author":"IGNF",
+    "main":"dist/GpPluginLeaflet.js",
+    "homepage":"https://geoservices.ign.fr/documentation/utilisation_web/extension-leaflet.html",
+    "description":"French Geoportal Extension for Leaflet",
+    "scripts":{},
+    "bugs":{},
+    "keywords":[
+        "geoportail",
+        "plugin",
+        "javascript",
+        "leaflet",
+        "publish"
+    ],
+    "devDependencies":{},
+    "directories":{},
+    "repository":{
+        "url":"https://github.com/IGNF/geoportal-extensions.git",
+        "type":"git"
+    },
+    "version":"1.0.0-beta.6",
+    "dependencies":{}
+}

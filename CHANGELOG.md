@@ -2,30 +2,46 @@
 
 ## [Unreleased](https://github.com/IGNF/geoportal-extensions/tree/HEAD)
 
-[Full Changelog](https://github.com/IGNF/geoportal-extensions/compare/ol3-0.12.0...HEAD)
+[Full Changelog](https://github.com/IGNF/geoportal-extensions/compare/leaflet-0.9.1...HEAD)
 
-**Implemented enhancements:**
+- Extension Leaflet Route : paramétrer le lieu de départ ou d'arrivé du widget [\#48](https://github.com/IGNF/geoportal-extensions/issues/48)
+
+- Compilation sous Windows : régression \(path.join\) [\#167](https://github.com/IGNF/geoportal-extensions/issues/167)
+- Extension Leaflet LayerSwitcher : Mauvaise interprétation de l'option collapsed... [\#154](https://github.com/IGNF/geoportal-extensions/issues/154)
+- Extension Leaflet LayerSwitcher : mauvaise gestion de paramètre de visibilité des couches [\#152](https://github.com/IGNF/geoportal-extensions/issues/152)
+- Leaflet et OL3 - SearchBar : décalages dans le positionnement avec l'autcompletion [\#151](https://github.com/IGNF/geoportal-extensions/issues/151)
+- ol.control.GeoportalAttribution : suppression des attributions des couches non Géoportail [\#146](https://github.com/IGNF/geoportal-extensions/issues/146)
+- ol.control.SearchEngine : postalcode autocompletion returns null coordinates \[0,0\] [\#107](https://github.com/IGNF/geoportal-extensions/issues/107)
+
+- L.geoportalControl.Route rechercher uniquement à partir du nom de la commune ou du lieu-dit [\#165](https://github.com/IGNF/geoportal-extensions/issues/165)
+- L.geoportalControl.LayerSwitcher option [\#156](https://github.com/IGNF/geoportal-extensions/issues/156)
+- Calcul d'Isochrone, pointeur qui ne se place pas au bon endroit [\#144](https://github.com/IGNF/geoportal-extensions/issues/144)
+- Extension Leaflet Layer : Provide custom serviceUrl [\#142](https://github.com/IGNF/geoportal-extensions/issues/142)
+- Dependance à geoportal-access-lib depuis NPM [\#128](https://github.com/IGNF/geoportal-extensions/issues/128)
+- Compilation sous windows [\#119](https://github.com/IGNF/geoportal-extensions/issues/119)
+
+- Feature template samples [\#161](https://github.com/IGNF/geoportal-extensions/pull/161) ([lowzonenose](https://github.com/lowzonenose))
+- Feature dependency npm [\#160](https://github.com/IGNF/geoportal-extensions/pull/160) ([lowzonenose](https://github.com/lowzonenose))
+- Debug CSS rules based on dje remarks [\#155](https://github.com/IGNF/geoportal-extensions/pull/155) ([gcebelieu](https://github.com/gcebelieu))
+- Test de render sur les extensions [\#153](https://github.com/IGNF/geoportal-extensions/pull/153) ([lowzonenose](https://github.com/lowzonenose))
+- fix \(controls\) : fixes GlobeViewExtended  [\#148](https://github.com/IGNF/geoportal-extensions/pull/148) ([vcoindet](https://github.com/vcoindet))
+- fix \#146 : clean previous attributions only for Geoportal Layers [\#147](https://github.com/IGNF/geoportal-extensions/pull/147) ([lboulanger](https://github.com/lboulanger))
+
+## [leaflet-0.9.1](https://github.com/IGNF/geoportal-extensions/tree/leaflet-0.9.1) (2017-08-17)
+[Full Changelog](https://github.com/IGNF/geoportal-extensions/compare/ol3-0.12.0...leaflet-0.9.1)
 
 - Compatibilité des extensions Leaflet avec la version 1.1.0 de Leaflet [\#121](https://github.com/IGNF/geoportal-extensions/issues/121)
 
-**Fixed bugs:**
-
 - Extension Leaflet : l'édition des coordonnées du MousePosition ne fonctionne pas bien [\#138](https://github.com/IGNF/geoportal-extensions/issues/138)
-
-**Closed issues:**
 
 - drawing tools conflicts with openlayers popups  [\#143](https://github.com/IGNF/geoportal-extensions/issues/143)
 - Edition des coordonnées \(MousePosition\) : gestion du cas où displayCoordinates = false [\#140](https://github.com/IGNF/geoportal-extensions/issues/140)
-
-**Merged pull requests:**
 
 - MousePosition coordinates edition : bug fixes [\#141](https://github.com/IGNF/geoportal-extensions/pull/141) ([lboulanger](https://github.com/lboulanger))
 - Test  de la version Leaflet 1.1.0 [\#123](https://github.com/IGNF/geoportal-extensions/pull/123) ([lowzonenose](https://github.com/lowzonenose))
 
 ## [ol3-0.12.0](https://github.com/IGNF/geoportal-extensions/tree/ol3-0.12.0) (2017-07-27)
 [Full Changelog](https://github.com/IGNF/geoportal-extensions/compare/leaflet-0.9.0...ol3-0.12.0)
-
-**Implemented enhancements:**
 
 - extension Ol3 : ol.layer.WMS : le nom du layer n'est pas rempli automatiquement dans le layerswitcher [\#110](https://github.com/IGNF/geoportal-extensions/issues/110)
 - Extension OL3 : gestion des styles avec le format KML [\#98](https://github.com/IGNF/geoportal-extensions/issues/98)
@@ -34,18 +50,13 @@
 - Extension Ol3 - widget d'import de données : ajouter le format GeoJSON [\#77](https://github.com/IGNF/geoportal-extensions/issues/77)
 - L'implémentation de Promise \(ES6\) écrase celle existante [\#67](https://github.com/IGNF/geoportal-extensions/issues/67)
 
-**Fixed bugs:**
-
 - \[Safari\]\[OL3\] Profil altimétrique [\#108](https://github.com/IGNF/geoportal-extensions/issues/108)
-- ol.control.SearchEngine : postalcode autocompletion returns null coordinates \[0,0\] [\#107](https://github.com/IGNF/geoportal-extensions/issues/107)
 - \[Extension Route\] Problème d'affichage du tracé du calcul d'itinéraire sur un petit parcours... [\#95](https://github.com/IGNF/geoportal-extensions/issues/95)
 - OL3 : widget elevationPath [\#93](https://github.com/IGNF/geoportal-extensions/issues/93)
 - Extension OL3 : Récupérer la couche de dessin après import des données pour vision des légendes et édition [\#91](https://github.com/IGNF/geoportal-extensions/issues/91)
 - Extension OL3 : Problèmes d'exports dûs à l'incompatibilité entre la couche dessin et la couche mesure [\#84](https://github.com/IGNF/geoportal-extensions/issues/84)
 - ol.layer.GeoportalWMTS et GeoportalWMS : résolutions arrondies [\#70](https://github.com/IGNF/geoportal-extensions/issues/70)
 - Extension OL3 : geocodage inverse - ménage à la suppression du controle ? [\#58](https://github.com/IGNF/geoportal-extensions/issues/58)
-
-**Closed issues:**
 
 - Affichage des coordonnées \(MousePosition\) : toujours afficher les unités [\#135](https://github.com/IGNF/geoportal-extensions/issues/135)
 - Edition des coordonnées \(MousePosition\) : infobulle à n'afficher qu'en mode édition [\#134](https://github.com/IGNF/geoportal-extensions/issues/134)
@@ -62,8 +73,6 @@
 - \[Question\] : Renommer les éléments automatiquement ajoutés à la couche LayerSwitcher après instanciation de la carte ? [\#85](https://github.com/IGNF/geoportal-extensions/issues/85)
 - Extensions : certains widgets ne peuvent pas apparaitre plusieurs fois sur une même page [\#74](https://github.com/IGNF/geoportal-extensions/issues/74)
 - Support complet de Leaflet 1.0 [\#68](https://github.com/IGNF/geoportal-extensions/issues/68)
-
-**Merged pull requests:**
 
 - fix \#135 : display mouseposition coordinates units [\#137](https://github.com/IGNF/geoportal-extensions/pull/137) ([lboulanger](https://github.com/lboulanger))
 - fix \#134 : mouseposition coordinates edition : display label only when editCoordinates is true [\#136](https://github.com/IGNF/geoportal-extensions/pull/136) ([lboulanger](https://github.com/lboulanger))
@@ -94,27 +103,19 @@
 ## [ol3-0.11.0](https://github.com/IGNF/geoportal-extensions/tree/ol3-0.11.0) (2016-12-04)
 [Full Changelog](https://github.com/IGNF/geoportal-extensions/compare/ol3-0.11.0-dev...ol3-0.11.0)
 
-**Implemented enhancements:**
-
 - Extension Ol3 : zoom moteur de recherche [\#78](https://github.com/IGNF/geoportal-extensions/issues/78)
 - Extension OL3 : proposer un outil de calcul de profil altimétrique  [\#64](https://github.com/IGNF/geoportal-extensions/issues/64)
 - Extension leaflet : Zoom barre de recherche  [\#63](https://github.com/IGNF/geoportal-extensions/issues/63)
 - outils de croquis Ol3 : "outils d'édition" \(et non pas "outils d'éditon"\) [\#53](https://github.com/IGNF/geoportal-extensions/issues/53)
 - ol.control.LayerImport : "epsg:3857" devrait permettre de reconnaître "EPSG:3857" [\#51](https://github.com/IGNF/geoportal-extensions/issues/51)
 
-**Fixed bugs:**
-
 - ol.control.LayerImport : extent mal récupérée pour les couches en EPSG:4326 [\#52](https://github.com/IGNF/geoportal-extensions/issues/52)
 - ol.control.GeoportalAttribution: attributions de type texte ne s'affichent pas sous Safari [\#50](https://github.com/IGNF/geoportal-extensions/issues/50)
-
-**Closed issues:**
 
 - Pouvoir tracer les requêtes issues des extensions Géoportail [\#65](https://github.com/IGNF/geoportal-extensions/issues/65)
 - Extension OL3 : proposer un outil de mesure de surface [\#57](https://github.com/IGNF/geoportal-extensions/issues/57)
 - Extension OL3 : proposer un outil de mesure de distance [\#56](https://github.com/IGNF/geoportal-extensions/issues/56)
 - Extension OL3 : proposer un outil de mesure d'azimuth [\#55](https://github.com/IGNF/geoportal-extensions/issues/55)
-
-**Merged pull requests:**
 
 - Feature leaflet elevationpath [\#82](https://github.com/IGNF/geoportal-extensions/pull/82) ([lowzonenose](https://github.com/lowzonenose))
 - Feature ol3 searchengine [\#81](https://github.com/IGNF/geoportal-extensions/pull/81) ([lowzonenose](https://github.com/lowzonenose))
@@ -130,15 +131,11 @@
 ## [ol3-0.11.0-dev](https://github.com/IGNF/geoportal-extensions/tree/ol3-0.11.0-dev) (2016-09-02)
 [Full Changelog](https://github.com/IGNF/geoportal-extensions/compare/leaflet-0.8.1-dev...ol3-0.11.0-dev)
 
-**Implemented enhancements:**
-
 - Evolutions widgets itinéraires et isochrones \(ol.control.Route et ol.control.Isocurve\) [\#43](https://github.com/IGNF/geoportal-extensions/issues/43)
 - Rajout des définitions du registre IGNF et enrichissement des définitions EPSG dans les extensions [\#36](https://github.com/IGNF/geoportal-extensions/issues/36)
 - Extension Ol3 : outil d'import - définir un style par défaut \(KML et GPX\) [\#76](https://github.com/IGNF/geoportal-extensions/issues/76)
 - Gérer l'import d'un KML créé via le portail [\#47](https://github.com/IGNF/geoportal-extensions/issues/47)
 - jsdoc ol.control.LayerSwitcher : corriger l'exemple d'utilisation de la méthode addLayer [\#45](https://github.com/IGNF/geoportal-extensions/issues/45)
-
-**Fixed bugs:**
 
 - Compatibilité IE10 : calculs d'itinéraires et isochrones non fonctionnels [\#40](https://github.com/IGNF/geoportal-extensions/issues/40)
 - Compatibilité IE10 : css des widgets Route et Isochrone [\#39](https://github.com/IGNF/geoportal-extensions/issues/39)
@@ -146,11 +143,7 @@
 - ol.control.LayerSwitcher : ordre des couches pas toujours bien mis à jour [\#49](https://github.com/IGNF/geoportal-extensions/issues/49)
 - ol.control.LayerSwitcher : addLayer with zIndex param [\#29](https://github.com/IGNF/geoportal-extensions/issues/29)
 
-**Closed issues:**
-
 - ol.control.GeoportalAttribution: ne pas créer d'éléments de liste \(\<li\>\) vide [\#35](https://github.com/IGNF/geoportal-extensions/issues/35)
-
-**Merged pull requests:**
 
 - Surcharge de ol.format.KML pour la gestion des styles sur les outils … [\#46](https://github.com/IGNF/geoportal-extensions/pull/46) ([lowzonenose](https://github.com/lowzonenose))
 - ol : route & isocurve enhancements [\#44](https://github.com/IGNF/geoportal-extensions/pull/44) ([lboulanger](https://github.com/lboulanger))
@@ -159,9 +152,7 @@
 - Feature register proj4 [\#37](https://github.com/IGNF/geoportal-extensions/pull/37) ([lowzonenose](https://github.com/lowzonenose))
 
 ## [leaflet-0.8.1-dev](https://github.com/IGNF/geoportal-extensions/tree/leaflet-0.8.1-dev) (2016-07-21)
-[Full Changelog](https://github.com/IGNF/geoportal-extensions/compare/ol3-0.10.0...leaflet-0.8.1-dev)
-
-**Implemented enhancements:**
+[Full Changelog](https://github.com/IGNF/geoportal-extensions/compare/leaflet-0.8.0...leaflet-0.8.1-dev)
 
 - Appel aux webservices en HTTPs quand on est en HTTPs [\#15](https://github.com/IGNF/geoportal-extensions/issues/15)
 - L.geoportalControl.SearchEngine : réponses sans lien avec la question [\#32](https://github.com/IGNF/geoportal-extensions/issues/32)
@@ -174,8 +165,6 @@
 - layerswitcher ol3 : gestion des changements de zindex [\#26](https://github.com/IGNF/geoportal-extensions/pull/26) ([lboulanger](https://github.com/lboulanger))
 - mise en place du controle d'import de couches \(OL3\) [\#24](https://github.com/IGNF/geoportal-extensions/pull/24) ([lboulanger](https://github.com/lboulanger))
 
-**Fixed bugs:**
-
 - ol.control.LayerImport : encodeURIComponent\(\) lorsqu'on utilise un proxy [\#34](https://github.com/IGNF/geoportal-extensions/issues/34)
 - L.geoportalControl.Route : Départ et Arrivée modifiés lors du calcul [\#6](https://github.com/IGNF/geoportal-extensions/issues/6)
 - L.geoportalControl.Route : nombre de chiffres pour l'affichage de la distance [\#5](https://github.com/IGNF/geoportal-extensions/issues/5)
@@ -184,24 +173,18 @@
 - Extension Leaflet Reverse en version Leaflet 1.0.0 [\#17](https://github.com/IGNF/geoportal-extensions/issues/17)
 - L.geoportalControl.Route : mise en évidence sur le détail de l'itinéraire [\#7](https://github.com/IGNF/geoportal-extensions/issues/7)
 
-**Closed issues:**
-
 - Authentification HTTP et couches WMTS [\#31](https://github.com/IGNF/geoportal-extensions/issues/31)
 - Support IE9 envisageable pour OL3 ? [\#13](https://github.com/IGNF/geoportal-extensions/issues/13)
-
-**Merged pull requests:**
 
 - fix issue\#29 : LayerSwitcher - addLayer with zIndex param [\#33](https://github.com/IGNF/geoportal-extensions/pull/33) ([lboulanger](https://github.com/lboulanger))
 - Remplacement de la référence vers spatialreference.org par epsg.io [\#27](https://github.com/IGNF/geoportal-extensions/pull/27) ([ThomasG77](https://github.com/ThomasG77))
 - correctif sur l'extension leaflet route [\#16](https://github.com/IGNF/geoportal-extensions/pull/16) ([lowzonenose](https://github.com/lowzonenose))
 - ajout des accents dans les formulaires du composant SearchEngine \(rec… [\#14](https://github.com/IGNF/geoportal-extensions/pull/14) ([lowzonenose](https://github.com/lowzonenose))
 
-## [ol3-0.10.0](https://github.com/IGNF/geoportal-extensions/tree/ol3-0.10.0) (2016-06-07)
-[Full Changelog](https://github.com/IGNF/geoportal-extensions/compare/leaflet-0.8.0...ol3-0.10.0)
-
 ## [leaflet-0.8.0](https://github.com/IGNF/geoportal-extensions/tree/leaflet-0.8.0) (2016-06-07)
-**Merged pull requests:**
+[Full Changelog](https://github.com/IGNF/geoportal-extensions/compare/ol3-0.10.0...leaflet-0.8.0)
 
+## [ol3-0.10.0](https://github.com/IGNF/geoportal-extensions/tree/ol3-0.10.0) (2016-06-07)
 - README-leaflet.md [\#3](https://github.com/IGNF/geoportal-extensions/pull/3) ([lowzonenose](https://github.com/lowzonenose))
 - ajout d'un "s" à OpenLayers 3 [\#2](https://github.com/IGNF/geoportal-extensions/pull/2) ([lboulanger](https://github.com/lboulanger))
 - Quelques correctifs OL3 \(syntaxe\) [\#1](https://github.com/IGNF/geoportal-extensions/pull/1) ([lboulanger](https://github.com/lboulanger))

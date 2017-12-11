@@ -73,9 +73,22 @@ function mixIt() {
   gulp publish --ol3 --itowns --mix
 }
 
-while getopts "aolviVI" opts
+# build docker
+function docker() {
+  echo "####### Build Docker !"
+  docker build -t geoportal-extensions .
+  echo "####### Run Docker !"
+  docker run -it --rm geoportal-extensions
+}
+
+while getopts "daolviVI" opts
 do
    case $opts in
+     d)
+        echo "#################################"
+        echo "########### DOCKER ! ###########"
+        docker
+        ;;
      o)
         echo "#################################"
         echo "###### OpenLayers bundle ! ######"

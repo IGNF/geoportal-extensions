@@ -4,7 +4,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_MousePosition__default_0_document_0_phone.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_MousePosition__default_0_document_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_MousePosition__default_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_MousePosition__default_0_document_0_phone.png",
         "label": "MousePosition : default",
@@ -24,7 +24,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_MousePosition__default_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_MousePosition__default_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_MousePosition__default_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_MousePosition__default_0_document_1_tablet.png",
         "label": "MousePosition : default",
@@ -37,7 +37,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "analysisTime": 240
+          "analysisTime": 509
         }
       },
       "status": "pass"
@@ -45,7 +45,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_MousePosition__move_to_0_document_0_phone.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_MousePosition__move_to_0_document_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_MousePosition__move_to_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_MousePosition__move_to_0_document_0_phone.png",
         "label": "MousePosition : move to",
@@ -57,7 +57,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "analysisTime": 59
+          "analysisTime": 239
         }
       },
       "status": "pass"
@@ -65,7 +65,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_MousePosition__move_to_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_MousePosition__move_to_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_MousePosition__move_to_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_MousePosition__move_to_0_document_1_tablet.png",
         "label": "MousePosition : move to",
@@ -77,7 +77,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "analysisTime": 107
+          "analysisTime": 309
         }
       },
       "status": "pass"
@@ -85,7 +85,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_MousePosition__show_settings_0_document_0_phone.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_MousePosition__show_settings_0_document_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_MousePosition__show_settings_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_MousePosition__show_settings_0_document_0_phone.png",
         "label": "MousePosition : show settings",
@@ -104,7 +104,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_MousePosition__show_settings_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_MousePosition__show_settings_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_MousePosition__show_settings_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_MousePosition__show_settings_0_document_1_tablet.png",
         "label": "MousePosition : show settings",
@@ -116,7 +116,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "analysisTime": 282
+          "analysisTime": 660
         }
       },
       "status": "pass"
@@ -124,7 +124,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_IsoChrone__default_0_document_0_phone.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_IsoChrone__default_0_document_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_IsoChrone__default_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_IsoChrone__default_0_document_0_phone.png",
         "label": "IsoChrone : default",
@@ -143,7 +143,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_IsoChrone__default_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_IsoChrone__default_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_IsoChrone__default_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_IsoChrone__default_0_document_1_tablet.png",
         "label": "IsoChrone : default",
@@ -155,7 +155,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "analysisTime": 320
+          "analysisTime": 136
         }
       },
       "status": "pass"
@@ -163,7 +163,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_IsoChrone__open_exclusions_0_document_0_phone.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_IsoChrone__open_exclusions_0_document_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_IsoChrone__open_exclusions_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_IsoChrone__open_exclusions_0_document_0_phone.png",
         "label": "IsoChrone : open exclusions",
@@ -182,7 +182,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_IsoChrone__open_exclusions_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_IsoChrone__open_exclusions_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_IsoChrone__open_exclusions_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_IsoChrone__open_exclusions_0_document_1_tablet.png",
         "label": "IsoChrone : open exclusions",
@@ -194,7 +194,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "analysisTime": 251
+          "analysisTime": 278
         }
       },
       "status": "pass"
@@ -202,7 +202,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_IsoChrone__compute_time_0_document_0_phone.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_IsoChrone__compute_time_0_document_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_IsoChrone__compute_time_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_IsoChrone__compute_time_0_document_0_phone.png",
         "label": "IsoChrone : compute time",
@@ -214,7 +214,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "analysisTime": 177
+          "analysisTime": 383
         }
       },
       "status": "pass"
@@ -222,7 +222,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_IsoChrone__compute_time_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_IsoChrone__compute_time_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_IsoChrone__compute_time_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_IsoChrone__compute_time_0_document_1_tablet.png",
         "label": "IsoChrone : compute time",
@@ -234,7 +234,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "analysisTime": 100
+          "analysisTime": 261
         }
       },
       "status": "pass"
@@ -242,7 +242,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_IsoDistance__default_0_document_0_phone.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_IsoDistance__default_0_document_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_IsoDistance__default_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_IsoDistance__default_0_document_0_phone.png",
         "label": "IsoDistance : default",
@@ -261,7 +261,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_IsoDistance__default_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_IsoDistance__default_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_IsoDistance__default_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_IsoDistance__default_0_document_1_tablet.png",
         "label": "IsoDistance : default",
@@ -273,7 +273,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "analysisTime": 113
+          "analysisTime": 371
         }
       },
       "status": "pass"
@@ -281,7 +281,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_IsoDistance__compute_distance_0_document_0_phone.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_IsoDistance__compute_distance_0_document_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_IsoDistance__compute_distance_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_IsoDistance__compute_distance_0_document_0_phone.png",
         "label": "IsoDistance : compute distance",
@@ -293,7 +293,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "analysisTime": 68
+          "analysisTime": 346
         }
       },
       "status": "pass"
@@ -301,7 +301,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_IsoDistance__compute_distance_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_IsoDistance__compute_distance_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_IsoDistance__compute_distance_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_IsoDistance__compute_distance_0_document_1_tablet.png",
         "label": "IsoDistance : compute distance",
@@ -313,7 +313,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "analysisTime": 131
+          "analysisTime": 148
         }
       },
       "status": "pass"
@@ -321,7 +321,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_LayerSwitcher__default_0_document_0_phone.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_LayerSwitcher__default_0_document_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_LayerSwitcher__default_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_LayerSwitcher__default_0_document_0_phone.png",
         "label": "LayerSwitcher : default",
@@ -340,7 +340,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_LayerSwitcher__default_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_LayerSwitcher__default_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_LayerSwitcher__default_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_LayerSwitcher__default_0_document_1_tablet.png",
         "label": "LayerSwitcher : default",
@@ -359,7 +359,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_LayerSwitcher__add_a_layer_0_document_0_phone.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_LayerSwitcher__add_a_layer_0_document_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_LayerSwitcher__add_a_layer_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_LayerSwitcher__add_a_layer_0_document_0_phone.png",
         "label": "LayerSwitcher : add a layer",
@@ -370,8 +370,8 @@ report({
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.10",
-          "analysisTime": 272
+          "misMatchPercentage": "0.00",
+          "analysisTime": 301
         }
       },
       "status": "pass"
@@ -379,7 +379,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_LayerSwitcher__add_a_layer_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_LayerSwitcher__add_a_layer_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_LayerSwitcher__add_a_layer_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_LayerSwitcher__add_a_layer_0_document_1_tablet.png",
         "label": "LayerSwitcher : add a layer",
@@ -390,8 +390,8 @@ report({
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.03",
-          "analysisTime": 128
+          "misMatchPercentage": "0.00",
+          "analysisTime": 94
         }
       },
       "status": "pass"
@@ -399,7 +399,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_LayerSwitcher__remove_a_layer_0_document_0_phone.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_LayerSwitcher__remove_a_layer_0_document_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_LayerSwitcher__remove_a_layer_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_LayerSwitcher__remove_a_layer_0_document_0_phone.png",
         "label": "LayerSwitcher : remove a layer",
@@ -410,8 +410,8 @@ report({
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.05",
-          "analysisTime": 263
+          "misMatchPercentage": "0.00",
+          "analysisTime": 164
         }
       },
       "status": "pass"
@@ -419,7 +419,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_LayerSwitcher__remove_a_layer_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_LayerSwitcher__remove_a_layer_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_LayerSwitcher__remove_a_layer_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_LayerSwitcher__remove_a_layer_0_document_1_tablet.png",
         "label": "LayerSwitcher : remove a layer",
@@ -430,8 +430,8 @@ report({
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.01",
-          "analysisTime": 267
+          "misMatchPercentage": "0.00",
+          "analysisTime": 98
         }
       },
       "status": "pass"
@@ -439,7 +439,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_Reverse__default_0_document_0_phone.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_Reverse__default_0_document_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_Reverse__default_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_Reverse__default_0_document_0_phone.png",
         "label": "Reverse : default",
@@ -458,7 +458,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_Reverse__default_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_Reverse__default_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_Reverse__default_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_Reverse__default_0_document_1_tablet.png",
         "label": "Reverse : default",
@@ -470,7 +470,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "analysisTime": 320
+          "analysisTime": 259
         }
       },
       "status": "pass"
@@ -478,7 +478,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_Route__default_0_document_0_phone.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_Route__default_0_document_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_Route__default_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_Route__default_0_document_0_phone.png",
         "label": "Route : default",
@@ -497,7 +497,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_Route__default_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_Route__default_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_Route__default_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_Route__default_0_document_1_tablet.png",
         "label": "Route : default",
@@ -509,7 +509,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "analysisTime": 137
+          "analysisTime": 160
         }
       },
       "status": "pass"
@@ -517,7 +517,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_Route__open_exclusions_0_document_0_phone.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_Route__open_exclusions_0_document_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_Route__open_exclusions_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_Route__open_exclusions_0_document_0_phone.png",
         "label": "Route : open exclusions",
@@ -536,7 +536,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_Route__open_exclusions_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_Route__open_exclusions_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_Route__open_exclusions_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_Route__open_exclusions_0_document_1_tablet.png",
         "label": "Route : open exclusions",
@@ -548,7 +548,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "analysisTime": 142
+          "analysisTime": 84
         }
       },
       "status": "pass"
@@ -556,7 +556,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_Route__compute_0_document_0_phone.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_Route__compute_0_document_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_Route__compute_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_Route__compute_0_document_0_phone.png",
         "label": "Route : compute",
@@ -568,7 +568,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "analysisTime": 136
+          "analysisTime": 184
         }
       },
       "status": "pass"
@@ -576,7 +576,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_Route__compute_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_Route__compute_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_Route__compute_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_Route__compute_0_document_1_tablet.png",
         "label": "Route : compute",
@@ -588,7 +588,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "analysisTime": 53
+          "analysisTime": 165
         }
       },
       "status": "pass"
@@ -596,7 +596,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_SearchEngine__default_0_document_0_phone.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_SearchEngine__default_0_document_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_SearchEngine__default_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_SearchEngine__default_0_document_0_phone.png",
         "label": "SearchEngine : default",
@@ -615,7 +615,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_SearchEngine__default_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_SearchEngine__default_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_SearchEngine__default_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_SearchEngine__default_0_document_1_tablet.png",
         "label": "SearchEngine : default",
@@ -634,7 +634,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_SearchEngine__show_advanced_search_0_document_0_phone.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_SearchEngine__show_advanced_search_0_document_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_SearchEngine__show_advanced_search_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_SearchEngine__show_advanced_search_0_document_0_phone.png",
         "label": "SearchEngine : show advanced search",
@@ -653,7 +653,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_SearchEngine__show_advanced_search_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_SearchEngine__show_advanced_search_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_SearchEngine__show_advanced_search_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_SearchEngine__show_advanced_search_0_document_1_tablet.png",
         "label": "SearchEngine : show advanced search",
@@ -665,7 +665,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "analysisTime": 108
+          "analysisTime": 46
         }
       },
       "status": "pass"
@@ -673,7 +673,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_SearchEngine__search_with_autocompletion_0_document_0_phone.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_SearchEngine__search_with_autocompletion_0_document_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_SearchEngine__search_with_autocompletion_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_SearchEngine__search_with_autocompletion_0_document_0_phone.png",
         "label": "SearchEngine : search with autocompletion",
@@ -685,7 +685,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "analysisTime": 60
+          "analysisTime": 77
         }
       },
       "status": "pass"
@@ -693,7 +693,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_SearchEngine__search_with_autocompletion_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_SearchEngine__search_with_autocompletion_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_SearchEngine__search_with_autocompletion_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_SearchEngine__search_with_autocompletion_0_document_1_tablet.png",
         "label": "SearchEngine : search with autocompletion",
@@ -705,7 +705,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "analysisTime": 113
+          "analysisTime": 81
         }
       },
       "status": "pass"
@@ -713,7 +713,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_SearchEngine__search_with_geocoding_postalCode_0_document_0_phone.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_SearchEngine__search_with_geocoding_postalCode_0_document_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_SearchEngine__search_with_geocoding_postalCode_0_document_0_phone.png",
         "selector": "document",
         "fileName": "leaflet_backstop_SearchEngine__search_with_geocoding_postalCode_0_document_0_phone.png",
         "label": "SearchEngine : search with geocoding (postalCode)",
@@ -725,7 +725,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "analysisTime": 42
+          "analysisTime": 78
         }
       },
       "status": "pass"
@@ -733,7 +733,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_SearchEngine__search_with_geocoding_postalCode_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_SearchEngine__search_with_geocoding_postalCode_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_SearchEngine__search_with_geocoding_postalCode_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "leaflet_backstop_SearchEngine__search_with_geocoding_postalCode_0_document_1_tablet.png",
         "label": "SearchEngine : search with geocoding (postalCode)",
@@ -745,7 +745,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "analysisTime": 149
+          "analysisTime": 68
         }
       },
       "status": "pass"
@@ -753,7 +753,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_MousePosition__extension_only_0_dividGPmousePosition-_0_phone.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_MousePosition__extension_only_0_dividGPmousePosition-_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_MousePosition__extension_only_0_dividGPmousePosition-_0_phone.png",
         "selector": "div[id^=GPmousePosition-]",
         "fileName": "leaflet_backstop_MousePosition__extension_only_0_dividGPmousePosition-_0_phone.png",
         "label": "MousePosition : extension only",
@@ -773,7 +773,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_MousePosition__extension_only_0_dividGPmousePosition-_1_tablet.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_MousePosition__extension_only_0_dividGPmousePosition-_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_MousePosition__extension_only_0_dividGPmousePosition-_1_tablet.png",
         "selector": "div[id^=GPmousePosition-]",
         "fileName": "leaflet_backstop_MousePosition__extension_only_0_dividGPmousePosition-_1_tablet.png",
         "label": "MousePosition : extension only",
@@ -793,7 +793,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_IsoChrone__extension_only_0_dividGPisochron-_0_phone.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_IsoChrone__extension_only_0_dividGPisochron-_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_IsoChrone__extension_only_0_dividGPisochron-_0_phone.png",
         "selector": "div[id^=GPisochron-]",
         "fileName": "leaflet_backstop_IsoChrone__extension_only_0_dividGPisochron-_0_phone.png",
         "label": "IsoChrone : extension only",
@@ -813,7 +813,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_IsoChrone__extension_only_0_dividGPisochron-_1_tablet.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_IsoChrone__extension_only_0_dividGPisochron-_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_IsoChrone__extension_only_0_dividGPisochron-_1_tablet.png",
         "selector": "div[id^=GPisochron-]",
         "fileName": "leaflet_backstop_IsoChrone__extension_only_0_dividGPisochron-_1_tablet.png",
         "label": "IsoChrone : extension only",
@@ -833,7 +833,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_Reverse__extension_only_0_dividGPreverseGeocoding-_0_phone.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_Reverse__extension_only_0_dividGPreverseGeocoding-_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_Reverse__extension_only_0_dividGPreverseGeocoding-_0_phone.png",
         "selector": "div[id^=GPreverseGeocoding-]",
         "fileName": "leaflet_backstop_Reverse__extension_only_0_dividGPreverseGeocoding-_0_phone.png",
         "label": "Reverse : extension only",
@@ -853,7 +853,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_Reverse__extension_only_0_dividGPreverseGeocoding-_1_tablet.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_Reverse__extension_only_0_dividGPreverseGeocoding-_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_Reverse__extension_only_0_dividGPreverseGeocoding-_1_tablet.png",
         "selector": "div[id^=GPreverseGeocoding-]",
         "fileName": "leaflet_backstop_Reverse__extension_only_0_dividGPreverseGeocoding-_1_tablet.png",
         "label": "Reverse : extension only",
@@ -873,7 +873,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_Route__extension_only_0_dividGProute-_0_phone.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_Route__extension_only_0_dividGProute-_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_Route__extension_only_0_dividGProute-_0_phone.png",
         "selector": "div[id^=GProute-]",
         "fileName": "leaflet_backstop_Route__extension_only_0_dividGProute-_0_phone.png",
         "label": "Route : extension only",
@@ -893,7 +893,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_Route__extension_only_0_dividGProute-_1_tablet.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_Route__extension_only_0_dividGProute-_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_Route__extension_only_0_dividGProute-_1_tablet.png",
         "selector": "div[id^=GProute-]",
         "fileName": "leaflet_backstop_Route__extension_only_0_dividGProute-_1_tablet.png",
         "label": "Route : extension only",
@@ -913,7 +913,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_SearchEngine__extension_only_0_dividGPsearchEngine-_0_phone.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_SearchEngine__extension_only_0_dividGPsearchEngine-_0_phone.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_SearchEngine__extension_only_0_dividGPsearchEngine-_0_phone.png",
         "selector": "div[id^=GPsearchEngine-]",
         "fileName": "leaflet_backstop_SearchEngine__extension_only_0_dividGPsearchEngine-_0_phone.png",
         "label": "SearchEngine : extension only",
@@ -933,7 +933,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/leaflet_backstop_SearchEngine__extension_only_0_dividGPsearchEngine-_1_tablet.png",
-        "test": "../bitmaps_test/20171030-151158/leaflet_backstop_SearchEngine__extension_only_0_dividGPsearchEngine-_1_tablet.png",
+        "test": "../bitmaps_test/20171031-091253/leaflet_backstop_SearchEngine__extension_only_0_dividGPsearchEngine-_1_tablet.png",
         "selector": "div[id^=GPsearchEngine-]",
         "fileName": "leaflet_backstop_SearchEngine__extension_only_0_dividGPsearchEngine-_1_tablet.png",
         "label": "SearchEngine : extension only",
