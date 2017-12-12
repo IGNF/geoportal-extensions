@@ -1,8 +1,10 @@
 # Change Log
 
-## [Unreleased](https://github.com/IGNF/geoportal-extensions/tree/HEAD)
+## [leaflet-1.0.0](https://github.com/IGNF/geoportal-extensions/tree/leaflet-1.0.0) (2017-12-11)
+[Full Changelog](https://github.com/IGNF/geoportal-extensions/compare/ol3-1.0.0...leaflet-1.0.0)
 
-[Full Changelog](https://github.com/IGNF/geoportal-extensions/compare/leaflet-0.9.1...HEAD)
+## [ol3-1.0.0](https://github.com/IGNF/geoportal-extensions/tree/ol3-1.0.0) (2017-12-11)
+[Full Changelog](https://github.com/IGNF/geoportal-extensions/compare/leaflet-0.9.1...ol3-1.0.0)
 
 - Extension Leaflet Route : paramétrer le lieu de départ ou d'arrivé du widget [\#48](https://github.com/IGNF/geoportal-extensions/issues/48)
 
@@ -13,6 +15,7 @@
 - ol.control.GeoportalAttribution : suppression des attributions des couches non Géoportail [\#146](https://github.com/IGNF/geoportal-extensions/issues/146)
 - ol.control.SearchEngine : postalcode autocompletion returns null coordinates \[0,0\] [\#107](https://github.com/IGNF/geoportal-extensions/issues/107)
 
+- Autopan à l'ouverture de pop-ups [\#170](https://github.com/IGNF/geoportal-extensions/issues/170)
 - L.geoportalControl.Route rechercher uniquement à partir du nom de la commune ou du lieu-dit [\#165](https://github.com/IGNF/geoportal-extensions/issues/165)
 - L.geoportalControl.LayerSwitcher option [\#156](https://github.com/IGNF/geoportal-extensions/issues/156)
 - Calcul d'Isochrone, pointeur qui ne se place pas au bon endroit [\#144](https://github.com/IGNF/geoportal-extensions/issues/144)
@@ -20,6 +23,11 @@
 - Dependance à geoportal-access-lib depuis NPM [\#128](https://github.com/IGNF/geoportal-extensions/issues/128)
 - Compilation sous windows [\#119](https://github.com/IGNF/geoportal-extensions/issues/119)
 
+- Upgrade Geoportal access lib to 1.1 [\#178](https://github.com/IGNF/geoportal-extensions/pull/178) ([gcebelieu](https://github.com/gcebelieu))
+- Add npm installation instructions to READMEs [\#177](https://github.com/IGNF/geoportal-extensions/pull/177) ([gcebelieu](https://github.com/gcebelieu))
+- Ajout du paramètre autoPanOptions pour permettre le recentrage automatique des pop-up [\#172](https://github.com/IGNF/geoportal-extensions/pull/172) ([ojathelonius](https://github.com/ojathelonius))
+- Recentrage de la pop-up lorsqu'elle apparaît en dehors du canvas [\#171](https://github.com/IGNF/geoportal-extensions/pull/171) ([ojathelonius](https://github.com/ojathelonius))
+- Automatisation des publications [\#166](https://github.com/IGNF/geoportal-extensions/pull/166) ([lowzonenose](https://github.com/lowzonenose))
 - Feature template samples [\#161](https://github.com/IGNF/geoportal-extensions/pull/161) ([lowzonenose](https://github.com/lowzonenose))
 - Feature dependency npm [\#160](https://github.com/IGNF/geoportal-extensions/pull/160) ([lowzonenose](https://github.com/lowzonenose))
 - Debug CSS rules based on dje remarks [\#155](https://github.com/IGNF/geoportal-extensions/pull/155) ([gcebelieu](https://github.com/gcebelieu))

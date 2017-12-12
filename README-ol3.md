@@ -69,7 +69,7 @@ Les scripts d'OpenLayers s'obtiennent sur [la page de téléchargement d'OpenLay
 
 <a id="download-direct"/>
 
-### Téléchargement direct
+#### Téléchargement direct
 
 Vous pouvez télécharger la dernière version de l'extension Géoportail pour OpenLayers directement sur [la page des releases des extensions Géoportail](https://github.com/IGNF/geoportal-extensions/releases).
 
@@ -78,7 +78,7 @@ L'archive téléchargée (GpOpenLayers.zip) comprend l'arborescence décrite ci-
 
 <a id="download-npm"/>
 
-### Récupération avec NPM
+#### Récupération avec NPM
 
 L'extension Géoportail pour OpenLayers est aussi disponible dans les dépôts [NPM](https://www.npmjs.com/package/geoportal-extensions-openlayers).
 
@@ -113,7 +113,7 @@ Intégrez l'extension géoportail pour ol3 dans votre page web classiquement à 
 
 ### Configuration de l'accès à la plateforme Géoportail
 
-L'extension Géoportail pour OpenLayers exploite les services web exposés par la plateforme Géoportail. Ceux-ci sont soumis à l'obtention d'une **clef d'accès** obtenue sur le site [professionnels.ign.fr](http://professionnels.ign.fr/api-web) ayant les droits sur les ressources que vous souhaitez exploiter.
+L'extension Géoportail pour OpenLayers exploite les services web exposés par la plateforme Géoportail. Ceux-ci sont soumis à l'obtention d'une **clef d'accès** obtenue sur le site [professionnels.ign.fr](http://professionnels.ign.fr/ign/contrats) ayant les droits sur les ressources que vous souhaitez exploiter.
 
 Une fois la clef obtenue, vous pouvez paramétrer l'utilisation de l'extension avec cette clef de deux manières possibles :
 
