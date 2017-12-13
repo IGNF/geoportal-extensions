@@ -11,12 +11,12 @@ Vous pouvez ouvrir un ticket dans les situations suivantes :
 * Discuter d'un sujet ou d'une idée relatives au projet
 * Proposer une nouvelle fonctionnalité ou une évolution de fonctionnalité
 
-Votre ticket est ensuite pris en compte par les membres de l'équipe ou de la communauté. Et une action peut vous être demandée telle qu'**ouvrir un Pull Request** afin de contribuer...
+Votre ticket est ensuite pris en compte par les membres de l'équipe ou de la communauté. Et une action peut vous être demandée telle qu'**ouvrir une Pull Request** afin de contribuer...
 
 
-## Ouvrir un pull request (PR)
+## Ouvrir une pull request (PR)
 
-Une pull request vous permet de soumettre une proposition d'évolution du code source à l'équipe en charge du projet. Voici comment soumettre un **pull request** !
+Une pull request vous permet de soumettre une proposition d'évolution du code source à l'équipe en charge du projet. Voici comment soumettre une **pull request** !
 
 
 ### On «fork» le projet
@@ -95,8 +95,8 @@ Vous permet de générer la jsDoc du projet dans le répertoire *target/doc/*
 - De votre `fork`, ouvrez une demande de `pull request` sur cette branche (cf. https://help.github.com/articles/creating-a-pull-request/). Et ciblez sur la branche `master` du dépôt d'origine...
 - Référencez tous les problèmes ainsi que la documentation sur votre PR.
 - Utilisez dans vos `commit` des fonctionnalités de GitHub (ex. "Fix #37.").
-- Si le responsable demande des modifications supplémentaires, il suffit de les pousser vers votre branche locale, le `pull request` se met à jour automatiquement.
-- Une fois que le `pull request` est approuvé, les responsables du projet effectueront le merge (cf. https://help.github.com/articles/merging-a-pull-request/).
+- Si le responsable demande des modifications supplémentaires, il suffit de les pousser vers votre branche locale, la `pull request` se met à jour automatiquement.
+- Une fois que la `pull request` est approuvée, les responsables du projet effectueront le merge (cf. https://help.github.com/articles/merging-a-pull-request/).
 
 
 ## Liens utiles
