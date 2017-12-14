@@ -81,6 +81,8 @@ function docker() {
   docker run -it --rm geoportal-extensions
 }
 
+npm install
+
 while getopts "daolviVI" opts
 do
    case $opts in
