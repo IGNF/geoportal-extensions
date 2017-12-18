@@ -1110,7 +1110,7 @@ define([
                 var options = {
                     clickable : true,
                     zIndexOffset : 1000,
-                    icon : (typeof marker === "string") ? new IconDefault(marker) : marker
+                    icon : ( typeof marker === "string" ) ? new IconDefault(marker) : marker
                 };
 
                 this._marker = L.marker(L.latLng(position.x, position.y), options);
