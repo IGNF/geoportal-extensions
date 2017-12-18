@@ -48,6 +48,9 @@ define([
      *           // do some stuff...
      *           return zoom;
      *       }
+     * @param {String}  [options.placeholder] - Placeholder in search bar. Default is "Rechercher un lieu, une adresse".
+     * @param {Boolean}  [options.displayMarker = true] - set a marker on search result, defaults to true.
+     * @param {String}  [options.markerStyle = "lightOrange"] - Marker style. Currently possible values are "lightOrange" (default value), "darkOrange", "red" and "turquoiseBlue".
      * @example
      *  var SearchEngine = ol.control.SearchEngine({
      *      apiKey : "CLEAPI",
@@ -191,7 +194,9 @@ define([
             displayAdvancedSearch : true,
             advancedSearch : {},
             geocodeOptions : {},
-            autocompleteOptions : {}
+            autocompleteOptions : {},
+            displayMarker : true,
+            markerStyle : "lightOrange"
         };
 
         // merge with user options
@@ -245,8 +250,9 @@ define([
         this._initAdvancedSearchCodes();
 
         // marker
+        this._displayMarker = this.options.displayMarker;
         this._marker = null;
-        this._markerUrl = Markers["lightOrange"];
+        this._markerUrl = Markers[this.options.markerStyle];
 
         // popup
         this._popupContent = null;
@@ -461,7 +467,7 @@ define([
         var picto = this._createShowSearchEnginePictoElement();
         container.appendChild(picto);
 
-        var search = this._inputSearchContainer = this._createSearchInputElement();
+        var search = this._inputSearchContainer = this._createSearchInputElement(this.options.placeholder);
         var context = this;
         if ( search.addEventListener ) {
             search.addEventListener("click", function () {
@@ -886,7 +892,6 @@ define([
     SearchEngine.prototype._setPosition = function (position, zoom) {
 
         var view = this.getMap().getView();
-        console.log(position);
         view.setCenter(position);
         view.setZoom(zoom);
 
@@ -1300,7 +1305,10 @@ define([
         // on centre la vue et positionne le marker, à la position reprojetée dans la projection de la carte
         var zoom = this._getZoom(info);
         this._setPosition(position, zoom);
-        this._setMarker(position, info);
+        if ( this._displayMarker ) {
+            this._setMarker(position, info);
+        }
+
     };
 
     // ################################################################### //
@@ -1411,7 +1419,9 @@ define([
         // on centre la vue et positionne le marker, à la position reprojetée dans la projection de la carte
         var zoom = this._getZoom(info);
         this._setPosition(position, zoom);
-        this._setMarker(position, info);
+        if ( this._displayMarker ) {
+            this._setMarker(position, info);
+        }
     };
 
     // ################################################################### //
