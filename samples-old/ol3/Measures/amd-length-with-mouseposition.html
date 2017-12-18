@@ -60,7 +60,8 @@
         "ol",
         "gp",
         "Ol3/Layers/LayerWMTS",
-        "Ol3/Controls/Measures/MeasureLength"
+        "Ol3/Controls/Measures/MeasureLength",
+        "Ol3/Controls/MousePosition"
       ],
       function (
         ol,
@@ -93,6 +94,8 @@
           var measureLength = new MeasureLength();
           map.addControl(measureLength);
 
+          var mouse = new ol.control.MousePosition();
+          map.addControl(mouse);
         };
 
         Gp.Services.getConfig({
