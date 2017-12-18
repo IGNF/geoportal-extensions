@@ -1113,6 +1113,7 @@ define([
                     _icon = marker;
                 } else {
                     _icon = new IconDefault("blue");
+                    console.log("Utilisation du marker par défaut !");
                 }
 
                 // cf. http://leafletjs.com/reference.html#marker-options
