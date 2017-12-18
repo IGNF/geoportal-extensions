@@ -83,7 +83,7 @@ define(["Common/Utils/SelectorID"], function (ID) {
         *
         * @returns {DOMElement} DOM element
         */
-        _createSearchInputElement : function () {
+        _createSearchInputElement : function (placeholder) {
 
             // contexte d'execution
             var self = this;
@@ -108,7 +108,7 @@ define(["Common/Utils/SelectorID"], function (ID) {
             var input  = document.createElement("input");
             input.id   = this._addUID("GPsearchInputText");
             input.type = "text";
-            input.placeholder = "Rechercher un lieu, une adresse";
+            input.placeholder = placeholder;
             input.autocomplete = "off";
             // Manage autocomplete list appearance when filling the address input
             input.addEventListener("keyup", function (e) {
