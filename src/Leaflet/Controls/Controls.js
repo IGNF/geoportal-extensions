@@ -254,6 +254,9 @@ function (
         * @param {String}  [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
         * @param {Boolean} [options.collapsed] - collapse mode, false by default
         * @param {String}  [options.position] - position of component into the map, 'topleft' by default. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
+        * @param {String}  [options.placeholder] - set placeholder in search bar. Default is "Rechercher un lieu, une adresse".
+        * @param {Boolean} [options.displayMarker] - set a marker on search result, defaults to true.
+        * @param {String}  [options.markerStyle] - set marker style. Currently possible values are "blue" (default value), "orange", "red" and "green".
         * @param {Boolean} [options.displayInfo] - get informations on popup marker
         * @param {Sting|Numeric|Function} [options.zoomTo] - zoom to results, by default, current zoom.
         *       possible values : "auto", any fixed zoom level or a function retruning a zoom :
