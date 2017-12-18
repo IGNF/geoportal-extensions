@@ -1106,11 +1106,20 @@ define([
 
             if (position) {
 
+                var _icon = null;
+                if ( typeof marker === "string" ) {
+                    _icon = new IconDefault(marker);
+                } else if ( marker instanceof L.Icon ) {
+                    _icon = marker;
+                } else {
+                    _icon = new IconDefault("blue");
+                }
+
                 // cf. http://leafletjs.com/reference.html#marker-options
                 var options = {
                     clickable : true,
                     zIndexOffset : 1000,
-                    icon : ( typeof marker === "string" ) ? new IconDefault(marker) : marker
+                    icon : _icon
                 };
 
                 this._marker = L.marker(L.latLng(position.x, position.y), options);
