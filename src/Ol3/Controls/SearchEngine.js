@@ -196,7 +196,8 @@ define([
             geocodeOptions : {},
             autocompleteOptions : {},
             displayMarker : true,
-            markerStyle : "lightOrange"
+            markerStyle : "lightOrange",
+            placeholder : "Rechercher un lieu, une adresse"
         };
 
         // merge with user options
@@ -250,9 +251,14 @@ define([
         this._initAdvancedSearchCodes();
 
         // marker
-        this._displayMarker = this.options.displayMarker;
         this._marker = null;
-        this._markerUrl = Markers[this.options.markerStyle];
+
+        // marker style
+        var _markerStyle = this.options.markerStyle;
+        this._markerUrl  = (Object.keys(Markers).indexOf(_markerStyle ) === -1) ? Markers["lightOrange"] : Markers[_markerStyle];
+        
+        // marker display
+        this._displayMarker = this.options.displayMarker;
 
         // popup
         this._popupContent = null;
