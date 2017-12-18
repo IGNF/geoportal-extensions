@@ -81,9 +81,9 @@ define([
         *           // do some stuff...
         *           return zoom;
         *       }
-        * @param {String}  [options.placeholder] - Placeholder in search bar. Default is "Rechercher un lieu, une adresse".
+        * @param {String}  [options.placeholder] - set placeholder in search bar. Default is "Rechercher un lieu, une adresse".
         * @param {Boolean}  [options.displayMarker] - set a marker on search result, defaults to true.
-        * @param {String}  [options.markerStyle] - Marker style. Currently possible values are "blue" (default value), "orange", "red" and "green".
+        * @param {String|Object}  [options.markerStyle] - set a marker style. Currently possible values are "blue" (default value), "orange", "red" and "green". But you can use an L.Icon object (see {@link http://leafletjs.com/reference-1.2.0.html#icon L.Icon }). 
         * @param {Sting} [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
         * @param {Object} [options.resources] - resources to be used by geocode and autocompletion services, by default : ["StreetAddress", "PositionOfInterest"]
         * @param {Boolean} [options.displayAdvancedSearch] - False to disable advanced search tools (it will not be displayed). Default is true (displayed)
@@ -97,6 +97,8 @@ define([
         *      displayInfo : true,
         *      displayAdvancedSearch : true,
         *      placeholder : "Rechercher un lieu, une adresse",
+        *      displayMarker : true,
+        *      markerStyle : L.icon(iconUrl: 'https://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png');
         *      zoomTo : 15,
         *      resources : ["PositionOfInterest", "StreetAddress"],
         *      advancedSearch : {
@@ -1090,10 +1092,11 @@ define([
         * @param {Object} position - position {x: ..., y: ...}
         * @param {Object} information - suggested or geocoded information
         * @param {Boolean} display - display a popup information
+        * @param {String} marker - style style
         *
         * @private
         */
-        _setMarker : function (position, information, display, icon) {
+        _setMarker : function (position, information, display, marker) {
 
             var map = this._map;
             if (this._marker != null) {
@@ -1107,7 +1110,7 @@ define([
                 var options = {
                     clickable : true,
                     zIndexOffset : 1000,
-                    icon : new IconDefault(icon)
+                    icon : (typeof marker === "string") ? new IconDefault(marker) : marker
                 };
 
                 this._marker = L.marker(L.latLng(position.x, position.y), options);
