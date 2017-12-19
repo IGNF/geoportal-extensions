@@ -170,6 +170,9 @@ define([
             // gestion des droits sur les ressources/services
             this._checkRightsManagement();
 
+            // timer 
+            this._timer = null;
+
         },
 
         /**
@@ -925,11 +928,7 @@ define([
             });
 
             logger.log(options);
-
             Gp.Services.geocode(options);
-
-            logger.log(options);
-
         },
 
         /**
@@ -1309,7 +1308,7 @@ define([
                 text : value,
                 /** callback onSuccess */
                 onSuccess : function (results) {
-                    logger.log(results);
+                    logger.log("request from AutoComplete", results);
                     if (results) {
                         // on sauvegarde l'etat des résultats
                         context._suggestedLocations = results.suggestedLocations;
@@ -1332,15 +1331,41 @@ define([
                         }
                         // on affiche les résultats qui n'ont pas des coordonnées nulles
                         context._fillAutoCompletedLocationListContainer(context._locationsToBeDisplayed);
+                        // on annule eventuellement une requete de geocodage en cours car on obtient des
+                        // de nouveau des resultats d'autocompletion...
+                        if (context._timer) {
+                            clearTimeout(context._timer);
+                            context._timer = null;
+                            logger.warn("Cancel a geocode request !"); 
+                        }
                     }
                 },
                 /** callback onFailure */
                 onFailure : function (error) {
                     // FIXME
-                    // où affiche t on les messages : ex. 'No suggestion matching the search' ?
-                    // doit on nettoyer la liste des suggestions dernierement enregistrée :
+                    // où affiche t on les messages : ex. 'No suggestion matching the search', 
+                    // console ou fenetre de resultats ?
+                    // doit on nettoyer la liste des suggestions dernierement enregistrée ?
                     context._clearSuggestedLocation();
                     logger.log(error.message);
+                    // on envoie une requete de geocodage si aucun resultat d'autocompletion 
+                    // n'a été trouvé ! Mais on annule celle qui est en cours !
+                    if (error.message === "No suggestion matching the search") {
+                        if (context._timer) {
+                            clearTimeout(context._timer);
+                            logger.warn("Cancel the last geocode request !"); 
+                        }
+                        context._timer = setTimeout(
+                            function () { 
+                                logger.warn("Launch a geocode request !");
+                                var form = L.DomUtil.get("GPsearchInput-" + context._uid);
+                                form.dispatchEvent(new Event("submit", {
+                                    bubbles    : true,
+                                    cancelable : true
+                                }));
+                            }, 1500
+                        );
+                    }
                 }
             });
         },
@@ -1356,6 +1381,7 @@ define([
          * @private
          */
         _getGeocodeCoordinatesFromFullText : function ( suggestedLocation, i ) {
+
             var context = this;
             Gp.Services.geocode({
                 apiKey : context._servicesRightManagement["Geocode"]["key"],
@@ -1365,6 +1391,7 @@ define([
                 },
                 /** callback onSuccess */
                 onSuccess : function (response) {
+                    logger.log("request from Geocoding (coordinates null)", response);
                     if ( response.locations && response.locations.length !== 0 && response.locations[0].position ) {
                         // on modifie les coordonnées du résultat en EPSG:4326 donc lat,lon
                         if ( context._suggestedLocations && context._suggestedLocations[i] ) {
@@ -1469,7 +1496,7 @@ define([
                 location : value,
                 /** callback onSuccess */
                 onSuccess : function (results) {
-                    logger.log(results);
+                    logger.log("request from Geocoding", results);
                     if (results) {
                         var locations = results.locations;
                         context._fillGeocodedLocationListContainer(locations);
