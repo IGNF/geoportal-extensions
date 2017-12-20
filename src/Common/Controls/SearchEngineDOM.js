@@ -112,6 +112,7 @@ define(["Common/Utils/SelectorID"], function (ID) {
             input.autocomplete = "off";
             // Manage autocomplete list appearance when filling the address input
             input.addEventListener("keyup", function (e) {
+
                 var charCode = e.which || e.keyCode;
                 if (charCode === 13 || charCode === 10 || charCode === 38 || charCode === 40) {
                     return;
@@ -135,15 +136,10 @@ define(["Common/Utils/SelectorID"], function (ID) {
 
             input.addEventListener("keydown" , function (e) {
                 // FIXME
-                // je desactive cet evenement car l'action clavier 'enter (13)'
-                // lance le submit de la form ! Ce comportement n'est pas souhaité car le
-                // submit execute un geocodage !
+                // l'action clavier 'enter (13)' lance le submit de la form ! 
+                // Ce comportement n'est pas souhaité car le submit execute un geocodage !
                 // Il faut donc trouver le moyen d'eviter le submit sur un return venant
                 // seulement d'une selection de suggestion...
-
-                if (true) {
-                    return;
-                }
 
                 var charCode = e.which || e.keyCode;
 
@@ -201,6 +197,8 @@ define(["Common/Utils/SelectorID"], function (ID) {
                         next.style["background-color"] = "#CEDBEF";
                         break;
                     case 13 : // enter
+                        // cf. FIXME 
+                        e.preventDefault();
                         current.click(e);
                         break;
                 }
