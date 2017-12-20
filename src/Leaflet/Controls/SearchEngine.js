@@ -1358,11 +1358,17 @@ define([
                         context._timer = setTimeout(
                             function () { 
                                 logger.warn("Launch a geocode request !");
-                                var form = L.DomUtil.get("GPsearchInput-" + context._uid);
-                                form.dispatchEvent(new Event("submit", {
-                                    bubbles    : true,
-                                    cancelable : true
-                                }));
+                                var form  = L.DomUtil.get("GPsearchInput-" + context._uid);
+                                // INFO
+                                // ceci ne semble pas être 100% compatible IE...
+                                // var event = new Event("submit", {
+                                //     bubbles    : true,
+                                //     cancelable : true
+                                // });
+                                // mais le code suivant est valide pour IE>9 !
+                                var event = document.createEvent("Event");
+                                event.initEvent("submit", true, true); 
+                                form.dispatchEvent(event);
                             }, 1500
                         );
                     }
