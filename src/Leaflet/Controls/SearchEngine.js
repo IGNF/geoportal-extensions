@@ -897,7 +897,7 @@ define([
             // on y force le param suivant, s'il n'a pas été surchargé :
             if (!options.hasOwnProperty("returnFreeForm")) {
                 L.Util.extend(options, {
-                    returnFreeForm : false
+                    returnFreeForm : true
                 });
             }
 
