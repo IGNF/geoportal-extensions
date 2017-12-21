@@ -1,0 +1,69 @@
+{{#extend "layout-leaflet-sample-amd"}}
+
+{{#content "vendor"}}
+        <script src="{{ config.resources }}/vendor/amCharts-min.js"></script>
+{{/content}}
+
+{{#content "head"}}
+        <title>Sample Leaflet ElevationPath</title>
+{{/content}}
+
+{{#content "style"}}
+        <style>
+          div#map {
+            width: 100%;
+            height: 500px;
+          }
+        </style>
+{{/content}}
+
+{{#content "body"}}
+        <h2>Ajout du Widget du moteur de recherche</h2>
+        <!-- map -->
+        <div id="map"></div>
+{{/content}}
+
+{{#content "js"}}
+        <script type="text/javascript">
+          requirejs([
+            'gp',
+            'Leaflet/Layers/Layers',
+            'Leaflet/Controls/ElevationPath'
+          ], function (
+            Gp,
+            Layers,
+            ElevationPath
+          ) {
+
+            Gp.Services.getConfig({
+              serverUrl : "{{ config.resources }}/AutoConf.js",
+              callbackSuffix : "",
+              // apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
+              timeOut : 20000,
+              onSuccess : function () {
+
+                var wms = Layers.WMS({
+                  layer : "ORTHOIMAGERY.ORTHOPHOTOS",
+                });
+
+                var map  = L.map('map', {
+                  zoom : 2,
+                  center : L.latLng(48, 2)
+                });
+
+                wms.addTo(map);
+
+                var search = new ElevationPath({
+                  active : true,
+                  displayProfileOptions : {
+                    apply : ElevationPath.DISPLAY_PROFILE_LIB_AMCHARTS
+                  }
+                });
+
+                map.addControl(search);
+              }
+            })
+          });
+        </script>
+{{/content}}
+{{/extend}}
