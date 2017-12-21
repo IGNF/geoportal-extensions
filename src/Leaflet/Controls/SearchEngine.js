@@ -60,7 +60,11 @@ define([
             displayAdvancedSearch : true,
             advancedSearch : {},
             geocodeOptions : {},
-            autocompleteOptions : {}
+            autocompleteOptions : {
+                serviceOptions : {},
+                triggerGeocode : false,
+                triggerDelay : 1000
+            }
         },
 
         /**
@@ -90,6 +94,9 @@ define([
         * @param {Object} [options.advancedSearch] - advanced search for geocoding (filters)
         * @param {Object} [options.geocodeOptions] - options of geocode service
         * @param {Object} [options.autocompleteOptions] - options of autocomplete service
+        * @param {Object} [options.autocompleteOptions.serviceOptions] - options of autocomplete service
+        * @param {Object} [options.autocompleteOptions.triggerGeocode] - trigger a geocoding request if the autocompletion does not return any suggestions, false by default
+        * @param {Object} [options.autocompleteOptions.triggerDelay] - waiting time before sending the geocoding request, 1000ms by default
         * @example
         *  var SearchEngine = L.geoportalControl.SearchEngine({
         *      position : "topright",
@@ -170,8 +177,8 @@ define([
             // gestion des droits sur les ressources/services
             this._checkRightsManagement();
 
-            // timer 
-            this._timer = null;
+            // trigger geocode  
+            this._triggerHandler = null;
 
         },
 
@@ -1297,12 +1304,16 @@ define([
                 return;
             }
 
+            var _triggerGeocode = this.options.autocompleteOptions.triggerGeocode;
+            var _triggerDelay   = this.options.autocompleteOptions.triggerGeocodeDelay;
+
             // INFORMATION
             // on effectue la requête au service d'autocompletion.
             // on met en place des callbacks afin de recuperer les resultats ou
             // les messages d'erreurs du service.
             // les resultats sont affichés dans une liste deroulante.
             // les messages d'erreurs sont affichés sur la console (?)
+            
             var context = this;
             this._requestAutoComplete({
                 text : value,
@@ -1333,9 +1344,9 @@ define([
                         context._fillAutoCompletedLocationListContainer(context._locationsToBeDisplayed);
                         // on annule eventuellement une requete de geocodage en cours car on obtient des
                         // de nouveau des resultats d'autocompletion...
-                        if (context._timer) {
-                            clearTimeout(context._timer);
-                            context._timer = null;
+                        if (context._triggerHandler) {
+                            clearTimeout(context._triggerHandler);
+                            context._triggerHandler = null;
                             logger.warn("Cancel a geocode request !"); 
                         }
                     }
@@ -1350,12 +1361,12 @@ define([
                     logger.log(error.message);
                     // on envoie une requete de geocodage si aucun resultat d'autocompletion 
                     // n'a été trouvé ! Mais on annule celle qui est en cours !
-                    if (error.message === "No suggestion matching the search") {
-                        if (context._timer) {
-                            clearTimeout(context._timer);
+                    if (error.message === "No suggestion matching the search" && _triggerGeocode) {
+                        if (context._triggerHandler) {
+                            clearTimeout(context._triggerHandler);
                             logger.warn("Cancel the last geocode request !"); 
                         }
-                        context._timer = setTimeout(
+                        context._triggerHandler = setTimeout(
                             function () { 
                                 logger.warn("Launch a geocode request !");
                                 var form  = L.DomUtil.get("GPsearchInput-" + context._uid);
@@ -1369,7 +1380,7 @@ define([
                                 var event = document.createEvent("Event");
                                 event.initEvent("submit", true, true); 
                                 form.dispatchEvent(event);
-                            }, 1500
+                            }, _triggerDelay
                         );
                     }
                 }

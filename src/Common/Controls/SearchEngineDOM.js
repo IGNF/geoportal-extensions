@@ -745,7 +745,7 @@ define(["Common/Utils/SelectorID"], function (ID) {
                 } else if ( places.postalCode ) {
                     // cas des StreetAddress, PositionOfInterest, Administratif
                     // on affiche uniquement ce qui est commun aux ressources ...
-                    div.innerHTML = places.commune + " " + places.postalCode;
+                    div.innerHTML = places.postalCode + " " + places.commune;
                 } else if ( places.cadastralParcel ) {
                     // cas des CadastralParcel
                     div.innerHTML = places.cadastralParcel;
