@@ -28,6 +28,7 @@ span[id^=GPshowElevationPathOpen] {
   background-image: url("img/GPshowElevationPath.png");
 }
 
+
 /* Panel */
 
 [id^=GPelevationPathPanelClose] {
@@ -35,6 +36,10 @@ span[id^=GPshowElevationPathOpen] {
 }
 
 div[id^=GPelevationPathPanelReduce] {
+  background-image: url("img/GPshowElevationPath.png");
+}
+
+div[id^=GPelevationPathPanelInfo] {
   background-image: url("img/GPshowElevationPath.png");
 }
 

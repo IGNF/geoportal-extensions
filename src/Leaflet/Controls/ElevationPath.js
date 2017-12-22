@@ -131,6 +131,9 @@ define([
             // geometry à transmettre au service :  { lon : [], lat : []}
             this._geometry = null;
 
+            // distance du segment
+            this._distance = 0;
+
             // aucun droits sur les ressources
             this._noRightManagement = false;
 
@@ -222,31 +225,35 @@ define([
         _initDisplayProfileOptions : function () {
 
             // gestion de l'affichage du profil
-            var profil = this.options.displayProfileOptions || {};
-            if ( typeof profil === "undefined" || Object.keys(profil).length === 0 ) {
-                this.options.displayProfileOptions = {
-                    greaterSlope : true,
-                    meanSlope : true,
-                    ascendingElevation : true,
-                    descendingElevation : true,
-                    profile : true,
-                    apply : ElevationPath.DISPLAY_PROFILE_BY_DEFAULT,
-                    target : null
-                };
-
-            } else {
-                this.options.displayProfileOptions = {};
-            }
+            var _profileOpts = this.options.displayProfileOptions;
 
             // gestion de la fonction du profil
-            var displayFunction = profil.apply || this.options.displayProfileOptions.apply;
-            this.options.displayProfileOptions.apply =  ( typeof displayFunction === "function" ) ?
+            var displayFunction = _profileOpts.apply;
+            _profileOpts.apply =  ( typeof displayFunction === "function" ) ?
                 displayFunction : ElevationPath.DISPLAY_PROFILE_BY_DEFAULT;
 
             // gestion du container du profil
-            var displayContainer = profil.target || this.options.displayProfileOptions.target;
-            this.options.displayProfileOptions.target =  ( typeof displayContainer === "undefined" ) ?
-                null : displayContainer;
+            var displayContainer = _profileOpts.target;
+            _profileOpts.target =  ( typeof displayContainer !== "undefined" ) ?
+                displayContainer : null;
+            
+            // les autres options
+            var _protoOpts = Object.getPrototypeOf(this.options);
+            if ( typeof _profileOpts.meanSlope === "undefined") {
+                _profileOpts.meanSlope = _protoOpts.displayProfileOptions.meanSlope;
+            }
+            if ( typeof  _profileOpts.greaterSlope === "undefined") {
+                _profileOpts.greaterSlope = _protoOpts.displayProfileOptions.greaterSlope;
+            }
+            if ( typeof _profileOpts.ascendingElevation === "undefined") {
+                _profileOpts.ascendingElevation = _protoOpts.displayProfileOptions.ascendingElevation;
+            }
+            if ( typeof  _profileOpts.descendingElevation === "undefined") {
+                _profileOpts.descendingElevation = _protoOpts.displayProfileOptions.descendingElevation;
+            }
+            if ( typeof _profileOpts.profile === "undefined") {
+                _profileOpts.profile = _protoOpts.displayProfileOptions.profile;
+            }
 
         },
 
@@ -348,6 +355,23 @@ define([
             this._reducePanel = true;
             this._pictoContainer.style.display = "block";
             this._panelContainer.style.display = "none";
+        },
+
+        /**
+        * this method is called by event 'click' on '' picto
+        * (cf. this.),
+        * and display the panel info
+        * TODO
+        *
+        * @private
+        */
+        onOpenElevationPathInfoClick : function () {
+
+            var meanSlope = this.options.displayProfileOptions.meanSlope;
+            var greaterSlope = this.options.displayProfileOptions.greaterSlope;
+            var ascendingElevation =  this.options.displayProfileOptions.ascendingElevation;
+            var descendingElevation = this.options.displayProfileOptions.descendingElevation;
+            logger.log(meanSlope, greaterSlope, ascendingElevation, descendingElevation);
         },
 
         // ################################################################### //
@@ -509,18 +533,25 @@ define([
             }
 
             this._geometry = [];
+            this._distance = 0;
 
             var geometry = layer.getLatLngs();
             for (var i = 0; i < geometry.length; i++) {
                 // on transmet au service des coordonnées en EPSG:4326
-                var LatLng = geometry[i];
+                var LatLngI = geometry[i];
+                var LatLngJ = geometry[i + 1];
                 this._geometry.push({
-                    lon : LatLng.lng,
-                    lat : LatLng.lat
+                    lon : LatLngI.lng,
+                    lat : LatLngI.lat
                 });
+                // on calcul la distance du segment
+                if (LatLngJ) {
+                    this._distance += LatLngI.distanceTo(LatLngJ);
+                }
             }
 
-            logger.log(this._geometry);
+            logger.log("Geometry", this._geometry);
+            logger.log("Distance", this._distance);
         },
 
         /**
@@ -685,6 +716,15 @@ define([
 
             var _data = elevations;
 
+            // FIXME facteur à 2000 doit il etre une option ?
+            var _limite = 2000; // metres
+            var _unit = "km";
+            var _factor = 1000;
+            if (this._distance < _limite) {
+                _factor = 1;
+                _unit = "m";
+            }
+
             // Calcul de la distance au départ pour chaque point + arrondi des lat/lon
             _data[0].dist  = 0;
             _data[0].slope = 0;
@@ -710,12 +750,13 @@ define([
                     _distancePlus += dist;
                     _ascendingElevation += slope;
                 }
-                _distance += dist;
+                _distance += dist/_factor;
                 _data[i].dist = _distance;
         
                 _slopes += Math.abs(Math.round(slope / dist * 100));
                 _data[i].slope = Math.abs(Math.round(slope / dist * 100));
         
+                // EVOL ?
                 // cf. gradiant
                 // http://www.color-hex.com/color/00b798
                 var value = _data[i].slope;
@@ -777,11 +818,12 @@ define([
                 meanSlope : Math.round(_slopes / _data.length), // pente moyenne
                 distancePlus : _distancePlus.toLocaleString(), // distance cumulée positive
                 distanceMinus : _distanceMinus.toLocaleString(), // distance cumulée négative
-                ascendingElevation : _ascendingElevation.toLocaleString(), // dénivelé cumulée positive
-                descendingElevation : _descendingElevation.toLocaleString(), // dénivelé cumulée négative
+                ascendingElevation : _ascendingElevation, // dénivelé cumulée positive
+                descendingElevation : _descendingElevation, // dénivelé cumulée négative
                 altMin : _altMin.toLocaleString(), // altitude min
                 altMax : _altMax.toLocaleString(), // altitude max
                 distance : _distance.toLocaleString(), // distance totale
+                unit : _unit, // unité des mesures de distance
                 points : _data
             };
         },
@@ -808,8 +850,10 @@ define([
             // TODO contexte ?
             var context = this;
 
+            var _profileOpts = this.options.displayProfileOptions;
+
             // fonction
-            var displayFunction = this.options.displayProfileOptions.apply;
+            var displayFunction = _profileOpts.apply;
 
             // Calcul du profil
             if ( typeof AmCharts !== "undefined" && typeof d3 !== "undefined") {
@@ -819,7 +863,18 @@ define([
             // execution...
             displayFunction.call(this, data, container, context);
 
+            // affichage des informations du profil ?
+            var element = L.DomUtil.get("GPelevationPathPanelInfo-" + this._uid);
+            if (_profileOpts.greaterSlope || 
+                _profileOpts.meanSlope || 
+                _profileOpts.ascendingElevation || 
+                _profileOpts.descendingElevation) {
+                // on affiche les informations
+                element.style.display = "block";
+            }
+
         },
+
 
         /**
         * this method is called by this.
@@ -997,12 +1052,6 @@ define([
 
         var _points = data.points;
 
-        // var meanSlope = this.options.displayProfileOptions.meanSlope;
-        // var greaterSlope = this.options.displayProfileOptions.greaterSlope;
-        // var ascendingElevation =  this.options.displayProfileOptions.ascendingElevation;
-        // var descendingElevation = this.options.displayProfileOptions.descendingElevation;
-        // var profile = this.options.displayProfileOptions.profile;
-
         var sortedElev = JSON.parse(JSON.stringify(_points)) ;
         sortedElev.sort(function (e1, e2) {
             return e1.z - e2.z ;
@@ -1011,7 +1060,8 @@ define([
         var minZ = sortedElev[0].z ;
         var maxZ = sortedElev[sortedElev.length - 1].z ;
         var diff = maxZ - minZ ;
-        var distMax = _points[_points.length - 1].dist; // km !
+        var dist = data.distance;
+        var unit = data.unit;
         // var distMin = 0;
         var barwidth = 100 / _points.length ;
 
@@ -1095,6 +1145,12 @@ define([
             var pct = Math.floor((d.z - minZ) * 100 / diff) ;
             li.setAttribute("class", "percent v" + pct) ;
             li.title = "altitude : " + d.z + "m" ;
+            li.title += " - lon : " + d.lon;
+            li.title += " - lat : " + d.lat;
+            var _profile = this.options.displayProfileOptions.profile;
+            if (_profile) {
+                li.title += " - pente : " + d.slope + "%";
+            }
             li.setAttribute("style", "width: " + barwidth + "%") ;
             ulData.appendChild(li) ;
         }
@@ -1110,7 +1166,7 @@ define([
         liXmin.innerHTML = "";
         var liXmax = document.createElement("li");
         liXmax.setAttribute("class", "profile-max-x");
-        liXmax.innerHTML = distMax + " km";
+        liXmax.innerHTML = dist + " " + unit;
         ulX.appendChild(liXmin);
         ulX.appendChild(liXmax);
         divX.appendChild(ulX);
@@ -1138,12 +1194,6 @@ define([
         }
 
         var _points = data.points;
-
-        // var meanSlope = this.options.displayProfileOptions.meanSlope;
-        // var greaterSlope = this.options.displayProfileOptions.greaterSlope;
-        // var ascendingElevation =  this.options.displayProfileOptions.ascendingElevation;
-        // var descendingElevation = this.options.displayProfileOptions.descendingElevation;
-        // var profile = this.options.displayProfileOptions.profile;
 
         // TODO CSS externe
         var div  = document.createElement("textarea");
@@ -1182,12 +1232,6 @@ define([
         }
 
         var _points = data.points;
-
-        // var meanSlope = this.options.displayProfileOptions.meanSlope;
-        // var greaterSlope = this.options.displayProfileOptions.greaterSlope;
-        // var ascendingElevation =  this.options.displayProfileOptions.ascendingElevation;
-        // var descendingElevation = this.options.displayProfileOptions.descendingElevation;
-        // var profile = this.options.displayProfileOptions.profile;
 
         var margin = {
             top : 20,
@@ -1267,7 +1311,7 @@ define([
             .attr("y", -15)
             .attr("dy", ".71em")
             .attr("x", width)
-            .text("Distance (km)");
+            .text("Distance (" + data.unit + ")");
 
         svg.append("g")
             .attr("class", "y axis-d3")
@@ -1400,11 +1444,16 @@ define([
                 div.transition()
                     .duration(200)
                     .style("opacity", 0.9);
-                div	.html(
-                        "Alt : " + d.z + " m <br/>" +
-                        "Lon : " + d.lon + " <br/>" +
-                        "Lat : " + d.lat
-                    )
+                
+                var _message = "";
+                _message += "  Alt : " + d.z + " m";
+                _message += "<br/> Lon : " + d.lon;
+                _message += "<br/> Lat : " + d.lat;
+                var _profile = self.options.displayProfileOptions.profile;
+                if (_profile) {
+                    _message += "<br/> Pente : " + d.slope + " %";
+                }
+                div	.html(_message)
                     .style("left", (d3.event.pageX) + "px")
                     .style("top", (d3.event.pageY - 28) + "px");
             }
@@ -1435,55 +1484,54 @@ define([
         var textSlope = "";
         var meanSlope = this.options.displayProfileOptions.meanSlope;
         if (meanSlope) {
-            textSlope =+ "Pente moyenne : " + data.meanSlope + " %";
+            textSlope += "Pente moyenne : " + data.meanSlope.toLocaleString() + " % - ";
         }
         
         var greaterSlope = this.options.displayProfileOptions.greaterSlope;
         if (greaterSlope) {
-            textSlope =+ "Plus forte pente : " + data.greaterSlope + " %";
+            textSlope += "Plus forte pente : " + data.greaterSlope.toLocaleString() + " %";
         }
 
-        var labelSlope = {};
+        var _labels = [];
         if (textSlope !== "") {
-            labelSlope = {
-                "id": "Label-slope",
-                "align": "center",
-                "bold": false,
-                "size": 10,
-	            "y": 200,
-        		"text": textSlope
-            };
+            _labels.push({
+                id : "Label-slope",
+                align : "center",
+                bold : false,
+                size : 7,
+                y : 180,
+                text : textSlope
+            });
         }
 
         var textElevation = "";
         var ascendingElevation =  this.options.displayProfileOptions.ascendingElevation;
         if (ascendingElevation) {
-            textElevation = "Dénivelé positif : " + data.ascendingElevation + " m";
+            textElevation += "Dénivelé positif : " + data.ascendingElevation.toLocaleString() + " m - ";
         }
 
         var descendingElevation = this.options.displayProfileOptions.descendingElevation;
         if (descendingElevation) {
-            textElevation = "Dénivelé négatif : " + data.descendingElevation + " m";
+            textElevation += "Dénivelé négatif : " + data.descendingElevation.toLocaleString() + " m";
         }
 
-        var labelElevation = {};
         if (textElevation !== "") {
-            labelElevation = {
-                "id": "Label-elevation",
-                "align": "center",
-                "bold": false,
-                "size": 10,
-	            "y": 210,
-        		"text": textElevation
-            };
+            _labels.push({
+                id : "Label-elevation",
+                align : "center",
+                bold : false,
+                size : 7,
+                y : 190,
+                text : textElevation
+            });
         }
 
         var ballonText = "<span class='altiPathValue'>[[title]] : [[value]]m</span><br/>";
         var profile = this.options.displayProfileOptions.profile;
         if (profile) {
-            ballonText =+ "<span class='altiPathValue'>Pente : [[slope]] %</span><br/>";
+            ballonText += "<span class='altiPathValue'>Pente : [[slope]] %</span><br/>";
         }
-        ballonText =+ "<span class='altiPathCoords'>(lat: [[lat]] / lon:[[lon]])</span>";
+        ballonText += "<span class='altiPathCoords'>(lat: [[lat]] / lon:[[lon]])</span>";
         
         AmCharts.addInitHandler(function () {});
 
@@ -1496,7 +1544,7 @@ define([
             marginTop : 10,
             startDuration : 0,
             color : "#5E5E5E",
-            fontSize : 10,
+            fontSize : 8,
             theme : "light",
             thousandsSeparator : "",
             numberFormatter : {
@@ -1509,8 +1557,9 @@ define([
                 gridPosition : "start",
                 minHorizontalGap : 40,
                 tickPosition : "start",
-                title : "Distance (km)",
+                title : "Distance ("+ data.unit +")",
                 titleColor : "#5E5E5E",
+                labelOffset : 0,
                 startOnAxis : true
             },
             chartCursor : {
@@ -1553,7 +1602,6 @@ define([
                     title : "Altitude (m)"
                 }
             ],
-            allLabel : [labelElevation, labelSlope],
             balloon : {
                 borderColor : "#CCCCCC",
                 borderThickness : 1,
@@ -1561,6 +1609,7 @@ define([
                 showBullet : true
             },
             titles : [],
+            allLabels : _labels,
             dataProvider : _points
         });
 

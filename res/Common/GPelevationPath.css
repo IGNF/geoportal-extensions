@@ -1,3 +1,7 @@
+div[id^=GPelevationPathPanelInfo] {
+  display: none; /* on n'affiche pas le bouton d'information par defaut */
+}
+
 /* Calc waiting */
 
 .GPelevationPathCalcWaitingContainerVisible,
@@ -343,7 +347,7 @@ ul#profile-data .percent:hover {
 
 /* CSS : D3 */
 
-text {
+.axis-d3 > text {
   fill: rgb(94, 94, 94);
   font-family: Verdana;
   font-size: 10px;
@@ -408,10 +412,10 @@ div.tooltip-d3 {
     position: inherit;;
     text-align: left;
     width: 80px;
-    height: 35px;
-    padding: 2px;
+    height: 45px;
+    padding: 5px;
     font: 8px sans-serif;
-    background: lightsteelblue;
+    background: white;
     border: 0px;
     border-radius: 8px;
     pointer-events: none;

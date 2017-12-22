@@ -18,7 +18,7 @@
 {{/content}}
 
 {{#content "body"}}
-        <h2>Ajout du Widget du moteur de recherche</h2>
+        <h2>Ajout du Widget de profil alti</h2>
         <!-- map -->
         <div id="map"></div>
 {{/content}}
@@ -56,7 +56,13 @@
                 var search = new ElevationPath({
                   active : true,
                   displayProfileOptions : {
-                    apply : ElevationPath.DISPLAY_PROFILE_LIB_AMCHARTS
+                    apply : ElevationPath.DISPLAY_PROFILE_LIB_AMCHARTS,
+                    target : null, // par defaut
+                    meanSlope : false,
+                    greaterSlope : false,
+                    ascendingElevation : false,
+                    descendingElevation : false, 
+                    profile : true // par defaut
                   }
                 });
 

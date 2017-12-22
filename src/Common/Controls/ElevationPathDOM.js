@@ -114,10 +114,33 @@ define([], function () {
             var container  = document.createElement("div");
             container.className = "GPpanelHeader";
 
-            var div  = document.createElement("div");
-            div.className = "GPpanelTitle";
-            div.innerHTML = "Profil Altimétrique";
-            container.appendChild(div);
+            var divInfo = document.createElement("div");
+            divInfo.id = this._addUID("GPelevationPathPanelInfo");
+            divInfo.className = "GPpanelInfo";
+            divInfo.title = "Informations";
+            // add event on click
+            if ( divInfo.addEventListener ) {
+                divInfo.addEventListener(
+                    "click",
+                    function () {
+                        self.onOpenElevationPathInfoClick();
+                    }
+                );
+            } else if ( divInfo.attachEvent ) {
+                // internet explorer
+                divInfo.attachEvent(
+                    "onclick",
+                    function () {
+                        self.onOpenElevationPathInfoClick();
+                    }
+                );
+            }
+            container.appendChild(divInfo);
+
+            var divTitle  = document.createElement("div");
+            divTitle.className = "GPpanelTitle";
+            divTitle.innerHTML = "Profil Altimétrique";
+            container.appendChild(divTitle);
 
             var divReduce  = document.createElement("div");
             divReduce.id = this._addUID("GPelevationPathPanelReduce");
