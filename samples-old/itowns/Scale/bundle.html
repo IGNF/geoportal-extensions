@@ -59,9 +59,6 @@ and open the template in the editor.
             });
 
             itowns.Fetcher.json('../Resources/JSONLayers/Ortho.json').then(result => globeView.addLayer(result));
-            itowns.Fetcher.json('../Resources/JSONLayers/OrthosCRS.json').then(result => globeView.addLayer(result));
-            itowns.Fetcher.json('../Resources/JSONLayers/ScanEX.json').then(result => globeView.addLayer(result));
-            itowns.Fetcher.json('../Resources/JSONLayers/Region.json').then(result => globeView.addLayer(result));
 
             itowns.Fetcher.json('../Resources/JSONLayers/IGN_MNT.json').then(result => globeView.addLayer(result));
             itowns.Fetcher.json('../Resources/JSONLayers/IGN_MNT_HIGHRES.json').then(result => globeView.addLayer(result));

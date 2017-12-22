@@ -27,13 +27,7 @@ define([
         // call constructor
         this._globeView = new Itowns.GlobeView(viewerDiv, coordCarto, options);
 
-        var parentPreRender = this._globeView.preRender;
-        /**
-        * Overload itowns.GlobeView preRender method
-        */
-        this._globeView.preRender = (function () {
-            parentPreRender();
-
+        this._globeView.addFrameRequester(Itowns.MAIN_LOOP_EVENTS.BEFORE_RENDER, (function () {
             var self = this;
             clearTimeout(this._preRenderTimer);
             this._preRenderTimer = setTimeout( function () {
@@ -57,7 +51,7 @@ define([
                     self._globeView.dispatchEvent(event);
                 }
             }, 100);
-        }).bind(this);
+        }).bind(this));
     }
 
     /**

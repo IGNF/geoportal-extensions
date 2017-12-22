@@ -107,7 +107,7 @@ define([
             /**
               * update miniview's camera with the globeView's camera position
               */
-            globe.getGlobeView().onAfterRender = function onAfterRender () {
+            globe.getGlobeView().addFrameRequester(Itowns.MAIN_LOOP_EVENTS.AFTER_RENDER, function () {
                 // clamp distance camera from globe
                 var range = globe.getGlobeView().controls.getRange();
                 var distance = Math.min(Math.max(range * 1.5, minDistance), maxDistance);
@@ -116,7 +116,7 @@ define([
                 camera.position.copy(globe.getGlobeView().controls.moveTarget()).setLength(distance);
                 camera.lookAt(globe.getGlobeView().controls.moveTarget());
                 miniView.notifyChange(true);
-            };
+            });
 
             /**
               * Add one imagery layer to the miniview (by default, the ortho)
