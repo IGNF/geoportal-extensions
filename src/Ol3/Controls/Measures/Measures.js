@@ -261,11 +261,14 @@ define([
                 var nodesToRemove = [];
                 for (var i = 0; i < len; i++) {
                     var node  = nodes.children[i];
-                    var child = node.children[0];
-                    if (child.className === "GPmeasureTooltip GPmeasureTooltip-static" ||
-                        child.className === "GPmeasureTooltip GPmeasureTooltip-measure" ) {
-                        nodesToRemove.push(node);
+                    if (node.children.length !== 0) {
+                        var child = node.children[0];
+                        if (child.className === "GPmeasureTooltip GPmeasureTooltip-static" ||
+                            child.className === "GPmeasureTooltip GPmeasureTooltip-measure" ) {
+                            nodesToRemove.push(node);
+                        }
                     }
+                    
                 }
                 for (var j = 0; j < nodesToRemove.length; j++) {
                     nodes.removeChild(nodesToRemove[j]);

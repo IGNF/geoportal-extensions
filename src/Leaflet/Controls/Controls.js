@@ -252,9 +252,12 @@ function (
         * @extends {L.Control}
         * @param {Object}  options - control options
         * @param {String}  [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
-        * @param {Boolean} [options.collapsed] - collapse mode, false by default
-        * @param {String}  [options.position] - position of component into the map, 'topleft' by default. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
-        * @param {Boolean} [options.displayInfo] - get informations on popup marker
+        * @param {Boolean} [options.collapsed = false] - collapse mode
+        * @param {String}  [options.position = "topleft"] - position of component into the map. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
+        * @param {String}  [options.placeholder = "Rechercher un lieu, une adresse"] - set placeholder in search bar
+        * @param {Boolean} [options.displayMarker = true] - set a marker on search result
+        * @param {String|Object}  [options.markerStyle = "blue"] - set a marker style. Currently possible values are "blue" (default value), "orange", "red" and "green". But you can use an L.Icon object (see {@link http://leafletjs.com/reference-1.2.0.html#icon L.Icon })
+        * @param {Boolean} [options.displayInfo = true] - get informations on popup marker
         * @param {Sting|Numeric|Function} [options.zoomTo] - zoom to results, by default, current zoom.
         *       possible values : "auto", any fixed zoom level or a function retruning a zoom :
         *

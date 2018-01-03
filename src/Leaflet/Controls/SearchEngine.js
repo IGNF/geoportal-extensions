@@ -5,6 +5,7 @@ define([
     "gp",
     "Common/Utils/CheckRightManagement",
     "Common/Utils/SelectorID",
+    "Leaflet/Controls/Utils/IconDefault",
     "Common/Controls/SearchEngineDOM",
     "Common/Controls/SearchEngineUtils"
 ], function (
@@ -13,6 +14,7 @@ define([
     Gp,
     RightManagement,
     ID,
+    IconDefault,
     SearchEngineDOM,
     SearchEngineUtils
 ) {
@@ -52,6 +54,9 @@ define([
             displayInfo : true,
             zoomTo : "",
             resources : [],
+            placeholder : "Rechercher un lieu, une adresse",
+            displayMarker : true,
+            markerStyle : "blue",
             displayAdvancedSearch : true,
             advancedSearch : {},
             geocodeOptions : {},
@@ -76,6 +81,9 @@ define([
         *           // do some stuff...
         *           return zoom;
         *       }
+        * @param {String}  [options.placeholder] - set placeholder in search bar. Default is "Rechercher un lieu, une adresse".
+        * @param {Boolean}  [options.displayMarker] - set a marker on search result, defaults to true.
+        * @param {String|Object}  [options.markerStyle] - set a marker style. Currently possible values are "blue" (default value), "orange", "red" and "green". But you can use an L.Icon object (see {@link http://leafletjs.com/reference-1.2.0.html#icon L.Icon }). 
         * @param {Sting} [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
         * @param {Object} [options.resources] - resources to be used by geocode and autocompletion services, by default : ["StreetAddress", "PositionOfInterest"]
         * @param {Boolean} [options.displayAdvancedSearch] - False to disable advanced search tools (it will not be displayed). Default is true (displayed)
@@ -88,6 +96,9 @@ define([
         *      collapsed : true,
         *      displayInfo : true,
         *      displayAdvancedSearch : true,
+        *      placeholder : "Rechercher un lieu, une adresse",
+        *      displayMarker : true,
+        *      markerStyle : L.icon(iconUrl: 'https://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png');
         *      zoomTo : 15,
         *      resources : ["PositionOfInterest", "StreetAddress"],
         *      advancedSearch : {
@@ -350,7 +361,7 @@ define([
             var picto = this._pictoContainer = this._createShowSearchEnginePictoElement();
             container.appendChild(picto);
 
-            var search = this._createSearchInputElement();
+            var search = this._createSearchInputElement(this.options.placeholder);
             container.appendChild(search);
 
             if ( this.options.displayAdvancedSearch ) {
@@ -886,7 +897,7 @@ define([
             // on y force le param suivant, s'il n'a pas été surchargé :
             if (!options.hasOwnProperty("returnFreeForm")) {
                 L.Util.extend(options, {
-                    returnFreeForm : false
+                    returnFreeForm : true
                 });
             }
 
@@ -1081,10 +1092,11 @@ define([
         * @param {Object} position - position {x: ..., y: ...}
         * @param {Object} information - suggested or geocoded information
         * @param {Boolean} display - display a popup information
+        * @param {String} marker - style style
         *
         * @private
         */
-        _setMarker : function (position, information, display) {
+        _setMarker : function (position, information, display, marker) {
 
             var map = this._map;
             if (this._marker != null) {
@@ -1094,16 +1106,21 @@ define([
 
             if (position) {
 
-                // FIXME doit on avoir un icone de position propre au geoportail ?
-                // (ne pas oublier de l'ajouter dans options.icon)
-                // var icon = L.icon({
-                //     iconUrl : "marker-ign.png"
-                // });
+                var _icon = null;
+                if ( typeof marker === "string" ) {
+                    _icon = new IconDefault(marker);
+                } else if ( marker instanceof L.Icon ) {
+                    _icon = marker;
+                } else {
+                    _icon = new IconDefault("blue");
+                    console.log("Utilisation du marker par défaut !");
+                }
 
                 // cf. http://leafletjs.com/reference.html#marker-options
                 var options = {
                     clickable : true,
-                    zIndexOffset : 1000
+                    zIndexOffset : 1000,
+                    icon : _icon
                 };
 
                 this._marker = L.marker(L.latLng(position.x, position.y), options);
@@ -1411,7 +1428,9 @@ define([
 
             this._setLabel(label);
             this._setPosition(position, zoom);
-            this._setMarker(position, info, this.options.displayInfo);
+            if (this.options.displayMarker) {
+                this._setMarker(position, info, this.options.displayInfo, this.options.markerStyle);
+            }
         },
 
         // ################################################################### //
@@ -1498,7 +1517,9 @@ define([
 
             this._setLabel(label);
             this._setPosition(position, zoom);
-            this._setMarker(position, info, this.options.displayInfo);
+            if (this.options.displayMarker) {
+                this._setMarker(position, info, this.options.displayInfo, this.options.markerStyle);
+            }
         },
 
         // ################################################################### //
