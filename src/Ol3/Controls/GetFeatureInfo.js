@@ -101,7 +101,7 @@ define([
     // ################################################################### //
 
     /**
-     * Initialize GetFeatureInfo control (called by constructor)
+     * Initializes GetFeatureInfo control (called by constructor)
      *
      * @param {Object} options - General options of the control set by user.
      * @param {Array.<Object>} layers - Array of ol layers with their configuration options (obj, event, infoFormat)
@@ -222,67 +222,68 @@ define([
      * @param {ol.Map} map - Map.
      */
     GetFeatureInfo.prototype.setMap = function (map) {
+        if ( map ) {
+            // on active les evenements (si des couches sont configurees)
+            this._updateEvents(map);
 
-        // call original setMap method
-        ol.control.Control.prototype.setMap.call(this, map);
-
-        this._updateEvents();
-
-        // nothing else to do if map == null
-        if (map == null) {
-            return ;
-        }
-
-        if ( this._cursorStyle && this._active ) {
-            this._activateCursor(true);
-        }
-
-        map.getLayers().on(
-            "remove",
-            function (evt) {
-                for ( var i = 0 ; i < this._layers.length ; ++i ) {
-                    if ( this._layers[i].obj === evt.element ) {
-                        this._layers.splice(i, 1);
-                        break;
-                    }
-                }
-                this._updateEvents();
-            },
-            this
-        );
-
-        if ( this._auto ) {
-            // ajout des couches vecteur deja dans la carte
-            var updated = false;
-            map.getLayers().forEach( function (olLayer) {
-                var layerFormat = GfiUtils.getLayerFormat(olLayer);
-                if ( !this._hasLayer( olLayer ) && layerFormat == "vector" ) {
-                    this._layers.push({
-                        obj : olLayer
-                    });
-                    updated = true;
-                }
-            },
-            this
-            );
-            if ( updated ) {
-                this._updateEvents();
+            if ( this._cursorStyle && this._active ) {
+                this._activateCursor(true, map);
             }
 
             map.getLayers().on(
-                "add",
+                "remove",
                 function (evt) {
-                    var layerFormat = GfiUtils.getLayerFormat( evt.element );
-                    if ( layerFormat == "vector" ) {
-                        this._layers.push({
-                            obj : evt.element
-                        });
+                    for ( var i = 0 ; i < this._layers.length ; ++i ) {
+                        if ( this._layers[i].obj === evt.element ) {
+                            this._layers.splice(i, 1);
+                            break;
+                        }
                     }
-                    this._updateEvents();
+                    this._updateEvents(map);
                 },
                 this
             );
+
+            if ( this._auto ) {
+                // ajout des couches vecteur deja dans la carte
+                var updated = false;
+                map.getLayers().forEach( function (olLayer) {
+                    var layerFormat = GfiUtils.getLayerFormat(olLayer);
+                    if ( !this._hasLayer( olLayer ) && layerFormat == "vector" ) {
+                        this._layers.push({
+                            obj : olLayer
+                        });
+                        updated = true;
+                    }
+                },
+                this
+                );
+
+                if ( updated ) {
+                    this._updateEvents(map);
+                }
+
+                map.getLayers().on(
+                    "add",
+                    function (evt) {
+                        var layerFormat = GfiUtils.getLayerFormat( evt.element );
+                        if ( layerFormat == "vector" ) {
+                            this._layers.push({
+                                obj : evt.element
+                            });
+                        }
+                        this._updateEvents(map);
+                    },
+                    this
+                );
+            }
+        } else {
+            this._clearEvents();
+            this._activateCursor(false);
         }
+
+        // call original setMap method
+        ol.control.Control.prototype.setMap.call(this, map);
     };
 
     // ################################################################### //
@@ -290,7 +291,7 @@ define([
     // ################################################################### //
 
     /**
-     * Get the list of layers already added to the map and attached to the control.
+     * Gets the list of layers already added to the map and attached to the control.
      *
      * @returns {Array.<Object>} gfiLayers List of layers.
      * @returns {ol.layer.Layer} gfiLayers.obj {@link http://openlayers.org/en/latest/apidoc/ol.layer.Layer.html ol.layer.Layer} layer handled by the control (that has been added to map).
@@ -302,7 +303,7 @@ define([
     };
 
     /**
-     * Set the default event applied to layer with no triggering event configured.
+     * Sets the default event applied to layer with no triggering event configured.
      * This can be set on run time.
      *
      * @param {String} eventName - name of the mouse event chosen in the list : 'singleclick', 'dblclick', 'contextmenu'.
@@ -322,7 +323,7 @@ define([
     };
 
     /**
-     * Set the cursor style when hovering vector layers features.
+     * Sets the cursor style when hovering vector layers features.
      *
      * @param {String} cursorStyle - cursor style. The value must be choosen in the possible values of the css cursor property.
      */
@@ -342,7 +343,7 @@ define([
     };
 
     /**
-     * Set active control property
+     * Sets active control property
      *
      * @param {Boolean} active - specify the value the active property must be set to.
      */
@@ -355,7 +356,7 @@ define([
     };
 
     /**
-     * Set active control property
+     * Sets active control property
      *
      * @param {Boolean} active - specify the value the active property must be set to.
      *
@@ -376,7 +377,7 @@ define([
     };
 
     /**
-     * Get active control property
+     * Gets active control property
      *
      * @return {Boolean} active
      */
@@ -394,7 +395,7 @@ define([
     };
 
     /**
-     * indicates if the widget is hidden
+     * Indicates if the widget is hidden
      *
      * @return {Boolean} hidden
      */
@@ -404,6 +405,7 @@ define([
 
     /**
      * Set the layers list the control is attached to. Listened events are updated according to this list.
+     *
      * @param {Array.<Object>} gfiLayers - list of layers which can be requested through the control.
      * @param {ol.layer.Layer} gfiLayers.obj - {@link http://openlayers.org/en/latest/apidoc/ol.layer.Layer.html ol.layer.Layer} layer handled by the control (that has been added to map).
      * @param {String} [gfiLayers.event] - Name of the mouse event triggering getFeatureInfo on this layer (that has been added to map). allowed values are : 'singleclick', 'dblclick' and 'contextmenu'.
@@ -426,14 +428,14 @@ define([
     };
 
     /**
-     * add an event listener to the specified event.
+     * Adds an event listener to the specified event.
+     *
      * @param {String} eventName - name of the mouse event chosen in the list : 'singleclick', 'dblclick', 'contextmenu'.
+     * @param {Object} map - map on wich event are attached.
      *
      * @private
      */
-    GetFeatureInfo.prototype._activateEvent = function (eventName) {
-
-        var map = this.getMap();
+    GetFeatureInfo.prototype._activateEvent = function (eventName, map) {
         var gfiObj = this;
 
         /**
@@ -461,15 +463,13 @@ define([
     };
 
     /**
-     * Unlisten the specified event.
+     * Unlistens the specified event.
      * @param {String} eventName - name of the mouse event chosen in the list : 'singleclick', 'dblclick', 'contextmenu'.
+     * @param {Object} map - map on wich event are attached.
      *
      * @private
      */
-    GetFeatureInfo.prototype._deactivateEvent = function (eventName) {
-
-        var map = this.getMap();
-
+    GetFeatureInfo.prototype._deactivateEvent = function (eventName, map) {
         if ( eventName == "contextmenu") {
             map.getViewport().removeEventListener(
                 eventName,
@@ -488,11 +488,16 @@ define([
     };
 
     /**
-     * update the listener (listen/unlisten) in accordance with the layers attached to the control and their triggering events.
+     * Updates the listener (listen/unlisten) in accordance with the layers attached to the control and their triggering events.
+     *
+     * @param {Object} map - map on wich event are attached.
      *
      * @private
      */
-    GetFeatureInfo.prototype._updateEvents = function () {
+    GetFeatureInfo.prototype._updateEvents = function (map) {
+        if ( !map ) {
+            map = this.getMap();
+        }
         var sEvent = [];
         for ( var i = 0 ; i < this._layers.length ; ++i ) {
             var event = (this._layers[i].event) ? this._layers[i].event : this._defaultEvent;
@@ -503,9 +508,23 @@ define([
 
         for ( var eventName in this._events ) {
             if ( !this._events[eventName] && sEvent.indexOf(eventName) >= 0 ) {
-                this._activateEvent(eventName);
+                this._activateEvent(eventName, map);
             } else if ( this._events[eventName] && sEvent.indexOf(eventName) < 0 ) {
-                this._deactivateEvent(eventName);
+                this._deactivateEvent(eventName, map);
+            }
+        }
+    };
+
+    /**
+     * Clears all the listeners.
+     *
+     * @private
+     */
+    GetFeatureInfo.prototype._clearEvents = function () {
+        var map = this.getMap();
+        for ( var eventName in this._events ) {
+            if ( this._events[eventName] ) {
+                this._deactivateEvent(eventName, map);
             }
         }
     };
@@ -527,14 +546,17 @@ define([
     };
 
     /**
-     * Listen/unlisten 'pointermove' event displaying specific cursor style when hovering vector features
+     * Listens/unlistens 'pointermove' event displaying specific cursor style when hovering vector features
      *
      * @param {Boolean} activate - specify if the control must be activated or deactivated
+     * @param {Object} map - map on wich cursor is attached.
      *
      * @private
      */
-    GetFeatureInfo.prototype._activateCursor = function (activate) {
-        var map = this.getMap();
+    GetFeatureInfo.prototype._activateCursor = function (activate, map) {
+        if ( !map ) {
+            map = this.getMap();
+        }
 
         if (activate) {
             if ( this._eventsHandler.hasOwnProperty("pointermove") ) {
@@ -573,7 +595,7 @@ define([
     };
 
     /**
-     * Set the layers list the control is attached to.
+     * Sets the layers list the control is attached to.
      * @param {Array.<Object>} gfiLayers - list of layers which can be requested through the control.
      *
      * @private
@@ -609,7 +631,7 @@ define([
     // ################################################################### //
 
     /**
-     * this method is called by event 'change' on 'GPactivateGetFeatureInfo'
+     * This method is called by event 'change' on 'GPactivateGetFeatureInfo'
      * tag select (cf. this._createActivateGetFeatureInfoElement).
      *
      * @method onActivateGetFeatureInfoElementChange
@@ -622,7 +644,7 @@ define([
     };
 
     /**
-     * Create control main container (called by GetFeatureInfo constructor)
+     * Creates control main container (called by GetFeatureInfo constructor)
      * @param {Object} [options] - options object to configure the widget :
      * @param {Boolean} [options.hidden] - specifies if the widget should be hidden.
      *
