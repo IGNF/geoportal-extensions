@@ -215,6 +215,46 @@ define([], function () {
             div.appendChild(p);
 
             return div;
+        },
+
+        /**
+        * Create information Panel
+        *
+        * @returns {DOMElement} DOM element
+        */
+        _createElevationPathInformationsElement : function () {
+
+            var div  = document.createElement("div");
+            div.id   = this._addUID("GPelevationPathInformationsContainer");
+            div.className = "GPelevationPathInformationsContainerHidden";
+
+            var p = document.createElement("p");
+            p.className = "GPelevationPathInformations";
+            p.innerHTML = "Aucune information...";
+            div.appendChild(p);
+
+            return div;
+        },
+
+        /**
+        * Add a information into Panel
+        *
+        * @param {String} value - value of item
+        * @returns {DOMElement} DOM element
+        */
+        _addElevationPathInformationsItem : function (value) {
+
+            var div = document.getElementById(this._addUID("GPelevationPathInformationsContainer"));
+            
+            if (div) {
+                var p = document.createElement("p");
+                p.className = "GPelevationPathInformations";
+                p.innerHTML = value;
+                div.appendChild(p);
+            }
+
+            return div;
+            
         }
     };
 

@@ -17,6 +17,19 @@ div[id^=GPelevationPathPanelInfo] {
   overflow: hidden;
 }
 
+.GPelevationPathInformationsContainerVisible,
+.GPelevationPathInformationsContainerHidden {
+  position: absolute;
+  top: 32px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(255,255,255,0.9);
+  font-size: 13px;
+  font-weight: bold;
+  overflow: hidden;
+}
+
 .GPelevationPathCalcWaitingContainerVisible {
   display: -webkit-flex;
   display: -webkit-box;
@@ -24,16 +37,32 @@ div[id^=GPelevationPathPanelInfo] {
   display: flex;
 }
 
-.GPelevationPathCalcWaitingContainerHidden {
+.GPelevationPathInformationsContainerVisible {
+  display: -webkit-flex;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-direction: column;
+}
+
+.GPelevationPathCalcWaitingContainerHidden,
+.GPelevationPathInformationsContainerHidden {
   display: none;
 }
 
-.GPelevationPathCalcWaiting {
+.GPelevationPathCalcWaiting,
+.GPelevationPathInformations {
   margin: auto;
 }
 
+.GPelevationPathInformations {
+  font-size: 0.8em;
+}
+
 .GPelevationPathCalcWaitingContainerVisible,
-.GPelevationPathCalcWaitingContainerHidden {
+.GPelevationPathCalcWaitingContainerHidden,
+.GPelevationPathInformationsContainerVisible,
+.GPelevationPathInformationsContainerHidden {
   border-radius: 5px;
 }
 

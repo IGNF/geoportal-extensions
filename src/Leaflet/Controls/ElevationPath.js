@@ -114,6 +114,10 @@ define([
             this._panelContainer = null;
             this._profilContainer = null;
             this._waitingContainer = null;
+            this._infoContainer = null;
+
+            // timer sur la fenetre d'informations des données
+            this._timerHdlr = null;
 
             // detection si le panneau est reduit
             this._reducePanel = false;
@@ -133,6 +137,9 @@ define([
 
             // distance du segment
             this._distance = 0;
+
+            // data elevations
+            this._data = {};
 
             // aucun droits sur les ressources
             this._noRightManagement = false;
@@ -298,6 +305,10 @@ define([
             var waiting = this._waitingContainer = this._createElevationPathWaitingElement();
             panel.appendChild(waiting);
 
+            // info
+            var info = this._infoContainer = this._createElevationPathInformationsElement();
+            panel.appendChild(info);
+
             container.appendChild(panel);
 
             return container;
@@ -367,11 +378,51 @@ define([
         */
         onOpenElevationPathInfoClick : function () {
 
+            // options d'affichage
             var meanSlope = this.options.displayProfileOptions.meanSlope;
             var greaterSlope = this.options.displayProfileOptions.greaterSlope;
             var ascendingElevation =  this.options.displayProfileOptions.ascendingElevation;
             var descendingElevation = this.options.displayProfileOptions.descendingElevation;
-            logger.log(meanSlope, greaterSlope, ascendingElevation, descendingElevation);
+
+            // clean
+            var div = this._infoContainer;
+            if (div.childElementCount) {
+                while (div.firstChild) {
+                    div.removeChild(div.firstChild);
+                }
+            }
+
+            // creation des infomations 
+
+            if (ascendingElevation) {
+                this._addElevationPathInformationsItem("Dénivelé positive : " + this._data.ascendingElevation.toLocaleString() + " m");
+            }
+
+            if (descendingElevation) {
+                this._addElevationPathInformationsItem("Dénivelé négative : " + this._data.descendingElevation.toLocaleString() + " m");
+            }
+
+            if (meanSlope) {
+                this._addElevationPathInformationsItem("Pente moyenne : " + this._data.meanSlope.toLocaleString() + " %");
+            }
+
+            if (greaterSlope) {
+                this._addElevationPathInformationsItem("Plus forte pente : " + this._data.greaterSlope.toLocaleString() + " %");
+            }
+
+            // show des informations !
+            if (div.className === "GPelevationPathInformationsContainerVisible") {
+                clearTimeout(this._timerHdlr);
+                div.className = "GPelevationPathInformationsContainerHidden";
+            } else {
+                div.className = "GPelevationPathInformationsContainerVisible";
+            }
+            
+            // hidden des informations !
+            this._timerHdlr = setTimeout( function () {
+                div.className = "GPelevationPathInformationsContainerHidden";
+            }, 4000);
+            
         },
 
         // ################################################################### //
@@ -750,7 +801,7 @@ define([
                     _distancePlus += dist;
                     _ascendingElevation += slope;
                 }
-                _distance += dist/_factor;
+                _distance += dist / _factor;
                 _data[i].dist = _distance;
         
                 _slopes += Math.abs(Math.round(slope / dist * 100));
@@ -838,7 +889,12 @@ define([
         _displayProfil : function (elevations) {
 
             // data
-            var data = this._computeElevationMeasure(elevations);
+            if (this._data) {
+                this._data = {};
+            }
+
+            // sauvegarde des données
+            var data = this._data = this._computeElevationMeasure(elevations);
 
             // container
             var container = this.options.displayProfileOptions.target;
@@ -872,9 +928,7 @@ define([
                 // on affiche les informations
                 element.style.display = "block";
             }
-
         },
-
 
         /**
         * this method is called by this.
@@ -1481,51 +1535,6 @@ define([
 
         var _points = data.points;
 
-        var textSlope = "";
-        var meanSlope = this.options.displayProfileOptions.meanSlope;
-        if (meanSlope) {
-            textSlope += "Pente moyenne : " + data.meanSlope.toLocaleString() + " % - ";
-        }
-        
-        var greaterSlope = this.options.displayProfileOptions.greaterSlope;
-        if (greaterSlope) {
-            textSlope += "Plus forte pente : " + data.greaterSlope.toLocaleString() + " %";
-        }
-
-        var _labels = [];
-        if (textSlope !== "") {
-            _labels.push({
-                id : "Label-slope",
-                align : "center",
-                bold : false,
-                size : 7,
-                y : 180,
-                text : textSlope
-            });
-        }
-
-        var textElevation = "";
-        var ascendingElevation =  this.options.displayProfileOptions.ascendingElevation;
-        if (ascendingElevation) {
-            textElevation += "Dénivelé positif : " + data.ascendingElevation.toLocaleString() + " m - ";
-        }
-
-        var descendingElevation = this.options.displayProfileOptions.descendingElevation;
-        if (descendingElevation) {
-            textElevation += "Dénivelé négatif : " + data.descendingElevation.toLocaleString() + " m";
-        }
-
-        if (textElevation !== "") {
-            _labels.push({
-                id : "Label-elevation",
-                align : "center",
-                bold : false,
-                size : 7,
-                y : 190,
-                text : textElevation
-            });
-        }
-
         var ballonText = "<span class='altiPathValue'>[[title]] : [[value]]m</span><br/>";
         var profile = this.options.displayProfileOptions.profile;
         if (profile) {
@@ -1557,7 +1566,7 @@ define([
                 gridPosition : "start",
                 minHorizontalGap : 40,
                 tickPosition : "start",
-                title : "Distance ("+ data.unit +")",
+                title : "Distance (" + data.unit + ")",
                 titleColor : "#5E5E5E",
                 labelOffset : 0,
                 startOnAxis : true
@@ -1609,7 +1618,7 @@ define([
                 showBullet : true
             },
             titles : [],
-            allLabels : _labels,
+            allLabels : [],
             dataProvider : _points
         });
 
