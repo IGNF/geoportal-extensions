@@ -135,16 +135,15 @@ define([
      */
     MousePosition.prototype.setGlobe = function (globe) {
 
-        if ( globe ) { // dans le cas de l'ajout du contrôle au globe
+        if ( globe ) { // In the case of the adding of a control to the globe
 
-            // dans le cas de l'ajout du contrôle au globe
             this._centerElement = this._createMapCenter();
             globe.getTargetElement().appendChild(this._centerElement);
 
-            // on définie le callback sur la carte pour recuperer les coordonnées
+            // defines the callback on the map to retrieve the coordinates
             this._callbacks.mouseMove = this.onMouseMove.bind(this);
 
-            // evenement valable pour le mode desktop !
+            // valid event for desktop mode
             if (!this.collapsed) {
                 if (this._isDesktop) {
                     globe.addEventListener( "mousemove", this._callbacks.mouseMove );
@@ -154,9 +153,9 @@ define([
             }
             this._globe = globe;
         } else if (globe == null) { // if globe == null we remove the MP control
-            // on supprime le listener associé au MP
+            // deletes the listener associated to the mousePosition control
             this._globe.removeEventListener( "mousemove", this._callbacks.mouseMove );
-            // on supprime le DOM du mousePosition
+            // deletes the mousePosition control DOM
             while (this.getElement().hasChildNodes()) {
                 this.getElement().removeChild(this.getElement().lastChild);
             }
@@ -172,7 +171,7 @@ define([
     // ################################################################### //
 
     /**
-     * Set additional projection system
+     * Sets additional projection system
      *
      * @method use system defined in the Itowns/CRS/CRS.js class
      * @param {Object} system - Projection system
@@ -198,7 +197,7 @@ define([
             system.type = "Metric";
         }
 
-        // 1. add system to control systems
+        // 1. adds system to control systems
         for (var j = 0; j < this._projectionSystems.length; j++) {
             var obj = this._projectionSystems[j];
             if (system.crs === obj.crs) {
@@ -210,7 +209,7 @@ define([
         system.code = this._projectionSystems.length;
         this._projectionSystems.push(system);
 
-        // 2. add system settings option to container (if it was already build)
+        // 2. adds system settings option to container (if it was already build)
         var selectSystem = document.getElementById(this._addUID("GPmousePositionProjectionSystem"));
         if ( selectSystem ) {
             var option = document.createElement("option");
@@ -221,8 +220,7 @@ define([
     };
 
     /**
-     * Set additional projection systems
-     * FIXME feature not available with VG
+     * Sets additional projection systems
      *
      * @param {Array} systems - Array of system object, with following properties :
      * @param {String} systems.crs - Proj4 CRS alias (from proj4 defs) e.g. "EPSG:4326"
@@ -243,7 +241,7 @@ define([
     };
 
     /**
-     * Remove projection system (in case there are several system with same code, only the first one will be removed)
+     * Removes projection system (in case there are several system with same code, only the first one will be removed)
      *
      * @param {String} systemCrs - CRS alias (from proj4 defs)
      */
@@ -254,12 +252,12 @@ define([
         }
 
         var systemCode = null;
-        // find system in control projection systems list
+        // finds system in control projection systems list
         for ( var i = 0; i < this._projectionSystems.length; i++ ) {
             var proj = this._projectionSystems[i];
             if ( systemCrs === proj.crs ) {
                 systemCode = proj.code;
-                // remove system from control projection systems list
+                // removes system from control projection systems list
                 this._projectionSystems.splice(i, 1);
                 break;
             }
@@ -277,7 +275,7 @@ define([
             this._projectionSystems[ii].code = ii;
         }
 
-        // find system in control container systems list
+        // finds system in control container systems list
         var indexChildToRemove = null;
         var systemList = document.getElementById(this._addUID("GPmousePositionProjectionSystem"));
         for ( var j = 0; j < systemList.childNodes.length; j++) {
@@ -287,7 +285,7 @@ define([
             }
             systemList.childNodes[j].value = oldNewCodeGlobe [ Number( systemList.childNodes[j].value ) ];
         }
-        // remove system from control container systems list
+        // removes system from control container systems list
         if ( indexChildToRemove != null ) {
             systemList.removeChild( systemList.childNodes[ indexChildToRemove ] );
         }
@@ -300,7 +298,7 @@ define([
     };
 
     /**
-     * Set control units (to be displayed)
+     * Sets control units (to be displayed)
      *
      * @param {Array} units - list of all coordinates units, to be displayed in control units list.
      *      Values may be "DEC" (decimal degrees), "DMS" (sexagecimal), "RAD" (radians) and "GON" (grades) for geographical coordinates,
@@ -319,7 +317,7 @@ define([
     };
 
     /**
-     * Set control altitude options (useless if displayAltitude == false)
+     * Sets control altitude options (useless if displayAltitude == false)
      *
      * @param {Object} options - altitude options
      * @param {Object}  [options.serviceOptions] - options of elevation service
@@ -342,7 +340,7 @@ define([
     };
 
     /**
-     * Display or hide elevation panel
+     * Displays or hides elevation panel
      *
      * @param {Boolean} displayAltitude - true to display elevation panel, false to hide it
      */
@@ -358,7 +356,7 @@ define([
     };
 
     /**
-     * Display or hide coordinates panel
+     * Displays or hides coordinates panel
      *
      * @param {Boolean} displayCoordinates - true to display coordinates panel, false to hide it
      */
@@ -372,7 +370,7 @@ define([
     };
 
     /**
-     * Collapse or display control main container
+     * Collapses or displays control main container
      *
      * @param {Boolean} collapsed - True to collapse control, False to display it
      */
@@ -387,7 +385,7 @@ define([
         if ( !this._isDesktop ) {
             document.getElementById(this._addUID("GPmapCenter")).className = collapsed ? "" : "GPmapCenterVisible";
         }
-        // on simule l'ouverture du panneau après un click
+        // simulates the opening of the panel after a click
         this.onShowMousePositionClick();
         this._showMousePositionContainer.checked = !collapsed;
     };
@@ -397,7 +395,7 @@ define([
     // ################################################################### //
 
     /**
-     * Initialize control (called by MousePosition constructor)
+     * Initializes control (called by MousePosition constructor)
      *
      * @method _initialize
      * @param {Object} options - control options (set by user)
@@ -432,21 +430,21 @@ define([
             };
         }
 
-        // identifiant du contrôle : utile pour suffixer les identifiants CSS (pour gérer le cas où il y en a plusieurs dans la même page)
+        // id of the widget : usefull to suffix the CSS ids (to handle cases with several widgets on the same page)
         this._uid = SelectorID.generate();
 
-        // initialisation des systemes de projections
+        // initialization of the projections systems
         this._projectionSystems = [];
         this._initProjectionSystems();
 
-        // initialisation des systemes des unités
+        // initialization of the units systems
         this._projectionUnits = {};
         this._initProjectionUnits();
 
-        // detection du support : desktop ou tactile
+        // support detect : desktop or tactile
         this._isDesktop = Utils.detectSupport();
 
-        // on met en place un seuil sur le timer
+        // implements a timer threshold
         if ( this.options.altitude.triggerDelay < 100 ) {
             this.options.altitude.triggerDelay = 100;
         }
@@ -469,14 +467,14 @@ define([
         // {Object} control panel container (DOM Element)
         this._showMousePositionContainer = null;
 
-        // gestion de l'affichage du panneau de l'altitude
+        // management of the altitude panel display
         if ( !this.options.displayAltitude && !this.options.displayCoordinates ) {
-            // on reactive l'affichage des coordonnées, pour ne pas afficher un panneau vide !
+            // reactivate the display of coordinates, to not display an empty panel
             this.options.displayCoordinates = true;
         }
 
-        // gestion des droits sur les ressources/services
-        // si l'on souhaite un calcul d'altitude, on verifie les droits sur les ressources d'alti...
+        // rights management on resources and services
+        // if we want an altitude calculation, we check the alti resources rights...
         if ( this.options.displayAltitude ) {
             this._checkRightsManagement();
         }
@@ -493,11 +491,10 @@ define([
      */
     MousePosition.prototype._initProjectionSystems = function () {
 
-        // on donne la possibilité à l'utilisateur de modifier
-        // la liste des systèmes à afficher
+        // user has the possibility to modify the list of systems to display
         // Ex. this.options.systems
 
-        // systemes de projection disponible par defaut
+        // available projection systems vy default
         var projectionSystemsByDefault = [
             {
                 label : "Géographique",
@@ -535,13 +532,13 @@ define([
 
         var systems = this.options.systems;
         for (var i = 0; i < systems.length; i++) {
-            // definition d'un systeme de reference
+            // definition of a reference system
             var sys = systems[i];
             this.addSystem(sys);
         }
 
         if ( this._projectionSystems.length === 0 ) {
-            // on ajoute les systèmes de projections par défaut
+            // we add the default projection systems
             for (var ii = 0; ii < projectionSystemsByDefault.length; ii++ ) {
                 this.addSystem(projectionSystemsByDefault[ii]);
             }
@@ -558,12 +555,11 @@ define([
      */
     MousePosition.prototype._initProjectionUnits = function () {
 
-        // on donne la possibilité à l'utilisateur de modifier
-        // la liste des unités à afficher
+        // user has the possibility to modify the list of units to display
         // Ex.
         // this.options.units : ["DEC", "DMS"]
 
-        // unités disponible par defaut
+        // available units systems by default
         var projectionUnitsByDefault = {
             Geographical : [
                 {
@@ -625,7 +621,7 @@ define([
             }
         }
 
-        // au cas où...
+        // in case of...
         if ( typeof this._projectionUnits === "object" && Object.keys(this._projectionUnits).length === 0 ) {
             this._projectionUnits = projectionUnitsByDefault;
         }
@@ -648,10 +644,9 @@ define([
 
         this._noRightManagement = !rightManagement;
 
-        // on recupère les informations utiles
-        // sur ce controle, on ne s'occupe pas de la ressource car elle est unique...
-        // Ex. la clef API issue de l'autoconfiguration si elle n'a pas
-        // été renseignée.
+        // retrieves the usefull infos
+        // on this control, we do not care about the ressource bescause it is unique
+        // Ex : the API key from the autoconfiguration if it has not been given
         if ( !this.options.apiKey ) {
             this.options.apiKey = rightManagement.key;
         }
@@ -669,7 +664,7 @@ define([
      * @private
      */
     MousePosition.prototype._initContainer = function (options) {
-        // creation du container principal
+        // creates the main container
         var container = this._createMainContainerElement();
 
         var inputShow = this._showMousePositionContainer = this._createShowMousePositionElement();
@@ -767,7 +762,7 @@ define([
     MousePosition.prototype._setTypeUnitsPanel = function (type) {
         var container = this._projectionUnitsContainer;
 
-        // on supprime les enfants...
+        // deletes the childNodes
         while (container.firstChild) {
             container.removeChild(container.firstChild);
         }
@@ -782,10 +777,9 @@ define([
             container.appendChild(option);
         }
 
-        // le nouveau type de system ...
+        // the new type of system
         this._currentProjectionType = type;
-        // et comme on a changé de type de systeme,
-        // il faut changer aussi d'unité !
+        // as the system changed, the unit system has to change too !
         this._currentProjectionUnits = this._projectionUnits[type][0].code;
     };
 
@@ -907,13 +901,13 @@ define([
         //          lat : 48
         //      }
         //
-        // structure pour les coordonnées en fonctin du type demandé :
-        // {x:, y:, unit:} ou {lng:, lat:} ou {lon:, lat:} ou {e:, n:, unit:}...
+        // structure for the coordinates depending on the system type :
+        // {x:, y:, unit:} or {lng:, lat:} or {lon:, lat:} or {e:, n:, unit:}...
 
         var coord = [];
         var coordinates = {};
 
-        // on projete le point dans le systeme demandé
+        // transforms the point in the wanted coords system
         var oSrs = this._currentProjectionSystems;
         var crsProp = oSrs.crs;
 
@@ -921,21 +915,21 @@ define([
             console.log("ERROR : system crs not found");
             return;
         }
-        // on reprojette les coordonnées depuis leur CRS d'origine (WGS84) vers le CRS demandé (crsProp)
+        // reproject coordinates from their CRS of origin (WGS84) to the wanted CRS (crsProp)
         if (crsProp !== "EPSG:4326") {
             coord = proj4(CRS[crsProp],[coords.lon, coords.lat]);
-            // on affecte les valeurs projetées à coords
+            // projected values are affected to the coord var
             coordinates.lon = coord[0];
             coordinates.lat = coord[1];
         } else {
             coordinates = coords;
         }
 
-        // type de systeme : Geographical ou Metric
+        // system type : Geographical or Metric
 
         var type = this._currentProjectionSystems.type;
 
-        // on recherche la fonction de formatage dans l'unité demandée
+        // checks for a formatting function in the wanted unit
         var convert = null;
         var units = this._projectionUnits[type];
 
@@ -968,7 +962,7 @@ define([
      * @private
      */
     MousePosition.prototype._setElevation = function (coords) {
-        // gestion du timer de la requete du service d'altitude
+        // management of the timer of the altitude service request
         var delay = this.options.altitude.responseDelay;
         this.GPdisplayElevation(coords, delay);
     };
@@ -1014,7 +1008,7 @@ define([
 
         this._setCoordinate(coordinate);
 
-        // calcul de l'altitude après un certain délai après l'arrêt du mouvement de la souris
+        // calculation of the altitude after a time limit from the moment where the mouse movement is stopped
         if ( this.options.displayAltitude ) {
             clearTimeout(this._timer);
             this._timer = setTimeout( function () {
@@ -1065,33 +1059,32 @@ define([
      */
     MousePosition.prototype.onRequestAltitude = function (coordinate, callback) {
         // INFORMATION
-        // on effectue la requête au service d'altitude...
-        // on met en place des callbacks afin de recuperer les resultats ou
-        // les messages d'erreurs du service.
-        // le resultat est affiché dans une balise du dom.
-        // les messages d'erreurs sont affichés sur la console (?)
+        // we launch the request to the altitude services
+        // we implement callbacks in order to retrieve results or errors
+        // from the service.
+        // The result is displayed in a DOM element.
+        // The error messages are display in the dev console (?)
 
         if ( !coordinate || Object.keys(coordinate).length === 0 ) {
             return;
         }
 
-        // si on ne veut pas de calcul d'altitude, on ne continue pas !
+        // if we do not want any altitude calculation, we just stop !
         if ( !this.options.displayAltitude ) {
             return;
         }
 
-        // si on n'a pas les droits sur la ressource, pas la peine de
-        // continuer !
+        // if we don not have the rights on the requested resource, we just stop !
         if ( this._noRightManagement ) {
             console.log("[WARNING] contract key configuration has no rights to load geoportal elevation ");
             document.getElementById(this._addUID("GPmousePositionAlt")).innerHTML = "No rights!";
             return;
         }
 
-        // on recupere les options du service
+        // we retrieve the service options...
         var options = this.options.altitude.serviceOptions || {};
 
-        // ainsi que les coordonnées
+        // ... and the coordinates...
         options.zonly = true;
         options.positions = [
             {
@@ -1100,11 +1093,11 @@ define([
             }
         ];
 
-        // et les callbacks
+        // ... and the callbacks
         options.scope = this;
 
         if ( !options.rawResponse ) {
-            // dans le cas général
+            // in the general case
             /** callback onSuccess */
             options.onSuccess = function (results) {
                 if (results && Object.keys(results)) {
@@ -1122,9 +1115,8 @@ define([
         options.onFailure = function (error) {
             console.log("[getAltitude] ERROR : " + error.message);
         };
-
-        // cas où la clef API n'est pas renseignée dans les options du service,
-        // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
+        // in the case of the API key is not given as option of the service,
+        // we use the key of the autoconf, or the key given in the control options
         options.apiKey = options.apiKey || this.options.apiKey;
 
         Gp.Services.getAltitude(options);
@@ -1144,14 +1136,11 @@ define([
         var globe = this.getGlobe();
 
         this.collapsed = this._showMousePositionContainer.checked;
-        // on génère nous même l'evenement OpenLayers de changement de propriété
-        // (utiliser mousePosition.on("change:collapsed", function(e) ) pour s'abonner à cet évènement)
-        // FIXME this.dispatchEvent("change:collapsed");
 
-        // evenement declenché à l'ouverture/fermeture du panneau,
-        // et en fonction du mode : desktop ou tactile !
+        // event triggered when opening/closing the panel
+        // and depending on the mode : desktop or tactile!
         if ( this._showMousePositionContainer.checked ) {
-            // FIXME gérer ou non le cas mobile
+            // FIXME handle or not mobile case
             if (this._isDesktop) {
                 globe.removeEventListener("mousemove", this._callbacks.mouseMove);
             } else {
@@ -1159,7 +1148,7 @@ define([
             }
 
         } else {
-            // FIXME gérer ou non le cas mobile
+            // FIXME handle or not mobile case
             if (this._isDesktop) {
                 globe.addEventListener("mousemove", this._callbacks.mouseMove);
             } else {
@@ -1168,8 +1157,8 @@ define([
         }
 
         // FIXME
-        // on gère l'affichage des panneaux ici..., même si ce n'est pas l'endroit
-        // adequate...
+        // we handle here the panel display..., but this is not really the good
+        // place to do it...
         this._setElevationPanel(this.options.displayAltitude);
         this._setCoordinatesPanel(this.options.displayCoordinates);
         if ( !this.options.displayCoordinates ) {
@@ -1202,7 +1191,7 @@ define([
      * @private
      */
     MousePosition.prototype._setCurrentSystem = function ( systemCode ) {
-            // si on change de type de systeme, on doit aussi changer le type d'unités !
+            // if we change of system type, we must change the unit type too !
             var type = null;
             for (var i = 0 ; i < this._projectionSystems.length ; ++i) {
                 if ( this._projectionSystems[i].code == systemCode ) {
@@ -1220,15 +1209,13 @@ define([
                 this._setTypeUnitsPanel(type);
             }
 
-            // on enregistre le systeme courrant
+            // registers the current system
             this._currentProjectionSystems = this._projectionSystems[Number(systemCode)];
 
-            // on simule un deplacement en mode tactile pour mettre à jour les
-            // resultats
+            // simulates a movement in tactile mode to update the results
             if (!this._isDesktop) {
                 this.onGlobeMove();
             }
-            // FIXME : adapter le rechargement en mode tactile à OpenLayers !!
         } ;
 
     /**
@@ -1302,12 +1289,10 @@ define([
 
         this._currentProjectionUnits = value;
 
-        // on simule un deplacement en mode tactile pour mettre à jour les
-        // resultats
+        // simulates a movement in tactile mode to update the results
         if (!this._isDesktop) {
             this.onGlobeMove();
         }
-        // FIXME : adapter le rechargement en mode tactile à OpenLayers !!
     };
 
     return MousePosition;

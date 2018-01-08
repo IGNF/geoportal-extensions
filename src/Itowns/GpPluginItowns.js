@@ -24,16 +24,16 @@ define([
 
     "use strict";
 
-    // Rajout des propriétés de l'extension dans le namespace Gp
+    // Adds the extensions properties in the Gp namespace
     Gp.LayerUtils = LayerUtils ;
 
-    // on determine l'environnement d'execution : browser ou non ?
+    // determines the execution environment l'environnement : browser or not ?
     var scope = typeof window !== "undefined" ? window : {};
 
-    // on voit s'il existe déjà cette variable, sinon on la met en place
+    // checks if the var already exists : if not, we create it
     var _itowns = Itowns || {};
 
-    // creation du namespace pour les extensions itowns
+    // creation of the namespace for the itowns extensions
     _itowns.control = {};
     _itowns.control.MousePosition = MousePosition;
     _itowns.control.LayerSwitcher = LayerSwitcher;
@@ -42,7 +42,7 @@ define([
     _itowns.control.MiniGlobe = MiniGlobe;
     _itowns.GlobeViewExtended = GlobeViewExtended;
 
-    // on sauvegarde dans la variable globale !
+    // saves in the global variable !
     scope.itowns = scope.itowns || {};
     Utils.assign(scope.itowns, _itowns);
 
