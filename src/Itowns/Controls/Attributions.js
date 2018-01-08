@@ -22,7 +22,6 @@ define([
      * @constructor
      * @alias itowns.control.Attributions
      * @extends {itowns.control.Widget}
-     * @alias itowns.control.Attributions
      * @param {Object} aOptions - control options
      * @param {Object} [aOptions.options] - Itowns.control.Control options
      * @param {Boolean} [aOptions.options.collapsed = false] - Specify if the control has to be opened or not.
@@ -66,7 +65,7 @@ define([
      */
     Attributions.prototype = Object.create(Widget.prototype, {});
 
-    // on récupère les méthodes de la classe commune AttributionDOM
+    // retrieves methods of the common class AttributionDOM
     Utils.assign(Attributions.prototype, AttributionDOM);
 
     /**
@@ -84,17 +83,17 @@ define([
      * Bind globe to control
      */
     Attributions.prototype.setGlobe = function (globe) {
-        // info : cette méthode est appelée (entre autres?) après un globe.addWidget() ou globe.removeWidget()
+        // info : this function is called after a globe.addWidget() or a globe.removeWidget()
 
-        if ( globe ) { // dans le cas de l'ajout du contrôle au globe
+        if ( globe ) { // In the case of the adding of a control to the globe
             var self = this;
 
-            // Ajout des listeners
+            // Adding of the listeners
 
             // At every globe movement, attributions may be updated,
             // according to layers on globe, and their visibility.
             /**
-            * ajout du callback onPreRenderCallBack
+            * Adds the onPreRenderCallBack callback
             */
             this._callbacks.onPreRenderCallBack = function (e) {
                 var allLayers = e.colorLayersId.concat(e.elevationLayersId);
@@ -106,10 +105,10 @@ define([
             globe.preRenderEventFetchViewExtent();
             globe.preRenderEventFetchLayersDisplayed();
         } else {
-            // suppression listener
+            // delete listener
             this._globe.removeEventListener( "prerender", this._callbacks.onPreRenderCallBack );
 
-            // suppression DOM
+            // delete DOM
             while (this._element.hasChildNodes()) {
                 this._element.removeChild(this._element.lastChild);
             }
@@ -158,10 +157,10 @@ define([
      * @private
      */
     Attributions.prototype._initialize = function (options) {
-        // identifiant du contrôle : utile pour suffixer les identifiants CSS (pour gérer le cas où il y en a plusieurs dans la même page)
+        // id of the widget : usefull to suffix the CSS ids (to handle cases with several widgets on the same page)
         this._uid = SelectorID.generate();
 
-        // div qui contiendra les div des listes.
+        // div which will contain the list divs.
         this._AttributionContainer = null;
 
         // callbacks
@@ -172,7 +171,7 @@ define([
     };
 
     /**
-     * Create control main container
+     * Creates control main container
      *
      * @method _initContainer
      * @param {Object} options - control options
@@ -182,22 +181,21 @@ define([
 
         var container = this._createMainContainerElement();
 
-        // ajout dans le container principal du selecteur d'affichage des layers
+        // adds in the main container the layer display selector
         var inputShow = this._createMainAttributionsShowElement();
         container.appendChild(inputShow);
 
-        // gestion du mode "collapsed"
+        // handles the "collapsed" mode
         if (!options.collapsed) {
             inputShow.checked = "checked";
         }
-
-        // ajout dans le container principal de la liste des layers
+        // adds the layer list in the main container
         var divA = this._attributionListContainer = this._createMainAttributionsListContainer();
         var ulA = this._createAttributionsList();
         divA.appendChild(ulA);
         container.appendChild(divA);
 
-        // ajout dans le container principal du picto du controle
+        // adds the widget picto in the main container
         var picto = this._createMainPictoElement(options.collapsed);
         container.appendChild(picto);
 
@@ -224,8 +222,8 @@ define([
 
             var layer = globe.getLayerById(layersDisplayed[h]);
 
-            // bug de itowns : ne devrait retourner que les layers visibles
-            if( !layer.visible ) {
+            // FIXME itowns bug : itowns should only returns visible layers
+            if ( !layer.visible ) {
                 continue;
             }
 
@@ -233,42 +231,42 @@ define([
 
             if (ori) {
                 for (var j = 0; j < ori.length; j++) {
-                    // si l'attribution est déjà ajoutée, on passe pour ne pas l'ajouter plusieurs fois
+                    // if the attribution is already added, we skip to not add it several times
                     if (attributions.has(ori[j].name)) {
                         continue;
                     };
-                    // s'il n'y a pas de contraintes associées à l'originator, on rajoute l'attribution et on continue
+                    // if no constraints are associated to the originator, we just add the attribution
                     if (!ori[j].constraints) {
-                        // on ajoute l'attribution dans la Map() 'attributions'
+                        // adds the attribution in the Map() called 'attributions'
                         attributions.set(ori[j].name, ori[j]);
                         continue;
                     }
-                    // si l'attribut minScaleDenominator existe
+                    // if the minScaleDenominator exists
                     if (ori[j].constraints[0].minScaleDenominator) {
-                        // si min/maxScaleDenominator sont égaux, on veut afficher l'attribution pour le niveau de zoom associé au scale dénominator
+                        // if min/maxScaleDenominator are equals, we display the attribution corresponding to the zoom level associated to the scale denominator
                         if (ori[j].constraints[0].minScaleDenominator === ori[j].constraints[0].maxScaleDenominator) {
-                            // on récupère le niveau de zoom
+                            // retrieves the zoom level
                             var attributionZoomLevel = LayerUtils.getZoomLevelFromScaleDenominator(ori[j].constraints[0].minScaleDenominator);
-                            // on sélectionne une fourchette de scaledenominators autour du niveau de zoom qui correspond
+                            // selects the scaledenominators around the corresponding zoom level
                             var maxAttributionScaleDenominator = (this._resolutionsWGS84[attributionZoomLevel] + this._resolutionsWGS84[attributionZoomLevel - 1]) / (0.00028 * 2);
                             var minAttributionScaleDenominator = (this._resolutionsWGS84[attributionZoomLevel] + this._resolutionsWGS84[attributionZoomLevel + 1]) / (0.00028 * 2);
                             if (!(maxAttributionScaleDenominator > scaleDenominator && scaleDenominator > minAttributionScaleDenominator)) {
                                 continue;
                             }
                         }
-                        // sinon, on vérifie qu'on se situe bien entre minScaleDenominator et maxScaleDenominator
+                        // either, we check we are located between the minScaleDenominator and the maxScaleDenominator
                         else if (!(ori[j].constraints[0].minScaleDenominator < scaleDenominator && scaleDenominator < ori[j].constraints[0].maxScaleDenominator)) {
                             continue;
                         }
                     }
-                    // on vérifie si l'attribut 'bbox' existe bien
+                    // checks if 'bbox" exists
                     if (ori[j].constraints[0].bbox) {
-                        // on vérifie que l'on se trouve bien dans les limites de la bbox
+                        // checks we are into the bbox limits
                         if (ori[j].constraints[0].bbox.left < extent.west() && ori[j].constraints[0].bbox.right > extent.east() && ori[j].constraints[0].bbox.top > extent.north() && ori[j].constraints[0].bbox.bottom < extent.south()) {
-                            // on ajoute l'attribution dans la Map() 'attributions'
+                            // adds the attribution in the Map() called 'attributions'
                             attributions.set(ori[j].name, ori[j]);
                         }
-                        // si l'attribut 'bbox' n'est pas renseigné
+                        // if 'bbox' attribute doesn't exist
                     } else if (!ori[j].constraints[0].bbox) {
                         attributions.set(ori[j].name, ori[j]);
                     }
@@ -283,7 +281,7 @@ define([
     // ################################################################### //
 
     /**
-     * Update the layer list container
+     * Updates the layer list container
      *
      * @method _updateAttributionListContainer
      * @private
