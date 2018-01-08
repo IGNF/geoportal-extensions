@@ -1,391 +1,199 @@
 {{#extend "layout-itowns-sample-amd"}}
 
 {{#content "head"}}
-        <title>Sample itowns LayerSwitcher</title>
+    <script> var apiKey = "{{ config.apikey }}"; </script>
+    <script src="{{ config.baseurl }}/samples-src/resources/itowns/layers.js"></script>
+    <title>Sample itowns LayerSwitcher</title>
 {{/content}}
 
-    {{#content "style"}}
-            <style>
-                    html {
-                        height: 100%;
-                    }
+{{#content "style"}}
+    <style>
+            html {
+                height: 100%;
+            }
 
-                    body {
-                        margin: 0;
-                        overflow:hidden;
-                        height:100%;
-                    }
+            body {
+                margin: 0;
+                overflow:hidden;
+                height:100%;
+            }
 
-                    #viewerDiv {
-                        margin : auto auto;
-                        width: 100%;
-                        height: 70%;
-                        padding: 0;
-                    }
+            #viewerDiv {
+                margin : auto auto;
+                width: 100%;
+                height: 70%;
+                padding: 0;
+            }
 
-                    #menuDiv {
-                        width: 600px;
-                    }
-            </style>
+            #menuDiv {
+                width: 600px;
+            }
+    </style>
 {{/content}}
 
 {{#content "body"}}
-            <h2>Ajout d'un contrôle de gestion des couches : LayerSwitcher</h2>
-            <!-- map -->
-            <div id="viewerDiv"></div>
-            </br>
-            <div id="menuDiv">
-                <input type="button" onclick="addLayer(0)" value ="Add layer 1"/>
-                <input type="button" onclick="removeLayer(0)" value ="Remove layer 1"/>
-                <input type="button" onclick="setOpacity(0)" value ="Change opacity 1"/>
-                <input type="button" onclick="setVisibity(0)" value ="Change visibility 1"/>
-                <input type="button" onclick="moveLayerUp(0)" value ="Up 1"/>
-                <input type="button" onclick="moveLayerDown(0)" value ="Down 1"/>
+    <h2>Ajout d'un contrôle de gestion des couches : LayerSwitcher</h2>
+    <!-- map -->
+    <div id="viewerDiv"></div>
+    </br>
+    <div id="menuDiv">
+        <input type="button" onclick="addLayer(0)" value ="Add layer 1"/>
+        <input type="button" onclick="removeLayer(0)" value ="Remove layer 1"/>
+        <input type="button" onclick="setOpacity(0)" value ="Change opacity 1"/>
+        <input type="button" onclick="setVisibity(0)" value ="Change visibility 1"/>
+        <input type="button" onclick="moveLayerUp(0)" value ="Up 1"/>
+        <input type="button" onclick="moveLayerDown(0)" value ="Down 1"/>
 
-                <input type="button" onclick="addLayer(1)" value ="Add layer 2"/>
-                <input type="button" onclick="removeLayer(1)" value ="Remove layer 2"/>
-                <input type="button" onclick="setOpacity(1)" value ="Change opacity 2"/>
-                <input type="button" onclick="setVisibity(1)" value ="Change visibility 2"/>
-                <input type="button" onclick="moveLayerUp(1)" value ="Up 2"/>
-                <input type="button" onclick="moveLayerDown(1)" value ="Down 2"/>
+        <input type="button" onclick="addLayer(1)" value ="Add layer 2"/>
+        <input type="button" onclick="removeLayer(1)" value ="Remove layer 2"/>
+        <input type="button" onclick="setOpacity(1)" value ="Change opacity 2"/>
+        <input type="button" onclick="setVisibity(1)" value ="Change visibility 2"/>
+        <input type="button" onclick="moveLayerUp(1)" value ="Up 2"/>
+        <input type="button" onclick="moveLayerDown(1)" value ="Down 2"/>
 
-                <input type="button" onclick="addLayer(2)" value ="Add layer 3"/>
-                <input type="button" onclick="removeLayer(2)" value ="Remove layer 3"/>
-                <input type="button" onclick="setOpacity(2)" value ="Change opacity 3"/>
-                <input type="button" onclick="setVisibity(2)" value ="Change visibility 3"/>
-                <input type="button" onclick="moveLayerUp(2)" value ="Up 3"/>
-                <input type="button" onclick="moveLayerDown(2)" value ="Down 3"/>
+        <input type="button" onclick="addLayer(2)" value ="Add layer 3"/>
+        <input type="button" onclick="removeLayer(2)" value ="Remove layer 3"/>
+        <input type="button" onclick="setOpacity(2)" value ="Change opacity 3"/>
+        <input type="button" onclick="setVisibity(2)" value ="Change visibility 3"/>
+        <input type="button" onclick="moveLayerUp(2)" value ="Up 3"/>
+        <input type="button" onclick="moveLayerDown(2)" value ="Down 3"/>
 
-                <input type="button" onclick="addLayer(3)" value ="Add layer 4"/>
-                <input type="button" onclick="removeLayer(3)" value ="Remove layer 4"/>
-                <input type="button" onclick="setOpacity(3)" value ="Change opacity 4"/>
-                <input type="button" onclick="setVisibity(3)" value ="Change visibility 4"/>
-                <input type="button" onclick="moveLayerUp(3)" value ="Up 4"/>
-                <input type="button" onclick="moveLayerDown(3)" value ="Down 4"/>
+        <input type="button" onclick="addLayer(3)" value ="Add layer 4"/>
+        <input type="button" onclick="removeLayer(3)" value ="Remove layer 4"/>
+        <input type="button" onclick="setOpacity(3)" value ="Change opacity 4"/>
+        <input type="button" onclick="setVisibity(3)" value ="Change visibility 4"/>
+        <input type="button" onclick="moveLayerUp(3)" value ="Up 4"/>
+        <input type="button" onclick="moveLayerDown(3)" value ="Down 4"/>
 
-                <input type="button" onclick="addLayer2()" value ="Add layer 5"/>
-            </div>
-{{/content}}
+        <input type="button" onclick="addLayer2()" value ="Add layer 5"/>
+    </div>
+    {{/content}}
 
-{{#content "js"}}
-            <script type="text/javascript">
-                var globeView = null;
-                var itownsGlobal = null;
+    {{#content "js"}}
+    <script type="text/javascript">
+        var globeView = null;
+        var itownsGlobal = null;
 
-                const urlImageryLayers = [];
-                urlImageryLayers.push('{{ config.resources }}/itowns/JSONLayers/OrthosCRS.json');
-                urlImageryLayers.push('{{ config.resources }}/itowns/JSONLayers/Ortho.json');
-                urlImageryLayers.push('{{ config.resources }}/itowns/JSONLayers/ScanEX.json');
-                urlImageryLayers.push('{{ config.resources }}/itowns/JSONLayers/Region.json');
+        const urlImageryLayers = [];
+        urlImageryLayers.push('{{ config.resources }}/itowns/JSONLayers/OrthosCRS.json');
+        urlImageryLayers.push('{{ config.resources }}/itowns/JSONLayers/Ortho.json');
+        urlImageryLayers.push('{{ config.resources }}/itowns/JSONLayers/ScanEX.json');
+        urlImageryLayers.push('{{ config.resources }}/itowns/JSONLayers/Region.json');
 
-                const layersId = ["OrthoCRS","Ortho","ScanEX","Region"];
+        const layersId = ["OrthoCRS","Ortho","ScanEX","Region"];
 
-                var addLayer = function (i) {
-                    itownsGlobal.Fetcher.json(urlImageryLayers[i]).then(result => { globeView.addLayer(result) });
-                }
+        var addLayer = function (i) {
+            itownsGlobal.Fetcher.json(urlImageryLayers[i]).then(result => { globeView.addLayer(result) });
+        }
 
-                var addLayer2 = function () {
-                    layerOrtho.id = layerOrtho.id+"e";
-                    globeView.addLayer(layerOrtho);
-                }
+        var addLayer2 = function () {
+            layerOrtho.id = layerOrtho.id+"e";
+            globeView.addLayer(layerOrtho);
+        }
 
-                var removeLayer = function (i) {
-                    globeView.removeLayer(layersId[i]);
-                }
+        var removeLayer = function (i) {
+            globeView.removeLayer(layersId[i]);
+        }
 
-                var setOpacity = function (i) {
-                    var layerToChange = globeView.getLayerById(layersId[i]);
-                    var newOpacity = layerToChange.opacity - 0.2;
-                    if( newOpacity < 0 ) {
-                        newOpacity = 1.;
+        var setOpacity = function (i) {
+            var layerToChange = globeView.getLayerById(layersId[i]);
+            var newOpacity = layerToChange.opacity - 0.2;
+            if( newOpacity < 0 ) {
+                newOpacity = 1.;
+            }
+            globeView.setLayerOpacity(layerToChange,newOpacity);
+        }
+
+        var setVisibity = function (i) {
+            var layerToChange = globeView.getLayerById(layersId[i]);
+            globeView.setLayerVisibility(layerToChange,!layerToChange.visible);
+        }
+
+        var moveLayerUp = function (i) {
+          var index = _getIndex(layersId[i])+1;
+          if( index > globeView.getColorLayers().length-1 ) {
+              index = 0;
+          }
+          globeView.moveLayerToIndex(layersId[i],index);
+        }
+
+        var moveLayerDown = function (i) {
+            var index = _getIndex(layersId[i])-1;
+            if( index < 0 ) {
+                index = globeView.getColorLayers().length-1;
+            }
+            globeView.moveLayerToIndex(layersId[i],index);
+        }
+
+        var _getIndex = function (layerId) {
+            var layerToChange = globeView.getLayerById(layerId);
+            return layerToChange.sequence;
+        }
+
+        requirejs(
+            ["itowns", "proj4", "gp", "Itowns/GlobeViewExtended", "Itowns/Controls/LayerSwitcher"],
+            function (itowns, proj4, Gp, GlobeViewExtended, LayerSwitcher)
+        {
+            itowns.control = {};
+            itowns.control.LayerSwitcher = LayerSwitcher;
+            itowns.GlobeViewExtended = GlobeViewExtended;
+
+            var createMap = function() {
+                /* global itowns,document,GuiTools*/
+                const positionOnGlobe = { longitude: 2.3465, latitude: 48.88, altitude: 250000 };
+
+                // iTowns namespace defined here
+                const viewerDiv = document.getElementById('viewerDiv');
+                globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
+                itownsGlobal = itowns;
+
+                globeView.addEventListener(itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED, () => {
+                    // ajout des couches
+                    var promises = [];
+                    promises.push( itowns.Fetcher.json('{{ config.resources }}/itowns/JSONLayers/IGN_MNT.json').then(result => globeView.addLayer(result)) );
+                    promises.push( itowns.Fetcher.json('{{ config.resources }}/itowns/JSONLayers/IGN_MNT_HIGHRES.json').then(result => globeView.addLayer(result)) );
+                    for ( var i = 0 ; i < urlImageryLayers.length ; ++i ) {
+                        promises.push( itowns.Fetcher.json(urlImageryLayers[i]).then(result => globeView.addLayer(result) ) );
                     }
-                    globeView.setLayerOpacity(layerToChange,newOpacity);
-                }
 
-                var setVisibity = function (i) {
-                    var layerToChange = globeView.getLayerById(layersId[i]);
-                    globeView.setLayerVisibility(layerToChange,!layerToChange.visible);
-                }
-
-                var moveLayerUp = function (i) {
-                  var index = _getIndex(layersId[i])+1;
-                  if( index > globeView.getColorLayers().length-1 ) {
-                      index = 0;
-                  }
-                  globeView.moveLayerToIndex(layersId[i],index);
-                }
-
-                var moveLayerDown = function (i) {
-                    var index = _getIndex(layersId[i])-1;
-                    if( index < 0 ) {
-                        index = globeView.getColorLayers().length-1;
-                    }
-                    globeView.moveLayerToIndex(layersId[i],index);
-                }
-
-                var _getIndex = function (layerId) {
-                    var layerToChange = globeView.getLayerById(layerId);
-                    return layerToChange.sequence;
-                }
-
-                requirejs(
-                    ["itowns", "proj4", "gp", "Itowns/GlobeViewExtended", "Itowns/Controls/LayerSwitcher"],
-                    function (itowns, proj4, Gp, GlobeViewExtended, LayerSwitcher)
-                {
-                    itowns.control = {};
-                    itowns.control.LayerSwitcher = LayerSwitcher;
-                    itowns.GlobeViewExtended = GlobeViewExtended;
-
-                    var createMap = function() {
-                        /* global itowns,document,GuiTools*/
-                        const positionOnGlobe = { longitude: 2.3465, latitude: 48.88, altitude: 250000 };
-
-                        // iTowns namespace defined here
-                        const viewerDiv = document.getElementById('viewerDiv');
-                        globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
-                        itownsGlobal = itowns;
-
-                        globeView.addEventListener(itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED, () => {
-                            // ajout des couches
-                            var promises = [];
-                            promises.push( itowns.Fetcher.json('{{ config.resources }}/itowns/JSONLayers/IGN_MNT.json').then(result => globeView.addLayer(result)) );
-                            promises.push( itowns.Fetcher.json('{{ config.resources }}/itowns/JSONLayers/IGN_MNT_HIGHRES.json').then(result => globeView.addLayer(result)) );
-                            for ( var i = 0 ; i < urlImageryLayers.length ; ++i ) {
-                                promises.push( itowns.Fetcher.json(urlImageryLayers[i]).then(result => globeView.addLayer(result) ) );
-                            }
-
-                            Promise.all(promises).then( () => {
-                                // ajout du control
-                                var layerSwitcher = new itowns.control.LayerSwitcher({
-                                    layers : [
-                                        {
-                                            id : "Ortho",
-                                            config : {
-                                                title : "Couche de Photos IGNPO",
-                                                description : "Description de ma couche",
-                                                quicklookUrl : "lien/Vers/UnApercuRapide.png",
-                                                legends : [
-                                                    {
-                                                        url : "lien/Vers/UneLegende.png"
-                                                    }
-                                                ],
-                                                metadata : [
-                                                    {
-                                                        url : "lien/Vers/Une/MetaDonnee.xml"
-                                                    }
-                                                ]
+                    Promise.all(promises).then( () => {
+                        // ajout du control
+                        var layerSwitcher = new itowns.control.LayerSwitcher({
+                            layers : [
+                                {
+                                    id : "Ortho",
+                                    config : {
+                                        title : "Couche de Photos IGNPO",
+                                        description : "Description de ma couche",
+                                        quicklookUrl : "lien/Vers/UnApercuRapide.png",
+                                        legends : [
+                                            {
+                                                url : "lien/Vers/UneLegende.png"
                                             }
-                                        }
-                                    ]
-                                });
-                                globeView.addWidget( layerSwitcher );
-                            });
+                                        ],
+                                        metadata : [
+                                            {
+                                                url : "lien/Vers/Une/MetaDonnee.xml"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
                         });
-                    }
-
-                    Gp.Services.getConfig({
-                        // serverUrl : "./../resources/AutoConf.js",
-                        // callbackSuffix : '',
-                        apiKey : "{{ config.apikey }}",
-                        timeOut : 20000,
-                        onSuccess : createMap
+                        globeView.addWidget( layerSwitcher );
                     });
                 });
+            }
 
-                var layerOrtho = {
-                    "type": "color",
-                    "protocol":   "wmts",
-                    "id":         "Ortho",
-                    "url":        "http://wxs.ign.fr/{{ config.apikey }}/geoportail/wmts",
-                    "updateStrategy": {
-                        "type": "0",
-                        "options": {}
-                    },
-                    "networkOptions" : {
-                        "crossOrigin" : "omit"
-                    },
-                    "options": {
-                        "originators" :  [{
-                            "name" : "IGN GE",
-                            "attribution" : "IGN Grandes Echelles",
-                            "url" : "http://www.ign.fr",
-                            "constraints" : [{
-                                "crs":"EPSG:4326"
-                            }]
-                        },
-                        {
-                            "name" : "IGN PE",
-                            "url" : "http://www.ign.fr",
-                            "constraints" : [{
-                                "crs":"EPSG:4326",
-                                "bbox":{
-                                    "left":-173.154,
-                                    "right":173.837,
-                                    "top":90,
-                                    "bottom":-90
-                                },
-                                "maxScaleDenominator":559082264,
-                                "minScaleDenominator":272990
-                            }]
-                        },
-                                {
-                            "name" : "OSM NE",
-                            "url" : "http://www.openstreetmap.org/",
-                            "constraints" : [{
-                                "crs":"EPSG:4326",
-                                "bbox":{"left":2.3,"right":10,"top":51.093,"bottom":48.8}
-                            }]
-                                },
-                                {
-                              "name" : "OSM NW",
-                              "url" : "http://www.openstreetmap.org/",
-                              "constraints" : [{
-                                  "crs":"EPSG:4326",
-                                  "bbox":{"left":-10,"right":2.3,"top":51.093,"bottom":48.8}
-                              }]
-                        },
-                                {
-                              "name" : "OSM SW",
-                              "url" : "http://www.openstreetmap.org/",
-                              "constraints" : [{
-                                  "crs":"EPSG:4326",
-                                  "bbox":{"left":-10,"right":2.3,"top":48.8,"bottom":-21.39}
-                              }]
-                        },
-                                {
-                                         "name" : "OSM SE",
-                                         "url" : "http://www.openstreetmap.org/",
-                                         "constraints" : [{
-                                                 "crs":"EPSG:4326",
-                                                 "bbox":{"left":2.3,"right":55.837,"top":48.8,"bottom":-21.39}
-                                         }]
-                                }],
-                        "attribution" : {
-                            "name":"IGN",
-                            "url":"http://www.ign.fr/"
-                        },
-                        "name": "ORTHOIMAGERY.ORTHOPHOTOS",
-                        "mimetype": "image/jpeg",
-                        "tileMatrixSet": "PM",
-                        "tileMatrixSetLimits": {
-                            "2": {
-                                "minTileRow": 0,
-                                "maxTileRow": 4,
-                                "minTileCol": 0,
-                                "maxTileCol": 4
-                            },
-                            "3": {
-                                "minTileRow": 0,
-                                "maxTileRow": 8,
-                                "minTileCol": 0,
-                                "maxTileCol": 8
-                            },
-                            "4": {
-                                "minTileRow": 0,
-                                "maxTileRow": 16,
-                                "minTileCol": 0,
-                                "maxTileCol": 16
-                            },
-                            "5": {
-                                "minTileRow": 0,
-                                "maxTileRow": 32,
-                                "minTileCol": 0,
-                                "maxTileCol": 32
-                            },
-                            "6": {
-                                "minTileRow": 1,
-                                "maxTileRow": 64,
-                                "minTileCol": 0,
-                                "maxTileCol": 64
-                            },
-                            "7": {
-                                "minTileRow": 3,
-                                "maxTileRow": 128,
-                                "minTileCol": 0,
-                                "maxTileCol": 128
-                            },
-                            "8": {
-                                "minTileRow": 7,
-                                "maxTileRow": 256,
-                                "minTileCol": 0,
-                                "maxTileCol": 256
-                            },
-                            "9": {
-                                "minTileRow": 15,
-                                "maxTileRow": 512,
-                                "minTileCol": 0,
-                                "maxTileCol": 512
-                            },
-                            "10": {
-                                "minTileRow": 31,
-                                "maxTileRow": 1024,
-                                "minTileCol": 0,
-                                "maxTileCol": 1024
-                            },
-                            "11": {
-                                "minTileRow": 62,
-                                "maxTileRow": 2048,
-                                "minTileCol": 0,
-                                "maxTileCol": 2048
-                            },
-                            "12": {
-                                "minTileRow": 125,
-                                "maxTileRow": 4096,
-                                "minTileCol": 0,
-                                "maxTileCol": 4096
-                            },
-                            "13": {
-                                "minTileRow": 2739,
-                                "maxTileRow": 4628,
-                                "minTileCol": 41,
-                                "maxTileCol": 7917
-                            },
-                            "14": {
-                                "minTileRow": 5478,
-                                "maxTileRow": 9256,
-                                "minTileCol": 82,
-                                "maxTileCol": 15835
-                            },
-                            "15": {
-                                "minTileRow": 10956,
-                                "maxTileRow": 18513,
-                                "minTileCol": 165,
-                                "maxTileCol": 31670
-                            },
-                            "16": {
-                                "minTileRow": 21912,
-                                "maxTileRow": 37026,
-                                "minTileCol": 330,
-                                "maxTileCol": 63341
-                            },
-                            "17": {
-                                "minTileRow": 43825,
-                                "maxTileRow": 74052,
-                                "minTileCol": 660,
-                                "maxTileCol": 126683
-                            },
-                            "18": {
-                                "minTileRow": 87651,
-                                "maxTileRow": 148105,
-                                "minTileCol": 1320,
-                                "maxTileCol": 253366
-                            },
-                            "19": {
-                                "minTileRow": 175302,
-                                "maxTileRow": 294060,
-                                "minTileCol": 170159,
-                                "maxTileCol": 343473
-                            },
-                            "20": {
-                                "minTileRow": 376733,
-                                "maxTileRow": 384679,
-                                "minTileCol": 530773,
-                                "maxTileCol": 540914
-                            }
-                        }
-                    }
-                }
-            </script>
+            Gp.Services.getConfig({
+                // serverUrl : "./../resources/AutoConf.js",
+                // callbackSuffix : '',
+                apiKey : "{{ config.apikey }}",
+                timeOut : 20000,
+                onSuccess : createMap
+            });
+        });
+    </script>
 {{/content}}
 
 {{/extend}}
