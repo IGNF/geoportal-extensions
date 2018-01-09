@@ -800,7 +800,7 @@ define([
 
             var options = {};
             // on recupere les options du service
-            L.Util.extend(options, this.options.autocompleteOptions);
+            L.Util.extend(options, this.options.autocompleteOptions.serviceOptions);
             // ainsi que la recherche et les callbacks
             L.Util.extend(options, settings);
 
@@ -1355,7 +1355,6 @@ define([
                 onFailure : function (error) {
                     // FIXME
                     // où affiche t on les messages : ex. 'No suggestion matching the search', 
-                    // console ou fenetre de resultats ?
                     // doit on nettoyer la liste des suggestions dernierement enregistrée ?
                     context._clearSuggestedLocation();
                     logger.log(error.message);
