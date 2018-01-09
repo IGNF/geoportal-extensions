@@ -61,8 +61,6 @@
 
                         itowns.Fetcher.json('{{ config.resources }}/itowns/JSONLayers/Ortho.json').then(result => globeView.addLayer(result));
                         itowns.Fetcher.json('{{ config.resources }}/itowns/JSONLayers/OrthosCRS.json').then(result => globeView.addLayer(result));
-                        itowns.Fetcher.json('{{ config.resources }}/itowns/JSONLayers/ScanEX.json').then(result => globeView.addLayer(result));
-                        itowns.Fetcher.json('{{ config.resources }}/itowns/JSONLayers/Region.json').then(result => globeView.addLayer(result));
 
                         itowns.Fetcher.json('{{ config.resources }}/itowns/JSONLayers/IGN_MNT.json').then(result => globeView.addLayer(result));
                         itowns.Fetcher.json('{{ config.resources }}/itowns/JSONLayers/IGN_MNT_HIGHRES.json').then(result => globeView.addLayer(result));
