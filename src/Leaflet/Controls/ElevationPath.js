@@ -793,7 +793,15 @@ define([
                 var b = [_data[i - 1].lon, _data[i - 1].lat];
                 var dist = _haversineDistance(a,b);
         
-                var slope = _data[i].z - _data[i - 1].z;
+                var za = _data[i].z;
+                var zb = _data[i - 1].z;
+                if (za < 0) {
+                    za = 0;
+                }
+                if (zb < 0) {
+                    zb = 0;
+                }
+                var slope = za - zb;
                 if (slope < 0) {
                     _distanceMinus += dist;
                     _descendingElevation += slope;
@@ -804,8 +812,8 @@ define([
                 _distance += dist / _factor;
                 _data[i].dist = _distance;
         
-                _slopes += Math.abs(Math.round(slope / dist * 100));
-                _data[i].slope = Math.abs(Math.round(slope / dist * 100));
+                _slopes += (slope) ? Math.abs(Math.round(slope / dist * 100)) : 0;
+                _data[i].slope = (slope) ? Math.abs(Math.round(slope / dist * 100)) : 0;
         
                 // EVOL ?
                 // cf. gradiant
