@@ -96,7 +96,7 @@ define([
         * @param {Object} [options.autocompleteOptions] - options of autocomplete service
         * @param {Object} [options.autocompleteOptions.serviceOptions] - options of autocomplete service
         * @param {Boolean} [options.autocompleteOptions.triggerGeocode] - trigger a geocoding request if the autocompletion does not return any suggestions, false by default
-        * @param {Boolean} [options.autocompleteOptions.triggerDelay] - waiting time before sending the geocoding request, 1000ms by default
+        * @param {Number}  [options.autocompleteOptions.triggerDelay] - waiting time before sending the geocoding request, 1000ms by default
         * @example
         *  var SearchEngine = L.geoportalControl.SearchEngine({
         *      position : "topright",
