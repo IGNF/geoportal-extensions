@@ -28,8 +28,8 @@ define([
     *
     * Leaflet Control Class to search positons of geographic identifiers (places names, address, cadastral parcel) using :
     *
-    * - the [geocoding web service of the Geoportal Platform]{@link http://api.ign.fr/tech-docs-js/developpeur/search.html}.
-    * - the [autocompletion service of the Geoportal Platform]{@link http://api.ign.fr/tech-docs-js/developpeur/search.html#The_autocompletion_Service}
+    * - the [geocoding web service of the Geoportal Platform]{@link https://geoservices.ign.fr/documentation/geoservices/geocodage.html}.
+    * - the [autocompletion service of the Geoportal Platform]{@link https://geoservices.ign.fr/documentation/geoservices/autocompletion.html}
     * <br/>
     *
     * Use {@link module:Controls.SearchEngine L.geoportalControl.SearchEngine()} factory to create instances of that class.
