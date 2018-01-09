@@ -317,7 +317,12 @@ function (
         * @param {Object} [options.displayProfileOptions = {}] - profile options.
         * @param {Function} [options.displayProfileOptions.apply] - function to display profile if you want to cutomise it. By default, [DISPLAY_PROFILE_BY_DEFAULT()](./L.geoportalControl.ElevationPath.html#.DISPLAY_PROFILE_BY_DEFAULT) is used. Helper functions to use with D3 [DISPLAY_PROFILE_LIB_D3()](./L.geoportalControl.ElevationPath.html#.DISPLAY_PROFILE_LIB_D3) or AmCharts [DISPLAY_PROFILE_LIB_AMCHARTS()](./L.geoportalControl.ElevationPath.html#.DISPLAY_PROFILE_LIB_AMCHARTS) frameworks are also provided. You may also provide your own function.
         * @param {Object} [options.displayProfileOptions.target] - DOM container to use to display the profile.
-        *
+        * @param {Boolean} [options.displayProfileOptions.greaterSlope = true] - display the greater slope into the graph
+        * @param {Boolean} [options.displayProfileOptions.meanSlope = true] -  display the mean slope into the graph
+        * @param {Boolean} [options.displayProfileOptions.ascendingElevation = true] -  display the ascending elevation into the graph
+        * @param {Boolean} [options.displayProfileOptions.descendingElevation = true] -  display the descending elevation into the graph
+        * @param {Boolean} [options.displayProfileOptions.profile = true] -  display the profile into the graph
+        **
         * @returns {L.geoportalControl.ElevationPath}
         * @example
         *  var e = L.geoportalControl.ElevationPath({
@@ -327,6 +332,12 @@ function (
         *      elevationPathOptions : {},
         *      displayProfileOptions  : {
         *          apply : L.geoportalControl.DISPLAY_PROFILE_LIB_AMCHARTS
+        *          target : null, // by default
+        *          meanSlope : true, // by default
+        *          greaterSlope : true, // by default
+        *          ascendingElevation : false,
+        *          descendingElevation : false, 
+        *          profile : false 
         *      }
         *  });
         */
