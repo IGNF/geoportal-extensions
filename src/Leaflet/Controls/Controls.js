@@ -322,7 +322,7 @@ function (
         * @param {Boolean} [options.displayProfileOptions.ascendingElevation = true] -  display the ascending elevation into the graph
         * @param {Boolean} [options.displayProfileOptions.descendingElevation = true] -  display the descending elevation into the graph
         * @param {Boolean} [options.displayProfileOptions.profile = true] -  display the profile into the graph
-        **
+        *
         * @returns {L.geoportalControl.ElevationPath}
         * @example
         *  var e = L.geoportalControl.ElevationPath({
