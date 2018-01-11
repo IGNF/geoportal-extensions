@@ -263,7 +263,7 @@ define([
         // marker style
         var _markerStyle = this.options.markerStyle;
         this._markerUrl  = (Object.keys(Markers).indexOf(_markerStyle ) === -1) ? Markers["lightOrange"] : Markers[_markerStyle];
-        
+
         // marker display
         this._displayMarker = this.options.displayMarker;
 
@@ -285,7 +285,7 @@ define([
         // gestion des droits sur les ressources/services
         this._checkRightsManagement();
 
-        // trigger geocode  
+        // trigger geocode
         this._triggerHandler = null;
     };
 
@@ -1208,7 +1208,7 @@ define([
                     if (context._triggerHandler) {
                         clearTimeout(context._triggerHandler);
                         context._triggerHandler = null;
-                        logger.warn("Cancel a geocode request !"); 
+                        logger.warn("Cancel a geocode request !");
                     }
                 }
             },
@@ -1216,30 +1216,48 @@ define([
             onFailure : function (error) {
                 // FIXME
                 // où affiche t on les messages : ex. 'No suggestion matching the search' ?
-                // doit on nettoyer la liste des suggestions dernierement enregistrée :
                 context._clearSuggestedLocation();
                 logger.log(error.message);
-                // on envoie une requete de geocodage si aucun resultat d'autocompletion 
-                // n'a été trouvé ! Mais on annule celle qui est en cours !
-                if (error.message === "No suggestion matching the search" && _triggerGeocode) {
+                // on envoie une requete de geocodage si aucun resultat d'autocompletion
+                // n'a été trouvé ! On limite le nombre de requetes avec une saisie
+                // de 5 caractères (ex. pour le code postal !)...
+                // Et on n'oublie pas d'annuler celle qui est en cours !
+                if (error.message === "No suggestion matching the search" && _triggerGeocode && value.length === 5) {
                     if (context._triggerHandler) {
                         clearTimeout(context._triggerHandler);
-                        logger.warn("Cancel the last geocode request !"); 
+                        logger.warn("Cancel the last geocode request !");
                     }
                     context._triggerHandler = setTimeout(
-                        function () { 
-                            logger.warn("Launch a geocode request !");
-                            var form  = document.getElementById("GPsearchInput-" + context._uid);
-                            // INFO
-                            // ceci ne semble pas être 100% compatible IE...
-                            // var event = new Event("submit", {
-                            //     bubbles    : true,
-                            //     cancelable : true
-                            // });
-                            // mais le code suivant est valide pour IE>9 !
-                            var event = document.createEvent("Event");
-                            event.initEvent("submit", true, true); 
-                            form.dispatchEvent(event);
+                        function () {
+                            logger.warn("Launch a geocode request (code postal) !");
+                            context._requestGeocoding({
+                                location : value,
+                                returnFreeForm : true,
+                                /** callback onSuccess */
+                                onSuccess : function (results) {
+                                    logger.log("request from Geocoding", results);
+                                    if (results) {
+                                        context._locationsToBeDisplayed = [];
+                                        // on modifie la structure des reponses pour être
+                                        // compatible avec l'autocompletion !
+                                        var locations = results.locations;
+                                        for (var i = 0; i < locations.length; i++) {
+                                            var location = locations[i];
+                                            location.fullText = location.placeAttributes.freeform;
+                                            location.position = {
+                                                x : location.position.y,
+                                                y : location.position.x
+                                            };
+                                            context._locationsToBeDisplayed.push(location);
+                                        }
+                                        context._fillAutoCompletedLocationListContainer(locations);
+                                    }
+                                },
+                                /** callback onFailure */
+                                onFailure : function (error) {
+                                    logger.log(error.message);
+                                }
+                            });
                         }, _triggerDelay
                     );
                 }

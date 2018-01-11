@@ -87,7 +87,7 @@ define([
         *       }
         * @param {String}  [options.placeholder] - set placeholder in search bar. Default is "Rechercher un lieu, une adresse".
         * @param {Boolean}  [options.displayMarker] - set a marker on search result, defaults to true.
-        * @param {String|Object}  [options.markerStyle] - set a marker style. Currently possible values are "blue" (default value), "orange", "red" and "green". But you can use an L.Icon object (see {@link http://leafletjs.com/reference-1.2.0.html#icon L.Icon }). 
+        * @param {String|Object}  [options.markerStyle] - set a marker style. Currently possible values are "blue" (default value), "orange", "red" and "green". But you can use an L.Icon object (see {@link http://leafletjs.com/reference-1.2.0.html#icon L.Icon }).
         * @param {Sting} [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
         * @param {Object} [options.resources] - resources to be used by geocode and autocompletion services, by default : ["StreetAddress", "PositionOfInterest"]
         * @param {Boolean} [options.displayAdvancedSearch] - False to disable advanced search tools (it will not be displayed). Default is true (displayed)
@@ -177,7 +177,7 @@ define([
             // gestion des droits sur les ressources/services
             this._checkRightsManagement();
 
-            // trigger geocode  
+            // trigger geocode
             this._triggerHandler = null;
 
         },
@@ -972,6 +972,49 @@ define([
 
         },
 
+        /**
+         * this method is called by Gp.Services.autoComplete callback in case of success
+         * (cf. this.onAutoCompleteSearchText), for suggested locations with null coordinates
+         * (case of postalCode research for instance).
+         * Send a geocode request with suggested location 'fullText' attribute, to get its coordinates and display it in autocomplete results list container.
+         *
+         * @param {Gp.Services.AutoCompleteResponse.SuggestedLocation} suggestedLocation - autocompletion result (with null coordinates) to be geocoded
+         * @param {Number} i - suggestedLocation position in Gp.Services.AutoCompleteResponse.suggestedLocations autocomplete results list
+         * @private
+         */
+        _getGeocodeCoordinatesFromFullText : function ( suggestedLocation, i ) {
+
+            var _location = suggestedLocation.fullText;
+
+            var context  = this;
+            this._requestGeocoding({
+                location : _location,
+                /** callback onSuccess */
+                onSuccess : function (response) {
+                    logger.log("request from Geocoding (coordinates null)", response);
+                    if ( response.locations && response.locations.length !== 0 && response.locations[0].position ) {
+                        // on modifie les coordonnées du résultat en EPSG:4326 donc lat,lon
+                        if ( context._suggestedLocations && context._suggestedLocations[i] ) {
+                            context._suggestedLocations[i].position = {
+                                x : response.locations[0].position.y,
+                                y : response.locations[0].position.x
+                            };
+                            // et on l'affiche dans la liste
+                            context._locationsToBeDisplayed.unshift(context._suggestedLocations[i]);
+                            context._fillAutoCompletedLocationListContainer(context._locationsToBeDisplayed);
+                        }
+                    }
+                },
+                /** callback onFailure */
+                onFailure : function () {
+                    // si on n'a pas réussi à récupérer les coordonnées, on affiche quand même le résultat
+                    if ( context._suggestedLocations && context._suggestedLocations[i] ) {
+                        context._createAutoCompletedLocationElement(context._suggestedLocations[i], i);
+                    }
+                }
+            });
+        },
+
         // ################################################################### //
         // ######################### other methods ########################### //
         // ################################################################### //
@@ -1284,7 +1327,7 @@ define([
         * @private
         */
         onAutoCompleteSearchText : function (e) {
-            logger.log(e);
+
             var value = e.target.value;
             if (!value) {
                 return;
@@ -1313,7 +1356,7 @@ define([
             // les messages d'erreurs du service.
             // les resultats sont affichés dans une liste deroulante.
             // les messages d'erreurs sont affichés sur la console (?)
-            
+
             var context = this;
             this._requestAutoComplete({
                 text : value,
@@ -1347,85 +1390,58 @@ define([
                         if (context._triggerHandler) {
                             clearTimeout(context._triggerHandler);
                             context._triggerHandler = null;
-                            logger.warn("Cancel a geocode request !"); 
+                            logger.warn("Cancel a geocode request !");
                         }
                     }
                 },
                 /** callback onFailure */
                 onFailure : function (error) {
                     // FIXME
-                    // où affiche t on les messages : ex. 'No suggestion matching the search', 
-                    // doit on nettoyer la liste des suggestions dernierement enregistrée ?
+                    // où affiche t on les messages : ex. 'No suggestion matching the search' ?
                     context._clearSuggestedLocation();
                     logger.log(error.message);
-                    // on envoie une requete de geocodage si aucun resultat d'autocompletion 
-                    // n'a été trouvé ! Mais on annule celle qui est en cours !
-                    if (error.message === "No suggestion matching the search" && _triggerGeocode) {
+                    // on envoie une requete de geocodage si aucun resultat d'autocompletion
+                    // n'a été trouvé ! On limite le nombre de requetes avec une saisie
+                    // de 5 caractères (ex. pour le code postal !)...
+                    // Et on n'oublie pas d'annuler celle qui est en cours !
+                    if (error.message === "No suggestion matching the search" && _triggerGeocode && value.length === 5) {
                         if (context._triggerHandler) {
                             clearTimeout(context._triggerHandler);
-                            logger.warn("Cancel the last geocode request !"); 
+                            logger.warn("Cancel the last geocode request !");
                         }
                         context._triggerHandler = setTimeout(
-                            function () { 
-                                logger.warn("Launch a geocode request !");
-                                var form  = L.DomUtil.get("GPsearchInput-" + context._uid);
-                                // INFO
-                                // ceci ne semble pas être 100% compatible IE...
-                                // var event = new Event("submit", {
-                                //     bubbles    : true,
-                                //     cancelable : true
-                                // });
-                                // mais le code suivant est valide pour IE>9 !
-                                var event = document.createEvent("Event");
-                                event.initEvent("submit", true, true); 
-                                form.dispatchEvent(event);
+                            function () {
+                                logger.warn("Launch a geocode request (code postal) !");
+                                context._requestGeocoding({
+                                    location : value,
+                                    returnFreeForm : true,
+                                    /** callback onSuccess */
+                                    onSuccess : function (results) {
+                                        logger.log("request from Geocoding", results);
+                                        if (results) {
+                                            context._locationsToBeDisplayed = [];
+                                            // on modifie la structure des reponses pour être
+                                            // compatible avec l'autocompletion !
+                                            var locations = results.locations;
+                                            for (var i = 0; i < locations.length; i++) {
+                                                var location = locations[i];
+                                                location.fullText = location.placeAttributes.freeform;
+                                                location.position = {
+                                                    x : location.position.y,
+                                                    y : location.position.x
+                                                };
+                                                context._locationsToBeDisplayed.push(location);
+                                            }
+                                            context._fillAutoCompletedLocationListContainer(locations);
+                                        }
+                                    },
+                                    /** callback onFailure */
+                                    onFailure : function (error) {
+                                        logger.log(error.message);
+                                    }
+                                });
                             }, _triggerDelay
                         );
-                    }
-                }
-            });
-        },
-
-        /**
-         * this method is called by Gp.Services.autoComplete callback in case of success
-         * (cf. this.onAutoCompleteSearchText), for suggested locations with null coordinates
-         * (case of postalCode research for instance).
-         * Send a geocode request with suggested location 'fullText' attribute, to get its coordinates and display it in autocomplete results list container.
-         *
-         * @param {Gp.Services.AutoCompleteResponse.SuggestedLocation} suggestedLocation - autocompletion result (with null coordinates) to be geocoded
-         * @param {Number} i - suggestedLocation position in Gp.Services.AutoCompleteResponse.suggestedLocations autocomplete results list
-         * @private
-         */
-        _getGeocodeCoordinatesFromFullText : function ( suggestedLocation, i ) {
-
-            var context = this;
-            Gp.Services.geocode({
-                apiKey : context._servicesRightManagement["Geocode"]["key"],
-                location : suggestedLocation.fullText,
-                filterOptions : {
-                    type : suggestedLocation.type
-                },
-                /** callback onSuccess */
-                onSuccess : function (response) {
-                    logger.log("request from Geocoding (coordinates null)", response);
-                    if ( response.locations && response.locations.length !== 0 && response.locations[0].position ) {
-                        // on modifie les coordonnées du résultat en EPSG:4326 donc lat,lon
-                        if ( context._suggestedLocations && context._suggestedLocations[i] ) {
-                            context._suggestedLocations[i].position = {
-                                x : response.locations[0].position.y,
-                                y : response.locations[0].position.x
-                            };
-                            // et on l'affiche dans la liste
-                            context._locationsToBeDisplayed.unshift(context._suggestedLocations[i]);
-                            context._fillAutoCompletedLocationListContainer(context._locationsToBeDisplayed);
-                        }
-                    }
-                },
-                /** callback onFailure */
-                onFailure : function () {
-                    // si on n'a pas réussi à récupérer les coordonnées, on affiche quand même le résultat
-                    if ( context._suggestedLocations && context._suggestedLocations[i] ) {
-                        context._createAutoCompletedLocationElement(context._suggestedLocations[i], i);
                     }
                 }
             });
@@ -1436,7 +1452,6 @@ define([
         * (cf. this._createAutoCompleteListElement), and it selects the location.
         * this location displays a marker on the map.
         * FIXME
-        * TODO
         *
         * @param {Object} e - HTMLElement
         *
