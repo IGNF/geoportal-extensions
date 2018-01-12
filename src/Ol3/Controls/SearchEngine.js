@@ -6,8 +6,8 @@ define([
     "Ol3/Controls/Utils/Markers",
     "Common/Utils/CheckRightManagement",
     "Common/Utils/SelectorID",
-    "Common/Controls/SearchEngineDOM",
-    "Common/Controls/SearchEngineUtils"
+    "Common/Utils/SearchEngineUtils",
+    "Common/Controls/SearchEngineDOM"
 ], function (
     ol,
     Gp,
@@ -16,8 +16,8 @@ define([
     Markers,
     RightManagement,
     SelectorID,
-    SearchEngineDOM,
-    SearchEngineUtils
+    SearchEngineUtils,
+    SearchEngineDOM
 ) {
     "use strict";
 
@@ -256,7 +256,7 @@ define([
         // marker style
         var _markerStyle = this.options.markerStyle;
         this._markerUrl  = (Object.keys(Markers).indexOf(_markerStyle ) === -1) ? Markers["lightOrange"] : Markers[_markerStyle];
-        
+
         // marker display
         this._displayMarker = this.options.displayMarker;
 

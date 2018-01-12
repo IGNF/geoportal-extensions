@@ -9,7 +9,8 @@ define([
     "Leaflet/Controls/LocationSelector",
     "Leaflet/Controls/Utils/PositionFormater",
     "Leaflet/Controls/Utils/IconDefault",
-    "Common/Controls/ElevationPathDOM"
+    "Common/Controls/ElevationPathDOM",
+    "Common/Controls/ProfileElevationPathDOM"
 ], function (
     L,
     Draw, // loading plugin leaflet-draw
@@ -20,7 +21,8 @@ define([
     LocationSelector,
     PositionFormater,
     IconDefault,
-    ElevationPathDOM
+    ElevationPathDOM,
+    ProfileElevationPathDOM
 ) {
 
     "use strict";
@@ -243,7 +245,7 @@ define([
             var displayContainer = _profileOpts.target;
             _profileOpts.target =  ( typeof displayContainer !== "undefined" ) ?
                 displayContainer : null;
-            
+
             // les autres options
             var _protoOpts = Object.getPrototypeOf(this.options);
             if ( typeof _profileOpts.meanSlope === "undefined") {
@@ -392,7 +394,7 @@ define([
                 }
             }
 
-            // creation des infomations 
+            // creation des infomations
 
             if (ascendingElevation) {
                 this._addElevationPathInformationsItem("Dénivelé positive : " + this._data.ascendingElevation.toLocaleString() + " m");
@@ -417,12 +419,12 @@ define([
             } else {
                 div.className = "GPelevationPathInformationsContainerVisible";
             }
-            
+
             // hidden des informations !
             this._timerHdlr = setTimeout( function () {
                 div.className = "GPelevationPathInformationsContainerHidden";
             }, 4000);
-            
+
         },
 
         // ################################################################### //
@@ -792,7 +794,7 @@ define([
                 var a = [_data[i].lon, _data[i].lat];
                 var b = [_data[i - 1].lon, _data[i - 1].lat];
                 var dist = _haversineDistance(a,b);
-        
+
                 var za = _data[i].z;
                 var zb = _data[i - 1].z;
                 if (za < 0) {
@@ -811,10 +813,10 @@ define([
                 }
                 _distance += dist / _factor;
                 _data[i].dist = _distance;
-        
+
                 _slopes += (slope) ? Math.abs(Math.round(slope / dist * 100)) : 0;
                 _data[i].slope = (slope) ? Math.abs(Math.round(slope / dist * 100)) : 0;
-        
+
                 // EVOL ?
                 // cf. gradiant
                 // http://www.color-hex.com/color/00b798
@@ -828,11 +830,11 @@ define([
                 } else {
                     _data[i].color = "#00B798";
                 }
-        
+
                 _data[i].lat = Math.round(_data[i].lat * 10000) / 10000;
                 _data[i].lon = Math.round(_data[i].lon * 10000) / 10000;
             }
-        
+
             // Valeur du coeff d'arrondi des distances en fonction de la distance totale
             var coeffArrond = 100;
             if (_distance > 100) {
@@ -840,17 +842,17 @@ define([
             } else if (_distance > 10) {
                 coeffArrond = 10;
             }
-        
+
             // Correction arrondi distance totale
             _distance   = Math.round(_distance * coeffArrond) / coeffArrond;
             _distanceMinus = Math.round(_distanceMinus * coeffArrond) / coeffArrond;
             _distancePlus  = Math.round(_distancePlus * coeffArrond) / coeffArrond;
-        
+
             // Correction des altitudes aberrantes + arrondi des calculs de distance + ...
             var _altMin = _data[0].z;
             var _altMax = _data[0].z;
             var _greaterSlope = _data[0].slope;
-        
+
             for (var ji = 0; ji < _data.length; ji++) {
                 var d = _data[ji];
                 if (d.z < 0) {
@@ -862,11 +864,11 @@ define([
                 if (d.z <= _altMin) {
                     _altMin = d.z;
                 }
-        
+
                 d.dist = Math.round(d.dist * coeffArrond) / coeffArrond;
                 // FIXME erreur avec D3 car cette lib souhaite un numerique !
-                // d.dist = d.dist.toLocaleString(); 
-        
+                // d.dist = d.dist.toLocaleString();
+
                 if (d.slope > _greaterSlope ) {
                     _greaterSlope = d.slope;
                 }
@@ -929,136 +931,13 @@ define([
 
             // affichage des informations du profil ?
             var element = L.DomUtil.get("GPelevationPathPanelInfo-" + this._uid);
-            if (_profileOpts.greaterSlope || 
-                _profileOpts.meanSlope || 
-                _profileOpts.ascendingElevation || 
+            if (_profileOpts.greaterSlope ||
+                _profileOpts.meanSlope ||
+                _profileOpts.ascendingElevation ||
                 _profileOpts.descendingElevation) {
                 // on affiche les informations
                 element.style.display = "block";
             }
-        },
-
-        /**
-        * this method is called by this.
-        * and activate event on map and profil
-        *
-        * @private
-        */
-        _activateProfilEvent : function (position) {
-
-            if (this._profile === null) {
-                return;
-            }
-
-            var map  = this._map;
-            var self = this;
-
-            // suppression de l'ancien d'un marker
-            if (self._marker) {
-                map.removeLayer(self._marker);
-                self._marker = null;
-            }
-
-            // creation d'un marker
-            self._marker = L.marker(L.latLng(position.lat, position.lon), {
-                icon : new IconDefault("orange"),
-                draggable : false,
-                clickable : false,
-                zIndexOffset : 1000
-            });
-            self._marker.addTo(map);
-
-            /**
-            * event sur le survol du graphe qui permet de mettre à jour la position du marker
-            *
-            * @param {Object} e - event
-            * @private
-            */
-            var changed = function (e) {
-                logger.trace(e);
-                var obj = e.chart.dataProvider[e.index];
-
-                var srs = L.CRS.EPSG4326;
-                var _pointA = srs.latLngToPoint(L.latLng(self._geometry[0].lat, self._geometry[0].lon));
-                var _pointB = srs.latLngToPoint(L.latLng(self._geometry[self._geometry.length - 1].lat, self._geometry[self._geometry.length - 1].lon));
-                var _point = L.LineUtil.closestPointOnSegment( srs.latLngToPoint(L.latLng(obj.lat, obj.lon)), _pointA, _pointB );
-                self._marker.setLatLng( srs.pointToLatLng(_point));
-                // self._marker.setLatLng( L.latLng(obj.lat, obj.lon));
-                self._marker.update();
-
-            };
-
-            // FIXME remove event !?
-            self._profile.removeListener("changed", changed);
-            self._profile.addListener("changed", changed);
-
-            /**
-            * event sur le survol du graphe qui permet de mettre à jour la position du marker
-            *
-            * @param {Object} e - event
-            * @private
-            */
-            // var mouseover = function (e) {
-            //     logger.trace(e);
-            //     if (self._profile === null) {
-            //         return;
-            //     }
-            //
-            //     // creation d'un marker
-            //     self._marker = L.marker(L.latLng(position.lat, position.lon), {
-            //         icon : new IconDefault("orange"),
-            //         draggable : false,
-            //         clickable : false,
-            //         zIndexOffset : 1000
-            //     });
-            //     self._marker.addTo(map);
-            // };
-
-            /**
-            * event sur la sortie du graphe qui permet de mettre à jour la position du marker
-            *
-            * @param {Object} e - event
-            * @private
-            */
-            // var mouseout = function (e) {
-            //     logger.trace(e);
-            //     if (self._profile === null) {
-            //         return;
-            //     }
-            //
-            //     // suppression de l'ancien d'un marker
-            //     if (self._marker) {
-            //         map.removeLayer(self._marker);
-            //         self._marker = null;
-            //     }
-            // };
-
-            /**
-            * event sur le deplacement sur le graphe qui permet de mettre à jour la position du marker
-            *
-            * @param {Object} e - event
-            * @private
-            */
-            // var mousemove = function (e) {
-            //     logger.trace(e);
-            //     if (self._profile === null) {
-            //         return;
-            //     }
-            //
-            //     // suppression de l'ancien d'un marker
-            //     if (self._marker) {
-            //         self._marker.setLatLng(L.latLng(e.lat, e.lon));
-            //         self._marker.update();
-            //     }
-            // };
-
-            // FIXME event !?
-            // this._profilContainer.removeEventListener("mouseover", mouseover);
-            // this._profilContainer.addEventListener("mouseover", mouseover);
-            // this._profilContainer.removeEventListener("mouseout", mouseout);
-            // this._profilContainer.addEventListener("mouseout", mouseout);
-            // this._profilContainer.removeEventListener("mousemove", mousemove);
-            // this._profilContainer.addEventListener("mousemove", mousemove);
         },
 
         // ################################################################### //
@@ -1091,6 +970,97 @@ define([
     });
 
     /**
+    * create Profile Marker
+    */
+    ElevationPath.__createProfileMarker = function (context, data) {
+
+        logger.log("__createProfileMarker");
+
+        var self = context;
+        var map  = self._map;
+
+        // var _srs    = L.CRS.EPSG4326;
+        // var _pointA = _srs.latLngToPoint(L.latLng(self._geometry[0].lat, self._geometry[0].lon));
+        // var _pointB = _srs.latLngToPoint(L.latLng(self._geometry[self._geometry.length - 1].lat, self._geometry[self._geometry.length - 1].lon));
+        // var _point  = L.LineUtil.closestPointOnSegment(_srs.latLngToPoint(L.latLng(data.lat, data.lon)), _pointA, _pointB );
+
+        // creation d"un marker
+        self._marker = L.marker(L.latLng(data), {
+            icon : new IconDefault("orange"),
+            draggable : false,
+            clickable : false,
+            zIndexOffset : 1000
+        });
+
+        self._marker.addTo(map);
+    };
+
+    /**
+    * update Profile Marker
+    */
+    ElevationPath.__updateProfileMarker = function (context, data) {
+
+        logger.log("__updateProfileMarker");
+
+        var self = context;
+        var map  = self._map;
+
+        // var _srs    = L.CRS.EPSG4326;
+        // var _pointA = _srs.latLngToPoint(L.latLng(self._geometry[0].lat, self._geometry[0].lon));
+        // var _pointB = _srs.latLngToPoint(L.latLng(self._geometry[self._geometry.length - 1].lat, self._geometry[self._geometry.length - 1].lon));
+        // var _point  = L.LineUtil.closestPointOnSegment( _srs.latLngToPoint(L.latLng(data.lat, data.lon)), _pointA, _pointB );
+
+        if (self._marker) {
+            self._marker.setLatLng(L.latLng(data));
+            self._marker.update();
+        } else {
+            // creation d"un marker
+            self._marker = L.marker(L.latLng(data), {
+                icon : new IconDefault("orange"),
+                draggable : false,
+                clickable : false,
+                zIndexOffset : 1000
+            });
+
+            self._marker.addTo(map);
+        }
+
+    };
+
+    /**
+    * remove Profile Marker
+    */
+    ElevationPath.__removeProfileMarker = function (context) {
+
+        logger.log("__removeProfileMarker");
+
+        var self = context;
+        var map  = self._map;
+
+        if (self._marker) {
+            map.removeLayer(self._marker);
+            self._marker = null;
+        }
+
+    };
+
+    /**
+    * custom operation into raw profil...
+    * TODO
+    */
+    ElevationPath.__customRawProfileOperation = function () {
+        logger.log("__customRawProfileOperation");
+    };
+
+    /**
+    * custom operation into raw profil...
+    * TODO
+    */
+    ElevationPath.__customRawProfileMouseOverEvent = function (context, e) {
+        logger.log("__customRawProfileMouseOverEvent", context, e);
+    };
+
+    /**
     * Display Profile function used by default : no additonal framework needed.
     *
     * @static
@@ -1101,140 +1071,11 @@ define([
     ElevationPath.DISPLAY_PROFILE_BY_DEFAULT = function (data, container, context) {
         logger.trace("ElevationPath.DISPLAY_PROFILE_BY_DEFAULT");
 
-        // on nettoie toujours...
-        if (container) {
-            while (container.firstChild) {
-                container.removeChild(container.firstChild);
-            }
+        var profile = ProfileElevationPathDOM.displayProfileByDefault(data, container, context, ElevationPath);
+        // on sauvegarde le profil du container dans l'objet
+        if (profile) {
+            this._profile = profile;
         }
-
-        if (!data) {
-            return;
-        }
-
-        var _points = data.points;
-
-        var sortedElev = JSON.parse(JSON.stringify(_points)) ;
-        sortedElev.sort(function (e1, e2) {
-            return e1.z - e2.z ;
-        }) ;
-
-        var minZ = sortedElev[0].z ;
-        var maxZ = sortedElev[sortedElev.length - 1].z ;
-        var diff = maxZ - minZ ;
-        var dist = data.distance;
-        var unit = data.unit;
-        // var distMin = 0;
-        var barwidth = 100 / _points.length ;
-
-        var self = this;
-        var map  = context._map;
-
-        var div = document.createElement("div");
-        div.id  = "profileElevationByDefault";
-        div.addEventListener("mouseover", function (e) {
-
-            var _lon = parseFloat(e.target.dataset["lon"]);
-            var _lat = parseFloat(e.target.dataset["lat"]);
-
-            if (_lon && _lat) {
-
-                var srs = L.CRS.EPSG4326;
-                var _pointA = srs.latLngToPoint(L.latLng(self._geometry[0].lat, self._geometry[0].lon));
-                var _pointB = srs.latLngToPoint(L.latLng(self._geometry[self._geometry.length - 1].lat, self._geometry[self._geometry.length - 1].lon));
-                var _point = L.LineUtil.closestPointOnSegment( srs.latLngToPoint(L.latLng(_lat, _lon)), _pointA, _pointB );
-                
-                // creation d"un marker
-                self._marker = L.marker(srs.pointToLatLng(_point), {
-                    icon : new IconDefault("orange"),
-                    draggable : false,
-                    clickable : false,
-                    zIndexOffset : 1000
-                });
-
-                self._marker.addTo(map);
-            }
-        });
-        div.addEventListener("mousemove", function () {});
-        div.addEventListener("mouseout", function () {
-            // suppression de l'ancien d'un marker
-            if (self._marker) {
-                map.removeLayer(self._marker);
-                self._marker = null;
-            }
-        });
-        container.appendChild(div);
-
-        var divBox = document.createElement("div");
-        divBox.className = "profile-box";
-
-        var divZ = document.createElement("div");
-        divZ.className = "profile-z-vertical";
-        var ulZ  = document.createElement("ul");
-        var liZmin = document.createElement("li");
-        liZmin.setAttribute("class", "profile-min-z");
-        liZmin.innerHTML = minZ + " m";
-        var liZmax = document.createElement("li");
-        liZmax.setAttribute("class", "profile-max-z");
-        liZmax.innerHTML = maxZ + " m";
-
-        // var divUnit = document.createElement("div");
-        // divUnit.className = "profile-unit";
-        // divUnit.innerHTML = "m";
-
-        ulZ.appendChild(liZmax);
-        ulZ.appendChild(liZmin);
-        divZ.appendChild(ulZ);
-        // divZ.appendChild(divUnit);
-        divBox.appendChild(divZ);
-
-        var divData = document.createElement("div");
-        divData.className = "profile-content";
-
-        var ulData  = document.createElement("ul");
-        ulData.id   = "profile-data";
-        ulData.className = "profile-z-axis profile-x-axis";
-        divData.appendChild(ulData);
-
-        for (var i = 0 ; i < _points.length ; i++) {
-            var d = _points[i] ;
-            var li = document.createElement("li") ;
-            li.setAttribute("data-z",d.z) ;
-            li.setAttribute("data-lon",d.lon) ;
-            li.setAttribute("data-lat",d.lat) ;
-            li.setAttribute("data-dist",d.dist) ;
-
-            var pct = Math.floor((d.z - minZ) * 100 / diff) ;
-            li.setAttribute("class", "percent v" + pct) ;
-            li.title = "altitude : " + d.z + "m" ;
-            li.title += " - lon : " + d.lon;
-            li.title += " - lat : " + d.lat;
-            var _profile = this.options.displayProfileOptions.profile;
-            if (_profile) {
-                li.title += " - pente : " + d.slope + "%";
-            }
-            li.setAttribute("style", "width: " + barwidth + "%") ;
-            ulData.appendChild(li) ;
-        }
-
-        divBox.appendChild(divData);
-        div.appendChild(divBox);
-
-        var divX = document.createElement("div");
-        divX.className = "profile-x-horizontal";
-        var ulX  = document.createElement("ul");
-        var liXmin = document.createElement("li");
-        liXmin.setAttribute("class", "profile-min-x");
-        liXmin.innerHTML = "";
-        var liXmax = document.createElement("li");
-        liXmax.setAttribute("class", "profile-max-x");
-        liXmax.innerHTML = dist + " " + unit;
-        ulX.appendChild(liXmin);
-        ulX.appendChild(liXmax);
-        divX.appendChild(ulX);
-        div.appendChild(divX);
-
-        context._profile = container;
     };
 
     /**
@@ -1248,25 +1089,11 @@ define([
     ElevationPath.DISPLAY_PROFILE_RAW = function (data, container, context) {
         logger.trace("ElevationPath.DISPLAY_PROFILE_RAW");
 
-        // on nettoie toujours...
-        if (container) {
-            while (container.firstChild) {
-                container.removeChild(container.firstChild);
-            }
+        var profile = ProfileElevationPathDOM.displayProfileRaw(data, container, context, ElevationPath);
+        // on sauvegarde le profil du container dans l'objet
+        if (profile) {
+            this._profile = profile;
         }
-
-        var _points = data.points;
-
-        // TODO CSS externe
-        var div  = document.createElement("textarea");
-        div.id = "profilElevationResults";
-        div.rows = 10;
-        div.cols = 50;
-        div.style.width = "100%";
-        div.innerHTML = JSON.stringify(_points, undefined, 4);
-        container.appendChild(div);
-
-        context._profile = container;
     };
 
     /**
@@ -1280,248 +1107,16 @@ define([
     ElevationPath.DISPLAY_PROFILE_LIB_D3 = function (data, container, context) {
         logger.trace("ElevationPath.DISPLAY_PROFILE_LIB_D3");
 
-        // Calcul du profile
         if ( typeof d3 === "undefined" ) {
             console.log("Lib. D3 is not loaded !");
             return;
         }
 
-        // on nettoie toujours...
-        if (container) {
-            while (container.firstChild) {
-                container.removeChild(container.firstChild);
-            }
+        var profile = ProfileElevationPathDOM.displayProfileLibD3(data, container, context, ElevationPath);
+        // on sauvegarde le profil du container dans l'objet
+        if (profile) {
+            this._profile = profile;
         }
-
-        var _points = data.points;
-
-        var margin = {
-            top : 20,
-            right : 20,
-            bottom : 30,
-            left : 40
-        };
-
-        var width = container.clientWidth - margin.left - margin.right;
-        var height = container.clientHeight - margin.top - margin.bottom;
-
-        var x = d3.scale.linear()
-            .range([0, width]);
-
-        var y = d3.scale.linear()
-            .range([height, 0]);
-
-        var xAxis = d3.svg.axis()
-            .scale(x)
-            .orient("bottom")
-            .ticks(5);
-
-        var yAxis = d3.svg.axis()
-            .scale(y)
-            .orient("left")
-            .ticks(5);
-
-        var line = d3.svg.line()
-            .interpolate("basis")
-            .x(function (d) {
-                return x(d.dist);
-            })
-            .y(function (d) {
-                return y(d.z);
-            });
-
-        var area = d3.svg.area()
-            .interpolate("basis")
-            .x(function (d) {
-                return x(d.dist);
-            })
-            .y0(height)
-            .y1(function (d) {
-                return y(d.z);
-            });
-
-        var svg = d3.select(container)
-            .append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
-            .append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-        var xDomain = d3.extent(_points, function (d) {
-            return d.dist;
-        });
-        x.domain(xDomain);
-
-        var yDomain = [
-            0,
-            d3.max(_points, function (d) {
-                return d.z;
-            })
-        ];
-        y.domain(yDomain);
-
-        svg.append("path")
-            .datum(_points)
-            .attr("class", "area-d3")
-            .attr("d", area);
-
-        svg.append("g")
-            .attr("class", "x axis-d3")
-            .attr("transform", "translate(0," + height + ")")
-            .call(xAxis)
-            .append("text")
-            .attr("y", -15)
-            .attr("dy", ".71em")
-            .attr("x", width)
-            .text("Distance (" + data.unit + ")");
-
-        svg.append("g")
-            .attr("class", "y axis-d3")
-            .call(yAxis)
-            .append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("y", 6)
-            .attr("dy", ".71em")
-            .text("Altitude (m)");
-
-        svg.append("g")
-            .attr("class", "grid-d3 vertical")
-            .attr("transform", "translate(0," + height + ")")
-            .call(xAxis
-                .orient("bottom")
-                .tickSize(-height, 0, 0)
-                .tickFormat("")
-            );
-
-        svg.append("g")
-            .attr("class", "grid-d3 horizontal")
-            .call(yAxis
-                .orient("left")
-                .tickSize(-width, 0, 0)
-                .tickFormat("")
-            );
-
-        svg.append("path")
-            .datum(_points)
-            .attr("class", "line-d3")
-            .attr("d", line);
-
-        svg.selectAll("circle")
-            .data(_points)
-            .enter()
-            .append("circle")
-            .attr("cx", function (d) {
-                return x(d.dist);
-            })
-            .attr("cy", function (d) {
-                return y(d.z);
-            })
-            .attr("r", 0)
-            .attr("class", "circle-d3");
-
-        var focus = svg.append("g").style("display", "none");
-
-        focus.append("line")
-            .attr("id", "focusLineX")
-            .attr("class", "focusLine-d3");
-        focus.append("line")
-            .attr("id", "focusLineY")
-            .attr("class", "focusLine-d3");
-        focus.append("circle")
-            .attr("id", "focusCircle")
-            .attr("r", 4)
-            .attr("class", "circle-d3 focusCircle-d3");
-
-        var div = d3.select(container).append("div")
-            .attr("class", "tooltip-d3")
-            .style("opacity", 0);
-
-        var bisectDist = d3.bisector(function (d) {
-            return d.dist;
-        }).left;
-
-        var self = this;
-        var map  = context._map;
-
-        svg.append("rect")
-            .attr("class", "overlay-d3")
-            .attr("width", width)
-            .attr("height", height)
-            .on("mouseover", function () {
-                focus.style("display", null);
-                // creation d"un marker
-                self._marker = L.marker(L.latLng(_points[0].lat, _points[0].lon), {
-                    icon : new IconDefault("orange"),
-                    draggable : false,
-                    clickable : false,
-                    zIndexOffset : 1000
-                });
-
-                self._marker.addTo(map);
-            })
-            .on("mouseout", function () {
-                focus.style("display", "none");
-                // suppression de l'ancien d'un marker
-                if (self._marker) {
-                    map.removeLayer(self._marker);
-                    self._marker = null;
-                }
-                // tooltips
-                div.transition()
-                    .duration(500)
-                    .style("opacity", 0);
-            })
-            .on("mousemove", function () {
-
-                var m = d3.mouse(this);
-                var distance = x.invert(m[0]);
-                var i = bisectDist(_points, distance);
-
-                var d0 = _points[i - 1];
-                var d1 = _points[i];
-                var d  = distance - d0[0] > d1[0] - distance ? d1 : d0;
-
-                var xc = x(d.dist);
-                var yc = y(d.z);
-
-                focus.select("#focusCircle")
-                    .attr("cx", xc)
-                    .attr("cy", yc);
-                focus.select("#focusLineX")
-                    .attr("x1", xc).attr("y1", y(yDomain[0]))
-                    .attr("x2", xc).attr("y2", y(yDomain[1]));
-                focus.select("#focusLineY")
-                    .attr("x1", x(xDomain[0])).attr("y1", yc)
-                    .attr("x2", x(xDomain[1])).attr("y2", yc);
-
-                // mise à jour du marker
-                var srs = L.CRS.EPSG4326;
-                var _pointA = srs.latLngToPoint(L.latLng(self._geometry[0].lat, self._geometry[0].lon));
-                var _pointB = srs.latLngToPoint(L.latLng(self._geometry[self._geometry.length - 1].lat, self._geometry[self._geometry.length - 1].lon));
-                var _point = L.LineUtil.closestPointOnSegment( srs.latLngToPoint(L.latLng(d.lat, d.lon)), _pointA, _pointB );
-                self._marker.setLatLng( srs.pointToLatLng(_point));
-                self._marker.update();
-
-                // tooltips
-                div.transition()
-                    .duration(200)
-                    .style("opacity", 0.9);
-                
-                var _message = "";
-                _message += "  Alt : " + d.z + " m";
-                _message += "<br/> Lon : " + d.lon;
-                _message += "<br/> Lat : " + d.lat;
-                var _profile = self.options.displayProfileOptions.profile;
-                if (_profile) {
-                    _message += "<br/> Pente : " + d.slope + " %";
-                }
-                div	.html(_message)
-                    .style("left", (d3.event.pageX) + "px")
-                    .style("top", (d3.event.pageY - 28) + "px");
-            }
-        );
-
-        context._profile = d3.selectAll("rect.overlay")[0][0];
     };
 
     /**
@@ -1541,98 +1136,11 @@ define([
             return;
         }
 
-        var _points = data.points;
-
-        var ballonText = "<span class='altiPathValue'>[[title]] : [[value]]m</span><br/>";
-        var profile = this.options.displayProfileOptions.profile;
+        var profile = ProfileElevationPathDOM.displayProfileLibAmCharts(data, container, context, ElevationPath);
+        // on sauvegarde le profil du container dans l'objet
         if (profile) {
-            ballonText += "<span class='altiPathValue'>Pente : [[slope]] %</span><br/>";
+            this._profile = profile;
         }
-        ballonText += "<span class='altiPathCoords'>(lat: [[lat]] / lon:[[lon]])</span>";
-        
-        AmCharts.addInitHandler(function () {});
-
-        context._profile = AmCharts.makeChart( container, {
-            type : "serial",
-            pathToImages : "http://cdn.amcharts.com/lib/3/images/",
-            categoryField : "dist",
-            autoMarginOffset : 0,
-            marginRight : 10,
-            marginTop : 10,
-            startDuration : 0,
-            color : "#5E5E5E",
-            fontSize : 8,
-            theme : "light",
-            thousandsSeparator : "",
-            numberFormatter : {
-                precision : -1,
-                decimalSeparator : ",",
-                thousandsSeparato : " "
-            },
-            categoryAxis : {
-                color : "#5E5E5E",
-                gridPosition : "start",
-                minHorizontalGap : 40,
-                tickPosition : "start",
-                title : "Distance (" + data.unit + ")",
-                titleColor : "#5E5E5E",
-                labelOffset : 0,
-                startOnAxis : true
-            },
-            chartCursor : {
-                animationDuration : 0,
-                bulletsEnabled : true,
-                bulletSize : 10,
-                categoryBalloonEnabled : false,
-                cursorColor : "#F90",
-                graphBulletAlpha : 1,
-                graphBulletSize : 1,
-                zoomable : false
-            },
-            trendLines : [],
-            graphs : [
-                {
-                    balloonColor : "#CCCCCC",
-                    balloonText : ballonText,
-                    bullet : "round",
-                    bulletAlpha : 0,
-                    bulletBorderColor : "#FFF",
-                    bulletBorderThickness : 2,
-                    bulletColor : "#F90",
-                    bulletSize : 6,
-                    hidden : false,
-                    id : "AmGraph-1",
-                    fillAlphas : 0.4,
-                    fillColors : "#C77A04",
-                    lineAlpha : 1,
-                    lineColor : "#C77A04",
-                    lineThickness : 1,
-                    title : "Altitude",
-                    valueField : "z"
-                }
-            ],
-            guides : [],
-            valueAxes : [
-                {
-                    id : "ValueAxis-1",
-                    minVerticalGap : 20,
-                    title : "Altitude (m)"
-                }
-            ],
-            balloon : {
-                borderColor : "#CCCCCC",
-                borderThickness : 1,
-                fillColor : "#FFFFFF",
-                showBullet : true
-            },
-            titles : [],
-            allLabels : [],
-            dataProvider : _points
-        });
-
-        // on active les evenement entre la carte / graphe
-        var _initPosition = _points[0];
-        context._activateProfilEvent(_initPosition);
 
     };
 
