@@ -85,33 +85,34 @@ define([
     /**
     * Set layer opacity
     *
-    * @param {String} layer - Layer object
+    * @param {String} layerId - Layer id
     * @param {Number} opacityValue - opacity value in [0 1]
     */
-    GlobeViewExtended.prototype.setLayerOpacity = function (layer, opacityValue) {
-        layer.opacity = opacityValue;
+    GlobeViewExtended.prototype.setLayerOpacity = function (layerId, opacityValue) {
+        this.getColorLayerById(layerId).opacity = opacityValue;
         this.getGlobeView().notifyChange(true);
     };
 
     /**
     * Set layer visibility
     *
-    * @param {String} layer - Layer object
+    * @param {String} layerId - Layer id
     * @param {Boolean} visible - New visibility of the layer
     */
-    GlobeViewExtended.prototype.setLayerVisibility = function (layer, visible) {
-        layer.visible = visible;
+    GlobeViewExtended.prototype.setLayerVisibility = function (layerId, visible) {
+        this.getColorLayerById(layerId).visible = visible;
         this.getGlobeView().notifyChange(true);
     };
 
     /**
     * Move layer to the specified index
     *
-    * @param {String} layerID - Layer id
+    * @param {String} layerId - Layer id
     * @param {Boolean} index - new index of the layer
     */
-    GlobeViewExtended.prototype.moveLayerToIndex = function (layerID, index) {
-        Itowns.ColorLayersOrdering.moveLayerToIndex(this.getGlobeView(), layerID, index);
+    GlobeViewExtended.prototype.moveLayerToIndex = function (layerId, index) {
+        Itowns.ColorLayersOrdering.moveLayerToIndex(this.getGlobeView(), layerId, index);
+        this.getGlobeView().notifyChange(true);
     };
 
     /**
@@ -198,15 +199,39 @@ define([
     /**
     * Get layer by its id
     *
-    * @param {String} id - Layer id
+    * @param {String} layerId - Layer id
     * @return {Object} layer Object
     */
-    GlobeViewExtended.prototype.getLayerById = function (id) {
-        return this.getGlobeView().getLayers( function (layer) {
-            if (layer.id === id) {
-                return layer;
+    GlobeViewExtended.prototype.getLayerById = function (layerId) {
+        var layer =  this.getGlobeView().getLayers( function (l) {
+            if (l.id === layerId) {
+                return l;
             }
         })[0];
+        if( !layer ) {
+            this.logger.trace("[GlobeViewExtended]  : no Layer found for the id '"+layerId+"'") ;
+            return;
+        }
+        return layer ;
+    };
+
+    /**
+    * Get color layer by its id
+    *
+    * @param {String} layerId - Color layer id
+    * @return {Object} layer Object
+    */
+    GlobeViewExtended.prototype.getColorLayerById = function ( layerId ) {
+        var layer =  this.getGlobeView().getLayers(function (l) {
+            if (l.id === layerId && l.type === "color") {
+                return l;
+            }
+        })[0];
+        if( !layer ) {
+            this.logger.trace("[GlobeViewExtended]  : no colorLayer found for the id '"+layerId+"'") ;
+            return;
+        }
+        return layer ;
     };
 
     /**
