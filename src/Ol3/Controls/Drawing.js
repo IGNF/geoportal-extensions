@@ -43,6 +43,7 @@ define([
      * @param {Boolean} [options.tools.tooltip = true] - Display text editing tool
      * @param {Boolean} [options.tools.edit = true] - Display editing tool
      * @param {Boolean} [options.tools.export = true] - Display exporting tool
+     * @param {Boolean} [options.tools.measure = false] - Display measure drawing into popup info
      * @param {String} [options.labels] - Labels for Control
      * @param {String} [options.labels.control] - Label for Control
      * @param {String} [options.labels.points] - Label for points drawing tool
@@ -118,7 +119,8 @@ define([
         display : true,
         tooltip : true,
         edit : true,
-        export : true
+        export : true,
+        measure : false
     } ;
 
     /**
@@ -427,17 +429,7 @@ define([
                 this.options.cursorStyle[key] = Drawing.DefaultCursorStyle[key] ;
             }
         },this) ;
-        /*
-        this.options.tools = options.tools || {};
-        this.options.tools.points = (options.tools.points === false) ? false : true ;
-        this.options.tools.lines = (options.tools.lines === false) ? false : true ;
-        this.options.tools.polygons = (options.tools.polygons === false) ? false : true ;
-        this.options.tools.text = (options.tools.text === false) ? false : true ;
-        this.options.tools.edit = (options.tools.edit === false) ? false : true ;
-        this.options.tools.display = (options.tools.display === false) ? false : true ;
-        this.options.tools.remove = (options.tools.remove === false) ? false : true ;
-        this.options.tools.export = (options.tools.export === false) ? false : true ;
-        */
+
         this.options.collapsed = ( options.collapsed !== undefined ) ? options.collapsed : true;
         /** {Boolean} specify if Drawing control is collapsed (true) or not (false) */
         this.collapsed = this.options.collapsed;
@@ -740,11 +732,22 @@ define([
     Drawing.prototype._drawEndFeature = function (feature,geomType) {
         // application des styles par defaut.
         var style = null ;
+        // mesures
+        var geom = (feature.getGeometry());
+        var measure = "";
+
         switch (geomType) {
             case "Point" :
                 style = new ol.style.Style({
                     image : new ol.style.Icon(this._getIconStyleOptions(this.options.markersList[0]))
                 }) ;
+
+                var projection  = this.getMap().getView().getProjection();
+                var coordinates = geom.getCoordinates();
+                var c = ol.proj.transform(coordinates, projection, "EPSG:4326");
+                measure += c[0] + "°";
+                measure += "\n";
+                measure += c[1] + "°";
                 break ;
             case "LineString" :
                 style = new ol.style.Style({
@@ -753,6 +756,10 @@ define([
                         width : this.options.defaultStyles.strokeWidth
                     })
                 }) ;
+
+                measure += "Environ ";
+                measure += Math.round(geom.getLength() * 100) / 100;
+                measure += " m";
                 break ;
             case "Polygon" :
                 style = new ol.style.Style({
@@ -767,6 +774,10 @@ define([
                         width : this.options.defaultStyles.polyStrokeWidth
                     })
                 }) ;
+
+                measure += "Environ ";
+                measure += Math.round(geom.getArea() * 100) / 100;
+                measure += " m^2";
                 break ;
         }
         feature.setStyle(style) ;
@@ -792,6 +803,7 @@ define([
             applyFunc : setAttValue,
             inputId : this._addUID("att-input"),
             placeholder : "Saisir une description...",
+            measure : (this.options.tools.measure) ? measure : null,
             geomType : geomType
         }) ;
         popupOvl = new ol.Overlay({
