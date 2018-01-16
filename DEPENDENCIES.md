@@ -55,7 +55,7 @@ last
 
 * leaflet
 
-└── leaflet@1.2.0
+└── leaflet@1.3.0
 
 * leaflet-draw
 
