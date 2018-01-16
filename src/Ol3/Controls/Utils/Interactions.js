@@ -82,7 +82,11 @@ define([
 
             var interactions = map.getInteractions().getArray() ;
             for (var i = 0 ; i < interactions.length ; i++ ) {
-                if (interactions[i].getActive() && interactions[i] instanceof ol.interaction.Draw) {
+                if (interactions[i].getActive() &&
+                   (interactions[i] instanceof ol.interaction.Draw ||
+                    interactions[i] instanceof ol.interaction.Select ||
+                    interactions[i] instanceof ol.interaction.Modify)) {
+
                     var prop = interactions[i].getProperties();
                     var name =  prop.name;
                     if ( typeof name !== "undefined" && this._extensions.indexOf(name) > -1) {

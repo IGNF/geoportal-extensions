@@ -255,18 +255,6 @@ define([
             }
         }, this) ;
 
-        // mode "collapsed"
-        /*
-        if (!this.collapsed) {
-            var inputShow = document.getElementById("GPshowMousePosition");
-            inputShow.checked = "checked";
-            this._setElevationPanel(this.options.displayAltitude);
-            this._setCoordinatesPanel(this.options.displayCoordinates);
-            if ( !this.options.displayCoordinates ) {
-                this._setSettingsPanel(false);
-            }
-        }
-        */
     };
 
     /**
@@ -733,8 +721,16 @@ define([
         // application des styles par defaut.
         var style = null ;
         // mesures
-        var geom = (feature.getGeometry());
-        var measure = "";
+        var wgs84Sphere = new ol.Sphere(6378137);
+        var projection  = this.getMap().getView().getProjection();
+        var measure = null;
+
+        /** arrindi */
+        function __roundDecimal (nombre, precision) {
+            precision = precision || 2;
+            var factor = Math.pow(10, precision);
+            return Math.round( nombre * factor ) / factor;
+        }
 
         switch (geomType) {
             case "Point" :
@@ -742,12 +738,14 @@ define([
                     image : new ol.style.Icon(this._getIconStyleOptions(this.options.markersList[0]))
                 }) ;
 
-                var projection  = this.getMap().getView().getProjection();
-                var coordinates = geom.getCoordinates();
-                var c = ol.proj.transform(coordinates, projection, "EPSG:4326");
-                measure += c[0] + "°";
+                var coordinatesPoint = (feature.getGeometry()).getCoordinates();
+                var c = ol.proj.transform(coordinatesPoint, projection, "EPSG:4326");
+                measure = "lon : ";
+                measure += __roundDecimal(c[0], 4) + "°";
                 measure += "\n";
-                measure += c[1] + "°";
+                measure += "lat : ";
+                measure += __roundDecimal(c[1], 4) + "°";
+
                 break ;
             case "LineString" :
                 style = new ol.style.Style({
@@ -757,9 +755,17 @@ define([
                     })
                 }) ;
 
-                measure += "Environ ";
-                measure += Math.round(geom.getLength() * 100) / 100;
-                measure += " m";
+                var measureLength = 0;
+                var coordinatesLine = (feature.getGeometry()).getCoordinates();
+                for (var i = 0, ii = coordinatesLine.length - 1; i < ii; ++i) {
+                    var c1 = ol.proj.transform(coordinatesLine[i],     projection, "EPSG:4326");
+                    var c2 = ol.proj.transform(coordinatesLine[i + 1], projection, "EPSG:4326");
+                    measureLength += wgs84Sphere.haversineDistance(c1, c2);
+                }
+                measure = (measureLength > 1000) ?
+                  __roundDecimal(measureLength / 1000, 3) + " km" :
+                  __roundDecimal(measureLength, 3) + " m";
+
                 break ;
             case "Polygon" :
                 style = new ol.style.Style({
@@ -775,9 +781,14 @@ define([
                     })
                 }) ;
 
-                measure += "Environ ";
-                measure += Math.round(geom.getArea() * 100) / 100;
-                measure += " m^2";
+                var measureArea = 0;
+                var coordinatesAera = ((feature.getGeometry()).clone().transform(projection, "EPSG:4326")).getLinearRing(0).getCoordinates();
+                measureArea = Math.abs(wgs84Sphere.geodesicArea(coordinatesAera));
+
+                measure = (measureArea > 1000000) ?
+                    __roundDecimal(measureArea / 1000000, 3) + " km^2" :
+                    __roundDecimal(measureArea, 2) + " m^2";
+
                 break ;
         }
         feature.setStyle(style) ;
@@ -1463,6 +1474,17 @@ define([
         // on génère nous même l'evenement OpenLayers de changement de propriété
         // (utiliser mousePosition.on("change:collapsed", function(e) ) pour s'abonner à cet évènement)
         this.dispatchEvent("change:collapsed");
+
+        // on deselectionne les Tools
+        for (var toolsType in this.dtOptions) {
+            if (this.dtOptions.hasOwnProperty(toolsType)) {
+                if (this.dtOptions[toolsType].active) {
+                    var toolsId = this._addUID("drawing-tool-" + this.dtOptions[toolsType].id) ;
+                    document.getElementById(toolsId).className = "drawing-tool";
+                    this.dtOptions[toolsType].active = false;
+                }
+            }
+        }
     };
 
     /**
