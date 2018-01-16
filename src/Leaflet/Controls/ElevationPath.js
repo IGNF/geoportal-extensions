@@ -60,7 +60,7 @@ define([
                 meanSlope : true,
                 ascendingElevation : true,
                 descendingElevation : true,
-                profile : true,
+                currentSlope : true,
                 apply : null,
                 target : null
             }
@@ -81,7 +81,7 @@ define([
         * @param {Boolean} [options.displayProfileOptions.meanSlope = true] -  display the mean slope into the graph
         * @param {Boolean} [options.displayProfileOptions.ascendingElevation = true] -  display the ascending elevation into the graph
         * @param {Boolean} [options.displayProfileOptions.descendingElevation = true] -  display the descending elevation into the graph
-        * @param {Boolean} [options.displayProfileOptions.profile = true] -  display the profile into the graph
+        * @param {Boolean} [options.displayProfileOptions.currentSlope = true] -  display the profile into the graph
         *
         * @example
         *  var e = L.geoportalControl.ElevationPath({
@@ -260,8 +260,8 @@ define([
             if ( typeof  _profileOpts.descendingElevation === "undefined") {
                 _profileOpts.descendingElevation = _protoOpts.displayProfileOptions.descendingElevation;
             }
-            if ( typeof _profileOpts.profile === "undefined") {
-                _profileOpts.profile = _protoOpts.displayProfileOptions.profile;
+            if ( typeof _profileOpts.currentSlope === "undefined") {
+                _profileOpts.currentSlope = _protoOpts.displayProfileOptions.currentSlope;
             }
 
         },
@@ -397,11 +397,11 @@ define([
             // creation des infomations
 
             if (ascendingElevation) {
-                this._addElevationPathInformationsItem("Dénivelé positive : " + this._data.ascendingElevation.toLocaleString() + " m");
+                this._addElevationPathInformationsItem("Dénivelé positif : " + this._data.ascendingElevation.toLocaleString() + " m");
             }
 
             if (descendingElevation) {
-                this._addElevationPathInformationsItem("Dénivelé négative : " + this._data.descendingElevation.toLocaleString() + " m");
+                this._addElevationPathInformationsItem("Dénivelé négatif : " + this._data.descendingElevation.toLocaleString() + " m");
             }
 
             if (meanSlope) {

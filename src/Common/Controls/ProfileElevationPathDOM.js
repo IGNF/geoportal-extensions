@@ -115,12 +115,12 @@ define([], function () {
 
                 var pct = Math.floor((d.z - minZ) * 100 / diff) ;
                 li.setAttribute("class", "percent v" + pct) ;
-                li.title = "altitude : " + d.z + "m" ;
-                li.title += " - lon : " + d.lon;
-                li.title += " - lat : " + d.lat;
-                if (_displayProfileOptions.profile) {
-                    li.title += " - pente : " + d.slope + "%";
+                li.title = "Altitude : " + d.z + "m" ;
+                if (_displayProfileOptions.currentSlope) {
+                    li.title += " - Pente : " + d.slope + "%";
                 }
+                li.title += " - (Lat : " + d.lat + "/ Lon : " + d.lon + ")";
+
                 li.setAttribute("style", "width: " + barwidth + "%") ;
                 ulData.appendChild(li) ;
             }
@@ -402,12 +402,12 @@ define([], function () {
                         .style("opacity", 0.9);
 
                     var _message = "";
-                    _message += "  Alt : " + d.z + " m";
-                    _message += "<br/> Lon : " + d.lon;
-                    _message += "<br/> Lat : " + d.lat;
-                    if (_displayProfileOptions.profile) {
+                    _message += " Altitude : " + d.z + " m";
+                    if (_displayProfileOptions.currentSlope) {
                         _message += "<br/> Pente : " + d.slope + " %";
                     }
+                    _message += "<br/> (Lat : " + d.lat + "/ Lon : " + d.lon + ")";
+
                     div	.html(_message)
                         .style("left", (d3.event.pageX) + "px")
                         .style("top", (d3.event.pageY - 28) + "px");
@@ -431,11 +431,11 @@ define([], function () {
             var _points = data.points;
 
             var ballonText = "<span class='altiPathValue'>[[title]] : [[value]]m</span><br/>";
-            var profile = self.options.displayProfileOptions.profile;
-            if (profile) {
+            var currentSlope = self.options.displayProfileOptions.currentSlope;
+            if (currentSlope) {
                 ballonText += "<span class='altiPathValue'>Pente : [[slope]] %</span><br/>";
             }
-            ballonText += "<span class='altiPathCoords'>(lat: [[lat]] / lon:[[lon]])</span>";
+            ballonText += "<span class='altiPathCoords'>(Lat: [[lat]] / Lon:[[lon]])</span>";
 
             AmCharts.addInitHandler(function () {});
 

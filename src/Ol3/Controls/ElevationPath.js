@@ -48,6 +48,11 @@ define([
     * @param {Object} [options.stylesOptions.draw.finish = {}] - Line Style when finished drawing. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Stroke.html ol.style.Stroke} object.
     * @param {Object} [options.elevationPathOptions = {}] - elevation path service options. See {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~getAltitude Gp.Services.getAltitude()} for available options
     * @param {Object} [options.displayProfileOptions = {}] - profile options.
+    * @param {Boolean} [options.displayProfileOptions.greaterSlope = true] - display the greater slope into the graph
+    * @param {Boolean} [options.displayProfileOptions.meanSlope = true] -  display the mean slope into the graph
+    * @param {Boolean} [options.displayProfileOptions.ascendingElevation = true] -  display the ascending elevation into the graph
+    * @param {Boolean} [options.displayProfileOptions.descendingElevation = true] -  display the descending elevation into the graph
+    * @param {Boolean} [options.displayProfileOptions.currentSlope = true] -  display the profile into the graph
     * @param {Function} [options.displayProfileOptions.apply] - function to display profile if you want to cutomise it. By default, ([DISPLAY_PROFILE_BY_DEFAULT()](./ol.control.ElevationPath.html#.DISPLAY_PROFILE_BY_DEFAULT)) is used. Helper functions to use with D3 ([DISPLAY_PROFILE_LIB_D3()](./ol.control.ElevationPath.html#.DISPLAY_PROFILE_LIB_D3)) or AmCharts ([DISPLAY_PROFILE_LIB_AMCHARTS()](./ol.control.ElevationPath.html#.DISPLAY_PROFILE_LIB_AMCHARTS)) frameworks are also provided. You may also provide your own function.
     * @param {Object} [options.displayProfileOptions.target] - DOM container to use to display the profile.
     * @example
@@ -414,7 +419,7 @@ define([
         //             bullet : "round",
         //             bulletAlpha : 0,
         //             bulletBorderColor : "#FFF",
-        //             bulletBorderThickness : 2,
+        //             bulletBorderThickness : 2,currentSlope
         //             bulletColor : "#F90",
         //             bulletSize : 6,
         //             hidden : false,
@@ -595,7 +600,7 @@ define([
                 meanSlope : true,
                 ascendingElevation : true,
                 descendingElevation : true,
-                profile : true,
+                currentSlope : true,
                 apply : null,
                 target : null
             },
@@ -1373,11 +1378,11 @@ define([
         // creation des infomations
 
         if (ascendingElevation) {
-            this._addElevationPathInformationsItem("Dénivelé positive : " + this._data.ascendingElevation.toLocaleString() + " m");
+            this._addElevationPathInformationsItem("Dénivelé positif : " + this._data.ascendingElevation.toLocaleString() + " m");
         }
 
         if (descendingElevation) {
-            this._addElevationPathInformationsItem("Dénivelé négative : " + this._data.descendingElevation.toLocaleString() + " m");
+            this._addElevationPathInformationsItem("Dénivelé négatif : " + this._data.descendingElevation.toLocaleString() + " m");
         }
 
         if (meanSlope) {

@@ -321,7 +321,7 @@ function (
         * @param {Boolean} [options.displayProfileOptions.meanSlope = true] -  display the mean slope into the graph
         * @param {Boolean} [options.displayProfileOptions.ascendingElevation = true] -  display the ascending elevation into the graph
         * @param {Boolean} [options.displayProfileOptions.descendingElevation = true] -  display the descending elevation into the graph
-        * @param {Boolean} [options.displayProfileOptions.profile = true] -  display the profile into the graph
+        * @param {Boolean} [options.displayProfileOptions.currentSlope = true] -  display the profile into the graph
         *
         * @returns {L.geoportalControl.ElevationPath}
         * @example
@@ -336,8 +336,8 @@ function (
         *          meanSlope : true, // by default
         *          greaterSlope : true, // by default
         *          ascendingElevation : false,
-        *          descendingElevation : false, 
-        *          profile : false 
+        *          descendingElevation : false,
+        *          currentSlope : false
         *      }
         *  });
         */
