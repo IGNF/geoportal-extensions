@@ -42,8 +42,8 @@ define([
      * @param {Object}  [options.geocodeOptions = {}] - options of geocode service (see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~geocode Gp.Services.geocode})
      * @param {Object}  [options.autocompleteOptions = {}] - options of autocomplete service (see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~autoComplete Gp.Services.autoComplete}
      * @param {Object}  [options.autocompleteOptions.serviceOptions] - options of autocomplete service
-     * @param {Boolean} [options.autocompleteOptions.triggerGeocode] - trigger a geocoding request if the autocompletion does not return any suggestions, false by default
-     * @param {Number}  [options.autocompleteOptions.triggerDelay] - waiting time before sending the geocoding request, 1000ms by default
+     * @param {Boolean} [options.autocompleteOptions.triggerGeocode = false] - trigger a geocoding request if the autocompletion does not return any suggestions, false by default
+     * @param {Number}  [options.autocompleteOptions.triggerDelay = 1000] - waiting time before sending the geocoding request, 1000ms by default
      * @param {Sting|Numeric|Function} [options.zoomTo] - zoom to results, by default, current zoom.
      *       Value possible : auto or zoom level.
      *       Possible to overload it with a function :
@@ -1219,10 +1219,8 @@ define([
                 context._clearSuggestedLocation();
                 logger.log(error.message);
                 // on envoie une requete de geocodage si aucun resultat d'autocompletion
-                // n'a été trouvé ! On limite le nombre de requetes avec une saisie
-                // de 5 caractères (ex. pour le code postal !)...
-                // Et on n'oublie pas d'annuler celle qui est en cours !
-                if (error.message === "No suggestion matching the search" && _triggerGeocode && value.length === 5) {
+                // n'a été trouvé ! Et on n'oublie pas d'annuler celle qui est en cours !
+                if (error.message === "No suggestion matching the search" && _triggerGeocode /* && value.length === 5 */) {
                     if (context._triggerHandler) {
                         clearTimeout(context._triggerHandler);
                         logger.warn("Cancel the last geocode request !");

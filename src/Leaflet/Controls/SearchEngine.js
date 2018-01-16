@@ -1401,10 +1401,8 @@ define([
                     context._clearSuggestedLocation();
                     logger.log(error.message);
                     // on envoie une requete de geocodage si aucun resultat d'autocompletion
-                    // n'a été trouvé ! On limite le nombre de requetes avec une saisie
-                    // de 5 caractères (ex. pour le code postal !)...
-                    // Et on n'oublie pas d'annuler celle qui est en cours !
-                    if (error.message === "No suggestion matching the search" && _triggerGeocode && value.length === 5) {
+                    // n'a été trouvé ! Et on n'oublie pas d'annuler celle qui est en cours !
+                    if (error.message === "No suggestion matching the search" && _triggerGeocode) {
                         if (context._triggerHandler) {
                             clearTimeout(context._triggerHandler);
                             logger.warn("Cancel the last geocode request !");
