@@ -1,10 +1,14 @@
 define([
-    "itowns"
+    "itowns",
+    "woodman"
 ], function (
-    Itowns
+    Itowns,
+    woodman
 ) {
-
     "use strict";
+
+    woodman.load("console");
+    var logger = woodman.getLogger("GlobeViewExtended");
 
     /**
     * @classdesc
@@ -209,7 +213,7 @@ define([
             }
         })[0];
         if( !layer ) {
-            this.logger.trace("[GlobeViewExtended]  : no Layer found for the id '"+layerId+"'") ;
+            logger.trace("[GlobeViewExtended]  : no Layer found for the id '"+layerId+"'") ;
             return;
         }
         return layer ;
@@ -228,7 +232,7 @@ define([
             }
         })[0];
         if( !layer ) {
-            this.logger.trace("[GlobeViewExtended]  : no colorLayer found for the id '"+layerId+"'") ;
+            logger.trace("[GlobeViewExtended]  : no colorLayer found for the id '"+layerId+"'") ;
             return;
         }
         return layer ;
