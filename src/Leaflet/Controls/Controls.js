@@ -279,6 +279,9 @@ function (
         * @param {Object}  [options.advancedSearch] - advanced search for geocoding (filters)
         * @param {Object}  [options.geocodeOptions] - options of geocode service. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~geocode Gp.Services.geocode}
         * @param {Object}  [options.autocompleteOptions] - options of autocomplete service. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~autoComplete Gp.Services.autoComplete}
+        * @param {Object}  [options.autocompleteOptions.serviceOptions] - options of autocomplete service
+        * @param {Boolean} [options.autocompleteOptions.triggerGeocode = false] - trigger a geocoding request if the autocompletion does not return any suggestions, false by default
+        * @param {Number}  [options.autocompleteOptions.triggerDelay = 1000] - waiting time before sending the geocoding request, 1000ms by default
         * @returns {L.geoportalControl.SearchEngine}
         * @example
         *  var SearchEngine = L.geoportalControl.SearchEngine({

@@ -27,7 +27,7 @@ define([
     /**
     * @classdesc
     *
-    * Leaflet Control Class to display Mouse position in various CRS and altitude using the <a href="http://api.ign.fr/tech-docs-js/developpeur/alti.html" target="_blank">altimetric web service of the Geoportal Platform</a>.
+    * Leaflet Control Class to display Mouse position in various CRS and altitude using the <a href="https://geoservices.ign.fr/documentation/geoservices/alti.html" target="_blank">altimetric web service of the Geoportal Platform</a>.
     *
     * Use {@link module:Controls.MousePosition L.geoportalControl.MousePosition()} factory to create instances of that class.
     *

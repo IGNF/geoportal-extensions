@@ -50,13 +50,12 @@
                 wms.addTo(map);
 
                 var search = new SearchEngine({
-                  placeholder : "Recherche...",
-                  displayMarker : true,
-                  markerStyle : L.icon({
-                    iconUrl: 'https://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png',
-                    iconSize: [64, 64],
-                    iconAnchor: [0, 64]
-                  }),
+                  geocodeOptions : {},
+                  autocompleteOptions : {
+                    serviceOptions : {},
+                    triggerGeocode : true, // trigger a geocoding request if the autocompletion does not return any suggestions, false by default
+                    triggerDelay : 1500 // waiting time before sending the geocoding request, 1000ms by default
+                  }
                 });
 
                 map.addControl(search);
