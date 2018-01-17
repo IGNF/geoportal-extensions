@@ -44,6 +44,10 @@ div[id^=GPelevationPathPanelReduce] {
   background-image: url("img/GPshowElevationPath.png");
 }
 
+div[id^=GPelevationPathPanelInfo] {
+  background-image: url("img/GPshowElevationPath.png");
+}
+
 [id^=GPelevationPathPanel-] {
   position : relative;
   top : 6px;

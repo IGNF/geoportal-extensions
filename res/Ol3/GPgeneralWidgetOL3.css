@@ -29,6 +29,14 @@
   background-position: -26px 0;
 }
 
+.GPpanelInfo {
+  top: 3px;
+  left: 3px;
+  width: 26px;
+  height: 26px;
+  background-position: -78px 0;
+}
+
 /* Showing/hiding advanced panels */
 
 .GPshowAdvancedToolPicto {

@@ -5,18 +5,18 @@ define([
     "gp",
     "Common/Utils/CheckRightManagement",
     "Common/Utils/SelectorID",
+    "Common/Utils/SearchEngineUtils",
     "Leaflet/Controls/Utils/IconDefault",
-    "Common/Controls/SearchEngineDOM",
-    "Common/Controls/SearchEngineUtils"
+    "Common/Controls/SearchEngineDOM"
 ], function (
     L,
     woodman,
     Gp,
     RightManagement,
     ID,
+    SearchEngineUtils,
     IconDefault,
-    SearchEngineDOM,
-    SearchEngineUtils
+    SearchEngineDOM
 ) {
 
     "use strict";
@@ -83,7 +83,7 @@ define([
         *       }
         * @param {String}  [options.placeholder] - set placeholder in search bar. Default is "Rechercher un lieu, une adresse".
         * @param {Boolean}  [options.displayMarker] - set a marker on search result, defaults to true.
-        * @param {String|Object}  [options.markerStyle] - set a marker style. Currently possible values are "blue" (default value), "orange", "red" and "green". But you can use an L.Icon object (see {@link http://leafletjs.com/reference-1.2.0.html#icon L.Icon }). 
+        * @param {String|Object}  [options.markerStyle] - set a marker style. Currently possible values are "blue" (default value), "orange", "red" and "green". But you can use an L.Icon object (see {@link http://leafletjs.com/reference-1.2.0.html#icon L.Icon }).
         * @param {Sting} [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
         * @param {Object} [options.resources] - resources to be used by geocode and autocompletion services, by default : ["StreetAddress", "PositionOfInterest"]
         * @param {Boolean} [options.displayAdvancedSearch] - False to disable advanced search tools (it will not be displayed). Default is true (displayed)

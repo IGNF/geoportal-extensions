@@ -1,0 +1,86 @@
+{{#extend "ol-sample-amd-layout"}}
+
+{{#content "head"}}
+        <title>Sample ol3 ElevationPath</title>
+{{/content}}
+
+{{#content "style"}}
+        <style>
+            div#map {
+                width: 100%;
+                height: 500px;
+            }
+        </style>
+{{/content}}
+
+{{#content "body"}}
+            <h2>profil altimetrique, en mode AMD</h2>
+            <!-- map -->
+            <div id="map">
+            </div>
+{{/content}}
+
+{{#content "js"}}
+            <script type="text/javascript">
+            requirejs(
+              [
+                "ol",
+                "gp",
+                "Ol3/Layers/LayerWMTS",
+                "Ol3/Controls/ElevationPath"
+              ],
+              function (
+                ol,
+                Gp,
+                LayerWMTS,
+                ElevationPath
+              ) {
+
+                var map;
+
+                var createMap = function () {
+                  // on cache l'image de chargement du Géoportail.
+                  document.getElementById("map").style.backgroundImage = "none";
+
+                  // Création de la map
+                  var map = new ol.Map({
+                      layers: [
+                          new LayerWMTS({
+                            layer : "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+                          })
+                      ],
+                      target: 'map',
+                      view: new ol.View({
+                          center: [288074.8449901076, 6247982.515792289],
+                          zoom: 5
+                      })
+                  });
+
+                  var elevation = new ElevationPath({
+                    debug : true,
+                    displayProfileOptions : {
+                      apply : ElevationPath.DISPLAY_PROFILE_RAW,
+                      target : null, // par defaut
+                      meanSlope : false,
+                      greaterSlope : false,
+                      ascendingElevation : false,
+                      descendingElevation : false,
+                      profile : true // par defaut
+                    }
+                  });
+                  map.addControl(elevation);
+                };
+
+                Gp.Services.getConfig({
+                  serverUrl : "{{ config.resources }}/AutoConf.js",
+                  callbackSuffix : "",
+                  // apiKey: "jhyvi0fgmnuxvfv0zjzorvdn",
+                  timeOut : 20000,
+                  onSuccess : createMap
+                });
+
+              });
+           </script>
+{{/content}}
+
+{{/extend}}
