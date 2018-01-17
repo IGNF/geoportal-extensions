@@ -81,7 +81,7 @@ define([
         * @param {Boolean} [options.displayProfileOptions.meanSlope = true] -  display the mean slope into the graph
         * @param {Boolean} [options.displayProfileOptions.ascendingElevation = true] -  display the ascending elevation into the graph
         * @param {Boolean} [options.displayProfileOptions.descendingElevation = true] -  display the descending elevation into the graph
-        * @param {Boolean} [options.displayProfileOptions.currentSlope = true] -  display the profile into the graph
+        * @param {Boolean} [options.displayProfileOptions.currentSlope = true] -  display current slope value on profile mouseover
         *
         * @example
         *  var e = L.geoportalControl.ElevationPath({
