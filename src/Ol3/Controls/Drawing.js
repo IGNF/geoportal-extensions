@@ -718,34 +718,15 @@ define([
      * @private
      */
     Drawing.prototype._drawEndFeature = function (feature,geomType) {
+
         // application des styles par defaut.
         var style = null ;
-        // mesures
-        var wgs84Sphere = new ol.Sphere(6378137);
-        var projection  = this.getMap().getView().getProjection();
-        var measure = null;
-
-        /** arrindi */
-        function __roundDecimal (nombre, precision) {
-            precision = precision || 2;
-            var factor = Math.pow(10, precision);
-            return Math.round( nombre * factor ) / factor;
-        }
 
         switch (geomType) {
             case "Point" :
                 style = new ol.style.Style({
                     image : new ol.style.Icon(this._getIconStyleOptions(this.options.markersList[0]))
                 }) ;
-
-                var coordinatesPoint = (feature.getGeometry()).getCoordinates();
-                var c = ol.proj.transform(coordinatesPoint, projection, "EPSG:4326");
-                measure = "lon : ";
-                measure += __roundDecimal(c[0], 4) + "°";
-                measure += "\n";
-                measure += "lat : ";
-                measure += __roundDecimal(c[1], 4) + "°";
-
                 break ;
             case "LineString" :
                 style = new ol.style.Style({
@@ -754,18 +735,6 @@ define([
                         width : this.options.defaultStyles.strokeWidth
                     })
                 }) ;
-
-                var measureLength = 0;
-                var coordinatesLine = (feature.getGeometry()).getCoordinates();
-                for (var i = 0, ii = coordinatesLine.length - 1; i < ii; ++i) {
-                    var c1 = ol.proj.transform(coordinatesLine[i],     projection, "EPSG:4326");
-                    var c2 = ol.proj.transform(coordinatesLine[i + 1], projection, "EPSG:4326");
-                    measureLength += wgs84Sphere.haversineDistance(c1, c2);
-                }
-                measure = (measureLength > 1000) ?
-                  __roundDecimal(measureLength / 1000, 3) + " km" :
-                  __roundDecimal(measureLength, 3) + " m";
-
                 break ;
             case "Polygon" :
                 style = new ol.style.Style({
@@ -780,21 +749,17 @@ define([
                         width : this.options.defaultStyles.polyStrokeWidth
                     })
                 }) ;
-
-                var measureArea = 0;
-                var coordinatesAera = ((feature.getGeometry()).clone().transform(projection, "EPSG:4326")).getLinearRing(0).getCoordinates();
-                measureArea = Math.abs(wgs84Sphere.geodesicArea(coordinatesAera));
-
-                measure = (measureArea > 1000000) ?
-                    __roundDecimal(measureArea / 1000000, 3) + " km^2" :
-                    __roundDecimal(measureArea, 2) + " m^2";
-
                 break ;
         }
         feature.setStyle(style) ;
+
+        // gestion des mesures
+        this._updateMeasure(feature, geomType);
+
         // creation overlay pour saisie du label
         var popupOvl = null ;
         var context = this ;
+
         /**
          * Enregistrement de la valeur saisie dans l'input.
          *
@@ -814,7 +779,7 @@ define([
             applyFunc : setAttValue,
             inputId : this._addUID("att-input"),
             placeholder : "Saisir une description...",
-            measure : (this.options.tools.measure) ? measure : null,
+            measure : (this.options.tools.measure) ? feature.getProperties().measure : null,
             geomType : geomType
         }) ;
         popupOvl = new ol.Overlay({
@@ -1132,7 +1097,8 @@ define([
             }
             var popupOvl = null ;
             var geomType = null ;
-            var textValue = null ;
+            var _textValue = null ;
+            var _measure = null;
             if (seEv.selected[0].getGeometry() instanceof ol.geom.Point) {
                 // on determine si c'est un marker ou un label.
                 var _label = seEv.selected[0].getProperties().name;
@@ -1154,12 +1120,15 @@ define([
             }
             if (geomType == "Text") {
                 // pour les labels on récupère la valeur dans le style
-                textValue = seEv.selected[0].getStyle().getText().getText() ;
+                _textValue = seEv.selected[0].getStyle().getText().getText() ;
             } else {
                 // pour les autres, c'est un attribut du feature
                 var featProps = seEv.selected[0].getProperties() ;
                 if (featProps && featProps.hasOwnProperty("description")) {
-                    textValue = featProps["description"] ;
+                    _textValue = featProps["description"] ;
+                }
+                if (featProps && featProps.hasOwnProperty("measure")) {
+                    _measure = featProps["measure"] ;
                 }
             }
             var context = this ;
@@ -1184,16 +1153,17 @@ define([
                     feature.setStyle(style) ;
                     return ;
                 }
-                var formated = value.replace(/\n/g, "<br>");
+                var _formated = value.replace(/\n/g, "<br>");
                 feature.setProperties({
-                    description : formated
+                    description : _formated
                 }) ;
             } ;
             var popupDiv = this._createLabelDiv({
                 applyFunc : setTextValue,
                 inputId : this._addUID("label-input"),
                 placeholder : (geomType == "Text" ? "Saisir un label..." : "Saisir une description..."),
-                text : textValue,
+                text : _textValue,
+                measure : (this.options.tools.measure) ? _measure : null,
                 geomType : geomType
             }) ;
             popupOvl = new ol.Overlay({
@@ -1214,6 +1184,72 @@ define([
         this) ;
         return interaction ;
     } ;
+
+    /**
+      * Callback de fin de modification du dessin afin de mettre à jour la mesure
+      * TODO
+      *
+      * @private
+      */
+    Drawing.prototype._updateMeasure = function (feature, geomType) {
+
+        logger.log(feature);
+
+        var measure = null;
+
+        var wgs84Sphere = new ol.Sphere(6378137);
+        var projection  = this.getMap().getView().getProjection();
+
+        /** arrondi */
+        function __roundDecimal (nombre, precision) {
+            precision = precision || 2;
+            var factor = Math.pow(10, precision);
+            return Math.round( nombre * factor ) / factor;
+        }
+
+        var type = (geomType) ? geomType : feature.getProperties().type;
+        switch (type) {
+            case "Point" :
+                var coordinatesPoint = (feature.getGeometry()).getCoordinates();
+                var c = ol.proj.transform(coordinatesPoint, projection, "EPSG:4326");
+                measure = "lon : ";
+                measure += __roundDecimal(c[0], 4) + "°";
+                measure += " / ";
+                measure += "lat : ";
+                measure += __roundDecimal(c[1], 4) + "°";
+
+                break ;
+            case "LineString" :
+                var measureLength = 0;
+                var coordinatesLine = (feature.getGeometry()).getCoordinates();
+                for (var i = 0, ii = coordinatesLine.length - 1; i < ii; ++i) {
+                    var c1 = ol.proj.transform(coordinatesLine[i],     projection, "EPSG:4326");
+                    var c2 = ol.proj.transform(coordinatesLine[i + 1], projection, "EPSG:4326");
+                    measureLength += wgs84Sphere.haversineDistance(c1, c2);
+                }
+                measure = (measureLength > 1000) ?
+                  __roundDecimal(measureLength / 1000, 3) + " km" :
+                  __roundDecimal(measureLength, 3) + " m";
+
+                break ;
+            case "Polygon" :
+                var measureArea = 0;
+                var coordinatesAera = ((feature.getGeometry()).clone().transform(projection, "EPSG:4326")).getLinearRing(0).getCoordinates();
+                measureArea = Math.abs(wgs84Sphere.geodesicArea(coordinatesAera));
+
+                measure = (measureArea > 1000000) ?
+                    __roundDecimal(measureArea / 1000000, 3) + " km^2" :
+                    __roundDecimal(measureArea, 2) + " m^2";
+
+                break ;
+        }
+
+        // enregistrement de la mesure dans la feature
+        feature.setProperties({
+            measure : measure,
+            type : type
+        });
+    };
 
     /**
      * Handles click on drawing tools icons
@@ -1401,8 +1437,15 @@ define([
                 break ;
             case this._addUID("drawing-tool-edit") :
                 if (context.dtOptions["edit"].active) {
+                    var selectInteraction =  new ol.interaction.Select({
+                        condition : ol.events.condition.singleClick,
+                        layers : [this.layer]
+                    });
+                    map.addInteraction(selectInteraction);
+
                     context.interaction = new ol.interaction.Modify({
-                        features : context.layer.getSource().getFeaturesCollection(),
+                        // features : context.layer.getSource().getFeaturesCollection(),
+                        features : selectInteraction.getFeatures(),
                         style : new ol.style.Style({
                             image : new ol.style.Circle({
                                 radius : this.options.cursorStyle.radius,
@@ -1420,6 +1463,10 @@ define([
                             return false ;
                         }
                     });
+                    context.interaction.on("modifyend", function (deEv) {
+                        var feature = deEv.features.item(0);
+                        context._updateMeasure(feature);
+                    }, context) ;
                 }
                 break ;
             case this._addUID("drawing-tool-display") :
@@ -1448,6 +1495,7 @@ define([
             });
             map.addInteraction(context.interaction) ;
         }
+        logger.log("interactions", map.getInteractions());
     } ;
 
     // ################################################################### //
