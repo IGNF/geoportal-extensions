@@ -1,0 +1,117 @@
+{{#extend "layout-itowns-sample-amd"}}
+
+{{#content "head"}}
+    <script> var apiKey = "{{ config.apikey }}"; </script>
+    <script src="{{ config.baseurl }}/samples-src/resources/itowns/layers.js"></script>
+    <title>Sample itowns LayerSwitcher</title>
+{{/content}}
+
+{{#content "style"}}
+    <style>
+            html {
+                height: 100%;
+            }
+
+            body {
+                margin: 0;
+                overflow:hidden;
+                height:100%;
+            }
+
+            #viewerDiv {
+                margin : auto auto;
+                width: 100%;
+                height: 70%;
+                padding: 0;
+            }
+    </style>
+{{/content}}
+
+{{#content "body"}}
+    <h2>Ajout d'un contrôle de gestion des couches : LayerSwitcher</h2>
+    <!-- map -->
+    <div id="viewerDiv"></div>
+{{/content}}
+
+{{#content "js"}}
+    <script type="text/javascript">
+            requirejs(
+                ["itowns", "proj4", "gp", "Itowns/GlobeViewExtended", "Itowns/Controls/LayerSwitcher"],
+                function (itowns, proj4, Gp, GlobeViewExtended, LayerSwitcher)
+            {
+                itowns.control = {};
+                itowns.control.LayerSwitcher = LayerSwitcher;
+                itowns.GlobeViewExtended = GlobeViewExtended;
+
+                var createMap = function() {
+                    /* global itowns,document,GuiTools*/
+                    const positionOnGlobe = { longitude: 2.3465, latitude: 48.88, altitude: 25000000 };
+
+                    // iTowns namespace defined here
+                    const viewerDiv = document.getElementById('viewerDiv');
+                    const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
+
+                    globeView.addEventListener(itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED, () => {
+
+                        // ajout des couches
+                        var p1 = itowns.Fetcher.json('{{ config.resources }}/itowns/JSONLayers/OrthosCRS.json').then(result => globeView.addLayer(result));
+                        var p2 = itowns.Fetcher.json('{{ config.resources }}/itowns/JSONLayers/IGN_MNT.json').then(result => globeView.addLayer(result));
+                        var p3 = itowns.Fetcher.json('{{ config.resources }}/itowns/JSONLayers/IGN_MNT_HIGHRES.json').then(result => globeView.addLayer(result));
+
+                        Promise.all([p1, p2, p3]).then( () => {
+                            // ajout du control
+                            var layerSwitcher = new itowns.control.LayerSwitcher({
+                                options : {
+                                    collapsed: true
+                                },
+                                layers : [
+                                    {
+                                        id : "ScanEX",
+                                        displayed : true
+                                    },
+                                    {
+                                        id : "Ortho",
+                                        displayed : true,
+                                        config : {
+                                            title : "Couche de Photos IGNPO",
+                                            description : "Description de ma couche",
+                                            quicklookUrl : "lien/Vers/UnApercuRapide.png",
+                                            legends : [
+                                                {
+                                                    url : "lien/Vers/UneLegende.png"
+                                                }
+                                            ],
+                                            metadata : [
+                                                {
+                                                    url : "lien/Vers/Une/MetaDonnee.xml"
+                                                }
+                                            ],
+                                            visibility: true,
+                                            opacity: 0.8
+                                        }
+                                    }
+                                ]
+                            });
+
+                            globeView.addWidget(layerSwitcher);
+                            globeView.addLayer(layerOrtho);
+
+                            // ajout de nouvelles couches
+                            itowns.Fetcher.json('{{ config.resources }}/itowns/JSONLayers/ScanEX.json').then(result => globeView.addLayer(result));
+                            itowns.Fetcher.json('{{ config.resources }}/itowns/JSONLayers/Region.json').then(result => globeView.addLayer(result));
+                        });
+                    });
+                }
+
+                Gp.Services.getConfig({
+                    // serverUrl : "./../resources/AutoConf.js",
+                    // callbackSuffix : '',
+                    apiKey : "{{ config.apikey }}",
+                    timeOut : 20000,
+                    onSuccess : createMap
+                });
+            });
+    </script>
+{{/content}}
+
+{{/extend}}

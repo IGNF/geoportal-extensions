@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+  <meta charset="UTF-8">
+  <title>Liste des exemples iTowns</title>0
+</head>
+<body>
+  <h1>Exemples d'utilisation de l'extension Géoportail pour iTowns</h1>
+  </h1>
+  <div>
+
+    <!-- liste des fichiers -->
+    <h2>Liste des exemples</h2>
+    <ul>
+    <% files.forEach(function(path) {
+        var split  = path.split('/');
+        var plugin = split.slice(-2)[0];
+        var file   = split.slice(-1)[0];
+      %>
+      <li><a href="<%- path %>"> <%- plugin %> -- <%- file %></a></li>
+      <% });
+    %>
+    </ul>
+
+    <h2>Ressources iTowns</h2>
+    <p>
+      <ul>
+        <li><a href="https://github.com/iTowns/itowns" target="_blank" >iTowns project</a></li>
+        <li><a href="http://www.itowns-project.org/itowns/API_Doc/" target="_blank" >iTowns API documentation</a></li>
+      </ul>
+    </p>
+  </div>
+</body>
+</html>
