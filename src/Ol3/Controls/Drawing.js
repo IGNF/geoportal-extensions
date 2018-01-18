@@ -248,9 +248,9 @@ define([
                 // found layer removed.
                 this.layer = null ;
                 // on supprime l'interaction en cours si besoin
-                if (this.interaction) {
-                    this.getMap().removeInteraction(this.interaction) ;
-                    this.interaction = null ;
+                if (this.interactionCurrent) {
+                    this.getMap().removeInteraction(this.interactionCurrent) ;
+                    this.interactionCurrent = null ;
                 }
             }
         }, this) ;
@@ -564,7 +564,9 @@ define([
             }
         },this) ;
 
-        this.interaction = null ;
+        this.interactionCurrent = null ;
+        this.interactionSelectEdit = null;
+
         this.stylingOvl = null ;
 
         this.layer = null ;
@@ -815,9 +817,9 @@ define([
             }
             this.layer.getSource().removeFeature(seEv.selected[0]) ;
             // suppression puis rajout de l'interaction pour appliquer le changement tout de suite...
-            this.getMap().removeInteraction(this.interaction) ;
-            this.interaction = this._createRemoveInteraction() ;
-            this.getMap().addInteraction(this.interaction) ;
+            this.getMap().removeInteraction(this.interactionCurrent) ;
+            this.interactionCurrent = this._createRemoveInteraction() ;
+            this.getMap().addInteraction(this.interactionCurrent) ;
 
         },
         this) ;
@@ -1069,9 +1071,9 @@ define([
             popupOvl.setPosition(seEv.mapBrowserEvent.coordinate) ;
             this.stylingOvl = popupOvl ;
             // suppression puis rajout de l'interaction pour appliquer le changement tout de suite...
-            this.getMap().removeInteraction(this.interaction) ;
-            this.interaction = this._createStylingInteraction() ;
-            this.getMap().addInteraction(this.interaction) ;
+            this.getMap().removeInteraction(this.interactionCurrent) ;
+            this.interactionCurrent = this._createStylingInteraction() ;
+            this.getMap().addInteraction(this.interactionCurrent) ;
         },
         this) ;
         return interaction ;
@@ -1177,9 +1179,9 @@ define([
             document.getElementById(this._addUID("label-input")).focus() ;
             this.labelOvl = popupOvl ;
             // suppression puis rajout de l'interaction pour appliquer le changement tout de suite...
-            this.getMap().removeInteraction(this.interaction) ;
-            this.interaction = this._createLabelInteraction() ;
-            this.getMap().addInteraction(this.interaction) ;
+            this.getMap().removeInteraction(this.interactionCurrent) ;
+            this.interactionCurrent = this._createLabelInteraction() ;
+            this.getMap().addInteraction(this.interactionCurrent) ;
         },
         this) ;
         return interaction ;
@@ -1270,11 +1272,18 @@ define([
             current : "Drawing"
         });
 
-        // on supprime  l'interaction courante s'il y en a une.
-        if (context.interaction) {
-            map.removeInteraction(context.interaction) ;
-            context.interaction = null ;
+        // on supprime l'interaction courante s'il y en a une.
+        if (context.interactionCurrent) {
+            map.removeInteraction(context.interactionCurrent) ;
+            context.interactionCurrent = null ;
         }
+
+        // on supprime l'interaction de selection courante s'il y en a une.
+        if (context.interactionSelectEdit) {
+            map.removeInteraction(context.interactionSelectEdit) ;
+            context.interactionSelectEdit = null ;
+        }
+
         // si aucune couche de dessin, on en crée une vide.
         if (!this.layer) {
             this._createEmptyLayer() ;
@@ -1282,14 +1291,14 @@ define([
         switch (toolId) {
             case this._addUID("drawing-tool-point") :
                 if (context.dtOptions["points"].active) {
-                    context.interaction = new ol.interaction.Draw({
+                    context.interactionCurrent = new ol.interaction.Draw({
                         features : context.layer.getSource().getFeaturesCollection(),
                         style : new ol.style.Style({
                             image : new ol.style.Icon(this._getIconStyleOptions(this.options.markersList[0]))
                         }),
                         type : ("Point")
                     });
-                    context.interaction.on("drawend", function (deEv) {
+                    context.interactionCurrent.on("drawend", function (deEv) {
                         // ajout eventuel d'un attribut description sur le feature
                         context._drawEndFeature(deEv.feature,"Point") ;
                     },
@@ -1298,7 +1307,7 @@ define([
                 break ;
             case this._addUID("drawing-tool-line") :
                 if (context.dtOptions["lines"].active) {
-                    context.interaction = new ol.interaction.Draw({
+                    context.interactionCurrent = new ol.interaction.Draw({
                         features : context.layer.getSource().getFeaturesCollection(),
                         style : new ol.style.Style({
                             image : new ol.style.Circle({
@@ -1318,7 +1327,7 @@ define([
                         }),
                         type : ("LineString")
                     });
-                    context.interaction.on("drawend", function (deEv) {
+                    context.interactionCurrent.on("drawend", function (deEv) {
                         // ajout eventuel d'un attribut description sur le feature
                         context._drawEndFeature(deEv.feature,"LineString") ;
                     },
@@ -1327,7 +1336,7 @@ define([
                 break ;
             case this._addUID("drawing-tool-polygon") :
                 if (context.dtOptions["polygons"].active) {
-                    context.interaction = new ol.interaction.Draw({
+                    context.interactionCurrent = new ol.interaction.Draw({
                         features : context.layer.getSource().getFeaturesCollection(),
                         style : new ol.style.Style({
                             image : new ol.style.Circle({
@@ -1353,7 +1362,7 @@ define([
                         }),
                         type : ("Polygon")
                     });
-                    context.interaction.on("drawend", function (deEv) {
+                    context.interactionCurrent.on("drawend", function (deEv) {
                         // ajout eventuel d'un attribut description sur le feature
                         context._drawEndFeature(deEv.feature,"Polygon") ;
                     },
@@ -1363,7 +1372,7 @@ define([
             case this._addUID("drawing-tool-text") :
                 // text : creation de points invisibles avec un label.
                 if (context.dtOptions["text"].active) {
-                    context.interaction = new ol.interaction.Draw({
+                    context.interactionCurrent = new ol.interaction.Draw({
                         features : context.layer.getSource().getFeaturesCollection(),
                         style : new ol.style.Style({
                             image : new ol.style.Circle({
@@ -1379,7 +1388,7 @@ define([
                         }),
                         type : ("Point")
                     });
-                    context.interaction.on("drawend", function (deEv) {
+                    context.interactionCurrent.on("drawend", function (deEv) {
                         // creation overlay pour saisie du label
                         var popupOvl = null ;
                         /**
@@ -1437,15 +1446,20 @@ define([
                 break ;
             case this._addUID("drawing-tool-edit") :
                 if (context.dtOptions["edit"].active) {
-                    var selectInteraction =  new ol.interaction.Select({
+                    context.interactionSelectEdit =  new ol.interaction.Select({
                         condition : ol.events.condition.singleClick,
                         layers : [this.layer]
                     });
-                    map.addInteraction(selectInteraction);
 
-                    context.interaction = new ol.interaction.Modify({
+                    context.interactionSelectEdit.setProperties({
+                        name : "Drawing",
+                        source : context
+                    });
+                    map.addInteraction(context.interactionSelectEdit);
+
+                    context.interactionCurrent = new ol.interaction.Modify({
                         // features : context.layer.getSource().getFeaturesCollection(),
-                        features : selectInteraction.getFeatures(),
+                        features : this.interactionSelectEdit.getFeatures(),
                         style : new ol.style.Style({
                             image : new ol.style.Circle({
                                 radius : this.options.cursorStyle.radius,
@@ -1463,7 +1477,7 @@ define([
                             return false ;
                         }
                     });
-                    context.interaction.on("modifyend", function (deEv) {
+                    context.interactionCurrent.on("modifyend", function (deEv) {
                         var feature = deEv.features.item(0);
                         context._updateMeasure(feature);
                     }, context) ;
@@ -1471,29 +1485,29 @@ define([
                 break ;
             case this._addUID("drawing-tool-display") :
                 if (context.dtOptions["display"].active) {
-                    context.interaction = this._createStylingInteraction() ;
+                    context.interactionCurrent = this._createStylingInteraction() ;
                 }
                 break ;
             case this._addUID("drawing-tool-tooltip") :
 
                 if (context.dtOptions["tooltip"].active) {
-                    context.interaction = this._createLabelInteraction() ;
+                    context.interactionCurrent = this._createLabelInteraction() ;
                 }
                 break ;
             case this._addUID("drawing-tool-remove") :
                 if (context.dtOptions["remove"].active) {
-                    context.interaction = context._createRemoveInteraction() ;
+                    context.interactionCurrent = context._createRemoveInteraction() ;
                 }
                 break ;
             default :
                 logger.trace("unhandled tool type") ;
         }
-        if (context.interaction) {
-            context.interaction.setProperties({
+        if (context.interactionCurrent) {
+            context.interactionCurrent.setProperties({
                 name : "Drawing",
                 source : this
             });
-            map.addInteraction(context.interaction) ;
+            map.addInteraction(context.interactionCurrent) ;
         }
         logger.log("interactions", map.getInteractions());
     } ;
