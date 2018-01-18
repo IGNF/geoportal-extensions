@@ -45,5 +45,3 @@ nb-configuration.xml
 /samples/
 /lib/
 /test_rendering/node_modules/
-/test_rendering/bitmaps_reference/**
-/test_rendering/bitmaps_test/**
