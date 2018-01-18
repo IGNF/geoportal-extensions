@@ -119,7 +119,7 @@ define([], function () {
                 if (_displayProfileOptions.currentSlope) {
                     li.title += " - Pente : " + d.slope + "%";
                 }
-                li.title += " - (Lat : " + d.lat + "/ Lon : " + d.lon + ")";
+                li.title += " (Lat : " + d.lat + " / Lon : " + d.lon + ")";
 
                 li.setAttribute("style", "width: " + barwidth + "%") ;
                 ulData.appendChild(li) ;
@@ -180,6 +180,9 @@ define([], function () {
             //     divC.id = "point_" + i;
             //     divC.innerHTML = JSON.stringify(point, undefined, 4);
             //     div.appendChild(divC);
+            //     divC.addEventListener("mouseover", function (e) {
+            //          className.__customRawProfileMouseOverEvent(context, e);
+            //     });
             // }
 
             container.appendChild(div);
@@ -414,7 +417,8 @@ define([], function () {
                 }
             );
 
-            return d3.selectAll("rect.overlay")[0][0];
+            // return d3.selectAll("rect.overlay")[0][0];
+            return svg;
         },
 
         /**

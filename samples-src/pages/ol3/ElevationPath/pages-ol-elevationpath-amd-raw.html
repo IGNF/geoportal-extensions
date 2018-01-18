@@ -57,15 +57,8 @@
                   });
 
                   var elevation = new ElevationPath({
-                    debug : true,
                     displayProfileOptions : {
-                      apply : ElevationPath.DISPLAY_PROFILE_RAW,
-                      target : null, // par defaut
-                      meanSlope : false,
-                      greaterSlope : false,
-                      ascendingElevation : false,
-                      descendingElevation : false,
-                      profile : true // par defaut
+                      apply : ElevationPath.DISPLAY_PROFILE_RAW
                     }
                   });
                   map.addControl(elevation);

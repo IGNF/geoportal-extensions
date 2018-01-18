@@ -449,6 +449,9 @@ define([
                 map.addLayer(this._featuresLayer);
 
                 var self = this;
+                /* evenements : on desactive le menu systeme pour la saisie */
+                map.on("contextmenu", function () {});
+
                 /* evenement sur la carte lors d'une saisie,
                 on y ajoute le layer, et on y stocke les coordonnées */
                 map.on("draw:created", function (e) {
@@ -898,6 +901,10 @@ define([
         */
         _displayProfil : function (elevations) {
 
+            // on reactive le menu systeme en fin de saisie !
+            var map = this._map;
+            map.off("contextmenu");
+
             // data
             if (this._data) {
                 this._data = {};
@@ -938,6 +945,7 @@ define([
                 // on affiche les informations
                 element.style.display = "block";
             }
+
         },
 
         // ################################################################### //
