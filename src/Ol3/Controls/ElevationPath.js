@@ -226,7 +226,8 @@ define([
     };
 
     /**
-    * custom operation into raw profil...
+    * TODO : customisation possible d'une opération sur le profil
+    * @private
     */
     ElevationPath.__customRawProfileOperation = function (context, d) {
         logger.log("__customRawProfileOperation");
@@ -267,8 +268,9 @@ define([
     };
 
     /**
-    * custom operation into raw profil...
-    * TODO
+    * TODO : customisation possible d'une opération sur le profil
+    * Ex. Methode appélée dans le DOM : ProfileElevationPathDOM
+    * @private
     */
     ElevationPath.__customRawProfileMouseOverEvent = function (context, e) {
         logger.log("__customRawProfileMouseOverEvent", context, e);
@@ -334,11 +336,6 @@ define([
         // on sauvegarde le profil du container dans l'objet
         if (profile) {
             this._profile = profile;
-            // INFO orienté maintenance !
-            // ex. symbolisation des points produits par le service
-            if (this.options.debug) {
-                ElevationPath.__customRawProfileOperation(context, data);
-            }
         }
     };
 
@@ -525,6 +522,7 @@ define([
 
         // fenetre du profil
         this._panelContainer.style.display = "none";
+        // this._panelContainer.style.visibility = "hidden";
 
         // picto
         this._showContainer.checked = false;
@@ -593,7 +591,6 @@ define([
             render : null,
             active : false,
             apiKey : null,
-            debug : false,
             elevationOptions : {},
             displayProfileOptions : {
                 greaterSlope : true,
@@ -891,7 +888,7 @@ define([
         // Event start
         var self = this;
         this._measureDraw.on("drawstart", function (evt) {
-            logger.trace(evt);
+            logger.trace("drawstart", evt);
 
             // delete marker current
             if (self._marker !== null) {
@@ -916,7 +913,7 @@ define([
 
         // Event end
         this._measureDraw.on("drawend", function (evt) {
-            logger.trace(evt);
+            logger.trace("drawend", evt);
 
             // set feature
             self._lastSketch = self._currentSketch;
@@ -1074,6 +1071,7 @@ define([
             logger.trace(result);
             if (result) {
                 self._panelContainer.style.display = "block";
+                // self._panelContainer.style.visibility = "visible";
                 self._displayProfile(result.elevations);
                 self._waitingContainer.className = "GPelevationPathCalcWaitingContainerHidden";
                 self._waiting = false;

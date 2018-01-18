@@ -61,7 +61,6 @@
                   });
 
                   var elevation = new ElevationPath({
-                    debug : true,
                     displayProfileOptions : {
                       apply : ElevationPath.DISPLAY_PROFILE_LIB_D3,
                       target : null, // par defaut
@@ -69,7 +68,7 @@
                       greaterSlope : true,
                       ascendingElevation : true,
                       descendingElevation : true,
-                      profile : true // par defaut
+                      currentSlope : true // par defaut
                     }
                   });
                   map.addControl(elevation);

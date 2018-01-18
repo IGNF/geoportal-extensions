@@ -1,9 +1,5 @@
 {{#extend "ol-sample-amd-layout"}}
 
-{{#content "vendor"}}
-        <script src="{{ config.resources }}/vendor/amCharts-min.js"></script>
-{{/content}}
-
 {{#content "head"}}
         <title>Sample ol3 ElevationPath</title>
 {{/content}}
@@ -11,8 +7,9 @@
 {{#content "style"}}
         <style>
             div#map {
-                width: 100%;
+                width: 80%;
                 height: 500px;
+                float: left;
             }
         </style>
 {{/content}}
@@ -20,8 +17,9 @@
 {{#content "body"}}
             <h2>profil altimetrique, en mode AMD</h2>
             <!-- map -->
-            <div id="map">
-            </div>
+            <div id="map"></div>
+            <!-- profil -->
+            <div id="profil" style="display: inline-block;"></div>
 {{/content}}
 
 {{#content "js"}}
@@ -62,7 +60,8 @@
 
                   var elevation = new ElevationPath({
                     displayProfileOptions : {
-                      apply : ElevationPath.DISPLAY_PROFILE_LIB_AMCHARTS
+                      apply : ElevationPath.DISPLAY_PROFILE_RAW,
+                      target : document.getElementById("profil")
                     }
                   });
                   map.addControl(elevation);
