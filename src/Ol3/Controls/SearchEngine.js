@@ -6,8 +6,8 @@ define([
     "Ol3/Controls/Utils/Markers",
     "Common/Utils/CheckRightManagement",
     "Common/Utils/SelectorID",
-    "Common/Controls/SearchEngineDOM",
-    "Common/Controls/SearchEngineUtils"
+    "Common/Utils/SearchEngineUtils",
+    "Common/Controls/SearchEngineDOM"
 ], function (
     ol,
     Gp,
@@ -16,8 +16,8 @@ define([
     Markers,
     RightManagement,
     SelectorID,
-    SearchEngineDOM,
-    SearchEngineUtils
+    SearchEngineUtils,
+    SearchEngineDOM
 ) {
     "use strict";
 
@@ -41,6 +41,9 @@ define([
      * @param {Object}  [options.advancedSearch] - advanced search options for geocoding (filters). Properties can be found among geocode options.filterOptions (see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~geocode Gp.Services.geocode})
      * @param {Object}  [options.geocodeOptions = {}] - options of geocode service (see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~geocode Gp.Services.geocode})
      * @param {Object}  [options.autocompleteOptions = {}] - options of autocomplete service (see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~autoComplete Gp.Services.autoComplete}
+     * @param {Object}  [options.autocompleteOptions.serviceOptions] - options of autocomplete service
+     * @param {Boolean} [options.autocompleteOptions.triggerGeocode = false] - trigger a geocoding request if the autocompletion does not return any suggestions, false by default
+     * @param {Number}  [options.autocompleteOptions.triggerDelay = 1000] - waiting time before sending the geocoding request, 1000ms by default
      * @param {Sting|Numeric|Function} [options.zoomTo] - zoom to results, by default, current zoom.
      *       Value possible : auto or zoom level.
      *       Possible to overload it with a function :
@@ -194,7 +197,11 @@ define([
             displayAdvancedSearch : true,
             advancedSearch : {},
             geocodeOptions : {},
-            autocompleteOptions : {},
+            autocompleteOptions : {
+                serviceOptions : {},
+                triggerGeocode : false,
+                triggerDelay : 1000
+            },
             displayMarker : true,
             markerStyle : "lightOrange",
             placeholder : "Rechercher un lieu, une adresse"
@@ -256,7 +263,7 @@ define([
         // marker style
         var _markerStyle = this.options.markerStyle;
         this._markerUrl  = (Object.keys(Markers).indexOf(_markerStyle ) === -1) ? Markers["lightOrange"] : Markers[_markerStyle];
-        
+
         // marker display
         this._displayMarker = this.options.displayMarker;
 
@@ -278,6 +285,8 @@ define([
         // gestion des droits sur les ressources/services
         this._checkRightsManagement();
 
+        // trigger geocode
+        this._triggerHandler = null;
     };
 
     /**
@@ -732,7 +741,7 @@ define([
 
         var options = {};
         // on recupere les options du service
-        Utils.assign(options, this.options.autocompleteOptions);
+        Utils.assign(options, this.options.autocompleteOptions.serviceOptions);
         // ainsi que la recherche et les callbacks
         Utils.assign(options, settings);
 
@@ -1162,6 +1171,9 @@ define([
             return;
         }
 
+        var _triggerGeocode = this.options.autocompleteOptions.triggerGeocode;
+        var _triggerDelay   = this.options.autocompleteOptions.triggerDelay;
+
         // INFORMATION
         // on effectue la requête au service d'autocompletion.
         // on met en place des callbacks afin de recuperer les resultats ou
@@ -1173,7 +1185,7 @@ define([
             text : value,
             /** callback onSuccess */
             onSuccess : function (results) {
-                logger.log(results);
+                logger.log("request from AutoComplete", results);
                 if (results) {
                     // on sauvegarde l'etat des résultats
                     context._suggestedLocations = results.suggestedLocations;
@@ -1191,15 +1203,62 @@ define([
                     };
                     // on affiche les résultats qui n'ont pas des coordonnées nulles
                     context._fillAutoCompletedLocationListContainer(context._locationsToBeDisplayed);
+                    // on annule eventuellement une requete de geocodage en cours car on obtient des
+                    // de nouveau des resultats d'autocompletion...
+                    if (context._triggerHandler) {
+                        clearTimeout(context._triggerHandler);
+                        context._triggerHandler = null;
+                        logger.warn("Cancel a geocode request !");
+                    }
                 }
             },
             /** callback onFailure */
             onFailure : function (error) {
                 // FIXME
                 // où affiche t on les messages : ex. 'No suggestion matching the search' ?
-                // doit on nettoyer la liste des suggestions dernierement enregistrée :
                 context._clearSuggestedLocation();
                 logger.log(error.message);
+                // on envoie une requete de geocodage si aucun resultat d'autocompletion
+                // n'a été trouvé ! Et on n'oublie pas d'annuler celle qui est en cours !
+                if (error.message === "No suggestion matching the search" && _triggerGeocode /* && value.length === 5 */) {
+                    if (context._triggerHandler) {
+                        clearTimeout(context._triggerHandler);
+                        logger.warn("Cancel the last geocode request !");
+                    }
+                    context._triggerHandler = setTimeout(
+                        function () {
+                            logger.warn("Launch a geocode request (code postal) !");
+                            context._requestGeocoding({
+                                location : value,
+                                returnFreeForm : true,
+                                /** callback onSuccess */
+                                onSuccess : function (results) {
+                                    logger.log("request from Geocoding", results);
+                                    if (results) {
+                                        context._locationsToBeDisplayed = [];
+                                        // on modifie la structure des reponses pour être
+                                        // compatible avec l'autocompletion !
+                                        var locations = results.locations;
+                                        for (var i = 0; i < locations.length; i++) {
+                                            var location = locations[i];
+                                            location.fullText = location.placeAttributes.freeform;
+                                            location.position = {
+                                                x : location.position.y,
+                                                y : location.position.x
+                                            };
+                                            context._locationsToBeDisplayed.push(location);
+                                        }
+                                        context._fillAutoCompletedLocationListContainer(locations);
+                                    }
+                                },
+                                /** callback onFailure */
+                                onFailure : function (error) {
+                                    logger.log(error.message);
+                                }
+                            });
+                        }, _triggerDelay
+                    );
+                }
             }
         });
 
@@ -1236,6 +1295,7 @@ define([
             },
             /** callback onSuccess */
             onSuccess : function (response) {
+                logger.log("request from Geocoding (coordinates null)", response);
                 if ( response.locations && response.locations.length !== 0 && response.locations[0].position ) {
                     // on modifie les coordonnées du résultat en EPSG:4326 donc lat,lon
                     if ( context._suggestedLocations && context._suggestedLocations[i] ) {
@@ -1353,7 +1413,7 @@ define([
             location : value,
             /** callback onSuccess */
             onSuccess : function (results) {
-                logger.log(results);
+                logger.log("request from Geocoding", results);
                 if (results) {
                     var locations = results.locations;
                     context._fillGeocodedLocationListContainer(locations);

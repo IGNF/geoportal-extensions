@@ -598,6 +598,7 @@ define([], function () {
          * @param {Object} options - options for popup
          * @param {String} options.geomType - gemeotryType selected ("Point", "Line" or "Polygon")
          * @param {String} options.text - text to fill input.
+         * @param {String} options.measure - measure to fill input.
          * @param {String} options.placeholder - placeholder for text input.
          * @param {String} options.inputId - text input id.
          * @param {Function} options.applyFunc - function called when text is to be saved.
@@ -618,9 +619,11 @@ define([], function () {
                 inputLabel.cols = 40 ;
                 inputLabel.className = "gp-textarea-att-label-style" ;
             }
+
             if (options.text) {
                 inputLabel.value = options.text ;
             }
+
             inputLabel.autocomplete = "off" ;
             inputLabel.placeholder = options.placeholder ;
             inputLabel.id = options.inputId ;
@@ -638,6 +641,16 @@ define([], function () {
                     options.applyFunc.call(this,inputLabel.value,false) ;
                 }
             } ;
+
+            if (options.measure && options.geomType != "Text") {
+                var inputMeasure = document.createElement("input");
+                inputMeasure.type = "text";
+                inputMeasure.readonly = true;
+                inputMeasure.className = "gp-input-measure-style" ;
+                inputMeasure.value = options.measure;
+                popup.appendChild(inputMeasure);
+            }
+
             if (options.geomType != "Text") {
                 // apply button
                 var applyButton = document.createElement("input") ;

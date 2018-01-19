@@ -279,6 +279,9 @@ function (
         * @param {Object}  [options.advancedSearch] - advanced search for geocoding (filters)
         * @param {Object}  [options.geocodeOptions] - options of geocode service. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~geocode Gp.Services.geocode}
         * @param {Object}  [options.autocompleteOptions] - options of autocomplete service. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~autoComplete Gp.Services.autoComplete}
+        * @param {Object}  [options.autocompleteOptions.serviceOptions] - options of autocomplete service
+        * @param {Boolean} [options.autocompleteOptions.triggerGeocode = false] - trigger a geocoding request if the autocompletion does not return any suggestions, false by default
+        * @param {Number}  [options.autocompleteOptions.triggerDelay = 1000] - waiting time before sending the geocoding request, 1000ms by default
         * @returns {L.geoportalControl.SearchEngine}
         * @example
         *  var SearchEngine = L.geoportalControl.SearchEngine({
@@ -317,6 +320,11 @@ function (
         * @param {Object} [options.displayProfileOptions = {}] - profile options.
         * @param {Function} [options.displayProfileOptions.apply] - function to display profile if you want to cutomise it. By default, [DISPLAY_PROFILE_BY_DEFAULT()](./L.geoportalControl.ElevationPath.html#.DISPLAY_PROFILE_BY_DEFAULT) is used. Helper functions to use with D3 [DISPLAY_PROFILE_LIB_D3()](./L.geoportalControl.ElevationPath.html#.DISPLAY_PROFILE_LIB_D3) or AmCharts [DISPLAY_PROFILE_LIB_AMCHARTS()](./L.geoportalControl.ElevationPath.html#.DISPLAY_PROFILE_LIB_AMCHARTS) frameworks are also provided. You may also provide your own function.
         * @param {Object} [options.displayProfileOptions.target] - DOM container to use to display the profile.
+        * @param {Boolean} [options.displayProfileOptions.greaterSlope = true] - display the greater slope into the graph
+        * @param {Boolean} [options.displayProfileOptions.meanSlope = true] -  display the mean slope into the graph
+        * @param {Boolean} [options.displayProfileOptions.ascendingElevation = true] -  display the ascending elevation into the graph
+        * @param {Boolean} [options.displayProfileOptions.descendingElevation = true] -  display the descending elevation into the graph
+        * @param {Boolean} [options.displayProfileOptions.currentSlope = true] -  display current slope value on profile mouseover
         *
         * @returns {L.geoportalControl.ElevationPath}
         * @example
@@ -327,6 +335,12 @@ function (
         *      elevationPathOptions : {},
         *      displayProfileOptions  : {
         *          apply : L.geoportalControl.DISPLAY_PROFILE_LIB_AMCHARTS
+        *          target : null, // by default
+        *          meanSlope : true, // by default
+        *          greaterSlope : true, // by default
+        *          ascendingElevation : false,
+        *          descendingElevation : false,
+        *          currentSlope : false
         *      }
         *  });
         */

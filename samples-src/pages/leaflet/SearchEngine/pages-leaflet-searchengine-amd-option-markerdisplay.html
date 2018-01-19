@@ -50,8 +50,12 @@
                 wms.addTo(map);
 
                 var search = new SearchEngine({
+                  placeholder : "Recherche...",
+                  displayMarker : true,
                   markerStyle : L.icon({
-                    iconUrl: 'https://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png'
+                    iconUrl: 'https://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png',
+                    iconSize: [64, 64],
+                    iconAnchor: [0, 64]
                   }),
                 });
 

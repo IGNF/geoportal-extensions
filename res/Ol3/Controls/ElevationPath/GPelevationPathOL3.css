@@ -22,12 +22,12 @@ input[id^=GPshowElevationPath-]:checked + label {
 
 input[id^=GPshowElevationPath-] + label + div {
   display: none;
-  /*visibility: hidden;*/
+  /* visibility: hidden; */
 }
 
 input[id^=GPshowElevationPath-]:checked + label + div {
   display: block;
-  /*visibility: visible;*/
+  /* visibility: visible; */
 }
 
 span[id^=GPshowElevationPathOpen] {
@@ -41,6 +41,10 @@ span[id^=GPshowElevationPathOpen] {
 }
 
 div[id^=GPelevationPathPanelReduce] {
+  background-image: url("img/GPshowElevationPath.png");
+}
+
+div[id^=GPelevationPathPanelInfo] {
   background-image: url("img/GPshowElevationPath.png");
 }
 

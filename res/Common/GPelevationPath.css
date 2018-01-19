@@ -1,3 +1,7 @@
+div[id^=GPelevationPathPanelInfo] {
+  display: none; /* on n'affiche pas le bouton d'information par defaut */
+}
+
 /* Calc waiting */
 
 .GPelevationPathCalcWaitingContainerVisible,
@@ -13,6 +17,19 @@
   overflow: hidden;
 }
 
+.GPelevationPathInformationsContainerVisible,
+.GPelevationPathInformationsContainerHidden {
+  position: absolute;
+  top: 32px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(255,255,255,0.9);
+  font-size: 13px;
+  font-weight: bold;
+  overflow: hidden;
+}
+
 .GPelevationPathCalcWaitingContainerVisible {
   display: -webkit-flex;
   display: -webkit-box;
@@ -20,16 +37,32 @@
   display: flex;
 }
 
-.GPelevationPathCalcWaitingContainerHidden {
+.GPelevationPathInformationsContainerVisible {
+  display: -webkit-flex;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-direction: column;
+}
+
+.GPelevationPathCalcWaitingContainerHidden,
+.GPelevationPathInformationsContainerHidden {
   display: none;
 }
 
-.GPelevationPathCalcWaiting {
+.GPelevationPathCalcWaiting,
+.GPelevationPathInformations {
   margin: auto;
 }
 
+.GPelevationPathInformations {
+  font-size: 0.8em;
+}
+
 .GPelevationPathCalcWaitingContainerVisible,
-.GPelevationPathCalcWaitingContainerHidden {
+.GPelevationPathCalcWaitingContainerHidden,
+.GPelevationPathInformationsContainerVisible,
+.GPelevationPathInformationsContainerHidden {
   border-radius: 5px;
 }
 
@@ -343,7 +376,7 @@ ul#profile-data .percent:hover {
 
 /* CSS : D3 */
 
-text {
+.axis-d3 > text {
   fill: rgb(94, 94, 94);
   font-family: Verdana;
   font-size: 10px;
@@ -408,10 +441,10 @@ div.tooltip-d3 {
     position: inherit;;
     text-align: left;
     width: 80px;
-    height: 35px;
-    padding: 2px;
+    height: 45px;
+    padding: 5px;
     font: 8px sans-serif;
-    background: lightsteelblue;
+    background: white;
     border: 0px;
     border-radius: 8px;
     pointer-events: none;

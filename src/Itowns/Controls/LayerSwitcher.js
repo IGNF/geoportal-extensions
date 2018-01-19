@@ -663,8 +663,7 @@ define([
         var opacityValue = e.target.value;
         var opacityId = document.getElementById(this._addUID("GPopacityValue_ID_" + layerID));
         opacityId.innerHTML = opacityValue + "%";
-        var layer = globe.getLayerById(layerID);
-        globe.setLayerOpacity(layer, opacityValue / 100);
+        globe.setLayerOpacity(layerID, opacityValue / 100);
     };
 
     /**
@@ -705,8 +704,7 @@ define([
         var globe = this.getGlobe();
 
         var layerID  = this._resolveLayerId(e.target.id);
-        var layer = globe.getLayerById(layerID);
-        globe.setLayerVisibility(layer, e.target.checked); // update viewer
+        globe.setLayerVisibility(layerID, e.target.checked); // update viewer
     };
 
     /**
