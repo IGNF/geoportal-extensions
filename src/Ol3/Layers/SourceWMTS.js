@@ -59,6 +59,12 @@ define([
 
             var wmtsParams = Config.getLayerParams(options.layer, "WMTS", options.apiKey);
 
+            // gestion de mixContent...
+            var isBrowser = typeof window !== "undefined" ? true : false;
+            var _protocol  = (isBrowser) ? (location && location.protocol && location.protocol.indexOf("https:") === 0 ? "https://" : "http://") :  "http://";
+            var _url = wmtsParams.url;
+            wmtsParams.url = _url.replace(/(http|https):\/\//, _protocol);
+
             // save originators (to be updated by Originators control)
             this._originators = wmtsParams.originators;
 
@@ -70,8 +76,8 @@ define([
                 // tracker extension ol3
                 // FIXME : gp-ext version en mode AMD
                 url : Gp.Helper.normalyzeUrl(wmtsParams.url,{
-                          "gp-ol3-ext" : "__GPOL3EXTVERSION__"
-                      },false),
+                    "gp-ol3-ext" : "__GPOL3EXTVERSION__"
+                },false),
                 version : wmtsParams.version,
                 style : wmtsParams.styles,
                 format : wmtsParams.format,

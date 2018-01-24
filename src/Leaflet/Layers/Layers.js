@@ -134,11 +134,16 @@ define([
             this._initParams("WMS");
             logger.log(this.params);
 
+            // gestion de mixContent...
+            var isBrowser = typeof window !== "undefined" ? true : false;
+            var _protocol  = (isBrowser) ? (location && location.protocol && location.protocol.indexOf("https:") === 0 ? "https://" : "http://") :  "http://";
+
             // url du service (par defaut)
             var serviceUrl = null;
             if (this.params.key || this.options.apiKey) {
-                serviceUrl = this.params.url || L.Util.template("http://wxs.ign.fr/{key}/geoportail/r/wms", {
-                    key : this.params.key || this.options.apiKey
+                serviceUrl = this.params.url || L.Util.template("{protocol}wxs.ign.fr/{key}/geoportail/r/wms", {
+                    key : this.params.key || this.options.apiKey,
+                    protocol : _protocol
                 });
             } else {
                 // pas d'autoconf, ni de clef API !
@@ -228,18 +233,24 @@ define([
             this._initParams("WMTS");
             logger.log(this.params);
 
+            // gestion de mixContent...
+            var isBrowser = typeof window !== "undefined" ? true : false;
+            var _protocol  = (isBrowser) ? (location && location.protocol && location.protocol.indexOf("https:") === 0 ? "https://" : "http://") :  "http://";
+
             // url du service (par defaut)
             var serviceUrl = null;
+
             if (this.params.key || this.options.apiKey) {
-                serviceUrl = this.params.url || L.Util.template("http://wxs.ign.fr/{key}/geoportail/wmts", {
-                    key : this.params.key || this.options.apiKey
+                serviceUrl = this.params.url || L.Util.template("{protocol}wxs.ign.fr/{key}/geoportail/wmts", {
+                    key : this.params.key || this.options.apiKey,
+                    protocol : _protocol
                 });
             } else {
                 // FIXME pas d'autoconf, ni clef API !
                 // on évite l'exception en envoyant les requêtes vers localhost
                 serviceUrl = L.Util.template(this.serviceUrl, {
-                layer : this.options.layer
-            });
+                    layer : this.options.layer
+                });
             }
 
             // params du service WMS (par defaut)
