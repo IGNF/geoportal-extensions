@@ -134,16 +134,11 @@ define([
             this._initParams("WMS");
             logger.log(this.params);
 
-            // gestion de mixContent...
-            var isBrowser = typeof window !== "undefined" ? true : false;
-            var _protocol  = (isBrowser) ? (location && location.protocol && location.protocol.indexOf("https:") === 0 ? "https://" : "http://") :  "http://";
-
             // url du service (par defaut)
             var serviceUrl = null;
             if (this.params.key || this.options.apiKey) {
-                serviceUrl = this.params.url || L.Util.template("{protocol}wxs.ign.fr/{key}/geoportail/r/wms", {
-                    key : this.params.key || this.options.apiKey,
-                    protocol : _protocol
+                serviceUrl = this.params.url || L.Util.template("http://wxs.ign.fr/{key}/geoportail/r/wms", {
+                    key : this.params.key || this.options.apiKey
                 });
             } else {
                 // pas d'autoconf, ni de clef API !
@@ -233,17 +228,12 @@ define([
             this._initParams("WMTS");
             logger.log(this.params);
 
-            // gestion de mixContent...
-            var isBrowser = typeof window !== "undefined" ? true : false;
-            var _protocol  = (isBrowser) ? (location && location.protocol && location.protocol.indexOf("https:") === 0 ? "https://" : "http://") :  "http://";
-
             // url du service (par defaut)
             var serviceUrl = null;
 
             if (this.params.key || this.options.apiKey) {
-                serviceUrl = this.params.url || L.Util.template("{protocol}wxs.ign.fr/{key}/geoportail/wmts", {
-                    key : this.params.key || this.options.apiKey,
-                    protocol : _protocol
+                serviceUrl = this.params.url || L.Util.template("http://wxs.ign.fr/{key}/geoportail/wmts", {
+                    key : this.params.key || this.options.apiKey
                 });
             } else {
                 // FIXME pas d'autoconf, ni clef API !

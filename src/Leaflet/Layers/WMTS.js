@@ -3,7 +3,9 @@
  * W106 - Identifier '_geoportal_id' is not in camel case
  */
 
- /*jshint -W106 */
+/*jshint -W106 */
+
+/* globals self */
 
 define([
     "leaflet",
@@ -94,12 +96,16 @@ function (L, Gp, woodman, LayerEvent) {
             this._wmtsParams = {};
             L.Util.extend(this._wmtsParams, this.defaultWmtsParams, options.paramsWmts);
 
+            // gestion de mixContent dans l'url du service...
+            var ctx = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : null;
+            var protocol = (ctx) ? (ctx.location && ctx.location.protocol && ctx.location.protocol.indexOf("https:") === 0 ? "https://" : "http://") :  "http://";
+
             // appel du constructeur de la classe étendue
             L.TileLayer.prototype.initialize.call(
                 this,
                 // tracker extension leaflet
                 // FIXME : gp-ext version en mode AMD
-                Gp.Helper.normalyzeUrl(url, {
+                Gp.Helper.normalyzeUrl(url.replace(/(http|https):\/\//, protocol), {
                     "gp-leaflet-ext" : "__GPLEAFLETEXTVERSION__"
                 }, false),
                 options.paramsNative

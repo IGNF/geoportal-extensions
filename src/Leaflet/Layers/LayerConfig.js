@@ -37,12 +37,6 @@ function (woodman, Config, Util) {
                 return;
             }
 
-            // gestion de mixContent...
-            var isBrowser = typeof window !== "undefined" ? true : false;
-            var _protocol  = (isBrowser) ? (location && location.protocol && location.protocol.indexOf("https:") === 0 ? "https://" : "http://") :  "http://";
-            var _url = params.url;
-            params.url = _url.replace(/(http|https):\/\//, _protocol);
-
             // gestion des zoom
             params.minZoom = Util.getZoomLevelFromScaleDenominator(params.maxScale) || 1;
             params.maxZoom = Util.getZoomLevelFromScaleDenominator(params.minScale) || 21;

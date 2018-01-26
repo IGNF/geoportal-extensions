@@ -1,4 +1,4 @@
-
+/* globals self */
 define([
     "ol",
     "gp",
@@ -53,16 +53,14 @@ define([
         if ( layerId && Config.configuration.getLayerConf(layerId) ) {
             var wmsParams = Config.getLayerParams(options.layer, "WMS", options.apiKey);
 
-            // gestion de mixContent...
-            var isBrowser = typeof window !== "undefined" ? true : false;
-            var _protocol  = (isBrowser) ? (location && location.protocol && location.protocol.indexOf("https:") === 0 ? "https://" : "http://") :  "http://";
-            var _url = wmsParams.url;
-            wmsParams.url = _url.replace(/(http|https):\/\//, _protocol);
+            // gestion de mixContent dans l'url du service...
+            var ctx = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : null;
+            var protocol = (ctx) ? (ctx.location && ctx.location.protocol && ctx.location.protocol.indexOf("https:") === 0 ? "https://" : "http://") :  "http://";
 
             var wmsSourceOptions = {
                 // tracker extension ol3
                 // FIXME : gp-ext version en mode AMD
-                url : Gp.Helper.normalyzeUrl(wmsParams.url,{
+                url : Gp.Helper.normalyzeUrl(wmsParams.url.replace(/(http|https):\/\//, protocol),{
                     "gp-ol3-ext" : "__GPOL3EXTVERSION__"
                 },false),
                 params : {
