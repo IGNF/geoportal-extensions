@@ -828,11 +828,15 @@ define([
         // visibles. Déplacement systématique des couches non visibles en couches de fond (pour ne pas occulter
         // les couches visibles).
 
+        if ( e.newIndex - e.oldIndex === 0 ) {
+            return;
+        }
+
         var targetIndex = null;
         if ( !e.newIndex || e.newIndex === 0 ) {
             targetIndex = globe.getColorLayers().length - 1;
         } else {
-            var layerTargetID  = this._resolveLayerId( e.from.childNodes[e.newIndex + (e.newIndex === e.from.childNodes.length - 1 ? -1 : 1)].id);
+            var layerTargetID  = this._resolveLayerId( e.from.childNodes[e.newIndex + (e.newIndex - e.oldIndex < 0 ? 1 : -1)].id);
             targetIndex = globe.getLayerById(layerTargetID).sequence;
         }
 
