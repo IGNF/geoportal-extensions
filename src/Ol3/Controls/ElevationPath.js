@@ -9,6 +9,7 @@ define([
     "Ol3/Controls/MeasureToolBox",
     "Ol3/Controls/Utils/Interactions",
     "Common/Controls/ElevationPathDOM",
+    "Common/Controls/ProfileElevationPathDOM",
     "Common/Utils/SelectorID"
 ], function (
     ol,
@@ -20,6 +21,7 @@ define([
     MeasureToolBox,
     Interactions,
     ElevationPathDOM,
+    ProfileElevationPathDOM,
     ID
 ) {
 
@@ -46,6 +48,11 @@ define([
     * @param {Object} [options.stylesOptions.draw.finish = {}] - Line Style when finished drawing. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Stroke.html ol.style.Stroke} object.
     * @param {Object} [options.elevationPathOptions = {}] - elevation path service options. See {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~getAltitude Gp.Services.getAltitude()} for available options
     * @param {Object} [options.displayProfileOptions = {}] - profile options.
+    * @param {Boolean} [options.displayProfileOptions.greaterSlope = true] - display the greater slope into the graph
+    * @param {Boolean} [options.displayProfileOptions.meanSlope = true] -  display the mean slope into the graph
+    * @param {Boolean} [options.displayProfileOptions.ascendingElevation = true] -  display the ascending elevation into the graph
+    * @param {Boolean} [options.displayProfileOptions.descendingElevation = true] -  display the descending elevation into the graph
+    * @param {Boolean} [options.displayProfileOptions.currentSlope = true] -  display current slope value on profile mouseover
     * @param {Function} [options.displayProfileOptions.apply] - function to display profile if you want to cutomise it. By default, ([DISPLAY_PROFILE_BY_DEFAULT()](./ol.control.ElevationPath.html#.DISPLAY_PROFILE_BY_DEFAULT)) is used. Helper functions to use with D3 ([DISPLAY_PROFILE_LIB_D3()](./ol.control.ElevationPath.html#.DISPLAY_PROFILE_LIB_D3)) or AmCharts ([DISPLAY_PROFILE_LIB_AMCHARTS()](./ol.control.ElevationPath.html#.DISPLAY_PROFILE_LIB_AMCHARTS)) frameworks are also provided. You may also provide your own function.
     * @param {Object} [options.displayProfileOptions.target] - DOM container to use to display the profile.
     * @example
@@ -98,6 +105,10 @@ define([
         this._panelContainer = null;
         this._profileContainer = null;
         this._waitingContainer = null;
+        this._infoContainer = null;
+
+        // timer sur la fenetre d'informations des données
+        this._timerHdlr = null;
 
         // objet de type "ol.style"
         this._drawStyleStart = null;
@@ -106,6 +117,9 @@ define([
 
         // graph
         this._profile = null;
+
+        // data elevations
+        this._data = {};
 
         /* objet de type
             "ol.source.Vector",
@@ -161,7 +175,7 @@ define([
     *
     * @private
     */
-    ElevationPath.__removeProfilMarker = function (context) {
+    ElevationPath.__removeProfileMarker = function (context) {
         var self = context;
         // suppression de l'ancien marker
         if (self._marker) {
@@ -171,16 +185,14 @@ define([
     };
 
     /**
-    * mise à jour du marker
+    * suppression du marker
     *
     * @private
     */
-    ElevationPath.__updateProfilMarker = function (d, context) {
+    ElevationPath.__createProfileMarker = function (context, d) {
         var self = context;
         var map  = self.getMap();
         var proj = map.getView().getProjection();
-
-        ElevationPath.__removeProfilMarker(self);
 
         var _coordinate = ol.proj.transform([d.lon, d.lat], "EPSG:4326", proj);
         var _coordinateProj = self._measureSource
@@ -203,6 +215,68 @@ define([
     };
 
     /**
+    * mise à jour du marker
+    *
+    * @private
+    */
+    ElevationPath.__updateProfileMarker = function (context, d) {
+        var self = context;
+        ElevationPath.__removeProfileMarker(self);
+        ElevationPath.__createProfileMarker(self, d);
+    };
+
+    /**
+    * TODO : customisation possible d'une opération sur le profil
+    * @private
+    */
+    ElevationPath.__customRawProfileOperation = function (context, d) {
+        logger.log("__customRawProfileOperation");
+
+        var self = context;
+
+        var _pts = d.points;
+        var _proj = self.getMap().getView().getProjection();
+        for (var i = 0; i < _pts.length; i++) {
+            var obj = _pts[i];
+            var _coordinate = ol.proj.transform([obj.lon, obj.lat], "EPSG:4326", _proj);
+            var _geometry   = new ol.geom.Point(_coordinate);
+
+            self._marker = new ol.Feature({
+                geometry : _geometry
+            });
+            logger.trace(_geometry);
+
+            // TODO style en options ?
+            var styles = ElevationPath.DEFAULT_STYLES.RESULTS;
+            var _image = new ol.style.Circle({
+                radius : styles.imageRadius,
+                stroke : new ol.style.Stroke({
+                    color : styles.imageStrokeColor,
+                    width : styles.imageStrokeWidth
+                }),
+                fill : new ol.style.Fill({
+                    color : styles.imageFillColor
+                })
+            });
+            self._marker.setStyle(new ol.style.Style({
+                image : _image
+            }));
+
+            // ajout du marker sur la map
+            self._measureSource.addFeature(self._marker);
+        }
+    };
+
+    /**
+    * TODO : customisation possible d'une opération sur le profil
+    * Ex. Methode appélée dans le DOM : ProfileElevationPathDOM
+    * @private
+    */
+    ElevationPath.__customRawProfileMouseOverEvent = function (context, e) {
+        logger.log("__customRawProfileMouseOverEvent", context, e);
+    };
+
+    /**
     * display Profile using Amcharts framework. This method needs AmCharts libraries to be loaded.
     *
     * @param {Object} data - collection elevations
@@ -218,48 +292,11 @@ define([
             return;
         }
 
-        AmCharts.addInitHandler(function () {
-            logger.trace("AmCharts::addInitHandler (event)");
-        });
-
-        var self = context;
-
-        var _config = {};
-        Utils.mergeParams(_config, self.options.styles.profile);
-        Utils.mergeParams(_config, {
-            dataProvider : data
-        });
-
-        self._profile = AmCharts.makeChart(container, _config);
-        self._profile.addListener("changed", function (e) {
-            logger.trace("AmCharts::changed (event)", e);
-            var obj = e.chart.dataProvider[e.index];
-            logger.trace(obj);
-
-            ElevationPath.__removeProfilMarker(self);
-            ElevationPath.__updateProfilMarker(obj, self);
-
-            // var _proj = self.getMap().getView().getProjection();
-            // var _coordinate = ol.proj.transform([obj.lon, obj.lat], "EPSG:4326", _proj);
-            // var _geometry   = new ol.geom.Point(_coordinate);
-            //
-            // // suppression de l'ancien marker
-            // if (self._marker) {
-            //     self._measureSource.removeFeature(self._marker);
-            //     self._marker = null;
-            // }
-            //
-            // self._marker = new ol.Feature({
-            //     geometry : _geometry
-            // });
-            // logger.trace(_geometry);
-            //
-            // // style
-            // self._marker.setStyle(self._markerStyle);
-            //
-            // // ajout du marker sur la map
-            // self._measureSource.addFeature(self._marker);
-        });
+        var profile = ProfileElevationPathDOM.displayProfileLibAmCharts(data, container, context, ElevationPath);
+        // on sauvegarde le profil du container dans l'objet
+        if (profile) {
+            this._profile = profile;
+        }
     };
 
     /**
@@ -278,229 +315,11 @@ define([
             return;
         }
 
-        // on nettoie toujours...
-        if (container) {
-            while (container.firstChild) {
-                container.removeChild(container.firstChild);
-            }
+        var profile = ProfileElevationPathDOM.displayProfileLibD3(data, container, context, ElevationPath);
+        // on sauvegarde le profil du container dans l'objet
+        if (profile) {
+            this._profile = profile;
         }
-
-        var margin = {
-            top : 20,
-            right : 20,
-            bottom : 30,
-            left : 40
-        };
-
-        // FIXME
-        // If your DIV is not visible, you won't be able to get its dimensions.
-        // var width  = container.clientWidth - margin.left - margin.right;
-        // var height = container.clientHeight - margin.top - margin.bottom;
-
-        var h = getComputedStyle(container, null).getPropertyValue("height").replace("px", "");
-        var w = getComputedStyle(container, null).getPropertyValue("width").replace("px", "");
-
-        var width  = w - margin.left - margin.right;
-        var height = h - margin.top - margin.bottom;
-
-        var x = d3.scale.linear()
-            .range([0, width]);
-
-        var y = d3.scale.linear()
-            .range([height, 0]);
-
-        var xAxis = d3.svg.axis()
-            .scale(x)
-            .orient("bottom")
-            .ticks(5);
-
-        var yAxis = d3.svg.axis()
-            .scale(y)
-            .orient("left")
-            .ticks(5);
-
-        var line = d3.svg.line()
-            .interpolate("basis")
-            .x(function (d) {
-                return x(d.dist);
-            })
-            .y(function (d) {
-                return y(d.z);
-            });
-
-        var area = d3.svg.area()
-            .interpolate("basis")
-            .x(function (d) {
-                return x(d.dist);
-            })
-            .y0(height)
-            .y1(function (d) {
-                return y(d.z);
-            });
-
-        var svg = d3.select(container)
-            .append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
-            .append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-        var xDomain = d3.extent(data, function (d) {
-            return d.dist;
-        });
-        x.domain(xDomain);
-
-        var yDomain = [
-            0,
-            d3.max(data, function (d) {
-                return d.z;
-            })
-        ];
-        y.domain(yDomain);
-
-        svg.append("path")
-            .datum(data)
-            .attr("class", "area-d3")
-            .attr("d", area);
-
-        svg.append("g")
-            .attr("class", "x axis-d3")
-            .attr("transform", "translate(0," + height + ")")
-            .call(xAxis)
-            .append("text")
-            .attr("y", -15)
-            .attr("dy", ".71em")
-            .attr("x", width)
-            .text("Distance (km)");
-
-        svg.append("g")
-            .attr("class", "y axis-d3")
-            .call(yAxis)
-            .append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("y", 6)
-            .attr("dy", ".71em")
-            .text("Altitude (m)");
-
-        svg.append("g")
-            .attr("class", "grid-d3 vertical")
-            .attr("transform", "translate(0," + height + ")")
-            .call(xAxis
-                .orient("bottom")
-                .tickSize(-height, 0, 0)
-                .tickFormat("")
-            );
-
-        svg.append("g")
-            .attr("class", "grid-d3 horizontal")
-            .call(yAxis
-                .orient("left")
-                .tickSize(-width, 0, 0)
-                .tickFormat("")
-            );
-
-        svg.append("path")
-            .datum(data)
-            .attr("class", "line-d3")
-            .attr("d", line);
-
-        svg.selectAll("circle")
-            .data(data)
-            .enter()
-            .append("circle")
-            .attr("cx", function (d) {
-                return x(d.dist);
-            })
-            .attr("cy", function (d) {
-                return y(d.z);
-            })
-            .attr("r", 0)
-            .attr("class", "circle-d3");
-
-        var focus = svg.append("g").style("display", "none");
-
-        focus.append("line")
-            .attr("id", "focusLineX")
-            .attr("class", "focusLine-d3");
-        focus.append("line")
-            .attr("id", "focusLineY")
-            .attr("class", "focusLine-d3");
-        focus.append("circle")
-            .attr("id", "focusCircle")
-            .attr("r", 4)
-            .attr("class", "circle-d3 focusCircle-d3");
-
-        var div = d3.select(container).append("div")
-            .attr("class", "tooltip-d3")
-            .style("opacity", 0);
-
-        var bisectDist = d3.bisector(function (d) {
-            return d.dist;
-        }).left;
-
-        var self = context;
-
-        svg.append("rect")
-            .attr("class", "overlay-d3")
-            .attr("width", width)
-            .attr("height", height)
-            .on("mouseover", function () {
-                focus.style("display", null);
-
-                ElevationPath.__updateProfilMarker(data[0], self);
-
-            })
-            .on("mouseout", function () {
-                focus.style("display", "none");
-
-                ElevationPath.__removeProfilMarker(self);
-
-                // tooltips
-                div.transition()
-                    .duration(500)
-                    .style("opacity", 0);
-            })
-            .on("mousemove", function () {
-
-                var m = d3.mouse(this);
-                var distance = x.invert(m[0]);
-                var i = bisectDist(data, distance);
-
-                var d0 = (i === 0) ? data[0] : data[i - 1];
-                var d1 = data[i];
-                var d  = distance - d0[0] > d1[0] - distance ? d1 : d0;
-
-                var xc = x(d.dist);
-                var yc = y(d.z);
-
-                focus.select("#focusCircle")
-                    .attr("cx", xc)
-                    .attr("cy", yc);
-                focus.select("#focusLineX")
-                    .attr("x1", xc).attr("y1", y(yDomain[0]))
-                    .attr("x2", xc).attr("y2", y(yDomain[1]));
-                focus.select("#focusLineY")
-                    .attr("x1", x(xDomain[0])).attr("y1", yc)
-                    .attr("x2", x(xDomain[1])).attr("y2", yc);
-
-                // mise à jour de la position du marker
-                ElevationPath.__updateProfilMarker(d, self);
-
-                // tooltips
-                div.transition()
-                    .duration(200)
-                    .style("opacity", 0.9);
-                div	.html(
-                        "Alt : " + d.z + " m <br/>" +
-                        "Lon : " + d.lon + " <br/>" +
-                        "Lat : " + d.lat
-                    )
-                    .style("left", (d3.event.pageX) + "px")
-                    .style("top", (d3.event.pageY - 28) + "px");
-            }
-        );
-
-        self._profile = d3.selectAll("rect.overlay")[0][0];
     };
 
     /**
@@ -513,60 +332,10 @@ define([
     ElevationPath.DISPLAY_PROFILE_RAW = function (data, container, context) {
         logger.trace("ElevationPath.DISPLAY_PROFILE_RAW");
 
-        // on nettoie toujours...
-        if (container) {
-            while (container.firstChild) {
-                container.removeChild(container.firstChild);
-            }
-        }
-
-        var self = context;
-
-        // TODO CSS externe
-        var div  = document.createElement("textarea");
-        div.id = "profileElevationRaw";
-        div.rows = 10;
-        div.cols = 50;
-        div.style.width = "100%";
-        div.wrap = "off";
-        div.innerHTML = JSON.stringify(data, undefined, 4);
-        container.appendChild(div);
-
-        self._profile = container;
-
-        // symbolisation des points produits par le service
-        // INFO orienté maintenance !
-        if (self.options.debug) {
-            var _proj = self.getMap().getView().getProjection();
-            for (var i = 0; i < data.length; i++) {
-                var obj = data[i];
-                var _coordinate = ol.proj.transform([obj.lon, obj.lat], "EPSG:4326", _proj);
-                var _geometry   = new ol.geom.Point(_coordinate);
-
-                self._marker = new ol.Feature({
-                    geometry : _geometry
-                });
-                logger.trace(_geometry);
-
-                // TODO style en options ?
-                var styles = ElevationPath.DEFAULT_STYLES.RESULTS;
-                var _image = new ol.style.Circle({
-                    radius : styles.imageRadius,
-                    stroke : new ol.style.Stroke({
-                        color : styles.imageStrokeColor,
-                        width : styles.imageStrokeWidth
-                    }),
-                    fill : new ol.style.Fill({
-                        color : styles.imageFillColor
-                    })
-                });
-                self._marker.setStyle(new ol.style.Style({
-                    image : _image
-                }));
-
-                // ajout du marker sur la map
-                self._measureSource.addFeature(self._marker);
-            }
+        var profile = ProfileElevationPathDOM.displayProfileRaw(data, container, context, ElevationPath);
+        // on sauvegarde le profil du container dans l'objet
+        if (profile) {
+            this._profile = profile;
         }
     };
 
@@ -580,118 +349,11 @@ define([
     ElevationPath.DISPLAY_PROFILE_BY_DEFAULT = function (data, container, context) {
         logger.trace("ElevationPath.DISPLAY_PROFILE_BY_DEFAULT");
 
-        // on nettoie toujours...
-        if (container) {
-            while (container.firstChild) {
-                container.removeChild(container.firstChild);
-            }
+        var profile = ProfileElevationPathDOM.displayProfileByDefault(data, container, context, ElevationPath);
+        // on sauvegarde le profil du container dans l'objet
+        if (profile) {
+            this._profile = profile;
         }
-
-        if (!data) {
-            return;
-        }
-
-        var sortedElev = JSON.parse(JSON.stringify(data)) ;
-        sortedElev.sort(function (e1, e2) {
-            return e1.z - e2.z ;
-        }) ;
-
-        var minZ = sortedElev[0].z ;
-        var maxZ = sortedElev[sortedElev.length - 1].z ;
-        var diff = maxZ - minZ ;
-        var distMax = data[data.length - 1].dist; // km !
-        // var distMin = 0;
-
-        var barwidth = 100 / data.length ;
-
-        var self = context;
-
-        var div = document.createElement("div");
-        div.id  = "profileElevationByDefault";
-        div.addEventListener("mouseover", function (e) {
-
-            var _lon = parseFloat(e.target.dataset["lon"]);
-            var _lat = parseFloat(e.target.dataset["lat"]);
-
-            if (_lon && _lat) {
-                ElevationPath.__updateProfilMarker({
-                    lon : _lon,
-                    lat : _lat
-                }, self);
-            }
-
-        });
-        div.addEventListener("mousemove", function () {});
-        div.addEventListener("mouseout", function () {
-            ElevationPath.__removeProfilMarker(self);
-        });
-        container.appendChild(div);
-
-        var divBox = document.createElement("div");
-        divBox.className = "profile-box";
-
-        var divZ = document.createElement("div");
-        divZ.className = "profile-z-vertical";
-
-        var ulZ  = document.createElement("ul");
-        var liZmin = document.createElement("li");
-        liZmin.setAttribute("class", "profile-min-z");
-        liZmin.innerHTML = minZ + " m";
-        var liZmax = document.createElement("li");
-        liZmax.setAttribute("class", "profile-max-z");
-        liZmax.innerHTML = maxZ + " m";
-
-        // var divUnit = document.createElement("div");
-        // divUnit.className = "profile-unit";
-        // divUnit.innerHTML = "m";
-
-        ulZ.appendChild(liZmax);
-        ulZ.appendChild(liZmin);
-        divZ.appendChild(ulZ);
-        // divZ.appendChild(divUnit);
-        divBox.appendChild(divZ);
-
-        var divData = document.createElement("div");
-        divData.className = "profile-content";
-
-        var ulData  = document.createElement("ul");
-        ulData.id   = "profile-data";
-        ulData.className = "profile-z-axis profile-x-axis";
-        divData.appendChild(ulData);
-
-        for (var i = 0 ; i < data.length ; i++) {
-            var d = data[i] ;
-            var li = document.createElement("li") ;
-            li.setAttribute("data-z",d.z) ;
-            li.setAttribute("data-lon",d.lon) ;
-            li.setAttribute("data-lat",d.lat) ;
-            li.setAttribute("data-dist",d.dist) ;
-
-            var pct = Math.floor((d.z - minZ) * 100 / diff) ;
-            li.setAttribute("class", "percent v" + pct) ;
-            li.title = "altitude : " + d.z + "m" ;
-            li.setAttribute("style", "width: " + barwidth + "%") ;
-            ulData.appendChild(li) ;
-        }
-
-        divBox.appendChild(divData);
-        div.appendChild(divBox);
-
-        var divX = document.createElement("div");
-        divX.className = "profile-x-horizontal";
-        var ulX  = document.createElement("ul");
-        var liXmin = document.createElement("li");
-        liXmin.setAttribute("class", "profile-min-x");
-        liXmin.innerHTML = "";
-        var liXmax = document.createElement("li");
-        liXmax.setAttribute("class", "profile-max-x");
-        liXmax.innerHTML = distMax + " km";
-        ulX.appendChild(liXmin);
-        ulX.appendChild(liXmax);
-        divX.appendChild(ulX);
-        div.appendChild(divX);
-
-        self._profile = container;
     };
 
     /**
@@ -713,79 +375,78 @@ define([
             imageFillColor : "rgba(128, 128, 128, 0.2)",
             imageStrokeColor : "rgba(0, 0, 0, 0.7)",
             imageStrokeWidth : 2
-        },
-        // styling amCharts profile by default
-        // FIXME : should'nt be part of this class but in the helper function
-        PROFILE : {
-            type : "serial",
-            pathToImages : "http://cdn.amcharts.com/lib/3/images/",
-            categoryField : "dist",
-            autoMarginOffset : 0,
-            marginRight : 10,
-            marginTop : 10,
-            startDuration : 0,
-            color : "#5E5E5E",
-            fontSize : 10,
-            theme : "light",
-            thousandsSeparator : "",
-            categoryAxis : {
-                color : "#5E5E5E",
-                gridPosition : "start",
-                minHorizontalGap : 40,
-                tickPosition : "start",
-                title : "Distance (km)",
-                titleColor : "#5E5E5E",
-                startOnAxis : true
-            },
-            chartCursor : {
-                animationDuration : 0,
-                bulletsEnabled : true,
-                bulletSize : 10,
-                categoryBalloonEnabled : false,
-                cursorColor : "#F90",
-                graphBulletAlpha : 1,
-                graphBulletSize : 1,
-                zoomable : false
-            },
-            trendLines : [],
-            graphs : [
-                {
-                    balloonColor : "#CCCCCC",
-                    balloonText : "<span class='altiPathValue'>[[title]] : [[value]]m</span><br/><span class='altiPathCoords'>(lat: [[lat]] / lon:[[lon]])</span>",
-                    bullet : "round",
-                    bulletAlpha : 0,
-                    bulletBorderColor : "#FFF",
-                    bulletBorderThickness : 2,
-                    bulletColor : "#F90",
-                    bulletSize : 6,
-                    hidden : false,
-                    id : "AmGraph-1",
-                    fillAlphas : 0.4,
-                    fillColors : "#C77A04",
-                    lineAlpha : 1,
-                    lineColor : "#C77A04",
-                    lineThickness : 1,
-                    title : "Altitude",
-                    valueField : "z"
-                }
-            ],
-            guides : [],
-            valueAxes : [
-                {
-                    id : "ValueAxis-1",
-                    minVerticalGap : 20,
-                    title : "Altitude (m)"
-                }
-            ],
-            allLabels : [],
-            balloon : {
-                borderColor : "#CCCCCC",
-                borderThickness : 1,
-                fillColor : "#FFFFFF",
-                showBullet : true
-            },
-            titles : []
         }
+        // FIXME ???
+        // PROFILE : {
+        //     type : "serial",
+        //     pathToImages : "http://cdn.amcharts.com/lib/3/images/",
+        //     categoryField : "dist",
+        //     autoMarginOffset : 0,
+        //     marginRight : 10,
+        //     marginTop : 10,
+        //     startDuration : 0,
+        //     color : "#5E5E5E",
+        //     fontSize : 10,
+        //     theme : "light",
+        //     thousandsSeparator : "",
+        //     categoryAxis : {
+        //         color : "#5E5E5E",
+        //         gridPosition : "start",
+        //         minHorizontalGap : 40,
+        //         tickPosition : "start",
+        //         title : "Distance (km)",
+        //         titleColor : "#5E5E5E",
+        //         startOnAxis : true
+        //     },
+        //     chartCursor : {
+        //         animationDuration : 0,
+        //         bulletsEnabled : true,
+        //         bulletSize : 10,
+        //         categoryBalloonEnabled : false,
+        //         cursorColor : "#F90",
+        //         graphBulletAlpha : 1,
+        //         graphBulletSize : 1,
+        //         zoomable : false
+        //     },
+        //     trendLines : [],
+        //     graphs : [
+        //         {
+        //             balloonColor : "#CCCCCC",
+        //             balloonText : "<span class='altiPathValue'>[[title]] : [[value]]m</span><br/><span class='altiPathCoords'>(lat: [[lat]] / lon:[[lon]])</span>",
+        //             bullet : "round",
+        //             bulletAlpha : 0,
+        //             bulletBorderColor : "#FFF",
+        //             bulletBorderThickness : 2,currentSlope
+        //             bulletColor : "#F90",
+        //             bulletSize : 6,
+        //             hidden : false,
+        //             id : "AmGraph-1",
+        //             fillAlphas : 0.4,
+        //             fillColors : "#C77A04",
+        //             lineAlpha : 1,
+        //             lineColor : "#C77A04",
+        //             lineThickness : 1,
+        //             title : "Altitude",
+        //             valueField : "z"
+        //         }
+        //     ],
+        //     guides : [],
+        //     valueAxes : [
+        //         {
+        //             id : "ValueAxis-1",
+        //             minVerticalGap : 20,
+        //             title : "Altitude (m)"
+        //         }
+        //     ],
+        //     allLabels : [],
+        //     balloon : {
+        //         borderColor : "#CCCCCC",
+        //         borderThickness : 1,
+        //         fillColor : "#FFFFFF",
+        //         showBullet : true
+        //     },
+        //     titles : []
+        // }
     };
 
     /**
@@ -861,6 +522,7 @@ define([
 
         // fenetre du profil
         this._panelContainer.style.display = "none";
+        // this._panelContainer.style.visibility = "hidden";
 
         // picto
         this._showContainer.checked = false;
@@ -924,75 +586,64 @@ define([
         logger.trace("ElevationPath::_initialize : ", options);
 
         // liste des options
-        this.options = {};
+        this.options = {
+            target : null,
+            render : null,
+            active : false,
+            apiKey : null,
+            elevationOptions : {},
+            displayProfileOptions : {
+                greaterSlope : true,
+                meanSlope : true,
+                ascendingElevation : true,
+                descendingElevation : true,
+                currentSlope : true,
+                apply : null,
+                target : null
+            },
+            stylesOptions : {
+                profile : null,
+                draw : null,
+                marker : null
+            }
+        };
 
-        this.options.target   = ( typeof options.target !== "undefined" ) ? options.target : null;
-        this.options.render   = ( typeof options.render !== "undefined" ) ? options.render : null;
+        // merge with user options
+        Utils.mergeParams(this.options, options);
 
         // cle API sur le service
         this.options.apiKey = options.apiKey;
 
-        // mode debug (tracé des points du service d'alti)
-        var debug = options.debug;
-        this.options.debug = ( typeof debug === "undefined") ? false : debug;
-
-        // gestion du mode active
-        var active = options.active;
-        this.options.active = ( typeof active === "undefined") ? false : active;
-
-        // gestion des options du service
-        var service = options.elevationOptions;
-        this.options.service = ( typeof service === "undefined" || Object.keys(service).length === 0 ) ? {} : service;
-
         // gestion de l'affichage du profil
-        var profil = options.displayProfileOptions || {};
-        if ( typeof profil === "undefined" || Object.keys(profil).length === 0 ) {
-            this.options.profile = {
-                apply : ElevationPath.DISPLAY_PROFILE_BY_DEFAULT,
-                target : null
-            };
-
-        } else {
-            this.options.profile = {};
-        }
+        var _profile = options.displayProfileOptions || {};
 
         // gestion de la fonction du profil
-        var displayFunction = profil.apply || this.options.profile.apply;
-        this.options.profile.apply =  ( typeof displayFunction === "function" ) ?
+        var displayFunction = _profile.apply;
+        this.options.displayProfileOptions.apply =  ( typeof displayFunction === "function" ) ?
             displayFunction : ElevationPath.DISPLAY_PROFILE_BY_DEFAULT;
 
         // gestion du container du profil
-        var displayContainer = profil.target || this.options.profile.target;
-        this.options.profile.target =  ( typeof displayContainer === "undefined" ) ?
-            null : displayContainer;
+        var displayContainer = _profile.target;
+        this.options.displayProfileOptions.target =  ( typeof displayContainer !== "undefined" ) ?
+            displayContainer : null;
 
         // gestion des styles
-        var styles = options.stylesOptions || {};
-        if ( typeof styles === "undefined" || Object.keys(styles).length === 0 ) {
-            // on applique les styles par defaut (en mode properties)
-            this.options.styles = {
-                profile : ElevationPath.DEFAULT_STYLES.PROFILE
-            };
+        var _styles = options.stylesOptions || {};
 
-        } else {
-            this.options.styles = {};
-        }
+        // FIXME ???
+        // gestion du style du profil
+        // var profileStyle = _styles.profile;
+        // this.options.stylesOptions.profile = ( typeof profileStyle === "undefined" || Object.keys(profileStyle).length === 0 ) ?
+        //     ElevationPath.DEFAULT_STYLES.PROFILE : profileStyle;
+        // this._createStylingProfile();
 
         // gestion des styles du tracé
-        this.options.styles.draw = styles.draw || {} ;
+        this.options.stylesOptions.draw = _styles.draw || {};
         this._createStylingDraw();
 
         // gestion des styles du marker
-        this.options.styles.marker = styles.marker || {} ;
+        this.options.stylesOptions.marker = _styles.marker || {} ;
         this._createStylingMarker();
-
-        // gestion des styles du profile de type AmCharts
-        // TODO : Revoir le paramétrage de l'affichage du profil
-        //        Pour l'instant sert uniquement pour la bib amcharts...
-        var profile = styles.profile || this.options.styles.profile;
-        this.options.styles.profile = ( typeof profile === "undefined" || Object.keys(profile).length === 0 ) ?
-            ElevationPath.DEFAULT_STYLES.PROFILE : profile;
-        this._createStylingProfile();
 
     };
 
@@ -1033,7 +684,11 @@ define([
         var waiting = this._waitingContainer = this._createElevationPathWaitingElement();
         panel.appendChild(waiting);
 
-        if (this.options.profile.target === null) {
+        // info
+        var info = this._infoContainer = this._createElevationPathInformationsElement();
+        panel.appendChild(info);
+
+        if (this.options.displayProfileOptions.target === null) {
             container.appendChild(panel);
         }
 
@@ -1086,8 +741,8 @@ define([
 
         // si marker n'est pas un objet ol.style.Image, on applique le
         // style par défaut.
-        if (this.options.styles.marker instanceof ol.style.Image ) {
-            marker = this.options.styles.marker ;
+        if (this.options.stylesOptions.marker instanceof ol.style.Image ) {
+            marker = this.options.stylesOptions.marker ;
         }
 
         this._markerStyle = new ol.style.Style({
@@ -1104,7 +759,7 @@ define([
         logger.trace("ElevationPath::_createStylingDraw");
 
         // on interprete les params pour y creer un objet ol.Style
-        var styles  = this.options.styles.draw;
+        var styles  = this.options.stylesOptions.draw;
 
         // style de depart
         logger.trace("style start", styles.start);
@@ -1140,14 +795,14 @@ define([
 
     /**
     * create style graph
-    * TODO : à revoir (ne sert que pour AmCharts)
+    * FIXME : à revoir car ne sert que pour AmCharts !?
     *
     * @private
     */
     ElevationPath.prototype._createStylingProfile = function () {
         logger.trace("ElevationPath::_createStylingProfile");
 
-        var userStyles = this.options.styles.profile;
+        var userStyles = this.options.stylesOptions.profile;
 
         logger.trace("style profile", userStyles);
 
@@ -1233,7 +888,7 @@ define([
         // Event start
         var self = this;
         this._measureDraw.on("drawstart", function (evt) {
-            logger.trace(evt);
+            logger.trace("drawstart", evt);
 
             // delete marker current
             if (self._marker !== null) {
@@ -1258,7 +913,7 @@ define([
 
         // Event end
         this._measureDraw.on("drawend", function (evt) {
-            logger.trace(evt);
+            logger.trace("drawend", evt);
 
             // set feature
             self._lastSketch = self._currentSketch;
@@ -1268,7 +923,7 @@ define([
             // FIXME à revoir...
             // Si il n'y a pas de surcharge utilisateur de la fonction de recuperation des
             // resultats, on realise l'affichage du panneau
-            if ( typeof self.options.service.onSuccess === "undefined" && self.options.profile.target === null) {
+            if ( typeof self.options.elevationOptions.onSuccess === "undefined" && self.options.displayProfileOptions.target === null) {
                 self._panelContainer.style.display = "block";
                 // self._panelContainer.style.visibility = "visible";
             }
@@ -1401,7 +1056,7 @@ define([
         var options = {};
 
         // on surcharge avec les options de l'utilisateur
-        Utils.mergeParams(options, this.options.service);
+        Utils.mergeParams(options, this.options.elevationOptions);
 
         // au cas où ...
         Utils.mergeParams(options, {
@@ -1416,6 +1071,7 @@ define([
             logger.trace(result);
             if (result) {
                 self._panelContainer.style.display = "block";
+                // self._panelContainer.style.visibility = "visible";
                 self._displayProfile(result.elevations);
                 self._waitingContainer.className = "GPelevationPathCalcWaitingContainerHidden";
                 self._waiting = false;
@@ -1433,8 +1089,8 @@ define([
         };
 
         Utils.mergeParams(options, {
-            onSuccess : this.options.service.onSuccess || _requestServiceOnSuccess,
-            onFailure : this.options.service.onFailure || _requestServiceOnFailure
+            onSuccess : this.options.elevationOptions.onSuccess || _requestServiceOnSuccess,
+            onFailure : this.options.elevationOptions.onFailure || _requestServiceOnFailure
         });
 
         // le sampling est soit defini par l'utilisateur (opts),
@@ -1486,36 +1142,129 @@ define([
     ElevationPath.prototype._computeElevationMeasure = function (elevations) {
         logger.trace("ElevationPath::_computeElevationMeasure", elevations);
 
-        var wgs84Sphere = new ol.Sphere(6378137);
+        var _data = elevations;
+
+        // FIXME facteur à 2000 doit il etre une option ?
+        var _limite = 2000; // metres
+        var _unit = "km";
+        var _factor = 1000;
+        var _length = this._getLength();
+        if (_length < _limite) {
+            _factor = 1;
+            _unit = "m";
+        }
 
         // Calcul de la distance au départ pour chaque point + arrondi des lat/lon
-        elevations[0].dist = 0;
-        var distance = 0;
-        for (var i = 1; i < elevations.length; i++) {
-            distance += (wgs84Sphere.haversineDistance([elevations[i].lon, elevations[i].lat], [elevations[i - 1].lon, elevations[i - 1].lat])) / 1000;
-            elevations[i].dist = distance;
-            elevations[i].lat = Math.round(elevations[i].lat * 10000) / 10000;
-            elevations[i].lon = Math.round(elevations[i].lon * 10000) / 10000;
+        _data[0].dist  = 0;
+        _data[0].slope = 0;
+
+        var _distanceMinus = 0;
+        var _distancePlus  = 0;
+        var _ascendingElevation  = 0;
+        var _descendingElevation  = 0;
+        var _distance = 0;
+        var _slopes = 0;
+
+        var wgs84Sphere = new ol.Sphere(6378137);
+
+        for (var i = 1; i < _data.length; i++) {
+
+            var a = [_data[i].lon, _data[i].lat];
+            var b = [_data[i - 1].lon, _data[i - 1].lat];
+            var dist = wgs84Sphere.haversineDistance(a,b);
+
+            var za = _data[i].z;
+            var zb = _data[i - 1].z;
+            if (za < 0) {
+                za = 0;
+            }
+            if (zb < 0) {
+                zb = 0;
+            }
+            var slope = za - zb;
+            if (slope < 0) {
+                _distanceMinus += dist;
+                _descendingElevation += slope;
+            } else if (slope > 0) {
+                _distancePlus += dist;
+                _ascendingElevation += slope;
+            }
+            _distance += dist / _factor;
+            _data[i].dist = _distance;
+
+            _slopes += (slope) ? Math.abs(Math.round(slope / dist * 100)) : 0;
+            _data[i].slope = (slope) ? Math.abs(Math.round(slope / dist * 100)) : 0;
+
+            // EVOL ?
+            // cf. gradiant
+            // http://www.color-hex.com/color/00b798
+            var value = _data[i].slope;
+            if (value > 15 && value < 30) {
+                _data[i].color = "#005b4c";
+            } else if (value > 30 && value < 45) {
+                _data[i].color = "#00362d";
+            } else if (value > 45) {
+                _data[i].color = "#00120f";
+            } else {
+                _data[i].color = "#00B798";
+            }
+
+            _data[i].lat = Math.round(_data[i].lat * 10000) / 10000;
+            _data[i].lon = Math.round(_data[i].lon * 10000) / 10000;
         }
 
         // Valeur du coeff d'arrondi des distances en fonction de la distance totale
         var coeffArrond = 100;
-        if (distance > 100) {
+        if (_distance > 100) {
             coeffArrond = 1;
-        } else if (distance > 10) {
+        } else if (_distance > 10) {
             coeffArrond = 10;
         }
 
-        // Correction des altitudes aberrantes + arrondi des calculs de distance
-        for (var j = 0; j < elevations.length; j++) {
-            var data = elevations[j];
-            if (data.z < 0) {
-                data.z = 0;
+        // Correction arrondi distance totale
+        _distance   = Math.round(_distance * coeffArrond) / coeffArrond;
+        _distanceMinus = Math.round(_distanceMinus * coeffArrond) / coeffArrond;
+        _distancePlus  = Math.round(_distancePlus * coeffArrond) / coeffArrond;
+
+        // Correction des altitudes aberrantes + arrondi des calculs de distance + ...
+        var _altMin = _data[0].z;
+        var _altMax = _data[0].z;
+        var _greaterSlope = _data[0].slope;
+
+        for (var ji = 0; ji < _data.length; ji++) {
+            var d = _data[ji];
+            if (d.z < 0) {
+                d.z = 0;
             }
-            data.dist = Math.round(data.dist * coeffArrond) / coeffArrond;
+            if (d.z >= _altMax) {
+                _altMax = d.z;
+            }
+            if (d.z <= _altMin) {
+                _altMin = d.z;
+            }
+
+            d.dist = Math.round(d.dist * coeffArrond) / coeffArrond;
+            // FIXME erreur avec D3 car cette lib souhaite un numerique !
+            // d.dist = d.dist.toLocaleString();
+
+            if (d.slope > _greaterSlope ) {
+                _greaterSlope = d.slope;
+            }
         }
 
-        return elevations;
+        return {
+            greaterSlope : _greaterSlope, // pente max
+            meanSlope : Math.round(_slopes / _data.length), // pente moyenne
+            distancePlus : _distancePlus.toLocaleString(), // distance cumulée positive
+            distanceMinus : _distanceMinus.toLocaleString(), // distance cumulée négative
+            ascendingElevation : _ascendingElevation, // dénivelé cumulée positive
+            descendingElevation : _descendingElevation, // dénivelé cumulée négative
+            altMin : _altMin.toLocaleString(), // altitude min
+            altMax : _altMax.toLocaleString(), // altitude max
+            distance : _distance.toLocaleString(), // distance totale
+            unit : _unit, // unité des mesures de distance
+            points : _data
+        };
     };
 
     /**
@@ -1529,10 +1278,15 @@ define([
         logger.trace("ElevationPath::_displayProfile", elevations);
 
         // data
-        var data = this._computeElevationMeasure(elevations);
+        if (this._data) {
+            this._data = {};
+        }
+
+        // sauvegarde des données
+        var data = this._data = this._computeElevationMeasure(elevations);
 
         // container
-        var container = this.options.profile.target;
+        var container = this.options.displayProfileOptions.target;
         if (container) {
             container.appendChild(this._panelContainer);
         }
@@ -1542,10 +1296,22 @@ define([
         var context = this;
 
         // fonction
-        var displayFunction = this.options.profile.apply;
+        var displayFunction = this.options.displayProfileOptions.apply;
 
         // execution...
         displayFunction.call(this, data, container, context);
+
+        var opts = this.options.displayProfileOptions;
+        var element = document.getElementById("GPelevationPathPanelInfo-" + this._uid);
+        if (element) {
+            if (opts.greaterSlope ||
+                opts.meanSlope ||
+                opts.ascendingElevation ||
+                opts.descendingElevation) {
+                // on affiche les informations
+                element.style.display = "block";
+            }
+        }
 
     };
 
@@ -1582,6 +1348,62 @@ define([
             this._removeProfile();
             this._removeMeasureInteraction(map);
         }
+    };
+
+    /**
+    * this method is called by event 'click' on '' picto
+    * (cf. this.),
+    * and display the panel info
+    *
+    * @private
+    */
+    ElevationPath.prototype.onOpenElevationPathInfoClick = function () {
+
+        // options d'affichage
+        var meanSlope = this.options.displayProfileOptions.meanSlope;
+        var greaterSlope = this.options.displayProfileOptions.greaterSlope;
+        var ascendingElevation =  this.options.displayProfileOptions.ascendingElevation;
+        var descendingElevation = this.options.displayProfileOptions.descendingElevation;
+
+        // clean
+        var div = this._infoContainer;
+        if (div.childElementCount) {
+            while (div.firstChild) {
+                div.removeChild(div.firstChild);
+            }
+        }
+
+        // creation des infomations
+
+        if (ascendingElevation) {
+            this._addElevationPathInformationsItem("Dénivelé positif : " + this._data.ascendingElevation.toLocaleString() + " m");
+        }
+
+        if (descendingElevation) {
+            this._addElevationPathInformationsItem("Dénivelé négatif : " + this._data.descendingElevation.toLocaleString() + " m");
+        }
+
+        if (meanSlope) {
+            this._addElevationPathInformationsItem("Pente moyenne : " + this._data.meanSlope.toLocaleString() + " %");
+        }
+
+        if (greaterSlope) {
+            this._addElevationPathInformationsItem("Plus forte pente : " + this._data.greaterSlope.toLocaleString() + " %");
+        }
+
+        // show des informations !
+        if (div.className === "GPelevationPathInformationsContainerVisible") {
+            clearTimeout(this._timerHdlr);
+            div.className = "GPelevationPathInformationsContainerHidden";
+        } else {
+            div.className = "GPelevationPathInformationsContainerVisible";
+        }
+
+        // hidden des informations !
+        this._timerHdlr = setTimeout( function () {
+            div.className = "GPelevationPathInformationsContainerHidden";
+        }, 4000);
+
     };
 
     return ElevationPath;

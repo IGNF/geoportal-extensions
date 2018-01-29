@@ -114,10 +114,33 @@ define([], function () {
             var container  = document.createElement("div");
             container.className = "GPpanelHeader";
 
-            var div  = document.createElement("div");
-            div.className = "GPpanelTitle";
-            div.innerHTML = "Profil Altimétrique";
-            container.appendChild(div);
+            var divInfo = document.createElement("div");
+            divInfo.id = this._addUID("GPelevationPathPanelInfo");
+            divInfo.className = "GPpanelInfo";
+            divInfo.title = "Informations";
+            // add event on click
+            if ( divInfo.addEventListener ) {
+                divInfo.addEventListener(
+                    "click",
+                    function () {
+                        self.onOpenElevationPathInfoClick();
+                    }
+                );
+            } else if ( divInfo.attachEvent ) {
+                // internet explorer
+                divInfo.attachEvent(
+                    "onclick",
+                    function () {
+                        self.onOpenElevationPathInfoClick();
+                    }
+                );
+            }
+            container.appendChild(divInfo);
+
+            var divTitle  = document.createElement("div");
+            divTitle.className = "GPpanelTitle";
+            divTitle.innerHTML = "Profil Altimétrique";
+            container.appendChild(divTitle);
 
             var divReduce  = document.createElement("div");
             divReduce.id = this._addUID("GPelevationPathPanelReduce");
@@ -192,6 +215,46 @@ define([], function () {
             div.appendChild(p);
 
             return div;
+        },
+
+        /**
+        * Create information Panel
+        *
+        * @returns {DOMElement} DOM element
+        */
+        _createElevationPathInformationsElement : function () {
+
+            var div  = document.createElement("div");
+            div.id   = this._addUID("GPelevationPathInformationsContainer");
+            div.className = "GPelevationPathInformationsContainerHidden";
+
+            var p = document.createElement("p");
+            p.className = "GPelevationPathInformations";
+            p.innerHTML = "Aucune information...";
+            div.appendChild(p);
+
+            return div;
+        },
+
+        /**
+        * Add a information into Panel
+        *
+        * @param {String} value - value of item
+        * @returns {DOMElement} DOM element
+        */
+        _addElevationPathInformationsItem : function (value) {
+
+            var div = document.getElementById(this._addUID("GPelevationPathInformationsContainer"));
+            
+            if (div) {
+                var p = document.createElement("p");
+                p.className = "GPelevationPathInformations";
+                p.innerHTML = value;
+                div.appendChild(p);
+            }
+
+            return div;
+            
         }
     };
 

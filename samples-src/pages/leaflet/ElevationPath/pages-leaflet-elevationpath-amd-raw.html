@@ -1,7 +1,7 @@
 {{#extend "layout-leaflet-sample-amd"}}
 
 {{#content "head"}}
-        <title>Sample Leaflet SearchEngine</title>
+        <title>Sample Leaflet ElevationPath</title>
 {{/content}}
 
 {{#content "style"}}
@@ -14,7 +14,7 @@
 {{/content}}
 
 {{#content "body"}}
-        <h2>Ajout du Widget du moteur de recherche</h2>
+        <h2>Ajout du Widget de profil alti</h2>
         <!-- map -->
         <div id="map"></div>
 {{/content}}
@@ -24,11 +24,11 @@
           requirejs([
             'gp',
             'Leaflet/Layers/Layers',
-            'Leaflet/Controls/SearchEngine'
+            'Leaflet/Controls/ElevationPath'
           ], function (
             Gp,
             Layers,
-            SearchEngine
+            ElevationPath
           ) {
 
             Gp.Services.getConfig({
@@ -49,14 +49,11 @@
 
                 wms.addTo(map);
 
-                var search = new SearchEngine({
-                  placeholder : "Recherche...",
-                  displayMarker : true,
-                  markerStyle : L.icon({
-                    iconUrl: 'https://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png',
-                    iconSize: [64, 64],
-                    iconAnchor: [0, 64]
-                  }),
+                var search = new ElevationPath({
+                  active : true,
+                  displayProfileOptions : {
+                    apply : ElevationPath.DISPLAY_PROFILE_RAW
+                  }
                 });
 
                 map.addControl(search);

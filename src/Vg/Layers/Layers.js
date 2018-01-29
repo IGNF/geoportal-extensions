@@ -83,7 +83,7 @@ define([
 
         /**
         * Access to WMS Geoportal Layer.
-        * Using [Auto-configuration service]{@link http://api.ign.fr/tech-docs-js/developpeur/geodrm.html#Available_resources_-_APIs_autoconfiguration} of the Geoportal platform.
+        * Using [Auto-configuration service]{@link https://geoservices.ign.fr/documentation/services-acces.html#obtention-dune-clef-dacc%C3%A8s-aux-services-web} of the Geoportal platform.
         *
         * @method WMS
         * @alias VirtualGeo.geoportalLayer.WMS
@@ -173,7 +173,7 @@ define([
 
         /**
         * Access to WMTS Layer
-        * Using [Auto-configuration service]{@link http://api.ign.fr/tech-docs-js/developpeur/geodrm.html#Available_resources_-_APIs_autoconfiguration} of the Geoportal platform.
+        * Using [Auto-configuration service]{@link https://geoservices.ign.fr/documentation/geoservices/geodrm.html#Available_resources_-_APIs_autoconfiguration} of the Geoportal platform.
         *
         * @method WMTS
         * @alias VirtualGeo.VirtualGeo.WMTS

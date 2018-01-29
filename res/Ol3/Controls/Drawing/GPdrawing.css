@@ -163,7 +163,7 @@ button[id^=drawing-export-] {
 .tool-form-submit {
     border: medium none;
     border-radius: 20px;
-    font-family: "Helvetica Neue",Arial,Helvetica,sans-serif; 
+    font-family: "Helvetica Neue",Arial,Helvetica,sans-serif;
     font-size: 0.9em;
     text-align: center;
     text-transform: uppercase;
@@ -172,8 +172,8 @@ button[id^=drawing-export-] {
     color: #fff;
 }
 
-/* 
- * popups 
+/*
+ * popups
  */
 .gp-label-div,
 .gp-styling-div {
@@ -207,6 +207,14 @@ button[id^=drawing-export-] {
   width: 240px;
   height: 80px;
   resize: none;
+}
+
+.gp-input-measure-style {
+  width: 240px;
+  font-size: 0.75em;
+  background-color: #FFF;
+  text-align: center;
+  border-radius: 10px;
 }
 
 .gp-textarea-att-label-style {
