@@ -1,10 +1,14 @@
 define([
-    "itowns"
+    "itowns",
+    "woodman"
 ], function (
-    Itowns
+    Itowns,
+    woodman
 ) {
-
     "use strict";
+
+    woodman.load("console");
+    var logger = woodman.getLogger("GlobeViewExtended");
 
     /**
     * @classdesc
@@ -209,7 +213,7 @@ define([
             }
         })[0];
         if( !layer ) {
-            this.logger.trace("[GlobeViewExtended]  : no Layer found for the id '"+layerId+"'") ;
+            logger.trace("[GlobeViewExtended]  : no Layer found for the id '"+layerId+"'") ;
             return;
         }
         return layer ;
@@ -228,7 +232,7 @@ define([
             }
         })[0];
         if( !layer ) {
-            this.logger.trace("[GlobeViewExtended]  : no colorLayer found for the id '"+layerId+"'") ;
+            logger.trace("[GlobeViewExtended]  : no colorLayer found for the id '"+layerId+"'") ;
             return;
         }
         return layer ;
@@ -246,6 +250,19 @@ define([
             }
         });
     };
+
+    /**
+    * Get vector layers
+    *
+    * @return {Array} vector layers
+    */
+    GlobeViewExtended.prototype.getVectorLayers = function () {
+        return this.getGlobeView().getLayers( function (layer) {
+            if (layer.protocol === "rasterizer") {
+                return layer;
+            }
+        });
+    }
 
     /**
     * Get elevation layers
@@ -367,5 +384,133 @@ define([
         return this.getGlobeView().controls.getScale();
     };
 
-    return GlobeViewExtended;
+   /**
+    * Sets tilt
+    *
+    * @param {Number} tilt - Tilt value
+    */
+    GlobeViewExtended.prototype.setTilt = function setTilt (tilt) {
+        this.getGlobeView().controls.setTilt(tilt, false);
+    };
+
+   /**
+    * Returns tilt
+    *
+    * @return {Number} - Tilt
+    */
+    GlobeViewExtended.prototype.getTilt = function getTilt () {
+        return this.getGlobeView().controls.getCameraOrientation()[0];
+    };
+
+    /**
+    * Sets azimuth
+    *
+    * @param {Number} azimuth - Azimuth value
+     */
+    GlobeViewExtended.prototype.setAzimuth = function (azimuth) {
+        this.getGlobeView().controls.setHeading(azimuth, false);
+    };
+
+    /**
+     * Returns azimuth
+     *
+     * @return {Number} azimuth
+     */
+    GlobeViewExtended.prototype.getAzimuth = function () {
+        return this.getGlobeView().controls.getCameraOrientation()[1];
+    };
+
+   /**
+    * Gets the coordinate in lat,lon for a given pixel.
+    *
+    * @param {number | MouseEvent} mouse - The x-position inside the Globe element or a mouse event.
+    * @param {number=} y - The pixel y-position inside the Globe element.
+    * @return {Coordinates} position
+    */
+    GlobeViewExtended.prototype.getCoordinateFromPixel = function getCoordinateFromPixel (mouseEvent, y) {
+       return this.getGlobeView().controls.pickGeoPosition(mouseEvent, y);
+    };
+
+    /**
+     * Get all visible features that intersect a pixel
+     *
+     * @param {number | MouseEvent} mouse - The x-position inside the Globe element or a mouse event.
+     * @param {number=} y - The pixel y-position inside the Globe element.
+     * @return {Array} visibleFeatures - The array of visible features.
+     */
+     GlobeViewExtended.prototype.getFeaturesAtPixel = function getFeaturesAtPixel (mouseEvent, y) {
+         var vectorLayers = this.getVectorLayers();
+         if (!vectorLayers) {
+             return;
+         }
+         // array of the visible features on the clicker coord
+         var visibleFeatures = [];
+
+         var geoCoord = this.getCoordinateFromPixel(mouseEvent, y);
+         if (geoCoord) {
+             // buffer around the click inside we retrieve the features
+             var precision = this.getGlobeView().controls.pixelsToDegrees(5);
+             for (var i = 0; i < vectorLayers.length; i++) {
+                 var idx;
+                 var layer = vectorLayers[i];
+                 // if the layer is not visible, we ignore it
+                 if (!layer.visible) {
+                     continue;
+                 }
+                 var result = itowns.FeaturesUtils.filterFeaturesUnderCoordinate(geoCoord, layer.feature, precision);
+                 // we add the features to the visible features array
+                 for (idx = 0; idx < result.length; idx++) {
+                     visibleFeatures.push(result[idx]);
+                 }
+             }
+         }
+         return visibleFeatures;
+     };
+
+   /**
+    * Changes the center of the scene on screen to the specified in lat, lon.
+    *
+    * @param {Object} center
+    * @param {number}  center.longitude - Coordinate longitude WGS84 in degree
+    * @param {number}  center.latitude - Coordinate latitude WGS84 in degree
+    * @return {Array} visibleFeatures - The array of visible features.
+    */
+    GlobeViewExtended.prototype.setCameraTargetGeoPosition = function setCameraTargetGeoPosition (center) {
+        this.getGlobeView().controls.setCameraTargetGeoPositionAdvanced(center, false);
+    };
+
+    /**
+     * Retuns the coordinates of the central point on screen in lat,lon and alt
+     *
+     * @return {Object} center
+     */
+    GlobeViewExtended.prototype.getCenter = function getCenter () {
+        var cameraCenter = this.getGlobeView().controls.getCameraTargetGeoPosition();
+        var center = {
+            lon  : cameraCenter.longitude(),
+            lat  : cameraCenter.latitude(),
+            alt  : cameraCenter.altitude()
+        };
+        return center;
+    };
+
+    /**
+     * Returns the actual zoom.
+     *
+     * @return {Number} zoom
+     */
+    GlobeViewExtended.prototype.getZoom = function getZoom () {
+        return this.getGlobeView().controls.getZoom();
+    };
+
+    /**
+     * Sets the current zoom.
+     *
+     * @param {Number} zoom - The zoom
+     */
+    GlobeViewExtended.prototype.setZoom = function setZoom (zoom) {
+        this.getGlobeView().controls.setZoom(zoom,false);
+    };
+
+     return GlobeViewExtended;
 });
