@@ -1,3 +1,4 @@
+/* globals window, self */
 define([
     "leaflet",
     "woodman",
@@ -29,6 +30,7 @@ define([
 
         options : {},
         params : {},
+        protocol : null,
 
         serviceUrl : "http://localhost?no-rights-found-for=[{layer}]",
 
@@ -57,6 +59,22 @@ define([
                 console.log("PARAM_MISSING : apiKey !");
             }
 
+            // par defaut
+            if ( typeof this.options.ssl === "undefined" ) {
+                this.options.ssl = false;
+            }
+
+        },
+
+        /**
+        * get runtime context
+        */
+        _initContext : function () {
+            var _context  = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : null;
+            var _protocol = (_context) ?
+                (_context.location && _context.location.protocol && _context.location.protocol.indexOf("https:") === 0 ? "https://" : "http://") :
+                (this.options.ssl ? "https://" : "http://");
+            this.protocol = _protocol;
         },
 
         /**
@@ -83,6 +101,7 @@ define([
                 if (!this.options.apiKey) {
                     // FIXME on retire l'exception...
                     console.log("WARNING PARAM_MISSING : parameter 'apiKey' is mandatory if the contract key configuration has not been loaded !");
+                    return;
                 }
             }
         },
@@ -96,6 +115,7 @@ define([
         * @extends {L.TileLayer.WMS}
         * @param {Object} options - options for function call.
         * @param {String} options.layer - layer name (e.g. "ORTHOIMAGERY.ORTHOPHOTOS")
+        * @param {Boolean} [options.ssl] - if set true, enforce protocol https (only for nodejs)
         * @param {String} [options.apiKey] - access key to Geoportal platform, obtained [here]{@link http://professionnels.ign.fr/ign/contrats}.
         * @param {Object} [settings] - other options for L.TileLayer.WMS function (see {@link http://leafletjs.com/reference.html#tilelayer-wms-options})
         * @returns {L.geoportalLayer.WMS}
@@ -130,13 +150,17 @@ define([
             /** options natives de Leaflet */
             this.settings = settings || {};
 
+            // env d'execution : browser ou non ?
+            this._initContext();
+
             // gestion de l'autoconf
             this._initParams("WMS");
             logger.log(this.params);
 
-            // url du service (par defaut)
+            // url du service
             var serviceUrl = null;
             if (this.params.key || this.options.apiKey) {
+                // url de l'autoconf ou le service par defaut
                 serviceUrl = this.params.url || L.Util.template("http://wxs.ign.fr/{key}/geoportail/r/wms", {
                     key : this.params.key || this.options.apiKey
                 });
@@ -167,7 +191,7 @@ define([
             L.Util.extend(paramsNative, this.settings);
 
             return new WMS(
-                serviceUrl,
+                serviceUrl.replace(/(http|https):\/\//, this.protocol),
                 {
                     paramsNative : paramsNative,
                     paramsWms    : paramsWms,
@@ -190,6 +214,7 @@ define([
         * @extends {L.TileLayer}
         * @param {Object} options - options for function call.
         * @param {String} options.layer - layer name (e.g. "ORTHOIMAGERY.ORTHOPHOTOS")
+        * @param {Boolean} [options.ssl] - if set true, enforce protocol https (only for nodejs)
         * @param {String} [options.apiKey] - access key to Geoportal platform, obtained [here]{@link http://professionnels.ign.fr/ign/contrats}.
         * @param {Object} [settings] - other options for L.TileLayer function (see {@link http://leafletjs.com/reference.html#tilelayer-options})
         * @returns {L.geoportalLayer.WMTS}
@@ -224,13 +249,15 @@ define([
             /** options natives de Leaflet */
             this.settings = settings || {};
 
+            // env d'execution : browser ou non ?
+            this._initContext();
+
             // gestion de l'autoconf
             this._initParams("WMTS");
             logger.log(this.params);
 
             // url du service (par defaut)
             var serviceUrl = null;
-
             if (this.params.key || this.options.apiKey) {
                 serviceUrl = this.params.url || L.Util.template("http://wxs.ign.fr/{key}/geoportail/wmts", {
                     key : this.params.key || this.options.apiKey
@@ -272,7 +299,7 @@ define([
             L.Util.extend(paramsNative, this.settings);
 
             return new WMTS(
-                serviceUrl,
+                serviceUrl.replace(/(http|https):\/\//, this.protocol),
                 {
                     paramsNative : paramsNative,
                     paramsWmts   : paramsWmts,
