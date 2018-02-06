@@ -1,0 +1,59 @@
+{{#extend "layout-leaflet-sample-amd"}}
+
+{{#content "head"}}
+        <title>Sample Leaflet</title>
+{{/content}}
+
+{{#content "style"}}
+        <style>
+        div#map {
+            width: 100%;
+            height: 500px;
+        }
+        </style>
+{{/content}}
+
+{{#content "body"}}
+        <h2>Ajout d'une couche WMS</h2>
+        <!-- map -->
+        <div id="map"></div>
+{{/content}}
+
+{{#content "js"}}
+        <script type="text/javascript">
+        var map;
+        requirejs(
+            [
+                "gp",
+                "Leaflet/Layers/Layers"
+            ],
+            function (
+                Gp,
+                Layers
+            ) {
+
+                Gp.Services.getConfig({
+                    serverUrl : "{{ config.resources }}/AutoConf.js",
+                    callbackSuffix : "",
+                    // apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
+                    timeOut : 20000,
+                    /** onsuccess */
+                    onSuccess : function () {
+
+                        var wms = Layers.WMS({
+                            layer : "ORTHOIMAGERY.ORTHOPHOTOS"
+                        });
+
+                        var map  = L.map("map", {
+                            zoom : 2,
+                            center : L.latLng(48, 2)
+                        });
+
+                        wms.addTo(map);
+
+                    }
+                });
+            });
+            </script>
+    {{/content}}
+    {{/extend}}
