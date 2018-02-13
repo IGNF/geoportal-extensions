@@ -1,12 +1,10 @@
 define([
-    "itowns",
     "Common/Utils",
     "Common/Utils/SelectorID",
     "Common/Utils/LayerUtils",
     "Common/Controls/AttributionDOM",
     "Itowns/Controls/Widget"
 ], function (
-    Itowns,
     Utils,
     SelectorID,
     LayerUtils,
@@ -102,12 +100,12 @@ define([
                 self._inRangeUpdate(allLayers, e.extent);
             };
 
-            globe.addEventListener("prerender", this._callbacks.onPreRenderCallBack);
+            globe.listen("prerender", this._callbacks.onPreRenderCallBack);
             globe.preRenderEventFetchViewExtent();
             globe.preRenderEventFetchLayersDisplayed();
         } else {
             // suppression listener
-            this._globe.removeEventListener( "prerender", this._callbacks.onPreRenderCallBack );
+            this._globe.forget( "prerender", this._callbacks.onPreRenderCallBack );
 
             // suppression DOM
             while (this._element.hasChildNodes()) {

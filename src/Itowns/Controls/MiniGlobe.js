@@ -84,11 +84,7 @@ define([
         if ( globe ) { // dans le cas de l'ajout du contrôle au globe
             var minDistance = 6650000;
             var maxDistance = 30000000;
-            var positionOnGlobe = {
-                longitude : globe.getGlobeView().controls.getCameraTargetGeoPosition().longitude(),
-                latitude : globe.getGlobeView().controls.getCameraTargetGeoPosition().latitude(),
-                altitude : globe.getGlobeView().controls.getCameraTargetGeoPosition().altitude()
-            };
+            var positionOnGlobe = globe.getCenter();
             var miniView = new Itowns.GlobeView(this._element, positionOnGlobe, {
                 // `limit globe' subdivision level:
                 // we're don't need a precise globe model
@@ -107,14 +103,14 @@ define([
             /**
               * update miniview's camera with the globeView's camera position
               */
-            globe.getGlobeView().addFrameRequester(Itowns.MAIN_LOOP_EVENTS.AFTER_RENDER, function () {
+            globe.listen( "afterrender", function () {
                 // clamp distance camera from globe
-                var range = globe.getGlobeView().controls.getRange();
+                var range = globe.getRange();
                 var distance = Math.min(Math.max(range * 1.5, minDistance), maxDistance);
                 var camera = miniView.camera.camera3D;
                 // Update target miniview's camera
-                camera.position.copy(globe.getGlobeView().controls.moveTarget()).setLength(distance);
-                camera.lookAt(globe.getGlobeView().controls.moveTarget());
+                camera.position.copy(globe.moveTarget()).setLength(distance);
+                camera.lookAt(globe.moveTarget());
                 miniView.notifyChange(true);
             });
 

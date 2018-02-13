@@ -55,16 +55,18 @@
                         itowns.Fetcher.json("{{ config.resources }}/itowns/JSONLayers/IGN_MNT.json").then(result => globeView.addLayer(result));
                         itowns.Fetcher.json("{{ config.resources }}/itowns/JSONLayers/IGN_MNT_HIGHRES.json").then(result => globeView.addLayer(result));
 
-                        globeView.addEventListener(itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED, () => {
-                            // eslint-disable-next-line no-console
-                            console.info("Globe initialized");
-                            var scalebar = new itowns.control.Scale({
-                                target : viewerDiv,
-                                position : "absolute"
+                        var scalebar = new itowns.control.Scale({
+                            target : viewerDiv,
+                            position : "absolute"
                         });
                         globeView.addWidget( scalebar );
-                    });
-                });
+
+                        globeView.listen("globeinitialized", () => {
+                            // eslint-disable-next-line no-console
+                            console.info("Globe initialized");
+                        });
+                    }
+                );
             </script>
 {{/content}}
 

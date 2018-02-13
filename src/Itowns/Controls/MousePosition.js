@@ -1,5 +1,4 @@
 define([
-    "itowns",
     "proj4",
     "woodman",
     "gp",
@@ -11,7 +10,6 @@ define([
     "Itowns/Controls/Utils/PositionFormater",
     "Itowns/CRS/CRS"
 ], function (
-    Itowns,
     proj4,
     woodman,
     Gp,
@@ -147,15 +145,15 @@ define([
             // evenement valable pour le mode desktop !
             if (!this.collapsed) {
                 if (this._isDesktop) {
-                    globe.addEventListener( "mousemove", this._callbacks.mouseMove );
+                    globe.listen( "mousemove", this._callbacks.mouseMove );
                 } else {
-                    globe.addEventListener( "centerchanged", this.onGlobeMove );
+                    globe.listen( "centerchanged", this.onGlobeMove );
                 }
             }
             this._globe = globe;
         } else if (globe == null) { // if globe == null we remove the MP control
             // on supprime le listener associé au MP
-            this._globe.removeEventListener( "mousemove", this._callbacks.mouseMove );
+            this._globe.forget( "mousemove", this._callbacks.mouseMove );
             // on supprime le DOM du mousePosition
             while (this.getElement().hasChildNodes()) {
                 this.getElement().removeChild(this.getElement().lastChild);
@@ -997,7 +995,7 @@ define([
     MousePosition.prototype.onMouseMove = function (e) {
         var self = this;
 
-        var position = this.getGlobe().getGlobeView().controls.pickGeoPosition(e);
+        var position = this.getGlobe().getCoordinateFromMouseEvent(e);
         if ( !position ) {
             this.GPdisplayCoords({
                 lon : "---",
@@ -1153,17 +1151,17 @@ define([
         if ( this._showMousePositionContainer.checked ) {
             // FIXME gérer ou non le cas mobile
             if (this._isDesktop) {
-                globe.removeEventListener("mousemove", this._callbacks.mouseMove);
+                globe.forget("mousemove", this._callbacks.mouseMove);
             } else {
-                globe.removeEventListener("centerchanged", this.onGlobeMove);
+                globe.forget("centerchanged", this.onGlobeMove);
             }
 
         } else {
             // FIXME gérer ou non le cas mobile
             if (this._isDesktop) {
-                globe.addEventListener("mousemove", this._callbacks.mouseMove);
+                globe.listen("mousemove", this._callbacks.mouseMove);
             } else {
-                globe.addEventListener("centerchanged", this.onGlobeMove);
+                globe.listen("centerchanged", this.onGlobeMove);
             }
         }
 

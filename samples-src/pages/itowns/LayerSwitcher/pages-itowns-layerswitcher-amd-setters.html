@@ -101,12 +101,12 @@
             if( newOpacity < 0 ) {
                 newOpacity = 1.;
             }
-            globeView.setLayerOpacity(layerToChange,newOpacity);
+            globeView.setLayerOpacity(layersId[i],newOpacity);
         }
 
         var setVisibity = function (i) {
             var layerToChange = globeView.getLayerById(layersId[i]);
-            globeView.setLayerVisibility(layerToChange,!layerToChange.visible);
+            globeView.setLayerVisibility(layersId[i],!layerToChange.visible);
         }
 
         var moveLayerUp = function (i) {
@@ -147,7 +147,7 @@
                 globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
                 itownsGlobal = itowns;
 
-                globeView.addEventListener(itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED, () => {
+                globeView.listen("globeinitialized", () => {
                     // ajout des couches
                     var promises = [];
                     promises.push( itowns.Fetcher.json('{{ config.resources }}/itowns/JSONLayers/IGN_MNT.json').then(result => globeView.addLayer(result)) );

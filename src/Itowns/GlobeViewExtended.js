@@ -71,6 +71,165 @@ define([
     };
 
     /**
+     * Associate a function to trigger when an event is received.
+     *
+     * @param {String} type - The event type.
+     * @param {Function} callback - The function to execute when the event occures.
+     *
+     */
+    GlobeViewExtended.prototype.listen = function (type, callback){
+        if ( typeof(callback) != "function") {
+            console.log("no callback provided for event : " + type) ;
+            return false ;
+        }
+
+        switch (type) {
+            case "rangechanged" :
+                this.getGlobeView().controls.addEventListener(Itowns.CONTROL_EVENTS.RANGE_CHANGED, callback);
+                break ;
+            case "centerchanged" :
+                this.getGlobeView().controls.addEventListener(Itowns.CONTROL_EVENTS.CAMERA_TARGET_CHANGED, callback);
+                break;
+            case "layeradded" :
+                this.getGlobeView().addEventListener(Itowns.GLOBE_VIEW_EVENTS.LAYER_ADDED, callback);
+                break ;
+            case "layerorderchanged" :
+                this.getGlobeView().addEventListener(Itowns.GLOBE_VIEW_EVENTS.COLOR_LAYERS_ORDER_CHANGED, callback);
+                break;
+            case "globeinitialized" :
+                this.getGlobeView().addEventListener(Itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED, callback);
+                break ;
+            case "layerremoved" :
+                this.getGlobeView().addEventListener(Itowns.GLOBE_VIEW_EVENTS.LAYER_REMOVED, callback);
+                break ;
+            case "prerender" :
+                this.getGlobeView().addEventListener(type, callback);
+                break ;
+            case "mousemove" :
+                this._viewerDiv.addEventListener(type, callback);
+                break;
+            case "afterrender" :
+                this.getGlobeView().addFrameRequester(Itowns.MAIN_LOOP_EVENTS.AFTER_RENDER, callback);
+                break ;
+            default :
+                console.log("unhandled event : " + type ) ;
+                return false ;
+        }
+        return true;
+    }
+
+    /**
+     * Associate a function to trigger when a layer event is received.
+     *
+     * @param {Object} layer - The itowns layer.
+     * @param {String} type - the event type.
+     * @param {Function} callback - The function to execute when the event occures.
+     *
+     */
+    GlobeViewExtended.prototype.addLayerListener = function (layer, type, callback){
+        if ( typeof(callback) != "function") {
+            console.log("no callback provided for event : " + type) ;
+            return false ;
+        }
+
+        switch (type) {
+            case "opacitypropertychanged" :
+                layer.addEventListener("opacity-property-changed", callback);
+                break;
+            case "visiblepropertychanged" :
+                layer.addEventListener("visible-property-changed", callback);
+                break;
+            case "sequencepropertychanged" :
+                layer.addEventListener("sequence-property-changed", callback);
+                break;
+            default :
+                console.log("unhandled event : " + type ) ;
+                return false ;
+        }
+        return true;
+
+    }
+
+    /**
+     * Cancels an event listening
+     *
+     * @param {String} type - the event type.
+     * @param {Function} callback - The function to execute when the event occures.
+     *
+     */
+    GlobeViewExtended.prototype.forget = function (type, callback){
+        if ( typeof(callback) != "function") {
+            console.log("no callback provided for event : " + type) ;
+            return false ;
+        }
+
+        switch (type) {
+            case "rangechanged" :
+                this.getGlobeView().controls.removeEventListener(Itowns.CONTROL_EVENTS.RANGE_CHANGED, callback);
+                break ;
+            case "centerchanged" :
+                this.getGlobeView().controls.removeEventListener(Itowns.CONTROL_EVENTS.CAMERA_TARGET_CHANGED, callback);
+                break;
+            case "layeradded" :
+                this.getGlobeView().removeEventListener(Itowns.GLOBE_VIEW_EVENTS.LAYER_ADDED, callback);
+                break ;
+            case "layerorderchanged" :
+                this.getGlobeView().removeEventListener(Itowns.GLOBE_VIEW_EVENTS.COLOR_LAYERS_ORDER_CHANGED, callback);
+                break;
+            case "globeinitialized" :
+                this.getGlobeView().removeEventListener(Itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED, callback);
+                break ;
+            case "layerremoved" :
+                this.getGlobeView().removeEventListener(Itowns.GLOBE_VIEW_EVENTS.LAYER_REMOVED, callback);
+                break ;
+            case "prerender" :
+                this.getGlobeView().removeEventListener(type, callback);
+                break ;
+            case "mousemove" :
+                this._viewerDiv.removeEventListener(type, callback);
+                break;
+            case "afterrender" :
+                this.getGlobeView().removeFrameRequester(Itowns.MAIN_LOOP_EVENTS.AFTER_RENDER, callback);
+                break ;
+            default :
+                console.log("unhandled event : " + type ) ;
+                return false ;
+        }
+        return true;
+    }
+
+    /**
+     * Cancels a layer event listening
+     *
+     * @param {Object} layer - The itowns layer.
+     * @param {String} type - The event type.
+     * @param {Function} callback - The function to execute when the event occures.
+     *
+     */
+    GlobeViewExtended.prototype.removeLayerListener = function (layer, type, callback){
+        if ( typeof(callback) != "function") {
+            console.log("no callback provided for event : " + type) ;
+            return false ;
+        }
+
+        switch (type) {
+            case "opacitypropertychanged" :
+                layer.removeEventListener("opacity-property-changed", callback);
+                break;
+            case "visiblepropertychanged" :
+                layer.removeEventListener("visible-property-changed", callback);
+                break;
+            case "sequencepropertychanged" :
+                layer.removeEventListener("sequence-property-changed", callback);
+                break;
+            default :
+                console.log("unhandled event : " + type ) ;
+                return false ;
+        }
+        return true;
+    }
+
+    /**
     * Overload itowns.GlobeView addLayer method
     */
     GlobeViewExtended.prototype.addLayer = function (layer) {
@@ -117,26 +276,6 @@ define([
     GlobeViewExtended.prototype.moveLayerToIndex = function (layerId, index) {
         Itowns.ColorLayersOrdering.moveLayerToIndex(this.getGlobeView(), layerId, index);
         this.getGlobeView().notifyChange(true);
-    };
-
-    /**
-    * Add event listener to the globe
-    *
-    * @param {String} type - event type
-    * @param {Boolean} callback - event handler
-    */
-    GlobeViewExtended.prototype.addEventListener = function (type, callback) {
-        switch ( type ) {
-            case "mousemove" :
-                this._viewerDiv.addEventListener( type, callback );
-                break;
-            case "centerchanged" :
-                this.getGlobeView().controls.addEventListener( type, callback );
-                break;
-            default :
-                this.getGlobeView().addEventListener( type, callback );
-                break;
-        }
     };
 
     /**
@@ -334,7 +473,7 @@ define([
      *
      * @param {Object} widget - The Widget object to add
      */
-    GlobeViewExtended.prototype.addWidget = function addWidget (widget) {
+    GlobeViewExtended.prototype.addWidget = function (widget) {
         if ( !widget.getTarget() ) {
             widget.setTarget(this._viewerDiv, "absolute");
         }
@@ -347,7 +486,7 @@ define([
      *
      * @return {Array} widgets - The array of widgets.
      */
-    GlobeViewExtended.prototype.getWidgets = function getWidgets () {
+    GlobeViewExtended.prototype.getWidgets = function () {
         return this._widgets;
     };
 
@@ -356,7 +495,7 @@ define([
      *
      * @param {Object} widget - The Widget object to remove
      */
-    GlobeViewExtended.prototype.removeWidget = function removeWidget (widget) {
+    GlobeViewExtended.prototype.removeWidget = function (widget) {
         widget.setGlobe();
         for (var idx = 0; idx < this._widgets.length; idx++) {
             if (this._widgets[idx] === widget) {
@@ -371,7 +510,7 @@ define([
     *
     * @return {HTMLElement} Globe container element
     */
-    GlobeViewExtended.prototype.getTargetElement = function getTargetElement () {
+    GlobeViewExtended.prototype.getTargetElement = function () {
         return this._viewerDiv;
     };
 
@@ -380,7 +519,7 @@ define([
      *
      * @return {Number} Scale
      */
-    GlobeViewExtended.prototype.getScale = function getScale () {
+    GlobeViewExtended.prototype.getScale = function () {
         return this.getGlobeView().controls.getScale();
     };
 
@@ -389,7 +528,7 @@ define([
     *
     * @param {Number} tilt - Tilt value
     */
-    GlobeViewExtended.prototype.setTilt = function setTilt (tilt) {
+    GlobeViewExtended.prototype.setTilt = function (tilt) {
         this.getGlobeView().controls.setTilt(tilt, false);
     };
 
@@ -398,7 +537,7 @@ define([
     *
     * @return {Number} - Tilt
     */
-    GlobeViewExtended.prototype.getTilt = function getTilt () {
+    GlobeViewExtended.prototype.getTilt = function () {
         return this.getGlobeView().controls.getCameraOrientation()[0];
     };
 
@@ -423,22 +562,32 @@ define([
    /**
     * Gets the coordinate in lat,lon for a given pixel.
     *
-    * @param {number | MouseEvent} mouse - The x-position inside the Globe element or a mouse event.
-    * @param {number=} y - The pixel y-position inside the Globe element.
+    * @param {number} x - The pixel x-position inside the Globe element.
+    * @param {number} y - The pixel y-position inside the Globe element.
     * @return {Coordinates} position
     */
-    GlobeViewExtended.prototype.getCoordinateFromPixel = function getCoordinateFromPixel (mouseEvent, y) {
-       return this.getGlobeView().controls.pickGeoPosition(mouseEvent, y);
+    GlobeViewExtended.prototype.getCoordinateFromPixel = function (x, y) {
+       return this.getGlobeView().controls.pickGeoPosition({x:x, y:y});
     };
+
+    /**
+     * Gets the coordinate in lat,lon for a given mouse position.
+     *
+     * @param {MouseEvent} mouseEvent - A mouse event.
+     * @return {Coordinates} position
+     */
+     GlobeViewExtended.prototype.getCoordinateFromMouseEvent = function (mouseEvent) {
+         var coords = this.getGlobeView().eventToViewCoords(mouseEvent);
+         return this.getGlobeView().controls.pickGeoPosition(coords);
+     };
 
     /**
      * Get all visible features that intersect a pixel
      *
-     * @param {number | MouseEvent} mouse - The x-position inside the Globe element or a mouse event.
-     * @param {number=} y - The pixel y-position inside the Globe element.
+     * @param {MouseEvent} mouseEvent - A mouse event.
      * @return {Array} visibleFeatures - The array of visible features.
      */
-     GlobeViewExtended.prototype.getFeaturesAtPixel = function getFeaturesAtPixel (mouseEvent, y) {
+     GlobeViewExtended.prototype.getFeaturesAtMousePosition = function (mouseEvent) {
          var vectorLayers = this.getVectorLayers();
          if (!vectorLayers) {
              return;
@@ -446,7 +595,7 @@ define([
          // array of the visible features on the clicker coord
          var visibleFeatures = [];
 
-         var geoCoord = this.getCoordinateFromPixel(mouseEvent, y);
+         var geoCoord = this.getCoordinateFromMouseEvent(mouseEvent);
          if (geoCoord) {
              // buffer around the click inside we retrieve the features
              var precision = this.getGlobeView().controls.pixelsToDegrees(5);
@@ -475,7 +624,7 @@ define([
     * @param {number}  center.latitude - Coordinate latitude WGS84 in degree
     * @return {Array} visibleFeatures - The array of visible features.
     */
-    GlobeViewExtended.prototype.setCameraTargetGeoPosition = function setCameraTargetGeoPosition (center) {
+    GlobeViewExtended.prototype.setCameraTargetGeoPosition = function (center) {
         this.getGlobeView().controls.setCameraTargetGeoPositionAdvanced(center, false);
     };
 
@@ -484,7 +633,7 @@ define([
      *
      * @return {Object} center
      */
-    GlobeViewExtended.prototype.getCenter = function getCenter () {
+    GlobeViewExtended.prototype.getCenter = function () {
         var cameraCenter = this.getGlobeView().controls.getCameraTargetGeoPosition();
         var center = {
             lon  : cameraCenter.longitude(),
@@ -499,7 +648,7 @@ define([
      *
      * @return {Number} zoom
      */
-    GlobeViewExtended.prototype.getZoom = function getZoom () {
+    GlobeViewExtended.prototype.getZoom = function () {
         return this.getGlobeView().controls.getZoom();
     };
 
@@ -508,9 +657,42 @@ define([
      *
      * @param {Number} zoom - The zoom
      */
-    GlobeViewExtended.prototype.setZoom = function setZoom (zoom) {
+    GlobeViewExtended.prototype.setZoom = function (zoom) {
         this.getGlobeView().controls.setZoom(zoom,false);
     };
+
+    /**
+     * To convert the projection in meters on the globe of a number of pixels of screen
+     * @param      {number} pixels count pixels to project
+     * @return     {number} projection in meters on globe
+     */
+     GlobeViewExtended.prototype.pixelsToMeters = function (pixels) {
+         return this.getGlobeView().controls.pixelsToMeters(pixels);
+     };
+
+     /**
+      * Projection on screen in pixels of length in meter on globe
+      * @param      {number}  value Length in meter on globe
+      * @return     {number}  projection in pixels on screen
+      */
+      GlobeViewExtended.prototype.metersToPixels = function (value) {
+          return this.getGlobeView().controls.metersToPixels(value);
+      };
+
+      /**
+       * Returns the "range": the distance in meters between the camera and the current central point on the screen.
+       * @return {number} number
+       */
+      GlobeViewExtended.prototype.getRange = function () {
+          return this.getGlobeView().controls.getRange();
+      };
+
+      /**
+      * @return {THREE.Vector3} position
+      */
+      GlobeViewExtended.prototype.moveTarget = function () {
+          return this.getGlobeView().controls.moveTarget();
+      };
 
      return GlobeViewExtended;
 });

@@ -1,11 +1,9 @@
 define([
-    "itowns",
     "Common/Utils",
     "Common/Utils/SelectorID",
     "Common/Controls/ScaleDOM",
     "Itowns/Controls/Widget"
 ], function (
-    Itowns,
     Utils,
     SelectorID,
     ScaleDOM,
@@ -88,11 +86,11 @@ define([
               * quand la vue change, on recalcule l'echelle graphique
               */
             this._callbacks.onChangedViewCallback = function () {
-                var value = self.getGlobe().getGlobeView().controls.pixelsToMeters(200);
+                var value = self.getGlobe().pixelsToMeters(200);
                 value = Math.floor(value);
                 var digit = Math.pow(10, value.toString().length - 1);
                 value = Math.round(value / digit) * digit;
-                var pix = self.getGlobe().getGlobeView().controls.metersToPixels(value);
+                var pix = self.getGlobe().metersToPixels(value);
                 var unit = "m";
                 if (value >= 1000) {
                     value /= 1000;
@@ -103,14 +101,16 @@ define([
             };
             // Ajout des listeners
             // Listen for globe full initialisation event
-            globe.addEventListener(Itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED, this._callbacks.onChangedViewCallback);
-            // // At every globe range movement, scale bar may be updated,
-            globe.getGlobeView().controls.addEventListener(Itowns.CONTROL_EVENTS.RANGE_CHANGED, this._callbacks.onChangedViewCallback);
+            globe.listen( "globeinitialized", this._callbacks.onChangedViewCallback);
+            // At every globe range movement, scale bar may be updated,
+            globe.listen( "rangechanged", this._callbacks.onChangedViewCallback);
+
             this._globe = globe;
         } else if (globe == null) {
             // On retire les listeners qui étaient liés au scalecontrol supprimé
-            this._globe.removeEventListener(Itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED, this._callbacks.onChangedViewCallback);
-            this._globe.getGlobeView().controls.removeEventListener(Itowns.CONTROL_EVENTS.RANGE_CHANGED, this._callbacks.onChangedViewCallback);
+            globe.forget( "globeinitialized", this._callbacks.onChangedViewCallback);
+            // At every globe range movement, scale bar may be updated,
+            globe.forget( "rangechanged", this._callbacks.onChangedViewCallback);
 
             // if globe == null we remove the scale control
             // on supprime le DOM du scale control
