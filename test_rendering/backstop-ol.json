@@ -162,14 +162,14 @@
         "clickSelector": "span[id^=GPshowIsochronOpen-]"
       },
       {
-        "label": "Isochrone : Voiture",
+        "label": "Isochrone (interaction) : Voiture",
         "url": "http://localhost:8087/test_rendering/ol3/interactions/iso.html",
         "clickSelector": "button[id=computeIsochrone]",
         "delay": 2000,
         "postInteractionWait": 5000
       },
       {
-        "label": "Isodistance : Pieton",
+        "label": "Isodistance (interaction) : Pieton",
         "url": "http://localhost:8087/test_rendering/ol3/interactions/iso.html",
         "clickSelector": "button[id=computeIsodistance]",
         "delay": 2000,
@@ -181,14 +181,14 @@
         "clickSelector": "span[id^=GPshowRouteOpen-]"
       },
       {
-        "label": "Route : Voiture - plus rapide",
+        "label": "Route (interaction) : Voiture - plus rapide",
         "url": "http://localhost:8087/test_rendering/ol3/interactions/route.html",
         "clickSelector": "button[id=computeFastest]",
         "delay": 2000,
         "postInteractionWait": 5000
       },
       {
-        "label": "Route : Pieton - plus court",
+        "label": "Route (interaction) : Pieton - plus court",
         "url": "http://localhost:8087/test_rendering/ol3/interactions/route.html",
         "clickSelector": "button[id=computeShortest]",
         "delay": 2000,
@@ -205,27 +205,27 @@
         "clickSelector": "span[id^=GPshowAdvancedSearchOpen-]"      
       },
       {
-        "label": "SearchEngine : interaction search autocomplete",
+        "label": "SearchEngine (interaction) : interaction search autocomplete",
         "url": "http://localhost:8087/test_rendering/ol3/interactions/searchengine.html",
         "clickSelector": "button[id=autoCompleteLocation]",
         "delay": 2000,
         "postInteractionWait": 5000      
       },
       {
-        "label": "SearchEngine : interaction search center",
+        "label": "SearchEngine (interaction) : interaction search center",
         "url": "http://localhost:8087/test_rendering/ol3/interactions/searchengine.html",
         "clickSelector": "button[id=searchLocation]",
         "delay": 2000,
         "postInteractionWait": 5000      
       },
       {
-        "label": "Attributions : update originators",
+        "label": "Attributions (interaction) : update originators",
         "url": "http://localhost:8087/test_rendering/ol3/interactions/attributions.html",
         "clickSelector": "button[id=zoomIn]",
         "postInteractionWait": 1000         
       },
       {
-        "label": "ElevationPath : interaction alti profil",
+        "label": "ElevationPath (interaction) : interaction alti profil",
         "url": "http://localhost:8087/test_rendering/ol3/interactions/elevationpath.html",
         "clickSelector": "button[id=computeProfil]",
         "postInteractionWait": 1000         

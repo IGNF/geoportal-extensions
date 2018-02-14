@@ -30,15 +30,9 @@
                         source : src
                     });
 
-                    var osmLayer = new ol.layer.Tile({
-                        source: new ol.source.OSM(),
-                        opacity: 0.5
-                    });
-
                     var map = new ol.Map({
                         layers: [
-                            gpLayer,
-                            osmLayer
+                            gpLayer
                         ],
                         target: 'map',
                         view: new ol.View({
