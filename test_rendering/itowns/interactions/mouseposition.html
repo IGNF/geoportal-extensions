@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="UTF-8">
+    <!-- Library itowns -->
+    <script src="../../lib/itowns/js/itowns.js"></script>
+  
+    <!-- Plugin itowns IGN -->
+    <link rel="stylesheet" href="../../dist/itowns/GpPluginItowns.css" />
+    <script src="../../dist/itowns/GpPluginItowns-src.js"></script>
+
+</head>
+<body>
+    <!-- code -->
+    <script>
+
+      var mouse;
+
+          window.onload = function () {
+
+            const positionOnGlobe = { longitude : 2.3465, latitude : 48.88, altitude : 2500000 };
+
+            // iTowns namespace defined here
+            const viewerDiv = document.getElementById('viewerDiv');
+            const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
+
+            globeView.addEventListener(itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED, () => {
+                // eslint-disable-next-line no-console
+                console.info('Globe initialized');
+                var mousePosition = new itowns.control.MousePosition({
+                    apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
+                    collapsed : false,
+                });
+                globeView.addWidget( mousePosition );
+            });
+        
+            itowns.Fetcher.json('../../samples/resources/itowns/JSONLayers/Ortho.json').then(result => globeView.addLayer(result));
+        
+            itowns.Fetcher.json('../../samples/resources/itowns/JSONLayers/IGN_MNT.json').then(result => globeView.addLayer(result));
+
+            document.getElementById("moveTo").onclick = function(e) {
+                mouse.moveTo(L.latLng(49, 3), 15);
+            }
+        }
+    </script>
+
+    <!-- map -->
+    <div id="map" style="height: 400px;"></div>
+    <button type="button" id="moveTo">Deplacement</button>
+
+</body>
+</html>

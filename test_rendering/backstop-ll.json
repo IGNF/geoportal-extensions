@@ -1,0 +1,205 @@
+{
+  "id": "leaflet_backstop",
+  "viewports": [
+    {
+      "label": "phone",
+      "width": 320,
+      "height": 480
+    },
+    {
+      "label": "tablet",
+      "width": 1024,
+      "height": 768
+    }
+  ],
+  "onBeforeScript": "chromy/onBefore.js",
+  "onReadyScript": "chromy/onReady.js",
+  "delay": 0,
+  "scenarios": [
+    {
+      "label": "MousePosition : default",
+      "cookiePath": "backstop_data/engine_scripts/cookies.json",
+      "url": "leaflet/mouseposition.html",
+      "referenceUrl": "",
+      "readyEvent": "",
+      "readySelector": "",
+      "delay": 100,
+      "hideSelectors": [],
+      "removeSelectors": [],
+      "hoverSelector": "",
+      "clickSelector": "label[id^=GPshowMousePositionPicto]",
+      "postInteractionWait": 100,
+      "selectors": [],
+      "selectorExpansion": true,
+      "misMatchThreshold" : 0.1,
+      "requireSameDimensions": true
+    },
+    {
+      "label": "MousePosition : move to",
+      "url": "http://localhost:8087/test_rendering/leaflet/interactions/mouseposition.html",
+      "delay": 100,
+      "clickSelector": "#moveTo",
+      "postInteractionWait": 1000
+    },
+    {
+      "label": "MousePosition : show settings",
+      "url": "leaflet/mouseposition-1.html",
+      "clickSelector": "label[id^=GPshowMousePositionSettingsPicto]"
+    },
+    {
+      "label": "IsoChrone : default",
+      "url": "leaflet/isochrone.html",
+      "clickSelector": "label[id^=GPshowIsochronPicto]"
+    },
+    {
+      "label": "IsoChrone : open exclusions",
+      "url": "leaflet/isochrone-1.html",
+      "clickSelector": "label[id^=GPshowIsoExclusionsPicto]"
+    },
+    {
+      "label": "IsoChrone : compute time",
+      "url": "http://localhost:8087/test_rendering/leaflet/interactions/isochrone.html",
+      "delay": 100,
+      "clickSelector": "#computeTime",
+      "postInteractionWait": 2000
+    },
+    {
+      "label": "IsoDistance : default",
+      "url": "leaflet/isodistance.html",
+      "clickSelector": "span[id^=GPisochronChoiceAltDistTxt]"
+    },
+    {
+      "label": "IsoDistance : compute distance",
+      "url": "http://localhost:8087/test_rendering/leaflet/interactions/isochrone.html",
+      "delay": 100,
+      "clickSelector": "#computeDistance",
+      "postInteractionWait": 2000
+    },
+    {
+      "label": "LayerSwitcher : default",
+      "url": "leaflet/layerswitcher.html",
+      "clickSelector": "label[id^=GPshowLayersListPicto]",
+      "postInteractionWait": 2000
+    },
+    {
+      "label": "LayerSwitcher : add a layer",
+      "url": "http://localhost:8087/test_rendering/leaflet/interactions/layerswitcher.html",
+      "clickSelector": "#addLayer",
+      "postInteractionWait": 2000
+    },
+    {
+      "label": "LayerSwitcher : remove a layer",
+      "url": "http://localhost:8087/test_rendering/leaflet/interactions/layerswitcher.html",
+      "clickSelector": "#removeLayer",
+      "postInteractionWait": 2000
+    },
+    {
+      "label": "Reverse : default",
+      "url": "leaflet/reverse.html",
+      "clickSelector": "label[id^=GPshowReverseGeocodingPicto]"
+    },
+    {
+      "label": "Route : default",
+      "url": "leaflet/route.html",
+      "clickSelector": "label[id^=GPshowRoutePicto]"
+    },
+    {
+      "label": "Route : open exclusions",
+      "url": "leaflet/route-1.html",
+      "clickSelector": "label[id^=GPshowRouteExclusionsPicto]"
+    },
+    {
+      "label": "Route : compute",
+      "url": "http://localhost:8087/test_rendering/leaflet/interactions/route.html",
+      "delay": 100,
+      "clickSelector": "#compute",
+      "postInteractionWait": 3000
+    },
+    {
+      "label": "SearchEngine : default",
+      "url": "leaflet/searchengine.html",
+      "clickSelector": "label[id^=GPshowSearchEnginePicto]"
+    },
+    {
+      "label": "SearchEngine : show advanced search",
+      "url": "leaflet/searchengine-1.html",
+      "clickSelector": "span[id^=GPshowAdvancedSearchOpen]"
+    },
+    {
+      "label": "SearchEngine : search with autocompletion",
+      "url": "http://localhost:8087/test_rendering/leaflet/interactions/searchengine.html",
+      "clickSelector": "#searchWithAutoComplete",
+      "postInteractionWait": "div[id^=AutoCompletedLocation_0-]"
+    },
+    {
+      "label": "SearchEngine : search with geocoding (postalCode)",
+      "url": "http://localhost:8087/test_rendering/leaflet/interactions/searchengine.html",
+      "clickSelector": "#searchWithGeocoding",
+      "postInteractionWait": "div[id^=GeocodedLocation_0-]"
+    },
+    {
+      "label": "MousePosition : extension only",
+      "url": "leaflet/mouseposition.html",
+      "clickSelector": "label[id^=GPshowMousePositionPicto]",
+      "postInteractionWait": 100,
+      "selectors": [
+        "div[id^=GPmousePosition-]"
+      ],
+      "requireSameDimensions": true
+    },
+    {
+      "label": "IsoChrone : extension only",
+      "url": "leaflet/isochrone.html",
+      "clickSelector": "label[id^=GPshowIsochronPicto]",
+      "postInteractionWait": 100,
+      "selectors": [
+        "div[id^=GPisochron-]"
+      ],
+      "requireSameDimensions": true
+    },
+    {
+      "label": "Reverse : extension only",
+      "url": "leaflet/reverse.html",
+      "clickSelector": "label[id^=GPshowReverseGeocodingPicto]",
+      "postInteractionWait": 100,
+      "selectors": [
+        "div[id^=GPreverseGeocoding-]"
+      ],
+      "requireSameDimensions": true
+    },
+    {
+      "label": "Route : extension only",
+      "url": "leaflet/route.html",
+      "clickSelector": "label[id^=GPshowRoutePicto]",
+      "postInteractionWait": 100,
+      "selectors": [
+        "div[id^=GProute-]"
+      ],
+      "requireSameDimensions": true
+    },
+    {
+      "label": "SearchEngine : extension only",
+      "url": "leaflet/searchengine.html",
+      "clickSelector": "label[id^=GPshowSearchEnginePicto]",
+      "postInteractionWait": 100,
+      "selectors": [
+        "div[id^=GPsearchEngine-]"
+      ],
+      "requireSameDimensions": true
+    }
+  ],
+  "paths": {
+    "bitmaps_reference": "backstop_data/leaflet/bitmaps_reference",
+    "bitmaps_test": "backstop_data/leaflet/bitmaps_test",
+    "engine_scripts": "backstop_data/leaflet/engine_scripts",
+    "html_report": "backstop_data/leaflet/html_report",
+    "ci_report": "backstop_data/leaflet/ci_report"
+  },
+  "report": ["browser"],
+  "engine": "chrome",
+  "engineFlags": [],
+  "asyncCaptureLimit": 5,
+  "asyncCompareLimit": 50,
+  "debug": false,
+  "debugWindow": false
+}

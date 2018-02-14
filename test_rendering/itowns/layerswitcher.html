@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <meta charset="UTF-8">
+  <!-- Library itowns -->
+  <script src="../../lib/itowns/js/itowns.js"></script>
+
+  <!-- Plugin itowns IGN -->
+  <link rel="stylesheet" href="../../dist/itowns/GpPluginItowns.css" />
+  <script src="../../dist/itowns/GpPluginItowns-src.js"></script>
+
+</head>
+<body>
+        <!-- map -->
+        <div id="viewerDiv" style="height: 400px;"></div>
+        
+    <!-- code -->
+    <script>
+
+        window.onload = function () {
+            const positionOnGlobe = { longitude: 2.3465, latitude: 48.88, altitude: 250000 };
+
+            const viewerDiv = document.getElementById('viewerDiv');
+            const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
+            
+            itowns.Fetcher.json('../../samples/resources/itowns/JSONLayers/OrthosCRS.json').then(result => globeView.addLayer(result));
+            itowns.Fetcher.json('../../samples/resources/itowns/JSONLayers/Ortho.json').then(result => globeView.addLayer(result));
+            itowns.Fetcher.json('../../samples/resources/itowns/JSONLayers/ScanEX.json').then(result => globeView.addLayer(result));
+            itowns.Fetcher.json('../../samples/resources/itowns/JSONLayers/Region.json').then(result => globeView.addLayer(result));
+
+            itowns.Fetcher.json('../../samples/resources/itowns/JSONLayers/IGN_MNT.json').then(result => globeView.addLayer(result));
+            
+            globeView.addEventListener(itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED, () => {
+                // eslint-disable-next-line no-console
+                console.info('Globe initialized');
+                var layerSwitcher = new itowns.control.LayerSwitcher({
+                    options : {
+                        collapsed: true
+                    },
+                    layers : [
+                        {
+                            id : "Ortho",
+                            config : {
+                                title : "Couche de Photos IGNPO",
+                                description : "Description de ma couche",
+                                quicklookUrl : "lien/Vers/UnApercuRapide.png",
+                                legends : [
+                                    {
+                                        url : "lien/Vers/UneLegende.png"
+                                    }
+                                ],
+                                metadata : [
+                                    {
+                                        url : "lien/Vers/Une/MetaDonnee.xml"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                });
+                globeView.addWidget( layerSwitcher );
+            });
+        };
+    </script>
+
+
+
+</body>
+</html>

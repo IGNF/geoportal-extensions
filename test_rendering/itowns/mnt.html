@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <meta charset="UTF-8">
+  <!-- Library itowns -->
+  <script src="../../lib/itowns/js/itowns.js"></script>
+
+  <!-- Plugin itowns IGN -->
+  <link rel="stylesheet" href="../../dist/itowns/GpPluginItowns.css" />
+  <script src="../../dist/itowns/GpPluginItowns-src.js"></script>
+
+</head>
+<body>
+        <!-- map -->
+        <div id="viewerDiv" style="height: 400px; width: 800px;"></div>
+        
+    <!-- code -->
+    <script>
+
+        window.onload = function () {
+            const positionOnGlobe = { longitude: 6.47, latitude: 44.28, altitude: 8000 };
+
+            const viewerDiv = document.getElementById('viewerDiv');
+            const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
+            
+            itowns.Fetcher.json('../../samples/resources/itowns/JSONLayers/OrthosCRS.json').then(result => globeView.addLayer(result));
+            itowns.Fetcher.json('../../samples/resources/itowns/JSONLayers/Ortho.json').then(result => globeView.addLayer(result));
+
+            itowns.Fetcher.json('../../samples/resources/itowns/JSONLayers/IGN_MNT.json').then(result => globeView.addLayer(result));
+            
+            globeView.addEventListener(itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED, () => {
+                // eslint-disable-next-line no-console
+                console.info('Globe initialized');
+                globeView.getGlobeView().controls.setTilt(60, false);
+            });
+        };
+    </script>
+
+
+
+</body>
+</html>
