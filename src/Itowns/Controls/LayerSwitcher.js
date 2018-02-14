@@ -825,11 +825,15 @@ define([
         // when the index of a visible layer changes.
         // Always moves the non-visible layers under the other layers (to not hide them)
 
+        if ( e.newIndex - e.oldIndex === 0 ) {
+            return;
+        }
+
         var targetIndex = null;
         if ( !e.newIndex || e.newIndex === 0 ) {
             targetIndex = globe.getColorLayers().length - 1;
         } else {
-            var layerTargetID  = this._resolveLayerId( e.from.childNodes[e.newIndex + (e.newIndex === e.from.childNodes.length - 1 ? -1 : 1)].id);
+            var layerTargetID  = this._resolveLayerId( e.from.childNodes[e.newIndex + (e.newIndex - e.oldIndex < 0 ? 1 : -1)].id);
             targetIndex = globe.getLayerById(layerTargetID).sequence;
         }
 

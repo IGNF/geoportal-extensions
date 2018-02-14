@@ -1,4 +1,4 @@
-
+/* globals self */
 define([
     "ol",
     "gp",
@@ -22,6 +22,7 @@ define([
      * @extends {ol.source.TileWMS}
      * @param {Object} options            - options for function call.
      * @param {String} options.layer      - Layer name (e.g. "ORTHOIMAGERY.ORTHOPHOTOS")
+     * @param {Boolean} [options.ssl]     - if set true, enforce protocol https (only for nodejs)
      * @param {String} [options.apiKey]   - Access key to Geoportal platform
      * @param {Object} [options.olParams] - other options for ol.source.TileWMS function (see {@link http://openlayers.org/en/latest/apidoc/ol.source.TileWMS.html ol.source.TileWMS})
      * @example
@@ -43,6 +44,11 @@ define([
             throw new Error("ERROR WRONG TYPE : layer");
         }
 
+        // par defaut
+        if ( typeof options.ssl === "undefined" ) {
+            options.ssl = false;
+        }
+
         // Check if configuration is loaded
         if ( !Config.isConfigLoaded() ) {
             throw new Error("ERROR : contract key configuration has to be loaded to load Geoportal layers. See http://ignf.github.io/evolution-apigeoportail/ol3/ol3-autoconf.html");
@@ -53,12 +59,18 @@ define([
         if ( layerId && Config.configuration.getLayerConf(layerId) ) {
             var wmsParams = Config.getLayerParams(options.layer, "WMS", options.apiKey);
 
+            // gestion de mixContent dans l'url du service...
+            var ctx = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : null;
+            var protocol = (ctx) ?
+                (ctx.location && ctx.location.protocol && ctx.location.protocol.indexOf("https:") === 0 ? "https://" : "http://") :
+                (options.ssl ? "https://" : "http://");
+
             var wmsSourceOptions = {
                 // tracker extension ol3
                 // FIXME : gp-ext version en mode AMD
-                url : Gp.Helper.normalyzeUrl(wmsParams.url,{
-                          "gp-ol3-ext" : "__GPOL3EXTVERSION__"
-                      },false),
+                url : Gp.Helper.normalyzeUrl(wmsParams.url.replace(/(http|https):\/\//, protocol),{
+                    "gp-ol3-ext" : "__GPOL3EXTVERSION__"
+                },false),
                 params : {
                     SERVICE : "WMS",
                     LAYERS : options.layer,

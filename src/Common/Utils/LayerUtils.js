@@ -263,7 +263,7 @@ define([], function () {
                                 image.className = "";
                                 container.appendChild(image);
                             }
-                            image.src = logo;
+                            image.src = logo; // FIXME : mixContent ! 
                             image.title = text || name;
                             image.style.height = "30px";
                             image.style.width  = "30px";
