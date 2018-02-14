@@ -12,7 +12,7 @@ requirejs.config({
         "proj4"        : "../node_modules/proj4/dist/proj4-src",
         "proj4leaflet" : "../node_modules/proj4leaflet/src/proj4leaflet",
         "ol"           : "../node_modules/openlayers/dist/ol",
-        itowns : "../lib/itowns/js/itowns",
+        "itowns"       : "../lib/itowns/js/itowns",
         "woodman"      : "../node_modules/woodman/dist/woodman-amd",
         "sortable"     : "../node_modules/sortablejs/Sortable"
         // "vg"        : "../lib/vg/js/VirtualGeoWeb-1.1.min", // not use beacause of browser compatibility only !

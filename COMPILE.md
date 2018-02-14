@@ -81,6 +81,22 @@ Puis, relancer l'installation...
 Pour installation manuelle, ne pas oublier de mettre l'executable _phantomjs.exe_
 dans l'environnement d'execution de windows (ex. https://www.java.com/fr/download/help/path.xml)
 
+### Installation d'une version spécifique d'une dépendance via NPM
+
+Orienté developpement
+
+**ouvrir une console :**
+
+    // branche master du depot "IGNF/geoportal-access-lib" (dev)
+    npm install https://github.com/IGNF/geoportal-access-lib/tarball/master --no-save
+
+Upgrade de version
+
+**ouvrir une console :**
+
+    // publication openlayers en version 4.4.4
+    npm install openlayers@4.4.4 --no-save
+
 ### Compilation via GULP
 
 **ouvrir une console :**

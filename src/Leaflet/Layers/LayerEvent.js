@@ -1,9 +1,8 @@
 /**
- * desativation JSHINT
- * W106 - Identifier '_geoportal_id' is not in camel case
- */
-
- /*jshint -W106 */
+* desativation JSHINT
+* W106 - Identifier '_geoportal_id' is not in camel case
+*/
+/*jshint -W106 */
 
 define([
     "woodman",
