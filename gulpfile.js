@@ -396,24 +396,68 @@
             preserveLicenseComments : false,
             useStrict : true,
             logLevel : 0,
-            /** TODO : jsdoc*/
+            /** onBuildRead */
+            onBuildRead : function (moduleName, path, contents) {
+
+                console.log("Read module", moduleName);
+
+                var _contentModule = contents;
+                var _contentModuleA;
+                var _contentModuleB;
+                var _contentModuleC;
+
+                // FIXME on reecrit correctement la gestion des dependances internes...
+                // * window[NameSpace] = factory() => moduleName = window[NameSpace] = factory()
+                // * window.NameSpace = factory() => moduleName = window.NameSpace = factory()
+                // * root.NameSpace = factory() => moduleName = root.NameSpace = factory()
+                // * global.NameSpace = factory() => moduleName = global.NameSpace = factory()
+
+                if (moduleName === "proj4") {
+                    _contentModuleA = contents;
+                    _contentModuleB = _contentModuleA.replace("typeof exports === 'object'", moduleName + " = typeof exports === 'object'");
+                    _contentModuleC = _contentModuleB.replace("this", "typeof self !== 'undefined' ? self : this");
+                    _contentModule = _contentModuleC;
+                } else if (moduleName === "sortable") {
+                    _contentModuleA = contents;
+                    _contentModuleB = _contentModuleA.replace("module.exports = factory", moduleName + " = module.exports = factory");
+                    _contentModuleC = _contentModuleB.replace("window", moduleName + " = window");
+                    _contentModule = _contentModuleC;
+                } else if (moduleName === "proj4leaflet") {
+                    _contentModuleA = contents;
+                    _contentModuleB = _contentModuleA.replace("var L, proj4;", "");
+                    _contentModuleC = _contentModuleB.replace("module.exports = factory", moduleName + " = module.exports = factory");
+                    _contentModule = _contentModuleC;
+                } else if (moduleName === "gp") {
+                    _contentModuleA = contents;
+                    _contentModuleB = _contentModuleA.replace("module.exports = factory", moduleName + " = module.exports = factory");
+                    _contentModuleC = _contentModuleB.replace("root.", moduleName + " = root.");
+                    _contentModule = _contentModuleC;
+                } else {
+                    _contentModule = contents;
+                }
+
+                return _contentModule;
+
+            },
+            /** onModuleBundleComplete */
             onModuleBundleComplete : function (data) {
 
                 var amdclean = require("amdclean") ;
                 var outputFile = data.path;
 
-                var content = fs.readFileSync(outputFile, "utf8", function (err, data) {});
+                var dependencies = (isExecuteLeaflet) ? "var gp, proj4, sortable, proj4leaflet;\n" : "var gp, proj4, sortable;\n";
+                var dependenciesNodeJS = "var request, xmldom;\n";
 
                 fs.writeFileSync(outputFile, amdclean.clean({
-                    globalModules : ["proj4"], // module globale !
-                    // filePath : outputFile,
-                    code : content.replace("var L, proj4;", ""),
+                    // globalModules : ["proj4"], // module globale !
+                    filePath : outputFile,
                     prefixMode : "camelCase",
+                    transformAMDChecks : false,
                     wrap : {
-                        // FIXME petite bidouille interne avec les dependances nodejs...
-                        // même si le bundle n'est compatible nodejs...
-                        start : "\n/* BEGIN CODE */\nvar request, xmldom;\n",
-                        end : "\n/* END CODE   */\n"
+                        // FIXME petite bidouille interne avec les dependances...
+                        // car transformAMDChecks:true ne fait pas correctement son travail...
+                        start : dependenciesNodeJS + dependencies,
+                        end : ""
                     },
                     escodegen : {
                         comment : false,
@@ -529,14 +573,14 @@
                         end : "\n/* END CODE   */\n"
                     },
                     escodegen : {
-                         comment : false,
-                         format : {
-                             indent : {
-                                 style : "    ",
-                                 adjustMultilineComment : true
-                             }
-                         }
-                     }
+                        comment : false,
+                        format : {
+                            indent : {
+                                style : "    ",
+                                adjustMultilineComment : true
+                            }
+                        }
+                    }
                 }));
             }
         }, function () {
@@ -565,7 +609,7 @@
             deps = [{
                 name : "ol",
                 amd : "ol",
-                cjs : "ol",
+                cjs : "openlayers",
                 global : "ol",
                 param : "ol"
             }];
@@ -596,6 +640,8 @@
 
         return gulp.src(path.join(srcdir, getDistFileName()))
             .pipe(umd({
+                /** template */
+                template : path.join("utils", "template", "UMD.tpl"),
                 /** exports function */
                 exports : function (file) {
                     return "Gp" ;
@@ -627,7 +673,7 @@
                 {
                     name : "ol",
                     amd : "ol",
-                    cjs : "ol",
+                    cjs : "openlayers",
                     global : "ol",
                     param : "ol"
                 }
@@ -637,7 +683,7 @@
                 {
                     name : "ol",
                     amd : "ol",
-                    cjs : "ol",
+                    cjs : "openlayers",
                     global : "ol",
                     param : "ol"
                 },
