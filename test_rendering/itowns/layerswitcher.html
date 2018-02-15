@@ -24,7 +24,6 @@
             const viewerDiv = document.getElementById('viewerDiv');
             const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
             
-            itowns.Fetcher.json('../../samples/resources/itowns/JSONLayers/OrthosCRS.json').then(result => globeView.addLayer(result));
             itowns.Fetcher.json('../../samples/resources/itowns/JSONLayers/Ortho.json').then(result => globeView.addLayer(result));
             itowns.Fetcher.json('../../samples/resources/itowns/JSONLayers/ScanEX.json').then(result => globeView.addLayer(result));
             itowns.Fetcher.json('../../samples/resources/itowns/JSONLayers/Region.json').then(result => globeView.addLayer(result));

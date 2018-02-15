@@ -43,29 +43,20 @@
         "label": "LayerSwitcher : default",
         "cookiePath": "backstop_data/itowns/engine_scripts/cookies.json",
         "url": "http://localhost:8087/test_rendering/itowns/layerswitcher.html",
-        "referenceUrl": "",
-        "readyEvent": "",
-        "readySelector": "",
-        "delay": 100,
-        "hideSelectors": [],
-        "removeSelectors": [],
-        "hoverSelector": "",
+        "delay": 1000,
         "clickSelector": "label[id^=GPshowLayersListPicto]",
-        "postInteractionWait": 100,
-        "selectors": ["div[id^=GPlayerSwitcher-]"],
-        "selectorExpansion": true,
-        "misMatchThreshold" : 0.1,
-        "requireSameDimensions": true
+        "postInteractionWait": 1000,
+        "selectors": ["div[id^=GPlayerSwitcher-]"]
       },
       {
-        "label": "LayerSwitcher : add a layer",
+        "label": "LayerSwitcher (interaction) : add a layer",
         "url": "http://localhost:8087/test_rendering/itowns/interactions/layerswitcher.html",
         "clickSelector": "#addLayer",
         "delay": 10000,
         "postInteractionWait": 10000
       },
       {
-        "label": "LayerSwitcher : remove a layer",
+        "label": "LayerSwitcher (interaction) : remove a layer",
         "url": "http://localhost:8087/test_rendering/itowns/interactions/layerswitcher.html",
         "clickSelector": "#removeLayer",
         "delay": 10000,
@@ -75,6 +66,7 @@
         "label": "MNT",
         "url": "http://localhost:8087/test_rendering/itowns/mnt.html",
         "clickSelector": "div[id^=viewerDiv]",
+        "misMatchThreshold" : 1,
         "postInteractionWait": 10000
       }
     ],
