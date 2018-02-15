@@ -308,8 +308,8 @@ define([
         }
 
         // subscription to the events
-        globe.addLayerListener(layer, "opacitypropertychanged", this._callbacks.onOpacityLayerCallBack);
-        globe.addLayerListener(layer, "visiblepropertychanged", this._callbacks.onVisibilityLayerCallBack);
+        globe.addLayerListener(layer, GlobeViewExtended.EVENTS.OPACITY_PROPERTY_CHANGED, this._callbacks.onOpacityLayerCallBack);
+        globe.addLayerListener(layer, GlobeViewExtended.EVENTS.VISIBLE_PROPERTY_CHANGED, this._callbacks.onVisibilityLayerCallBack);
 
         // make sure layer is in globe layers
         var LayerInGlobe = globe.getLayerById(id);
