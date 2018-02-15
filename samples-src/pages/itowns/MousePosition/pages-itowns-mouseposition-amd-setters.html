@@ -120,7 +120,7 @@
                         const viewerDiv = document.getElementById('viewerDiv');
                         const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
 
-                        globeView.listen("globeinitialized", () => {
+                        globeView.listen(itowns.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
                             mousePosition = new itowns.control.MousePosition({
                                 collapsed: false,
                                 displayCoordinates: true,

@@ -1,9 +1,11 @@
 define([
+    "Itowns/GlobeViewExtended",
     "Common/Utils",
     "Common/Utils/SelectorID",
     "Common/Controls/ScaleDOM",
     "Itowns/Controls/Widget"
 ], function (
+    GlobeViewExtended,
     Utils,
     SelectorID,
     ScaleDOM,
@@ -101,16 +103,16 @@ define([
             };
             // Ajout des listeners
             // Listen for globe full initialisation event
-            globe.listen( "globeinitialized", this._callbacks.onChangedViewCallback);
+            globe.listen( GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, this._callbacks.onChangedViewCallback);
             // At every globe range movement, scale bar may be updated,
-            globe.listen( "rangechanged", this._callbacks.onChangedViewCallback);
+            globe.listen( GlobeViewExtended.EVENTS.RANGE_CHANGED, this._callbacks.onChangedViewCallback);
 
             this._globe = globe;
         } else if (globe == null) {
             // On retire les listeners qui étaient liés au scalecontrol supprimé
-            globe.forget( "globeinitialized", this._callbacks.onChangedViewCallback);
+            this._globe.forget( GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, this._callbacks.onChangedViewCallback);
             // At every globe range movement, scale bar may be updated,
-            globe.forget( "rangechanged", this._callbacks.onChangedViewCallback);
+            this._globe.forget( GlobeViewExtended.EVENTS.RANGE_CHANGED, this._callbacks.onChangedViewCallback);
 
             // if globe == null we remove the scale control
             // on supprime le DOM du scale control

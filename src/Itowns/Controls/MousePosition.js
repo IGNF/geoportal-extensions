@@ -2,6 +2,7 @@ define([
     "proj4",
     "woodman",
     "gp",
+    "Itowns/GlobeViewExtended",
     "Common/Utils",
     "Common/Utils/CheckRightManagement",
     "Common/Utils/SelectorID",
@@ -13,6 +14,7 @@ define([
     proj4,
     woodman,
     Gp,
+    GlobeViewExtended,
     Utils,
     RightManagement,
     SelectorID,
@@ -145,15 +147,15 @@ define([
             // evenement valable pour le mode desktop !
             if (!this.collapsed) {
                 if (this._isDesktop) {
-                    globe.listen( "mousemove", this._callbacks.mouseMove );
+                    globe.listen( GlobeViewExtended.EVENTS.MOUSE_MOVE, this._callbacks.mouseMove );
                 } else {
-                    globe.listen( "centerchanged", this.onGlobeMove );
+                    globe.listen( GlobeViewExtended.EVENTS.CENTER_CHANGED, this.onGlobeMove );
                 }
             }
             this._globe = globe;
         } else if (globe == null) { // if globe == null we remove the MP control
             // on supprime le listener associé au MP
-            this._globe.forget( "mousemove", this._callbacks.mouseMove );
+            this._globe.forget( GlobeViewExtended.EVENTS.MOUSE_MOVE, this._callbacks.mouseMove );
             // on supprime le DOM du mousePosition
             while (this.getElement().hasChildNodes()) {
                 this.getElement().removeChild(this.getElement().lastChild);
@@ -1151,17 +1153,17 @@ define([
         if ( this._showMousePositionContainer.checked ) {
             // FIXME gérer ou non le cas mobile
             if (this._isDesktop) {
-                globe.forget("mousemove", this._callbacks.mouseMove);
+                globe.forget(GlobeViewExtended.EVENTS.MOUSE_MOVE, this._callbacks.mouseMove);
             } else {
-                globe.forget("centerchanged", this.onGlobeMove);
+                globe.forget(GlobeViewExtended.EVENTS.CENTER_CHANGED, this.onGlobeMove);
             }
 
         } else {
             // FIXME gérer ou non le cas mobile
             if (this._isDesktop) {
-                globe.listen("mousemove", this._callbacks.mouseMove);
+                globe.listen(GlobeViewExtended.EVENTS.MOUSE_MOVE, this._callbacks.mouseMove);
             } else {
-                globe.listen("centerchanged", this.onGlobeMove);
+                globe.listen(GlobeViewExtended.EVENTS.CENTER_CHANGED, this.onGlobeMove);
             }
         }
 

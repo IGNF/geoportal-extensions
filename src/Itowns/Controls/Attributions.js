@@ -1,10 +1,12 @@
 define([
+    "Itowns/GlobeViewExtended",
     "Common/Utils",
     "Common/Utils/SelectorID",
     "Common/Utils/LayerUtils",
     "Common/Controls/AttributionDOM",
     "Itowns/Controls/Widget"
 ], function (
+    GlobeViewExtended,
     Utils,
     SelectorID,
     LayerUtils,
@@ -100,12 +102,12 @@ define([
                 self._inRangeUpdate(allLayers, e.extent);
             };
 
-            globe.listen("prerender", this._callbacks.onPreRenderCallBack);
+            globe.listen( GlobeViewExtended.EVENTS.PRE_RENDER, this._callbacks.onPreRenderCallBack);
             globe.preRenderEventFetchViewExtent();
             globe.preRenderEventFetchLayersDisplayed();
         } else {
             // suppression listener
-            this._globe.forget( "prerender", this._callbacks.onPreRenderCallBack );
+            this._globe.forget( GlobeViewExtended.EVENTS.PRE_RENDER, this._callbacks.onPreRenderCallBack );
 
             // suppression DOM
             while (this._element.hasChildNodes()) {

@@ -39,7 +39,7 @@
                 const viewerDiv = document.getElementById('viewerDiv');
                 const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
 
-                globeView.listen("globeinitialized", () => {
+                globeView.listen(itowns.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
                     // eslint-disable-next-line no-console
                     console.info('Globe initialized');
                     var mousePosition = new itowns.control.MousePosition({

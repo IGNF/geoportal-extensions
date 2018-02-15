@@ -1,11 +1,13 @@
 define([
     "itowns",
+    "Itowns/GlobeViewExtended",
     "Common/Utils",
     "Common/Utils/SelectorID",
     "Common/Controls/MiniGlobeDOM",
     "Itowns/Controls/Widget"
 ], function (
     Itowns,
+    GlobeViewExtended,
     Utils,
     SelectorID,
     MiniGlobeDOM,
@@ -103,7 +105,7 @@ define([
             /**
               * update miniview's camera with the globeView's camera position
               */
-            globe.listen( "afterrender", function () {
+            globe.listen( GlobeViewExtended.EVENTS.AFTER_RENDER, function () {
                 // clamp distance camera from globe
                 var range = globe.getRange();
                 var distance = Math.min(Math.max(range * 1.5, minDistance), maxDistance);

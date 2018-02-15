@@ -1,10 +1,12 @@
 define([
+    "Itowns/GlobeViewExtended",
     "Common/Utils",
     "Common/Utils/LayerUtils",
     "Common/Utils/SelectorID",
     "Common/Controls/LayerSwitcherDOM",
     "Itowns/Controls/Widget"
 ], function (
+    GlobeViewExtended,
     Utils,
     LayerUtils,
     SelectorID,
@@ -172,7 +174,7 @@ define([
             this._callbacks.onChangedViewCallBack = function (e) {
                 self._inRangeUpdate(e.colorLayersId);
             };
-            globe.listen("prerender", this._callbacks.onChangedViewCallBack);
+            globe.listen(GlobeViewExtended.EVENTS.PRE_RENDER, this._callbacks.onChangedViewCallBack);
             // pour que l'evenement prerender renvoie les couches visibles
             globe.preRenderEventFetchColorLayersDisplayed();
 
@@ -197,7 +199,7 @@ define([
                     }
                 }
             };
-            globe.listen("layeradded", this._callbacks.onAddedLayerCallBack);
+            globe.listen(GlobeViewExtended.EVENTS.LAYER_ADDED, this._callbacks.onAddedLayerCallBack);
 
             /**
             * ajout du callback onlayerremoved
@@ -211,7 +213,7 @@ define([
                 }
 
             };
-            globe.listen("layerremoved", this._callbacks.onRemovedLayerCallBack);
+            globe.listen(GlobeViewExtended.EVENTS.LAYER_REMOVED, this._callbacks.onRemovedLayerCallBack);
 
             /**
             * ajout du callback onlayerchanged:index
@@ -235,12 +237,12 @@ define([
                     self._updateLayerListContainer();
                 }
             };
-            globe.listen("layerorderchanged", this._callbacks.onIndexLayerCallBack);
+            globe.listen(GlobeViewExtended.EVENTS.LAYERS_ORDER_CHANGED, this._callbacks.onIndexLayerCallBack);
 
             var layers = globe.getColorLayers();
             for ( var ii = 0 ; ii < layers.length ; ++ii ) {
-                globe.addLayerListener(layers[ii], "opacitypropertychanged", this._callbacks.onOpacityLayerCallBack);
-                globe.addLayerListener(layers[ii], "visiblepropertychanged", this._callbacks.onOpacityLayerCallBack);
+                globe.addLayerListener(layers[ii], GlobeViewExtended.EVENTS.OPACITY_PROPERTY_CHANGED, this._callbacks.onOpacityLayerCallBack);
+                globe.addLayerListener(layers[ii], GlobeViewExtended.EVENTS.VISIBLE_PROPERTY_CHANGED, this._callbacks.onOpacityLayerCallBack);
                 self._updateLayerVisibility(layers[ii].id, layers[ii].visible);
                 self._updateLayerOpacity(layers[ii].id, layers[ii].opacity);
             }
@@ -249,14 +251,14 @@ define([
 
         } else {
             // On retire les listeners qui étaient liés au layerSwitcher supprimé
-            this._globe.forget("prerender", this._callbacks.onChangedViewCallBack);
-            this._globe.forget("layeradded", this._callbacks.onAddedLayerCallBack);
-            this._globe.forget("layerremoved", this._callbacks.onRemovedLayerCallBack);
-            this._globe.forget("layerorderchanged", this._callbacks.onIndexLayerCallBack);
+            this._globe.forget(GlobeViewExtended.EVENTS.PRE_RENDER, this._callbacks.onChangedViewCallBack);
+            this._globe.forget(GlobeViewExtended.EVENTS.LAYER_ADDED, this._callbacks.onAddedLayerCallBack);
+            this._globe.forget(GlobeViewExtended.EVENTS.LAYER_REMOVED, this._callbacks.onRemovedLayerCallBack);
+            this._globe.forget(GlobeViewExtended.EVENTS.LAYERS_ORDER_CHANGED, this._callbacks.onIndexLayerCallBack);
             var layers = this._globe.getColorLayers();
             for ( var j = 0 ; j < layers.length ; ++j ) {
-                this._globe.removeLayerListener(layers[j], "opacitypropertychanged", this._callbacks.onOpacityLayerCallBack);
-                this._globe.removeLayerListener(layers[j], "visiblepropertychanged", this._callbacks.onOpacityLayerCallBack);
+                this._globe.removeLayerListener(layers[j], GlobeViewExtended.EVENTS.OPACITY_PROPERTY_CHANGED, this._callbacks.onOpacityLayerCallBack);
+                this._globe.removeLayerListener(layers[j], GlobeViewExtended.EVENTS.VISIBLE_PROPERTY_CHANGED, this._callbacks.onOpacityLayerCallBack);
             }
             // On supprime le DOM du layerSwitcher
             while (this._element.hasChildNodes()) {

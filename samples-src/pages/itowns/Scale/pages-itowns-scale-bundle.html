@@ -45,7 +45,7 @@
                 });
                 globeView.addWidget( scalebar );
 
-                globeView.listen("globeinitialized", () => {
+                globeView.listen(itowns.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
                     console.info('Globe initialized');
                 });
 

@@ -147,7 +147,7 @@
                 globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
                 itownsGlobal = itowns;
 
-                globeView.listen("globeinitialized", () => {
+                globeView.listen(itowns.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
                     // ajout des couches
                     var promises = [];
                     promises.push( itowns.Fetcher.json('{{ config.resources }}/itowns/JSONLayers/IGN_MNT.json').then(result => globeView.addLayer(result)) );

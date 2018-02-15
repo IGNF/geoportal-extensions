@@ -38,7 +38,7 @@ define([
                 if ( self._fetchVisibleColorLayers || self._fetchVisibleElevationLayers || self._fetchExtent ) {
 
                     var event = {
-                        type : "prerender"
+                        type : GlobeViewExtended.EVENTS.PRE_RENDER
                     };
                     if ( self._fetchExtent ) {
                         event.extent = new Itowns.Extent("EPSG:4326", 180, -180, 90, -90);
@@ -56,7 +56,32 @@ define([
                 }
             }, 100);
         }).bind(this));
+
+        this._initEventMap();
     }
+
+    /**
+     * intializes the evenements map
+     */
+    GlobeViewExtended.prototype._initEventMap = function () {
+        if ( !GlobeViewExtended.EVENTS ) {
+            GlobeViewExtended.EVENTS = {
+                RANGE_CHANGED  : Itowns.CONTROL_EVENTS.RANGE_CHANGED,
+                CENTER_CHANGED  : Itowns.CONTROL_EVENTS.CAMERA_TARGET_CHANGED,
+                ORIENTATION_CHANGED : Itowns.CONTROL_EVENTS.ORIENTATION_CHANGED,
+                LAYER_ADDED : Itowns.GLOBE_VIEW_EVENTS.LAYER_ADDED,
+                LAYER_REMOVED : Itowns.GLOBE_VIEW_EVENTS.LAYER_REMOVED,
+                LAYERS_ORDER_CHANGED : Itowns.GLOBE_VIEW_EVENTS.COLOR_LAYERS_ORDER_CHANGED,
+                GLOBE_INITIALIZED : Itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED,
+                PRE_RENDER : "prerender",
+                MOUSE_MOVE : "mousemove",
+                AFTER_RENDER : Itowns.MAIN_LOOP_EVENTS.AFTER_RENDER,
+                OPACITY_PROPERTY_CHANGED : "opacity-property-changed",
+                VISIBLE_PROPERTY_CHANGED : "visible-property-changed",
+                SEQUENCE_PROPERTY_CHANGED : "sequence-property-changed"
+            }
+        }
+    };
 
     /**
     * Constructor (alias)
@@ -71,162 +96,134 @@ define([
     };
 
     /**
-     * Associate a function to trigger when an event is received.
+     * Associates a function to trigger when an event is received.
      *
-     * @param {String} type - The event type.
+     * @param {String} type - the event type. Can be any of {@link EVENTS}
      * @param {Function} callback - The function to execute when the event occures.
+     * @return {Object} key - The event key
      *
      */
     GlobeViewExtended.prototype.listen = function (type, callback){
         if ( typeof(callback) != "function") {
             console.log("no callback provided for event : " + type) ;
-            return false ;
+            return null ;
         }
 
-        switch (type) {
-            case "rangechanged" :
-                this.getGlobeView().controls.addEventListener(Itowns.CONTROL_EVENTS.RANGE_CHANGED, callback);
-                break ;
-            case "centerchanged" :
-                this.getGlobeView().controls.addEventListener(Itowns.CONTROL_EVENTS.CAMERA_TARGET_CHANGED, callback);
-                break;
-            case "layeradded" :
-                this.getGlobeView().addEventListener(Itowns.GLOBE_VIEW_EVENTS.LAYER_ADDED, callback);
-                break ;
-            case "layerorderchanged" :
-                this.getGlobeView().addEventListener(Itowns.GLOBE_VIEW_EVENTS.COLOR_LAYERS_ORDER_CHANGED, callback);
-                break;
-            case "globeinitialized" :
-                this.getGlobeView().addEventListener(Itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED, callback);
-                break ;
-            case "layerremoved" :
-                this.getGlobeView().addEventListener(Itowns.GLOBE_VIEW_EVENTS.LAYER_REMOVED, callback);
-                break ;
-            case "prerender" :
-                this.getGlobeView().addEventListener(type, callback);
-                break ;
-            case "mousemove" :
-                this._viewerDiv.addEventListener(type, callback);
-                break;
-            case "afterrender" :
-                this.getGlobeView().addFrameRequester(Itowns.MAIN_LOOP_EVENTS.AFTER_RENDER, callback);
-                break ;
-            default :
-                console.log("unhandled event : " + type ) ;
-                return false ;
+        var target = this._getEventTarget(type);
+        if ( !target ){
+            return null;
         }
-        return true;
+
+        if( type === "afterrender" ) {
+            target.addFrameRequester(type, callback);
+        } else {
+            target.addEventListener(type, callback);
+        }
+
+        return {
+            target : target,
+            callback : callback,
+            type : type
+        };
     }
 
     /**
-     * Associate a function to trigger when a layer event is received.
+     * Associates a function to trigger when a layer event is received.
      *
      * @param {Object} layer - The itowns layer.
-     * @param {String} type - the event type.
+     * @param {String} type - the event type. Can be any of {@link EVENTS}.
      * @param {Function} callback - The function to execute when the event occures.
+     * @return {Object} key - The event key
      *
      */
     GlobeViewExtended.prototype.addLayerListener = function (layer, type, callback){
         if ( typeof(callback) != "function") {
             console.log("no callback provided for event : " + type) ;
-            return false ;
+            return null ;
         }
+        layer.addEventListener(type, callback);
+        return {
+            target : layer,
+            callback : callback,
+            type : type
+        };
+    }
 
+    /**
+     * Returns the target of a given event type
+     *
+     * @param {String} type - the event type. Can be any of {@link EVENTS}
+     * @return {Object} target - The event target.
+     *
+     */
+    GlobeViewExtended.prototype._getEventTarget = function ( type ) {
         switch (type) {
-            case "opacitypropertychanged" :
-                layer.addEventListener("opacity-property-changed", callback);
-                break;
-            case "visiblepropertychanged" :
-                layer.addEventListener("visible-property-changed", callback);
-                break;
-            case "sequencepropertychanged" :
-                layer.addEventListener("sequence-property-changed", callback);
-                break;
+            case GlobeViewExtended.EVENTS.RANGE_CHANGED :
+            case GlobeViewExtended.EVENTS.CENTER_CHANGED :
+            case GlobeViewExtended.EVENTS.ORIENTATION_CHANGED :
+                return this.getGlobeView().controls;
+            case GlobeViewExtended.EVENTS.LAYER_ADDED :
+            case GlobeViewExtended.EVENTS.LAYER_REMOVED :
+            case GlobeViewExtended.EVENTS.LAYERS_ORDER_CHANGED :
+            case GlobeViewExtended.EVENTS.GLOBE_INITIALIZED :
+            case GlobeViewExtended.EVENTS.PRE_RENDER :
+            case GlobeViewExtended.EVENTS.AFTER_RENDER :
+                return this.getGlobeView();
+            case GlobeViewExtended.EVENTS.MOUSE_MOVE :
+                return this._viewerDiv;
             default :
                 console.log("unhandled event : " + type ) ;
-                return false ;
+                return null ;
         }
-        return true;
-
     }
 
     /**
      * Cancels an event listening
      *
+     * @param {Object} key - The event key.
+     *
+     */
+    GlobeViewExtended.prototype.forgetByKey = function (key){
+        if ( key.type === "afterrender" ) {
+            key.target.removeFrameRequester(key.type, key.callback);
+        } else {
+            key.target.removeEventListener(key.type, key.callback);
+        }
+    }
+
+    /**
+     * Cancels an layer event listening
+     *
+     * @param {Object} layer - The itowns layer.
      * @param {String} type - the event type.
      * @param {Function} callback - The function to execute when the event occures.
      *
      */
-    GlobeViewExtended.prototype.forget = function (type, callback){
-        if ( typeof(callback) != "function") {
-            console.log("no callback provided for event : " + type) ;
-            return false ;
-        }
-
-        switch (type) {
-            case "rangechanged" :
-                this.getGlobeView().controls.removeEventListener(Itowns.CONTROL_EVENTS.RANGE_CHANGED, callback);
-                break ;
-            case "centerchanged" :
-                this.getGlobeView().controls.removeEventListener(Itowns.CONTROL_EVENTS.CAMERA_TARGET_CHANGED, callback);
-                break;
-            case "layeradded" :
-                this.getGlobeView().removeEventListener(Itowns.GLOBE_VIEW_EVENTS.LAYER_ADDED, callback);
-                break ;
-            case "layerorderchanged" :
-                this.getGlobeView().removeEventListener(Itowns.GLOBE_VIEW_EVENTS.COLOR_LAYERS_ORDER_CHANGED, callback);
-                break;
-            case "globeinitialized" :
-                this.getGlobeView().removeEventListener(Itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED, callback);
-                break ;
-            case "layerremoved" :
-                this.getGlobeView().removeEventListener(Itowns.GLOBE_VIEW_EVENTS.LAYER_REMOVED, callback);
-                break ;
-            case "prerender" :
-                this.getGlobeView().removeEventListener(type, callback);
-                break ;
-            case "mousemove" :
-                this._viewerDiv.removeEventListener(type, callback);
-                break;
-            case "afterrender" :
-                this.getGlobeView().removeFrameRequester(Itowns.MAIN_LOOP_EVENTS.AFTER_RENDER, callback);
-                break ;
-            default :
-                console.log("unhandled event : " + type ) ;
-                return false ;
-        }
-        return true;
+    GlobeViewExtended.prototype.removeLayerListener = function (layer, type, callback) {
+        this.forgetByKey({
+            target : layer,
+            callback : callback,
+            type : type
+        });
     }
 
     /**
-     * Cancels a layer event listening
+     * Cancels an event listening
      *
-     * @param {Object} layer - The itowns layer.
-     * @param {String} type - The event type.
-     * @param {Function} callback - The function to execute when the event occures.
+     * @param {Object} key - The event key.
      *
      */
-    GlobeViewExtended.prototype.removeLayerListener = function (layer, type, callback){
-        if ( typeof(callback) != "function") {
-            console.log("no callback provided for event : " + type) ;
-            return false ;
+    GlobeViewExtended.prototype.forget = function (type, callback) {
+        var target = this._getEventTarget(type);
+        if ( !target ){
+            return null;
         }
 
-        switch (type) {
-            case "opacitypropertychanged" :
-                layer.removeEventListener("opacity-property-changed", callback);
-                break;
-            case "visiblepropertychanged" :
-                layer.removeEventListener("visible-property-changed", callback);
-                break;
-            case "sequencepropertychanged" :
-                layer.removeEventListener("sequence-property-changed", callback);
-                break;
-            default :
-                console.log("unhandled event : " + type ) ;
-                return false ;
-        }
-        return true;
+        this.forgetByKey({
+            target : target,
+            callback : callback,
+            type : type
+        });
     }
 
     /**
@@ -606,7 +603,7 @@ define([
                  if (!layer.visible) {
                      continue;
                  }
-                 var result = itowns.FeaturesUtils.filterFeaturesUnderCoordinate(geoCoord, layer.feature, precision);
+                 var result = Itowns.FeaturesUtils.filterFeaturesUnderCoordinate(geoCoord, layer.feature, precision);
                  // we add the features to the visible features array
                  for (idx = 0; idx < result.length; idx++) {
                      visibleFeatures.push(result[idx]);
@@ -692,6 +689,18 @@ define([
       */
       GlobeViewExtended.prototype.moveTarget = function () {
           return this.getGlobeView().controls.moveTarget();
+      };
+
+      /**
+      *
+      */
+      GlobeViewExtended.prototype.getLayerEventInfos = function (evt) {
+          var propertyName = evt.type.replace("-property-changed","");
+          return {
+              propertyName : propertyName,
+              previousValue : evt.previous[propertyName],
+              newValue : evt.new[propertyName]
+          };
       };
 
      return GlobeViewExtended;
