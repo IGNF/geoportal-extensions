@@ -45,6 +45,7 @@
         "url": "http://localhost:8087/test_rendering/itowns/layerswitcher.html",
         "delay": 1000,
         "clickSelector": "label[id^=GPshowLayersListPicto]",
+        "misMatchThreshold" : 10,
         "postInteractionWait": 1000,
         "selectors": ["div[id^=GPlayerSwitcher-]"]
       },
@@ -52,6 +53,7 @@
         "label": "LayerSwitcher (interaction) : add a layer",
         "url": "http://localhost:8087/test_rendering/itowns/interactions/layerswitcher.html",
         "clickSelector": "#addLayer",
+        "misMatchThreshold" : 30,
         "delay": 10000,
         "postInteractionWait": 10000
       },
@@ -59,6 +61,7 @@
         "label": "LayerSwitcher (interaction) : remove a layer",
         "url": "http://localhost:8087/test_rendering/itowns/interactions/layerswitcher.html",
         "clickSelector": "#removeLayer",
+        "misMatchThreshold" : 30,
         "delay": 10000,
         "postInteractionWait": 10000
       },
@@ -66,7 +69,7 @@
         "label": "MNT",
         "url": "http://localhost:8087/test_rendering/itowns/mnt.html",
         "clickSelector": "div[id^=viewerDiv]",
-        "misMatchThreshold" : 1,
+        "misMatchThreshold" : 30,
         "postInteractionWait": 10000
       }
     ],
