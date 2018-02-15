@@ -33,16 +33,6 @@ function ol3() {
   gulp publish --ol3
 }
 
-# vg
-function vg() {
-  echo "####### VG production !"
-  gulp --vg
-  gulp publish --vg
-  echo "####### VG !"
-  gulp --production --vg
-  gulp publish --vg
-}
-
 # itowns
 function itowns() {
   echo "####### iTowns production !"
@@ -51,16 +41,6 @@ function itowns() {
   echo "####### iTowns !"
   gulp --production --itowns
   gulp publish --itowns
-}
-
-# mix
-function mixVg() {
-  echo "####### Mixte OL/VG !"
-  gulp --ol3 --vg --mix
-  gulp publish --ol3 --vg --mix
-  echo "####### Mixte OL/VG production !"
-  gulp --production --ol3 --vg --mix
-  gulp publish --ol3 --vg --mix
 }
 
 # mix itowns
@@ -83,7 +63,7 @@ function docker() {
 
 npm install
 
-while getopts "daolviVI" opts
+while getopts "daoliI" opts
 do
    case $opts in
      d)
@@ -101,20 +81,10 @@ do
         echo "####### Leaflet bundle ! ########"
         leaflet
         ;;
-     v)
-        echo "#################################"
-        echo "###### VirtualGeo bundle ! ######"
-        vg
-        ;;
      i)
         echo "#############################"
         echo "###### Itowns bundle ! ######"
         itowns
-        ;;
-     V)
-        echo "###############################"
-        echo "###### Mixte VG bundle ! ######"
-        mixVg
         ;;
      I)
         echo "###################################"
@@ -126,13 +96,11 @@ do
         echo "########## ALL bundle ! #########"
         ol3
         leaflet
-        vg
         itowns
-        mixVg
         mixIt
         ;;
      \?)
-        echo "$OPTARG : option invalide : a(all), o(openlayers), l(leaflet), i(itowns), v(virtualgeo) I(ol/itowns) ou V(ol/virtualgeo) !"
+        echo "$OPTARG : option invalide : a(all), o(openlayers), l(leaflet), i(itowns), ou I(ol/itowns) !"
         exit -1
         ;;
    esac

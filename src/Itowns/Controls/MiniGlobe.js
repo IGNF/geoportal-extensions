@@ -44,7 +44,7 @@ define([
         var vDiv = document.getElementById("viewerDiv");
         this._options = options;
 
-        // by default, add the control on the viwerDiv
+        // by default, adds the control on the viewerDiv
         var targetDiv = document.getElementById(options.target) || vDiv;
 
         Widget.call(
@@ -63,7 +63,7 @@ define([
      */
     MiniGlobe.prototype = Object.create(Widget.prototype, {});
 
-    // on récupère les méthodes de la classe commune MiniGlobeDOM
+    // retrieves methods of the common class MiniGlobeDOM
     Utils.assign(MiniGlobe.prototype, MiniGlobeDOM);
 
     /**
@@ -81,9 +81,9 @@ define([
      * Bind globe to control
      */
     MiniGlobe.prototype.setGlobe = function (globe) {
-        // info : cette méthode est appelée (entre autres?) après un globe.addWidget() ou globe.removeWidget()
+        // info : this function is called after a globe.addWidget() or a globe.removeWidget()
 
-        if ( globe ) { // dans le cas de l'ajout du contrôle au globe
+        if ( globe ) { // In the case of the adding of a control to the globe
             var minDistance = 6650000;
             var maxDistance = 30000000;
             var positionOnGlobe = globe.getCenter();
@@ -125,7 +125,7 @@ define([
             this._globeObj = miniView;
         } else if (globe == null) {
             // if globe == null we remove the overview control
-            // on supprime le DOM de  l'overviewcontrol
+            // we delete the overview control DOM
             while (this.getElement().hasChildNodes()) {
                 this.getElement().removeChild(this.getElement().lastChild);
             }
@@ -146,10 +146,11 @@ define([
      * @private
      */
     MiniGlobe.prototype._initialize = function () {
-        // identifiant du contrôle : utile pour suffixer les identifiants CSS (pour gérer le cas où il y en a plusieurs dans la même page)
+
+        // id of the widget : usefull to suffix the CSS ids (to handle cases with several widgets on the same page)
         this._uid = SelectorID.generate();
 
-        // div qui contiendra les div des listes.
+        // div which will contain the list divs.
         this._MiniGlobeContainer = null;
 
         // callbacks
@@ -157,7 +158,7 @@ define([
     };
 
     /**
-     * Create control main container
+     * Creates control main container
      *
      * @method _initContainer
      * @private
