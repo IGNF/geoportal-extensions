@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <!-- Library openlayers -->
+  <script src="../../node_modules/openlayers/dist/ol-debug.js"></script>
+
+  <!-- Plugin ol3 IGN -->
+  <link rel="stylesheet" href="../../dist/ol3/GpPluginOl3.css" />
+  <script data-url="./resources/AutoConf.js" src="../../dist/ol3/GpPluginOl3-src.js"></script>
+
+</head>
+<body>
+        <!-- map -->
+        <div id="map" style="height: 400px;"></div>
+        
+    <!-- code -->
+    <script type="text/javascript">
+                var map;
+                window.onload = function() {
+                    // on cache l'image de chargement du Géoportail.
+                    document.getElementById('map').style.backgroundImage = 'none';
+
+					// 1. Création de la map
+                    map = new ol.Map({
+                        target : "map",
+                        view : new ol.View({
+                            center : [288074.8449901076, 6247982.515792289],
+                            zoom : 6
+                        }),
+                        layers : [
+                            new ol.layer.Tile({
+                                source : new ol.source.GeoportalWMTS({
+                                    layer: "ORTHOIMAGERY.ORTHOPHOTOS"
+                                }),
+                                opacity : 0.8
+                            }),
+                            new ol.layer.Tile({
+                                source : new ol.source.GeoportalWMTS({
+                                    layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+                                })
+                            })
+                        ]
+                    });
+
+					// 2. Appel du LayerSwitcher
+                    layerSwitcher = new ol.control.LayerSwitcher({});
+
+					// 3. Ajout du LayerSwitcher à la carte
+                    map.addControl(layerSwitcher);
+                };
+           </script>
+
+
+
+</body>
+</html>
