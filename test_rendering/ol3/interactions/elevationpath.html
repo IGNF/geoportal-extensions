@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <!-- Library openlayers -->
+  <script src="../../../node_modules/openlayers/dist/ol-debug.js"></script>
+
+  <!-- Plugin ol3 IGN -->
+  <link rel="stylesheet" href="../../../dist/ol3/GpPluginOl3.css" />
+  <script data-url="./../resources/AutoConf.js" src="../../../dist/ol3/GpPluginOl3-src.js"></script>
+
+</head>
+<body>
+        <!-- map -->
+        <div id="map" style="height: 400px;"></div>
+        <button id="computeProfil"> Calculer profil alti </button>
+        
+    <!-- code -->
+    <script type="text/javascript">
+    var map;
+    var profil;
+
+    window.onload = function () {
+        // on cache l'image de chargement du Géoportail.
+        document.getElementById("map").style.backgroundImage = "none";
+
+        // Création de la map
+        map = new ol.Map({
+          target : "map",
+          layers : [
+            new ol.layer.GeoportalWMTS({
+              layer : "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+            })
+          ],
+          view : new ol.View({
+            center : [288074.8449901076, 6247982.515792289],
+            zoom : 8
+          })
+        });
+
+        profil = new ol.control.ElevationPath({
+            debug : true, // orienté maintenance : affiche les points du service sur le tracé !
+            elevationPathOptions : {
+              sampling : 2
+            },
+            stylesOptions : {
+              draw : {
+                start : new ol.style.Stroke({
+                    color : "yellow",
+                    lineDash : null,
+                    width : 5
+                }),
+                pointer : new ol.style.Circle({
+                    radius : 8,
+                    stroke : new ol.style.Stroke({
+                        color : "red",
+                        width : 1
+                    }),
+                    fill : new ol.style.Fill({
+                        color : "blue"
+                    })
+                }),
+                finish : new ol.style.Stroke({
+                    color : "rgba(0, 0, 0, 0.5)",
+                    width : 8
+                })
+              }
+          }
+        });
+        map.addControl(profil);
+        var computeProfilAlti = function () {
+          var altiOptions = {
+          apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
+          sampling : 200,
+          positions : [
+            {
+              lon : 0.9975493661560053,
+              lat : 49.13332206048233
+            },
+            {
+              lon : 1.0689604989685055,
+              lat : 49.118943242255966
+            }
+          ],
+          onSuccess : function (result) {
+                    if (result) {
+                        profil._panelContainer.style.display = "block";
+                        // self._panelContainer.style.visibility = "visible";
+                        profil._displayProfile(result.elevations);
+                        profil._waitingContainer.className = "GPelevationPathCalcWaitingContainerHidden";
+                        profil._waiting = false;
+                    }
+                },
+          onFailure : function (error) {
+                    // on ferme le panneau en cas d'erreur !
+                    profil._panelContainer.style.display = "none";
+                    // self._panelContainer.style.visibility = "hidden";
+                    profil._waitingContainer.className = "GPelevationPathCalcWaitingContainerHidden";
+                    profil._waiting = false;
+                }
+          };
+
+          Gp.Services.getAltitude(altiOptions);
+        }
+
+        document.getElementById("computeProfil").onclick = function() {
+          document.querySelector("button[id^=GPtoolbox-measure-button-]").click();
+          computeProfilAlti();
+        }
+    };
+
+
+    </script>
+
+</body>
+</html>

@@ -17,7 +17,7 @@ API :
 > node server.js
 
 3. Executer les tests
-> npm run test
+> npm run test-[ll|ol|it]
 
 > **TODO : clean des tests**
 Le ménage est à faire en production !
@@ -25,7 +25,7 @@ Un répertoire d'images est généré après chaque test...
 Il faut donc prévoir une target de nettoyage en production...
 
 4. Recalculer les images references
-> npm run reference
+> npm run reference-[ll|ol|it]
 
 >  **uniquement** si l'on souhaite ajouter de nouveaux tests !
 
@@ -33,14 +33,14 @@ Il faut donc prévoir une target de nettoyage en production...
 
 ## Les fichiers de scenarios
 
-> **TODO : utiliser plusieurs fichiers de configurations**
+> ** utilisation de plusieurs fichiers de configurations**
 Possibilité d'utiliser plusieurs fichiers de configurations afin de structurer nos tests
-par fonctionnalités, viewport, ...
+par fonctionnalités : Leaflet, OpenLayer et Itowns
 
 ## Répertoires de résultats
 
-> **TODO : structurer les images réferences**
-Choix de placer les tests leaflet / openlayers dans des répertoires séparés.
+> ** structure des images réferences**
+Choix de placer les tests leaflet / openlayers / itowns dans des répertoires séparés.
 
 ```
 "paths": {
@@ -76,8 +76,7 @@ Par defaut, c'est tout le document que l'on capture (screenshot) !
 
 ## Choix des evenements déclencheurs de la capture
 
-> **TODO**
-*SPA testing support* - Use Casper (or Chrome) scripts and explicit web app triggers
+> *SPA testing support* - Use Casper (or Chrome) scripts and explicit web app triggers
  to ensure screenshots are captured at the correct time inside your web app
  (e.g. after API responses, after CSS animation completion, or wait for any other
  watchable async process).
@@ -89,16 +88,14 @@ On utilise principalement les declencheurs suivants :
 "postInteractionWait": 1000 // Temps d'attente du screenshot après le clic
 ```
 
-> **TODO**
-*Simulating user interactions* - Use Casper (or Chrome) scripting inside your
+> *Simulating user interactions* - Use Casper (or Chrome) scripting inside your
 scenarios to simulate interactions with your on-screen components.
 
 > **>>>>>**
 Dans le cadre de la *cucumberisation* des tests de rendu, on va devoir realiser
 des actions scriptées avec *cucumberjs*.
 
-> **FIXME**
-*Cross Domain* - Howto ???
+> *Cross Domain*
 
 > **>>>>>**
 Ne pas mettre de chemin relatif mais des URLs (Ex. http://localhost/).
