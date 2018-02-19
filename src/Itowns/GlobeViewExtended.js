@@ -114,7 +114,7 @@ define([
             return null;
         }
 
-        if( type === "afterrender" ) {
+        if( type === GlobeViewExtended.EVENTS.AFTER_RENDER ) {
             target.addFrameRequester(type, callback);
         } else {
             target.addEventListener(type, callback);
@@ -184,7 +184,7 @@ define([
      *
      */
     GlobeViewExtended.prototype.forgetByKey = function (key){
-        if ( key.type === "afterrender" ) {
+        if ( key.type === GlobeViewExtended.EVENTS.AFTER_RENDER ) {
             key.target.removeFrameRequester(key.type, key.callback);
         } else {
             key.target.removeEventListener(key.type, key.callback);
