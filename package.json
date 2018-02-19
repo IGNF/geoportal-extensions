@@ -31,7 +31,9 @@
     "geoportail",
     "javascript",
     "OpenLayers",
-    "Leaflet"
+    "Leaflet",
+    "Itowns",
+    "3D"
   ],
   "license": "CECILL-B",
   "bugs": {
