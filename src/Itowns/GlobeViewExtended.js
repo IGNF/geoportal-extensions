@@ -57,6 +57,15 @@ define([
             }, 100);
         }).bind(this));
 
+        this._globeView.addFrameRequester(Itowns.MAIN_LOOP_EVENTS.AFTER_RENDER, (function afterRenderHandler() {
+            if (this._globeView.mainLoop.scheduler.commandsWaitingExecutionCount() == 0) {
+                this._globeView.dispatchEvent({
+                    type : GlobeViewExtended.EVENTS.VIEW_INITIALIZED
+                });
+                this._globeView.removeFrameRequester(Itowns.MAIN_LOOP_EVENTS.AFTER_RENDER, afterRenderHandler);
+            }
+        }).bind(this));
+
         this._initEventMap();
     }
 
@@ -73,6 +82,7 @@ define([
                 LAYER_REMOVED : Itowns.GLOBE_VIEW_EVENTS.LAYER_REMOVED,
                 LAYERS_ORDER_CHANGED : Itowns.GLOBE_VIEW_EVENTS.COLOR_LAYERS_ORDER_CHANGED,
                 GLOBE_INITIALIZED : Itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED,
+                VIEW_INITIALIZED : "viewinitialized",
                 PRE_RENDER : "prerender",
                 MOUSE_MOVE : "mousemove",
                 AFTER_RENDER : Itowns.MAIN_LOOP_EVENTS.AFTER_RENDER,
@@ -168,6 +178,7 @@ define([
             case GlobeViewExtended.EVENTS.GLOBE_INITIALIZED :
             case GlobeViewExtended.EVENTS.PRE_RENDER :
             case GlobeViewExtended.EVENTS.AFTER_RENDER :
+            case GlobeViewExtended.EVENTS.VIEW_INITIALIZED :
                 return this.getGlobeView();
             case GlobeViewExtended.EVENTS.MOUSE_MOVE :
                 return this._viewerDiv;
