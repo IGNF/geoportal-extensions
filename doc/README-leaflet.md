@@ -15,7 +15,7 @@ This extension is not standalone and has to be used **together with Leaflet** li
 <link rel="stylesheet" href="path/to/GpPluginLeaflet.css" />
 ```
 
-NB : to have complete access to this extension functionnalities, you need to provide your geoportal access key (<a href="http://professionnels.ign.fr/ign/contrats" target="_blank">obtained here</a>) either when loading extension script (using the data-key attribute) or by conditinning their use to the onSuccess callback function of a <a href="http://ignf.github.io/geoportal-access-lib/v1.0.0-beta.2/jsdoc/module-Services.html#~getConfig" target="_blank">Gp.Services.GetConfig()</a> call with that key. Otherwhise some functionalities may not work as announced.
+NB : to have complete access to this extension functionnalities, you need to provide your geoportal access key (<a href="http://professionnels.ign.fr/ign/contrats" target="_blank">obtained here</a>) either when loading extension script (using the data-key attribute) or by conditinning their use to the onSuccess callback function of a <a href="http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~getConfig" target="_blank">Gp.Services.GetConfig()</a> call with that key. Otherwhise some functionalities may not work as announced.
 
 
 ## Geoportal CRS
@@ -51,7 +51,3 @@ Controls provided by the Geoportal Extension are additionnal <a href="http://lea
 | {@link L.geoportalControl.Route L.geoportalControl.Route} | Allows users to compute and display routes on a Map using  <a href="https://geoservices.ign.fr/documentation/geoservices/itineraires.html" target="_blank">routing service</a> of the Geoportal Platform. |
 | {@link L.geoportalControl.Isocurve L.geoportalControl.Isocurve} | Allows users to compute and display Isochrone or Isodistance curves on a Map using  <a href="https://geoservices.ign.fr/documentation/geoservices/isochrones.html" target="_blank">isochron/isodistance service</a> of the Geoportal Platform. |
 | {@link L.geoportalControl.ElevationPath L.geoportalControl.ElevationPath} | Allows users to compute an altimetric profile using <a href="https://geoservices.ign.fr/documentation/geoservices/alti.html" target="_blank">elevation service</a> of the Geoportal Platform. |
-
-
-
-
