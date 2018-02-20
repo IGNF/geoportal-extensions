@@ -242,7 +242,7 @@ define([
             var layers = globe.getColorLayers();
             for ( var ii = 0 ; ii < layers.length ; ++ii ) {
                 globe.addLayerListener(layers[ii], GlobeViewExtended.EVENTS.OPACITY_PROPERTY_CHANGED, this._callbacks.onOpacityLayerCallBack);
-                globe.addLayerListener(layers[ii], GlobeViewExtended.EVENTS.VISIBLE_PROPERTY_CHANGED, this._callbacks.onOpacityLayerCallBack);
+                globe.addLayerListener(layers[ii], GlobeViewExtended.EVENTS.VISIBLE_PROPERTY_CHANGED, this._callbacks.onVisibilityLayerCallBack);
                 self._updateLayerVisibility(layers[ii].id, layers[ii].visible);
                 self._updateLayerOpacity(layers[ii].id, layers[ii].opacity);
             }
@@ -258,7 +258,7 @@ define([
             var layers = this._globe.getColorLayers();
             for ( var j = 0 ; j < layers.length ; ++j ) {
                 this._globe.removeLayerListener(layers[j], GlobeViewExtended.EVENTS.OPACITY_PROPERTY_CHANGED, this._callbacks.onOpacityLayerCallBack);
-                this._globe.removeLayerListener(layers[j], GlobeViewExtended.EVENTS.VISIBLE_PROPERTY_CHANGED, this._callbacks.onOpacityLayerCallBack);
+                this._globe.removeLayerListener(layers[j], GlobeViewExtended.EVENTS.VISIBLE_PROPERTY_CHANGED, this._callbacks.onVisibilityLayerCallBack);
             }
             // deletes the layerSwitcher DOM
             while (this._element.hasChildNodes()) {
