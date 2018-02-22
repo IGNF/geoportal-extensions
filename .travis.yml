@@ -4,7 +4,7 @@ node_js:
 stages:
   - name: deploy
     # require the branch name to be master
-    if: branch = master
+    if: branch = refacto-api-itowns
 before_script:
   - npm install
 script: ./node_modules/.bin/gulp build
