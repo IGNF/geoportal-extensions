@@ -151,7 +151,6 @@ define([
                     globe.listen( GlobeViewExtended.EVENTS.CENTER_CHANGED, this.onGlobeMove );
                 }
             }
-            this._globe = globe;
         } else if (globe == null) { // if globe == null we remove the MP control
             // deletes the listener associated to the mousePosition control
             this._globe.forget( GlobeViewExtended.EVENTS.MOUSE_MOVE, this._callbacks.mouseMove );

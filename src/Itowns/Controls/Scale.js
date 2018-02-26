@@ -88,11 +88,11 @@ define([
               * when the view is changing, we recalculate the graphic scale
               */
             this._callbacks.onChangedViewCallback = function () {
-                var value = self.getGlobe().pixelsToMeters(200);
+                var value = globe.pixelsToMeters(200);
                 value = Math.floor(value);
                 var digit = Math.pow(10, value.toString().length - 1);
                 value = Math.round(value / digit) * digit;
-                var pix = self.getGlobe().metersToPixels(value);
+                var pix = globe.metersToPixels(value);
                 var unit = "m";
                 if (value >= 1000) {
                     value /= 1000;
@@ -111,9 +111,6 @@ define([
 
             // At every globe range movement, scale bar may be updated,
             globe.listen( GlobeViewExtended.EVENTS.RANGE_CHANGED, this._callbacks.onChangedViewCallback);
-
-
-            this._globe = globe;
         } else if (globe == null) {
             // we remove the listeners linked to the scalecontrol which has been deleted
             this._globe.forget( GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, this._callbacks.onChangedViewCallback);

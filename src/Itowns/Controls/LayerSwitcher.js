@@ -246,9 +246,6 @@ define([
                 self._updateLayerVisibility(layers[ii].id, layers[ii].visible);
                 self._updateLayerOpacity(layers[ii].id, layers[ii].opacity);
             }
-
-            this._globe = globe;
-
         } else {
             // removes the listeners associated to the deleted layerswitcher
             this._globe.forget(GlobeViewExtended.EVENTS.PRE_RENDER, this._callbacks.onChangedViewCallBack);
