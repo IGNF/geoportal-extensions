@@ -105,7 +105,7 @@ define([
             /**
               * update miniview's camera with the globeView's camera position
               */
-            globe.listen( GlobeViewExtended.EVENTS.AFTER_RENDER, function () {
+            function updateMiniGlobeHandler() {
                 // clamp distance camera from globe
                 var range = globe.getRange();
                 var distance = Math.min(Math.max(range * 1.5, minDistance), maxDistance);
@@ -114,7 +114,13 @@ define([
                 camera.position.copy(globe.moveTarget()).setLength(distance);
                 camera.lookAt(globe.moveTarget());
                 miniView.notifyChange(true);
-            });
+            };
+            globe.listen( GlobeViewExtended.EVENTS.AFTER_RENDER, updateMiniGlobeHandler);
+            if( globe.isInitialized() ) {
+                updateMiniGlobeHandler();
+            } else {
+                globe.listen( GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, updateMiniGlobeHandler);
+            }
 
             /**
               * Add one imagery layer to the miniview (by default, the ortho)

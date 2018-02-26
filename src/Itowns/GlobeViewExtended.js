@@ -28,13 +28,23 @@ define([
         // widget container
         this._widgets = [];
 
+        // mapping des evenements
+        this._initEventMap();
+
+        // pour savoir si le globe est initialise
+        this._isInitialized = false;
+
         // call constructor
         this._globeView = new Itowns.GlobeView(viewerDiv, coordCarto, options);
 
+        var self = this;
+        this.listen(GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, function () {
+            self._isInitialized = true;
+        });
+
         this._globeView.addFrameRequester(Itowns.MAIN_LOOP_EVENTS.BEFORE_RENDER, (function () {
-            var self = this;
             clearTimeout(this._preRenderTimer);
-            this._preRenderTimer = setTimeout( function () {
+            self._preRenderTimer = setTimeout( function () {
                 if ( self._fetchVisibleColorLayers || self._fetchVisibleElevationLayers || self._fetchExtent ) {
 
                     var event = {
@@ -57,9 +67,8 @@ define([
             }, 100);
         }).bind(this));
 
-        this.freezeControl();
+        //this.freezeControl();
 
-        this._initEventMap();
     }
 
     /**
@@ -99,18 +108,31 @@ define([
     };
 
     /**
-     * Get GlobeViex Object (parent)
+     * Indicates if the globe is initialized or not
+     *
+     * @return {Boolean} isInitialized
+     *
+     */
+     GlobeViewExtended.prototype.isInitialized = function () {
+         return this._isInitialized;
+     }
+
+    /**
+     * Disables globe controls until the globe rendering is completed
      */
     GlobeViewExtended.prototype.freezeControl = function () {
         // disable navigation
         this._globeView .controls.enabled = false;
-        this._globeView.addFrameRequester(Itowns.MAIN_LOOP_EVENTS.AFTER_RENDER, (function afterRenderHandler() {
-            if (this._globeView.mainLoop.scheduler.commandsWaitingExecutionCount() == 0 && this._globeView._changeSources.size == 0) {
+
+        var self = this;
+
+        this._globeView.addFrameRequester(Itowns.MAIN_LOOP_EVENTS.AFTER_RENDER, function afterRenderHandler() {
+            if (self._globeView.mainLoop.scheduler.commandsWaitingExecutionCount() == 0 && self._globeView._changeSources.size == 0) {
                 // enable navigation
-                this._globeView.controls.enabled = true;
-                this._globeView.removeFrameRequester(Itowns.MAIN_LOOP_EVENTS.AFTER_RENDER, afterRenderHandler);
+                self._globeView.controls.enabled = true;
+                self._globeView.removeFrameRequester(Itowns.MAIN_LOOP_EVENTS.AFTER_RENDER, afterRenderHandler);
             }
-        }).bind(this));
+        });
     };
 
     /**

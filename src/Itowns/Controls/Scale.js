@@ -102,10 +102,16 @@ define([
                 self.getElement().style.width = pix + "px";
             };
             // Ajout des listeners
-            // Listen for globe full initialisation event
-            globe.listen( GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, this._callbacks.onChangedViewCallback);
+            // initialization
+            if( globe.isInitialized() ) {
+                this._callbacks.onChangedViewCallback();
+            } else {
+                globe.listen( GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, this._callbacks.onChangedViewCallback);
+            }
+
             // At every globe range movement, scale bar may be updated,
             globe.listen( GlobeViewExtended.EVENTS.RANGE_CHANGED, this._callbacks.onChangedViewCallback);
+
 
             this._globe = globe;
         } else if (globe == null) {
