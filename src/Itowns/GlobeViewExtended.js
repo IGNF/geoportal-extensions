@@ -67,7 +67,7 @@ define([
             }, 100);
         }).bind(this));
 
-        //this.freezeControl();
+        this.freezeControl();
 
     }
 
