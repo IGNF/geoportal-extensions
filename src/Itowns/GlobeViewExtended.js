@@ -57,14 +57,7 @@ define([
             }, 100);
         }).bind(this));
 
-        this._globeView.addFrameRequester(Itowns.MAIN_LOOP_EVENTS.AFTER_RENDER, (function afterRenderHandler() {
-            if (this._globeView.mainLoop.scheduler.commandsWaitingExecutionCount() == 0) {
-                this._globeView.dispatchEvent({
-                    type : GlobeViewExtended.EVENTS.VIEW_INITIALIZED
-                });
-                this._globeView.removeFrameRequester(Itowns.MAIN_LOOP_EVENTS.AFTER_RENDER, afterRenderHandler);
-            }
-        }).bind(this));
+        this.freezeControl();
 
         this._initEventMap();
     }
@@ -103,6 +96,21 @@ define([
      */
     GlobeViewExtended.prototype.getGlobeView = function () {
         return this._globeView;
+    };
+
+    /**
+     * Get GlobeViex Object (parent)
+     */
+    GlobeViewExtended.prototype.freezeControl = function () {
+        // disable navigation
+        this._globeView .controls.enabled = false;
+        this._globeView.addFrameRequester(Itowns.MAIN_LOOP_EVENTS.AFTER_RENDER, (function afterRenderHandler() {
+            if (this._globeView.mainLoop.scheduler.commandsWaitingExecutionCount() == 0 && this._globeView._changeSources.size == 0) {
+                // enable navigation
+                this._globeView.controls.enabled = true;
+                this._globeView.removeFrameRequester(Itowns.MAIN_LOOP_EVENTS.AFTER_RENDER, afterRenderHandler);
+            }
+        }).bind(this));
     };
 
     /**
