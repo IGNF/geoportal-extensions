@@ -4,18 +4,32 @@ node_js:
 stages:
   - name: deploy
     # require the branch name to be master
-    if: branch = refacto-api-itowns
+    if: branch = master
 before_script:
   - npm install
-script: ./node_modules/.bin/gulp build
+script: 
+  - ./node_modules/.bin/gulp build --mix --itowns --ol3
+  - ./node_modules/.bin/gulp build --leaflet
 cache:
   directories:
     - node_modules
+before_deploy:
+    - git clone https://github.com/IGNF/geoportal-extensions --branch gh-pages deploy/
+    - cp -r target/build/Itowns/dist deploy/bundles/
+    - cp -r target/build/Mix/dist deploy/bundles/
+    - cp -r target/build/Ol3/dist deploy/bundles/
+    - cp -r target/build/Leaflet/dist deploy/bundles/
+    - mkdir deploy/doc/
+    - cp -r target/build/Leaflet/doc deploy/doc/leaflet/
+    - cp -r target/build/Ol3/doc deploy/doc/ol3/
+    - cp -r target/build/Itowns/doc deploy/doc/itowns/
 deploy:
   provider: pages
   skip-cleanup: true
   github-token: $ghkey  # Set in travis-ci.org dashboard, marked secure
-  local-dir: $TRAVIS_BUILD_DIR/dist/*
+  local_dir: deploy/
   keep-history: true
   on:
     branch: gh-pages
+  after_deploy:
+    - rm -rf deploy/
