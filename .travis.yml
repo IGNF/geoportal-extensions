@@ -22,7 +22,6 @@ before_deploy:
     - mkdir deploy/doc/
     - cp -r target/build/Leaflet/doc deploy/doc/leaflet/
     - cp -r target/build/Ol3/doc deploy/doc/ol3/
-    - cp -r target/build/Itowns/doc deploy/doc/itowns/
 deploy:
   provider: pages
   skip-cleanup: true
