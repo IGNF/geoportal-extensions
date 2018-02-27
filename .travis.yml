@@ -30,6 +30,6 @@ deploy:
   local_dir: deploy/
   keep-history: true
   on:
-    branch: gh-pages
+    branch: master
   after_deploy:
     - rm -rf deploy/
