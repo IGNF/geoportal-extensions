@@ -6,8 +6,7 @@
   "version": "0.1.0",
   "leafletExtVersion": "1.0.0",
   "ol3ExtVersion": "1.0.0",
-  "vgExtVersion": "5.0.0",
-  "itownsExtVersion": "2.1",
+  "itownsExtVersion": "2.3.0",
   "description": "French Geoportal Extensions for OpenLayers, Leaflet and iTowns libraries",
   "main": "dist/leaflet/GpPluginLeaflet.js, dist/ol3/GpPluginOl3.js,",
   "directories": {
@@ -45,6 +44,7 @@
     "leaflet": "^1.3.0",
     "leaflet-draw": "0.4.12",
     "openlayers": "4.0.1",
+    "itowns": "2.3.0",
     "proj4": "2.4.4",
     "proj4leaflet": "1.0.2",
     "requirejs": "^2.3.5",
