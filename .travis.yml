@@ -8,8 +8,14 @@ stages:
 before_script:
   - npm install
 script: 
-  - ./node_modules/.bin/gulp build --mix --itowns --ol3
-  - ./node_modules/.bin/gulp build --leaflet
+  # build the mixed ol3/itowns, ol3, itowns, leaflet bundles
+  - npm run build-mix-itowns-ol3
+  - npm run build-leaflet
+  # publish the bundles in the dist folder
+  - npm run publish-ol3
+  - npm run publish-itowns
+  - npm run publish-mix-itowns-ol3
+  - npm run publish-leaflet 
 cache:
   directories:
     - node_modules

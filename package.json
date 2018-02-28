@@ -20,6 +20,11 @@
     "build-ol3": "gulp build",
     "build-leaflet": "gulp build --leaflet",
     "build-itowns": "gulp build --itowns",
+    "build-mix-itowns-ol3": "gulp build --mix --itowns --ol3",
+    "publish-ol3": "gulp publish",
+    "publish-leaflet": "gulp publish --leaflet",
+    "publish-itowns": "gulp publish --itowns",
+    "publish-mix-itowns-ol3": "gulp publish --ol3 --itowns --mix",
     "test": "gulp test",
     "doc": "gulp doc",
     "check": "gulp check"
