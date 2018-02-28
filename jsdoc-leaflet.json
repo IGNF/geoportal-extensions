@@ -18,12 +18,12 @@
         "hardwrap": true
     },
     "opts": {
-        "template" : "target/build/Leaflet/doc/jaguarjs-jsdoc",
+        "template" : "target/build/Leaflet/jsdoc/jaguarjs-jsdoc",
         "encoding" : "utf8",
-        "destination": "./target/build/Leaflet/doc",
+        "destination": "./target/build/Leaflet/jsdoc",
         "recurse": true,
         "lenient": true,
         "verbose": true,
-        "tutorials" : "./target/build/Leaflet/doc/tutorials"
+        "tutorials" : "./target/build/Leaflet/jsdoc/tutorials"
     }
 }

@@ -33,9 +33,9 @@
         "hardwrap": true
     },
     "opts": {
-        "template" : "target/build/Itowns/doc/jaguarjs-jsdoc",
+        "template" : "target/build/Itowns/jsdoc/jaguarjs-jsdoc",
         "encoding" : "utf8",
-        "destination": "./target/build/Itowns/doc",
+        "destination": "./target/build/Itowns/jsdoc",
         "recurse": true,
         "lenient": true,
         "verbose": true

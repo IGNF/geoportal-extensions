@@ -953,7 +953,7 @@
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     gulp.task("copy-libjsdoc", function () {
 
-        var builddir = path.join(_build, getDistDirName(), "doc");
+        var builddir = path.join(_build, getDistDirName(), "jsdoc");
 
         return gulp.src(path.join(_dir.doc, "**"))
                 .pipe(gulp.dest(builddir))

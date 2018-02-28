@@ -1,110 +1,138 @@
 #!/bin/bash
 
-# Script de construction des bundles ainsi que de deploiement
-# sur le serveur de sources
-#  - TODO choix des bundles à construire
-#  - TODO mise en place d'un "Build Number" unique et commune à tous les bundles
-#         ex. fichier build.number avec un numéro qui est incrementé aprés chaque execution
-#  - TODO gulp publish --build-number
-#  - TODO gérer la publication des bundles sur le depot de sources (mercurial ou git)
-#         hg commit -m "building bundles ${build.number}..."
-#         hg outgoing | sed -n -e 3p  | cut -d: -f3 (ex. 944ed81fd2b6)
-#         hg push
+# Script de construction des bundles
+# ./build.sh -a(all)
+#     -o(openlayers)
+#     -l(leaflet)
+#     -i(itowns)
+#     -I(ol/itowns)
 
-echo "BEGIN"
+# TODO
+#   - gulp est une commande globale !
+#     > npm install --global gulp
 
+##########
+# doCmd()
+
+doCmd () {
+    cmd2issue=$1
+    eval ${cmd2issue}
+    retour=$?
+    if [ $retour -ne 0 ] ; then
+        printTo "Erreur d'execution (code:${retour}) !..."
+        exit 100
+    fi
+}
+
+##########
+# printTo()
+
+printTo () {
+    text=$1
+    d=`date`
+    echo "[${d}] ${text}"
+}
+
+printTo "BEGIN"
+
+##########
 # leaflet
 function leaflet() {
-  echo "####### LEAFLET production !"
-  gulp --production --leaflet
-  gulp publish --leaflet
-  echo "####### LEAFLET !"
-  gulp --leaflet
-  gulp publish --leaflet
+  printTo "####### LEAFLET production !"
+  doCmd "gulp build --production --leaflet"
+  doCmd "gulp publish --leaflet"
+  printTo "####### LEAFLET !"
+  doCmd "gulp build --leaflet"
+  doCmd "gulp publish --leaflet"
 }
 
+##########
 # ol3
 function ol3() {
-  echo "####### OL production !"
-  gulp --production --ol3
-  gulp publish --ol3
-  echo "####### OL !"
-  gulp --ol3
-  gulp publish --ol3
+  printTo "####### OL production !"
+  doCmd "gulp build --production --ol3"
+  doCmd "gulp publish --ol3"
+  printTo "####### OL !"
+  doCmd "gulp build --ol3"
+  doCmd "gulp publish --ol3"
 }
 
+##########
 # itowns
 function itowns() {
-  echo "####### iTowns production !"
-  gulp --itowns
-  gulp publish --itowns
-  echo "####### iTowns !"
-  gulp --production --itowns
-  gulp publish --itowns
+  printTo "####### iTowns production !"
+  doCmd "gulp build --itowns"
+  doCmd "gulp publish --itowns"
+  printTo "####### iTowns !"
+  doCmd "gulp build --production --itowns"
+  doCmd "gulp publish --itowns"
 }
 
+##########
 # mix itowns
 function mixIt() {
-  echo "####### Mixte OL/iTowns !"
-  gulp --ol3 --itowns --mix
-  gulp publish --ol3 --itowns --mix
-  echo "####### Mixte OL/iTowns production !"
-  gulp --production --ol3 --itowns --mix
-  gulp publish --ol3 --itowns --mix
+  printTo "####### Mixte OL/iTowns !"
+  doCmd "gulp build --ol3 --itowns --mix"
+  doCmd "gulp publish --ol3 --itowns --mix"
+  printTo "####### Mixte OL/iTowns production !"
+  doCmd "gulp build --production --ol3 --itowns --mix"
+  doCmd "gulp publish --ol3 --itowns --mix"
 }
 
+##########
 # build docker
 function docker() {
-  echo "####### Build Docker !"
-  docker build -t geoportal-extensions .
-  echo "####### Run Docker !"
-  docker run -it --rm geoportal-extensions
+  printTo "####### Build Docker !"
+  doCmd "docker build -t geoportal-extensions ."
+  printTo "####### Run Docker !"
+  doCmd "docker run -it --rm geoportal-extensions"
 }
 
-npm install
+doCmd "npm install"
+doCmd "gulp clean"
 
 while getopts "daoliI" opts
 do
    case $opts in
      d)
-        echo "#################################"
-        echo "########### DOCKER ! ###########"
+        printTo "#################################"
+        printTo "########### DOCKER ! ###########"
         docker
         ;;
      o)
-        echo "#################################"
-        echo "###### OpenLayers bundle ! ######"
+        printTo "#################################"
+        printTo "###### OpenLayers bundle ! ######"
         ol3
         ;;
      l)
-        echo "#################################"
-        echo "####### Leaflet bundle ! ########"
+        printTo "#################################"
+        printTo "####### Leaflet bundle ! ########"
         leaflet
         ;;
      i)
-        echo "#############################"
-        echo "###### Itowns bundle ! ######"
+        printTo "#############################"
+        printTo "###### Itowns bundle ! ######"
         itowns
         ;;
      I)
-        echo "###################################"
-        echo "###### Mixte Itowns bundle ! ######"
+        printTo "###################################"
+        printTo "###### Mixte Itowns bundle ! ######"
         mixIt
         ;;
      a)
-        echo "#################################"
-        echo "########## ALL bundle ! #########"
+        printTo "#################################"
+        printTo "########## ALL bundle ! #########"
         ol3
         leaflet
         itowns
         mixIt
         ;;
      \?)
-        echo "$OPTARG : option invalide : a(all), o(openlayers), l(leaflet), i(itowns), ou I(ol/itowns) !"
+        printTo "$OPTARG : option invalide : a(all), o(openlayers), l(leaflet), i(itowns), I(ol/itowns) !"
         exit -1
         ;;
    esac
 done
 
-echo "END"
+printTo "END"
 exit 0

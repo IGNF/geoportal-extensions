@@ -33,9 +33,9 @@
         "hardwrap": true
     },
     "opts": {
-        "template" : "target/build/Ol3/doc/jaguarjs-jsdoc",
+        "template" : "target/build/Ol3/jsdoc/jaguarjs-jsdoc",
         "encoding" : "utf8",
-        "destination": "./target/build/Ol3/doc",
+        "destination": "./target/build/Ol3/jsdoc",
         "recurse": true,
         "lenient": true,
         "verbose": true
