@@ -1,12 +1,12 @@
 define([
-    "itowns",
+    "Itowns/GlobeViewExtended",
     "Common/Utils",
     "Common/Utils/LayerUtils",
     "Common/Utils/SelectorID",
     "Common/Controls/LayerSwitcherDOM",
     "Itowns/Controls/Widget"
 ], function (
-    Itowns,
+    GlobeViewExtended,
     Utils,
     LayerUtils,
     SelectorID,
@@ -91,7 +91,7 @@ define([
      */
     LayerSwitcher.prototype = Object.create(Widget.prototype, {});
 
-    // on récupère les méthodes de la classe commune LayerSwitcherDOM
+    // retrieves methods of the common class LayerSwitcherDOM
     Utils.assign(LayerSwitcher.prototype, LayerSwitcherDOM);
 
     /**
@@ -106,18 +106,18 @@ define([
     // ################################################################### //
 
     /**
-     * Bind globe to control
+     * Binds globe to control
      */
     LayerSwitcher.prototype.setGlobe = function (globe) {
-
-        if ( globe ) { // dans le cas de l'ajout du contrôle au globe
+        var layers;
+        if ( globe ) { // in the case the control is added to the globe
             var self = this;
 
             // add options layers to layerlist.
-            // (seulement les couches configurées dans les options du layerSwitcher par l'utilisateur),
-            // les autres couches de la carte seront ajoutées dans la méthode setGlobe
+            // (only the layers configurated by the user in the options of the layerSwitcher )
+            // the other layers of the map will be added in the setGlobe method
             for ( var i = 0; i < this._initLayers.length; i++ ) {
-                // recup le layer, son id,
+                // retrieves the layer...
                 var layer = null;
 
                 if (this._initLayers[i].id) {
@@ -125,7 +125,7 @@ define([
                 }
 
                 if ( layer && this._initLayers[i].displayed ) {
-                    // et les infos de la conf si elles existent (title, description, legends, quicklook, metadata)
+                    // .. and the infos of the configuration if they exist (title, description, legends, quicklook, metadata)
                     var conf = this._initLayers[i].config || {};
                     var layerOptions = {
                         title : conf.title || layer.title || this._initLayers[i].id,
@@ -147,20 +147,20 @@ define([
                 }
             }
 
-            // on ajoute les couches
+            // adds the layers
             this._addGlobeLayers(globe);
 
-            // Ajout des listeners
+            // adding of listeners
 
             /**
-            * ajout du callback onlayerchanged:opacity
+            * adds the onlayerchanged:opacity callback
             */
             this._callbacks.onOpacityLayerCallBack = function (e) {
                 self._updateLayerOpacity(e.target.id, e.new.opacity);
             };
 
             /**
-            * ajout du callback onlayerchanged:visible
+            * adds the onlayerchanged:visible callback
             */
             this._callbacks.onVisibilityLayerCallBack = function (e) {
                 self._updateLayerVisibility(e.target.id, e.new.visible);
@@ -169,17 +169,17 @@ define([
             // At every globe movement, layer switcher may be updated,
             // according to layers on globe, and their range.
             /**
-            * ajout du callback onChangedViewCallBack
+            * adds the onChangedViewCallBack callback
             */
             this._callbacks.onChangedViewCallBack = function (e) {
                 self._inRangeUpdate(e.colorLayersId);
             };
-            globe.addEventListener("prerender", this._callbacks.onChangedViewCallBack);
-            // pour que l'evenement prerender renvoie les couches visibles
+            globe.listen(GlobeViewExtended.EVENTS.PRE_RENDER, this._callbacks.onChangedViewCallBack);
+            // prerender events returns visible layers
             globe.preRenderEventFetchColorLayersDisplayed();
 
             /**
-            * ajout du callback onlayeradded
+            * adds the onlayeradded
             */
             this._callbacks.onAddedLayerCallBack = function (e) {
                 var id = e.layerId;
@@ -199,24 +199,24 @@ define([
                     }
                 }
             };
-            globe.addEventListener(Itowns.GLOBE_VIEW_EVENTS.LAYER_ADDED, this._callbacks.onAddedLayerCallBack);
+            globe.listen(GlobeViewExtended.EVENTS.LAYER_ADDED, this._callbacks.onAddedLayerCallBack);
 
             /**
-            * ajout du callback onlayerremoved
+            * adds the onlayerremoved callback
             */
             this._callbacks.onRemovedLayerCallBack = function (e) {
                 var id = e.layerId;
 
-                // On met à jour l'index max et on retire la couche du layerSwitcher
+                // update the index max and delete the layer from the layerswitcher
                 if ( self ) {
                     self.removeLayer(id);
                 }
 
             };
-            globe.addEventListener(Itowns.GLOBE_VIEW_EVENTS.LAYER_REMOVED, this._callbacks.onRemovedLayerCallBack);
+            globe.listen(GlobeViewExtended.EVENTS.LAYER_REMOVED, this._callbacks.onRemovedLayerCallBack);
 
             /**
-            * ajout du callback onlayerchanged:index
+            * adds the onlayerchanged:index callback
             */
             this._callbacks.onIndexLayerCallBack = function (e) {
 
@@ -237,42 +237,39 @@ define([
                     self._updateLayerListContainer();
                 }
             };
-            globe.addEventListener(Itowns.GLOBE_VIEW_EVENTS.COLOR_LAYERS_ORDER_CHANGED, this._callbacks.onIndexLayerCallBack);
+            globe.listen(GlobeViewExtended.EVENTS.LAYERS_ORDER_CHANGED, this._callbacks.onIndexLayerCallBack);
 
-            var layers = globe.getColorLayers();
+            layers = globe.getColorLayers();
             for ( var ii = 0 ; ii < layers.length ; ++ii ) {
-                layers[ii].addEventListener("opacity-property-changed", this._callbacks.onOpacityLayerCallBack);
-                layers[ii].addEventListener("visible-property-changed", this._callbacks.onVisibilityLayerCallBack);
+                globe.addLayerListener(layers[ii], GlobeViewExtended.EVENTS.OPACITY_PROPERTY_CHANGED, this._callbacks.onOpacityLayerCallBack);
+                globe.addLayerListener(layers[ii], GlobeViewExtended.EVENTS.VISIBLE_PROPERTY_CHANGED, this._callbacks.onVisibilityLayerCallBack);
                 self._updateLayerVisibility(layers[ii].id, layers[ii].visible);
                 self._updateLayerOpacity(layers[ii].id, layers[ii].opacity);
             }
-
-            this._globe = globe;
-
         } else {
-            // On retire les listeners qui étaient liés au layerSwitcher supprimé
-            this._globe.removeEventListener("prerender", this._callbacks.onChangedViewCallBack);
-            this._globe.removeEventListener(Itowns.GLOBE_VIEW_EVENTS.LAYER_ADDED, this._callbacks.onAddedLayerCallBack);
-            this._globe.removeEventListener(Itowns.GLOBE_VIEW_EVENTS.LAYER_REMOVED, this._callbacks.onRemovedLayerCallBack);
-            this._globe.removeEventListener(Itowns.GLOBE_VIEW_EVENTS.COLOR_LAYERS_ORDER_CHANGED, this._callbacks.onIndexLayerCallBack);
-            var layers = this._globe.getColorLayers();
+            // removes the listeners associated to the deleted layerswitcher
+            this._globe.forget(GlobeViewExtended.EVENTS.PRE_RENDER, this._callbacks.onChangedViewCallBack);
+            this._globe.forget(GlobeViewExtended.EVENTS.LAYER_ADDED, this._callbacks.onAddedLayerCallBack);
+            this._globe.forget(GlobeViewExtended.EVENTS.LAYER_REMOVED, this._callbacks.onRemovedLayerCallBack);
+            this._globe.forget(GlobeViewExtended.EVENTS.LAYERS_ORDER_CHANGED, this._callbacks.onIndexLayerCallBack);
+            layers = this._globe.getColorLayers();
             for ( var j = 0 ; j < layers.length ; ++j ) {
-                layers[j].removeEventListener("opacity-property-changed", this._callbacks.onOpacityLayerCallBack);
-                layers[j].removeEventListener("visible-property-changed", this._callbacks.onVisibilityLayerCallBack);
+                this._globe.removeLayerListener(layers[j], GlobeViewExtended.EVENTS.OPACITY_PROPERTY_CHANGED, this._callbacks.onOpacityLayerCallBack);
+                this._globe.removeLayerListener(layers[j], GlobeViewExtended.EVENTS.VISIBLE_PROPERTY_CHANGED, this._callbacks.onVisibilityLayerCallBack);
             }
-            // On supprime le DOM du layerSwitcher
+            // deletes the layerSwitcher DOM
             while (this._element.hasChildNodes()) {
                 this._element.removeChild(this._element.lastChild);
             }
             this._element.parentNode.removeChild(this._element);
         }
 
-        // call original setGlobe method
+        // calls original setGlobe method
         Widget.prototype.setGlobe.call(this, globe);
     };
 
     /**
-     * Add a new layer to control (when added to globe) or add new layer configuration
+     * Adds a new layer to control (when added to globe) or add new layer configuration
      *
      * @param {Object} layer - layer to add to layer switcher
      * @param {Object} [config] - additional options for layer configuration
@@ -307,9 +304,9 @@ define([
             return;
         }
 
-        // abonnement aux evenements
-        layer.addEventListener("opacity-property-changed", this._callbacks.onOpacityLayerCallBack);
-        layer.addEventListener("visible-property-changed", this._callbacks.onVisibilityLayerCallBack);
+        // subscription to the events
+        globe.addLayerListener(layer, GlobeViewExtended.EVENTS.OPACITY_PROPERTY_CHANGED, this._callbacks.onOpacityLayerCallBack);
+        globe.addLayerListener(layer, GlobeViewExtended.EVENTS.VISIBLE_PROPERTY_CHANGED, this._callbacks.onVisibilityLayerCallBack);
 
         // make sure layer is in globe layers
         var LayerInGlobe = globe.getLayerById(id);
@@ -345,7 +342,7 @@ define([
             }
             this._layers[id] = layerOptions;
 
-            // création de la div de la couche destinée à être ajoutée au LS
+            // creation of the div of the layer which will be added to the layerSwitcher
             this._layers[id].div = this._createLayerDiv(id);
 
             this._updateLayerListContainer();
@@ -399,7 +396,7 @@ define([
     };
 
     /**
-     * Remove a layer from control
+     * Removes a layer from control
      *
      * @param {Object} layerId - layer to remove to layer switcher
      */
@@ -415,7 +412,7 @@ define([
         var layerDiv = document.getElementById(this._addUID("GPlayerSwitcher_ID_" + layerId));
         layerList.removeChild(layerDiv);
 
-        // on retire la couche de la liste des layers
+        // removes layer of the layer list
         delete this._layers[layerId];
     };
 
@@ -433,7 +430,7 @@ define([
         if ( ( collapsed && isCollapsed) || ( !collapsed && !isCollapsed ) ) {
             return;
         }
-        // on simule l'ouverture du panneau après un click
+        // simulates the panel opening after a click
         if ( !isCollapsed ) {
             var layers = document.getElementsByClassName("GPlayerInfoOpened");
             for ( var i = 0; i < layers.length; i++ ) {
@@ -463,13 +460,13 @@ define([
      * @private
      */
     LayerSwitcher.prototype._initialize = function (options, layers) {
-        // identifiant du contrôle : utile pour suffixer les identifiants CSS (pour gérer le cas où il y en a plusieurs dans la même page)
+        // id of the control ; used to suffix the CSS id (handles cases with severel controls on the same page)
         this._uid = SelectorID.generate();
 
         // {Object} control layers list. Each key is a layer id, and its value is an object of layers options (layer, id, opacity, visibility, title, description...)
         this._layers = {};
 
-        // div qui contiendra les div des listes.
+        // div which will contain the divs of the lists
         this._layerListContainer = null;
 
         // callbacks
@@ -481,7 +478,7 @@ define([
     };
 
     /**
-     * Return the layer configuration defined at widget initialization
+     * Returns the layer configuration defined at widget initialization
      *
      * @method _getLayerConf
      * @param {String} layerId - layer id
@@ -515,36 +512,36 @@ define([
     };
 
     /**
-     * Create control main container
+     * Creates control main container
      *
      * @method _initContainer
      * @param {Object} options - control options
      * @private
      */
     LayerSwitcher.prototype._initContainer = function (options) {
-        // creation du container principal
+        // creation of the main container
         var container = this._createMainContainerElement();
 
-        // ajout dans le container principal d'affichage des layers
+        // adding in the main container
         var input = this._createMainLayersShowElement();
         container.appendChild(input);
 
-        // gestion du mode "collapsed"
+        // handling of the "collapsed" mode
         if (!options.collapsed) {
             input.checked = "checked";
         }
-        // ajout dans le container principal de la liste des layers
+        // adds the layer list in the main container
         var divL = this._layerListContainer = this._createMainLayersElement();
         container.appendChild(divL);
 
-        // creation du mode draggable
+        // creates the draggable mode
         this._createDraggableElement(divL, this);
 
-        // ajout dans le container principal du picto du controle
+        // adds the control picto in the main container
         var picto = this._createMainPictoElement();
         container.appendChild(picto);
 
-        // ajout dans le container principal du panneau d'information
+        // adds the info panel in the main container
         var divI = this._createMainInfoElement();
         container.appendChild(divI);
 
@@ -552,7 +549,7 @@ define([
     };
 
     /**
-     * Add control layers to control main container
+     * Adds control layers to control main container
      *
      * @method _addGlobeLayers
      * @param {Object} globe - the Itowns.GlobeViewExtended object
@@ -560,7 +557,7 @@ define([
      */
     LayerSwitcher.prototype._addGlobeLayers = function (globe) {
 
-        // Récupération de l'élément contenant les différentes couches.
+        // Retrieves the element which contains the different layers
         var elementLayersList;
         var childNodes = this.getElement().childNodes;
 
@@ -570,17 +567,16 @@ define([
                 break;
             }
         }
-
-        // on réordonne les couches dans l'ordre d'empilement (globe.getLayers renvoie un tableau ordonné dans le sens inverse)
+        // reorders layers according to the layer stack (globe.getLayers returns an reverse ordenered array)
         var layers = globe.getColorLayers();
         var orderedLayers = layers.sort(function (a, b) {
             return b.sequence - a.sequence;
         });
 
-        // on parcourt toutes les couches de la carte, pour les ajouter à la liste du controle si ce n'est pas déjà le cas.
+        // loop over all the layers of the map in order to add them to the control layer list (if they are not already added)
         orderedLayers.forEach(
             function (layer) {
-                // ajout des couches de la carte à la liste
+                // adds the map layers to the list
                 var id;
                 id = layer.id;
                 if ( !this._layerDisplayedInLayerSwitcher(id) ) {
@@ -589,7 +585,7 @@ define([
                 var layerConf = this._getLayerConf(id) || this._addedLayerConf[id] || {};
                 var layerInfos = this._getLayerInfo(layer) || {};
                 if ( !this._layers[id] ) {
-                    // si la couche n'est pas encore dans la liste des layers (this._layers), on l'ajoute
+                    // if the layer is not yet in the layer list (this._layers), we add it
                     var layerOptions = {
                         title : layerConf.title || layerInfos._title || id,
                         description : layerConf.description || layerInfos._description || null,
@@ -620,7 +616,7 @@ define([
     };
 
     /**
-     * create layer div (to append to control DOM element).
+     * creates layer div (to append to control DOM element).
      *
      * @method _createLayerDiv
      * @param {String} layerId - layer id
@@ -635,7 +631,7 @@ define([
             layerOptions.displayInformationElement = true;
         }
 
-        // ajout d'une div pour cette layer dans le control
+        // adds a specific div in the control for the layer
         layerOptions.id = layerId;
         var layerDiv = this._createContainerLayerElement(layerOptions);
 
@@ -651,7 +647,7 @@ define([
     // ################################################################### //
 
     /**
-     * Change layer opacity on layer opacity picto click
+     * Changes layer opacity on layer opacity picto click
      *
      * @method _onChangeLayerOpacity
      * @param {Object} e - HTML event
@@ -668,7 +664,7 @@ define([
     };
 
     /**
-     * Update picto opacity value on layer opacity change
+     * Updates picto opacity value on layer opacity change
      *
      * @method _updateLayerOpacity
      * @param {String} layerId - layer id
@@ -695,7 +691,7 @@ define([
     };
 
     /**
-     * Change layer visibility on layer visibility picto click
+     * Changes layer visibility on layer visibility picto click
      *
      * @method _onVisibilityLayerClick
      * @param {Object} e - HTML event
@@ -709,7 +705,7 @@ define([
     };
 
     /**
-     * Change picto visibility on layer visibility change
+     * Changes picto visibility on layer visibility change
      *
      * @method _updateLayerVisibility
      * @param {String} layerId - layer id
@@ -724,7 +720,7 @@ define([
     };
 
     /**
-     * Open layer information panel on picto click
+     * Opens layer information panel on picto click
      *
      * @method _onOpenLayerInfoClick
      * @param {Event} e - MouseEvent
@@ -795,7 +791,7 @@ define([
     };
 
     /**
-     * remove layer from layer switcher and globe on picto click
+     * removes layer from layer switcher and globe on picto click
      *
      * @method _onDropLayerClick
      * @param {Event} e - MouseEvent
@@ -805,16 +801,15 @@ define([
         var globe = this.getGlobe();
 
         var layerID  = this._resolveLayerId(e.target.id);
-
-        // le retrait de la couche va déclencher l'ecouteur d'évenement,
-        // et appeler this.removeLayer qui va supprimer la div.
+        // removing the layer will trigger the event listener
+        // which will call this.removeLayer and delete the div
         globe.removeLayer(layerID);
 
         this._updateLayerListContainer();
     };
 
     /**
-     * change layers order on drag and drop
+     * changes layers order on drag and drop
      *
      * @method _onDropLayerClick
      * @param {Event} e - HTML event
@@ -823,10 +818,9 @@ define([
     LayerSwitcher.prototype._onDragAndDropLayerClick = function (e) {
         var globe = this.getGlobe();
 
-        // gestion des indexes de telle manière que les couches non visibles dans le ls (displayed: false)
-        // se voient affecter les indexes les plus petits (couche basse) lors du changement d'index de couches
-        // visibles. Déplacement systématique des couches non visibles en couches de fond (pour ne pas occulter
-        // les couches visibles).
+        // Handling of the indexes : gives the little indexes (lowest layers) to the non-visible layers (displayed: false)
+        // when the index of a visible layer changes.
+        // Always moves the non-visible layers under the other layers (to not hide them)
 
         if ( e.newIndex - e.oldIndex === 0 ) {
             return;
@@ -883,21 +877,21 @@ define([
         if ( this._layerListContainer ) {
             var globe = this.getGlobe();
 
-            // on vide le container précédent
+            // empty the previous container
             while ( this._layerListContainer.firstChild ) {
                 this._layerListContainer.removeChild(this._layerListContainer.firstChild);
             }
-            // on réordonne les couches dans l'ordre d'empilement (globe.getLayers renvoie un tableau ordonné dans le sens inverse)
+            // reorders layers according to the layer stack (globe.getLayers returns an reverse ordenered array)..
             var layers = globe.getColorLayers();
             var orderedLayers = layers.sort(function (a, b) {
                 return b.sequence - a.sequence;
             });
-            // et on rajoute les div correspondantes aux différentes couches, dans l'ordre décroissant des zindex
+            // ... and adds the correct div to the different layers, in the zindex decreasing order
             for ( var j = 0; j < orderedLayers.length; j++ ) {
                 if ( !this._layers[orderedLayers[j].id] ) {
                     continue;
                 }
-                // récupération de la div de la couche, stockée dans le tableau _layers
+                // retrieves the div of the layer, stored in the _layers array
                 var layerDiv = this._layers[orderedLayers[j].id].div;
                 this._layerListContainer.appendChild(layerDiv);
             }
@@ -911,7 +905,7 @@ define([
     // ################################################################### //
 
     /**
-     * Get layer informations : title, description, quicklookurl, legends, metadata
+     * Gets layer informations : title, description, quicklookurl, legends, metadata
      *
      * @private
      * @memberof LayerSwitcher
@@ -932,7 +926,7 @@ define([
     };
 
     /**
-     * Get layer id from div id
+     * Gets layer id from div id
      *
      * @method _resolveLayerId
      * @param {String} divId - HTML div id

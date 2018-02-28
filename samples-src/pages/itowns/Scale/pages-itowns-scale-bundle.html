@@ -39,18 +39,17 @@
                 const viewerDiv = document.getElementById('viewerDiv');
                 const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
 
-                globeView.addEventListener(itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED, () => {
-                    // eslint-disable-next-line no-console
+                var scalebar = new itowns.control.Scale({
+                    target : viewerDiv,
+                    position : "absolute"
+                });
+                globeView.addWidget( scalebar );
+
+                globeView.listen(itowns.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
                     console.info('Globe initialized');
-                    var scalebar = new itowns.control.Scale({
-                        target : viewerDiv,
-                        position : "absolute"
-                    });
-                    globeView.addWidget( scalebar );
                 });
 
                 itowns.Fetcher.json('{{ config.resources }}/itowns/JSONLayers/Ortho.json').then(result => globeView.addLayer(result));
-
                 itowns.Fetcher.json('{{ config.resources }}/itowns/JSONLayers/IGN_MNT.json').then(result => globeView.addLayer(result));
                 itowns.Fetcher.json('{{ config.resources }}/itowns/JSONLayers/IGN_MNT_HIGHRES.json').then(result => globeView.addLayer(result));
             </script>

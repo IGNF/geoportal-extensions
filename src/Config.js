@@ -15,6 +15,5 @@ requirejs.config({
         "itowns"       : "../lib/itowns/js/itowns",
         "woodman"      : "../node_modules/woodman/dist/woodman-amd",
         "sortable"     : "../node_modules/sortablejs/Sortable"
-        // "vg"        : "../lib/vg/js/VirtualGeoWeb-1.1.min", // not use beacause of browser compatibility only !
     }
 });

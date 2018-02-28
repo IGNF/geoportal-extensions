@@ -39,16 +39,17 @@
                 const viewerDiv = document.getElementById('viewerDiv');
                 const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
 
-                globeView.addEventListener(itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED, () => {
+                globeView.listen(itowns.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
                     // eslint-disable-next-line no-console
                     console.info('Globe initialized');
-                    var miniglobe = new itowns.control.MiniGlobe({
-                        target : viewerDiv,
-                        position : "absolute"
-                    });
-                    globeView.addWidget( miniglobe );
                 });
 
+                var miniglobe = new itowns.control.MiniGlobe({
+                    target : viewerDiv,
+                    position : "absolute"
+                });
+                globeView.addWidget( miniglobe );
+                
                 itowns.Fetcher.json('{{ config.resources }}/itowns/JSONLayers/Ortho.json').then(result => globeView.addLayer(result));
 
                 itowns.Fetcher.json('{{ config.resources }}/itowns/JSONLayers/IGN_MNT.json').then(result => globeView.addLayer(result));

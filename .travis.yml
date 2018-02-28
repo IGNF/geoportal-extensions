@@ -8,20 +8,28 @@ stages:
 before_script:
   - npm install
 script: 
-  - ./node_modules/.bin/gulp build --mix --itowns --ol3
-  - ./node_modules/.bin/gulp build --leaflet
+  # build the mixed ol3/itowns, ol3, itowns, leaflet bundles
+  - npm run build-mix-itowns-ol3
+  - npm run build-leaflet
+  # prod bundles
+  - npm run build-mix-itowns-ol3:prod
+  - npm run build-leaflet:prod
+  # publish all the bundles in  the dist directory
+  - npm run publish-all
 cache:
   directories:
     - node_modules
 before_deploy:
     - git clone https://github.com/IGNF/geoportal-extensions --branch gh-pages deploy/
-    - cp -r target/build/Itowns/dist deploy/bundles/
-    - cp -r target/build/Mix/dist deploy/bundles/
-    - cp -r target/build/Ol3/dist deploy/bundles/
-    - cp -r target/build/Leaflet/dist deploy/bundles/
-    - mkdir deploy/doc/
-    - cp -r target/build/Leaflet/doc deploy/doc/leaflet/
-    - cp -r target/build/Ol3/doc deploy/doc/ol3/
+    - mkdir deploy/current/
+    - cp -r target/build/Itowns/dist deploy/current/bundles/
+    - cp -r target/build/Mix/dist deploy/current/bundles/
+    - cp -r target/build/Ol3/dist deploy/current/bundles/
+    - cp -r target/build/Leaflet/dist deploy/current/bundles/
+    - mkdir deploy/current/doc/
+    - cp -r target/build/Leaflet/doc deploy/current/doc/leaflet/
+    - cp -r target/build/Ol3/doc deploy/current/doc/ol3/
+    - cp -r target/build/Itowns/doc deploy/current/doc/itowns/
 deploy:
   provider: pages
   skip-cleanup: true

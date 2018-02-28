@@ -22,14 +22,12 @@ Depuis le répertoire racine geoportal-extensions :
 
 > ./samples/*.html
 
-
-
 ## Evolutions possibles
 
     https://github.com/helpers/handlebars-helpers
     npm install --save handlebars-helpers
 
-## Exemples 
+## Exemples
 
 En **pure** *handlebars* sans appel à *handlebars-layouts* :
     https://cloudfour.com/thinks/the-hidden-power-of-handlebars-partials/

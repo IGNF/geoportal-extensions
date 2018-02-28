@@ -1,11 +1,13 @@
 define([
     "itowns",
+    "Itowns/GlobeViewExtended",
     "Common/Utils",
     "Common/Utils/SelectorID",
     "Common/Controls/MiniGlobeDOM",
     "Itowns/Controls/Widget"
 ], function (
     Itowns,
+    GlobeViewExtended,
     Utils,
     SelectorID,
     MiniGlobeDOM,
@@ -42,7 +44,7 @@ define([
         var vDiv = document.getElementById("viewerDiv");
         this._options = options;
 
-        // by default, add the control on the viwerDiv
+        // by default, adds the control on the viewerDiv
         var targetDiv = document.getElementById(options.target) || vDiv;
 
         Widget.call(
@@ -61,7 +63,7 @@ define([
      */
     MiniGlobe.prototype = Object.create(Widget.prototype, {});
 
-    // on récupère les méthodes de la classe commune MiniGlobeDOM
+    // retrieves methods of the common class MiniGlobeDOM
     Utils.assign(MiniGlobe.prototype, MiniGlobeDOM);
 
     /**
@@ -79,16 +81,12 @@ define([
      * Bind globe to control
      */
     MiniGlobe.prototype.setGlobe = function (globe) {
-        // info : cette méthode est appelée (entre autres?) après un globe.addWidget() ou globe.removeWidget()
+        // info : this function is called after a globe.addWidget() or a globe.removeWidget()
 
-        if ( globe ) { // dans le cas de l'ajout du contrôle au globe
+        if ( globe ) { // In the case of the adding of a control to the globe
             var minDistance = 6650000;
             var maxDistance = 30000000;
-            var positionOnGlobe = {
-                longitude : globe.getGlobeView().controls.getCameraTargetGeoPosition().longitude(),
-                latitude : globe.getGlobeView().controls.getCameraTargetGeoPosition().latitude(),
-                altitude : globe.getGlobeView().controls.getCameraTargetGeoPosition().altitude()
-            };
+            var positionOnGlobe = globe.getCenter();
             var miniView = new Itowns.GlobeView(this._element, positionOnGlobe, {
                 // `limit globe' subdivision level:
                 // we're don't need a precise globe model
@@ -107,16 +105,22 @@ define([
             /**
               * update miniview's camera with the globeView's camera position
               */
-            globe.getGlobeView().addFrameRequester(Itowns.MAIN_LOOP_EVENTS.AFTER_RENDER, function () {
+            var updateMiniGlobeHandler = function () {
                 // clamp distance camera from globe
-                var range = globe.getGlobeView().controls.getRange();
+                var range = globe.getRange();
                 var distance = Math.min(Math.max(range * 1.5, minDistance), maxDistance);
                 var camera = miniView.camera.camera3D;
                 // Update target miniview's camera
-                camera.position.copy(globe.getGlobeView().controls.moveTarget()).setLength(distance);
-                camera.lookAt(globe.getGlobeView().controls.moveTarget());
+                camera.position.copy(globe.moveTarget()).setLength(distance);
+                camera.lookAt(globe.moveTarget());
                 miniView.notifyChange(true);
-            });
+            };
+            globe.listen( GlobeViewExtended.EVENTS.AFTER_RENDER, updateMiniGlobeHandler);
+            if ( globe.isInitialized() ) {
+                updateMiniGlobeHandler;
+            } else {
+                globe.listen( GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, updateMiniGlobeHandler);
+            }
 
             /**
               * Add one imagery layer to the miniview (by default, the ortho)
@@ -127,7 +131,7 @@ define([
             this._globeObj = miniView;
         } else if (globe == null) {
             // if globe == null we remove the overview control
-            // on supprime le DOM de  l'overviewcontrol
+            // we delete the overview control DOM
             while (this.getElement().hasChildNodes()) {
                 this.getElement().removeChild(this.getElement().lastChild);
             }
@@ -148,10 +152,11 @@ define([
      * @private
      */
     MiniGlobe.prototype._initialize = function () {
-        // identifiant du contrôle : utile pour suffixer les identifiants CSS (pour gérer le cas où il y en a plusieurs dans la même page)
+
+        // id of the widget : usefull to suffix the CSS ids (to handle cases with several widgets on the same page)
         this._uid = SelectorID.generate();
 
-        // div qui contiendra les div des listes.
+        // div which will contain the list divs.
         this._MiniGlobeContainer = null;
 
         // callbacks
@@ -159,7 +164,7 @@ define([
     };
 
     /**
-     * Create control main container
+     * Creates control main container
      *
      * @method _initContainer
      * @private

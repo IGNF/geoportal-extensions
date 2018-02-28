@@ -1,6 +1,6 @@
 # Extensions Géoportail
 
-Ce projet a pour but de fournir des extensions facilitant l'accès aux ressources de la plateforme Géoportail pour les bibliothèques cartographiques Leaflet et OpenLayers (versions 3 et supérieures).
+Ce projet a pour but de fournir des extensions facilitant l'accès aux ressources de la plateforme Géoportail pour les bibliothèques cartographiques Leaflet, OpenLayers (versions 3 et supérieures) et iTowns.
 
 Ces extensions proposent des classes et widgets utilisables en complément de la bibliothèque cartographique qu'elles étendent, permettant notamment :
 
@@ -27,3 +27,7 @@ Voir le détail des [fonctionnalités proposées par l'extension Géoportail pou
 
 Voir le détail des [fonctionnalités proposées par l'extension Géoportail pour OpenLayers](README-ol3.md)
 
+
+## ITOWNS
+
+Voir le détail des [fonctionnalités proposées par l'extension Géoportail pour iTowns](README-itowns.md)

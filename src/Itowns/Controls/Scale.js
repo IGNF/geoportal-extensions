@@ -1,11 +1,11 @@
 define([
-    "itowns",
+    "Itowns/GlobeViewExtended",
     "Common/Utils",
     "Common/Utils/SelectorID",
     "Common/Controls/ScaleDOM",
     "Itowns/Controls/Widget"
 ], function (
-    Itowns,
+    GlobeViewExtended,
     Utils,
     SelectorID,
     ScaleDOM,
@@ -61,7 +61,7 @@ define([
      */
     Scale.prototype = Object.create(Widget.prototype, {});
 
-    // on récupère les méthodes de la classe commune ScaleDOM
+    // retrieves methods of the common class ScaleDOM
     Utils.assign(Scale.prototype, ScaleDOM);
 
     /**
@@ -76,23 +76,23 @@ define([
     // ################################################################### //
 
     /**
-     * Bind globe to control
+     * Binds globe to control
      */
     Scale.prototype.setGlobe = function (globe) {
-        // info : cette méthode est appelée (entre autres?) après un globe.addWidget() ou globe.removeWidget()
+        // info : this function is called after a globe.addWidget() or a globe.removeWidget()
 
-        if ( globe ) { // dans le cas de l'ajout du contrôle au globe
+        if ( globe ) { // In the case of the adding of a control to the globe
             var self = this;
             /**
-              * Definition du callback du scaleControl :
-              * quand la vue change, on recalcule l'echelle graphique
+              * Definition of the scaleControl callback :
+              * when the view is changing, we recalculate the graphic scale
               */
             this._callbacks.onChangedViewCallback = function () {
-                var value = self.getGlobe().getGlobeView().controls.pixelsToMeters(200);
+                var value = globe.pixelsToMeters(200);
                 value = Math.floor(value);
                 var digit = Math.pow(10, value.toString().length - 1);
                 value = Math.round(value / digit) * digit;
-                var pix = self.getGlobe().getGlobeView().controls.metersToPixels(value);
+                var pix = globe.metersToPixels(value);
                 var unit = "m";
                 if (value >= 1000) {
                     value /= 1000;
@@ -102,18 +102,22 @@ define([
                 self.getElement().style.width = pix + "px";
             };
             // Ajout des listeners
-            // Listen for globe full initialisation event
-            globe.addEventListener(Itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED, this._callbacks.onChangedViewCallback);
-            // // At every globe range movement, scale bar may be updated,
-            globe.getGlobeView().controls.addEventListener(Itowns.CONTROL_EVENTS.RANGE_CHANGED, this._callbacks.onChangedViewCallback);
-            this._globe = globe;
+            // initialization
+            if ( globe.isInitialized() ) {
+                this._callbacks.onChangedViewCallback();
+            } else {
+                globe.listen( GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, this._callbacks.onChangedViewCallback);
+            }
+
+            // At every globe range movement, scale bar may be updated,
+            globe.listen( GlobeViewExtended.EVENTS.RANGE_CHANGED, this._callbacks.onChangedViewCallback);
         } else if (globe == null) {
-            // On retire les listeners qui étaient liés au scalecontrol supprimé
-            this._globe.removeEventListener(Itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED, this._callbacks.onChangedViewCallback);
-            this._globe.getGlobeView().controls.removeEventListener(Itowns.CONTROL_EVENTS.RANGE_CHANGED, this._callbacks.onChangedViewCallback);
+            // we remove the listeners linked to the scalecontrol which has been deleted
+            this._globe.forget( GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, this._callbacks.onChangedViewCallback);
+            this._globe.forget( GlobeViewExtended.EVENTS.RANGE_CHANGED, this._callbacks.onChangedViewCallback);
 
             // if globe == null we remove the scale control
-            // on supprime le DOM du scale control
+            // delete the scaleControl DOM
             while (this.getElement().hasChildNodes()) {
                 this.getElement().removeChild(this.getElement().lastChild);
             }
@@ -134,10 +138,10 @@ define([
      * @private
      */
     Scale.prototype._initialize = function () {
-        // identifiant du contrôle : utile pour suffixer les identifiants CSS (pour gérer le cas où il y en a plusieurs dans la même page)
+        // id of the widget : usefull to suffix the CSS ids (to handle cases with several widgets on the same page)
         this._uid = SelectorID.generate();
 
-        // div qui contiendra les div des listes.
+        // div which will contain the list divs.
         this._ScaleContainer = null;
 
         // callbacks

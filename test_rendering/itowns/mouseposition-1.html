@@ -4,7 +4,7 @@
 
   <meta charset="UTF-8">
   <!-- Library itowns -->
-  <script src="../../lib/itowns/js/itowns.js"></script>
+  <script src="../../node_modules/itowns/dist/itowns.js"></script>
 
   <!-- Plugin itowns IGN -->
   <link rel="stylesheet" href="../../dist/itowns/GpPluginItowns.css" />
@@ -22,7 +22,7 @@
             const viewerDiv = document.getElementById('viewerDiv');
             const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
 
-                globeView.addEventListener(itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED, () => {
+                globeView.listen(itowns.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
                     // eslint-disable-next-line no-console
                     console.info('Globe initialized');
                     var mousePosition = new itowns.control.MousePosition({

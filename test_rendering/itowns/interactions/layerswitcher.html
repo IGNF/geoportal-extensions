@@ -4,7 +4,7 @@
 
   <meta charset="UTF-8">
   <!-- Library itowns -->
-  <script src="../../../lib/itowns/js/itowns.js"></script>
+  <script src="../../../node_modules/itowns/dist/itowns.js"></script>
 
   <!-- Plugin itowns IGN -->
   <link rel="stylesheet" href="../../../dist/itowns/GpPluginItowns.css" />
@@ -16,7 +16,7 @@
         <div id="viewerDiv" style="height: 400px;"></div>
         <button id="addLayer"> Ajouter couche </button>
         <button id="removeLayer"> Supprimer couche </button>
-        
+
     <!-- code -->
     <script>
 
@@ -25,11 +25,11 @@
 
             const viewerDiv = document.getElementById('viewerDiv');
             const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
-            
+
             itowns.Fetcher.json('../../../samples/resources/itowns/JSONLayers/Ortho.json').then(result => globeView.addLayer(result));
             itowns.Fetcher.json('../../../samples/resources/itowns/JSONLayers/ScanEX.json').then(result => globeView.addLayer(result));
-            
-            globeView.addEventListener(itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED, () => {
+
+            globeView.listen(itowns.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
                 // eslint-disable-next-line no-console
                 console.info('Globe initialized');
                 var layerSwitcher = new itowns.control.LayerSwitcher({
@@ -63,7 +63,7 @@
             document.getElementById("addLayer").onclick = function() {
                 itowns.Fetcher.json('../../../samples/resources/itowns/JSONLayers/Region.json').then(result => globeView.addLayer(result));
             }
-            
+
             document.getElementById("removeLayer").onclick = function() {
                 globeView.removeLayer("ScanEX");
             }

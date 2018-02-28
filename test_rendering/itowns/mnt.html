@@ -4,7 +4,7 @@
 
   <meta charset="UTF-8">
   <!-- Library itowns -->
-  <script src="../../lib/itowns/js/itowns.js"></script>
+  <script src="../../node_modules/itowns/dist/itowns.js"></script>
 
   <!-- Plugin itowns IGN -->
   <link rel="stylesheet" href="../../dist/itowns/GpPluginItowns.css" />
@@ -14,7 +14,7 @@
 <body>
         <!-- map -->
         <div id="viewerDiv" style="height: 400px; width: 800px;"></div>
-        
+
     <!-- code -->
     <script>
 
@@ -23,12 +23,12 @@
 
             const viewerDiv = document.getElementById('viewerDiv');
             const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
-            
+
             itowns.Fetcher.json('../../samples/resources/itowns/JSONLayers/Ortho.json').then(result => globeView.addLayer(result));
 
             itowns.Fetcher.json('../../samples/resources/itowns/JSONLayers/IGN_MNT.json').then(result => globeView.addLayer(result));
-            
-            globeView.addEventListener(itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED, () => {
+
+            globeView.listen(itowns.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
                 // eslint-disable-next-line no-console
                 console.info('Globe initialized');
                 globeView.getGlobeView().controls.setTilt(60, false);
