@@ -103,7 +103,7 @@ define([
             };
             // Ajout des listeners
             // initialization
-            if( globe.isInitialized() ) {
+            if ( globe.isInitialized() ) {
                 this._callbacks.onChangedViewCallback();
             } else {
                 globe.listen( GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, this._callbacks.onChangedViewCallback);

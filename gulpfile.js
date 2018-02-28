@@ -1281,7 +1281,7 @@
         isExecuteLeaflet = !isExecuteITowns;
         isExecuteOl3WithITowns = isExecuteLeafletWithITowns = false;
         $.util.log("[TODO] Execution des taches pour ITowns !!!");
-        runSequence(/*"check",*/ /*"test",*/ "dist", "doc", "lib", "sample", cb);
+        runSequence("check", /*"test",*/ "dist", "doc", "lib", "sample", cb);
     });
 
     gulp.task("build-ol3-it", function (cb) {

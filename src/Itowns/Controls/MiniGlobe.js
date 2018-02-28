@@ -105,7 +105,7 @@ define([
             /**
               * update miniview's camera with the globeView's camera position
               */
-            function updateMiniGlobeHandler() {
+            var updateMiniGlobeHandler = function () {
                 // clamp distance camera from globe
                 var range = globe.getRange();
                 var distance = Math.min(Math.max(range * 1.5, minDistance), maxDistance);
@@ -116,8 +116,8 @@ define([
                 miniView.notifyChange(true);
             };
             globe.listen( GlobeViewExtended.EVENTS.AFTER_RENDER, updateMiniGlobeHandler);
-            if( globe.isInitialized() ) {
-                updateMiniGlobeHandler();
+            if ( globe.isInitialized() ) {
+                updateMiniGlobeHandler;
             } else {
                 globe.listen( GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, updateMiniGlobeHandler);
             }

@@ -91,7 +91,7 @@ define([
                 OPACITY_PROPERTY_CHANGED : "opacity-property-changed",
                 VISIBLE_PROPERTY_CHANGED : "visible-property-changed",
                 SEQUENCE_PROPERTY_CHANGED : "sequence-property-changed"
-            }
+            };
         }
     };
 
@@ -113,9 +113,9 @@ define([
      * @return {Boolean} isInitialized
      *
      */
-     GlobeViewExtended.prototype.isInitialized = function () {
-         return this._isInitialized;
-     }
+    GlobeViewExtended.prototype.isInitialized = function () {
+        return this._isInitialized;
+    };
 
     /**
      * Disables globe controls until the globe rendering is completed
@@ -125,14 +125,17 @@ define([
         this._globeView .controls.enabled = false;
 
         var self = this;
-
-        this._globeView.addFrameRequester(Itowns.MAIN_LOOP_EVENTS.AFTER_RENDER, function afterRenderHandler() {
+        /**
+         * afterRenderHandler function (duplicated code from itowns?)
+         */
+        var afterRenderHandlerFunction = function afterRenderHandler () {
             if (self._globeView.mainLoop.scheduler.commandsWaitingExecutionCount() == 0 && self._globeView._changeSources.size == 0) {
                 // enable navigation
                 self._globeView.controls.enabled = true;
                 self._globeView.removeFrameRequester(Itowns.MAIN_LOOP_EVENTS.AFTER_RENDER, afterRenderHandler);
             }
-        });
+        }; 
+        this._globeView.addFrameRequester(Itowns.MAIN_LOOP_EVENTS.AFTER_RENDER, afterRenderHandlerFunction);
     };
 
     /**
@@ -143,18 +146,18 @@ define([
      * @return {Object} key - The event key
      *
      */
-    GlobeViewExtended.prototype.listen = function (type, callback){
+    GlobeViewExtended.prototype.listen = function (type, callback) {
         if ( typeof(callback) != "function") {
             console.log("no callback provided for event : " + type) ;
             return null ;
         }
 
         var target = this._getEventTarget(type);
-        if ( !target ){
+        if ( !target ) {
             return null;
         }
 
-        if( type === GlobeViewExtended.EVENTS.AFTER_RENDER ) {
+        if ( type === GlobeViewExtended.EVENTS.AFTER_RENDER ) {
             target.addFrameRequester(type, callback);
         } else {
             target.addEventListener(type, callback);
@@ -165,7 +168,7 @@ define([
             callback : callback,
             type : type
         };
-    }
+    };
 
     /**
      * Associates a function to trigger when a layer event is received.
@@ -176,7 +179,7 @@ define([
      * @return {Object} key - The event key
      *
      */
-    GlobeViewExtended.prototype.addLayerListener = function (layer, type, callback){
+    GlobeViewExtended.prototype.addLayerListener = function (layer, type, callback) {
         if ( typeof(callback) != "function") {
             console.log("no callback provided for event : " + type) ;
             return null ;
@@ -187,7 +190,7 @@ define([
             callback : callback,
             type : type
         };
-    }
+    };
 
     /**
      * Returns the target of a given event type
@@ -216,7 +219,7 @@ define([
                 console.log("unhandled event : " + type ) ;
                 return null ;
         }
-    }
+    };
 
     /**
      * Cancels an event listening
@@ -224,13 +227,13 @@ define([
      * @param {Object} key - The event key.
      *
      */
-    GlobeViewExtended.prototype.forgetByKey = function (key){
+    GlobeViewExtended.prototype.forgetByKey = function (key) {
         if ( key.type === GlobeViewExtended.EVENTS.AFTER_RENDER ) {
             key.target.removeFrameRequester(key.type, key.callback);
         } else {
             key.target.removeEventListener(key.type, key.callback);
         }
-    }
+    };
 
     /**
      * Cancels an layer event listening
@@ -246,17 +249,17 @@ define([
             callback : callback,
             type : type
         });
-    }
+    };
 
     /**
      * Cancels an event listening
      *
-     * @param {Object} key - The event key.
+     * @param {Object} type - The event type.
      *
      */
     GlobeViewExtended.prototype.forget = function (type, callback) {
         var target = this._getEventTarget(type);
-        if ( !target ){
+        if ( !target ) {
             return null;
         }
 
@@ -265,7 +268,7 @@ define([
             callback : callback,
             type : type
         });
-    }
+    };
 
     /**
     * Overload itowns.GlobeView addLayer method
@@ -389,8 +392,8 @@ define([
                 return l;
             }
         })[0];
-        if( !layer ) {
-            logger.trace("[GlobeViewExtended]  : no Layer found for the id '"+layerId+"'") ;
+        if ( !layer ) {
+            logger.trace("[GlobeViewExtended]  : no Layer found for the id '" + layerId + "'") ;
             return;
         }
         return layer ;
@@ -408,8 +411,8 @@ define([
                 return l;
             }
         })[0];
-        if( !layer ) {
-            logger.trace("[GlobeViewExtended]  : no colorLayer found for the id '"+layerId+"'") ;
+        if ( !layer ) {
+            logger.trace("[GlobeViewExtended]  : no colorLayer found for the id '" + layerId + "'") ;
             return;
         }
         return layer ;
@@ -439,7 +442,7 @@ define([
                 return layer;
             }
         });
-    }
+    };
 
     /**
     * Get elevation layers
@@ -561,20 +564,20 @@ define([
         return this.getGlobeView().controls.getScale();
     };
 
-   /**
-    * Sets tilt
-    *
-    * @param {Number} tilt - Tilt value
-    */
+    /**
+     * Sets tilt
+     *
+     * @param {Number} tilt - Tilt value
+     */
     GlobeViewExtended.prototype.setTilt = function (tilt) {
         this.getGlobeView().controls.setTilt(tilt, false);
     };
 
-   /**
-    * Returns tilt
-    *
-    * @return {Number} - Tilt
-    */
+    /**
+     * Returns tilt
+     *
+     * @return {Number} - Tilt
+     */
     GlobeViewExtended.prototype.getTilt = function () {
         return this.getGlobeView().controls.getCameraOrientation()[0];
     };
@@ -597,15 +600,18 @@ define([
         return this.getGlobeView().controls.getCameraOrientation()[1];
     };
 
-   /**
-    * Gets the coordinate in lat,lon for a given pixel.
-    *
-    * @param {number} x - The pixel x-position inside the Globe element.
-    * @param {number} y - The pixel y-position inside the Globe element.
-    * @return {Coordinates} position
-    */
+    /**
+     * Gets the coordinate in lat,lon for a given pixel.
+     *
+     * @param {Number} x - The pixel x-position inside the Globe element.
+     * @param {Number} y - The pixel y-position inside the Globe element.
+     * @return {Coordinates} position
+     */
     GlobeViewExtended.prototype.getCoordinateFromPixel = function (x, y) {
-       return this.getGlobeView().controls.pickGeoPosition({x:x, y:y});
+        return this.getGlobeView().controls.pickGeoPosition({
+            x : x, 
+            y : y
+        });
     };
 
     /**
@@ -614,10 +620,10 @@ define([
      * @param {MouseEvent} mouseEvent - A mouse event.
      * @return {Coordinates} position
      */
-     GlobeViewExtended.prototype.getCoordinateFromMouseEvent = function (mouseEvent) {
-         var coords = this.getGlobeView().eventToViewCoords(mouseEvent);
-         return this.getGlobeView().controls.pickGeoPosition(coords);
-     };
+    GlobeViewExtended.prototype.getCoordinateFromMouseEvent = function (mouseEvent) {
+        var coords = this.getGlobeView().eventToViewCoords(mouseEvent);
+        return this.getGlobeView().controls.pickGeoPosition(coords);
+    };
 
     /**
      * Get all visible features that intersect a pixel
@@ -625,43 +631,41 @@ define([
      * @param {MouseEvent} mouseEvent - A mouse event.
      * @return {Array} visibleFeatures - The array of visible features.
      */
-     GlobeViewExtended.prototype.getFeaturesAtMousePosition = function (mouseEvent) {
-         var vectorLayers = this.getVectorLayers();
-         if (!vectorLayers) {
-             return;
-         }
-         // array of the visible features on the clicker coord
-         var visibleFeatures = [];
+    GlobeViewExtended.prototype.getFeaturesAtMousePosition = function (mouseEvent) {
+        var vectorLayers = this.getVectorLayers();
+        if (!vectorLayers) {
+            return;
+        }
+        // array of the visible features on the clicker coord
+        var visibleFeatures = [];
+        var geoCoord = this.getCoordinateFromMouseEvent(mouseEvent);
+        if (geoCoord) {
+            // buffer around the click inside we retrieve the features
+            var precision = this.getGlobeView().controls.pixelsToDegrees(5);
+            for (var i = 0; i < vectorLayers.length; i++) {
+                var idx;
+                var layer = vectorLayers[i];
+                // if the layer is not visible, we ignore it
+                if (!layer.visible) {
+                    continue;
+                }
+                var result = Itowns.FeaturesUtils.filterFeaturesUnderCoordinate(geoCoord, layer.feature, precision);
+                // we add the features to the visible features array
+                for (idx = 0; idx < result.length; idx++) {
+                    visibleFeatures.push(result[idx]);
+                }
+            }
+        }
+        return visibleFeatures;
+    };
 
-         var geoCoord = this.getCoordinateFromMouseEvent(mouseEvent);
-         if (geoCoord) {
-             // buffer around the click inside we retrieve the features
-             var precision = this.getGlobeView().controls.pixelsToDegrees(5);
-             for (var i = 0; i < vectorLayers.length; i++) {
-                 var idx;
-                 var layer = vectorLayers[i];
-                 // if the layer is not visible, we ignore it
-                 if (!layer.visible) {
-                     continue;
-                 }
-                 var result = Itowns.FeaturesUtils.filterFeaturesUnderCoordinate(geoCoord, layer.feature, precision);
-                 // we add the features to the visible features array
-                 for (idx = 0; idx < result.length; idx++) {
-                     visibleFeatures.push(result[idx]);
-                 }
-             }
-         }
-         return visibleFeatures;
-     };
-
-   /**
-    * Changes the center of the scene on screen to the specified in lat, lon.
-    *
-    * @param {Object} center
-    * @param {number}  center.longitude - Coordinate longitude WGS84 in degree
-    * @param {number}  center.latitude - Coordinate latitude WGS84 in degree
-    * @return {Array} visibleFeatures - The array of visible features.
-    */
+    /**
+     * Changes the center of the scene on screen to the specified in lat, lon.
+     *
+     * @param {Object} center - Center object
+     * @param {Number} center.longitude - Coordinate longitude WGS84 in degree
+     * @param {Number} center.latitude - Coordinate latitude WGS84 in degree
+     */
     GlobeViewExtended.prototype.setCameraTargetGeoPosition = function (center) {
         this.getGlobeView().controls.setCameraTargetGeoPositionAdvanced(center, false);
     };
@@ -701,48 +705,48 @@ define([
 
     /**
      * To convert the projection in meters on the globe of a number of pixels of screen
-     * @param      {number} pixels count pixels to project
-     * @return     {number} projection in meters on globe
+     * @param {Number} pixels - count pixels to project
+     * @return {Number} projection in meters on globe
      */
-     GlobeViewExtended.prototype.pixelsToMeters = function (pixels) {
-         return this.getGlobeView().controls.pixelsToMeters(pixels);
-     };
+    GlobeViewExtended.prototype.pixelsToMeters = function (pixels) {
+        return this.getGlobeView().controls.pixelsToMeters(pixels);
+    };
 
-     /**
-      * Projection on screen in pixels of length in meter on globe
-      * @param      {number}  value Length in meter on globe
-      * @return     {number}  projection in pixels on screen
-      */
-      GlobeViewExtended.prototype.metersToPixels = function (value) {
-          return this.getGlobeView().controls.metersToPixels(value);
-      };
+    /**
+     * Projection on screen in pixels of length in meter on globe
+     * @param {Number} value - Length in meter on globe
+     * @return {Number} projection in pixels on screen
+     */
+    GlobeViewExtended.prototype.metersToPixels = function (value) {
+        return this.getGlobeView().controls.metersToPixels(value);
+    };
 
-      /**
-       * Returns the "range": the distance in meters between the camera and the current central point on the screen.
-       * @return {number} number
-       */
-      GlobeViewExtended.prototype.getRange = function () {
-          return this.getGlobeView().controls.getRange();
-      };
+    /**
+     * Returns the "range": the distance in meters between the camera and the current central point on the screen.
+     * @return {Number} number
+     */
+    GlobeViewExtended.prototype.getRange = function () {
+        return this.getGlobeView().controls.getRange();
+    };
 
-      /**
-      * @return {THREE.Vector3} position
-      */
-      GlobeViewExtended.prototype.moveTarget = function () {
-          return this.getGlobeView().controls.moveTarget();
-      };
+    /**
+     * @return {THREE.Vector3} position
+     */
+    GlobeViewExtended.prototype.moveTarget = function () {
+        return this.getGlobeView().controls.moveTarget();
+    };
 
-      /**
-      *
-      */
-      GlobeViewExtended.prototype.getLayerEventInfos = function (evt) {
-          var propertyName = evt.type.replace("-property-changed","");
-          return {
-              propertyName : propertyName,
-              previousValue : evt.previous[propertyName],
-              newValue : evt.new[propertyName]
-          };
-      };
+    /**
+     * To get the layer event infos
+     */
+    GlobeViewExtended.prototype.getLayerEventInfos = function (evt) {
+        var propertyName = evt.type.replace("-property-changed","");
+        return {
+            propertyName : propertyName,
+            previousValue : evt.previous[propertyName],
+            newValue : evt.new[propertyName]
+        };
+    };
 
-     return GlobeViewExtended;
+    return GlobeViewExtended;
 });

@@ -109,7 +109,7 @@ define([
      * Binds globe to control
      */
     LayerSwitcher.prototype.setGlobe = function (globe) {
-
+        var layers;
         if ( globe ) { // in the case the control is added to the globe
             var self = this;
 
@@ -239,7 +239,7 @@ define([
             };
             globe.listen(GlobeViewExtended.EVENTS.LAYERS_ORDER_CHANGED, this._callbacks.onIndexLayerCallBack);
 
-            var layers = globe.getColorLayers();
+            layers = globe.getColorLayers();
             for ( var ii = 0 ; ii < layers.length ; ++ii ) {
                 globe.addLayerListener(layers[ii], GlobeViewExtended.EVENTS.OPACITY_PROPERTY_CHANGED, this._callbacks.onOpacityLayerCallBack);
                 globe.addLayerListener(layers[ii], GlobeViewExtended.EVENTS.VISIBLE_PROPERTY_CHANGED, this._callbacks.onVisibilityLayerCallBack);
@@ -252,7 +252,7 @@ define([
             this._globe.forget(GlobeViewExtended.EVENTS.LAYER_ADDED, this._callbacks.onAddedLayerCallBack);
             this._globe.forget(GlobeViewExtended.EVENTS.LAYER_REMOVED, this._callbacks.onRemovedLayerCallBack);
             this._globe.forget(GlobeViewExtended.EVENTS.LAYERS_ORDER_CHANGED, this._callbacks.onIndexLayerCallBack);
-            var layers = this._globe.getColorLayers();
+            layers = this._globe.getColorLayers();
             for ( var j = 0 ; j < layers.length ; ++j ) {
                 this._globe.removeLayerListener(layers[j], GlobeViewExtended.EVENTS.OPACITY_PROPERTY_CHANGED, this._callbacks.onOpacityLayerCallBack);
                 this._globe.removeLayerListener(layers[j], GlobeViewExtended.EVENTS.VISIBLE_PROPERTY_CHANGED, this._callbacks.onVisibilityLayerCallBack);

@@ -1239,6 +1239,8 @@ define([
         var systemList = document.getElementById(this._addUID("GPmousePositionProjectionSystem"));
         systemList.innerHTML = "";
 
+        var option;
+
         // add systems whose extent intersects the globe extent
         for (var j = 0; j < this._projectionSystems.length; j++) {
             var proj = this._projectionSystems[j];
@@ -1250,7 +1252,7 @@ define([
                        globeExtent.north() < proj.geoBBox.bottom
                  ) {
                     if ( proj === this._currentProjectionSystems ) {
-                        var option = document.createElement("option");
+                        option = document.createElement("option");
                         option.value = proj.code;
                         option.text  = proj.label || j;
                         option.setAttribute( "selected", "selected" );
@@ -1261,7 +1263,7 @@ define([
                     continue; // do not intersect
                 }
             }
-            var option = document.createElement("option");
+            option = document.createElement("option");
             option.value = proj.code;
             option.text  = proj.label || j;
             if ( proj === this._currentProjectionSystems ) {
