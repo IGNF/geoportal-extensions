@@ -11,11 +11,11 @@ script:
   # build the mixed ol3/itowns, ol3, itowns, leaflet bundles
   - npm run build-mix-itowns-ol3
   - npm run build-leaflet
-  # publish the bundles in the dist folder
-  - npm run publish-ol3
-  - npm run publish-itowns
-  - npm run publish-mix-itowns-ol3
-  - npm run publish-leaflet 
+  # prod bundles
+  - npm run build-mix-itowns-ol3:prod
+  - npm run build-leaflet:prod
+  # publish all the bundles in  the dist directory
+  - npm run publish-all
 cache:
   directories:
     - node_modules

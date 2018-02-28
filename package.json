@@ -16,15 +16,17 @@
     "example": "samples"
   },
   "scripts": {
-    "build": "echo Use : \n echo - build-ol3 to build Geoportal Extension for OpenLayers 3 \n echo - build-leaflet to build Geoportal Extension for Leaflet \n echo - build-itowns to build Geoportal Extension for iTowns ",
+    "build": "npm run build-mix-itowns-ol3 && npm run build-leaflet",
     "build-ol3": "gulp build",
     "build-leaflet": "gulp build --leaflet",
     "build-itowns": "gulp build --itowns",
     "build-mix-itowns-ol3": "gulp build --mix --itowns --ol3",
-    "publish-ol3": "gulp publish",
-    "publish-leaflet": "gulp publish --leaflet",
-    "publish-itowns": "gulp publish --itowns",
-    "publish-mix-itowns-ol3": "gulp publish --ol3 --itowns --mix",
+    "build-prod": "npm run build-mix-itowns-ol3:prod && npm run build-leaflet:prod",
+    "build-ol3:prod": "gulp build --production",
+    "build-leaflet:prod": "gulp build --production --leaflet",
+    "build-itowns:prod": "gulp build --production --itowns",
+    "build-mix-itowns-ol3:prod": "gulp build --production --mix --itowns --ol3",
+    "publish-all": "gulp publish --ol3 && gulp publish --leaflet && gulp publish --itowns && gulp publish --ol3 --itowns --mix",
     "test": "gulp test",
     "doc": "gulp doc",
     "check": "gulp check"
