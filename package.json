@@ -8,7 +8,7 @@
   "ol3ExtVersion": "1.0.0",
   "itownsExtVersion": "2.3.0",
   "description": "French Geoportal Extensions for OpenLayers, Leaflet and iTowns libraries",
-  "main": "dist/leaflet/GpPluginLeaflet.js, dist/ol3/GpPluginOl3.js,",
+  "main": "dist/leaflet/GpPluginLeaflet.js, dist/ol3/GpPluginOl3.js, dist/itowns/GpPluginItowns.js,",
   "directories": {
     "doc": "doc",
     "test": "test",
@@ -16,7 +16,10 @@
     "example": "samples"
   },
   "scripts": {
-    "build": "gulp build",
+    "build": "echo Use : \n echo - build-ol3 to build Geoportal Extension for OpenLayers 3 \n echo - build-leaflet to build Geoportal Extension for Leaflet \n echo - build-itowns to build Geoportal Extension for iTowns ",
+    "build-ol3": "gulp build",
+    "build-leaflet": "gulp build --leaflet",
+    "build-itowns": "gulp build --itowns",
     "test": "gulp test",
     "doc": "gulp doc",
     "check": "gulp check"
@@ -40,7 +43,7 @@
   },
   "homepage": "https://github.com/IGNF/geoportal-extensions#readme",
   "dependencies": {
-    "geoportal-access-lib": "^1.1.0",
+    "geoportal-access-lib": "^1.2.0",
     "leaflet": "^1.3.0",
     "leaflet-draw": "0.4.12",
     "openlayers": "4.0.1",
