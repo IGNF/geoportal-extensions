@@ -11,7 +11,7 @@ define([
     "Itowns/Controls/Utils/PositionFormater",
     "Itowns/CRS/CRS"
 ], function (
-    proj4,
+    Proj4,
     woodman,
     Gp,
     GlobeViewExtended,
@@ -916,7 +916,7 @@ define([
         }
         // reproject coordinates from their CRS of origin (WGS84) to the wanted CRS (crsProp)
         if (crsProp !== "EPSG:4326") {
-            coord = proj4(CRS[crsProp],[coords.lon, coords.lat]);
+            coord = Proj4(CRS[crsProp],[coords.lon, coords.lat]);
             // projected values are affected to the coord var
             coordinates.lon = coord[0];
             coordinates.lat = coord[1];

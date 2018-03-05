@@ -380,7 +380,7 @@
             findNestedDependencies : false,
             preserveLicenseComments : false,
             useStrict : true,
-            logLevel : 0,
+            logLevel : 1,
             /** onBuildRead */
             onBuildRead : function (moduleName, path, contents) {
 
@@ -390,6 +390,8 @@
                 var _contentModuleA;
                 var _contentModuleB;
                 var _contentModuleC;
+                var _contentModuleD;
+                var _contentModuleE;
 
                 // FIXME on reecrit correctement la gestion des dependances internes...
                 // * window[NameSpace] = factory() => moduleName = window[NameSpace] = factory()
@@ -415,8 +417,10 @@
                 } else if (moduleName === "gp") {
                     _contentModuleA = contents;
                     _contentModuleB = _contentModuleA.replace("module.exports = factory", moduleName + " = module.exports = factory");
-                    _contentModuleC = _contentModuleB.replace("root.", moduleName + " = root.");
-                    _contentModule = _contentModuleC;
+                    _contentModuleC = _contentModuleB.replace("exports[", moduleName + " = exports[");
+                    _contentModuleD = _contentModuleC.replace("root[", moduleName + " = root[");
+                    _contentModuleE = _contentModuleD.replace("define(", moduleName + " = define(");
+                    _contentModule = _contentModuleE;
                 } else {
                     _contentModule = contents;
                 }

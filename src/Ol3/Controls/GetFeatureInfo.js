@@ -8,7 +8,7 @@ define([
     "Common/Controls/GetFeatureInfoDOM"
 ], function (
     ol,
-    proj4,
+    Proj4,
     Gp,
     Utils,
     GfiUtils,

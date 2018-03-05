@@ -1,0 +1,47 @@
+{
+  "name": "geoportal-extensions",
+  "olExtName": "French Geoportal Extension for OpenLayers",
+  "version": "1.0.0",
+  "olExtVersion": "2.0.0",
+  "description": "French Geoportal Extensions for OpenLayers librarie",
+  "main": "dist/ol/GpPluginOpenLayers.js",
+  "directories": {},
+  "scripts": {
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/IGNF/geoportal-extensions.git"
+  },
+  "author": "IGNF",
+  "keywords": [
+    "geoportail",
+    "javascript",
+    "OpenLayers",
+    "Leaflet",
+    "Itowns",
+    "3D"
+  ],
+  "license": "CECILL-B",
+  "bugs": {
+    "url": "https://github.com/IGNF/geoportal-extensions/issues"
+  },
+  "homepage": "https://github.com/IGNF/geoportal-extensions#readme",
+  "dependencies": {
+    "geoportal-access-lib": "^1.2.0",
+    "loglevel": "^1.6.1",
+    "openlayers": "4.0.1",
+    "proj4": "2.4.4",
+    "request": "^2.83.0",
+    "sortablejs": "1.4.0",
+    "xmldom": "^0.1.27"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "path": "^0.12.7",
+    "requirejs": "^2.3.5",
+    "webpack": "^3.11.0"
+  }
+}
