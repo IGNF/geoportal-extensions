@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 
- * @date 2018-02-28
+ * @date 2018-03-05
  *
  */
 label[id^=GPshowDrawingPicto-]{display:inline-block}input[id^=GPshowDrawing-]+label,input[id^=GPshowDrawing-]:checked+label+div{display:block}input[id^=GPshowDrawing-]+label+div,input[id^=GPshowDrawing-]:checked+label{display:none}div[id^=GPdrawingPanel-]{width:240px;overflow:hidden}div[id^=GPdrawingBasicPanel-]{padding:10px 15px}.GPdrawingCoords,.GPdrawingLabel{display:inline-block;line-height:20px}.GPdrawingLabel{width:80px;font-weight:700}.GPdrawingCoords{width:110px}.marker-input-radio{display:none}input.marker-input-radio:checked+label{border:1px solid red}
