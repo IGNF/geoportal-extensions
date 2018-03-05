@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/IGNF/geoportal-extensions#readme",
   "dependencies": {
-    "geoportal-access-lib": "^1.2.0",
+    "geoportal-access-lib": "https://github.com/IGNF/geoportal-access-lib/tarball/migrate-es6",
     "loglevel": "^1.6.1",
     "openlayers": "4.0.1",
     "proj4": "2.4.4",

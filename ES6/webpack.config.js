@@ -1,9 +1,13 @@
+/* global module, __dirname */
+
 // -- modules
 var path    = require("path");
 var webpack = require("webpack");
 
 // -- plugins
-var DefineWebpackPlugin = webpack.DefinePlugin;
+var DefineWebpackPlugin   = webpack.DefinePlugin;
+
+// -- variables
 
 module.exports = env => {
 
@@ -11,13 +15,12 @@ module.exports = env => {
 
     return {
         entry : [
-            // FIXME doit on ajouter les classes EPSG2154 et EPSG27572 !?
             path.join(__dirname, "src", "Common", "Utils", "AutoLoadConfig"),
             path.join(__dirname, "src", "OpenLayers", "GpPluginOpenLayers")
         ],
         output : {
             path : path.join(__dirname, "dist", "openlayers"),
-            filename : "GpPluginOpenLayers-src.js",
+            filename : (_production) ? "GpPluginOpenLayers.js" : "GpPluginOpenLayers-src.js",
             library : "Gp",
             libraryTarget : "umd",
             libraryExport : "default",
@@ -48,7 +51,7 @@ module.exports = env => {
                 amd : "require"
             }
         },
-        devtool : "source-map",
+        devtool : (_production) ? false : "source-map",
         module : {
             rules : [{
                 test : /\.js$/,
