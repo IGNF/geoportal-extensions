@@ -50,16 +50,18 @@ module.exports = env => {
         },
         devtool : "source-map",
         module : {
-            loaders : [{
+            rules : [{
                 test : /\.js$/,
                 include : [
                   path.join(__dirname, "src", "Common"),
                   path.join(__dirname, "src", "OpenLayers")
                 ],
                 exclude : /node_modules/,
-                loader : "babel-loader",
-                query : {
-                    presets : ["env"]
+                use : {
+                    loader : "babel-loader",
+                    options : {
+                        presets : ["env"]
+                    }
                 }
             }]
         },

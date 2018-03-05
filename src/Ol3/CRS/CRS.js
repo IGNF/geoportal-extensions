@@ -3,7 +3,7 @@ define([
     "ol",
     "Common/Utils/Register"
 ], function (
-    Proj4,
+    proj4,
     ol,
     Register
 ) {
@@ -19,7 +19,7 @@ define([
         Register.load();
         // overload proj4 into ol
         if ( !ol.proj.proj4_ && ol.proj.setProj4 ) {
-            ol.proj.setProj4(Proj4);
+            ol.proj.setProj4(proj4);
         } else {
             console.log("WARNING : OpenLayers library should manage proj4 dependency in order to add custom projections (Lambert 93 for instance)");
         }

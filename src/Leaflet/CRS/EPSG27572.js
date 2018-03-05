@@ -6,7 +6,7 @@ define([
     "Common/Utils/Register"
 ], function (
     L,
-    // Proj4,
+    // proj4,
     // Proj4leaflet,
     Config,
     Register

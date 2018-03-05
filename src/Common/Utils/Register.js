@@ -1,4 +1,4 @@
-define(["proj4"], function (Proj4) {
+define(["proj4"], function (proj4) {
 
     "use strict";
 
@@ -62,7 +62,7 @@ define(["proj4"], function (Proj4) {
                     for (var code in codes) {
                         if (codes.hasOwnProperty(code)) {
                             var name = register + ":" + code;
-                            Proj4.defs(name, this.get(name));
+                            proj4.defs(name, this.get(name));
                         }
                     }
                 }

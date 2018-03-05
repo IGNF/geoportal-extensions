@@ -3,7 +3,7 @@ define([
     "ol",
     "Common/Utils/Register"
 ], function (
-    Proj4,
+    proj4,
     ol,
     Register
 ) {
@@ -36,10 +36,10 @@ define([
             // singleton
             var code = "EPSG:27572";
             if (!this.instance) {
-                Proj4.defs(code, Register.get(code));
+                proj4.defs(code, Register.get(code));
                 if ( !ol.proj.get(code) ) {
                     if ( !ol.proj.proj4_ && ol.proj.setProj4 ) {
-                        ol.proj.setProj4(Proj4);
+                        ol.proj.setProj4(proj4);
                     } else {
                         console.log("WARNING : OpenLayers library should manage proj4 dependency in order to add custom projections (EPSG:27572 for instance)");
                     }

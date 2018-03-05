@@ -9,7 +9,7 @@ define([
 ],
 function (
     L,
-    Proj4,
+    proj4,
     Proj4Leaflet,
     Register,
     Epsg2154,

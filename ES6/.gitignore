@@ -41,6 +41,8 @@ nb-configuration.xml
 /bower_components/
 /bower_dependencies/
 /node_modules/
+# /dist/
+# /samples/
 /jsdoc/
 /lib/
 /tests/

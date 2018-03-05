@@ -12,7 +12,7 @@ define([
     "Ol3/CRS/CRS" // call autoload function !
 ], function (
     ol,
-    Proj4,
+    proj4,
     woodman,
     Gp,
     Utils,
