@@ -10,7 +10,6 @@ import MathUtils from "../../Common/Utils/MathUtils";
 import MousePositionDOM from "../../Common/Controls/MousePositionDOM";
 import "../CRS/CRS";
 
-
 var logger = Logger.getLogger("GeoportalMousePosition");
 
 /**
