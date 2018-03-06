@@ -1,0 +1,451 @@
+div[id^=GPelevationPathPanelInfo] {
+  display: none; /* on n'affiche pas le bouton d'information par defaut */
+}
+
+/* Calc waiting */
+
+.GPelevationPathCalcWaitingContainerVisible,
+.GPelevationPathCalcWaitingContainerHidden {
+  position: absolute;
+  top: 32px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(255,255,255,0.9);
+  font-size: 1.5em;
+  font-weight: bold;
+  overflow: hidden;
+}
+
+.GPelevationPathInformationsContainerVisible,
+.GPelevationPathInformationsContainerHidden {
+  position: absolute;
+  top: 32px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(255,255,255,0.9);
+  font-size: 13px;
+  font-weight: bold;
+  overflow: hidden;
+}
+
+.GPelevationPathCalcWaitingContainerVisible {
+  display: -webkit-flex;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.GPelevationPathInformationsContainerVisible {
+  display: -webkit-flex;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-direction: column;
+}
+
+.GPelevationPathCalcWaitingContainerHidden,
+.GPelevationPathInformationsContainerHidden {
+  display: none;
+}
+
+.GPelevationPathCalcWaiting,
+.GPelevationPathInformations {
+  margin: auto;
+}
+
+.GPelevationPathInformations {
+  font-size: 0.8em;
+}
+
+.GPelevationPathCalcWaitingContainerVisible,
+.GPelevationPathCalcWaitingContainerHidden,
+.GPelevationPathInformationsContainerVisible,
+.GPelevationPathInformationsContainerHidden {
+  border-radius: 5px;
+}
+
+/* CSS : Raw */
+
+#profileElevationRaw {
+  resize: none;
+  padding: unset;
+}
+
+/* CSS : default */
+
+#profileElevationByDefault {
+  display:-webkit-flex;
+  display:-webkit-box;
+  display:-ms-flexbox;
+  display:flex;
+  -webkit-box-orient:vertical;
+  -webkit-box-direction:normal;
+  -webkit-flex-direction:column;
+      -ms-flex-direction:column;
+          flex-direction:column;
+  height:100%;
+}
+
+.profile-box {
+  height: calc(100% - 15px);
+  display:-webkit-flex;
+  display:-webkit-box;
+  display:-ms-flexbox;
+  display:flex;
+  -webkit-flex:1;
+  -webkit-box-flex:1;
+      -ms-flex:1;
+          flex:1;
+  -webkit-box-orient:horizontal;
+  -webkit-box-direction:normal;
+  -webkit-flex-direction:row;
+      -ms-flex-direction:row;
+          flex-direction:row;
+}
+
+.profile-content {
+  -webkit-flex:1;
+  -webkit-box-flex:1;
+      -ms-flex:1;
+          flex:1;
+  -webkit-justify-content:center;
+  -webkit-box-pack:center;
+      -ms-flex-pack:center;
+          justify-content:center;
+  -webkit-box-align:center;
+  -webkit-align-items:center;
+      -ms-flex-align:center;
+          align-items:center;
+}
+
+.profile-z-vertical,
+.profile-z-vertical ul,
+.profile-x-horizontal,
+.profile-x-horizontal ul {
+  display:-webkit-flex;
+  display:-webkit-box;
+  display:-ms-flexbox;
+  display:flex;
+  /*justify-content:center;*/
+  -webkit-align-items:center;
+  -webkit-box-align:center;
+      -ms-flex-align:center;
+          align-items:center;
+}
+
+
+.profile-z-vertical,
+.profile-z-vertical ul,
+.profile-content
+{
+  -webkit-box-orient:vertical;
+  -webkit-box-direction:normal;
+  -webkit-flex-direction:column;
+      -ms-flex-direction:column;
+          flex-direction:column;
+  height:100%;
+}
+
+.profile-z-vertical ul,
+.profile-x-horizontal ul{
+  /*padding:0;*/
+  margin:0;
+  list-style-type:none;
+}
+
+.profile-z-vertical{
+  /*background:green;*/
+  -webkit-flex:0 1 auto;
+  -webkit-box-flex:0;
+      -ms-flex:0 1 auto;
+          flex:0 1 auto;
+
+}
+.profile-z-vertical ul{
+  /*background:pink;*/
+  -webkit-justify-content:space-between;
+  -webkit-box-pack:justify;
+      -ms-flex-pack:justify;
+          justify-content:space-between;
+  padding:2px 5px 2px 2px;
+  /*border-right:1px solid #888;*/
+}
+.profile-z-vertical .profile-unit{
+  /*background:gray;*/
+  width:100%;
+  text-align:center;
+  /*padding:5px 5px 2px 2px;*/
+}
+.profile-content{
+  /*background:yellow;*/
+  /*flex:1 0 auto;*/
+
+}
+.profile-content ul {
+  background:white;
+  -webkit-flex:1 0 auto;
+  -webkit-box-flex:1;
+      -ms-flex:1 0 auto;
+          flex:1 0 auto;
+  height:100%;
+  width:100%;
+  -webkit-justify-content:flex-start;
+  -webkit-box-pack:start;
+      -ms-flex-pack:start;
+          justify-content:flex-start;
+  -webkit-align-items:flex-end;
+  -webkit-box-align:end;
+      -ms-flex-align:end;
+          align-items:flex-end;
+
+  margin:0;
+  padding:0;
+
+}
+.profile-x-horizontal{
+  /*background:blue;*/
+  -webkit-flex:0 1 auto;
+  -webkit-box-flex:0;
+      -ms-flex:0 1 auto;
+          flex:0 1 auto;;
+  width:100%;
+  height: 15px
+}
+.profile-x-horizontal ul{
+  /*background:orange;*/
+  -webkit-justify-content:space-between;
+  -webkit-box-pack:justify;
+      -ms-flex-pack:justify;
+          justify-content:space-between;
+  /*padding:5px 2px 2px 2px;*/
+  width:100%;
+  /*border-top:1px solid #888;*/
+}
+
+.profile-x-fleche {
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 5px solid green;
+}
+
+.profile-z-fleche {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid red;
+}
+
+.profile-z-axis {
+    border-right: none;
+    border-left: solid 2px #888;
+    cursor: default;
+}
+
+.profile-x-axis {
+    border-top: none;
+    border-bottom: solid 2px #888;
+    cursor: default;
+}
+
+ul#profile-data li.percent {
+    display: inline-block;
+    vertical-align: bottom;
+    background-color: #C77A04;
+    opacity : 0.3;
+    border-top: solid 1px;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+li.axe span.bottom-axis {
+    vertical-align: bottom;
+}
+
+ul#profile-data .percent:hover {
+    display: inline-block;
+    vertical-align: bottom;
+    background-color: #f00;
+}
+
+.v0 { height: 0%; }
+.v1 { height: 1%; }
+.v2 { height: 2%; }
+.v3 { height: 3%; }
+.v4 { height: 4%; }
+.v5 { height: 5%; }
+.v6 { height: 6%; }
+.v7 { height: 7%; }
+.v8 { height: 8%; }
+.v9 { height: 9%; }
+.v10 { height: 10%; }
+.v11 { height: 11%; }
+.v12 { height: 12%; }
+.v13 { height: 13%; }
+.v14 { height: 14%; }
+.v15 { height: 15%; }
+.v16 { height: 16%; }
+.v17 { height: 17%; }
+.v18 { height: 18%; }
+.v19 { height: 19%; }
+.v20 { height: 20%; }
+.v21 { height: 21%; }
+.v22 { height: 22%; }
+.v23 { height: 23%; }
+.v24 { height: 24%; }
+.v25 { height: 25%; }
+.v26 { height: 26%; }
+.v27 { height: 27%; }
+.v28 { height: 28%; }
+.v29 { height: 29%; }
+.v30 { height: 30%; }
+.v31 { height: 31%; }
+.v32 { height: 32%; }
+.v33 { height: 33%; }
+.v34 { height: 34%; }
+.v35 { height: 35%; }
+.v36 { height: 36%; }
+.v37 { height: 37%; }
+.v38 { height: 38%; }
+.v39 { height: 39%; }
+.v40 { height: 40%; }
+.v41 { height: 41%; }
+.v42 { height: 42%; }
+.v43 { height: 43%; }
+.v44 { height: 44%; }
+.v45 { height: 45%; }
+.v46 { height: 46%; }
+.v47 { height: 47%; }
+.v48 { height: 48%; }
+.v49 { height: 49%; }
+.v50 { height: 50%; }
+.v51 { height: 51%; }
+.v52 { height: 52%; }
+.v53 { height: 53%; }
+.v54 { height: 54%; }
+.v55 { height: 55%; }
+.v56 { height: 56%; }
+.v57 { height: 57%; }
+.v58 { height: 58%; }
+.v59 { height: 59%; }
+.v60 { height: 60%; }
+.v61 { height: 61%; }
+.v62 { height: 62%; }
+.v63 { height: 63%; }
+.v64 { height: 64%; }
+.v65 { height: 65%; }
+.v66 { height: 66%; }
+.v67 { height: 67%; }
+.v68 { height: 68%; }
+.v69 { height: 69%; }
+.v70 { height: 70%; }
+.v71 { height: 71%; }
+.v72 { height: 72%; }
+.v73 { height: 73%; }
+.v74 { height: 74%; }
+.v75 { height: 75%; }
+.v76 { height: 76%; }
+.v77 { height: 77%; }
+.v78 { height: 78%; }
+.v79 { height: 79%; }
+.v80 { height: 80%; }
+.v81 { height: 81%; }
+.v82 { height: 82%; }
+.v83 { height: 83%; }
+.v84 { height: 84%; }
+.v85 { height: 85%; }
+.v86 { height: 86%; }
+.v87 { height: 87%; }
+.v88 { height: 88%; }
+.v89 { height: 89%; }
+.v90 { height: 90%; }
+.v91 { height: 91%; }
+.v92 { height: 92%; }
+.v93 { height: 93%; }
+.v94 { height: 94%; }
+.v95 { height: 95%; }
+.v96 { height: 96%; }
+.v97 { height: 97%; }
+.v98 { height: 98%; }
+.v99 { height: 99%; }
+.v100 { height: 100%; }
+
+/* CSS : D3 */
+
+.axis-d3 > text {
+  fill: rgb(94, 94, 94);
+  font-family: Verdana;
+  font-size: 10px;
+  opacity: 1;
+  text-anchor: end;
+}
+
+.axis-d3 {
+  fill: none;
+  stroke: #5E5E5E;
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+
+.area-d3 {
+  fill: #C77A04;
+  stroke: #5E5E5E;
+  stroke-width: 0;
+  fill-opacity: 0.4;
+}
+
+.line-d3 {
+  fill: none;
+  stroke: #C77A04;
+  stroke-width: 1px;
+}
+
+.grid-d3 .tick {
+  stroke: lightgrey;
+  opacity: 0.7;
+}
+
+.grid-d3 path {
+  stroke-width: 0;
+}
+
+.grid-d3 .tick {
+  stroke: lightgrey;
+  opacity: 0.7;
+}
+
+.grid-d3 path {
+  stroke-width: 0;
+}
+
+.overlay-d3 {
+  fill: none;
+  pointer-events: all;
+}
+
+.focusLine-d3 {
+  fill: none;
+  stroke: #C77A04;
+  stroke-width: 0.5px;
+}
+
+.focusCircle-d3 {
+  fill: #C77A04;
+}
+
+div.tooltip-d3 {
+    position: inherit;;
+    text-align: left;
+    width: 80px;
+    height: 45px;
+    padding: 5px;
+    font: 8px sans-serif;
+    background: white;
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
+}

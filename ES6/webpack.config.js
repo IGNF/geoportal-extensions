@@ -6,6 +6,7 @@ var webpack = require("webpack");
 
 // -- plugins
 var DefineWebpackPlugin   = webpack.DefinePlugin;
+var ExtractTextWebPackPlugin = require("extract-text-webpack-plugin");
 
 // -- variables
 
@@ -16,7 +17,8 @@ module.exports = env => {
     return {
         entry : [
             path.join(__dirname, "src", "Common", "Utils", "AutoLoadConfig"),
-            path.join(__dirname, "src", "OpenLayers", "GpPluginOpenLayers")
+            path.join(__dirname, "src", "OpenLayers", "GpPluginOpenLayers"),
+            path.join(__dirname, "src", "OpenLayers", "importOpenLayersCSS")
         ],
         output : {
             path : path.join(__dirname, "dist", "openlayers"),
@@ -53,7 +55,8 @@ module.exports = env => {
         },
         devtool : (production) ? false : "source-map",
         module : {
-            rules : [{
+            rules : [
+              {
                 test : /\.js$/,
                 include : [
                   path.join(__dirname, "src", "Common"),
@@ -66,13 +69,40 @@ module.exports = env => {
                         presets : ["env"]
                     }
                 }
-            }]
+            },
+            {
+                test : /\.css$/,
+                include : [
+                    path.join(__dirname, "res", "Common"),
+                    path.join(__dirname, "res", "OpenLayers")
+                ],
+                use : ExtractTextWebPackPlugin.extract({
+                    fallback : {
+                        loader : "style-loader",
+                        options : {
+                            sourceMap : false
+                        }
+                    },
+                    use : {
+                        loader : "css-loader",
+                        options : {
+                            sourceMap : true
+                        }
+                    }
+                })
+            },
+            {
+                test : /\.(png|jpg|gif|svg)$/,
+                loader : "url-loader"
+            }
+          ]
         },
         plugins : [
             /** GESTION DU LOGGER */
             new DefineWebpackPlugin({
                 __PRODUCTION__ : JSON.stringify(production)
-            })
+            }),
+            new ExtractTextWebPackPlugin((production) ? "GpPluginOpenLayers.css" : "GpPluginOpenLayers-src.css")
         ]
     };
 };
