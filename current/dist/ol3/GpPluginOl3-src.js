@@ -10,15 +10,15 @@
  * copyright IGN
  * @author IGN
  * @version 1.0.0
- * @date 2018-03-05
+ * @date 2018-03-06
  *
  */
 /*!
  * @overview es6-promise - a tiny implementation of Promises/A+.
- * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and cont  ributors (Conversion to ES6 API by Jake Archibald)
+ * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors (Conversion to ES6 API by Jake Archibald)
  * @license   Licensed under MIT license
- *            See https://raw.githubusercontent.com/jakearchibald/es6-promise/  master/LICENSE
- * @version   3.0.2
+ *            See https://raw.githubusercontent.com/stefanpenner/es6-promise/master/LICENSE
+ * @version   v4.2.4
  */
 /*!
  * Sortable -- minimalist JavaScript library for reorderable drag-and-drop lists
@@ -29960,7 +29960,7 @@ Ol3ControlsMeasuresMeasureAzimuth = function (ol, woodman, Utils, MeasureToolBox
 }(ol, {}, CommonUtils, Ol3ControlsMeasureToolBox, Ol3ControlsMeasuresMeasures, CommonControlsMeasureAzimuthDOM, CommonUtilsSelectorID);
 Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, ProxyUtils, GfiUtils, Utils, KML, WMTS, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, GetFeatureInfo, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution, Markers, ElevationPath, MeasureLength, MeasureArea, MeasureAzimuth) {
     Gp.ol3extVersion = '1.0.0';
-    Gp.ol3extDate = '2018-03-05';
+    Gp.ol3extDate = '2018-03-06';
     Gp.olUtils = Utils;
     Gp.LayerUtils = LayerUtils;
     Gp.ProxyUtils = ProxyUtils;

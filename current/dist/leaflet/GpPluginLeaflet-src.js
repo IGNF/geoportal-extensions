@@ -10,15 +10,15 @@
  * copyright IGN
  * @author IGN
  * @version 1.0.0
- * @date 2018-03-05
+ * @date 2018-03-06
  *
  */
 /*!
  * @overview es6-promise - a tiny implementation of Promises/A+.
- * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and cont  ributors (Conversion to ES6 API by Jake Archibald)
+ * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors (Conversion to ES6 API by Jake Archibald)
  * @license   Licensed under MIT license
- *            See https://raw.githubusercontent.com/jakearchibald/es6-promise/  master/LICENSE
- * @version   3.0.2
+ *            See https://raw.githubusercontent.com/stefanpenner/es6-promise/master/LICENSE
+ * @version   v4.2.4
  */
 /*!
  * Sortable -- minimalist JavaScript library for reorderable drag-and-drop lists
@@ -26760,7 +26760,7 @@ LeafletLayersLayers = function (L, woodman, LayerConfig, WMS, WMTS) {
 }(leaflet, {}, LeafletLayersLayerConfig, LeafletLayersWMS, LeafletLayersWMTS);
 LeafletGpPluginLeaflet = function (L, P, Gp, Controls, ElevationPath, Layers, CRS, Register) {
     Gp.leafletExtVersion = '1.0.0';
-    Gp.leafletExtDate = '2018-03-05';
+    Gp.leafletExtDate = '2018-03-06';
     Gp.Register = Register;
     L.geoportalLayer = Layers;
     L.geoportalControl = Controls;
