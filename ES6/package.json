@@ -1,16 +1,20 @@
 {
   "name": "geoportal-extensions",
+  "leafletExtName": "French Geoportal Extension for Leaflet",
   "olExtName": "French Geoportal Extension for OpenLayers",
+  "itownsExtName": "French Geoportal Extension for Itowns",
   "version": "1.0.0",
-  "olExtVersion": "2.0.0",
-  "description": "French Geoportal Extensions for OpenLayers librarie",
-  "main": "dist/ol/GpPluginOpenLayers.js",
+  "leafletExtVersion": "1.0.0",
+  "olExtVersion": "1.0.0",
+  "itownsExtVersion": "2.3.0",
+  "description": "French Geoportal Extensions for OpenLayers, Leaflet and iTowns libraries",
+  "main": "dist/leaflet/GpPluginLeaflet.js, dist/openlayers/GpPluginOl3.js, dist/itowns/GpPluginItowns.js",
   "directories": {},
   "scripts": {
     "build": "webpack",
-    "build-it": "webpack --config webpack.config.itowns",
-    "build:ol": "webpack --config webpack.config.openlayers.js",
-    "build:leaflet": "webpack --config webpack.config.leaflet.js"
+    "build:it": "webpack --config webpack.config.itowns",
+    "build:ol": "webpack --config webpack.config.openlayers",
+    "build:leaflet": "webpack --config webpack.config.leaflet"
   },
   "repository": {
     "type": "git",
@@ -53,6 +57,7 @@
     "requirejs": "^2.3.5",
     "style-loader": "^0.20.2",
     "url-loader": "^1.0.1",
-    "webpack": "^3.11.0"
+    "webpack": "^3.11.0",
+    "webpack-merge": "^4.1.2"
   }
 }

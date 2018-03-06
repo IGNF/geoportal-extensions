@@ -3,6 +3,7 @@
 // -- modules
 var path    = require("path");
 var webpack = require("webpack");
+var merge   = require("webpack-merge");
 
 // -- plugins
 var DefineWebpackPlugin   = webpack.DefinePlugin;
@@ -13,12 +14,15 @@ var ExtractTextWebPackPlugin = require("extract-text-webpack-plugin");
 module.exports = env => {
 
     var production = (env) ? env.production : false;
+    // -- library
+    var leaflet = (env) ? env.leaflet : false;
+    var openlayers = (env) ? env.openlayers : false;
 
     return {
         entry : [
             path.join(__dirname, "src", "Common", "Utils", "AutoLoadConfig"),
             path.join(__dirname, "src", "OpenLayers", "GpPluginOpenLayers"),
-            path.join(__dirname, "src", "OpenLayers", "importOpenLayersCSS")
+            path.join(__dirname, "src", "OpenLayers", "importOpenLayers")
         ],
         output : {
             path : path.join(__dirname, "dist", "openlayers"),
