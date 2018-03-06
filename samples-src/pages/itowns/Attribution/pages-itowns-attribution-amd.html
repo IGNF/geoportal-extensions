@@ -60,14 +60,14 @@
 
                             globeView.listen(itowns.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
                                 // eslint-disable-next-line no-console
-                                console.info("Globe initialized");
-                                var attribution = new itowns.control.Attributions({
-                                    options : {
-                                        // collapsed : true
-                                    }
+                                    console.info("Globe initialized");
+                                    var attribution = new itowns.control.Attributions({
+                                        options : {
+                                            // collapsed : true
+                                        }
+                                });
+                                globeView.addWidget( attribution );
                             });
-                            globeView.addWidget( attribution );
-                        });
                     });
             </script>
 {{/content}}

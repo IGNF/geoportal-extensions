@@ -7,7 +7,8 @@
   "main": "dist/ol/GpPluginOpenLayers.js",
   "directories": {},
   "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "build-it": "webpack --config webpack.config.itowns"
   },
   "repository": {
     "type": "git",
@@ -34,7 +35,8 @@
     "proj4": "2.4.4",
     "request": "^2.83.0",
     "sortablejs": "1.4.0",
-    "xmldom": "^0.1.27"
+    "xmldom": "^0.1.27",
+    "itowns": "2.3.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
@@ -42,7 +44,6 @@
     "babel-preset-env": "^1.6.1",
     "path": "^0.12.7",
     "requirejs": "^2.3.5",
-    "webpack": "^4.1.0",
-    "webpack-cli": "^2.0.10"
+    "webpack": "^3.11.0"
   }
 }
