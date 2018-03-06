@@ -8,7 +8,7 @@
   "directories": {},
   "scripts": {
     "build": "webpack",
-    "build-it": "webpack --config webpack.config.itowns"
+    "build-it": "webpack --config webpack.config.itowns",
     "build:ol": "webpack --config webpack.config.openlayers.js",
     "build:leaflet": "webpack --config webpack.config.leaflet.js"
   },
