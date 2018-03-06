@@ -8,6 +8,7 @@
   "directories": {},
   "scripts": {
     "build": "webpack",
+    "build-it": "webpack --config webpack.config.itowns",
     "build:ol": "webpack --config webpack.config.openlayers.js",
     "build:leaflet": "webpack --config webpack.config.leaflet.js"
   },
@@ -39,7 +40,8 @@
     "proj4leaflet": "^1.0.2",
     "request": "^2.83.0",
     "sortablejs": "1.4.0",
-    "xmldom": "^0.1.27"
+    "xmldom": "^0.1.27",
+    "itowns": "2.3.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
