@@ -81,7 +81,17 @@ TODO...
 
 revoir les règles !
 
+## CSS/images
+
+## Minification
+
+**Warning**
+> implementation differente entre les versions de webpack !
+
 ## Environnement de production / developpement
+
+En version 4 de webpack, on a le flag **--mode production**.
+En version 3 de webpack, on a du code js à placer pour utiliser **--env.production**.
 
 ## LICENCES
 
