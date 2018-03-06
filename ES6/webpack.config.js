@@ -11,7 +11,7 @@ var DefineWebpackPlugin   = webpack.DefinePlugin;
 
 module.exports = env => {
 
-    var _production = (env) ? env.production : false;
+    var production = (env) ? env.production : false;
 
     return {
         entry : [
@@ -20,7 +20,7 @@ module.exports = env => {
         ],
         output : {
             path : path.join(__dirname, "dist", "openlayers"),
-            filename : (_production) ? "GpPluginOpenLayers.js" : "GpPluginOpenLayers-src.js",
+            filename : (production) ? "GpPluginOpenLayers.js" : "GpPluginOpenLayers-src.js",
             library : "Gp",
             libraryTarget : "umd",
             libraryExport : "default",
@@ -51,7 +51,7 @@ module.exports = env => {
                 amd : "require"
             }
         },
-        devtool : (_production) ? false : "source-map",
+        devtool : (production) ? false : "source-map",
         module : {
             rules : [{
                 test : /\.js$/,
@@ -71,7 +71,7 @@ module.exports = env => {
         plugins : [
             /** GESTION DU LOGGER */
             new DefineWebpackPlugin({
-                __PRODUCTION__ : JSON.stringify(_production)
+                __PRODUCTION__ : JSON.stringify(production)
             })
         ]
     };
