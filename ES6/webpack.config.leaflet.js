@@ -1,14 +1,19 @@
 /* global module, __dirname */
 
 // -- modules
+var fs      = require("fs");
 var path    = require("path");
 var webpack = require("webpack");
+var header  = require("string-template");
 
 // -- plugins
 var DefineWebpackPlugin   = webpack.DefinePlugin;
 var ExtractTextWebPackPlugin = require("extract-text-webpack-plugin");
+var BannerWebPackPlugin   = webpack.BannerPlugin;
 
 // -- variables
+var date = new Date().toISOString().split("T")[0];
+var pkg  = require(path.join(__dirname, "package.json"));
 
 module.exports = env => {
 
@@ -17,7 +22,7 @@ module.exports = env => {
     return {
         entry : [
             path.join(__dirname, "src", "Common", "Utils", "AutoLoadConfig"),
-            path.join(__dirname, "src", "Leaflet", "importLeafletCSS"),
+            path.join(__dirname, "src", "Leaflet", "CSS"),
             path.join(__dirname, "src", "Leaflet", "GpPluginLeaflet")
         ],
         output : {
@@ -105,7 +110,37 @@ module.exports = env => {
             new DefineWebpackPlugin({
                 __PRODUCTION__ : JSON.stringify(production)
             }),
-            new ExtractTextWebPackPlugin((production) ? "GpPluginLeaflet.css" : "GpPluginLeaflet-src.css")
+            new ExtractTextWebPackPlugin((production) ? "GpPluginLeaflet.css" : "GpPluginLeaflet-src.css"),
+            /** AJOUT DES LICENCES */
+            new BannerWebPackPlugin({
+                banner : fs.readFileSync(path.join(__dirname, "licences", "licence-proj4js.txt"), "utf8"),
+                raw : true
+            }),
+            new BannerWebPackPlugin({
+                banner : fs.readFileSync(path.join(__dirname, "licences", "licence-es6promise.txt"), "utf8"),
+                raw : true
+            }),
+            new BannerWebPackPlugin({
+                banner : fs.readFileSync(path.join(__dirname, "licences", "licence-sortable.txt"), "utf8"),
+                raw : true
+            }),
+            new BannerWebPackPlugin({
+                banner : fs.readFileSync(path.join(__dirname, "licences", "licence-plugin-leaflet-draw.txt"), "utf8"),
+                raw : true
+            }),
+            new BannerWebPackPlugin({
+                banner : fs.readFileSync(path.join(__dirname, "licences", "licence-proj4leaflet.txt"), "utf8"),
+                raw : true
+            }),
+            new BannerWebPackPlugin({
+                banner : header(fs.readFileSync(path.join(__dirname, "licences", "licence-ign.tmpl"), "utf8"), {
+                    __BRIEF__ : pkg.leafletExtName,
+                    __VERSION__ : pkg.leafletExtVersion,
+                    __DATE__ : date
+                }),
+                raw : true,
+                entryOnly : true
+            })
         ]
     };
 };
