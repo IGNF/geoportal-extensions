@@ -16,11 +16,11 @@ module.exports = env => {
     return {
         entry : [
             path.join(__dirname, "src", "Common", "Utils", "AutoLoadConfig"),
-            path.join(__dirname, "src", "OpenLayers", "GpPluginOpenLayers")
+            path.join(__dirname, "src", "Leaflet", "GpPluginLeaflet")
         ],
         output : {
-            path : path.join(__dirname, "dist", "openlayers"),
-            filename : (production) ? "GpPluginOpenLayers.js" : "GpPluginOpenLayers-src.js",
+            path : path.join(__dirname, "dist", "leaflet"),
+            filename : (production) ? "GpPluginLeaflet.js" : "GpPluginLeaflet-src.js",
             library : "Gp",
             libraryTarget : "umd",
             libraryExport : "default",
@@ -28,17 +28,20 @@ module.exports = env => {
         },
         resolve : {
             alias : {
-                proj4 : path.resolve( __dirname, "node_modules", "proj4", "dist", "proj4-src.js"),
                 gp : path.resolve( __dirname, "node_modules", "geoportal-access-lib", "dist", "GpServices-src.js"),
-                sortable : path.resolve( __dirname, "node_modules", "sortablejs", "Sortable.js")
+                proj4 : path.resolve( __dirname, "node_modules", "proj4", "dist", "proj4-src.js"),
+                proj4leaflet : path.resolve( __dirname, "node_modules", "proj4leaflet", "src", "proj4leaflet.js"),
+                sortable : path.resolve( __dirname, "node_modules", "sortablejs", "Sortable.js"),
+                // extension Leaflet pour le dessin
+                "leaflet-draw" : path.resolve( __dirname, "node_modules", "leaflet-draw", "dist", "leaflet.draw-src.js")
             }
         },
         externals : {
-            ol : {
-                commonjs : "openlayers",
-                commonjs2 : "openlayers",
-                amd : "ol",
-                root : "ol"
+            leaflet : {
+                commonjs : "leaflet",
+                commonjs2 : "leaflet",
+                amd : "leaflet",
+                root : "L"
             },
             request : {
                 commonjs2 : "request",
@@ -57,7 +60,7 @@ module.exports = env => {
                 test : /\.js$/,
                 include : [
                   path.join(__dirname, "src", "Common"),
-                  path.join(__dirname, "src", "OpenLayers")
+                  path.join(__dirname, "src", "Leaflet")
                 ],
                 exclude : /node_modules/,
                 use : {

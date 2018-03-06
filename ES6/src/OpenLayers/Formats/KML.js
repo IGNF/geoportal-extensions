@@ -3,7 +3,6 @@ import Logger from "../../Common/Utils/LoggerByDefault";
 import Utils from "../../Common/Utils";
 // import $__xmldom from "xmldom";
 
-
 var logger = Logger.getLogger("extended KML format");
 
 /**
