@@ -6,7 +6,7 @@ requirejs.config({
     // En mode 'production', les paths "ol" et "leaflet" sont remplacés par le mot clef "empty:"
     // car ce sont des dependances externes (injectées par une balise "script")
     paths : {
-        "gp"           : "../node_modules/geoportal-access-lib/dist/GpServices-src",
+        "Gp"           : "../node_modules/geoportal-access-lib/dist/GpServices-src",
         "leaflet"      : "../node_modules/leaflet/dist/leaflet-src",
         "leaflet-draw" : "../node_modules/leaflet-draw/dist/leaflet.draw-src",
         "proj4"        : "../node_modules/proj4/dist/proj4-src",

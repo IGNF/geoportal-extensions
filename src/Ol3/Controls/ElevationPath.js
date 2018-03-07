@@ -2,7 +2,7 @@
 define([
     "ol",
     "woodman",
-    "gp",
+    "Gp",
     "Common/Utils",
     "Common/Utils/CheckRightManagement",
     "Ol3/Controls/Measures/Measures",

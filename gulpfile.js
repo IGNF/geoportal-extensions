@@ -345,7 +345,7 @@
             request : "empty:", // depenance externe pour nodejs !
             xmldom : "empty:",  // depenance externe pour nodejs !
             proj4 : "../../../../node_modules/proj4/dist/proj4-src" /*+ modeExt*/,
-            gp : "../../../../node_modules/geoportal-access-lib/dist/GpServices-src"  /*+ modeExt */,
+            Gp : "../../../../node_modules/geoportal-access-lib/dist/GpServices-src"  /*+ modeExt */,
             sortable : "../../../../node_modules/sortablejs/Sortable" /*+ modeExt */
         };
 
@@ -414,7 +414,7 @@
                     _contentModuleB = _contentModuleA.replace("var L, proj4;", "");
                     _contentModuleC = _contentModuleB.replace("module.exports = factory", moduleName + " = module.exports = factory");
                     _contentModule = _contentModuleC;
-                } else if (moduleName === "gp") {
+                } else if (moduleName === "Gp") {
                     _contentModuleA = contents;
                     _contentModuleB = _contentModuleA.replace("module.exports = factory", moduleName + " = module.exports = factory");
                     _contentModuleC = _contentModuleB.replace("exports[", moduleName + " = exports[");
@@ -434,7 +434,7 @@
                 var amdclean = require("amdclean") ;
                 var outputFile = data.path;
 
-                var dependencies = (isExecuteLeaflet) ? "var gp, proj4, sortable, proj4leaflet;\n" : "var gp, proj4, sortable;\n";
+                var dependencies = (isExecuteLeaflet) ? "var Gp, proj4, sortable, proj4leaflet;\n" : "var Gp, proj4, sortable;\n";
                 var dependenciesNodeJS = "var request, xmldom;\n";
 
                 fs.writeFileSync(outputFile, amdclean.clean({
@@ -490,7 +490,7 @@
             request : "empty:", // depenance externe pour nodejs !
             xmldom : "empty:",  // depenance externe pour nodejs !
             proj4 : "../../../../node_modules/proj4/dist/proj4-src" /*+ modeExt*/,
-            gp : "../../../../node_modules/geoportal-access-lib/dist/GpServices-src"  /*+ modeExt */,
+            Gp : "../../../../node_modules/geoportal-access-lib/dist/GpServices-src"  /*+ modeExt */,
             sortable : "../../../../node_modules/sortablejs/Sortable" /*+ modeExt */,
             woodman : "empty:"
         };

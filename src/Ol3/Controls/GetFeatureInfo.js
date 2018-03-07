@@ -1,7 +1,7 @@
 define([
     "ol",
     "proj4",
-    "gp",
+    "Gp",
     "Common/Utils",
     "Ol3/GfiUtils",
     "Common/Utils/SelectorID",

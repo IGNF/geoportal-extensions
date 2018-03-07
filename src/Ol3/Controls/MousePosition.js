@@ -2,7 +2,7 @@ define([
     "ol",
     "proj4",
     "woodman",
-    "gp",
+    "Gp",
     "Common/Utils",
     "Ol3/Controls/Utils/Markers",
     "Common/Utils/CheckRightManagement",

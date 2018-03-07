@@ -1,7 +1,7 @@
 define([
     "woodman",
     "ol",
-    "gp",
+    "Gp",
     "Common/Utils",
     "Ol3/Controls/Utils/Markers",
     "Ol3/Controls/LayerSwitcher",

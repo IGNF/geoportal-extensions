@@ -1,7 +1,7 @@
 /* globals self */
 define([
     "ol",
-    "gp",
+    "Gp",
     "Common/Utils",
     "Common/Utils/Config"
 ], function (

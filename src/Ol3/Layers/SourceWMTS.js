@@ -2,7 +2,7 @@
 define([
     "ol",
     "Ol3/Sources/WMTS",
-    "gp",
+    "Gp",
     "Ol3/GfiUtils",
     "Common/Utils",
     "Common/Utils/Config",
