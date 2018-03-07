@@ -6,7 +6,7 @@
 
 define([
     "leaflet",
-    "gp",
+    "Gp",
     "woodman",
     "Leaflet/Layers/LayerEvent"
 ],

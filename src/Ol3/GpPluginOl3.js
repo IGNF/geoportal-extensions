@@ -1,6 +1,6 @@
 define([
     "ol",
-    "gp",
+    "Gp",
     "Common/Utils/LayerUtils",
     "Common/Utils/Register",
     "Common/Utils/ProxyUtils",

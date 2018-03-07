@@ -1,6 +1,6 @@
 define([
     "itowns",
-    "gp",
+    "Gp",
     "Common/Utils",
     "Common/Utils/LayerUtils",
     "Itowns/Controls/MousePosition",

@@ -1,4 +1,4 @@
-define(["gp"], function (Gp) {
+define(["Gp"], function (Gp) {
 
     "use strict";
 

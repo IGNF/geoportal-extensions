@@ -2,7 +2,7 @@
 define([
     "leaflet",
     "woodman",
-    "gp",
+    "Gp",
     "Common/Utils/CheckRightManagement",
     "Common/Utils/SelectorID",
     "Common/Utils/SearchEngineUtils",

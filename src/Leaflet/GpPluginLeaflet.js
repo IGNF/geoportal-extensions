@@ -1,7 +1,7 @@
 define([
     "leaflet",
     "leaflet-draw",
-    "gp",
+    "Gp",
     "Leaflet/Controls/Controls",
     "Leaflet/Controls/ElevationPath",
     "Leaflet/Layers/Layers",

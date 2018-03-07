@@ -1,6 +1,6 @@
 define([
     "ol",
-    "gp",
+    "Gp",
     "woodman",
     "Common/Utils",
     "Ol3/Controls/Utils/Markers",

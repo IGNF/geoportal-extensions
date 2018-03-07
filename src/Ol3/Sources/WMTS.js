@@ -1,5 +1,5 @@
 define([
-    "gp",
+    "Gp",
     "ol",
     "Common/Utils"
 ], function (

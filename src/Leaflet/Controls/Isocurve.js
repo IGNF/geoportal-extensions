@@ -1,7 +1,7 @@
 define([
     "leaflet",
     "woodman",
-    "gp",
+    "Gp",
     "Common/Utils/CheckRightManagement",
     "Common/Utils/SelectorID",
     "Leaflet/Controls/LocationSelector",

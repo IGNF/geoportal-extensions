@@ -2,7 +2,7 @@ define([
     "ol",
     "Common/Utils",
     "woodman",
-    "gp",
+    "Gp",
     "Common/Utils/CheckRightManagement",
     "Common/Utils/SelectorID",
     "Common/Controls/LocationSelectorDOM",

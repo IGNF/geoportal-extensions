@@ -88,7 +88,7 @@ function docker() {
   doCmd "docker run -it --rm geoportal-extensions"
 }
 
-doCmd "npm install"
+# doCmd "npm install"
 doCmd "gulp clean"
 
 while getopts "daoliI" opts

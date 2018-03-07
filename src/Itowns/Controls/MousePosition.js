@@ -1,7 +1,7 @@
 define([
     "proj4",
     "woodman",
-    "gp",
+    "Gp",
     "Itowns/GlobeViewExtended",
     "Common/Utils",
     "Common/Utils/CheckRightManagement",

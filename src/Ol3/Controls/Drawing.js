@@ -1,7 +1,7 @@
 define([
     "woodman",
     "ol",
-    "gp",
+    "Gp",
     "Common/Utils/SelectorID",
     "Ol3/Controls/Utils/Interactions",
     "Common/Controls/DrawingDOM",

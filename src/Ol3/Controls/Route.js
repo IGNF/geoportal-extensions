@@ -1,6 +1,6 @@
 define([
     "ol",
-    "gp",
+    "Gp",
     "Common/Utils",
     "woodman",
     "Common/Utils/CheckRightManagement",
