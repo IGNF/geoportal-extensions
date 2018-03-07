@@ -47,28 +47,21 @@ dans un environnement Web, amd et ES6 pour valider le bundle.
 
 ## Openlayers
 
-**OK!** pour la creation du bundle uniquement !
+**OK!** pour la creation du bundle !
 
 **Warning**
-> On en profite pour supprimer les réf. ol3 -> openlayers !
-
-**TODO**
-- CSS et images..
+> cf. FIXME.md - On en profite pour supprimer les réf. ol3 -> openlayers !
 
 
 
 ## Leaflet
 
-**OK!** pour la creation du bundle uniquement !
-
-**TODO**
-- CSS et images..
-
+**OK!** pour la creation du bundle !
 
 
 ## Itowns
 
-TODO...
+**OK!** pour la creation du bundle !
 
 ## Mix Openlayers/Itowns
 
@@ -83,7 +76,11 @@ revoir les règles !
 
 ## CSS/images
 
+**OK!**
+
 ## Minification
+
+**OK!**
 
 **Warning**
 > implementation differente entre les versions de webpack !
@@ -94,6 +91,8 @@ En version 4 de webpack, on a le flag **--mode production**.
 En version 3 de webpack, on a du code js à placer pour utiliser **--env.production**.
 
 ## LICENCES
+
+**OK!**
 
 Licences *multiples* à ajouter aux bundles !
 
