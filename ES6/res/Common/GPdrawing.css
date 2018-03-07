@@ -1,0 +1,61 @@
+/* MOUSE POSITION */
+
+/* Showing/hiding drawing panel */
+
+label[id^=GPshowDrawingPicto-] {
+  display: inline-block;
+}
+
+input[id^=GPshowDrawing-] + label {
+  display: block;
+}
+
+input[id^=GPshowDrawing-]:checked + label {
+  display: none;
+}
+
+input[id^=GPshowDrawing-] + label + div {
+  display: none;
+}
+
+input[id^=GPshowDrawing-]:checked + label + div {
+  display: block;
+}
+
+/* General panels */
+
+div[id^=GPdrawingPanel-] {
+  width: 240px;
+  overflow: hidden;
+}
+
+/* Basic infos */
+
+div[id^=GPdrawingBasicPanel-] {
+  padding: 10px 15px;
+}
+
+.GPdrawingLabel,
+.GPdrawingCoords {
+  display: inline-block;
+  line-height: 20px;
+}
+
+.GPdrawingLabel {
+  width: 80px;
+  font-weight: bold;
+}
+
+.GPdrawingCoords {
+  width: 110px;
+}
+
+/* markers selector */
+.marker-input-radio {
+  display : none ;
+}
+
+input.marker-input-radio:checked + label {
+  border: 1px solid red;
+}
+

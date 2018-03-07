@@ -1,13 +1,19 @@
 /* global module, __dirname */
 
 // -- modules
+var fs      = require("fs");
 var path    = require("path");
 var webpack = require("webpack");
+var header  = require("string-template");
 
 // -- plugins
 var DefineWebpackPlugin   = webpack.DefinePlugin;
+var ExtractTextWebPackPlugin = require("extract-text-webpack-plugin");
+var BannerWebPackPlugin   = webpack.BannerPlugin;
 
 // -- variables
+var date = new Date().toISOString().split("T")[0];
+var pkg  = require(path.join(__dirname, "package.json"));
 
 module.exports = env => {
 
@@ -16,6 +22,7 @@ module.exports = env => {
     return {
         entry : [
             path.join(__dirname, "src", "Common", "Utils", "AutoLoadConfig"),
+            path.join(__dirname, "src", "Leaflet", "CSS"),
             path.join(__dirname, "src", "Leaflet", "GpPluginLeaflet")
         ],
         output : {
@@ -32,7 +39,7 @@ module.exports = env => {
                 proj4 : path.resolve( __dirname, "node_modules", "proj4", "dist", "proj4-src.js"),
                 proj4leaflet : path.resolve( __dirname, "node_modules", "proj4leaflet", "src", "proj4leaflet.js"),
                 sortable : path.resolve( __dirname, "node_modules", "sortablejs", "Sortable.js"),
-                // extension Leaflet pour le dessin
+                // plugin Leaflet pour le dessin
                 "leaflet-draw" : path.resolve( __dirname, "node_modules", "leaflet-draw", "dist", "leaflet.draw-src.js")
             }
         },
@@ -56,7 +63,8 @@ module.exports = env => {
         },
         devtool : (production) ? false : "source-map",
         module : {
-            rules : [{
+            rules : [
+              {
                 test : /\.js$/,
                 include : [
                   path.join(__dirname, "src", "Common"),
@@ -69,12 +77,69 @@ module.exports = env => {
                         presets : ["env"]
                     }
                 }
-            }]
+            },
+            {
+                test : /\.css$/,
+                include : [
+                    path.join(__dirname, "res", "Common"),
+                    path.join(__dirname, "res", "Leaflet")
+                ],
+                use : ExtractTextWebPackPlugin.extract({
+                    fallback : {
+                        loader : "style-loader",
+                        options : {
+                            sourceMap : false
+                        }
+                    },
+                    use : {
+                        loader : "css-loader",
+                        options : {
+                            sourceMap : true
+                        }
+                    }
+                })
+            },
+            {
+                test : /\.(png|jpg|gif|svg)$/,
+                loader : "url-loader"
+            }
+          ]
         },
         plugins : [
             /** GESTION DU LOGGER */
             new DefineWebpackPlugin({
                 __PRODUCTION__ : JSON.stringify(production)
+            }),
+            new ExtractTextWebPackPlugin((production) ? "GpPluginLeaflet.css" : "GpPluginLeaflet-src.css"),
+            /** AJOUT DES LICENCES */
+            new BannerWebPackPlugin({
+                banner : fs.readFileSync(path.join(__dirname, "licences", "licence-proj4js.txt"), "utf8"),
+                raw : true
+            }),
+            new BannerWebPackPlugin({
+                banner : fs.readFileSync(path.join(__dirname, "licences", "licence-es6promise.txt"), "utf8"),
+                raw : true
+            }),
+            new BannerWebPackPlugin({
+                banner : fs.readFileSync(path.join(__dirname, "licences", "licence-sortable.txt"), "utf8"),
+                raw : true
+            }),
+            new BannerWebPackPlugin({
+                banner : fs.readFileSync(path.join(__dirname, "licences", "licence-plugin-leaflet-draw.txt"), "utf8"),
+                raw : true
+            }),
+            new BannerWebPackPlugin({
+                banner : fs.readFileSync(path.join(__dirname, "licences", "licence-proj4leaflet.txt"), "utf8"),
+                raw : true
+            }),
+            new BannerWebPackPlugin({
+                banner : header(fs.readFileSync(path.join(__dirname, "licences", "licence-ign.tmpl"), "utf8"), {
+                    __BRIEF__ : pkg.leafletExtName,
+                    __VERSION__ : pkg.leafletExtVersion,
+                    __DATE__ : date
+                }),
+                raw : true,
+                entryOnly : true
             })
         ]
     };

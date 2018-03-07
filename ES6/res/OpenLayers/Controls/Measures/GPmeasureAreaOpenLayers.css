@@ -1,0 +1,13 @@
+/* MEASURELENGTH POSITION */
+
+div[id^=GPmeasureArea-] {
+  top: 260px;
+  left: 74px;
+}
+
+/* Showing/hiding measureLength position panel */
+
+span[id^=GPshowMeasureAreaOpen-] {
+  background-image: url("img/GPmeasuresOpen.png");
+  background-position: -78px;
+}

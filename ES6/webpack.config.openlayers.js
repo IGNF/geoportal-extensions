@@ -1,26 +1,33 @@
 /* global module, __dirname */
 
 // -- modules
+var fs      = require("fs");
 var path    = require("path");
 var webpack = require("webpack");
+var header  = require("string-template");
 
 // -- plugins
 var DefineWebpackPlugin   = webpack.DefinePlugin;
+var ExtractTextWebPackPlugin = require("extract-text-webpack-plugin");
+var BannerWebPackPlugin   = webpack.BannerPlugin;
 
 // -- variables
+var date = new Date().toISOString().split("T")[0];
+var pkg  = require(path.join(__dirname, "package.json"));
 
 module.exports = env => {
 
-    var _production = (env) ? env.production : false;
+    var production = (env) ? env.production : false;
 
     return {
         entry : [
             path.join(__dirname, "src", "Common", "Utils", "AutoLoadConfig"),
+            path.join(__dirname, "src", "OpenLayers", "CSS"),
             path.join(__dirname, "src", "OpenLayers", "GpPluginOpenLayers")
         ],
         output : {
             path : path.join(__dirname, "dist", "openlayers"),
-            filename : (_production) ? "GpPluginOpenLayers.js" : "GpPluginOpenLayers-src.js",
+            filename : (production) ? "GpPluginOpenLayers.js" : "GpPluginOpenLayers-src.js",
             library : "Gp",
             libraryTarget : "umd",
             libraryExport : "default",
@@ -51,9 +58,10 @@ module.exports = env => {
                 amd : "require"
             }
         },
-        devtool : (_production) ? false : "source-map",
+        devtool : (production) ? false : "source-map",
         module : {
-            rules : [{
+            rules : [
+              {
                 test : /\.js$/,
                 include : [
                   path.join(__dirname, "src", "Common"),
@@ -66,12 +74,61 @@ module.exports = env => {
                         presets : ["env"]
                     }
                 }
-            }]
+            },
+            {
+                test : /\.css$/,
+                include : [
+                    path.join(__dirname, "res", "Common"),
+                    path.join(__dirname, "res", "OpenLayers")
+                ],
+                use : ExtractTextWebPackPlugin.extract({
+                    fallback : {
+                        loader : "style-loader",
+                        options : {
+                            sourceMap : false
+                        }
+                    },
+                    use : {
+                        loader : "css-loader",
+                        options : {
+                            sourceMap : true
+                        }
+                    }
+                })
+            },
+            {
+                test : /\.(png|jpg|gif|svg)$/,
+                loader : "url-loader"
+            }
+          ]
         },
         plugins : [
             /** GESTION DU LOGGER */
             new DefineWebpackPlugin({
-                __PRODUCTION__ : JSON.stringify(_production)
+                __PRODUCTION__ : JSON.stringify(production)
+            }),
+            new ExtractTextWebPackPlugin((production) ? "GpPluginOpenLayers.css" : "GpPluginOpenLayers-src.css"),
+            /** AJOUT DES LICENCES */
+            new BannerWebPackPlugin({
+                banner : fs.readFileSync(path.join(__dirname, "licences", "licence-proj4js.txt"), "utf8"),
+                raw : true
+            }),
+            new BannerWebPackPlugin({
+                banner : fs.readFileSync(path.join(__dirname, "licences", "licence-es6promise.txt"), "utf8"),
+                raw : true
+            }),
+            new BannerWebPackPlugin({
+                banner : fs.readFileSync(path.join(__dirname, "licences", "licence-sortable.txt"), "utf8"),
+                raw : true
+            }),
+            new BannerWebPackPlugin({
+                banner : header(fs.readFileSync(path.join(__dirname, "licences", "licence-ign.tmpl"), "utf8"), {
+                    __BRIEF__ : pkg.olExtName,
+                    __VERSION__ : pkg.olExtVersion,
+                    __DATE__ : date
+                }),
+                raw : true,
+                entryOnly : true
             })
         ]
     };

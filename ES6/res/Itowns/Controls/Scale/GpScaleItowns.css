@@ -1,0 +1,15 @@
+div[id^=GPscaleContainer-] {
+    border: 2px solid white;
+    border-top: none;
+    text-align: center;
+    display: block;
+    background-image: linear-gradient(rgba(200, 200, 200, 0.3), rgba(200, 200, 200, 0.3));
+    height: 18px;
+    width: 200px;
+    color: white;
+    font-family: 'Open Sans',
+    sans-serif;
+    font-size: 16px;
+    right: 20px;
+    bottom: 20px;
+}
