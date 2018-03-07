@@ -1,16 +1,17 @@
 /* global module, __dirname */
+"use strict";
 
 // -- modules
 var fs      = require("fs");
 var path    = require("path");
 var webpack = require("webpack");
-var merge   = require("webpack-merge");
 var header  = require("string-template");
 
 // -- plugins
 var DefineWebpackPlugin   = webpack.DefinePlugin;
 var BannerWebPackPlugin   = webpack.BannerPlugin;
 var ExtractTextWebPackPlugin = require("extract-text-webpack-plugin");
+var UglifyJsWebPackPlugin = webpack.optimize.UglifyJsPlugin;
 
 // -- variables globales (par defaut)
 var date    = new Date().toISOString().split("T")[0];
@@ -26,9 +27,9 @@ module.exports = env => {
     //      sinon, par defaut, false en mode source.
     var production = (env) ? env.production : false;
 
-    // -- library
+    // -- options library
     var leaflet = (env) ? env.leaflet : false;
-    var openlayers = (env) ? env.openlayers : false;
+    var openlayers = (env) ? env.ol : false;
     var itowns = (env) ? env.itowns : false;
 
     // -- option par defaut OpenLayers
@@ -137,22 +138,32 @@ module.exports = env => {
             new DefineWebpackPlugin({
                 __PRODUCTION__ : JSON.stringify(production)
             }),
-            /* CSS / IMAGES */
-            new ExtractTextWebPackPlugin((production) ? bundleName + ".css" : bundleName + "-src.css"),
-            /** AJOUT DES LICENCES */
+            /** CSS / IMAGES */
+            new ExtractTextWebPackPlugin((production) ? bundleName + ".css" : bundleName + "-src.css")
+        ]
+        /** MINIFICATION */
+        .concat(
+            (production) ? [
+                new UglifyJsWebPackPlugin({
+                    uglifyOptions : {
+                        mangle : true,
+                        warnings : false,
+                        compress : false
+                    }
+                })] : []
+        )
+        /** AJOUT DES LICENCES */
+        .concat([
             new BannerWebPackPlugin({
                 banner : fs.readFileSync(path.join(__dirname, "licences", "licence-proj4js.txt"), "utf8"),
-                raw : true
-            }),
-            new BannerWebPackPlugin({
-                banner : fs.readFileSync(path.join(__dirname, "licences", "licence-es6promise.txt"), "utf8"),
                 raw : true
             }),
             new BannerWebPackPlugin({
                 banner : fs.readFileSync(path.join(__dirname, "licences", "licence-sortable.txt"), "utf8"),
                 raw : true
             })
-        ].concat(
+        ])
+        .concat(
             (leaflet) ? [
                 new BannerWebPackPlugin({
                     banner : fs.readFileSync(path.join(__dirname, "licences", "licence-plugin-leaflet-draw.txt"), "utf8"),

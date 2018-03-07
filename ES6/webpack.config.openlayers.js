@@ -10,6 +10,7 @@ var header  = require("string-template");
 var DefineWebpackPlugin   = webpack.DefinePlugin;
 var ExtractTextWebPackPlugin = require("extract-text-webpack-plugin");
 var BannerWebPackPlugin   = webpack.BannerPlugin;
+var UglifyJsWebPackPlugin = webpack.optimize.UglifyJsPlugin;
 
 // -- variables
 var date = new Date().toISOString().split("T")[0];
@@ -114,14 +115,24 @@ module.exports = env => {
             new DefineWebpackPlugin({
                 __PRODUCTION__ : JSON.stringify(production)
             }),
-            new ExtractTextWebPackPlugin((production) ? "GpPluginOpenLayers.css" : "GpPluginOpenLayers-src.css"),
-            /** AJOUT DES LICENCES */
+            /** CSS / IMAGES */
+            new ExtractTextWebPackPlugin((production) ? "GpPluginOpenLayers.css" : "GpPluginOpenLayers-src.css")
+        ]
+        /** MINIFICATION */
+        .concat(
+            (production) ? [
+                new UglifyJsWebPackPlugin({
+                    uglifyOptions : {
+                        mangle : true,
+                        warnings : false,
+                        compress : false
+                    }
+                })] : []
+        )
+        /** AJOUT DES LICENCES */
+        .concat([
             new BannerWebPackPlugin({
                 banner : fs.readFileSync(path.join(__dirname, "licences", "licence-proj4js.txt"), "utf8"),
-                raw : true
-            }),
-            new BannerWebPackPlugin({
-                banner : fs.readFileSync(path.join(__dirname, "licences", "licence-es6promise.txt"), "utf8"),
                 raw : true
             }),
             new BannerWebPackPlugin({
@@ -137,6 +148,6 @@ module.exports = env => {
                 raw : true,
                 entryOnly : true
             })
-        ]
+        ])
     };
 };

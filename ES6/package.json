@@ -17,7 +17,9 @@
     "build:mix": "webpack --config webpack.config.mix.it.ol",
     "build:mix:prod": "webpack --config webpack.config.mix.it.ol --env.production",
     "build:ol": "webpack --config webpack.config.openlayers",
-    "build:leaflet": "webpack --config webpack.config.leaflet"
+    "build:ol:prod": "webpack --config webpack.config.openlayers --env.production",
+    "build:leaflet": "webpack --config webpack.config.leaflet",
+    "build:leaflet:prod": "webpack --config webpack.config.leaflet --env.production"
   },
   "repository": {
     "type": "git",
