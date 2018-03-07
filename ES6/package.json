@@ -13,8 +13,11 @@
   "scripts": {
     "build": "webpack",
     "build:it": "webpack --config webpack.config.itowns",
-    "build:ol": "webpack --config webpack.config.openlayers",
-    "build:leaflet": "webpack --config webpack.config.leaflet"
+    "build:it:prod": "webpack --config webpack.config.itowns --env.production",
+    "build:mix": "webpack --config webpack.config.mix.it.ol",
+    "build:mix:prod": "webpack --config webpack.config.mix.it.ol --env.production",
+    "build:ol": "webpack --config webpack.config.openlayers.js",
+    "build:leaflet": "webpack --config webpack.config.leaflet.js"
   },
   "repository": {
     "type": "git",
