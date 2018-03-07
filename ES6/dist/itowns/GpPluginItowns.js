@@ -1,89 +1,3 @@
-/*!
- * @brief French Geoportal Extension for OpenLayers
- *
- * This software is released under the licence CeCILL-B (Free BSD compatible)
- * @see http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
- * @see http://www.cecill.info/licences/Licence_CeCILL-B_V1-fr.txt
- * @see http://www.cecill.info/
- *
- * copyright CeCILL-B
- * copyright IGN
- * @author IGN
- * @version 1.0.0
- * @date 2018-03-07
- *
- */
-
-/*!
- * Sortable -- minimalist JavaScript library for reorderable drag-and-drop lists
- *
- * Released under MIT LICENSE
- * 
- * Copyright 2013-2016 Lebedev Konstantin <ibnRubaXa@gmail.com>
- * http://rubaxa.github.io/Sortable/
- * 
- * Permission is hereby granted, free of charge, to any person obtaining
- * a copy of this software and associated documentation files (the
- * "Software"), to deal in the Software without restriction, including
- * without limitation the rights to use, copy, modify, merge, publish,
- * distribute, sublicense, and/or sell copies of the Software, and to
- * permit persons to whom the Software is furnished to do so, subject to
- * the following conditions:
- * 
- * The above copyright notice and this permission notice shall be
- * included in all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
- * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
- * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
- * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
-
-/*!
- * @overview es6-promise - a tiny implementation of Promises/A+.
- * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and cont  ributors (Conversion to ES6 API by Jake Archibald)
- * @license   Licensed under MIT license
- *            See https://raw.githubusercontent.com/jakearchibald/es6-promise/  master/LICENSE
- * @version   3.0.2
- */
-
-/*!
- * Proj4js - Javascript reprojection library. 
- * 
- * Authors:
- * 
- * - Mike Adair madairATdmsolutions.ca
- * - Richard Greenwood richATgreenwoodmap.com
- * - Didier Richard didier.richardATign.fr
- * - Stephen Irons stephen.ironsATclear.net.nz
- * - Olivier Terral oterralATgmail.com
- * - Calvin Metcalf cmetcalfATappgeo.com
- * 
- * Copyright (c) 2014, Mike Adair, Richard Greenwood, Didier Richard, Stephen Irons, Olivier Terral and Calvin Metcalf
- * 
- *  Permission is hereby granted, free of charge, to any person obtaining a
- *  copy of this software and associated documentation files (the "Software"),
- *  to deal in the Software without restriction, including without limitation
- *  the rights to use, copy, modify, merge, publish, distribute, sublicense,
- *  and/or sell copies of the Software, and to permit persons to whom the
- *  Software is furnished to do so, subject to the following conditions:
- * 
- *  The above copyright notice and this permission notice shall be included
- *  in all copies or substantial portions of the Software.
- * 
- *  _THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
- *  OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
- *  THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
- *  DEALINGS IN THE SOFTWARE._
- * 
- */
-
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory(require("itowns"), require("xmldom"), require("request"));
@@ -20104,7 +20018,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _loglevel = __webpack_require__(38);
+var _loglevel = __webpack_require__(16);
 
 var Log = _interopRequireWildcard(_loglevel);
 
@@ -20115,7 +20029,7 @@ var LoggerByDefault = {
     getLogger: function getLogger(name) {
         // Substitute global constants configured at compile time
         // cf. webpack.config.js
-         false ? Log.disableAll() : Log.enableAll();
+         true ? Log.disableAll() : Log.enableAll();
         var logname = name || "default";
         return Log.getLogger(logname);
     }
@@ -21386,8 +21300,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(10);
-__webpack_require__(13);
-module.exports = __webpack_require__(35);
+module.exports = __webpack_require__(13);
 
 
 /***/ }),
@@ -21480,225 +21393,6 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_12__;
 "use strict";
 
 
-var _GPdrawing = __webpack_require__(14);
-
-var _GPdrawing2 = _interopRequireDefault(_GPdrawing);
-
-var _GPisochron = __webpack_require__(15);
-
-var _GPisochron2 = _interopRequireDefault(_GPisochron);
-
-var _GPmeasureAzimuth = __webpack_require__(16);
-
-var _GPmeasureAzimuth2 = _interopRequireDefault(_GPmeasureAzimuth);
-
-var _GPreverseGeocoding = __webpack_require__(17);
-
-var _GPreverseGeocoding2 = _interopRequireDefault(_GPreverseGeocoding);
-
-var _GPelevationPath = __webpack_require__(18);
-
-var _GPelevationPath2 = _interopRequireDefault(_GPelevationPath);
-
-var _GPlayerSwitcher = __webpack_require__(19);
-
-var _GPlayerSwitcher2 = _interopRequireDefault(_GPlayerSwitcher);
-
-var _GPmeasureLength = __webpack_require__(20);
-
-var _GPmeasureLength2 = _interopRequireDefault(_GPmeasureLength);
-
-var _GProute = __webpack_require__(21);
-
-var _GProute2 = _interopRequireDefault(_GProute);
-
-var _GPgeneralWidget = __webpack_require__(22);
-
-var _GPgeneralWidget2 = _interopRequireDefault(_GPgeneralWidget);
-
-var _GPlocation = __webpack_require__(23);
-
-var _GPlocation2 = _interopRequireDefault(_GPlocation);
-
-var _GPmeasureToolTip = __webpack_require__(24);
-
-var _GPmeasureToolTip2 = _interopRequireDefault(_GPmeasureToolTip);
-
-var _GPsearchEngine = __webpack_require__(25);
-
-var _GPsearchEngine2 = _interopRequireDefault(_GPsearchEngine);
-
-var _GPgetFeatureInfo = __webpack_require__(26);
-
-var _GPgetFeatureInfo2 = _interopRequireDefault(_GPgetFeatureInfo);
-
-var _GPmeasureArea = __webpack_require__(27);
-
-var _GPmeasureArea2 = _interopRequireDefault(_GPmeasureArea);
-
-var _GPmousePosition = __webpack_require__(28);
-
-var _GPmousePosition2 = _interopRequireDefault(_GPmousePosition);
-
-var _GPgeneralWidgetItowns = __webpack_require__(29);
-
-var _GPgeneralWidgetItowns2 = _interopRequireDefault(_GPgeneralWidgetItowns);
-
-var _GPattributionItowns = __webpack_require__(30);
-
-var _GPattributionItowns2 = _interopRequireDefault(_GPattributionItowns);
-
-var _GPlayerSwitcherItowns = __webpack_require__(31);
-
-var _GPlayerSwitcherItowns2 = _interopRequireDefault(_GPlayerSwitcherItowns);
-
-var _GPminiGlobeItowns = __webpack_require__(32);
-
-var _GPminiGlobeItowns2 = _interopRequireDefault(_GPminiGlobeItowns);
-
-var _GPmousePositionItowns = __webpack_require__(33);
-
-var _GPmousePositionItowns2 = _interopRequireDefault(_GPmousePositionItowns);
-
-var _GPscaleItowns = __webpack_require__(34);
-
-var _GPscaleItowns2 = _interopRequireDefault(_GPscaleItowns);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 21 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 22 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 23 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 24 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 25 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 26 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 27 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 28 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 29 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 30 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 31 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 32 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 33 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 34 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 35 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -21715,23 +21409,23 @@ var _LayerUtils = __webpack_require__(6);
 
 var _LayerUtils2 = _interopRequireDefault(_LayerUtils);
 
-var _MousePosition = __webpack_require__(36);
+var _MousePosition = __webpack_require__(14);
 
 var _MousePosition2 = _interopRequireDefault(_MousePosition);
 
-var _LayerSwitcher = __webpack_require__(44);
+var _LayerSwitcher = __webpack_require__(22);
 
 var _LayerSwitcher2 = _interopRequireDefault(_LayerSwitcher);
 
-var _Attributions = __webpack_require__(46);
+var _Attributions = __webpack_require__(24);
 
 var _Attributions2 = _interopRequireDefault(_Attributions);
 
-var _Scale = __webpack_require__(48);
+var _Scale = __webpack_require__(26);
 
 var _Scale2 = _interopRequireDefault(_Scale);
 
-var _MiniGlobe = __webpack_require__(50);
+var _MiniGlobe = __webpack_require__(28);
 
 var _MiniGlobe2 = _interopRequireDefault(_MiniGlobe);
 
@@ -21758,7 +21452,7 @@ Itowns.GlobeViewExtended = _GlobeViewExtended2.default;
 exports.default = _gp2.default;
 
 /***/ }),
-/* 36 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21770,7 +21464,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _proj = __webpack_require__(37);
+var _proj = __webpack_require__(15);
 
 var _proj2 = _interopRequireDefault(_proj);
 
@@ -21790,7 +21484,7 @@ var _Utils = __webpack_require__(1);
 
 var _Utils2 = _interopRequireDefault(_Utils);
 
-var _CheckRightManagement = __webpack_require__(39);
+var _CheckRightManagement = __webpack_require__(17);
 
 var _CheckRightManagement2 = _interopRequireDefault(_CheckRightManagement);
 
@@ -21798,7 +21492,7 @@ var _SelectorID = __webpack_require__(2);
 
 var _SelectorID2 = _interopRequireDefault(_SelectorID);
 
-var _MousePositionDOM = __webpack_require__(41);
+var _MousePositionDOM = __webpack_require__(19);
 
 var _MousePositionDOM2 = _interopRequireDefault(_MousePositionDOM);
 
@@ -21806,11 +21500,11 @@ var _Widget = __webpack_require__(3);
 
 var _Widget2 = _interopRequireDefault(_Widget);
 
-var _PositionFormater = __webpack_require__(42);
+var _PositionFormater = __webpack_require__(20);
 
 var _PositionFormater2 = _interopRequireDefault(_PositionFormater);
 
-var _CRS = __webpack_require__(43);
+var _CRS = __webpack_require__(21);
 
 var _CRS2 = _interopRequireDefault(_CRS);
 
@@ -23066,7 +22760,7 @@ MousePosition.prototype.onMousePositionProjectionUnitsChange = function (e) {
 exports.default = MousePosition;
 
 /***/ }),
-/* 37 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function (global, factory) {
@@ -29399,7 +29093,7 @@ exports.default = MousePosition;
 
 
 /***/ }),
-/* 38 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -29659,7 +29353,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 39 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29673,7 +29367,7 @@ var _LoggerByDefault = __webpack_require__(7);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
-var _Config = __webpack_require__(40);
+var _Config = __webpack_require__(18);
 
 var _Config2 = _interopRequireDefault(_Config);
 
@@ -29839,7 +29533,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 40 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30110,7 +29804,7 @@ var Config = {
 exports.default = Config;
 
 /***/ }),
-/* 41 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31012,7 +30706,7 @@ var MousePositionDOM = {
 exports.default = MousePositionDOM;
 
 /***/ }),
-/* 42 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31118,7 +30812,7 @@ var PositionFormater = {
 exports.default = PositionFormater;
 
 /***/ }),
-/* 43 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31333,7 +31027,7 @@ var CRS = {
 exports.default = CRS;
 
 /***/ }),
-/* 44 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31361,7 +31055,7 @@ var _SelectorID = __webpack_require__(2);
 
 var _SelectorID2 = _interopRequireDefault(_SelectorID);
 
-var _LayerSwitcherDOM = __webpack_require__(45);
+var _LayerSwitcherDOM = __webpack_require__(23);
 
 var _LayerSwitcherDOM2 = _interopRequireDefault(_LayerSwitcherDOM);
 
@@ -32287,7 +31981,7 @@ LayerSwitcher.prototype._resolveLayerId = function (divId) {
 exports.default = LayerSwitcher;
 
 /***/ }),
-/* 45 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32930,7 +32624,7 @@ var LayerSwitcherDOM = {
 exports.default = LayerSwitcherDOM;
 
 /***/ }),
-/* 46 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32958,7 +32652,7 @@ var _LayerUtils = __webpack_require__(6);
 
 var _LayerUtils2 = _interopRequireDefault(_LayerUtils);
 
-var _AttributionDOM = __webpack_require__(47);
+var _AttributionDOM = __webpack_require__(25);
 
 var _AttributionDOM2 = _interopRequireDefault(_AttributionDOM);
 
@@ -33283,7 +32977,7 @@ Attributions.prototype._resolutionsWGS84 = {
 exports.default = Attributions;
 
 /***/ }),
-/* 47 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33393,7 +33087,7 @@ var AttributionDOM = {
 exports.default = AttributionDOM;
 
 /***/ }),
-/* 48 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33417,7 +33111,7 @@ var _SelectorID = __webpack_require__(2);
 
 var _SelectorID2 = _interopRequireDefault(_SelectorID);
 
-var _ScaleDOM = __webpack_require__(49);
+var _ScaleDOM = __webpack_require__(27);
 
 var _ScaleDOM2 = _interopRequireDefault(_ScaleDOM);
 
@@ -33576,7 +33270,7 @@ Scale.prototype._initContainer = function () {
 exports.default = Scale;
 
 /***/ }),
-/* 49 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33610,7 +33304,7 @@ var ScaleDOM = {
 exports.default = ScaleDOM;
 
 /***/ }),
-/* 50 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33638,7 +33332,7 @@ var _SelectorID = __webpack_require__(2);
 
 var _SelectorID2 = _interopRequireDefault(_SelectorID);
 
-var _MiniGlobeDOM = __webpack_require__(51);
+var _MiniGlobeDOM = __webpack_require__(29);
 
 var _MiniGlobeDOM2 = _interopRequireDefault(_MiniGlobeDOM);
 
@@ -33947,7 +33641,7 @@ MiniGlobe.prototype._baseLayer = {
 exports.default = MiniGlobe;
 
 /***/ }),
-/* 51 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33983,4 +33677,3 @@ exports.default = MiniGlobeDOM;
 /***/ })
 /******/ ])["default"];
 });
-//# sourceMappingURL=GpPluginItowns-src.js.map
