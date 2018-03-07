@@ -16,11 +16,12 @@ module.exports = env => {
     return {
         entry : [
             path.join(__dirname, "src", "Common", "Utils", "AutoLoadConfig"),
-            path.join(__dirname, "src", "Itowns", "GpPluginItowns")
+            path.join(__dirname, "src", "Itowns", "GpPluginItowns"),
+            path.join(__dirname, "src", "OpenLayers", "GpPluginOpenLayers")
         ],
         output : {
-            path : path.join(__dirname, "dist", "itowns"),
-            filename : (_production) ? "GpPluginItowns.js" : "GpPluginItowns-src.js",
+            path : path.join(__dirname, "dist", "mix"),
+            filename : (_production) ? "GpPluginOlItowns.js" : "GpPluginOlItowns-src.js",
             library : "Gp",
             libraryTarget : "umd",
             libraryExport : "default",
@@ -30,7 +31,8 @@ module.exports = env => {
             alias : {
                 proj4 : path.resolve( __dirname, "node_modules", "proj4", "dist", "proj4-src.js"),
                 gp : path.resolve( __dirname, "node_modules", "geoportal-access-lib", "dist", "GpServices-src.js"),
-                sortable : path.resolve( __dirname, "node_modules", "sortablejs", "Sortable.js")
+                sortable : path.resolve( __dirname, "node_modules", "sortablejs", "Sortable.js"),
+                itowns : path.resolve( __dirname, "node_modules", "itowns", "dist", "itowns.js")
             }
         },
         externals : {
@@ -39,6 +41,12 @@ module.exports = env => {
                 commonjs : "itowns",
                 amd : "itowns",
                 root : "itowns"
+            },
+            ol : {
+                commonjs : "openlayers",
+                commonjs2 : "openlayers",
+                amd : "ol",
+                root : "ol"
             },
             request : {
                 commonjs2 : "request",
@@ -57,6 +65,7 @@ module.exports = env => {
                 test : /\.js$/,
                 include : [
                   path.join(__dirname, "src", "Common"),
+                  path.join(__dirname, "src", "OpenLayers"),
                   path.join(__dirname, "src", "Itowns")
                 ],
                 exclude : /node_modules/,
