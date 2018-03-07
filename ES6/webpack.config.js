@@ -145,6 +145,10 @@ module.exports = env => {
         .concat(
             (production) ? [
                 new UglifyJsWebPackPlugin({
+                    output : {
+                        comments : false,
+                        beautify : false
+                    },
                     uglifyOptions : {
                         mangle : true,
                         warnings : false,
@@ -156,6 +160,10 @@ module.exports = env => {
         .concat([
             new BannerWebPackPlugin({
                 banner : fs.readFileSync(path.join(__dirname, "licences", "licence-proj4js.txt"), "utf8"),
+                raw : true
+            }),
+            new BannerWebPackPlugin({
+                banner : fs.readFileSync(path.join(__dirname, "licences", "licence-es6promise.txt"), "utf8"),
                 raw : true
             }),
             new BannerWebPackPlugin({

@@ -114,6 +114,10 @@ module.exports = env => {
                 raw : true
             }),
             new BannerWebPackPlugin({
+                banner : fs.readFileSync(path.join(__dirname, "licences", "licence-es6promise.txt"), "utf8"),
+                raw : true
+            }),
+            new BannerWebPackPlugin({
                 banner : fs.readFileSync(path.join(__dirname, "licences", "licence-sortable.txt"), "utf8"),
                 raw : true
             }),
