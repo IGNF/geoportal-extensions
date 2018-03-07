@@ -15,8 +15,8 @@ var ExtractTextWebPackPlugin = require("extract-text-webpack-plugin");
 // -- variables globales (par defaut)
 var date    = new Date().toISOString().split("T")[0];
 var pkg     = require(path.join(__dirname, "package.json"));
-var version = pkg.olExtVersion; // par defaut
-var brief   = pkg.olExtName;    // par defaut
+var version = pkg.olExtVersion; // par defaut OpenLayers
+var brief   = pkg.olExtName;    // par defaut OpenLayers
 
 module.exports = env => {
 
@@ -29,20 +29,23 @@ module.exports = env => {
     // -- library
     var leaflet = (env) ? env.leaflet : false;
     var openlayers = (env) ? env.openlayers : false;
+    var itowns = (env) ? env.itowns : false;
 
-    // -- option par defaut
-    if (!openlayers && !leaflet) {
+    // -- option par defaut OpenLayers
+    if (!openlayers && !leaflet && !itowns) {
         openlayers = true;
     }
 
     // -- variables
     var projectName = (openlayers) ?
         "OpenLayers" : (leaflet) ?
-            "Leaflet" : null;
+            "Leaflet" : (itowns) ?
+                "Itowns" : null;
 
     var bundleName = (openlayers) ?
         "GpPluginOpenLayers" : (leaflet) ?
-            "GpPluginLeaflet" : null;
+            "GpPluginLeaflet" : (itowns) ?
+                "GpPluginItowns" : null;
 
     // -- config
     var config = {
@@ -163,8 +166,8 @@ module.exports = env => {
         ).concat([
             new BannerWebPackPlugin({
                 banner : header(fs.readFileSync(path.join(__dirname, "licences", "licence-ign.tmpl"), "utf8"), {
-                    __BRIEF__ : (openlayers) ? pkg.olExtName : (leaflet) ?  pkg.leafletExtName : brief,
-                    __VERSION__ : (openlayers) ? pkg.olExtVersion : (leaflet) ?  pkg.leafletExtVersion : version,
+                    __BRIEF__ : (openlayers) ? pkg.olExtName : (leaflet) ?  pkg.leafletExtName : (itowns) ? pkg.itownsExtName : brief,
+                    __VERSION__ : (openlayers) ? pkg.olExtVersion : (leaflet) ?  pkg.leafletExtVersion : (itowns) ? pkg.itownsExtVersion : version,
                     __DATE__ : date
                 }),
                 raw : true,
@@ -174,7 +177,8 @@ module.exports = env => {
     };
 
     // -- config ajout externals
-    config.externals[(openlayers) ? "ol" : (leaflet) ? "leaflet" : null] = (openlayers) ? {
+    config.externals[(openlayers) ? "ol" : (leaflet) ? "leaflet" : (itowns) ? "itowns" : null] =
+    (openlayers) ? {
         commonjs : "openlayers",
         commonjs2 : "openlayers",
         amd : "ol",
@@ -184,6 +188,11 @@ module.exports = env => {
         commonjs2 : "leaflet",
         amd : "leaflet",
         root : "L"
+    } : (itowns) ? {
+        commonjs2 : "itowns",
+        commonjs : "itowns",
+        amd : "itowns",
+        root : "itowns"
     } : null;
 
     return config;

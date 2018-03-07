@@ -1,5 +1,5 @@
 /*!
- * @brief French Geoportal Extension for OpenLayers
+ * @brief French Geoportal Extension for Itowns
  *
  * This software is released under the licence CeCILL-B (Free BSD compatible)
  * @see http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
@@ -9,7 +9,7 @@
  * copyright CeCILL-B
  * copyright IGN
  * @author IGN
- * @version 1.0.0
+ * @version 2.3.0
  * @date 2018-03-07
  *
  */
@@ -20104,7 +20104,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _loglevel = __webpack_require__(38);
+var _loglevel = __webpack_require__(40);
 
 var Log = _interopRequireWildcard(_loglevel);
 
@@ -20115,7 +20115,7 @@ var LoggerByDefault = {
     getLogger: function getLogger(name) {
         // Substitute global constants configured at compile time
         // cf. webpack.config.js
-         false ? Log.disableAll() : Log.enableAll();
+        undefined ? Log.disableAll() : Log.enableAll();
         var logname = name || "default";
         return Log.getLogger(logname);
     }
@@ -21719,19 +21719,19 @@ var _MousePosition = __webpack_require__(36);
 
 var _MousePosition2 = _interopRequireDefault(_MousePosition);
 
-var _LayerSwitcher = __webpack_require__(44);
+var _LayerSwitcher = __webpack_require__(46);
 
 var _LayerSwitcher2 = _interopRequireDefault(_LayerSwitcher);
 
-var _Attributions = __webpack_require__(46);
+var _Attributions = __webpack_require__(48);
 
 var _Attributions2 = _interopRequireDefault(_Attributions);
 
-var _Scale = __webpack_require__(48);
+var _Scale = __webpack_require__(50);
 
 var _Scale2 = _interopRequireDefault(_Scale);
 
-var _MiniGlobe = __webpack_require__(50);
+var _MiniGlobe = __webpack_require__(52);
 
 var _MiniGlobe2 = _interopRequireDefault(_MiniGlobe);
 
@@ -21790,7 +21790,7 @@ var _Utils = __webpack_require__(1);
 
 var _Utils2 = _interopRequireDefault(_Utils);
 
-var _CheckRightManagement = __webpack_require__(39);
+var _CheckRightManagement = __webpack_require__(41);
 
 var _CheckRightManagement2 = _interopRequireDefault(_CheckRightManagement);
 
@@ -21798,7 +21798,7 @@ var _SelectorID = __webpack_require__(2);
 
 var _SelectorID2 = _interopRequireDefault(_SelectorID);
 
-var _MousePositionDOM = __webpack_require__(41);
+var _MousePositionDOM = __webpack_require__(43);
 
 var _MousePositionDOM2 = _interopRequireDefault(_MousePositionDOM);
 
@@ -21806,11 +21806,11 @@ var _Widget = __webpack_require__(3);
 
 var _Widget2 = _interopRequireDefault(_Widget);
 
-var _PositionFormater = __webpack_require__(42);
+var _PositionFormater = __webpack_require__(44);
 
 var _PositionFormater2 = _interopRequireDefault(_PositionFormater);
 
-var _CRS = __webpack_require__(43);
+var _CRS = __webpack_require__(45);
 
 var _CRS2 = _interopRequireDefault(_CRS);
 
@@ -23067,6 +23067,40 @@ exports.default = MousePosition;
 
 /***/ }),
 /* 37 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["proj4"] = __webpack_require__(39);
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(38)))
+
+/***/ }),
+/* 38 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function (global, factory) {
@@ -29399,7 +29433,7 @@ exports.default = MousePosition;
 
 
 /***/ }),
-/* 38 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -29659,7 +29693,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 39 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29673,7 +29707,7 @@ var _LoggerByDefault = __webpack_require__(7);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
-var _Config = __webpack_require__(40);
+var _Config = __webpack_require__(42);
 
 var _Config2 = _interopRequireDefault(_Config);
 
@@ -29839,7 +29873,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 40 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30110,7 +30144,7 @@ var Config = {
 exports.default = Config;
 
 /***/ }),
-/* 41 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31012,7 +31046,7 @@ var MousePositionDOM = {
 exports.default = MousePositionDOM;
 
 /***/ }),
-/* 42 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31118,7 +31152,7 @@ var PositionFormater = {
 exports.default = PositionFormater;
 
 /***/ }),
-/* 43 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31333,7 +31367,7 @@ var CRS = {
 exports.default = CRS;
 
 /***/ }),
-/* 44 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31361,7 +31395,7 @@ var _SelectorID = __webpack_require__(2);
 
 var _SelectorID2 = _interopRequireDefault(_SelectorID);
 
-var _LayerSwitcherDOM = __webpack_require__(45);
+var _LayerSwitcherDOM = __webpack_require__(47);
 
 var _LayerSwitcherDOM2 = _interopRequireDefault(_LayerSwitcherDOM);
 
@@ -32287,7 +32321,7 @@ LayerSwitcher.prototype._resolveLayerId = function (divId) {
 exports.default = LayerSwitcher;
 
 /***/ }),
-/* 45 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32930,7 +32964,7 @@ var LayerSwitcherDOM = {
 exports.default = LayerSwitcherDOM;
 
 /***/ }),
-/* 46 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32958,7 +32992,7 @@ var _LayerUtils = __webpack_require__(6);
 
 var _LayerUtils2 = _interopRequireDefault(_LayerUtils);
 
-var _AttributionDOM = __webpack_require__(47);
+var _AttributionDOM = __webpack_require__(49);
 
 var _AttributionDOM2 = _interopRequireDefault(_AttributionDOM);
 
@@ -33283,7 +33317,7 @@ Attributions.prototype._resolutionsWGS84 = {
 exports.default = Attributions;
 
 /***/ }),
-/* 47 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33393,7 +33427,7 @@ var AttributionDOM = {
 exports.default = AttributionDOM;
 
 /***/ }),
-/* 48 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33417,7 +33451,7 @@ var _SelectorID = __webpack_require__(2);
 
 var _SelectorID2 = _interopRequireDefault(_SelectorID);
 
-var _ScaleDOM = __webpack_require__(49);
+var _ScaleDOM = __webpack_require__(51);
 
 var _ScaleDOM2 = _interopRequireDefault(_ScaleDOM);
 
@@ -33576,7 +33610,7 @@ Scale.prototype._initContainer = function () {
 exports.default = Scale;
 
 /***/ }),
-/* 49 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33610,7 +33644,7 @@ var ScaleDOM = {
 exports.default = ScaleDOM;
 
 /***/ }),
-/* 50 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33638,7 +33672,7 @@ var _SelectorID = __webpack_require__(2);
 
 var _SelectorID2 = _interopRequireDefault(_SelectorID);
 
-var _MiniGlobeDOM = __webpack_require__(51);
+var _MiniGlobeDOM = __webpack_require__(53);
 
 var _MiniGlobeDOM2 = _interopRequireDefault(_MiniGlobeDOM);
 
@@ -33947,7 +33981,7 @@ MiniGlobe.prototype._baseLayer = {
 exports.default = MiniGlobe;
 
 /***/ }),
-/* 51 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
