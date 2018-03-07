@@ -16,8 +16,8 @@
     "build:it:prod": "webpack --config webpack.config.itowns --env.production",
     "build:mix": "webpack --config webpack.config.mix.it.ol",
     "build:mix:prod": "webpack --config webpack.config.mix.it.ol --env.production",
-    "build:ol": "webpack --config webpack.config.openlayers.js",
-    "build:leaflet": "webpack --config webpack.config.leaflet.js"
+    "build:ol": "webpack --config webpack.config.openlayers",
+    "build:leaflet": "webpack --config webpack.config.leaflet"
   },
   "repository": {
     "type": "git",
@@ -55,6 +55,7 @@
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
     "css-loader": "^0.28.10",
+    "expose-loader": "^0.7.4",
     "extract-text-webpack-plugin": "^3.0.2",
     "path": "^0.12.7",
     "requirejs": "^2.3.5",

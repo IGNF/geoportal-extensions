@@ -79,6 +79,13 @@ module.exports = env => {
                 }
             },
             {
+                test : require.resolve("proj4"),
+                use : [{
+                    loader : "expose-loader",
+                    options : "proj4"
+                }]
+            },
+            {
                 test : /\.css$/,
                 include : [
                     path.join(__dirname, "res", "Common"),
