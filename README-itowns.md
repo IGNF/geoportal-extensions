@@ -205,7 +205,7 @@ Enregistrez ce fichier sur votre plateforme et paramétrez l'extension Géoporta
 
 ### Versions d'iTowns supportées
 
-L'extension Géoportail pour iTowns peut s'utiliser avec la **version 2.2.1** d'iTowns.
+L'extension Géoportail pour iTowns peut s'utiliser avec la **version 3.1.0** d'iTowns.
 
 
 ### Navigateurs supportés
@@ -514,9 +514,7 @@ globeView.addLayer(orthoLayer);
 globeView.addWidget(layerSwitcher);
 ```
 
-**Exemple d'utilisation**
-
-JSFIDDLE
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/b01pLz3m/embedded/result,js,html,css/)
 
 <a id="mp"/>
 
@@ -551,11 +549,14 @@ var mpControl = new itowns.control.MousePosition(opts);
 map.addControl(mpControl);
 ```
 
-**Exemple d'utilisation avec affichage unique de l'altitude** [JSFIDDLE1]()
+**Exemple d'utilisation avec affichage des coordonnées et de l'altitude** 
+[![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/a9abm7Lp/embedded/result,js,html,css/)
 
-**Exemple d'utilisation avec paramétrage des systèmes de coordonnées** [JSFIDDLE2]()
+**Exemple d'utilisation avec affichage unique de l'altitude** 
+[![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/1zcskvup/embedded/result,js,html,css/)
 
-**Exemple d'utilisation avec activation de l'édition de coordonnées pour localisation** [JSFIDDLE3]()
+**Exemple d'utilisation avec paramétrage des systèmes de coordonnées** 
+[![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/tmjdezkq/embedded/result,js,html,css/)
 
 <a id="attributions"/>
 
@@ -592,4 +593,4 @@ var attribution = new itowns.control.Attributions(opts);
 globeView.addWidget( attribution );
 ```
 
-**Exemple d'utilisation** [JSFIDDLE_ATTR]()
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/r3or3tz9/embedded/result,js,html,css/)
