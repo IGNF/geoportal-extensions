@@ -1,5 +1,5 @@
 /*!
- * @brief French Geoportal Extension for OpenLayers
+ * @brief French Geoportal Extension for OpenLayers&French Geoportal Extension for Itowns
  *
  * This software is released under the licence CeCILL-B (Free BSD compatible)
  * @see http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
@@ -9,7 +9,7 @@
  * copyright CeCILL-B
  * copyright IGN
  * @author IGN
- * @version 1.0.0
+ * @version 1.0.0&2.3.0
  * @date 2018-03-09
  *
  */
@@ -18,10 +18,10 @@
  * Sortable -- minimalist JavaScript library for reorderable drag-and-drop lists
  *
  * Released under MIT LICENSE
- * 
+ *
  * Copyright 2013-2016 Lebedev Konstantin <ibnRubaXa@gmail.com>
  * http://rubaxa.github.io/Sortable/
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
  * "Software"), to deal in the Software without restriction, including
@@ -29,10 +29,10 @@
  * distribute, sublicense, and/or sell copies of the Software, and to
  * permit persons to whom the Software is furnished to do so, subject to
  * the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -51,29 +51,29 @@
  */
 
 /*!
- * Proj4js - Javascript reprojection library. 
- * 
+ * Proj4js - Javascript reprojection library.
+ *
  * Authors:
- * 
+ *
  * - Mike Adair madairATdmsolutions.ca
  * - Richard Greenwood richATgreenwoodmap.com
  * - Didier Richard didier.richardATign.fr
  * - Stephen Irons stephen.ironsATclear.net.nz
  * - Olivier Terral oterralATgmail.com
  * - Calvin Metcalf cmetcalfATappgeo.com
- * 
+ *
  * Copyright (c) 2014, Mike Adair, Richard Greenwood, Didier Richard, Stephen Irons, Olivier Terral and Calvin Metcalf
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
  *  to deal in the Software without restriction, including without limitation
  *  the rights to use, copy, modify, merge, publish, distribute, sublicense,
  *  and/or sell copies of the Software, and to permit persons to whom the
  *  Software is furnished to do so, subject to the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be included
  *  in all copies or substantial portions of the Software.
- * 
+ *
  *  _THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
  *  OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
@@ -81,7 +81,7 @@
  *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE._
- * 
+ *
  */
 
 (function webpackUniversalModuleDefinition(root, factory) {

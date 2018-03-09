@@ -10,6 +10,7 @@ var header  = require("string-template");
 var DefineWebpackPlugin   = webpack.DefinePlugin;
 var ExtractTextWebPackPlugin = require("extract-text-webpack-plugin");
 var BannerWebPackPlugin   = webpack.BannerPlugin;
+var UglifyJsWebPackPlugin = webpack.optimize.UglifyJsPlugin;
 
 // -- variables
 var date = new Date().toISOString().split("T")[0];
@@ -117,8 +118,26 @@ module.exports = env => {
             new DefineWebpackPlugin({
                 __PRODUCTION__ : JSON.stringify(production)
             }),
-            new ExtractTextWebPackPlugin((production) ? "GpPluginOlItowns.css" : "GpPluginOlItowns-src.css"),
-            /** AJOUT DES LICENCES */
+            /** CSS / IMAGES */
+            new ExtractTextWebPackPlugin((production) ? "GpPluginOlItowns.css" : "GpPluginOlItowns-src.css")
+        ]
+        /** MINIFICATION */
+        .concat(
+            (production) ? [
+                new UglifyJsWebPackPlugin({
+                    output : {
+                        comments : false,
+                        beautify : false
+                    },
+                    uglifyOptions : {
+                        mangle : true,
+                        warnings : false,
+                        compress : false
+                    }
+                })] : []
+        )
+        /** AJOUT DES LICENCES */
+        .concat([
             new BannerWebPackPlugin({
                 banner : fs.readFileSync(path.join(__dirname, "licences", "licence-proj4js.txt"), "utf8"),
                 raw : true
@@ -133,13 +152,13 @@ module.exports = env => {
             }),
             new BannerWebPackPlugin({
                 banner : header(fs.readFileSync(path.join(__dirname, "licences", "licence-ign.tmpl"), "utf8"), {
-                    __BRIEF__ : pkg.olExtName,
-                    __VERSION__ : pkg.olExtVersion,
+                    __BRIEF__ : pkg.olExtName + "&" + pkg.itownsExtName,
+                    __VERSION__ : pkg.olExtVersion + "&" + pkg.itownsExtVersion,
                     __DATE__ : date
                 }),
                 raw : true,
                 entryOnly : true
             })
-        ]
+        ])
     };
 };
