@@ -43,29 +43,40 @@ dans un environnement Web, amd et ES6 pour valider le bundle.
 
 6. valider avec des exemples (cf. exemples de bases)
 
+7. valider le bundle en l'intégrant dans le SDK !
 
+## Avancement
 
-## Openlayers
+### Openlayers
 
-**OK!** pour la creation du bundle !
+**OK!**
 
 **Warning**
-> cf. FIXME.md - On en profite pour supprimer les réf. ol3 -> openlayers !
+> cf. FIXME.md
+- On en profite pour supprimer les réf. ol3 -> openlayers !
 
+### Leaflet
 
+**OK!**
 
-## Leaflet
+### Itowns
 
-**OK!** pour la creation du bundle !
+**OK!**
 
+**Warning**
+> cf. FIXME.md
+- Itowns n'est plus une dependance des modules,
+mais on choisie de faire appel à la variable globale itowns !
 
-## Itowns
+### Mix Openlayers/Itowns
 
-**OK!** pour la creation du bundle !
+**OK!**
 
-## Mix Openlayers/Itowns
-
-TODO...
+**Warning**
+> cf. FIXME.md
+- On renomme le bundle en supprimant la ref ol3 !
+- Itowns n'est plus une dependance des modules,
+mais on choisie de faire appel à la variable globale itowns !
 
 
 # FINALISATION DU PROJET
@@ -77,6 +88,10 @@ revoir les règles !
 ## CSS/images
 
 **OK!**
+
+**Warning**
+> cf. FIXME.md
+- minification des CSS
 
 ## Minification
 

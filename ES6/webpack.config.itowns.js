@@ -92,7 +92,8 @@ module.exports = env => {
                         use : {
                             loader : "css-loader",
                             options : {
-                                sourceMap : true
+                                sourceMap : true, // FIXME ?
+                                minimize: (production) ? true : false
                             }
                         }
                     })
