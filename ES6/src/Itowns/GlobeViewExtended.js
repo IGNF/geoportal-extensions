@@ -1,4 +1,3 @@
-import * as Itowns from "itowns";
 import Logger from "../Common/Utils/LoggerByDefault";
 
 
@@ -16,6 +15,10 @@ function GlobeViewExtended(viewerDiv, coordCarto, options) {
 
     viewerDiv.style.position = "relative";
 
+    //itowns
+    var scope = typeof window !== "undefined" ? window : {};
+    this._itowns = scope.itowns;
+
     // stockage de l'élément html porteur du globe
     this._viewerDiv = viewerDiv;
 
@@ -29,14 +32,14 @@ function GlobeViewExtended(viewerDiv, coordCarto, options) {
     this._isInitialized = false;
 
     // call constructor
-    this._globeView = new Itowns.GlobeView(viewerDiv, coordCarto, options);
+    this._globeView = new this._itowns.GlobeView(viewerDiv, coordCarto, options);
 
     var self = this;
     this.listen(GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, function() {
         self._isInitialized = true;
     });
 
-    this._globeView.addFrameRequester(Itowns.MAIN_LOOP_EVENTS.BEFORE_RENDER, (function() {
+    this._globeView.addFrameRequester(this._itowns.MAIN_LOOP_EVENTS.BEFORE_RENDER, (function() {
         clearTimeout(this._preRenderTimer);
         self._preRenderTimer = setTimeout(function() {
             if (self._fetchVisibleColorLayers || self._fetchVisibleElevationLayers || self._fetchExtent) {
@@ -45,7 +48,7 @@ function GlobeViewExtended(viewerDiv, coordCarto, options) {
                     type: GlobeViewExtended.EVENTS.PRE_RENDER
                 };
                 if (self._fetchExtent) {
-                    event.extent = new Itowns.Extent("EPSG:4326", 180, -180, 90, -90);
+                    event.extent = new self._itowns.Extent("EPSG:4326", 180, -180, 90, -90);
                 }
                 if (self._fetchVisibleColorLayers) {
                     event.colorLayersId = [];
@@ -71,17 +74,17 @@ function GlobeViewExtended(viewerDiv, coordCarto, options) {
 GlobeViewExtended.prototype._initEventMap = function() {
     if (!GlobeViewExtended.EVENTS) {
         GlobeViewExtended.EVENTS = {
-            RANGE_CHANGED: Itowns.CONTROL_EVENTS.RANGE_CHANGED,
-            CENTER_CHANGED: Itowns.CONTROL_EVENTS.CAMERA_TARGET_CHANGED,
-            ORIENTATION_CHANGED: Itowns.CONTROL_EVENTS.ORIENTATION_CHANGED,
-            LAYER_ADDED: Itowns.GLOBE_VIEW_EVENTS.LAYER_ADDED,
-            LAYER_REMOVED: Itowns.GLOBE_VIEW_EVENTS.LAYER_REMOVED,
-            LAYERS_ORDER_CHANGED: Itowns.GLOBE_VIEW_EVENTS.COLOR_LAYERS_ORDER_CHANGED,
-            GLOBE_INITIALIZED: Itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED,
+            RANGE_CHANGED: this._itowns.CONTROL_EVENTS.RANGE_CHANGED,
+            CENTER_CHANGED: this._itowns.CONTROL_EVENTS.CAMERA_TARGET_CHANGED,
+            ORIENTATION_CHANGED: this._itowns.CONTROL_EVENTS.ORIENTATION_CHANGED,
+            LAYER_ADDED: this._itowns.GLOBE_VIEW_EVENTS.LAYER_ADDED,
+            LAYER_REMOVED: this._itowns.GLOBE_VIEW_EVENTS.LAYER_REMOVED,
+            LAYERS_ORDER_CHANGED: this._itowns.GLOBE_VIEW_EVENTS.COLOR_LAYERS_ORDER_CHANGED,
+            GLOBE_INITIALIZED: this._itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED,
             VIEW_INITIALIZED: "viewinitialized",
             PRE_RENDER: "prerender",
             MOUSE_MOVE: "mousemove",
-            AFTER_RENDER: Itowns.MAIN_LOOP_EVENTS.AFTER_RENDER,
+            AFTER_RENDER: this._itowns.MAIN_LOOP_EVENTS.AFTER_RENDER,
             OPACITY_PROPERTY_CHANGED: "opacity-property-changed",
             VISIBLE_PROPERTY_CHANGED: "visible-property-changed",
             SEQUENCE_PROPERTY_CHANGED: "sequence-property-changed"
@@ -126,10 +129,10 @@ GlobeViewExtended.prototype.freezeControl = function() {
         if (self._globeView.mainLoop.scheduler.commandsWaitingExecutionCount() == 0 && self._globeView._changeSources.size == 0) {
             // enable navigation
             self._globeView.controls.enabled = true;
-            self._globeView.removeFrameRequester(Itowns.MAIN_LOOP_EVENTS.AFTER_RENDER, afterRenderHandler);
+            self._globeView.removeFrameRequester(self._itowns.MAIN_LOOP_EVENTS.AFTER_RENDER, afterRenderHandler);
         }
     };
-    this._globeView.addFrameRequester(Itowns.MAIN_LOOP_EVENTS.AFTER_RENDER, afterRenderHandlerFunction);
+    this._globeView.addFrameRequester(this._itowns.MAIN_LOOP_EVENTS.AFTER_RENDER, afterRenderHandlerFunction);
 };
 
 /**
@@ -309,7 +312,7 @@ GlobeViewExtended.prototype.setLayerVisibility = function(layerId, visible) {
  * @param {Boolean} index - new index of the layer
  */
 GlobeViewExtended.prototype.moveLayerToIndex = function(layerId, index) {
-    Itowns.ColorLayersOrdering.moveLayerToIndex(this.getGlobeView(), layerId, index);
+    this._itowns.ColorLayersOrdering.moveLayerToIndex(this.getGlobeView(), layerId, index);
     this.getGlobeView().notifyChange(true);
 };
 
@@ -458,7 +461,7 @@ GlobeViewExtended.prototype.getElevationLayers = function() {
  */
 GlobeViewExtended.prototype.getExtent = function() {
     var options = {
-        extent: new Itowns.Extent("EPSG:4326", 180, -180, 90, -90)
+        extent: new this._itowns.Extent("EPSG:4326", 180, -180, 90, -90)
     };
 
     this._getCurrentSceneInfos(this.scene, options);
@@ -643,7 +646,7 @@ GlobeViewExtended.prototype.getFeaturesAtMousePosition = function(mouseEvent) {
             if (!layer.visible) {
                 continue;
             }
-            var result = Itowns.FeaturesUtils.filterFeaturesUnderCoordinate(geoCoord, layer.feature, precision);
+            var result = this._itowns.FeaturesUtils.filterFeaturesUnderCoordinate(geoCoord, layer.feature, precision);
             // we add the features to the visible features array
             for (idx = 0; idx < result.length; idx++) {
                 visibleFeatures.push(result[idx]);

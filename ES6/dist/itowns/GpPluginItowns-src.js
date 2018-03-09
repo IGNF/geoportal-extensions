@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 1.0.0
- * @date 2018-03-07
+ * @date 2018-03-09
  *
  */
 
@@ -93,7 +93,7 @@
 		exports["Gp"] = factory(require("itowns"), require("xmldom"), require("request"));
 	else
 		root["Gp"] = factory(root["itowns"], root[undefined], root[undefined]);
-})(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE_5__, __WEBPACK_EXTERNAL_MODULE_11__, __WEBPACK_EXTERNAL_MODULE_12__) {
+})(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE_7__, __WEBPACK_EXTERNAL_MODULE_11__, __WEBPACK_EXTERNAL_MODULE_12__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -170,17 +170,11 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _itowns = __webpack_require__(5);
-
-var Itowns = _interopRequireWildcard(_itowns);
-
-var _LoggerByDefault = __webpack_require__(7);
+var _LoggerByDefault = __webpack_require__(6);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 var logger = _LoggerByDefault2.default.getLogger("GlobeViewExtended");
 
@@ -196,6 +190,10 @@ function GlobeViewExtended(viewerDiv, coordCarto, options) {
 
     viewerDiv.style.position = "relative";
 
+    //itowns
+    var scope = typeof window !== "undefined" ? window : {};
+    this._itowns = scope.itowns;
+
     // stockage de l'élément html porteur du globe
     this._viewerDiv = viewerDiv;
 
@@ -209,14 +207,14 @@ function GlobeViewExtended(viewerDiv, coordCarto, options) {
     this._isInitialized = false;
 
     // call constructor
-    this._globeView = new Itowns.GlobeView(viewerDiv, coordCarto, options);
+    this._globeView = new this._itowns.GlobeView(viewerDiv, coordCarto, options);
 
     var self = this;
     this.listen(GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, function () {
         self._isInitialized = true;
     });
 
-    this._globeView.addFrameRequester(Itowns.MAIN_LOOP_EVENTS.BEFORE_RENDER, function () {
+    this._globeView.addFrameRequester(this._itowns.MAIN_LOOP_EVENTS.BEFORE_RENDER, function () {
         clearTimeout(this._preRenderTimer);
         self._preRenderTimer = setTimeout(function () {
             if (self._fetchVisibleColorLayers || self._fetchVisibleElevationLayers || self._fetchExtent) {
@@ -225,7 +223,7 @@ function GlobeViewExtended(viewerDiv, coordCarto, options) {
                     type: GlobeViewExtended.EVENTS.PRE_RENDER
                 };
                 if (self._fetchExtent) {
-                    event.extent = new Itowns.Extent("EPSG:4326", 180, -180, 90, -90);
+                    event.extent = new self._itowns.Extent("EPSG:4326", 180, -180, 90, -90);
                 }
                 if (self._fetchVisibleColorLayers) {
                     event.colorLayersId = [];
@@ -250,17 +248,17 @@ function GlobeViewExtended(viewerDiv, coordCarto, options) {
 GlobeViewExtended.prototype._initEventMap = function () {
     if (!GlobeViewExtended.EVENTS) {
         GlobeViewExtended.EVENTS = {
-            RANGE_CHANGED: Itowns.CONTROL_EVENTS.RANGE_CHANGED,
-            CENTER_CHANGED: Itowns.CONTROL_EVENTS.CAMERA_TARGET_CHANGED,
-            ORIENTATION_CHANGED: Itowns.CONTROL_EVENTS.ORIENTATION_CHANGED,
-            LAYER_ADDED: Itowns.GLOBE_VIEW_EVENTS.LAYER_ADDED,
-            LAYER_REMOVED: Itowns.GLOBE_VIEW_EVENTS.LAYER_REMOVED,
-            LAYERS_ORDER_CHANGED: Itowns.GLOBE_VIEW_EVENTS.COLOR_LAYERS_ORDER_CHANGED,
-            GLOBE_INITIALIZED: Itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED,
+            RANGE_CHANGED: this._itowns.CONTROL_EVENTS.RANGE_CHANGED,
+            CENTER_CHANGED: this._itowns.CONTROL_EVENTS.CAMERA_TARGET_CHANGED,
+            ORIENTATION_CHANGED: this._itowns.CONTROL_EVENTS.ORIENTATION_CHANGED,
+            LAYER_ADDED: this._itowns.GLOBE_VIEW_EVENTS.LAYER_ADDED,
+            LAYER_REMOVED: this._itowns.GLOBE_VIEW_EVENTS.LAYER_REMOVED,
+            LAYERS_ORDER_CHANGED: this._itowns.GLOBE_VIEW_EVENTS.COLOR_LAYERS_ORDER_CHANGED,
+            GLOBE_INITIALIZED: this._itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED,
             VIEW_INITIALIZED: "viewinitialized",
             PRE_RENDER: "prerender",
             MOUSE_MOVE: "mousemove",
-            AFTER_RENDER: Itowns.MAIN_LOOP_EVENTS.AFTER_RENDER,
+            AFTER_RENDER: this._itowns.MAIN_LOOP_EVENTS.AFTER_RENDER,
             OPACITY_PROPERTY_CHANGED: "opacity-property-changed",
             VISIBLE_PROPERTY_CHANGED: "visible-property-changed",
             SEQUENCE_PROPERTY_CHANGED: "sequence-property-changed"
@@ -305,10 +303,10 @@ GlobeViewExtended.prototype.freezeControl = function () {
         if (self._globeView.mainLoop.scheduler.commandsWaitingExecutionCount() == 0 && self._globeView._changeSources.size == 0) {
             // enable navigation
             self._globeView.controls.enabled = true;
-            self._globeView.removeFrameRequester(Itowns.MAIN_LOOP_EVENTS.AFTER_RENDER, afterRenderHandler);
+            self._globeView.removeFrameRequester(self._itowns.MAIN_LOOP_EVENTS.AFTER_RENDER, afterRenderHandler);
         }
     };
-    this._globeView.addFrameRequester(Itowns.MAIN_LOOP_EVENTS.AFTER_RENDER, afterRenderHandlerFunction);
+    this._globeView.addFrameRequester(this._itowns.MAIN_LOOP_EVENTS.AFTER_RENDER, afterRenderHandlerFunction);
 };
 
 /**
@@ -488,7 +486,7 @@ GlobeViewExtended.prototype.setLayerVisibility = function (layerId, visible) {
  * @param {Boolean} index - new index of the layer
  */
 GlobeViewExtended.prototype.moveLayerToIndex = function (layerId, index) {
-    Itowns.ColorLayersOrdering.moveLayerToIndex(this.getGlobeView(), layerId, index);
+    this._itowns.ColorLayersOrdering.moveLayerToIndex(this.getGlobeView(), layerId, index);
     this.getGlobeView().notifyChange(true);
 };
 
@@ -637,7 +635,7 @@ GlobeViewExtended.prototype.getElevationLayers = function () {
  */
 GlobeViewExtended.prototype.getExtent = function () {
     var options = {
-        extent: new Itowns.Extent("EPSG:4326", 180, -180, 90, -90)
+        extent: new this._itowns.Extent("EPSG:4326", 180, -180, 90, -90)
     };
 
     this._getCurrentSceneInfos(this.scene, options);
@@ -821,7 +819,7 @@ GlobeViewExtended.prototype.getFeaturesAtMousePosition = function (mouseEvent) {
             if (!layer.visible) {
                 continue;
             }
-            var result = Itowns.FeaturesUtils.filterFeaturesUnderCoordinate(geoCoord, layer.feature, precision);
+            var result = this._itowns.FeaturesUtils.filterFeaturesUnderCoordinate(geoCoord, layer.feature, precision);
             // we add the features to the visible features array
             for (idx = 0; idx < result.length; idx++) {
                 visibleFeatures.push(result[idx]);
@@ -19777,12 +19775,6 @@ function __getChildValue (node) {
 
 /***/ }),
 /* 5 */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_5__;
-
-/***/ }),
-/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20094,7 +20086,7 @@ var LayerUtils = {
 exports.default = LayerUtils;
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20121,6 +20113,12 @@ var LoggerByDefault = {
     }
 }; /* global __PRODUCTION__ */
 exports.default = LoggerByDefault;
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_7__;
 
 /***/ }),
 /* 8 */
@@ -21700,18 +21698,20 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
-var _itowns = __webpack_require__(5);
-
-var Itowns = _interopRequireWildcard(_itowns);
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _gp = __webpack_require__(4);
 
 var _gp2 = _interopRequireDefault(_gp);
 
-var _LayerUtils = __webpack_require__(6);
+var _itowns = __webpack_require__(7);
+
+var Itowns = _interopRequireWildcard(_itowns);
+
+var _LayerUtils = __webpack_require__(5);
 
 var _LayerUtils2 = _interopRequireDefault(_LayerUtils);
 
@@ -21739,12 +21739,15 @@ var _GlobeViewExtended = __webpack_require__(0);
 
 var _GlobeViewExtended2 = _interopRequireDefault(_GlobeViewExtended);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // Adds the extensions properties in the Gp namespace
 _gp2.default.LayerUtils = _LayerUtils2.default;
+
+// determines the execution environment l'environnement : browser or not ?
+var scope = typeof window !== "undefined" ? window : {};
 
 // creation of the namespace for the itowns extensions
 Itowns.control = {};
@@ -21754,6 +21757,25 @@ Itowns.control.Attributions = _Attributions2.default;
 Itowns.control.Scale = _Scale2.default;
 Itowns.control.MiniGlobe = _MiniGlobe2.default;
 Itowns.GlobeViewExtended = _GlobeViewExtended2.default;
+
+// saves in the global variable !
+if (!scope.itowns) {
+    scope.itowns = {};
+}
+
+deepCopy(Itowns, scope.itowns);
+
+function deepCopy(source, target) {
+    for (var prop in source) {
+        if (source.hasOwnProperty(prop)) {
+            if (!target.hasOwnProperty(prop)) {
+                target[prop] = source[prop];
+            } else if (_typeof(source[prop]) === "object") {
+                deepCopy(source[prop], target[prop]);
+            }
+        }
+    }
+}
 
 exports.default = _gp2.default;
 
@@ -21774,7 +21796,7 @@ var _proj = __webpack_require__(37);
 
 var _proj2 = _interopRequireDefault(_proj);
 
-var _LoggerByDefault = __webpack_require__(7);
+var _LoggerByDefault = __webpack_require__(6);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
@@ -29669,7 +29691,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _LoggerByDefault = __webpack_require__(7);
+var _LoggerByDefault = __webpack_require__(6);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
@@ -31353,7 +31375,7 @@ var _Utils = __webpack_require__(1);
 
 var _Utils2 = _interopRequireDefault(_Utils);
 
-var _LayerUtils = __webpack_require__(6);
+var _LayerUtils = __webpack_require__(5);
 
 var _LayerUtils2 = _interopRequireDefault(_LayerUtils);
 
@@ -32954,7 +32976,7 @@ var _SelectorID = __webpack_require__(2);
 
 var _SelectorID2 = _interopRequireDefault(_SelectorID);
 
-var _LayerUtils = __webpack_require__(6);
+var _LayerUtils = __webpack_require__(5);
 
 var _LayerUtils2 = _interopRequireDefault(_LayerUtils);
 
@@ -33622,7 +33644,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _itowns = __webpack_require__(5);
+var _itowns = __webpack_require__(7);
 
 var Itowns = _interopRequireWildcard(_itowns);
 
