@@ -123,8 +123,8 @@ module.exports = env => {
             }),
             new BannerWebPackPlugin({
                 banner : header(fs.readFileSync(path.join(__dirname, "licences", "licence-ign.tmpl"), "utf8"), {
-                    __BRIEF__ : pkg.olExtName,
-                    __VERSION__ : pkg.olExtVersion,
+                    __BRIEF__ : pkg.itownsExtName,
+                    __VERSION__ : pkg.itownsExtVersion,
                     __DATE__ : date
                 }),
                 raw : true,

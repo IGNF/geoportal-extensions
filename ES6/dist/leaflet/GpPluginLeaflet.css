@@ -16,19 +16,19 @@
 
 /*!
  * Proj4Leaflet --  Smooth Proj4js integration with Leaflet
- * 
+ *
  * Copyright (c) 2012, Kartena AB
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -66,10 +66,10 @@
  * Sortable -- minimalist JavaScript library for reorderable drag-and-drop lists
  *
  * Released under MIT LICENSE
- * 
+ *
  * Copyright 2013-2016 Lebedev Konstantin <ibnRubaXa@gmail.com>
  * http://rubaxa.github.io/Sortable/
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
  * "Software"), to deal in the Software without restriction, including
@@ -77,10 +77,10 @@
  * distribute, sublicense, and/or sell copies of the Software, and to
  * permit persons to whom the Software is furnished to do so, subject to
  * the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -91,37 +91,29 @@
  */
 
 /*!
- * @overview es6-promise - a tiny implementation of Promises/A+.
- * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and cont  ributors (Conversion to ES6 API by Jake Archibald)
- * @license   Licensed under MIT license
- *            See https://raw.githubusercontent.com/jakearchibald/es6-promise/  master/LICENSE
- * @version   3.0.2
- */
-
-/*!
- * Proj4js - Javascript reprojection library. 
- * 
+ * Proj4js - Javascript reprojection library.
+ *
  * Authors:
- * 
+ *
  * - Mike Adair madairATdmsolutions.ca
  * - Richard Greenwood richATgreenwoodmap.com
  * - Didier Richard didier.richardATign.fr
  * - Stephen Irons stephen.ironsATclear.net.nz
  * - Olivier Terral oterralATgmail.com
  * - Calvin Metcalf cmetcalfATappgeo.com
- * 
+ *
  * Copyright (c) 2014, Mike Adair, Richard Greenwood, Didier Richard, Stephen Irons, Olivier Terral and Calvin Metcalf
- * 
+ *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
  *  to deal in the Software without restriction, including without limitation
  *  the rights to use, copy, modify, merge, publish, distribute, sublicense,
  *  and/or sell copies of the Software, and to permit persons to whom the
  *  Software is furnished to do so, subject to the following conditions:
- * 
+ *
  *  The above copyright notice and this permission notice shall be included
  *  in all copies or substantial portions of the Software.
- * 
+ *
  *  _THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
  *  OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
@@ -129,7 +121,7 @@
  *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE._
- * 
+ *
  */
 
 /* ISOCHRON */
@@ -3086,5 +3078,3 @@ div[id^=GPlocationStageAdd],
 .GPlocationTransportImg {
   background-image: url(data:image/png;base64,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);
 }
-
-/*# sourceMappingURL=GpPluginLeaflet-src.css.map*/
