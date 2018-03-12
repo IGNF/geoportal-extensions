@@ -24,6 +24,10 @@ define([
 
     "use strict";
 
+    // Adds extensions properties in the Gp namespace
+    Gp.itownsextVersion = "__GPITOWNSEXTVERSION__" ;
+    Gp.itownsextDate = "__GPDATE__";
+
     // Adds the extensions properties in the Gp namespace
     Gp.LayerUtils = LayerUtils ;
 

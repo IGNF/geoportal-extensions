@@ -2,7 +2,7 @@
     "type": "color",
     "protocol":   "wmts",
     "id":         "ScanEX",
-    "url":        "http://wxs.ign.fr/va5orxd0pgzvq3jxutqfuy0b/geoportail/wmts",
+    "url":        "http://wxs.ign.fr/ptlp78g6fvz9daz5mg2fztvr/geoportail/wmts",
     "fx" :        2.5,
     "updateStrategy": {
         "type": 0,
