@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 2.3.0
- * @date 2018-03-09
+ * @date 2018-03-12
  *
  */
 
@@ -93,7 +93,7 @@
 		exports["Gp"] = factory(require("itowns"), require("xmldom"), require("request"));
 	else
 		root["Gp"] = factory(root["itowns"], root[undefined], root[undefined]);
-})(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE_7__, __WEBPACK_EXTERNAL_MODULE_11__, __WEBPACK_EXTERNAL_MODULE_12__) {
+})(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE_35__, __WEBPACK_EXTERNAL_MODULE_10__, __WEBPACK_EXTERNAL_MODULE_11__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -156,7 +156,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 9);
+/******/ 	return __webpack_require__(__webpack_require__.s = 8);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -188,7 +188,7 @@ var logger = _LoggerByDefault2.default.getLogger("GlobeViewExtended");
  */
 function GlobeViewExtended(viewerDiv, coordCarto, options) {
 
-    viewerDiv.style.position = "relative";
+    viewerDiv.style.position = !options || !options.position ? "relative" : options.position;
 
     //itowns
     var scope = typeof window !== "undefined" ? window : {};
@@ -239,7 +239,9 @@ function GlobeViewExtended(viewerDiv, coordCarto, options) {
         }, 100);
     }.bind(this));
 
-    this.freezeControl();
+    if (this._globeView.controls) {
+        this.freezeControl();
+    }
 }
 
 /**
@@ -918,6 +920,40 @@ GlobeViewExtended.prototype.getLayerEventInfos = function (evt) {
     };
 };
 
+/**
+ * Sets background (specific to miniglobe)
+ */
+GlobeViewExtended.prototype.setBackground = function () {
+    // Set a 0 alpha clear value (instead of the default '1')
+    // because we want a transparent background for the miniglobe view to be able
+    // to see the main view "behind"
+    this.getGlobeView().mainLoop.gfxEngine.renderer.setClearColor(0x000000, 0);
+};
+
+/**
+ * Sets camera position
+ * @param {THREE.Vector3} target - Target position
+ * @param {Number} distance - Distance from target
+ */
+GlobeViewExtended.prototype.setCameraPosition = function (target, distance) {
+    this.getGlobeView().camera.camera3D.position.copy(target).setLength(distance);
+};
+
+/**
+ * Sets camera orientation to look at specified target
+ * @param {THREE.Vector3} target - Target position
+ */
+GlobeViewExtended.prototype.lookAt = function (target) {
+    this.getGlobeView().camera.camera3D.lookAt(target);
+};
+
+/**
+ * Notifies the scene it needs to be updated
+ */
+GlobeViewExtended.prototype.notifyChange = function () {
+    this.getGlobeView().notifyChange(true);
+};
+
 exports.default = GlobeViewExtended;
 
 /***/ }),
@@ -1224,7 +1260,7 @@ exports.default = Widget;
 
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(true)
-		module.exports = factory(__webpack_require__(11), __webpack_require__(12));
+		module.exports = factory(__webpack_require__(10), __webpack_require__(11));
 	else if(typeof define === 'function' && define.amd)
 		define("Gp", ["require", "require"], factory);
 	else if(typeof exports === 'object')
@@ -20116,12 +20152,6 @@ exports.default = LoggerByDefault;
 
 /***/ }),
 /* 7 */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_7__;
-
-/***/ }),
-/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
@@ -21380,16 +21410,16 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 
 
 /***/ }),
-/* 9 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(10);
-__webpack_require__(13);
-module.exports = __webpack_require__(35);
+__webpack_require__(9);
+__webpack_require__(12);
+module.exports = __webpack_require__(34);
 
 
 /***/ }),
-/* 10 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21460,6 +21490,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 })();
 
 /***/ }),
+/* 10 */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_10__;
+
+/***/ }),
 /* 11 */
 /***/ (function(module, exports) {
 
@@ -21467,102 +21503,102 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_11__;
 
 /***/ }),
 /* 12 */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_12__;
-
-/***/ }),
-/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _GPdrawing = __webpack_require__(14);
+var _GPdrawing = __webpack_require__(13);
 
 var _GPdrawing2 = _interopRequireDefault(_GPdrawing);
 
-var _GPisochron = __webpack_require__(15);
+var _GPisochron = __webpack_require__(14);
 
 var _GPisochron2 = _interopRequireDefault(_GPisochron);
 
-var _GPmeasureAzimuth = __webpack_require__(16);
+var _GPmeasureAzimuth = __webpack_require__(15);
 
 var _GPmeasureAzimuth2 = _interopRequireDefault(_GPmeasureAzimuth);
 
-var _GPreverseGeocoding = __webpack_require__(17);
+var _GPreverseGeocoding = __webpack_require__(16);
 
 var _GPreverseGeocoding2 = _interopRequireDefault(_GPreverseGeocoding);
 
-var _GPelevationPath = __webpack_require__(18);
+var _GPelevationPath = __webpack_require__(17);
 
 var _GPelevationPath2 = _interopRequireDefault(_GPelevationPath);
 
-var _GPlayerSwitcher = __webpack_require__(19);
+var _GPlayerSwitcher = __webpack_require__(18);
 
 var _GPlayerSwitcher2 = _interopRequireDefault(_GPlayerSwitcher);
 
-var _GPmeasureLength = __webpack_require__(20);
+var _GPmeasureLength = __webpack_require__(19);
 
 var _GPmeasureLength2 = _interopRequireDefault(_GPmeasureLength);
 
-var _GProute = __webpack_require__(21);
+var _GProute = __webpack_require__(20);
 
 var _GProute2 = _interopRequireDefault(_GProute);
 
-var _GPgeneralWidget = __webpack_require__(22);
+var _GPgeneralWidget = __webpack_require__(21);
 
 var _GPgeneralWidget2 = _interopRequireDefault(_GPgeneralWidget);
 
-var _GPlocation = __webpack_require__(23);
+var _GPlocation = __webpack_require__(22);
 
 var _GPlocation2 = _interopRequireDefault(_GPlocation);
 
-var _GPmeasureToolTip = __webpack_require__(24);
+var _GPmeasureToolTip = __webpack_require__(23);
 
 var _GPmeasureToolTip2 = _interopRequireDefault(_GPmeasureToolTip);
 
-var _GPsearchEngine = __webpack_require__(25);
+var _GPsearchEngine = __webpack_require__(24);
 
 var _GPsearchEngine2 = _interopRequireDefault(_GPsearchEngine);
 
-var _GPgetFeatureInfo = __webpack_require__(26);
+var _GPgetFeatureInfo = __webpack_require__(25);
 
 var _GPgetFeatureInfo2 = _interopRequireDefault(_GPgetFeatureInfo);
 
-var _GPmeasureArea = __webpack_require__(27);
+var _GPmeasureArea = __webpack_require__(26);
 
 var _GPmeasureArea2 = _interopRequireDefault(_GPmeasureArea);
 
-var _GPmousePosition = __webpack_require__(28);
+var _GPmousePosition = __webpack_require__(27);
 
 var _GPmousePosition2 = _interopRequireDefault(_GPmousePosition);
 
-var _GPgeneralWidgetItowns = __webpack_require__(29);
+var _GPgeneralWidgetItowns = __webpack_require__(28);
 
 var _GPgeneralWidgetItowns2 = _interopRequireDefault(_GPgeneralWidgetItowns);
 
-var _GPattributionItowns = __webpack_require__(30);
+var _GPattributionItowns = __webpack_require__(29);
 
 var _GPattributionItowns2 = _interopRequireDefault(_GPattributionItowns);
 
-var _GPlayerSwitcherItowns = __webpack_require__(31);
+var _GPlayerSwitcherItowns = __webpack_require__(30);
 
 var _GPlayerSwitcherItowns2 = _interopRequireDefault(_GPlayerSwitcherItowns);
 
-var _GPminiGlobeItowns = __webpack_require__(32);
+var _GPminiGlobeItowns = __webpack_require__(31);
 
 var _GPminiGlobeItowns2 = _interopRequireDefault(_GPminiGlobeItowns);
 
-var _GPmousePositionItowns = __webpack_require__(33);
+var _GPmousePositionItowns = __webpack_require__(32);
 
 var _GPmousePositionItowns2 = _interopRequireDefault(_GPmousePositionItowns);
 
-var _GPscaleItowns = __webpack_require__(34);
+var _GPscaleItowns = __webpack_require__(33);
 
 var _GPscaleItowns2 = _interopRequireDefault(_GPscaleItowns);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 /* 14 */
@@ -21686,12 +21722,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /***/ }),
 /* 34 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21707,7 +21737,7 @@ var _gp = __webpack_require__(4);
 
 var _gp2 = _interopRequireDefault(_gp);
 
-var _itowns = __webpack_require__(7);
+var _itowns = __webpack_require__(35);
 
 var Itowns = _interopRequireWildcard(_itowns);
 
@@ -21778,6 +21808,12 @@ function deepCopy(source, target) {
 }
 
 exports.default = _gp2.default;
+
+/***/ }),
+/* 35 */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_35__;
 
 /***/ }),
 /* 36 */
@@ -32319,7 +32355,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _sortable = __webpack_require__(8);
+var _sortable = __webpack_require__(7);
 
 var _sortable2 = _interopRequireDefault(_sortable);
 
@@ -33315,7 +33351,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _sortable = __webpack_require__(8);
+var _sortable = __webpack_require__(7);
 
 var _sortable2 = _interopRequireDefault(_sortable);
 
@@ -33644,10 +33680,6 @@ Object.defineProperty(exports, "__esModule", {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _itowns = __webpack_require__(7);
-
-var Itowns = _interopRequireWildcard(_itowns);
-
 var _GlobeViewExtended = __webpack_require__(0);
 
 var _GlobeViewExtended2 = _interopRequireDefault(_GlobeViewExtended);
@@ -33669,8 +33701,6 @@ var _Widget = __webpack_require__(3);
 var _Widget2 = _interopRequireDefault(_Widget);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 /**
  * @classdesc
@@ -33742,20 +33772,18 @@ MiniGlobe.prototype.setGlobe = function (globe) {
         var minDistance = 6650000;
         var maxDistance = 30000000;
         var positionOnGlobe = globe.getCenter();
-        var miniView = new Itowns.GlobeView(this._element, positionOnGlobe, {
+        var miniView = new _GlobeViewExtended2.default(this._element, positionOnGlobe, {
             // `limit globe' subdivision level:
             // we're don't need a precise globe model
             // since the mini globe will always be seen from a far point of view (see minDistance above)
             maxSubdivisionLevel: 6,
             // Don't instance default controls since miniview's camera will be synced
             // on the main view's one (see globeView.onAfterRender)
-            noControls: true
+            noControls: true,
+            position: "absolute"
         });
 
-        // Set a 0 alpha clear value (instead of the default '1')
-        // because we want a transparent background for the miniglobe view to be able
-        // to see the main view "behind"
-        miniView.mainLoop.gfxEngine.renderer.setClearColor(0x000000, 0);
+        miniView.setBackground();
 
         /**
          * update miniview's camera with the globeView's camera position
@@ -33764,11 +33792,10 @@ MiniGlobe.prototype.setGlobe = function (globe) {
             // clamp distance camera from globe
             var range = globe.getRange();
             var distance = Math.min(Math.max(range * 1.5, minDistance), maxDistance);
-            var camera = miniView.camera.camera3D;
             // Update target miniview's camera
-            camera.position.copy(globe.moveTarget()).setLength(distance);
-            camera.lookAt(globe.moveTarget());
-            miniView.notifyChange(true);
+            miniView.setCameraPosition(globe.moveTarget(), distance);
+            miniView.lookAt(globe.moveTarget());
+            miniView.notifyChange();
         };
         globe.listen(_GlobeViewExtended2.default.EVENTS.AFTER_RENDER, updateMiniGlobeHandler);
         if (globe.isInitialized()) {

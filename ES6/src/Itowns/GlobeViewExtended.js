@@ -13,7 +13,7 @@ var logger = Logger.getLogger("GlobeViewExtended");
  */
 function GlobeViewExtended(viewerDiv, coordCarto, options) {
 
-    viewerDiv.style.position = "relative";
+    viewerDiv.style.position = (!options  || !options.position) ? "relative" : options.position;
 
     //itowns
     var scope = typeof window !== "undefined" ? window : {};
@@ -64,8 +64,9 @@ function GlobeViewExtended(viewerDiv, coordCarto, options) {
         }, 100);
     }).bind(this));
 
-    this.freezeControl();
-
+    if ( this._globeView.controls ) {
+        this.freezeControl();
+    }
 }
 
 /**
@@ -743,6 +744,40 @@ GlobeViewExtended.prototype.getLayerEventInfos = function(evt) {
         previousValue: evt.previous[propertyName],
         newValue: evt.new[propertyName]
     };
+};
+
+/**
+ * Sets background (specific to miniglobe)
+ */
+GlobeViewExtended.prototype.setBackground = function() {
+    // Set a 0 alpha clear value (instead of the default '1')
+    // because we want a transparent background for the miniglobe view to be able
+    // to see the main view "behind"
+    this.getGlobeView().mainLoop.gfxEngine.renderer.setClearColor(0x000000, 0);
+};
+
+/**
+ * Sets camera position
+ * @param {THREE.Vector3} target - Target position
+ * @param {Number} distance - Distance from target
+ */
+GlobeViewExtended.prototype.setCameraPosition = function(target, distance) {
+    this.getGlobeView().camera.camera3D.position.copy(target).setLength(distance);
+};
+
+/**
+ * Sets camera orientation to look at specified target
+ * @param {THREE.Vector3} target - Target position
+ */
+GlobeViewExtended.prototype.lookAt = function(target) {
+    this.getGlobeView().camera.camera3D.lookAt(target);
+};
+
+/**
+ * Notifies the scene it needs to be updated
+ */
+GlobeViewExtended.prototype.notifyChange = function() {
+    this.getGlobeView().notifyChange(true);
 };
 
 export default GlobeViewExtended;

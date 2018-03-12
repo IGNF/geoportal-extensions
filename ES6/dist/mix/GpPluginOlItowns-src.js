@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 1.0.0&2.3.0
- * @date 2018-03-09
+ * @date 2018-03-12
  *
  */
 
@@ -93,7 +93,7 @@
 		exports["Gp"] = factory(require("openlayers"), require("xmldom"), require("request"), require("itowns"));
 	else
 		root["Gp"] = factory(root["ol"], root[undefined], root[undefined], root["itowns"]);
-})(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_15__, __WEBPACK_EXTERNAL_MODULE_47__, __WEBPACK_EXTERNAL_MODULE_35__) {
+})(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_15__, __WEBPACK_EXTERNAL_MODULE_46__, __WEBPACK_EXTERNAL_MODULE_73__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -156,7 +156,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 45);
+/******/ 	return __webpack_require__(__webpack_require__.s = 44);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -382,7 +382,7 @@ exports.default = LoggerByDefault;
 
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(true)
-		module.exports = factory(__webpack_require__(15), __webpack_require__(47));
+		module.exports = factory(__webpack_require__(15), __webpack_require__(46));
 	else if(typeof define === 'function' && define.amd)
 		define("Gp", ["require", "require"], factory);
 	else if(typeof exports === 'object')
@@ -20202,6 +20202,40 @@ GlobeViewExtended.prototype.getLayerEventInfos = function (evt) {
     };
 };
 
+/**
+ * Sets background (specific to miniglobe)
+ */
+GlobeViewExtended.prototype.setBackground = function () {
+    // Set a 0 alpha clear value (instead of the default '1')
+    // because we want a transparent background for the miniglobe view to be able
+    // to see the main view "behind"
+    this.getGlobeView().mainLoop.gfxEngine.renderer.setClearColor(0x000000, 0);
+};
+
+/**
+ * Sets camera position
+ * @param {THREE.Vector3} target - Target position
+ * @param {Number} distance - Distance from target
+ */
+GlobeViewExtended.prototype.setCameraPosition = function (target, distance) {
+    this.getGlobeView().camera.camera3D.position.copy(target).setLength(distance);
+};
+
+/**
+ * Sets camera orientation to look at specified target
+ * @param {THREE.Vector3} target - Target position
+ */
+GlobeViewExtended.prototype.lookAt = function (target) {
+    this.getGlobeView().camera.camera3D.lookAt(target);
+};
+
+/**
+ * Notifies the scene it needs to be updated
+ */
+GlobeViewExtended.prototype.notifyChange = function () {
+    this.getGlobeView().notifyChange(true);
+};
+
 exports.default = GlobeViewExtended;
 
 /***/ }),
@@ -26949,7 +26983,7 @@ var _SelectorID = __webpack_require__(2);
 
 var _SelectorID2 = _interopRequireDefault(_SelectorID);
 
-var _LayerSwitcherDOM = __webpack_require__(37);
+var _LayerSwitcherDOM = __webpack_require__(36);
 
 var _LayerSwitcherDOM2 = _interopRequireDefault(_LayerSwitcherDOM);
 
@@ -30408,12 +30442,6 @@ exports.default = Interactions;
 
 /***/ }),
 /* 35 */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_35__;
-
-/***/ }),
-/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31315,7 +31343,7 @@ var MousePositionDOM = {
 exports.default = MousePositionDOM;
 
 /***/ }),
-/* 37 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31325,7 +31353,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _sortable = __webpack_require__(38);
+var _sortable = __webpack_require__(37);
 
 var _sortable2 = _interopRequireDefault(_sortable);
 
@@ -31958,7 +31986,7 @@ var LayerSwitcherDOM = {
 exports.default = LayerSwitcherDOM;
 
 /***/ }),
-/* 38 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
@@ -33217,7 +33245,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 
 
 /***/ }),
-/* 39 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33742,7 +33770,7 @@ var Register = {
 exports.default = Register;
 
 /***/ }),
-/* 40 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33887,7 +33915,7 @@ WMTS.prototype.getGetFeatureInfoUrl = function (coordinate, resolution, projecti
 exports.default = WMTS;
 
 /***/ }),
-/* 41 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33905,7 +33933,7 @@ var _proj = __webpack_require__(9);
 
 var _proj2 = _interopRequireDefault(_proj);
 
-var _Register = __webpack_require__(39);
+var _Register = __webpack_require__(38);
 
 var _Register2 = _interopRequireDefault(_Register);
 
@@ -33980,7 +34008,7 @@ var CRS = {
 exports.default = CRS;
 
 /***/ }),
-/* 42 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33998,7 +34026,7 @@ var _gp = __webpack_require__(4);
 
 var _gp2 = _interopRequireDefault(_gp);
 
-var _WMTS = __webpack_require__(40);
+var _WMTS = __webpack_require__(39);
 
 var _WMTS2 = _interopRequireDefault(_WMTS);
 
@@ -34143,7 +34171,7 @@ SourceWMTS.prototype.constructor = SourceWMTS;
 exports.default = SourceWMTS;
 
 /***/ }),
-/* 43 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34280,7 +34308,7 @@ SourceWMS.prototype.constructor = SourceWMS;
 exports.default = SourceWMS;
 
 /***/ }),
-/* 44 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35106,18 +35134,18 @@ LocationSelector.prototype._fillAutoCompletedLocationListContainer = function (l
 exports.default = LocationSelector;
 
 /***/ }),
-/* 45 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(46);
-__webpack_require__(48);
-__webpack_require__(55);
-__webpack_require__(73);
+__webpack_require__(45);
+__webpack_require__(47);
+__webpack_require__(54);
+__webpack_require__(72);
 module.exports = __webpack_require__(85);
 
 
 /***/ }),
-/* 46 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35188,13 +35216,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 })();
 
 /***/ }),
-/* 47 */
+/* 46 */
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE_47__;
+module.exports = __WEBPACK_EXTERNAL_MODULE_46__;
 
 /***/ }),
-/* 48 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35260,31 +35288,37 @@ var _GPmousePosition = __webpack_require__(34);
 
 var _GPmousePosition2 = _interopRequireDefault(_GPmousePosition);
 
-var _GPgeneralWidgetItowns = __webpack_require__(49);
+var _GPgeneralWidgetItowns = __webpack_require__(48);
 
 var _GPgeneralWidgetItowns2 = _interopRequireDefault(_GPgeneralWidgetItowns);
 
-var _GPattributionItowns = __webpack_require__(50);
+var _GPattributionItowns = __webpack_require__(49);
 
 var _GPattributionItowns2 = _interopRequireDefault(_GPattributionItowns);
 
-var _GPlayerSwitcherItowns = __webpack_require__(51);
+var _GPlayerSwitcherItowns = __webpack_require__(50);
 
 var _GPlayerSwitcherItowns2 = _interopRequireDefault(_GPlayerSwitcherItowns);
 
-var _GPminiGlobeItowns = __webpack_require__(52);
+var _GPminiGlobeItowns = __webpack_require__(51);
 
 var _GPminiGlobeItowns2 = _interopRequireDefault(_GPminiGlobeItowns);
 
-var _GPmousePositionItowns = __webpack_require__(53);
+var _GPmousePositionItowns = __webpack_require__(52);
 
 var _GPmousePositionItowns2 = _interopRequireDefault(_GPmousePositionItowns);
 
-var _GPscaleItowns = __webpack_require__(54);
+var _GPscaleItowns = __webpack_require__(53);
 
 var _GPscaleItowns2 = _interopRequireDefault(_GPscaleItowns);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ }),
+/* 48 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 /* 49 */
@@ -35318,12 +35352,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /***/ }),
 /* 54 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35389,75 +35417,81 @@ var _GPmousePosition = __webpack_require__(34);
 
 var _GPmousePosition2 = _interopRequireDefault(_GPmousePosition);
 
-var _GPgeneralWidgetOpenLayers = __webpack_require__(56);
+var _GPgeneralWidgetOpenLayers = __webpack_require__(55);
 
 var _GPgeneralWidgetOpenLayers2 = _interopRequireDefault(_GPgeneralWidgetOpenLayers);
 
-var _GpattributionOpenLayers = __webpack_require__(57);
+var _GpattributionOpenLayers = __webpack_require__(56);
 
 var _GpattributionOpenLayers2 = _interopRequireDefault(_GpattributionOpenLayers);
 
-var _GPmeasureAreaOpenLayers = __webpack_require__(58);
+var _GPmeasureAreaOpenLayers = __webpack_require__(57);
 
 var _GPmeasureAreaOpenLayers2 = _interopRequireDefault(_GPmeasureAreaOpenLayers);
 
-var _GPdrawingOpenLayers = __webpack_require__(59);
+var _GPdrawingOpenLayers = __webpack_require__(58);
 
 var _GPdrawingOpenLayers2 = _interopRequireDefault(_GPdrawingOpenLayers);
 
-var _GPmeasureAzimuthOpenLayers = __webpack_require__(60);
+var _GPmeasureAzimuthOpenLayers = __webpack_require__(59);
 
 var _GPmeasureAzimuthOpenLayers2 = _interopRequireDefault(_GPmeasureAzimuthOpenLayers);
 
-var _GPelevationPathOpenLayers = __webpack_require__(61);
+var _GPelevationPathOpenLayers = __webpack_require__(60);
 
 var _GPelevationPathOpenLayers2 = _interopRequireDefault(_GPelevationPathOpenLayers);
 
-var _GPmeasureLengthOpenLayers = __webpack_require__(62);
+var _GPmeasureLengthOpenLayers = __webpack_require__(61);
 
 var _GPmeasureLengthOpenLayers2 = _interopRequireDefault(_GPmeasureLengthOpenLayers);
 
-var _GPgetFeatureInfoOpenLayers = __webpack_require__(63);
+var _GPgetFeatureInfoOpenLayers = __webpack_require__(62);
 
 var _GPgetFeatureInfoOpenLayers2 = _interopRequireDefault(_GPgetFeatureInfoOpenLayers);
 
-var _GPmousePositionOpenLayers = __webpack_require__(64);
+var _GPmousePositionOpenLayers = __webpack_require__(63);
 
 var _GPmousePositionOpenLayers2 = _interopRequireDefault(_GPmousePositionOpenLayers);
 
-var _GPisochronOpenLayers = __webpack_require__(65);
+var _GPisochronOpenLayers = __webpack_require__(64);
 
 var _GPisochronOpenLayers2 = _interopRequireDefault(_GPisochronOpenLayers);
 
-var _GPreverseGeocodingOpenLayers = __webpack_require__(66);
+var _GPreverseGeocodingOpenLayers = __webpack_require__(65);
 
 var _GPreverseGeocodingOpenLayers2 = _interopRequireDefault(_GPreverseGeocodingOpenLayers);
 
-var _GPimportOpenLayers = __webpack_require__(67);
+var _GPimportOpenLayers = __webpack_require__(66);
 
 var _GPimportOpenLayers2 = _interopRequireDefault(_GPimportOpenLayers);
 
-var _GProuteOpenLayers = __webpack_require__(68);
+var _GProuteOpenLayers = __webpack_require__(67);
 
 var _GProuteOpenLayers2 = _interopRequireDefault(_GProuteOpenLayers);
 
-var _GPlayerSwitcherOpenLayers = __webpack_require__(69);
+var _GPlayerSwitcherOpenLayers = __webpack_require__(68);
 
 var _GPlayerSwitcherOpenLayers2 = _interopRequireDefault(_GPlayerSwitcherOpenLayers);
 
-var _GPsearchEngineOpenLayers = __webpack_require__(70);
+var _GPsearchEngineOpenLayers = __webpack_require__(69);
 
 var _GPsearchEngineOpenLayers2 = _interopRequireDefault(_GPsearchEngineOpenLayers);
 
-var _GPlocationOpenLayers = __webpack_require__(71);
+var _GPlocationOpenLayers = __webpack_require__(70);
 
 var _GPlocationOpenLayers2 = _interopRequireDefault(_GPlocationOpenLayers);
 
-var _GPtoolBoxMeasureOpenLayers = __webpack_require__(72);
+var _GPtoolBoxMeasureOpenLayers = __webpack_require__(71);
 
 var _GPtoolBoxMeasureOpenLayers2 = _interopRequireDefault(_GPtoolBoxMeasureOpenLayers);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ }),
+/* 55 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 /* 56 */
@@ -35557,12 +35591,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /***/ }),
 /* 72 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35578,7 +35606,7 @@ var _gp = __webpack_require__(4);
 
 var _gp2 = _interopRequireDefault(_gp);
 
-var _itowns = __webpack_require__(35);
+var _itowns = __webpack_require__(73);
 
 var Itowns = _interopRequireWildcard(_itowns);
 
@@ -35651,6 +35679,12 @@ function deepCopy(source, target) {
 exports.default = _gp2.default;
 
 /***/ }),
+/* 73 */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_73__;
+
+/***/ }),
 /* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -35691,7 +35725,7 @@ var _SelectorID = __webpack_require__(2);
 
 var _SelectorID2 = _interopRequireDefault(_SelectorID);
 
-var _MousePositionDOM = __webpack_require__(36);
+var _MousePositionDOM = __webpack_require__(35);
 
 var _MousePositionDOM2 = _interopRequireDefault(_MousePositionDOM);
 
@@ -37568,7 +37602,7 @@ var _SelectorID = __webpack_require__(2);
 
 var _SelectorID2 = _interopRequireDefault(_SelectorID);
 
-var _LayerSwitcherDOM = __webpack_require__(37);
+var _LayerSwitcherDOM = __webpack_require__(36);
 
 var _LayerSwitcherDOM2 = _interopRequireDefault(_LayerSwitcherDOM);
 
@@ -38857,7 +38891,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _sortable = __webpack_require__(38);
+var _sortable = __webpack_require__(37);
 
 var _sortable2 = _interopRequireDefault(_sortable);
 
@@ -39186,10 +39220,6 @@ Object.defineProperty(exports, "__esModule", {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _itowns = __webpack_require__(35);
-
-var Itowns = _interopRequireWildcard(_itowns);
-
 var _GlobeViewExtended = __webpack_require__(8);
 
 var _GlobeViewExtended2 = _interopRequireDefault(_GlobeViewExtended);
@@ -39211,8 +39241,6 @@ var _Widget = __webpack_require__(11);
 var _Widget2 = _interopRequireDefault(_Widget);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 /**
  * @classdesc
@@ -39284,7 +39312,7 @@ MiniGlobe.prototype.setGlobe = function (globe) {
         var minDistance = 6650000;
         var maxDistance = 30000000;
         var positionOnGlobe = globe.getCenter();
-        var miniView = new Itowns.GlobeView(this._element, positionOnGlobe, {
+        var miniView = new _GlobeViewExtended2.default(this._element, positionOnGlobe, {
             // `limit globe' subdivision level:
             // we're don't need a precise globe model
             // since the mini globe will always be seen from a far point of view (see minDistance above)
@@ -39294,10 +39322,7 @@ MiniGlobe.prototype.setGlobe = function (globe) {
             noControls: true
         });
 
-        // Set a 0 alpha clear value (instead of the default '1')
-        // because we want a transparent background for the miniglobe view to be able
-        // to see the main view "behind"
-        miniView.mainLoop.gfxEngine.renderer.setClearColor(0x000000, 0);
+        miniView.setBackground();
 
         /**
          * update miniview's camera with the globeView's camera position
@@ -39306,11 +39331,10 @@ MiniGlobe.prototype.setGlobe = function (globe) {
             // clamp distance camera from globe
             var range = globe.getRange();
             var distance = Math.min(Math.max(range * 1.5, minDistance), maxDistance);
-            var camera = miniView.camera.camera3D;
             // Update target miniview's camera
-            camera.position.copy(globe.moveTarget()).setLength(distance);
-            camera.lookAt(globe.moveTarget());
-            miniView.notifyChange(true);
+            miniView.setCameraPosition(globe.moveTarget(), distance);
+            miniView.lookAt(globe.moveTarget());
+            miniView.notifyChange();
         };
         globe.listen(_GlobeViewExtended2.default.EVENTS.AFTER_RENDER, updateMiniGlobeHandler);
         if (globe.isInitialized()) {
@@ -39567,7 +39591,7 @@ var _LayerUtils = __webpack_require__(5);
 
 var _LayerUtils2 = _interopRequireDefault(_LayerUtils);
 
-var _Register = __webpack_require__(39);
+var _Register = __webpack_require__(38);
 
 var _Register2 = _interopRequireDefault(_Register);
 
@@ -39587,19 +39611,19 @@ var _KML = __webpack_require__(18);
 
 var _KML2 = _interopRequireDefault(_KML);
 
-var _WMTS = __webpack_require__(40);
+var _WMTS = __webpack_require__(39);
 
 var _WMTS2 = _interopRequireDefault(_WMTS);
 
-var _CRS = __webpack_require__(41);
+var _CRS = __webpack_require__(40);
 
 var _CRS2 = _interopRequireDefault(_CRS);
 
-var _SourceWMTS = __webpack_require__(42);
+var _SourceWMTS = __webpack_require__(41);
 
 var _SourceWMTS2 = _interopRequireDefault(_SourceWMTS);
 
-var _SourceWMS = __webpack_require__(43);
+var _SourceWMS = __webpack_require__(42);
 
 var _SourceWMS2 = _interopRequireDefault(_SourceWMS);
 
@@ -39744,7 +39768,7 @@ var _LayerUtils = __webpack_require__(5);
 
 var _LayerUtils2 = _interopRequireDefault(_LayerUtils);
 
-var _SourceWMTS = __webpack_require__(42);
+var _SourceWMTS = __webpack_require__(41);
 
 var _SourceWMTS2 = _interopRequireDefault(_SourceWMTS);
 
@@ -39906,7 +39930,7 @@ var _LayerUtils = __webpack_require__(5);
 
 var _LayerUtils2 = _interopRequireDefault(_LayerUtils);
 
-var _SourceWMS = __webpack_require__(43);
+var _SourceWMS = __webpack_require__(42);
 
 var _SourceWMS2 = _interopRequireDefault(_SourceWMS);
 
@@ -43551,11 +43575,11 @@ var _MathUtils = __webpack_require__(94);
 
 var _MathUtils2 = _interopRequireDefault(_MathUtils);
 
-var _MousePositionDOM = __webpack_require__(36);
+var _MousePositionDOM = __webpack_require__(35);
 
 var _MousePositionDOM2 = _interopRequireDefault(_MousePositionDOM);
 
-__webpack_require__(41);
+__webpack_require__(40);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -47639,7 +47663,7 @@ var _SelectorID = __webpack_require__(2);
 
 var _SelectorID2 = _interopRequireDefault(_SelectorID);
 
-var _LocationSelector = __webpack_require__(44);
+var _LocationSelector = __webpack_require__(43);
 
 var _LocationSelector2 = _interopRequireDefault(_LocationSelector);
 
@@ -51255,7 +51279,7 @@ var _SelectorID = __webpack_require__(2);
 
 var _SelectorID2 = _interopRequireDefault(_SelectorID);
 
-var _LocationSelector = __webpack_require__(44);
+var _LocationSelector = __webpack_require__(43);
 
 var _LocationSelector2 = _interopRequireDefault(_LocationSelector);
 

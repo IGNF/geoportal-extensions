@@ -1,4 +1,3 @@
-import * as Itowns from "itowns";
 import GlobeViewExtended from "../GlobeViewExtended";
 import Utils from "../../Common/Utils";
 import SelectorID from "../../Common/Utils/SelectorID";
@@ -77,20 +76,18 @@ MiniGlobe.prototype.setGlobe = function(globe) {
         var minDistance = 6650000;
         var maxDistance = 30000000;
         var positionOnGlobe = globe.getCenter();
-        var miniView = new Itowns.GlobeView(this._element, positionOnGlobe, {
+        var miniView = new GlobeViewExtended(this._element, positionOnGlobe, {
             // `limit globe' subdivision level:
             // we're don't need a precise globe model
             // since the mini globe will always be seen from a far point of view (see minDistance above)
             maxSubdivisionLevel: 6,
             // Don't instance default controls since miniview's camera will be synced
             // on the main view's one (see globeView.onAfterRender)
-            noControls: true
+            noControls: true,
+            position: "absolute"
         });
 
-        // Set a 0 alpha clear value (instead of the default '1')
-        // because we want a transparent background for the miniglobe view to be able
-        // to see the main view "behind"
-        miniView.mainLoop.gfxEngine.renderer.setClearColor(0x000000, 0);
+        miniView.setBackground();
 
         /**
          * update miniview's camera with the globeView's camera position
@@ -99,11 +96,10 @@ MiniGlobe.prototype.setGlobe = function(globe) {
             // clamp distance camera from globe
             var range = globe.getRange();
             var distance = Math.min(Math.max(range * 1.5, minDistance), maxDistance);
-            var camera = miniView.camera.camera3D;
             // Update target miniview's camera
-            camera.position.copy(globe.moveTarget()).setLength(distance);
-            camera.lookAt(globe.moveTarget());
-            miniView.notifyChange(true);
+            miniView.setCameraPosition(globe.moveTarget(), distance);
+            miniView.lookAt(globe.moveTarget());
+            miniView.notifyChange();
         };
         globe.listen(GlobeViewExtended.EVENTS.AFTER_RENDER, updateMiniGlobeHandler);
         if (globe.isInitialized()) {
