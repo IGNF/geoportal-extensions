@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 1.0.0
- * @date 2018-03-06
+ * @date 2018-03-12
  *
  */
 /*!
@@ -26760,7 +26760,7 @@ LeafletLayersLayers = function (L, woodman, LayerConfig, WMS, WMTS) {
 }(leaflet, {}, LeafletLayersLayerConfig, LeafletLayersWMS, LeafletLayersWMTS);
 LeafletGpPluginLeaflet = function (L, P, Gp, Controls, ElevationPath, Layers, CRS, Register) {
     Gp.leafletExtVersion = '1.0.0';
-    Gp.leafletExtDate = '2018-03-06';
+    Gp.leafletExtDate = '2018-03-12';
     Gp.Register = Register;
     L.geoportalLayer = Layers;
     L.geoportalControl = Controls;
