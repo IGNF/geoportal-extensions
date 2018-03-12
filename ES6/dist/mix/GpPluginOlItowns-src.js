@@ -19460,6 +19460,8 @@ var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// import * as Itowns from "itowns"; // itowns globale !?
+
 var logger = _LoggerByDefault2.default.getLogger("GlobeViewExtended");
 
 /**
@@ -19472,11 +19474,11 @@ var logger = _LoggerByDefault2.default.getLogger("GlobeViewExtended");
  */
 function GlobeViewExtended(viewerDiv, coordCarto, options) {
 
-    viewerDiv.style.position = "relative";
+    viewerDiv.style.position = !options || !options.position ? "relative" : options.position;
 
-    //itowns
-    var scope = typeof window !== "undefined" ? window : {};
-    this._itowns = scope.itowns;
+    // FIXME itowns globale !?
+    var env = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : {};
+    this._itowns = env.itowns;
 
     // stockage de l'élément html porteur du globe
     this._viewerDiv = viewerDiv;
@@ -19523,7 +19525,9 @@ function GlobeViewExtended(viewerDiv, coordCarto, options) {
         }, 100);
     }.bind(this));
 
-    this.freezeControl();
+    if (this._globeView.controls) {
+        this.freezeControl();
+    }
 }
 
 /**
@@ -35646,7 +35650,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 _gp2.default.LayerUtils = _LayerUtils2.default;
 
 // determines the execution environment l'environnement : browser or not ?
-var scope = typeof window !== "undefined" ? window : {};
+var env = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : {};
 
 // creation of the namespace for the itowns extensions
 Itowns.control = {};
@@ -35657,12 +35661,12 @@ Itowns.control.Scale = _Scale2.default;
 Itowns.control.MiniGlobe = _MiniGlobe2.default;
 Itowns.GlobeViewExtended = _GlobeViewExtended2.default;
 
-// saves in the global variable !
-if (!scope.itowns) {
-    scope.itowns = {};
+// FIXME saves in the global variable !
+if (!env.itowns) {
+    env.itowns = {};
 }
 
-deepCopy(Itowns, scope.itowns);
+deepCopy(Itowns, env.itowns);
 
 function deepCopy(source, target) {
     for (var prop in source) {
@@ -39319,7 +39323,8 @@ MiniGlobe.prototype.setGlobe = function (globe) {
             maxSubdivisionLevel: 6,
             // Don't instance default controls since miniview's camera will be synced
             // on the main view's one (see globeView.onAfterRender)
-            noControls: true
+            noControls: true,
+            position: "absolute"
         });
 
         miniView.setBackground();

@@ -13,7 +13,7 @@ import GlobeViewExtended from "./GlobeViewExtended";
 Gp.LayerUtils = LayerUtils ;
 
 // determines the execution environment l'environnement : browser or not ?
-var scope = typeof window !== "undefined" ? window : {};
+var env = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : {};
 
 // creation of the namespace for the itowns extensions
 Itowns.control = {};
@@ -24,12 +24,12 @@ Itowns.control.Scale = Scale;
 Itowns.control.MiniGlobe = MiniGlobe;
 Itowns.GlobeViewExtended = GlobeViewExtended;
 
-// saves in the global variable !
-if ( !scope.itowns ){
-    scope.itowns = {};
+// FIXME saves in the global variable !
+if ( !env.itowns ){
+    env.itowns = {};
 }
 
-deepCopy( Itowns, scope.itowns );
+deepCopy( Itowns, env.itowns );
 
 function deepCopy(source, target)
 {

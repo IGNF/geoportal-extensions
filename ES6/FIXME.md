@@ -25,12 +25,6 @@ Fonctionnement de la variable globale Gp en mode AMD est surprenante...
 Itowns n'est plus une dependance des modules ES6 !
 On choisie de faire appel à la variable globale itowns !
 
-**Remarque**
-- il faut bien gérer les environnements d'execution !
-
-**???**
-> le module MiniGlobe utilise la dependance itowns !?
-
 ## BREAKDOWN
 
 La modification des réf. au mot clef "ol3" risque de causer des effets de bord.
