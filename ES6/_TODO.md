@@ -111,8 +111,7 @@ Licences *multiples* à ajouter aux bundles !
 
 ## JSDOC
 
-**NOK!**
-> cf. FIXME.md
+**OK!**
 
 ## LES EXEMPLES
 
@@ -129,7 +128,9 @@ Licences *multiples* à ajouter aux bundles !
 **OK!**
 
 **Warning!**
-> on laisse les tests sous gulp..., et on ne les intègre pas à webpack !
+> on laisse les tests sous gulp...,
+et on ne les intègre pas à webpack (sous projet independant) !
+
 
 ## UPDATE : aide + doc
 
