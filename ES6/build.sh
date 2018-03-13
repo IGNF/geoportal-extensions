@@ -34,6 +34,13 @@ printTo () {
 printTo "BEGIN"
 
 ##########
+# clean
+function clean() {
+    printTo "####### CLEAN !"
+    doCmd "rm -rf dist/$1"
+}
+
+##########
 # leaflet
 function leaflet() {
   printTo "####### LEAFLET !"
@@ -72,12 +79,10 @@ function mix() {
 printTo "###########  NPM  ##############"
 doCmd "npm run setup"
 
-printTo "##### geoportal-access-lib #####"
+printTo "########### BUILD : ############"
+printTo "#### > geoportal-access-lib ####"
 doCmd "cd ./node_modules/geoportal-access-lib/ && npm install && npm run build"
-
-printTo "######## CLEAN JSDOC ############"
 doCmd "cd ../.."
-doCmd "rm -rf jsdoc"
 
 while getopts "aoliI" opts
 do
@@ -86,11 +91,13 @@ do
         printTo "#################################"
         printTo "###### OpenLayers bundle ! ######"
         ol
+        clean "openlayers"
         ;;
      l)
         printTo "#################################"
         printTo "####### Leaflet bundle ! ########"
         leaflet
+        clean "leaflet"
         ;;
      i)
         printTo "#############################"
@@ -101,6 +108,7 @@ do
         printTo "###################################"
         printTo "###### Mixte Itowns bundle ! ######"
         mix
+        clean "mix"
         ;;
      a)
         printTo "#################################"
@@ -109,6 +117,7 @@ do
         leaflet
         itowns
         mix
+        clean
         ;;
      \?)
         printTo "$OPTARG : option invalide : a(all), o(openlayers), l(leaflet), i(itowns), I(ol/itowns) !"

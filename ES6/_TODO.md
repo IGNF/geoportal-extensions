@@ -120,6 +120,10 @@ Licences *multiples* à ajouter aux bundles !
 
 *templatisation* des exemples avec **gulp** ou un **loader de webpack** ?
 
+## LES TESTS
+
+**TODO!**
+
 ## LES TESTS DE RENDU
 
 **OK!**
@@ -141,7 +145,10 @@ Licences *multiples* à ajouter aux bundles !
 
 ## TRAVIS
 
-**TODO!**
+**OK!**
+
+**Warning!**
+> à tester !!!
 
 ## STRUCTURE DES WEBPACK
 
