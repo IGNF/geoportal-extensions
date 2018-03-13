@@ -956,6 +956,14 @@ GlobeViewExtended.prototype.notifyChange = function () {
     this.getGlobeView().notifyChange(true);
 };
 
+/**
+* Resizes itowns
+*/
+GlobeViewExtended.prototype.resize = function (width, height) {
+    this.getGlobeView().mainLoop.gfxEngine.onWindowResize(width, height);
+    this.getGlobeView().notifyChange(true);
+};
+
 exports.default = GlobeViewExtended;
 
 /***/ }),
