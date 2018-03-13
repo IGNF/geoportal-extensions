@@ -11,12 +11,34 @@ var DefineWebpackPlugin   = webpack.DefinePlugin;
 var ExtractTextWebPackPlugin = require("extract-text-webpack-plugin");
 var BannerWebPackPlugin   = webpack.BannerPlugin;
 var UglifyJsWebPackPlugin = webpack.optimize.UglifyJsPlugin;
+const hbsLayouts = require("handlebars-layouts");
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ReplaceWebpackPlugin  = require("replace-bundle-webpack-plugin");
 var JsDocWebPackPlugin    = require("jsdoc-webpack-plugin");
 
 // -- variables
 var date = new Date().toISOString().split("T")[0];
 var pkg  = require(path.join(__dirname, "package.json"));
+
+
+// -- to generate dynamicaly html sample files
+var concatHtmlWebpackPlugins = function(dirSource, dirTarget, result = []) {
+    fs.readdirSync(dirSource).forEach((file) => {
+        const fPath = path.resolve(dirSource, file);
+
+        if (fs.statSync(fPath).isDirectory()) {
+            return concatHtmlWebpackPlugins(fPath, path.join(dirTarget, file), result);
+        }
+        result.push(
+            new HtmlWebpackPlugin({
+                template: fPath,
+                filename: path.join(dirTarget, file)
+            })
+        );
+    });
+    return result;
+};
+
 
 module.exports = env => {
 
@@ -103,6 +125,37 @@ module.exports = env => {
                 {
                     test : /\.(png|jpg|gif|svg)$/,
                     loader : "url-loader"
+                },
+                {
+                    test: /\.(html)$/,
+                    // exclude: /node_modules/,
+                    use: [
+                        {
+                            loader: 'raw-loader'
+                        },
+                        {
+                            loader: 'hbs-template-loader',
+                            options: {
+                                helpers: [
+                                    hbsLayouts
+                                ],
+                                partials: [
+                                    path.join(__dirname, "samples-src", "templates", "itowns", "*.hbs"),
+                                    path.join(__dirname, "samples-src", "templates", "partials", "*.hbs"),
+                                    path.join(__dirname, "samples-src", "templates", "partials", "itowns", "*.hbs")
+                                ],
+                                context: [
+                                    path.join(__dirname, "samples-src", "config.json")
+                                ],
+                                htmlBeautifyOptions: {
+                                    indent_size: 2,
+                                    indent_char: ' ',
+                                    indent_with_tabs: false
+                                },
+                                charset: 'utf8'
+                            }
+                        }
+                    ]
                 }
             ]
         },
@@ -176,5 +229,12 @@ module.exports = env => {
                 entryOnly : true
             })
         ])
+        /** GENERATION DES EXEMPLES A PARTIR DE TEMPLATES */
+        .concat(
+            concatHtmlWebpackPlugins(
+                path.join(__dirname, "samples-src", "pages", "itowns"),
+                path.join(__dirname, "samples", "itowns")
+            )
+        )
     };
 };

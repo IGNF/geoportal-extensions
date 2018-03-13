@@ -1,0 +1,75 @@
+{{#extend "layout-leaflet-sample-amd"}}
+
+{{#content "head"}}
+        <title>Sample Leaflet</title>
+{{/content}}
+
+{{#content "style"}}
+        <style>
+        div#map {
+            width: 100%;
+            height: 500px;
+        }
+        </style>
+{{/content}}
+
+{{#content "body"}}
+        <h2>Ajout d'une couche WMTS</h2>
+        <!-- map -->
+        <div id="map"></div>
+{{/content}}
+
+{{#content "js"}}
+        <script type="text/javascript">
+        var map;
+        requirejs(
+            [
+                "Gp",
+                "Leaflet/Layers/WMTS"
+            ],
+            function (
+                Gp,
+                WMTS
+            ) {
+
+                Gp.Services.getConfig({
+                    serverUrl : "{{ config.resources }}/AutoConf.js",
+                    callbackSuffix : "",
+                    // apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
+                    timeOut : 20000,
+                    /** onsuccess */
+                    onSuccess : function () {
+
+                        var wmts = new WMTS("http://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/geoportail/wmts", {
+                            paramsNative : {
+                                minZoom : 1,
+                                maxZoom : 21
+                            },
+                            paramsWmts   : {
+                                layer   : "ORTHOIMAGERY.ORTHOPHOTOS",
+                                style   : "normal",
+                                format  : "image/jpeg",
+                                version : "1.0.0",
+                                tilematrixset : "PM"
+                            },
+                            originators  : [],
+                            legends      : [],
+                            metadata     : [],
+                            title        : "",
+                            description  : "",
+                            quicklookUrl : ""
+                        });
+
+                        var map  = L.map("map", {
+                            zoom : 2,
+                            center : L.latLng(48, 2)
+                        });
+
+                        wmts.addTo(map);
+
+                    }
+                });
+            });
+            </script>
+    {{/content}}
+    {{/extend}}

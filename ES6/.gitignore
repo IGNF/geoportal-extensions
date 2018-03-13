@@ -41,8 +41,12 @@ nb-configuration.xml
 /bower_components/
 /bower_dependencies/
 /node_modules/
-# /dist/
+/dist/
 # /samples/
+/samples/itowns
+/samples/mix
+/samples/leaflet
+/samples/openlayers
 /jsdoc/
 /lib/
 /tests/
