@@ -1,0 +1,55 @@
+{{#extend "ol-sample-bundle-layout"}}
+
+{{#content "head"}}
+        <title>Sample ol3</title>
+{{/content}}
+
+{{#content "style"}}
+        <style>
+            div#map {
+                width: 100%;
+                height: 500px;
+            }
+        </style>
+{{/content}}
+
+{{#content "body"}}
+            <h2>Ajout d'une couche WMS en lambert 93</h2>
+            <!-- map -->
+            <div id="map">
+            </div>
+{{/content}}
+
+{{#content "js"}}
+            <script type="text/javascript">
+                var map;
+                window.onload = function() {
+                    // on cache l'image de chargement du Géoportail.
+                    document.getElementById('map').style.backgroundImage = 'none';
+
+                    var gpLayer = new ol.layer.Tile({
+                        source : new ol.source.GeoportalWMS({
+                            layer : "ORTHOIMAGERY.ORTHOPHOTOS",
+                            olParams : {
+                                params : {
+                                    CRS : "EPSG:2154"
+                                }
+                            }
+                        })
+                    });
+
+                    map = new ol.Map({
+                        layers : [gpLayer],
+                        target : 'map',
+                        view : new ol.View({
+                            projection : "EPSG:2154",
+                            center : [600000, 6750000],
+                            zoom : 7
+                        })
+                    });
+
+                };
+           </script>
+{{/content}}
+
+{{/extend}}

@@ -1,0 +1,72 @@
+{{#extend "layout-itowns-sample-amd"}}
+
+{{#content "head"}}
+        <title>Sample itowns MiniGlobe</title>
+{{/content}}
+
+    {{#content "style"}}
+            <style>
+                    html {
+                        height: 100%;
+                    }
+
+                    body {
+                        margin: 0;
+                        overflow:hidden;
+                        height:100%;
+                    }
+
+                    #viewerDiv {
+                        margin : auto auto;
+                        width: 100%;
+                        height: 70%;
+                        padding: 0;
+                    }
+            </style>
+{{/content}}
+
+{{#content "body"}}
+            <h2>Ajout d'un contrôle d'affichage de la minivue : MiniGlobe</h2>
+            <!-- map -->
+            <div id="viewerDiv"></div>
+{{/content}}
+
+{{#content "js"}}
+            <script type="text/javascript">
+                var globeView = null;
+                requirejs(
+                    ["itowns", "proj4", "Gp", "Itowns/GlobeViewExtended", "Itowns/Controls/MiniGlobe"],
+                    function (itowns, proj4, Gp, GlobeViewExtended, MiniGlobe) {
+                        itowns.control = {};
+                        itowns.control.MiniGlobe = MiniGlobe;
+                        itowns.GlobeViewExtended = GlobeViewExtended;
+
+                        const positionOnGlobe = {
+                            longitude : 2.3465,
+                            latitude : 48.88,
+                            altitude : 25000000
+                        };
+
+                        const viewerDiv = document.getElementById("viewerDiv");
+                        globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
+
+                        itowns.Fetcher.json("{{ config.resources }}/itowns/JSONLayers/Ortho.json").then(result => globeView.addLayer(result));
+
+                        itowns.Fetcher.json("{{ config.resources }}/itowns/JSONLayers/IGN_MNT.json").then(result => globeView.addLayer(result));
+                        itowns.Fetcher.json("{{ config.resources }}/itowns/JSONLayers/IGN_MNT_HIGHRES.json").then(result => globeView.addLayer(result));
+
+                        globeView.listen(itowns.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
+                            // eslint-disable-next-line no-console
+                            console.info("Globe initialized");
+                        });
+
+                        var miniglobe = new itowns.control.MiniGlobe({
+                            target : viewerDiv,
+                            position : "absolute"
+                        });
+                        globeView.addWidget( miniglobe );
+                });
+            </script>
+{{/content}}
+
+{{/extend}}

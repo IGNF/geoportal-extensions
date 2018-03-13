@@ -956,6 +956,14 @@ GlobeViewExtended.prototype.notifyChange = function () {
     this.getGlobeView().notifyChange(true);
 };
 
+/**
+* Resizes itowns
+*/
+GlobeViewExtended.prototype.resize = function (width, height) {
+    this.getGlobeView().mainLoop.gfxEngine.onWindowResize(width, height);
+    this.getGlobeView().notifyChange(true);
+};
+
 exports.default = GlobeViewExtended;
 
 /***/ }),
@@ -1249,7 +1257,7 @@ exports.default = Widget;
  * copyright IGN
  * @author IGN
  * @version 2.0.0
- * @date 2018-03-05
+ * @date 2018-03-12
  *
  */
 /*!
@@ -6645,7 +6653,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 var Gp = {
     servicesVersion : "2.0.0" ,
-    servicesDate : "2018-03-05",
+    servicesDate : "2018-03-12",
     /**
      * Methode pour rajouter une classe / objet au namespace global.
      *
