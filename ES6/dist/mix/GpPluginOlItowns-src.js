@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 1.0.0&2.3.0
- * @date 2018-03-12
+ * @date 2018-03-13
  *
  */
 
@@ -44,10 +44,10 @@
 
 /*!
  * @overview es6-promise - a tiny implementation of Promises/A+.
- * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and cont  ributors (Conversion to ES6 API by Jake Archibald)
+ * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors (Conversion to ES6 API by Jake Archibald)
  * @license   Licensed under MIT license
- *            See https://raw.githubusercontent.com/jakearchibald/es6-promise/  master/LICENSE
- * @version   3.0.2
+ *            See https://raw.githubusercontent.com/stefanpenner/es6-promise/master/LICENSE
+ * @version   v4.2.4
  */
 
 /*!
@@ -369,7 +369,7 @@ exports.default = LoggerByDefault;
  * copyright IGN
  * @author IGN
  * @version 2.0.0
- * @date 2018-03-05
+ * @date 2018-03-13
  *
  */
 /*!
@@ -5765,7 +5765,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 var Gp = {
     servicesVersion : "2.0.0" ,
-    servicesDate : "2018-03-05",
+    servicesDate : "2018-03-13",
     /**
      * Methode pour rajouter une classe / objet au namespace global.
      *

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <meta charset="UTF-8">
+  <!-- Library Leaflet -->
+  <link rel="stylesheet" href="../../node_modules/leaflet/dist/leaflet.css" />
+  <script src="../../node_modules/leaflet/dist/leaflet-src.js"></script>
+
+  <!-- Plugin leaflet IGN -->
+  <link rel="stylesheet" href="../../dist/leaflet/GpPluginLeaflet-src.css" />
+  <script src="../../dist/leaflet/GpPluginLeaflet-src.js"></script>
+
+</head>
+<body>
+    <!-- code -->
+    <script>
+
+          window.onload = function () {
+
+              var map  = L.map('map', {
+                zoom : 6,
+                center : L.latLng(48, 2),
+                // layers : [wmts, wms1, wms2, wms3]
+                // minZoom : 3,
+                // maxZoom : 18,
+                // cf. http://leafletjs.com/reference.html#map-usage
+                // bounceAtZoomLimits
+                // fadeAnimation,
+                // zoomAnimation,
+                // zoomAnimationThreshold,
+                // markerZoomAnimation,
+              });
+
+              // map.addLayer(wmts);
+              var search = L.geoportalControl.SearchEngine({
+                apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
+                collapsed : false
+              });
+              map.addControl(search);
+        }
+    </script>
+
+    <!-- map -->
+    <div id="map" style="height: 400px;"></div>
+
+</body>
+</html>

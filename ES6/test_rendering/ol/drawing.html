@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <!-- Library openlayers -->
+  <script src="../../node_modules/openlayers/dist/ol-debug.js"></script>
+
+  <!-- Plugin openlayers IGN -->
+  <link rel="stylesheet" href="../../dist/openlayers/GpPluginOpenLayers.css" />
+  <script data-url="./resources/AutoConf.js" src="../../dist/openlayers/GpPluginOpenLayers-src.js"></script>
+
+</head>
+<body>
+        <!-- map -->
+        <div id="map" style="height: 400px;"></div>
+        <button type="button" id="drawPoint">Dessiner point</button>
+        <button type="button" id="drawLine">Dessiner ligne</button>
+        <button type="button" id="drawPolygon">Dessiner polygone</button>
+        <button type="button" id="drawText">Dessiner texte</button>
+        <button type="button" id="edit">Modifier forme</button>
+        <button type="button" id="display">Modifier Apparence</button>
+        <button type="button" id="tooltip">Modifier texte</button>
+        <button type="button" id="remove">Supprimer</button>
+
+    <!-- code -->
+    <script>
+    var map;
+    window.onload = function() {
+        // on cache l'image de chargement du Géoportail.
+        document.getElementById('map').style.backgroundImage = 'none';
+
+        //Création de la map
+        map = new ol.Map({
+            target : "map",
+            view : new ol.View({
+                center : [288074.8449901076, 6247982.515792289],
+                zoom : 8
+            })
+        });
+
+        var drawing = new ol.control.Drawing({
+            collapsed : false,
+            defaultStyles : {
+                textFillColor : "#0000FF",
+                textStrokeColor : "#FFFFFF",
+                strokeColor : "#000000",
+                polyFillColor : "#FF00FF",
+                polyFillOpacity : 0.8,
+                strokeWidth : 2
+            },
+            cursorStyle : {
+                pointRadius : 3,
+                fillColor : "rgba(255,153,0,1)",
+                strokeColor : "#FF0",
+                strokeWidth : 1
+            }
+        });
+        map.addControl(drawing);
+
+        // 4. Ajout des listeners sur les boutons
+        document.getElementById("drawPoint").onclick = function (e) {
+            document.querySelector('li[id^="drawing-tool-point-"]').click();
+        }
+        document.getElementById("drawLine").onclick = function (e) {
+            document.querySelector('li[id^="drawing-tool-line-"]').click();
+        }
+        document.getElementById("drawPolygon").onclick = function (e) {
+            document.querySelector('li[id^="drawing-tool-polygon-"]').click();
+        }
+        document.getElementById("drawText").onclick = function (e) {
+            document.querySelector('li[id^="drawing-tool-text-"]').click();
+        }
+        document.getElementById("edit").onclick = function (e) {
+            document.querySelector('li[id^="drawing-tool-edit-"]').click();
+        }
+        document.getElementById("display").onclick = function (e) {
+            document.querySelector('li[id^="drawing-tool-display-"]').click();
+        }
+        document.getElementById("tooltip").onclick = function (e) {
+            document.querySelector('li[id^="drawing-tool-tooltip-"]').click();
+        }
+        document.getElementById("remove").onclick = function (e) {
+            document.querySelector('li[id^="drawing-tool-remove-"]').click();
+        }
+    };
+    </script>
+
+</body>
+</html>

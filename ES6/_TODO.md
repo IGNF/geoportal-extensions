@@ -83,15 +83,13 @@ mais on choisie de faire appel à la variable globale itowns !
 
 ## ESLINT
 
+**TODO!**
+
 revoir les règles !
 
 ## CSS/images
 
 **OK!**
-
-**Warning**
-> cf. FIXME.md
-- minification des CSS
 
 ## Minification
 
@@ -113,24 +111,40 @@ Licences *multiples* à ajouter aux bundles !
 
 ## JSDOC
 
+**NOK!**
+> cf. FIXME.md
+
 ## LES EXEMPLES
+
+**TODO!**
 
 *templatisation* des exemples avec **gulp** ou un **loader de webpack** ?
 
 ## LES TESTS DE RENDU
 
-on laisse les tests sous gulp...
+**OK!**
+
+**Warning!**
+> on laisse les tests sous gulp..., et on ne les intègre pas à webpack !
 
 ## UPDATE : aide + doc
+
+**OK!**
+
 - COMPILE.md
 - README.md
 - ...
 
 ## INTERFACE NPM
-(cf.TARGET.md)
+
+**TODO!**
 
 ## TRAVIS
 
+**TODO!**
+
 ## STRUCTURE DES WEBPACK
+
+**TODO!**
 
 configurations multiples ou un seul *webpack.config.js* ?

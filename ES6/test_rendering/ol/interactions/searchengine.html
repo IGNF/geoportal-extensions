@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <!-- Library openlayers -->
+  <script src="../../../node_modules/openlayers/dist/ol-debug.js"></script>
+
+  <!-- Plugin openlayers IGN -->
+  <link rel="stylesheet" href="../../../dist/openlayers/GpPluginOpenLayers.css" />
+  <script data-url="./../resources/AutoConf.js" src="../../../dist/openlayers/GpPluginOpenLayers-src.js"></script>
+
+</head>
+<body>
+        <!-- map -->
+        <div id="map" style="height: 400px;"></div>
+        <button id="searchLocation"> Centrage lieu</button>
+        <button id="autoCompleteLocation"> Autocomplete lieu</button>
+        
+        <!-- code -->
+        <script>
+            // var map;
+            // var route;
+            window.onload = function () {
+                // on cache l'image de chargement du Géoportail.
+                document.getElementById("map").style.backgroundImage = "none";
+                // Création de la map
+                var map = new ol.Map({
+                    target : "map",
+                    layers : [
+                        new ol.layer.GeoportalWMTS({
+                            layer : "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+                        })
+                    ],
+                    view : new ol.View({
+                        center : [288074.8449901076, 6247982.515792289],
+                        zoom : 13
+                    })
+                });
+                var search = new ol.control.SearchEngine({
+                    collapsed : false
+                });
+                map.addControl(search);
+
+                // SNIPPET FROM https://paul.kinlan.me/waiting-for-an-element-to-be-created/
+                function waitForElement(selector) {
+                    return new Promise(function(resolve, reject) {
+                      var element = document.querySelector("div[id^="+selector+"]");
+                
+                        if (element) {
+                            resolve(element);
+                            return;
+                        }
+                
+                        var observer = new MutationObserver(function(mutations) {
+                            mutations.forEach(function(mutation) {
+                                var nodes = Array.from(mutation.addedNodes);
+                                for(var node of nodes) {
+                                    if(node.matches && node.matches("div[id^="+selector+"]")) {
+                                        observer.disconnect();
+                                        resolve(node);
+                                        return;
+                                    }
+                                };
+                            });
+                        });
+
+                        observer.observe(document.documentElement, { childList: true, subtree: true });
+                    });
+                }
+
+                // search and centers on Paris
+                var searchParis = function() {
+                    var location = {
+                        target : {
+                            value : "Paris"
+                        }
+                    }
+                    document.querySelector("input[id^=GPsearchInputText]").value = location.target.value;
+                    search.onAutoCompleteSearchText(location);
+                    waitForElement("AutoCompletedLocation_0-").then(function(element) {
+                        element.click();
+                    });
+                    
+                };
+
+                // autocomplete Paris results
+                var autoCompleteParis = function() {
+                    var location = {
+                        target : {
+                            value : "Paris"
+                        }
+                    }
+                    document.querySelector("input[id^=GPsearchInputText]").value = location.target.value;
+                    search.onAutoCompleteSearchText(location);
+                };
+
+                document.getElementById("searchLocation").onclick = function() {
+                    searchParis();
+                }
+
+                document.getElementById("autoCompleteLocation").onclick = function() {
+                    autoCompleteParis();
+                }
+            };
+        </script>
+
+</body>
+</html>

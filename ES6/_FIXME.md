@@ -25,6 +25,15 @@ Fonctionnement de la variable globale Gp en mode AMD est surprenante...
 Itowns n'est plus une dependance des modules ES6 !
 On choisie de faire appel à la variable globale itowns !
 
+## Generation de la JSDOC
+
+**???**
+conflit sur la version du module "fs-extra" !?
+
+la résolution des dependances du module jsdoc-webpack-plugin n'est pas realisée
+correctement, la version "fs-extra@0.30.0" du plugin semble être en conflit
+avec "fs-extra@2.0.0" d'openlayers !?
+
 ## BREAKDOWN
 
 La modification des réf. au mot clef "ol3" risque de causer des effets de bord.
@@ -35,5 +44,8 @@ Les exemples jsfiddle utilise la variable "ol3ExtVersion" :
 Le nom du bundle d'openlayers :
 > GpPluginOl3 -> GpPluginOpenLayers
 
-Le nom du bundle en mode miste :
+Le nom du bundle en mode mixte :
 > GpPluginOl3Itowns -> GpPluginOlItowns
+
+Pour la jsdoc sur la gh-pages, on modifie aussi le nom du répertoire :
+> current/jsdoc/ol3 -> current/jsdoc/openlayers

@@ -12,6 +12,8 @@ var DefineWebpackPlugin   = webpack.DefinePlugin;
 var BannerWebPackPlugin   = webpack.BannerPlugin;
 var ExtractTextWebPackPlugin = require("extract-text-webpack-plugin");
 var UglifyJsWebPackPlugin = webpack.optimize.UglifyJsPlugin;
+var JsDocWebPackPlugin    = require("jsdoc-webpack-plugin");
+var CleanWebpackPlugin    = require("clean-webpack-plugin");
 
 // -- variables globales (par defaut)
 var date    = new Date().toISOString().split("T")[0];
@@ -27,12 +29,18 @@ module.exports = env => {
     //      sinon, par defaut, false en mode source.
     var production = (env) ? env.production : false;
 
+    // -- options : nettoyage des répertoires temporaires
+    // ex. webpack --env.clean
+    //      true, suppresion des répertoires dist, jsdoc et samples
+    //      par defaut, false.
+    var clean = (env) ? env.clean : false;
+
     // -- options library
     var leaflet = (env) ? env.leaflet : false;
     var openlayers = (env) ? env.ol : false;
     var itowns = (env) ? env.itowns : false;
 
-    // -- option par defaut OpenLayers
+    // -- option par defaut : OpenLayers
     if (!openlayers && !leaflet && !itowns) {
         openlayers = true;
     }
@@ -134,14 +142,32 @@ module.exports = env => {
             }
           ]
         },
-        plugins : [
+        plugins : []
+        .concat(
+            (clean) ? [
+                /** NETTOYAGE DES REPERTOIRES TEMPORAIRES */
+                new CleanWebpackPlugin([
+                    "dist",
+                    "jsdoc",
+                    "samples",
+                    "tests"
+                ], {
+                  verbose : true
+                })
+            ] : []
+        )
+        .concat([
             /** GESTION DU LOGGER */
             new DefineWebpackPlugin({
                 __PRODUCTION__ : JSON.stringify(production)
             }),
+            /** GENERATION DE LA JSDOC */
+            new JsDocWebPackPlugin({
+                conf : path.join(__dirname, "jsdoc-" + projectName.toLowerCase() + ".json")
+            }),
             /** CSS / IMAGES */
             new ExtractTextWebPackPlugin((production) ? bundleName + ".css" : bundleName + "-src.css")
-        ]
+        ])
         /** MINIFICATION */
         .concat(
             (production) ? [
