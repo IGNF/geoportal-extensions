@@ -14,12 +14,13 @@ var ExtractTextWebPackPlugin = require("extract-text-webpack-plugin");
 var UglifyJsWebPackPlugin = webpack.optimize.UglifyJsPlugin;
 var JsDocWebPackPlugin    = require("jsdoc-webpack-plugin");
 var CleanWebpackPlugin    = require("clean-webpack-plugin");
+var ReplaceWebpackPlugin  = require("replace-bundle-webpack-plugin");
 
 // -- variables globales (par defaut)
 var date    = new Date().toISOString().split("T")[0];
 var pkg     = require(path.join(__dirname, "package.json"));
-var version = pkg.olExtVersion; // par defaut OpenLayers
-var brief   = pkg.olExtName;    // par defaut OpenLayers
+var versionDefault = pkg.olExtVersion;      // par defaut OpenLayers
+var briefDefault   = pkg.olExtName;         // par defaut OpenLayer
 
 module.exports = env => {
 
@@ -55,6 +56,16 @@ module.exports = env => {
         "GpPluginOpenLayers" : (leaflet) ?
             "GpPluginLeaflet" : (itowns) ?
                 "GpPluginItowns" : null;
+
+    var version = (openlayers) ?
+        pkg.olExtVersion : (leaflet) ?
+            pkg.leafletExtVersion : (itowns) ?
+                pkg.itownsExtVersion : versionDefault;
+
+    var brief = (openlayers) ?
+        pkg.olExtName : (leaflet) ?
+            pkg.leafletExtName : (itowns) ?
+                pkg.itownsExtName : briefDefault;
 
     // -- config
     var config = {
@@ -157,6 +168,28 @@ module.exports = env => {
             ] : []
         )
         .concat([
+            /** REPLACEMENT DE VALEURS */
+            new ReplaceWebpackPlugin(
+                [
+                    {
+                        partten : (openlayers) ?
+                            /__GPOLEXTVERSION__/g : (leaflet) ?
+                                /__GPLEAFLETEXTVERSION__/g : (itowns) ?
+                                    /__GPITOWNSEXTVERSION__/g : /__GPVERSION__/g,
+                        /** replacement de la clef __GPVERSION__ par la version du package */
+                        replacement : function () {
+                            return version;
+                        }
+                    },
+                    {
+                        partten : /__GPDATE__/g,
+                        /** replacement de la clef __GPDATE__ par la date du build */
+                        replacement : function () {
+                            return date;
+                        }
+                    }
+                ]
+            ),
             /** GESTION DU LOGGER */
             new DefineWebpackPlugin({
                 __PRODUCTION__ : JSON.stringify(production)
@@ -212,8 +245,8 @@ module.exports = env => {
         ).concat([
             new BannerWebPackPlugin({
                 banner : header(fs.readFileSync(path.join(__dirname, "licences", "licence-ign.tmpl"), "utf8"), {
-                    __BRIEF__ : (openlayers) ? pkg.olExtName : (leaflet) ?  pkg.leafletExtName : (itowns) ? pkg.itownsExtName : brief,
-                    __VERSION__ : (openlayers) ? pkg.olExtVersion : (leaflet) ?  pkg.leafletExtVersion : (itowns) ? pkg.itownsExtVersion : version,
+                    __BRIEF__ : brief,
+                    __VERSION__ : version,
                     __DATE__ : date
                 }),
                 raw : true,

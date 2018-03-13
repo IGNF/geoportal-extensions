@@ -12,6 +12,10 @@ import GlobeViewExtended from "./GlobeViewExtended";
 // Adds the extensions properties in the Gp namespace
 Gp.LayerUtils = LayerUtils ;
 
+// Adds extensions properties in the Gp namespace
+Gp.itownsExtVersion = "__GPITOWNSEXTVERSION__" ;
+Gp.itownsExtDate = "__GPDATE__";
+
 // determines the execution environment l'environnement : browser or not ?
 var env = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : {};
 

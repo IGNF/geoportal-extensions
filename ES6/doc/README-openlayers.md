@@ -22,7 +22,7 @@ NB : to have complete access to this extension functionnalities, you need to pro
 
 ## Geoportal Sources
 
-Sources provided by the Geoportal Extension are additionnal <a href="http://openlayers.org/en/latest/apidoc/ol.source.html" target="_blank">OpenLayers 3 Sources</a> that give simple access to Geoportal data that can then be used to feed <a href="http://openlayers.org/en/latest/apidoc/ol.layer.html" target="_blank">OpenLayers 3 layers</a>.
+Sources provided by the Geoportal Extension are additionnal <a href="http://openlayers.org/en/latest/apidoc/ol.source.html" target="_blank">OpenLayers Sources</a> that give simple access to Geoportal data that can then be used to feed <a href="http://openlayers.org/en/latest/apidoc/ol.layer.html" target="_blank">OpenLayers layers</a>.
 
 
 | Geoportal Source | Description |
@@ -33,7 +33,7 @@ Sources provided by the Geoportal Extension are additionnal <a href="http://open
 
 ## Geoportal Layers
 
-Layers provided by the Geoportal Extension are additionnal <a href="http://openlayers.org/en/latest/apidoc/ol.layer.html" target="_blank">OpenLayers 3 layers</a> already connected to previous [Geoportal Extension sources](#sources) that can be added to an <a href="http://openlayers.org/en/latest/apidoc/ol.Map.html" target="_blank">OpenLayers Map</a> like any other OpenLayers 3 layer.
+Layers provided by the Geoportal Extension are additionnal <a href="http://openlayers.org/en/latest/apidoc/ol.layer.html" target="_blank">OpenLayers layers</a> already connected to previous [Geoportal Extension sources](#sources) that can be added to an <a href="http://openlayers.org/en/latest/apidoc/ol.Map.html" target="_blank">OpenLayers Map</a> like any other OpenLayers layer.
 
 | Geoportal Layer | Description |
 | - | - |
@@ -43,7 +43,7 @@ Layers provided by the Geoportal Extension are additionnal <a href="http://openl
 
 ## Geoportal Controls
 
-Controls provided by the Geoportal Extension are additionnal <a href="http://openlayers.org/en/latest/apidoc/ol.control.html" target="_blank">OpenLayers 3 controls</a> that, when added to an <a href="http://openlayers.org/en/latest/apidoc/ol.Map.html" target="_blank">OpenLayers Map</a>, allows user to interact with it.
+Controls provided by the Geoportal Extension are additionnal <a href="http://openlayers.org/en/latest/apidoc/ol.control.html" target="_blank">OpenLayers controls</a> that, when added to an <a href="http://openlayers.org/en/latest/apidoc/ol.Map.html" target="_blank">OpenLayers Map</a>, allows user to interact with it.
 
 | Geoportal Control | Description |
 | - | - |

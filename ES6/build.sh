@@ -90,34 +90,35 @@ do
      o)
         printTo "#################################"
         printTo "###### OpenLayers bundle ! ######"
-        ol
         clean "openlayers"
+        ol
         ;;
      l)
         printTo "#################################"
         printTo "####### Leaflet bundle ! ########"
-        leaflet
         clean "leaflet"
+        leaflet
         ;;
      i)
         printTo "#############################"
         printTo "###### Itowns bundle ! ######"
+        clean "itowns"
         itowns
         ;;
      I)
         printTo "###################################"
         printTo "###### Mixte Itowns bundle ! ######"
-        mix
         clean "mix"
+        mix
         ;;
      a)
         printTo "#################################"
         printTo "########## ALL bundle ! #########"
+        clean
         ol
         leaflet
         itowns
         mix
-        clean
         ;;
      \?)
         printTo "$OPTARG : option invalide : a(all), o(openlayers), l(leaflet), i(itowns), I(ol/itowns) !"

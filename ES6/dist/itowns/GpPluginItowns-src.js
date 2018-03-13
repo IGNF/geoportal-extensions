@@ -21786,6 +21786,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // Adds the extensions properties in the Gp namespace
 _gp2.default.LayerUtils = _LayerUtils2.default;
 
+// Adds extensions properties in the Gp namespace
+_gp2.default.itownsExtVersion = "2.3.0";
+_gp2.default.itownsExtDate = "2018-03-13";
+
 // determines the execution environment l'environnement : browser or not ?
 var env = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : {};
 

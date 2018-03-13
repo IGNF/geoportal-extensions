@@ -21622,7 +21622,7 @@ var GfiUtils = {
      * Gets HTML content from features array
      *
      * @param {ol.Map} map - map openlayers
-     * @param {Array.<ol.Features>} features - ol3 features Array
+     * @param {Array.<ol.Features>} features - openlayers features Array
      * @returns {HTMLElement} HTML content.
      */
     features2html: function features2html(map, features) {
@@ -22035,18 +22035,18 @@ var logger = _LoggerByDefault2.default.getLogger("extended KML format");
  *
  * INFO
  * only ol.Control is a user-extendable class.
- * Everything else requires integration with the original ol3 source and a new ol.js
+ * Everything else requires integration with the original openlayers source and a new ol.js
  * to be built with your new classes incorporated.
  *
  * SPEC
  * cf. https://developers.google.com/kml/forum/advanced
  *
  * ISSUES
- * cf. https://github.com/openlayers/ol3/issues/4829
- * cf. https://github.com/openlayers/ol3/issues/4460
- * cf. https://github.com/openlayers/ol3/pull/5590
- * cf. https://github.com/openlayers/ol3/issues/5229
- * cf. https://github.com/openlayers/ol3/issues/3371
+ * cf. https://github.com/openlayers/openlayers/issues/4829
+ * cf. https://github.com/openlayers/openlayers/issues/4460
+ * cf. https://github.com/openlayers/openlayers/pull/5590
+ * cf. https://github.com/openlayers/openlayers/issues/5229
+ * cf. https://github.com/openlayers/openlayers/issues/3371
  *
  * @constructor
  * @extends {ol.format.KML}
@@ -23976,10 +23976,10 @@ function SourceWMTS(options) {
         this._metadata = wmtsParams.metadata;
 
         var wmtsSourceOptions = {
-            // tracker extension ol3
+            // tracker extension openlayers
             // FIXME : gp-ext version en mode AMD
             url: _gp2.default.Helper.normalyzeUrl(wmtsParams.url.replace(/(http|https):\/\//, protocol), {
-                "gp-ol3-ext": "__GPOL3EXTVERSION__"
+                "gp-ol-ext": "1.0.0"
             }, false),
             version: wmtsParams.version,
             style: wmtsParams.styles,
@@ -24120,10 +24120,10 @@ function SourceWMS(options) {
         var protocol = ctx ? ctx.location && ctx.location.protocol && ctx.location.protocol.indexOf("https:") === 0 ? "https://" : "http://" : options.ssl ? "https://" : "http://";
 
         var wmsSourceOptions = {
-            // tracker extension ol3
+            // tracker extension openlayers
             // FIXME : gp-ext version en mode AMD
             url: _gp2.default.Helper.normalyzeUrl(wmsParams.url.replace(/(http|https):\/\//, protocol), {
-                "gp-ol3-ext": "__GPOL3EXTVERSION__"
+                "gp-ol-ext": "1.0.0"
             }, false),
             params: {
                 SERVICE: "WMS",
@@ -25546,11 +25546,9 @@ var _MeasureAzimuth2 = _interopRequireDefault(_MeasureAzimuth);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// FIXME suprimer les réf. à ol3 !
-
 // Rajout des propriétés de l'extension dans le namespace Gp
-_gp2.default.ol3extVersion = "__GPOL3EXTVERSION__";
-_gp2.default.ol3extDate = "__GPDATE__";
+_gp2.default.olExtVersion = "1.0.0";
+_gp2.default.olExtDate = "2018-03-13";
 _gp2.default.olUtils = _Utils2.default;
 
 // Classes utilitaires
@@ -25566,7 +25564,7 @@ _ol2.default.source.WMTSExtended = _WMTS2.default;
 // Surcharge sur les functions ol/proj4 par défaut
 _CRS2.default.overload();
 
-// Rajout des propriétés ol3 dans le namespace ol
+// Rajout des propriétés dans le namespace ol
 _ol2.default.source.GeoportalWMTS = _SourceWMTS2.default;
 _ol2.default.source.GeoportalWMS = _SourceWMS2.default;
 _ol2.default.layer.GeoportalWMTS = _LayerWMTS2.default;
@@ -52386,7 +52384,7 @@ LayerImport.prototype._getWMSLayerGetMapUrl = function () {
 /**
  * this method is called by this._addGetCapWMSLayer
  * and gets a projection both available for a given layer and already defined in proj4js (ol.proj)
- * (ol3 raster reprojection will be then able to reproject layer in map projection)
+ * (openlayers raster reprojection will be then able to reproject layer in map projection)
  *
  * @param {Object} layerInfo - layer information from getCapabilities response
  * @param {String} mapProjCode - map projection code (e.g. "EPSG:4326")

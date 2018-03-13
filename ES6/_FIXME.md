@@ -25,15 +25,6 @@ Fonctionnement de la variable globale Gp en mode AMD est surprenante...
 Itowns n'est plus une dependance des modules ES6 !
 On choisie de faire appel à la variable globale itowns !
 
-## Generation de la JSDOC
-
-**???**
-conflit sur la version du module "fs-extra" !?
-
-la résolution des dependances du module jsdoc-webpack-plugin n'est pas realisée
-correctement, la version "fs-extra@0.30.0" du plugin semble être en conflit
-avec "fs-extra@2.0.0" d'openlayers !?
-
 ## BREAKDOWN
 
 La modification des réf. au mot clef "ol3" risque de causer des effets de bord.
@@ -49,3 +40,15 @@ Le nom du bundle en mode mixte :
 
 Pour la jsdoc sur la gh-pages, on modifie aussi le nom du répertoire :
 > current/jsdoc/ol3 -> current/jsdoc/openlayers
+
+La réf. à la documentation sur l'autoconf fonctionne t elle ?
+> http://ignf.github.io/evolution-apigeoportail/ol3/ol3-autoconf.html
+
+**TODO sur le projet Evolution**
+> remplacer les urls ci dessus par une autre sans les réf. à ol3 !
+
+Le "tracker extension openlayers" risque de modifier les statistiques de l'API !!!
+> gp-ol3-ext -> gp-ol-ext
+
+**TODO sur le projet statistiques**
+> ajouter dans le regex la recherche de "gp-ol-ext" !

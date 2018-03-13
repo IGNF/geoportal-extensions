@@ -1458,7 +1458,7 @@ LayerImport.prototype._getWMSLayerGetMapUrl = function() {
 /**
  * this method is called by this._addGetCapWMSLayer
  * and gets a projection both available for a given layer and already defined in proj4js (ol.proj)
- * (ol3 raster reprojection will be then able to reproject layer in map projection)
+ * (openlayers raster reprojection will be then able to reproject layer in map projection)
  *
  * @param {Object} layerInfo - layer information from getCapabilities response
  * @param {String} mapProjCode - map projection code (e.g. "EPSG:4326")

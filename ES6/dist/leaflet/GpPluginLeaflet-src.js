@@ -28158,8 +28158,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // var L = scope.L || {};
 
 // Rajout des propriétés de l'extension dans le namespace Gp
-_gp2.default.leafletExtVersion = "__GPLEAFLETEXTVERSION__";
-_gp2.default.leafletExtDate = "__GPDATE__";
+_gp2.default.leafletExtVersion = "1.0.0";
+_gp2.default.leafletExtDate = "2018-03-13";
 
 // Classes utilitaires
 _gp2.default.Register = _Register2.default;
@@ -52143,7 +52143,7 @@ var WMS = _leaflet2.default.TileLayer.WMS.extend( /** @lends WMS.prototype */{
     // tracker extension leaflet
     // FIXME : gp-ext version en mode AMD
     _gp2.default.Helper.normalyzeUrl(url, {
-      "gp-leaflet-ext": "__GPLEAFLETEXTVERSION__"
+      "gp-leaflet-ext": "1.0.0"
     }, false), settings);
 
     // sauvegarde
@@ -52431,7 +52431,7 @@ var WMTS = _leaflet2.default.TileLayer.extend( /** @lends WMTS.prototype */{
         // tracker extension leaflet
         // FIXME : gp-ext version en mode AMD
         _gp2.default.Helper.normalyzeUrl(url, {
-            "gp-leaflet-ext": "__GPLEAFLETEXTVERSION__"
+            "gp-leaflet-ext": "1.0.0"
         }, false), options.paramsNative);
 
         // sauvegarde des originators
