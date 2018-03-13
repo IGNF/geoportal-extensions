@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 1.0.0&2.3.0
- * @date 2018-03-12
+ * @date 2018-03-13
  *
  */
 
@@ -20237,6 +20237,14 @@ GlobeViewExtended.prototype.lookAt = function (target) {
  * Notifies the scene it needs to be updated
  */
 GlobeViewExtended.prototype.notifyChange = function () {
+    this.getGlobeView().notifyChange(true);
+};
+
+/**
+* Resizes itowns
+*/
+GlobeViewExtended.prototype.resize = function (width, height) {
+    this.getGlobeView().mainLoop.gfxEngine.onWindowResize(width, height);
     this.getGlobeView().notifyChange(true);
 };
 
