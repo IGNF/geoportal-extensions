@@ -12,18 +12,18 @@ var logger = Logger.getLogger("extended KML format");
  *
  * INFO
  * only ol.Control is a user-extendable class.
- * Everything else requires integration with the original ol3 source and a new ol.js
+ * Everything else requires integration with the original openlayers source and a new ol.js
  * to be built with your new classes incorporated.
  *
  * SPEC
  * cf. https://developers.google.com/kml/forum/advanced
  *
  * ISSUES
- * cf. https://github.com/openlayers/ol3/issues/4829
- * cf. https://github.com/openlayers/ol3/issues/4460
- * cf. https://github.com/openlayers/ol3/pull/5590
- * cf. https://github.com/openlayers/ol3/issues/5229
- * cf. https://github.com/openlayers/ol3/issues/3371
+ * cf. https://github.com/openlayers/openlayers/issues/4829
+ * cf. https://github.com/openlayers/openlayers/issues/4460
+ * cf. https://github.com/openlayers/openlayers/pull/5590
+ * cf. https://github.com/openlayers/openlayers/issues/5229
+ * cf. https://github.com/openlayers/openlayers/issues/3371
  *
  * @constructor
  * @extends {ol.format.KML}

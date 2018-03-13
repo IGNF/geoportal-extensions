@@ -1,0 +1,256 @@
+{
+    "id": "ol_backstop",
+    "viewports": [
+      {
+        "label": "phone",
+        "width": 320,
+        "height": 480
+      },
+      {
+        "label": "tablet",
+        "width": 1024,
+        "height": 768
+      }
+    ],
+    "onBeforeScript": "chromy/onBefore.js",
+    "onReadyScript": "chromy/onReady.js",
+    "delay": 0,
+    "scenarios": [
+      {
+        "label": "MousePosition : default",
+        "cookiePath": "backstop_data/ol/engine_scripts/cookies.json",
+        "url": "ol/mouseposition.html",
+        "referenceUrl": "",
+        "readyEvent": "",
+        "readySelector": "",
+        "delay": 100,
+        "hideSelectors": [],
+        "removeSelectors": [],
+        "hoverSelector": "",
+        "clickSelector": "label[id^=GPshowMousePositionPicto]",
+        "postInteractionWait": 2000,
+        "selectors": [],
+        "selectorExpansion": true,
+        "misMatchThreshold" : 0.1,
+        "requireSameDimensions": true
+      },
+      {
+        "label": "MousePosition : show settings",
+        "url": "ol/mouseposition.html",
+        "clickSelector": "label[id^=GPshowMousePositionSettingsPicto]",
+        "selectors": [
+          "div[id^=GPmousePosition]"
+        ]
+      },
+      {
+        "label": "LayerSwitcher : default",
+        "url": "ol/layerswitcher.html",
+        "clickSelector": "label[id^=GPshowLayersListPicto]",
+        "selectors": [
+          "div[id^=GPlayerSwitcher]"
+        ]
+      },
+      {
+        "label": "LayerSwitcher : add a layer",
+        "url": "http://localhost:8087/test_rendering/ol/interactions/layerswitcher.html",
+        "clickSelector": "#addLayer",
+        "selectors": [
+          "div[id=map]"
+        ],
+        "postInteractionWait": 1000
+      },
+      {
+        "label": "LayerSwitcher : remove a layer",
+        "url": "http://localhost:8087/test_rendering/ol/interactions/layerswitcher.html",
+        "clickSelector": "#removeLayer",
+        "selectors": [
+          "div[id=map]"
+        ],
+        "postInteractionWait": 1000
+      },
+      {
+        "label": "Drawing : point",
+        "url": "ol/drawing.html",
+        "clickSelector": "#drawPoint",
+        "selectors": [
+          "div[id^=GPdrawing]"
+        ]
+      },
+      {
+        "label": "Drawing : line",
+        "url": "ol/drawing.html",
+        "clickSelector": "#drawLine",
+        "selectors": [
+          "div[id^=GPdrawing]"
+        ]
+      },
+      {
+        "label": "Drawing : polygon",
+        "url": "ol/drawing.html",
+        "clickSelector": "#drawPolygon",
+        "selectors": [
+          "div[id^=GPdrawing]"
+        ]
+      },
+      {
+        "label": "Drawing : text",
+        "url": "ol/drawing.html",
+        "clickSelector": "#drawText",
+        "selectors": [
+          "div[id^=GPdrawing]"
+        ]
+      },
+      {
+        "label": "Drawing : edit",
+        "url": "ol/drawing.html",
+        "clickSelector": "#edit",
+        "selectors": [
+          "div[id^=GPdrawing]"
+        ]
+      },
+      {
+        "label": "Drawing : display",
+        "url": "ol/drawing.html",
+        "clickSelector": "#display",
+        "selectors": [
+          "div[id^=GPdrawing]"
+        ]
+      },
+      {
+        "label": "Drawing : tooltip",
+        "url": "ol/drawing.html",
+        "clickSelector": "#tooltip",
+        "selectors": [
+          "div[id^=GPdrawing]"
+        ]
+      },
+      {
+        "label": "Drawing : remove",
+        "url": "ol/drawing.html",
+        "clickSelector": "#remove",
+        "selectors": [
+          "div[id^=GPdrawing]"
+        ]
+      },
+      {
+        "label": "Measure (DOM): area",
+        "url": "ol/measurearea.html",
+        "clickSelector": "button[id^=GPtoolbox-measure-button]",
+        "selectors": [
+          "div[id=map]"
+        ]
+      },
+      {
+        "label": "Measure (DOM) : length",
+        "url": "ol/measurelength.html",
+        "clickSelector": "button[id^=GPtoolbox-measure-button]",
+        "selectors": [
+          "div[id=map]"
+        ]
+      },
+      {
+        "label": "Measure (DOM) : azimuth",
+        "url": "ol/measureazimuth.html",
+        "clickSelector": "button[id^=GPtoolbox-measure-button]",
+        "selectors": [
+          "div[id=map]"
+        ]
+      },
+      {
+        "label": "Isochrone/distance (DOM) : default",
+        "url": "ol/iso.html",
+        "clickSelector": "span[id^=GPshowIsochronOpen-]"
+      },
+      {
+        "label": "Isochrone (interaction) : Voiture",
+        "url": "http://localhost:8087/test_rendering/ol/interactions/iso.html",
+        "clickSelector": "button[id=computeIsochrone]",
+        "delay": 2000,
+        "postInteractionWait": 5000
+      },
+      {
+        "label": "Isodistance (interaction) : Pieton",
+        "url": "http://localhost:8087/test_rendering/ol/interactions/iso.html",
+        "clickSelector": "button[id=computeIsodistance]",
+        "delay": 2000,
+        "postInteractionWait": 5000
+      },
+      {
+        "label": "Route (DOM) : default",
+        "url": "ol/route.html",
+        "clickSelector": "span[id^=GPshowRouteOpen-]"
+      },
+      {
+        "label": "Route (interaction) : Voiture - plus rapide",
+        "url": "http://localhost:8087/test_rendering/ol/interactions/route.html",
+        "clickSelector": "button[id=computeFastest]",
+        "delay": 2000,
+        "postInteractionWait": 5000
+      },
+      {
+        "label": "Route (interaction) : Pieton - plus court",
+        "url": "http://localhost:8087/test_rendering/ol/interactions/route.html",
+        "clickSelector": "button[id=computeShortest]",
+        "delay": 2000,
+        "postInteractionWait": 5000
+      },
+      {
+        "label": "SearchEngine (DOM) : default",
+        "url": "ol/searchengine_1.html",
+        "clickSelector": "span[id^=GPshowSearchEngineOpen-]"
+      },
+      {
+        "label": "SearchEngine (DOM) : advanced search",
+        "url": "ol/searchengine.html",
+        "clickSelector": "span[id^=GPshowAdvancedSearchOpen-]"
+      },
+      {
+        "label": "SearchEngine (interaction) : interaction search autocomplete",
+        "url": "http://localhost:8087/test_rendering/ol/interactions/searchengine.html",
+        "clickSelector": "button[id=autoCompleteLocation]",
+        "delay": 2000,
+        "postInteractionWait": 5000
+      },
+      {
+        "label": "SearchEngine (interaction) : interaction search center",
+        "url": "http://localhost:8087/test_rendering/ol/interactions/searchengine.html",
+        "clickSelector": "button[id=searchLocation]",
+        "delay": 2000,
+        "postInteractionWait": 5000
+      },
+      {
+        "label": "Attributions (interaction) : update originators",
+        "url": "http://localhost:8087/test_rendering/ol/interactions/attributions.html",
+        "clickSelector": "button[id=zoomIn]",
+        "postInteractionWait": 1000
+      },
+      {
+        "label": "ElevationPath (interaction) : interaction alti profil",
+        "url": "http://localhost:8087/test_rendering/ol/interactions/elevationpath.html",
+        "clickSelector": "button[id=computeProfil]",
+        "postInteractionWait": 1000
+      },
+      {
+        "label": "LayerImport (DOM) : default",
+        "url": "ol/layerimport.html",
+        "clickSelector": "label[id^=GPshowImportPicto-]",
+        "selectors" : [
+          "div[id^=GPimport]"
+        ]
+      }
+    ],
+    "paths": {
+      "bitmaps_reference": "backstop_data/ol/bitmaps_reference",
+      "bitmaps_test": "backstop_data/ol/bitmaps_test",
+      "engine_scripts": "backstop_data/ol/engine_scripts",
+      "html_report": "backstop_data/ol/html_report",
+      "ci_report": "backstop_data/ol/ci_report"
+    },
+    "report": ["browser"],
+    "engine": "chrome",
+    "engineFlags": [],
+    "asyncCaptureLimit": 5,
+    "asyncCompareLimit": 50,
+    "debug": false,
+    "debugWindow": false
+  }

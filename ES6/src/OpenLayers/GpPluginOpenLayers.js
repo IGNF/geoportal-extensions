@@ -28,11 +28,9 @@ import MeasureLength from "./Controls/Measures/MeasureLength";
 import MeasureArea from "./Controls/Measures/MeasureArea";
 import MeasureAzimuth from "./Controls/Measures/MeasureAzimuth";
 
-// FIXME suprimer les réf. à ol3 !
-
 // Rajout des propriétés de l'extension dans le namespace Gp
-Gp.ol3extVersion = "__GPOL3EXTVERSION__";
-Gp.ol3extDate = "__GPDATE__";
+Gp.olExtVersion = "__GPOLEXTVERSION__";
+Gp.olExtDate = "__GPDATE__";
 Gp.olUtils = Utils;
 
 // Classes utilitaires
@@ -48,7 +46,7 @@ ol.source.WMTSExtended = WMTS;
 // Surcharge sur les functions ol/proj4 par défaut
 CRS.overload();
 
-// Rajout des propriétés ol3 dans le namespace ol
+// Rajout des propriétés dans le namespace ol
 ol.source.GeoportalWMTS = SourceWMTS;
 ol.source.GeoportalWMS = SourceWMS;
 ol.layer.GeoportalWMTS = LayerWMTS;

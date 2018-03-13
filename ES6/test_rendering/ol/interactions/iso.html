@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <!-- Library openlayers -->
+  <script src="../../../node_modules/openlayers/dist/ol-debug.js"></script>
+
+  <!-- Plugin openlayers IGN -->
+  <link rel="stylesheet" href="../../../dist/openlayers/GpPluginOpenLayers.css" />
+  <script data-url="./../resources/AutoConf.js" src="../../../dist/openlayers/GpPluginOpenLayers-src.js"></script>
+
+</head>
+<body>
+        <!-- map -->
+        <div id="map" style="height: 600px;"></div>
+        <button id="computeIsochrone"> Calcul isochrone</button>
+        <button id="computeIsodistance"> Calcul isodistance</button>
+        
+    <!-- code -->
+    <script>
+                var map;
+                var iso;
+                window.onload = function () {
+                    // on cache l'image de chargement du Géoportail.
+                    document.getElementById("map").style.backgroundImage = "none";
+
+                    // Création de la map
+                    map = new ol.Map({
+                        target : "map",
+                        view : new ol.View({
+                            center : [288074.8449901076, 6247982.515792289],
+                            zoom : 6
+                        })
+                    });
+
+                    iso = new ol.control.Isocurve();
+                    map.addControl(iso);
+
+                    var computeIsochrone = function() {
+                        var isoRequestOptions = {
+                            position : {
+                                "x": 2.29424,
+                                "y": 48.858264
+                                },
+                            graph : "Voiture",
+                            exclusions : [],
+                            method : "time",
+                            smoothing : true,
+                            timeOut : 0,
+                            protocol : "XHR",
+                            time : 600,
+                                /** callback onSuccess */
+                                onSuccess : function (results) {
+                                    logger.log(results);
+                                    if (results) {
+                                        iso._drawIsoResults(results);
+                                    }
+                                },
+                                /** callback onFailure */
+                                onFailure : function (error) {
+                                    // FIXME mise à jour du controle mais le service ne repond pas en 200 !?
+                                    iso._hideWaitingContainer();
+                                    console.log(error.message);
+                                }
+                        };
+
+                     iso._requestIsoCurve(isoRequestOptions);
+                    }
+
+                    var computeIsodistance = function() {
+                        var isoRequestOptions = {
+                            position : {
+                                "x": 2.29424,
+                                "y": 48.858264
+                                },
+                            graph : "Pieton",
+                            exclusions : [],
+                            method : "distance",
+                            smoothing : true,
+                            timeOut : 0,
+                            protocol : "XHR",
+                            distance : 500,
+                                /** callback onSuccess */
+                                onSuccess : function (results) {
+                                    logger.log(results);
+                                    if (results) {
+                                        iso._drawIsoResults(results);
+                                    }
+                                },
+                                /** callback onFailure */
+                                onFailure : function (error) {
+                                    // FIXME mise à jour du controle mais le service ne repond pas en 200 !?
+                                    iso._hideWaitingContainer();
+                                    console.log(error.message);
+                                }
+                        };
+
+                     iso._requestIsoCurve(isoRequestOptions);
+                    }
+                         
+                    var logger = {};
+                    logger.log = function() {
+                        console.log("");
+                    };
+
+                    document.getElementById("computeIsochrone").onclick = function() {
+                        computeIsochrone();
+                    }
+
+                    document.getElementById("computeIsodistance").onclick = function() {
+                        computeIsodistance();
+                    }
+                };
+            </script>
+
+</body>
+</html>

@@ -11,6 +11,8 @@ var DefineWebpackPlugin   = webpack.DefinePlugin;
 var ExtractTextWebPackPlugin = require("extract-text-webpack-plugin");
 var BannerWebPackPlugin   = webpack.BannerPlugin;
 var UglifyJsWebPackPlugin = webpack.optimize.UglifyJsPlugin;
+var ReplaceWebpackPlugin  = require("replace-bundle-webpack-plugin");
+var JsDocWebPackPlugin    = require("jsdoc-webpack-plugin");
 
 // -- variables
 var date = new Date().toISOString().split("T")[0];
@@ -112,9 +114,32 @@ module.exports = env => {
           ]
         },
         plugins : [
+            /** REPLACEMENT DE VALEURS */
+            new ReplaceWebpackPlugin(
+                [
+                    {
+                        partten : /__GPOLEXTVERSION__/g,
+                        /** replacement de la clef __GPVERSION__ par la version du package */
+                        replacement : function () {
+                            return pkg.olExtVersion;
+                        }
+                    },
+                    {
+                        partten : /__GPDATE__/g,
+                        /** replacement de la clef __GPDATE__ par la date du build */
+                        replacement : function () {
+                            return date;
+                        }
+                    }
+                ]
+            ),
             /** GESTION DU LOGGER */
             new DefineWebpackPlugin({
                 __PRODUCTION__ : JSON.stringify(production)
+            }),
+            /** GENERATION DE LA JSDOC */
+            new JsDocWebPackPlugin({
+                conf : path.join(__dirname, "jsdoc-openlayers.json")
             }),
             /** CSS / IMAGES */
             new ExtractTextWebPackPlugin((production) ? "GpPluginOpenLayers.css" : "GpPluginOpenLayers-src.css")

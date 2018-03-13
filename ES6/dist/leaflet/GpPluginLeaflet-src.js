@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 1.0.0
- * @date 2018-03-09
+ * @date 2018-03-13
  *
  */
 
@@ -92,10 +92,10 @@
 
 /*!
  * @overview es6-promise - a tiny implementation of Promises/A+.
- * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and cont  ributors (Conversion to ES6 API by Jake Archibald)
+ * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors (Conversion to ES6 API by Jake Archibald)
  * @license   Licensed under MIT license
- *            See https://raw.githubusercontent.com/jakearchibald/es6-promise/  master/LICENSE
- * @version   3.0.2
+ *            See https://raw.githubusercontent.com/stefanpenner/es6-promise/master/LICENSE
+ * @version   v4.2.4
  */
 
 /*!
@@ -258,7 +258,7 @@ exports.default = LoggerByDefault;
  * copyright IGN
  * @author IGN
  * @version 2.0.0
- * @date 2018-03-05
+ * @date 2018-03-13
  *
  */
 /*!
@@ -5654,7 +5654,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 var Gp = {
     servicesVersion : "2.0.0" ,
-    servicesDate : "2018-03-05",
+    servicesDate : "2018-03-13",
     /**
      * Methode pour rajouter une classe / objet au namespace global.
      *
@@ -28158,8 +28158,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // var L = scope.L || {};
 
 // Rajout des propriétés de l'extension dans le namespace Gp
-_gp2.default.leafletExtVersion = "__GPLEAFLETEXTVERSION__";
-_gp2.default.leafletExtDate = "__GPDATE__";
+_gp2.default.leafletExtVersion = "1.0.0";
+_gp2.default.leafletExtDate = "2018-03-13";
 
 // Classes utilitaires
 _gp2.default.Register = _Register2.default;
@@ -52143,7 +52143,7 @@ var WMS = _leaflet2.default.TileLayer.WMS.extend( /** @lends WMS.prototype */{
     // tracker extension leaflet
     // FIXME : gp-ext version en mode AMD
     _gp2.default.Helper.normalyzeUrl(url, {
-      "gp-leaflet-ext": "__GPLEAFLETEXTVERSION__"
+      "gp-leaflet-ext": "1.0.0"
     }, false), settings);
 
     // sauvegarde
@@ -52431,7 +52431,7 @@ var WMTS = _leaflet2.default.TileLayer.extend( /** @lends WMTS.prototype */{
         // tracker extension leaflet
         // FIXME : gp-ext version en mode AMD
         _gp2.default.Helper.normalyzeUrl(url, {
-            "gp-leaflet-ext": "__GPLEAFLETEXTVERSION__"
+            "gp-leaflet-ext": "1.0.0"
         }, false), options.paramsNative);
 
         // sauvegarde des originators

@@ -57,10 +57,10 @@ function SourceWMS(options) {
             (options.ssl ? "https://" : "http://");
 
         var wmsSourceOptions = {
-            // tracker extension ol3
+            // tracker extension openlayers
             // FIXME : gp-ext version en mode AMD
             url: Gp.Helper.normalyzeUrl(wmsParams.url.replace(/(http|https):\/\//, protocol), {
-                "gp-ol3-ext": "__GPOL3EXTVERSION__"
+                "gp-ol-ext": "__GPOLEXTVERSION__"
             }, false),
             params: {
                 SERVICE: "WMS",

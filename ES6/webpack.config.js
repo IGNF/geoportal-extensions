@@ -12,12 +12,15 @@ var DefineWebpackPlugin   = webpack.DefinePlugin;
 var BannerWebPackPlugin   = webpack.BannerPlugin;
 var ExtractTextWebPackPlugin = require("extract-text-webpack-plugin");
 var UglifyJsWebPackPlugin = webpack.optimize.UglifyJsPlugin;
+var JsDocWebPackPlugin    = require("jsdoc-webpack-plugin");
+var CleanWebpackPlugin    = require("clean-webpack-plugin");
+var ReplaceWebpackPlugin  = require("replace-bundle-webpack-plugin");
 
 // -- variables globales (par defaut)
 var date    = new Date().toISOString().split("T")[0];
 var pkg     = require(path.join(__dirname, "package.json"));
-var version = pkg.olExtVersion; // par defaut OpenLayers
-var brief   = pkg.olExtName;    // par defaut OpenLayers
+var versionDefault = pkg.olExtVersion;      // par defaut OpenLayers
+var briefDefault   = pkg.olExtName;         // par defaut OpenLayer
 
 module.exports = env => {
 
@@ -27,12 +30,18 @@ module.exports = env => {
     //      sinon, par defaut, false en mode source.
     var production = (env) ? env.production : false;
 
+    // -- options : nettoyage des répertoires temporaires
+    // ex. webpack --env.clean
+    //      true, suppresion des répertoires dist, jsdoc et samples
+    //      par defaut, false.
+    var clean = (env) ? env.clean : false;
+
     // -- options library
     var leaflet = (env) ? env.leaflet : false;
     var openlayers = (env) ? env.ol : false;
     var itowns = (env) ? env.itowns : false;
 
-    // -- option par defaut OpenLayers
+    // -- option par defaut : OpenLayers
     if (!openlayers && !leaflet && !itowns) {
         openlayers = true;
     }
@@ -47,6 +56,16 @@ module.exports = env => {
         "GpPluginOpenLayers" : (leaflet) ?
             "GpPluginLeaflet" : (itowns) ?
                 "GpPluginItowns" : null;
+
+    var version = (openlayers) ?
+        pkg.olExtVersion : (leaflet) ?
+            pkg.leafletExtVersion : (itowns) ?
+                pkg.itownsExtVersion : versionDefault;
+
+    var brief = (openlayers) ?
+        pkg.olExtName : (leaflet) ?
+            pkg.leafletExtName : (itowns) ?
+                pkg.itownsExtName : briefDefault;
 
     // -- config
     var config = {
@@ -134,14 +153,54 @@ module.exports = env => {
             }
           ]
         },
-        plugins : [
+        plugins : []
+        .concat(
+            (clean) ? [
+                /** NETTOYAGE DES REPERTOIRES TEMPORAIRES */
+                new CleanWebpackPlugin([
+                    "dist",
+                    "jsdoc",
+                    "samples",
+                    "tests"
+                ], {
+                  verbose : true
+                })
+            ] : []
+        )
+        .concat([
+            /** REPLACEMENT DE VALEURS */
+            new ReplaceWebpackPlugin(
+                [
+                    {
+                        partten : (openlayers) ?
+                            /__GPOLEXTVERSION__/g : (leaflet) ?
+                                /__GPLEAFLETEXTVERSION__/g : (itowns) ?
+                                    /__GPITOWNSEXTVERSION__/g : /__GPVERSION__/g,
+                        /** replacement de la clef __GPVERSION__ par la version du package */
+                        replacement : function () {
+                            return version;
+                        }
+                    },
+                    {
+                        partten : /__GPDATE__/g,
+                        /** replacement de la clef __GPDATE__ par la date du build */
+                        replacement : function () {
+                            return date;
+                        }
+                    }
+                ]
+            ),
             /** GESTION DU LOGGER */
             new DefineWebpackPlugin({
                 __PRODUCTION__ : JSON.stringify(production)
             }),
+            /** GENERATION DE LA JSDOC */
+            new JsDocWebPackPlugin({
+                conf : path.join(__dirname, "jsdoc-" + projectName.toLowerCase() + ".json")
+            }),
             /** CSS / IMAGES */
             new ExtractTextWebPackPlugin((production) ? bundleName + ".css" : bundleName + "-src.css")
-        ]
+        ])
         /** MINIFICATION */
         .concat(
             (production) ? [
@@ -186,8 +245,8 @@ module.exports = env => {
         ).concat([
             new BannerWebPackPlugin({
                 banner : header(fs.readFileSync(path.join(__dirname, "licences", "licence-ign.tmpl"), "utf8"), {
-                    __BRIEF__ : (openlayers) ? pkg.olExtName : (leaflet) ?  pkg.leafletExtName : (itowns) ? pkg.itownsExtName : brief,
-                    __VERSION__ : (openlayers) ? pkg.olExtVersion : (leaflet) ?  pkg.leafletExtVersion : (itowns) ? pkg.itownsExtVersion : version,
+                    __BRIEF__ : brief,
+                    __VERSION__ : version,
                     __DATE__ : date
                 }),
                 raw : true,

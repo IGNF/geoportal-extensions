@@ -161,7 +161,7 @@ var GfiUtils = {
      * Gets HTML content from features array
      *
      * @param {ol.Map} map - map openlayers
-     * @param {Array.<ol.Features>} features - ol3 features Array
+     * @param {Array.<ol.Features>} features - openlayers features Array
      * @returns {HTMLElement} HTML content.
      */
     features2html: function(map, features) {

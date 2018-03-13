@@ -68,10 +68,10 @@ function SourceWMTS(options) {
         this._metadata = wmtsParams.metadata;
 
         var wmtsSourceOptions = {
-            // tracker extension ol3
+            // tracker extension openlayers
             // FIXME : gp-ext version en mode AMD
             url: Gp.Helper.normalyzeUrl(wmtsParams.url.replace(/(http|https):\/\//, protocol), {
-                "gp-ol3-ext": "__GPOL3EXTVERSION__"
+                "gp-ol-ext": "__GPOLEXTVERSION__"
             }, false),
             version: wmtsParams.version,
             style: wmtsParams.styles,

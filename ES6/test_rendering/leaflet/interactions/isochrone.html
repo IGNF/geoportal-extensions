@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <meta charset="UTF-8">
+  <!-- Library Leaflet -->
+  <link rel="stylesheet" href="../../../node_modules/leaflet/dist/leaflet.css" />
+  <script src="../../../node_modules/leaflet/dist/leaflet-src.js"></script>
+
+  <!-- Plugin leaflet IGN -->
+  <link rel="stylesheet" href="../../../dist/leaflet/GpPluginLeaflet-src.css" />
+  <script src="../../../dist/leaflet/GpPluginLeaflet-src.js"></script>
+
+</head>
+<body>
+    <!-- code -->
+    <script>
+
+      var iso;
+
+          window.onload = function () {
+
+              var map  = L.map('map', {
+                zoom : 13,
+                center : L.latLng(49, 3)
+              });
+
+              // map.addLayer(wmts);
+              iso = L.geoportalControl.Isocurve({
+                apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
+                collapsed : true
+              });
+              map.addControl(iso);
+
+              document.getElementById("computeTime").onclick = function(e) {
+                iso.compute(L.latLng(49, 3), "0.32", {
+                  direction : "arrival",
+                  method : "time",
+                  transport : "Pieton",
+                  exclusions : []
+                });
+              }
+              document.getElementById("computeDistance").onclick = function(e) {
+                iso.compute(L.latLng(49, 3), "1.59", {
+                  method : "distance",
+                  transport : "Voiture",
+                  exclusions : []
+                });
+              }
+        }
+    </script>
+
+    <!-- map -->
+    <div id="map" style="height: 400px;"></div>
+    <button type="button" id="computeTime">Calcul Temps</button>
+    <button type="button" id="computeDistance">Calcul Distance</button>
+</body>
+</html>
