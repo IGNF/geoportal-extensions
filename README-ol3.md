@@ -123,7 +123,7 @@ Une fois la clef obtenue, vous pouvez paramétrer l'utilisation de l'extension a
 <script data-key="VOTRE-CLEF" src="chemin/vers/GpPluginOl3.js"></script>
 ```
 
-Votre utilisation des fonctionnalités de l'extension Géoportail sera alors simplement conditionnée à la réception de l'événement onload de la page web, comme sur l'exemple suivant :
+Votre utilisation des fonctionnalités de l'extension Géoportail sera alors simplement conditionnée par la réception de l'événement onload de la page web, comme sur l'exemple suivant :
 
 ``` html
 <html>
@@ -178,14 +178,20 @@ Vous pouvez améliorer le temps de chargement de votre page en mettant en cache 
 
 Enregistrez ce fichier sur votre plateforme et paramétrez l'extension Géoportail de la manière suivante (selon les méthodes citées précédemment) :
 
-**Méthode 1** : Utilisez l'attribut *data-url* de la balise script chargeant l'extension pour pointer vers votre fichier :
+**Méthode 1** : Utilisez l'attribut "data-url" de la balise **script** chargeant l'extension pour pointer vers votre fichier :
+
+``` html
+<script data-url="chemin/vers/autoconf.json" src="chemin/vers/GpPluginOl3.js"></script>
+```
+
+Votre utilisation des fonctionnalités de l'extension Géoportail sera alors simplement conditionnée par la réception de l'événement onload de la page web, comme sur l'exemple suivant :
 
 ``` html
 <html>
     <head>
         <!-- Library OpenLayers -->
         ...
-        <script src="GpPluginOl3.js" data-url="chemin/vers/autoconf.json"></script>
+        <script data-url="chemin/vers/autoconf.json" src="chemin/vers/GpPluginOl3.js"></script>
     </head>
     <body>
         <script>
@@ -198,7 +204,7 @@ Enregistrez ce fichier sur votre plateforme et paramétrez l'extension Géoporta
 ```
 
 
-**Méthode 2** : Utilisez le paramètre *serverUrl* de la fonction Gp.Services.getConfig() pour pointer vers votre fichier :
+**Méthode 2** : Utilisez le paramètre *serverUrl* de la fonction Gp.Services.getConfig() pour pointer vers votre fichier, ainsi que le paramètre *callbackSuffix*, de la manière suivante :
 
 ``` html
 <html>
@@ -208,6 +214,7 @@ Enregistrez ce fichier sur votre plateforme et paramétrez l'extension Géoporta
             window.onload = function () {
                 Gp.Services.getConfig({
                     serverUrl: 'chemin/vers/autoconf.json',
+                    callbackSuffix : '',
                     onSuccess: function (response) {
                         // votre utilisation de l'extension Géoportail pour OpenLayers
                     }
@@ -1099,4 +1106,3 @@ map.addControl(getfeatureinfo);
 ```
 
 **Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/vg6dz7bn/embedded/result,js,html,css/)
-
