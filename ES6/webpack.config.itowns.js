@@ -5,14 +5,14 @@ var fs      = require("fs");
 var path    = require("path");
 var webpack = require("webpack");
 var header  = require("string-template");
+var hbsLayouts = require("handlebars-layouts");
 
 // -- plugins
 var DefineWebpackPlugin   = webpack.DefinePlugin;
 var ExtractTextWebPackPlugin = require("extract-text-webpack-plugin");
 var BannerWebPackPlugin   = webpack.BannerPlugin;
 var UglifyJsWebPackPlugin = webpack.optimize.UglifyJsPlugin;
-const hbsLayouts = require("handlebars-layouts");
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+var HtmlWebpackPlugin     = require('html-webpack-plugin');
 var ReplaceWebpackPlugin  = require("replace-bundle-webpack-plugin");
 var JsDocWebPackPlugin    = require("jsdoc-webpack-plugin");
 
@@ -20,9 +20,8 @@ var JsDocWebPackPlugin    = require("jsdoc-webpack-plugin");
 var date = new Date().toISOString().split("T")[0];
 var pkg  = require(path.join(__dirname, "package.json"));
 
-
 // -- to generate dynamicaly html sample files
-var concatHtmlWebpackPlugins = function(dirSource, dirTarget, result = []) {
+var concatHtmlWebpackPlugins = function (dirSource, dirTarget, result = []) {
     fs.readdirSync(dirSource).forEach((file) => {
         const fPath = path.resolve(dirSource, file);
 
@@ -31,14 +30,13 @@ var concatHtmlWebpackPlugins = function(dirSource, dirTarget, result = []) {
         }
         result.push(
             new HtmlWebpackPlugin({
-                template: fPath,
-                filename: path.join(dirTarget, file)
+                template : fPath,
+                filename : path.join(dirTarget, file)
             })
         );
     });
     return result;
 };
-
 
 module.exports = env => {
 
@@ -127,32 +125,32 @@ module.exports = env => {
                     loader : "url-loader"
                 },
                 {
-                    test: /\.(html)$/,
-                    // exclude: /node_modules/,
-                    use: [
+                    test : /\.(html)$/,
+                    exclude : /node_modules/,
+                    use : [
                         {
-                            loader: 'raw-loader'
+                            loader: "raw-loader"
                         },
                         {
-                            loader: 'hbs-template-loader',
-                            options: {
-                                helpers: [
+                            loader : "hbs-template-loader",
+                            options : {
+                                helpers : [
                                     hbsLayouts
                                 ],
-                                partials: [
+                                partials : [
                                     path.join(__dirname, "samples-src", "templates", "itowns", "*.hbs"),
                                     path.join(__dirname, "samples-src", "templates", "partials", "*.hbs"),
                                     path.join(__dirname, "samples-src", "templates", "partials", "itowns", "*.hbs")
                                 ],
-                                context: [
+                                context : [
                                     path.join(__dirname, "samples-src", "config.json")
                                 ],
-                                htmlBeautifyOptions: {
-                                    indent_size: 2,
-                                    indent_char: ' ',
-                                    indent_with_tabs: false
+                                htmlBeautifyOptions : {
+                                    indent_size : 2,
+                                    indent_char : ' ',
+                                    indent_with_tabs : false
                                 },
-                                charset: 'utf8'
+                                charset : "utf8"
                             }
                         }
                     ]

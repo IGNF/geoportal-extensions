@@ -65,17 +65,13 @@
     "css-loader": "^0.28.10",
     "expose-loader": "^0.7.4",
     "extract-text-webpack-plugin": "^3.0.2",
-<<<<<<< HEAD
     "handlebars-layouts": "^3.1.4",
     "hbs-template-loader": "0.0.15",
     "html-webpack-plugin": "^3.0.6",
-    "path": "^0.12.7",
-    "raw-loader": "^0.5.1",
-=======
     "jsdoc-webpack-plugin": "0.0.1",
     "path": "^0.12.7",
+    "raw-loader": "^0.5.1",
     "replace-bundle-webpack-plugin": "^1.0.0",
->>>>>>> eb0f65ad95461765430823332cc7ac32449576ce
     "requirejs": "^2.3.5",
     "string-template": "^1.0.0",
     "style-loader": "^0.20.2",

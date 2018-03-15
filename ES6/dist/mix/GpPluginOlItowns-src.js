@@ -9,7 +9,7 @@
  * copyright CeCILL-B
  * copyright IGN
  * @author IGN
- * @version 1.0.0&2.3.0
+ * @version 1.0.0&1.0.0
  * @date 2018-03-13
  *
  */
@@ -35658,7 +35658,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 _gp2.default.LayerUtils = _LayerUtils2.default;
 
 // Adds extensions properties in the Gp namespace
-_gp2.default.itownsExtVersion = "2.3.0";
+_gp2.default.itownsExtVersion = "1.0.0";
 _gp2.default.itownsExtDate = "2018-03-13";
 
 // determines the execution environment l'environnement : browser or not ?
