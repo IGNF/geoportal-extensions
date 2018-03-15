@@ -105,7 +105,7 @@ Une fois la clef obtenue, vous pouvez paramétrer l'utilisation de l'extension a
 <script data-key="VOTRE-CLEF" src="chemin/vers/GpPluginItowns.js"></script>
 ```
 
-Votre utilisation des fonctionnalités de l'extension Géoportail sera alors simplement conditionnée à la réception de l'événement onload de la page web, comme sur l'exemple suivant :
+Votre utilisation des fonctionnalités de l'extension Géoportail sera alors simplement conditionnée par la réception de l'événement onload de la page web, comme sur l'exemple suivant :
 
 ``` html
 <html>
@@ -113,14 +113,14 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
         <!-- Library iTowns -->
         <link rel="stylesheet" href="itowns.css" />
         <script src="itowns.js"></script>
-        <!-- Extension Géoportail pour OpenLayers -->
+        <!-- Extension Géoportail pour iTowns -->
         <link rel="stylesheet" href="GpPluginItowns.css" />
         <script src="GpPluginItowns.js" data-key="CLEAPI"></script>
     </head>
     <body>
         <script>
             window.onload = function () {
-                // votre utilisation de l'extension Géoportail pour OpenLayers
+                // votre utilisation de l'extension Géoportail pour iTowns
             }
         </script>
     </body>
@@ -145,7 +145,7 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
                 Gp.Services.getConfig({
                     apiKey: 'CLEAPI',
                     onSuccess: function (response) {
-                        // votre utilisation de l'extension Géoportail pour OpenLayers
+                        // votre utilisation de l'extension Géoportail pour iTowns
                     }
                 });
             }
@@ -160,19 +160,25 @@ Vous pouvez améliorer le temps de chargement de votre page en mettant en cache 
 
 Enregistrez ce fichier sur votre plateforme et paramétrez l'extension Géoportail de la manière suivante (selon les méthodes citées précédemment) :
 
-**Méthode 1** : Utilisez l'attribut *data-url* de la balise script chargeant l'extension pour pointer vers votre fichier :
+**Méthode 1** : Utilisez l'attribut "data-url" de la balise **script** chargeant l'extension pour pointer vers votre fichier :
+
+``` html
+<script data-url="chemin/vers/autoconf.json" src="chemin/vers/GpPluginItowns.js"></script>
+```
+
+Votre utilisation des fonctionnalités de l'extension Géoportail sera alors simplement conditionnée par la réception de l'événement onload de la page web, comme sur l'exemple suivant :
 
 ``` html
 <html>
     <head>
-        <!-- Library OpenLayers -->
+        <!-- Library iTowns -->
         ...
-        <script src="GpPluginItowns.js" data-url="chemin/vers/autoconf.json"></script>
+        <script data-url="chemin/vers/autoconf.json" src="chemin/vers/GpPluginItowns.js"></script>
     </head>
     <body>
         <script>
             window.onload = function () {
-                // votre utilisation de l'extension Géoportail pour OpenLayers
+                // votre utilisation de l'extension Géoportail pour iTowns
             }
         </script>
     </body>
@@ -180,7 +186,7 @@ Enregistrez ce fichier sur votre plateforme et paramétrez l'extension Géoporta
 ```
 
 
-**Méthode 2** : Utilisez le paramètre *serverUrl* de la fonction Gp.Services.getConfig() pour pointer vers votre fichier :
+**Méthode 2** : Utilisez le paramètre *serverUrl* de la fonction Gp.Services.getConfig() pour pointer vers votre fichier, ainsi que le paramètre *callbackSuffix*, de la manière suivante :
 
 ``` html
 <html>
@@ -190,8 +196,9 @@ Enregistrez ce fichier sur votre plateforme et paramétrez l'extension Géoporta
             window.onload = function () {
                 Gp.Services.getConfig({
                     serverUrl: 'chemin/vers/autoconf.json',
+                    callbackSuffix : '',
                     onSuccess: function (response) {
-                        // votre utilisation de l'extension Géoportail pour OpenLayers
+                        // votre utilisation de l'extension Géoportail pour iTowns
                     }
                 });
             }
@@ -205,12 +212,12 @@ Enregistrez ce fichier sur votre plateforme et paramétrez l'extension Géoporta
 
 ### Versions d'iTowns supportées
 
-L'extension Géoportail pour iTowns peut s'utiliser avec la **version 2.2.1** d'iTowns.
+L'extension Géoportail pour iTowns peut s'utiliser avec la **version 3.1.0** d'iTowns.
 
 
 ### Navigateurs supportés
 
-La librairie iTowns fonctionne avec la technologie "webGL". Les anciennes versions des navigateurs ne supportent pas le webGL. Ainsi, en principe, l'extension Géoportail pour iTowns fonctionne sur les navigateurs qui supportent le webGl ( voir ce [tableau de support du webGL en fonction des navigateurs](https://caniuse.com/#search=webgl) )
+La librairie iTowns fonctionne avec la technologie "webGL". Les anciennes versions des navigateurs ne supportent pas le webGL. Ainsi, en principe, l'extension Géoportail pour iTowns fonctionne sur les navigateurs qui supportent le webGL ( voir ce [tableau de support du webGL en fonction des navigateurs](https://caniuse.com/#search=webgl) ).
 
 Navigateur | version
 -----------|--------
@@ -245,143 +252,143 @@ NB :
 
 ### Affichage des couche WMTS Géoportail
 
-Le modèle de données iTowns prend en entrée des couches matérialisées sous forme d'objet javascript. Il n'y a pour le moment pas d'accès privilégié aux couches WMTS géoportail avec l'extension Géoportail pour iTowns. Pour afficher des couches WMTS (Géoportail ou autre), il faut se référer à la [documentation d'iTowns pour l'ajout d'une couche](http://www.itowns-project.org/itowns/API_Doc/GlobeView.html#addLayer).
+Le modèle de données iTowns prend en entrée des couches matérialisées sous forme d'objet JavaScript. Il n'y a pour le moment pas d'accès privilégié aux couches WMTS Géoportail avec l'extension Géoportail pour iTowns. Pour afficher des couches WMTS (Géoportail ou autre), il faut se référer à la [documentation d'iTowns pour l'ajout d'une couche](http://www.itowns-project.org/itowns/API_Doc/GlobeView.html#addLayer).
 
 #### Exemple d'utilisation
 ``` javascript
 const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
 
 var orthoLayer = {
-                type:       "color",
-                protocol:   "wmts",
-                id:         "Ortho",
-                url:        "http://wxs.ign.fr/maCLEF/geoportail/wmts",
-                updateStrategy: {
-                    type: "0",
-                    options: {}
-                },
-                networkOptions : {
-                    crossOrigin : "omit"
-                },
-                options: {
-                    name: "ORTHOIMAGERY.ORTHOPHOTOS",
-                    mimetype: "image/jpeg",
-                    tileMatrixSet: "PM",
-                    tileMatrixSetLimits: {
-                        "2": {
-                            "minTileRow": 0,
-                            "maxTileRow": 4,
-                            "minTileCol": 0,
-                            "maxTileCol": 4
-                        },
-                        "3": {
-                            "minTileRow": 0,
-                            "maxTileRow": 8,
-                            "minTileCol": 0,
-                            "maxTileCol": 8
-                        },
-                        "4": {
-                            "minTileRow": 0,
-                            "maxTileRow": 6,
-                            "minTileCol": 0,
-                            "maxTileCol": 16
-                        },
-                        "5": {
-                            "minTileRow": 0,
-                            "maxTileRow": 32,
-                            "minTileCol": 0,
-                            "maxTileCol": 32
-                        },
-                        "6": {
-                            "minTileRow": 1,
-                            "maxTileRow": 64,
-                            "minTileCol": 0,
-                            "maxTileCol": 64
-                        },
-                        "7": {
-                            "minTileRow": 3,
-                            "maxTileRow": 28,
-                            "minTileCol": 0,
-                            "maxTileCol": 128
-                        },
-                        "8": {
-                            "minTileRow": 7,
-                        },
-                        "9": {
-                            "minTileRow": 15,
-                            "maxTileRow": 512,
-                            "minTileCol": 0,
-                            "maxTileCol": 512
-                        },
-                        "10": {
-                            "minTileRow": 31,
-                            "maxTileRow": 1024,
-                            "minTileCol": 0,
-                            "maxTileCol": 1024
-                        },
-                        "11": {
-                            "minTileRow": 62,
-                            "maxTileRow": 2048,
-                            "minTileCol": 0,
-                            "maxTileCol": 2048
-                        },
-                        "12": {
-                            "minTileRow": 125,
-                            "maxTileRow": 4096,
-                            "minTileCol": 0,
-                            "maxTileCol": 4096
-                        },
-                        "13": {
-                            "minTileRow": 2739,
-                            "maxTileRow": 4628,
-                            "minTileCol": 41,
-                            "maxTileCol": 7917
-                        },
-                        "14": {
-                            "minTileRow": 5478,
-                            "maxTileRow": 9256,
-                            "minTileCol": 82,
-                            "maxTileCol": 15835
-                        },
-                        "15": {
-                            "minTileRow": 10956,
-                            "maxTileRow": 8513,
-                            "minTileCol": 165,
-                            "maxTileCol": 31670
-                        },
-                        "16": {
-                            "minTileRow": 21912,
-                            "maxTileRow": 37026,
-                            "minTileCol": 330,
-                            "maxTileCol": 63341
-                        },
-                        "17": {
-                            "minTileRow": 43825,
-                            "maxTileRow": 74052,
-                            "minTileCol": 660,
-                            "maxTileCol": 126683
-                        },
-                        "18": {
-                            "minTileRow": 87651,
-                            "maxTileRow": 48105,
-                            "minTileCol": 1320,
-                            "maxTileCol": 253366
-                        },
-                        "19": {
-                            "minTileRow": 175302,
-                            "maxTileRow": 294060,
-                            "minTileCol": 170159,
-                            "maxTileCol": 343473
-                        },
-                        "20": {
-                            "minTileRow": 376733,
-                            "maxTileRow": 384679,
-                            "minTileCol": 530773,
-                            "maxTileCol": 540914
-                        }
-                    }
-                }
-            };
+    type:       "color",
+    protocol:   "wmts",
+    id:         "Ortho",
+    url:        "http://wxs.ign.fr/maCLEF/geoportail/wmts",
+    updateStrategy: {
+        type: "0",
+        options: {}
+    },
+    networkOptions : {
+        crossOrigin : "omit"
+    },
+    options: {
+        name: "ORTHOIMAGERY.ORTHOPHOTOS",
+        mimetype: "image/jpeg",
+        tileMatrixSet: "PM",
+        tileMatrixSetLimits: {
+            "2": {
+                "minTileRow": 0,
+                "maxTileRow": 4,
+                "minTileCol": 0,
+                "maxTileCol": 4
+            },
+            "3": {
+                "minTileRow": 0,
+                "maxTileRow": 8,
+                "minTileCol": 0,
+                "maxTileCol": 8
+            },
+            "4": {
+                "minTileRow": 0,
+                "maxTileRow": 6,
+                "minTileCol": 0,
+                "maxTileCol": 16
+            },
+            "5": {
+                "minTileRow": 0,
+                "maxTileRow": 32,
+                "minTileCol": 0,
+                "maxTileCol": 32
+            },
+            "6": {
+                "minTileRow": 1,
+                "maxTileRow": 64,
+                "minTileCol": 0,
+                "maxTileCol": 64
+            },
+            "7": {
+                "minTileRow": 3,
+                "maxTileRow": 28,
+                "minTileCol": 0,
+                "maxTileCol": 128
+            },
+            "8": {
+                "minTileRow": 7,
+            },
+            "9": {
+                "minTileRow": 15,
+                "maxTileRow": 512,
+                "minTileCol": 0,
+                "maxTileCol": 512
+            },
+            "10": {
+                "minTileRow": 31,
+                "maxTileRow": 1024,
+                "minTileCol": 0,
+                "maxTileCol": 1024
+            },
+            "11": {
+                "minTileRow": 62,
+                "maxTileRow": 2048,
+                "minTileCol": 0,
+                "maxTileCol": 2048
+            },
+            "12": {
+                "minTileRow": 125,
+                "maxTileRow": 4096,
+                "minTileCol": 0,
+                "maxTileCol": 4096
+            },
+            "13": {
+                "minTileRow": 2739,
+                "maxTileRow": 4628,
+                "minTileCol": 41,
+                "maxTileCol": 7917
+            },
+            "14": {
+                "minTileRow": 5478,
+                "maxTileRow": 9256,
+                "minTileCol": 82,
+                "maxTileCol": 15835
+            },
+            "15": {
+                "minTileRow": 10956,
+                "maxTileRow": 8513,
+                "minTileCol": 165,
+                "maxTileCol": 31670
+            },
+            "16": {
+                "minTileRow": 21912,
+                "maxTileRow": 37026,
+                "minTileCol": 330,
+                "maxTileCol": 63341
+            },
+            "17": {
+                "minTileRow": 43825,
+                "maxTileRow": 74052,
+                "minTileCol": 660,
+                "maxTileCol": 126683
+            },
+            "18": {
+                "minTileRow": 87651,
+                "maxTileRow": 48105,
+                "minTileCol": 1320,
+                "maxTileCol": 253366
+            },
+            "19": {
+                "minTileRow": 175302,
+                "maxTileRow": 294060,
+                "minTileCol": 170159,
+                "maxTileCol": 343473
+            },
+            "20": {
+                "minTileRow": 376733,
+                "maxTileRow": 384679,
+                "minTileCol": 530773,
+                "maxTileCol": 540914
+            }
+        }
+    }
+};
 
 globeView.addLayer(orthoLayer);
 ```
@@ -514,9 +521,7 @@ globeView.addLayer(orthoLayer);
 globeView.addWidget(layerSwitcher);
 ```
 
-**Exemple d'utilisation**
-
-JSFIDDLE
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/b01pLz3m/embedded/result,js,html,css/)
 
 <a id="mp"/>
 
@@ -551,11 +556,14 @@ var mpControl = new itowns.control.MousePosition(opts);
 map.addControl(mpControl);
 ```
 
-**Exemple d'utilisation avec affichage unique de l'altitude** [JSFIDDLE1]()
+**Exemple d'utilisation avec affichage des coordonnées et de l'altitude**
+[![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/a9abm7Lp/embedded/result,js,html,css/)
 
-**Exemple d'utilisation avec paramétrage des systèmes de coordonnées** [JSFIDDLE2]()
+**Exemple d'utilisation avec affichage unique de l'altitude**
+[![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/1zcskvup/embedded/result,js,html,css/)
 
-**Exemple d'utilisation avec activation de l'édition de coordonnées pour localisation** [JSFIDDLE3]()
+**Exemple d'utilisation avec paramétrage des systèmes de coordonnées**
+[![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/tmjdezkq/embedded/result,js,html,css/)
 
 <a id="attributions"/>
 
@@ -592,4 +600,4 @@ var attribution = new itowns.control.Attributions(opts);
 globeView.addWidget( attribution );
 ```
 
-**Exemple d'utilisation** [JSFIDDLE_ATTR]()
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/r3or3tz9/embedded/result,js,html,css/)
