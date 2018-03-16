@@ -1,7 +1,7 @@
 # MIGRATION WEBPACK
 
 Migration des projets
-- *geoportal-access-lib* (en cours de finalisation)
+- *geoportal-access-lib*
 - *geoportal-extensions*
 
 **Note**
@@ -214,7 +214,7 @@ un fichier *webpack.test.serve.js* pour l'execution des tests dans un navigateur
 
 cf. https://github.com/survivejs/webpack-merge
 
-Ex. d'utilisation de config : 
+Ex. d'utilisation de config :
 https://github.com/survivejs/site/blob/master/webpack.config.js
 
 En fonction de l'option, (ex. --env.leaflet) sur le build (ex. npm run build -- --env.leaflet),

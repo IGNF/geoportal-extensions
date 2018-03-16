@@ -1,50 +1,5 @@
 # Migration ES6
 
-Pour le moment, on fait un fichier webpack par projet (ol, Leaflet, itowns et mixte)
-afin que l'on ne se marche pas dessus.
-
-Dans un *1er temps*, on s'intéresse uniquement à la création du bundle.
-
-Les opérations annexes (jsdoc, tests, exemples,...) viendront dans un *second temps*.
-
-Et, on *finit* par la mutualisation des fichiers webpack et la finalisation pour mise en production (passage en version 2.0.0) avec interface de compilation pour l'utilisateur (cf. TARGET.md).
-
-Avant passage en publication, il faudra impérativement valider notre travail avec le SDK !
-
-Pour commencer, j'ai mis en place une base de travail avec le sous projet openlayers.
-Les sources sont migrées en ES6 avec un webpack et 3 exemples fonctionnels
-dans un environnement Web, amd et ES6 pour valider le bundle.
-
-**Warning**
-> utilisation de la version de dev. non publiée : 2.0.0 de l'API des services !
-
-## Howto
-
-1. migration AMD -> ES6
-
-  ex. commande de migration :
-> amdtoes6 -d src/Ol3 -o src-es6/OpenLayers -b
-
-2. modifier les chemins des imports
-
-3. corrections diverses dans le code
-  - woodman -> loglevel
-  - ...
-
-4. dupliquer le webpack de base pour générer un bundle
-
-5. builder le projet  *geoportal-access-lib* de la branche *migrate-es6* :
-
-  > npm install
-
-  > cd ./node_modules/geoportal-access-lib/
-
-  > nm run setup && npm run build && npm run build -- --env.production
-
-6. valider avec des exemples (cf. exemples de bases)
-
-7. valider le bundle en l'intégrant dans le SDK !
-
 ## Avancement
 
 ### Openlayers
@@ -85,7 +40,9 @@ mais on choisie de faire appel à la variable globale itowns !
 
 **TODO!**
 
-revoir les règles !
+cf.https://eslint.org/
+
+revoir toutes les règles !
 
 ## CSS/images
 
@@ -107,19 +64,41 @@ En version 3 de webpack, on a du code js à placer pour utiliser **--env.product
 
 **OK!**
 
-Licences *multiples* à ajouter aux bundles !
-
 ## JSDOC
+
+### génération de la JSDOC
 
 **OK!**
 
-## LES EXEMPLES
+### client web pour l'affichage
 
 **TODO!**
 
-*templatisation* des exemples avec **gulp** ou un **loader de webpack** ?
+## LES EXEMPLES
+
+### génération des EXEMPLES
+
+**TODO!**
+
+*templatisation* des exemples avec
+- **gulp** ou
+- un **loader de webpack** ou
+- un **plugin de webpack** ou
+- un **plugin maison**
+
+Le choix a été fait d'utiliser un **plugin maison** !
+
+### client web pour l'affichage
+
+**TODO!**
 
 ## LES TESTS
+
+### génération des TESTS
+
+**TODO!**
+
+### client web pour l'affichage
 
 **TODO!**
 
@@ -129,18 +108,13 @@ Licences *multiples* à ajouter aux bundles !
 
 **Warning!**
 > on laisse les tests sous gulp...,
-et on ne les intègre pas à webpack (sous projet independant) !
+et on ne les intègre pas à webpack !
 
-
-## UPDATE : aide + doc
+## LA DOCUMENTATION
 
 **OK!**
 
-- COMPILE.md
-- README.md
-- ...
-
-## INTERFACE NPM
+## L'INTERFACE NPM
 
 **TODO!**
 
@@ -149,9 +123,9 @@ et on ne les intègre pas à webpack (sous projet independant) !
 **OK!**
 
 **Warning!**
-> à tester !!!
+> intégration des tests et des tests de rendu à mettre en place !!!
 
-## STRUCTURE DES WEBPACK
+## LA STRUCTURE DES CONFIG WEBPACK
 
 **TODO!**
 
