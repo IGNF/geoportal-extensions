@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 1.0.0
- * @date 2018-03-15
+ * @date 2018-03-20
  *
  */
 /*!
@@ -29960,7 +29960,7 @@ Ol3ControlsMeasuresMeasureAzimuth = function (ol, woodman, Utils, MeasureToolBox
 }(ol, {}, CommonUtils, Ol3ControlsMeasureToolBox, Ol3ControlsMeasuresMeasures, CommonControlsMeasureAzimuthDOM, CommonUtilsSelectorID);
 Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, ProxyUtils, GfiUtils, Utils, KML, WMTS, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, GetFeatureInfo, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution, Markers, ElevationPath, MeasureLength, MeasureArea, MeasureAzimuth) {
     Gp.ol3extVersion = '1.0.0';
-    Gp.ol3extDate = '2018-03-15';
+    Gp.ol3extDate = '2018-03-20';
     Gp.olUtils = Utils;
     Gp.LayerUtils = LayerUtils;
     Gp.ProxyUtils = ProxyUtils;
