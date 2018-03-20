@@ -1,6 +1,7 @@
 define([], function () {
 
     "use strict";
+
     /**
      * @classdesc
      * iTowns Widget class. 
@@ -8,9 +9,18 @@ define([], function () {
      *
      * @constructor
      * @alias itowns.control.Widget
+     * @param {Object} options - options for function call.
+     * @param {String}  options.name - Name of the widget.
+     * @param {Object}  options.element - HTML element of the widget
+     * @param {Object}  options.target - HTML element where to put the widget
+     * @param {String}  options.position - "absolute" or "relative"
      * @example
-     * var myWidget = new itowns.control.Widget();
-     *
+     * var myWidget = new itowns.control.Widget({
+     *      name : "myWidget",
+     *      element : myWidgetDiv,
+     *      target : myWidgetTargetDiv,
+     *      position: "absolute"
+     * });
      */
     function Widget (options) {
         this.name = null;
