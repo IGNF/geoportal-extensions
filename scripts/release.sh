@@ -48,6 +48,7 @@ NPM_OAUTH_PWD_MSQ="XXXXXX"
 
 # options properties
 #   --leaflet |l
+#   --itowns |i
 #   (--verbose )
 #   --build |b, --data |d, --json |j, --commit |o, --publish |p, --clean |C
 OPTS_RUN_BUILD=${_OPTS_RUN_BUILD}
@@ -63,6 +64,7 @@ OPTS_VERBOSE=${_OPTS_VERBOSE}
 
 # read option
 # l (--leaflet) Publication Leaflet (par defaut),
+# i (--itowns)     Publication iTowns,
 # o (--ol3)     Publication Openlayers,
 # b (--build)   Execution de la tache de compilation,
 # d (--data)    Execution de la tache de git-clone,
@@ -72,7 +74,7 @@ OPTS_VERBOSE=${_OPTS_VERBOSE}
 # p (--publish) Execution de la tache de publication npm,
 # C (--clean)   Execution de la tache de nettoyage.
 
-_OPTS=`getopt -o hlob::d::j::c::t::p::C:: --long help,verbose,leaflet,ol3,password:,username:,token:,build::,data::,json::,commit::,tag::,publish::,clean:: -n 'release.sh' -- "$@"`
+_OPTS=`getopt -o hliob::d::j::c::t::p::C:: --long help,verbose,leaflet,itowns,ol3,password:,username:,token:,build::,data::,json::,commit::,tag::,publish::,clean:: -n 'release.sh' -- "$@"`
 eval set -- "${_OPTS}"
 
 while true; do
@@ -84,6 +86,7 @@ while true; do
         echo "    -h            Affiche cette aide."
         echo "    --verbose     Mode verbose,"
         echo "    --leaflet|l   Publication Leaflet (par defaut),"
+        echo "    --itowns|i       Publication iTowns,"
         echo "    --ol3|o       Publication Openlayers,"
         echo "    --username    [private][surcharge] compte de publication NPM,"
         echo "    --password    [private][surcharge] password de publication NPM,"
@@ -112,6 +115,11 @@ while true; do
     -l|--leaflet)
          # par defaut...
          _PACKAGE_LIBRARY="leaflet"
+         shift ;;
+
+    -i|--itowns)
+         # par defaut...
+         _PACKAGE_LIBRARY="itowns"
          shift ;;
 
     -o|--ol3)
@@ -269,7 +277,7 @@ if [ -n ${_GIT_USER_MAIL} ]; then
 fi
 
 _GIT_USER_NAME=$(git config --get user.name)
-if [ -n ${_GIT_USER_NAME} ]; then
+if [ -n "${_GIT_USER_NAME}" ]; then
   printTo "Utilisation du 'username' de l'utilisateur courant (git config)"
   GIT_USER_NAME=${_GIT_USER_NAME}
 fi
@@ -284,6 +292,12 @@ fi
 [ ${_PACKAGE_LIBRARY} == "leaflet" ] && {
   GIT_DIR_PUBLISH=${_GIT_DIR_PUBLISH_LEAFLET}
   GIT_REPOSITORY="${_GIT_REPOSITORY_PREFIX}${GIT_REPOSITORY_USER_NAME}/${_GIT_REPOSITORY_NAME_LEAFLET}.git"
+}
+
+# depot github itowns
+[ ${_PACKAGE_LIBRARY} == "itowns" ] && {
+  GIT_DIR_PUBLISH=${_GIT_DIR_PUBLISH_ITOWNS}
+  GIT_REPOSITORY="${_GIT_REPOSITORY_PREFIX}${GIT_REPOSITORY_USER_NAME}/${_GIT_REPOSITORY_NAME_ITOWNS}.git"
 }
 
 # depot github ol

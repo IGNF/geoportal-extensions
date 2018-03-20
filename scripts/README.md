@@ -70,10 +70,12 @@ Mettre à jour un package :
 Ajouter l'utilisateur de publication :
 ```
 npm adduser or login
-Username: ignf
-Password:
+Username: ignfgeoportail
+Password: voir sur redmine
 Email: (this IS public) contact.geoservices@ign.fr
 ```
+Vérifier son .npmrc -> si erreur, essayer avec strict-ssl à false
+
 > **Depublication du package (complete)**
 npm unpublish --force
 
