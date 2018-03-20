@@ -1,11 +1,16 @@
 define([], function () {
 
     "use strict";
-
     /**
-     * Constructor
+     * @classdesc
+     * iTowns Widget class. 
+     * Every geoportal control inherits of this class.
      *
      * @constructor
+     * @alias itowns.control.Widget
+     * @example
+     * var myWidget = new itowns.control.Widget();
+     *
      */
     function Widget (options) {
         this.name = null;
