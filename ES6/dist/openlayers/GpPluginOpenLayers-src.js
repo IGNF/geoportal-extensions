@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 1.0.0
- * @date 2018-03-13
+ * @date 2018-03-20
  *
  */
 
@@ -369,7 +369,7 @@ exports.default = SelectorID;
  * copyright IGN
  * @author IGN
  * @version 2.0.0
- * @date 2018-03-13
+ * @date 2018-03-12
  *
  */
 /*!
@@ -5765,7 +5765,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 var Gp = {
     servicesVersion : "2.0.0" ,
-    servicesDate : "2018-03-13",
+    servicesDate : "2018-03-12",
     /**
      * Methode pour rajouter une classe / objet au namespace global.
      *
@@ -25548,7 +25548,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // Rajout des propriétés de l'extension dans le namespace Gp
 _gp2.default.olExtVersion = "1.0.0";
-_gp2.default.olExtDate = "2018-03-13";
+_gp2.default.olExtDate = "2018-03-20";
 _gp2.default.olUtils = _Utils2.default;
 
 // Classes utilitaires

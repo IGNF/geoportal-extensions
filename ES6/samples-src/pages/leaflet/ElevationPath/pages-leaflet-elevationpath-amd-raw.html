@@ -21,24 +21,21 @@
 
 {{#content "js"}}
         <script type="text/javascript">
-          requirejs([
-            'Gp',
-            'Leaflet/Layers/Layers',
-            'Leaflet/Controls/ElevationPath'
-          ], function (
-            Gp,
-            Layers,
-            ElevationPath
-          ) {
-
+        requirejs([
+          'leaflet',
+          'Gp',
+        ], function (
+          L,
+          Gp
+        ) {
             Gp.Services.getConfig({
-              serverUrl : "{{ config.resources }}/AutoConf.js",
+              serverUrl : "{{ resources }}/AutoConf.js",
               callbackSuffix : "",
               // apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
               timeOut : 20000,
               onSuccess : function () {
 
-                var wms = Layers.WMS({
+                var wms = L.geoportalLayer.WMS({
                   layer : "ORTHOIMAGERY.ORTHOPHOTOS",
                 });
 
@@ -49,10 +46,10 @@
 
                 wms.addTo(map);
 
-                var search = new ElevationPath({
+                var search = new L.geoportalControl.ElevationPath({
                   active : true,
                   displayProfileOptions : {
-                    apply : ElevationPath.DISPLAY_PROFILE_RAW
+                    apply : L.geoportalControl.ElevationPath.DISPLAY_PROFILE_RAW
                   }
                 });
 

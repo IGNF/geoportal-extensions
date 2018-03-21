@@ -1,0 +1,113 @@
+{{#extend "openlayers/ol-sample-bundle-layout"}}
+
+{{#content "head"}}
+        <title>Sample ol3 LayerSwitcher</title>
+{{/content}}
+
+{{#content "style"}}
+        <style>
+            div#map {
+                width: 100%;
+                height: 500px;
+            }
+        </style>
+{{/content}}
+
+{{#content "body"}}
+            <h2>Ajout du gestionnaire de couches avec configuration des informations des couches (titre, description, légendes...)</h2>
+            <!-- map -->
+            <div id="map">
+            </div>
+{{/content}}
+
+{{#content "js"}}
+            <script type="text/javascript">
+                var map;
+                window.onload = function() {
+                    // on cache l'image de chargement du Géoportail.
+                    document.getElementById('map').style.backgroundImage = 'none';
+
+					// 1. Création de la map
+                    map = new ol.Map({
+                        target : "map",
+                        view : new ol.View({
+                            center : [288074.8449901076, 6247982.515792289],
+                            zoom : 6
+                        })
+                    });
+
+					// 2. Ajout de plusieurs couches différentes.
+                    var gpOrthos = new ol.layer.Tile({
+                        source : new ol.source.GeoportalWMTS({
+                            layer: "ORTHOIMAGERY.ORTHOPHOTOS"
+                        }),
+                        opacity : 0.8
+                    });
+                    map.addLayer(gpOrthos);
+
+					var gpMaps = new ol.layer.Tile({
+                        source : new ol.source.GeoportalWMTS({
+                            layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+                        })
+                    });
+                    map.addLayer(gpMaps);
+
+                    var osm = new ol.layer.Tile({
+                        source: new ol.source.OSM(),
+                        opacity: 0.5,
+                        visible: false
+                    });
+                    map.addLayer(osm);
+
+                    var olStamen = new ol.layer.Tile({
+                        source : new ol.source.Stamen({
+                            layer : "watercolor"
+                        }),
+                        opacity : 0.5,
+                        extent : [-635240, 4688265, 1204491, 6682415]
+                    });
+                    map.addLayer(olStamen);
+
+					// 3. Appel du LayerSwitcher
+                    layerSwitcher = new ol.control.LayerSwitcher(
+                        {
+                            layers : [
+                                {
+                                    layer : osm,
+                                    config : {
+                                        title : "OSM layer",
+                                        description : "OSM layer"
+                                    }
+                                },{
+                                    layer : olStamen,
+                                    config : {
+                                        title : "Images Stamen",
+                                        description : "Images Stamen",
+                                        quicklookUrl : "http://www.mapquest.com/",
+                                        legends : [
+                                            {
+                                                url : "http://www.mapquest.com/"
+                                            }
+                                        ]
+                                        ,
+                                        metadata : [
+                                            {
+                                                url : "http://www.mapquest.com/"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ],
+                            options : {
+                                collapsed: false
+                            }
+                        }
+                    );
+
+					// 4. Ajout du LayerSwitcher à la carte
+                    map.addControl(layerSwitcher);
+                };
+           </script>
+{{/content}}
+
+{{/extend}}

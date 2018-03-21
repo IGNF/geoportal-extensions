@@ -1,8 +1,8 @@
 {{#extend "layout-itowns-sample-bundle"}}
 
 {{#content "head"}}
-    <script> var apiKey = "{{ config.apikey }}"; </script>
-    <script src="{{ config.baseurl }}/samples-src/resources/itowns/layers.js"></script>
+    <script> var apiKey = "{{ apikey }}"; </script>
+    <script src="{{ baseurl }}/samples-src/resources/itowns/layers.js"></script>
     <title>Sample itowns LayerSwitcher</title>
 {{/content}}
 
@@ -43,13 +43,13 @@
 
         // globeView.addLayer(layerOrtho);
 
-        itowns.Fetcher.json('{{ config.resources }}/itowns/JSONLayers/OrthosCRS.json').then(result => globeView.addLayer(result));
-        itowns.Fetcher.json('{{ config.resources }}/itowns/JSONLayers/Ortho.json').then(result => globeView.addLayer(result));
-        itowns.Fetcher.json('{{ config.resources }}/itowns/JSONLayers/ScanEX.json').then(result => globeView.addLayer(result));
-        itowns.Fetcher.json('{{ config.resources }}/itowns/JSONLayers/Region.json').then(result => globeView.addLayer(result));
+        itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/OrthosCRS.json').then(result => globeView.addLayer(result));
+        itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/Ortho.json').then(result => globeView.addLayer(result));
+        itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/ScanEX.json').then(result => globeView.addLayer(result));
+        itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/Region.json').then(result => globeView.addLayer(result));
 
-        itowns.Fetcher.json('{{ config.resources }}/itowns/JSONLayers/IGN_MNT.json').then(result => globeView.addLayer(result));
-        itowns.Fetcher.json('{{ config.resources }}/itowns/JSONLayers/IGN_MNT_HIGHRES.json').then(result => globeView.addLayer(result));
+        itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/IGN_MNT.json').then(result => globeView.addLayer(result));
+        itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/IGN_MNT_HIGHRES.json').then(result => globeView.addLayer(result));
 
         globeView.listen(itowns.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
             // eslint-disable-next-line no-console

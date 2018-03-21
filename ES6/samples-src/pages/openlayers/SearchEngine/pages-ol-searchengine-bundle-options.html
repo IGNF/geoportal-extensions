@@ -1,0 +1,122 @@
+{{#extend "openlayers/ol-sample-bundle-layout"}}
+
+{{#content "head"}}
+        <title>Sample ol3 SearchEngine</title>
+{{/content}}
+
+{{#content "style"}}
+        <style>
+            div#map {
+                width: 100%;
+                height: 500px;
+            }
+        </style>
+{{/content}}
+
+{{#content "body"}}
+            <h2>Ajout du moteur de recherche avec les options par défaut</h2>
+            <!-- map -->
+            <div id="map">
+            </div>
+{{/content}}
+
+{{#content "js"}}
+            <script type="text/javascript">
+                var map;
+                window.onload = function() {
+                    // on cache l'image de chargement du Géoportail.
+                    document.getElementById('map').style.backgroundImage = 'none';
+
+					// 1. Création de la map
+                    map = new ol.Map({
+                        target : "map",
+                        view : new ol.View({
+                            center : [288074.8449901076, 6247982.515792289],
+                            zoom : 6
+                        }),
+                        layers : [
+                            new ol.layer.Tile({
+                                source : new ol.source.GeoportalWMTS({
+                                    layer: "ORTHOIMAGERY.ORTHOPHOTOS"
+                                }),
+                                opacity : 0.8
+                            }),
+                            new ol.layer.Tile({
+                                source : new ol.source.GeoportalWMTS({
+                                    layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+                                })
+                            })
+                        ]
+                    });
+
+					// 2. Appel du SearchEngine
+                    var search = new ol.control.SearchEngine({
+                        collapsed : false,
+                        displayAdvancedSearch : true,
+                        advancedSearch : {
+                          PositionOfInterest : [
+                            {name : "nature", title : "Nature"},
+                            {name : "municipality", title : "Ville"},
+                            {name : "department", title : "Departement", value : "77"}
+                          ],
+                          StreetAddress : null || [], // on ne veut pas configurer cette entrée !
+                          CadastralParcel : [
+                            {
+                              name : "department",
+                              title : "Departement"
+                            },
+                            {
+                              name : "commune",
+                              title : "Code commune (INSEE)"
+                            },
+                            {
+                              name : "insee",
+                              title : "Code INSEE"
+                            },
+                            {
+                              name : "absorbedCity",
+                              title : "Commune absorbée"
+                            },
+                            {
+                              name : "section",
+                              title : "Section"
+                            },
+                            {
+                              name : "number",
+                              title : "Numero"
+                            }
+                          ]
+                        },
+                        resources : {
+                          geocode : ["CadastralParcel", "StreetAddress", "PositionOfInterest", "test"],
+                          // autocomplete : ["PositionOfInterest"]
+                          autocomplete : ["StreetAddress", "test"]
+                        },
+                        geocodeOptions : {
+                          filterOptions : {
+                            type : ["PositionOfInterest"],
+                            // department : "31"
+                          },
+                          maximumResponses : 5,
+                          returnFreeForm : false,
+                          // rawResponse : true
+                        },
+                        autocompleteOptions : {
+                          filterOptions : {
+                            type : ["StreetAddress", "PositionOfInterest"],
+                          }
+                        },
+                        // valeur possible : "" ou null, "auto", 18, function (i) { return 1; }
+                        zoomTo : "auto",
+                        placeholder : "Recherche...",
+                        markerDisplay : true,
+                        markerStyle : "turquoiseBlue"
+                    });
+
+					// 3. Ajout du SearchEngine à la carte
+                    map.addControl(search);
+                };
+           </script>
+{{/content}}
+
+{{/extend}}

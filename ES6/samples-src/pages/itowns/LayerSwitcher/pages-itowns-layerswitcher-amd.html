@@ -1,8 +1,8 @@
 {{#extend "layout-itowns-sample-amd"}}
 
 {{#content "head"}}
-    <script> var apiKey = "{{ config.apikey }}"; </script>
-    <script src="{{ config.baseurl }}/samples-src/resources/itowns/layers.js"></script>
+    <script> var apiKey = "{{ apikey }}"; </script>
+    <script src="{{ baseurl }}/samples-src/resources/itowns/layers.js"></script>
     <title>Sample itowns LayerSwitcher</title>
 {{/content}}
 
@@ -35,14 +35,14 @@
 
 {{#content "js"}}
     <script type="text/javascript">
-            requirejs(
-                ["itowns", "proj4", "Gp", "Itowns/GlobeViewExtended", "Itowns/Controls/LayerSwitcher"],
-                function (itowns, proj4, Gp, GlobeViewExtended, LayerSwitcher)
-            {
-                itowns.control = {};
-                itowns.control.LayerSwitcher = LayerSwitcher;
-                itowns.GlobeViewExtended = GlobeViewExtended;
-
+            requirejs([
+                "itowns",
+                "Gp"
+            ],
+            function (
+                itowns,
+                Gp
+            ){
                 var createMap = function() {
                     /* global itowns,document,GuiTools*/
                     const positionOnGlobe = { longitude: 2.3465, latitude: 48.88, altitude: 25000000 };
@@ -54,9 +54,9 @@
                     globeView.listen(itowns.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
 
                         // ajout des couches
-                        var p1 = itowns.Fetcher.json('{{ config.resources }}/itowns/JSONLayers/OrthosCRS.json').then(result => globeView.addLayer(result));
-                        var p2 = itowns.Fetcher.json('{{ config.resources }}/itowns/JSONLayers/IGN_MNT.json').then(result => globeView.addLayer(result));
-                        var p3 = itowns.Fetcher.json('{{ config.resources }}/itowns/JSONLayers/IGN_MNT_HIGHRES.json').then(result => globeView.addLayer(result));
+                        var p1 = itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/OrthosCRS.json').then(result => globeView.addLayer(result));
+                        var p2 = itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/IGN_MNT.json').then(result => globeView.addLayer(result));
+                        var p3 = itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/IGN_MNT_HIGHRES.json').then(result => globeView.addLayer(result));
 
                         Promise.all([p1, p2, p3]).then( () => {
                             // ajout du control
@@ -97,8 +97,8 @@
                             globeView.addLayer(layerOrtho);
 
                             // ajout de nouvelles couches
-                            itowns.Fetcher.json('{{ config.resources }}/itowns/JSONLayers/ScanEX.json').then(result => globeView.addLayer(result));
-                            itowns.Fetcher.json('{{ config.resources }}/itowns/JSONLayers/Region.json').then(result => globeView.addLayer(result));
+                            itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/ScanEX.json').then(result => globeView.addLayer(result));
+                            itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/Region.json').then(result => globeView.addLayer(result));
                         });
                     });
                 }
@@ -106,7 +106,7 @@
                 Gp.Services.getConfig({
                     // serverUrl : "./../resources/AutoConf.js",
                     // callbackSuffix : '',
-                    apiKey : "{{ config.apikey }}",
+                    apiKey : "{{ apikey }}",
                     timeOut : 20000,
                     onSuccess : createMap
                 });

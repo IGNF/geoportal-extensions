@@ -1,4 +1,3 @@
-var apiKey = document.currentScript.getAttribute('data-key');
 
 var layerOrtho = {
     "type": "color",
