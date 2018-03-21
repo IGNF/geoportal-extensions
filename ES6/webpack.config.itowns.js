@@ -84,6 +84,23 @@ module.exports = env => {
                     }
                 },
                 {
+                    test : /\.js$/,
+                    enforce : "pre",
+                    include : [
+                      path.join(__dirname, "src", "Common"),
+                      path.join(__dirname, "src", "Itowns")
+                    ],
+                    exclude : /node_modules/,
+                    use : [
+                        {
+                            loader : "eslint-loader",
+                            options : {
+                                emitWarning : true
+                            }
+                        }
+                    ]
+                },
+                {
                     test : /\.css$/,
                     include : [
                         path.join(__dirname, "res", "Common"),

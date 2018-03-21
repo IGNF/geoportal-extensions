@@ -29,6 +29,7 @@ On choisie de faire appel à la variable globale itowns !
 
 La modification des réf. au mot clef "ol3" risque de causer des effets de bord.
 
+**TODO sur les exemples jsfiddle**
 Les exemples jsfiddle utilise la variable "ol3ExtVersion" :
 > "ol3ExtVersion"-> "olExtVersion"
 
@@ -38,9 +39,11 @@ Le nom du bundle d'openlayers :
 Le nom du bundle en mode mixte :
 > GpPluginOl3Itowns -> GpPluginOlItowns
 
+**TODO sur la gh-pages**
 Pour la jsdoc sur la gh-pages, on modifie aussi le nom du répertoire :
 > current/jsdoc/ol3 -> current/jsdoc/openlayers
 
+**???**
 La réf. à la documentation sur l'autoconf fonctionne t elle ?
 > http://ignf.github.io/evolution-apigeoportail/ol3/ol3-autoconf.html
 

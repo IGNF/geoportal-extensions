@@ -275,6 +275,7 @@
         return gulp.src(srcdir)
                .pipe(replace(/__GPLEAFLETEXTVERSION__/g,npmConf.leafletExtVersion))
                .pipe(replace(/__GPOL3EXTVERSION__/g,npmConf.ol3ExtVersion))
+               .pipe(replace(/__GPITOWNSEXTVERSION__/g,npmConf.itownsExtVersion))
                .pipe(replace(/__GPDATE__/g,buildDate))
                .pipe(gulp.dest(builddir))
                .pipe($.plumber())
@@ -299,6 +300,7 @@
         return gulp.src(srcdir)
                .pipe(replace(/__GPLEAFLETEXTVERSION__/g,npmConf.leafletExtVersion))
                .pipe(replace(/__GPOL3EXTVERSION__/g,npmConf.ol3ExtVersion))
+               .pipe(replace(/__GPITOWNSEXTVERSION__/g,npmConf.itownsExtVersion))
                .pipe(replace(/__GPDATE__/g,buildDate))
                .pipe(gulp.dest(builddir))
                .pipe($.plumber())
@@ -380,7 +382,7 @@
             findNestedDependencies : false,
             preserveLicenseComments : false,
             useStrict : true,
-            logLevel : 1,
+            logLevel : 0,
             /** onBuildRead */
             onBuildRead : function (moduleName, path, contents) {
 
