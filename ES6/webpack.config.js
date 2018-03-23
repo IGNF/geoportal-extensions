@@ -147,7 +147,10 @@ module.exports = env => {
                 include : [
                     path.join(__dirname, "res", "Common"),
                     path.join(__dirname, "res", projectName)
-                ],
+                ]
+                .concat(
+                    (leaflet) ? path.join(__dirname, "node_modules/leaflet-draw/dist/") : []
+                ),
                 use : ExtractTextWebPackPlugin.extract({
                     fallback : {
                         loader : "style-loader",
@@ -159,7 +162,7 @@ module.exports = env => {
                         loader : "css-loader",
                         options : {
                             sourceMap : true, // FIXME ?
-                            minimize: (production) ? true : false
+                            minimize : (production) ? true : false
                         }
                     }
                 })

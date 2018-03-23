@@ -19,3 +19,6 @@ import controlGProuteLeaflet from "../../res/Leaflet/Controls/Route/GProuteLeafl
 import controlGPlayerSwitcherLeaflet from "../../res/Leaflet/Controls/LayerSwitcher/GPlayerSwitcherLeaflet.css";
 import controlGPsearchEngineLeaflet from "../../res/Leaflet/Controls/SearchEngine/GPsearchEngineLeaflet.css";
 import controlGPlocationLeaflet from "../../res/Leaflet/Controls/LocationSelector/GPlocationLeaflet.css";
+
+// plugin leaflet-draw
+import leafletDrawPlugin from "../../node_modules/leaflet-draw/dist/leaflet.draw-src.css";
