@@ -90,6 +90,9 @@ En version 3 de webpack, on a du code js à placer pour utiliser **--env.product
 
 Le choix a été fait d'utiliser un **plugin maison** !
 
+**Warning**
+> publication du plugin !?
+
 ### client web pour l'affichage
 
 **TODO!**

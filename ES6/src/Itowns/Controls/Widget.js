@@ -1,9 +1,24 @@
 /**
- * Constructor
- *
- * @constructor
- */
-function Widget(options) {
+* @classdesc
+* iTowns Widget class.
+* Every geoportal control inherits of this class.
+*
+* @constructor
+* @alias itowns.control.Widget
+* @param {Object} options - options for function call.
+* @param {String}  options.name - Name of the widget.
+* @param {Object}  options.element - HTML element of the widget
+* @param {Object}  options.target - HTML element where to put the widget
+* @param {String}  options.position - "absolute" or "relative"
+* @example
+* var myWidget = new itowns.control.Widget({
+*      name : "myWidget",
+*      element : myWidgetDiv,
+*      target : myWidgetTargetDiv,
+*      position: "absolute"
+* });
+*/
+function Widget (options) {
     this.name = null;
     this._element = null;
     this._target = null;
@@ -23,7 +38,7 @@ Widget.prototype.constructor = Widget;
  * @method
  * @return {HTMLElement} widget's container element.
  */
-Widget.prototype.getElement = function getElement() {
+Widget.prototype.getElement = function getElement () {
     return this._element;
 };
 
@@ -34,7 +49,7 @@ Widget.prototype.getElement = function getElement() {
  * @param {HTMLElement} targetDiv - widget target div.
  * @param {String} position - html position attribute.
  */
-Widget.prototype.setTarget = function setTarget(targetDiv, position) {
+Widget.prototype.setTarget = function setTarget (targetDiv, position) {
     if (!targetDiv) {
         return;
     }
@@ -66,7 +81,7 @@ Widget.prototype.setTarget = function setTarget(targetDiv, position) {
  * @method
  * @return {HTMLElement} widget's target div.
  */
-Widget.prototype.getTarget = function getTarget() {
+Widget.prototype.getTarget = function getTarget () {
     return this._target;
 };
 
@@ -76,7 +91,7 @@ Widget.prototype.getTarget = function getTarget() {
  * @method
  * @param {Object} options - The new options of the control.
  */
-Widget.prototype.setOptions = function setOptions(options) {
+Widget.prototype.setOptions = function setOptions (options) {
     this.name = options.name;
     this._element = options.element;
     this.setTarget(options.target, options.position);
@@ -88,7 +103,7 @@ Widget.prototype.setOptions = function setOptions(options) {
  * @method
  * @return {Object} globe
  */
-Widget.prototype.getGlobe = function getGlobe() {
+Widget.prototype.getGlobe = function getGlobe () {
     return this._globe;
 };
 
@@ -98,7 +113,7 @@ Widget.prototype.getGlobe = function getGlobe() {
  * @method
  * @param {Object} globe - Globe to associate to the widget.
  */
-Widget.prototype.setGlobe = function setGlobe(globe) {
+Widget.prototype.setGlobe = function setGlobe (globe) {
     this._globe = globe;
 };
 
