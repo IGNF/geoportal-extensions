@@ -34,39 +34,39 @@
 {{#content "js"}}
             <script type="text/javascript">
                 var globeView = null;
-                requirejs(
-                    ["itowns", "proj4", "Gp", "Itowns/GlobeViewExtended", "Itowns/Controls/Scale"],
-                    function (itowns, proj4, Gp, GlobeViewExtended, Scale) {
-                        itowns.control = {};
-                        itowns.control.Scale = Scale;
-                        itowns.GlobeViewExtended = GlobeViewExtended;
+                requirejs([
+                    "itowns",
+                    "Gp"
+                ],
+                function (
+                    itowns,
+                    Gp
+                ){
+                    const positionOnGlobe = {
+                        longitude : 2.3465,
+                        latitude : 48.88,
+                        altitude : 25000000
+                    };
 
-                        const positionOnGlobe = {
-                            longitude : 2.3465,
-                            latitude : 48.88,
-                            altitude : 25000000
-                        };
+                    const viewerDiv = document.getElementById("viewerDiv");
+                    globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
 
-                        const viewerDiv = document.getElementById("viewerDiv");
-                        globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
+                    itowns.Fetcher.json("{{ resources }}/itowns/JSONLayers/Ortho.json").then(result => globeView.addLayer(result));
 
-                        itowns.Fetcher.json("{{ config.resources }}/itowns/JSONLayers/Ortho.json").then(result => globeView.addLayer(result));
+                    itowns.Fetcher.json("{{ resources }}/itowns/JSONLayers/IGN_MNT.json").then(result => globeView.addLayer(result));
+                    itowns.Fetcher.json("{{ resources }}/itowns/JSONLayers/IGN_MNT_HIGHRES.json").then(result => globeView.addLayer(result));
 
-                        itowns.Fetcher.json("{{ config.resources }}/itowns/JSONLayers/IGN_MNT.json").then(result => globeView.addLayer(result));
-                        itowns.Fetcher.json("{{ config.resources }}/itowns/JSONLayers/IGN_MNT_HIGHRES.json").then(result => globeView.addLayer(result));
+                    var scalebar = new itowns.control.Scale({
+                        target : viewerDiv,
+                        position : "absolute"
+                    });
+                    globeView.addWidget( scalebar );
 
-                        var scalebar = new itowns.control.Scale({
-                            target : viewerDiv,
-                            position : "absolute"
-                        });
-                        globeView.addWidget( scalebar );
-
-                        globeView.listen(itowns.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
-                            // eslint-disable-next-line no-console
-                            console.info("Globe initialized");
-                        });
-                    }
-                );
+                    globeView.listen(itowns.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
+                        // eslint-disable-next-line no-console
+                        console.info("Globe initialized");
+                    });
+                });
             </script>
 {{/content}}
 

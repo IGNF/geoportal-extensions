@@ -43,7 +43,7 @@
                     // eslint-disable-next-line no-console
                     console.info('Globe initialized');
                     var mousePosition = new itowns.control.MousePosition({
-                        apiKey : "{{ config.apikey }}",
+                        apiKey : "{{ apikey }}",
                         collapsed : false,
                         units : ["m", "dec"]
                     }
@@ -51,10 +51,10 @@
                     globeView.addWidget( mousePosition );
                 });
 
-                itowns.Fetcher.json('{{ config.resources }}/itowns/JSONLayers/Ortho.json').then(result => globeView.addLayer(result));
+                itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/Ortho.json').then(result => globeView.addLayer(result));
 
-                itowns.Fetcher.json('{{ config.resources }}/itowns/JSONLayers/IGN_MNT.json').then(result => globeView.addLayer(result));
-                itowns.Fetcher.json('{{ config.resources }}/itowns/JSONLayers/IGN_MNT_HIGHRES.json').then(result => globeView.addLayer(result));
+                itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/IGN_MNT.json').then(result => globeView.addLayer(result));
+                itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/IGN_MNT_HIGHRES.json').then(result => globeView.addLayer(result));
             </script>
 {{/content}}
 

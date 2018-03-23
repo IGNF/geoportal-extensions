@@ -5,6 +5,9 @@ var fs      = require("fs");
 var path    = require("path");
 var webpack = require("webpack");
 var header  = require("string-template");
+var HandlebarsLayoutsHelpers = require("handlebars-layouts");
+var Handlebars = require("handlebars");
+var glob = require("glob");
 
 // -- plugins
 var DefineWebpackPlugin   = webpack.DefinePlugin;
@@ -13,6 +16,8 @@ var BannerWebPackPlugin   = webpack.BannerPlugin;
 var UglifyJsWebPackPlugin = webpack.optimize.UglifyJsPlugin;
 var ReplaceWebpackPlugin  = require("replace-bundle-webpack-plugin");
 var JsDocWebPackPlugin    = require("jsdoc-webpack-plugin");
+var HandlebarsPlugin = require("handlebars-webpack-plugin");
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 // -- variables
 var date = new Date().toISOString().split("T")[0];
@@ -159,7 +164,61 @@ module.exports = env => {
                 conf : path.join(__dirname, "jsdoc-openlayers.json")
             }),
             /** CSS / IMAGES */
-            new ExtractTextWebPackPlugin((production) ? "GpPluginOpenLayers.css" : "GpPluginOpenLayers-src.css")
+            new ExtractTextWebPackPlugin((production) ? "GpPluginOpenLayers.css" : "GpPluginOpenLayers-src.css"),
+            /** HANDLEBARS TEMPLATES */
+            new HandlebarsPlugin({
+                // path to hbs entry file(s)
+                entry: path.join(__dirname, "samples-src", "pages", "openlayers", "**", "*.html"),
+                // output path and filename(s). This should lie within the webpacks output-folder
+                // if ommited, the input filepath stripped of its extension will be used
+                output: path.join(__dirname, "samples", "openlayers", (production) ? "[name].html" : "[name]-src.html"),
+                // data passed to main hbs template:
+                //data: path.join(__dirname, "samples-src", "config.json"),
+                data: {
+                    "mode" : (production)? "" : "-src",
+                    "baseurl" : "../..",
+                    "resources" : "../resources",
+                    "apikey" : "jhyvi0fgmnuxvfv0zjzorvdn"
+                },
+                partials: [
+                    path.join(__dirname, "samples-src", "templates", "openlayers", "*.hbs"),
+                    path.join(__dirname, "samples-src", "templates", "partials", "*.hbs"),
+                    path.join(__dirname, "samples-src", "templates", "partials", "openlayers", "*.hbs")
+                ],
+                helpers: {
+                    extend: HandlebarsLayoutsHelpers(Handlebars).extend,
+                    embed: HandlebarsLayoutsHelpers(Handlebars).embed,
+                    block: HandlebarsLayoutsHelpers(Handlebars).block,
+                    content: HandlebarsLayoutsHelpers(Handlebars).content
+                }
+            }),
+            /** TEMPLATES INDEX */
+            new HandlebarsPlugin({
+                entry: path.join(__dirname, "samples-src", "pages", "index-openlayers.html"),
+                output: path.join(__dirname, "samples", (production) ? "[name].html" : "[name]-src.html"),
+                data: {
+                    paths: () => {
+                        var list = glob.sync(path.join(__dirname, "samples-src", "pages", "openlayers", "**", "*.html"));
+                        list = list.map(function(filePath) {
+                            var ext = path.extname(filePath);
+                            var name = path.basename(filePath, ext);
+                            return {
+                                filePath: path.join("openlayers", name.concat((production) ? "" : "-src").concat(ext)),
+                                fileName: name
+                            };
+                        });
+                        return list;
+                    }
+                }
+            }),
+            /* RESOURCES COPY FOR SAMPLES */
+            new CopyWebpackPlugin([
+                {
+                    from: path.join(__dirname, "samples-src", "resources", "**/*"),
+                    to: path.join(__dirname, "samples", "resources"),
+                    context: path.join(__dirname, "samples-src", "resources")
+                }
+            ])
         ]
         /** MINIFICATION */
         .concat(

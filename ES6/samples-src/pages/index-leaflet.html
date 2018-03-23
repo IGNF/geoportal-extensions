@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
-  <meta charset="UTF-8"> 
+  <meta charset="UTF-8">
   <title>Liste des exemples Leaflet</title>
 </head>
 <body>
@@ -11,14 +11,9 @@
     <!-- liste des fichiers -->
     <h2>Liste des exemples</h2>
     <ul>
-    <% files.forEach(function(path) {
-        var split  = path.split('/');
-        var plugin = split.slice(-2)[0];
-        var file   = split.slice(-1)[0];
-      %>
-      <li><a href="<%- path %>"> <%- plugin %> -- <%- file %></a></li>
-      <% });
-    %>
+        {{#each samples as |sample|}}
+          <li><a href="{{sample.filePath}}"> {{sample.label}}</a></li>
+        {{/each}}
     </ul>
 
     <!-- Comment utiliser l'extension avec un exemple -->

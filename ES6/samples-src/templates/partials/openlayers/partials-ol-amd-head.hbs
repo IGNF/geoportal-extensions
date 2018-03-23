@@ -1,0 +1,14 @@
+        <!-- requirejs -->
+        <script src="{{ baseurl }}/node_modules/requirejs/require.js"></script>
+        <script>
+                /* global requirejs */
+                requirejs.config({
+                    "paths": {
+                    "ol"       : "{{ baseurl }}/node_modules/openlayers/dist/ol-debug",
+                    "Gp"       : "{{ baseurl }}/dist/openlayers/GpPluginOpenLayers{{ mode }}"
+                    },
+                    shim : {
+                        "Gp" : ["ol"]
+                    }
+                });
+        </script>

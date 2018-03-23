@@ -1,0 +1,109 @@
+{{#extend "openlayers/ol-sample-amd-layout"}}
+
+{{#content "head"}}
+        <title>Sample OpenLayers</title>
+{{/content}}
+
+{{#content "style"}}
+        <style>
+            div#map {
+                max-width: 100%;
+                height: 500px;
+            }
+        </style>
+{{/content}}
+
+{{#content "body"}}
+            <h2>Ajout de tous les widgets</h2>
+            <!-- map -->
+            <div id="map">
+            </div>
+{{/content}}
+
+{{#content "js"}}
+        <script>
+            requirejs(
+              [
+                "ol",
+                "Gp"
+              ],
+              function (
+                ol,
+                Gp
+              ) {
+
+                var map;
+
+                var createMap = function () {
+                  // on cache l'image de chargement du Géoportail.
+                  document.getElementById("map").style.backgroundImage = "none";
+
+                  // Création de la map
+                  var wmts =  new ol.source.GeoportalWMTS({
+                      layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+                  });
+
+                  var layer = new ol.layer.Tile({
+                      source : wmts
+                  });
+
+                  var map = new ol.Map({
+                      layers: [layer],
+                      target: 'map',
+                      view: new ol.View({
+                          center: [288074.8449901076, 6247982.515792289],
+                          zoom: 5
+                      })
+                  });
+
+                  var drawing = new ol.control.Drawing();
+                  map.addControl(drawing);
+                  var iso = new ol.control.Isocurve();
+                  map.addControl(iso);
+                  var layerImport = new ol.control.LayerImport();
+                  map.addControl(layerImport);
+                  var layerSwitcher = new ol.control.LayerSwitcher();
+                  map.addControl(layerSwitcher);
+                  var mp = new ol.control.GeoportalMousePosition();
+                  map.addControl(mp);
+                  var route = new ol.control.Route();
+                  map.addControl(route);
+                  var reverse = new ol.control.ReverseGeocode({});
+                  map.addControl(reverse);
+                  var search = new ol.control.SearchEngine({});
+                  map.addControl(search);
+
+                  var measureLength = new ol.control.MeasureLength();
+                  map.addControl(measureLength);
+                  var measureArea = new ol.control.MeasureArea();
+                  map.addControl(measureArea);
+                  var measureAzimuth = new ol.control.MeasureAzimuth();
+                  map.addControl(measureAzimuth);
+                  var measureProfil = new ol.control.ElevationPath();
+                  map.addControl(measureProfil);
+
+                  var attributions = new ol.control.GeoportalAttribution();
+                  map.addControl(attributions);
+
+                  var getFeatureInfo = new ol.control.GetFeatureInfo(
+                    {
+                        options: {
+                            active : false
+                        }
+                    }
+                  );
+                  map.addControl(getFeatureInfo);
+                };
+
+                Gp.Services.getConfig({
+                  serverUrl : "{{ resources }}/AutoConf.js",
+                  callbackSuffix : "",
+                  // apiKey: "jhyvi0fgmnuxvfv0zjzorvdn",
+                  timeOut : 20000,
+                  onSuccess : createMap
+                });
+
+              });
+          </script>
+{{/content}}
+{{/extend}}
