@@ -1,27 +1,27 @@
 {
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module"
+    },
     "env": {
         "browser": true,
         "node": true,
         "es6": true
     },
-    "extends": "eslint:recommended",
-    "parserOptions": {
-        "ecmaVersion": 6,
-        "sourceType": "module"
+    "extends": "standard",
+    "plugins": [],
+    "globals": {
+        "document": false,
+        "navigator": false,
+        "window": false
     },
     "rules": {
-        "valid-jsdoc": [
-            "error"
-        ],
-        "space-before-function-paren": [
-            "error",
-            "always"
-        ],
-        "space-unary-ops": [
+        "curly": "error",
+        "key-spacing": [
             "error",
             {
-                "words": true,
-                "nonwords": true
+                "beforeColon": true,
+                "afterColon": true
             }
         ],
         "keyword-spacing": [
@@ -43,6 +43,20 @@
             "error",
             "unix"
         ],
+        "padded-blocks": [
+            "error",
+            {
+                "blocks": "never",
+                "switches": "never",
+                "classes": "always"
+            }
+        ],
+        "prefer-promise-reject-errors": [
+            "warn",
+            {
+                "allowEmptyReject": true
+            }
+        ],
         "quotes": [
             "error",
             "double"
@@ -51,6 +65,28 @@
             "error",
             "always"
         ],
-        "curly": "error"
+        "space-before-function-paren": [
+            "error",
+            "always"
+        ],
+        "space-unary-ops": [
+            "error",
+            {
+                "words": true,
+                "nonwords": false
+            }
+        ],
+        "valid-jsdoc": [
+            "error",
+            {
+                "preferType": {
+                    "boolean": "Boolean",
+                    "number": "Number",
+                    "object": "Object",
+                    "string": "String"
+                },
+                "requireReturn": false
+            }
+        ]
     }
 }

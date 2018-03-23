@@ -40,7 +40,9 @@ mais on choisie de faire appel à la variable globale itowns !
 
 **TODO!**
 
-cf.https://eslint.org/
+cf. https://eslint.org/
+cf. https://github.com/standard/eslint-config-standard
+cf. https://github.com/standard/eslint-config-standard/blob/master/eslintrc.json
 
 revoir toutes les règles !
 
