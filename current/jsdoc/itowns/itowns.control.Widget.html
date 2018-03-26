@@ -10,7 +10,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <!-- !meta IGN -->
 
-    <title>Class: Scale</title>
+    <title>Class: Widget</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -589,7 +589,7 @@
 
     <section class="content">
         <label class="openLeftMenu" for="showLeftMenu" title="Ouvrir le menu latéral"></label>
-        <h1 class="page-title" data-filename="itowns.control.Scale.html">Class: Scale</h1>
+        <h1 class="page-title" data-filename="itowns.control.Widget.html">Class: Widget</h1>
         
 
 
@@ -600,11 +600,11 @@
 <header>
 -->
     <h1>
-    <span class="main-title" data-classname=itowns.control.Scale> itowns.control.Scale </span>
+    <span class="main-title" data-classname=itowns.control.Widget> itowns.control.Widget </span>
     </h1>
     
     
-        <div class="description"><p>Control to display the scalebar with itowns</p></div>
+        <div class="description"><p>iTowns Widget class.<br>Every geoportal control inherits of this class.</p></div>
     
 <!--
 </header>  
@@ -618,14 +618,14 @@
         
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="Scale">
+        <h4 class="name" id="Widget">
             
-            new Scale<span class="signature">()</span>
+            new Widget<span class="signature">(options)</span>
         </h4>
     
         
         <div class="tag-source">
-            Itowns/Controls/Scale.js, line 28
+            Itowns/Controls/Widget.js, line 25
         </div>
         
     </div>
@@ -640,6 +640,167 @@
     
     
     
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name">options</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>options for function call.</p>
+                
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name">name</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>Name of the widget.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name">element</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>HTML element of the widget</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name">target</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>HTML element where to put the widget</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name">position</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>&quot;absolute&quot; or &quot;relative&quot;</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+
+            </td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+
     
     
     
@@ -683,7 +844,12 @@
         
 
     
-    <pre class="prettyprint"><code>var scale = new itowns.control.Scale();</code></pre>
+    <pre class="prettyprint"><code>var myWidget = new itowns.control.Widget({
+     name : "myWidget",
+     element : myWidgetDiv,
+     target : myWidgetTargetDiv,
+     position: "absolute"
+});</code></pre>
     
 
     
@@ -693,11 +859,42 @@
     </div>
     
     
-        <h3 class="subsection-title">Extends</h3>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        <h3 class="subsection-title">Members</h3>
         
-        <ul>
-            <li><a href="itowns.control.Widget.html">itowns.control.Widget</a></li>
-        </ul>
+        <dl>
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="constructor">constructor</h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Constructor (alias)</p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
     
     
     
@@ -708,6 +905,18 @@
     
     
     
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        </dl>
     
     
     
@@ -716,10 +925,8 @@
         <dl>
             
 <dt>
-    <div class="nameContainer inherited">
+    <div class="nameContainer">
         <h4 class="name" id="getElement">
-            
-                <span class="inherited"><a href="itowns.control.Widget.html#getElement">inherited</a></span>
             
             getElement<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{HTMLElement}</span>
         </h4>
@@ -799,10 +1006,8 @@ container element.
         
             
 <dt>
-    <div class="nameContainer inherited">
+    <div class="nameContainer">
         <h4 class="name" id="getGlobe">
-            
-                <span class="inherited"><a href="itowns.control.Widget.html#getGlobe">inherited</a></span>
             
             getGlobe<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Object}</span>
         </h4>
@@ -878,10 +1083,8 @@ container element.
         
             
 <dt>
-    <div class="nameContainer inherited">
+    <div class="nameContainer">
         <h4 class="name" id="getTarget">
-            
-                <span class="inherited"><a href="itowns.control.Widget.html#getTarget">inherited</a></span>
             
             getTarget<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{HTMLElement}</span>
         </h4>
@@ -964,12 +1167,12 @@ target div.
     <div class="nameContainer">
         <h4 class="name" id="setGlobe">
             
-            setGlobe<span class="signature">()</span>
+            setGlobe<span class="signature">(globe)</span>
         </h4>
     
         
         <div class="tag-source">
-            Itowns/Controls/Scale.js, line 81
+            Itowns/Controls/Widget.js, line 120
         </div>
         
     </div>
@@ -980,7 +1183,7 @@ target div.
     
     
     <div class="description">
-        <p>Binds globe to control</p>
+        <p>Associate a globe to the widget.</p>
     </div>
     
 
@@ -988,6 +1191,52 @@ target div.
     
     
     
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name">globe</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>Globe to associate to the widget.</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+
     
     
     
@@ -1032,10 +1281,8 @@ target div.
         
             
 <dt>
-    <div class="nameContainer inherited">
+    <div class="nameContainer">
         <h4 class="name" id="setOptions">
-            
-                <span class="inherited"><a href="itowns.control.Widget.html#setOptions">inherited</a></span>
             
             setOptions<span class="signature">(options)</span>
         </h4>
@@ -1151,10 +1398,8 @@ target div.
         
             
 <dt>
-    <div class="nameContainer inherited">
+    <div class="nameContainer">
         <h4 class="name" id="setTarget">
-            
-                <span class="inherited"><a href="itowns.control.Widget.html#setTarget">inherited</a></span>
             
             setTarget<span class="signature">(targetDiv, position)</span>
         </h4>
