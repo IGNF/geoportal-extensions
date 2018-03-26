@@ -607,7 +607,7 @@ globeView.addWidget( attribution );
 
 ### Affichage d'une mini-vue dynamique
 
-Ce widget a pour but d'afficher une mini-vue. Cette mini-vue va suivre les déplacements de la vue principale, afin que l'utilisateur aie systématiquement un aperçu son positionnement global sur le globe. La couche par défaut affichée sur la mini-vue est la couche cartographique de l'IGN.
+Ce widget a pour but d'afficher une mini-vue. Cette mini-vue va suivre les déplacements de la vue principale, afin que l'utilisateur ait systématiquement un aperçu son positionnement global sur le globe. La couche par défaut affichée sur la mini-vue est la couche cartographique de l'IGN.
 
 Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe itowns.control.MiniGlobe que l'on peut ensuite ajouter au globe de la manière suivante :
 
@@ -641,9 +641,9 @@ globeView.addWidget( miniglobe );
 
 <a id="scalebar"/>
 
-### Affichage d'une echelle graphique
+### Affichage d'une échelle graphique
 
-Ce widget a pour but d'afficher une echelle graphique. Cette echelle graphique se met à jour dynamiquement en fonction des déplacements de la caméra et permet d'indiquer de manière à quelle echelle correspond la vue de l'utilisateur. 
+Ce widget a pour but d'afficher une échelle graphique. Cette échelle graphique se met à jour dynamiquement en fonction des déplacements de la caméra et permet d'indiquer approximativement à quelle échelle correspond la vue de l'utilisateur. 
 
 Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe itowns.control.Scale que l'on peut ensuite ajouter au globe de la manière suivante :
 
