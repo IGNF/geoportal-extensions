@@ -12,11 +12,11 @@ script:
   - cd ./node_modules/geoportal-access-lib/ && npm install && npm run build && cd ../..
   - npm run build:ol
   - npm run build:leaflet
-  - npm run build:it
+  - npm run build:itowns
   - npm run build:mix
   - npm run build:ol:prod
   - npm run build:leaflet:prod
-  - npm run build:it:prod
+  - npm run build:itowns:prod
   - npm run build:mix:prod
 cache:
   directories:
