@@ -1,6 +1,5 @@
 {
-    "baseurl" : "../../../..",
-    "mode" : "-src",
+    "baseurl" : "../../..",
     "resources" : "../../resources",
     "apikey" : "jhyvi0fgmnuxvfv0zjzorvdn"
 }

@@ -1,262 +1,257 @@
-define([], function () {
+var ElevationPathDOM = {
 
-    "use strict";
+    /** Add uuid to the tag ID */
+    _addUID: function(id) {
+        var uid = (this._uid) ? id + "-" + this._uid : id;
+        return uid;
+    },
 
-    var ElevationPathDOM = {
+    /**
+     * Main container (DOM)
+     *
+     * @returns {DOMElement} DOM element
+     */
+    _createMainContainerElement: function() {
 
-        /** Add uuid to the tag ID */
-        _addUID : function (id) {
-            var uid = (this._uid) ?  id + "-" + this._uid : id;
-            return uid;
-        },
+        var container = document.createElement("div");
+        container.id = this._addUID("GPelevationPath");
+        container.className = "GPwidget";
+        return container;
+    },
 
-        /**
-        * Main container (DOM)
-        *
-        * @returns {DOMElement} DOM element
-        */
-        _createMainContainerElement : function () {
+    // ################################################################### //
+    // ################# Methods to display Main Panel ################### //
+    // ################################################################### //
 
-            var container = document.createElement("div");
-            container.id  = this._addUID("GPelevationPath");
-            container.className = "GPwidget";
-            return container;
-        },
+    /**
+     * Hidden checkbox for minimizing/maximizing panel
+     *
+     * @returns {DOMElement} DOM element
+     */
+    _createShowElevationPathElement: function() {
+        var input = document.createElement("input");
+        input.id = this._addUID("GPshowElevationPath");
+        input.type = "checkbox";
+        return input;
+    },
 
-        // ################################################################### //
-        // ################# Methods to display Main Panel ################### //
-        // ################################################################### //
+    /**
+     * Show control
+     * see event !
+     *
+     * @returns {DOMElement} DOM element
+     */
+    _createShowElevationPathPictoElement: function() {
 
-        /**
-        * Hidden checkbox for minimizing/maximizing panel
-        *
-        * @returns {DOMElement} DOM element
-        */
-        _createShowElevationPathElement : function () {
-            var input  = document.createElement("input");
-            input.id   = this._addUID("GPshowElevationPath");
-            input.type = "checkbox";
-            return input;
-        },
+        // contexte d'execution
+        var context = this;
 
-        /**
-        * Show control
-        * see event !
-        *
-        * @returns {DOMElement} DOM element
-        */
-        _createShowElevationPathPictoElement : function () {
+        var label = document.createElement("label");
+        label.id = this._addUID("GPshowElevationPathPicto");
+        label.className = "GPshowAdvancedToolPicto";
+        label.htmlFor = this._addUID("GPshowElevationPath");
+        label.title = "Calculer un profil";
 
-            // contexte d'execution
-            var context = this;
+        // gestionnaire d'evenement :
+        // on ouvre le menu de saisie de saisie
+        // L'ouverture/Fermeture permet de faire le menage
+        // (reinitialisation)
+        if (label.addEventListener) {
+            label.addEventListener("click", function(e) {
+                context.onShowElevationPathClick(e);
+            });
+        } else if (label.attachEvent) {
+            label.attachEvent("onclick", function(e) {
+                context.onShowElevationPathClick(e);
+            });
+        }
 
-            var label = document.createElement("label");
-            label.id  = this._addUID("GPshowElevationPathPicto");
-            label.className = "GPshowAdvancedToolPicto";
-            label.htmlFor = this._addUID("GPshowElevationPath");
-            label.title = "Calculer un profil";
+        var spanOpen = document.createElement("span");
+        spanOpen.id = this._addUID("GPshowElevationPathOpen");
+        spanOpen.className = "GPshowAdvancedToolOpen";
+        label.appendChild(spanOpen);
 
-            // gestionnaire d'evenement :
-            // on ouvre le menu de saisie de saisie
-            // L'ouverture/Fermeture permet de faire le menage
-            // (reinitialisation)
-            if (label.addEventListener) {
-                label.addEventListener("click", function (e) {
-                    context.onShowElevationPathClick(e);
-                });
-            } else if (label.attachEvent) {
-                label.attachEvent("onclick", function (e) {
-                    context.onShowElevationPathClick(e);
-                });
-            }
+        return label;
+    },
 
-            var spanOpen = document.createElement("span");
-            spanOpen.id  = this._addUID("GPshowElevationPathOpen");
-            spanOpen.className  = "GPshowAdvancedToolOpen";
-            label.appendChild(spanOpen);
+    // ################################################################### //
+    // ######################### Methods to Panel ######################## //
+    // ################################################################### //
 
-            return label;
-        },
+    /**
+     * Create Container Panel
+     *
+     * FIXME
+     * don't call this._createElevationPathPanelHeaderElement
+     * don't call this._createElevationPathPanelProfilElement
+     *
+     * @returns {DOMElement} DOM element
+     */
+    _createElevationPathPanelElement: function() {
+        var div = document.createElement("div");
+        div.id = this._addUID("GPelevationPathPanel");
+        div.className = "GPpanel";
 
-        // ################################################################### //
-        // ######################### Methods to Panel ######################## //
-        // ################################################################### //
+        // div.appendChild(this._createElevationPathPanelHeaderElement());
+        // div.appendChild(this._createElevationPathPanelProfilElement());
 
-        /**
-        * Create Container Panel
-        *
-        * FIXME
-        * don't call this._createElevationPathPanelHeaderElement
-        * don't call this._createElevationPathPanelProfilElement
-        *
-        * @returns {DOMElement} DOM element
-        */
-        _createElevationPathPanelElement : function () {
-            var div  = document.createElement("div");
-            div.id   = this._addUID("GPelevationPathPanel");
-            div.className = "GPpanel";
+        return div;
+    },
 
-            // div.appendChild(this._createElevationPathPanelHeaderElement());
-            // div.appendChild(this._createElevationPathPanelProfilElement());
+    /**
+     * Create Header Panel
+     *
+     * @returns {DOMElement} DOM element
+     */
+    _createElevationPathPanelHeaderElement: function() {
 
-            return div;
-        },
+        var self = this;
 
-        /**
-        * Create Header Panel
-        *
-        * @returns {DOMElement} DOM element
-        */
-        _createElevationPathPanelHeaderElement : function () {
+        var container = document.createElement("div");
+        container.className = "GPpanelHeader";
 
-            var self = this;
+        var divInfo = document.createElement("div");
+        divInfo.id = this._addUID("GPelevationPathPanelInfo");
+        divInfo.className = "GPpanelInfo";
+        divInfo.title = "Informations";
+        // add event on click
+        if (divInfo.addEventListener) {
+            divInfo.addEventListener(
+                "click",
+                function() {
+                    self.onOpenElevationPathInfoClick();
+                }
+            );
+        } else if (divInfo.attachEvent) {
+            // internet explorer
+            divInfo.attachEvent(
+                "onclick",
+                function() {
+                    self.onOpenElevationPathInfoClick();
+                }
+            );
+        }
+        container.appendChild(divInfo);
 
-            var container  = document.createElement("div");
-            container.className = "GPpanelHeader";
+        var divTitle = document.createElement("div");
+        divTitle.className = "GPpanelTitle";
+        divTitle.innerHTML = "Profil Altimétrique";
+        container.appendChild(divTitle);
 
-            var divInfo = document.createElement("div");
-            divInfo.id = this._addUID("GPelevationPathPanelInfo");
-            divInfo.className = "GPpanelInfo";
-            divInfo.title = "Informations";
-            // add event on click
-            if ( divInfo.addEventListener ) {
-                divInfo.addEventListener(
-                    "click",
-                    function () {
-                        self.onOpenElevationPathInfoClick();
-                    }
-                );
-            } else if ( divInfo.attachEvent ) {
-                // internet explorer
-                divInfo.attachEvent(
-                    "onclick",
-                    function () {
-                        self.onOpenElevationPathInfoClick();
-                    }
-                );
-            }
-            container.appendChild(divInfo);
+        var divReduce = document.createElement("div");
+        divReduce.id = this._addUID("GPelevationPathPanelReduce");
+        divReduce.className = "GPpanelReduce";
+        divReduce.title = "Masquer le panneau";
 
-            var divTitle  = document.createElement("div");
-            divTitle.className = "GPpanelTitle";
-            divTitle.innerHTML = "Profil Altimétrique";
-            container.appendChild(divTitle);
+        if (divReduce.addEventListener) {
+            divReduce.addEventListener("click", function() {
+                if (typeof self.onReduceElevationPathPanelClick === "function") {
+                    document.getElementById(self._addUID("GPshowElevationPath")).checked = false;
+                    self.onReduceElevationPathPanelClick();
+                }
+            }, false);
+        } else if (divReduce.attachEvent) {
+            divReduce.attachEvent("onclick", function() {
+                if (typeof self.onReduceElevationPathPanelClick === "function") {
+                    document.getElementById(self._addUID("GPshowElevationPath")).checked = false;
+                    self.onReduceElevationPathPanelClick();
+                }
+            });
+        }
+        container.appendChild(divReduce);
 
-            var divReduce  = document.createElement("div");
-            divReduce.id = this._addUID("GPelevationPathPanelReduce");
-            divReduce.className = "GPpanelReduce";
-            divReduce.title = "Masquer le panneau";
+        var divClose = document.createElement("div");
+        divClose.id = this._addUID("GPelevationPathPanelClose");
+        divClose.className = "GPpanelClose";
+        divClose.title = "Fermer le panneau";
 
-            if (divReduce.addEventListener) {
-                divReduce.addEventListener("click", function () {
-                    if ( typeof self.onReduceElevationPathPanelClick === "function") {
-                        document.getElementById(self._addUID("GPshowElevationPath")).checked = false;
-                        self.onReduceElevationPathPanelClick();
-                    }
-                }, false);
-            } else if (divReduce.attachEvent) {
-                divReduce.attachEvent("onclick", function () {
-                    if ( typeof self.onReduceElevationPathPanelClick === "function") {
-                        document.getElementById(self._addUID("GPshowElevationPath")).checked = false;
-                        self.onReduceElevationPathPanelClick();
-                    }
-                });
-            }
-            container.appendChild(divReduce);
+        // Link panel close / visibility checkbox
+        if (divClose.addEventListener) {
+            divClose.addEventListener("click", function() {
+                document.getElementById(self._addUID("GPshowElevationPathPicto")).click();
+            }, false);
+        } else if (divClose.attachEvent) {
+            divClose.attachEvent("onclick", function() {
+                document.getElementById(self._addUID("GPshowElevationPathPicto")).click();
+            });
+        }
+        container.appendChild(divClose);
 
-            var divClose  = document.createElement("div");
-            divClose.id = this._addUID("GPelevationPathPanelClose");
-            divClose.className = "GPpanelClose";
-            divClose.title = "Fermer le panneau";
+        return container;
+    },
 
-            // Link panel close / visibility checkbox
-            if (divClose.addEventListener) {
-                divClose.addEventListener("click", function () {
-                    document.getElementById(self._addUID("GPshowElevationPathPicto")).click();
-                }, false);
-            } else if (divClose.attachEvent) {
-                divClose.attachEvent("onclick", function () {
-                    document.getElementById(self._addUID("GPshowElevationPathPicto")).click();
-                });
-            }
-            container.appendChild(divClose);
+    /**
+     * Create Form
+     * see evenement !
+     *
+     * @returns {DOMElement} DOM element
+     */
+    _createElevationPathPanelProfilElement: function() {
 
-            return container;
-        },
+        var div = document.createElement("div");
+        div.id = "GPelevationPathProfil";
 
-        /**
-        * Create Form
-        * see evenement !
-        *
-        * @returns {DOMElement} DOM element
-        */
-        _createElevationPathPanelProfilElement : function () {
+        return div;
+    },
 
-            var div  = document.createElement("div");
-            div.id = "GPelevationPathProfil";
+    /**
+     * Create Waiting Panel
+     *
+     * @returns {DOMElement} DOM element
+     */
+    _createElevationPathWaitingElement: function() {
+        var div = document.createElement("div");
+        div.id = this._addUID("GPelevationPathCalcWaitingContainer");
+        div.className = "GPelevationPathCalcWaitingContainerHidden";
 
-            return div;
-        },
+        var p = document.createElement("p");
+        p.className = "GPelevationPathCalcWaiting";
+        p.innerHTML = "Calcul en cours...";
 
-        /**
-        * Create Waiting Panel
-        *
-        * @returns {DOMElement} DOM element
-        */
-        _createElevationPathWaitingElement : function () {
-            var div  = document.createElement("div");
-            div.id   = this._addUID("GPelevationPathCalcWaitingContainer");
-            div.className = "GPelevationPathCalcWaitingContainerHidden";
+        div.appendChild(p);
 
-            var p = document.createElement("p");
-            p.className = "GPelevationPathCalcWaiting";
-            p.innerHTML = "Calcul en cours...";
+        return div;
+    },
 
-            div.appendChild(p);
+    /**
+     * Create information Panel
+     *
+     * @returns {DOMElement} DOM element
+     */
+    _createElevationPathInformationsElement: function() {
 
-            return div;
-        },
+        var div = document.createElement("div");
+        div.id = this._addUID("GPelevationPathInformationsContainer");
+        div.className = "GPelevationPathInformationsContainerHidden";
 
-        /**
-        * Create information Panel
-        *
-        * @returns {DOMElement} DOM element
-        */
-        _createElevationPathInformationsElement : function () {
+        var p = document.createElement("p");
+        p.className = "GPelevationPathInformations";
+        p.innerHTML = "Aucune information...";
+        div.appendChild(p);
 
-            var div  = document.createElement("div");
-            div.id   = this._addUID("GPelevationPathInformationsContainer");
-            div.className = "GPelevationPathInformationsContainerHidden";
+        return div;
+    },
 
+    /**
+     * Add a information into Panel
+     *
+     * @param {String} value - value of item
+     * @returns {DOMElement} DOM element
+     */
+    _addElevationPathInformationsItem: function(value) {
+
+        var div = document.getElementById(this._addUID("GPelevationPathInformationsContainer"));
+
+        if (div) {
             var p = document.createElement("p");
             p.className = "GPelevationPathInformations";
-            p.innerHTML = "Aucune information...";
+            p.innerHTML = value;
             div.appendChild(p);
-
-            return div;
-        },
-
-        /**
-        * Add a information into Panel
-        *
-        * @param {String} value - value of item
-        * @returns {DOMElement} DOM element
-        */
-        _addElevationPathInformationsItem : function (value) {
-
-            var div = document.getElementById(this._addUID("GPelevationPathInformationsContainer"));
-            
-            if (div) {
-                var p = document.createElement("p");
-                p.className = "GPelevationPathInformations";
-                p.innerHTML = value;
-                div.appendChild(p);
-            }
-
-            return div;
-            
         }
-    };
 
-    return ElevationPathDOM;
-});
+        return div;
+
+    }
+};
+
+export default ElevationPathDOM;

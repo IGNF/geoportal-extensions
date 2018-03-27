@@ -1,44 +1,32 @@
 /* global describe, it */
+import MathUtils from "../../../src/Common/Utils/MathUtils";
 
-define(['chai'], function (chai) {
+import { assert, expect, should } from "chai";
+should();
 
-    var assert = chai.assert;
-    var expect = chai.expect;
-    var should = chai.should();
+describe("-- Test MathUtils --", function () {
 
-    describe("-- Test MathUtils --", function () {
+    describe('#modulo', function () {
 
-        var MathUtils;
+    });
 
-        before(function (done) {
-            require(['Common/Utils/MathUtils'], function (_MathUtils) {
-                MathUtils = _MathUtils;
-                done();
-            });
-        });
+    describe('#modulo', function () {
 
-        describe('#modulo', function () {
+    });
 
-        });
+    describe('#decimalToDMS', function () {
 
-        describe('#modulo', function () {
+    });
 
-        });
+    describe('#toInteger', function () {
 
-        describe('#decimalToDMS', function () {
+    });
 
-        });
+    describe('#isInteger', function () {
 
-        describe('#toInteger', function () {
+    });
 
-        });
+    describe('#toFloat', function () {
 
-        describe('#isInteger', function () {
-
-        });
-
-        describe('#toFloat', function () {
-
-        });
     });
 });

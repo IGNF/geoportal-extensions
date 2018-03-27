@@ -5,9 +5,9 @@
     "plugins": ["plugins/markdown"],
     "source": {
         "include": [
-            "src/Itowns",
-            "src/Common",
-            "doc/README-itowns.md"
+            "./src/Itowns",
+            "./src/Common",
+            "./doc/README-itowns.md"
         ]
     },
     "templates": {
@@ -33,9 +33,9 @@
         "hardwrap": true
     },
     "opts": {
-        "template" : "target/build/Itowns/jsdoc/jaguarjs-jsdoc",
+        "template" : "./doc/jaguarjs-jsdoc",
         "encoding" : "utf8",
-        "destination": "./target/build/Itowns/jsdoc",
+        "destination": "./jsdoc/itowns",
         "recurse": true,
         "lenient": true,
         "verbose": true

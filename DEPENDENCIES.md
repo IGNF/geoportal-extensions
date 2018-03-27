@@ -1,4 +1,4 @@
-# DEPENDENCIES (12/10/2017)
+# DEPENDENCIES (26/03/2018)
 
 * openlayers
 
@@ -29,38 +29,30 @@ last
 └── sortablejs@1.4.0
 ```
 
-* woodman
-
-- node-fs@0.1.7
-- base64id@0.1.0
-- policyfile@0.0.4
-- redis@0.7.3
-- zeparser@0.0.5
-- active-x-obfuscator@0.0.1
-- uglify-js@1.2.5
-- commander@2.1.0
-- nan@1.0.0
-- options@0.0.6
-- tinycolor@0.0.1
-- ws@0.4.32
-- xmlhttprequest@1.4.2
-- socket.io-client@0.9.16
-- socket.io@0.9.16
-└─┬ woodman@1.1.0
-  └── esprima@1.0.4
-
 * geoportal-access-lib
 
-└── geoportal-access-lib@1.0.1
+└── geoportal-access-lib@2.0.0
 
 * leaflet
 
-└── leaflet@1.3.0
+└── leaflet@1.3.1
 
 * leaflet-draw
 
-└── leaflet-draw@0.4.12
+└── leaflet-draw@1.0.2
 
-* requirejs
+* "itowns"
 
-└── requirejs@2.3.5
+└── "itowns@2.3.0"
+
+* "loglevel"
+
+└── "loglevel@1.6.1"
+
+* "request"
+
+└── "request@2.83.0"
+
+* "xmldom"
+
+└── "xmldom@0.1.27"

@@ -1,5 +1,7 @@
 # Extension Géoportail pour iTowns
 
+[![release](https://img.shields.io/badge/release%20-itowns%201.0.0-brightgreen.svg?style=flat)](https://github.com/IGNF/geoportal-extensions/releases/tag/itowns-1.0.0)
+
 L'extension Géoportail pour iTowns étend la librairie 3D iTowns afin de proposer l'ajout de widgets au globe. Les fonctionnalités suivantes sont proposées en complément de la bibliothèque [iTowns](http://www.itowns-project.org/) :
 
 * [affichage dynamique des attributions](#attributions)

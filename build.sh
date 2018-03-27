@@ -7,9 +7,7 @@
 #     -i(itowns)
 #     -I(ol/itowns)
 
-# TODO
-#   - gulp est une commande globale !
-#     > npm install --global gulp
+# FIXME incompatibilité avec un env. Windows
 
 ##########
 # doCmd()
@@ -36,102 +34,95 @@ printTo () {
 printTo "BEGIN"
 
 ##########
-# leaflet
-function leaflet() {
-  printTo "####### LEAFLET production !"
-  doCmd "gulp build --production --leaflet"
-  doCmd "gulp publish --leaflet"
-  printTo "####### LEAFLET !"
-  doCmd "gulp build --leaflet"
-  doCmd "gulp publish --leaflet"
+# clean
+function clean() {
+    # pas de tests...
+    printTo "####### CLEAN !"
+    doCmd "rm -rf dist/$1"
+    doCmd "rm -rf samples/$1"
+    doCmd "rm -rf jsdoc/$1"
 }
 
 ##########
-# ol3
-function ol3() {
-  printTo "####### OL production !"
-  doCmd "gulp build --production --ol3"
-  doCmd "gulp publish --ol3"
+# leaflet
+function leaflet() {
+  printTo "####### LEAFLET !"
+  doCmd "npm run build:leaflet"
+  printTo "####### LEAFLET production !"
+  doCmd "npm run build:leaflet:prod"
+}
+
+##########
+# ol
+function ol() {
   printTo "####### OL !"
-  doCmd "gulp build --ol3"
-  doCmd "gulp publish --ol3"
+  doCmd "npm run build:ol"
+  printTo "####### OL production !"
+  doCmd "npm run build:ol:prod"
 }
 
 ##########
 # itowns
 function itowns() {
-  printTo "####### iTowns production !"
-  doCmd "gulp build --itowns"
-  doCmd "gulp publish --itowns"
   printTo "####### iTowns !"
-  doCmd "gulp build --production --itowns"
-  doCmd "gulp publish --itowns"
+  doCmd "npm run build:it"
+  printTo "####### iTowns production !"
+  doCmd "npm run build:it:prod"
 }
 
 ##########
 # mix itowns
-function mixIt() {
+function mix() {
   printTo "####### Mixte OL/iTowns !"
-  doCmd "gulp build --ol3 --itowns --mix"
-  doCmd "gulp publish --ol3 --itowns --mix"
+  doCmd "npm run build:mix"
   printTo "####### Mixte OL/iTowns production !"
-  doCmd "gulp build --production --ol3 --itowns --mix"
-  doCmd "gulp publish --ol3 --itowns --mix"
-}
-
-##########
-# build docker
-function docker() {
-  printTo "####### Build Docker !"
-  doCmd "docker build -t geoportal-extensions ."
-  printTo "####### Run Docker !"
-  doCmd "docker run -it --rm geoportal-extensions"
+  doCmd "npm run build:mix:prod"
 }
 
 printTo "###########  NPM  ##############"
-doCmd "npm install"
+doCmd "npm run setup"
 
-printTo "##### geoportal-access-lib #####"
+printTo "########### BUILD : ############"
+printTo "#### > geoportal-access-lib ####"
 doCmd "cd ./node_modules/geoportal-access-lib/ && npm install && npm run build"
+doCmd "cd ../.."
 
-printTo "########### CLEAN ###############"
-doCmd "cd ../.. && gulp clean"
-
-while getopts "daoliI" opts
+while getopts "aoliI" opts
 do
    case $opts in
-     d)
-        printTo "#################################"
-        printTo "########### DOCKER ! ###########"
-        docker
-        ;;
      o)
         printTo "#################################"
         printTo "###### OpenLayers bundle ! ######"
-        ol3
+        clean "openlayers"
+        ol
         ;;
      l)
         printTo "#################################"
         printTo "####### Leaflet bundle ! ########"
+        clean "leaflet"
         leaflet
         ;;
      i)
         printTo "#############################"
         printTo "###### Itowns bundle ! ######"
+        clean "itowns"
         itowns
         ;;
      I)
         printTo "###################################"
         printTo "###### Mixte Itowns bundle ! ######"
-        mixIt
+        mix
         ;;
      a)
         printTo "#################################"
         printTo "########## ALL bundle ! #########"
-        ol3
+        clean "openlayers"
+        ol
+        clean "leaflet"
         leaflet
+        clean "itowns"
         itowns
-        mixIt
+        mix
         ;;
      \?)
         printTo "$OPTARG : option invalide : a(all), o(openlayers), l(leaflet), i(itowns), I(ol/itowns) !"

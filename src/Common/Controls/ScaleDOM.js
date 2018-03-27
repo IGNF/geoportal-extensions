@@ -1,28 +1,23 @@
-define([], function () {
+var ScaleDOM = {
 
-    "use strict";
+    /** Add uuid to the tag ID */
+    _addUID: function(id) {
+        var uid = (this._uid) ? id + "-" + this._uid : id;
+        return uid;
+    },
 
-    var ScaleDOM = {
+    /**
+     * Main container (DOM)
+     *
+     * @returns {DOMElement} DOM element
+     */
+    _createMainContainerElement: function() {
 
-        /** Add uuid to the tag ID */
-        _addUID : function (id) {
-            var uid = (this._uid) ?  id + "-" + this._uid : id;
-            return uid;
-        },
+        var container = document.createElement("div");
+        container.id = this._addUID("GPscaleContainer");
+        container.className = "GPwidget";
+        return container;
+    }
+};
 
-        /**
-        * Main container (DOM)
-        *
-        * @returns {DOMElement} DOM element
-        */
-        _createMainContainerElement : function () {
-
-            var container = document.createElement("div");
-            container.id  = this._addUID("GPscaleContainer");
-            container.className = "GPwidget";
-            return container;
-        }
-    };
-
-    return ScaleDOM;
-});
+export default ScaleDOM;

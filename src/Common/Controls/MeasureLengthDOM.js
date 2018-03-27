@@ -1,84 +1,79 @@
-define([], function () {
+var MeasureLengthDOM = {
 
-    "use strict";
+    /** Add uuid to the tag ID */
+    _addUID: function(id) {
+        var uid = (this._uid) ? id + "-" + this._uid : id;
+        return uid;
+    },
 
-    var MeasureLengthDOM = {
+    /**
+     * Main container (DOM)
+     *
+     * @returns {DOMElement} DOM element
+     */
+    _createMainContainerElement: function() {
 
-        /** Add uuid to the tag ID */
-        _addUID : function (id) {
-            var uid = (this._uid) ?  id + "-" + this._uid : id;
-            return uid;
-        },
+        var container = document.createElement("div");
+        container.id = this._addUID("GPmeasureLength");
+        container.className = "GPwidget";
+        return container;
+    },
 
-        /**
-        * Main container (DOM)
-        *
-        * @returns {DOMElement} DOM element
-        */
-        _createMainContainerElement : function () {
+    // ################################################################### //
+    // ################### Methods of main container ##################### //
+    // ################################################################### //
 
-            var container = document.createElement("div");
-            container.id  = this._addUID("GPmeasureLength");
-            container.className = "GPwidget";
-            return container;
-        },
+    /**
+     * Hidden checkbox for minimizing/maximizing
+     *
+     * @returns {DOMElement} DOM element
+     */
+    _createShowMeasureLengthElement: function() {
 
-        // ################################################################### //
-        // ################### Methods of main container ##################### //
-        // ################################################################### //
+        var input = document.createElement("input");
+        input.id = this._addUID("GPshowMeasureLength");
+        input.type = "checkbox";
+        return input;
+    },
 
-        /**
-        * Hidden checkbox for minimizing/maximizing
-        *
-        * @returns {DOMElement} DOM element
-        */
-        _createShowMeasureLengthElement : function () {
+    /**
+     * Show control
+     * see event !
+     *
+     * @returns {DOMElement} DOM element
+     */
+    _createShowMeasureLengthPictoElement: function() {
 
-            var input  = document.createElement("input");
-            input.id   = this._addUID("GPshowMeasureLength");
-            input.type = "checkbox";
-            return input;
-        },
+        // contexte d'execution
+        var context = this;
 
-        /**
-        * Show control
-        * see event !
-        *
-        * @returns {DOMElement} DOM element
-        */
-        _createShowMeasureLengthPictoElement : function () {
+        var label = document.createElement("label");
+        label.id = this._addUID("GPshowMeasureLengthPicto");
+        label.className = "GPshowAdvancedToolPicto";
+        label.htmlFor = this._addUID("GPshowMeasureLength");
+        label.title = "Mesurer une distance";
 
-            // contexte d'execution
-            var context = this;
-
-            var label = document.createElement("label");
-            label.id  = this._addUID("GPshowMeasureLengthPicto");
-            label.className = "GPshowAdvancedToolPicto";
-            label.htmlFor = this._addUID("GPshowMeasureLength");
-            label.title = "Mesurer une distance";
-
-            // gestionnaire d'evenement :
-            // on ouvre le menu de saisie...
-            // L'ouverture/Fermeture permet de faire le menage
-            // (reinitialisation)
-            if (label.addEventListener) {
-                label.addEventListener("click", function (e) {
-                    context.onShowMeasureLengthClick(e);
-                });
-            } else if (label.attachEvent) {
-                label.attachEvent("onclick", function (e) {
-                    context.onShowMeasureLengthClick(e);
-                });
-            }
-
-            var spanOpen = document.createElement("span");
-            spanOpen.id  = this._addUID("GPshowMeasureLengthOpen");
-            spanOpen.className  = "GPshowAdvancedToolOpen";
-            label.appendChild(spanOpen);
-
-            return label;
+        // gestionnaire d'evenement :
+        // on ouvre le menu de saisie...
+        // L'ouverture/Fermeture permet de faire le menage
+        // (reinitialisation)
+        if (label.addEventListener) {
+            label.addEventListener("click", function(e) {
+                context.onShowMeasureLengthClick(e);
+            });
+        } else if (label.attachEvent) {
+            label.attachEvent("onclick", function(e) {
+                context.onShowMeasureLengthClick(e);
+            });
         }
-    };
 
-    return MeasureLengthDOM;
-});
+        var spanOpen = document.createElement("span");
+        spanOpen.id = this._addUID("GPshowMeasureLengthOpen");
+        spanOpen.className = "GPshowAdvancedToolOpen";
+        label.appendChild(spanOpen);
+
+        return label;
+    }
+};
+
+export default MeasureLengthDOM;

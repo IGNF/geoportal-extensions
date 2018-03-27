@@ -1,15 +1,14 @@
         <!-- requirejs -->
-        <script src="{{ config.baseurl }}/node_modules/requirejs/require.js"></script>
+        <script src="{{ baseurl }}/node_modules/requirejs/require.js"></script>
         <script>
                 /* global requirejs */
                 requirejs.config({
-                    "baseUrl" : "{{ config.baseurl }}/src/",
                     "paths": {
-                    "itowns"       : "../node_modules/itowns/dist/itowns",
-                    "proj4"    : "../node_modules/proj4/dist/proj4{{ config.mode }}",
-                    "Gp"       : "../node_modules/geoportal-access-lib/dist/GpServices{{ config.mode }}",
-                    "sortable" : "../node_modules/sortablejs/Sortable",
-                    "woodman"  : "../node_modules/woodman/dist/woodman-amd"
+                        "itowns"   : "{{ baseurl }}/node_modules/itowns/dist/itowns",
+                        "Gp"       : "{{ baseurl }}/dist/itowns/GpPluginItowns{{ mode }}"
+                    },
+                    shim : {
+                        "Gp" : ["itowns"]
                     }
                 });
         </script>

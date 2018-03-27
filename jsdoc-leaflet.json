@@ -5,25 +5,40 @@
     "plugins": ["plugins/markdown"],
     "source": {
         "include": [
-            "src/Leaflet",
-            "src/Common",
-            "doc/README-leaflet.md"
+            "./src/Leaflet",
+            "./src/Common",
+            "./doc/README-leaflet.md"
         ]
     },
     "templates": {
-        "applicationName" : "Geoportal Extension for Leaflet"
+        "applicationName"       : "Geoportal Extension for Leaflet",
+        "cleverLinks"           : false,
+        "monospaceLinks"        : false,
+        "dateFormat"            : "ddd MMM Do YYYY",
+        "outputSourceFiles"     : true,
+        "outputSourcePath"      : true,
+        "systemName"            : "Geoportal Extension for Leaflet",
+        "footer"                : "API Extension version 1.0.0",
+        "copyright"             : "Geoportail - Copyright (c) IGN, released under the CECILL-B license",
+        "navType"               : "inline",
+        "theme"                 : "darkly",
+        "linenums"              : true,
+        "collapseSymbols"       : true,
+        "inverseNav"            : true,
+        "highlightTutorialCode" : false,
+        "syntaxTheme"           : "default"
     },
     "markdown": {
         "parser": "gfm",
         "hardwrap": true
     },
     "opts": {
-        "template" : "target/build/Leaflet/jsdoc/jaguarjs-jsdoc",
+        "template" : "./doc/jaguarjs-jsdoc",
         "encoding" : "utf8",
-        "destination": "./target/build/Leaflet/jsdoc",
+        "destination": "./jsdoc/leaflet",
         "recurse": true,
         "lenient": true,
         "verbose": true,
-        "tutorials" : "./target/build/Leaflet/jsdoc/tutorials"
+        "tutorials" : "./doc/tutorials"
     }
 }

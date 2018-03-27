@@ -1,50 +1,50 @@
-define([
-    "itowns",
-    "Gp",
-    "Common/Utils",
-    "Common/Utils/LayerUtils",
-    "Itowns/Controls/MousePosition",
-    "Itowns/Controls/LayerSwitcher",
-    "Itowns/Controls/Attributions",
-    "Itowns/Controls/Scale",
-    "Itowns/Controls/MiniGlobe",
-    "Itowns/GlobeViewExtended"
-], function (
-    Itowns,
-    Gp,
-    Utils,
-    LayerUtils,
-    MousePosition,
-    LayerSwitcher,
-    Attributions,
-    Scale,
-    MiniGlobe,
-    GlobeViewExtended
-) {
+import Gp from "gp";
+import * as Itowns from "itowns";
+import LayerUtils from "../Common/Utils/LayerUtils";
+import MousePosition from "./Controls/MousePosition";
+import LayerSwitcher from "./Controls/LayerSwitcher";
+import Attributions from "./Controls/Attributions";
+import Scale from "./Controls/Scale";
+import MiniGlobe from "./Controls/MiniGlobe";
+import GlobeViewExtended from "./GlobeViewExtended";
 
-    "use strict";
+// Adds the extensions properties in the Gp namespace
+Gp.LayerUtils = LayerUtils;
 
-    // Adds the extensions properties in the Gp namespace
-    Gp.LayerUtils = LayerUtils ;
+// Adds extensions properties in the Gp namespace
+Gp.itownsExtVersion = "__GPITOWNSEXTVERSION__";
+Gp.itownsExtDate = "__GPDATE__";
 
-    // determines the execution environment l'environnement : browser or not ?
-    var scope = typeof window !== "undefined" ? window : {};
+// determines the execution environment l'environnement : browser or not ?
+var env = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : {};
 
-    // checks if the var already exists : if not, we create it
-    var _itowns = Itowns || {};
+// creation of the namespace for the itowns extensions
+Itowns.control = {};
+Itowns.control.MousePosition = MousePosition;
+Itowns.control.LayerSwitcher = LayerSwitcher;
+Itowns.control.Attributions = Attributions;
+Itowns.control.Scale = Scale;
+Itowns.control.MiniGlobe = MiniGlobe;
+Itowns.GlobeViewExtended = GlobeViewExtended;
 
-    // creation of the namespace for the itowns extensions
-    _itowns.control = {};
-    _itowns.control.MousePosition = MousePosition;
-    _itowns.control.LayerSwitcher = LayerSwitcher;
-    _itowns.control.Attributions = Attributions;
-    _itowns.control.Scale = Scale;
-    _itowns.control.MiniGlobe = MiniGlobe;
-    _itowns.GlobeViewExtended = GlobeViewExtended;
+// FIXME saves in the global variable !
+if ( !env.itowns ){
+    env.itowns = {};
+}
 
-    // saves in the global variable !
-    scope.itowns = scope.itowns || {};
-    Utils.assign(scope.itowns, _itowns);
+deepCopy( Itowns, env.itowns );
 
-    return Gp;
-});
+function deepCopy(source, target)
+{
+    for (var prop in source) {
+        if ( source.hasOwnProperty(prop) ) {
+            if ( !target.hasOwnProperty(prop) ) {
+                target[prop] = source[prop];
+            } else if ( typeof source[prop] === "object" ) {
+                deepCopy( source[prop], target[prop] );
+            }
+        }
+    }
+}
+
+export default Gp;

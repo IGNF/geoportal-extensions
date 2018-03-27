@@ -22,10 +22,10 @@
 {{#content "js"}}
     <script type=module>
 
-    import * as Gp from "{{ config.baseurl }}/dist/leaflet/GpPluginLeaflet{{ config.mode }}.js";
+    import * as Gp from "{{ baseurl }}/dist/leaflet/GpPluginLeaflet{{ mode }}.js";
 
     self.Gp.Services.getConfig({
-      serverUrl : "{{ config.resources }}/AutoConf.js",
+      serverUrl : "{{ resources }}/AutoConf.js",
       callbackSuffix : "",
       onSuccess : function () {
           // on cache l'image de chargement du Géoportail.
