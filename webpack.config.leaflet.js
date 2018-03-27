@@ -170,7 +170,7 @@ module.exports = env => {
             }),
             /** GENERATION DE LA JSDOC */
             new JsDocWebPackPlugin({
-                conf : path.join(__dirname, "jsdoc-leaflet.json")
+                conf : path.join(__dirname, "doc/jsdoc-leaflet.json")
             }),
             /** CSS / IMAGES */
             new ExtractTextWebPackPlugin((production) ? "GpPluginLeaflet.css" : "GpPluginLeaflet-src.css"),

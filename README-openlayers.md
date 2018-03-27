@@ -53,6 +53,7 @@ Vous pouvez récupérer l'extension Géoportail pour OpenLayers soit par [télé
 
 L'extension Géoportail pour OpenLayers comprend l'arborescence de fichiers suivante :
 
+```
     <Extension Géoportail pour OpenLayers>/
         GpPluginOpenLayers.js
             (version minifiée du code javascript pour une utilisation en production)
@@ -62,9 +63,7 @@ L'extension Géoportail pour OpenLayers comprend l'arborescence de fichiers suiv
             (version non minifiée du code javascript pour une utilisation en développement)
         GpPluginOpenLayers-src.css
             (version non minifiée des css pour une utilisation en développement)
-        img/
-            (resources images utilisées par les fichiers CSS)
-
+```
 
 Les scripts d'OpenLayers s'obtiennent sur [la page de téléchargement d'OpenLayers](http://openlayers.org/download/).
 

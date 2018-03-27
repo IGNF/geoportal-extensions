@@ -112,6 +112,7 @@ module.exports = env => {
                         path.join(__dirname, "res", "Common"),
                         path.join(__dirname, "res", "OpenLayers")
                     ],
+                    exclude : /node_modules/,
                     use : ExtractTextWebPackPlugin.extract({
                         fallback : {
                             loader : "style-loader",
@@ -130,7 +131,8 @@ module.exports = env => {
                 },
                 {
                     test : /\.(png|jpg|gif|svg)$/,
-                    loader : "url-loader"
+                    loader : "url-loader",
+                    exclude : /node_modules/
                 }
             ]
         },
@@ -160,7 +162,7 @@ module.exports = env => {
             }),
             /** GENERATION DE LA JSDOC */
             new JsDocWebPackPlugin({
-                conf : path.join(__dirname, "jsdoc-openlayers.json")
+                conf : path.join(__dirname, "doc/jsdoc-openlayers.json")
             }),
             /** CSS / IMAGES */
             new ExtractTextWebPackPlugin((production) ? "GpPluginOpenLayers.css" : "GpPluginOpenLayers-src.css"),
@@ -209,7 +211,7 @@ module.exports = env => {
                                 var label = relativePath.replace("/", " -- ");
                                 var pathObj = path.parse(relativePath);
                                 return {
-                                    filePath : path.join("leaflet", pathObj.dir, pathObj.name.concat((production) ? "" : "-src").concat(pathObj.ext)),
+                                    filePath : path.join("openlayers", pathObj.dir, pathObj.name.concat((production) ? "" : "-src").concat(pathObj.ext)),
                                     label : label
                                 };
                             });

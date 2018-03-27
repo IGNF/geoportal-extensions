@@ -10,8 +10,8 @@ module.exports = {
     externals : [nodeExternals()],
     resolve : {
         alias : {
-            proj4 : path.resolve(__dirname, "node_modules", "proj4", "dist", "proj4.js"),
-            gp : path.resolve(__dirname, "node_modules", "geoportal-access-lib", "dist", "GpServices-src.js")
+            proj4 : path.resolve("..", "node_modules", "proj4", "dist", "proj4.js"),
+            gp : path.resolve("..", "node_modules", "geoportal-access-lib", "dist", "GpServices-src.js")
         }
     },
     module : {

@@ -153,7 +153,7 @@ module.exports = env => {
             }),
             /** GENERATION DE LA JSDOC */
             new JsDocWebPackPlugin({
-                conf : path.join(__dirname, "jsdoc-itowns.json")
+                conf : path.join(__dirname, "doc/jsdoc-itowns.json")
             }),
             /** CSS / IMAGES */
             new ExtractTextWebPackPlugin((production) ? "GpPluginItowns.css" : "GpPluginItowns-src.css"),
