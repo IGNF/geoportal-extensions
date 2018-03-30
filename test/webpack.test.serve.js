@@ -8,18 +8,18 @@ var DefineWebpackPlugin = webpack.DefinePlugin;
 
 module.exports = {
     entry : {
-        tests : path.join(__dirname, "test")
+        tests : path.join(__dirname)
     },
     output : {
-        path : path.join(__dirname, "test"),
+        path : path.join(__dirname),
         filename : "test_bundle.js",
         libraryTarget : "umd"
     },
     externals : ["request", "xmldom"],
     resolve : {
         alias : {
-            proj4 : path.resolve(__dirname, "node_modules", "proj4", "dist", "proj4.js"),
-            gp : path.resolve(__dirname, "node_modules", "geoportal-access-lib", "dist", "GpServices-src.js")
+            proj4 : path.resolve("..", "node_modules", "proj4", "dist", "proj4.js"),
+            gp : path.resolve("..", "node_modules", "geoportal-access-lib", "dist", "GpServices-src.js")
         }
     },
     devtool : "source-map",

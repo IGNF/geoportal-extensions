@@ -89,7 +89,7 @@ describe("-- Test Plugin Leaflet Layers::WMS --", function () {
         it('WMS with right, return a layer with attributions', function (done) {
 
             Gp.Services.getConfig({
-                serverUrl : "test/spec/leaflet/fixtures/autoconf/callback-autoconf-xml",
+                serverUrl : "spec/leaflet/fixtures/autoconf/callback-autoconf-xml",
                 // apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
                 callbackSuffix : "",
                 timeOut : 20000,
@@ -121,7 +121,7 @@ describe("-- Test Plugin Leaflet Layers::WMS --", function () {
         it('WMS with no right, return a layer by default', function (done) {
 
             Gp.Services.getConfig({
-                serverUrl : "test/spec/leaflet/fixtures/autoconf/callback-autoconf-xml",
+                serverUrl : "spec/leaflet/fixtures/autoconf/callback-autoconf-xml",
                 // apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
                 callbackSuffix : "",
                 timeOut : 20000,

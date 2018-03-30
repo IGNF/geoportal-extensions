@@ -82,23 +82,23 @@ module.exports = env => {
                         }
                     }
                 },
-                {
-                    test : /\.js$/,
-                    enforce : "pre",
-                    include : [
-                        path.join(__dirname, "src", "Common"),
-                        path.join(__dirname, "src", "Itowns")
-                    ],
-                    exclude : /node_modules/,
-                    use : [
-                        {
-                            loader : "eslint-loader",
-                            options : {
-                                emitWarning : true
-                            }
-                        }
-                    ]
-                },
+                // {
+                //     test : /\.js$/,
+                //     enforce : "pre",
+                //     include : [
+                //         path.join(__dirname, "src", "Common"),
+                //         path.join(__dirname, "src", "Itowns")
+                //     ],
+                //     exclude : /node_modules/,
+                //     use : [
+                //         {
+                //             loader : "eslint-loader",
+                //             options : {
+                //                 emitWarning : true
+                //             }
+                //         }
+                //     ]
+                // },
                 {
                     test : /\.css$/,
                     include : [
@@ -153,7 +153,7 @@ module.exports = env => {
             }),
             /** GENERATION DE LA JSDOC */
             new JsDocWebPackPlugin({
-                conf : path.join(__dirname, "jsdoc-itowns.json")
+                conf : path.join(__dirname, "doc/jsdoc-itowns.json")
             }),
             /** CSS / IMAGES */
             new ExtractTextWebPackPlugin((production) ? "GpPluginItowns.css" : "GpPluginItowns-src.css"),

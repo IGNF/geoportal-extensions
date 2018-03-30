@@ -77,24 +77,17 @@ En version 3 de webpack, on a du code js à placer pour utiliser **--env.product
 
 ### client web pour l'affichage
 
-**TODO!**
+**OK!**
 
 ## LES EXEMPLES
 
 ### génération des EXEMPLES
 
-**TODO: en cours...**
-
-*templatisation* des exemples avec
-- **gulp** ou
-- un **loader de webpack** ou
-- un **plugin de webpack** ou
-- un **plugin maison**
-
-Le choix a été fait d'utiliser un **plugin maison** !
+**OK!**
 
 **Warning**
-> publication du plugin !?
+> *templatisation* des exemples avec un **plugin maison** !
+> mais publication du plugin ?
 
 ### client web pour l'affichage
 
@@ -112,11 +105,10 @@ Le choix a été fait d'utiliser un **plugin maison** !
 
 ## LES TESTS DE RENDU
 
-**OK!**
+**OK!** mais en tant que projet independant !
 
 **Warning!**
-> on laisse les tests sous gulp...,
-et on ne les intègre pas à webpack !
+> on laisse les tests sous gulp..., et on ne les intègre pas à webpack !
 
 ## LA DOCUMENTATION
 
@@ -131,7 +123,7 @@ et on ne les intègre pas à webpack !
 **OK!**
 
 **Warning!**
-> intégration des tests et des tests de rendu à mettre en place !!!
+> intégration des tests à mettre en place !!!
 
 ## SCRIPTS
 

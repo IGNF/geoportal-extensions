@@ -229,7 +229,7 @@ module.exports = env => {
                     __PRODUCTION__ : JSON.stringify(production)
                 }),
                 new JsDocWebPackPlugin({
-                    conf : path.join(__dirname, "jsdoc-" + projectName.toLowerCase() + ".json")
+                    conf : path.join(__dirname, "doc/jsdoc-" + projectName.toLowerCase() + ".json")
                 }),
                 new ExtractTextWebPackPlugin((production) ? bundleName + ".css" : bundleName + "-src.css"),
                 new HandlebarsPlugin(

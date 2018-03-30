@@ -50,7 +50,6 @@ L'extension Géoportail pour Leaflet comprend l'arborescence de fichiers suivant
     GpPluginLeaflet.css        (version minifiée des css pour une utilisation en production)
     GpPluginLeaflet-src.js     (version non minifiée du code javascript pour une utilisation en développement)
     GpPluginLeaflet-src.css    (version non minifiée des css pour une utilisation en développement)
-    img/                       (resources images utilisées par les fichiers CSS)
 ```
 
 Les scripts de Leaflet s'obtiennent sur [la page de téléchargement de Leaflet](http://leafletjs.com/download.html).

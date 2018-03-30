@@ -85,23 +85,23 @@ module.exports = env => {
                         }
                     }
                 },
-                {
-                    test : /\.js$/,
-                    enforce : "pre",
-                    include : [
-                        path.join(__dirname, "src", "Common"),
-                        path.join(__dirname, "src", "Leaflet")
-                    ],
-                    exclude : /node_modules/,
-                    use : [
-                        {
-                            loader : "eslint-loader",
-                            options : {
-                                emitWarning : true
-                            }
-                        }
-                    ]
-                },
+                // {
+                //     test : /\.js$/,
+                //     enforce : "pre",
+                //     include : [
+                //         path.join(__dirname, "src", "Common"),
+                //         path.join(__dirname, "src", "Leaflet")
+                //     ],
+                //     exclude : /node_modules/,
+                //     use : [
+                //         {
+                //             loader : "eslint-loader",
+                //             options : {
+                //                 emitWarning : true
+                //             }
+                //         }
+                //     ]
+                // },
                 {
                     test : require.resolve("proj4"),
                     use : [{
@@ -170,7 +170,7 @@ module.exports = env => {
             }),
             /** GENERATION DE LA JSDOC */
             new JsDocWebPackPlugin({
-                conf : path.join(__dirname, "jsdoc-leaflet.json")
+                conf : path.join(__dirname, "doc/jsdoc-leaflet.json")
             }),
             /** CSS / IMAGES */
             new ExtractTextWebPackPlugin((production) ? "GpPluginLeaflet.css" : "GpPluginLeaflet-src.css"),

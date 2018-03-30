@@ -35,6 +35,7 @@ Vous pouvez récupérer l'extension Géoportail pour iTowns soit par [téléchar
 
 L'extension Géoportail pour iTowns comprend l'arborescence de fichiers suivante :
 
+```
     <Extension Géoportail pour iTowns>/
         GpPluginItowns.js
             (version minifiée du code javascript pour une utilisation en production)
@@ -44,9 +45,7 @@ L'extension Géoportail pour iTowns comprend l'arborescence de fichiers suivante
             (version non minifiée du code javascript pour une utilisation en développement)
         GpPluginItowns-src.css
             (version non minifiée des css pour une utilisation en développement)
-        img/
-            (resources images utilisées par les fichiers CSS)
-
+```
 
 Les scripts d'iTowns s'obtiennent sur [la page de téléchargement d'iTowns](https://github.com/iTowns/itowns/releases).
 

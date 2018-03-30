@@ -43,7 +43,7 @@ describe("-- Test Plugin Leaflet Layers::LayerConfig --", function () {
 
         it('Config without parameter key, layer and service, return by default', function (done) {
             Gp.Services.getConfig({
-                serverUrl : "test/spec/leaflet/fixtures/autoconf/callback-autoconf-xml",
+                serverUrl : "spec/leaflet/fixtures/autoconf/callback-autoconf-xml",
                 // apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
                 callbackSuffix : "",
                 timeOut : 20000,
@@ -67,7 +67,7 @@ describe("-- Test Plugin Leaflet Layers::LayerConfig --", function () {
         it('Config with parameter key, layer and service, but return nothing', function (done) {
 
             Gp.Services.getConfig({
-                serverUrl : "test/spec/leaflet/fixtures/autoconf/callback-autoconf-xml",
+                serverUrl : "spec/leaflet/fixtures/autoconf/callback-autoconf-xml",
                 // apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
                 callbackSuffix : "",
                 timeOut : 20000,
