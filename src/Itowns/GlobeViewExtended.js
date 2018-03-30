@@ -270,10 +270,13 @@ GlobeViewExtended.prototype.forget = function(type, callback) {
 
 /**
  * Overload itowns.GlobeView addLayer method
+ * @param {Object} layer - The itowns layer.
+ * @return {Promise}
  */
 GlobeViewExtended.prototype.addLayer = function(layer) {
-    this.getGlobeView().addLayer(layer);
+    var promise = this.getGlobeView().addLayer(layer);
     this.getGlobeView().notifyChange(true);
+    return promise;
 };
 
 /**
@@ -566,9 +569,10 @@ GlobeViewExtended.prototype.getScale = function() {
  * Sets tilt
  *
  * @param {Number} tilt - Tilt value
+ * @return {Promise}
  */
 GlobeViewExtended.prototype.setTilt = function(tilt) {
-    this.getGlobeView().controls.setTilt(tilt, false);
+    return this.getGlobeView().controls.setTilt(tilt, false);
 };
 
 /**
@@ -584,9 +588,10 @@ GlobeViewExtended.prototype.getTilt = function() {
  * Sets azimuth
  *
  * @param {Number} azimuth - Azimuth value
+ * @return {Promise}
  */
 GlobeViewExtended.prototype.setAzimuth = function(azimuth) {
-    this.getGlobeView().controls.setHeading(azimuth, false);
+    return this.getGlobeView().controls.setHeading(azimuth, false);
 };
 
 /**
@@ -663,9 +668,10 @@ GlobeViewExtended.prototype.getFeaturesAtMousePosition = function(mouseEvent) {
  * @param {Object} center - Center object
  * @param {Number} center.longitude - Coordinate longitude WGS84 in degree
  * @param {Number} center.latitude - Coordinate latitude WGS84 in degree
+ * @return {Promise} A promise that resolves when the next 'globe initilazed' event fires.
  */
 GlobeViewExtended.prototype.setCameraTargetGeoPosition = function(center) {
-    this.getGlobeView().controls.setCameraTargetGeoPositionAdvanced(center, false);
+    return this.getGlobeView().controls.setCameraTargetGeoPositionAdvanced(center, false);
 };
 
 /**
@@ -696,9 +702,10 @@ GlobeViewExtended.prototype.getZoom = function() {
  * Sets the current zoom.
  *
  * @param {Number} zoom - The zoom
+ * @return {Promise}
  */
 GlobeViewExtended.prototype.setZoom = function(zoom) {
-    this.getGlobeView().controls.setZoom(zoom, false);
+    return this.getGlobeView().controls.setZoom(zoom, false);
 };
 
 /**
