@@ -1,7 +1,7 @@
 var ElevationPathDOM = {
 
     /** Add uuid to the tag ID */
-    _addUID: function(id) {
+    _addUID : function(id) {
         var uid = (this._uid) ? id + "-" + this._uid : id;
         return uid;
     },
@@ -11,8 +11,7 @@ var ElevationPathDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createMainContainerElement: function() {
-
+    _createMainContainerElement : function () {
         var container = document.createElement("div");
         container.id = this._addUID("GPelevationPath");
         container.className = "GPwidget";
@@ -28,7 +27,7 @@ var ElevationPathDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createShowElevationPathElement: function() {
+    _createShowElevationPathElement : function () {
         var input = document.createElement("input");
         input.id = this._addUID("GPshowElevationPath");
         input.type = "checkbox";
@@ -41,8 +40,7 @@ var ElevationPathDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createShowElevationPathPictoElement: function() {
-
+    _createShowElevationPathPictoElement : function () {
         // contexte d'execution
         var context = this;
 
@@ -57,11 +55,11 @@ var ElevationPathDOM = {
         // L'ouverture/Fermeture permet de faire le menage
         // (reinitialisation)
         if (label.addEventListener) {
-            label.addEventListener("click", function(e) {
+            label.addEventListener("click", function (e) {
                 context.onShowElevationPathClick(e);
             });
         } else if (label.attachEvent) {
-            label.attachEvent("onclick", function(e) {
+            label.attachEvent("onclick", function (e) {
                 context.onShowElevationPathClick(e);
             });
         }
@@ -87,7 +85,7 @@ var ElevationPathDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createElevationPathPanelElement: function() {
+    _createElevationPathPanelElement : function () {
         var div = document.createElement("div");
         div.id = this._addUID("GPelevationPathPanel");
         div.className = "GPpanel";
@@ -103,8 +101,7 @@ var ElevationPathDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createElevationPathPanelHeaderElement: function() {
-
+    _createElevationPathPanelHeaderElement : function () {
         var self = this;
 
         var container = document.createElement("div");
@@ -118,7 +115,7 @@ var ElevationPathDOM = {
         if (divInfo.addEventListener) {
             divInfo.addEventListener(
                 "click",
-                function() {
+                function () {
                     self.onOpenElevationPathInfoClick();
                 }
             );
@@ -126,7 +123,7 @@ var ElevationPathDOM = {
             // internet explorer
             divInfo.attachEvent(
                 "onclick",
-                function() {
+                function () {
                     self.onOpenElevationPathInfoClick();
                 }
             );
@@ -144,14 +141,14 @@ var ElevationPathDOM = {
         divReduce.title = "Masquer le panneau";
 
         if (divReduce.addEventListener) {
-            divReduce.addEventListener("click", function() {
+            divReduce.addEventListener("click", function () {
                 if (typeof self.onReduceElevationPathPanelClick === "function") {
                     document.getElementById(self._addUID("GPshowElevationPath")).checked = false;
                     self.onReduceElevationPathPanelClick();
                 }
             }, false);
         } else if (divReduce.attachEvent) {
-            divReduce.attachEvent("onclick", function() {
+            divReduce.attachEvent("onclick", function () {
                 if (typeof self.onReduceElevationPathPanelClick === "function") {
                     document.getElementById(self._addUID("GPshowElevationPath")).checked = false;
                     self.onReduceElevationPathPanelClick();
@@ -167,11 +164,11 @@ var ElevationPathDOM = {
 
         // Link panel close / visibility checkbox
         if (divClose.addEventListener) {
-            divClose.addEventListener("click", function() {
+            divClose.addEventListener("click", function () {
                 document.getElementById(self._addUID("GPshowElevationPathPicto")).click();
             }, false);
         } else if (divClose.attachEvent) {
-            divClose.attachEvent("onclick", function() {
+            divClose.attachEvent("onclick", function () {
                 document.getElementById(self._addUID("GPshowElevationPathPicto")).click();
             });
         }
@@ -186,8 +183,7 @@ var ElevationPathDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createElevationPathPanelProfilElement: function() {
-
+    _createElevationPathPanelProfilElement : function () {
         var div = document.createElement("div");
         div.id = "GPelevationPathProfil";
 
@@ -199,7 +195,7 @@ var ElevationPathDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createElevationPathWaitingElement: function() {
+    _createElevationPathWaitingElement : function () {
         var div = document.createElement("div");
         div.id = this._addUID("GPelevationPathCalcWaitingContainer");
         div.className = "GPelevationPathCalcWaitingContainerHidden";
@@ -218,8 +214,7 @@ var ElevationPathDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createElevationPathInformationsElement: function() {
-
+    _createElevationPathInformationsElement : function () {
         var div = document.createElement("div");
         div.id = this._addUID("GPelevationPathInformationsContainer");
         div.className = "GPelevationPathInformationsContainerHidden";
@@ -238,8 +233,7 @@ var ElevationPathDOM = {
      * @param {String} value - value of item
      * @returns {DOMElement} DOM element
      */
-    _addElevationPathInformationsItem: function(value) {
-
+    _addElevationPathInformationsItem : function (value) {
         var div = document.getElementById(this._addUID("GPelevationPathInformationsContainer"));
 
         if (div) {
@@ -250,7 +244,6 @@ var ElevationPathDOM = {
         }
 
         return div;
-
     }
 };
 

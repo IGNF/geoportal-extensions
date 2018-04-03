@@ -6,7 +6,7 @@
 var IsoDOM = {
 
     /** Add uuid to the tag ID */
-    _addUID: function(id) {
+    _addUID : function (id) {
         var uid = (this._uid) ? id + "-" + this._uid : id;
         return uid;
     },
@@ -16,8 +16,7 @@ var IsoDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createMainContainerElement: function() {
-
+    _createMainContainerElement : function () {
         var container = document.createElement("div");
         container.id = this._addUID("GPisochron");
         container.className = "GPwidget";
@@ -33,7 +32,7 @@ var IsoDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createShowIsoElement: function() {
+    _createShowIsoElement : function () {
         var input = document.createElement("input");
         input.id = this._addUID("GPshowIsochron");
         input.type = "checkbox";
@@ -46,8 +45,7 @@ var IsoDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createShowIsoPictoElement: function() {
-
+    _createShowIsoPictoElement : function () {
         // contexte d'execution
         var context = this;
 
@@ -62,11 +60,11 @@ var IsoDOM = {
         // L'ouverture/Fermeture permet de faire le menage
         // (reinitialisation)
         if (label.addEventListener) {
-            label.addEventListener("click", function(e) {
+            label.addEventListener("click", function (e) {
                 context.onShowIsoPanelClick(e);
             });
         } else if (label.attachEvent) {
-            label.attachEvent("onclick", function(e) {
+            label.attachEvent("onclick", function (e) {
                 context.onShowIsoPanelClick(e);
             });
         }
@@ -92,7 +90,7 @@ var IsoDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createIsoPanelElement: function() {
+    _createIsoPanelElement : function () {
         var div = document.createElement("div");
         div.id = this._addUID("GPisochronPanel");
         div.className = "GPpanel";
@@ -108,8 +106,7 @@ var IsoDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createIsoPanelHeaderElement: function() {
-
+    _createIsoPanelHeaderElement : function () {
         var self = this;
 
         var container = document.createElement("div");
@@ -150,11 +147,11 @@ var IsoDOM = {
 
         // Link panel close / visibility checkbox
         if (divClose.addEventListener) {
-            divClose.addEventListener("click", function() {
+            divClose.addEventListener("click", function () {
                 document.getElementById(self._addUID("GPshowIsochronPicto")).click();
             }, false);
         } else if (divClose.attachEvent) {
-            divClose.attachEvent("onclick", function() {
+            divClose.attachEvent("onclick", function () {
                 document.getElementById(self._addUID("GPshowIsochronPicto")).click();
             });
         }
@@ -169,16 +166,14 @@ var IsoDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createIsoPanelFormElement: function() {
-
+    _createIsoPanelFormElement : function () {
         // contexte d'execution
         var self = this;
 
         var form = document.createElement("form");
         form.id = this._addUID("GPisochronForm");
 
-        form.addEventListener("submit", function(e) {
-
+        form.addEventListener("submit", function (e) {
             e.preventDefault();
             self.onIsoComputationSubmit(e);
             return false;
@@ -192,7 +187,7 @@ var IsoDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createIsoWaitingElement: function() {
+    _createIsoWaitingElement : function () {
         var div = document.createElement("div");
         div.id = this._addUID("GPisochronCalcWaitingContainer");
         div.className = "GPisochronCalcWaitingContainerHidden";
@@ -219,7 +214,7 @@ var IsoDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createIsoPanelFormTypeChoiceElement: function() {
+    _createIsoPanelFormTypeChoiceElement : function () {
         var div = document.createElement("div");
         div.id = this._addUID("GPisochronChoice");
 
@@ -236,8 +231,7 @@ var IsoDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createIsoPanelFormTypeChoiceChronElement: function(checked) {
-
+    _createIsoPanelFormTypeChoiceChronElement : function (checked) {
         var self = this;
 
         var div = document.createElement("div");
@@ -249,13 +243,13 @@ var IsoDOM = {
         input.type = "radio";
         input.checked = (checked) ? true : false;
         if (input.addEventListener) {
-            input.addEventListener("change", function(e) {
+            input.addEventListener("change", function (e) {
                 document.getElementById(self._addUID("GPisochronValueChron")).className = "GPflexInput";
                 document.getElementById(self._addUID("GPisochronValueDist")).className = "GPisochronValueHidden";
                 self.onIsoTypeChoiceChange(e);
             }, false);
         } else if (input.attachEvent) {
-            input.attachEvent("onchange", function() {
+            input.attachEvent("onchange", function () {
                 document.getElementById(self._addUID("GPisochronValueChron")).className = "GPflexInput";
                 document.getElementById(self._addUID("GPisochronValueDist")).className = "GPisochronValueHidden";
                 self.onIsoTypeChoiceChange();
@@ -274,11 +268,11 @@ var IsoDOM = {
         span.id = this._addUID("GPisochronChoiceAltChronTxt");
         span.innerHTML = "isochrone";
         if (span.addEventListener) {
-            span.addEventListener("click", function() {
+            span.addEventListener("click", function () {
                 document.getElementById(self._addUID("GPisochronChoiceAltChron")).click();
             }, false);
         } else if (span.attachEvent) {
-            span.attachEvent("onclick", function() {
+            span.attachEvent("onclick", function () {
                 document.getElementById(self._addUID("GPisochronChoiceAltChron")).click();
             });
         }
@@ -294,8 +288,7 @@ var IsoDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createIsoPanelFormTypeChoiceDistElement: function(checked) {
-
+    _createIsoPanelFormTypeChoiceDistElement : function(checked) {
         var self = this;
 
         var div = document.createElement("div");
@@ -307,13 +300,13 @@ var IsoDOM = {
         input.type = "radio";
         input.checked = (checked) ? true : false;
         if (input.addEventListener) {
-            input.addEventListener("change", function(e) {
+            input.addEventListener("change", function (e) {
                 document.getElementById(self._addUID("GPisochronValueDist")).className = "GPflexInput";
                 document.getElementById(self._addUID("GPisochronValueChron")).className = "GPisochronValueHidden";
                 self.onIsoTypeChoiceChange(e);
             }, false);
         } else if (input.attachEvent) {
-            input.attachEvent("onchange", function() {
+            input.attachEvent("onchange", function () {
                 document.getElementById(self._addUID("GPisochronValueDist")).className = "GPflexInput";
                 document.getElementById(self._addUID("GPisochronValueChron")).className = "GPisochronValueHidden";
                 self.onIsoTypeChoiceChange();
@@ -332,11 +325,11 @@ var IsoDOM = {
         span.id = this._addUID("GPisochronChoiceAltDistTxt");
         span.innerHTML = "isodistance";
         if (span.addEventListener) {
-            span.addEventListener("click", function() {
+            span.addEventListener("click", function () {
                 document.getElementById(self._addUID("GPisochronChoiceAltDist")).click();
             }, false);
         } else if (span.attachEvent) {
-            span.attachEvent("onclick", function() {
+            span.attachEvent("onclick", function () {
                 document.getElementById(self._addUID("GPisochronChoiceAltDist")).click();
             });
         }
@@ -355,8 +348,7 @@ var IsoDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createIsoPanelFormValueIsochronElement: function(checked) {
-
+    _createIsoPanelFormValueIsochronElement : function (checked) {
         // contexte
         var context = this;
 
@@ -377,13 +369,13 @@ var IsoDOM = {
         input1.value = "0";
         input1.type = "number";
         if (input1.addEventListener) {
-            input1.addEventListener("change", function(e) {
+            input1.addEventListener("change", function (e) {
                 if (typeof context.onIsoValueChronTimeMinuteChange === "function") {
                     context.onIsoValueChronTimeHourChange(e);
                 }
             });
         } else if (input1.attachEvent) {
-            input1.attachEvent("onchange", function(e) {
+            input1.attachEvent("onchange", function (e) {
                 if (typeof context.onIsoValueChronTimeMinuteChange === "function") {
                     context.onIsoValueChronTimeHourChange(e);
                 }
@@ -403,13 +395,13 @@ var IsoDOM = {
         input2.value = "0";
         input2.type = "number";
         if (input2.addEventListener) {
-            input2.addEventListener("change", function(e) {
+            input2.addEventListener("change", function (e) {
                 if (typeof context.onIsoValueChronTimeMinuteChange === "function") {
                     context.onIsoValueChronTimeMinuteChange(e);
                 }
             });
         } else if (input2.attachEvent) {
-            input2.attachEvent("onchange", function(e) {
+            input2.attachEvent("onchange", function (e) {
                 if (typeof context.onIsoValueChronTimeMinuteChange === "function") {
                     context.onIsoValueChronTimeMinuteChange(e);
                 }
@@ -430,8 +422,7 @@ var IsoDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createIsoPanelFormValueIsodistanceElement: function(checked) {
-
+    _createIsoPanelFormValueIsodistanceElement : function (checked) {
         // contexte
         var context = this;
 
@@ -452,13 +443,13 @@ var IsoDOM = {
         input1.value = "0";
         input1.type = "number";
         if (input1.addEventListener) {
-            input1.addEventListener("change", function(e) {
+            input1.addEventListener("change", function (e) {
                 if (typeof context.onIsoValueDistChange === "function") {
                     context.onIsoValueDistChange(e);
                 }
             });
         } else if (input1.attachEvent) {
-            input1.attachEvent("onchange", function(e) {
+            input1.attachEvent("onchange", function (e) {
                 if (typeof context.onIsoValueDistChange === "function") {
                     context.onIsoValueDistChange(e);
                 }
@@ -486,7 +477,7 @@ var IsoDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createIsoPanelFormModeChoiceElement: function() {
+    _createIsoPanelFormModeChoiceElement : function () {
         var div = document.createElement("div");
         div.id = this._addUID("GPisochronModeChoice");
 
@@ -503,8 +494,7 @@ var IsoDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createIsoPanelFormModeChoiceTransportElement: function(transports) {
-
+    _createIsoPanelFormModeChoiceTransportElement : function (transports) {
         // contexte d'execution
         var context = this;
 
@@ -521,7 +511,6 @@ var IsoDOM = {
             var transport = transports[i];
 
             if (transport === "Voiture") {
-
                 var inputCar = document.createElement("input");
                 inputCar.id = this._addUID("GPisochronTransportCar");
                 inputCar.type = "radio";
@@ -533,11 +522,11 @@ var IsoDOM = {
                 // on stocke le mode de transport,
                 // utilisation pour la requête sur le service de calcul d'itiniraire
                 if (inputCar.addEventListener) {
-                    inputCar.addEventListener("change", function(e) {
+                    inputCar.addEventListener("change", function (e) {
                         context.onIsoModeTransportChange(e);
                     });
                 } else if (inputCar.attachEvent) {
-                    inputCar.attachEvent("onchange", function(e) {
+                    inputCar.attachEvent("onchange", function (e) {
                         context.onIsoModeTransportChange(e);
                     });
                 }
@@ -550,11 +539,9 @@ var IsoDOM = {
                 labelCar.htmlFor = this._addUID("GPisochronTransportCar");
                 labelCar.title = "Voiture";
                 div.appendChild(labelCar);
-
             }
 
             if (transport === "Pieton") {
-
                 var inputPedestrian = document.createElement("input");
                 inputPedestrian.id = this._addUID("GPisochronTransportPedestrian");
                 inputPedestrian.type = "radio";
@@ -566,11 +553,11 @@ var IsoDOM = {
                 // on stocke le mode de transport,
                 // utilisation pour la requête sur le service de calcul d'itiniraire
                 if (inputPedestrian.addEventListener) {
-                    inputPedestrian.addEventListener("change", function(e) {
+                    inputPedestrian.addEventListener("change", function (e) {
                         context.onIsoModeTransportChange(e);
                     });
                 } else if (inputPedestrian.attachEvent) {
-                    inputPedestrian.attachEvent("onchange", function(e) {
+                    inputPedestrian.attachEvent("onchange", function (e) {
                         context.onIsoModeTransportChange(e);
                     });
                 }
@@ -596,8 +583,7 @@ var IsoDOM = {
      * @param {Array} directions - directions to display in list ("Departure", "Arrival"). First element will be selected by default
      * @returns {DOMElement} DOM element
      */
-    _createIsoPanelFormModeChoiceDirectionElement: function(directions) {
-
+    _createIsoPanelFormModeChoiceDirectionElement : function (directions) {
         // contexte d'execution
         var self = this;
 
@@ -615,7 +601,7 @@ var IsoDOM = {
         // gestionnaire d'evenement :
         // on stocke la valeur du mode de calcul,
         // utilisation pour la requête sur le service de calcul d'iso
-        select.addEventListener("change", function(e) {
+        select.addEventListener("change", function (e) {
             self.onIsoModeDirectionChange(e);
         });
 
@@ -654,7 +640,7 @@ var IsoDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createShowIsoExclusionsElement: function() {
+    _createShowIsoExclusionsElement : function () {
         var input = document.createElement("input");
         input.id = this._addUID("GPshowIsoExclusions");
         input.type = "checkbox";
@@ -666,8 +652,7 @@ var IsoDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createShowIsoExclusionsPictoElement: function() {
-
+    _createShowIsoExclusionsPictoElement : function () {
         var label = document.createElement("label");
         label.id = this._addUID("GPshowIsoExclusionsPicto");
         label.className = "GPshowMoreOptions GPshowIsoExclusionsPicto";
@@ -683,8 +668,7 @@ var IsoDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createIsoPanelFormExclusionsElement: function() {
-
+    _createIsoPanelFormExclusionsElement : function () {
         var div = document.createElement("div");
         div.id = this._addUID("GPisoExclusions");
 
@@ -705,8 +689,7 @@ var IsoDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createIsoPanelFormExclusionOptionsElement: function(exclusions) {
-
+    _createIsoPanelFormExclusionOptionsElement : function (exclusions) {
         // contexte d'execution
         var context = this;
 
@@ -716,9 +699,8 @@ var IsoDOM = {
         /* jshint -W083 */
         for (var value in exclusions) {
             if (exclusions.hasOwnProperty(value)) {
-
                 var status = exclusions[value];
-                switch (value) {
+                switch (status) {
                     case "toll":
                         var inputToll = document.createElement("input");
                         inputToll.id = this._addUID("GPisoExclusionsToll");
@@ -728,11 +710,11 @@ var IsoDOM = {
                         // on stocke l'exclusion,
                         // utilisation pour la requête sur le service de calcul d'itiniraire
                         if (inputToll.addEventListener) {
-                            inputToll.addEventListener("change", function(e) {
+                            inputToll.addEventListener("change", function (e) {
                                 context.onIsoExclusionsChange(e);
                             });
                         } else if (inputToll.attachEvent) {
-                            inputToll.attachEvent("onchange", function(e) {
+                            inputToll.attachEvent("onchange", function (e) {
                                 context.onIsoExclusionsChange(e);
                             });
                         }
@@ -756,11 +738,11 @@ var IsoDOM = {
                         // on stocke l'exclusion,
                         // utilisation pour la requête sur le service de calcul d'itiniraire
                         if (inputTunnel.addEventListener) {
-                            inputTunnel.addEventListener("change", function(e) {
+                            inputTunnel.addEventListener("change", function (e) {
                                 context.onIsoExclusionsChange(e);
                             });
                         } else if (inputTunnel.attachEvent) {
-                            inputTunnel.attachEvent("onchange", function(e) {
+                            inputTunnel.attachEvent("onchange", function (e) {
                                 context.onIsoExclusionsChange(e);
                             });
                         }
@@ -784,11 +766,11 @@ var IsoDOM = {
                         // on stocke l'exclusion,
                         // utilisation pour la requête sur le service de calcul d'itiniraire
                         if (inputBridge.addEventListener) {
-                            inputBridge.addEventListener("change", function(e) {
+                            inputBridge.addEventListener("change", function (e) {
                                 context.onIsoExclusionsChange(e);
                             });
                         } else if (inputBridge.attachEvent) {
-                            inputBridge.attachEvent("onchange", function(e) {
+                            inputBridge.attachEvent("onchange", function (e) {
                                 context.onIsoExclusionsChange(e);
                             });
                         }
@@ -818,8 +800,7 @@ var IsoDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createIsoSubmitFormElement: function() {
-
+    _createIsoSubmitFormElement : function () {
         var input = document.createElement("input");
         input.id = this._addUID("GPisochronSubmit");
         input.className = "GPinputSubmit";
@@ -838,14 +819,13 @@ var IsoDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createIsoFormResetElement: function() {
-
+    _createIsoFormResetElement : function () {
         var self = this;
 
         var divReset = document.createElement("div");
         divReset.id = this._addUID("GPisochronReset");
         divReset.title = "Réinitialiser les paramètres";
-        divReset.addEventListener("click", function(e) {
+        divReset.addEventListener("click", function (e) {
             self.onIsoResetClick(e);
         });
 

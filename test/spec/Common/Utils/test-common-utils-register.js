@@ -1,5 +1,5 @@
 /* global describe, it */
-import Register from "../../../src/Common/Utils/Register";
+import Register from "../../../../src/Common/Utils/Register";
 import proj4 from "proj4";
 
 import { assert, expect, should } from "chai";

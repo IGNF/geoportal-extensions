@@ -347,9 +347,12 @@ var DrawingDOM = {
      * Converts hex color and opacity value to rgba String.
      * (Code adapted from : http://stackoverflow.com/a/5624139)
      */
-    hexToRgba: function(hex, opacity) {
+    hexToRgba : function (hex, opacity) {
         // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
         var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+        if (!hex) {
+            throw "Invalid format";
+        }
         hex = hex.replace(shorthandRegex, function(m, r, g, b) {
             return r + r + g + g + b + b;
         });

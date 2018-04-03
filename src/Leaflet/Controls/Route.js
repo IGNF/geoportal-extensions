@@ -20,27 +20,27 @@ var logger = Logger.getLogger("route(plus)");
  * @namespace
  * @alias L.geoportalControl.Route
  */
-var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
+var Route = L.Control.extend(/** @lends L.geoportalControl.Route.prototype */ {
 
-    includes: RouteDOM,
+    includes : RouteDOM,
 
     /**
      * Options du service
      *
      * @private
      */
-    options: {
-        position: "topleft",
-        collapsed: true, // plier !
-        graphs: ["Voiture", "Pieton"],
-        exclusions: {
-            toll: false,
-            tunnel: false,
-            bridge: false
+    options : {
+        position : "topleft",
+        collapsed : true, // plier !
+        graphs : ["Voiture", "Pieton"],
+        exclusions : {
+            toll : false,
+            tunnel : false,
+            bridge : false
         },
-        disableReverse: false,
-        routeOptions: {}, // FIXME a t on besoin des options de ce service ?
-        autocompleteOptions: {}
+        disableReverse : false,
+        routeOptions : {}, // FIXME a t on besoin des options de ce service ?
+        autocompleteOptions : {}
     },
 
     /**
@@ -69,8 +69,7 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
      *      routeOptions : {}
      *  });
      */
-    initialize: function(options) {
-
+    initialize : function (options) {
         // on transmet les options au controle
         L.Util.setOptions(this, options);
 
@@ -140,7 +139,6 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
 
         // gestion des droits sur les ressources/services
         this._checkRightsManagement();
-
     },
 
     /**
@@ -150,8 +148,7 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
      *
      * @private
      */
-    onAdd: function(map) {
-
+    onAdd : function (map) {
         // initialisation du DOM du composant
         var container = this._container = this._initLayout(map);
 
@@ -169,7 +166,7 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
      *
      * @private
      */
-    onRemove: function( /* map */ ) {},
+    onRemove : function (/* map */) {},
 
     // ################################################################### //
     // ####################### init application ########################## //
@@ -180,7 +177,7 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
      *
      * @private
      */
-    _initTransport: function() {
+    _initTransport : function () {
         // Mode de transport selectionné
         this._currentTransport = "Voiture"; // par defaut
 
@@ -210,7 +207,7 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
      *
      * @private
      */
-    _initComputation: function() {
+    _initComputation : function () {
         // Mode de calcul selectionné
         this._currentComputation = "fastest"; // par defaut
 
@@ -226,7 +223,7 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
      *
      * @private
      */
-    _initExclusions: function() {
+    _initExclusions : function () {
         // Exclusions selectionnées : Tunnel, Toll et Bridge
         this._currentExclusions = []; // par defaut
 
@@ -234,9 +231,9 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
         var exclusion = this.options.exclusions;
         if (!exclusion || Object.keys(exclusion).length === 0) {
             this.options.exclusions = {
-                toll: false,
-                tunnel: false,
-                bridge: false
+                toll : false,
+                tunnel : false,
+                bridge : false
             };
         }
 
@@ -269,8 +266,7 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
      *
      * @private
      */
-    _checkRightsManagement: function() {
-
+    _checkRightsManagement : function () {
         var _opts = null;
         var _res = [];
         var _key = null;
@@ -284,9 +280,9 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
         }
 
         var rightManagementRoute = RightManagement.check({
-            key: _key || this.options.apiKey,
-            resources: _res,
-            services: ["Itineraire"]
+            key : _key || this.options.apiKey,
+            resources : _res,
+            services : ["Itineraire"]
         });
 
         // les ressources du service d'autocompletion
@@ -303,9 +299,9 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
         }
 
         var rightManagementAutoComplete = RightManagement.check({
-            key: _key || this.options.apiKey,
-            resources: _res,
-            services: ["AutoCompletion"]
+            key : _key || this.options.apiKey,
+            resources : _res,
+            services : ["AutoCompletion"]
         });
 
         // au cas où pas de droit !
@@ -326,7 +322,6 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
             this._resources["Itineraire"]["resources"] = rightManagementRoute["Itineraire"];
             this._resources["Itineraire"]["key"] = rightManagementRoute["key"];
         }
-
     },
 
     /**
@@ -336,8 +331,7 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
      *
      * @private
      */
-    _detectSupport: function() {
-
+    _detectSupport : function () {
         // TODO
         // Choix de gérer la détection dans le code du composant au lieu du DOM car :
         // Utilisation de l'implémentation Leaflet
@@ -376,8 +370,7 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
      *
      * @private
      */
-    _initLayout: function(map) {
-
+    _initLayout : function (map) {
         // create main container
         var container = this._createMainContainerElement();
 
@@ -451,23 +444,22 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
      *
      * @private
      */
-    _createRoutePanelFormPointsElement: function(map) {
-
+    _createRoutePanelFormPointsElement : function (map) {
         var points = [];
 
         var count = 1;
         // point de depart
         var start = new LocationSelector({
-            apiKey: this.options.apiKey || null,
-            tag: {
-                id: count,
-                unique: this._uid,
-                label: "Départ",
-                color: "blue",
-                display: true
+            apiKey : this.options.apiKey || null,
+            tag : {
+                id : count,
+                unique : this._uid,
+                label : "Départ",
+                color : "blue",
+                display : true
             },
-            disableReverse: this.options.disableReverse,
-            autocompleteOptions: this.options.autocompleteOptions || null
+            disableReverse : this.options.disableReverse,
+            autocompleteOptions : this.options.autocompleteOptions || null
         });
         start.setMap(map);
 
@@ -476,8 +468,8 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
         if (opts.startPoint) {
             start._inputAutoCompleteContainer.value = opts.startPoint.x + " , " + opts.startPoint.y;
             start.setCoordinate({
-                lng: opts.startPoint.x,
-                lat: opts.startPoint.y
+                lng : opts.startPoint.x,
+                lat : opts.startPoint.y
             });
         }
 
@@ -486,17 +478,17 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
         // points intermediaires
         for (count = 2; count < 7; count++) {
             var step = new LocationSelector({
-                apiKey: this.options.apiKey || null,
-                tag: {
-                    id: count,
-                    unique: this._uid,
-                    label: "Etape",
-                    color: "green",
-                    display: false,
-                    removeOption: true
+                apiKey : this.options.apiKey || null,
+                tag : {
+                    id : count,
+                    unique : this._uid,
+                    label : "Etape",
+                    color : "green",
+                    display : false,
+                    removeOption : true
                 },
-                disableReverse: this.options.disableReverse,
-                autocompleteOptions: this.options.autocompleteOptions || null
+                disableReverse : this.options.disableReverse,
+                autocompleteOptions : this.options.autocompleteOptions || null
             });
             step.setMap(map);
             points.push(step.getContainer());
@@ -504,26 +496,26 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
         }
         // point d'arrivé
         var end = new LocationSelector({
-            apiKey: this.options.apiKey || null,
-            tag: {
-                id: count,
-                unique: this._uid,
-                label: "Arrivée",
-                color: "red",
-                display: true,
-                addOption: true,
-                removeOption: false
+            apiKey : this.options.apiKey || null,
+            tag : {
+                id : count,
+                unique : this._uid,
+                label : "Arrivée",
+                color : "red",
+                display : true,
+                addOption : true,
+                removeOption : false
             },
-            disableReverse: this.options.disableReverse,
-            autocompleteOptions: this.options.autocompleteOptions || null
+            disableReverse : this.options.disableReverse,
+            autocompleteOptions : this.options.autocompleteOptions || null
         });
         end.setMap(map);
 
         if (opts.endPoint) {
             end._inputAutoCompleteContainer.value = opts.endPoint.x + " , " + opts.endPoint.y;
             end.setCoordinate({
-                lng: opts.endPoint.x,
-                lat: opts.endPoint.y
+                lng : opts.endPoint.x,
+                lat : opts.endPoint.y
             });
         }
 
@@ -546,7 +538,7 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
      *
      * @private
      */
-    onShowRoutePanelClick: function(e) {
+    onShowRoutePanelClick : function (e) {
         logger.log("onShowRoutePanelClick", e);
         // clean !
         if (!this._geojsonSections) {
@@ -563,7 +555,7 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
      *
      * @private
      */
-    onRouteModeComputationChange: function(e) {
+    onRouteModeComputationChange : function (e) {
         logger.log("onRouteModeComputationChange", e);
         var idx = e.target.selectedIndex;
         var value = e.target.options[idx].value;
@@ -586,7 +578,7 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
      *
      * @private
      */
-    onRouteModeComputationChangeAndRun: function(e) {
+    onRouteModeComputationChangeAndRun : function (e) {
         logger.log("onRouteModeComputationChangeAndRun", e);
 
         // event choice computation
@@ -599,9 +591,9 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
 
         // submit request
         this.onRouteComputationSubmit({
-            computation: this._currentComputation,
-            transport: this._currentTransport,
-            exclusions: this._currentExclusions
+            computation : this._currentComputation,
+            transport : this._currentTransport,
+            exclusions : this._currentExclusions
         });
     },
 
@@ -614,7 +606,7 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
      *
      * @private
      */
-    onRouteModeTransportChange: function(e) {
+    onRouteModeTransportChange : function (e) {
         logger.log("onRouteModeTransportChange", e);
         var value = e.target.value;
 
@@ -635,7 +627,7 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
      *
      * @private
      */
-    onShowRouteExclusionsClick: function(e) {
+    onShowRouteExclusionsClick : function (e) {
         logger.log("onShowRouteExclusionsClick", e);
         // not use !
     },
@@ -650,7 +642,7 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
      *
      * @private
      */
-    onRouteExclusionsChange: function(e) {
+    onRouteExclusionsChange : function (e) {
         logger.log("onRouteExclusionsChange", e);
         var value = e.target.value;
         var checked = e.target.checked;
@@ -676,7 +668,6 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
         if (bFound && !checked) {
             this._currentExclusions[iFound] = null;
         }
-
     },
 
     /**
@@ -687,7 +678,7 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
      *
      * @private
      */
-    onRouteComputationSubmit: function(options) {
+    onRouteComputationSubmit : function (options) {
         logger.log("onRouteComputationSubmit", options);
 
         // FIXME on lance une requête en EPSG:4326, les coordonnées
@@ -735,23 +726,23 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
         // on met en place l'affichage des resultats dans la fenetre de resultats.
         var context = this;
         this._requestRouting({
-            startPoint: start,
-            endPoint: end,
-            viaPoints: step,
-            graph: this._currentTransport,
-            routePreference: this._currentComputation,
-            exclusions: this._currentExclusions,
-            geometryInInstructions: true, // surcharge obligatoire !
-            distanceUnit: "m", // surcharge obligatoire !
+            startPoint : start,
+            endPoint : end,
+            viaPoints : step,
+            graph : this._currentTransport,
+            routePreference : this._currentComputation,
+            exclusions : this._currentExclusions,
+            geometryInInstructions : true, // surcharge obligatoire !
+            distanceUnit : "m", // surcharge obligatoire !
             /** callback onSuccess */
-            onSuccess: function(results) {
+            onSuccess : function (results) {
                 logger.log(results);
                 if (results) {
                     context._fillRouteResultsDetails(results);
                 }
             },
             /** callback onFailure */
-            onFailure: function(error) {
+            onFailure : function (error) {
                 // FIXME mise à jour du controle mais le service ne repond pas en 200 !?
                 context._hideWaitingContainer();
 
@@ -759,7 +750,6 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
                 logger.log(error.message);
             }
         });
-
     },
 
     /**
@@ -771,7 +761,7 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
      *
      * @private
      */
-    onShowRouteResultsNewClick: function(e) {
+    onShowRouteResultsNewClick : function (e) {
         logger.log("onShowRouteResultsNewClick", e);
 
         // on reactive le drag&drop
@@ -795,7 +785,7 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
      *
      * @private
      */
-    onRouteResultsDetailsMouseOver: function(e) {
+    onRouteResultsDetailsMouseOver : function (e) {
         logger.log("onRouteResultsDetailsMouseOver", e);
 
         var idx = ID.index(e.target.id);
@@ -809,12 +799,12 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
             return;
         }
 
-        this._geojsonSections.eachLayer(function(layer) {
+        this._geojsonSections.eachLayer(function (layer) {
             if (layer.feature.id === parseInt(idx, 10)) {
                 layer.setStyle({
-                    weight: 10,
-                    color: "#0F9DE8",
-                    opacity: 0.5
+                    weight : 10,
+                    color : "#0F9DE8",
+                    opacity : 0.5
                 });
             }
         });
@@ -829,7 +819,7 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
      *
      * @private
      */
-    onRouteResultsDetailsMouseOut: function(e) {
+    onRouteResultsDetailsMouseOut : function (e) {
         logger.log("onRouteResultsDetailsMouseOut", e);
 
         var idx = ID.index(e.target.id);
@@ -843,12 +833,12 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
             return;
         }
 
-        this._geojsonSections.eachLayer(function(layer) {
+        this._geojsonSections.eachLayer(function (layer) {
             if (layer.feature.id === parseInt(idx, 10)) {
                 layer.setStyle({
-                    color: "#ED7F10",
-                    weight: 5,
-                    opacity: 0.75
+                    color : "#ED7F10",
+                    weight : 5,
+                    opacity : 0.75
                 });
             }
         });
@@ -864,7 +854,7 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
      *
      * @private
      */
-    onRouteResultsDetailsClick: function(e) {
+    onRouteResultsDetailsClick : function (e) {
         logger.log("onRouteResultsDetailsClick", e);
 
         var idx = ID.index(e.target.id);
@@ -884,31 +874,30 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
         var newInstruction = e.target.title;
         var oldInstruction = e.target.innerHTML;
 
-        this._geojsonSections.eachLayer(function(layer) {
+        this._geojsonSections.eachLayer(function (layer) {
             if (layer.feature.id === parseInt(idx, 10)) {
                 e.target.innerHTML = newInstruction;
                 layer.setStyle({
-                    weight: 10,
-                    color: "#0F9DE8",
-                    opacity: 0.5
+                    weight : 10,
+                    color : "#0F9DE8",
+                    opacity : 0.5
                 });
             }
         });
 
         clearTimeout(1000);
-        setTimeout(function() {
-            self._geojsonSections.eachLayer(function(layer) {
+        setTimeout(function () {
+            self._geojsonSections.eachLayer(function (layer) {
                 if (layer.feature.id === parseInt(idx, 10)) {
                     e.target.innerHTML = oldInstruction;
                     layer.setStyle({
-                        color: "#ED7F10",
-                        weight: 5,
-                        opacity: 0.75
+                        color : "#ED7F10",
+                        weight : 5,
+                        opacity : 0.75
                     });
                 }
             });
         }, 1000);
-
     },
 
     // ################################################################### //
@@ -925,8 +914,7 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
      *
      * @private
      */
-    _requestRouting: function(settings) {
-
+    _requestRouting : function (settings) {
         // on ne fait pas de requête si on n'a pas renseigné de parametres !
         if (!settings || Object.keys(settings).length === 0) {
             return;
@@ -987,7 +975,7 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
         // cas où la clef API n'est pas renseignée dans les options du service,
         // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
         L.Util.extend(options, {
-            apiKey: this.options.routeOptions.apiKey || this.options.apiKey || key
+            apiKey : this.options.routeOptions.apiKey || this.options.apiKey || key
         });
 
         logger.log(options);
@@ -1002,8 +990,7 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
      *
      * @private
      */
-    _fillRouteResultsDetails: function(results) {
-
+    _fillRouteResultsDetails : function (results) {
         // FIXME
         // gestion des temps de traitement avec des callback !?
 
@@ -1038,7 +1025,7 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
             var map = this._map;
             var bounds = L.latLngBounds([bbox.bottom, bbox.left], [bbox.top, bbox.right]);
             map.fitBounds(bounds, {
-                padding: [1, 1]
+                padding : [1, 1]
             });
         }
 
@@ -1058,7 +1045,7 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
      *
      * @private
      */
-    _fillRouteResultsDetailsContainer: function(distance, duration, instructions) {
+    _fillRouteResultsDetailsContainer : function (distance, duration, instructions) {
         // FIXME callback
 
         // Distance et Durée
@@ -1066,7 +1053,6 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
 
         // Détails
         this._resultsRouteDetailsContainer = this._addRouteResultsDetailsElement(instructions, this._convertSecondsToTime);
-
     },
 
     /**
@@ -1075,7 +1061,7 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
      *
      * @private
      */
-    _fillRouteResultsDetailsGeometry: function(geometry) {
+    _fillRouteResultsDetailsGeometry : function (geometry) {
         // FIXME callback
 
         this._clearRouteResultsGeometry();
@@ -1083,13 +1069,13 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
         var map = this._map;
 
         var _style = {
-            color: "#ff7800",
-            weight: 5,
-            opacity: 0.65
+            color : "#ff7800",
+            weight : 5,
+            opacity : 0.65
         };
 
         this._geojsonRoute = L.geoJson(geometry, {
-            style: _style
+            style : _style
         }).addTo(map);
     },
 
@@ -1099,7 +1085,7 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
      *
      * @private
      */
-    _fillRouteResultsDetailsFeatureGeometry: function(instructions) {
+    _fillRouteResultsDetailsFeatureGeometry : function (instructions) {
         // FIXME callback
 
         this._clearRouteResultsFeatureGeometry();
@@ -1107,14 +1093,14 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
         var map = this._map;
 
         var _style = {
-            color: "#ED7F10",
-            weight: 5,
-            opacity: 0.75
+            color : "#ED7F10",
+            weight : 5,
+            opacity : 0.75
         };
 
         var _geometry = {
-            type: "FeatureCollection",
-            features: []
+            type : "FeatureCollection",
+            features : []
         };
 
         for (var i = 0; i < instructions.length; i++) {
@@ -1122,11 +1108,11 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
             var id = i + 1;
 
             _geometry.features.push({
-                id: id,
-                type: "Feature",
-                geometry: o.geometry,
-                properties: {
-                    popupContent: "(" + id + ") distance : " + this._convertDistance(o.distance) +
+                id : id,
+                type : "Feature",
+                geometry : o.geometry,
+                properties : {
+                    popupContent : "(" + id + ") distance : " + this._convertDistance(o.distance) +
                         " / temps : " + this._convertSecondsToTime(o.duration)
                 }
             });
@@ -1134,7 +1120,7 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
 
         var self = this;
         /** ... */
-        function resetHighlight(e) {
+        function resetHighlight (e) {
             var layer = e.target;
             self._geojsonSections.resetStyle(layer);
             var div = L.DomUtil.get("GProuteResultsDetailsInstruction_" + layer.feature.id + "-" + self._uid);
@@ -1142,25 +1128,25 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
         }
 
         /** ... */
-        function highlightFeature(e) {
+        function highlightFeature (e) {
             var layer = e.target;
             logger.log(layer);
             layer.setStyle({
-                weight: 10,
-                color: "#0F9DE8",
-                opacity: 0.5
+                weight : 10,
+                color : "#0F9DE8",
+                opacity : 0.5
             });
             var div = L.DomUtil.get("GProuteResultsDetailsInstruction_" + layer.feature.id + "-" + self._uid);
             L.DomUtil.addClass(div, "GProuteResultsDetailsHighlight");
         }
 
         this._geojsonSections = L.geoJson(_geometry, {
-            style: _style,
+            style : _style,
             /** Function that will be called on each created feature layer. */
-            onEachFeature: function(feature, layer) {
+            onEachFeature : function (feature, layer) {
                 layer.on({
-                    mouseover: highlightFeature,
-                    mouseout: resetHighlight
+                    mouseover : highlightFeature,
+                    mouseout : resetHighlight
                 });
 
                 layer.bindPopup(feature.properties.popupContent);
@@ -1178,7 +1164,7 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
      *
      * @private
      */
-    _clear: function() {
+    _clear : function () {
 
         this._currentTransport = null;
         this._currentExclusions = [];
@@ -1201,8 +1187,7 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
      *
      * @private
      */
-    _clearRouteResultsDetails: function() {
-
+    _clearRouteResultsDetails : function () {
         this._currentRouteInformations = null;
 
         // doit on nettoyer le container "GProuteResultsDetails" ?
@@ -1232,8 +1217,7 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
      *
      * @private
      */
-    _clearRouteResultsGeometry: function() {
-
+    _clearRouteResultsGeometry : function () {
         var map = this._map;
 
         if (this._geojsonRoute != null) {
@@ -1248,8 +1232,7 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
      *
      * @private
      */
-    _clearRouteResultsFeatureGeometry: function() {
-
+    _clearRouteResultsFeatureGeometry : function () {
         var map = this._map;
 
         if (this._geojsonSections != null) {
@@ -1267,8 +1250,7 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
      *
      * @private
      */
-    _displayWaitingContainer: function() {
-
+    _displayWaitingContainer : function () {
         this._waitingContainer.className = "GProuteCalcWaitingContainerVisible";
         this._waiting = true;
 
@@ -1279,7 +1261,7 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
             this._timer = null;
         }
         var context = this;
-        this._timer = setTimeout(function() {
+        this._timer = setTimeout(function () {
             if (context._waiting === true) {
                 context._hideWaitingContainer();
             } else {
@@ -1295,7 +1277,7 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
      *
      * @private
      */
-    _hideWaitingContainer: function() {
+    _hideWaitingContainer : function () {
         if (this._waiting) {
             this._waitingContainer.className = "GProuteCalcWaitingContainerHidden";
             this._waiting = false;
@@ -1313,8 +1295,7 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
      *
      * @private
      */
-    _simplifiedInstructions: function(instructions) {
-
+    _simplifiedInstructions : function (instructions) {
         var newInstructions = [];
 
         var current = instructions[0];
@@ -1359,7 +1340,7 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
      *
      * @private
      */
-    _convertSecondsToTime: function(duration) {
+    _convertSecondsToTime : function (duration) {
         var time = "";
 
         duration = Math.round(duration);
@@ -1389,7 +1370,7 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
      *
      * @private
      */
-    _convertDistance: function(distance) {
+    _convertDistance : function (distance) {
         var d = "";
 
         var distanceKm = parseInt(distance / 1000, 10);
@@ -1413,8 +1394,7 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
      * @param {Object} positions - positions = [{lng: , lat: }]
      * @param {Object} options - options = {...}
      */
-    compute: function(positions, options) {
-
+    compute : function (positions, options) {
         if (!this._showRouteContainer.checked) {
             this._pictoRouteContainer.click();
         }
@@ -1426,9 +1406,9 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
 
         // Les options par defauts
         var settings = {
-            computation: "fastest",
-            transport: "Voiture",
-            exclusions: []
+            computation : "fastest",
+            transport : "Voiture",
+            exclusions : []
         };
 
         // On recupere les options
@@ -1453,19 +1433,16 @@ var Route = L.Control.extend( /** @lends L.geoportalControl.Route.prototype */ {
             stepInput.value = positions[i].lng + " , " + positions[i].lat;
         }
 
-        (settings.transport === "Voiture") ?
-        L.DomUtil.get("GProuteTransportCar-" + this._uid).checked = true:
-            L.DomUtil.get("GProuteTransportPedestrian-" + this._uid).checked = true;
+        (settings.transport === "Voiture")
+            ? L.DomUtil.get("GProuteTransportCar-" + this._uid).checked = true : L.DomUtil.get("GProuteTransportPedestrian-" + this._uid).checked = true;
 
-        (settings.computation === "fastest") ?
-        L.DomUtil.get("GProuteComputationSelect-" + this._uid).selectedIndex = 0:
-            L.DomUtil.get("GProuteComputationSelect-" + this._uid).selectedIndex = 1;
+        (settings.computation === "fastest")
+            ? L.DomUtil.get("GProuteComputationSelect-" + this._uid).selectedIndex = 0 : L.DomUtil.get("GProuteComputationSelect-" + this._uid).selectedIndex = 1;
 
         // TODO exclusion !
 
         // Calcul
         this.onRouteComputationSubmit(settings);
-
     }
 });
 

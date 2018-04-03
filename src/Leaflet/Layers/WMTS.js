@@ -2,7 +2,6 @@
 * desativation JSHINT
 * W106 - Identifier '_geoportal_id' is not in camel case
 */
-/*jshint -W106 */
 
 import Gp from "gp";
 import L from "leaflet";
@@ -23,18 +22,18 @@ var logger = Logger.getLogger("wmts");
  * **Extends** Leaflet <a href="http://leafletjs.com/reference.html#tilelayer" target="_blank">L.TileLayer</a> native class.
  *
  */
-var WMTS = L.TileLayer.extend( /** @lends WMTS.prototype */ {
+var WMTS = L.TileLayer.extend(/** @lends WMTS.prototype */ {
 
-    includes: LayerEvent,
+    includes : LayerEvent,
 
-    defaultWmtsParams: {
-        service: "WMTS",
-        request: "GetTile",
-        version: "1.0.0",
-        layer: "",
-        style: "",
-        tilematrixset: "PM",
-        format: "image/jpeg"
+    defaultWmtsParams : {
+        service : "WMTS",
+        request : "GetTile",
+        version : "1.0.0",
+        layer : "",
+        style : "",
+        tilematrixset : "PM",
+        format : "image/jpeg"
     },
 
     /**
@@ -80,8 +79,7 @@ var WMTS = L.TileLayer.extend( /** @lends WMTS.prototype */ {
      *
      * @ignore
      */
-    initialize: function(url, options) {
-
+    initialize : function (url, options) {
         logger.log("initialize");
 
         // parametres WMTS
@@ -94,7 +92,7 @@ var WMTS = L.TileLayer.extend( /** @lends WMTS.prototype */ {
             // tracker extension leaflet
             // FIXME : gp-ext version en mode AMD
             Gp.Helper.normalyzeUrl(url, {
-                "gp-leaflet-ext": "__GPLEAFLETEXTVERSION__"
+                "gp-leaflet-ext" : "__GPLEAFLETEXTVERSION__"
             }, false),
             options.paramsNative
         );
@@ -109,7 +107,6 @@ var WMTS = L.TileLayer.extend( /** @lends WMTS.prototype */ {
 
         // id du Layer
         this._geoportal_id = 0; // FIXME L.stamp(this);
-
     },
 
     /**
@@ -119,8 +116,7 @@ var WMTS = L.TileLayer.extend( /** @lends WMTS.prototype */ {
      * @param {Object} map - map leaflet object
      * @private
      */
-    onAdd: function(map) {
-
+    onAdd : function (map) {
         logger.trace("onAdd layer", this._geoportal_id);
 
         // recuperation de la map
@@ -148,34 +144,34 @@ var WMTS = L.TileLayer.extend( /** @lends WMTS.prototype */ {
              * d'un layer de type overlay.
              * Les attributions ne doivent plus apparaitre si le layer est invisible !
              */
-            overlayremove: this._onRemoveLayer,
+            overlayremove : this._onRemoveLayer,
 
             /**
              * Permet d'activer la visibilité des attributions sur l'ajout
              * d'un layer de type overlay.
              * Les attributions doivent apparaitre si le layer est visible !
              */
-            overlayadd: this._onAddLayer,
+            overlayadd : this._onAddLayer,
 
             /**
              * Permet de desactiver la visibilité des attributions sur le retrait
              * d'un layer de type layer.
              * Les attributions ne doivent plus apparaitre si le layer est invisible !
              */
-            layerremove: this._onRemoveLayer,
+            layerremove : this._onRemoveLayer,
 
             /**
              * Permet d'activer la visibilité des attributions sur l'ajout
              * d'un layer de type layer.
              * Les attributions doivent apparaitre si le layer est visible !
              */
-            layeradd: this._onAddLayer,
+            layeradd : this._onAddLayer,
 
             /**
              * Permet d'ajouter des fonctionnalités lors de la creation du layer
              * sur les evenements de fin de mouvemenent (move ou zoom)
              */
-            moveend: this._onMoveEndLayer
+            moveend : this._onMoveEndLayer
 
         }, this);
 
@@ -201,8 +197,7 @@ var WMTS = L.TileLayer.extend( /** @lends WMTS.prototype */ {
      * @param {Object} map - map leaflet object
      * @private
      */
-    onRemove: function(map) {
-
+    onRemove : function (map) {
         logger.trace("onRemove layer", this._geoportal_id);
 
         // recuperation de la map
@@ -218,11 +213,11 @@ var WMTS = L.TileLayer.extend( /** @lends WMTS.prototype */ {
 
         // supprimer les evenements
         map.off({
-            overlayremove: this._onRemoveLayer,
-            overlayadd: this._onAddLayer,
-            layerremove: this._onRemoveLayer,
-            layeradd: this._onAddLayer,
-            moveend: this._onMoveEndLayer
+            overlayremove : this._onRemoveLayer,
+            overlayadd : this._onAddLayer,
+            layerremove : this._onRemoveLayer,
+            layeradd : this._onAddLayer,
+            moveend : this._onMoveEndLayer
         }, this);
     },
 
@@ -233,7 +228,8 @@ var WMTS = L.TileLayer.extend( /** @lends WMTS.prototype */ {
      * @param {Object} tilePoint - Point leaflet object
      * @private
      */
-    getTileUrl: function(tilePoint) { // (Point, Number) -> String
+    getTileUrl : function (tilePoint) {
+        // (Point, Number) -> String
 
         // ex http://wxs.ign.fr/j5tcdln4ya4xggpdu4j0f0cn/geoportail/wmts?
         // SERVICE=WMTS&
@@ -249,7 +245,7 @@ var WMTS = L.TileLayer.extend( /** @lends WMTS.prototype */ {
 
         var zoom = this._getZoomForUrl();
         var url = L.Util.template(this._url, {
-            s: this._getSubdomain(tilePoint)
+            s : this._getSubdomain(tilePoint)
         });
         return url + L.Util.getParamString(this._wmtsParams, url) +
             "&tilematrix=" + zoom +
@@ -263,8 +259,7 @@ var WMTS = L.TileLayer.extend( /** @lends WMTS.prototype */ {
      *
      * @private
      */
-    setParams: function(params, noRedraw) {
-
+    setParams : function (params, noRedraw) {
         L.extend(this._wmtsParams, params);
 
         if (!noRedraw) {

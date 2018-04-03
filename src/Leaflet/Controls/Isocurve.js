@@ -20,29 +20,29 @@ var logger = Logger.getLogger("Isocurve");
  * @namespace
  * @alias L.geoportalControl.Isocurve
  */
-var Isocurve = L.Control.extend( /** @lends L.geoportalControl.Isocurve.prototype */ {
+var Isocurve = L.Control.extend(/** @lends L.geoportalControl.Isocurve.prototype */ {
 
-    includes: IsoDOM,
+    includes : IsoDOM,
 
     /**
      * Options du service
      *
      * @private
      */
-    options: {
-        position: "topleft",
-        collapsed: true, // plier !
-        methods: ["time", "distance"],
-        graphs: ["Voiture", "Pieton"],
-        exclusions: {
-            toll: false,
-            tunnel: false,
-            bridge: false
+    options : {
+        position : "topleft",
+        collapsed : true, // plier !
+        methods : ["time", "distance"],
+        graphs : ["Voiture", "Pieton"],
+        exclusions : {
+            toll : false,
+            tunnel : false,
+            bridge : false
         },
-        directions: ["departure", "arrival"],
-        disableReverse: false,
-        isocurveOptions: {},
-        autocompleteOptions: {}
+        directions : ["departure", "arrival"],
+        disableReverse : false,
+        isocurveOptions : {},
+        autocompleteOptions : {}
     },
 
     /**
@@ -74,8 +74,7 @@ var Isocurve = L.Control.extend( /** @lends L.geoportalControl.Isocurve.prototyp
      *      autocompleteOptions : {}
      *  });
      */
-    initialize: function(options) {
-
+    initialize : function (options) {
         // on transmet les options au controle
         L.Util.setOptions(this, options);
 
@@ -153,7 +152,6 @@ var Isocurve = L.Control.extend( /** @lends L.geoportalControl.Isocurve.prototyp
 
         // gestion des droits sur les ressources/services
         this._checkRightsManagement();
-
     },
 
     /**
@@ -163,8 +161,7 @@ var Isocurve = L.Control.extend( /** @lends L.geoportalControl.Isocurve.prototyp
      *
      * @private
      */
-    onAdd: function(map) {
-
+    onAdd : function (map) {
         // initialisation du DOM du composant
         var container = this._container = this._initLayout(map);
 
@@ -182,7 +179,7 @@ var Isocurve = L.Control.extend( /** @lends L.geoportalControl.Isocurve.prototyp
      *
      * @private
      */
-    onRemove: function( /* map */ ) {},
+    onRemove : function (/* map */) {},
 
     // ################################################################### //
     // ####################### init application ########################## //
@@ -193,7 +190,7 @@ var Isocurve = L.Control.extend( /** @lends L.geoportalControl.Isocurve.prototyp
      *
      * @private
      */
-    _initTransport: function() {
+    _initTransport : function () {
         // Mode de transport selectionné
         this._currentTransport = "Voiture"; // par defaut
 
@@ -223,7 +220,7 @@ var Isocurve = L.Control.extend( /** @lends L.geoportalControl.Isocurve.prototyp
      *
      * @private
      */
-    _initDirection: function() {
+    _initDirection : function () {
         this._currentDirection = "departure"; // par defaut
 
         // par defaut
@@ -256,7 +253,7 @@ var Isocurve = L.Control.extend( /** @lends L.geoportalControl.Isocurve.prototyp
      *
      * @private
      */
-    _initComputation: function() {
+    _initComputation : function () {
         // Mode de calcul selectionné
         this._currentComputation = "time"; // par defaut
 
@@ -292,7 +289,7 @@ var Isocurve = L.Control.extend( /** @lends L.geoportalControl.Isocurve.prototyp
      *
      * @private
      */
-    _initExclusions: function() {
+    _initExclusions : function () {
         // Exclusions selectionnées : Tunnel, Toll et Bridge
         this._currentExclusions = []; // par defaut
 
@@ -300,9 +297,9 @@ var Isocurve = L.Control.extend( /** @lends L.geoportalControl.Isocurve.prototyp
         var exclusion = this.options.exclusions;
         if (!exclusion || (typeof exclusion === "object" && Object.keys(exclusion).length === 0)) {
             this.options.exclusions = {
-                toll: false,
-                tunnel: false,
-                bridge: false
+                toll : false,
+                tunnel : false,
+                bridge : false
             };
         }
 
@@ -334,8 +331,7 @@ var Isocurve = L.Control.extend( /** @lends L.geoportalControl.Isocurve.prototyp
      *
      * @private
      */
-    _checkRightsManagement: function() {
-
+    _checkRightsManagement : function () {
         var _opts = null;
         var _res = [];
         var _key = null;
@@ -349,9 +345,9 @@ var Isocurve = L.Control.extend( /** @lends L.geoportalControl.Isocurve.prototyp
         }
 
         var rightManagementIsochrone = RightManagement.check({
-            key: _key || this.options.apiKey,
-            resources: _res,
-            services: ["Isochrone"]
+            key : _key || this.options.apiKey,
+            resources : _res,
+            services : ["Isochrone"]
         });
         logger.log("rightManagementIsochrone", rightManagementIsochrone);
 
@@ -367,9 +363,9 @@ var Isocurve = L.Control.extend( /** @lends L.geoportalControl.Isocurve.prototyp
         }
 
         var rightManagementAutoComplete = RightManagement.check({
-            key: _key || this.options.apiKey,
-            resources: _res,
-            services: ["AutoCompletion"]
+            key : _key || this.options.apiKey,
+            resources : _res,
+            services : ["AutoCompletion"]
         });
         logger.log("rightManagementAutoComplete", rightManagementAutoComplete);
 
@@ -400,8 +396,7 @@ var Isocurve = L.Control.extend( /** @lends L.geoportalControl.Isocurve.prototyp
      *
      * @private
      */
-    _detectSupport: function() {
-
+    _detectSupport : function () {
         // TODO
         // Choix de gérer la détection dans le code du composant au lieu du DOM car :
         // Utilisation de l'implémentation Leaflet
@@ -440,8 +435,7 @@ var Isocurve = L.Control.extend( /** @lends L.geoportalControl.Isocurve.prototyp
      *
      * @private
      */
-    _initLayout: function(map) {
-
+    _initLayout : function (map) {
         // create main container
         var container = this._createMainContainerElement();
 
@@ -535,21 +529,20 @@ var Isocurve = L.Control.extend( /** @lends L.geoportalControl.Isocurve.prototyp
      *
      * @private
      */
-    _createIsoPanelFormPointElement: function(map) {
-
+    _createIsoPanelFormPointElement : function (map) {
         // point de depart
         this._currentPoint = new LocationSelector({
-            apiKey: this.options.apiKey || null,
-            tag: {
-                id: 0,
-                unique: this._uid,
-                label: "Départ",
-                color: "red",
-                display: true
+            apiKey : this.options.apiKey || null,
+            tag : {
+                id : 0,
+                unique : this._uid,
+                label : "Départ",
+                color : "red",
+                display : true
             },
-            displayInfo: true,
-            disableReverse: this.options.disableReverse,
-            autocompleteOptions: this.options.autocompleteOptions || null
+            displayInfo : true,
+            disableReverse : this.options.disableReverse,
+            autocompleteOptions : this.options.autocompleteOptions || null
         });
         this._currentPoint.setMap(map);
 
@@ -569,7 +562,7 @@ var Isocurve = L.Control.extend( /** @lends L.geoportalControl.Isocurve.prototyp
      *
      * @private
      */
-    onShowIsoPanelClick: function(e) {
+    onShowIsoPanelClick : function (e) {
         logger.log("onShowIsoPanelClick", e);
         // on desactive l'impl. reduction de la fenetre
         // if (this._geojsonIso && !this._reducePanel) {
@@ -587,11 +580,10 @@ var Isocurve = L.Control.extend( /** @lends L.geoportalControl.Isocurve.prototyp
      *
      * @private
      */
-    onIsoResetClick: function(e) {
+    onIsoResetClick : function (e) {
         logger.log("onIsoResetClick", e);
 
         this._clear();
-
     },
 
     // // on desactive l'impl. reduction de la fenetre
@@ -616,7 +608,7 @@ var Isocurve = L.Control.extend( /** @lends L.geoportalControl.Isocurve.prototyp
      *
      * @private
      */
-    onIsoTypeChoiceChange: function(e) {
+    onIsoTypeChoiceChange : function (e) {
         var value = e.target.value;
 
         if (!value) {
@@ -640,8 +632,7 @@ var Isocurve = L.Control.extend( /** @lends L.geoportalControl.Isocurve.prototyp
      *
      * @private
      */
-    onIsoModeTransportChange: function(e) {
-
+    onIsoModeTransportChange : function (e) {
         var value = e.target.value;
 
         if (!value) {
@@ -659,7 +650,7 @@ var Isocurve = L.Control.extend( /** @lends L.geoportalControl.Isocurve.prototyp
      *
      * @private
      */
-    onIsoModeDirectionChange: function(e) {
+    onIsoModeDirectionChange : function (e) {
         var value = e.target.value;
 
         if (!value) {
@@ -678,7 +669,7 @@ var Isocurve = L.Control.extend( /** @lends L.geoportalControl.Isocurve.prototyp
      *
      * @private
      */
-    onIsoValueChronTimeHourChange: function(e) {
+    onIsoValueChronTimeHourChange : function (e) {
         var value = e.target.value;
 
         // pointer to...
@@ -700,7 +691,7 @@ var Isocurve = L.Control.extend( /** @lends L.geoportalControl.Isocurve.prototyp
      *
      * @private
      */
-    onIsoValueChronTimeMinuteChange: function(e) {
+    onIsoValueChronTimeMinuteChange : function (e) {
         var value = e.target.value;
 
         // pointer to...
@@ -722,7 +713,7 @@ var Isocurve = L.Control.extend( /** @lends L.geoportalControl.Isocurve.prototyp
      *
      * @private
      */
-    onIsoValueDistChange: function(e) {
+    onIsoValueDistChange : function (e) {
         var value = e.target.value;
 
         // pointer to...
@@ -745,7 +736,7 @@ var Isocurve = L.Control.extend( /** @lends L.geoportalControl.Isocurve.prototyp
      *
      * @private
      */
-    onIsoExclusionsChange: function(e) {
+    onIsoExclusionsChange : function (e) {
         var value = e.target.value;
         var checked = e.target.checked;
 
@@ -778,8 +769,7 @@ var Isocurve = L.Control.extend( /** @lends L.geoportalControl.Isocurve.prototyp
      *
      * @private
      */
-    onIsoComputationSubmit: function() {
-
+    onIsoComputationSubmit : function () {
         if (!this._currentPoint || !this._currentPoint.getCoordinate || !this._currentPoint.getCoordinate()) {
             return;
         }
@@ -818,19 +808,19 @@ var Isocurve = L.Control.extend( /** @lends L.geoportalControl.Isocurve.prototyp
         var self = this;
 
         this._requestIsoCurve({
-            position: self._currentPoint.getCoordinate(),
-            graph: self._currentTransport,
-            exclusions: self._currentExclusions,
-            method: self._currentComputation,
-            reverse: (self._currentDirection.toLowerCase() === "arrival") ? true : false,
-            time: time,
-            distance: distance,
-            smoothing: true,
-            timeout: 7000,
-            protocol: "XHR",
+            position : self._currentPoint.getCoordinate(),
+            graph : self._currentTransport,
+            exclusions : self._currentExclusions,
+            method : self._currentComputation,
+            reverse : (self._currentDirection.toLowerCase() === "arrival") ? true : false,
+            time : time,
+            distance : distance,
+            smoothing : true,
+            timeout : 7000,
+            protocol : "XHR",
 
             /** callback onSuccess */
-            onSuccess: function(results) {
+            onSuccess : function (results) {
                 logger.log(results);
                 if (results) {
                     self._drawIsoResults(results);
@@ -838,7 +828,7 @@ var Isocurve = L.Control.extend( /** @lends L.geoportalControl.Isocurve.prototyp
             },
 
             /** callback onFailure */
-            onFailure: function(error) {
+            onFailure : function (error) {
                 // FIXME mise à jour du controle mais le service ne repond pas en 200 !?
                 self._hideWaitingContainer();
 
@@ -860,8 +850,7 @@ var Isocurve = L.Control.extend( /** @lends L.geoportalControl.Isocurve.prototyp
      *
      * @private
      */
-    _requestIsoCurve: function(settings) {
-
+    _requestIsoCurve : function (settings) {
         // on ne fait pas de requête si on n'a pas renseigné de parametres !
         if (!settings ||
             ((typeof settings === "object") && (Object.keys(settings).length === 0))) {
@@ -916,7 +905,6 @@ var Isocurve = L.Control.extend( /** @lends L.geoportalControl.Isocurve.prototyp
         logger.log(options);
 
         Gp.Services.isoCurve(options);
-
     },
 
     /**
@@ -927,8 +915,7 @@ var Isocurve = L.Control.extend( /** @lends L.geoportalControl.Isocurve.prototyp
      *
      * @private
      */
-    _drawIsoResults: function(results) {
-
+    _drawIsoResults : function (results) {
         this._clearIsoResultsGeometry();
 
         // sauvegarde de l'etat des resultats
@@ -945,13 +932,13 @@ var Isocurve = L.Control.extend( /** @lends L.geoportalControl.Isocurve.prototyp
         var _geometry = results.geometry;
 
         var _style = {
-            color: "#ff7800",
-            weight: 5,
-            opacity: 0.65
+            color : "#ff7800",
+            weight : 5,
+            opacity : 0.65
         };
 
         this._geojsonIso = L.geoJson(_geometry, {
-            style: _style
+            style : _style
         }).addTo(map);
 
         // cache la patience
@@ -969,8 +956,7 @@ var Isocurve = L.Control.extend( /** @lends L.geoportalControl.Isocurve.prototyp
      *
      * @private
      */
-    _clear: function() {
-
+    _clear : function () {
         this._initTransport();
         this._initExclusions();
         this._initComputation();
@@ -1003,8 +989,7 @@ var Isocurve = L.Control.extend( /** @lends L.geoportalControl.Isocurve.prototyp
      *
      * @private
      */
-    _clearIsoResultsGeometry: function() {
-
+    _clearIsoResultsGeometry : function () {
         var map = this._map;
 
         if (this._geojsonIso != null) {
@@ -1022,8 +1007,7 @@ var Isocurve = L.Control.extend( /** @lends L.geoportalControl.Isocurve.prototyp
      *
      * @private
      */
-    _displayWaitingContainer: function() {
-
+    _displayWaitingContainer : function () {
         this._waitingContainer.className = "GPisochronCalcWaitingContainerVisible";
         this._waiting = true;
 
@@ -1034,7 +1018,7 @@ var Isocurve = L.Control.extend( /** @lends L.geoportalControl.Isocurve.prototyp
             this._timer = null;
         }
         var context = this;
-        this._timer = setTimeout(function() {
+        this._timer = setTimeout(function () {
             if (context._waiting === true) {
                 context._hideWaitingContainer();
             } else {
@@ -1050,7 +1034,7 @@ var Isocurve = L.Control.extend( /** @lends L.geoportalControl.Isocurve.prototyp
      *
      * @private
      */
-    _hideWaitingContainer: function() {
+    _hideWaitingContainer : function () {
         if (this._waiting) {
             this._waitingContainer.className = "GPisochronCalcWaitingContainerHidden";
             this._waiting = false;
@@ -1071,8 +1055,7 @@ var Isocurve = L.Control.extend( /** @lends L.geoportalControl.Isocurve.prototyp
      * @param {Object} value - distance en km ou heures-minutes
      * @param {Object} options - options = {...}
      */
-    compute: function(position, value, options) {
-
+    compute : function (position, value, options) {
         if (!this._showContainer.checked) {
             this._pictoContainer.click();
         }
@@ -1084,10 +1067,10 @@ var Isocurve = L.Control.extend( /** @lends L.geoportalControl.Isocurve.prototyp
 
         // Les options par defauts
         var settings = {
-            direction: "departure",
-            method: "time",
-            transport: "Voiture",
-            exclusions: []
+            direction : "departure",
+            method : "time",
+            transport : "Voiture",
+            exclusions : []
         };
 
         // On recupere les options
@@ -1121,14 +1104,12 @@ var Isocurve = L.Control.extend( /** @lends L.geoportalControl.Isocurve.prototyp
         }
 
         this._currentDirection = settings.direction;
-        (settings.direction === "departure") ?
-        L.DomUtil.get("GPisochronDirectionSelect-" + this._uid).selectedIndex = 0:
-            L.DomUtil.get("GPisochronDirectionSelect-" + this._uid).selectedIndex = 1;
+        (settings.direction === "departure")
+            ? L.DomUtil.get("GPisochronDirectionSelect-" + this._uid).selectedIndex = 0 : L.DomUtil.get("GPisochronDirectionSelect-" + this._uid).selectedIndex = 1;
 
         this.onIsoComputationSubmit();
 
         map.flyTo(position);
-
     }
 
 });

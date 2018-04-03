@@ -1,5 +1,5 @@
 /* global describe, it */
-import ID from "../../../src/Common/Utils/SelectorID";
+import ID from "../../../../src/Common/Utils/SelectorID";
 
 import { assert, expect, should } from "chai";
 should();

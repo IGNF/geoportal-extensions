@@ -1,5 +1,5 @@
 /* global describe, it */
-import MathUtils from "../../../src/Common/Utils/MathUtils";
+import MathUtils from "../../../../src/Common/Utils/MathUtils";
 
 import { assert, expect, should } from "chai";
 should();

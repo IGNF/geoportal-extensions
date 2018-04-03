@@ -22,29 +22,29 @@ var logger = Logger.getLogger("mouseposition");
  * @namespace
  * @alias L.geoportalControl.MousePosition
  */
-var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePosition.prototype */ {
+var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition.prototype */ {
 
-    includes: MousePositionDOM,
+    includes : MousePositionDOM,
 
     /**
      * options by default
      *
      * @private
      */
-    options: {
-        position: "bottomleft",
-        collapsed: true,
-        units: [],
-        systems: [],
-        displayAltitude: true,
-        displayCoordinates: true,
-        editCoordinates: false,
-        altitude: {
-            triggerDelay: 200,
-            responseDelay: 500,
-            noDataValue: -99999,
-            noDataValueTolerance: 90000,
-            serviceOptions: {}
+    options : {
+        position : "bottomleft",
+        collapsed : true,
+        units : [],
+        systems : [],
+        displayAltitude : true,
+        displayCoordinates : true,
+        editCoordinates : false,
+        altitude : {
+            triggerDelay : 200,
+            responseDelay : 500,
+            noDataValue : -99999,
+            noDataValueTolerance : 90000,
+            serviceOptions : {}
         }
     },
 
@@ -111,8 +111,7 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
      *      units : ["DEC", "DMS"]
      *  });
      */
-    initialize: function(options) {
-
+    initialize : function (options) {
         // on merge les options avec celles par defaut
         L.Util.extend(this.options, options);
 
@@ -196,8 +195,7 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
      *
      * @private
      */
-    onAdd: function(map) {
-
+    onAdd : function (map) {
         // initialisation du DOM du composant
         var container = this._container = this._initLayout();
 
@@ -232,8 +230,7 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
      *
      * @private
      */
-    onRemove: function(map) {
-
+    onRemove : function (map) {
         map.off("mousemove", this.onMouseMove);
     },
 
@@ -245,46 +242,44 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
      *
      * @private
      */
-    _initProjectionSystems: function() {
-
+    _initProjectionSystems : function () {
         // on donne la possibilité à l'utilisateur de modifier
         // la liste des systèmes à afficher
         // Ex. this.options.systems
 
         // systemes de projection disponible par defaut
         var projectionSystemsByDefault = [{
-            label: "G\u00e9ographique",
-            crs: L.CRS.Simple, // L.Projection.LonLat !
-            type: "Geographical"
+            label : "G\u00e9ographique",
+            crs : L.CRS.Simple, // L.Projection.LonLat !
+            type : "Geographical"
         }, {
-            label: "Web Mercator",
-            crs: L.CRS.EPSG3395, // L.Projection.SphericalMercator !
-            type: "Metric"
+            label : "Web Mercator",
+            crs : L.CRS.EPSG3395, // L.Projection.SphericalMercator !
+            type : "Metric"
         }, {
-            label: "Lambert 93",
-            crs: CRS.EPSG2154,
-            type: "Metric",
-            geoBBox: {
-                left: -9.86,
-                bottom: 41.15,
-                right: 10.38,
-                top: 51.56
+            label : "Lambert 93",
+            crs : CRS.EPSG2154,
+            type : "Metric",
+            geoBBox : {
+                left : -9.86,
+                bottom : 41.15,
+                right : 10.38,
+                top : 51.56
             }
         }, {
-            label: "Lambert II \u00e9tendu",
-            crs: CRS.EPSG27572,
-            type: "Metric",
-            geoBBox: {
-                left: -4.87,
-                bottom: 42.33,
-                right: 8.23,
-                top: 51.14
+            label : "Lambert II \u00e9tendu",
+            crs : CRS.EPSG27572,
+            type : "Metric",
+            geoBBox : {
+                left : -4.87,
+                bottom : 42.33,
+                right : 8.23,
+                top : 51.14
             }
         }];
 
         var systems = this.options.systems;
         for (var i = 0; i < systems.length; i++) {
-
             // definition d'un systeme de reference
             var sys = systems[i];
 
@@ -337,8 +332,7 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
      *
      * @private
      */
-    _initProjectionUnits: function() {
-
+    _initProjectionUnits : function () {
         // on donne la possibilité à l'utilisateur de modifier
         // la liste des unités à afficher
         // Ex.
@@ -346,31 +340,31 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
 
         // unités disponible par defaut
         var projectionUnitsByDefault = {
-            Geographical: [{
-                code: "DEC",
-                label: "degrés décimaux",
-                format: this._displayDEC
+            Geographical : [{
+                code : "DEC",
+                label : "degrés décimaux",
+                format : this._displayDEC
             }, {
-                code: "DMS",
-                label: "degrés sexagésimaux",
-                format: this._displayDMS
+                code : "DMS",
+                label : "degrés sexagésimaux",
+                format : this._displayDMS
             }, {
-                code: "RAD",
-                label: "radians",
-                format: this._displayRAD
+                code : "RAD",
+                label : "radians",
+                format : this._displayRAD
             }, {
-                code: "GON",
-                label: "grades",
-                format: this._displayGON
+                code : "GON",
+                label : "grades",
+                format : this._displayGON
             }],
-            Metric: [{
-                code: "M",
-                label: "mètres",
-                format: this._displayMeter
+            Metric : [{
+                code : "M",
+                label : "mètres",
+                format : this._displayMeter
             }, {
-                code: "KM",
-                label: "kilomètres",
-                format: this._displayKMeter
+                code : "KM",
+                label : "kilomètres",
+                format : this._displayKMeter
             }]
         };
 
@@ -402,7 +396,6 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
         if (Object.keys(this._projectionUnits).length === 0) {
             this._projectionUnits = projectionUnitsByDefault;
         }
-
     },
 
     /**
@@ -411,12 +404,11 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
      *
      * @private
      */
-    _checkRightsManagement: function() {
-
+    _checkRightsManagement : function () {
         var rightManagement = RightManagement.check({
-            key: this.options.apiKey,
-            resources: ["SERVICE_CALCUL_ALTIMETRIQUE_RSC"],
-            services: ["Elevation"]
+            key : this.options.apiKey,
+            resources : ["SERVICE_CALCUL_ALTIMETRIQUE_RSC"],
+            services : ["Elevation"]
         });
 
         this._noRightManagement = !rightManagement;
@@ -426,7 +418,7 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
         // Ex. la clef API issue de l'autoconfiguration si elle n'a pas
         // été renseignée.
         if (!this.options.apiKey) {
-            this.options.apiKey = rightManagement.key;
+            this.options.apiKey = (rightManagement) ? rightManagement.key : null;
         }
     },
 
@@ -437,8 +429,7 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
      *
      * @private
      */
-    _detectSupport: function() {
-
+    _detectSupport : function () {
         // TODO
         // Choix de gérer la détection dans le code du composant au lieu du DOM car :
         // Utilisation de l'implémentation Leaflet
@@ -477,8 +468,7 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
      *
      * @private
      */
-    _initLayout: function() {
-
+    _initLayout : function () {
         // create main container
         var container = this._createMainContainerElement();
 
@@ -524,7 +514,7 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
      *
      * @private
      */
-    _setElevationPanel: function(active) {
+    _setElevationPanel : function (active) {
         var div = null;
 
         if (!active) {
@@ -547,7 +537,7 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
      *
      * @private
      */
-    _setCoordinatePanel: function(active) {
+    _setCoordinatePanel : function (active) {
         if (!active) {
             var div = L.DomUtil.get(this._addUID("GPmousePositionCoordinate"));
             div.style.display = "none";
@@ -563,7 +553,7 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
      *
      * @private
      */
-    _setSettingsPanel: function(active) {
+    _setSettingsPanel : function (active) {
         if (!active) {
             var divPicto = L.DomUtil.get("GPshowMousePositionSettingsPicto");
             var divPanel = L.DomUtil.get(this._addUID("GPmousePositionSettings"));
@@ -580,7 +570,7 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
      *
      * @private
      */
-    _setTypeUnitsPanel: function(type) {
+    _setTypeUnitsPanel : function (type) {
         var container = this._projectionUnitsContainer;
 
         // on supprime les enfants...
@@ -626,7 +616,7 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
      *
      * @private
      */
-    _displayDEC: function(oLatLng) {
+    _displayDEC : function (oLatLng) {
         var coordinate = {};
         coordinate.lat = PositionFormater.roundToDecimal(oLatLng.lat, 6);
         coordinate.lng = PositionFormater.roundToDecimal(oLatLng.lng, 6);
@@ -639,12 +629,11 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
      *
      * @private
      */
-    _displayDMS: function(oLatLng) {
+    _displayDMS : function (oLatLng) {
         var coordinate = {};
         coordinate.lat = PositionFormater.decimalLatToDMS(oLatLng.lat, true);
         coordinate.lng = PositionFormater.decimalLonToDMS(oLatLng.lng, true);
         return coordinate;
-
     },
 
     /**
@@ -652,13 +641,12 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
      *
      * @private
      */
-    _displayRAD: function(oLatLng) {
+    _displayRAD : function (oLatLng) {
         var coordinate = {};
         coordinate.lat = PositionFormater.decimalToRadian(oLatLng.lat);
         coordinate.lng = PositionFormater.decimalToRadian(oLatLng.lng);
         coordinate.unit = "rad";
         return coordinate;
-
     },
 
     /**
@@ -666,13 +654,12 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
      *
      * @private
      */
-    _displayGON: function(oLatLng) {
+    _displayGON : function (oLatLng) {
         var coordinate = {};
         coordinate.lat = PositionFormater.decimalToGrade(oLatLng.lat);
         coordinate.lng = PositionFormater.decimalToGrade(oLatLng.lng);
         coordinate.unit = "gon";
         return coordinate;
-
     },
 
     /**
@@ -680,14 +667,13 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
      *
      * @private
      */
-    _displayMeter: function(oXY) {
+    _displayMeter : function (oXY) {
         // on recoit toujours des coordonnées metriques
         var coordinate = {};
         coordinate.x = L.Util.formatNum(oXY.x, 2);
         coordinate.y = L.Util.formatNum(oXY.y, 2);
         coordinate.unit = "m";
         return coordinate;
-
     },
 
     /**
@@ -695,13 +681,12 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
      *
      * @private
      */
-    _displayKMeter: function(oXY) {
+    _displayKMeter : function (oXY) {
         var coordinate = {};
         coordinate.x = L.Util.formatNum(oXY.x / 1000, 2);
         coordinate.y = L.Util.formatNum(oXY.y / 1000, 2);
         coordinate.unit = "km";
         return coordinate;
-
     },
 
     // ################################################################### //
@@ -717,8 +702,7 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
      * @returns {Object} oXY - coordinate
      * @private
      */
-    _project: function(oLatLng, crs) {
-
+    _project : function (oLatLng, crs) {
         // cf. http://leafletjs.com/reference.html#iprojection
         // notre carte est dans la projection par defaut :
         // Spherical Mercator projection (EPSG:3857)
@@ -773,8 +757,7 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
      * @returns {Object} oLatLng - geographic coordinate (L.LatLng)
      * @private
      */
-    _unproject: function(oXY) {
-
+    _unproject : function (oXY) {
         // cf. http://leafletjs.com/reference.html#iprojection
         // notre carte est dans la projection par defaut :
         // Spherical Mercator projection (EPSG:3857)
@@ -802,15 +785,15 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
         // pas de reprojection pour le systeme de projection natif !
         if (oSrs === L.CRS.Simple) {
             return {
-                lat: oXY.y,
-                lng: oXY.x
+                lat : oXY.y,
+                lng : oXY.x
             };
         }
 
         if (this._currentProjectionType === "Geographical") {
             return {
-                lat: oXY.y,
-                lng: oXY.x
+                lat : oXY.y,
+                lng : oXY.x
             };
         }
 
@@ -840,8 +823,7 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
      *
      * @private
      */
-    _setCoordinate: function(oLatLng) {
-
+    _setCoordinate : function (oLatLng) {
         // structure
         // L.LatLng
         //     lat: 4.07249425916745
@@ -886,7 +868,7 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
      *
      * @private
      */
-    _setElevation: function(oLatLng) {
+    _setElevation : function (oLatLng) {
         // gestion du timer de la requete du service d'altitude
         var delay = this.options.altitude.responseDelay;
         var noDataValue = this.options.altitude.noDataValue;
@@ -902,7 +884,7 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
      *
      * @private
      */
-    onMoveStopped: function(oLatLng) {
+    onMoveStopped : function (oLatLng) {
         // si pas de droit, on ne met pas à jour l'affichage !
         if (this._noRightManagement) {
             return;
@@ -919,8 +901,7 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
      *
      * @private
      */
-    onMouseMove: function(e) {
-
+    onMouseMove : function (e) {
         var self = this;
 
         var oLatLng = e.latlng;
@@ -928,7 +909,7 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
         this._setCoordinate(oLatLng);
 
         clearTimeout(this._timer);
-        this._timer = setTimeout(function() {
+        this._timer = setTimeout(function () {
             self.onMoveStopped(oLatLng);
         }, this.options.altitude.triggerDelay);
     },
@@ -940,8 +921,7 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
      *
      * @private
      */
-    onMapMove: function() {
-
+    onMapMove : function () {
         var self = this;
         var map = this._map;
 
@@ -950,7 +930,7 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
         this._setCoordinate(oLatLng);
 
         clearTimeout(this._timer);
-        this._timer = setTimeout(function() {
+        this._timer = setTimeout(function () {
             self.onMoveStopped(oLatLng);
         }, this.options.altitude.triggerDelay);
     },
@@ -967,8 +947,7 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
      *
      * @private
      */
-    onRequestAltitude: function(coordinate, callback) {
-
+    onRequestAltitude : function (coordinate, callback) {
         logger.log("onRequestAltitude");
 
         // INFORMATION
@@ -1001,18 +980,18 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
 
         // ainsi que les coordonnées
         L.Util.extend(options, {
-            zonly: true,
-            positions: [{
-                lon: coordinate.lon || coordinate.lng,
-                lat: coordinate.lat
+            zonly : true,
+            positions : [{
+                lon : coordinate.lon || coordinate.lng,
+                lat : coordinate.lat
             }]
         });
 
         // et les callbacks
         L.Util.extend(options, {
-            scope: this,
+            scope : this,
             /** callback onSuccess */
-            onSuccess: function(results) {
+            onSuccess : function (results) {
                 logger.log(results);
                 if (results && Object.keys(results)) {
                     // var context = this.options.scope;
@@ -1021,7 +1000,7 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
                 }
             },
             /** callback onFailure */
-            onFailure: function(error) {
+            onFailure : function (error) {
                 logger.error(error.message);
             }
         });
@@ -1029,7 +1008,7 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
         // cas où la clef API n'est pas renseignée dans les options du service,
         // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
         L.Util.extend(options, {
-            apiKey: options.apiKey || this.options.apiKey
+            apiKey : options.apiKey || this.options.apiKey
         });
 
         logger.log(options);
@@ -1047,8 +1026,7 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
      *
      * @private
      */
-    onShowMousePositionClick: function(e) {
-
+    onShowMousePositionClick : function (e) {
         logger.log(e);
 
         // checked : true - panel close
@@ -1058,13 +1036,13 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
         // evenement declenché à l'ouverture/fermeture du panneau,
         // et en fonction du mode : desktop ou tactile !
         if (this._showContainer.checked) {
-            (this._isDesktop) ?
-            map.off("mousemove", this.onMouseMove, this):
-                map.off("move", this.onMapMove, this);
+            (this._isDesktop)
+                ? map.off("mousemove", this.onMouseMove, this)
+                : map.off("move", this.onMapMove, this);
         } else {
-            (this._isDesktop) ?
-            map.on("mousemove", this.onMouseMove, this):
-                map.on("move", this.onMapMove, this);
+            (this._isDesktop)
+                ? map.on("mousemove", this.onMouseMove, this)
+                : map.on("move", this.onMapMove, this);
         }
 
         // on gère l'affichage des panneaux ici...,
@@ -1082,8 +1060,7 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
      * @param {Boolean} editing - editing mode
      * @private
      */
-    onMousePositionEditModeClick: function(editing) {
-
+    onMousePositionEditModeClick : function (editing) {
         if (!this.options.editCoordinates) {
             return;
         }
@@ -1100,13 +1077,13 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
         var map = this._map;
 
         if (this._isDesktop) {
-            (this._isEditing) ?
-            map.off("mousemove", this.onMouseMove, this):
-                map.on("mousemove", this.onMouseMove, this);
+            (this._isEditing)
+                ? map.off("mousemove", this.onMouseMove, this)
+                : map.on("mousemove", this.onMouseMove, this);
         } else {
-            (this._isEditing) ?
-            map.off("move", this.onMapMove, this):
-                map.on("move", this.onMapMove, this);
+            (this._isEditing)
+                ? map.off("move", this.onMapMove, this)
+                : map.on("move", this.onMapMove, this);
         }
     },
 
@@ -1117,7 +1094,7 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
      * @returns {Number}
      * @private
      */
-    _convertCoordinate: function(value, unit) {
+    _convertCoordinate : function (value, unit) {
         var result;
         if (unit === "DEC" || unit === "DMS") { // DMS est converti en DEC !
             result = value;
@@ -1144,8 +1121,7 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
      * @param {Event} e - event
      * @returns {Boolean}
      */
-    validateExtentCoordinate: function(coordType, value, e) {
-
+    validateExtentCoordinate : function (coordType, value, e) {
         // FIXME pas de validation...
         if (e !== undefined) {
             return true;
@@ -1161,7 +1137,8 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
             return true;
         }
 
-        if (geoBBox) { // check if coordinates are in the extent
+        if (geoBBox) {
+            // check if coordinates are in the extent
 
             var extent = [geoBBox.left, geoBBox.bottom, geoBBox.right, geoBBox.top];
             var unit = this._currentProjectionUnits;
@@ -1169,8 +1146,8 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
             // on convertit un point..., mais on n'a pas de fonction
             // de conversion comme pour ol3...
             var oLatLon = this._unproject({
-                x: (coordType === "Lon") ? this._convertCoordinate(value, unit) : 0,
-                y: (coordType === "Lat") ? this._convertCoordinate(value, unit) : 0
+                x : (coordType === "Lon") ? this._convertCoordinate(value, unit) : 0,
+                y : (coordType === "Lat") ? this._convertCoordinate(value, unit) : 0
 
             });
 
@@ -1194,8 +1171,7 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
      * @returns {String} coordinate
      * @private
      */
-    _getCoordinate: function(coordType) {
-
+    _getCoordinate : function (coordType) {
         var inputDegrees = L.DomUtil.get(this._addUID("GPmousePosition" + coordType + "Degrees"));
         var degrees = inputDegrees.value;
         if (!degrees) {
@@ -1248,12 +1224,11 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
      *
      * @private
      */
-    _locateDMSCoordinates: function() {
-
+    _locateDMSCoordinates : function () {
         // on est toujours en coordonnées geographiques...
         var oLatLon = {
-            lat: this._getCoordinate("Lat"),
-            lng: this._getCoordinate("Lon")
+            lat : this._getCoordinate("Lat"),
+            lng : this._getCoordinate("Lon")
         };
 
         if (!this.validateExtentCoordinate("Lon", oLatLon.lng)) {
@@ -1274,8 +1249,7 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
      *
      * @private
      */
-    _locateCoordinates: function() {
-
+    _locateCoordinates : function () {
         // soit longitude ou soit y
         var lonYDom = L.DomUtil.get(this._addUID("GPmousePositionLon")).value;
         lonYDom = lonYDom.replace(",", ".");
@@ -1315,14 +1289,13 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
 
         var unit = this._currentProjectionUnits;
         var oLatLon = this._unproject({
-            x: this._convertCoordinate(lon !== null ? lon : x, unit),
-            y: this._convertCoordinate(lat !== null ? lat : y, unit)
+            x : this._convertCoordinate(lon !== null ? lon : x, unit),
+            y : this._convertCoordinate(lat !== null ? lat : y, unit)
         });
 
         // FIXME https://github.com/Leaflet/Leaflet/issues/922
         var map = this._map;
         map.panTo(oLatLon);
-
     },
 
     /**
@@ -1331,8 +1304,7 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
      * @method locate
      * @private
      */
-    onMousePositionEditModeLocateClick: function() {
-
+    onMousePositionEditModeLocateClick : function () {
         if (!this.options.editCoordinates) {
             return;
         }
@@ -1342,8 +1314,9 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
             return;
         }
 
-        (this._currentProjectionUnits === "DMS") ?
-        this._locateDMSCoordinates(): this._locateCoordinates();
+        (this._currentProjectionUnits === "DMS")
+            ? this._locateDMSCoordinates()
+            : this._locateCoordinates();
     },
 
     /**
@@ -1355,8 +1328,7 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
      *
      * @private
      */
-    onMousePositionProjectionSystemChange: function(e) {
-
+    onMousePositionProjectionSystemChange : function (e) {
         var idx = e.target.selectedIndex; // index
         var value = e.target.options[idx].value; // crs, ex. MERCATOR (optionnel)
         var label = e.target.options[idx].label; // etiquette, ex Géographiques
@@ -1373,11 +1345,11 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
      *
      * @private
      */
-    _setCurrentSystem: function(systemCode) {
+    _setCurrentSystem : function (systemCode) {
         // si on change de type de systeme, on doit aussi changer le type d'unités !
         var type = null;
         for (var i = 0; i < this._projectionSystems.length; ++i) {
-            if (this._projectionSystems[i].code == systemCode) {
+            if (this._projectionSystems[i].code === systemCode) {
                 type = this._projectionSystems[i].type;
                 break;
             }
@@ -1411,8 +1383,7 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
      *
      * @private
      */
-    onMousePositionProjectionSystemMouseOver: function(e) {
-
+    onMousePositionProjectionSystemMouseOver : function (e) {
         logger.log(e);
 
         var map = this._map;
@@ -1469,8 +1440,7 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
      *
      * @private
      */
-    onMousePositionProjectionUnitsChange: function(e) {
-
+    onMousePositionProjectionUnitsChange : function (e) {
         var idx = e.target.selectedIndex;
         var value = e.target.options[idx].value;
         var label = e.target.options[idx].label;
@@ -1510,8 +1480,7 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
      * @param {Number} zoom - zoom
      * @param {Object} options - Zoom/pan options
      */
-    moveTo: function(position, zoom, options) {
-
+    moveTo : function (position, zoom, options) {
         if (!this._showContainer.checked) {
             this._pictoContainer.click();
         }
@@ -1522,11 +1491,10 @@ var MousePosition = L.Control.extend( /** @lends L.geoportalControl.MousePositio
         }
 
         this.onMouseMove({
-            latlng: position
+            latlng : position
         });
 
         map.flyTo(position, zoom || 10, options || {});
-
     }
 });
 

@@ -1,6 +1,6 @@
 /* global describe, it */
 
-import CheckRightManagement from "../../../src/Common/Utils/CheckRightManagement";
+import CheckRightManagement from "../../../../src/Common/Utils/CheckRightManagement";
 
 import { assert, expect, should } from "chai";
 should();
@@ -60,6 +60,13 @@ describe("-- Test CheckRightManagement --", function () {
         }
     };
 
+    before(function () {
+
+    });
+    after(function () {
+        window.Gp = null;
+    });
+    
     describe('#check (without autoconfiguration)', function () {
 
         window.Gp = null;

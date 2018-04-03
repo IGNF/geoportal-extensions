@@ -1,5 +1,5 @@
 /* global describe, it */
-import ProxyUtils from "../../../src/Common/Utils/ProxyUtils";
+import ProxyUtils from "../../../../src/Common/Utils/ProxyUtils";
 
 import { assert, expect, should } from "chai";
 should();

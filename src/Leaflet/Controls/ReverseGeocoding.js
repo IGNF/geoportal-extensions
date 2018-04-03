@@ -14,28 +14,28 @@ var logger = Logger.getLogger("reversegeocoding");
  *
  * Leaflet Control Class to find locations by clicking on a map using <a href="https://geoservices.ign.fr/documentation/geoservices/geocodage-inverse.html" target="_blank">reverse geocoding service</a> of the Geoportal platform.
  *
- * Use {@link module:Controls.ReverseGeocode L.geoportalControl.ReverseGeocode()} factory to create instances of that class.
+ * Use {@link module :Controls.ReverseGeocode L.geoportalControl.ReverseGeocode()} factory to create instances of that class.
  *
  * **Extends** Leaflet <a href="http://leafletjs.com/reference.html#control" target="_blank">L.Control</a> native class.
  *
  * @namespace
  * @alias L.geoportalControl.ReverseGeocode
  */
-var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGeocode.prototype */ {
+var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeocode.prototype */ {
 
-    includes: ReverseGeocodingDOM,
+    includes : ReverseGeocodingDOM,
 
     /**
      * options by default
      *
      * @private
      */
-    options: {
-        position: "bottomleft",
-        collapsed: true,
-        resources: ["StreetAddress", "PositionOfInterest"],
-        delimitations: ["Point", "Circle", "Extent"],
-        reverseGeocodeOptions: {}
+    options : {
+        position : "bottomleft",
+        collapsed : true,
+        resources : ["StreetAddress", "PositionOfInterest"],
+        delimitations : ["Point", "Circle", "Extent"],
+        reverseGeocodeOptions : {}
     },
 
     /**
@@ -57,8 +57,7 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
      *  });
      * @private
      */
-    initialize: function(options) {
-
+    initialize : function (options) {
         // on merge les options avec celles par defaut
         L.Util.extend(this.options, options);
 
@@ -135,7 +134,6 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
         // #################### informations des résultats #################### //
 
         this._reverseGeocodingLocations = [];
-
     },
 
     /**
@@ -145,8 +143,7 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
      *
      * @private
      */
-    onAdd: function(map) {
-
+    onAdd : function (map) {
         // initialisation du DOM du composant
         var container = this._container = this._initLayout();
 
@@ -172,8 +169,7 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
      *
      * @private
      */
-    onRemove: function(map) {
-
+    onRemove : function (map) {
         this._clearLocations();
         this._clearLocationsFeature(map);
         this._clearInputRequest();
@@ -192,8 +188,7 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
      *
      * @private
      */
-    _checkRightsManagement: function() {
-
+    _checkRightsManagement : function () {
         var _resources = [];
         var _key;
         var _opts = null;
@@ -215,9 +210,9 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
             ];
         }
         var rightManagementGeocode = RightManagement.check({
-            key: _key || this.options.apiKey,
-            resources: _resources,
-            services: ["Geocode"]
+            key : _key || this.options.apiKey,
+            resources : _resources,
+            services : ["Geocode"]
         });
         logger.log("rightManagementGeocode", rightManagementGeocode);
 
@@ -245,7 +240,7 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
      *
      * @private
      */
-    _checkInputOptions: function() {
+    _checkInputOptions : function () {
         var i;
         // on vérifie le tableau des resources
         if (this.options.resources) {
@@ -281,7 +276,6 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
                 }
             }
         }
-
     },
 
     /**
@@ -290,7 +284,7 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
      *
      * @private
      */
-    _initGeocodingType: function() {
+    _initGeocodingType : function () {
         // Type de géocodage selectionné
         this._currentGeocodingType = "StreetAddress"; // par defaut
 
@@ -302,7 +296,6 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
 
         // options utilisateur
         if (Array.isArray(resources) && resources.length) {
-
             // vérification des droits
             var noRightsIndexes = [];
             for (var i = 0; i < resources.length; i++) {
@@ -338,7 +331,7 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
      *
      * @private
      */
-    _initGeocodingDelimitation: function() {
+    _initGeocodingDelimitation : function () {
         // Type de délimitation selectionné
         this._currentGeocodingDelimitation = "Point"; // par defaut
 
@@ -367,7 +360,7 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
      *
      * @private
      */
-    _initLayout: function() {
+    _initLayout : function () {
         // create main container
         var container = this._createMainContainerElement();
 
@@ -441,23 +434,21 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
      * @param {Object} map - control map.
      * @private
      */
-    _activateMapInteraction: function(map) {
-
+    _activateMapInteraction : function (map) {
         logger.info("_activateMapInteraction()");
 
         // Creation de la couche vectorielle sur laquelle on va dessiner
         if (this._inputFeaturesLayer === null) {
-
             this._inputFeaturesLayer = new L.FeatureGroup();
             map.addLayer(this._inputFeaturesLayer);
 
             var self = this;
             /* evenement sur la carte lors d'une saisie,
             on y ajoute le layer, et on y stocke les coordonnées */
-            map.on("draw:created", function(e) {
+            map.on("draw :created", function (e) {
                 var layer = e.layer;
                 var type = e.layerType;
-                // console.log("draw:created");
+                // console.log("draw :created");
 
                 // TODO
                 // comment mettre en place un icone dynamiquement ?
@@ -470,15 +461,15 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
             });
 
             /* evenements */
-            map.on("draw:drawstart", function() {
-                // console.log("draw:drawstart");
+            map.on("draw :drawstart", function () {
+                // console.log("draw :drawstart");
                 self._removeFeatureLayer(self._lastIdLayer);
                 self._lastIdLayer = self._currentIdLayer;
             });
 
             /* evenements */
-            map.on("draw:drawstop", function() {
-                // console.log("draw:drawstop");
+            map.on("draw :drawstop", function () {
+                // console.log("draw :drawstop");
             });
         }
 
@@ -496,10 +487,9 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
 
                 this._activateBoxInteraction(map);
                 break;
-            default:
+            default :
                 break;
         }
-
     },
 
     /**
@@ -508,16 +498,15 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
      * @param {Object} map - control map.
      * @private
      */
-    _removeMapInteraction: function(map) {
-
+    _removeMapInteraction : function (map) {
         if (!map) {
             return;
         }
 
         if (this._inputFeaturesLayer !== null) {
-            map.off("draw:created");
-            map.off("draw:drawstart");
-            map.off("draw:drawstop");
+            map.off("draw :created");
+            map.off("draw :drawstart");
+            map.off("draw :drawstop");
             map.removeLayer(this._inputFeaturesLayer);
             this._inputFeaturesLayer = null;
         }
@@ -537,7 +526,7 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
      * @param {Object} map - control map.
      * @private
      */
-    _activatePointInteraction: function(map) {
+    _activatePointInteraction : function (map) {
         logger.info("_activatePointInteraction()");
 
         if (this._currentFeature) {
@@ -550,12 +539,11 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
         // TODO styles des icones
         var markerOptions = {
             // icon : par defaut...
-            repeatMode: true
+            repeatMode : true
         };
 
         this._currentFeature = new L.Draw.Marker(map, markerOptions);
         this._currentFeature.enable();
-
     },
 
     /**
@@ -565,7 +553,7 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
      * @param {Object} map - control map.
      * @private
      */
-    _activateCircleInteraction: function(map) {
+    _activateCircleInteraction : function (map) {
         logger.info("_activateCircleInteraction()");
 
         if (this._currentFeature) {
@@ -573,7 +561,7 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
         }
 
         var circleOptions = {
-            repeatMode: true
+            repeatMode : true
         }; // TODO styles
 
         this._currentFeature = new L.Draw.Circle(map, circleOptions);
@@ -587,7 +575,7 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
      * @param {Object} map - control map.
      * @private
      */
-    _activateBoxInteraction: function(map) {
+    _activateBoxInteraction : function (map) {
         logger.info("_activateBoxInteraction()");
 
         if (this._currentFeature) {
@@ -595,7 +583,7 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
         }
 
         var rectangleOptions = {
-            repeatMode: true
+            repeatMode : true
         }; // TODO styles
 
         this._currentFeature = new L.Draw.Rectangle(map, rectangleOptions);
@@ -607,50 +595,44 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
      *
      * @private
      */
-    _setFeaturePosition: function(layer, type) {
-        // on transmet toujours des coordonnées au service en EPSG:4326
+    _setFeaturePosition : function (layer, type) {
+        // on transmet toujours des coordonnées au service en EPSG :4326
         var oLatLng = null;
         if (type === "marker") {
-
             oLatLng = layer.getLatLng();
             this._requestPosition = {
-                x: oLatLng.lat,
-                y: oLatLng.lng
+                x : oLatLng.lat,
+                y : oLatLng.lng
             };
-
         } else if (type === "circle") {
-
             oLatLng = layer.getLatLng();
             this._requestPosition = {
-                x: oLatLng.lat,
-                y: oLatLng.lng
+                x : oLatLng.lat,
+                y : oLatLng.lng
             };
             this._requestCircleFilter = {
-                x: oLatLng.lat,
-                y: oLatLng.lng,
-                radius: layer.getRadius()
+                x : oLatLng.lat,
+                y : oLatLng.lng,
+                radius : layer.getRadius()
             };
-
         } else if (type === "rectangle") {
-
             oLatLng = layer.getBounds();
             var center = {
-                lng: (oLatLng.getSouthWest().lng + oLatLng.getNorthEast().lng) / 2,
-                lat: (oLatLng.getSouthWest().lat + oLatLng.getNorthEast().lat) / 2
+                lng : (oLatLng.getSouthWest().lng + oLatLng.getNorthEast().lng) / 2,
+                lat : (oLatLng.getSouthWest().lat + oLatLng.getNorthEast().lat) / 2
             };
 
             this._requestPosition = {
-                x: center.lat,
-                y: center.lng
+                x : center.lat,
+                y : center.lng
             };
 
             this._requestBboxFilter = {
-                left: oLatLng.getSouthWest().lat,
-                right: oLatLng.getNorthEast().lat,
-                bottom: oLatLng.getSouthWest().lng,
-                top: oLatLng.getNorthEast().lng
+                left : oLatLng.getSouthWest().lat,
+                right : oLatLng.getNorthEast().lat,
+                bottom : oLatLng.getSouthWest().lng,
+                top : oLatLng.getNorthEast().lng
             };
-
         } else {
             logger.warn("type gemetric not defined !?");
         }
@@ -663,7 +645,7 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
      *
      * @private
      */
-    _setFeatureLayer: function(layer) {
+    _setFeatureLayer : function (layer) {
         if (!this._inputFeaturesLayer) {
             return;
         }
@@ -675,7 +657,7 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
      *
      * @private
      */
-    _removeFeatureLayer: function(id) {
+    _removeFeatureLayer : function (id) {
         if (!this._inputFeaturesLayer) {
             return;
         }
@@ -689,7 +671,6 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
         } else {
             this._inputFeaturesLayer.removeLayer(id);
         }
-
     },
 
     // ################################################################### //
@@ -702,8 +683,7 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
      *
      * @private
      */
-    _reverseGeocodingRequest: function(settings) {
-
+    _reverseGeocodingRequest : function (settings) {
         // retrait de l'interaction sur la map pendant l'attente (et l'affichage des résultats)
         var map = this._map;
         this._removeMapInteraction(map);
@@ -716,12 +696,12 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
         L.Util.extend(options, settings);
         // options par defaut
         L.Util.extend(options, {
-            apiKey: this.options.apiKey,
-            srs: "EPSG:4326",
-            returnFreeForm: false,
+            apiKey : this.options.apiKey,
+            srs : "EPSG :4326",
+            returnFreeForm : false,
             // maximumResponses : 25, // on peut la surcharger !
-            timeOut: 30000,
-            protocol: "XHR"
+            timeOut : 30000,
+            protocol : "XHR"
 
         });
 
@@ -737,22 +717,20 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
             }
 
             L.Util.extend(options, {
-                filterOptions: {
-                    type: _type,
-                    circle: this._requestCircleFilter
+                filterOptions : {
+                    type : _type,
+                    circle : this._requestCircleFilter
                 }
             });
-
         }
 
         if (this._currentGeocodingDelimitation.toLowerCase() === "extent" && this._requestBboxFilter) {
             L.Util.extend(options, {
-                filterOptions: {
-                    type: _type,
-                    bbox: this._requestBboxFilter
+                filterOptions : {
+                    type : _type,
+                    bbox : this._requestBboxFilter
                 }
             });
-
         }
 
         logger.log("reverseGeocode request options : ", options);
@@ -775,7 +753,7 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
      * @param {Array} locations - array of geocoded locations (reverse geocode results)
      * @private
      */
-    _displayGeocodedLocations: function(locations) {
+    _displayGeocodedLocations : function (locations) {
         var map = this._map;
 
         // 1. on vide les résultats précédents
@@ -806,7 +784,6 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
 
         // on zoom sur l'emprise des markers
         map.fitBounds(this._inputResultsLayer.getBounds());
-
     },
 
     /**
@@ -816,8 +793,7 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
      * @param {Array} locations - array of geocoded locations (reverse geocode results)
      * @private
      */
-    _fillGeocodedLocationListContainer: function(locations) {
-
+    _fillGeocodedLocationListContainer : function (locations) {
         //  ajout de la liste des résultats dans le container des resultats
         for (var i = 0; i < locations.length; i++) {
             var location = locations[i];
@@ -839,8 +815,7 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
      * @returns {String} locationDescription - geocoded location description to be displayed
      * @private
      */
-    _fillGeocodedLocationDescription: function(location) {
-
+    _fillGeocodedLocationDescription : function (location) {
         if (!location || !location.placeAttributes) {
             return;
         }
@@ -849,7 +824,6 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
         var locationDescription = "";
         // on sélectionne les infos à afficher selon le type
         switch (location.type) {
-
             case "StreetAddress":
                 if (attr.street) {
                     locationDescription += attr.number ? attr.number + " " : "";
@@ -889,7 +863,7 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
                 }
                 break;
 
-            default:
+            default :
                 locationDescription += attr.municipality ? attr.municipality : "";
                 break;
         };
@@ -908,13 +882,12 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
      * @param {Object} locations - geocoded locations (reverse geocode result)
      * @private
      */
-    _displayGeocodedLocationsOnMap: function(locations) {
-
+    _displayGeocodedLocationsOnMap : function (locations) {
         var map = this._map;
         var self = this;
 
         /** function set style Highlight for results */
-        function _setHighLight(e) {
+        function _setHighLight (e) {
             var layer = e.target;
 
             layer.setIcon(new IconDefault("red"));
@@ -925,7 +898,7 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
         }
 
         /** function reset style Highlight for results */
-        function _resetHighLight(e) {
+        function _resetHighLight (e) {
             var layer = e.target;
 
             layer.setIcon(new IconDefault("green"));
@@ -947,12 +920,12 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
             }
 
             var options = {
-                id: i,
-                icon: new IconDefault("green"),
-                riseOnHover: true,
-                draggable: false,
-                clickable: true,
-                zIndexOffset: 1000
+                id : i,
+                icon : new IconDefault("green"),
+                riseOnHover : true,
+                draggable : false,
+                clickable : true,
+                zIndexOffset : 1000
             };
 
             var _marker = L.marker(L.latLng(location.position.x, location.position.y), options);
@@ -982,7 +955,6 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
 
             this._inputResultsLayer.addLayer(_marker);
         }
-
     },
 
     // ################################################################### //
@@ -996,8 +968,7 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
      *
      * @private
      */
-    onShowReverseGeocodingClick: function() {
-
+    onShowReverseGeocodingClick : function () {
         var map = this._map;
 
         // interactions declenchées à l'ouverture/fermeture du panneau
@@ -1008,7 +979,6 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
                 this._activateMapInteraction(map);
             }
         }
-
     },
 
     /**
@@ -1019,7 +989,7 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
      * @param {Object} e - HTMLElement
      * @private
      */
-    onReverseGeocodingTypeChange: function(e) {
+    onReverseGeocodingTypeChange : function (e) {
         var idx = e.target.selectedIndex;
         var value = e.target.options[idx].value;
 
@@ -1038,7 +1008,7 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
      * @param {Object} e - HTMLElement
      * @private
      */
-    onReverseGeocodingDelimitationChange: function(e) {
+    onReverseGeocodingDelimitationChange : function (e) {
         var idx = e.target.selectedIndex;
         var value = e.target.options[idx].value;
 
@@ -1069,7 +1039,7 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
      *
      * @private
      */
-    onGPreverseGeocodingReturnPictoClick: function() {
+    onGPreverseGeocodingReturnPictoClick : function () {
         var map = this._map;
 
         // suppression des résultats précédents
@@ -1091,8 +1061,7 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
      *
      * @private
      */
-    onReverseGeocodingSubmit: function() {
-
+    onReverseGeocodingSubmit : function () {
         // le paramètre position est obligatoire
         if (!this._requestPosition) {
             logger.log("missing position");
@@ -1107,12 +1076,12 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
         var map = this._map;
         var self = this;
         this._reverseGeocodingRequest({
-            position: self._requestPosition,
-            filterOptions: {
-                type: [self._currentGeocodingType]
+            position : self._requestPosition,
+            filterOptions : {
+                type : [self._currentGeocodingType]
             },
             /** callback onSuccess */
-            onSuccess: function(results) {
+            onSuccess : function (results) {
                 logger.log(results);
                 if (results) {
                     var locations = results.locations;
@@ -1121,8 +1090,7 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
                 }
             },
             /** callback onFailure */
-            onFailure: function(error) {
-
+            onFailure : function (error) {
                 self._hideWaitingContainer();
 
                 // suppression d'éventuels résultats précédents
@@ -1146,7 +1114,7 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
      * @param {Object} e - HTMLElement
      * @private
      */
-    onReverseGeocodingResultClick: function(e) {
+    onReverseGeocodingResultClick : function (e) {
         logger.log("onReverseGeocodingResultClick", e);
     },
 
@@ -1158,8 +1126,7 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
      * @param {Object} e - HTMLElement
      * @private
      */
-    onReverseGeocodingResultMouseOver: function(e) {
-
+    onReverseGeocodingResultMouseOver : function (e) {
         // récupération de l'id du résultat survolé
         var idx = ID.index(e.target.id);
 
@@ -1172,7 +1139,7 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
             return;
         }
 
-        this._inputResultsLayer.eachLayer(function(layer) {
+        this._inputResultsLayer.eachLayer(function (layer) {
             if (layer.options.id === parseInt(idx, 10)) {
                 layer.fire("mouseover");
             }
@@ -1187,8 +1154,7 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
      * @param {Object} e - HTMLElement
      * @private
      */
-    onReverseGeocodingResultMouseOut: function(e) {
-
+    onReverseGeocodingResultMouseOut : function (e) {
         // récupération de l'id du résultat survolé
         var idx = ID.index(e.target.id);
 
@@ -1201,7 +1167,7 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
             return;
         }
 
-        this._inputResultsLayer.eachLayer(function(layer) {
+        this._inputResultsLayer.eachLayer(function (layer) {
             if (layer.options.id === parseInt(idx, 10)) {
                 layer.fire("mouseout");
             }
@@ -1217,8 +1183,7 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
      *
      * @private
      */
-    _clearLocations: function() {
-
+    _clearLocations : function () {
         this._reverseGeocodingLocations = [];
         // on vide le container avec la liste des résultats
         if (this._resultsListContainer) {
@@ -1233,14 +1198,12 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
      *
      * @private
      */
-    _clearLocationsFeature: function(map) {
-
+    _clearLocationsFeature : function (map) {
         // suppression des anciens resultats
         if (this._inputResultsLayer !== null) {
             map.removeLayer(this._inputResultsLayer);
             this._inputResultsLayer = null;
         }
-
     },
 
     /**
@@ -1248,8 +1211,7 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
      *
      * @private
      */
-    _clearInputRequest: function() {
-
+    _clearInputRequest : function () {
         // on supprime les valeurs stockées (filtres, position)
         this._requestPosition = null;
         this._requestCircleFilter = null;
@@ -1265,8 +1227,7 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
      *
      * @private
      */
-    _displayWaitingContainer: function() {
-
+    _displayWaitingContainer : function () {
         this._waitingContainer.className = "GPreverseGeocodingCalcWaitingContainerVisible";
         this._waiting = true;
 
@@ -1277,7 +1238,7 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
             this._timer = null;
         }
         var context = this;
-        this._timer = setTimeout(function() {
+        this._timer = setTimeout(function () {
             if (context._waiting === true) {
                 context._hideWaitingContainer();
             } else {
@@ -1293,7 +1254,7 @@ var ReverseGeocoding = L.Control.extend( /** @lends L.geoportalControl.ReverseGe
      *
      * @private
      */
-    _hideWaitingContainer: function() {
+    _hideWaitingContainer : function () {
         if (this._waiting) {
             this._waitingContainer.className = "GPreverseGeocodingCalcWaitingContainerHidden";
             this._waiting = false;

@@ -1,5 +1,5 @@
 /* global describe, it */
-import Config from "../../../src/Common/Utils/Config";
+import Config from "../../../../src/Common/Utils/Config";
 
 import { assert, expect, should } from "chai";
 should();
@@ -7,7 +7,12 @@ should();
 describe("-- Test Config --", function () {
 
     var key = "w6lxse7rpnhirxhsk2qzbafu";
+    before(function () {
 
+    });
+    after(function () {
+        window.Gp = null;
+    });
     describe('#isConfigLoaded', function () {
 
         it('without autoconf, configuration is not loaded', function () {

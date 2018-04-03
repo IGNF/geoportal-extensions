@@ -1,5 +1,5 @@
 /* global describe, it */
-import Utils from "../../../src/Common/Utils/LayerUtils";
+import Utils from "../../../../src/Common/Utils/LayerUtils";
 
 import { assert, expect, should } from "chai";
 should();

@@ -1,5 +1,3 @@
-import Sortable from "sortable";
-
 var AttributionDOM = {
 
     // ################################################################### //
@@ -7,7 +5,7 @@ var AttributionDOM = {
     // ################################################################### //
 
     /** Add uuid to the tag ID */
-    _addUID: function(id) {
+    _addUID : function (id) {
         var uid = (this._uid) ? id + "-" + this._uid : id;
         return uid;
     },
@@ -17,8 +15,7 @@ var AttributionDOM = {
      *
      * @returns {DOMElement} div DOM
      */
-    _createMainContainerElement: function() {
-
+    _createMainContainerElement : function () {
         var container = document.createElement("div");
         container.id = this._addUID("GPAttribution");
         container.className = "GPwidget";
@@ -31,7 +28,7 @@ var AttributionDOM = {
      *
      * @returns {DOMElement} checkbox DOM
      */
-    _createMainAttributionsShowElement: function() {
+    _createMainAttributionsShowElement : function () {
         var input = document.createElement("input");
         input.id = this._addUID("GPshowAttributionsList");
         input.type = "checkbox";
@@ -43,7 +40,7 @@ var AttributionDOM = {
      *
      * @returns {DOMElement} liste DOM
      */
-    _createAttributionsList: function() {
+    _createAttributionsList : function () {
         var ul = document.createElement("ul");
         ul.id = this._addUID("GPAttributionsList");
         return ul;
@@ -54,7 +51,7 @@ var AttributionDOM = {
      *
      * @returns {DOMElement} div DOM
      */
-    _createMainAttributionsListContainer: function() {
+    _createMainAttributionsListContainer : function () {
         var div = document.createElement("div");
         div.id = this._addUID("GPAttributionsListContainer");
 
@@ -66,7 +63,7 @@ var AttributionDOM = {
      *
      * @returns {DOMElement} label DOM
      */
-    _createMainPictoElement: function(collapsed) {
+    _createMainPictoElement : function (collapsed) {
 
         var self = this;
 
@@ -80,7 +77,7 @@ var AttributionDOM = {
         spanOpen.id = this._addUID("GPshowAttributionsListOpenClose");
         spanOpen.className = "GPshowAdvancedToolOpen";
         spanOpen.innerHTML = collapsed ? "i" : "»";
-        spanOpen.addEventListener("click", function() {
+        spanOpen.addEventListener("click", function () {
             spanOpen.innerHTML = (document.getElementById(self._addUID("GPshowAttributionsList")).checked) ? "i" : "»";
         });
 
