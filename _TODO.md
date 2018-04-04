@@ -91,7 +91,7 @@ En version 3 de webpack, on a du code js à placer pour utiliser **--env.product
 
 ### client web pour l'affichage
 
-**TODO!**
+**OK!**
 
 ## LES TESTS
 
@@ -125,7 +125,7 @@ Liste des tests à faire...
 
 ### client web pour l'affichage
 
-**TODO: en cours...**
+**OK!**
 
 par defaut, tous les tests sont executés...
 sinon, option par projet (leaflet, ol ou itowns)...
@@ -143,7 +143,7 @@ sinon, option par projet (leaflet, ol ou itowns)...
 
 ## L'INTERFACE NPM
 
-**TODO: en cours...**
+**OK!**
 
 ## TRAVIS
 
