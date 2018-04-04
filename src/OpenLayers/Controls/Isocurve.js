@@ -223,7 +223,7 @@ Isocurve.prototype.initialize = function (options) {
     this._currentIsoResults = null;
 
     // la géométrie
-    this._geojsonLayer;
+    this._geojsonLayer = null;
 
     // si un calcul est en cours ou non
     this._waiting = false;
