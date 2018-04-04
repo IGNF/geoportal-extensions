@@ -28,20 +28,19 @@ Itowns.control.MiniGlobe = MiniGlobe;
 Itowns.GlobeViewExtended = GlobeViewExtended;
 
 // FIXME saves in the global variable !
-if ( !env.itowns ){
+if (!env.itowns) {
     env.itowns = {};
 }
 
-deepCopy( Itowns, env.itowns );
+deepCopy(Itowns, env.itowns);
 
-function deepCopy(source, target)
-{
+function deepCopy (source, target) {
     for (var prop in source) {
-        if ( source.hasOwnProperty(prop) ) {
-            if ( !target.hasOwnProperty(prop) ) {
+        if (source.hasOwnProperty(prop)) {
+            if (!target.hasOwnProperty(prop)) {
                 target[prop] = source[prop];
-            } else if ( typeof source[prop] === "object" ) {
-                deepCopy( source[prop], target[prop] );
+            } else if (typeof source[prop] === "object") {
+                deepCopy(source[prop], target[prop]);
             }
         }
     }

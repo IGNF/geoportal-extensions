@@ -4,7 +4,6 @@ import Utils from "../../Common/Utils";
 import ID from "../../Common/Utils/SelectorID";
 import MeasureToolBoxDOM from "../../Common/Controls/MeasureToolBoxDOM";
 
-
 var logger = Logger.getLogger("toolbox");
 
 var MeasureToolBox = {
@@ -14,7 +13,7 @@ var MeasureToolBox = {
      * { map : uid }
      * Ex. { "map1" : 465456456486845 }
      */
-    _toolbox: {},
+    _toolbox : {},
 
     /**
      * Ajout d'un controle dans la ToolBox.
@@ -23,7 +22,7 @@ var MeasureToolBox = {
      * @param {ol.Map} map - map
      * @param {ol.control.Control} ctrl - objet à ajouter
      */
-    add: function(map, ctrl) {
+    add : function (map, ctrl) {
         logger.trace("ToolBox.add()", ctrl);
 
         if (!map) {
@@ -57,7 +56,6 @@ var MeasureToolBox = {
         var widgetContainer = mapDocument.getElementById(this.getWidgetID(uid));
         ctrl.setTarget(widgetContainer);
         logger.trace("add control to toolbox !");
-
     }
 };
 

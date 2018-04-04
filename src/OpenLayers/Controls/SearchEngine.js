@@ -8,7 +8,6 @@ import SelectorID from "../../Common/Utils/SelectorID";
 import SearchEngineUtils from "../../Common/Utils/SearchEngineUtils";
 import SearchEngineDOM from "../../Common/Controls/SearchEngineDOM";
 
-
 var logger = Logger.getLogger("searchengine");
 
 /**
@@ -57,8 +56,7 @@ var logger = Logger.getLogger("searchengine");
  *      autocompleteOptions : {}
  *  });
  */
-function SearchEngine(options) {
-
+function SearchEngine (options) {
     options = options || {};
 
     if (!(this instanceof SearchEngine)) {
@@ -82,11 +80,10 @@ function SearchEngine(options) {
 
     // call ol.control.Control constructor
     ol.control.Control.call(this, {
-        element: this._containerElement || this._container,
-        target: options.target,
-        render: options.render
+        element : this._containerElement || this._container,
+        target : options.target,
+        render : options.render
     });
-
 };
 
 // Inherits from ol.control.Control
@@ -116,15 +113,13 @@ SearchEngine.prototype.constructor = SearchEngine;
  *
  * @param {ol.Map} map - Map.
  */
-SearchEngine.prototype.setMap = function(map) {
-
+SearchEngine.prototype.setMap = function (map) {
     if (!map) {
         this._clearResults();
     }
 
     // on appelle la méthode setMap originale d'OpenLayers
     ol.control.Control.prototype.setMap.call(this, map);
-
 };
 
 /**
@@ -132,7 +127,7 @@ SearchEngine.prototype.setMap = function(map) {
  *
  * @returns {Boolean} collapsed - true if widget is collapsed
  */
-SearchEngine.prototype.getCollapsed = function() {
+SearchEngine.prototype.getCollapsed = function () {
     return this.collapsed;
 };
 
@@ -141,7 +136,7 @@ SearchEngine.prototype.getCollapsed = function() {
  *
  * @param {Boolean} collapsed - True to collapse widget, False to display it
  */
-SearchEngine.prototype.setCollapsed = function(collapsed) {
+SearchEngine.prototype.setCollapsed = function (collapsed) {
     if (collapsed === undefined) {
         console.log("[ERROR] SearchEngine:setCollapsed - missing collapsed parameter");
         return;
@@ -167,29 +162,28 @@ SearchEngine.prototype.setCollapsed = function(collapsed) {
  * @param {Object} options - constructor options
  * @private
  */
-SearchEngine.prototype.initialize = function(options) {
-
+SearchEngine.prototype.initialize = function (options) {
     this._checkInputOptions(options);
 
     // define default options
     this.options = {
-        collapsed: true,
-        zoomTo: "",
-        resources: {
-            geocode: [],
-            autocomplete: []
+        collapsed : true,
+        zoomTo : "",
+        resources : {
+            geocode : [],
+            autocomplete : []
         },
-        displayAdvancedSearch: true,
-        advancedSearch: {},
-        geocodeOptions: {},
-        autocompleteOptions: {
-            serviceOptions: {},
-            triggerGeocode: false,
-            triggerDelay: 1000
+        displayAdvancedSearch : true,
+        advancedSearch : {},
+        geocodeOptions : {},
+        autocompleteOptions : {
+            serviceOptions : {},
+            triggerGeocode : false,
+            triggerDelay : 1000
         },
-        displayMarker: true,
-        markerStyle: "lightOrange",
-        placeholder: "Rechercher un lieu, une adresse"
+        displayMarker : true,
+        markerStyle : "lightOrange",
+        placeholder : "Rechercher un lieu, une adresse"
     };
 
     // merge with user options
@@ -280,13 +274,12 @@ SearchEngine.prototype.initialize = function(options) {
  *
  * @private
  */
-SearchEngine.prototype._checkInputOptions = function(options) {
+SearchEngine.prototype._checkInputOptions = function (options) {
     var i;
 
     if (options.resources) {
         // on vérifie que resources est bien un objet
         if (typeof options.resources === "object") {
-
             // ressources de geocodage
             var geocodeResources = options.resources.geocode;
             if (geocodeResources) {
@@ -327,7 +320,6 @@ SearchEngine.prototype._checkInputOptions = function(options) {
             options.resources = null;
         }
     }
-
 };
 
 /**
@@ -336,8 +328,7 @@ SearchEngine.prototype._checkInputOptions = function(options) {
  *
  * @private
  */
-SearchEngine.prototype._initAdvancedSearchCodes = function() {
-
+SearchEngine.prototype._initAdvancedSearchCodes = function () {
     // INFORMATION
     // on y ajoute les filtres attributaires pour une table de ressources
     // selectionnée via un evenement (onchange) de la liste deroulante du
@@ -350,26 +341,26 @@ SearchEngine.prototype._initAdvancedSearchCodes = function() {
         switch (geocodeResources[i]) {
             case "PositionOfInterest":
                 this._advancedSearchCodes.push({
-                    id: "PositionOfInterest",
-                    title: "Lieux/toponymes"
+                    id : "PositionOfInterest",
+                    title : "Lieux/toponymes"
                 });
                 break;
             case "StreetAddress":
                 this._advancedSearchCodes.push({
-                    id: "StreetAddress",
-                    title: "Adresses"
+                    id : "StreetAddress",
+                    title : "Adresses"
                 });
                 break;
             case "CadastralParcel":
                 this._advancedSearchCodes.push({
-                    id: "CadastralParcel",
-                    title: "Parcelles cadastrales"
+                    id : "CadastralParcel",
+                    title : "Parcelles cadastrales"
                 });
                 break;
             case "Administratif":
                 this._advancedSearchCodes.push({
-                    id: "Administratif",
-                    title: "Administratif"
+                    id : "Administratif",
+                    title : "Administratif"
                 });
                 break;
             default:
@@ -379,11 +370,11 @@ SearchEngine.prototype._initAdvancedSearchCodes = function() {
     // par défaut, au cas où aucune ressource passée en option ne correspond à celles attendues
     if (this._advancedSearchCodes.length === 0) {
         this._advancedSearchCodes = [{
-            id: "StreetAddress",
-            title: "Adresses"
+            id : "StreetAddress",
+            title : "Adresses"
         }, {
-            id: "PositionOfInterest",
-            title: "Lieux/toponymes"
+            id : "PositionOfInterest",
+            title : "Lieux/toponymes"
         }];
     }
 
@@ -396,8 +387,7 @@ SearchEngine.prototype._initAdvancedSearchCodes = function() {
  *
  * @private
  */
-SearchEngine.prototype._initAdvancedSearchFilters = function() {
-
+SearchEngine.prototype._initAdvancedSearchFilters = function () {
     // liste des filtres par defauts pour toutes les ressources
     this._advancedSearchFilters = SearchEngineUtils.advancedSearchFiltersByDefault;
 
@@ -415,7 +405,7 @@ SearchEngine.prototype._initAdvancedSearchFilters = function() {
  * @return {Object} element - DOM element for popup
  * @private
  */
-SearchEngine.prototype._initPopupDiv = function() {
+SearchEngine.prototype._initPopupDiv = function () {
     var context = this;
     var element = document.createElement("div");
     element.className = "gp-feature-info-div";
@@ -423,7 +413,7 @@ SearchEngine.prototype._initPopupDiv = function() {
     closer.type = "button";
     closer.className = "gp-styling-button closer";
     /** on closer click : remove popup */
-    closer.onclick = function() {
+    closer.onclick = function () {
         if (context._popupOverlay != null) {
             context._popupOverlay.setPosition(undefined);
         }
@@ -447,7 +437,7 @@ SearchEngine.prototype._initPopupDiv = function() {
  *
  * @private
  */
-SearchEngine.prototype._initContainer = function() {
+SearchEngine.prototype._initContainer = function () {
     // create main container
     var container = this._createMainContainerElement();
 
@@ -467,11 +457,11 @@ SearchEngine.prototype._initContainer = function() {
     var search = this._inputSearchContainer = this._createSearchInputElement(this.options.placeholder);
     var context = this;
     if (search.addEventListener) {
-        search.addEventListener("click", function() {
+        search.addEventListener("click", function () {
             context.onAutoCompleteInputClick();
         });
     } else if (search.attachEvent) {
-        search.attachEvent("onclick", function() {
+        search.attachEvent("onclick", function () {
             context.onAutoCompleteInputClick();
         });
     }
@@ -523,8 +513,7 @@ SearchEngine.prototype._initContainer = function() {
  * @param {String} code - resource geocoding name
  * @private
  */
-SearchEngine.prototype._setFilter = function(code) {
-
+SearchEngine.prototype._setFilter = function (code) {
     // INFORMATION
     // Nous avons 2 solutions possibles pour la mise en place des filtres.
     // 1. Soit on decide de creer tous les filtres pour chaque ressource
@@ -591,8 +580,7 @@ SearchEngine.prototype._setFilter = function(code) {
  *
  * @private
  */
-SearchEngine.prototype._checkRightsManagement = function() {
-
+SearchEngine.prototype._checkRightsManagement = function () {
     // INFORMATION
     // l'autoconfiguration n'est utile que pour récupérer la clef si elle
     // n'est pas renseignée, et pour vérifier les droits sur les ressources
@@ -635,9 +623,9 @@ SearchEngine.prototype._checkRightsManagement = function() {
         ];
     }
     var rightManagementAutoComplete = RightManagement.check({
-        key: _key || this.options.apiKey,
-        resources: _resources,
-        services: ["AutoCompletion"]
+        key : _key || this.options.apiKey,
+        resources : _resources,
+        services : ["AutoCompletion"]
     });
     logger.log("rightManagementAutoComplete", rightManagementAutoComplete);
 
@@ -658,9 +646,9 @@ SearchEngine.prototype._checkRightsManagement = function() {
         ];
     }
     var rightManagementGeocode = RightManagement.check({
-        key: _key || this.options.apiKey,
-        resources: _resources,
-        services: ["Geocode"]
+        key : _key || this.options.apiKey,
+        resources : _resources,
+        services : ["Geocode"]
     });
     logger.log("rightManagementGeocode", rightManagementGeocode);
 
@@ -690,7 +678,6 @@ SearchEngine.prototype._checkRightsManagement = function() {
     if (rightManagementGeocode) {
         this._servicesRightManagement["Geocode"] = rightManagementGeocode["Geocode"];
     }
-
 };
 
 // ################################################################### //
@@ -707,8 +694,7 @@ SearchEngine.prototype._checkRightsManagement = function() {
  * @param {Function} settings.onFailure - callback
  * @private
  */
-SearchEngine.prototype._requestAutoComplete = function(settings) {
-
+SearchEngine.prototype._requestAutoComplete = function (settings) {
     // on ne fait pas de requête si on n'a pas renseigné de parametres !
     if (!settings || (typeof settings === "object" && Object.keys(settings).length === 0)) {
         return;
@@ -756,8 +742,7 @@ SearchEngine.prototype._requestAutoComplete = function(settings) {
  * @param {Array} locations - Array of Gp.Services.AutoComplete.SuggestedLocation corresponding to autocomplete results list
  * @private
  */
-SearchEngine.prototype._fillAutoCompletedLocationListContainer = function(locations) {
-
+SearchEngine.prototype._fillAutoCompletedLocationListContainer = function (locations) {
     if (!locations || locations.length === 0) {
         return;
     }
@@ -775,7 +760,6 @@ SearchEngine.prototype._fillAutoCompletedLocationListContainer = function(locati
         // Proposals are dynamically filled in Javascript by autocomplete service
         this._createAutoCompletedLocationElement(locations[i], i);
     }
-
 };
 
 /**
@@ -788,8 +772,7 @@ SearchEngine.prototype._fillAutoCompletedLocationListContainer = function(locati
  * @param {Function} settings.onFailure - callback
  * @private
  */
-SearchEngine.prototype._requestGeocoding = function(settings) {
-
+SearchEngine.prototype._requestGeocoding = function (settings) {
     // on ne fait pas de requête si on n'a pas renseigné de parametres !
     if (!settings || (typeof settings === "object" && Object.keys(settings).length === 0)) {
         return;
@@ -839,8 +822,7 @@ SearchEngine.prototype._requestGeocoding = function(settings) {
  *
  * @private
  */
-SearchEngine.prototype._fillGeocodedLocationListContainer = function(locations) {
-
+SearchEngine.prototype._fillGeocodedLocationListContainer = function (locations) {
     if (!locations || locations.length === 0) {
         this._clearGeocodedLocation();
         return;
@@ -874,7 +856,7 @@ SearchEngine.prototype._fillGeocodedLocationListContainer = function(locations) 
  * @param {String} label - label suggested location
  * @private
  */
-SearchEngine.prototype._setLabel = function(label) {
+SearchEngine.prototype._setLabel = function (label) {
     document.getElementById("GPsearchInputText-" + this._uid).value = label;
 };
 
@@ -886,12 +868,10 @@ SearchEngine.prototype._setLabel = function(label) {
  * @param {Number} zoom - zoom level
  * @private
  */
-SearchEngine.prototype._setPosition = function(position, zoom) {
-
+SearchEngine.prototype._setPosition = function (position, zoom) {
     var view = this.getMap().getView();
     view.setCenter(position);
     view.setZoom(zoom);
-
 };
 
 /**
@@ -902,8 +882,7 @@ SearchEngine.prototype._setPosition = function(position, zoom) {
  * @param {Array} position - ol.Coordinate object [lon, lat] ou [x, y]
  * @private
  */
-SearchEngine.prototype._setMarker = function(position, info) {
-
+SearchEngine.prototype._setMarker = function (position, info) {
     var map = this.getMap();
     var context = this;
 
@@ -914,7 +893,6 @@ SearchEngine.prototype._setMarker = function(position, info) {
     }
 
     if (position) {
-
         // création de l'élément DOM
         var markerDiv = document.createElement("img");
         markerDiv.src = this._markerUrl;
@@ -923,7 +901,7 @@ SearchEngine.prototype._setMarker = function(position, info) {
         if (markerDiv.addEventListener) {
             markerDiv.addEventListener(
                 "click",
-                function() {
+                function () {
                     context._onResultMarkerSelect(info);
                 }
             );
@@ -931,7 +909,7 @@ SearchEngine.prototype._setMarker = function(position, info) {
             // Internet Explorer
             markerDiv.attachEvent(
                 "onclick",
-                function() {
+                function () {
                     context._onResultMarkerSelect(info);
                 }
             );
@@ -939,10 +917,10 @@ SearchEngine.prototype._setMarker = function(position, info) {
 
         // création du marker (overlay)
         this._marker = new ol.Overlay({
-            position: position,
-            offset: [-25.5, -38],
-            element: markerDiv,
-            stopEvent: false
+            position : position,
+            offset : [-25.5, -38],
+            element : markerDiv,
+            stopEvent : false
         });
         map.addOverlay(this._marker);
     }
@@ -955,8 +933,7 @@ SearchEngine.prototype._setMarker = function(position, info) {
  * @param {Object} info - {}
  * @private
  */
-SearchEngine.prototype._getZoom = function(info) {
-
+SearchEngine.prototype._getZoom = function (info) {
     var map = this.getMap();
     var key = this.options.zoomTo;
     var zoom = null;
@@ -977,7 +954,6 @@ SearchEngine.prototype._getZoom = function(info) {
     }
 
     if (typeof key === "string") {
-
         // if (key === "max") {
         //     zoom = map.getMaxZoom();
         // } else if (key === "min") {
@@ -987,7 +963,6 @@ SearchEngine.prototype._getZoom = function(info) {
         if (key === "auto") {
             logger.trace("zoom auto");
             zoom = SearchEngineUtils.zoomToResultsByDefault(info);
-
         } else {
             logger.trace("zoom level parsing");
             var value = parseInt(key, 10);
@@ -999,7 +974,7 @@ SearchEngine.prototype._getZoom = function(info) {
     }
 
     // polyfill IE
-    Number.isInteger = Number.isInteger || function(value) {
+    Number.isInteger = Number.isInteger || function (value) {
         return typeof value === "number" &&
             isFinite(value) &&
             Math.floor(value) === value;
@@ -1036,7 +1011,7 @@ SearchEngine.prototype._getZoom = function(info) {
  * @param {Object} information - location information
  * @private
  */
-SearchEngine.prototype._onResultMarkerSelect = function(information) {
+SearchEngine.prototype._onResultMarkerSelect = function (information) {
     var map = this.getMap();
 
     var popupContent = "";
@@ -1064,17 +1039,16 @@ SearchEngine.prototype._onResultMarkerSelect = function(information) {
     if (!this._popupOverlay) {
         // ajout de la popup a la carte comme un overlay
         this._popupOverlay = new ol.Overlay({
-            element: this._popupDiv,
-            positioning: "bottom-center",
-            position: this._marker.getPosition(),
-            offset: [0, -42]
+            element : this._popupDiv,
+            positioning : "bottom-center",
+            position : this._marker.getPosition(),
+            offset : [0, -42]
         });
         map.addOverlay(this._popupOverlay);
     } else {
         // si l'overlay est déjà créé, on modifie juste sa position
         this._popupOverlay.setPosition(this._marker.getPosition());
     }
-
 };
 
 // ################################################################### //
@@ -1088,7 +1062,7 @@ SearchEngine.prototype._onResultMarkerSelect = function(information) {
  *
  * @private
  */
-SearchEngine.prototype.onShowSearchEngineClick = function() {
+SearchEngine.prototype.onShowSearchEngineClick = function () {
     this.collapsed = this._showSearchEngineInput.checked;
     // on génère nous même l'evenement OpenLayers de changement de propriété
     // (utiliser ol.control.SearchEngine.on("change:collapsed", function ) pour s'abonner à cet évènement)
@@ -1101,7 +1075,7 @@ SearchEngine.prototype.onShowSearchEngineClick = function() {
  *
  * @private
  */
-SearchEngine.prototype.onSearchResetClick = function() {
+SearchEngine.prototype.onSearchResetClick = function () {
     this._clearResults();
 };
 
@@ -1114,7 +1088,7 @@ SearchEngine.prototype.onSearchResetClick = function() {
  *
  * @private
  */
-SearchEngine.prototype.onAutoCompleteInputClick = function() {
+SearchEngine.prototype.onAutoCompleteInputClick = function () {
     var inputSearchTextContainer = document.getElementById("GPsearchInputText-" + this._uid);
     if (inputSearchTextContainer && !inputSearchTextContainer.disabled && inputSearchTextContainer.value.length > 2) {
         this._displaySuggestedLocation();
@@ -1130,8 +1104,7 @@ SearchEngine.prototype.onAutoCompleteInputClick = function() {
  * @param {Object} e - HTMLElement
  * @private
  */
-SearchEngine.prototype.onAutoCompleteSearchText = function(e) {
-
+SearchEngine.prototype.onAutoCompleteSearchText = function (e) {
     var value = e.target.value;
     if (!value) {
         return;
@@ -1164,9 +1137,9 @@ SearchEngine.prototype.onAutoCompleteSearchText = function(e) {
     // les messages d'erreurs sont affichés sur la console (?)
     var context = this;
     this._requestAutoComplete({
-        text: value,
+        text : value,
         /** callback onSuccess */
-        onSuccess: function(results) {
+        onSuccess : function (results) {
             logger.log("request from AutoComplete", results);
             if (results) {
                 // on sauvegarde l'etat des résultats
@@ -1195,26 +1168,26 @@ SearchEngine.prototype.onAutoCompleteSearchText = function(e) {
             }
         },
         /** callback onFailure */
-        onFailure: function(error) {
+        onFailure : function (error) {
             // FIXME
             // où affiche t on les messages : ex. 'No suggestion matching the search' ?
             context._clearSuggestedLocation();
             logger.log(error.message);
             // on envoie une requete de geocodage si aucun resultat d'autocompletion
             // n'a été trouvé ! Et on n'oublie pas d'annuler celle qui est en cours !
-            if (error.message === "No suggestion matching the search" && _triggerGeocode /* && value.length === 5 */ ) {
+            if (error.message === "No suggestion matching the search" && _triggerGeocode /* && value.length === 5 */) {
                 if (context._triggerHandler) {
                     clearTimeout(context._triggerHandler);
                     logger.warn("Cancel the last geocode request !");
                 }
                 context._triggerHandler = setTimeout(
-                    function() {
+                    function () {
                         logger.warn("Launch a geocode request (code postal) !");
                         context._requestGeocoding({
-                            location: value,
-                            returnFreeForm: true,
+                            location : value,
+                            returnFreeForm : true,
                             /** callback onSuccess */
-                            onSuccess: function(results) {
+                            onSuccess : function (results) {
                                 logger.log("request from Geocoding", results);
                                 if (results) {
                                     context._locationsToBeDisplayed = [];
@@ -1225,8 +1198,8 @@ SearchEngine.prototype.onAutoCompleteSearchText = function(e) {
                                         var location = locations[i];
                                         location.fullText = location.placeAttributes.freeform;
                                         location.position = {
-                                            x: location.position.y,
-                                            y: location.position.x
+                                            x : location.position.y,
+                                            y : location.position.x
                                         };
                                         context._locationsToBeDisplayed.push(location);
                                     }
@@ -1234,7 +1207,7 @@ SearchEngine.prototype.onAutoCompleteSearchText = function(e) {
                                 }
                             },
                             /** callback onFailure */
-                            onFailure: function(error) {
+                            onFailure : function (error) {
                                 logger.log(error.message);
                             }
                         });
@@ -1267,23 +1240,23 @@ SearchEngine.prototype.onAutoCompleteSearchText = function(e) {
  * @param {Number} i - suggestedLocation position in Gp.Services.AutoCompleteResponse.suggestedLocations autocomplete results list
  * @private
  */
-SearchEngine.prototype._getGeocodeCoordinatesFromFullText = function(suggestedLocation, i) {
+SearchEngine.prototype._getGeocodeCoordinatesFromFullText = function (suggestedLocation, i) {
     var context = this;
     Gp.Services.geocode({
-        apiKey: this.options.apiKey,
-        location: suggestedLocation.fullText,
-        filterOptions: {
-            type: suggestedLocation.type
+        apiKey : this.options.apiKey,
+        location : suggestedLocation.fullText,
+        filterOptions : {
+            type : suggestedLocation.type
         },
         /** callback onSuccess */
-        onSuccess: function(response) {
+        onSuccess : function (response) {
             logger.log("request from Geocoding (coordinates null)", response);
             if (response.locations && response.locations.length !== 0 && response.locations[0].position) {
                 // on modifie les coordonnées du résultat en EPSG:4326 donc lat,lon
                 if (context._suggestedLocations && context._suggestedLocations[i]) {
                     context._suggestedLocations[i].position = {
-                        x: response.locations[0].position.y,
-                        y: response.locations[0].position.x
+                        x : response.locations[0].position.y,
+                        y : response.locations[0].position.x
                     };
                     // et on l'affiche dans la liste
                     context._locationsToBeDisplayed.unshift(context._suggestedLocations[i]);
@@ -1292,7 +1265,7 @@ SearchEngine.prototype._getGeocodeCoordinatesFromFullText = function(suggestedLo
             }
         },
         /** callback onFailure */
-        onFailure: function() {
+        onFailure : function () {
             // si on n'a pas réussi à récupérer les coordonnées, on affiche quand même le résultat
             if (context._suggestedLocations && context._suggestedLocations[i]) {
                 context._createAutoCompletedLocationElement(context._suggestedLocations[i], i);
@@ -1309,8 +1282,7 @@ SearchEngine.prototype._getGeocodeCoordinatesFromFullText = function(suggestedLo
  * @param {Object} e - HTMLElement
  * @private
  */
-SearchEngine.prototype.onAutoCompletedResultsItemClick = function(e) {
-
+SearchEngine.prototype.onAutoCompletedResultsItemClick = function (e) {
     // TODO on souhaite un comportement different pour la selection des reponses
     // de l'autocompletion :
     // - liste deroulante des reponses,
@@ -1333,9 +1305,9 @@ SearchEngine.prototype.onAutoCompletedResultsItemClick = function(e) {
         this._locationsToBeDisplayed[idx].position.y
     ];
     var info = {
-        service: "SuggestedLocation",
-        type: this._locationsToBeDisplayed[idx].type,
-        fields: this._locationsToBeDisplayed[idx]
+        service : "SuggestedLocation",
+        type : this._locationsToBeDisplayed[idx].type,
+        fields : this._locationsToBeDisplayed[idx]
     };
 
     // on ajoute le texte de l'autocomplétion dans l'input
@@ -1356,7 +1328,6 @@ SearchEngine.prototype.onAutoCompletedResultsItemClick = function(e) {
     if (this._displayMarker) {
         this._setMarker(position, info);
     }
-
 };
 
 // ################################################################### //
@@ -1372,8 +1343,7 @@ SearchEngine.prototype.onAutoCompletedResultsItemClick = function(e) {
  * @param {Object} e - HTMLElement
  * @private
  */
-SearchEngine.prototype.onGeocodingSearchSubmit = function(e) {
-
+SearchEngine.prototype.onGeocodingSearchSubmit = function (e) {
     var value = e.target[0].value;
     if (!value) {
         return;
@@ -1392,9 +1362,9 @@ SearchEngine.prototype.onGeocodingSearchSubmit = function(e) {
     // on met en place l'affichage des resultats dans une fenetre de recherche.
     var context = this;
     this._requestGeocoding({
-        location: value,
+        location : value,
         /** callback onSuccess */
-        onSuccess: function(results) {
+        onSuccess : function (results) {
             logger.log("request from Geocoding", results);
             if (results) {
                 var locations = results.locations;
@@ -1402,13 +1372,12 @@ SearchEngine.prototype.onGeocodingSearchSubmit = function(e) {
             }
         },
         /** callback onFailure */
-        onFailure: function(error) {
+        onFailure : function (error) {
             // FIXME cf. this.onAutoCompleteSearch()
             context._clearGeocodedLocation();
             logger.log(error.message);
         }
     });
-
 };
 
 /**
@@ -1419,7 +1388,7 @@ SearchEngine.prototype.onGeocodingSearchSubmit = function(e) {
  * @param {Object} e - HTMLElement
  * @private
  */
-SearchEngine.prototype.onGeocodedResultsItemClick = function(e) {
+SearchEngine.prototype.onGeocodedResultsItemClick = function (e) {
     var idx = SelectorID.index(e.target.id);
 
     if (!idx) {
@@ -1432,9 +1401,9 @@ SearchEngine.prototype.onGeocodedResultsItemClick = function(e) {
     ];
     var attributes = this._geocodedLocations[idx].placeAttributes;
     var info = {
-        service: "DirectGeocodedLocation",
-        type: this._geocodedLocations[idx].type,
-        fields: this._geocodedLocations[idx]
+        service : "DirectGeocodedLocation",
+        type : this._geocodedLocations[idx].type,
+        fields : this._geocodedLocations[idx]
     };
 
     // on ajoute le texte du géocodage dans l'input
@@ -1485,7 +1454,7 @@ SearchEngine.prototype.onGeocodedResultsItemClick = function(e) {
  * @param {Object} e - HTMLElement
  * @private
  */
-SearchEngine.prototype.onGeocodingAdvancedSearchCodeChange = function(e) {
+SearchEngine.prototype.onGeocodingAdvancedSearchCodeChange = function (e) {
     logger.log(e);
     var idx = e.target.selectedIndex;
     var value = e.target.options[idx].value;
@@ -1515,7 +1484,7 @@ SearchEngine.prototype.onGeocodingAdvancedSearchCodeChange = function(e) {
  * @param {Array} data - [{key: ..., value: ...}]
  * @private
  */
-SearchEngine.prototype.onGeocodingAdvancedSearchSubmit = function(e, data) {
+SearchEngine.prototype.onGeocodingAdvancedSearchSubmit = function (e, data) {
     logger.log(data);
     if (!data || data.length === 0) {
         return;
@@ -1537,9 +1506,8 @@ SearchEngine.prototype.onGeocodingAdvancedSearchSubmit = function(e, data) {
 
         // FIXME ne marche pas bien !
         _filterOptions = {
-            type: [this._currentGeocodingCode]
+            type : [this._currentGeocodingCode]
         };
-
     } else {
         // recuperation des parametres des filtres pour les transmettre
         // à la requête, ainsi que le type de table de ressources de geocodage,
@@ -1550,10 +1518,10 @@ SearchEngine.prototype.onGeocodingAdvancedSearchSubmit = function(e, data) {
     // on met en place l'affichage des resultats dans une fenetre de recherche.
     var context = this;
     this._requestGeocoding({
-        location: _location,
-        filterOptions: _filterOptions,
+        location : _location,
+        filterOptions : _filterOptions,
         /** callback onSuccess */
-        onSuccess: function(results) {
+        onSuccess : function (results) {
             logger.log(results);
             if (results) {
                 var locations = results.locations;
@@ -1561,7 +1529,7 @@ SearchEngine.prototype.onGeocodingAdvancedSearchSubmit = function(e, data) {
             }
         },
         /** callback onFailure */
-        onFailure: function(error) {
+        onFailure : function (error) {
             // FIXME cf. this.onAutoCompleteSearch()
             context._clearGeocodedLocation();
             logger.log(error.message);
@@ -1578,7 +1546,7 @@ SearchEngine.prototype.onGeocodingAdvancedSearchSubmit = function(e, data) {
  * @returns {String} location - cadastral parcel number : concatenation of inputs values (e.g. : 940670000D0041 or 94067_____0041)
  * @private
  */
-SearchEngine.prototype._getCadastralParcelRequestParams = function(filterOptions) {
+SearchEngine.prototype._getCadastralParcelRequestParams = function (filterOptions) {
     /* info:
         la parcelle cadastrale se compose de 14 chiffres ou lettres, indiquant, de gauche à droite :
         - le code du département (2 caractères)
@@ -1702,8 +1670,7 @@ SearchEngine.prototype._getCadastralParcelRequestParams = function(filterOptions
  *
  * @private
  */
-SearchEngine.prototype._clearResults = function() {
-
+SearchEngine.prototype._clearResults = function () {
     var map = this.getMap();
 
     this._currentGeocodingLocation = null;
@@ -1725,7 +1692,7 @@ SearchEngine.prototype._clearResults = function() {
  *
  * @private
  */
-SearchEngine.prototype._clearSuggestedLocation = function() {
+SearchEngine.prototype._clearSuggestedLocation = function () {
     this._suggestedLocations = [];
     if (this._suggestedContainer) {
         while (this._suggestedContainer.firstChild) {
@@ -1740,7 +1707,7 @@ SearchEngine.prototype._clearSuggestedLocation = function() {
  *
  * @private
  */
-SearchEngine.prototype._hideSuggestedLocation = function() {
+SearchEngine.prototype._hideSuggestedLocation = function () {
     if (this._autocompleteContainer) {
         this._autocompleteContainer.style.display = "none";
     }
@@ -1752,7 +1719,7 @@ SearchEngine.prototype._hideSuggestedLocation = function() {
  *
  * @private
  */
-SearchEngine.prototype._displaySuggestedLocation = function() {
+SearchEngine.prototype._displaySuggestedLocation = function () {
     if (this._autocompleteContainer) {
         this._autocompleteContainer.style.display = "block";
     }
@@ -1764,7 +1731,7 @@ SearchEngine.prototype._displaySuggestedLocation = function() {
  *
  * @private
  */
-SearchEngine.prototype._clearGeocodedLocation = function() {
+SearchEngine.prototype._clearGeocodedLocation = function () {
     this._geocodedLocations = [];
     if (this._geocodedContainer) {
         while (this._geocodedContainer.firstChild) {

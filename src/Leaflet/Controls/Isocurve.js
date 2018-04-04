@@ -470,11 +470,11 @@ var Isocurve = L.Control.extend(/** @lends L.geoportalControl.Isocurve.prototype
         var typeChoice = this._createIsoPanelFormTypeChoiceElement();
         for (var i = 0; i < this.options.methods.length; i++) {
             if (this.options.methods[i] === "time") {
-                isoChronChecked = (i === 0) ? true : false;
+                isoChronChecked = (i === 0);
                 typeChoice.appendChild(this._createIsoPanelFormTypeChoiceChronElement(isoChronChecked));
             }
             if (this.options.methods[i] === "distance") {
-                isoDistChecked = (i === 0) ? true : false;
+                isoDistChecked = (i === 0);
                 typeChoice.appendChild(this._createIsoPanelFormTypeChoiceDistElement(isoDistChecked));
             }
         }
@@ -812,7 +812,7 @@ var Isocurve = L.Control.extend(/** @lends L.geoportalControl.Isocurve.prototype
             graph : self._currentTransport,
             exclusions : self._currentExclusions,
             method : self._currentComputation,
-            reverse : (self._currentDirection.toLowerCase() === "arrival") ? true : false,
+            reverse : (self._currentDirection.toLowerCase() === "arrival"),
             time : time,
             distance : distance,
             smoothing : true,

@@ -2,8 +2,12 @@ import ID from "../Utils/SelectorID";
 
 var LocationSelectorDOM = {
 
-    /** Add uuid to the tag ID */
-    _addUID: function(id) {
+    /**
+    * Add uuid to the tag ID
+    * @param {String} id - id selector
+    * @returns {String} uid - id selector with an unique id
+    */
+    _addUID : function (id) {
         var uid = (this._uid) ? id + "-" + this._uid : id;
         return uid;
     },
@@ -13,8 +17,7 @@ var LocationSelectorDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createMainContainerElement: function() {
-
+    _createMainContainerElement : function () {
         var container = document.createElement("div");
         container.className = this._addUID("GPlocationPoint"); // ceci permet de gerer les groupes de points !
         container.className += " GPwidget";
@@ -29,8 +32,7 @@ var LocationSelectorDOM = {
      * @param {Number} display  - display
      * @returns {DOMElement} DOM element
      */
-    _createLocationPointElement: function(id, display) {
-
+    _createLocationPointElement : function (id, display) {
         var div = document.createElement("div");
         div.id = this._addUID("GPlocationPoint_" + id);
         div.className = (display) ? "GPflexInput GPlocationStageFlexInput" : "GPflexInput GPlocationStageFlexInputHidden";
@@ -47,8 +49,7 @@ var LocationSelectorDOM = {
      * @param {String} text - label
      * @returns {DOMElement} DOM element
      */
-    _createLocationPointLabelElement: function(id, text) {
-
+    _createLocationPointLabelElement : function (id, text) {
         // contexte d'execution
         var self = this;
 
@@ -56,8 +57,7 @@ var LocationSelectorDOM = {
         labelOrigin.id = this._addUID("GPlocationOriginLabel_" + id);
         labelOrigin.htmlFor = "GPlocationOrigin_" + id;
         labelOrigin.innerHTML = text;
-        labelOrigin.addEventListener("click", function(e) {
-
+        labelOrigin.addEventListener("click", function (e) {
             var i = ID.index(this.id);
             var points = document.getElementsByClassName(self._addUID("GPlocationPoint"));
             for (var j = 0; j < points.length; j++) {
@@ -90,8 +90,7 @@ var LocationSelectorDOM = {
      * @param {Number} id - tag ID
      * @returns {DOMElement} DOM element
      */
-    _createLocationAutoCompleteteInputElement: function(id) {
-
+    _createLocationAutoCompleteteInputElement : function (id) {
         // contexte d'execution
         var self = this;
 
@@ -101,7 +100,7 @@ var LocationSelectorDOM = {
         inputOrigin.type = "text";
         inputOrigin.placeholder = "Saisir une adresse";
         inputOrigin.autocomplete = "off";
-        inputOrigin.addEventListener("keyup", function(e) {
+        inputOrigin.addEventListener("keyup", function (e) {
             var charCode = e.which || e.keyCode;
             if (charCode === 13 || charCode === 10 || charCode === 38 || charCode === 40) {
                 return;
@@ -119,7 +118,7 @@ var LocationSelectorDOM = {
             self.onAutoCompleteSearchText(e);
         });
 
-        inputOrigin.addEventListener("keydown", function(e) {
+        inputOrigin.addEventListener("keydown", function (e) {
             var charCode = e.which || e.keyCode;
 
             var container = document.getElementById(self._addUID("GPlocationAutoCompleteList_" + id));
@@ -195,8 +194,7 @@ var LocationSelectorDOM = {
      * @param {Number} id - tag ID
      * @returns {DOMElement} DOM element
      */
-    _createLocationCoordinateInputElement: function(id) {
-
+    _createLocationCoordinateInputElement : function (id) {
         // contexte d'execution
         var self = this;
 
@@ -205,7 +203,7 @@ var LocationSelectorDOM = {
         inputOriginCoord.className = "GPlocationOriginHidden";
         inputOriginCoord.type = "text";
         inputOriginCoord.disabled = false;
-        inputOriginCoord.addEventListener("click", function() {
+        inputOriginCoord.addEventListener("click", function () {
             var i = ID.index(this.id);
             document.getElementById(self._addUID("GPlocationOriginLabel_" + i)).click();
         });
@@ -218,8 +216,7 @@ var LocationSelectorDOM = {
      * @param {Number} id - tag ID
      * @returns {DOMElement} DOM element
      */
-    _createLocationPointerShowInputElement: function(id) {
-
+    _createLocationPointerShowInputElement : function (id) {
         var inputOriginPointer = document.createElement("input");
         inputOriginPointer.id = this._addUID("GPlocationOriginPointer_" + id);
         inputOriginPointer.type = "checkbox";
@@ -232,8 +229,7 @@ var LocationSelectorDOM = {
      * @param {Number} id - tag ID
      * @returns {DOMElement} DOM element
      */
-    _createLocationPointerInputElement: function(id) {
-
+    _createLocationPointerInputElement : function (id) {
         // contexte d'execution
         var self = this;
 
@@ -242,7 +238,7 @@ var LocationSelectorDOM = {
         labelOriginPointer.htmlFor = "GPlocationOriginPointer_" + id;
         labelOriginPointer.className = "GPlocationOriginPointerImg";
         labelOriginPointer.title = "Pointer un lieu sur la carte";
-        labelOriginPointer.addEventListener("click", function(e) {
+        labelOriginPointer.addEventListener("click", function (e) {
             e.preventDefault();
             e.stopPropagation();
             var i = ID.index(this.id);
@@ -253,9 +249,9 @@ var LocationSelectorDOM = {
             for (j = 0; j < points.length; j++) {
                 tag = points[j].childNodes[0].id;
                 id = ID.index(tag);
-                if (i != id) {
+                if (i !== id) {
                     document.getElementById(self._addUID("GPlocationOriginPointer_" + id)).checked = false;
-                    if (document.getElementById(self._addUID("GPlocationOriginCoords_" + id)).value == "Pointer un lieu sur la carte") {
+                    if (document.getElementById(self._addUID("GPlocationOriginCoords_" + id)).value === "Pointer un lieu sur la carte") {
                         document.getElementById(self._addUID("GPlocationOriginCoords_" + id)).value = "";
                         document.getElementById(self._addUID("GPlocationOrigin_" + id)).className = "GPlocationOriginVisible";
                         document.getElementById(self._addUID("GPlocationOriginCoords_" + id)).className = "GPlocationOriginHidden";
@@ -283,7 +279,7 @@ var LocationSelectorDOM = {
                 for (j = 0; j < points.length; j++) {
                     tag = points[j].childNodes[0].id;
                     id = ID.index(tag);
-                    if (i == id) {
+                    if (i === id) {
                         document.getElementById(self._addUID("GPlocationPoint_" + id)).style.cssText = "";
                     } else {
                         document.getElementById(self._addUID("GPlocationPoint_" + id)).style.display = "none";
@@ -315,8 +311,7 @@ var LocationSelectorDOM = {
      * @param {Number} id - tag ID
      * @returns {DOMElement} DOM element
      */
-    _createLocationRemovePointElement: function(id) {
-
+    _createLocationRemovePointElement : function (id) {
         // contexte d'execution
         var self = this;
 
@@ -324,8 +319,7 @@ var LocationSelectorDOM = {
         divRm.id = this._addUID("GPlocationStageRemove_" + id);
         divRm.className = "GPlocationStageRemove";
         divRm.title = "Supprimer l'étape";
-        divRm.addEventListener("click", function(e) {
-
+        divRm.addEventListener("click", function (e) {
             var points = document.getElementsByClassName(self._addUID("GPlocationPoint"));
             var last = points.length - 1;
             var start = points[0].childNodes[0].id;
@@ -334,7 +328,7 @@ var LocationSelectorDOM = {
             var startID = ID.index(start);
             var endID = ID.index(end);
 
-            if (id != startID && id != endID) {
+            if (id !== startID && id !== endID) {
                 var i = ID.index(this.id);
                 document.getElementById(self._addUID("GPlocationPoint_" + i)).className = "GPflexInput GPlocationStageFlexInputHidden";
                 document.getElementById(self._addUID("GPlocationOrigin_" + i)).value = "";
@@ -361,16 +355,14 @@ var LocationSelectorDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createLocationAddPointElement: function() {
-
+    _createLocationAddPointElement : function () {
         // contexte d'execution
         var self = this;
 
         var divAdd = document.createElement("div");
         divAdd.id = this._addUID("GPlocationStageAdd");
         divAdd.title = "Ajouter une étape";
-        divAdd.addEventListener("click", function(e) {
-
+        divAdd.addEventListener("click", function (e) {
             var lastStage = 1;
             var nbStages = 0;
             var points = document.getElementsByClassName(self._addUID("GPlocationPoint"));
@@ -378,8 +370,8 @@ var LocationSelectorDOM = {
                 var tag = points[i].childNodes[0].id;
                 var id = ID.index(tag);
                 if (document.getElementById(self._addUID("GPlocationPoint_" + id))) {
-                    if (document.getElementById(self._addUID("GPlocationPoint_" + id)).className == "GPflexInput GPlocationStageFlexInputHidden") {
-                        if (lastStage == 1) {
+                    if (document.getElementById(self._addUID("GPlocationPoint_" + id)).className === "GPflexInput GPlocationStageFlexInputHidden") {
+                        if (lastStage === 1) {
                             lastStage = id;
                         }
                     } else {
@@ -394,7 +386,7 @@ var LocationSelectorDOM = {
                 // var exclusionsPictoTop = document.getElementById(self._addUID("GPshowLocationExclusionsPicto")).style.top;
                 // document.getElementById(self._addUID("GPshowLocationExclusionsPicto")).style.top = (parseInt(exclusionsPictoTop) + 33).toString() + "px";
             }
-            if (nbStages == 4) {
+            if (nbStages === 4) {
                 document.getElementById(self._addUID("GPlocationStageAdd")).style.display = "none";
             }
             // gestionnaire d'evenement :
@@ -412,8 +404,7 @@ var LocationSelectorDOM = {
      * @param {Number} id - tag ID
      * @returns {DOMElement} DOM element
      */
-    _createLocationAutoCompleteResultElement: function(id) {
-
+    _createLocationAutoCompleteResultElement : function (id) {
         // contexte d'execution
         var self = this;
 
@@ -422,12 +413,12 @@ var LocationSelectorDOM = {
         div.className = "GPadvancedAutoCompleteList";
 
         if (div.addEventListener) {
-            div.addEventListener("click", function(e) {
+            div.addEventListener("click", function (e) {
                 self.onAutoCompletedResultsItemClick(e);
                 document.getElementById(self._addUID("GPlocationAutoCompleteList_" + id)).style.display = "none";
             }, false);
         } else if (div.attachEvent) {
-            div.attachEvent("onclick", function(e) {
+            div.attachEvent("onclick", function (e) {
                 self.onAutoCompletedResultsItemClick(e);
                 document.getElementById(self._addUID("GPlocationAutoCompleteList_" + id)).style.display = "none";
             });
@@ -446,7 +437,7 @@ var LocationSelectorDOM = {
      * @param {Object} location - suggested location result
      * @param {Number} n  - number of the point
      */
-    _createLocationAutoCompletedLocationElement: function(id, location, n) {
+    _createLocationAutoCompletedLocationElement : function (id, location, n) {
         var container = document.getElementById(this._addUID("GPlocationAutoCompleteList_" + id));
 
         var div = document.createElement("div");
@@ -457,9 +448,11 @@ var LocationSelectorDOM = {
         container.appendChild(div);
     },
 
-    /** ... */
-    GPdisplayCoordinate: function(value) {
-
+    /**
+    * Display Coordinate
+    * @param {String} value - a Coordinate
+    */
+    GPdisplayCoordinate : function (value) {
         var points = document.getElementsByClassName(this._addUID("GPlocationPoint"));
         for (var i = 0; i < points.length; i++) {
             var tag = points[i].childNodes[0].id;

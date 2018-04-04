@@ -1,5 +1,8 @@
 /* global describe, it */
+import Logger from "../../../../src/Common/Utils/LoggerByDefault";
 import ID from "../../../../src/Common/Utils/SelectorID";
+
+var logger = Logger.getLogger("test-common-selectorid");
 
 import { assert, expect, should } from "chai";
 should();
@@ -12,7 +15,7 @@ describe("-- Test SelectorIDUtils --", function () {
 
             var uuid = ID.generate();
             var tag  = "NAME_25-" + uuid;
-            console.log(ID.name(tag), uuid);
+            logger.trace(ID.name(tag), uuid);
             expect(ID.name(tag)).to.be.equal("NAME_25");
 
         });
@@ -21,7 +24,7 @@ describe("-- Test SelectorIDUtils --", function () {
 
             var uuid = ID.generate();
             var tag  = "NAME_25-" + uuid;
-            console.log(ID.index(tag), uuid);
+            logger.trace(ID.index(tag), uuid);
             expect(ID.index(tag)).to.be.equal("25");
         });
 
@@ -29,7 +32,7 @@ describe("-- Test SelectorIDUtils --", function () {
 
             var uuid = ID.generate();
             var tag  = "NAME_25-" + uuid;
-            console.log(ID.uuid(tag));
+            logger.trace(ID.uuid(tag));
             expect(ID.uuid(tag)).to.be.equal(uuid);
         });
     });
@@ -40,7 +43,7 @@ describe("-- Test SelectorIDUtils --", function () {
 
             var uuid = ID.generate();
             var tag  = "NAME-" + uuid;
-            console.log(ID.name(tag), uuid);
+            logger.trace(ID.name(tag), uuid);
             expect(ID.name(tag)).to.be.equal("NAME");
 
         });
@@ -49,7 +52,7 @@ describe("-- Test SelectorIDUtils --", function () {
 
             var uuid = ID.generate();
             var tag  = "NAME-" + uuid;
-            console.log(ID.index(tag), uuid);
+            logger.trace(ID.index(tag), uuid);
             expect(ID.index(tag)).to.be.null;
         });
 
@@ -57,7 +60,7 @@ describe("-- Test SelectorIDUtils --", function () {
 
             var uuid = ID.generate();
             var tag  = "NAME-" + uuid;
-            console.log(ID.uuid(tag));
+            logger.trace(ID.uuid(tag));
             expect(ID.uuid(tag)).to.be.equal(uuid);
         });
     });
@@ -68,7 +71,7 @@ describe("-- Test SelectorIDUtils --", function () {
 
             var uuid = ID.generate();
             var tag  = "_NAME25-" + uuid;
-            console.log(ID.name(tag), uuid);
+            logger.trace(ID.name(tag), uuid);
             expect(ID.name(tag)).to.be.equal("_NAME25");
 
         });
@@ -77,7 +80,7 @@ describe("-- Test SelectorIDUtils --", function () {
 
             var uuid = ID.generate();
             var tag  = "NAME25-" + uuid;
-            console.log(ID.index(tag), uuid);
+            logger.trace(ID.index(tag), uuid);
             expect(ID.index(tag)).to.be.null;
         });
 
@@ -85,7 +88,7 @@ describe("-- Test SelectorIDUtils --", function () {
 
             var uuid = ID.generate();
             var tag  = "NAME_" + uuid;
-            console.log(ID.uuid(tag));
+            logger.trace(ID.uuid(tag));
             expect(ID.uuid(tag)).to.be.null;
         });
     });

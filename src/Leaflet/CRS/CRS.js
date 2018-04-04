@@ -7,7 +7,7 @@ import Epsg27572 from "./EPSG27572";
 import Epsg4326 from "./EPSG4326";
 
 /** autoload function */
-(function() {
+(function () {
     // load all defs into proj4
     Register.load();
 })();
@@ -47,7 +47,7 @@ var CRS = {
      * @alias L.geoportalCRS.EPSG2154
      * @returns {EPSG2154}
      */
-    EPSG2154: function() {
+    EPSG2154 : function () {
         return Epsg2154.build();
     },
 
@@ -59,7 +59,7 @@ var CRS = {
      * @alias L.geoportalCRS.EPSG27572
      * @returns {EPSG27572}
      */
-    EPSG27572: function() {
+    EPSG27572 : function () {
         return Epsg27572.build();
     },
 
@@ -71,7 +71,7 @@ var CRS = {
      * @alias L.geoportalCRS.EPSG4326
      * @returns {EPSG4326}
      */
-    EPSG4326: function() {
+    EPSG4326 : function () {
         return Epsg4326.build();
     }
 };

@@ -94,7 +94,7 @@ var LayerSwitcher = L.Control.Layers.extend(/** @lends L.geoportalControl.LayerS
         // de titre ou description  ...
 
         // a ton une configuration des layers ?
-        this._hasLayersConfig = (!this.options.layers || Object.keys(this.options.layers).length === 0) ? false : true;
+        this._hasLayersConfig = !((!this.options.layers || Object.keys(this.options.layers).length === 0));
 
         // configuration des layers
         this._layersConfig = (this._hasLayersConfig) ? this.options.layers : [];
@@ -293,8 +293,8 @@ var LayerSwitcher = L.Control.Layers.extend(/** @lends L.geoportalControl.LayerS
             layer : layer,
             id : id,
             overlay : overlay, // not use !
-            title : (layer._geoportal_id && layer._title) ? layer._title : (name) ? name : id,
-            description : (layer._geoportal_id && layer._description) ? layer._description : (name) ? name : id,
+            title : (layer._geoportal_id && layer._title) ? layer._title : (name) || id,
+            description : (layer._geoportal_id && layer._description) ? layer._description : (name) || id,
             visibility : true, // par defaut, sauf si surcharge via la config...
             legends : (layer._geoportal_id) ? layer._legends : null,
             metadata : (layer._geoportal_id) ? layer._metadata : null,

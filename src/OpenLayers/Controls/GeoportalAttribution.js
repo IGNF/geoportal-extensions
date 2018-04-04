@@ -16,8 +16,7 @@ import LayerUtils from "../../Common/Utils/LayerUtils";
  *          collapsed : false
  * );
  */
-function GeoportalAttribution(options) {
-
+function GeoportalAttribution (options) {
     if (!(this instanceof GeoportalAttribution)) {
         throw new TypeError("ERROR CLASS_CONSTRUCTOR");
     }
@@ -26,7 +25,6 @@ function GeoportalAttribution(options) {
     ol.control.Attribution.call(this,
         options
     );
-
 }
 
 // Inherits from ol.control.Attribution
@@ -47,13 +45,12 @@ GeoportalAttribution.prototype.constructor = GeoportalAttribution;
  *
  * @param {ol.Map} map - Map.
  */
-GeoportalAttribution.prototype.setMap = function(map) {
-
+GeoportalAttribution.prototype.setMap = function (map) {
     if (map != null) {
         // Remove default ol.control.Attribution
         var ctrls = map.getControls();
         ctrls.forEach(
-            function(element) {
+            function (element) {
                 if (element instanceof ol.control.Attribution && !(element instanceof GeoportalAttribution)) {
                     this.remove(element);
                 }
@@ -69,21 +66,21 @@ GeoportalAttribution.prototype.setMap = function(map) {
         var context = this;
         map.on(
             "moveend",
-            function() {
+            function () {
                 context._updateAttributions(map);
             },
             this
         );
         map.getLayers().on(
             "add",
-            function() {
+            function () {
                 context._updateAttributions(map);
             },
             this
         );
         map.getLayers().on(
             "remove",
-            function() {
+            function () {
                 context._updateAttributions(map);
             },
             this
@@ -91,7 +88,6 @@ GeoportalAttribution.prototype.setMap = function(map) {
     }
 
     ol.control.Attribution.prototype.setMap.call(this, map);
-
 };
 
 /**
@@ -100,7 +96,7 @@ GeoportalAttribution.prototype.setMap = function(map) {
  * @param {ol.Map} map - Map.
  * @private
  */
-GeoportalAttribution.prototype._updateAttributions = function(map) {
+GeoportalAttribution.prototype._updateAttributions = function (map) {
     // get map parameters
     var mapAttributions = {};
 
@@ -121,7 +117,6 @@ GeoportalAttribution.prototype._updateAttributions = function(map) {
 
     // loop on layers to get their originators, if there is at least one originator, and if layer is visible.
     for (var i = 0; i < layers.length; i++) {
-
         // distinguish case of ol.layer.Group (which is made up of layers with their own source)
         // and other ol.layer (with their own source)
         if (layers[i].getSource) {
@@ -132,7 +127,7 @@ GeoportalAttribution.prototype._updateAttributions = function(map) {
             var lyrs = layers[i].getLayers();
             var context = this;
             lyrs.forEach(
-                function(lyr) {
+                function (lyr) {
                     if (lyr.getSource) {
                         context._updateLayerAttributions(lyr, mapAttributions, standardExtent, mapProjection, zoom);
                     } else {
@@ -154,7 +149,7 @@ GeoportalAttribution.prototype._updateAttributions = function(map) {
  * @param {Number} mapZoom - map current zoom
  * @private
  */
-GeoportalAttribution.prototype._updateLayerAttributions = function(layer, mapAttributions, mapExtent, mapCrs, mapZoom) {
+GeoportalAttribution.prototype._updateLayerAttributions = function (layer, mapAttributions, mapExtent, mapCrs, mapZoom) {
     var src = layer.getSource();
 
     var attributions = [];
@@ -168,14 +163,13 @@ GeoportalAttribution.prototype._updateLayerAttributions = function(layer, mapAtt
     }
 
     if (originators && visibility) {
-
         // get layer's attributions array
         var layerAttributions = LayerUtils.getAttributions({
-            extent: mapExtent,
-            crs: mapCrs,
-            zoom: mapZoom,
-            visibility: visibility,
-            originators: originators
+            extent : mapExtent,
+            crs : mapCrs,
+            zoom : mapZoom,
+            visibility : visibility,
+            originators : originators
         });
 
         for (var j = 0; j < layerAttributions.length; j++) {
@@ -184,7 +178,7 @@ GeoportalAttribution.prototype._updateLayerAttributions = function(layer, mapAtt
             if (!mapAttributions || !mapAttributions[attributionj]) {
                 // add attribution html
                 attributions.push(new ol.Attribution({
-                    html: attributionj
+                    html : attributionj
                 }));
 
                 // add attribution to mapAttributions, to manage all layers attributions

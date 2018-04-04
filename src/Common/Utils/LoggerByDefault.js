@@ -6,8 +6,8 @@ var LoggerByDefault = {
     getLogger : function (name) {
         // Substitute global constants configured at compile time
         // cf. webpack.config.js
-        ( __PRODUCTION__ ) ?
-            Log.disableAll() : Log.enableAll();
+        (__PRODUCTION__)
+            ? Log.disableAll() : Log.enableAll();
         var logname = name || "default";
         return Log.getLogger(logname);
     }

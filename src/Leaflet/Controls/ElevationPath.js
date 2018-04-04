@@ -427,8 +427,8 @@ var ElevationPath = L.Control.extend(/** @lends L.geoportalControl.ElevationPath
 
             /* evenement sur la carte lors d'une saisie,
             on y ajoute le layer, et on y stocke les coordonnées */
-            map.on("draw :created", function (e) {
-                logger.trace("draw :created");
+            map.on("draw:created", function (e) {
+                logger.trace("draw:created");
 
                 self._currentIdLayer = L.Util.stamp(e.layer);
 
@@ -437,15 +437,15 @@ var ElevationPath = L.Control.extend(/** @lends L.geoportalControl.ElevationPath
             });
 
             /* evenements */
-            map.on("draw :drawstart", function () {
-                logger.trace("draw :drawstart");
+            map.on("draw:drawstart", function () {
+                logger.trace("draw:drawstart");
                 self._removeFeatureLayer(self._lastIdLayer);
                 self._lastIdLayer = self._currentIdLayer;
             });
 
             /* evenements */
-            map.on("draw :drawstop", function () {
-                logger.trace("draw :drawstop");
+            map.on("draw:drawstop", function () {
+                logger.trace("draw:drawstop");
                 if (typeof self.options.elevationPathOptions.onSuccess === "undefined" && self.options.displayProfileOptions.target === null) {
                     self._pictoContainer.style.display = "none";
                     self._panelContainer.style.display = "block";
@@ -469,9 +469,9 @@ var ElevationPath = L.Control.extend(/** @lends L.geoportalControl.ElevationPath
         }
 
         if (this._featuresLayer !== null) {
-            map.off("draw :created");
-            map.off("draw :drawstart");
-            map.off("draw :drawstop");
+            map.off("draw:created");
+            map.off("draw:drawstart");
+            map.off("draw:drawstop");
             map.removeLayer(this._featuresLayer);
             this._featuresLayer = null;
         }
@@ -551,7 +551,7 @@ var ElevationPath = L.Control.extend(/** @lends L.geoportalControl.ElevationPath
      * @private
      */
     _getFeatureGeometry : function (layer) {
-        // on transmet toujours des coordonnées au service en EPSG :4326
+        // on transmet toujours des coordonnées au service en EPSG:4326
         logger.log(layer.getLatLngs());
 
         if (this._geometry !== null) {
@@ -563,7 +563,7 @@ var ElevationPath = L.Control.extend(/** @lends L.geoportalControl.ElevationPath
 
         var geometry = layer.getLatLngs();
         for (var i = 0; i < geometry.length; i++) {
-            // on transmet au service des coordonnées en EPSG :4326
+            // on transmet au service des coordonnées en EPSG:4326
             var LatLngI = geometry[i];
             var LatLngJ = geometry[i + 1];
             this._geometry.push({

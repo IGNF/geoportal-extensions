@@ -1012,7 +1012,7 @@ var Route = L.Control.extend(/** @lends L.geoportalControl.Route.prototype */ {
         }
 
         // existe t il une geometrie pour chaque troncon de route ?
-        var bGeometryInstructions = (instructions[0].geometry.length !== 0) ? true : false;
+        var bGeometryInstructions = (instructions[0].geometry.length !== 0);
 
         // Geometries des tronçon
         if (instructions && bGeometryInstructions) {
@@ -1165,7 +1165,6 @@ var Route = L.Control.extend(/** @lends L.geoportalControl.Route.prototype */ {
      * @private
      */
     _clear : function () {
-
         this._currentTransport = null;
         this._currentExclusions = [];
         this._currentComputation = null;

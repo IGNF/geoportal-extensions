@@ -1,7 +1,11 @@
 var ElevationPathDOM = {
 
-    /** Add uuid to the tag ID */
-    _addUID : function(id) {
+    /**
+    * Add uuid to the tag ID
+    * @param {String} id - id selector
+    * @returns {String} uid - id selector with an unique id
+    */
+    _addUID : function (id) {
         var uid = (this._uid) ? id + "-" + this._uid : id;
         return uid;
     },

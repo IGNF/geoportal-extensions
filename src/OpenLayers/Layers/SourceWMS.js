@@ -21,8 +21,7 @@ import Config from "../../Common/Utils/Config";
  *      layer  : "ORTHOIMAGERY.ORTHOPHOTOS"
  * });
  */
-function SourceWMS(options) {
-
+function SourceWMS (options) {
     if (!(this instanceof SourceWMS)) {
         throw new TypeError("ERROR CLASS_CONSTRUCTOR");
     }
@@ -52,22 +51,22 @@ function SourceWMS(options) {
 
         // gestion de mixContent dans l'url du service...
         var ctx = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : null;
-        var protocol = (ctx) ?
-            (ctx.location && ctx.location.protocol && ctx.location.protocol.indexOf("https:") === 0 ? "https://" : "http://") :
-            (options.ssl ? "https://" : "http://");
+        var protocol = (ctx)
+            ? (ctx.location && ctx.location.protocol && ctx.location.protocol.indexOf("https:") === 0 ? "https://" : "http://")
+            : (options.ssl ? "https://" : "http://");
 
         var wmsSourceOptions = {
             // tracker extension openlayers
             // FIXME : gp-ext version en mode AMD
-            url: Gp.Helper.normalyzeUrl(wmsParams.url.replace(/(http|https):\/\//, protocol), {
-                "gp-ol-ext": "__GPOLEXTVERSION__"
+            url : Gp.Helper.normalyzeUrl(wmsParams.url.replace(/(http|https):\/\//, protocol), {
+                "gp-ol-ext" : "__GPOLEXTVERSION__"
             }, false),
-            params: {
-                SERVICE: "WMS",
-                LAYERS: options.layer,
-                VERSION: wmsParams.version,
-                STYLES: wmsParams.styles,
-                FORMAT: wmsParams.format
+            params : {
+                SERVICE : "WMS",
+                LAYERS : options.layer,
+                VERSION : wmsParams.version,
+                STYLES : wmsParams.styles,
+                FORMAT : wmsParams.format
             }
             // ,
             // attributions : [
@@ -92,13 +91,11 @@ function SourceWMS(options) {
         this._title = wmsParams.title;
         this._description = wmsParams.description;
         this._quicklookUrl = wmsParams.quicklookUrl;
-
     } else {
         // If layer is not in Gp.Config
         console.log("[source WMS] ERROR : " + options.layer + " cannot be found in Geoportal Configuration. Make sure that this resource is included in your contract key.");
         return new ol.source.TileWMS({});
     }
-
 }
 
 // Inherits from ol.source.TileWMS

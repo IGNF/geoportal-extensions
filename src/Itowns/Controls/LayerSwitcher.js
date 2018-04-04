@@ -5,7 +5,6 @@ import SelectorID from "../../Common/Utils/SelectorID";
 import LayerSwitcherDOM from "../../Common/Controls/LayerSwitcherDOM";
 import Widget from "./Widget";
 
-
 /**
  * @classdesc
  * Control to manage globe layers : their order, visibility and opacity, and display their informations (title, description, legends, metadata...)
@@ -42,8 +41,7 @@ import Widget from "./Widget";
  *  }
  * ));
  */
-function LayerSwitcher(lsOptions) {
-
+function LayerSwitcher (lsOptions) {
     lsOptions = lsOptions || {};
     var options = lsOptions.options || {};
     var layers = lsOptions.layers || [];
@@ -69,9 +67,9 @@ function LayerSwitcher(lsOptions) {
 
     Widget.call(
         this, {
-            name: "LayerSwitcher",
-            element: container,
-            target: targetDiv
+            name : "LayerSwitcher",
+            element : container,
+            target : targetDiv
         }
     );
 }
@@ -98,7 +96,7 @@ LayerSwitcher.prototype.constructor = LayerSwitcher;
 /**
  * Binds globe to control
  */
-LayerSwitcher.prototype.setGlobe = function(globe) {
+LayerSwitcher.prototype.setGlobe = function (globe) {
     var layers;
     if (globe) { // in the case the control is added to the globe
         var self = this;
@@ -118,11 +116,11 @@ LayerSwitcher.prototype.setGlobe = function(globe) {
                 // .. and the infos of the configuration if they exist (title, description, legends, quicklook, metadata)
                 var conf = this._initLayers[i].config || {};
                 var layerOptions = {
-                    title: conf.title || layer.title || this._initLayers[i].id,
-                    description: conf.description || null,
-                    legends: conf.legends || [],
-                    metadata: conf.metadata || [],
-                    quicklookUrl: conf.quicklookUrl || null
+                    title : conf.title || layer.title || this._initLayers[i].id,
+                    description : conf.description || null,
+                    legends : conf.legends || [],
+                    metadata : conf.metadata || [],
+                    quicklookUrl : conf.quicklookUrl || null
                 };
                 if (typeof conf.ipr !== "undefined") {
                     layerOptions.ipr = conf.ipr;
@@ -145,14 +143,14 @@ LayerSwitcher.prototype.setGlobe = function(globe) {
         /**
          * adds the onlayerchanged:opacity callback
          */
-        this._callbacks.onOpacityLayerCallBack = function(e) {
+        this._callbacks.onOpacityLayerCallBack = function (e) {
             self._updateLayerOpacity(e.target.id, e.new.opacity);
         };
 
         /**
          * adds the onlayerchanged:visible callback
          */
-        this._callbacks.onVisibilityLayerCallBack = function(e) {
+        this._callbacks.onVisibilityLayerCallBack = function (e) {
             self._updateLayerVisibility(e.target.id, e.new.visible);
         };
 
@@ -161,7 +159,7 @@ LayerSwitcher.prototype.setGlobe = function(globe) {
         /**
          * adds the onChangedViewCallBack callback
          */
-        this._callbacks.onChangedViewCallBack = function(e) {
+        this._callbacks.onChangedViewCallBack = function (e) {
             self._inRangeUpdate(e.colorLayersId);
         };
         globe.listen(GlobeViewExtended.EVENTS.PRE_RENDER, this._callbacks.onChangedViewCallBack);
@@ -171,7 +169,7 @@ LayerSwitcher.prototype.setGlobe = function(globe) {
         /**
          * adds the onlayeradded
          */
-        this._callbacks.onAddedLayerCallBack = function(e) {
+        this._callbacks.onAddedLayerCallBack = function (e) {
             var id = e.layerId;
             if (self) {
                 if (!self._layerDisplayedInLayerSwitcher(id)) {
@@ -194,24 +192,22 @@ LayerSwitcher.prototype.setGlobe = function(globe) {
         /**
          * adds the onlayerremoved callback
          */
-        this._callbacks.onRemovedLayerCallBack = function(e) {
+        this._callbacks.onRemovedLayerCallBack = function (e) {
             var id = e.layerId;
 
             // update the index max and delete the layer from the layerswitcher
             if (self) {
                 self.removeLayer(id);
             }
-
         };
         globe.listen(GlobeViewExtended.EVENTS.LAYER_REMOVED, this._callbacks.onRemovedLayerCallBack);
 
         /**
          * adds the onlayerchanged:index callback
          */
-        this._callbacks.onIndexLayerCallBack = function(e) {
-
+        this._callbacks.onIndexLayerCallBack = function (e) {
             /** arraysEquals */
-            var arraysEquals = function(a1, a2) {
+            var arraysEquals = function (a1, a2) {
                 if (a1.length !== a2.length) {
                     return false;
                 }
@@ -278,8 +274,7 @@ LayerSwitcher.prototype.setGlobe = function(globe) {
  *       }
  *   })
  */
-LayerSwitcher.prototype.addLayer = function(layer, config) {
-
+LayerSwitcher.prototype.addLayer = function (layer, config) {
     config = config || {};
     var globe = this.getGlobe();
 
@@ -308,15 +303,14 @@ LayerSwitcher.prototype.addLayer = function(layer, config) {
 
     // if layer is not already in layers list, add it to control (layers list and container div)
     if (!this._layers[id]) {
-
         // 1. add layer to layers list
         var layerInfos = this._getLayerInfo(layer) || {};
         var layerOptions = {
-            title: config.title || layerInfos._title || id,
-            description: config.description || layerInfos._description || null,
-            legends: config.legends || layerInfos._legends || [],
-            metadata: config.metadata || layerInfos._metadata || [],
-            quicklookUrl: config.quicklookUrl || layerInfos._quicklookUrl || null
+            title : config.title || layerInfos._title || id,
+            description : config.description || layerInfos._description || null,
+            legends : config.legends || layerInfos._legends || [],
+            metadata : config.metadata || layerInfos._metadata || [],
+            quicklookUrl : config.quicklookUrl || layerInfos._quicklookUrl || null
         };
         if (typeof config.ipr !== "undefined") {
             layerOptions.ipr = config.ipr;
@@ -339,7 +333,6 @@ LayerSwitcher.prototype.addLayer = function(layer, config) {
 
         // user may also add a new configuration for an already added layer
     } else if (this._layers[id] && config) {
-
         // add new configuration parameters to layer informations
         for (var prop in config) {
             if (config.hasOwnProperty(prop)) {
@@ -371,7 +364,7 @@ LayerSwitcher.prototype.addLayer = function(layer, config) {
             if (advancedTools) {
                 advancedTools.appendChild(
                     this._createAdvancedToolInformationElement({
-                        id: id
+                        id : id
                     })
                 );
             }
@@ -381,7 +374,6 @@ LayerSwitcher.prototype.addLayer = function(layer, config) {
             document.getElementById(this._addUID("GPlayerInfoPanel")).className = "GPlayerInfoPanelClosed";
             infodiv.className === "GPlayerInfo";
         }
-
     }
 };
 
@@ -390,7 +382,7 @@ LayerSwitcher.prototype.addLayer = function(layer, config) {
  *
  * @param {Object} layerId - layer to remove to layer switcher
  */
-LayerSwitcher.prototype.removeLayer = function(layerId) {
+LayerSwitcher.prototype.removeLayer = function (layerId) {
     var layerList = document.getElementById(this._addUID("GPlayersList"));
     // close layer info element if open.
     var infodiv = document.getElementById(this._addUID("GPinfo_ID_" + layerId));
@@ -411,7 +403,7 @@ LayerSwitcher.prototype.removeLayer = function(layerId) {
  *
  * @param {Boolean} collapsed - True to collapse control, False to display it
  */
-LayerSwitcher.prototype.setCollapsed = function(collapsed) {
+LayerSwitcher.prototype.setCollapsed = function (collapsed) {
     if (collapsed === undefined) {
         console.log("[ERROR] LayerSwitcher:setCollapsed - missing collapsed parameter");
         return;
@@ -434,7 +426,7 @@ LayerSwitcher.prototype.setCollapsed = function(collapsed) {
 /**
  * Returns true if widget is collapsed (minimize), false otherwise
  */
-LayerSwitcher.prototype.getCollapsed = function() {
+LayerSwitcher.prototype.getCollapsed = function () {
     return !document.getElementById(this._addUID("GPshowLayersList")).checked;
 };
 
@@ -449,7 +441,7 @@ LayerSwitcher.prototype.getCollapsed = function() {
  * @param {Array} layers - list of layers to be configured. Each array element is an object, with following properties :
  * @private
  */
-LayerSwitcher.prototype._initialize = function(options, layers) {
+LayerSwitcher.prototype._initialize = function (options, layers) {
     // id of the control ; used to suffix the CSS id (handles cases with severel controls on the same page)
     this._uid = SelectorID.generate();
 
@@ -475,7 +467,7 @@ LayerSwitcher.prototype._initialize = function(options, layers) {
  * @return {Object} layerConfig - layer configuration
  * @private
  */
-LayerSwitcher.prototype._getLayerConf = function(layerId) {
+LayerSwitcher.prototype._getLayerConf = function (layerId) {
     for (var i = 0; i < this._initLayers.length; ++i) {
         if (this._initLayers[i].id === layerId) {
             return this._initLayers[i].config;
@@ -492,7 +484,7 @@ LayerSwitcher.prototype._getLayerConf = function(layerId) {
  * @return {Boolean} displayed
  * @private
  */
-LayerSwitcher.prototype._layerDisplayedInLayerSwitcher = function(layerId) {
+LayerSwitcher.prototype._layerDisplayedInLayerSwitcher = function (layerId) {
     for (var i = 0; i < this._initLayers.length; ++i) {
         if (this._initLayers[i].id === layerId) {
             return (typeof this._initLayers[i].displayed === "undefined" || this._initLayers[i].displayed);
@@ -508,7 +500,7 @@ LayerSwitcher.prototype._layerDisplayedInLayerSwitcher = function(layerId) {
  * @param {Object} options - control options
  * @private
  */
-LayerSwitcher.prototype._initContainer = function(options) {
+LayerSwitcher.prototype._initContainer = function (options) {
     // creation of the main container
     var container = this._createMainContainerElement();
 
@@ -545,8 +537,7 @@ LayerSwitcher.prototype._initContainer = function(options) {
  * @param {Object} globe - the Itowns.GlobeViewExtended object
  * @private
  */
-LayerSwitcher.prototype._addGlobeLayers = function(globe) {
-
+LayerSwitcher.prototype._addGlobeLayers = function (globe) {
     // Retrieves the element which contains the different layers
     var elementLayersList;
     var childNodes = this.getElement().childNodes;
@@ -559,13 +550,13 @@ LayerSwitcher.prototype._addGlobeLayers = function(globe) {
     }
     // reorders layers according to the layer stack (globe.getLayers returns an reverse ordenered array)
     var layers = globe.getColorLayers();
-    var orderedLayers = layers.sort(function(a, b) {
+    var orderedLayers = layers.sort(function (a, b) {
         return b.sequence - a.sequence;
     });
 
     // loop over all the layers of the map in order to add them to the control layer list (if they are not already added)
     orderedLayers.forEach(
-        function(layer) {
+        function (layer) {
             // adds the map layers to the list
             var id;
             id = layer.id;
@@ -577,11 +568,11 @@ LayerSwitcher.prototype._addGlobeLayers = function(globe) {
             if (!this._layers[id]) {
                 // if the layer is not yet in the layer list (this._layers), we add it
                 var layerOptions = {
-                    title: layerConf.title || layerInfos._title || id,
-                    description: layerConf.description || layerInfos._description || null,
-                    legends: layerConf.legends || layerInfos._legends || [],
-                    metadata: layerConf.metadata || layerInfos._metadata || [],
-                    quicklookUrl: layerConf.quicklookUrl || layerInfos._quicklookUrl || null
+                    title : layerConf.title || layerInfos._title || id,
+                    description : layerConf.description || layerInfos._description || null,
+                    legends : layerConf.legends || layerInfos._legends || [],
+                    metadata : layerConf.metadata || layerInfos._metadata || [],
+                    quicklookUrl : layerConf.quicklookUrl || layerInfos._quicklookUrl || null
                 };
                 this._layers[id] = layerOptions;
             } else {
@@ -612,7 +603,7 @@ LayerSwitcher.prototype._addGlobeLayers = function(globe) {
  * @param {String} layerId - layer id
  * @private
  */
-LayerSwitcher.prototype._createLayerDiv = function(layerId) {
+LayerSwitcher.prototype._createLayerDiv = function (layerId) {
     var layerOptions = this._layers[layerId];
     var isLegends = layerOptions.legends && layerOptions.legends.length !== 0;
     var isMetadata = layerOptions.metadata && layerOptions.metadata.length !== 0;
@@ -643,7 +634,7 @@ LayerSwitcher.prototype._createLayerDiv = function(layerId) {
  * @param {Object} e - HTML event
  * @private
  */
-LayerSwitcher.prototype._onChangeLayerOpacity = function(e) {
+LayerSwitcher.prototype._onChangeLayerOpacity = function (e) {
     var globe = this.getGlobe();
     var layerID = this._resolveLayerId(e.target.id);
 
@@ -661,7 +652,7 @@ LayerSwitcher.prototype._onChangeLayerOpacity = function(e) {
  * @param {Number} opacity - opacity value
  * @private
  */
-LayerSwitcher.prototype._updateLayerOpacity = function(layerId, opacity) {
+LayerSwitcher.prototype._updateLayerOpacity = function (layerId, opacity) {
     if (opacity > 1) {
         opacity = 1;
     }
@@ -687,7 +678,7 @@ LayerSwitcher.prototype._updateLayerOpacity = function(layerId, opacity) {
  * @param {Object} e - HTML event
  * @private
  */
-LayerSwitcher.prototype._onVisibilityLayerClick = function(e) {
+LayerSwitcher.prototype._onVisibilityLayerClick = function (e) {
     var globe = this.getGlobe();
 
     var layerID = this._resolveLayerId(e.target.id);
@@ -702,7 +693,7 @@ LayerSwitcher.prototype._onVisibilityLayerClick = function(e) {
  * @param {Boolean} visibility - visible if true
  * @private
  */
-LayerSwitcher.prototype._updateLayerVisibility = function(layerId, visibility) {
+LayerSwitcher.prototype._updateLayerVisibility = function (layerId, visibility) {
     var layerVisibilityInput = document.getElementById(this._addUID("GPvisibility_ID_" + layerId));
     if (layerVisibilityInput) {
         layerVisibilityInput.checked = visibility;
@@ -716,7 +707,7 @@ LayerSwitcher.prototype._updateLayerVisibility = function(layerId, visibility) {
  * @param {Event} e - MouseEvent
  * @private
  */
-LayerSwitcher.prototype._onOpenLayerInfoClick = function(e) {
+LayerSwitcher.prototype._onOpenLayerInfoClick = function (e) {
     var layerID = this._resolveLayerId(e.target.id);
 
     var layerOptions = this._layers[layerID];
@@ -769,11 +760,11 @@ LayerSwitcher.prototype._onOpenLayerInfoClick = function(e) {
 
     // on récupère les infos associées au layer pour mettre dynamiquement le contenu du panel d'informations
     var obj = {
-        title: layerOptions.title,
-        description: layerOptions.description,
-        quicklookUrl: layerOptions.quicklookUrl,
-        metadata: layerOptions.metadata,
-        legends: layerOptions.legends
+        title : layerOptions.title,
+        description : layerOptions.description,
+        quicklookUrl : layerOptions.quicklookUrl,
+        metadata : layerOptions.metadata,
+        legends : layerOptions.legends
     };
 
     var infoLayer = this._createContainerLayerInfoElement(obj);
@@ -787,7 +778,7 @@ LayerSwitcher.prototype._onOpenLayerInfoClick = function(e) {
  * @param {Event} e - MouseEvent
  * @private
  */
-LayerSwitcher.prototype._onDropLayerClick = function(e) {
+LayerSwitcher.prototype._onDropLayerClick = function (e) {
     var globe = this.getGlobe();
 
     var layerID = this._resolveLayerId(e.target.id);
@@ -805,7 +796,7 @@ LayerSwitcher.prototype._onDropLayerClick = function(e) {
  * @param {Event} e - HTML event
  * @private
  */
-LayerSwitcher.prototype._onDragAndDropLayerClick = function(e) {
+LayerSwitcher.prototype._onDragAndDropLayerClick = function (e) {
     var globe = this.getGlobe();
 
     // Handling of the indexes : gives the little indexes (lowest layers) to the non-visible layers (displayed: false)
@@ -835,8 +826,7 @@ LayerSwitcher.prototype._onDragAndDropLayerClick = function(e) {
  * @method _inRangeUpdate
  * @private
  */
-LayerSwitcher.prototype._inRangeUpdate = function(layersDisplayed) {
-
+LayerSwitcher.prototype._inRangeUpdate = function (layersDisplayed) {
     for (var layerKey in this._layers) {
         var layer = this._layers[layerKey];
         if (!layer) {
@@ -863,7 +853,7 @@ LayerSwitcher.prototype._inRangeUpdate = function(layersDisplayed) {
  * @method _updateLayerListContainer
  * @private
  */
-LayerSwitcher.prototype._updateLayerListContainer = function() {
+LayerSwitcher.prototype._updateLayerListContainer = function () {
     if (this._layerListContainer) {
         var globe = this.getGlobe();
 
@@ -873,7 +863,7 @@ LayerSwitcher.prototype._updateLayerListContainer = function() {
         }
         // reorders layers according to the layer stack (globe.getLayers returns an reverse ordenered array)..
         var layers = globe.getColorLayers();
-        var orderedLayers = layers.sort(function(a, b) {
+        var orderedLayers = layers.sort(function (a, b) {
             return b.sequence - a.sequence;
         });
         // ... and adds the correct div to the different layers, in the zindex decreasing order
@@ -903,7 +893,7 @@ LayerSwitcher.prototype._updateLayerListContainer = function() {
  * @param {Object} layer - the layer object
  * @returns {Object} layerInfo - layer informations
  */
-LayerSwitcher.prototype._getLayerInfo = function(layer) {
+LayerSwitcher.prototype._getLayerInfo = function (layer) {
     var layerInfo = {};
     if (layer) {
         layerInfo._title = layer.title || null;
@@ -922,7 +912,7 @@ LayerSwitcher.prototype._getLayerInfo = function(layer) {
  * @param {String} divId - HTML div id
  * @private
  */
-LayerSwitcher.prototype._resolveLayerId = function(divId) {
+LayerSwitcher.prototype._resolveLayerId = function (divId) {
     var divName = SelectorID.name(divId); // ex GPvisibilityPicto_ID_26
     return divName.substring(divName.indexOf("_ID_") + 4); // ex. 26
 };

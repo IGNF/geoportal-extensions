@@ -26,9 +26,9 @@ var logger = Logger.getLogger("grouplocationselector");
  *      collapsed : true
  *  });
  */
-var GroupLocationSelector = L.Control.extend( /** @lends GroupLocationSelector.prototype */ {
+var GroupLocationSelector = L.Control.extend(/** @lends GroupLocationSelector.prototype */ {
 
-    includes: RouteDOM,
+    includes : RouteDOM,
 
     /**
      * Options du service
@@ -38,16 +38,15 @@ var GroupLocationSelector = L.Control.extend( /** @lends GroupLocationSelector.p
      * - picto (30px)
      * @type {Object}
      */
-    options: {
-        position: "topright",
-        collapsed: true
+    options : {
+        position : "topright",
+        collapsed : true
     },
 
     /**
      * constructor
      */
-    initialize: function(options) {
-
+    initialize : function (options) {
         /** liste de points selectionnée */
         this._currentPoints = [];
 
@@ -62,8 +61,7 @@ var GroupLocationSelector = L.Control.extend( /** @lends GroupLocationSelector.p
      * and fills variable 'this._container = this.onAdd(map)',
      * and create or disable events on map.
      */
-    onAdd: function(map) {
-
+    onAdd : function (map) {
         // initialisation du DOM du composant
         var container = this._container = this._initLayout(map);
 
@@ -79,7 +77,7 @@ var GroupLocationSelector = L.Control.extend( /** @lends GroupLocationSelector.p
      * TODO this method is called when the control is removed from the map
      * and removes events on map.
      */
-    onRemove: function( /* map */ ) {},
+    onRemove : function (/* map */) {},
 
     // ################################################################### //
     // ########################### init dom ############################## //
@@ -89,8 +87,7 @@ var GroupLocationSelector = L.Control.extend( /** @lends GroupLocationSelector.p
      * this method is called by this.onAdd(map)
      * and initialize the container HTMLElement
      */
-    _initLayout: function(map) {
-
+    _initLayout : function (map) {
         // create main container
         var container = this._createMainContainerElement();
 
@@ -145,7 +142,7 @@ var GroupLocationSelector = L.Control.extend( /** @lends GroupLocationSelector.p
      *
      * @param {Object} e - HTMLElement
      */
-    onShowRoutePanelClick: function(e) {
+    onShowRoutePanelClick : function (e) {
         logger.log("onShowRouteClick", e);
     },
 
@@ -155,7 +152,7 @@ var GroupLocationSelector = L.Control.extend( /** @lends GroupLocationSelector.p
      *
      * @param {Object} e - HTMLElement
      */
-    onRouteComputationSubmit: function(e) {
+    onRouteComputationSubmit : function (e) {
         logger.log("onRouteComputationSubmit", e);
     },
 
@@ -170,20 +167,19 @@ var GroupLocationSelector = L.Control.extend( /** @lends GroupLocationSelector.p
      *
      * @returns {Array} List DOM element
      */
-    _createRoutePanelFormPointsElement: function(map) {
-
+    _createRoutePanelFormPointsElement : function (map) {
         var points = [];
 
         var count = 1;
         // point de depart
         var start = new LocationSelector({
-            apiKey: this.options.apiKey || null,
-            tag: {
-                id: count,
-                unique: this._uid,
-                label: "Départ",
-                color: "blue",
-                display: true
+            apiKey : this.options.apiKey || null,
+            tag : {
+                id : count,
+                unique : this._uid,
+                label : "Départ",
+                color : "blue",
+                display : true
             }
         });
         start.setMap(map);
@@ -192,14 +188,14 @@ var GroupLocationSelector = L.Control.extend( /** @lends GroupLocationSelector.p
         // points intermediaires
         for (count = 2; count < 7; count++) {
             var step = new LocationSelector({
-                apiKey: this.options.apiKey || null,
-                tag: {
-                    id: count,
-                    unique: this._uid,
-                    label: "Etape",
-                    color: "red",
-                    display: false,
-                    removeOption: true
+                apiKey : this.options.apiKey || null,
+                tag : {
+                    id : count,
+                    unique : this._uid,
+                    label : "Etape",
+                    color : "red",
+                    display : false,
+                    removeOption : true
                 }
             });
             step.setMap(map);
@@ -208,15 +204,15 @@ var GroupLocationSelector = L.Control.extend( /** @lends GroupLocationSelector.p
         }
         // point d'arrivé
         var end = new LocationSelector({
-            apiKey: this.options.apiKey || null,
-            tag: {
-                id: count,
-                unique: this._uid,
-                label: "Arrivée",
-                color: "orange",
-                display: true,
-                addOption: true,
-                removeOption: false
+            apiKey : this.options.apiKey || null,
+            tag : {
+                id : count,
+                unique : this._uid,
+                label : "Arrivée",
+                color : "orange",
+                display : true,
+                addOption : true,
+                removeOption : false
             }
         });
         end.setMap(map);

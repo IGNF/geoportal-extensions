@@ -12,15 +12,15 @@ var SelectorID = {
      * Construction d'un identifiant statique basé sur le timestamp,
      * et qui s'incremente de +1 à chaque appel
      */
-    generate: (function() {
+    generate : (function () {
         var timestamp = Math.floor(Date.now());
-        return function() {
+        return function () {
             return timestamp++;
         };
     })(),
 
     /** nom du tag */
-    name: function(id) {
+    name : function (id) {
         var name = null;
 
         var i = id.lastIndexOf("-");
@@ -34,7 +34,7 @@ var SelectorID = {
     },
 
     /** numero d'identifiant du tag */
-    index: function(id) {
+    index : function (id) {
         var index = null;
 
         var name = this.name(id);
@@ -49,7 +49,7 @@ var SelectorID = {
     },
 
     /** uuid du tag */
-    uuid: function(id) {
+    uuid : function (id) {
         var uuid = null;
 
         var i = id.lastIndexOf("-");

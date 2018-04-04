@@ -7,9 +7,9 @@ var ProfileElevationPathDOM = {
      * @param {HTMLElement} container - html container where to display profile
      * @param {Object} context - this control object
      * @param {Object} className - calling class (ie ElevationPath)
+     * @returns {DOMElement} profil container
      */
-    displayProfileByDefault: function(data, container, context, className) {
-
+    displayProfileByDefault : function (data, container, context, className) {
         var self = context;
 
         // on nettoie toujours...
@@ -28,7 +28,7 @@ var ProfileElevationPathDOM = {
         var _points = data.points;
 
         var sortedElev = JSON.parse(JSON.stringify(_points));
-        sortedElev.sort(function(e1, e2) {
+        sortedElev.sort(function (e1, e2) {
             return e1.z - e2.z;
         });
 
@@ -69,30 +69,29 @@ var ProfileElevationPathDOM = {
 
         var divData = document.createElement("div");
         divData.className = "profile-content";
-        divData.addEventListener("mouseover", function(e) {
-
+        divData.addEventListener("mouseover", function (e) {
             var _lon = parseFloat(e.target.dataset["lon"]);
             var _lat = parseFloat(e.target.dataset["lat"]);
 
             if (_lon && _lat) {
                 className.__createProfileMarker(self, {
-                    lat: _lat,
-                    lon: _lon
+                    lat : _lat,
+                    lon : _lon
                 });
             }
         });
-        divData.addEventListener("mousemove", function(e) {
+        divData.addEventListener("mousemove", function (e) {
             var _lon = parseFloat(e.target.dataset["lon"]);
             var _lat = parseFloat(e.target.dataset["lat"]);
 
             if (_lon && _lat) {
                 className.__updateProfileMarker(self, {
-                    lat: _lat,
-                    lon: _lon
+                    lat : _lat,
+                    lon : _lon
                 });
             }
         });
-        divData.addEventListener("mouseout", function() {
+        divData.addEventListener("mouseout", function () {
             className.__removeProfileMarker(self);
         });
 
@@ -147,9 +146,9 @@ var ProfileElevationPathDOM = {
      * @param {HTMLElement} container - html container where to display profile
      * @param {Object} context - this control object
      * @param {Object} className - calling class (ie ElevationPath)
+     * @returns {DOMElement} profil container
      */
-    displayProfileRaw: function(data, container, context, className) {
-
+    displayProfileRaw : function (data, container, context, className) {
         // on nettoie toujours...
         if (container) {
             while (container.firstChild) {
@@ -165,7 +164,7 @@ var ProfileElevationPathDOM = {
         div.cols = 50;
         div.style.width = "100%";
         div.innerHTML = JSON.stringify(_points, undefined, 4);
-        div.addEventListener("mouseover", function(e) {
+        div.addEventListener("mouseover", function (e) {
             className.__customRawProfileMouseOverEvent(context, e);
         });
 
@@ -192,9 +191,9 @@ var ProfileElevationPathDOM = {
      * @param {HTMLElement} container - html container where to display profile
      * @param {Object} context - this control object
      * @param {Object} className - calling class (ie ElevationPath)
+     * @returns {DOMElement} profil container
      */
-    displayProfileLibD3: function(data, container, context, className) {
-
+    displayProfileLibD3 : function (data, container, context, className) {
         var self = context;
 
         // on nettoie toujours...
@@ -209,10 +208,10 @@ var ProfileElevationPathDOM = {
         var _displayProfileOptions = self.options.displayProfileOptions;
 
         var margin = {
-            top: 20,
-            right: 20,
-            bottom: 30,
-            left: 40
+            top : 20,
+            right : 20,
+            bottom : 30,
+            left : 40
         };
 
         var width = container.clientWidth - margin.left - margin.right;
@@ -236,20 +235,20 @@ var ProfileElevationPathDOM = {
 
         var line = d3.svg.line()
             .interpolate("basis")
-            .x(function(d) {
+            .x(function (d) {
                 return x(d.dist);
             })
-            .y(function(d) {
+            .y(function (d) {
                 return y(d.z);
             });
 
         var area = d3.svg.area()
             .interpolate("basis")
-            .x(function(d) {
+            .x(function (d) {
                 return x(d.dist);
             })
             .y0(height)
-            .y1(function(d) {
+            .y1(function (d) {
                 return y(d.z);
             });
 
@@ -260,14 +259,14 @@ var ProfileElevationPathDOM = {
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-        var xDomain = d3.extent(_points, function(d) {
+        var xDomain = d3.extent(_points, function (d) {
             return d.dist;
         });
         x.domain(xDomain);
 
         var yDomain = [
             0,
-            d3.max(_points, function(d) {
+            d3.max(_points, function (d) {
                 return d.z;
             })
         ];
@@ -323,10 +322,10 @@ var ProfileElevationPathDOM = {
             .data(_points)
             .enter()
             .append("circle")
-            .attr("cx", function(d) {
+            .attr("cx", function (d) {
                 return x(d.dist);
             })
-            .attr("cy", function(d) {
+            .attr("cy", function (d) {
                 return y(d.z);
             })
             .attr("r", 0)
@@ -349,7 +348,7 @@ var ProfileElevationPathDOM = {
             .attr("class", "tooltip-d3")
             .style("opacity", 0);
 
-        var bisectDist = d3.bisector(function(d) {
+        var bisectDist = d3.bisector(function (d) {
             return d.dist;
         }).left;
 
@@ -357,11 +356,11 @@ var ProfileElevationPathDOM = {
             .attr("class", "overlay-d3")
             .attr("width", width)
             .attr("height", height)
-            .on("mouseover", function() {
+            .on("mouseover", function () {
                 focus.style("display", null);
                 className.__createProfileMarker(self, _points[0]);
             })
-            .on("mouseout", function() {
+            .on("mouseout", function () {
                 focus.style("display", "none");
                 className.__removeProfileMarker(self);
 
@@ -370,8 +369,7 @@ var ProfileElevationPathDOM = {
                     .duration(500)
                     .style("opacity", 0);
             })
-            .on("mousemove", function() {
-
+            .on("mousemove", function () {
                 var m = d3.mouse(this);
                 var distance = x.invert(m[0]);
                 var i = bisectDist(_points, distance);
@@ -422,9 +420,9 @@ var ProfileElevationPathDOM = {
      * @param {HTMLElement} container - html container where to display profile
      * @param {Object} context - this control object
      * @param {Object} className - calling class (ie ElevationPath)
+     * @returns {DOMElement} profil container
      */
-    displayProfileLibAmCharts: function(data, container, context, className) {
-
+    displayProfileLibAmCharts : function (data, container, context, className) {
         var self = context;
 
         var _points = data.points;
@@ -436,91 +434,90 @@ var ProfileElevationPathDOM = {
         }
         ballonText += "<span class='altiPathCoords'>(Lat: [[lat]] / Lon:[[lon]])</span>";
 
-        AmCharts.addInitHandler(function() {});
+        AmCharts.addInitHandler(function () {});
 
         var settings = {
-            type: "serial",
-            pathToImages: "http://cdn.amcharts.com/lib/3/images/",
-            categoryField: "dist",
-            autoMarginOffset: 0,
-            marginRight: 10,
-            marginTop: 10,
-            startDuration: 0,
-            color: "#5E5E5E",
-            fontSize: 8,
-            theme: "light",
-            thousandsSeparator: "",
-            numberFormatter: {
-                precision: -1,
-                decimalSeparator: ",",
-                thousandsSeparato: " "
+            type : "serial",
+            pathToImages : "http://cdn.amcharts.com/lib/3/images/",
+            categoryField : "dist",
+            autoMarginOffset : 0,
+            marginRight : 10,
+            marginTop : 10,
+            startDuration : 0,
+            color : "#5E5E5E",
+            fontSize : 8,
+            theme : "light",
+            thousandsSeparator : "",
+            numberFormatter : {
+                precision : -1,
+                decimalSeparator : ",",
+                thousandsSeparato : " "
             },
-            categoryAxis: {
-                color: "#5E5E5E",
-                gridPosition: "start",
-                minHorizontalGap: 40,
-                tickPosition: "start",
-                title: "Distance (" + data.unit + ")",
-                titleColor: "#5E5E5E",
-                labelOffset: 0,
-                startOnAxis: true
+            categoryAxis : {
+                color : "#5E5E5E",
+                gridPosition : "start",
+                minHorizontalGap : 40,
+                tickPosition : "start",
+                title : "Distance (" + data.unit + ")",
+                titleColor : "#5E5E5E",
+                labelOffset : 0,
+                startOnAxis : true
             },
-            chartCursor: {
-                animationDuration: 0,
-                bulletsEnabled: true,
-                bulletSize: 10,
-                categoryBalloonEnabled: false,
-                cursorColor: "#F90",
-                graphBulletAlpha: 1,
-                graphBulletSize: 1,
-                zoomable: false
+            chartCursor : {
+                animationDuration : 0,
+                bulletsEnabled : true,
+                bulletSize : 10,
+                categoryBalloonEnabled : false,
+                cursorColor : "#F90",
+                graphBulletAlpha : 1,
+                graphBulletSize : 1,
+                zoomable : false
             },
-            trendLines: [],
-            graphs: [{
-                balloonColor: "#CCCCCC",
-                balloonText: ballonText,
-                bullet: "round",
-                bulletAlpha: 0,
-                bulletBorderColor: "#FFF",
-                bulletBorderThickness: 2,
-                bulletColor: "#F90",
-                bulletSize: 6,
-                hidden: false,
-                id: "AmGraph-1",
-                fillAlphas: 0.4,
-                fillColors: "#C77A04",
-                lineAlpha: 1,
-                lineColor: "#C77A04",
-                lineThickness: 1,
-                title: "Altitude",
-                valueField: "z"
+            trendLines : [],
+            graphs : [{
+                balloonColor : "#CCCCCC",
+                balloonText : ballonText,
+                bullet : "round",
+                bulletAlpha : 0,
+                bulletBorderColor : "#FFF",
+                bulletBorderThickness : 2,
+                bulletColor : "#F90",
+                bulletSize : 6,
+                hidden : false,
+                id : "AmGraph-1",
+                fillAlphas : 0.4,
+                fillColors : "#C77A04",
+                lineAlpha : 1,
+                lineColor : "#C77A04",
+                lineThickness : 1,
+                title : "Altitude",
+                valueField : "z"
             }],
-            guides: [],
-            valueAxes: [{
-                id: "ValueAxis-1",
-                minVerticalGap: 20,
-                title: "Altitude (m)"
+            guides : [],
+            valueAxes : [{
+                id : "ValueAxis-1",
+                minVerticalGap : 20,
+                title : "Altitude (m)"
             }],
-            balloon: {
-                borderColor: "#CCCCCC",
-                borderThickness: 1,
-                fillColor: "#FFFFFF",
-                showBullet: true
+            balloon : {
+                borderColor : "#CCCCCC",
+                borderThickness : 1,
+                fillColor : "#FFFFFF",
+                showBullet : true
             },
-            titles: [],
-            allLabels: [],
-            dataProvider: _points
+            titles : [],
+            allLabels : [],
+            dataProvider : _points
         };
 
         var _containerProfile = AmCharts.makeChart(container, settings);
 
-        _containerProfile.addListener("changed", function(e) {
+        _containerProfile.addListener("changed", function (e) {
             var obj = e.chart.dataProvider[e.index];
             className.__updateProfileMarker(self, obj);
         });
 
         return _containerProfile;
-
     }
 };
 

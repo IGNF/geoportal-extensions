@@ -5,7 +5,7 @@ var MathUtils = {
      * @param {Number} b - quotient
      * @returns {Number}
      */
-    modulo: function(a, b) {
+    modulo : function (a, b) {
         var r = a % b;
         return r * b < 0 ? r + b : r;
     },
@@ -19,7 +19,7 @@ var MathUtils = {
      * @param {Number} numDigits - number of digits for seconds
      * @returns {Object}
      */
-    decimalToDMS: function(degrees, hemispheres, numDigits) {
+    decimalToDMS : function (degrees, hemispheres, numDigits) {
         var normalizedDegrees = this.modulo(degrees + 180, 360) - 180;
         var x = Math.abs(3600 * normalizedDegrees);
         var dflPrecision = numDigits || 0;
@@ -42,10 +42,10 @@ var MathUtils = {
 
         var direction = hemispheres.charAt(normalizedDegrees < 0 ? 1 : 0);
         return {
-            d: deg,
-            m: min,
-            s: sec,
-            direction: direction
+            d : deg,
+            m : min,
+            s : sec,
+            direction : direction
         };
     },
 
@@ -56,7 +56,7 @@ var MathUtils = {
      * @param {Numeric} base - between 2 and 36
      * @returns {null|Numeric}
      */
-    toInteger: function(s, base) {
+    toInteger : function (s, base) {
         var _base = base || 10;
         var n = parseInt(s, _base);
         if (!isNaN(n) && isFinite(n)) {
@@ -71,7 +71,7 @@ var MathUtils = {
      * @param {String} s - string number
      * @returns {Boolean}
      */
-    isInteger: function(s) {
+    isInteger : function (s) {
         if (isNaN(s)) {
             return false;
         }
@@ -86,7 +86,7 @@ var MathUtils = {
      * @param {String} s - string number
      * @returns {null|Numeric}
      */
-    toFloat: function(s) {
+    toFloat : function (s) {
         var n = parseFloat(s);
         if (!isNaN(n) && isFinite(n)) {
             return n;

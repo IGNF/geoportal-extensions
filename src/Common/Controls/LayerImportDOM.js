@@ -1,7 +1,11 @@
 var LayerImportDOM = {
 
-    /** Add uuid to the tag ID */
-    _addUID: function(id) {
+    /**
+    * Add uuid to the tag ID
+    * @param {String} id - id selector
+    * @returns {String} uid - id selector with an unique id
+    */
+    _addUID : function (id) {
         var uid = (this._uid) ? id + "-" + this._uid : id;
         return uid;
     },
@@ -11,8 +15,7 @@ var LayerImportDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createMainContainerElement: function() {
-
+    _createMainContainerElement : function () {
         var container = document.createElement("div");
         container.id = this._addUID("GPimport");
         container.className = "GPwidget";
@@ -28,8 +31,7 @@ var LayerImportDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createShowImportElement: function() {
-
+    _createShowImportElement : function () {
         var input = document.createElement("input");
         input.id = this._addUID("GPshowImport");
         input.type = "checkbox";
@@ -41,8 +43,7 @@ var LayerImportDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createShowImportPictoElement: function() {
-
+    _createShowImportPictoElement : function () {
         // contexte d'execution
         var self = this;
 
@@ -54,11 +55,11 @@ var LayerImportDOM = {
 
         // Close all results and panels when minimizing the widget
         if (label.addEventListener) {
-            label.addEventListener("click", function() {
+            label.addEventListener("click", function () {
                 self._onShowImportClick();
             });
         } else if (label.attachEvent) {
-            label.attachEvent("onclick", function() {
+            label.attachEvent("onclick", function () {
                 self._onShowImportClick();
             });
         }
@@ -80,7 +81,7 @@ var LayerImportDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createImportPanelElement: function() {
+    _createImportPanelElement : function () {
         var div = document.createElement("div");
         div.id = this._addUID("GPimportPanel");
         div.className = "GPpanel";
@@ -93,7 +94,7 @@ var LayerImportDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createImportPanelHeaderElement: function() {
+    _createImportPanelHeaderElement : function () {
         var container = document.createElement("div");
         container.className = "GPpanelHeader";
 
@@ -112,7 +113,7 @@ var LayerImportDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createImportPanelTitleElement: function() {
+    _createImportPanelTitleElement : function () {
         var div = document.createElement("div");
         div.className = "GPpanelTitle";
         div.innerHTML = "Import de données";
@@ -124,7 +125,7 @@ var LayerImportDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createImportPanelCloseElement: function() {
+    _createImportPanelCloseElement : function () {
         // contexte
         var self = this;
 
@@ -135,11 +136,11 @@ var LayerImportDOM = {
 
         // Link panel close / visibility checkbox
         if (divClose.addEventListener) {
-            divClose.addEventListener("click", function() {
+            divClose.addEventListener("click", function () {
                 document.getElementById(self._addUID("GPshowImportPicto")).click();
             }, false);
         } else if (divClose.attachEvent) {
-            divClose.attachEvent("onclick", function() {
+            divClose.attachEvent("onclick", function () {
                 document.getElementById(self._addUID("GPshowImportPicto")).click();
             });
         }
@@ -157,8 +158,7 @@ var LayerImportDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createImportPanelFormElement: function() {
-
+    _createImportPanelFormElement : function () {
         // contexte d'execution
         var self = this;
 
@@ -168,12 +168,12 @@ var LayerImportDOM = {
 
         // TODO ?
         if (form.addEventListener) {
-            form.addEventListener("submit", function(e) {
+            form.addEventListener("submit", function (e) {
                 e.preventDefault();
                 self._onImportSubmit();
             });
         } else if (form.attachEvent) {
-            form.attachEvent("onsubmit", function(e) {
+            form.attachEvent("onsubmit", function (e) {
                 e.preventDefault();
                 self._onImportSubmit();
             });
@@ -188,8 +188,7 @@ var LayerImportDOM = {
      * @param {Array} importTypes - import types to be displayed (and used)
      * @returns {DOMElement} DOM element
      */
-    _createImportTypeLineElement: function(importTypes) {
-
+    _createImportTypeLineElement : function (importTypes) {
         // contexte d'execution
         var context = this;
 
@@ -208,7 +207,7 @@ var LayerImportDOM = {
         select.className = "GPimportSelect";
         // gestionnaire d'evenement : on stocke la valeur du type d'import
         if (select.addEventListener) {
-            select.addEventListener("change", function(e) {
+            select.addEventListener("change", function (e) {
                 if (this.value === "KML" || this.value === "GPX" || this.value === "GeoJSON") {
                     // static import
                     document.getElementById(context._addUID("GPimportStaticParams")).className = "GPimportVisibleParams";
@@ -221,7 +220,7 @@ var LayerImportDOM = {
                 context._onImportTypeChange(e);
             });
         } else if (select.attachEvent) {
-            select.attachEvent("onchange", function() {
+            select.attachEvent("onchange", function () {
                 if (this.value === "KML" || this.value === "GPX" || this.value === "GeoJSON") {
                     // static import
                     document.getElementById(context._addUID("GPimportStaticParams")).className = "GPimportVisibleParams";
@@ -265,7 +264,7 @@ var LayerImportDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createImportWaitingElement: function() {
+    _createImportWaitingElement : function () {
         var div = document.createElement("div");
         div.id = this._addUID("GPimportWaitingContainer");
         div.className = "GPimportWaitingContainerHidden";
@@ -285,10 +284,10 @@ var LayerImportDOM = {
 
     /**
      * Create container for KML/GPX/GeoJSON parameters
-     *
+     * @param {String} currentType - GeoJSON, GPX or KML value
      * @returns {DOMElement} DOM element
      */
-    _createImportStaticParamsContainer: function(currentType) {
+    _createImportStaticParamsContainer : function (currentType) {
         var div = document.createElement("div");
         div.id = this._addUID("GPimportStaticParams");
         if (currentType === "KML" || currentType === "GPX" || currentType === "GeoJSON") {
@@ -305,8 +304,7 @@ var LayerImportDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createStaticNameLabel: function() {
-
+    _createStaticNameLabel : function () {
         var div = document.createElement("div");
         div.className = "GPimportInputLine";
 
@@ -331,8 +329,7 @@ var LayerImportDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createStaticModeChoiceDiv: function() {
-
+    _createStaticModeChoiceDiv : function () {
         var div = document.createElement("div");
         div.id = this._addUID("GPimportChoice");
         return div;
@@ -343,8 +340,7 @@ var LayerImportDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createStaticLocalChoiceDiv: function() {
-
+    _createStaticLocalChoiceDiv : function () {
         var context = this;
 
         var div = document.createElement("div");
@@ -353,13 +349,13 @@ var LayerImportDOM = {
         var input = document.createElement("input");
         input.type = "radio";
         if (input.addEventListener) {
-            input.addEventListener("change", function(e) {
+            input.addEventListener("change", function (e) {
                 document.getElementById(context._addUID("GPimportValueLocal")).className = "GPimportInputLine";
                 document.getElementById(context._addUID("GPimportValueUrl")).className = "GPimportValueHidden";
                 context._onStaticImportTypeChange(e);
             });
         } else if (input.appendChild) {
-            input.appendChild("onchange", function() {
+            input.appendChild("onchange", function () {
                 document.getElementById(context._addUID("GPimportValueLocal")).className = "GPimportInputLine";
                 document.getElementById(context._addUID("GPimportValueUrl")).className = "GPimportValueHidden";
                 context._onStaticImportTypeChange();
@@ -386,8 +382,7 @@ var LayerImportDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createStaticUrlChoiceDiv: function() {
-
+    _createStaticUrlChoiceDiv : function () {
         var context = this;
 
         var div = document.createElement("div");
@@ -396,13 +391,13 @@ var LayerImportDOM = {
         var input = document.createElement("input");
         input.type = "radio";
         if (input.addEventListener) {
-            input.addEventListener("change", function(e) {
+            input.addEventListener("change", function (e) {
                 document.getElementById(context._addUID("GPimportValueUrl")).className = "GPimportInputLine";
                 document.getElementById(context._addUID("GPimportValueLocal")).className = "GPimportValueHidden";
                 context._onStaticImportTypeChange(e);
             });
         } else if (input.appendChild) {
-            input.appendChild("onchange", function() {
+            input.appendChild("onchange", function () {
                 document.getElementById(context._addUID("GPimportValueUrl")).className = "GPimportInputLine";
                 document.getElementById(context._addUID("GPimportValueLocal")).className = "GPimportValueHidden";
                 context._onStaticImportTypeChange();
@@ -429,7 +424,7 @@ var LayerImportDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createStaticLocalInputDiv: function() {
+    _createStaticLocalInputDiv : function () {
         var div = document.createElement("div");
         div.id = this._addUID("GPimportValueLocal");
         div.className = "GPimportInputLine";
@@ -441,7 +436,7 @@ var LayerImportDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createStaticLocalInputLabel: function() {
+    _createStaticLocalInputLabel : function () {
         var label = document.createElement("label");
         label.className = "GPimportLabel";
         label.htmlFor = this._addUID("GPimportFile");
@@ -455,7 +450,7 @@ var LayerImportDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createStaticLocalInput: function() {
+    _createStaticLocalInput : function () {
         var input = document.createElement("input");
         input.type = "file";
         input.id = this._addUID("GPimportFile");
@@ -468,7 +463,7 @@ var LayerImportDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createStaticUrlInputDiv: function() {
+    _createStaticUrlInputDiv : function () {
         var div = document.createElement("div");
         div.id = this._addUID("GPimportValueUrl");
         div.className = "GPimportValueHidden";
@@ -480,7 +475,7 @@ var LayerImportDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createStaticUrlInputLabel: function() {
+    _createStaticUrlInputLabel : function () {
         var label = document.createElement("label");
         label.className = "GPimportLabel";
         label.htmlFor = this._addUID("GPimportUrl");
@@ -494,7 +489,7 @@ var LayerImportDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createStaticUrlInput: function() {
+    _createStaticUrlInput : function () {
         var input = document.createElement("input");
         input.type = "text";
         input.id = this._addUID("GPimportUrl");
@@ -508,10 +503,10 @@ var LayerImportDOM = {
 
     /**
      * Create container for WMS/WMTS/WFS parameters
-     *
+     * @param {String} currentType - WMS, WMTS or WFS value
      * @returns {DOMElement} DOM element
      */
-    _createServiceParamsContainer: function(currentType) {
+    _createServiceParamsContainer : function (currentType) {
         var div = document.createElement("div");
         div.id = this._addUID("GPimportServiceParams");
         if (currentType === "WMS" || currentType === "WMTS" || currentType === "WFS") {
@@ -528,7 +523,7 @@ var LayerImportDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createServiceUrlDiv: function() {
+    _createServiceUrlDiv : function () {
         var div = document.createElement("div");
         div.className = "GPimportInputLine";
         return div;
@@ -539,7 +534,7 @@ var LayerImportDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createServiceUrlInputLabel: function() {
+    _createServiceUrlInputLabel : function () {
         var label = document.createElement("label");
         label.className = "GPimportLabel";
         label.htmlFor = this._addUID("GPimportServiceUrl");
@@ -553,7 +548,7 @@ var LayerImportDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createServiceUrlInput: function() {
+    _createServiceUrlInput : function () {
         var input = document.createElement("input");
         input.type = "text";
         input.id = this._addUID("GPimportServiceUrl");
@@ -570,8 +565,7 @@ var LayerImportDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createImportSubmitFormElement: function() {
-
+    _createImportSubmitFormElement : function () {
         var input = document.createElement("input");
         input.id = this._addUID("GPimportSubmit");
         input.className = "GPinputSubmit tool-form-submit";
@@ -590,7 +584,7 @@ var LayerImportDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createImportGetCapPanelElement: function() {
+    _createImportGetCapPanelElement : function () {
         var div = document.createElement("div");
         div.id = this._addUID("GPimportGetCapPanel");
         div.className = "GPpanel";
@@ -602,8 +596,7 @@ var LayerImportDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createImportGetCapPanelHeaderElement: function() {
-
+    _createImportGetCapPanelHeaderElement : function () {
         // contexte
         var context = this;
 
@@ -620,13 +613,13 @@ var LayerImportDOM = {
         // close picto
         var closeDiv = document.createElement("div");
         if (closeDiv.addEventListener) {
-            closeDiv.addEventListener("click", function() {
+            closeDiv.addEventListener("click", function () {
                 document.getElementById(context._addUID("GPimportGetCapPanel")).style.display = "none";
                 document.getElementById(context._addUID("GPimportPanel")).style.display = "";
                 context._onGetCapPanelClose();
             });
         } else if (closeDiv.attachEvent) {
-            closeDiv.attachEvent("click", function() {
+            closeDiv.attachEvent("click", function () {
                 document.getElementById(context._addUID("GPimportGetCapPanel")).style.display = "none";
                 document.getElementById(context._addUID("GPimportPanel")).style.display = "";
                 context._onGetCapPanelClose();
@@ -645,7 +638,7 @@ var LayerImportDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createImportGetCapResultsListElement: function() {
+    _createImportGetCapResultsListElement : function () {
         var container = document.createElement("div");
         container.id = this._addUID("GPimportGetCapResults");
         return container;
@@ -658,7 +651,7 @@ var LayerImportDOM = {
      * @param {Number} id - layer identifier in getCapabilities response layers list
      * @returns {DOMElement} DOM element
      */
-    _createImportGetCapResultElement: function(layerDescription, id) {
+    _createImportGetCapResultElement : function (layerDescription, id) {
         var div = document.createElement("div");
         div.className = "GPimportGetCapProposal";
         div.innerHTML = layerDescription;
@@ -666,11 +659,11 @@ var LayerImportDOM = {
 
         var context = this;
         if (div.addEventListener) {
-            div.addEventListener("click", function(e) {
+            div.addEventListener("click", function (e) {
                 context._onGetCapResponseLayerClick(e);
             });
         } else if (div.attachEvent) {
-            div.attachEvent("onclick", function() {
+            div.attachEvent("onclick", function () {
                 context._onGetCapResponseLayerClick();
             });
         }

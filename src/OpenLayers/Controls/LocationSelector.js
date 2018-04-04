@@ -7,7 +7,6 @@ import SelectorID from "../../Common/Utils/SelectorID";
 import LocationSelectorDOM from "../../Common/Controls/LocationSelectorDOM";
 import Markers from "./Utils/Markers";
 
-
 var logger = Logger.getLogger("locationselector");
 
 /**
@@ -44,8 +43,7 @@ var logger = Logger.getLogger("locationselector");
  *      autocompleteOptions : {}
  *  });
  */
-function LocationSelector(options) {
-
+function LocationSelector (options) {
     options = options || {};
 
     if (!(this instanceof LocationSelector)) {
@@ -67,9 +65,9 @@ function LocationSelector(options) {
 
     // call ol.control.Control constructor
     ol.control.Control.call(this, {
-        element: this._container,
-        target: options.target,
-        render: options.render
+        element : this._container,
+        target : options.target,
+        render : options.render
     });
 };
 // Inherits from ol.control.Control
@@ -90,20 +88,19 @@ LocationSelector.prototype.constructor = LocationSelector;
 /**
  * initialize component
  */
-LocationSelector.prototype.initialize = function(options) {
-
+LocationSelector.prototype.initialize = function (options) {
     // set default options
     this.options = {
-        tag: {
-            id: 1, // numero d'ordre sur un groupe de locations
-            groupId: null, // id du composant global contenant le LocationSelector
-            label: ">",
-            display: true,
-            addOption: false,
-            removeOption: false
+        tag : {
+            id : 1, // numero d'ordre sur un groupe de locations
+            groupId : null, // id du composant global contenant le LocationSelector
+            label : ">",
+            display : true,
+            addOption : false,
+            removeOption : false
         },
-        displayInfo: true,
-        autocompleteOptions: {}
+        displayInfo : true,
+        autocompleteOptions : {}
     };
 
     // merge with user options
@@ -163,7 +160,6 @@ LocationSelector.prototype.initialize = function(options) {
 
     // gestion des droits sur les ressources/services
     this._checkRightsManagement();
-
 };
 
 /**
@@ -171,14 +167,13 @@ LocationSelector.prototype.initialize = function(options) {
  *
  * @private
  */
-LocationSelector.prototype._initMarker = function() {
+LocationSelector.prototype._initMarker = function () {
     // init marker properties
     this._marker = null;
     this._markerUrl = "";
     this._markerOffset = [0, 0];
 
     if (this.options.tag.markerOpts && this.options.tag.markerOpts.url) {
-
         // get marker src url
         this._markerUrl = this.options.tag.markerOpts.url;
 
@@ -191,7 +186,6 @@ LocationSelector.prototype._initMarker = function() {
                 console.log("markerOpts.offset should be an array. e.g. : [0,0]");
             }
         }
-
     } else {
         // set default options for marker
         this._markerUrl = Markers["lightOrange"];
@@ -208,14 +202,14 @@ LocationSelector.prototype._initMarker = function() {
  *
  * @returns {Array} this._coordinate - point coordinate (EPSG:4326) : [lon, lat]
  */
-LocationSelector.prototype.getCoordinate = function() {
+LocationSelector.prototype.getCoordinate = function () {
     return this._coordinate;
 };
 
 /**
  * clean input
  */
-LocationSelector.prototype.clear = function() {
+LocationSelector.prototype.clear = function () {
     this._clearResults();
     this._inputLabelContainer.click();
 };
@@ -227,7 +221,7 @@ LocationSelector.prototype.clear = function() {
 /**
  * check
  */
-LocationSelector.prototype._checkRightsManagement = function() {
+LocationSelector.prototype._checkRightsManagement = function () {
     // les ressources du service d'autocompletion
     var _opts = this.options.autocompleteOptions.filterOptions;
     var _res = (_opts) ? _opts.type : [];
@@ -239,9 +233,9 @@ LocationSelector.prototype._checkRightsManagement = function() {
     }
 
     var rightManagement = RightManagement.check({
-        key: this.options.apiKey,
-        resources: _res,
-        services: ["AutoCompletion"]
+        key : this.options.apiKey,
+        resources : _res,
+        services : ["AutoCompletion"]
     });
 
     if (!rightManagement) {
@@ -257,14 +251,12 @@ LocationSelector.prototype._checkRightsManagement = function() {
     }
 
     Utils.assign(this._resources, rightManagement);
-
 };
 
 /**
  * initialize component container
  */
-LocationSelector.prototype._initContainer = function() {
-
+LocationSelector.prototype._initContainer = function () {
     var id = this.options.tag.id;
 
     // create main container
@@ -278,11 +270,11 @@ LocationSelector.prototype._initContainer = function() {
     var _inputAutoComplete = this._inputAutoCompleteContainer = this._createLocationAutoCompleteteInputElement(id);
     var context = this;
     if (_inputAutoComplete.addEventListener) {
-        _inputAutoComplete.addEventListener("click", function() {
+        _inputAutoComplete.addEventListener("click", function () {
             context.onAutoCompleteInputClick();
         });
     } else if (_inputAutoComplete.attachEvent) {
-        _inputAutoComplete.attachEvent("onclick", function() {
+        _inputAutoComplete.attachEvent("onclick", function () {
             context.onAutoCompleteInputClick();
         });
     }
@@ -319,7 +311,7 @@ LocationSelector.prototype._initContainer = function() {
  *
  * @private
  */
-LocationSelector.prototype.onAutoCompleteInputClick = function() {
+LocationSelector.prototype.onAutoCompleteInputClick = function () {
     if (this._inputAutoCompleteContainer && this._inputAutoCompleteContainer.value.length > 2) {
         this._displaySuggestedLocation();
     }
@@ -335,8 +327,7 @@ LocationSelector.prototype.onAutoCompleteInputClick = function() {
  * @param {Object} e - HTMLElement
  * @private
  */
-LocationSelector.prototype.onAutoCompleteSearchText = function(e) {
-
+LocationSelector.prototype.onAutoCompleteSearchText = function (e) {
     var value = e.target.value;
     if (!value) {
         return;
@@ -366,17 +357,17 @@ LocationSelector.prototype.onAutoCompleteSearchText = function(e) {
     // les messages d'erreurs sont affichés sur la console (?)
     var context = this;
     this._requestAutoComplete({
-        text: value,
-        maximumResponses: 5, // FIXME je limite le nombre de reponse car le container DOM est limité dans l'affichage !!!
+        text : value,
+        maximumResponses : 5, // FIXME je limite le nombre de reponse car le container DOM est limité dans l'affichage !!!
         /** callback onSuccess */
-        onSuccess: function(results) {
+        onSuccess : function (results) {
             if (results) {
                 var locations = results.suggestedLocations;
                 context._fillAutoCompletedLocationListContainer(locations);
             }
         },
         /** callback onFailure */
-        onFailure: function(error) {
+        onFailure : function (error) {
             // FIXME
             // où affiche t on les messages : ex. 'No suggestion matching the search' ?
             // doit on nettoyer la liste des suggestions dernierement enregistrée :
@@ -407,8 +398,7 @@ LocationSelector.prototype.onAutoCompleteSearchText = function(e) {
  * @param {Object} e - HTMLElement
  * @private
  */
-LocationSelector.prototype.onAutoCompletedResultsItemClick = function(e) {
-
+LocationSelector.prototype.onAutoCompletedResultsItemClick = function (e) {
     var idx = SelectorID.index(e.target.id);
 
     if (!idx) {
@@ -427,8 +417,8 @@ LocationSelector.prototype.onAutoCompletedResultsItemClick = function(e) {
     this._coordinate = position;
 
     var info = {
-        type: this._suggestedLocations[idx].type,
-        fields: this._suggestedLocations[idx]
+        type : this._suggestedLocations[idx].type,
+        fields : this._suggestedLocations[idx]
     };
 
     // on ajoute le texte de l'autocomplétion dans l'input
@@ -445,7 +435,6 @@ LocationSelector.prototype.onAutoCompletedResultsItemClick = function(e) {
     // on centre la vue et positionne le marker, à la position reprojetée dans la projection de la carte
     this._setPosition(position);
     this._setMarker(position, info, this.options.displayInfo);
-
 };
 
 /**
@@ -454,7 +443,7 @@ LocationSelector.prototype.onAutoCompletedResultsItemClick = function(e) {
  *
  * @private
  */
-LocationSelector.prototype.onActivateMapPointClick = function() {
+LocationSelector.prototype.onActivateMapPointClick = function () {
     var map = this.getMap();
 
     if (this._inputShowPointerContainer.checked) {
@@ -483,7 +472,7 @@ LocationSelector.prototype.onActivateMapPointClick = function() {
  *
  * @private
  */
-LocationSelector.prototype.onLocationClearPointClick = function() {
+LocationSelector.prototype.onLocationClearPointClick = function () {
     this._setCursor();
     this._clearResults();
 };
@@ -495,7 +484,7 @@ LocationSelector.prototype.onLocationClearPointClick = function() {
  *
  * @private
  */
-LocationSelector.prototype.onLocationRemovePointClick = function() {
+LocationSelector.prototype.onLocationRemovePointClick = function () {
     this._setCursor();
     this._clearResults();
 };
@@ -507,7 +496,7 @@ LocationSelector.prototype.onLocationRemovePointClick = function() {
  *
  * @param {Object} e - HTMLElement
  */
-LocationSelector.prototype.onLocationAddPointClick = function(e) {
+LocationSelector.prototype.onLocationAddPointClick = function (e) {
     logger.log("onRouteAddPointClick", e);
 };
 
@@ -523,8 +512,7 @@ LocationSelector.prototype.onLocationAddPointClick = function(e) {
  * @param {Object} e - HTMLElement
  * @private
  */
-LocationSelector.prototype.onMouseMapClick = function(e) {
-
+LocationSelector.prototype.onMouseMapClick = function (e) {
     var coordinate = e.coordinate;
     if (!e.map || !e.map.getView()) {
         return;
@@ -552,7 +540,7 @@ LocationSelector.prototype.onMouseMapClick = function(e) {
  * @param {String} label - label suggested location
  * @private
  */
-LocationSelector.prototype._setLabel = function(label) {
+LocationSelector.prototype._setLabel = function (label) {
     this._inputAutoCompleteContainer.value = label;
 };
 
@@ -562,7 +550,7 @@ LocationSelector.prototype._setLabel = function(label) {
  * @param {String} cursor - cursor style
  * @private
  */
-LocationSelector.prototype._setCursor = function(cursor) {
+LocationSelector.prototype._setCursor = function (cursor) {
     var map = this.getMap();
     var div = map.getTargetElement();
 
@@ -581,8 +569,7 @@ LocationSelector.prototype._setCursor = function(cursor) {
  * @param {Object} crs - coordinate CRS (ol.proj.Projection)
  * @private
  */
-LocationSelector.prototype._setCoordinate = function(olCoordinate, crs) {
-
+LocationSelector.prototype._setCoordinate = function (olCoordinate, crs) {
     // structure
     // ol.Coordinate
     //      [
@@ -605,7 +592,6 @@ LocationSelector.prototype._setCoordinate = function(olCoordinate, crs) {
 
     var value = lat + " / " + lng;
     this.GPdisplayCoordinate(value);
-
 };
 
 /**
@@ -615,7 +601,7 @@ LocationSelector.prototype._setCoordinate = function(olCoordinate, crs) {
  * @param {Array} position - ol.Coordinate object [lon, lat] (en lat/lon : "EPSG:4326")
  * @private
  */
-LocationSelector.prototype._setPosition = function(position) {
+LocationSelector.prototype._setPosition = function (position) {
     var view = this.getMap().getView();
     view.setCenter(position);
 };
@@ -630,8 +616,7 @@ LocationSelector.prototype._setPosition = function(position) {
  * @param {Boolean} display - display a popup information
  * @private
  */
-LocationSelector.prototype._setMarker = function(position, information, display) {
-
+LocationSelector.prototype._setMarker = function (position, information, display) {
     var map = this.getMap();
     // remove previous markers
     if (this._marker != null) {
@@ -640,14 +625,13 @@ LocationSelector.prototype._setMarker = function(position, information, display)
     }
 
     if (position) {
-
         var markerDiv = document.createElement("img");
         markerDiv.src = this._markerUrl;
         this._marker = new ol.Overlay({
-            position: position,
-            offset: this._markerOffset,
-            element: markerDiv,
-            stopEvent: false
+            position : position,
+            offset : this._markerOffset,
+            element : markerDiv,
+            stopEvent : false
         });
         map.addOverlay(this._marker);
 
@@ -687,7 +671,7 @@ LocationSelector.prototype._setMarker = function(position, information, display)
  *
  * @private
  */
-LocationSelector.prototype._clearResults = function() {
+LocationSelector.prototype._clearResults = function () {
     var map = this.getMap();
     this._currentLocation = null;
     this._coordinate = null;
@@ -707,7 +691,7 @@ LocationSelector.prototype._clearResults = function() {
  *
  * @private
  */
-LocationSelector.prototype._clearSuggestedLocation = function() {
+LocationSelector.prototype._clearSuggestedLocation = function () {
     // suppression du dom
     this._suggestedLocations = [];
     if (this._suggestedContainer) {
@@ -723,7 +707,7 @@ LocationSelector.prototype._clearSuggestedLocation = function() {
  *
  * @private
  */
-LocationSelector.prototype._hideSuggestedLocation = function() {
+LocationSelector.prototype._hideSuggestedLocation = function () {
     if (this._suggestedContainer) {
         this._suggestedContainer.style.display = "none";
     }
@@ -735,7 +719,7 @@ LocationSelector.prototype._hideSuggestedLocation = function() {
  *
  * @private
  */
-LocationSelector.prototype._displaySuggestedLocation = function() {
+LocationSelector.prototype._displaySuggestedLocation = function () {
     if (this._suggestedContainer) {
         this._suggestedContainer.style.display = "block";
     }
@@ -751,7 +735,7 @@ LocationSelector.prototype._displaySuggestedLocation = function() {
  * @param {Function} settings.onFailure - callback
  * @private
  */
-LocationSelector.prototype._requestAutoComplete = function(settings) {
+LocationSelector.prototype._requestAutoComplete = function (settings) {
     logger.log("_requestAutoComplete()", settings);
 
     // on ne fait pas de requête si on n'a pas renseigné de parametres !
@@ -798,8 +782,7 @@ LocationSelector.prototype._requestAutoComplete = function(settings) {
  *
  * @private
  */
-LocationSelector.prototype._fillAutoCompletedLocationListContainer = function(locations) {
-
+LocationSelector.prototype._fillAutoCompletedLocationListContainer = function (locations) {
     if (!locations || locations.length === 0) {
         return;
     }

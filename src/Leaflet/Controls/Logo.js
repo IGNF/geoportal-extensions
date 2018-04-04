@@ -1,7 +1,5 @@
 import L from "leaflet";
 
-
-
 /**
  * @classdesc
  *
@@ -27,19 +25,19 @@ import L from "leaflet";
  * });
  * logo.addTo(map);
  */
-var Logo = L.Control.extend( /** @lends Logo.prototype */ {
+var Logo = L.Control.extend(/** @lends Logo.prototype */ {
 
     /**
      * Options du service
      *
      * @private
      */
-    options: {
-        position: "topright",
-        picto: null,
-        url: null,
-        text: null,
-        size: "30px"
+    options : {
+        position : "topright",
+        picto : null,
+        url : null,
+        text : null,
+        size : "30px"
     },
 
     /**
@@ -47,7 +45,7 @@ var Logo = L.Control.extend( /** @lends Logo.prototype */ {
      *
      * @private
      */
-    initialize: function(options) {
+    initialize : function (options) {
         L.setOptions(this, options);
     },
 
@@ -56,11 +54,10 @@ var Logo = L.Control.extend( /** @lends Logo.prototype */ {
      *
      * @private
      */
-    onAdd: function( /* map */ ) {
-
+    onAdd : function (/* map */) {
         var container = L.DomUtil.create("div", "gp-control-logo", container);
 
-        var bLink = (this.options.url || this.options.text) ? true : false;
+        var bLink = !!((this.options.url || this.options.text));
         var link = null;
 
         if (bLink) {
@@ -68,7 +65,7 @@ var Logo = L.Control.extend( /** @lends Logo.prototype */ {
             link.target = "_blank";
             if (this.options.url) {
                 link.href = this.options.url;
-                (this.options.text) ? link.title = this.options.text: null;
+                (this.options.text) ? link.title = this.options.text : null;
             }
         }
 
@@ -77,7 +74,7 @@ var Logo = L.Control.extend( /** @lends Logo.prototype */ {
             link.text = this.options.text;
         }
 
-        var bImage = (this.options.picto) ? true : false;
+        var bImage = !!(this.options.picto);
         var image = null;
 
         if (bImage) {

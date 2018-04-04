@@ -12,16 +12,15 @@ var logger = Logger.getLogger("layer-event");
  */
 var LayerEvent = {
 
-    _id: null,
-    _attributions: [],
-    _visibility: true,
-    _originators: [],
+    _id : null,
+    _attributions : [],
+    _visibility : true,
+    _originators : [],
 
     /**
      * activation du controle attribution
      */
-    isEnable: function(map) {
-
+    isEnable : function (map) {
         if (!map.attributionControl) {
             return false;
         }
@@ -33,7 +32,7 @@ var LayerEvent = {
      *
      * @param {Boolean} visibility - true|false
      */
-    setVisible: function(visibility) {
+    setVisible : function (visibility) {
         logger.log("visibility", visibility);
         this._visibility = visibility;
         this.fire("visibilitychange");
@@ -44,14 +43,14 @@ var LayerEvent = {
      *
      * @returns {Boolean} visibility
      */
-    getVisible: function() {
+    getVisible : function () {
         return this._visibility;
     },
 
     /**
      * fonction de suppresion d'un layer du controle des layers
      */
-    _onRemoveLayer: function(e) {
+    _onRemoveLayer : function (e) {
         logger.trace("onRemove event", e);
         if (e.layer._geoportal_id != this._geoportal_id) {
             return;
@@ -63,7 +62,7 @@ var LayerEvent = {
     /**
      * fonction d'ajout d'un layer du controle des layers
      */
-    _onAddLayer: function(e) {
+    _onAddLayer : function (e) {
         logger.trace("onAdd event", e);
         if (e.layer._geoportal_id != this._geoportal_id) {
             return;
@@ -75,14 +74,14 @@ var LayerEvent = {
     /**
      * fonction de deplacement d'un layer
      */
-    _onMoveEndLayer: function(e) {
+    _onMoveEndLayer : function (e) {
         logger.trace("moveend event", e);
         // mise à jour des attributions
         this.updateAttributions(this._map, this);
     },
 
     /** updateAttributions */
-    updateAttributions: function(map) {
+    updateAttributions : function (map) {
         // FIXME on peut realiser une mise à jour plus intelligente que cette manière brutale...
         // Ex. mise en place de la notion 'hidden' de l'originators à desactiver
 
@@ -97,7 +96,7 @@ var LayerEvent = {
     },
 
     /** removeAttributions */
-    removeAttributions: function(map) {
+    removeAttributions : function (map) {
         logger.trace("removeAttributions...", this._geoportal_id);
         // suppression des attributions
         // L.Map utilise la methode getAttribution() du layer.
@@ -119,7 +118,7 @@ var LayerEvent = {
     },
 
     /** addAttributions */
-    addAttributions: function(map) {
+    addAttributions : function (map) {
         logger.trace("addAttributions...", this._geoportal_id);
         // on interroge les originators en options pour obtenir les infos
         // suivantes :
@@ -141,10 +140,10 @@ var LayerEvent = {
         var bottomRight = map.getBounds().getSouthEast();
         var arrayBounds = [topLeft.lat, topLeft.lng, bottomRight.lat, bottomRight.lng];
         var params = {
-            extent: arrayBounds, // map.getBounds(),
-            zoom: map.getZoom(),
-            originators: this._originators,
-            visibility: this._visibility
+            extent : arrayBounds, // map.getBounds(),
+            zoom : map.getZoom(),
+            originators : this._originators,
+            visibility : this._visibility
         };
         logger.log(params);
         var attributionsOriginators = LayerUtil.getAttributions(params);

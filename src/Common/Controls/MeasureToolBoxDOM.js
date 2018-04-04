@@ -1,31 +1,42 @@
 var MeasureToolBoxDOM = {
 
-    _toolboxId: "GPtoolbox-measure-main",
-    _buttonId: "GPtoolbox-measure-button",
-    _widgetId: "GPtoolbox-measure-widget",
+    _toolboxId : "GPtoolbox-measure-main",
+    _buttonId : "GPtoolbox-measure-button",
+    _widgetId : "GPtoolbox-measure-widget",
 
-    /** get toolBox ID */
-    getToolBoxID: function(uid) {
+    /**
+    * get toolBox ID
+    * @param {Number} uid - uid
+    * @returns {String} id selector unique
+    */
+    getToolBoxID : function (uid) {
         return (uid) ? this._toolboxId + "-" + uid : this._toolboxId;
     },
 
-    /** get toolBox ID */
-    getButtonID: function(uid) {
+    /**
+    * get button ID
+    * @param {Number} uid - uid
+    * @returns {String} id selector unique
+    */
+    getButtonID : function (uid) {
         return (uid) ? this._buttonId + "-" + uid : this._buttonId;
     },
 
-    /** get toolBox Container for widget */
-    getWidgetID: function(uid) {
+    /**
+    * get toolBox Container for widget
+    * @param {Number} uid - uid
+    * @returns {String} id selector unique
+    */
+    getWidgetID : function (uid) {
         return (uid) ? this._widgetId + "-" + uid : this._widgetId;
     },
 
     /**
      * Main container (DOM)
-     *
+     * @param {Number} uid - uid
      * @returns {DOMElement} DOM element
      */
-    _createToolBoxContainerElement: function(uid) {
-
+    _createToolBoxContainerElement : function (uid) {
         // <div id="GPtoolbox-measure-main">
         //   <button id="GPtoolbox-measure-button">&#9776;</button>
         //   <div id="GPtoolbox-measure-widget">
@@ -39,7 +50,7 @@ var MeasureToolBoxDOM = {
         var button = document.createElement("button");
         button.id = this.getButtonID(uid);
         var self = this;
-        button.addEventListener("click", function() {
+        button.addEventListener("click", function () {
             this.blur(); // permet de perdre le focus !
             var widget = document.getElementById(self.getWidgetID(uid));
             if (widget.style.display === "block") {
@@ -52,7 +63,7 @@ var MeasureToolBoxDOM = {
 
         var widget = document.createElement("div");
         widget.id = this.getWidgetID(uid);
-        widget.addEventListener("click", function() {
+        widget.addEventListener("click", function () {
 
             /*
                 e.preventDefault();

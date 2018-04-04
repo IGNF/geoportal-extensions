@@ -4,7 +4,11 @@ var AttributionDOM = {
     // ######################### Main container ########################## //
     // ################################################################### //
 
-    /** Add uuid to the tag ID */
+    /**
+    * Add uuid to the tag ID
+    * @param {String} id - id selector
+    * @returns {String} uid - id selector with an unique id
+    */
     _addUID : function (id) {
         var uid = (this._uid) ? id + "-" + this._uid : id;
         return uid;
@@ -60,11 +64,10 @@ var AttributionDOM = {
 
     /**
      * Création du container du picto du controle (DOM)
-     *
+     * @param {Boolean} collapsed - collapsed
      * @returns {DOMElement} label DOM
      */
     _createMainPictoElement : function (collapsed) {
-
         var self = this;
 
         var label = document.createElement("label");

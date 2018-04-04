@@ -1,11 +1,10 @@
-/**
- * desativation JSHINT
- * W083 - Don't make functions within a loop.
- */
-
 var IsoDOM = {
 
-    /** Add uuid to the tag ID */
+    /**
+    * Add uuid to the tag ID
+    * @param {String} id - id selector
+    * @returns {String} uid - id selector with an unique id
+    */
     _addUID : function (id) {
         var uid = (this._uid) ? id + "-" + this._uid : id;
         return uid;
@@ -228,7 +227,7 @@ var IsoDOM = {
      * Create Type choice Chron
      * see event !
      * FIXME event not useful
-     *
+     * @param {Boolean} checked - checked
      * @returns {DOMElement} DOM element
      */
     _createIsoPanelFormTypeChoiceChronElement : function (checked) {
@@ -241,7 +240,7 @@ var IsoDOM = {
         input.id = this._addUID("GPisochronChoiceAltChron");
         input.name = "GPisochronChoiceMode";
         input.type = "radio";
-        input.checked = (checked) ? true : false;
+        input.checked = !!(checked);
         if (input.addEventListener) {
             input.addEventListener("change", function (e) {
                 document.getElementById(self._addUID("GPisochronValueChron")).className = "GPflexInput";
@@ -285,10 +284,10 @@ var IsoDOM = {
      * Create Type choice Dist
      * see event !
      * FIXME event not useful
-     *
+     * @param {Boolean} checked - checked
      * @returns {DOMElement} DOM element
      */
-    _createIsoPanelFormTypeChoiceDistElement : function(checked) {
+    _createIsoPanelFormTypeChoiceDistElement : function (checked) {
         var self = this;
 
         var div = document.createElement("div");
@@ -298,7 +297,7 @@ var IsoDOM = {
         input.id = this._addUID("GPisochronChoiceAltDist");
         input.name = "GPisochronChoiceMode";
         input.type = "radio";
-        input.checked = (checked) ? true : false;
+        input.checked = !!(checked);
         if (input.addEventListener) {
             input.addEventListener("change", function (e) {
                 document.getElementById(self._addUID("GPisochronValueDist")).className = "GPflexInput";
@@ -345,7 +344,7 @@ var IsoDOM = {
     /**
      * Create isochron inputs values
      * see event !
-     *
+     * @param {Boolean} checked - checked
      * @returns {DOMElement} DOM element
      */
     _createIsoPanelFormValueIsochronElement : function (checked) {
@@ -419,7 +418,7 @@ var IsoDOM = {
     /**
      * Create isodistance inputs values
      * see event !
-     *
+     * @param {Boolean} checked - checked
      * @returns {DOMElement} DOM element
      */
     _createIsoPanelFormValueIsodistanceElement : function (checked) {
@@ -491,7 +490,7 @@ var IsoDOM = {
      * Create Mode choice transport
      * see event !
      * FIXME event not useful
-     *
+     * @param {Array} transports - transports in a list
      * @returns {DOMElement} DOM element
      */
     _createIsoPanelFormModeChoiceTransportElement : function (transports) {
@@ -686,7 +685,7 @@ var IsoDOM = {
      * Create Exclusions Options
      * see event !
      * FIXME event not useful
-     *
+     * @param {Array} exclusions - exclusions to display in list
      * @returns {DOMElement} DOM element
      */
     _createIsoPanelFormExclusionOptionsElement : function (exclusions) {
@@ -700,7 +699,7 @@ var IsoDOM = {
         for (var value in exclusions) {
             if (exclusions.hasOwnProperty(value)) {
                 var status = exclusions[value];
-                switch (status) {
+                switch (value) {
                     case "toll":
                         var inputToll = document.createElement("input");
                         inputToll.id = this._addUID("GPisoExclusionsToll");

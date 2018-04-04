@@ -65,9 +65,9 @@ function ol() {
 # itowns
 function itowns() {
   printTo "####### iTowns !"
-  doCmd "npm run build:it"
+  doCmd "npm run build:itowns"
   printTo "####### iTowns production !"
-  doCmd "npm run build:it:prod"
+  doCmd "npm run build:itowns:prod"
 }
 
 ##########

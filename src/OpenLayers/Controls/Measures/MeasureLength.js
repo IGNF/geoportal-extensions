@@ -9,7 +9,6 @@ import ID from "../../../Common/Utils/SelectorID";
 // Derived from OpenLayers measure example
 // http://openlayers.org/en/latest/examples/measure.html
 
-
 var logger = Logger.getLogger("measurelength");
 
 /**
@@ -32,8 +31,7 @@ var logger = Logger.getLogger("measurelength");
  *    geodesic : false
  * });
  */
-function MeasureLength(options) {
-
+function MeasureLength (options) {
     // options
     options = options || {};
 
@@ -59,11 +57,10 @@ function MeasureLength(options) {
 
     // heritage
     ol.control.Control.call(this, {
-        element: container,
-        target: options.target,
-        render: options.render
+        element : container,
+        target : options.target,
+        render : options.render
     });
-
 }
 
 // heritage avec ol.control.Control
@@ -94,7 +91,7 @@ MeasureLength.prototype.constructor = MeasureLength;
  *
  * @param {ol.Map} map - Map.
  */
-MeasureLength.prototype.setMap = function(map) {
+MeasureLength.prototype.setMap = function (map) {
     logger.trace("setMap()");
 
     var className = this.CLASSNAME;
@@ -102,7 +99,6 @@ MeasureLength.prototype.setMap = function(map) {
     // on fait le choix de ne pas activer les events sur la map à l'init de l'outil,
     // mais uniquement à son utilisation !
     if (map) {
-
         // var self = this;
         // map.on("click", function (e) {
         //     logger.trace("event on map with click!");
@@ -122,7 +118,6 @@ MeasureLength.prototype.setMap = function(map) {
         if (!this.options.target) {
             MeasureToolBox.add(map, this);
         }
-
     } else {
         this.clean();
     }
@@ -132,7 +127,6 @@ MeasureLength.prototype.setMap = function(map) {
 
     // on appelle la méthode setMap originale d'OpenLayers
     ol.control.Control.prototype.setMap.call(this, map);
-
 };
 
 // ################################################################### //
@@ -144,7 +138,7 @@ MeasureLength.prototype.setMap = function(map) {
  *
  * @private
  */
-MeasureLength.prototype._initialize = function(options) {
+MeasureLength.prototype._initialize = function (options) {
     logger.trace("call MeasureLength::_initialize() : ", options);
 
     // liste des options
@@ -155,7 +149,6 @@ MeasureLength.prototype._initialize = function(options) {
 
     // gestion des styles !
     this.createStylingMeasureInteraction(options.styles);
-
 };
 
 /**
@@ -163,7 +156,7 @@ MeasureLength.prototype._initialize = function(options) {
  *
  * @private
  */
-MeasureLength.prototype._initializeContainer = function() {
+MeasureLength.prototype._initializeContainer = function () {
     logger.trace("call MeasureLength::_initializeContainer() : ", this._uid);
 
     var container = this._createMainContainerElement();
@@ -189,7 +182,7 @@ MeasureLength.prototype._initializeContainer = function() {
  *
  * @private
  */
-MeasureLength.prototype.addMeasureEvents = function() {
+MeasureLength.prototype.addMeasureEvents = function () {
     logger.trace("call MeasureLength::addMeasureEvents()");
 
     var map = this.getMap();
@@ -203,7 +196,7 @@ MeasureLength.prototype.addMeasureEvents = function() {
  *
  * @private
  */
-MeasureLength.prototype.removeMeasureEvents = function() {
+MeasureLength.prototype.removeMeasureEvents = function () {
     logger.trace("call MeasureLength::removeMeasureEvents()");
 
     var map = this.getMap();
@@ -219,7 +212,7 @@ MeasureLength.prototype.removeMeasureEvents = function() {
  * @return {String} The formatted output.
  * @private
  */
-MeasureLength.prototype.format = function(line) {
+MeasureLength.prototype.format = function (line) {
     logger.trace("call MeasureLength::format()");
 
     var map = this.getMap();
@@ -259,7 +252,7 @@ MeasureLength.prototype.format = function(line) {
  *
  * @private
  */
-MeasureLength.prototype.onShowMeasureLengthClick = function(e) {
+MeasureLength.prototype.onShowMeasureLengthClick = function (e) {
     logger.trace("call MeasureLength::onShowMeasureLengthClick()", e);
 
     // appel de la methode commune

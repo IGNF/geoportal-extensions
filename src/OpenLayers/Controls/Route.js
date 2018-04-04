@@ -9,7 +9,6 @@ import LayerSwitcher from "./LayerSwitcher";
 import Markers from "./Utils/Markers";
 import RouteDOM from "../../Common/Controls/RouteDOM";
 
-
 var logger = Logger.getLogger("route");
 
 /**
@@ -57,8 +56,7 @@ var logger = Logger.getLogger("route");
  *      routeOptions : {}
  *  });
  */
-function Route(options) {
-
+function Route (options) {
     options = options || {};
 
     if (!(this instanceof Route)) {
@@ -81,9 +79,9 @@ function Route(options) {
 
     // call ol.control.Control constructor
     ol.control.Control.call(this, {
-        element: this._containerElement || this._container,
-        target: options.target,
-        render: options.render
+        element : this._containerElement || this._container,
+        target : options.target,
+        render : options.render
     });
 }
 
@@ -113,7 +111,7 @@ Route.prototype.constructor = Route;
  *
  * @returns {Boolean} collapsed - true if widget is collapsed
  */
-Route.prototype.getCollapsed = function() {
+Route.prototype.getCollapsed = function () {
     return this.collapsed;
 };
 
@@ -122,7 +120,7 @@ Route.prototype.getCollapsed = function() {
  *
  * @param {Boolean} collapsed - True to collapse widget, False to display it
  */
-Route.prototype.setCollapsed = function(collapsed) {
+Route.prototype.setCollapsed = function (collapsed) {
     if (collapsed === undefined) {
         console.log("[ERROR] Route:setCollapsed - missing collapsed parameter");
         return;
@@ -143,7 +141,7 @@ Route.prototype.setCollapsed = function(collapsed) {
  *
  * @returns {Object} layer - ol.layer.Vector route layer
  */
-Route.prototype.getLayer = function() {
+Route.prototype.getLayer = function () {
     return this._geojsonSections;
 };
 
@@ -152,8 +150,7 @@ Route.prototype.getLayer = function() {
  *
  * @param {ol.Map} map - Map.
  */
-Route.prototype.setMap = function(map) {
-
+Route.prototype.setMap = function (map) {
     if (map) {
         // enrichissement du DOM du container
         this._container = this._initContainer(map);
@@ -161,7 +158,6 @@ Route.prototype.setMap = function(map) {
 
     // on appelle la méthode setMap originale d'OpenLayers
     ol.control.Control.prototype.setMap.call(this, map);
-
 };
 
 // ################################################################### //
@@ -174,21 +170,20 @@ Route.prototype.setMap = function(map) {
  * @param {Object} options - constructor options
  * @private
  */
-Route.prototype.initialize = function(options) {
-
+Route.prototype.initialize = function (options) {
     this._checkInputOptions(options);
 
     // set default options
     this.options = {
-        collapsed: true,
-        graphs: ["Voiture", "Pieton"],
-        exclusions: {
-            toll: false,
-            tunnel: false,
-            bridge: false
+        collapsed : true,
+        graphs : ["Voiture", "Pieton"],
+        exclusions : {
+            toll : false,
+            tunnel : false,
+            bridge : false
         },
-        routeOptions: {},
-        autocompleteOptions: {}
+        routeOptions : {},
+        autocompleteOptions : {}
     };
 
     // merge with user options
@@ -196,17 +191,17 @@ Route.prototype.initialize = function(options) {
 
     // cas particulier des markers par défaut
     var defaultMarkersOpts = {
-        departure: {
-            url: Markers["red"],
-            offset: Markers.defaultOffset
+        departure : {
+            url : Markers["red"],
+            offset : Markers.defaultOffset
         },
-        stages: {
-            url: Markers["lightOrange"],
-            offset: Markers.defaultOffset
+        stages : {
+            url : Markers["lightOrange"],
+            offset : Markers.defaultOffset
         },
-        arrival: {
-            url: Markers["darkOrange"],
-            offset: Markers.defaultOffset
+        arrival : {
+            url : Markers["darkOrange"],
+            offset : Markers.defaultOffset
         }
     };
     // on récupère les options de chaque type de marker si spécifié
@@ -261,15 +256,15 @@ Route.prototype.initialize = function(options) {
 
     // styles pour les sélections des features
     this._defaultFeatureStyle = new ol.style.Style({
-        stroke: new ol.style.Stroke({
-            color: "rgba(0,183,152,0.9)",
-            width: 12
+        stroke : new ol.style.Stroke({
+            color : "rgba(0,183,152,0.9)",
+            width : 12
         })
     });
     this._selectedFeatureStyle = new ol.style.Style({
-        stroke: new ol.style.Stroke({
-            color: "rgba(255,102,0,0.9)",
-            width: 12
+        stroke : new ol.style.Stroke({
+            color : "rgba(255,102,0,0.9)",
+            width : 12
         })
     });
 
@@ -301,8 +296,7 @@ Route.prototype.initialize = function(options) {
  *
  * @private
  */
-Route.prototype._checkInputOptions = function(options) {
-
+Route.prototype._checkInputOptions = function (options) {
     // vérification des options
     // mode de transport
     if (options.graphs) {
@@ -323,7 +317,6 @@ Route.prototype._checkInputOptions = function(options) {
                             options.graphs[i] = "Voiture";
                         }
                     }
-
                 }
             }
         } else {
@@ -346,8 +339,7 @@ Route.prototype._checkInputOptions = function(options) {
  *
  * @private
  */
-Route.prototype._checkRightsManagement = function() {
-
+Route.prototype._checkRightsManagement = function () {
     var _opts = null;
     var _res = [];
     var _key = null;
@@ -361,9 +353,9 @@ Route.prototype._checkRightsManagement = function() {
     }
 
     var rightManagementRoute = RightManagement.check({
-        key: _key || this.options.apiKey,
-        resources: _res,
-        services: ["Itineraire"]
+        key : _key || this.options.apiKey,
+        resources : _res,
+        services : ["Itineraire"]
     });
     logger.log("rightManagementRoute", rightManagementRoute);
 
@@ -379,9 +371,9 @@ Route.prototype._checkRightsManagement = function() {
     }
 
     var rightManagementAutoComplete = RightManagement.check({
-        key: _key || this.options.apiKey,
-        resources: _res,
-        services: ["AutoCompletion"]
+        key : _key || this.options.apiKey,
+        resources : _res,
+        services : ["AutoCompletion"]
     });
     logger.log("rightManagementAutoComplete", rightManagementAutoComplete);
 
@@ -403,7 +395,6 @@ Route.prototype._checkRightsManagement = function() {
         this._resources["Itineraire"]["resources"] = rightManagementRoute["Itineraire"];
         this._resources["Itineraire"]["key"] = rightManagementRoute["key"];
     }
-
 };
 
 /**
@@ -411,7 +402,7 @@ Route.prototype._checkRightsManagement = function() {
  *
  * @private
  */
-Route.prototype._initContainer = function(map) {
+Route.prototype._initContainer = function (map) {
     // get main container
     var container = this._container;
 
@@ -476,7 +467,7 @@ Route.prototype._initContainer = function(map) {
     var context = this;
     // hide autocomplete suggested locations on container click
     if (container.addEventListener) {
-        container.addEventListener("click", function(e) {
+        container.addEventListener("click", function (e) {
             context._hideRouteSuggestedLocations.call(context, e);
         });
     }
@@ -494,7 +485,7 @@ Route.prototype._initContainer = function(map) {
  *
  * @private
  */
-Route.prototype._initTransport = function() {
+Route.prototype._initTransport = function () {
     // Mode de transport selectionné
     this._currentTransport = "Voiture"; // par defaut
 
@@ -525,7 +516,7 @@ Route.prototype._initTransport = function() {
  *
  * @private
  */
-Route.prototype._initComputation = function() {
+Route.prototype._initComputation = function () {
     // Mode de calcul selectionné
     this._currentComputation = "fastest"; // par defaut
 
@@ -541,7 +532,7 @@ Route.prototype._initComputation = function() {
  *
  * @private
  */
-Route.prototype._initExclusions = function() {
+Route.prototype._initExclusions = function () {
     // Exclusions selectionnées : Tunnel, Toll et Bridge
     this._currentExclusions = []; // par defaut
 
@@ -549,9 +540,9 @@ Route.prototype._initExclusions = function() {
     var exclusion = this.options.exclusions;
     if (!exclusion || (typeof exclusion === "object" && Object.keys(exclusion).length === 0)) {
         this.options.exclusions = {
-            toll: false,
-            tunnel: false,
-            bridge: false
+            toll : false,
+            tunnel : false,
+            bridge : false
         };
     }
 
@@ -580,7 +571,7 @@ Route.prototype._initExclusions = function() {
  * @return {Object} element - DOM element for popup
  * @private
  */
-Route.prototype._initPopupDiv = function() {
+Route.prototype._initPopupDiv = function () {
     var context = this;
     var element = document.createElement("div");
     element.className = "gp-feature-info-div";
@@ -588,7 +579,7 @@ Route.prototype._initPopupDiv = function() {
     closer.type = "button";
     closer.className = "gp-styling-button closer";
     /** on closer click : remove popup */
-    closer.onclick = function() {
+    closer.onclick = function () {
         if (context._popupOverlay != null) {
             context._popupOverlay.setPosition(undefined);
         }
@@ -613,22 +604,21 @@ Route.prototype._initPopupDiv = function() {
  * @returns {Array} List DOM element
  * @private
  */
-Route.prototype._createRoutePanelFormPointsElement = function(map) {
-
+Route.prototype._createRoutePanelFormPointsElement = function (map) {
     var points = [];
     var count = 1;
 
     // point de depart
     var start = new LocationSelector({
-        apiKey: this.options.apiKey || null,
-        tag: {
-            id: count,
-            groupId: this._uid,
-            markerOpts: this.options.markersOpts["departure"],
-            label: "Départ",
-            display: true
+        apiKey : this.options.apiKey || null,
+        tag : {
+            id : count,
+            groupId : this._uid,
+            markerOpts : this.options.markersOpts["departure"],
+            label : "Départ",
+            display : true
         },
-        autocompleteOptions: this.options.autocompleteOptions || null
+        autocompleteOptions : this.options.autocompleteOptions || null
     });
     start.setMap(map);
     // on ajoute des écouteurs d'évènements (en plus de ceux de LocationSelector),
@@ -640,16 +630,16 @@ Route.prototype._createRoutePanelFormPointsElement = function(map) {
     // points intermediaires
     for (count = 2; count < 7; count++) {
         var step = new LocationSelector({
-            apiKey: this.options.apiKey || null,
-            tag: {
-                id: count,
-                groupId: this._uid,
-                label: "Etape",
-                markerOpts: this.options.markersOpts["stages"],
-                display: false,
-                removeOption: true
+            apiKey : this.options.apiKey || null,
+            tag : {
+                id : count,
+                groupId : this._uid,
+                label : "Etape",
+                markerOpts : this.options.markersOpts["stages"],
+                display : false,
+                removeOption : true
             },
-            autocompleteOptions: this.options.autocompleteOptions || null
+            autocompleteOptions : this.options.autocompleteOptions || null
         });
         step.setMap(map);
         this._addFormPointsEventListeners(step);
@@ -659,16 +649,16 @@ Route.prototype._createRoutePanelFormPointsElement = function(map) {
 
     // point d'arrivée
     var end = new LocationSelector({
-        apiKey: this.options.apiKey || null,
-        tag: {
-            id: count,
-            groupId: this._uid,
-            markerOpts: this.options.markersOpts["arrival"],
-            label: "Arrivée",
-            display: true,
-            addOption: true
+        apiKey : this.options.apiKey || null,
+        tag : {
+            id : count,
+            groupId : this._uid,
+            markerOpts : this.options.markersOpts["arrival"],
+            label : "Arrivée",
+            display : true,
+            addOption : true
         },
-        autocompleteOptions: this.options.autocompleteOptions || null
+        autocompleteOptions : this.options.autocompleteOptions || null
     });
     end.setMap(map);
     this._addFormPointsEventListeners(end);
@@ -684,7 +674,7 @@ Route.prototype._createRoutePanelFormPointsElement = function(map) {
  * @param {Object} formPoint - route form point (locationSelector)
  * @private
  */
-Route.prototype._addFormPointsEventListeners = function(formPoint) {
+Route.prototype._addFormPointsEventListeners = function (formPoint) {
     if (!formPoint) {
         return;
     }
@@ -693,21 +683,21 @@ Route.prototype._addFormPointsEventListeners = function(formPoint) {
         // display form on origin label click
         formPoint._inputLabelContainer.addEventListener(
             "click",
-            function() {
+            function () {
                 context.onRouteOriginLabelClick.call(this, context);
             }
         );
         // minimize form on input show pointer, and set map event listeners (see this.onRouteOriginPointerClick)
         formPoint._inputShowPointer.addEventListener(
             "click",
-            function() {
+            function () {
                 context.onRouteOriginPointerClick.call(this, context, formPoint);
             }
         );
         if (formPoint._removePointElement) {
             formPoint._removePointElement.addEventListener(
                 "click",
-                function() {
+                function () {
                     // Moving up exclusions picto
                     var exclusionsPictoTop = context._showRouteExclusionsElement.style.top;
                     context._showRouteExclusionsElement.style.top = (parseInt(exclusionsPictoTop, 10) - 33).toString() + "px";
@@ -717,7 +707,7 @@ Route.prototype._addFormPointsEventListeners = function(formPoint) {
         if (formPoint._addPointElement) {
             formPoint._addPointElement.addEventListener(
                 "click",
-                function() {
+                function () {
                     // Moving down exclusions picto
                     var exclusionsPictoTop = context._showRouteExclusionsElement.style.top;
                     context._showRouteExclusionsElement.style.top = (parseInt(exclusionsPictoTop, 10) + 33).toString() + "px";
@@ -728,20 +718,20 @@ Route.prototype._addFormPointsEventListeners = function(formPoint) {
         // attachEvent: Internet explorer event listeners management
         formPoint._inputLabelContainer.attachEvent(
             "onclick",
-            function() {
+            function () {
                 context.onRouteOriginLabelClick.call(this, context);
             }
         );
         formPoint._inputShowPointer.attachEvent(
             "onclick",
-            function() {
+            function () {
                 context.onRouteOriginPointerClick.call(this, context, formPoint);
             }
         );
         if (formPoint._removePointElement) {
             formPoint._removePointElement.attachEvent(
                 "onclick",
-                function() {
+                function () {
                     // Moving up exclusions picto
                     var exclusionsPictoTop = context._showRouteExclusionsElement.style.top;
                     context._showRouteExclusionsElement.style.top = (parseInt(exclusionsPictoTop, 10) - 33).toString() + "px";
@@ -751,7 +741,7 @@ Route.prototype._addFormPointsEventListeners = function(formPoint) {
         if (formPoint._addPointElement) {
             formPoint._addPointElement.attachEvent(
                 "onclick",
-                function() {
+                function () {
                     // Moving down exclusions picto
                     var exclusionsPictoTop = context._showRouteExclusionsElement.style.top;
                     context._showRouteExclusionsElement.style.top = (parseInt(exclusionsPictoTop, 10) + 33).toString() + "px";
@@ -772,7 +762,7 @@ Route.prototype._addFormPointsEventListeners = function(formPoint) {
  * @param {Object} options - options
  * @private
  */
-Route.prototype.onRouteComputationSubmit = function(options) {
+Route.prototype.onRouteComputationSubmit = function (options) {
     logger.log("onRouteComputationSubmit", options);
 
     // FIXME on lance une requête en EPSG:4326, les coordonnées
@@ -789,8 +779,8 @@ Route.prototype.onRouteComputationSubmit = function(options) {
     if (points[0] && points[0].getCoordinate) {
         var startCoordinate = points[0].getCoordinate();
         start = {
-            x: startCoordinate[0],
-            y: startCoordinate[1]
+            x : startCoordinate[0],
+            y : startCoordinate[1]
         };
         logger.log("start", start);
     }
@@ -801,8 +791,8 @@ Route.prototype.onRouteComputationSubmit = function(options) {
     if (endPoint && endPoint.getCoordinate) {
         var endCoordinate = endPoint.getCoordinate();
         end = {
-            x: endCoordinate[0],
-            y: endCoordinate[1]
+            x : endCoordinate[0],
+            y : endCoordinate[1]
         };
         logger.log("end", end);
     }
@@ -814,8 +804,8 @@ Route.prototype.onRouteComputationSubmit = function(options) {
             var iCoordinate = points[i].getCoordinate();
             if (iCoordinate) {
                 var coordinate = {
-                    x: iCoordinate[0],
-                    y: iCoordinate[1]
+                    x : iCoordinate[0],
+                    y : iCoordinate[1]
                 };
                 logger.log("step", coordinate);
                 step.push(coordinate);
@@ -849,31 +839,30 @@ Route.prototype.onRouteComputationSubmit = function(options) {
     // on met en place l'affichage des resultats dans la fenetre de resultats.
     var context = this;
     this._requestRouting({
-        startPoint: start,
-        endPoint: end,
-        viaPoints: step,
-        graph: routeOptions.graph || this._currentTransport,
-        routePreference: routeOptions.routePreference || this._currentComputation,
-        exclusions: routeOptions.exclusions || this._currentExclusions,
-        geometryInInstructions: true,
-        distanceUnit: "m",
-        timeOut: _timeout,
-        protocol: _protocol,
+        startPoint : start,
+        endPoint : end,
+        viaPoints : step,
+        graph : routeOptions.graph || this._currentTransport,
+        routePreference : routeOptions.routePreference || this._currentComputation,
+        exclusions : routeOptions.exclusions || this._currentExclusions,
+        geometryInInstructions : true,
+        distanceUnit : "m",
+        timeOut : _timeout,
+        protocol : _protocol,
         /** callback onSuccess */
-        onSuccess: function(results) {
+        onSuccess : function (results) {
             logger.log(results);
             if (results) {
                 context._fillRouteResultsDetails(results);
             }
         },
         /** callback onFailure */
-        onFailure: function(error) {
+        onFailure : function (error) {
             context._hideWaitingContainer();
             context._clearRouteResultsDetails();
             logger.log(error.message);
         }
     });
-
 };
 
 /**
@@ -883,13 +872,13 @@ Route.prototype.onRouteComputationSubmit = function(options) {
  * @param {Object} routeControl - context : route Control (this)
  * @private
  */
-Route.prototype.onRouteOriginLabelClick = function(routeControl) {
+Route.prototype.onRouteOriginLabelClick = function (routeControl) {
     var map = routeControl.getMap();
     routeControl._formRouteContainer.className = "";
     // on désactive l'écouteur d'événements sur la carte (pour ne pas placer un marker au clic)
     map.un(
         "click",
-        function() {
+        function () {
             // on ne rétablit pas le mode "normal" si on est dans le panel des résultats (où className = "GProuteComponentHidden")
             if (routeControl._formRouteContainer.className === "GProuteFormMini") {
                 routeControl._formRouteContainer.className = "";
@@ -906,7 +895,7 @@ Route.prototype.onRouteOriginLabelClick = function(routeControl) {
  * @param {Object} locationSelector - context : locationSelector input (one of this._currentPoints)
  * @private
  */
-Route.prototype.onRouteOriginPointerClick = function(routeControl, locationSelector) {
+Route.prototype.onRouteOriginPointerClick = function (routeControl, locationSelector) {
     var map = routeControl.getMap();
     if (locationSelector._inputShowPointerContainer.checked) {
         // au click sur l'input pour pointer sur la carte: on minimise le formulaire
@@ -914,7 +903,7 @@ Route.prototype.onRouteOriginPointerClick = function(routeControl, locationSelec
         // et au clic sur la carte, on réaffichera le formulaire "normal"
         map.on(
             "click",
-            function() {
+            function () {
                 // on ne rétablit pas le mode "normal" si on est dans le panel des résultats (où className = "GProuteComponentHidden")
                 if (routeControl._formRouteContainer.className === "GProuteFormMini") {
                     routeControl._formRouteContainer.className = "";
@@ -927,7 +916,7 @@ Route.prototype.onRouteOriginPointerClick = function(routeControl, locationSelec
         // et on enlève l'écouteur d'évènement sur la carte
         map.un(
             "click",
-            function() {
+            function () {
                 // on ne rétablit pas le mode "normal" si on est dans le panel des résultats (où className = "GProuteComponentHidden")
                 if (routeControl._formRouteContainer.className === "GProuteFormMini") {
                     routeControl._formRouteContainer.className = "";
@@ -944,7 +933,7 @@ Route.prototype.onRouteOriginPointerClick = function(routeControl, locationSelec
  *
  * @private
  */
-Route.prototype.onShowRoutePanelClick = function() {
+Route.prototype.onShowRoutePanelClick = function () {
     // clean !
     if (!this._geojsonSections && !this._waiting) {
         this._clear();
@@ -963,7 +952,7 @@ Route.prototype.onShowRoutePanelClick = function() {
  * @param {Object} e - HTMLElement
  * @private
  */
-Route.prototype.onRouteModeComputationChange = function(e) {
+Route.prototype.onRouteModeComputationChange = function (e) {
     var idx = e.target.selectedIndex;
     var value = e.target.options[idx].value;
 
@@ -984,8 +973,7 @@ Route.prototype.onRouteModeComputationChange = function(e) {
  * @param {Object} e - HTMLElement
  * @private
  */
-Route.prototype.onRouteModeComputationChangeAndRun = function(e) {
-
+Route.prototype.onRouteModeComputationChangeAndRun = function (e) {
     // event choice computation
     this.onRouteModeComputationChange(e);
 
@@ -996,9 +984,9 @@ Route.prototype.onRouteModeComputationChangeAndRun = function(e) {
 
     // submit request
     this.onRouteComputationSubmit({
-        computation: this._currentComputation,
-        transport: this._currentTransport,
-        exclusions: this._currentExclusions
+        computation : this._currentComputation,
+        transport : this._currentTransport,
+        exclusions : this._currentExclusions
     });
 };
 
@@ -1010,7 +998,7 @@ Route.prototype.onRouteModeComputationChangeAndRun = function(e) {
  * @param {Object} e - HTMLElement
  * @private
  */
-Route.prototype.onRouteModeTransportChange = function(e) {
+Route.prototype.onRouteModeTransportChange = function (e) {
     var value = e.target.value;
     if (!value) {
         return;
@@ -1025,7 +1013,7 @@ Route.prototype.onRouteModeTransportChange = function(e) {
  * @param {Object} e - HTMLElement
  * @private
  */
-Route.prototype.onShowRouteExclusionsClick = function(e) {
+Route.prototype.onShowRouteExclusionsClick = function (e) {
     logger.log("onShowRouteExclusionsClick", e);
     // FIXME not use ?!
 };
@@ -1039,7 +1027,7 @@ Route.prototype.onShowRouteExclusionsClick = function(e) {
  * @param {Object} e - HTMLElement
  * @private
  */
-Route.prototype.onRouteExclusionsChange = function(e) {
+Route.prototype.onRouteExclusionsChange = function (e) {
     var value = e.target.value;
     var checked = e.target.checked;
 
@@ -1074,7 +1062,7 @@ Route.prototype.onRouteExclusionsChange = function(e) {
  *
  * @private
  */
-Route.prototype.onRouteResetClick = function() {
+Route.prototype.onRouteResetClick = function () {
     // clear points
     var currentPoints = this._currentPoints;
     for (var i = 0; i < currentPoints.length; i++) {
@@ -1094,7 +1082,7 @@ Route.prototype.onRouteResetClick = function() {
  *
  * @private
  */
-Route.prototype.onShowRouteResultsNewClick = function() {
+Route.prototype.onShowRouteResultsNewClick = function () {
     // clean avant un nouveau calcul !
     this._clearRouteResultsDetails();
     this._clearRouteResultsGeometry();
@@ -1109,7 +1097,7 @@ Route.prototype.onShowRouteResultsNewClick = function() {
  * @param {Object} e - HTMLElement
  * @private
  */
-Route.prototype.onRouteResultsDetailsMouseOver = function(e) {
+Route.prototype.onRouteResultsDetailsMouseOver = function (e) {
     // récupération de l'id de l'instruction survolée
     var tagid = e.target.id; // ex GProuteResultsDetailsInstruction_125
     var idx = tagid.substring(tagid.indexOf("_") + 1); // ex. 125
@@ -1137,7 +1125,7 @@ Route.prototype.onRouteResultsDetailsMouseOver = function(e) {
  * @param {Object} e - HTMLElement
  * @private
  */
-Route.prototype.onRouteResultsDetailsMouseOut = function(e) {
+Route.prototype.onRouteResultsDetailsMouseOut = function (e) {
     // récupération de l'id de l'instruction survolée
     var tagid = e.target.id; // ex GProuteResultsDetailsInstruction_125
     var idx = tagid.substring(tagid.indexOf("_") + 1); // ex. 125
@@ -1169,8 +1157,7 @@ Route.prototype.onRouteResultsDetailsMouseOut = function(e) {
  * @param {Function} options.onFailure - callback
  * @private
  */
-Route.prototype._requestRouting = function(options) {
-
+Route.prototype._requestRouting = function (options) {
     // on ne fait pas de requête si on n'a pas renseigné de parametres !
     if (!options || (typeof options === "object" && Object.keys(options).length === 0)) {
         return;
@@ -1234,8 +1221,7 @@ Route.prototype._requestRouting = function(options) {
  *
  * @private
  */
-Route.prototype._fillRouteResultsDetails = function(results) {
-
+Route.prototype._fillRouteResultsDetails = function (results) {
     // 1. Affichage des distances et durées
     var distance = results.totalDistance;
     var duration = results.totalTime;
@@ -1288,7 +1274,7 @@ Route.prototype._fillRouteResultsDetails = function(results) {
  *
  * @private
  */
-Route.prototype._fillRouteResultsDetailsContainer = function(distance, duration, instructions) {
+Route.prototype._fillRouteResultsDetailsContainer = function (distance, duration, instructions) {
     // Distance et Durée
     this._resultsRouteValuesContainer = this._addRouteResultsValuesElement(distance, duration, this._convertSecondsToTime);
 
@@ -1304,8 +1290,7 @@ Route.prototype._fillRouteResultsDetailsContainer = function(distance, duration,
  * @param {Object} style - route ol.style.Style object
  * @private
  */
-Route.prototype._fillRouteResultsDetailsGeometry = function(geometry, style) {
-
+Route.prototype._fillRouteResultsDetailsGeometry = function (geometry, style) {
     this._clearRouteResultsGeometry();
 
     var map = this.getMap();
@@ -1316,34 +1301,33 @@ Route.prototype._fillRouteResultsDetailsGeometry = function(geometry, style) {
 
     // création de l'objet geoJSON
     var geojsonObject = {
-        type: "Feature",
-        crs: {
-            type: "name",
-            properties: {
-                name: "EPSG:4326"
+        type : "Feature",
+        crs : {
+            type : "name",
+            properties : {
+                name : "EPSG:4326"
             }
         },
-        geometry: geometry
+        geometry : geometry
     };
     var geojsonformat = new ol.format.GeoJSON({
-        defaultDataProjection: "EPSG:4326"
+        defaultDataProjection : "EPSG:4326"
     });
     var features = geojsonformat.readFeatures(
         geojsonObject, {
-            dataProjection: "EPSG:4326",
-            featureProjection: "EPSG:3857"
+            dataProjection : "EPSG:4326",
+            featureProjection : "EPSG:3857"
         }
     );
 
     // ajout de la géométrie comme nouvelle couche vecteur à la carte
     this._geojsonRoute = new ol.layer.Vector({
-        source: new ol.source.Vector({
-            features: features
+        source : new ol.source.Vector({
+            features : features
         }),
-        style: style
+        style : style
     });
     map.addLayer(this._geojsonRoute);
-
 };
 
 /**
@@ -1354,22 +1338,21 @@ Route.prototype._fillRouteResultsDetailsGeometry = function(geometry, style) {
  * @param {Object} style - route ol.style.Style object
  * @private
  */
-Route.prototype._fillRouteResultsDetailsFeatureGeometry = function(instructions, style) {
-
+Route.prototype._fillRouteResultsDetailsFeatureGeometry = function (instructions, style) {
     this._clearRouteResultsFeatureGeometry();
 
     var map = this.getMap();
 
     // 1. création de l'objet geoJSON
     var geojsonObject = {
-        type: "FeatureCollection",
-        crs: {
-            type: "name",
-            properties: {
-                name: "EPSG:4326"
+        type : "FeatureCollection",
+        crs : {
+            type : "name",
+            properties : {
+                name : "EPSG:4326"
             }
         },
-        features: []
+        features : []
     };
 
     // 2. Remplissage de l'objet geoJSON : ajout des géométries de chaque instruction
@@ -1387,13 +1370,13 @@ Route.prototype._fillRouteResultsDetailsFeatureGeometry = function(instructions,
         }
 
         geojsonObject.features.push({
-            type: "Feature",
-            geometry: o.geometry,
-            properties: {
-                popupContent: "(" + id + ") distance : " + this._convertDistance(o.distance) +
+            type : "Feature",
+            geometry : o.geometry,
+            properties : {
+                popupContent : "(" + id + ") distance : " + this._convertDistance(o.distance) +
                     " / temps : " + this._convertSecondsToTime(o.duration)
             },
-            id: id
+            id : id
         });
     }
 
@@ -1401,23 +1384,23 @@ Route.prototype._fillRouteResultsDetailsFeatureGeometry = function(instructions,
 
     // Création du format GeoJSON, avec reprojection des géométries
     var geojsonformat = new ol.format.GeoJSON({
-        defaultDataProjection: "EPSG:4326"
+        defaultDataProjection : "EPSG:4326"
     });
     var mapProj = this.getMap().getView().getProjection().getCode();
     var features = geojsonformat.readFeatures(
         geojsonObject, {
-            dataProjection: "EPSG:4326",
-            featureProjection: mapProj
+            dataProjection : "EPSG:4326",
+            featureProjection : mapProj
         }
     );
 
     // 3. Ajout du tracé de l'itinéraire (geoJSON) comme nouvelle couche vecteur à la carte
     this._geojsonSections = new ol.layer.Vector({
-        source: new ol.source.Vector({
-            features: features
+        source : new ol.source.Vector({
+            features : features
         }),
-        style: style,
-        opacity: 0.9
+        style : style,
+        opacity : 0.9
     });
 
     var graph;
@@ -1433,7 +1416,7 @@ Route.prototype._fillRouteResultsDetailsFeatureGeometry = function(instructions,
 
     // 4. Si un layer switcher est présent dans la carte, on lui affecte des informations pour cette couche
     map.getControls().forEach(
-        function(control) {
+        function (control) {
             if (control instanceof LayerSwitcher) {
                 // un layer switcher est présent dans la carte
                 var layerId = this._geojsonSections.gpLayerId;
@@ -1441,8 +1424,8 @@ Route.prototype._fillRouteResultsDetailsFeatureGeometry = function(instructions,
                 if (control._layers[layerId].title === layerId) {
                     control.addLayer(
                         this._geojsonSections, {
-                            title: " Itinéraire " + graph,
-                            description: " Itinéraire basé sur un graphe " + graph
+                            title : " Itinéraire " + graph,
+                            description : " Itinéraire basé sur un graphe " + graph
                         }
                     );
                 }
@@ -1454,9 +1437,9 @@ Route.prototype._fillRouteResultsDetailsFeatureGeometry = function(instructions,
     // 5. Ajout de popups aux troncons
     // Création de l'interaction : survol des features (=troncons de l'itinéraire)
     this._resultsHoverInteraction = new ol.interaction.Select({
-        condition: ol.events.condition.pointerMove,
-        layers: [this._geojsonSections],
-        style: this._selectedFeatureStyle
+        condition : ol.events.condition.pointerMove,
+        layers : [this._geojsonSections],
+        style : this._selectedFeatureStyle
     });
     this._resultsHoverInteraction.on(
         "select",
@@ -1467,8 +1450,8 @@ Route.prototype._fillRouteResultsDetailsFeatureGeometry = function(instructions,
 
     // Création de l'interaction : selection des features (=troncons de l'itinéraire)
     this._resultsSelectInteraction = new ol.interaction.Select({
-        layers: [this._geojsonSections],
-        style: this._selectedFeatureStyle
+        layers : [this._geojsonSections],
+        style : this._selectedFeatureStyle
     });
     this._resultsSelectInteraction.on(
         "select",
@@ -1476,7 +1459,6 @@ Route.prototype._fillRouteResultsDetailsFeatureGeometry = function(instructions,
         this
     );
     map.addInteraction(this._resultsSelectInteraction);
-
 };
 
 /**
@@ -1485,8 +1467,7 @@ Route.prototype._fillRouteResultsDetailsFeatureGeometry = function(instructions,
  *
  * @private
  */
-Route.prototype._onResultsFeatureMouseOver = function(e) {
-
+Route.prototype._onResultsFeatureMouseOver = function (e) {
     if (e.selected.length !== 0) {
         // si on a bien survolé un tronçon, on surligne l'instruction correspondante
         var f = e.selected[0];
@@ -1505,7 +1486,6 @@ Route.prototype._onResultsFeatureMouseOver = function(e) {
             deSelectedInstruction.classList.remove("GProuteResultsDetailsInstructionHighlight");
         }
     }
-
 };
 
 /**
@@ -1515,7 +1495,7 @@ Route.prototype._onResultsFeatureMouseOver = function(e) {
  * @param {Object} e - on select event
  * @private
  */
-Route.prototype._onResultsFeatureSelect = function(e) {
+Route.prototype._onResultsFeatureSelect = function (e) {
     var map = this.getMap();
     if (e.selected.length !== 0) {
         // si on a sélectionné un troncon, on lui ajoute une popup
@@ -1525,17 +1505,15 @@ Route.prototype._onResultsFeatureSelect = function(e) {
         if (!this._popupOverlay) {
             // ajout de la popup a la carte comme un overlay
             this._popupOverlay = new ol.Overlay({
-                element: this._popupDiv,
-                positioning: "bottom-center",
-                position: e.mapBrowserEvent.coordinate
+                element : this._popupDiv,
+                positioning : "bottom-center",
+                position : e.mapBrowserEvent.coordinate
             });
             map.addOverlay(this._popupOverlay);
-
         } else {
             // si l'overlay est déjà créé, on modifie juste sa position
             this._popupOverlay.setPosition(e.mapBrowserEvent.coordinate);
         }
-
     } else {
         // si aucun troncon n'est sélectionné (click à côté du tracé),
         // on fait disparaitre la popup si elle existe
@@ -1555,8 +1533,7 @@ Route.prototype._onResultsFeatureSelect = function(e) {
  *
  * @private
  */
-Route.prototype._clear = function() {
-
+Route.prototype._clear = function () {
     this._currentTransport = null;
     this._currentExclusions = [];
     this._currentComputation = null;
@@ -1580,8 +1557,7 @@ Route.prototype._clear = function() {
  *
  * @private
  */
-Route.prototype._clearRouteInputOptions = function() {
-
+Route.prototype._clearRouteInputOptions = function () {
     // reinit options to default
     this._initTransport();
     this._initComputation();
@@ -1642,7 +1618,7 @@ Route.prototype._clearRouteInputOptions = function() {
  *
  * @private
  */
-Route.prototype._removeRouteStepLocations = function() {
+Route.prototype._removeRouteStepLocations = function () {
     var points = document.querySelectorAll("div[id^=\"GPlocationPoint\"]");
     var stepPoints = 0;
     if (points.length !== 0) {
@@ -1669,8 +1645,7 @@ Route.prototype._removeRouteStepLocations = function() {
  *
  * @private
  */
-Route.prototype._clearRouteResultsDetails = function() {
-
+Route.prototype._clearRouteResultsDetails = function () {
     this._currentRouteInformations = null;
 
     // doit on nettoyer le container "GProuteResultsDetails" ?
@@ -1700,7 +1675,7 @@ Route.prototype._clearRouteResultsDetails = function() {
  *
  * @private
  */
-Route.prototype._clearRouteResultsGeometry = function() {
+Route.prototype._clearRouteResultsGeometry = function () {
     var map = this.getMap();
 
     if (this._geojsonRoute != null) {
@@ -1715,8 +1690,7 @@ Route.prototype._clearRouteResultsGeometry = function() {
  *
  * @private
  */
-Route.prototype._clearRouteResultsFeatureGeometry = function() {
-
+Route.prototype._clearRouteResultsFeatureGeometry = function () {
     var map = this.getMap();
 
     // on retire la couche itinéraire de la carte
@@ -1746,7 +1720,7 @@ Route.prototype._clearRouteResultsFeatureGeometry = function() {
  *
  * @private
  */
-Route.prototype._hideRouteSuggestedLocations = function(e) {
+Route.prototype._hideRouteSuggestedLocations = function (e) {
     // si on clique sur un input de saisie de locationSelector
     if (e.target && e.target.id && e.target.id.indexOf("GPlocationOrigin_") !== -1) {
         // on récupère le numéro du point
@@ -1770,8 +1744,7 @@ Route.prototype._hideRouteSuggestedLocations = function(e) {
  *
  * @private
  */
-Route.prototype._displayWaitingContainer = function() {
-
+Route.prototype._displayWaitingContainer = function () {
     this._waitingContainer.className = "GProuteCalcWaitingContainerVisible";
     this._waiting = true;
 
@@ -1785,7 +1758,7 @@ Route.prototype._displayWaitingContainer = function() {
             this._timer = null;
         }
         var context = this;
-        this._timer = setTimeout(function() {
+        this._timer = setTimeout(function () {
             if (context._waiting === true) {
                 context._hideWaitingContainer();
             } else {
@@ -1802,7 +1775,7 @@ Route.prototype._displayWaitingContainer = function() {
  *
  * @private
  */
-Route.prototype._hideWaitingContainer = function() {
+Route.prototype._hideWaitingContainer = function () {
     if (this._waiting) {
         this._waitingContainer.className = "GProuteCalcWaitingContainerHidden";
         this._waiting = false;
@@ -1823,8 +1796,7 @@ Route.prototype._hideWaitingContainer = function() {
  *
  * @private
  */
-Route.prototype._simplifiedInstructions = function(instructions) {
-
+Route.prototype._simplifiedInstructions = function (instructions) {
     var newInstructions = [];
 
     // cas où...
@@ -1864,7 +1836,7 @@ Route.prototype._simplifiedInstructions = function(instructions) {
  *
  * @private
  */
-Route.prototype._convertSecondsToTime = function(duration) {
+Route.prototype._convertSecondsToTime = function (duration) {
     var time = "";
 
     duration = Math.round(duration);
@@ -1894,7 +1866,7 @@ Route.prototype._convertSecondsToTime = function(duration) {
  *
  * @private
  */
-Route.prototype._convertDistance = function(distance) {
+Route.prototype._convertDistance = function (distance) {
     var d = "";
 
     var distanceKm = parseInt(distance / 1000, 10);

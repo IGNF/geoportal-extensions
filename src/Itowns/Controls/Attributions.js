@@ -5,7 +5,6 @@ import LayerUtils from "../../Common/Utils/LayerUtils";
 import AttributionDOM from "../../Common/Controls/AttributionDOM";
 import Widget from "./Widget";
 
-
 /**
  * @classdesc
  * Control to manage layers attributions
@@ -23,8 +22,7 @@ import Widget from "./Widget";
  *  }
  * ));
  */
-function Attributions(aOptions) {
-
+function Attributions (aOptions) {
     aOptions = aOptions || {};
     var options = aOptions.options || {};
 
@@ -43,9 +41,9 @@ function Attributions(aOptions) {
 
     Widget.call(
         this, {
-            name: "Attributions",
-            element: container,
-            target: targetDiv
+            name : "Attributions",
+            element : container,
+            target : targetDiv
         }
     );
 }
@@ -72,7 +70,7 @@ Attributions.prototype.constructor = Attributions;
 /**
  * Bind globe to control
  */
-Attributions.prototype.setGlobe = function(globe) {
+Attributions.prototype.setGlobe = function (globe) {
     // info : this function is called after a globe.addWidget() or a globe.removeWidget()
 
     if (globe) { // In the case of the adding of a control to the globe
@@ -85,7 +83,7 @@ Attributions.prototype.setGlobe = function(globe) {
         /**
          * Adds the onPreRenderCallBack callback
          */
-        this._callbacks.onPreRenderCallBack = function(e) {
+        this._callbacks.onPreRenderCallBack = function (e) {
             var allLayers = e.colorLayersId.concat(e.elevationLayersId);
 
             self._inRangeUpdate(allLayers, e.extent);
@@ -114,7 +112,7 @@ Attributions.prototype.setGlobe = function(globe) {
  *
  * @param {Boolean} collapsed - True to collapse control, False to display it
  */
-Attributions.prototype.setCollapsed = function(collapsed) {
+Attributions.prototype.setCollapsed = function (collapsed) {
     if (collapsed === undefined) {
         console.log("[ERROR] Attributions:setCollapsed - missing collapsed parameter");
         return;
@@ -132,7 +130,7 @@ Attributions.prototype.setCollapsed = function(collapsed) {
  *
  * @return {Boolean} collapsed
  */
-Attributions.prototype.getCollapsed = function() {
+Attributions.prototype.getCollapsed = function () {
     return !document.getElementById(this._addUID("GPshowAttributionsList")).checked;
 };
 
@@ -146,7 +144,7 @@ Attributions.prototype.getCollapsed = function() {
  * @param {Object} options - Itowns.control.Control options
  * @private
  */
-Attributions.prototype._initialize = function(options) {
+Attributions.prototype._initialize = function (options) {
     // id of the widget : usefull to suffix the CSS ids (to handle cases with several widgets on the same page)
     this._uid = SelectorID.generate();
 
@@ -167,8 +165,7 @@ Attributions.prototype._initialize = function(options) {
  * @param {Object} options - control options
  * @private
  */
-Attributions.prototype._initContainer = function(options) {
-
+Attributions.prototype._initContainer = function (options) {
     var container = this._createMainContainerElement();
 
     // adds in the main container the layer display selector
@@ -201,7 +198,7 @@ Attributions.prototype._initContainer = function(options) {
  * @private
  */
 
-Attributions.prototype._inRangeUpdate = function(layersDisplayed, extent) {
+Attributions.prototype._inRangeUpdate = function (layersDisplayed, extent) {
     var globe = this.getGlobe();
 
     var scaleDenominator = 1 / globe.getScale();
@@ -209,7 +206,6 @@ Attributions.prototype._inRangeUpdate = function(layersDisplayed, extent) {
     var attributions = new window.Map();
 
     for (var h = 0; h < layersDisplayed.length; h++) {
-
         var layer = globe.getLayerById(layersDisplayed[h]);
 
         // FIXME itowns bug : itowns should only returns visible layers
@@ -276,12 +272,12 @@ Attributions.prototype._inRangeUpdate = function(layersDisplayed, extent) {
  * @method _updateAttributionListContainer
  * @private
  */
-Attributions.prototype._updateAttributionListContainer = function(attributions) {
+Attributions.prototype._updateAttributionListContainer = function (attributions) {
     var element = document.getElementById(this._addUID("GPAttributionsList"));
     document.getElementById(this._addUID("GPAttributionsList")).parentNode.removeChild(element);
 
     var ul = this._createAttributionsList();
-    attributions.forEach(function(a) {
+    attributions.forEach(function (a) {
         var li = document.createElement("li");
         var link = document.createElement("a");
         link.href = a.url;
@@ -295,28 +291,28 @@ Attributions.prototype._updateAttributionListContainer = function(attributions) 
 };
 
 Attributions.prototype._resolutionsWGS84 = {
-    0: 156543.033928041,
-    1: 78271.51696402048,
-    2: 39135.758482010235,
-    3: 19567.87924100512,
-    4: 9783.93962050256,
-    5: 4891.96981025128,
-    6: 2445.98490512564,
-    7: 1222.99245256282,
-    8: 611.49622628141,
-    9: 305.7481131407048,
-    10: 152.8740565703525,
-    11: 76.43702828517624,
-    12: 38.21851414258813,
-    13: 19.10925707129406,
-    14: 9.554628535647032,
-    15: 4.777314267823516,
-    16: 2.388657133911758,
-    17: 1.194328566955879,
-    18: 0.5971642834779395,
-    19: 0.2985821417389697,
-    20: 0.1492910708694849,
-    21: 0.0746455354347424
+    0 : 156543.033928041,
+    1 : 78271.51696402048,
+    2 : 39135.758482010235,
+    3 : 19567.87924100512,
+    4 : 9783.93962050256,
+    5 : 4891.96981025128,
+    6 : 2445.98490512564,
+    7 : 1222.99245256282,
+    8 : 611.49622628141,
+    9 : 305.7481131407048,
+    10 : 152.8740565703525,
+    11 : 76.43702828517624,
+    12 : 38.21851414258813,
+    13 : 19.10925707129406,
+    14 : 9.554628535647032,
+    15 : 4.777314267823516,
+    16 : 2.388657133911758,
+    17 : 1.194328566955879,
+    18 : 0.5971642834779395,
+    19 : 0.2985821417389697,
+    20 : 0.1492910708694849,
+    21 : 0.0746455354347424
 };
 
 export default Attributions;

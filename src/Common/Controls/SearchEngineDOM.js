@@ -2,8 +2,12 @@ import ID from "../Utils/SelectorID";
 
 var SearchEngineDOM = {
 
-    /** Add uuid to the tag ID */
-    _addUID: function(id) {
+    /**
+    * Add uuid to the tag ID
+    * @param {String} id - id selector
+    * @returns {String} uid - id selector with an unique id
+    */
+    _addUID : function (id) {
         var uid = (this._uid) ? id + "-" + this._uid : id;
         return uid;
     },
@@ -13,8 +17,7 @@ var SearchEngineDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createMainContainerElement: function() {
-
+    _createMainContainerElement : function () {
         var container = document.createElement("div");
         container.id = this._addUID("GPsearchEngine");
         container.className = "GPwidget";
@@ -30,8 +33,7 @@ var SearchEngineDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createShowSearchEngineElement: function() {
-
+    _createShowSearchEngineElement : function () {
         var input = document.createElement("input");
         input.id = this._addUID("GPshowSearchEngine");
         input.type = "checkbox";
@@ -43,8 +45,7 @@ var SearchEngineDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createShowSearchEnginePictoElement: function() {
-
+    _createShowSearchEnginePictoElement : function () {
         // contexte d'execution
         var self = this;
 
@@ -55,7 +56,7 @@ var SearchEngineDOM = {
         label.title = "Afficher/masquer la recherche par lieux";
 
         // Close all results and panels when minimizing the widget
-        label.addEventListener("click", function() {
+        label.addEventListener("click", function () {
             document.getElementById(self._addUID("GPautoCompleteList")).style.display = "none";
             document.getElementById(self._addUID("GPgeocodeResultsList")).style.display = "none";
             var showAdvancedSearch = document.getElementById(self._addUID("GPshowAdvancedSearch"));
@@ -81,16 +82,14 @@ var SearchEngineDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createSearchInputElement: function(placeholder) {
-
+    _createSearchInputElement : function (placeholder) {
         // contexte d'execution
         var self = this;
 
         var form = document.createElement("form");
         form.id = this._addUID("GPsearchInput");
         // Open geocode results panel when submitting the input
-        form.addEventListener("submit", function(e) {
-
+        form.addEventListener("submit", function (e) {
             e.preventDefault();
             document.getElementById(self._addUID("GPgeocodeResultsList")).style.display = "block";
             document.getElementById(self._addUID("GPautoCompleteList")).style.display = "none";
@@ -109,8 +108,7 @@ var SearchEngineDOM = {
         input.placeholder = placeholder;
         input.autocomplete = "off";
         // Manage autocomplete list appearance when filling the address input
-        input.addEventListener("keyup", function(e) {
-
+        input.addEventListener("keyup", function (e) {
             var charCode = e.which || e.keyCode;
             if (charCode === 13 || charCode === 10 || charCode === 38 || charCode === 40) {
                 return;
@@ -124,7 +122,6 @@ var SearchEngineDOM = {
             // gestionnaire d'evenement :
             // on récupère la valeur de saisie pour requête sur le service d'autocompletion
             self.onAutoCompleteSearchText(e);
-
         });
 
         // FIXME ce code interfere avec le click sur la liste des suggested locations !
@@ -132,7 +129,7 @@ var SearchEngineDOM = {
         //     document.getElementById(self._addUID("GPautoCompleteList")).style.display = "none";
         // });
 
-        input.addEventListener("keydown", function(e) {
+        input.addEventListener("keydown", function (e) {
             // FIXME
             // l'action clavier 'enter (13)' lance le submit de la form !
             // Ce comportement n'est pas souhaité car le submit execute un geocodage !
@@ -209,7 +206,7 @@ var SearchEngineDOM = {
         var div = document.createElement("div");
         div.id = this._addUID("GPsearchInputReset");
         // Reset input
-        div.addEventListener("click", function() {
+        div.addEventListener("click", function () {
             document.getElementById(self._addUID("GPsearchInputText")).value = "";
             document.getElementById(self._addUID("GPautoCompleteList")).style.display = "none";
             document.getElementById(self._addUID("GPgeocodeResultsList")).style.display = "none";
@@ -225,8 +222,7 @@ var SearchEngineDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createShowAdvancedSearchElement: function() {
-
+    _createShowAdvancedSearchElement : function () {
         // contexte d'execution
         var self = this;
 
@@ -236,7 +232,7 @@ var SearchEngineDOM = {
         div.title = "Ouvrir la recherche avancée";
 
         // Open advanced search
-        div.addEventListener("click", function() {
+        div.addEventListener("click", function () {
             var id = "#GPsearchInput-" + self._uid;
             document.querySelector(id + " input").disabled = true;
             document.getElementById(self._addUID("GPautoCompleteList")).style.display = "none";
@@ -262,8 +258,7 @@ var SearchEngineDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createAdvancedSearchPanelElement: function() {
-
+    _createAdvancedSearchPanelElement : function () {
         var div = document.createElement("div");
         div.id = this._addUID("GPadvancedSearchPanel");
         div.className = "GPpanel";
@@ -275,7 +270,6 @@ var SearchEngineDOM = {
         // div.appendChild(this._createAdvancedSearchPanelFormElement ());
 
         return div;
-
     },
 
     /**
@@ -286,8 +280,7 @@ var SearchEngineDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createGeocodeResultsElement: function() {
-
+    _createGeocodeResultsElement : function () {
         var div = document.createElement("div");
         div.id = this._addUID("GPgeocodeResultsList");
         div.className = "GPpanel";
@@ -300,7 +293,6 @@ var SearchEngineDOM = {
         // div.appendChild(this._createGeocodeResultsListElement ());
 
         return div;
-
     },
 
     /**
@@ -311,8 +303,7 @@ var SearchEngineDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createAutoCompleteElement: function() {
-
+    _createAutoCompleteElement : function () {
         var div = document.createElement("div");
         div.id = this._addUID("GPautoCompleteList");
         div.className = "GPautoCompleteList"; // GPpanel ?
@@ -323,7 +314,6 @@ var SearchEngineDOM = {
         // div.appendChild(this._createAutoCompleteListElement ());
 
         return div;
-
     },
 
     // ################################################################### //
@@ -335,8 +325,7 @@ var SearchEngineDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createAutoCompleteListElement: function() {
-
+    _createAutoCompleteListElement : function () {
         // contexte d'execution
         var self = this;
 
@@ -344,12 +333,12 @@ var SearchEngineDOM = {
         container.id = this._addUID("GPautocompleteResults");
 
         if (container.addEventListener) {
-            container.addEventListener("click", function(e) {
+            container.addEventListener("click", function (e) {
                 self.onAutoCompletedResultsItemClick(e);
                 document.getElementById(self._addUID("GPautoCompleteList")).style.display = "none";
             }, false);
         } else if (container.attachEvent) {
-            container.attachEvent("onclick", function(e) {
+            container.attachEvent("onclick", function (e) {
                 self.onAutoCompletedResultsItemClick(e);
                 document.getElementById(self._addUID("GPautoCompleteList")).style.display = "none";
             });
@@ -370,8 +359,7 @@ var SearchEngineDOM = {
      * @param {Object} location - suggested or geocoded location results
      * @param {Number} id - ID
      */
-    _createAutoCompletedLocationElement: function(location, id) {
-
+    _createAutoCompletedLocationElement : function (location, id) {
         var container = document.getElementById(this._addUID("GPautocompleteResults"));
 
         var div = document.createElement("div");
@@ -379,11 +367,11 @@ var SearchEngineDOM = {
         div.className = "GPautoCompleteProposal";
         div.innerHTML = location.fullText;
         if (div.addEventListener) {
-            div.addEventListener("click", function(e) {
+            div.addEventListener("click", function (e) {
                 container.click(e);
             }, false);
         } else if (div.attachEvent) {
-            div.attachEvent("onclick", function(e) {
+            div.attachEvent("onclick", function (e) {
                 container.click(e);
             });
         }
@@ -396,8 +384,7 @@ var SearchEngineDOM = {
     // ################################################################### //
 
     /** ... */
-    _createAdvancedSearchPanelHeaderElement: function() {
-
+    _createAdvancedSearchPanelHeaderElement : function () {
         // contexte d'execution
         var self = this;
 
@@ -415,7 +402,7 @@ var SearchEngineDOM = {
         divClose.title = "Fermer la recherche avancée";
 
         if (divClose.addEventListener) {
-            divClose.addEventListener("click", function() {
+            divClose.addEventListener("click", function () {
                 var id = "#GPsearchInput-" + self._uid;
                 document.querySelector(id + " input").disabled = false;
                 document.getElementById(self._addUID("GPgeocodeResultsList")).style.display = "none";
@@ -423,7 +410,7 @@ var SearchEngineDOM = {
                 document.getElementById(self._addUID("GPadvancedSearchPanel")).style.display = "none";
             }, false);
         } else if (divClose.attachEvent) {
-            divClose.attachEvent("onclick", function() {
+            divClose.attachEvent("onclick", function () {
                 var id = "#GPsearchInput-" + self._uid;
                 document.querySelector(id + " input").disabled = false;
                 document.getElementById(self._addUID("GPgeocodeResultsList")).style.display = "none";
@@ -438,15 +425,13 @@ var SearchEngineDOM = {
     },
 
     /** ... */
-    _createAdvancedSearchPanelFormElement: function(advancedSearchCodes) {
-
+    _createAdvancedSearchPanelFormElement : function (advancedSearchCodes) {
         // contexte d'execution
         var self = this;
 
         var form = document.createElement("form");
         form.id = this._addUID("GPadvancedSearchForm");
-        form.addEventListener("submit", function(e) {
-
+        form.addEventListener("submit", function (e) {
             e.preventDefault();
             // data
             var data = [];
@@ -456,8 +441,8 @@ var SearchEngineDOM = {
             for (var i = 0; i < matchesFilters.length; i++) {
                 var element = matchesFilters[i];
                 data.push({
-                    key: element.name,
-                    value: element.value
+                    key : element.name,
+                    value : element.value
                 });
             }
 
@@ -495,15 +480,14 @@ var SearchEngineDOM = {
     },
 
     /** ... */
-    _createAdvancedSearchFormCodeElement: function(codes) {
-
+    _createAdvancedSearchFormCodeElement : function (codes) {
         // contexte d'execution
         var self = this;
 
         var select = document.createElement("select");
         select.id = this._addUID("GPadvancedSearchCode");
         select.className = "GPadvancedSearchCode";
-        select.addEventListener("change", function(e) {
+        select.addEventListener("change", function (e) {
             // var idx   = e.target.selectedIndex;
             // var value = e.target.options[idx].value;
             // gestionnaire d'evenement :
@@ -514,17 +498,17 @@ var SearchEngineDOM = {
         // liste statique au cas où des codes n'ont pas été passés en entrée
         if (!codes) {
             codes = [{
-                id: "PositionOfInterest",
-                title: "Lieux/toponymes"
+                id : "PositionOfInterest",
+                title : "Lieux/toponymes"
             }, {
-                id: "StreetAddress",
-                title: "Adresses"
+                id : "StreetAddress",
+                title : "Adresses"
             }, {
-                id: "CadastralParcel",
-                title: "Parcelles cadastrales"
+                id : "CadastralParcel",
+                title : "Parcelles cadastrales"
             }, {
-                id: "Administratif",
-                title: "Administratif"
+                id : "Administratif",
+                title : "Administratif"
             }];
         }
 
@@ -539,8 +523,7 @@ var SearchEngineDOM = {
     },
 
     /** ... */
-    _createAdvancedSearchFormInputElement: function() {
-
+    _createAdvancedSearchFormInputElement : function () {
         var input = document.createElement("input");
         input.type = "submit";
         input.id = this._addUID("GPadvancedSearchSubmit");
@@ -555,8 +538,7 @@ var SearchEngineDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createAdvancedSearchFormFiltersElement: function() {
-
+    _createAdvancedSearchFormFiltersElement : function () {
         var container = document.createElement("div");
         container.id = this._addUID("GPadvancedSearchFilters");
         return container;
@@ -568,8 +550,7 @@ var SearchEngineDOM = {
      *
      * @param {String} code - code of geocoding resource
      */
-    _createAdvancedSearchFiltersTableElement: function(code, display) {
-
+    _createAdvancedSearchFiltersTableElement : function (code, display) {
         var container = document.createElement("div");
         container.id = this._addUID(code);
         if (!display) {
@@ -591,8 +572,7 @@ var SearchEngineDOM = {
      * @param {String} filterAttributes.description - description
      * @param {String} filterAttributes.value - value
      */
-    _createAdvancedSearchFiltersAttributElement: function(filterAttributes) {
-
+    _createAdvancedSearchFiltersAttributElement : function (filterAttributes) {
         // INFORMATION
         // cette methode peut être appelée si le document n'existe pas, elle
         // permet ainsi de creer une div sans insertion dans le container...
@@ -641,8 +621,7 @@ var SearchEngineDOM = {
     // ################################################################### //
 
     /** ... */
-    _createGeocodeResultsHeaderElement: function() {
-
+    _createGeocodeResultsHeaderElement : function () {
         var self = this;
 
         var container = document.createElement("div");
@@ -659,11 +638,11 @@ var SearchEngineDOM = {
         divClose.title = "Fermer la fenêtre de résultats";
 
         if (divClose.addEventListener) {
-            divClose.addEventListener("click", function() {
+            divClose.addEventListener("click", function () {
                 document.getElementById(self._addUID("GPgeocodeResultsList")).style.display = "none";
             }, false);
         } else if (divClose.attachEvent) {
-            divClose.attachEvent("onclick", function() {
+            divClose.attachEvent("onclick", function () {
                 document.getElementById(self._addUID("GPgeocodeResultsList")).style.display = "none";
             });
         }
@@ -677,8 +656,7 @@ var SearchEngineDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createGeocodeResultsListElement: function() {
-
+    _createGeocodeResultsListElement : function () {
         // contexte d'execution
         var self = this;
 
@@ -686,14 +664,14 @@ var SearchEngineDOM = {
         container.id = this._addUID("GPgeocodeResults");
 
         if (container.addEventListener) {
-            container.addEventListener("click", function(e) {
+            container.addEventListener("click", function (e) {
                 if (!e.ctrlKey) {
                     document.getElementById(self._addUID("GPgeocodeResultsList")).style.display = "none";
                 }
                 self.onGeocodedResultsItemClick(e);
             }, false);
         } else if (container.attachEvent) {
-            container.attachEvent("onclick", function(e) {
+            container.attachEvent("onclick", function (e) {
                 if (!e.ctrlKey) {
                     document.getElementById(self._addUID("GPgeocodeResultsList")).style.display = "none";
                 }
@@ -716,7 +694,7 @@ var SearchEngineDOM = {
      * @param {Object} location - suggested or geocoded location results
      * @param {Number} id - ID
      */
-    _createGeocodedLocationElement: function(location, id) {
+    _createGeocodedLocationElement : function (location, id) {
         var container = document.getElementById(this._addUID("GPgeocodeResults"));
 
         var div = document.createElement("div");
@@ -725,9 +703,7 @@ var SearchEngineDOM = {
 
         if (typeof location === "string") {
             div.innerHTML = location;
-
         } else {
-
             var places = location.placeAttributes;
 
             if (places.freeform) {

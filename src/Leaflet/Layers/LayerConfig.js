@@ -14,8 +14,7 @@ var LayerConfig = {
     /**
      * options : key, layer, service
      */
-    get: function(options) {
-
+    get : function (options) {
         var params = {};
 
         // Gestion de l'autoconf

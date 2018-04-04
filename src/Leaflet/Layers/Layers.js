@@ -18,17 +18,16 @@ import WMTS from "./WMTS";
  */
 var Layers = {
 
-    options: {},
-    params: {},
-    protocol: null,
+    options : {},
+    params : {},
+    protocol : null,
 
-    serviceUrl: "http://localhost?no-rights-found-for=[{layer}]",
+    serviceUrl : "http://localhost?no-rights-found-for=[{layer}]",
 
     /**
      * initialize options
      */
-    _initOptions: function() {
-
+    _initOptions : function () {
         if (!this.options || Object.keys(this.options) === 0) {
             throw new Error("PARAM_MISSING : options !");
         }
@@ -46,17 +45,16 @@ var Layers = {
         if (typeof this.options.ssl === "undefined") {
             this.options.ssl = false;
         }
-
     },
 
     /**
      * get runtime context
      */
-    _initContext: function() {
+    _initContext : function () {
         var _context = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : null;
-        var _protocol = (_context) ?
-            (_context.location && _context.location.protocol && _context.location.protocol.indexOf("https:") === 0 ? "https://" : "http://") :
-            (this.options.ssl ? "https://" : "http://");
+        var _protocol = (_context)
+            ? (_context.location && _context.location.protocol && _context.location.protocol.indexOf("https:") === 0 ? "https://" : "http://")
+            : (this.options.ssl ? "https://" : "http://");
         this.protocol = _protocol;
     },
 
@@ -65,8 +63,7 @@ var Layers = {
      *
      * @param {String} service - service name, WMS or WMTS
      */
-    _initParams: function(service) {
-
+    _initParams : function (service) {
         // par defaut...
         if (!service) {
             service = "WMTS";
@@ -74,9 +71,9 @@ var Layers = {
 
         // Gestion de l'autoconf
         this.params = LayerConfig.get({
-            key: this.options.apiKey,
-            layer: this.options.layer,
-            service: service
+            key : this.options.apiKey,
+            layer : this.options.layer,
+            service : service
         });
 
         if (!this.params || Object.keys(this.params) === 0) {
@@ -84,7 +81,6 @@ var Layers = {
             if (!this.options.apiKey) {
                 // FIXME on retire l'exception...
                 console.log("WARNING PARAM_MISSING : parameter 'apiKey' is mandatory if the contract key configuration has not been loaded !");
-                return;
             }
         }
     },
@@ -118,8 +114,7 @@ var Layers = {
      *
      *  lyr.addTo(map); // ou map.addLayer(lyr);
      */
-    WMS: function(options, settings) {
-
+    WMS : function (options, settings) {
         // gestion du logger
         var logger = Logger.getLogger("layers-wms");
 
@@ -144,29 +139,29 @@ var Layers = {
         if (this.params.key || this.options.apiKey) {
             // url de l'autoconf ou le service par defaut
             serviceUrl = this.params.url || L.Util.template("http://wxs.ign.fr/{key}/geoportail/r/wms", {
-                key: this.params.key || this.options.apiKey
+                key : this.params.key || this.options.apiKey
             });
         } else {
             // pas d'autoconf, ni de clef API !
             // on évite l'exception en envoyant les requêtes vers localhost...
             serviceUrl = L.Util.template(this.serviceUrl, {
-                layer: this.options.layer
+                layer : this.options.layer
             });
         }
 
         // params du service WMS (par defaut)
         var paramsWms = {
-            layers: this.options.layer,
-            styles: this.params.styles || "normal",
-            format: this.params.format || "image/jpeg",
-            version: this.params.version || "1.3.0"
+            layers : this.options.layer,
+            styles : this.params.styles || "normal",
+            format : this.params.format || "image/jpeg",
+            version : this.params.version || "1.3.0"
         };
 
         // options natives de leaflet (par defaut)
         var paramsNative = {
             // zoom level
-            minZoom: this.params.minZoom || 1,
-            maxZoom: this.params.maxZoom || 21
+            minZoom : this.params.minZoom || 1,
+            maxZoom : this.params.maxZoom || 21
         };
 
         // merge des autres options natives de leaflet
@@ -174,14 +169,14 @@ var Layers = {
 
         return new WMS(
             serviceUrl.replace(/(http|https):\/\//, this.protocol), {
-                paramsNative: paramsNative,
-                paramsWms: paramsWms,
-                originators: this.params.originators || [],
-                legends: this.params.legends || [],
-                metadata: this.params.metadata || [],
-                title: this.params.title || null,
-                description: this.params.description || null,
-                quicklookUrl: this.params.quicklookUrl || null
+                paramsNative : paramsNative,
+                paramsWms : paramsWms,
+                originators : this.params.originators || [],
+                legends : this.params.legends || [],
+                metadata : this.params.metadata || [],
+                title : this.params.title || null,
+                description : this.params.description || null,
+                quicklookUrl : this.params.quicklookUrl || null
             }
         );
     },
@@ -215,8 +210,7 @@ var Layers = {
      *
      *  lyr.addTo(map); // ou map.addLayer(lyr);
      */
-    WMTS: function(options, settings) {
-
+    WMTS : function (options, settings) {
         // gestion du logger
         var logger = Logger.getLogger("layers-wmts");
 
@@ -240,23 +234,23 @@ var Layers = {
         var serviceUrl = null;
         if (this.params.key || this.options.apiKey) {
             serviceUrl = this.params.url || L.Util.template("http://wxs.ign.fr/{key}/geoportail/wmts", {
-                key: this.params.key || this.options.apiKey
+                key : this.params.key || this.options.apiKey
             });
         } else {
             // FIXME pas d'autoconf, ni clef API !
             // on évite l'exception en envoyant les requêtes vers localhost
             serviceUrl = L.Util.template(this.serviceUrl, {
-                layer: this.options.layer
+                layer : this.options.layer
             });
         }
 
         // params du service WMS (par defaut)
         var paramsWmts = {
-            layer: this.options.layer,
-            style: this.params.styles || "normal",
-            format: this.params.format || "image/jpeg",
-            version: this.params.version || "1.0.0",
-            tilematrixset: this.params.TMSLink || "PM"
+            layer : this.options.layer,
+            style : this.params.styles || "normal",
+            format : this.params.format || "image/jpeg",
+            version : this.params.version || "1.0.0",
+            tilematrixset : this.params.TMSLink || "PM"
         };
 
         // options natives de leaflet (par defaut)
@@ -271,8 +265,8 @@ var Layers = {
 
         var paramsNative = {
             // zoom level
-            minZoom: this.params.minZoom || 1,
-            maxZoom: this.params.maxZoom || 21
+            minZoom : this.params.minZoom || 1,
+            maxZoom : this.params.maxZoom || 21
         };
 
         // merge des autres options natives de leaflet
@@ -280,14 +274,14 @@ var Layers = {
 
         return new WMTS(
             serviceUrl.replace(/(http|https):\/\//, this.protocol), {
-                paramsNative: paramsNative,
-                paramsWmts: paramsWmts,
-                originators: this.params.originators || [],
-                legends: this.params.legends || [],
-                metadata: this.params.metadata || [],
-                title: this.params.title || "",
-                description: this.params.description || "",
-                quicklookUrl: this.params.quicklookUrl || ""
+                paramsNative : paramsNative,
+                paramsWmts : paramsWmts,
+                originators : this.params.originators || [],
+                legends : this.params.legends || [],
+                metadata : this.params.metadata || [],
+                title : this.params.title || "",
+                description : this.params.description || "",
+                quicklookUrl : this.params.quicklookUrl || ""
             }
         );
     }

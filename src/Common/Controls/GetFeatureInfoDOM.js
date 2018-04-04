@@ -1,7 +1,11 @@
 var GetFeatureInfoDOM = {
 
-    /** Add uuid to the tag ID */
-    _addUID: function(id) {
+    /**
+    * Add uuid to the tag ID
+    * @param {String} id - id selector
+    * @returns {String} uid - id selector with an unique id
+    */
+    _addUID : function (id) {
         var uid = (this._uid) ? id + "-" + this._uid : id;
         return uid;
     },
@@ -11,8 +15,7 @@ var GetFeatureInfoDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createMainContainerElement: function() {
-
+    _createMainContainerElement : function () {
         var container = document.createElement("div");
         container.id = this._addUID("GPgetFeatureInfo");
         container.className = "GPwidget";
@@ -29,8 +32,7 @@ var GetFeatureInfoDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createActivateGetFeatureInfoElement: function(activate) {
-
+    _createActivateGetFeatureInfoElement : function (activate) {
         // contexte d'execution
         var context = this;
 
@@ -39,7 +41,7 @@ var GetFeatureInfoDOM = {
         input.type = "checkbox";
         input.checked = activate;
 
-        input.addEventListener("change", function(e) {
+        input.addEventListener("change", function (e) {
             context.onActivateGetFeatureInfoElementChange(e);
         });
 
@@ -48,9 +50,9 @@ var GetFeatureInfoDOM = {
 
     /**
      * Creation du container du picto du controle (DOM)
+     * @returns {DOMElement} DOM element
      */
-    _createMainPictoElement: function() {
-
+    _createMainPictoElement : function () {
         var self = this;
 
         var label = document.createElement("label");

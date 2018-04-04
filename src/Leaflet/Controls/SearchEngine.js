@@ -627,7 +627,7 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
                 for (var i = 0; i < filters.length; i++) {
                     var o = filters[i];
                     if (!o.hasOwnProperty("filter")) {
-                        o.filter = (o.name === "municipality") ? false : true;
+                        o.filter = o.name !== "municipality";
                     }
                 }
             }
@@ -938,7 +938,7 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
             onSuccess : function (response) {
                 logger.log("request from Geocoding (coordinates null)", response);
                 if (response.locations && response.locations.length !== 0 && response.locations[0].position) {
-                    // on modifie les coordonnées du résultat en EPSG :4326 donc lat,lon
+                    // on modifie les coordonnées du résultat en EPSG:4326 donc lat,lon
                     if (context._suggestedLocations && context._suggestedLocations[i]) {
                         context._suggestedLocations[i].position = {
                             x : response.locations[0].position.y,

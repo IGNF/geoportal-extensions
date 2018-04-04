@@ -2,7 +2,6 @@ import ol from "ol";
 import Logger from "../../../Common/Utils/LoggerByDefault";
 import Utils from "../../../Common/Utils";
 
-
 var logger = Logger.getLogger("interactions");
 
 /**
@@ -37,7 +36,7 @@ var Interactions = {
     /**
      * Liste des extensions qui utilisent le mécanisme des interactions
      */
-    _extensions: [
+    _extensions : [
         "Measures",
         "ElevationPath",
         "Drawing"
@@ -54,9 +53,9 @@ var Interactions = {
      *       Les extensions doivent implementer la méthode 'clean()'.
      *       Par defaut, tous les dessins sont supprimés
      */
-    _options: {
-        current: null,
-        clean: null
+    _options : {
+        current : null,
+        clean : null
     },
 
     /**
@@ -65,7 +64,7 @@ var Interactions = {
      * Il est possible d'ajouter des fonctionnalités via les options.
      * Par defaut, l'option 'clean' est renseignée...
      */
-    unset: function(map, options) {
+    unset : function (map, options) {
         logger.trace("unset()");
 
         var opts = {};
@@ -78,7 +77,6 @@ var Interactions = {
                 (interactions[i] instanceof ol.interaction.Draw ||
                     interactions[i] instanceof ol.interaction.Select ||
                     interactions[i] instanceof ol.interaction.Modify)) {
-
                 var prop = interactions[i].getProperties();
                 var name = prop.name;
                 if (typeof name !== "undefined" && this._extensions.indexOf(name) > -1) {

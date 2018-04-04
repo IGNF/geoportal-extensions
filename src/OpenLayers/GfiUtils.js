@@ -4,7 +4,6 @@ import Logger from "../Common/Utils/LoggerByDefault";
 import ProxyUtils from "../Common/Utils/ProxyUtils";
 // import $__xmldom from "xmldom";
 
-
 var logger = Logger.getLogger("GfiUtils");
 
 var GfiUtils = {
@@ -17,7 +16,7 @@ var GfiUtils = {
      * @return {String} format - layer format can be wms, wmts, vector or unknown
      *
      */
-    getLayerFormat: function(l) {
+    getLayerFormat : function (l) {
         var source = l.getSource();
         if (source instanceof ol.source.TileWMS || source instanceof ol.source.ImageWMS) {
             return "wms";
@@ -44,7 +43,7 @@ var GfiUtils = {
      * @param {Number} [autoPanOptions.autoPanMargin] - Margin (in pixels) between the pop-up and the border of the map when autopanning. Default is 20.
      * @return {Boolean} displayed - indicates if something has been displayed
      */
-    displayInfo: function(map, coords, content, contentType, autoPanOptions) {
+    displayInfo : function (map, coords, content, contentType, autoPanOptions) {
         logger.trace("[GfiUtils] : displayInfo...");
 
         if (!contentType) {
@@ -101,7 +100,7 @@ var GfiUtils = {
         /**
          * fait disparaître la popup au clic sur x
          */
-        closer.onclick = function() {
+        closer.onclick = function () {
             if (map.featuresOverlay) {
                 map.removeOverlay(map.featuresOverlay);
                 map.featuresOverlay = null;
@@ -142,13 +141,13 @@ var GfiUtils = {
         }
         map.featuresOverlay = new ol.Overlay({
             // id : id,
-            element: element,
-            autoPan: autoPanOptions.autoPan,
-            autoPanAnimation: autoPanOptions.autoPanAnimation,
-            autoPanMargin: autoPanOptions.autoPanMargin,
-            positioning: "bottom-center",
-            insertFirst: false, // popup appears on top of other overlays if any
-            stopEvent: true
+            element : element,
+            autoPan : autoPanOptions.autoPan,
+            autoPanAnimation : autoPanOptions.autoPanAnimation,
+            autoPanMargin : autoPanOptions.autoPanMargin,
+            positioning : "bottom-center",
+            insertFirst : false, // popup appears on top of other overlays if any
+            stopEvent : true
         });
         map.addOverlay(map.featuresOverlay);
         map.featuresOverlay.setPosition(coords);
@@ -164,9 +163,9 @@ var GfiUtils = {
      * @param {Array.<ol.Features>} features - openlayers features Array
      * @returns {HTMLElement} HTML content.
      */
-    features2html: function(map, features) {
+    features2html : function (map, features) {
         var content = document.createElement("div");
-        features.forEach(function(f) {
+        features.forEach(function (f) {
             var props = f.getProperties();
             if (props.hasOwnProperty("name")) {
                 var nameDiv = document.createElement("div");
@@ -232,9 +231,9 @@ var GfiUtils = {
      * @return {Boolean}
      *
      */
-    layerGetFeatureAtCoordinates: function(map, olLayer, olCoordinate) {
+    layerGetFeatureAtCoordinates : function (map, olLayer, olCoordinate) {
         var pixel = map.getPixelFromCoordinate(olCoordinate);
-        return map.hasFeatureAtPixel(pixel, function(layer) {
+        return map.hasFeatureAtPixel(pixel, function (layer) {
             if (layer === olLayer) {
                 return true;
             }
@@ -252,12 +251,12 @@ var GfiUtils = {
      * @param {Array.<ol.layer.Layer>} olLayers - layers requested
      *
      */
-    displayVectorFeatureInfo: function(map, olCoordinate, olLayers, autoPanOptions) {
+    displayVectorFeatureInfo : function (map, olCoordinate, olLayers, autoPanOptions) {
         var pixel = map.getPixelFromCoordinate(olCoordinate);
 
         // couches vecteur : on remplit un tableau avec les features à proximité.
         var features = [];
-        map.forEachFeatureAtPixel(pixel, function(feature, layer) {
+        map.forEachFeatureAtPixel(pixel, function (feature, layer) {
             if (!olLayers || olLayers.indexOf(layer) > -1) {
                 features.push(feature);
             }
@@ -300,7 +299,7 @@ var GfiUtils = {
      * @param {Number} [autoPanOptions.autoPanMargin] - Margin (in pixels) between the pop-up and the border of the map when autopanning. Default is 20.
      *
      */
-    displayFeatureInfo: function(map, olCoordinate, gfiLayers, proxyOptions, autoPanOptions) {
+    displayFeatureInfo : function (map, olCoordinate, gfiLayers, proxyOptions, autoPanOptions) {
         // Layers orders
         var layersOrdered = {};
         for (var j = 0; j < gfiLayers.length; j++) {
@@ -316,7 +315,7 @@ var GfiUtils = {
         var requests = [];
         // inversion de l'ordre des layers
         var positions = Object.keys(layersOrdered);
-        positions.sort(function(a, b) {
+        positions.sort(function (a, b) {
             return b - a;
         });
 
@@ -346,9 +345,9 @@ var GfiUtils = {
                     if (format == "vector") {
                         if (!foundFeature && this.layerGetFeatureAtCoordinates(map, l, olCoordinate)) {
                             requests.push({
-                                format: format,
-                                scope: this,
-                                coordinate: olCoordinate
+                                format : format,
+                                scope : this,
+                                coordinate : olCoordinate
                             });
                         }
                         continue;
@@ -364,7 +363,7 @@ var GfiUtils = {
                             olCoordinate,
                             _res,
                             map.getView().getProjection(), {
-                                INFOFORMAT: infoFormat
+                                INFOFORMAT : infoFormat
                             }
                         );
                     } else {
@@ -372,17 +371,17 @@ var GfiUtils = {
                             olCoordinate,
                             _res,
                             map.getView().getProjection(), {
-                                INFO_FORMAT: infoFormat
+                                INFO_FORMAT : infoFormat
                             }
                         );
                     }
 
                     requests.push({
                         // id : _id,
-                        format: infoFormat,
-                        url: ProxyUtils.proxifyUrl(_url, proxyOptions),
-                        scope: this,
-                        coordinate: olCoordinate
+                        format : infoFormat,
+                        url : ProxyUtils.proxifyUrl(_url, proxyOptions),
+                        scope : this,
+                        coordinate : olCoordinate
                     });
                 }
             }
@@ -392,13 +391,13 @@ var GfiUtils = {
         var vectorLayersOrdered = null;
 
         /** call request sync */
-        function requestsSync(list, iterator, callback) {
+        function requestsSync (list, iterator, callback) {
             if (list.length === 0) {
                 return;
             }
             var nextItemIndex = 0;
             /** function report next request */
-            function report(displayed) {
+            function report (displayed) {
                 nextItemIndex++;
                 if (displayed || nextItemIndex === list.length) {
                     callback();
@@ -413,7 +412,7 @@ var GfiUtils = {
         var context = this;
 
         requestsSync(requests,
-            function(data, report) {
+            function (data, report) {
                 if (data.format == "vector") {
                     if (!vectorLayersOrdered) {
                         vectorLayersOrdered = [];
@@ -428,11 +427,11 @@ var GfiUtils = {
                 } else {
                     // var self = data.scope;
                     Gp.Protocols.XHR.call({
-                        url: data.url,
-                        method: "GET",
-                        scope: data.scope,
+                        url : data.url,
+                        method : "GET",
+                        scope : data.scope,
                         /** Handles GFI response */
-                        onResponse: function(resp) {
+                        onResponse : function (resp) {
                             var exception = false;
 
                             // a t on une exception ?
@@ -449,14 +448,14 @@ var GfiUtils = {
                             report(displayed);
                         },
                         /** Handles GFI response error */
-                        onFailure: function(error) {
+                        onFailure : function (error) {
                             console.log(error);
                             report(false);
                         }
                     });
                 }
             },
-            function() {
+            function () {
                 logger.trace("Finish sync to GFI !");
             }
         );
@@ -465,8 +464,7 @@ var GfiUtils = {
     /**
      * Function returning the clicked position of an event
      */
-    getPosition: function(e, map) {
-
+    getPosition : function (e, map) {
         if (e.coordinate) {
             return e.coordinate;
         }
@@ -477,7 +475,6 @@ var GfiUtils = {
             pixel[0] = e.offsetX; // + document.body.scrollLeft + document.documentElement.scrollLeft;
             pixel[1] = e.offsetY; // + document.body.scrollTop + document.documentElement.scrollTop;
         } else if (e.pointerType === "touch") {
-
             // a implementer !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
             // Safari iOS / iPhone en mode Touch (cf. hammer)
@@ -493,7 +490,7 @@ var GfiUtils = {
     /**
      * onDisplayFeatureInfo
      */
-    onDisplayFeatureInfo: function(e, gfiObj) {
+    onDisplayFeatureInfo : function (e, gfiObj) {
         if (!gfiObj.isActive()) {
             return;
         }

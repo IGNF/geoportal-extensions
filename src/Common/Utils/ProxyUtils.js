@@ -9,8 +9,7 @@ var ProxyUtils = {
      * @param {String} proxyOptions.proxyUrl - Proxy URL.
      * @param {Array.<String>} [proxyOptions.noProxyDomains] - Proxy will not be used for this list of domain names.
      */
-    proxifyUrl: function(url, proxyOptions) {
-
+    proxifyUrl : function (url, proxyOptions) {
         // logger
 
         var logger = Logger.getLogger("proxifyUrl");

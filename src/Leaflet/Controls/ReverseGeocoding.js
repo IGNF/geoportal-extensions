@@ -445,10 +445,10 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
             var self = this;
             /* evenement sur la carte lors d'une saisie,
             on y ajoute le layer, et on y stocke les coordonnées */
-            map.on("draw :created", function (e) {
+            map.on("draw:created", function (e) {
                 var layer = e.layer;
                 var type = e.layerType;
-                // console.log("draw :created");
+                logger.trace("draw:created");
 
                 // TODO
                 // comment mettre en place un icone dynamiquement ?
@@ -461,15 +461,15 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
             });
 
             /* evenements */
-            map.on("draw :drawstart", function () {
-                // console.log("draw :drawstart");
+            map.on("draw:drawstart", function () {
+                logger.trace("draw:drawstart");
                 self._removeFeatureLayer(self._lastIdLayer);
                 self._lastIdLayer = self._currentIdLayer;
             });
 
             /* evenements */
-            map.on("draw :drawstop", function () {
-                // console.log("draw :drawstop");
+            map.on("draw:drawstop", function () {
+                logger.trace("draw:drawstop");
             });
         }
 
@@ -504,9 +504,9 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
         }
 
         if (this._inputFeaturesLayer !== null) {
-            map.off("draw :created");
-            map.off("draw :drawstart");
-            map.off("draw :drawstop");
+            map.off("draw:created");
+            map.off("draw:drawstart");
+            map.off("draw:drawstop");
             map.removeLayer(this._inputFeaturesLayer);
             this._inputFeaturesLayer = null;
         }
@@ -596,7 +596,7 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
      * @private
      */
     _setFeaturePosition : function (layer, type) {
-        // on transmet toujours des coordonnées au service en EPSG :4326
+        // on transmet toujours des coordonnées au service en EPSG:4326
         var oLatLng = null;
         if (type === "marker") {
             oLatLng = layer.getLatLng();
@@ -697,7 +697,7 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
         // options par defaut
         L.Util.extend(options, {
             apiKey : this.options.apiKey,
-            srs : "EPSG :4326",
+            srs : "EPSG:4326",
             returnFreeForm : false,
             // maximumResponses : 25, // on peut la surcharger !
             timeOut : 30000,

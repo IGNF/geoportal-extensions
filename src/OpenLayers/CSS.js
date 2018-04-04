@@ -1,3 +1,5 @@
+import commonGPgeneralWidget from "../../res/Common/GPgeneralWidget.css";
+
 import commonGPdrawing from "../../res/Common/GPdrawing.css";
 import commonGPisochron from "../../res/Common/GPisochron.css";
 import commonGPmeasureAzimuth from "../../res/Common/GPmeasureAzimuth.css";
@@ -6,7 +8,6 @@ import commonGPelevationPath from "../../res/Common/GPelevationPath.css";
 import commonGPlayerSwitcher from "../../res/Common/GPlayerSwitcher.css";
 import commonGPmeasureLength from "../../res/Common/GPmeasureLength.css";
 import commonGProute from "../../res/Common/GProute.css";
-import commonGPgeneralWidget from "../../res/Common/GPgeneralWidget.css";
 import commonGPlocation from "../../res/Common/GPlocation.css";
 import commonGPmeasureToolTip from "../../res/Common/GPmeasureToolTip.css";
 import commonGPsearchEngine from "../../res/Common/GPsearchEngine.css";

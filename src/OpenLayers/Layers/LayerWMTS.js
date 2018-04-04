@@ -22,9 +22,8 @@ import SourceWMTS from "./SourceWMTS";
  *      layer  : "ORTHOIMAGERY.ORTHOPHOTOS"
  * });
  */
- 
-function LayerWMTS(options) {
 
+function LayerWMTS (options) {
     if (!(this instanceof LayerWMTS)) {
         throw new TypeError("ERROR CLASS_CONSTRUCTOR");
     }
@@ -53,14 +52,14 @@ function LayerWMTS(options) {
         olSourceParams = options.olParams.sourceParams;
     }
     var wmtsSource = new SourceWMTS({
-        layer: options.layer,
-        ssl: options.ssl,
-        apiKey: options.apiKey,
-        olParams: olSourceParams
+        layer : options.layer,
+        ssl : options.ssl,
+        apiKey : options.apiKey,
+        olParams : olSourceParams
     });
 
     var layerTileOptions = {
-        source: wmtsSource
+        source : wmtsSource
     };
 
     // si le param layer n'a pas été renseigné lors de la création de la source,
@@ -70,7 +69,6 @@ function LayerWMTS(options) {
         var layerId = Config.getLayerId(options.layer, "WMTS");
         var globalConstraints = Config.getGlobalConstraints(layerId);
         if (globalConstraints && globalConstraints.projection) {
-
             /* INFO : désactivation temporaire de l'étendue, car certaines étendues (trop grandes ?)
             provoquent quelques bugs d'affichage (zoom > 16 par exemple) */
             // récupération de l'étendue (en EPSG:4326), et reprojection dans la proj de la couche
@@ -114,7 +112,6 @@ function LayerWMTS(options) {
 
     // création d'une ol.layer.Tile avec les options récupérées ci-dessus.
     ol.layer.Tile.call(this, layerTileOptions);
-
 }
 
 // Inherits from ol.layer.Tile
