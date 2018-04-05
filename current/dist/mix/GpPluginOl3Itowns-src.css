@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 1.0.0
- * @date 2018-03-26
+ * @date 2018-04-05
  *
  */
 /* MOUSE POSITION */
@@ -4181,7 +4181,7 @@ div[id^=GPtoolbox-measure-main]:hover button[id^=GPtoolbox-measure-button] {
  * copyright IGN
  * @author IGN
  * @version 1.0.0
- * @date 2018-03-26
+ * @date 2018-04-05
  *
  */
 label[id^=GPshowDrawingPicto-]{display:inline-block}input[id^=GPshowDrawing-]+label,input[id^=GPshowDrawing-]:checked+label+div{display:block}input[id^=GPshowDrawing-]+label+div,input[id^=GPshowDrawing-]:checked+label{display:none}div[id^=GPdrawingPanel-]{width:240px;overflow:hidden}div[id^=GPdrawingBasicPanel-]{padding:10px 15px}.GPdrawingCoords,.GPdrawingLabel{display:inline-block;line-height:20px}.GPdrawingLabel{width:80px;font-weight:700}.GPdrawingCoords{width:110px}.marker-input-radio{display:none}input.marker-input-radio:checked+label{border:1px solid red}
@@ -4228,7 +4228,7 @@ div[id^=GPtoolbox-measure-main]{float:left;left:78px;top:8px;position:absolute;d
  * copyright IGN
  * @author IGN
  * @version 
- * @date 2018-03-26
+ * @date 2018-04-05
  *
  */
 /* MOUSE POSITION */
@@ -7171,7 +7171,7 @@ div[id^=GPscaleContainer-] {
  * copyright IGN
  * @author IGN
  * @version 
- * @date 2018-03-26
+ * @date 2018-04-05
  *
  */
 label[id^=GPshowDrawingPicto-]{display:inline-block}input[id^=GPshowDrawing-]+label,input[id^=GPshowDrawing-]:checked+label+div{display:block}input[id^=GPshowDrawing-]+label+div,input[id^=GPshowDrawing-]:checked+label{display:none}div[id^=GPdrawingPanel-]{width:240px;overflow:hidden}div[id^=GPdrawingBasicPanel-]{padding:10px 15px}.GPdrawingCoords,.GPdrawingLabel{display:inline-block;line-height:20px}.GPdrawingLabel{width:80px;font-weight:700}.GPdrawingCoords{width:110px}.marker-input-radio{display:none}input.marker-input-radio:checked+label{border:1px solid red}

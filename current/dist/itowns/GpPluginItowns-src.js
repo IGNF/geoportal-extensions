@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 
- * @date 2018-03-26
+ * @date 2018-04-05
  *
  */
 /*!
@@ -12866,16 +12866,19 @@ ItownsGlobeViewExtended = function (Itowns, woodman) {
     GlobeViewExtended.prototype.isInitialized = function () {
         return this._isInitialized;
     };
+    GlobeViewExtended.prototype.onCameraMoveStop = function (cb) {
+        var self = this;
+        function afterRenderHandler() {
+            self._globeView.removeFrameRequester(Itowns.MAIN_LOOP_EVENTS.AFTER_CAMERA_UPDATE, afterRenderHandler);
+            cb();
+        }
+        this._globeView.addFrameRequester(Itowns.MAIN_LOOP_EVENTS.AFTER_CAMERA_UPDATE, afterRenderHandler);
+    };
     GlobeViewExtended.prototype.freezeControl = function () {
         this._globeView.controls.enabled = false;
-        var self = this;
-        var afterRenderHandlerFunction = function afterRenderHandler() {
-            if (self._globeView.mainLoop.scheduler.commandsWaitingExecutionCount() == 0 && self._globeView._changeSources.size == 0) {
-                self._globeView.controls.enabled = true;
-                self._globeView.removeFrameRequester(Itowns.MAIN_LOOP_EVENTS.AFTER_RENDER, afterRenderHandler);
-            }
-        };
-        this._globeView.addFrameRequester(Itowns.MAIN_LOOP_EVENTS.AFTER_RENDER, afterRenderHandlerFunction);
+        this.onCameraMoveStop(function () {
+            this._globeView.controls.enabled = true;
+        }.bind(this));
     };
     GlobeViewExtended.prototype.listen = function (type, callback) {
         if (typeof callback != 'function') {
@@ -16881,7 +16884,7 @@ ItownsControlsMiniGlobe = function (Itowns, GlobeViewExtended, Utils, SelectorID
 }(itowns, ItownsGlobeViewExtended, CommonUtils, CommonUtilsSelectorID, CommonControlsMiniGlobeDOM, ItownsControlsWidget);
 ItownsGpPluginItowns = function (Itowns, Gp, Utils, LayerUtils, MousePosition, LayerSwitcher, Attributions, Scale, MiniGlobe, GlobeViewExtended) {
     Gp.itownsextVersion = '1.0.0';
-    Gp.itownsextDate = '2018-03-26';
+    Gp.itownsextDate = '2018-04-05';
     Gp.LayerUtils = LayerUtils;
     var scope = typeof window !== 'undefined' ? window : {};
     var _itowns = Itowns || {};
