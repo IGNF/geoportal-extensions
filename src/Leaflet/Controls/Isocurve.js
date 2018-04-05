@@ -158,7 +158,8 @@ var Isocurve = L.Control.extend(/** @lends L.geoportalControl.Isocurve.prototype
      * this method is called by this.addTo(map) when the control is added on the map
      * and fills variable 'this._container = this.onAdd(map)',
      * and create or disable events on map.
-     *
+     * @param {L.Map} map - object map
+     * @returns {DOMElement} container
      * @private
      */
     onAdd : function (map) {
@@ -393,7 +394,7 @@ var Isocurve = L.Control.extend(/** @lends L.geoportalControl.Isocurve.prototype
      * this method is called by the constructor.
      * this information is useful to switch to touch mode.
      * Detection : test for desktop or tactile
-     *
+     * @returns {Boolean} desktop or tactile
      * @private
      */
     _detectSupport : function () {
@@ -432,7 +433,8 @@ var Isocurve = L.Control.extend(/** @lends L.geoportalControl.Isocurve.prototype
     /**
      * this method is called by this.onAdd(map)
      * and initialize the container HTMLElement
-     *
+     * @param {L.Map} map - object map
+     * @returns {DOMElement} container
      * @private
      */
     _initLayout : function (map) {
@@ -524,9 +526,8 @@ var Isocurve = L.Control.extend(/** @lends L.geoportalControl.Isocurve.prototype
     /**
      * Create a Point
      * OVERWRITTEN
-     *
+     * @param {L.Map} map - object map
      * @returns {Object} DOM element
-     *
      * @private
      */
     _createIsoPanelFormPointElement : function (map) {

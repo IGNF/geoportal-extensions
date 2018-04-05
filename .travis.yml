@@ -8,9 +8,7 @@ stages:
 before_script:
   - npm run setup
 script:
-  # fix : en attente de la publication de l'api des services en v2.0.0...
-  - cd ./node_modules/geoportal-access-lib/ && npm install && npm run build && cd ../..
-  - npm run build:ol
+ - npm run build:ol
   - npm run build:leaflet
   - npm run build:itowns
   - npm run build:mix

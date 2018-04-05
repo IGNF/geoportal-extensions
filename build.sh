@@ -82,11 +82,6 @@ function mix() {
 printTo "###########  NPM  ##############"
 doCmd "npm run setup"
 
-printTo "########### BUILD : ############"
-printTo "#### > geoportal-access-lib ####"
-doCmd "cd ./node_modules/geoportal-access-lib/ && npm install && npm run build"
-doCmd "cd ../.."
-
 while getopts "aoliI" opts
 do
    case $opts in
