@@ -118,24 +118,30 @@ define([
     };
 
     /**
+     * Detects when the camera movement stops, then launch the callback given as parameter
+     * 
+     * @param {Function} cb - The function to execute when the event occures.
+     * 
+     */
+    GlobeViewExtended.prototype.onCameraMoveStop = function (cb) {
+        var self = this;
+        function afterRenderHandler () {
+            self._globeView.removeFrameRequester(Itowns.MAIN_LOOP_EVENTS.AFTER_CAMERA_UPDATE, afterRenderHandler);
+            cb();
+        };
+        this._globeView.addFrameRequester(Itowns.MAIN_LOOP_EVENTS.AFTER_CAMERA_UPDATE, afterRenderHandler);
+    }
+
+    /**
      * Disables globe controls until the globe rendering is completed
      */
     GlobeViewExtended.prototype.freezeControl = function () {
         // disable navigation
-        this._globeView .controls.enabled = false;
+        this._globeView.controls.enabled = false;
 
-        var self = this;
-        /**
-         * afterRenderHandler function (duplicated code from itowns?)
-         */
-        var afterRenderHandlerFunction = function afterRenderHandler () {
-            if (self._globeView.mainLoop.scheduler.commandsWaitingExecutionCount() == 0 && self._globeView._changeSources.size == 0) {
-                // enable navigation
-                self._globeView.controls.enabled = true;
-                self._globeView.removeFrameRequester(Itowns.MAIN_LOOP_EVENTS.AFTER_RENDER, afterRenderHandler);
-            }
-        }; 
-        this._globeView.addFrameRequester(Itowns.MAIN_LOOP_EVENTS.AFTER_RENDER, afterRenderHandlerFunction);
+        this.onCameraMoveStop((function () { 
+            this._globeView.controls.enabled = true;
+        }).bind(this));
     };
 
     /**
