@@ -125,12 +125,15 @@ define([
      */
     GlobeViewExtended.prototype.onCameraMoveStop = function (cb) {
         var self = this;
+        /**
+         * callback
+         */
         function afterRenderHandler () {
             self._globeView.removeFrameRequester(Itowns.MAIN_LOOP_EVENTS.AFTER_CAMERA_UPDATE, afterRenderHandler);
             cb();
         };
         this._globeView.addFrameRequester(Itowns.MAIN_LOOP_EVENTS.AFTER_CAMERA_UPDATE, afterRenderHandler);
-    }
+    };
 
     /**
      * Disables globe controls until the globe rendering is completed
