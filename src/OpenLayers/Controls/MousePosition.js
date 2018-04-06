@@ -80,8 +80,7 @@ var logger = Logger.getLogger("GeoportalMousePosition");
  *      units : ["DEC", "DMS"]
  * });
  */
-function MousePosition(options) {
-
+function MousePosition (options) {
     options = options || {};
 
     if (!(this instanceof MousePosition)) {
@@ -95,9 +94,9 @@ function MousePosition(options) {
 
     // call ol.control.Control constructor
     ol.control.Control.call(this, {
-        element: container,
-        target: options.target,
-        render: options.render
+        element : container,
+        target : options.target,
+        render : options.render
     });
 };
 
@@ -122,7 +121,7 @@ MousePosition.prototype.constructor = MousePosition;
 /**
  * Overload ol.control.Control setMap method, called when
  */
-MousePosition.prototype.setMap = function(map) {
+MousePosition.prototype.setMap = function (map) {
     var context = this;
 
     if (map) { // dans le cas de l'ajout du contrôle à la map
@@ -158,14 +157,14 @@ MousePosition.prototype.setMap = function(map) {
             markerDiv.id = this._addUID("GPmousePositionMarker");
             markerDiv.src = this._markerUrl;
             markerDiv.title = "Cliquer pour supprimer";
-            markerDiv.addEventListener("click", function() {
+            markerDiv.addEventListener("click", function () {
                 context._markerOverlay.setPosition(undefined);
             });
 
             this._markerOverlay = new ol.Overlay({
-                offset: this._markerOffset,
-                element: markerDiv,
-                stopEvent: false
+                offset : this._markerOffset,
+                element : markerDiv,
+                stopEvent : false
             });
             map.addOverlay(this._markerOverlay);
         }
@@ -204,8 +203,7 @@ MousePosition.prototype.setMap = function(map) {
  * @param {String} [system.label] - CRS label to be displayed in control. Default is system.crs alias
  * @param {String} [system.type] - CRS units type for coordinates conversion (one of control options.units). Default is "Metric"
  */
-MousePosition.prototype.addSystem = function(system) {
-
+MousePosition.prototype.addSystem = function (system) {
     if (typeof system !== "object") {
         console.log("[ERROR] MousePosition:addSystem - system parameter should be an object");
         return;
@@ -254,7 +252,7 @@ MousePosition.prototype.addSystem = function(system) {
  * @param {String} systems.label - CRS label (for coordinates conversion)
  * @param {String} systems.type - CRS units type to be displayed in control (one of control options.units). Default is "Metric"
  */
-MousePosition.prototype.addSystems = function(systems) {
+MousePosition.prototype.addSystems = function (systems) {
     if (!systems) {
         return;
     }
@@ -272,7 +270,7 @@ MousePosition.prototype.addSystems = function(systems) {
  *
  * @param {String} systemCrs - CRS alias (from proj4 defs)
  */
-MousePosition.prototype.removeSystem = function(systemCrs) {
+MousePosition.prototype.removeSystem = function (systemCrs) {
     if (!systemCrs || typeof systemCrs !== "string") {
         console.log("[ERROR] MousePosition:removeSystem - systemCode parameter should be a string");
         return;
@@ -297,7 +295,7 @@ MousePosition.prototype.removeSystem = function(systemCrs) {
         return;
     }
 
-    /*re-initialization of codes*/
+    /* re-initialization of codes */
     var oldNewCodeMap = [];
 
     for (var j = 0; j < this._projectionSystems.length; j++) {
@@ -305,7 +303,7 @@ MousePosition.prototype.removeSystem = function(systemCrs) {
         this._projectionSystems[j].code = j;
     }
 
-    /*find system in control container systems list*/
+    /* find system in control container systems list */
     var indexChildToRemove = null;
 
     for (var k = 0; k < systemList.childNodes.length; k++) {
@@ -315,12 +313,12 @@ MousePosition.prototype.removeSystem = function(systemCrs) {
         }
         systemList.childNodes[j].value = oldNewCodeMap[Number(systemList.childNodes[j].value)];
     }
-    /*remove system from control container systems list*/
+    /* remove system from control container systems list */
     if (indexChildToRemove != null) {
         systemList.removeChild(systemList.childNodes[indexChildToRemove]);
     }
 
-    /*choose arbitrarily a new current system if needed*/
+    /* choose arbitrarily a new current system if needed */
     if (this._currentProjectionSystems.code == systemCode) {
         systemList.childNodes[0].setAttribute("selected", "selected");
         this._setCurrentSystem(systemList.childNodes[0].value);
@@ -334,7 +332,7 @@ MousePosition.prototype.removeSystem = function(systemCrs) {
  *      Values may be "DEC" (decimal degrees), "DMS" (sexagecimal), "RAD" (radians) and "GON" (grades) for geographical coordinates,
  *      and "M" or "KM" for metric coordinates
  */
-MousePosition.prototype.setUnits = function(units) {
+MousePosition.prototype.setUnits = function (units) {
     if (!units || !Array.isArray(units)) {
         return;
     }
@@ -354,7 +352,7 @@ MousePosition.prototype.setUnits = function(units) {
  * @param {Number}  [options.responseDelay] - latency for elevation request, 500 ms by default
  * @param {Number}  [options.triggerDelay] - immobilisation time of movement on the map to trigger the elevation calculation, 200 ms by default
  */
-MousePosition.prototype.setAltitudeOptions = function(options) {
+MousePosition.prototype.setAltitudeOptions = function (options) {
     if (!options || typeof options !== "object") {
         return;
     }
@@ -374,7 +372,7 @@ MousePosition.prototype.setAltitudeOptions = function(options) {
  *
  * @param {Boolean} displayAltitude - true to display elevation panel, false to hide it
  */
-MousePosition.prototype.displayAltitude = function(displayAltitude) {
+MousePosition.prototype.displayAltitude = function (displayAltitude) {
     if (displayAltitude === undefined) {
         return;
     }
@@ -390,7 +388,7 @@ MousePosition.prototype.displayAltitude = function(displayAltitude) {
  *
  * @param {Boolean} displayCoordinates - true to display coordinates panel, false to hide it
  */
-MousePosition.prototype.displayCoordinates = function(displayCoordinates) {
+MousePosition.prototype.displayCoordinates = function (displayCoordinates) {
     if (displayCoordinates === undefined) {
         return;
     }
@@ -404,7 +402,7 @@ MousePosition.prototype.displayCoordinates = function(displayCoordinates) {
  *
  * @param {Boolean} collapsed - True to collapse control, False to display it
  */
-MousePosition.prototype.setCollapsed = function(collapsed) {
+MousePosition.prototype.setCollapsed = function (collapsed) {
     if (collapsed === undefined) {
         console.log("[ERROR] MousePosition:setCollapsed - missing collapsed parameter");
         return;
@@ -431,8 +429,7 @@ MousePosition.prototype.setCollapsed = function(collapsed) {
  * @param {Object} options - control options (set by user)
  * @private
  */
-MousePosition.prototype._initialize = function(options) {
-
+MousePosition.prototype._initialize = function (options) {
     // Set default options
     // {Object} control options - set by user or by default
     this.options = options || {};
@@ -462,17 +459,17 @@ MousePosition.prototype._initialize = function(options) {
     if (options.altitude) {
         var altitude = options.altitude;
         this.options.altitude = {
-            triggerDelay: (altitude.triggerDelay !== undefined) ? altitude.triggerDelay : 200,
-            responseDelay: (altitude.responseDelay !== undefined) ? altitude.responseDelay : 500,
-            serviceOptions: altitude.serviceOptions || {},
-            noDataValue: (altitude.noDataValue !== undefined) ? altitude.noDataValue : -99999,
-            noDataValueTolerance: (altitude.noDataValueTolerance !== undefined) ? altitude.noDataValueTolerance : 90000
+            triggerDelay : (altitude.triggerDelay !== undefined) ? altitude.triggerDelay : 200,
+            responseDelay : (altitude.responseDelay !== undefined) ? altitude.responseDelay : 500,
+            serviceOptions : altitude.serviceOptions || {},
+            noDataValue : (altitude.noDataValue !== undefined) ? altitude.noDataValue : -99999,
+            noDataValueTolerance : (altitude.noDataValueTolerance !== undefined) ? altitude.noDataValueTolerance : 90000
         };
     } else {
         this.options.altitude = {
-            triggerDelay: 200,
-            responseDelay: 500,
-            serviceOptions: {}
+            triggerDelay : 200,
+            responseDelay : 500,
+            serviceOptions : {}
         };
     }
 
@@ -531,7 +528,7 @@ MousePosition.prototype._initialize = function(options) {
  * @param {Object} option - positionMarker option
  * @private
  */
-MousePosition.prototype._initMarker = function(option) {
+MousePosition.prototype._initMarker = function (option) {
     if (!this.options.editCoordinates) {
         return;
     }
@@ -576,46 +573,45 @@ MousePosition.prototype._initMarker = function(option) {
  * @method _initProjectionSystems
  * @private
  */
-MousePosition.prototype._initProjectionSystems = function() {
-
+MousePosition.prototype._initProjectionSystems = function () {
     // on donne la possibilité à l'utilisateur de modifier
     // la liste des systèmes à afficher
     // Ex. this.options.systems
 
     // systemes de projection disponible par defaut
     var projectionSystemsByDefault = [{
-        label: "G\u00e9ographique",
-        crs: ol.proj.get("EPSG:4326").getCode(),
-        type: "Geographical"
+        label : "G\u00e9ographique",
+        crs : ol.proj.get("EPSG:4326").getCode(),
+        type : "Geographical"
     }, {
-        label: "Web Mercator",
-        crs: ol.proj.get("EPSG:3857").getCode(),
-        type: "Metric"
+        label : "Web Mercator",
+        crs : ol.proj.get("EPSG:3857").getCode(),
+        type : "Metric"
     }, {
-        label: "Lambert 93",
-        crs: ol.proj.get("EPSG:2154").getCode(),
-        type: "Metric",
-        geoBBox: {
-            left: -9.86,
-            bottom: 41.15,
-            right: 10.38,
-            top: 51.56
+        label : "Lambert 93",
+        crs : ol.proj.get("EPSG:2154").getCode(),
+        type : "Metric",
+        geoBBox : {
+            left : -9.86,
+            bottom : 41.15,
+            right : 10.38,
+            top : 51.56
         }
     }, {
-        label: "Lambert II \u00e9tendu",
-        crs: ol.proj.get("EPSG:27572"),
-        type: "Metric",
-        geoBBox: {
-            left: -4.87,
-            bottom: 42.33,
-            right: 8.23,
-            top: 51.14
+        label : "Lambert II \u00e9tendu",
+        crs : ol.proj.get("EPSG:27572"),
+        type : "Metric",
+        geoBBox : {
+            left : -4.87,
+            bottom : 42.33,
+            right : 8.23,
+            top : 51.14
         }
     }];
 
     var systems = this.options.systems;
     for (var i = 0; i < systems.length; i++) {
-        /*definition d'un systeme de reference*/
+        /* definition d'un systeme de reference */
         var sys = systems[i];
         this.addSystem(sys);
     }
@@ -636,8 +632,7 @@ MousePosition.prototype._initProjectionSystems = function() {
  * @method _initProjectionUnits
  * @private
  */
-MousePosition.prototype._initProjectionUnits = function() {
-
+MousePosition.prototype._initProjectionUnits = function () {
     // on donne la possibilité à l'utilisateur de modifier
     // la liste des unités à afficher
     // Ex.
@@ -645,31 +640,31 @@ MousePosition.prototype._initProjectionUnits = function() {
 
     // unités disponible par defaut
     var projectionUnitsByDefault = {
-        Geographical: [{
-            code: "DEC",
-            label: "degrés décimaux",
-            format: this._displayDEC
+        Geographical : [{
+            code : "DEC",
+            label : "degrés décimaux",
+            format : this._displayDEC
         }, {
-            code: "DMS",
-            label: "degrés sexagésimaux",
-            format: this._displayDMS
+            code : "DMS",
+            label : "degrés sexagésimaux",
+            format : this._displayDMS
         }, {
-            code: "RAD",
-            label: "radians",
-            format: this._displayRAD
+            code : "RAD",
+            label : "radians",
+            format : this._displayRAD
         }, {
-            code: "GON",
-            label: "grades",
-            format: this._displayGON
+            code : "GON",
+            label : "grades",
+            format : this._displayGON
         }],
-        Metric: [{
-            code: "M",
-            label: "mètres",
-            format: this._displayMeter
+        Metric : [{
+            code : "M",
+            label : "mètres",
+            format : this._displayMeter
         }, {
-            code: "KM",
-            label: "kilomètres",
-            format: this._displayKMeter
+            code : "KM",
+            label : "kilomètres",
+            format : this._displayKMeter
         }]
     };
 
@@ -709,7 +704,7 @@ MousePosition.prototype._initProjectionUnits = function() {
  * @method _getCurrentProjectionInformation
  * @private
  */
-MousePosition.prototype._getCurrentProjectionInformation = function() {
+MousePosition.prototype._getCurrentProjectionInformation = function () {
     var systemInfo = [
         this._currentProjectionSystems.label,
         "en"
@@ -732,12 +727,11 @@ MousePosition.prototype._getCurrentProjectionInformation = function() {
  * @method _checkRightsManagement
  * @private
  */
-MousePosition.prototype._checkRightsManagement = function() {
-
+MousePosition.prototype._checkRightsManagement = function () {
     var rightManagement = RightManagement.check({
-        key: this.options.apiKey,
-        resources: ["SERVICE_CALCUL_ALTIMETRIQUE_RSC"],
-        services: ["Elevation"]
+        key : this.options.apiKey,
+        resources : ["SERVICE_CALCUL_ALTIMETRIQUE_RSC"],
+        services : ["Elevation"]
     });
 
     this._noRightManagement = !rightManagement;
@@ -749,7 +743,6 @@ MousePosition.prototype._checkRightsManagement = function() {
     if (!this.options.apiKey) {
         this.options.apiKey = rightManagement.key;
     }
-
 };
 
 // ################################################################### //
@@ -762,7 +755,7 @@ MousePosition.prototype._checkRightsManagement = function() {
  * @method _initContainer
  * @private
  */
-MousePosition.prototype._initContainer = function() {
+MousePosition.prototype._initContainer = function () {
     // creation du container principal
     var container = this._createMainContainerElement();
 
@@ -798,7 +791,7 @@ MousePosition.prototype._initContainer = function() {
  * @param {Boolean} active - true:active, false:disable
  * @private
  */
-MousePosition.prototype._setElevationPanel = function(active) {
+MousePosition.prototype._setElevationPanel = function (active) {
     var div = null;
 
     if (!active) {
@@ -823,7 +816,7 @@ MousePosition.prototype._setElevationPanel = function(active) {
  * @param {Boolean} active - true:active, false:disable
  * @private
  */
-MousePosition.prototype._setCoordinatesPanel = function(active) {
+MousePosition.prototype._setCoordinatesPanel = function (active) {
     var div = document.getElementById("GPmousePositionCoordinate-" + this._uid);
     if (!active) {
         div.style.display = "none";
@@ -840,7 +833,7 @@ MousePosition.prototype._setCoordinatesPanel = function(active) {
  * @param {Boolean} active - true:active, false:disable
  * @private
  */
-MousePosition.prototype._setSettingsPanel = function(active) {
+MousePosition.prototype._setSettingsPanel = function (active) {
     var divPicto = document.getElementById("GPshowMousePositionSettingsPicto-" + this._uid);
     var divPanel = document.getElementById("GPmousePositionSettings-" + this._uid);
     if (!active) {
@@ -860,7 +853,7 @@ MousePosition.prototype._setSettingsPanel = function(active) {
  * @param {String} type - Geographical or Metric
  * @private
  */
-MousePosition.prototype._setTypeUnitsPanel = function(type) {
+MousePosition.prototype._setTypeUnitsPanel = function (type) {
     var container = this._projectionUnitsContainer;
 
     // on supprime les enfants...
@@ -909,7 +902,7 @@ MousePosition.prototype._setTypeUnitsPanel = function(type) {
  * @return {Object} coordinate - coordinate object : {lat : 48, lng : 2} par exemple
  * @private
  */
-MousePosition.prototype._displayDEC = function(olCoordinate) {
+MousePosition.prototype._displayDEC = function (olCoordinate) {
     var coordinate = {};
     coordinate.lat = olCoordinate[1].toFixed(6);
     coordinate.lng = olCoordinate[0].toFixed(6);
@@ -925,11 +918,11 @@ MousePosition.prototype._displayDEC = function(olCoordinate) {
  * @return {Object} coordinate - coordinate object : {lng : "2° 00′ 00″ E", lat : "48° 00′ 00″ N"} par exemple
  * @private
  */
-MousePosition.prototype._displayDMS = function(olCoordinate) {
+MousePosition.prototype._displayDMS = function (olCoordinate) {
     return {
-        lng: MathUtils.decimalToDMS(olCoordinate[0], "EO", 2),
-        lat: MathUtils.decimalToDMS(olCoordinate[1], "NS", 2),
-        unit: "DMS"
+        lng : MathUtils.decimalToDMS(olCoordinate[0], "EO", 2),
+        lat : MathUtils.decimalToDMS(olCoordinate[1], "NS", 2),
+        unit : "DMS"
     };
 };
 
@@ -941,7 +934,7 @@ MousePosition.prototype._displayDMS = function(olCoordinate) {
  * @return {Object} coordinate - coordinate object : {lng : "0.02837864", lat : "0.84300269"} par exemple
  * @private
  */
-MousePosition.prototype._displayRAD = function(olCoordinate) {
+MousePosition.prototype._displayRAD = function (olCoordinate) {
     var coordinate = {};
     var d = 0.01745329251994329577;
     coordinate.lng = olCoordinate[0] * d;
@@ -960,7 +953,7 @@ MousePosition.prototype._displayRAD = function(olCoordinate) {
  * @return {Object} coordinate - coordinate object : {lng : "4.09545898", lat : "53.68751528"} par exemple
  * @private
  */
-MousePosition.prototype._displayGON = function(olCoordinate) {
+MousePosition.prototype._displayGON = function (olCoordinate) {
     var coordinate = {};
     var d = 1.11111111111111111111;
     coordinate.lng = olCoordinate[0] * d;
@@ -979,7 +972,7 @@ MousePosition.prototype._displayGON = function(olCoordinate) {
  * @return {Object} coordinate - coordinate object : {x : "148593.58", y : "6176560.95"} par exemple
  * @private
  */
-MousePosition.prototype._displayMeter = function(olCoordinate) {
+MousePosition.prototype._displayMeter = function (olCoordinate) {
     // on recoit toujours des coordonnées metriques
     var coordinate = {};
     coordinate.x = olCoordinate[0].toFixed(2);
@@ -996,7 +989,7 @@ MousePosition.prototype._displayMeter = function(olCoordinate) {
  * @return {Object} coordinate - coordinate object : {x : "214.96", y : "6250.09"} par exemple
  * @private
  */
-MousePosition.prototype._displayKMeter = function(olCoordinate) {
+MousePosition.prototype._displayKMeter = function (olCoordinate) {
     var coordinate = {};
     coordinate.x = (olCoordinate[0] / 1000).toFixed(2);
     coordinate.y = (olCoordinate[1] / 1000).toFixed(2);
@@ -1017,8 +1010,7 @@ MousePosition.prototype._displayKMeter = function(olCoordinate) {
  * @param {Object} crs - coordinate CRS (ol.proj.Projection)
  * @private
  */
-MousePosition.prototype._setCoordinate = function(olCoordinate, crs) {
-
+MousePosition.prototype._setCoordinate = function (olCoordinate, crs) {
     // structure
     // ol.Coordinate
     //      [
@@ -1072,7 +1064,7 @@ MousePosition.prototype._setCoordinate = function(olCoordinate, crs) {
  * @param {Array} olCoordinate - ol.Coordinate object [lon, lat]
  * @private
  */
-MousePosition.prototype._setElevation = function(olCoordinate) {
+MousePosition.prototype._setElevation = function (olCoordinate) {
     // gestion du timer de la requete du service d'altitude
     var delay = this.options.altitude.responseDelay;
     var noDataValue = this.options.altitude.noDataValue;
@@ -1089,7 +1081,7 @@ MousePosition.prototype._setElevation = function(olCoordinate) {
  * @param {Object} crs - coordinate CRS (ol.proj.Projection)
  * @private
  */
-MousePosition.prototype.onMoveStopped = function(olCoordinate, crs) {
+MousePosition.prototype.onMoveStopped = function (olCoordinate, crs) {
     // reprojection en CRS:84 (EPSG:4326) pour le calcul alti
     var oLatLng = ol.proj.transform(olCoordinate, crs, "EPSG:4326");
     this._setElevation(oLatLng);
@@ -1104,8 +1096,7 @@ MousePosition.prototype.onMoveStopped = function(olCoordinate, crs) {
  * @param {Object} e - HTMLElement
  * @private
  */
-MousePosition.prototype.onMouseMove = function(e) {
-
+MousePosition.prototype.onMouseMove = function (e) {
     var self = this;
 
     // info: coordinate = [x, y]
@@ -1119,7 +1110,7 @@ MousePosition.prototype.onMouseMove = function(e) {
 
     // calcul de l'altitude après un certain délai après l'arrêt du mouvement de la souris
     clearTimeout(this._timer);
-    this._timer = setTimeout(function() {
+    this._timer = setTimeout(function () {
         self.onMoveStopped(coordinate, crs);
     }, this.options.altitude.triggerDelay);
 };
@@ -1132,8 +1123,7 @@ MousePosition.prototype.onMouseMove = function(e) {
  * @method onMapMove
  * @private
  */
-MousePosition.prototype.onMapMove = function() {
-
+MousePosition.prototype.onMapMove = function () {
     var self = this;
 
     var map = this.getMap();
@@ -1148,10 +1138,9 @@ MousePosition.prototype.onMapMove = function() {
 
     // calcul de l'altitude après un certain délai après l'arrêt du mouvement de la souris
     clearTimeout(this._timer);
-    this._timer = setTimeout(function() {
+    this._timer = setTimeout(function () {
         self.onMoveStopped(coordinate, crs);
     }, this.options.altitude.triggerDelay);
-
 };
 
 // ################################################################### //
@@ -1166,8 +1155,7 @@ MousePosition.prototype.onMapMove = function() {
  * @param {Object} coordinate - {lat:..., lng:...}
  * @private
  */
-MousePosition.prototype.onRequestAltitude = function(coordinate, callback) {
-
+MousePosition.prototype.onRequestAltitude = function (coordinate, callback) {
     // INFORMATION
     // on effectue la requête au service d'altitude...
     // on met en place des callbacks afin de recuperer les resultats ou
@@ -1206,8 +1194,8 @@ MousePosition.prototype.onRequestAltitude = function(coordinate, callback) {
     // ainsi que les coordonnées
     var _zonly = true;
     var _positions = [{
-        lon: coordinate[0],
-        lat: coordinate[1]
+        lon : coordinate[0],
+        lat : coordinate[1]
     }];
 
     // et les callbacks
@@ -1219,20 +1207,20 @@ MousePosition.prototype.onRequestAltitude = function(coordinate, callback) {
     if (!_rawResponse) {
         // dans le cas général
         /** callback onSuccess */
-        _onSuccess = function(results) {
+        _onSuccess = function (results) {
             if (results && Object.keys(results)) {
                 callback.call(this, results.elevations[0].z);
             }
         };
     } else {
         /** callback onSuccess */
-        _onSuccess = function(results) {
+        _onSuccess = function (results) {
             console.log("alti service raw response : ", results);
         };
     }
 
     /** callback onFailure */
-    _onFailure = function(error) {
+    _onFailure = function (error) {
         console.log("[getAltitude] ERROR : " + error.message);
     };
 
@@ -1241,15 +1229,15 @@ MousePosition.prototype.onRequestAltitude = function(coordinate, callback) {
     var _apiKey = options.apiKey || this.options.apiKey;
 
     Gp.Services.getAltitude({
-        apiKey: _apiKey,
-        protocol: _protocol,
-        timeOut: _timeout,
-        scope: _scope,
-        rawResponse: _rawResponse,
-        onSuccess: _onSuccess,
-        onFailure: _onFailure,
-        zonly: _zonly,
-        positions: _positions
+        apiKey : _apiKey,
+        protocol : _protocol,
+        timeOut : _timeout,
+        scope : _scope,
+        rawResponse : _rawResponse,
+        onSuccess : _onSuccess,
+        onFailure : _onFailure,
+        zonly : _zonly,
+        positions : _positions
     });
 };
 
@@ -1261,8 +1249,7 @@ MousePosition.prototype.onRequestAltitude = function(coordinate, callback) {
  * @method onShowMousePositionClick
  * @private
  */
-MousePosition.prototype.onShowMousePositionClick = function() {
-
+MousePosition.prototype.onShowMousePositionClick = function () {
     // checked : true - panel close
     // checked : false - panel open
     var map = this.getMap();
@@ -1305,7 +1292,7 @@ MousePosition.prototype.onShowMousePositionClick = function() {
  * @method onMousePositionEditModeClick
  * @param {Boolean} editing - editing mode
  */
-MousePosition.prototype.onMousePositionEditModeClick = function(editing) {
+MousePosition.prototype.onMousePositionEditModeClick = function (editing) {
     if (!this.options.editCoordinates) {
         return;
     }
@@ -1351,7 +1338,7 @@ MousePosition.prototype.onMousePositionEditModeClick = function(editing) {
  * @returns {undefined}
  * @private
  */
-MousePosition.prototype.getCoordinate = function(coordType) {
+MousePosition.prototype.getCoordinate = function (coordType) {
     var inputDegrees = document.getElementById(this._addUID("GPmousePosition" + coordType + "Degrees"));
     var degrees = inputDegrees.value;
     if (!degrees) {
@@ -1405,7 +1392,7 @@ MousePosition.prototype.getCoordinate = function(coordType) {
  * @method locateDMSCoordinates
  * @private
  */
-MousePosition.prototype.locateDMSCoordinates = function() {
+MousePosition.prototype.locateDMSCoordinates = function () {
     var lonlat = [
         this.getCoordinate("Lon"),
         this.getCoordinate("Lat")
@@ -1437,7 +1424,7 @@ MousePosition.prototype.locateDMSCoordinates = function() {
  * @method locateCoordinates
  * @private
  */
-MousePosition.prototype.locateCoordinates = function() {
+MousePosition.prototype.locateCoordinates = function () {
     var lon = document.getElementById(this._addUID("GPmousePositionLon")).value;
 
     lon = lon.replace(",", ".");
@@ -1494,7 +1481,7 @@ MousePosition.prototype.locateCoordinates = function() {
  * @method locate
  * @private
  */
-MousePosition.prototype.onMousePositionEditModeLocateClick = function() {
+MousePosition.prototype.onMousePositionEditModeLocateClick = function () {
     if (!this.options.editCoordinates) {
         return;
     }
@@ -1519,8 +1506,7 @@ MousePosition.prototype.onMousePositionEditModeLocateClick = function() {
  * @param {Object} e - HTMLElement
  * @private
  */
-MousePosition.prototype.onMousePositionProjectionSystemChange = function(e) {
-
+MousePosition.prototype.onMousePositionProjectionSystemChange = function (e) {
     var idx = e.target.selectedIndex; // index
     var value = e.target.options[idx].value; // crs
 
@@ -1534,7 +1520,7 @@ MousePosition.prototype.onMousePositionProjectionSystemChange = function(e) {
  * @param {Object} systemCode - inner code (rank in array _projectionSystems)
  * @private
  */
-MousePosition.prototype._setCurrentSystem = function(systemCode) {
+MousePosition.prototype._setCurrentSystem = function (systemCode) {
     // si on change de type de systeme, on doit aussi changer le type d'unités !
     var type = null;
     for (var i = 0; i < this._projectionSystems.length; ++i) {
@@ -1572,8 +1558,7 @@ MousePosition.prototype._setCurrentSystem = function(systemCode) {
  * @param {Object} e - HTMLElement
  * @private
  */
-MousePosition.prototype.onMousePositionProjectionSystemMouseOver = function(e) {
-
+MousePosition.prototype.onMousePositionProjectionSystemMouseOver = function (e) {
     logger.trace(e);
 
     // map infos
@@ -1588,7 +1573,7 @@ MousePosition.prototype.onMousePositionProjectionSystemMouseOver = function(e) {
     // get extent in WGS84 coordinates
     mapExtent = ol.proj.transformExtent(mapExtent, crs, "EPSG:4326");
 
-    /*clear select*/
+    /* clear select */
     var systemList = document.getElementById(this._addUID("GPmousePositionProjectionSystem"));
     systemList.innerHTML = "";
 
@@ -1598,7 +1583,7 @@ MousePosition.prototype.onMousePositionProjectionSystemMouseOver = function(e) {
         var option = null;
 
         if (proj.geoBBox) {
-            /*bboxes intersection test*/
+            /* bboxes intersection test */
             if (mapExtent[0] > proj.geoBBox.right ||
                 mapExtent[1] > proj.geoBBox.top ||
                 mapExtent[2] < proj.geoBBox.left ||
@@ -1637,8 +1622,7 @@ MousePosition.prototype.onMousePositionProjectionSystemMouseOver = function(e) {
  * @param {Object} e - HTMLElement
  * @private
  */
-MousePosition.prototype.onMousePositionProjectionUnitsChange = function(e) {
-
+MousePosition.prototype.onMousePositionProjectionUnitsChange = function (e) {
     var idx = e.target.selectedIndex;
     var value = e.target.options[idx].value;
 
@@ -1668,7 +1652,7 @@ MousePosition.prototype.onMousePositionProjectionUnitsChange = function(e) {
  * @returns {undefined}
  * @private
  */
-MousePosition.prototype.convert = function(value) {
+MousePosition.prototype.convert = function (value) {
     var result;
     if (this._currentProjectionUnits === "M" || this._currentProjectionUnits === "DEC") {
         result = value;
@@ -1691,7 +1675,7 @@ MousePosition.prototype.convert = function(value) {
  * @returns {Boolean}
  * @private
  */
-MousePosition.prototype.validateExtentCoordinate = function(coordType, value) {
+MousePosition.prototype.validateExtentCoordinate = function (coordType, value) {
     if (["Lon", "Lat"].indexOf(coordType) === -1) {
         return false;
     }

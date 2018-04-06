@@ -1,7 +1,11 @@
 var DrawingDOM = {
 
-    /** Add uuid to the tag ID */
-    _addUID: function(id) {
+    /**
+    * Add uuid to the tag ID
+    * @param {String} id - id selector
+    * @returns {String} uid - id selector with an unique id
+    */
+    _addUID : function (id) {
         var uid = (this._uid) ? id + "-" + this._uid : id;
         return uid;
     },
@@ -11,8 +15,7 @@ var DrawingDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createMainContainerElement: function() {
-
+    _createMainContainerElement : function () {
         var container = document.createElement("div");
         container.id = this._addUID("GPdrawing");
         container.className = "GPwidget";
@@ -28,8 +31,7 @@ var DrawingDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createShowDrawingElement: function() {
-
+    _createShowDrawingElement : function () {
         var input = document.createElement("input");
         input.id = this._addUID("GPshowDrawing");
         input.className = "GPshowDrawing";
@@ -42,8 +44,7 @@ var DrawingDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createShowDrawingPictoElement: function() {
-
+    _createShowDrawingPictoElement : function () {
         var self = this;
 
         var label = document.createElement("label");
@@ -57,11 +58,11 @@ var DrawingDOM = {
         // L'ouverture/Fermeture permet de faire le menage
         // (reinitialisation)
         if (label.addEventListener) {
-            label.addEventListener("click", function(e) {
+            label.addEventListener("click", function (e) {
                 self.onShowDrawingClick(e);
             });
         } else if (label.attachEvent) {
-            label.attachEvent("onclick", function(e) {
+            label.attachEvent("onclick", function (e) {
                 self.onShowDrawingClick(e);
             });
         }
@@ -79,8 +80,7 @@ var DrawingDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createDrawingPanelElement: function() {
-
+    _createDrawingPanelElement : function () {
         var div = document.createElement("div");
         div.id = this._addUID("GPdrawingPanel");
         div.className = "GPpanel";
@@ -90,66 +90,66 @@ var DrawingDOM = {
         this.dtOptions = {};
         if (this.options.tools.points) {
             this.dtOptions.points = {
-                label: this.options.labels.points,
-                active: false,
-                panel: "draw",
-                id: "point"
+                label : this.options.labels.points,
+                active : false,
+                panel : "draw",
+                id : "point"
             };
         }
         if (this.options.tools.lines) {
             this.dtOptions.lines = {
-                label: this.options.labels.lines,
-                active: false,
-                panel: "draw",
-                id: "line"
+                label : this.options.labels.lines,
+                active : false,
+                panel : "draw",
+                id : "line"
             };
         }
         if (this.options.tools.polygons) {
             this.dtOptions.polygons = {
-                label: this.options.labels.polygons,
-                active: false,
-                panel: "draw",
-                id: "polygon"
+                label : this.options.labels.polygons,
+                active : false,
+                panel : "draw",
+                id : "polygon"
             };
         }
         if (this.options.tools.text) {
             this.dtOptions.text = {
-                label: this.options.labels.text,
-                active: false,
-                panel: "draw",
-                id: "text"
+                label : this.options.labels.text,
+                active : false,
+                panel : "draw",
+                id : "text"
             };
         }
         if (this.options.tools.edit) {
             this.dtOptions.edit = {
-                label: this.options.labels.edit,
-                active: false,
-                panel: "edit",
-                id: "edit"
+                label : this.options.labels.edit,
+                active : false,
+                panel : "edit",
+                id : "edit"
             };
         }
         if (this.options.tools.display) {
             this.dtOptions.display = {
-                label: this.options.labels.display,
-                active: false,
-                panel: "edit",
-                id: "display"
+                label : this.options.labels.display,
+                active : false,
+                panel : "edit",
+                id : "display"
             };
         }
         if (this.options.tools.tooltip) {
             this.dtOptions.tooltip = {
-                label: this.options.labels.tooltip,
-                active: false,
-                panel: "edit",
-                id: "tooltip"
+                label : this.options.labels.tooltip,
+                active : false,
+                panel : "edit",
+                id : "tooltip"
             };
         }
         if (this.options.tools.remove) {
             this.dtOptions.remove = {
-                label: this.options.labels.remove,
-                active: false,
-                panel: "edit",
-                id: "remove"
+                label : this.options.labels.remove,
+                active : false,
+                panel : "edit",
+                id : "remove"
             };
         }
         // ajout drawing tools
@@ -175,15 +175,17 @@ var DrawingDOM = {
         }
 
         return div;
-
     },
 
     // ################################################################### //
     // ####################### Panel container ########################### //
     // ################################################################### //
 
-    /** ... */
-    _createDrawingPanelHeaderElement: function() {
+    /**
+    * Creates drawing Panel header DOM structure
+    * @returns {DOMElement} DOM element
+    */
+    _createDrawingPanelHeaderElement : function () {
         /*
          * <div class="GPpanelHeader">
          *     <div class="GPpanelTitle">Annoter la carte</div>
@@ -207,11 +209,11 @@ var DrawingDOM = {
         // Link panel close / visibility checkbox
         var dtObj = this;
         if (divClose.addEventListener) {
-            divClose.addEventListener("click", function() {
+            divClose.addEventListener("click", function () {
                 document.getElementById(dtObj._addUID("GPshowDrawingPicto")).click();
             }, false);
         } else if (divClose.attachEvent) {
-            divClose.attachEvent("onclick", function() {
+            divClose.attachEvent("onclick", function () {
                 document.getElementById(dtObj._addUID("GPshowDrawingPicto")).click();
             });
         }
@@ -228,7 +230,7 @@ var DrawingDOM = {
      * @param {String} panelType - Drawing ("draw") or editing ("edit") tools panel
      * @returns {DOMElement} DOM element
      */
-    _createDrawingToolSection: function(sectionLabel, panelType) {
+    _createDrawingToolSection : function (sectionLabel, panelType) {
         /*
          * Exemple panelType == "draw"
          *
@@ -254,14 +256,14 @@ var DrawingDOM = {
         ul.className = "drawing-tools-flex-display";
         var context = this;
         /** li click handler function */
-        function liClickHandler(e) {
-            /*jshint validthis: true */
+        function liClickHandler (e) {
+            /* jshint validthis: true */
             // this == elem clicked
             context._handleDOMToolClick(e, this.id, context);
             context._handleToolClick(e, this.id, context);
         }
         for (var type in this.dtOptions) {
-            if (this.dtOptions[type].panel != panelType) {
+            if (this.dtOptions[type].panel !== panelType) {
                 continue;
             }
             var li = document.createElement("li");
@@ -283,7 +285,7 @@ var DrawingDOM = {
      * @param {String} buttonTitle - Button title
      * @returns {DOMElement} DOM element
      */
-    _createSavingSection: function(buttonLabel, buttonTitle) {
+    _createSavingSection : function (buttonLabel, buttonTitle) {
         /*
          * <div class="drawing-tool-section drawing-tools-flex-display">
          *     <button title="Exporter en KML" class="tool-form-submit drawing-button" id="drawing-export" type="button">Exporter</button>
@@ -300,7 +302,7 @@ var DrawingDOM = {
         button.textContent = buttonLabel;
         var context = this;
         /** export function */
-        button.onclick = function() {
+        button.onclick = function () {
             context.onExportFeatureClick();
         };
         container.appendChild(button);
@@ -313,11 +315,11 @@ var DrawingDOM = {
      * (Code adapted from : https://gist.github.com/mstssk/afda4ce9e5c335fd79cd)
      *
      * @param {String} rgba - A color of RGB or RGBA format.
-     * returns {Object} hex and opacity formated values
+     * @returns {Object} hex and opacity formated values
      */
-    rgbaToHex: function(rgba) {
+    rgbaToHex : function (rgba) {
         /** number to hex conversion */
-        function hex(number) {
+        function hex (number) {
             if (number > 255) {
                 throw "'" + number + "'' is greater than 255(0xff);";
             }
@@ -346,19 +348,25 @@ var DrawingDOM = {
     /**
      * Converts hex color and opacity value to rgba String.
      * (Code adapted from : http://stackoverflow.com/a/5624139)
+     * @param {String} hex - A color value on RGB format (hexa).
+     * @param {Number} opacity - A opacity value.
+     * @returns {String} A color of RGB or RGBA format
      */
-    hexToRgba: function(hex, opacity) {
+    hexToRgba : function (hex, opacity) {
         // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
         var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-        hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+        if (!hex) {
+            throw "Invalid format";
+        }
+        hex = hex.replace(shorthandRegex, function (m, r, g, b) {
             return r + r + g + g + b + b;
         });
 
         var rgb = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
         rgb = rgb ? {
-            r: parseInt(rgb[1], 16),
-            g: parseInt(rgb[2], 16),
-            b: parseInt(rgb[3], 16)
+            r : parseInt(rgb[1], 16),
+            g : parseInt(rgb[2], 16),
+            b : parseInt(rgb[3], 16)
         } : null;
         var result = rgb ? "rgba(" + rgb.r + ", " + rgb.g + ", " + rgb.b + ", " + opacity + ")" : null;
         return result;
@@ -372,7 +380,7 @@ var DrawingDOM = {
      * @param {String} options.className - input className
      * @returns {DOMElement} - created li element
      */
-    _createMarkersChooser: function(options) {
+    _createMarkersChooser : function (options) {
         var li = document.createElement("li");
         li.className = options.className;
         for (var i = 0; i < this.options.markersList.length; i++) {
@@ -383,7 +391,7 @@ var DrawingDOM = {
             inputElem.id = this._addUID("marker-" + i);
             inputElem.value = this.options.markersList[i].src;
             inputElem.className = "marker-input-radio";
-            if (options.defaultValue == inputElem.value) {
+            if (options.defaultValue === inputElem.value) {
                 inputElem.checked = true;
             }
             li.appendChild(inputElem);
@@ -411,7 +419,7 @@ var DrawingDOM = {
      * @param {String} options.className - input className
      * @returns {DOMElement} - created li element
      */
-    _createStylingElement: function(options) {
+    _createStylingElement : function (options) {
         var li = document.createElement("li");
         li.className = options.className;
         var textNode = document.createTextNode(options.label);
@@ -452,7 +460,7 @@ var DrawingDOM = {
      * @param {Function} options.applyFunc - function called when apply is selected
      * @returns {DOMElement} DOM element created
      */
-    _createStylingDiv: function(options) {
+    _createStylingDiv : function (options) {
         var div = document.createElement("div");
         div.className = "gp-styling-div";
         var ul = document.createElement("ul");
@@ -463,91 +471,91 @@ var DrawingDOM = {
         switch (options.geomType.toLowerCase()) {
             case "point":
                 li = this._createMarkersChooser({
-                    className: "gp-styling-option",
+                    className : "gp-styling-option",
                     // defaultValue : this.options.markersList[0].src
-                    defaultValue: options.initValues.markerSrc
+                    defaultValue : options.initValues.markerSrc
                 });
                 ul.appendChild(li);
                 break;
             case "text":
                 li = this._createStylingElement({
-                    type: "color",
-                    className: "gp-styling-option",
-                    label: this.options.labels.fillColor,
-                    id: this._addUID("fillColor"),
-                    defaultValue: options.initValues.fillColor
+                    type : "color",
+                    className : "gp-styling-option",
+                    label : this.options.labels.fillColor,
+                    id : this._addUID("fillColor"),
+                    defaultValue : options.initValues.fillColor
                 });
                 ul.appendChild(li);
                 li = this._createStylingElement({
-                    type: "color",
-                    className: "gp-styling-option",
-                    label: this.options.labels.strokeColor,
-                    id: this._addUID("strokeColor"),
-                    defaultValue: options.initValues.strokeColor
+                    type : "color",
+                    className : "gp-styling-option",
+                    label : this.options.labels.strokeColor,
+                    id : this._addUID("strokeColor"),
+                    defaultValue : options.initValues.strokeColor
                 });
                 ul.appendChild(li);
                 break;
             case "line":
                 li = this._createStylingElement({
-                    type: "color",
-                    className: "gp-styling-option",
-                    label: this.options.labels.strokeColor,
-                    id: this._addUID("strokeColor"),
-                    defaultValue: options.initValues.strokeColor
+                    type : "color",
+                    className : "gp-styling-option",
+                    label : this.options.labels.strokeColor,
+                    id : this._addUID("strokeColor"),
+                    defaultValue : options.initValues.strokeColor
                 });
                 ul.appendChild(li);
                 li = this._createStylingElement({
-                    type: "range",
-                    className: "gp-styling-option",
-                    label: this.options.labels.strokeWidth,
-                    title: "1 à 10 pixels",
-                    id: this._addUID("strokeWidth"),
-                    min: 1,
-                    max: 10,
-                    step: 1,
-                    defaultValue: options.initValues.strokeWidth
+                    type : "range",
+                    className : "gp-styling-option",
+                    label : this.options.labels.strokeWidth,
+                    title : "1 à 10 pixels",
+                    id : this._addUID("strokeWidth"),
+                    min : 1,
+                    max : 10,
+                    step : 1,
+                    defaultValue : options.initValues.strokeWidth
                 });
                 ul.appendChild(li);
                 break;
             case "polygon":
                 li = this._createStylingElement({
-                    type: "color",
-                    className: "gp-styling-option",
-                    label: this.options.labels.strokeColor,
-                    id: this._addUID("strokeColor"),
-                    defaultValue: options.initValues.strokeColor
+                    type : "color",
+                    className : "gp-styling-option",
+                    label : this.options.labels.strokeColor,
+                    id : this._addUID("strokeColor"),
+                    defaultValue : options.initValues.strokeColor
                 });
                 ul.appendChild(li);
                 li = this._createStylingElement({
-                    type: "range",
-                    className: "gp-styling-option",
-                    label: this.options.labels.strokeWidth,
-                    title: "1 à 10 pixels",
-                    id: this._addUID("strokeWidth"),
-                    min: 1,
-                    max: 10,
-                    step: 1,
-                    defaultValue: options.initValues.strokeWidth
+                    type : "range",
+                    className : "gp-styling-option",
+                    label : this.options.labels.strokeWidth,
+                    title : "1 à 10 pixels",
+                    id : this._addUID("strokeWidth"),
+                    min : 1,
+                    max : 10,
+                    step : 1,
+                    defaultValue : options.initValues.strokeWidth
                 });
                 ul.appendChild(li);
                 li = this._createStylingElement({
-                    type: "color",
-                    className: "gp-styling-option",
-                    label: this.options.labels.fillColor,
-                    id: this._addUID("fillColor"),
-                    defaultValue: options.initValues.fillColor
+                    type : "color",
+                    className : "gp-styling-option",
+                    label : this.options.labels.fillColor,
+                    id : this._addUID("fillColor"),
+                    defaultValue : options.initValues.fillColor
                 });
                 ul.appendChild(li);
                 li = this._createStylingElement({
-                    type: "range",
-                    className: "gp-styling-option",
-                    label: this.options.labels.fillOpacity,
-                    title: "0 (transparent) à 100% (opaque)",
-                    id: this._addUID("fillOpacity"),
-                    min: 0,
-                    max: 10,
-                    step: 1,
-                    defaultValue: options.initValues.fillOpacity * 10
+                    type : "range",
+                    className : "gp-styling-option",
+                    label : this.options.labels.fillOpacity,
+                    title : "0 (transparent) à 100% (opaque)",
+                    id : this._addUID("fillOpacity"),
+                    min : 0,
+                    max : 10,
+                    step : 1,
+                    defaultValue : options.initValues.fillOpacity * 10
                 });
                 ul.appendChild(li);
                 break;
@@ -561,7 +569,7 @@ var DrawingDOM = {
         applyButton.className = "gp-styling-button";
         applyButton.value = this.options.labels.applyToObject;
         /** click sur applyButton */
-        applyButton.onclick = function() {
+        applyButton.onclick = function () {
             options.applyFunc.call(this, "apply");
         };
         div.appendChild(applyButton);
@@ -571,7 +579,7 @@ var DrawingDOM = {
         setDefaultButton.value = this.options.labels.setAsDefault;
         setDefaultButton.className = "gp-styling-button";
         /** click sur set Default Button */
-        setDefaultButton.onclick = function() {
+        setDefaultButton.onclick = function () {
             options.applyFunc.call(this, "default");
         };
         div.appendChild(setDefaultButton);
@@ -581,7 +589,7 @@ var DrawingDOM = {
         // cancelButton.value = "X" ;
         cancelButton.className = "gp-styling-button closer";
         /** click sur cancel Button */
-        cancelButton.onclick = function() {
+        cancelButton.onclick = function () {
             options.applyFunc.call(this, "cancel");
         };
         div.appendChild(cancelButton);
@@ -601,11 +609,11 @@ var DrawingDOM = {
      * @returns {DOMElement} DOM element created
      * @private
      */
-    _createLabelDiv: function(options) {
+    _createLabelDiv : function (options) {
         var popup = document.createElement("div");
         popup.className = "gp-label-div";
         var inputLabel = null;
-        if (options.geomType == "Text") {
+        if (options.geomType === "Text") {
             inputLabel = document.createElement("input");
             inputLabel.type = "text";
             inputLabel.className = "gp-input-label-style";
@@ -625,20 +633,20 @@ var DrawingDOM = {
         inputLabel.id = options.inputId;
         popup.appendChild(inputLabel);
         /** blur */
-        inputLabel.onblur = function() {
+        inputLabel.onblur = function () {
             options.applyFunc.call(this, inputLabel.value, true);
         };
         /** keyup */
-        inputLabel.onkeyup = function(evtk) {
-            if (options.geomType == "Text" && evtk.keyCode == 13) {
+        inputLabel.onkeyup = function (evtk) {
+            if (options.geomType === "Text" && evtk.keyCode === 13) {
                 options.applyFunc.call(this, inputLabel.value, true);
             }
-            if (evtk.keyCode == 27) {
+            if (evtk.keyCode === 27) {
                 options.applyFunc.call(this, inputLabel.value, false);
             }
         };
 
-        if (options.measure && options.geomType != "Text") {
+        if (options.measure && options.geomType !== "Text") {
             var inputMeasure = document.createElement("input");
             inputMeasure.type = "text";
             inputMeasure.readonly = true;
@@ -647,14 +655,14 @@ var DrawingDOM = {
             popup.appendChild(inputMeasure);
         }
 
-        if (options.geomType != "Text") {
+        if (options.geomType !== "Text") {
             // apply button
             var applyButton = document.createElement("input");
             applyButton.type = "button";
             applyButton.className = "gp-styling-button";
             applyButton.value = this.options.labels.saveDescription;
             /** click sur applyButton */
-            applyButton.onclick = function() {
+            applyButton.onclick = function () {
                 options.applyFunc.call(this, inputLabel.value, true);
             };
             popup.appendChild(applyButton);
@@ -663,7 +671,7 @@ var DrawingDOM = {
             cancelButton.type = "button";
             cancelButton.className = "gp-styling-button closer";
             /** click sur cancel Button */
-            cancelButton.onclick = function() {
+            cancelButton.onclick = function () {
                 options.applyFunc.call(this, inputLabel.value, false);
             };
             popup.appendChild(cancelButton);
@@ -679,12 +687,12 @@ var DrawingDOM = {
      * @param {String} toolId - toolId selected
      * @param {DrawingDOM} context - Drawing control instance
      */
-    _handleDOMToolClick: function(e, toolId, context) {
+    _handleDOMToolClick : function (e, toolId, context) {
         for (var availType in context.dtOptions) {
             var availToolId = context._addUID("drawing-tool-" + context.dtOptions[availType].id);
             var li = document.getElementById(availToolId);
             // ce n'est pas l'outil selectionne : on le desactive (s'il ne l'était pas déjà).
-            if (availToolId != toolId) {
+            if (availToolId !== toolId) {
                 li.className = "drawing-tool";
                 context.dtOptions[availType].active = false;
                 continue;

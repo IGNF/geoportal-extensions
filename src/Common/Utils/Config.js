@@ -1,15 +1,14 @@
 var Config = {
 
     /** autoconf */
-    configuration: null,
+    configuration : null,
 
     /**
      * Controle du chargement de l'autoconf
      *
      * @returns {Boolean} isConfigLoaded - True si l'autoconf a déjà été chargée, False sinon.
      */
-    isConfigLoaded: function() {
-
+    isConfigLoaded : function () {
         var scope = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : typeof global !== "undefined" ? global : {};
         if (scope.Gp && scope.Gp.Config && Object.keys(scope.Gp.Config).length !== 0) {
             this.configuration = scope.Gp.Config;
@@ -25,8 +24,7 @@ var Config = {
      * @param {String} service   - nom du service (par ex. "WMS" ou "WMTS")
      * @returns {String} layerId - identifiant de la couche (par ex. "ORTHOIMAGERY.ORTHOPHOTOS$GEOPORTAIL:OGC:WMTS")
      */
-    getLayerId: function(layerName, service) {
-
+    getLayerId : function (layerName, service) {
         var layerId = null;
 
         // layer
@@ -41,7 +39,6 @@ var Config = {
             var layers = this.configuration["layers"];
             for (var key in layers) {
                 if (layers.hasOwnProperty(key)) {
-
                     var parts = key.split("$");
                     if (layerName === parts[0]) {
                         if (parts[1]) {
@@ -62,7 +59,7 @@ var Config = {
             }
         }
         if (!layerId) {
-            console.log("ERROR layer id (" + layerName + " / " + service + ") was not found !?");
+            console.log("ERROR layer id (layer name: " + layerName + " / service: " + service + ") was not found !?");
         }
 
         return layerId;
@@ -94,7 +91,7 @@ var Config = {
      * @returns {Array} params.[nativeResolutions] - Tableau regroupant les résolutions de chaque niveau de la matrice, dans le cas d'une couche WMTS
      * @returns {Array} params.[matrixIds]         - Tableau regroupant les identifiants de chaque niveau de la matrice, dans le cas d'une couche WMTS
      */
-    getLayerParams: function(layerName, service, apiKey) {
+    getLayerParams : function (layerName, service, apiKey) {
         var params = {};
 
         if (this.configuration) {
@@ -167,8 +164,7 @@ var Config = {
      * @returns {String} params. -
      * @returns {String} params. -
      */
-    getServiceParams: function(resource, service, apiKey) {
-
+    getServiceParams : function (resource, service, apiKey) {
         var params = {};
 
         if (this.configuration) {
@@ -197,7 +193,6 @@ var Config = {
                 params.extent = layerConf.getBBOX();
                 params.title = layerConf.getTitle();
                 params.description = layerConf.getDescription();
-
             }
         }
 
@@ -207,7 +202,7 @@ var Config = {
     /**
      * Resolution en geographique
      */
-    getResolutions: function() {
+    getResolutions : function () {
         var resolutions = [];
 
         if (this.configuration) {
@@ -220,7 +215,7 @@ var Config = {
     /**
      * Recuperation des parametres TMS de la configuration
      */
-    getTileMatrix: function(tmsName) {
+    getTileMatrix : function (tmsName) {
         var tms = {};
 
         if (this.configuration) {
@@ -242,7 +237,7 @@ var Config = {
      * @returns {Number} params.maxScale   - Dénominateur d'échelle maximum de la couche
      * @returns {Gp.BBox} params.extent    - Etendue de la couche, dans la projection de la couche
      */
-    getGlobalConstraints: function(layerId) {
+    getGlobalConstraints : function (layerId) {
         var params = {};
 
         if (layerId) {

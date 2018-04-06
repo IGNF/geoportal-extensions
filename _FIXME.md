@@ -15,10 +15,27 @@ L'entête UMD en v4 est foireux...
 
 ## Fonctionnement du bundle en AMD
 
-Fonctionnement de la variable globale Gp en mode AMD est surprenante...
+Fonctionnement de la variable **Gp** en mode AMD...
+Il existe 2 variables **Gp** :
+* Gp est globale (window.Gp)
+* Gp est locale  (interne au code === import Gp from 'gp' ou define(Gp) ou requirejs(Gp))
 
-**???**
-> Cette variable ne semble pas être remplie correctement ?
+Ex.
+```
+requirejs.config({
+    "Gp" : "../../../dist/leaflet/GpPluginLeaflet-src"
+});
+requirejs(['Gp'], function (Gp) {
+    console.log(Gp);        // les fonctions sans la reponse AutoConf (Config) !
+    console.log(window.Gp); // pas encore defini par 'Gp.Services.getConfig' : undefined !
+    Gp.Services.getConfig({
+        onSuccess : function () {
+            console.log(Gp);        // les fonctions sans la reponse AutoConf (Config) !
+            console.log(window.Gp); // uniquement la reponse AutoConf (Config) !
+        }
+    });
+});
+```
 
 ## Itowns
 

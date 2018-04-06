@@ -3,8 +3,7 @@ var LayerUtils = {
     /**
      * Obtenir le ZoomLevel à partir du ScaleDenominator
      */
-    getZoomLevelFromScaleDenominator: function(scaleDenominator, crs) {
-
+    getZoomLevelFromScaleDenominator : function (scaleDenominator, crs) {
         // ------------------------------------------------- //
         // Code issu de l'API Geoportal/Catalogue/Config.js  //
         // ------------------------------------------------- //
@@ -95,54 +94,54 @@ var LayerUtils = {
         switch (crs) {
             case "EPSG:2154":
                 resolutionsNatives = {
-                    0: 104579.224549894,
-                    1: 52277.5323537905,
-                    2: 26135.4870785954,
-                    3: 13066.8913818,
-                    4: 6533.2286041135,
-                    5: 3266.5595244627,
-                    6: 1633.2660045974,
-                    7: 816.629554986,
-                    8: 408.3139146768,
-                    9: 204.1567415109,
-                    10: 102.0783167832,
-                    11: 51.0391448966,
-                    12: 25.5195690743,
-                    13: 12.7597836936,
-                    14: 6.379891636,
-                    15: 3.1899457653,
-                    16: 1.5949728695,
-                    17: 0.7974864315,
-                    18: 0.3987432149,
-                    19: 0.1993716073,
-                    20: 0.0996858037,
-                    21: 0.0498429018
+                    0 : 104579.224549894,
+                    1 : 52277.5323537905,
+                    2 : 26135.4870785954,
+                    3 : 13066.8913818,
+                    4 : 6533.2286041135,
+                    5 : 3266.5595244627,
+                    6 : 1633.2660045974,
+                    7 : 816.629554986,
+                    8 : 408.3139146768,
+                    9 : 204.1567415109,
+                    10 : 102.0783167832,
+                    11 : 51.0391448966,
+                    12 : 25.5195690743,
+                    13 : 12.7597836936,
+                    14 : 6.379891636,
+                    15 : 3.1899457653,
+                    16 : 1.5949728695,
+                    17 : 0.7974864315,
+                    18 : 0.3987432149,
+                    19 : 0.1993716073,
+                    20 : 0.0996858037,
+                    21 : 0.0498429018
                 };
                 break;
             default:
                 resolutionsNatives = {
-                    0: 156543.033928041,
-                    1: 78271.51696402048,
-                    2: 39135.758482010235,
-                    3: 19567.87924100512,
-                    4: 9783.93962050256,
-                    5: 4891.96981025128,
-                    6: 2445.98490512564,
-                    7: 1222.99245256282,
-                    8: 611.49622628141,
-                    9: 305.7481131407048,
-                    10: 152.8740565703525,
-                    11: 76.43702828517624,
-                    12: 38.21851414258813,
-                    13: 19.10925707129406,
-                    14: 9.554628535647032,
-                    15: 4.777314267823516,
-                    16: 2.388657133911758,
-                    17: 1.194328566955879,
-                    18: 0.5971642834779395,
-                    19: 0.2985821417389697,
-                    20: 0.1492910708694849,
-                    21: 0.0746455354347424
+                    0 : 156543.033928041,
+                    1 : 78271.51696402048,
+                    2 : 39135.758482010235,
+                    3 : 19567.87924100512,
+                    4 : 9783.93962050256,
+                    5 : 4891.96981025128,
+                    6 : 2445.98490512564,
+                    7 : 1222.99245256282,
+                    8 : 611.49622628141,
+                    9 : 305.7481131407048,
+                    10 : 152.8740565703525,
+                    11 : 76.43702828517624,
+                    12 : 38.21851414258813,
+                    13 : 19.10925707129406,
+                    14 : 9.554628535647032,
+                    15 : 4.777314267823516,
+                    16 : 2.388657133911758,
+                    17 : 1.194328566955879,
+                    18 : 0.5971642834779395,
+                    19 : 0.2985821417389697,
+                    20 : 0.1492910708694849,
+                    21 : 0.0746455354347424
                 };
                 break;
         }
@@ -177,14 +176,12 @@ var LayerUtils = {
      * @param {Gp.Services.Config.Originator} params.originators - resource originators (from Gp.Config.layers[].originators)
      * @returns {Object} attributions - associative array, mapping originators url (keys) with their properties : html attributions elements
      */
-    getAttributions: function(params) {
-
+    getAttributions : function (params) {
         var zoom = params.zoom;
 
         var attributions = [];
 
         if (params.originators != null && params.visibility) {
-
             // drawLogo = boolean, true if attribution should be displayed (zoom, extent), false otherwise
             var drawLogo;
             for (var j = 0, jl = params.originators.length; j < jl; j++) {
@@ -193,7 +190,6 @@ var LayerUtils = {
 
                 var constraints = params.originators[j].constraints || [];
                 for (var k = 0, kl = constraints.length; k < kl; k++) {
-
                     var constraint = constraints[k];
                     drawLogo = true;
 
@@ -247,7 +243,7 @@ var LayerUtils = {
                         link.href = url;
                     }
 
-                    var bImage = (logo) ? true : false;
+                    var bImage = !!(logo);
                     var image = null;
                     // si on a un logo, on l'affiche à l'interieur du lien
                     if (bImage) {
@@ -259,7 +255,7 @@ var LayerUtils = {
                             image.className = "";
                             container.appendChild(image);
                         }
-                        image.src = logo; // FIXME : mixContent ! 
+                        image.src = logo; // FIXME : mixContent !
                         image.title = text || name;
                         image.style.height = "30px";
                         image.style.width = "30px";
@@ -291,7 +287,7 @@ var LayerUtils = {
      * @param {Array.<Float>} extent2 - Second extent : [top, left, bottom, right] = [maxy, minx, miny, maxx]
      * @return {Boolean} intersects - True if the two extents intersect, false otherwise.
      */
-    intersects: function(extent1, extent2) {
+    intersects : function (extent1, extent2) {
         var intersectsX = (extent1[1] <= extent2[3]) && (extent2[1] <= extent1[3]);
         var intersectsY = (extent1[2] <= extent2[0]) && (extent2[2] <= extent1[0]);
         return intersectsX && intersectsY;

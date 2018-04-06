@@ -15,8 +15,7 @@ export default {
      *       service-2 : [resource-1, resource-2]
      * }
      */
-    check: function(options) {
-
+    check : function (options) {
         // logger
 
         var logger = Logger.getLogger("checkrightmanagement");
@@ -64,7 +63,6 @@ export default {
 
         // la clef API n'est pas renseignée
         if (!_key) {
-
             // on verifie si l'autoconfiguration est disponible
 
             if (!Config.isConfigLoaded()) {
@@ -77,7 +75,6 @@ export default {
                     "so impossible to check yours rights !");
 
                 return;
-
             } else {
                 // si l'autoconfiguration est chargée,
                 // on recupere la clef API, et on en profitera ensuite pour controler
@@ -91,7 +88,6 @@ export default {
 
         // la clef API est renseignée ou recuperée de l'autoconfiguration
         if (_key) {
-
             // on verifie si l'autoconfiguration est disponible
 
             if (!Config.isConfigLoaded()) {
@@ -124,7 +120,6 @@ export default {
                 logger.log("right management not checked", _noRightManagement);
 
                 return _noRightManagement;
-
             } else {
                 // si l'autoconf est chargée,
                 // on verifie la correspondance entre la clef et l'autoconfiguration,
@@ -171,7 +166,6 @@ export default {
                 logger.log("right management checked", _rightManagement);
 
                 return _rightManagement;
-
             }
         }
     }

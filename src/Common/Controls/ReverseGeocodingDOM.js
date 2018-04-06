@@ -1,7 +1,11 @@
 var ReverseGeocodingDOM = {
 
-    /** Add uuid to the tag ID */
-    _addUID: function(id) {
+    /**
+    * Add uuid to the tag ID
+    * @param {String} id - id selector
+    * @returns {String} uid - id selector with an unique id
+    */
+    _addUID : function (id) {
         var uid = (this._uid) ? id + "-" + this._uid : id;
         return uid;
     },
@@ -11,8 +15,7 @@ var ReverseGeocodingDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createMainContainerElement: function() {
-
+    _createMainContainerElement : function () {
         var container = document.createElement("div");
         container.id = this._addUID("GPreverseGeocoding");
         container.className = "GPwidget";
@@ -28,8 +31,7 @@ var ReverseGeocodingDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createShowReverseGeocodingElement: function() {
-
+    _createShowReverseGeocodingElement : function () {
         var input = document.createElement("input");
         input.id = this._addUID("GPshowReverseGeocoding");
         input.type = "checkbox";
@@ -41,8 +43,7 @@ var ReverseGeocodingDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createShowReverseGeocodingPictoElement: function() {
-
+    _createShowReverseGeocodingPictoElement : function () {
         // contexte d'execution
         var self = this;
 
@@ -54,11 +55,11 @@ var ReverseGeocodingDOM = {
 
         // Close all results and panels when minimizing the widget
         if (label.addEventListener) {
-            label.addEventListener("click", function() {
+            label.addEventListener("click", function () {
                 self.onShowReverseGeocodingClick();
             });
         } else if (label.attachEvent) {
-            label.attachEvent("onclick", function() {
+            label.attachEvent("onclick", function () {
                 self.onShowReverseGeocodingClick();
             });
         }
@@ -76,7 +77,7 @@ var ReverseGeocodingDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createReverseGeocodingWaitingElement: function() {
+    _createReverseGeocodingWaitingElement : function () {
         var div = document.createElement("div");
         div.id = this._addUID("GPreverseGeocodingCalcWaitingContainer");
         div.className = "GPreverseGeocodingCalcWaitingContainerHidden";
@@ -95,7 +96,7 @@ var ReverseGeocodingDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createReverseGeocodingResultsPanelElement: function() {
+    _createReverseGeocodingResultsPanelElement : function () {
         var resultsPanelDiv = document.createElement("div");
         resultsPanelDiv.id = this._addUID("GPreverseGeocodingResultsPanel");
         resultsPanelDiv.className = "GPpanel GPreverseGeocodingComponentHidden";
@@ -107,7 +108,7 @@ var ReverseGeocodingDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createReverseGeocodingResultsListElement: function() {
+    _createReverseGeocodingResultsListElement : function () {
         var container = document.createElement("div");
         container.id = this._addUID("GPreverseGeocodingResultsList");
         // Results are dynamically filled in Javascript by reverse geocoding service
@@ -121,8 +122,7 @@ var ReverseGeocodingDOM = {
      * @param {String} locationDescription - reverse geocoded location results
      * @param {Number} id - ID
      */
-    _createReverseGeocodingResultElement: function(locationDescription, id) {
-
+    _createReverseGeocodingResultElement : function (locationDescription, id) {
         // contexte
         var context = this;
 
@@ -135,25 +135,25 @@ var ReverseGeocodingDOM = {
         div.title = locationDescription;
 
         if (div.addEventListener) {
-            div.addEventListener("mouseover", function(e) {
+            div.addEventListener("mouseover", function (e) {
                 context.onReverseGeocodingResultMouseOver(e);
             });
-            div.addEventListener("mouseout", function(e) {
+            div.addEventListener("mouseout", function (e) {
                 context.onReverseGeocodingResultMouseOut(e);
             });
-            div.addEventListener("click", function(e) {
+            div.addEventListener("click", function (e) {
                 if (typeof context.onReverseGeocodingResultClick === "function") {
                     context.onReverseGeocodingResultClick(e);
                 }
             });
         } else if (div.attachEvent) {
-            div.attachEvent("onmouseover", function(e) {
+            div.attachEvent("onmouseover", function (e) {
                 context.onReverseGeocodingResultMouseOver(e);
             });
-            div.attachEvent("onmouseout", function(e) {
+            div.attachEvent("onmouseout", function (e) {
                 context.onReverseGeocodingResultMouseOut(e);
             });
-            div.attachEvent("onclick", function(e) {
+            div.attachEvent("onclick", function (e) {
                 if (typeof context.onReverseGeocodingResultClick === "function") {
                     context.onReverseGeocodingResultClick(e);
                 }
@@ -172,7 +172,7 @@ var ReverseGeocodingDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createReverseGeocodingPanelElement: function() {
+    _createReverseGeocodingPanelElement : function () {
         var div = document.createElement("div");
         div.id = this._addUID("GPreverseGeocodingPanel");
         div.className = "GPpanel";
@@ -185,7 +185,7 @@ var ReverseGeocodingDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createReverseGeocodingPanelHeaderElement: function() {
+    _createReverseGeocodingPanelHeaderElement : function () {
         var container = document.createElement("div");
         container.className = "GPpanelHeader";
         // info: on sépare les appels pour la création du picto de retour,
@@ -198,7 +198,7 @@ var ReverseGeocodingDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createReverseGeocodingPanelReturnPictoElement: function() {
+    _createReverseGeocodingPanelReturnPictoElement : function () {
         // contexte
         var self = this;
 
@@ -207,7 +207,7 @@ var ReverseGeocodingDOM = {
         divNew.title = "Nouvelle recherche";
         divNew.className = "GPreverseGeocodingReturnPictoHidden";
         if (divNew.addEventListener) {
-            divNew.addEventListener("click", function(e) {
+            divNew.addEventListener("click", function (e) {
                 document.getElementById(self._addUID("GPreverseGeocodingResultsPanel")).className = "GProuteComponentHidden";
                 document.getElementById(self._addUID("GPreverseGeocodingForm")).className = "";
                 document.getElementById(self._addUID("GPreverseGeocodingHeaderTitle")).innerHTML = "Recherche inverse";
@@ -215,7 +215,7 @@ var ReverseGeocodingDOM = {
                 self.onGPreverseGeocodingReturnPictoClick(e);
             });
         } else if (divNew.attachEvent) {
-            divNew.attachEvent("onclick", function(e) {
+            divNew.attachEvent("onclick", function (e) {
                 document.getElementById(self._addUID("GPreverseGeocodingResultsPanel")).className = "GProuteComponentHidden";
                 document.getElementById(self._addUID("GPreverseGeocodingForm")).className = "";
                 document.getElementById(self._addUID("GPreverseGeocodingHeaderTitle")).innerHTML = "Recherche inverse";
@@ -231,7 +231,7 @@ var ReverseGeocodingDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createReverseGeocodingPanelTitleElement: function() {
+    _createReverseGeocodingPanelTitleElement : function () {
         var div = document.createElement("div");
         div.className = "GPpanelTitle";
         div.id = this._addUID("GPreverseGeocodingHeaderTitle");
@@ -244,7 +244,7 @@ var ReverseGeocodingDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createReverseGeocodingPanelCloseElement: function() {
+    _createReverseGeocodingPanelCloseElement : function () {
         // contexte
         var self = this;
 
@@ -255,11 +255,11 @@ var ReverseGeocodingDOM = {
 
         // Link panel close / visibility checkbox
         if (divClose.addEventListener) {
-            divClose.addEventListener("click", function() {
+            divClose.addEventListener("click", function () {
                 document.getElementById(self._addUID("GPshowReverseGeocodingPicto")).click();
             }, false);
         } else if (divClose.attachEvent) {
-            divClose.attachEvent("onclick", function() {
+            divClose.attachEvent("onclick", function () {
                 document.getElementById(self._addUID("GPshowReverseGeocodingPicto")).click();
             });
         }
@@ -273,8 +273,7 @@ var ReverseGeocodingDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createReverseGeocodingPanelFormElement: function() {
-
+    _createReverseGeocodingPanelFormElement : function () {
         // contexte d'execution
         var self = this;
 
@@ -282,12 +281,12 @@ var ReverseGeocodingDOM = {
         form.id = this._addUID("GPreverseGeocodingForm");
 
         if (form.addEventListener) {
-            form.addEventListener("submit", function(e) {
+            form.addEventListener("submit", function (e) {
                 e.preventDefault();
                 self.onReverseGeocodingSubmit();
             });
         } else if (form.attachEvent) {
-            form.attachEvent("onsubmit", function(e) {
+            form.attachEvent("onsubmit", function (e) {
                 e.preventDefault();
                 self.onReverseGeocodingSubmit();
             });
@@ -306,8 +305,7 @@ var ReverseGeocodingDOM = {
      * @param {Array} resources - geocoding resources to be displayed (and used)
      * @returns {DOMElement} DOM element
      */
-    _createReverseGeocodingFormModeChoiceGeocodingTypeElement: function(resources) {
-
+    _createReverseGeocodingFormModeChoiceGeocodingTypeElement : function (resources) {
         // contexte d'execution
         var context = this;
 
@@ -325,11 +323,11 @@ var ReverseGeocodingDOM = {
         // gestionnaire d'evenement : on stocke la valeur du type de geocodage,
         // utilisé dans la requête de géocodage inverse
         if (select.addEventListener) {
-            select.addEventListener("change", function(e) {
+            select.addEventListener("change", function (e) {
                 context.onReverseGeocodingTypeChange(e);
             });
         } else if (select.attachEvent) {
-            select.attachEvent("onchange", function(e) {
+            select.attachEvent("onchange", function (e) {
                 context.onReverseGeocodingTypeChange(e);
             });
         }
@@ -380,8 +378,7 @@ var ReverseGeocodingDOM = {
      * @param {Array} delimitations - geocoding delimitations to be displayed (and used)
      * @returns {DOMElement} DOM element
      */
-    _createReverseGeocodingFormModeChoiceGeocodingDelimitationElement: function(delimitations) {
-
+    _createReverseGeocodingFormModeChoiceGeocodingDelimitationElement : function (delimitations) {
         // contexte d'execution
         var context = this;
 
@@ -399,11 +396,11 @@ var ReverseGeocodingDOM = {
         // gestionnaire d'evenement : on stocke la valeur du type de délimitation,
         // et on modifie l'événement de pointage sur la carte en fonction
         if (select.addEventListener) {
-            select.addEventListener("change", function(e) {
+            select.addEventListener("change", function (e) {
                 context.onReverseGeocodingDelimitationChange(e);
             });
         } else if (select.attachEvent) {
-            select.attachEvent("onchange", function(e) {
+            select.attachEvent("onchange", function (e) {
                 context.onReverseGeocodingDelimitationChange(e);
             });
         }
@@ -451,8 +448,7 @@ var ReverseGeocodingDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createReverseGeocodingSubmitFormElement: function() {
-
+    _createReverseGeocodingSubmitFormElement : function () {
         var input = document.createElement("input");
         input.id = this._addUID("GPreverseGeocodingSubmit");
         input.className = "GPinputSubmit";

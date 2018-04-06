@@ -38,7 +38,7 @@ var Controls = {
      *      - url (String, mandatory) : link to a legend
      *      - minScaleDenominator (Number, optional) : min scale denominator for legend validity.
      * @param {Array} [options.layers.config.metadata] - array of layer metadata. Each array element is an object, with property url (String, mandatory) : link to a metadata
-     * @returns {L.geoportalControl.LayerSwitcher}
+     * @returns {L.geoportalControl.LayerSwitcher} - LayerSwitcher Object
      * @example
      *  layers = [
      *      {
@@ -59,7 +59,7 @@ var Controls = {
      *
      *  var layerSwitcher = L.geoportalControl.LayerSwitcher(options);
      */
-    LayerSwitcher: function(options) {
+    LayerSwitcher : function (options) {
         return new LayerSwitcher(options);
     },
 
@@ -81,7 +81,7 @@ var Controls = {
      * @param {Boolean} [options.disableReverse = false] - whether to enable/disable the reverse geocoding
      * @param {Object} [options.isocurveOptions] - isocurve service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~isoCurve Gp.Services.isoCurve}
      * @param {Object} [options.autocompleteOptions] - autocomplete service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~autoComplete Gp.Services.autoComplete}
-     * @returns {L.geoportalControl.Isocurve}
+     * @returns {L.geoportalControl.Isocurve} - Isocurve Object
      * @example
      *  var iso = L.geoportalControl.Isocurve({
      *      collapsed : false
@@ -96,7 +96,7 @@ var Controls = {
      *      autocompleteOptions : {}
      *  });
      */
-    Isocurve: function(options) {
+    Isocurve : function (options) {
         return new Isocurve(options);
     },
 
@@ -133,7 +133,7 @@ var Controls = {
      * @param {Number}  [options.altitude.noDataValueTolerance] - tolerance for no data value :
      *                  values in [noDataValue - noDataValueTolerance ; noDataValue + noDataValueTolerance] interval will not be displayed, but "---m" will be displayed instead.
      *                  Default is 90000
-     * @returns {L.geoportalControl.MousePosition}
+     * @returns {L.geoportalControl.MousePosition} - MousePosition Object
      * @example
      *  var MousePosition = L.geoportalControl.MousePosition({
      *      position : 'bottomleft',
@@ -161,7 +161,7 @@ var Controls = {
      *      units : ["DEC", "DMS"]
      *  });
      */
-    MousePosition: function(options) {
+    MousePosition : function (options) {
         return new MousePosition(options);
     },
 
@@ -179,7 +179,7 @@ var Controls = {
      * @param {Array}  [options.resources] - resources for geocoding, by default : ["StreetAddress", "PositionOfInterest"]
      * @param {Array}  [options.delimitations] - delimitations for reverse geocoding, by default : ["Point", "Circle", "Extent"]
      * @param {Object}  [options.ReverseGeocodeOptions] - reverse geocode service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~reverseGeocode Gp.Services.reverseGeocode} to know all reverse geocode options.
-     * @returns {L.geoportalControl.ReverseGeocode}
+     * @returns {L.geoportalControl.ReverseGeocode} - ReverseGeocode Object
      * @example
      *  var iso = L.geoportalControl.ReverseGeocode({
      *      collapsed : false,
@@ -189,7 +189,7 @@ var Controls = {
      *      reverseGeocodeOptions : {}
      *  });
      */
-    ReverseGeocode: function(options) {
+    ReverseGeocode : function (options) {
         return new ReverseGeocoding(options);
     },
 
@@ -210,7 +210,7 @@ var Controls = {
      * @param {Array}   [options.graphs] - list of resources, by default : ["Voiture", "Pieton"], and the first element is selected.
      * @param {Object}  [options.autocompleteOptions] - options of autocomplete service. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~autoComplete Gp.Services.autoComplete}
      * @param {Object}  [options.routeOptions] - options of route service. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~route Gp.Services.route}
-     * @returns {L.geoportalControl.Route}
+     * @returns {L.geoportalControl.Route} - Route Object
      * @example
      *  var route = L.geoportalControl.Route({
      *      position : "topright",
@@ -225,7 +225,7 @@ var Controls = {
      *      routeOptions : {}
      *  });
      */
-    Route: function(options) {
+    Route : function (options) {
         return new Route(options);
     },
 
@@ -268,7 +268,7 @@ var Controls = {
      * @param {Object}  [options.autocompleteOptions.serviceOptions] - options of autocomplete service
      * @param {Boolean} [options.autocompleteOptions.triggerGeocode = false] - trigger a geocoding request if the autocompletion does not return any suggestions, false by default
      * @param {Number}  [options.autocompleteOptions.triggerDelay = 1000] - waiting time before sending the geocoding request, 1000ms by default
-     * @returns {L.geoportalControl.SearchEngine}
+     * @returns {L.geoportalControl.SearchEngine} - SearchEngine Object
      * @example
      *  var SearchEngine = L.geoportalControl.SearchEngine({
      *      position : "topright",
@@ -287,7 +287,7 @@ var Controls = {
      *      autocompleteOptions : {}
      *  });
      */
-    SearchEngine: function(options) {
+    SearchEngine : function (options) {
         return new SearchEngine(options);
     },
 
@@ -312,7 +312,7 @@ var Controls = {
      * @param {Boolean} [options.displayProfileOptions.descendingElevation = true] -  display the descending elevation into the graph
      * @param {Boolean} [options.displayProfileOptions.currentSlope = true] -  display current slope value on profile mouseover
      *
-     * @returns {L.geoportalControl.ElevationPath}
+     * @returns {L.geoportalControl.ElevationPath} - ElevationPath Object
      * @example
      *  var e = L.geoportalControl.ElevationPath({
      *      active : false
@@ -330,7 +330,7 @@ var Controls = {
      *      }
      *  });
      */
-    ElevationPath: function(options) {
+    ElevationPath : function (options) {
         return new ElevationPath(options);
     },
 
@@ -347,7 +347,7 @@ var Controls = {
      * @param {String} options.text - text
      * @param {String} options.picto - picto
      * @param {String|Object} options.size - picto size
-     * @returns {Logo}
+     * @returns {Logo} - Logo Object
      * @example
      * var map  = L.map('map').setView([48, 2], 4);
      * var logo = L.geoportalControl.Logo({
@@ -359,7 +359,7 @@ var Controls = {
      * });
      * logo.addTo(map);
      */
-    Logo: function(options) {
+    Logo : function (options) {
         return new Logo(options);
     }
 };

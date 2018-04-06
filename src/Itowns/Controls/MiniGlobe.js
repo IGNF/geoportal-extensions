@@ -4,7 +4,6 @@ import SelectorID from "../../Common/Utils/SelectorID";
 import MiniGlobeDOM from "../../Common/Controls/MiniGlobeDOM";
 import Widget from "./Widget";
 
-
 /**
  * @classdesc
  * Control to display the MiniGlobe with itowns
@@ -16,8 +15,7 @@ import Widget from "./Widget";
  * var miniglobe = new itowns.control.MiniGlobe();
  *
  */
-function MiniGlobe(options) {
-
+function MiniGlobe (options) {
     options = options || {};
 
     if (!(this instanceof MiniGlobe)) {
@@ -39,10 +37,10 @@ function MiniGlobe(options) {
 
     Widget.call(
         this, {
-            name: "Overview",
-            element: container,
-            target: targetDiv,
-            position: options.position
+            name : "Overview",
+            element : container,
+            target : targetDiv,
+            position : options.position
         }
     );
 }
@@ -69,7 +67,7 @@ MiniGlobe.prototype.constructor = MiniGlobe;
 /**
  * Bind globe to control
  */
-MiniGlobe.prototype.setGlobe = function(globe) {
+MiniGlobe.prototype.setGlobe = function (globe) {
     // info : this function is called after a globe.addWidget() or a globe.removeWidget()
 
     if (globe) { // In the case of the adding of a control to the globe
@@ -80,11 +78,11 @@ MiniGlobe.prototype.setGlobe = function(globe) {
             // `limit globe' subdivision level:
             // we're don't need a precise globe model
             // since the mini globe will always be seen from a far point of view (see minDistance above)
-            maxSubdivisionLevel: 6,
+            maxSubdivisionLevel : 6,
             // Don't instance default controls since miniview's camera will be synced
             // on the main view's one (see globeView.onAfterRender)
-            noControls: true,
-            position: "absolute"
+            noControls : true,
+            position : "absolute"
         });
 
         miniView.setBackground();
@@ -92,7 +90,7 @@ MiniGlobe.prototype.setGlobe = function(globe) {
         /**
          * update miniview's camera with the globeView's camera position
          */
-        var updateMiniGlobeHandler = function() {
+        var updateMiniGlobeHandler = function () {
             // clamp distance camera from globe
             var range = globe.getRange();
             var distance = Math.min(Math.max(range * 1.5, minDistance), maxDistance);
@@ -137,8 +135,7 @@ MiniGlobe.prototype.setGlobe = function(globe) {
  *
  * @private
  */
-MiniGlobe.prototype._initialize = function() {
-
+MiniGlobe.prototype._initialize = function () {
     // id of the widget : usefull to suffix the CSS ids (to handle cases with several widgets on the same page)
     this._uid = SelectorID.generate();
 
@@ -155,143 +152,142 @@ MiniGlobe.prototype._initialize = function() {
  * @method _initContainer
  * @private
  */
-MiniGlobe.prototype._initContainer = function() {
-
+MiniGlobe.prototype._initContainer = function () {
     var container = this._createMainContainerElement();
 
     return container;
 };
 
 MiniGlobe.prototype._baseLayer = {
-    type: "color",
-    protocol: "wmts",
-    id: "Maps",
-    url: "https://wxs.ign.fr/an7nvfzojv5wa96dsga5nk8w/geoportail/wmts",
-    updateStrategy: {
-        type: "0",
-        options: {}
+    type : "color",
+    protocol : "wmts",
+    id : "Maps",
+    url : "https://wxs.ign.fr/an7nvfzojv5wa96dsga5nk8w/geoportail/wmts",
+    updateStrategy : {
+        type : "0",
+        options : {}
     },
-    networkOptions: {
-        crossOrigin: "omit"
+    networkOptions : {
+        crossOrigin : "omit"
     },
-    options: {
-        name: "GEOGRAPHICALGRIDSYSTEMS.MAPS",
-        mimetype: "image/jpeg",
-        tileMatrixSet: "PM",
-        tileMatrixSetLimits: {
-            0: {
-                minTileRow: "0",
-                maxTileRow: "0",
-                minTileCol: "0",
-                maxTileCol: "1"
+    options : {
+        name : "GEOGRAPHICALGRIDSYSTEMS.MAPS",
+        mimetype : "image/jpeg",
+        tileMatrixSet : "PM",
+        tileMatrixSetLimits : {
+            0 : {
+                minTileRow : "0",
+                maxTileRow : "0",
+                minTileCol : "0",
+                maxTileCol : "1"
             },
-            1: {
-                minTileRow: "0",
-                maxTileRow: "1",
-                minTileCol: "0",
-                maxTileCol: "2"
+            1 : {
+                minTileRow : "0",
+                maxTileRow : "1",
+                minTileCol : "0",
+                maxTileCol : "2"
             },
-            2: {
-                minTileRow: "0",
-                maxTileRow: "2",
-                minTileCol: "0",
-                maxTileCol: "4"
+            2 : {
+                minTileRow : "0",
+                maxTileRow : "2",
+                minTileCol : "0",
+                maxTileCol : "4"
             },
-            3: {
-                minTileRow: "0",
-                maxTileRow: "5",
-                minTileCol: "0",
-                maxTileCol: "8"
+            3 : {
+                minTileRow : "0",
+                maxTileRow : "5",
+                minTileCol : "0",
+                maxTileCol : "8"
             },
-            4: {
-                minTileRow: "1",
-                maxTileRow: "11",
-                minTileCol: "0",
-                maxTileCol: "16"
+            4 : {
+                minTileRow : "1",
+                maxTileRow : "11",
+                minTileCol : "0",
+                maxTileCol : "16"
             },
-            5: {
-                minTileRow: "3",
-                maxTileRow: "22",
-                minTileCol: "0",
-                maxTileCol: "32"
+            5 : {
+                minTileRow : "3",
+                maxTileRow : "22",
+                minTileCol : "0",
+                maxTileCol : "32"
             },
-            6: {
-                minTileRow: "7",
-                maxTileRow: "45",
-                minTileCol: "0",
-                maxTileCol: "64"
+            6 : {
+                minTileRow : "7",
+                maxTileRow : "45",
+                minTileCol : "0",
+                maxTileCol : "64"
             },
-            7: {
-                minTileRow: "42",
-                maxTileRow: "97",
-                minTileCol: "0",
-                maxTileCol: "115"
+            7 : {
+                minTileRow : "42",
+                maxTileRow : "97",
+                minTileCol : "0",
+                maxTileCol : "115"
             },
-            8: {
-                minTileRow: "84",
-                maxTileRow: "195",
-                minTileCol: "1",
-                maxTileCol: "247"
+            8 : {
+                minTileRow : "84",
+                maxTileRow : "195",
+                minTileCol : "1",
+                maxTileCol : "247"
             },
-            9: {
-                minTileRow: "170",
-                maxTileRow: "390",
-                minTileCol: "2",
-                maxTileCol: "495"
+            9 : {
+                minTileRow : "170",
+                maxTileRow : "390",
+                minTileCol : "2",
+                maxTileCol : "495"
             },
-            10: {
-                minTileRow: "340",
-                maxTileRow: "780",
-                minTileCol: "5",
-                maxTileCol: "990"
+            10 : {
+                minTileRow : "340",
+                maxTileRow : "780",
+                minTileCol : "5",
+                maxTileCol : "990"
             },
-            11: {
-                minTileRow: "681",
-                maxTileRow: "1544",
-                minTileCol: "10",
-                maxTileCol: "1981"
+            11 : {
+                minTileRow : "681",
+                maxTileRow : "1544",
+                minTileCol : "10",
+                maxTileCol : "1981"
             },
-            12: {
-                minTileRow: "1363",
-                maxTileRow: "3088",
-                minTileCol: "20",
-                maxTileCol: "3962"
+            12 : {
+                minTileRow : "1363",
+                maxTileRow : "3088",
+                minTileCol : "20",
+                maxTileCol : "3962"
             },
-            13: {
-                minTileRow: "2726",
-                maxTileRow: "6177",
-                minTileCol: "40",
-                maxTileCol: "7924"
+            13 : {
+                minTileRow : "2726",
+                maxTileRow : "6177",
+                minTileCol : "40",
+                maxTileCol : "7924"
             },
-            14: {
-                minTileRow: "5452",
-                maxTileRow: "12355",
-                minTileCol: "81",
-                maxTileCol: "15847"
+            14 : {
+                minTileRow : "5452",
+                maxTileRow : "12355",
+                minTileCol : "81",
+                maxTileCol : "15847"
             },
-            15: {
-                minTileRow: "10944",
-                maxTileRow: "21176",
-                minTileCol: "163",
-                maxTileCol: "31695"
+            15 : {
+                minTileRow : "10944",
+                maxTileRow : "21176",
+                minTileCol : "163",
+                maxTileCol : "31695"
             },
-            16: {
-                minTileRow: "21889",
-                maxTileRow: "42353",
-                minTileCol: "326",
-                maxTileCol: "63382"
+            16 : {
+                minTileRow : "21889",
+                maxTileRow : "42353",
+                minTileCol : "326",
+                maxTileCol : "63382"
             },
-            17: {
-                minTileRow: "43776",
-                maxTileRow: "73526",
-                minTileCol: "42528",
-                maxTileCol: "85869"
+            17 : {
+                minTileRow : "43776",
+                maxTileRow : "73526",
+                minTileCol : "42528",
+                maxTileCol : "85869"
             },
-            18: {
-                minTileRow: "87557",
-                maxTileRow: "147052",
-                minTileCol: "85058",
-                maxTileCol: "171738"
+            18 : {
+                minTileRow : "87557",
+                maxTileRow : "147052",
+                minTileCol : "85058",
+                maxTileCol : "171738"
             }
         }
     }

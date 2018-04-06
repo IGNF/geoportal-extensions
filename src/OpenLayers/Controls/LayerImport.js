@@ -8,7 +8,6 @@ import SelectorID from "../../Common/Utils/SelectorID";
 import ProxyUtils from "../../Common/Utils/ProxyUtils";
 import KMLExtended from "../Formats/KML";
 
-
 var logger = Logger.getLogger("layerimport");
 
 /**
@@ -85,8 +84,7 @@ var logger = Logger.getLogger("layerimport");
  *      }
  *  });
  */
-function LayerImport(options) {
-
+function LayerImport (options) {
     options = options || {};
 
     if (!(this instanceof LayerImport)) {
@@ -100,9 +98,9 @@ function LayerImport(options) {
 
     // call ol.control.Control constructor
     ol.control.Control.call(this, {
-        element: container,
-        target: options.target,
-        render: options.render
+        element : container,
+        target : options.target,
+        render : options.render
     });
 };
 
@@ -115,29 +113,29 @@ ol.inherits(LayerImport, ol.control.Control);
  * @private
  */
 LayerImport.DefaultStyles = {
-    image: new ol.style.Icon({
-        src: Markers["lightOrange"],
-        anchor: [25.5, 38],
-        anchorOrigin: "top-left",
-        anchorXUnits: "pixels",
-        anchorYUnits: "pixels"
+    image : new ol.style.Icon({
+        src : Markers["lightOrange"],
+        anchor : [25.5, 38],
+        anchorOrigin : "top-left",
+        anchorXUnits : "pixels",
+        anchorYUnits : "pixels"
     }),
-    stroke: new ol.style.Stroke({
-        color: "rgba(0,42,80,0.8)",
-        width: 4
+    stroke : new ol.style.Stroke({
+        color : "rgba(0,42,80,0.8)",
+        width : 4
     }),
-    fill: new ol.style.Fill({
-        color: "rgba(0, 183, 152, 0.5)"
+    fill : new ol.style.Fill({
+        color : "rgba(0, 183, 152, 0.5)"
     }),
-    text: new ol.style.Text({
-        font: "16px Sans",
-        textAlign: "left",
-        fill: new ol.style.Fill({
-            color: "rgba(255, 255, 255, 1)"
+    text : new ol.style.Text({
+        font : "16px Sans",
+        textAlign : "left",
+        fill : new ol.style.Fill({
+            color : "rgba(255, 255, 255, 1)"
         }),
-        stroke: new ol.style.Stroke({
-            color: "rgba(0, 0, 0, 1)",
-            width: 2
+        stroke : new ol.style.Stroke({
+            color : "rgba(0, 0, 0, 1)",
+            width : 2
         })
     })
 };
@@ -166,7 +164,7 @@ LayerImport.prototype.constructor = LayerImport;
  *
  * @returns {Boolean} collapsed - true if widget is collapsed
  */
-LayerImport.prototype.getCollapsed = function() {
+LayerImport.prototype.getCollapsed = function () {
     return this.collapsed;
 };
 
@@ -175,7 +173,7 @@ LayerImport.prototype.getCollapsed = function() {
  *
  * @param {Boolean} collapsed - True to collapse widget, False to display it
  */
-LayerImport.prototype.setCollapsed = function(collapsed) {
+LayerImport.prototype.setCollapsed = function (collapsed) {
     if (collapsed === undefined) {
         console.log("[ERROR] LayerImport:setCollapsed - missing collapsed parameter");
         return;
@@ -196,7 +194,7 @@ LayerImport.prototype.setCollapsed = function(collapsed) {
  *
  * @returns {String} contentStatic  - content static
  */
-LayerImport.prototype.getStaticImportContent = function() {
+LayerImport.prototype.getStaticImportContent = function () {
     return this.contentStatic;
 };
 
@@ -205,7 +203,7 @@ LayerImport.prototype.getStaticImportContent = function() {
  *
  * @returns {String} contentService  - content service
  */
-LayerImport.prototype.getServiceImportContent = function() {
+LayerImport.prototype.getServiceImportContent = function () {
     return this.contentService;
 };
 
@@ -219,8 +217,7 @@ LayerImport.prototype.getServiceImportContent = function() {
  * @param {Object} options - constructor options
  * @private
  */
-LayerImport.prototype._initialize = function(options) {
-
+LayerImport.prototype._initialize = function (options) {
     // ############################################################ //
     // ################### Options du composant ################### //
 
@@ -229,20 +226,20 @@ LayerImport.prototype._initialize = function(options) {
 
     // set default options
     this.options = {
-        collapsed: true,
-        layerTypes: ["KML", "GPX", "GeoJSON", "WMS", "WMTS"],
-        webServicesOptions: {},
-        vectorStyleOptions: {
-            KML: {
-                extractStyles: true,
-                showPointNames: true,
-                defaultStyle: {}
+        collapsed : true,
+        layerTypes : ["KML", "GPX", "GeoJSON", "WMS", "WMTS"],
+        webServicesOptions : {},
+        vectorStyleOptions : {
+            KML : {
+                extractStyles : true,
+                showPointNames : true,
+                defaultStyle : {}
             },
-            GPX: {
-                defaultStyle: {}
+            GPX : {
+                defaultStyle : {}
             },
-            GeoJSON: {
-                defaultStyle: {}
+            GeoJSON : {
+                defaultStyle : {}
             }
         }
     };
@@ -263,10 +260,10 @@ LayerImport.prototype._initialize = function(options) {
     } else {
         // get from control default options otherwise
         this.options.vectorStyleOptions.KML.defaultStyle = new ol.style.Style({
-            image: LayerImport.DefaultStyles.image,
-            stroke: LayerImport.DefaultStyles.stroke,
-            fill: LayerImport.DefaultStyles.fill,
-            text: LayerImport.DefaultStyles.text
+            image : LayerImport.DefaultStyles.image,
+            stroke : LayerImport.DefaultStyles.stroke,
+            fill : LayerImport.DefaultStyles.fill,
+            text : LayerImport.DefaultStyles.text
         });
     }
     if (options.vectorStyleOptions && options.vectorStyleOptions.GPX && options.vectorStyleOptions.GPX.defaultStyle) {
@@ -275,9 +272,9 @@ LayerImport.prototype._initialize = function(options) {
     } else {
         // get from control default options otherwise
         this.options.vectorStyleOptions.GPX.defaultStyle = new ol.style.Style({
-            image: LayerImport.DefaultStyles.image,
-            stroke: LayerImport.DefaultStyles.stroke,
-            fill: LayerImport.DefaultStyles.fill
+            image : LayerImport.DefaultStyles.image,
+            stroke : LayerImport.DefaultStyles.stroke,
+            fill : LayerImport.DefaultStyles.fill
         });
     }
     if (options.vectorStyleOptions && options.vectorStyleOptions.GeoJSON && options.vectorStyleOptions.GeoJSON.defaultStyle) {
@@ -286,9 +283,9 @@ LayerImport.prototype._initialize = function(options) {
     } else {
         // get from control default options otherwise
         this.options.vectorStyleOptions.GeoJSON.defaultStyle = new ol.style.Style({
-            image: LayerImport.DefaultStyles.image,
-            stroke: LayerImport.DefaultStyles.stroke,
-            fill: LayerImport.DefaultStyles.fill
+            image : LayerImport.DefaultStyles.image,
+            stroke : LayerImport.DefaultStyles.stroke,
+            fill : LayerImport.DefaultStyles.fill
         });
     }
 
@@ -342,7 +339,6 @@ LayerImport.prototype._initialize = function(options) {
     this._getCapResponseWMSLayers = [];
     this._getCapResponseWMTS = null;
     this._getCapResponseWMTSLayers = [];
-
 };
 
 /**
@@ -352,7 +348,7 @@ LayerImport.prototype._initialize = function(options) {
  * @param {Object} options - control input options
  * @private
  */
-LayerImport.prototype._checkInputOptions = function(options) {
+LayerImport.prototype._checkInputOptions = function (options) {
     // on vérifie le tableau des types
     if (options.layerTypes) {
         var layerTypes = options.layerTypes;
@@ -411,25 +407,25 @@ LayerImport.prototype._checkInputOptions = function(options) {
  *
  * @private
  */
-LayerImport.prototype._initDefaultStyles = function() {
+LayerImport.prototype._initDefaultStyles = function () {
     var kmlDefaultStyles = this.options.vectorStyleOptions.KML.defaultStyle;
     this._defaultKMLStyle = new ol.style.Style({
-        image: kmlDefaultStyles.image,
-        stroke: kmlDefaultStyles.stroke,
-        fill: kmlDefaultStyles.fill,
-        text: kmlDefaultStyles.text
+        image : kmlDefaultStyles.image,
+        stroke : kmlDefaultStyles.stroke,
+        fill : kmlDefaultStyles.fill,
+        text : kmlDefaultStyles.text
     });
     var gpxDefaultStyles = this.options.vectorStyleOptions.GPX.defaultStyle;
     this._defaultGPXStyle = new ol.style.Style({
-        image: gpxDefaultStyles.image,
-        stroke: gpxDefaultStyles.stroke,
-        fill: gpxDefaultStyles.fill
+        image : gpxDefaultStyles.image,
+        stroke : gpxDefaultStyles.stroke,
+        fill : gpxDefaultStyles.fill
     });
     var geoJSONDefaultStyles = this.options.vectorStyleOptions.GeoJSON.defaultStyle;
     this._defaultGeoJSONStyle = new ol.style.Style({
-        image: geoJSONDefaultStyles.image,
-        stroke: geoJSONDefaultStyles.stroke,
-        fill: geoJSONDefaultStyles.fill
+        image : geoJSONDefaultStyles.image,
+        stroke : geoJSONDefaultStyles.stroke,
+        fill : geoJSONDefaultStyles.fill
     });
 };
 
@@ -439,7 +435,7 @@ LayerImport.prototype._initDefaultStyles = function() {
  *
  * @private
  */
-LayerImport.prototype._initImportTypes = function() {
+LayerImport.prototype._initImportTypes = function () {
     this._currentImportType = this.options.layerTypes[0] || "KML";
     if (this._currentImportType === "KML" || this._currentImportType === "GPX" || this._currentImportType === "GeoJSON") {
         this._isCurrentImportTypeStatic = true;
@@ -455,8 +451,7 @@ LayerImport.prototype._initImportTypes = function() {
  * @private
  * @returns {DOMElement} container - control main container
  */
-LayerImport.prototype._initContainer = function() {
-
+LayerImport.prototype._initContainer = function () {
     // create main container
     var container = this._createMainContainerElement();
 
@@ -507,7 +502,7 @@ LayerImport.prototype._initContainer = function() {
  * @private
  * @returns {DOMElement} importForm - form main container
  */
-LayerImport.prototype._initInputFormElement = function() {
+LayerImport.prototype._initInputFormElement = function () {
     // form main container
     var importForm = this._createImportPanelFormElement();
 
@@ -586,7 +581,7 @@ LayerImport.prototype._initInputFormElement = function() {
  *
  * @private
  */
-LayerImport.prototype._onShowImportClick = function() {
+LayerImport.prototype._onShowImportClick = function () {
     this.collapsed = this._showImportInput.checked;
     // info : on génère nous même l'evenement OpenLayers de changement de propriété
     // (utiliser ol.control.LayerImport.on("change:collapsed", function ) pour s'abonner à cet évènement)
@@ -601,7 +596,7 @@ LayerImport.prototype._onShowImportClick = function() {
  * @param {Object} e - HTMLElement
  * @private
  */
-LayerImport.prototype._onImportTypeChange = function(e) {
+LayerImport.prototype._onImportTypeChange = function (e) {
     this._currentImportType = e.target.value;
     if (this._currentImportType === "KML" || this._currentImportType === "GPX" || this._currentImportType === "GeoJSON") {
         this._isCurrentImportTypeStatic = true;
@@ -618,7 +613,7 @@ LayerImport.prototype._onImportTypeChange = function(e) {
  * @param {Object} e - HTMLElement
  * @private
  */
-LayerImport.prototype._onStaticImportTypeChange = function(e) {
+LayerImport.prototype._onStaticImportTypeChange = function (e) {
     this._currentStaticImportType = e.target.value;
 };
 
@@ -629,7 +624,7 @@ LayerImport.prototype._onStaticImportTypeChange = function(e) {
  *
  * @private
  */
-LayerImport.prototype._onGetCapPanelClose = function() {
+LayerImport.prototype._onGetCapPanelClose = function () {
     this._clearGetCapParams();
     this._emptyGetCapResultsList();
 };
@@ -645,8 +640,7 @@ LayerImport.prototype._onGetCapPanelClose = function() {
  *
  * @private
  */
-LayerImport.prototype._onImportSubmit = function() {
-
+LayerImport.prototype._onImportSubmit = function () {
     logger.log("import d'une couche de type : " + this._currentImportType);
 
     // reinitialisation du contenu d'un import de type
@@ -672,8 +666,7 @@ LayerImport.prototype._onImportSubmit = function() {
  *
  * @private
  */
-LayerImport.prototype._importStaticLayer = function() {
-
+LayerImport.prototype._importStaticLayer = function () {
     var layerName;
     var staticImportNameInput = document.getElementById(this._addUID("GPimportName"));
     if (staticImportNameInput) {
@@ -684,12 +677,10 @@ LayerImport.prototype._importStaticLayer = function() {
     if (this._currentStaticImportType === "local") {
         logger.log("import static layer from local file");
         this._importStaticLayerFromLocalFile(layerName);
-
     } else if (this._currentStaticImportType === "url") {
         logger.log("import static layer from url");
         this._importStaticLayerFromUrl(layerName);
     }
-
 };
 
 /**
@@ -699,7 +690,7 @@ LayerImport.prototype._importStaticLayer = function() {
  * @param {String} layerName - imported layer name
  * @private
  */
-LayerImport.prototype._importStaticLayerFromUrl = function(layerName) {
+LayerImport.prototype._importStaticLayerFromUrl = function (layerName) {
     layerName = layerName || "";
 
     // 1. Récupération de l'url
@@ -727,18 +718,16 @@ LayerImport.prototype._importStaticLayerFromUrl = function(layerName) {
 
     var context = this;
     Gp.Protocols.XHR.call({
-        url: url,
-        method: "GET",
-        timeOut: 15000,
+        url : url,
+        method : "GET",
+        timeOut : 15000,
         /** on success callback : display results in container */
-        onResponse: function(response) {
-
+        onResponse : function (response) {
             context._hideWaitingContainer();
             context._addFeaturesFromImportStaticLayer(response, layerName);
-
         },
         /** on error callback : log error */
-        onFailure: function(error) {
+        onFailure : function (error) {
             // en cas d'erreur, on revient au panel initial et on cache la patience
             context._hideWaitingContainer();
             console.log("[ol.control.LayerImport] KML/GPX/GeoJSON request failed : ", error);
@@ -753,7 +742,7 @@ LayerImport.prototype._importStaticLayerFromUrl = function(layerName) {
  * @param {String} layerName - imported layer name
  * @private
  */
-LayerImport.prototype._importStaticLayerFromLocalFile = function(layerName) {
+LayerImport.prototype._importStaticLayerFromLocalFile = function (layerName) {
     var file = this._staticLocalImportInput.files[0];
     if (!file) {
         console.log("[ol.control.LayerImport] missing file");
@@ -767,29 +756,29 @@ LayerImport.prototype._importStaticLayerFromLocalFile = function(layerName) {
     // notamment la fonction onload qui affichera les entités chargées à la carte
     var context = this;
     /** on readAsText error */
-    fReader.onerror = function(e) {
+    fReader.onerror = function (e) {
         // en cas d'erreur, on revient au panel initial et on cache la patience
         context._hideWaitingContainer();
         logger.log("error fileReader : ", e);
     };
     /** on readAsText progress */
-    fReader.onprogress = function() {
+    fReader.onprogress = function () {
         logger.log("onprogress");
     };
     /** on load start */
-    fReader.onloadstart = function() {
+    fReader.onloadstart = function () {
         // affichage d'une patience le temps du chargement
         context._displayWaitingContainer();
         logger.log("onloadstart");
     };
     /** on readAsText abort */
-    fReader.onabort = function() {
+    fReader.onabort = function () {
         // en cas d'erreur, on revient au panel initial et on cache la patience
         context._hideWaitingContainer();
         logger.log("onabort");
     };
     /** on readAsText loadend */
-    fReader.onloadend = function(e) {
+    fReader.onloadend = function (e) {
         // fReader = null ?
         // en cas d'erreur, on revient au panel initial et on cache la patience
         // context._hideWaitingContainer();
@@ -797,7 +786,7 @@ LayerImport.prototype._importStaticLayerFromLocalFile = function(layerName) {
         logger.log("onloadend : ", e);
     };
     /** on readAsText load */
-    fReader.onload = function(e) {
+    fReader.onload = function (e) {
         logger.log("fileReader onload - file content : ", e.target.result);
 
         // on cache la patience
@@ -817,8 +806,7 @@ LayerImport.prototype._importStaticLayerFromLocalFile = function(layerName) {
  * @param {String} layerName - imported layer name
  * @private
  */
-LayerImport.prototype._addFeaturesFromImportStaticLayer = function(fileContent, layerName) {
-
+LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent, layerName) {
     // récupération du contenu du fichier
     var map = this.getMap();
     if (!map || !fileContent) {
@@ -833,9 +821,9 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function(fileContent, 
     if (this._currentImportType === "KML") {
         // lecture du fichier KML : création d'un format ol.format.KML, qui possède une méthode readFeatures (et readProjection)
         format = new KMLExtended({
-            showPointNames: this.options.vectorStyleOptions.KML.showPointNames,
-            extractStyles: this.options.vectorStyleOptions.KML.extractStyles,
-            defaultStyle: [
+            showPointNames : this.options.vectorStyleOptions.KML.showPointNames,
+            extractStyles : this.options.vectorStyleOptions.KML.extractStyles,
+            defaultStyle : [
                 this.options.vectorStyleOptions.KML.defaultStyle
             ]
         });
@@ -859,8 +847,8 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function(fileContent, 
     var features = null;
     features = format.readFeatures(
         fileContent, {
-            dataProjection: fileProj,
-            featureProjection: mapProj
+            dataProjection : fileProj,
+            featureProjection : mapProj
         }
     );
 
@@ -868,7 +856,7 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function(fileContent, 
 
     // création d'une couche vectorielle à partir de ces features
     var vectorSource = new ol.source.Vector({
-        features: new ol.Collection()
+        features : new ol.Collection()
     });
     vectorSource.addFeatures(features);
 
@@ -887,8 +875,8 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function(fileContent, 
     }
 
     var vectorLayer = new ol.layer.Vector({
-        source: vectorSource,
-        style: vectorStyle
+        source : vectorSource,
+        style : vectorStyle
     });
 
     // on rajoute le champ gpResultLayerId permettant d'identifier une couche crée par le composant. (pour layerSwitcher par ex)
@@ -913,8 +901,7 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function(fileContent, 
  * @param {String} layerName - imported layer name
  * @private
  */
-LayerImport.prototype._addFeaturesFromImportStaticLayerUrl = function(url, layerName) {
-
+LayerImport.prototype._addFeaturesFromImportStaticLayerUrl = function (url, layerName) {
     // récupération du contenu du fichier
     var map = this.getMap();
     if (!map || !url) {
@@ -925,13 +912,12 @@ LayerImport.prototype._addFeaturesFromImportStaticLayerUrl = function(url, layer
     if (this._currentImportType === "KML") {
         // lecture du fichier KML : création d'un format ol.format.KML, qui possède une méthode readFeatures (et readProjection)
         format = new KMLExtended({
-            showPointNames: true, // FIXME option !
-            extractStyles: this.options.vectorStyleOptions.KML.extractStyles,
-            defaultStyle: [
+            showPointNames : true, // FIXME option !
+            extractStyles : this.options.vectorStyleOptions.KML.extractStyles,
+            defaultStyle : [
                 this.options.vectorStyleOptions.KML.defaultStyle
             ]
         });
-
     } else if (this._currentImportType === "GPX") {
         // lecture du fichier GPX : création d'un format ol.format.GPX, qui possède une méthode readFeatures (et readProjection)
         format = new ol.format.GPX();
@@ -942,13 +928,13 @@ LayerImport.prototype._addFeaturesFromImportStaticLayerUrl = function(url, layer
 
     // création d'une couche vectorielle à partir de ces features
     var vectorSource = new ol.source.Vector({
-        url: url,
-        format: format
+        url : url,
+        format : format
     });
 
     if (this._currentImportType === "GPX") {
         vectorSource.forEachFeature(
-            function(feature) {
+            function (feature) {
                 // si aucun style n'est associé au feature
                 if (feature.getStyle() == null) {
                     logger.log("[ol.control.LayerImport] set default style for GPX feature");
@@ -961,7 +947,7 @@ LayerImport.prototype._addFeaturesFromImportStaticLayerUrl = function(url, layer
     }
     if (this._currentImportType === "GeoJSON") {
         vectorSource.forEachFeature(
-            function(feature) {
+            function (feature) {
                 // si aucun style n'est associé au feature
                 if (feature.getStyle() == null) {
                     logger.log("[ol.control.LayerImport] set default style for GeoJSON feature");
@@ -981,7 +967,7 @@ LayerImport.prototype._addFeaturesFromImportStaticLayerUrl = function(url, layer
     }
 
     var vectorLayer = new ol.layer.Vector({
-        source: vectorSource
+        source : vectorSource
     });
 
     // on rajoute le champ gpResultLayerId permettant d'identifier une couche crée par le composant. (pour layerSwitcher par ex)
@@ -1008,8 +994,7 @@ LayerImport.prototype._addFeaturesFromImportStaticLayerUrl = function(url, layer
  *
  * @private
  */
-LayerImport.prototype._importServiceLayers = function() {
-
+LayerImport.prototype._importServiceLayers = function () {
     if (this._currentImportType === "WFS") {
         console.log("[ol.control.LayerImport] WFS layer import is not implemented yet");
         return;
@@ -1070,16 +1055,16 @@ LayerImport.prototype._importServiceLayers = function() {
     // 4. send getcapabilities request (XHR protocol => proxy Url is needed)
     var context = this;
     Gp.Protocols.XHR.call({
-        url: url,
-        method: "GET",
-        timeOut: 15000,
+        url : url,
+        method : "GET",
+        timeOut : 15000,
         /** on success callback : display results in container */
-        onResponse: function(response) {
+        onResponse : function (response) {
             context._hideWaitingContainer();
             context._displayGetCapResponseLayers.call(context, response);
         },
         /** on error callback : log error */
-        onFailure: function(error) {
+        onFailure : function (error) {
             // en cas d'erreur, on revient au panel initial et on cache la patience
             context._hideWaitingContainer();
             console.log("[ol.control.LayerImport] getCapabilities request failed : ", error);
@@ -1094,8 +1079,7 @@ LayerImport.prototype._importServiceLayers = function() {
  * @param {Object} xmlResponse - getCapabilities response (xml format)
  * @private
  */
-LayerImport.prototype._displayGetCapResponseLayers = function(xmlResponse) {
-
+LayerImport.prototype._displayGetCapResponseLayers = function (xmlResponse) {
     var parser;
     var layers;
     var layerDescription;
@@ -1111,7 +1095,6 @@ LayerImport.prototype._displayGetCapResponseLayers = function(xmlResponse) {
 
     // Parse GetCapabilities Response
     if (this._currentImportType === "WMS") {
-
         parser = new ol.format.WMSCapabilities();
         if (!parser) {
             return;
@@ -1135,9 +1118,7 @@ LayerImport.prototype._displayGetCapResponseLayers = function(xmlResponse) {
                 this._displayGetCapResponseWMSLayer(getCapLayer);
             }
         }
-
     } else if (this._currentImportType === "WMTS") {
-
         parser = new ol.format.WMTSCapabilities();
         if (!parser) {
             return;
@@ -1185,7 +1166,7 @@ LayerImport.prototype._displayGetCapResponseLayers = function(xmlResponse) {
  * @param {Object} [parentLayersInfos] - object corresponding to parents <Layer> content in WMS GetCapabilities response (without children <Layer> infos)
  * @private
  */
-LayerImport.prototype._displayGetCapResponseWMSLayer = function(layerObj, parentLayersInfos) {
+LayerImport.prototype._displayGetCapResponseWMSLayer = function (layerObj, parentLayersInfos) {
     if (!layerObj) {
         console.log("[ol.control.LayerImport] _displayGetCapResponseWMSLayer : getCapabilities layer object not found");
     } else {
@@ -1252,7 +1233,6 @@ LayerImport.prototype._displayGetCapResponseWMSLayer = function(layerObj, parent
         if (!parentLayersInfos._isRootLayer && parentLayersInfos.Title) {
             layerObj.Title = parentLayersInfos.Title + " > " + layerObj.Title;
         }
-
     } else {
         // si on n'a pas d'infos de couche parent, on est à la racine du Capability, on le note
         layerObj._isRootLayer = true;
@@ -1267,7 +1247,6 @@ LayerImport.prototype._displayGetCapResponseWMSLayer = function(layerObj, parent
             }
         }
     } else {
-
         // on récupère la longueur de la liste des couches déjà récupérées, pour avoir ce qui sera l'index de la couche à ajouter.
         var lastIndex = this._getCapResponseWMSLayers.length;
 
@@ -1279,7 +1258,6 @@ LayerImport.prototype._displayGetCapResponseWMSLayer = function(layerObj, parent
             // si aucune projection n'est compatible avec celle de la carte ou connue par ol.proj,
             // on n'affiche pas la couche dans le panel des résultats
             console.log("[ol.control.LayerImport] wms layer cannot be added to map : unknown projection", layerObj);
-
         } else {
             // si on a une projection compatible : on la stocke et la couche sera éventuellement reprojetée à l'ajout
             layerObj._projection = projection;
@@ -1301,7 +1279,7 @@ LayerImport.prototype._displayGetCapResponseWMSLayer = function(layerObj, parent
  * @param {Object} e - HTMLElement
  * @private
  */
-LayerImport.prototype._onGetCapResponseLayerClick = function(e) {
+LayerImport.prototype._onGetCapResponseLayerClick = function (e) {
     if (e.target && e.target.id) {
         var proposalId = parseInt(e.target.id.substr(23), 10);
 
@@ -1316,14 +1294,12 @@ LayerImport.prototype._onGetCapResponseLayerClick = function(e) {
             layerInfo = this._getCapResponseWMSLayers[proposalId];
             // ajout de la couche à la carte
             this._addGetCapWMSLayer(layerInfo);
-
         } else if (this._currentImportType === "WMTS") {
             // récupération des informations liées à la couche
             layerInfo = this._getCapResponseWMTSLayers[proposalId];
             // ajout de la couche à la carte
             this._addGetCapWMTSLayer(layerInfo);
         }
-
     }
 };
 
@@ -1338,7 +1314,7 @@ LayerImport.prototype._onGetCapResponseLayerClick = function(e) {
  * @param {Object} layerInfo - layer information from getCapabilities response
  * @private
  */
-LayerImport.prototype._addGetCapWMSLayer = function(layerInfo) {
+LayerImport.prototype._addGetCapWMSLayer = function (layerInfo) {
     var map = this.getMap();
     if (!map) {
         console.log("[ol.control.LayerImport] _addGetCapWMSLayer error : map is not defined");
@@ -1423,7 +1399,7 @@ LayerImport.prototype._addGetCapWMSLayer = function(layerInfo) {
     // on rajoute le champ gpGFIparams permettant d'identifier si la couche est queryable, et de transmettre les formats reconnus par GetFeatureInfo
     if (layerInfo.queryable) {
         wmsLayer.gpGFIparams = {
-            queryable: true
+            queryable : true
         };
         // récupération des différents formats reconnus par le GetFeatureInfo
         if (this._getCapResponseWMS && this._getCapResponseWMS.Capability && this._getCapResponseWMS.Capability.Request && this._getCapResponseWMS.Capability.Request.GetFeatureInfo && this._getCapResponseWMS.Capability.Request.GetFeatureInfo.Format && Array.isArray(this._getCapResponseWMS.Capability.Request.GetFeatureInfo.Format)) {
@@ -1441,7 +1417,7 @@ LayerImport.prototype._addGetCapWMSLayer = function(layerInfo) {
  * @return {String} getmapurl - service getMap request url
  * @private
  */
-LayerImport.prototype._getWMSLayerGetMapUrl = function() {
+LayerImport.prototype._getWMSLayerGetMapUrl = function () {
     var getmapurl;
     if (this._getCapResponseWMS && this._getCapResponseWMS.Capability && this._getCapResponseWMS.Capability.Request && this._getCapResponseWMS.Capability.Request.GetMap) {
         var getmap = this._getCapResponseWMS.Capability.Request.GetMap;
@@ -1465,7 +1441,7 @@ LayerImport.prototype._getWMSLayerGetMapUrl = function() {
  * @return {String} projection - ol.proj projection alias (e.g. "EPSG:4326")
  * @private
  */
-LayerImport.prototype._getWMSLayerProjection = function(layerInfo, mapProjCode) {
+LayerImport.prototype._getWMSLayerProjection = function (layerInfo, mapProjCode) {
     var projection;
 
     if (!layerInfo || typeof layerInfo !== "object") {
@@ -1505,7 +1481,7 @@ LayerImport.prototype._getWMSLayerProjection = function(layerInfo, mapProjCode) 
  * @param {Object} layerTileOptions - options for ol.layer.Tile (to be filled)
  * @private
  */
-LayerImport.prototype._getWMSLayerMinMaxResolution = function(layerInfo, mapProjCode, layerTileOptions) {
+LayerImport.prototype._getWMSLayerMinMaxResolution = function (layerInfo, mapProjCode, layerTileOptions) {
     // récupération des résolutions min et max à partir des dénominateurs d'échelle
     var mapUnits = ol.proj.get(mapProjCode).getUnits();
     if (mapUnits === "m") {
@@ -1537,7 +1513,7 @@ LayerImport.prototype._getWMSLayerMinMaxResolution = function(layerInfo, mapProj
  * @param {Object} layerTileOptions - options for ol.layer.Tile (to be filled)
  * @private
  */
-LayerImport.prototype._getWMSLayerExtent = function(layerInfo, mapProjCode, layerTileOptions) {
+LayerImport.prototype._getWMSLayerExtent = function (layerInfo, mapProjCode, layerTileOptions) {
     if (!layerInfo) {
         console.log("[ol.control.LayerImport] _getWMSLayerExtent error : layerInfo is not defined");
         return;
@@ -1603,7 +1579,7 @@ LayerImport.prototype._getWMSLayerExtent = function(layerInfo, mapProjCode, laye
  * @param {Object} wmsSource - options for ol.source.TileWMS (to be filled)
  * @private
  */
-LayerImport.prototype._getWMSLayerInfoForLayerSwitcher = function(layerInfo, legend, wmsSource) {
+LayerImport.prototype._getWMSLayerInfoForLayerSwitcher = function (layerInfo, legend, wmsSource) {
     // ajout des informations pour le layerSwitcher (titre, description)
     if (layerInfo.Title) {
         wmsSource._title = layerInfo.Title;
@@ -1615,7 +1591,7 @@ LayerImport.prototype._getWMSLayerInfoForLayerSwitcher = function(layerInfo, leg
     // ajout de légende si on en a trouvé
     if (legend) {
         wmsSource._legends = [{
-            url: legend
+            url : legend
         }];
     }
     // ajout d'éventuelles métadonnées
@@ -1625,7 +1601,7 @@ LayerImport.prototype._getWMSLayerInfoForLayerSwitcher = function(layerInfo, leg
             var metadata = layerInfo.MetadataURL[i].OnlineResource;
             if (metadata) {
                 wmsSource._metadata.push({
-                    url: metadata
+                    url : metadata
                 });
             }
         }
@@ -1657,8 +1633,7 @@ LayerImport.prototype._getWMSLayerInfoForLayerSwitcher = function(layerInfo, leg
  * @param {Object} layerInfo - layer information from getCapabilities response
  * @private
  */
-LayerImport.prototype._addGetCapWMTSLayer = function(layerInfo) {
-
+LayerImport.prototype._addGetCapWMTSLayer = function (layerInfo) {
     if (!layerInfo || !layerInfo.Identifier) {
         console.log("[ol.control.LayerImport] layer information not found in getCapabilities response for layer ");
         return;
@@ -1695,9 +1670,9 @@ LayerImport.prototype._addGetCapWMTSLayer = function(layerInfo) {
     wmtsSourceOptions.matrixSet = tmsOptions.tms;
     wmtsSourceOptions.projection = tmsOptions.projCode;
     wmtsSourceOptions.tileGrid = new ol.tilegrid.WMTS({
-        resolutions: tmsOptions.resolutions,
-        matrixIds: tmsOptions.matrixIds,
-        origin: tmsOptions.origin
+        resolutions : tmsOptions.resolutions,
+        matrixIds : tmsOptions.matrixIds,
+        origin : tmsOptions.origin
     });
 
     // Récupération du style par défaut
@@ -1748,7 +1723,7 @@ LayerImport.prototype._addGetCapWMTSLayer = function(layerInfo) {
     // ajout d'une éventuelle légende
     if (legend) {
         wmtsSource._legends = [{
-            url: legend
+            url : legend
         }];
     }
 
@@ -1776,7 +1751,7 @@ LayerImport.prototype._addGetCapWMTSLayer = function(layerInfo) {
  * @return {String} gettileurl - service getTile request url
  * @private
  */
-LayerImport.prototype._getWMTSLayerGetTileUrl = function() {
+LayerImport.prototype._getWMTSLayerGetTileUrl = function () {
     var gettileurl;
     if (this._getCapResponseWMTS && this._getCapResponseWMTS.OperationsMetadata && this._getCapResponseWMTS.OperationsMetadata.GetTile) {
         var gettile = this._getCapResponseWMTS.OperationsMetadata.GetTile;
@@ -1796,7 +1771,7 @@ LayerImport.prototype._getWMTSLayerGetTileUrl = function() {
  * @return {String} projection - ol.proj projection alias (e.g. "EPSG:4326")
  * @private
  */
-LayerImport.prototype._getWMTSLayerProjection = function(layerInfo, getCapResponseWMTS) {
+LayerImport.prototype._getWMTSLayerProjection = function (layerInfo, getCapResponseWMTS) {
     var projection;
 
     if (!layerInfo || typeof layerInfo !== "object") {
@@ -1841,7 +1816,7 @@ LayerImport.prototype._getWMTSLayerProjection = function(layerInfo, getCapRespon
  * @return {Object} tmsOptions - ol.tileGrid.WMTS options
  * @private
  */
-LayerImport.prototype._getTMSParams = function(layerInfo) {
+LayerImport.prototype._getTMSParams = function (layerInfo) {
     var tmsOptions = {};
 
     var matrixIds = [];
@@ -1885,7 +1860,6 @@ LayerImport.prototype._getTMSParams = function(layerInfo) {
 
                     if (Array.isArray(tileMatrixSet.TileMatrix)) {
                         for (var j = 0; j < tileMatrixSet.TileMatrix.length; j++) {
-
                             // construction du tableau des matrixIds
                             tilematrix = tileMatrixSet.TileMatrix[j];
                             if (tilematrix.Identifier != null) {
@@ -1912,7 +1886,7 @@ LayerImport.prototype._getTMSParams = function(layerInfo) {
                     // tri des résolutions par ordre décroissant
                     if (Array.isArray(resolutions) && resolutions.sort !== undefined) {
                         resolutions.sort(
-                            function(x, y) {
+                            function (x, y) {
                                 return y - x;
                             }
                         );
@@ -1920,7 +1894,7 @@ LayerImport.prototype._getTMSParams = function(layerInfo) {
                     // tri des identifiants des niveaux de pyramide (matrixIds) par ordre croissant
                     if (Array.isArray(matrixIds) && matrixIds.sort !== undefined) {
                         matrixIds.sort(
-                            function(x, y) {
+                            function (x, y) {
                                 return x - y;
                             }
                         );
@@ -1930,7 +1904,6 @@ LayerImport.prototype._getTMSParams = function(layerInfo) {
         } else {
             console.log("[ol.control.LayerImport] TileMatrixSet data not found in getCapabilities response for layer " + layerInfo.Identifier);
         }
-
     } else {
         return;
     }
@@ -1952,7 +1925,7 @@ LayerImport.prototype._getTMSParams = function(layerInfo) {
  * @return {Array} extent - layer extent
  * @private
  */
-LayerImport.prototype._getWMTSLayerExtent = function(layerInfo) {
+LayerImport.prototype._getWMTSLayerExtent = function (layerInfo) {
     var extent;
     var mapProjCode = this._getMapProjectionCode();
 
@@ -1974,7 +1947,7 @@ LayerImport.prototype._getWMTSLayerExtent = function(layerInfo) {
  * @return {String} mapProjCode - control map projection code (e.g. "EPSG:3857")
  * @private
  */
-LayerImport.prototype._getMapProjectionCode = function() {
+LayerImport.prototype._getMapProjectionCode = function () {
     var map = this.getMap();
     if (!map || !map.getView || !map.getView().getProjection) {
         logger.log("unable to get layerimport's map");
@@ -1993,8 +1966,7 @@ LayerImport.prototype._getMapProjectionCode = function() {
  *
  * @private
  */
-LayerImport.prototype._displayWaitingContainer = function() {
-
+LayerImport.prototype._displayWaitingContainer = function () {
     this._waitingContainer.className = "GPimportWaitingContainerVisible";
     this._waiting = true;
 
@@ -2005,7 +1977,7 @@ LayerImport.prototype._displayWaitingContainer = function() {
         this._timer = null;
     }
     var context = this;
-    this._timer = setTimeout(function() {
+    this._timer = setTimeout(function () {
         if (context._waiting === true) {
             context._hideWaitingContainer();
         } else {
@@ -2021,7 +1993,7 @@ LayerImport.prototype._displayWaitingContainer = function() {
  *
  * @private
  */
-LayerImport.prototype._hideWaitingContainer = function() {
+LayerImport.prototype._hideWaitingContainer = function () {
     if (this._waiting) {
         this._waitingContainer.className = "GPimportWaitingContainerHidden";
         this._waiting = false;
@@ -2035,7 +2007,7 @@ LayerImport.prototype._hideWaitingContainer = function() {
  *
  * @private
  */
-LayerImport.prototype._clearGetCapParams = function() {
+LayerImport.prototype._clearGetCapParams = function () {
     this._getCapRequestUrl = null;
     this._getCapResponseWMS = null;
     this._getCapResponseWMTS = null;
@@ -2048,7 +2020,7 @@ LayerImport.prototype._clearGetCapParams = function() {
  *
  * @private
  */
-LayerImport.prototype._emptyGetCapResultsList = function() {
+LayerImport.prototype._emptyGetCapResultsList = function () {
     if (this._getCapResultsListContainer) {
         while (this._getCapResultsListContainer.firstChild) {
             this._getCapResultsListContainer.removeChild(this._getCapResultsListContainer.firstChild);

@@ -29,8 +29,7 @@ var logger = Logger.getLogger("extended KML format");
  * @extends {ol.format.KML}
  * @param {Object} options - Options
  */
-function KML(options) {
-
+function KML (options) {
     if (!(this instanceof KML)) {
         throw new TypeError("ERROR CLASS_CONSTRUCTOR");
     }
@@ -85,7 +84,7 @@ KML.prototype.constructor = KML;
  * Fonction d'indentation d'une chaine de caractères KML ou XML
  * cf. https://stackoverflow.com/questions/376373/pretty-printing-xml-with-javascript/
  */
-function _kmlFormattedToString(xml) {
+function _kmlFormattedToString (xml) {
     var reg = /(>)\s*(<)(\/*)/g; // updated Mar 30, 2015
     var wsexp = / *(.*) +\n/g;
     var contexp = /(<.+>)(.+\n)/g;
@@ -96,22 +95,22 @@ function _kmlFormattedToString(xml) {
     var lastType = "other";
     // 4 types of tags - single, closing, opening, other (text, doctype, comment) - 4*4 = 16 transitions
     var transitions = {
-        "single->single": 0,
-        "single->closing": -1,
-        "single->opening": 0,
-        "single->other": 0,
-        "closing->single": 0,
-        "closing->closing": -1,
-        "closing->opening": 0,
-        "closing->other": 0,
-        "opening->single": 1,
-        "opening->closing": 0,
-        "opening->opening": 1,
-        "opening->other": 1,
-        "other->single": 0,
-        "other->closing": -1,
-        "other->opening": 0,
-        "other->other": 0
+        "single->single" : 0,
+        "single->closing" : -1,
+        "single->opening" : 0,
+        "single->other" : 0,
+        "closing->single" : 0,
+        "closing->closing" : -1,
+        "closing->opening" : 0,
+        "closing->other" : 0,
+        "opening->single" : 1,
+        "opening->closing" : 0,
+        "opening->opening" : 1,
+        "opening->other" : 1,
+        "other->single" : 0,
+        "other->closing" : -1,
+        "other->opening" : 0,
+        "other->other" : 0
     };
 
     for (var i = 0; i < lines.length; i++) {
@@ -142,7 +141,7 @@ function _kmlFormattedToString(xml) {
 /**
  * Fonction de parsing d'une chaine de caractères KML
  */
-function _kmlParse(kmlString) {
+function _kmlParse (kmlString) {
     var kmlDoc = null;
     var parser = null;
     var scope = typeof window !== "undefined" ? window : null;
@@ -172,7 +171,7 @@ function _kmlParse(kmlString) {
 /**
  * Fonction de convertion en chaine de caractères.
  */
-function _kmlToString(kmlDoc) {
+function _kmlToString (kmlDoc) {
     var oSerializer = new XMLSerializer();
     var kmlStringExtended = oSerializer.serializeToString(kmlDoc);
 
@@ -201,7 +200,7 @@ function _kmlToString(kmlDoc) {
  *   extendedData : getExtendedData
  * });
  */
-function _kmlRead(kmlDoc, features, process) {
+function _kmlRead (kmlDoc, features, process) {
     var root = kmlDoc.documentElement;
     var firstNodeLevel = root.childNodes;
 
@@ -220,7 +219,6 @@ function _kmlRead(kmlDoc, features, process) {
     for (var i = 0; i < nodes.length; i++) {
         var node = nodes[i];
         switch (node.nodeName) {
-
             case "Style":
                 // INFO
                 // pour le traitement des balises Styles liées avec styleUrl,
@@ -358,7 +356,7 @@ function _kmlRead(kmlDoc, features, process) {
  * @param {Object} options - Options.
  * @return {String} Result.
  */
-KML.prototype.writeFeatures = function(features, options) {
+KML.prototype.writeFeatures = function (features, options) {
     // KML.prototype._parentWriteFeatures = ol.format.KML.prototype.writeFeatures;
     logger.log("overload : ol.format.KML.writeFeatures");
     var kmlString = this._writeExtendStylesFeatures(features, options);
@@ -370,8 +368,7 @@ KML.prototype.writeFeatures = function(features, options) {
  *
  * @private
  */
-KML.prototype._writeExtendStylesFeatures = function(features, options) {
-
+KML.prototype._writeExtendStylesFeatures = function (features, options) {
     var kmlString = ol.format.KML.prototype.writeFeatures.call(this, features, options);
 
     // On met en place un Parser sur le KML
@@ -391,8 +388,7 @@ KML.prototype._writeExtendStylesFeatures = function(features, options) {
      * @example
      *      <LabelStyleSimpleExtensionGroup fontFamily="Arial" haloColor="16777215" haloRadius="2" haloOpacity="1"/>
      */
-    var __createExtensionStyleLabel = function(feature, style) {
-
+    var __createExtensionStyleLabel = function (feature, style) {
         logger.trace("label with style :", style);
 
         if (!feature) {
@@ -405,7 +401,7 @@ KML.prototype._writeExtendStylesFeatures = function(features, options) {
         }
 
         /** RGB Colors (RRGGBB) To KML Colors (AABBGGRR) */
-        function __convertRGBColorsToKML(data) {
+        function __convertRGBColorsToKML (data) {
             var strColor = data.toString(16);
 
             if (strColor.charAt(0) === "#") {
@@ -424,7 +420,6 @@ KML.prototype._writeExtendStylesFeatures = function(features, options) {
 
         // Si pas de style defini, c'est donc que l'on va utiliser celui par defaut...
         if (feature.getStyle() instanceof ol.style.Style) {
-
             var fTextStyle = feature.getStyle().getText().getStroke();
 
             if (!fTextStyle) {
@@ -437,7 +432,6 @@ KML.prototype._writeExtendStylesFeatures = function(features, options) {
             var _font = "Sans"; // TODO
 
             if (style && style.getElementsByTagName("LabelStyleSimpleExtensionGroup").length === 0) {
-
                 var labelextend = kmlDoc.createElement("LabelStyleSimpleExtensionGroup");
                 labelextend.setAttribute("fontFamily", _font);
                 labelextend.setAttribute("haloColor", _haloColor);
@@ -446,7 +440,6 @@ KML.prototype._writeExtendStylesFeatures = function(features, options) {
                 style.appendChild(labelextend);
             }
         }
-
     };
 
     /**
@@ -462,7 +455,7 @@ KML.prototype._writeExtendStylesFeatures = function(features, options) {
      *      <hotSpot x="0.5"  y="1" xunits="fraction" yunits="fraction"/>
      *  </IconStyle></Style>
      */
-    var __createHotSpotStyleIcon = function(feature, style) {
+    var __createHotSpotStyleIcon = function (feature, style) {
         logger.trace("marker with style (hotspot):", style);
 
         if (!feature) {
@@ -471,7 +464,6 @@ KML.prototype._writeExtendStylesFeatures = function(features, options) {
 
         // Si pas de style defini, c'est donc que l'on va utiliser celui par defaut...
         if (feature.getStyle() instanceof ol.style.Style) {
-
             var fImageStyle = feature.getStyle().getImage();
 
             if (!fImageStyle) {
@@ -508,16 +500,14 @@ KML.prototype._writeExtendStylesFeatures = function(features, options) {
     };
 
     /** TODO */
-    var __createStyleToFeatureIconLabel = function(feature, iconStyle, labelStyle) {
+    var __createStyleToFeatureIconLabel = function (feature, iconStyle, labelStyle) {
         logger.trace("write an icon with a label");
         __createHotSpotStyleIcon(feature, iconStyle);
         __createExtensionStyleLabel(feature, labelStyle);
-
     };
 
     /** TODO */
-    var __setNameData = function(feature, tags) {
-
+    var __setNameData = function (feature, tags) {
         for (var i = 0; i < tags.length; i++) {
             var tag = tags[i];
             if (tag.nodeName === "name") {
@@ -535,10 +525,10 @@ KML.prototype._writeExtendStylesFeatures = function(features, options) {
 
     // On ajoute les styles étendus dans le DOM
     _kmlRead(kmlDoc, features, {
-        labelStyle: __createExtensionStyleLabel,
-        iconStyle: __createHotSpotStyleIcon,
-        iconLabelStyle: __createStyleToFeatureIconLabel,
-        nameData: __setNameData
+        labelStyle : __createExtensionStyleLabel,
+        iconStyle : __createHotSpotStyleIcon,
+        iconLabelStyle : __createStyleToFeatureIconLabel,
+        nameData : __setNameData
     });
 
     // On convertit le DOM en String...
@@ -569,7 +559,7 @@ KML.prototype._writeExtendStylesFeatures = function(features, options) {
  * @param {olx.format.ReadOptions=} options - options.
  * @return {Array.<ol.Feature>} Features.
  */
-KML.prototype.readFeatures = function(source, options) {
+KML.prototype.readFeatures = function (source, options) {
     // KML.prototype._parentReadFeatures = ol.format.KML.prototype.readFeatures;
     logger.log("overload : ol.format.KML.readFeatures");
     var features = this._readExtendStylesFeatures(source, options);
@@ -596,7 +586,7 @@ KML.prototype.readFeatures = function(source, options) {
  *
  * @private
  */
-KML.prototype._readExtendStylesFeatures = function(source, options) {
+KML.prototype._readExtendStylesFeatures = function (source, options) {
     var features = ol.format.KML.prototype.readFeatures.call(this, source, options);
 
     var kmlDoc = null;
@@ -604,7 +594,6 @@ KML.prototype._readExtendStylesFeatures = function(source, options) {
 
     if (typeof source === "string") {
         kmlString = source;
-
     } else {
         kmlString = source.documentElement.outerHTML;
     }
@@ -649,8 +638,7 @@ KML.prototype._readExtendStylesFeatures = function(source, options) {
      *  </Point>
      * </Placemark>
      */
-    var __getExtensionStyleToFeatureLabel = function(feature, style) {
-
+    var __getExtensionStyleToFeatureLabel = function (feature, style) {
         logger.trace("label with style :", style);
 
         if (!feature) {
@@ -658,7 +646,7 @@ KML.prototype._readExtendStylesFeatures = function(source, options) {
         }
 
         /** KML Colors (AABBGGRR) To RGB Colors (RRGGBB) */
-        function __convertKMLColorsToRGB(data) {
+        function __convertKMLColorsToRGB (data) {
             var color = "";
             color = color + data.substr(6, 2);
             color = color + data.substr(4, 2);
@@ -728,29 +716,28 @@ KML.prototype._readExtendStylesFeatures = function(source, options) {
 
         // On reconstruit le style !
         feature.setStyle(new ol.style.Style({
-            image: new ol.style.Icon({
-                src: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNiYAAAAAkAAxkR2eQAAAAASUVORK5CYII=",
-                size: [51, 38],
-                anchor: [25.5, 38],
-                anchorOrigin: "top-left",
-                anchorXUnits: "pixels",
-                anchorYUnits: "pixels"
+            image : new ol.style.Icon({
+                src : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNiYAAAAAkAAxkR2eQAAAAASUVORK5CYII=",
+                size : [51, 38],
+                anchor : [25.5, 38],
+                anchorOrigin : "top-left",
+                anchorXUnits : "pixels",
+                anchorYUnits : "pixels"
             }),
-            text: new ol.style.Text({
-                font: _fontSize + " " + _font,
-                textAlign: "left",
-                text: _text,
+            text : new ol.style.Text({
+                font : _fontSize + " " + _font,
+                textAlign : "left",
+                text : _text,
                 // offsetX : 5, // FIXME valeur arbitraire MAIS esthétique !
-                fill: new ol.style.Fill({
-                    color: _color
+                fill : new ol.style.Fill({
+                    color : _color
                 }),
-                stroke: new ol.style.Stroke({
-                    color: _colorHalo,
-                    width: _radiusHalo
+                stroke : new ol.style.Stroke({
+                    color : _colorHalo,
+                    width : _radiusHalo
                 })
             })
         }));
-
     };
 
     /**
@@ -772,7 +759,7 @@ KML.prototype._readExtendStylesFeatures = function(source, options) {
      *   </Point>
      * </Placemark>
      */
-    var __getHotSpotStyleToFeatureIcon = function(feature, style) {
+    var __getHotSpotStyleToFeatureIcon = function (feature, style) {
         logger.trace("hotspot :", style);
 
         var _src = null;
@@ -840,23 +827,23 @@ KML.prototype._readExtendStylesFeatures = function(source, options) {
         }
 
         var _options = {
-            src: _src,
-            crossOrigin: "anonymous", // cf. https://gis.stackexchange.com/questions/121555/wms-server-with-cors-enabled/147403#147403
-            scale: _scale || 1 // FIXME !?
+            src : _src,
+            crossOrigin : "anonymous", // cf. https://gis.stackexchange.com/questions/121555/wms-server-with-cors-enabled/147403#147403
+            scale : _scale || 1 // FIXME !?
         };
 
         if (_bSizeIcon) {
             Utils.mergeParams(_options, {
-                size: [_sizeW, _sizeH]
+                size : [_sizeW, _sizeH]
             });
         }
 
         if (_bHotSpot) {
             Utils.mergeParams(_options, {
-                anchor: [_anchorX, _anchorY],
-                anchorOrigin: "bottom-left",
-                anchorXUnits: _anchorXUnits || "pixels",
-                anchorYUnits: _anchorYUnits || "pixels"
+                anchor : [_anchorX, _anchorY],
+                anchorOrigin : "bottom-left",
+                anchorXUnits : _anchorXUnits || "pixels",
+                anchorYUnits : _anchorYUnits || "pixels"
             });
         }
 
@@ -868,8 +855,8 @@ KML.prototype._readExtendStylesFeatures = function(source, options) {
                 var _style = (_styles.length === 1) ? _styles[0] : _styles[_styles.length - 1];
                 // on écrase l'icone magic du label !
                 feature.setStyle(new ol.style.Style({
-                    image: new ol.style.Icon(_options),
-                    text: _style.getText()
+                    image : new ol.style.Icon(_options),
+                    text : _style.getText()
                 }));
             }
         }
@@ -897,8 +884,7 @@ KML.prototype._readExtendStylesFeatures = function(source, options) {
      *    </Data>
      * </ExtendedData>
      */
-    var __getExtendedData = function(feature, extend) {
-
+    var __getExtendedData = function (feature, extend) {
         logger.trace("extendData :", extend);
 
         if (!feature) {
@@ -945,25 +931,24 @@ KML.prototype._readExtendStylesFeatures = function(source, options) {
         }
 
         feature.setProperties({
-            name: _fname,
-            description: _fdescription
+            name : _fname,
+            description : _fdescription
         });
     };
 
     /** TODO */
-    var __getStyleToFeatureIconLabel = function(feature, iconStyle, labelStyle) {
+    var __getStyleToFeatureIconLabel = function (feature, iconStyle, labelStyle) {
         logger.trace("display icon and label");
         __getExtensionStyleToFeatureLabel(feature, labelStyle);
         __getHotSpotStyleToFeatureIcon(feature, iconStyle);
-
     };
 
     // On lit les styles étendus et on les ajoute aux features
     _kmlRead(kmlDoc, features, {
-        labelStyle: this.options.showPointNames ? __getExtensionStyleToFeatureLabel : null,
-        iconStyle: __getHotSpotStyleToFeatureIcon,
-        iconLabelStyle: this.options.showPointNames ? __getStyleToFeatureIconLabel : __getHotSpotStyleToFeatureIcon,
-        extendedData: __getExtendedData
+        labelStyle : this.options.showPointNames ? __getExtensionStyleToFeatureLabel : null,
+        iconStyle : __getHotSpotStyleToFeatureIcon,
+        iconLabelStyle : this.options.showPointNames ? __getStyleToFeatureIconLabel : __getHotSpotStyleToFeatureIcon,
+        extendedData : __getExtendedData
     });
 
     return features;

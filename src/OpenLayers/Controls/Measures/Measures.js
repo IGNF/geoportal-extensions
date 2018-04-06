@@ -5,7 +5,6 @@ import Interactions from "../Utils/Interactions";
 // Derived from OpenLayers measure example
 // http://openlayers.org/en/latest/examples/measure.html
 
-
 var logger = Logger.getLogger("measures");
 
 /**
@@ -23,59 +22,59 @@ var Measures = {
     /*
      * Pointer
      */
-    DEFAULT_POINTER_STYLE: new ol.style.Circle({
-        radius: 5,
-        stroke: new ol.style.Stroke({
-            color: "#002A50",
-            width: 2
+    DEFAULT_POINTER_STYLE : new ol.style.Circle({
+        radius : 5,
+        stroke : new ol.style.Stroke({
+            color : "#002A50",
+            width : 2
         }),
-        fill: new ol.style.Fill({
-            color: "rgba(255, 155, 0, 0.7)"
+        fill : new ol.style.Fill({
+            color : "rgba(255, 155, 0, 0.7)"
         })
     }),
 
     /*
      * Measures style line
      */
-    DEFAULT_DRAW_START_STYLE: new ol.style.Style({
-        fill: new ol.style.Fill({
-            color: "rgba(0, 183, 152, 0.2)"
+    DEFAULT_DRAW_START_STYLE : new ol.style.Style({
+        fill : new ol.style.Fill({
+            color : "rgba(0, 183, 152, 0.2)"
         }),
-        stroke: new ol.style.Stroke({
-            color: "#002A50",
-            lineDash: [10, 10],
-            width: 2
+        stroke : new ol.style.Stroke({
+            color : "#002A50",
+            lineDash : [10, 10],
+            width : 2
         })
     }),
 
     /*
      * Measures final style line
      */
-    DEFAULT_DRAW_FINISH_STYLE: new ol.style.Style({
-        fill: new ol.style.Fill({
-            color: "rgba(0, 183, 152, 0.3)"
+    DEFAULT_DRAW_FINISH_STYLE : new ol.style.Style({
+        fill : new ol.style.Fill({
+            color : "rgba(0, 183, 152, 0.3)"
         }),
-        stroke: new ol.style.Stroke({
-            color: "#002A50",
-            width: 3
+        stroke : new ol.style.Stroke({
+            color : "#002A50",
+            width : 3
         })
     }),
 
     // ****************************************************************** //
     // > ToolBox : these tools work together
     // ****************************************************************** //
-    tools: {
-        MeasureLength: {
-            active: false,
-            instance: null
+    tools : {
+        MeasureLength : {
+            active : false,
+            instance : null
         },
-        MeasureArea: {
-            active: false,
-            instance: null
+        MeasureArea : {
+            active : false,
+            instance : null
         },
-        MeasureAzimuth: {
-            active: false,
-            instance: null
+        MeasureAzimuth : {
+            active : false,
+            instance : null
         }
     },
 
@@ -87,56 +86,56 @@ var Measures = {
      * Global measure draw interaction
      * @type {ol.interaction.Draw}
      */
-    measureDraw: null,
+    measureDraw : null,
 
     /**
      * Global vector source for measure
      * @type {ol.source.Vector}
      */
-    measureSource: null,
+    measureSource : null,
 
     /**
      * Global vector layer for measure
      * @type {ol.layer.Vector}
      */
-    measureVector: null,
+    measureVector : null,
 
     /**
      * Currently drawn feature.
      * @type {ol.Feature}
      */
-    sketch: null,
+    sketch : null,
 
     /**
      * The measure tooltip element.
      * @type {Element}
      */
-    measureTooltipElement: null,
+    measureTooltipElement : null,
 
     /**
      * Overlay to show the measurement.
      * @type {ol.Overlay}
      */
-    measureTooltip: null,
+    measureTooltip : null,
 
     /**
      * TODO The help tooltip element.
      * @type {Element}
      */
-    helpTooltipElement: null,
+    helpTooltipElement : null,
 
     /**
      * TODO Overlay to show the help.
      * @type {ol.Overlay}
      */
-    helpTooltip: null,
+    helpTooltip : null,
 
     // ****************************************************************** //
     // > Methods Public
     // ****************************************************************** //
 
     /** Desactived Tool Measure */
-    clean: function() {
+    clean : function () {
         var _class = this.CLASSNAME;
 
         logger.trace("[" + _class + "] deactived tool !");
@@ -147,7 +146,6 @@ var Measures = {
         this.clearMeasureToolTip();
         this.removeMeasureEvents();
         this._showContainer.checked = false;
-
     },
 
     // ****************************************************************** //
@@ -159,8 +157,7 @@ var Measures = {
      *
      * @param {ol.MapBrowserEvent} e - The event.
      */
-    onPointerMoveHandler: function(e) {
-
+    onPointerMoveHandler : function (e) {
         if (e.dragging) {
             return;
         }
@@ -192,8 +189,7 @@ var Measures = {
      * @param {String} type - LineString or Polygon
      * @private
      */
-    onShowMeasureClick: function(e, type) {
-
+    onShowMeasureClick : function (e, type) {
         // desactivation des controles de mesures
         var self = this.CLASSNAME; // this.constructor.name : pas possible en mode minifié/manglifié !
         for (var className in this.tools) {
@@ -211,18 +207,15 @@ var Measures = {
         // desactivation des autres interactions parasites
         var map = this.getMap();
         Interactions.unset(map, {
-            current: "Measures"
+            current : "Measures"
         });
 
         if (!this._showContainer.checked) {
-
             this.addMeasureEvents();
             this.initMeasureInteraction();
             this.addMeasureInteraction(type);
             this.tools[self].active = true;
-
         } else {
-
             this.clearMeasure();
             this.clearMeasureToolTip();
             this.removeMeasureEvents();
@@ -237,8 +230,7 @@ var Measures = {
     /**
      * Clear all dom tooltip of length, area or azimut object.
      */
-    clearMeasureToolTip: function() {
-
+    clearMeasureToolTip : function () {
         var map = this.getMap();
         if (!map) {
             return;
@@ -260,7 +252,6 @@ var Measures = {
                         nodesToRemove.push(node);
                     }
                 }
-
             }
             for (var j = 0; j < nodesToRemove.length; j++) {
                 nodes.removeChild(nodesToRemove[j]);
@@ -271,8 +262,7 @@ var Measures = {
     /**
      * Clear all length, area or azimut object.
      */
-    clearMeasure: function() {
-
+    clearMeasure : function () {
         var map = this.getMap();
 
         // FIXME !?
@@ -299,7 +289,7 @@ var Measures = {
      *
      * @param {ol.Map} map - The Map.
      */
-    createMeasureTooltip: function(map) {
+    createMeasureTooltip : function (map) {
         if (this.measureTooltipElement) {
             this.measureTooltipElement.parentNode.removeChild(this.measureTooltipElement);
         }
@@ -308,9 +298,9 @@ var Measures = {
         this.measureTooltipElement.className = "GPmeasureTooltip GPmeasureTooltip-measure";
 
         this.measureTooltip = new ol.Overlay({
-            element: this.measureTooltipElement,
-            offset: [0, -15],
-            positioning: "bottom-center"
+            element : this.measureTooltipElement,
+            offset : [0, -15],
+            positioning : "bottom-center"
         });
 
         map.addOverlay(this.measureTooltip);
@@ -322,8 +312,7 @@ var Measures = {
      *
      * @param {ol.Map} map - The Map.
      */
-    createHelpTooltip: function(map) {
-
+    createHelpTooltip : function (map) {
         if (this.helpTooltipElement) {
             this.helpTooltipElement.parentNode.removeChild(this.helpTooltipElement);
         }
@@ -332,9 +321,9 @@ var Measures = {
         this.helpTooltipElement.className = "tooltip hidden";
 
         this.helpTooltip = new ol.Overlay({
-            element: this.helpTooltipElement,
-            offset: [15, 0],
-            positioning: "center-left"
+            element : this.helpTooltipElement,
+            offset : [15, 0],
+            positioning : "center-left"
         });
 
         map.addOverlay(this.helpTooltip);
@@ -345,8 +334,7 @@ var Measures = {
      *
      * @param {Object} styles - styles.
      */
-    createStylingMeasureInteraction: function(styles) {
-
+    createStylingMeasureInteraction : function (styles) {
         this.options.styles = styles || {};
 
         // style de depart
@@ -354,9 +342,9 @@ var Measures = {
 
         // Creation à partir des styles par défaut
         var startStyleOpts = {
-            image: Measures.DEFAULT_POINTER_STYLE,
-            fill: Measures.DEFAULT_DRAW_START_STYLE.getFill(),
-            stroke: Measures.DEFAULT_DRAW_START_STYLE.getStroke()
+            image : Measures.DEFAULT_POINTER_STYLE,
+            fill : Measures.DEFAULT_DRAW_START_STYLE.getFill(),
+            stroke : Measures.DEFAULT_DRAW_START_STYLE.getStroke()
         };
         // ecrasement à partir des propriétés renseignées
         if (this.options.styles.hasOwnProperty("pointer") && this.options.styles.pointer instanceof ol.style.Image) {
@@ -377,8 +365,8 @@ var Measures = {
         logger.trace("style finish", this.options.styles.finish);
 
         var finishStyleOpts = {
-            fill: Measures.DEFAULT_DRAW_FINISH_STYLE.getFill(),
-            stroke: Measures.DEFAULT_DRAW_FINISH_STYLE.getStroke()
+            fill : Measures.DEFAULT_DRAW_FINISH_STYLE.getFill(),
+            stroke : Measures.DEFAULT_DRAW_FINISH_STYLE.getStroke()
         };
         // ecrasement à partir des propriétés renseignées
         if (this.options.styles.hasOwnProperty("finish") && this.options.styles.finish instanceof ol.style.Style) {
@@ -391,7 +379,6 @@ var Measures = {
         }
 
         this.options.styles.finish = new ol.style.Style(finishStyleOpts);
-
     },
 
     /**
@@ -399,16 +386,15 @@ var Measures = {
      *
      * @param {String} type - LineString or Polygon.
      */
-    addMeasureInteraction: function(type) {
-
+    addMeasureInteraction : function (type) {
         var map = this.getMap();
 
         // Creates and adds the interaction
         var self = this;
         this.measureDraw = new ol.interaction.Draw({
-            source: this.measureSource,
+            source : this.measureSource,
             /** condition : permet de gerer la suppression des derniers points saisis */
-            condition: function(event) {
+            condition : function (event) {
                 if (event.originalEvent.ctrlKey) {
                     if (self.sketch) {
                         this.removeLastPoint();
@@ -417,12 +403,12 @@ var Measures = {
                 }
                 return true;
             },
-            type: type,
-            style: this.options.styles.start || Measures.DEFAULT_DRAW_START_STYLE
+            type : type,
+            style : this.options.styles.start || Measures.DEFAULT_DRAW_START_STYLE
         });
         this.measureDraw.setProperties({
-            name: "Measures",
-            source: this
+            name : "Measures",
+            source : this
         });
         map.addInteraction(this.measureDraw);
 
@@ -430,14 +416,13 @@ var Measures = {
         this.createMeasureTooltip(map);
 
         // Event start measuring
-        this.measureDraw.on("drawstart", function(evt) {
+        this.measureDraw.on("drawstart", function (evt) {
             // set sketch
             self.sketch = evt.feature;
         }, this);
 
         // Event end measuring
-        this.measureDraw.on("drawend", function() {
-
+        this.measureDraw.on("drawend", function () {
             // FIXME MaJ de la tooltip en mode mobile !
             if (self.sketch) {
                 var output;
@@ -463,22 +448,20 @@ var Measures = {
             // unset tooltip so that a new one can be created
             self.measureTooltipElement = null;
             self.createMeasureTooltip(map);
-
         }, this);
     },
 
     /**
      * Init the measure interaction
      */
-    initMeasureInteraction: function() {
-
+    initMeasureInteraction : function () {
         var map = this.getMap();
 
         this.measureSource = new ol.source.Vector();
 
         this.measureVector = new ol.layer.Vector({
-            source: this.measureSource,
-            style: this.options.styles.finish || Measures.DEFAULT_DRAW_FINISH_STYLE
+            source : this.measureSource,
+            style : this.options.styles.finish || Measures.DEFAULT_DRAW_FINISH_STYLE
         });
 
         // on rajoute le champ gpResultLayerId permettant d'identifier une couche crée par le composant.

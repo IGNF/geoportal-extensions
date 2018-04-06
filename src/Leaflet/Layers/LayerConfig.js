@@ -14,8 +14,7 @@ var LayerConfig = {
     /**
      * options : key, layer, service
      */
-    get: function(options) {
-
+    get : function (options) {
         var params = {};
 
         // Gestion de l'autoconf
@@ -27,7 +26,7 @@ var LayerConfig = {
         // gestion des parametres
         params = Config.getLayerParams(options.layer, options.service, options.key);
 
-        if (!params) {
+        if (!params || Object.keys(params).length === 0) {
             logger.warn("WARNING AUTOCONF_FAILED : params not found ?!");
             return;
         }

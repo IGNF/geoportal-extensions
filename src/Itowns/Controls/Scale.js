@@ -4,7 +4,6 @@ import SelectorID from "../../Common/Utils/SelectorID";
 import ScaleDOM from "../../Common/Controls/ScaleDOM";
 import Widget from "./Widget";
 
-
 /**
  * @classdesc
  * Control to display the scalebar with itowns
@@ -17,8 +16,7 @@ import Widget from "./Widget";
  * var scale = new itowns.control.Scale();
  *
  */
-function Scale(options) {
-
+function Scale (options) {
     options = options || {};
 
     if (!(this instanceof Scale)) {
@@ -39,10 +37,10 @@ function Scale(options) {
 
     Widget.call(
         this, {
-            name: "GraphicScale",
-            element: container,
-            target: targetDiv,
-            position: options.position
+            name : "GraphicScale",
+            element : container,
+            target : targetDiv,
+            position : options.position
         }
     );
 }
@@ -69,7 +67,7 @@ Scale.prototype.constructor = Scale;
 /**
  * Binds globe to control
  */
-Scale.prototype.setGlobe = function(globe) {
+Scale.prototype.setGlobe = function (globe) {
     // info : this function is called after a globe.addWidget() or a globe.removeWidget()
 
     if (globe) { // In the case of the adding of a control to the globe
@@ -78,7 +76,7 @@ Scale.prototype.setGlobe = function(globe) {
          * Definition of the scaleControl callback :
          * when the view is changing, we recalculate the graphic scale
          */
-        this._callbacks.onChangedViewCallback = function() {
+        this._callbacks.onChangedViewCallback = function () {
             var value = globe.pixelsToMeters(200);
             value = Math.floor(value);
             var digit = Math.pow(10, value.toString().length - 1);
@@ -128,7 +126,7 @@ Scale.prototype.setGlobe = function(globe) {
  *
  * @private
  */
-Scale.prototype._initialize = function() {
+Scale.prototype._initialize = function () {
     // id of the widget : usefull to suffix the CSS ids (to handle cases with several widgets on the same page)
     this._uid = SelectorID.generate();
 
@@ -145,8 +143,7 @@ Scale.prototype._initialize = function() {
  * @method _initContainer
  * @private
  */
-Scale.prototype._initContainer = function() {
-
+Scale.prototype._initContainer = function () {
     var container = this._createMainContainerElement();
 
     return container;

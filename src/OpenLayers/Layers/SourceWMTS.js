@@ -24,8 +24,7 @@ import LayerUtils from "../../Common/Utils/LayerUtils";
  *      layer  : "ORTHOIMAGERY.ORTHOPHOTOS"
  * });
  */
-function SourceWMTS(options) {
-
+function SourceWMTS (options) {
     if (!(this instanceof SourceWMTS)) {
         throw new TypeError("ERROR CLASS_CONSTRUCTOR");
     }
@@ -51,14 +50,13 @@ function SourceWMTS(options) {
     var layerId = Config.getLayerId(options.layer, "WMTS");
 
     if (layerId && Config.configuration.getLayerConf(layerId)) {
-
         var wmtsParams = Config.getLayerParams(options.layer, "WMTS", options.apiKey);
 
         // gestion de mixContent dans l'url du service...
         var ctx = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : null;
-        var protocol = (ctx) ?
-            (ctx.location && ctx.location.protocol && ctx.location.protocol.indexOf("https:") === 0 ? "https://" : "http://") :
-            (options.ssl ? "https://" : "http://");
+        var protocol = (ctx)
+            ? (ctx.location && ctx.location.protocol && ctx.location.protocol.indexOf("https:") === 0 ? "https://" : "http://")
+            : (options.ssl ? "https://" : "http://");
 
         // save originators (to be updated by Originators control)
         this._originators = wmtsParams.originators;
@@ -70,27 +68,27 @@ function SourceWMTS(options) {
         var wmtsSourceOptions = {
             // tracker extension openlayers
             // FIXME : gp-ext version en mode AMD
-            url: Gp.Helper.normalyzeUrl(wmtsParams.url.replace(/(http|https):\/\//, protocol), {
-                "gp-ol-ext": "__GPOLEXTVERSION__"
+            url : Gp.Helper.normalyzeUrl(wmtsParams.url.replace(/(http|https):\/\//, protocol), {
+                "gp-ol-ext" : "__GPOLEXTVERSION__"
             }, false),
-            version: wmtsParams.version,
-            style: wmtsParams.styles,
-            format: wmtsParams.format,
-            projection: wmtsParams.projection,
-            maxZoom: LayerUtils.getZoomLevelFromScaleDenominator(wmtsParams.minScale),
-            layer: options.layer,
-            matrixSet: wmtsParams.TMSLink,
-            tileGrid: new ol.tilegrid.WMTS({
-                    resolutions: wmtsParams.nativeResolutions,
-                    matrixIds: wmtsParams.matrixIds,
-                    origin: [wmtsParams.matrixOrigin.x, wmtsParams.matrixOrigin.y]
-                })
-                // ,
-                // attributions : [
-                //     new ol.Attribution({
-                //         html : "<a class='gp-control-attribution-link' target='_blank' href='http://www.ign.fr'><img class='gp-control-attribution-image' src='http://wxs.ign.fr/static/logos/IGN/IGN.gif' title='Institut national de l\'information géographique et forestière' style='height: 30px; width: 30px;'></a>"
-                //     })
-                // ]
+            version : wmtsParams.version,
+            style : wmtsParams.styles,
+            format : wmtsParams.format,
+            projection : wmtsParams.projection,
+            maxZoom : LayerUtils.getZoomLevelFromScaleDenominator(wmtsParams.minScale),
+            layer : options.layer,
+            matrixSet : wmtsParams.TMSLink,
+            tileGrid : new ol.tilegrid.WMTS({
+                resolutions : wmtsParams.nativeResolutions,
+                matrixIds : wmtsParams.matrixIds,
+                origin : [wmtsParams.matrixOrigin.x, wmtsParams.matrixOrigin.y]
+            })
+            // ,
+            // attributions : [
+            //     new ol.Attribution({
+            //         html : "<a class='gp-control-attribution-link' target='_blank' href='http://www.ign.fr'><img class='gp-control-attribution-image' src='http://wxs.ign.fr/static/logos/IGN/IGN.gif' title='Institut national de l\'information géographique et forestière' style='height: 30px; width: 30px;'></a>"
+            //     })
+            // ]
         };
 
         // récupération des autres paramètres passés par l'utilisateur
@@ -108,7 +106,6 @@ function SourceWMTS(options) {
         this._description = wmtsParams.description;
         this._title = wmtsParams.title;
         this._quicklookUrl = wmtsParams.quicklookUrl;
-
     } else {
         // If layer is not in Gp.Config
         console.log("[source WMTS] ERROR : " + options.layer + " cannot be found in Geoportal Configuration. Make sure that this resource is included in your contract key.");

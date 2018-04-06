@@ -91,7 +91,7 @@ En version 3 de webpack, on a du code js à placer pour utiliser **--env.product
 
 ### client web pour l'affichage
 
-**TODO!**
+**OK!**
 
 ## LES TESTS
 
@@ -99,9 +99,36 @@ En version 3 de webpack, on a du code js à placer pour utiliser **--env.product
 
 **TODO: en cours...**
 
+Liste des tests à faire...
+
+    src/
+    ├── Common
+    │   ├── Controls     <- OK mais à completer...
+    │   └── Utils        <- OK
+    ├── Itowns
+    │   ├── Controls
+    │   │   └── Utils
+    │   └── CRS
+    ├── Leaflet
+    │   ├── Controls     <- OK mais à completer...
+    │   │   └── Utils    <- OK
+    │   ├── CRS
+    │   └── Layers       <- OK
+    └── OpenLayers
+        ├── Controls
+        │   ├── Measures
+        │   └── Utils
+        ├── CRS
+        ├── Formats
+        ├── Layers
+        └── Sources
+
 ### client web pour l'affichage
 
-**TODO: en cours...**
+**OK!**
+
+par defaut, tous les tests sont executés...
+sinon, option par projet (leaflet, ol ou itowns)...
 
 ## LES TESTS DE RENDU
 
@@ -116,7 +143,7 @@ En version 3 de webpack, on a du code js à placer pour utiliser **--env.product
 
 ## L'INTERFACE NPM
 
-**TODO: en cours...**
+**OK!**
 
 ## TRAVIS
 

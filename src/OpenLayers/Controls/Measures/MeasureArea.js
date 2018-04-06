@@ -9,7 +9,6 @@ import ID from "../../../Common/Utils/SelectorID";
 // Derived from OpenLayers measure example
 // http://openlayers.org/en/latest/examples/measure.html
 
-
 var logger = Logger.getLogger("measurearea");
 
 /**
@@ -32,8 +31,7 @@ var logger = Logger.getLogger("measurearea");
  *    geodesic : false
  * });
  */
-function MeasureArea(options) {
-
+function MeasureArea (options) {
     /**
      * options
      * @private
@@ -65,9 +63,9 @@ function MeasureArea(options) {
 
     // heritage
     ol.control.Control.call(this, {
-        element: container,
-        target: options.target,
-        render: options.render
+        element : container,
+        target : options.target,
+        render : options.render
     });
 }
 
@@ -99,7 +97,7 @@ MeasureArea.prototype.constructor = MeasureArea;
  *
  * @param {ol.Map} map - Map.
  */
-MeasureArea.prototype.setMap = function(map) {
+MeasureArea.prototype.setMap = function (map) {
     logger.trace("setMap()");
 
     var className = this.CLASSNAME;
@@ -107,7 +105,6 @@ MeasureArea.prototype.setMap = function(map) {
     // on fait le choix de ne pas activer les events sur la map à l'init de l'outil,
     // mais uniquement à son utilisation !
     if (map) {
-
         // var self = this;
         // map.on("click", function (e) {
         //     logger.trace("event on map with click!");
@@ -136,7 +133,6 @@ MeasureArea.prototype.setMap = function(map) {
 
     // on appelle la méthode setMap originale d'OpenLayers
     ol.control.Control.prototype.setMap.call(this, map);
-
 };
 
 // ################################################################### //
@@ -148,7 +144,7 @@ MeasureArea.prototype.setMap = function(map) {
  *
  * @private
  */
-MeasureArea.prototype._initialize = function(options) {
+MeasureArea.prototype._initialize = function (options) {
     logger.trace("call MeasureArea::_initialize() : ", options);
 
     // liste des options
@@ -166,10 +162,10 @@ MeasureArea.prototype._initialize = function(options) {
  *
  * @private
  */
-MeasureArea.prototype._initializeContainer = function() {
+MeasureArea.prototype._initializeContainer = function () {
     logger.trace("call MeasureArea::_initializeContainer() : ", this._uid);
 
-    var container = this._createMainContainerElement();;
+    var container = this._createMainContainerElement(); ;
 
     var show = this._showContainer = this._createShowMeasureAreaElement();
     container.appendChild(show);
@@ -192,7 +188,7 @@ MeasureArea.prototype._initializeContainer = function() {
  *
  * @private
  */
-MeasureArea.prototype.addMeasureEvents = function() {
+MeasureArea.prototype.addMeasureEvents = function () {
     logger.trace("call MeasureArea::addMeasureEvents()");
 
     var map = this.getMap();
@@ -206,7 +202,7 @@ MeasureArea.prototype.addMeasureEvents = function() {
  *
  * @private
  */
-MeasureArea.prototype.removeMeasureEvents = function() {
+MeasureArea.prototype.removeMeasureEvents = function () {
     logger.trace("call MeasureArea::removeMeasureEvents()");
 
     var map = this.getMap();
@@ -222,7 +218,7 @@ MeasureArea.prototype.removeMeasureEvents = function() {
  * @return {String} The formatted output.
  * @private
  */
-MeasureArea.prototype.format = function(polygon) {
+MeasureArea.prototype.format = function (polygon) {
     logger.trace("call MeasureArea::format()");
 
     var map = this.getMap();
@@ -262,7 +258,7 @@ MeasureArea.prototype.format = function(polygon) {
  *
  * @private
  */
-MeasureArea.prototype.onShowMeasureAreaClick = function(e) {
+MeasureArea.prototype.onShowMeasureAreaClick = function (e) {
     logger.trace("call MeasureArea::onShowMeasureAreaClick()", e);
 
     // appel de la methode commune

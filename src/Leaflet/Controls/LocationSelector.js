@@ -37,30 +37,30 @@ var logger = Logger.getLogger("locationselector");
 *  var point = L.geoportalControl.LocationSelector({
 *  });
 */
-var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype */ {
+var LocationSelector = L.Control.extend(/** @lends LocationSelector.prototype */ {
 
-    includes: LocationSelectorDOM,
+    includes : LocationSelectorDOM,
 
     /**
      * options by default
      *
      * @private
      */
-    options: {
-        position: "topleft",
-        tag: {
-            id: 0, // numero d'ordre sur un groupe de locations !
-            unique: null, // numero unique pour tous les locations d'un groupe !
-            label: ">",
-            color: "blue",
-            display: true,
-            addOption: false,
-            removeOption: false
+    options : {
+        position : "topleft",
+        tag : {
+            id : 0, // numero d'ordre sur un groupe de locations !
+            unique : null, // numero unique pour tous les locations d'un groupe !
+            label : ">",
+            color : "blue",
+            display : true,
+            addOption : false,
+            removeOption : false
         },
-        disableReverse: false, // on l'active par defaut !
-        displayInfo: true,
-        autocompleteOptions: {},
-        reverseGeocodeOptions: {}
+        disableReverse : false, // on l'active par defaut !
+        displayInfo : true,
+        autocompleteOptions : {},
+        reverseGeocodeOptions : {}
     },
 
     /**
@@ -75,8 +75,7 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
      *
      * @private
      */
-    initialize: function(options) {
-
+    initialize : function (options) {
         // FIXME pb de merge sur tag:{} !?
         // on transmet les options au controle
         L.Util.setOptions(this, options);
@@ -137,7 +136,6 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
         // creation du DOM dans le constructeur uniquement si ce composant
         // est appelé par un autre composant graphique
         this._container = (this._uid) ? this._initLayout() : null;
-
     },
 
     // ################################################################### //
@@ -150,8 +148,7 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
      *
      * @private
      */
-    onAdd: function( /* map */ ) {
-
+    onAdd : function (/* map */) {
         // si on ajout ce composant à la carte en tant que objet graphique,
         // un uuid doit être generé automatiquement !
         this._uid = ID.generate();
@@ -173,7 +170,7 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
      *
      * @private
      */
-    onRemove: function( /* map */ ) {},
+    onRemove : function (/* map */) {},
 
     // ################################################################### //
     // ########################## publics methods ######################## //
@@ -182,27 +179,27 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
     /**
      * get coordinate
      */
-    getCoordinate: function() {
+    getCoordinate : function () {
         return this._coordinate;
     },
 
     /**
      * set coordinate : {lon,lat || x,y || N,E}
      */
-    setCoordinate: function(coordinate) {
+    setCoordinate : function (coordinate) {
         this._displayResultOfCoordinate(coordinate);
     },
     /**
      * get coordinate inverse (EPSG:4326)
      */
-    getCoordinateInverse: function() {
+    getCoordinateInverse : function () {
         if (!this._coordinate) {
             return;
         }
 
         var coordinateInv = {
-            x: this._coordinate.y,
-            y: this._coordinate.x
+            x : this._coordinate.y,
+            y : this._coordinate.x
         };
 
         return coordinateInv;
@@ -211,7 +208,7 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
     /**
      * set map
      */
-    setMap: function(map) {
+    setMap : function (map) {
         if (!this._map) {
             this._map = map;
         }
@@ -220,7 +217,7 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
     /**
      * clean
      */
-    clear: function() {
+    clear : function () {
         this._setCursor();
         this._setMarker();
         this._clearResults();
@@ -232,7 +229,7 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
      *
      * @param {Boolean} active - true:enable | false:disable
      */
-    dragging: function(active) {
+    dragging : function (active) {
         if (this._marker) {
             if (active) {
                 this._marker.dragging.enable();
@@ -252,8 +249,7 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
      *
      * @private
      */
-    _initLayout: function() {
-
+    _initLayout : function () {
         var id = this.options.tag.id;
 
         // create main container
@@ -295,8 +291,7 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
      *
      * @private
      */
-    _checkRightsManagement: function() {
-
+    _checkRightsManagement : function () {
         var _opts = null;
         var _res = [];
         var _key = null;
@@ -313,9 +308,9 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
         }
 
         var rightManagementRerverse = RightManagement.check({
-            key: _key || this.options.apiKey,
-            resources: _res,
-            services: ["ReverseGeocode"]
+            key : _key || this.options.apiKey,
+            resources : _res,
+            services : ["ReverseGeocode"]
         });
 
         // les ressources du service d'autocompletion
@@ -330,9 +325,9 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
         }
 
         var rightManagementAutoComplete = RightManagement.check({
-            key: _key || this.options.apiKey,
-            resources: _res,
-            services: ["AutoCompletion"]
+            key : _key || this.options.apiKey,
+            resources : _res,
+            services : ["AutoCompletion"]
         });
 
         // au cas où pas de droit !
@@ -366,7 +361,7 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
      *
      * @private
      */
-    _setLabel: function(label) {
+    _setLabel : function (label) {
         this._inputAutoCompleteContainer.value = label || "";
     },
 
@@ -377,8 +372,7 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
      *
      * @private
      */
-    _setCoordinate: function(oLatLng) {
-
+    _setCoordinate : function (oLatLng) {
         // structure
         // L.LatLng
         //     lat: 4.07249425916745
@@ -387,8 +381,8 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
         // FIXME les coordonnées en lat/lon sur du EPSG:4326 !
         // Mais règle sur les services : X -> LON et Y -> LAT
         this._coordinate = {
-            x: oLatLng.lng,
-            y: oLatLng.lat
+            x : oLatLng.lng,
+            y : oLatLng.lat
         };
 
         var lat = null;
@@ -398,7 +392,6 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
         if (false) {
             lat = PositionFormater.decimalLatToDMS(oLatLng.lat);
             lng = PositionFormater.decimalLongToDMS(oLatLng.lng);
-
         } else {
             lat = PositionFormater.roundToDecimal(oLatLng.lat, 4);
             lng = PositionFormater.roundToDecimal(oLatLng.lng, 4);
@@ -407,7 +400,6 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
         // on envoie du lon/lat à l'affichage
         var value = lng + " , " + lat;
         this.GPdisplayCoordinate(value);
-
     },
 
     /**
@@ -418,7 +410,7 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
      *
      * @private
      */
-    _setPosition: function(position) {
+    _setPosition : function (position) {
         logger.log("_setPosition()", position);
 
         var map = this._map;
@@ -426,7 +418,6 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
         // map.setZoomAround(L.latLng(position.y, position.x), map.getMaxZoom(), true);
         // FIXME on veut du lat/lon sur Leaflet donc on inverse !
         map.panTo(L.latLng(position.y, position.x));
-
     },
 
     /**
@@ -440,7 +431,7 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
      *
      * @private
      */
-    _setMarker: function(position, information, display) {
+    _setMarker : function (position, information, display) {
         logger.log("_setMarker()", position, information, display);
 
         // sur du drag&drop, on garde le même marker !
@@ -461,13 +452,12 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
         }
 
         if (position) {
-
             // cf. http://leafletjs.com/reference.html#marker-options
             var options = {
-                icon: new IconDefault(this.options.tag.color),
-                draggable: true,
-                clickable: true,
-                zIndexOffset: 1000
+                icon : new IconDefault(this.options.tag.color),
+                draggable : true,
+                clickable : true,
+                zIndexOffset : 1000
             };
 
             // FIXME on veut du lat/lon sur Leaflet donc on inverse !
@@ -492,12 +482,9 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
                 var popupContent = null;
 
                 if (typeof information !== "string") {
-
                     if (information.fields.fullText) {
                         popupContent = information.fields.fullText;
-
                     } else {
-
                         var values = [];
                         values.push(information.fields.street || "");
                         values.push(information.fields.postalCode || "");
@@ -510,10 +497,8 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
 
                         popupContent = values.join(" - ");
                     }
-
                 } else {
                     popupContent = information;
-
                 }
 
                 this._marker.bindPopup(popupContent);
@@ -529,8 +514,7 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
      *
      * @private
      */
-    _setCursor: function(cursor) {
-
+    _setCursor : function (cursor) {
         var div = this._map.getContainer();
 
         if (cursor) {
@@ -546,8 +530,7 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
      *
      * @private
      */
-    _clearResults: function() {
-
+    _clearResults : function () {
         this._currentLocation = null;
 
         this._coordinate = null;
@@ -561,7 +544,7 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
      *
      * @private
      */
-    _clearSuggestedLocation: function() {
+    _clearSuggestedLocation : function () {
         // suppression du dom
         this._suggestedLocations = [];
         if (this._suggestedContainer) {
@@ -586,7 +569,7 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
      *
      * @private
      */
-    _requestAutoComplete: function(settings) {
+    _requestAutoComplete : function (settings) {
         logger.log("_requestAutoComplete()", settings);
 
         // on ne fait pas de requête si on n'a pas renseigné de parametres !
@@ -630,7 +613,7 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
         // cas où la clef API n'est pas renseignée dans les options du service,
         // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
         L.Util.extend(options, {
-            apiKey: options.apiKey || this.options.apiKey || key
+            apiKey : options.apiKey || this.options.apiKey || key
         });
 
         logger.log(options);
@@ -646,7 +629,7 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
      *
      * @private
      */
-    _fillAutoCompletedLocationListContainer: function(locations) {
+    _fillAutoCompletedLocationListContainer : function (locations) {
         logger.log("_fillAutoCompletedLocationListContainer()", locations);
 
         if (!locations || locations.length === 0) {
@@ -685,7 +668,7 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
      *
      * @private
      */
-    _requestReverseGeocode: function(settings) {
+    _requestReverseGeocode : function (settings) {
         logger.log("_requestReverseGeocode()", settings);
 
         // on ne fait pas de requête si on n'a pas renseigné de parametres !
@@ -728,16 +711,16 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
         // on force qq options !
         // La table de geocodage est toujours par defaut : StreetAddress !
         L.Util.extend(options, {
-            returnFreeForm: true, // FIXME cette option n'est pas implementée !?
-            filterOptions: {
-                type: ["StreetAddress"]
+            returnFreeForm : true, // FIXME cette option n'est pas implementée !?
+            filterOptions : {
+                type : ["StreetAddress"]
             }
         });
 
         // cas où la clef API n'est pas renseignée dans les options du service,
         // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
         L.Util.extend(options, {
-            apiKey: options.apiKey || this.options.apiKey || key
+            apiKey : options.apiKey || this.options.apiKey || key
         });
 
         logger.log(options);
@@ -751,15 +734,14 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
      * @param {Object} oLatLng - geographic coordinate (L.LatLng)
      * @private
      */
-    _displayResultOfCoordinate: function(oLatLng) {
-
+    _displayResultOfCoordinate : function (oLatLng) {
         // on transmet les coordonnées au panneau
         this._setCoordinate(oLatLng);
 
         // on met en place le marker
         this._setMarker({
-            x: oLatLng.lng,
-            y: oLatLng.lat
+            x : oLatLng.lng,
+            y : oLatLng.lat
         }, null, false);
 
         logger.log(this.getCoordinate());
@@ -774,8 +756,7 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
      * @param {Object} oLocation - location Object
      * @private
      */
-    _displayResultOfLabel: function(oLocation) {
-
+    _displayResultOfLabel : function (oLocation) {
         // FIXME Le service est intérrogé en SRS EPSG:4326 par defaut,
         // donc on récupère du lat/lon en reponse.
         // mais on inverse car on souhaite transmettre des coordonnées en lon/lat...
@@ -793,8 +774,8 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
         // on transmet les coordonnées au panneau,
         // même si on ne les affiche pas...
         this._setCoordinate({
-            lat: oLocation.position.x,
-            lng: oLocation.position.y
+            lat : oLocation.position.x,
+            lng : oLocation.position.y
         });
 
         // on transmet le texte au panneau
@@ -802,8 +783,8 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
 
         // on met en place le marker
         this._setMarker({
-            x: oLocation.position.y, // LON
-            y: oLocation.position.x // LAT
+            x : oLocation.position.y, // LON
+            y : oLocation.position.x // LAT
         }, null, false);
 
         this._inputShowPointerContainer.checked = false;
@@ -829,7 +810,7 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
      *
      * @private
      */
-    onAutoCompleteSearchText: function(e) {
+    onAutoCompleteSearchText : function (e) {
         logger.log("onAutoCompleteSearchText()", e);
 
         var value = e.target.value;
@@ -860,10 +841,10 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
         // les messages d'erreurs sont affichés sur la console (?)
         var context = this;
         this._requestAutoComplete({
-            text: value,
-            maximumResponses: 5, // FIXME je limite le nombre de reponse car le container DOM est limité dans l'affichage !!!
+            text : value,
+            maximumResponses : 5, // FIXME je limite le nombre de reponse car le container DOM est limité dans l'affichage !!!
             /** callback onSuccess */
-            onSuccess: function(results) {
+            onSuccess : function (results) {
                 logger.log(results);
                 if (results) {
                     var locations = results.suggestedLocations;
@@ -871,7 +852,7 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
                 }
             },
             /** callback onFailure */
-            onFailure: function(error) {
+            onFailure : function (error) {
                 // FIXME
                 // où affiche t on les messages : ex. 'No suggestion matching the search' ?
                 // doit on nettoyer la liste des suggestions dernierement enregistrée :
@@ -892,7 +873,7 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
      *
      * @private
      */
-    onAutoCompletedResultsItemClick: function(e) {
+    onAutoCompletedResultsItemClick : function (e) {
         logger.log("onAutoCompletedResultsItemClick()", e);
 
         var idx = ID.index(e.target.id);
@@ -904,13 +885,13 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
         }
 
         var position = {
-            x: this._suggestedLocations[idx].position.x, // LON !
-            y: this._suggestedLocations[idx].position.y // LAT !
+            x : this._suggestedLocations[idx].position.x, // LON !
+            y : this._suggestedLocations[idx].position.y // LAT !
         };
 
         var info = {
-            type: this._suggestedLocations[idx].type,
-            fields: this._suggestedLocations[idx]
+            type : this._suggestedLocations[idx].type,
+            fields : this._suggestedLocations[idx]
         };
 
         var label = this._suggestedLocations[idx].fullText;
@@ -930,7 +911,7 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
      *
      * @private
      */
-    onActivateMapPointClick: function(e) {
+    onActivateMapPointClick : function (e) {
         logger.trace("onActivateMapPointClick()", e);
 
         var map = this._map;
@@ -952,7 +933,6 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
                 this._setCursor();
             }
         }
-
     },
 
     /**
@@ -964,7 +944,7 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
      *
      * @private
      */
-    onLocationClearPointClick: function(e) {
+    onLocationClearPointClick : function (e) {
         logger.log("onLocationClearPointClick", e);
         this._setCursor();
         this._setMarker();
@@ -981,7 +961,7 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
      *
      * @private
      */
-    onLocationRemovePointClick: function(e) {
+    onLocationRemovePointClick : function (e) {
         logger.log("onLocationRemovePointClick", e);
         this._setCursor();
         this._setMarker();
@@ -997,7 +977,7 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
      *
      * @private
      */
-    onLocationAddPointClick: function(e) {
+    onLocationAddPointClick : function (e) {
         logger.log("onLocationAddPointClick", e);
     },
 
@@ -1014,7 +994,7 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
      *
      * @private
      */
-    onMouseMapClick: function(e) {
+    onMouseMapClick : function (e) {
         logger.log("onMouseMapClick", e);
 
         // les coordonnées
@@ -1024,25 +1004,22 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
         // on transmet les coordonnées au panneau,
         // sinon, on transmet la reponse du service
         if (this.options.disableReverse || this._noRightManagement) {
-
             // on transmet les coordonnées au panneau, puis on place le marker
             this._displayResultOfCoordinate(oLatLng);
-
         } else {
-
             // contexte
             var self = this;
 
             // on realise une requête au service, si la reponse est vide ou
             // en échec, on transmet les coordonnées !
             this._requestReverseGeocode({
-                position: {
-                    x: oLatLng.lat, // on envoie X->LAT à l'API service IGN car on spécifie EPSG:4326
-                    y: oLatLng.lng // on envoie Y->LON à l'API service IGN car on spécifie EPSG:4326
+                position : {
+                    x : oLatLng.lat, // on envoie X->LAT à l'API service IGN car on spécifie EPSG:4326
+                    y : oLatLng.lng // on envoie Y->LON à l'API service IGN car on spécifie EPSG:4326
                 },
-                srs: "EPSG:4326",
+                srs : "EPSG:4326",
                 /** callback onSuccess */
-                onSuccess: function(results) {
+                onSuccess : function (results) {
                     logger.log(results);
                     if (results.locations.length !== 0) {
                         var oLocation = results.locations[0];
@@ -1052,7 +1029,7 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
                     }
                 },
                 /** callback onFailure */
-                onFailure: function(error) {
+                onFailure : function (error) {
                     logger.log(error.message);
                     self._displayResultOfCoordinate(oLatLng);
                 }
@@ -1066,8 +1043,7 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
      *
      * @private
      */
-    onStartDragMarker: function() {
-
+    onStartDragMarker : function () {
         if (!this._marker) {
             return;
         }
@@ -1087,8 +1063,7 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
      *
      * @private
      */
-    onDragMarker: function() {
-
+    onDragMarker : function () {
         if (!this._marker) {
             return;
         }
@@ -1099,7 +1074,6 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
         // on transmet les coordonnées au panneau
         var oLatLng = this._marker.getLatLng();
         this._setCoordinate(oLatLng);
-
     },
 
     /**
@@ -1109,8 +1083,7 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
      *
      * @private
      */
-    onEndDragMarker: function() {
-
+    onEndDragMarker : function () {
         if (!this._marker) {
             return;
         }
@@ -1125,7 +1098,7 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
         } else {
             logger.log("No key pressed, so autocomplete solution !");
             this.onMouseMapClick({
-                latlng: oLatLng
+                latlng : oLatLng
             });
         }
 
@@ -1142,8 +1115,7 @@ var LocationSelector = L.Control.extend( /** @lends LocationSelector.prototype *
      *
      * @private
      */
-    onMouseDownMarker: function(e) {
-
+    onMouseDownMarker : function (e) {
         if (!this._marker) {
             return;
         }

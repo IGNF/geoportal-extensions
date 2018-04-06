@@ -22,8 +22,7 @@ import SourceWMS from "./SourceWMS";
  *      layer  : "ORTHOIMAGERY.ORTHOPHOTOS"
  * });
  */
-function LayerWMS(options) {
-
+function LayerWMS (options) {
     if (!(this instanceof LayerWMS)) {
         throw new TypeError("ERROR CLASS_CONSTRUCTOR");
     }
@@ -52,14 +51,14 @@ function LayerWMS(options) {
         olSourceParams = options.olParams.sourceParams;
     }
     var wmsSource = new SourceWMS({
-        layer: options.layer,
-        ssl: options.ssl,
-        apiKey: options.apiKey,
-        olParams: olSourceParams
+        layer : options.layer,
+        ssl : options.ssl,
+        apiKey : options.apiKey,
+        olParams : olSourceParams
     });
 
     var layerTileOptions = {
-        source: wmsSource
+        source : wmsSource
     };
 
     // si le param LAYERS n'a pas été renseigné lors de la création de la source,
@@ -117,7 +116,6 @@ function LayerWMS(options) {
 
     // création d'une ol.layer.Tile avec les options récupérées ci-dessus.
     ol.layer.Tile.call(this, layerTileOptions);
-
 }
 
 // Inherits from ol.layer.Tile

@@ -37,22 +37,21 @@ var EPSG27572 = {
      *
      * @private
      */
-    instance: null,
+    instance : null,
 
     /**
      * execution
      *
      * @private
      */
-    build: function() {
-
+    build : function () {
         // singleton
         if (!this.instance) {
             var crs = new L.Proj.CRS("EPSG:27572",
                 Register.get("EPSG:27572"), {
                     // FIXME issue de l'autoconf cf. nativeResolutions
-                    resolutions: this._getResolutions(),
-                    origin: this._getOrigin()
+                    resolutions : this._getResolutions(),
+                    origin : this._getOrigin()
                 });
             this.instance = crs;
         }
@@ -65,8 +64,7 @@ var EPSG27572 = {
      *
      * @private
      */
-    _getResolutions: function() {
-
+    _getResolutions : function () {
         var resolutions = [];
         // resolutions issues de l'autoconf
         if (Config.isConfigLoaded()) {
@@ -112,7 +110,7 @@ var EPSG27572 = {
      *
      * @private
      */
-    _getOrigin: function() {
+    _getOrigin : function () {
         return [0, 12000000];
     }
 };

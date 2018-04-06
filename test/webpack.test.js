@@ -11,13 +11,15 @@ module.exports = {
     resolve : {
         alias : {
             proj4 : path.resolve("..", "node_modules", "proj4", "dist", "proj4.js"),
-            gp : path.resolve("..", "node_modules", "geoportal-access-lib", "dist", "GpServices-src.js")
+            gp : path.resolve("..", "node_modules", "geoportal-access-lib", "dist", "GpServices-src.js"),
+            sortable : path.resolve("..", "node_modules", "sortablejs", "Sortable.js")
         }
     },
     module : {
         rules : [
             {
                 test : /\.js$/,
+                exclude : /node_modules/,
                 loader : "babel-loader"
             }
         ]

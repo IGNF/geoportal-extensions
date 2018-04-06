@@ -23,9 +23,9 @@ var logger = Logger.getLogger("wms");
  * **Extends** Leaflet <a href="http://leafletjs.com/reference.html#tilelayer-wms" target="_blank">L.TileLayer.WMS</a> native class.
  *
  */
-var WMS = L.TileLayer.WMS.extend( /** @lends WMS.prototype */ {
+var WMS = L.TileLayer.WMS.extend(/** @lends WMS.prototype */ {
 
-    includes: LayerEvent,
+    includes : LayerEvent,
 
     /**
      *
@@ -66,8 +66,7 @@ var WMS = L.TileLayer.WMS.extend( /** @lends WMS.prototype */ {
      *
      * @ignore
      */
-    initialize: function(url, options) {
-
+    initialize : function (url, options) {
         var settings = {};
         L.Util.extend(settings, options.paramsWms, options.paramsNative);
 
@@ -77,7 +76,7 @@ var WMS = L.TileLayer.WMS.extend( /** @lends WMS.prototype */ {
             // tracker extension leaflet
             // FIXME : gp-ext version en mode AMD
             Gp.Helper.normalyzeUrl(url, {
-                "gp-leaflet-ext": "__GPLEAFLETEXTVERSION__"
+                "gp-leaflet-ext" : "__GPLEAFLETEXTVERSION__"
             }, false),
             settings
         );
@@ -92,7 +91,6 @@ var WMS = L.TileLayer.WMS.extend( /** @lends WMS.prototype */ {
 
         // init id du Layer
         this._geoportal_id = 0; // FIXME L.stamp(this);
-
     },
 
     /**
@@ -102,7 +100,7 @@ var WMS = L.TileLayer.WMS.extend( /** @lends WMS.prototype */ {
      * @param {Object} map - map leaflet object
      * @private
      */
-    onAdd: function(map) {
+    onAdd : function (map) {
         logger.trace("onAdd layer", this._geoportal_id);
 
         // recuperation de la map
@@ -130,34 +128,34 @@ var WMS = L.TileLayer.WMS.extend( /** @lends WMS.prototype */ {
              * d'un layer de type overlay.
              * Les attributions ne doivent plus apparaitre si le layer est invisible !
              */
-            overlayremove: this._onRemoveLayer,
+            overlayremove : this._onRemoveLayer,
 
             /**
              * Permet d'activer la visibilité des attributions sur l'ajout
              * d'un layer de type overlay.
              * Les attributions doivent apparaitre si le layer est visible !
              */
-            overlayadd: this._onAddLayer,
+            overlayadd : this._onAddLayer,
 
             /**
              * Permet de desactiver la visibilité des attributions sur le retrait
              * d'un layer de type layer.
              * Les attributions ne doivent plus apparaitre si le layer est invisible !
              */
-            layerremove: this._onRemoveLayer,
+            layerremove : this._onRemoveLayer,
 
             /**
              * Permet d'activer la visibilité des attributions sur l'ajout
              * d'un layer de type layer.
              * Les attributions doivent apparaitre si le layer est visible !
              */
-            layeradd: this._onAddLayer,
+            layeradd : this._onAddLayer,
 
             /**
              * Permet d'ajouter des fonctionnalités lors de la creation du layer
              * sur les evenements de fin de mouvemenent (move ou zoom)
              */
-            moveend: this._onMoveEndLayer
+            moveend : this._onMoveEndLayer
 
         }, this);
 
@@ -184,7 +182,7 @@ var WMS = L.TileLayer.WMS.extend( /** @lends WMS.prototype */ {
      * @param {Object} map - map leaflet object
      * @private
      */
-    onRemove: function(map) {
+    onRemove : function (map) {
         logger.trace("onRemove layer", this._geoportal_id);
 
         // recuperation de la map
@@ -200,13 +198,12 @@ var WMS = L.TileLayer.WMS.extend( /** @lends WMS.prototype */ {
 
         // supprimer les evenements
         map.off({
-            overlayremove: this._onRemoveLayer,
-            overlayadd: this._onAddLayer,
-            layerremove: this._onRemoveLayer,
-            layeradd: this._onAddLayer,
-            moveend: this._onMoveEndLayer
+            overlayremove : this._onRemoveLayer,
+            overlayadd : this._onAddLayer,
+            layerremove : this._onRemoveLayer,
+            layeradd : this._onAddLayer,
+            moveend : this._onMoveEndLayer
         }, this);
-
     },
 
     /**
@@ -216,7 +213,8 @@ var WMS = L.TileLayer.WMS.extend( /** @lends WMS.prototype */ {
      * @param {Object} tilePoint - Point object
      * @private
      */
-    getTileUrl: function(tilePoint) { // (Point, Number) -> String
+    getTileUrl : function (tilePoint) {
+        // (Point, Number) -> String
 
         // FIXME
         // on surcharge cette methode à cause d'un BUG Leaflet sur l'inversion de
@@ -239,7 +237,7 @@ var WMS = L.TileLayer.WMS.extend( /** @lends WMS.prototype */ {
         var bbox = (this._wmsVersion >= 1.3 && lstProjEpsgGeographic.indexOf(this._crs.code) !== -1) ? [se.y, nw.x, nw.y, se.x].join(",") : [nw.x, se.y, se.x, nw.y].join(",");
 
         var url = L.Util.template(this._url, {
-            s: this._getSubdomain(tilePoint)
+            s : this._getSubdomain(tilePoint)
         });
 
         return url + L.Util.getParamString(this.wmsParams, url, true) + "&BBOX=" + bbox;

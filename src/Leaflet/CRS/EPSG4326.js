@@ -45,21 +45,20 @@ var EPSG4326 = {
      *
      * @private
      */
-    instance: null,
+    instance : null,
 
     /**
      * execution
      *
      * @private
      */
-    build: function() {
-
+    build : function () {
         // singleton
         if (!this.instance) {
             var crs = new L.Proj.CRS("EPSG:4326",
                 Register.get("EPSG:4326"), {
-                    resolutions: this._getResolutions(),
-                    origin: [-180, 90] // ???
+                    resolutions : this._getResolutions(),
+                    origin : [-180, 90] // ???
                 });
 
             this.instance = crs;
@@ -73,8 +72,7 @@ var EPSG4326 = {
      *
      * @private
      */
-    _getResolutions: function() {
-
+    _getResolutions : function () {
         var resolutions = [];
         // FIXME resolutions issues de l'autoconf
         // mais pas celle du TMS WGS84G
@@ -112,14 +110,13 @@ var EPSG4326 = {
             0.000000670552253723145,
             0.00000033527612686157
         ];
-
     },
     /**
      * origine
      *
      * @private
      */
-    _getOrigin: function() {}
+    _getOrigin : function () {}
 };
 
 export default EPSG4326;

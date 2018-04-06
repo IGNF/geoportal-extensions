@@ -12,14 +12,15 @@ module.exports = {
     },
     output : {
         path : path.join(__dirname),
-        filename : "test_bundle.js",
+        filename : "[name].js",
         libraryTarget : "umd"
     },
     externals : ["request", "xmldom"],
     resolve : {
         alias : {
             proj4 : path.resolve("..", "node_modules", "proj4", "dist", "proj4.js"),
-            gp : path.resolve("..", "node_modules", "geoportal-access-lib", "dist", "GpServices-src.js")
+            gp : path.resolve("..", "node_modules", "geoportal-access-lib", "dist", "GpServices-src.js"),
+            sortable : path.resolve("..", "node_modules", "sortablejs", "Sortable.js")
         }
     },
     devtool : "source-map",
@@ -28,7 +29,7 @@ module.exports = {
         host : "localhost",
         port : 9001,
         hot : true,
-        open : true,
+        open : "google-chrome",
         watchOptions : {
             watch : true,
             poll : true

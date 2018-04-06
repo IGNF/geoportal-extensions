@@ -7,8 +7,7 @@ var Utils = {
      *
      * @returns {Boolean} isDesktop - true for desktop userAgent, false for mobile
      */
-    detectSupport: function() {
-
+    detectSupport : function () {
         var isDesktop = true;
         var userAgent = window.navigator.userAgent.toLowerCase();
 
@@ -39,7 +38,7 @@ var Utils = {
      * @param {Object} source - source object from which properties and method will be copied
      * @returns {Object} dest
      */
-    assign: function(dest, source) {
+    assign : function (dest, source) {
         dest = dest || {};
         for (var prop in source) {
             if (source.hasOwnProperty(prop)) {
@@ -55,7 +54,7 @@ var Utils = {
      * @param {Object} dest   - destination object where properties and method will be merge
      * @param {Object} source - source object from which properties and method will be merge
      */
-    mergeParams: function(dest, source) {
+    mergeParams : function (dest, source) {
         if (!dest || !source) {
             return;
         }

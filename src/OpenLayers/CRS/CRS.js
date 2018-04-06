@@ -6,7 +6,7 @@ import Register from "../../Common/Utils/Register";
  * Autoload function that loads all defs into proj4
  * and adds proj4 defs into ol.
  */
-(function() {
+(function () {
     // load all defs into proj4
     Register.load();
     // overload proj4 into ol
@@ -23,7 +23,7 @@ var CRS = {
      * Overload OpenLayers ol.proj.transformExtent function,
      * to manage EPSG:2154 extent restriction
      */
-    overloadTransformExtent: function() {
+    overloadTransformExtent : function () {
         /**
          * Transforms an extent from source projection to destination projection.  This
          * returns a new extent (and does not modify the original).
@@ -34,7 +34,7 @@ var CRS = {
          * @param {ol.proj.ProjectionLike} destination - Destination projection-like.
          * @return {ol.Extent} extent - The transformed extent.
          */
-        ol.proj.transformExtent = function(extent, source, destination) {
+        ol.proj.transformExtent = function (extent, source, destination) {
             if (destination === "EPSG:2154") {
                 if (source === "EPSG:4326") {
                     // dans le cas d'une transfo 4326->2154,
@@ -62,7 +62,7 @@ var CRS = {
     /**
      * Load all overload function
      */
-    overload: function() {
+    overload : function () {
         // TODO ajouter les fonctions à surcharger...
         this.overloadTransformExtent();
     }

@@ -8,7 +8,6 @@ import RightManagement from "../../Common/Utils/CheckRightManagement";
 import SelectorID from "../../Common/Utils/SelectorID";
 import ReverseGeocodingDOM from "../../Common/Controls/ReverseGeocodingDOM";
 
-
 var logger = Logger.getLogger("reversegeocoding");
 
 /**
@@ -33,7 +32,7 @@ var logger = Logger.getLogger("reversegeocoding");
  *      reverseGeocodeOptions : {}
  *  });
  */
-function ReverseGeocode(options) {
+function ReverseGeocode (options) {
     options = options || {};
 
     if (!(this instanceof ReverseGeocode)) {
@@ -56,9 +55,9 @@ function ReverseGeocode(options) {
 
     // call ol.control.Control constructor
     ol.control.Control.call(this, {
-        element: this._containerElement || this._container,
-        target: options.target,
-        render: options.render
+        element : this._containerElement || this._container,
+        target : options.target,
+        render : options.render
     });
 };
 
@@ -89,7 +88,7 @@ ReverseGeocode.prototype.constructor = ReverseGeocode;
  *
  * @returns {Boolean} collapsed - true if widget is collapsed
  */
-ReverseGeocode.prototype.getCollapsed = function() {
+ReverseGeocode.prototype.getCollapsed = function () {
     return this.collapsed;
 };
 
@@ -98,7 +97,7 @@ ReverseGeocode.prototype.getCollapsed = function() {
  *
  * @param {Boolean} collapsed - True to collapse widget, False to display it
  */
-ReverseGeocode.prototype.setCollapsed = function(collapsed) {
+ReverseGeocode.prototype.setCollapsed = function (collapsed) {
     if (collapsed === undefined) {
         console.log("[ERROR] ReverseGeocode:setCollapsed - missing collapsed parameter");
         return;
@@ -119,8 +118,7 @@ ReverseGeocode.prototype.setCollapsed = function(collapsed) {
  *
  * @param {ol.Map} map - Map.
  */
-ReverseGeocode.prototype.setMap = function(map) {
-
+ReverseGeocode.prototype.setMap = function (map) {
     if (map) {
         // lors de l'ajout à la map, on active la saisie du point ou de la zone de recherche sur la carte,
         // mais seulement si le widget est ouvert
@@ -145,7 +143,6 @@ ReverseGeocode.prototype.setMap = function(map) {
 
     // on appelle la méthode setMap originale d'OpenLayers
     ol.control.Control.prototype.setMap.call(this, map);
-
 };
 
 // ################################################################### //
@@ -158,8 +155,7 @@ ReverseGeocode.prototype.setMap = function(map) {
  * @param {Object} options - constructor options
  * @private
  */
-ReverseGeocode.prototype.initialize = function(options) {
-
+ReverseGeocode.prototype.initialize = function (options) {
     // ############################################################ //
     // ################### Options du composant ################### //
 
@@ -168,10 +164,10 @@ ReverseGeocode.prototype.initialize = function(options) {
 
     // set default options
     this.options = {
-        collapsed: true,
-        resources: ["StreetAddress", "PositionOfInterest", "CadastralParcel"],
-        delimitations: ["Point", "Circle", "Extent"],
-        reverseGeocodeOptions: {}
+        collapsed : true,
+        resources : ["StreetAddress", "PositionOfInterest", "CadastralParcel"],
+        delimitations : ["Point", "Circle", "Extent"],
+        reverseGeocodeOptions : {}
     };
 
     // merge with user options
@@ -256,15 +252,15 @@ ReverseGeocode.prototype.initialize = function(options) {
     this._reverseGeocodingLocations = [];
     this._reverseGeocodingLocationsMarkers = [];
     this._resultsDefaultStyle = new ol.style.Style({
-        image: new ol.style.Icon({
-            src: Markers["lightOrange"],
-            anchor: [0.5, 1]
+        image : new ol.style.Icon({
+            src : Markers["lightOrange"],
+            anchor : [0.5, 1]
         })
     });
     this._resultsSelectedStyle = new ol.style.Style({
-        image: new ol.style.Icon({
-            src: Markers["red"],
-            anchor: [0.5, 1]
+        image : new ol.style.Icon({
+            src : Markers["red"],
+            anchor : [0.5, 1]
         })
     });
     this._resultsHoverInteraction = null;
@@ -273,7 +269,6 @@ ReverseGeocode.prototype.initialize = function(options) {
     this._popupContent = null;
     this._popupDiv = this._initPopupDiv();
     this._popupOverlay = null;
-
 };
 
 /**
@@ -282,7 +277,7 @@ ReverseGeocode.prototype.initialize = function(options) {
  *
  * @private
  */
-ReverseGeocode.prototype._checkInputOptions = function(options) {
+ReverseGeocode.prototype._checkInputOptions = function (options) {
     var i;
     var j;
 
@@ -335,7 +330,6 @@ ReverseGeocode.prototype._checkInputOptions = function(options) {
             }
         }
     }
-
 };
 
 /**
@@ -344,7 +338,7 @@ ReverseGeocode.prototype._checkInputOptions = function(options) {
  *
  * @private
  */
-ReverseGeocode.prototype._initGeocodingType = function() {
+ReverseGeocode.prototype._initGeocodingType = function () {
     // Type de géocodage selectionné
     this._currentGeocodingType = "StreetAddress"; // par defaut
 
@@ -356,7 +350,6 @@ ReverseGeocode.prototype._initGeocodingType = function() {
 
     // options utilisateur
     if (Array.isArray(resources) && resources.length) {
-
         // vérification des droits
         var noRightsIndexes = [];
         for (var i = 0; i < resources.length; i++) {
@@ -392,7 +385,7 @@ ReverseGeocode.prototype._initGeocodingType = function() {
  *
  * @private
  */
-ReverseGeocode.prototype._initGeocodingDelimitation = function() {
+ReverseGeocode.prototype._initGeocodingDelimitation = function () {
     // Type de délimitation selectionné
     this._currentGeocodingDelimitation = "Point"; // par defaut
 
@@ -418,7 +411,7 @@ ReverseGeocode.prototype._initGeocodingDelimitation = function() {
  * @return {Object} element - DOM element for popup
  * @private
  */
-ReverseGeocode.prototype._initPopupDiv = function() {
+ReverseGeocode.prototype._initPopupDiv = function () {
     var context = this;
     var element = document.createElement("div");
     element.className = "gp-feature-info-div";
@@ -426,7 +419,7 @@ ReverseGeocode.prototype._initPopupDiv = function() {
     closer.type = "button";
     closer.className = "gp-styling-button closer";
     /** on closer click : remove popup */
-    closer.onclick = function() {
+    closer.onclick = function () {
         if (context._popupOverlay != null) {
             context._popupOverlay.setPosition(undefined);
         }
@@ -445,8 +438,7 @@ ReverseGeocode.prototype._initPopupDiv = function() {
  *
  * @private
  */
-ReverseGeocode.prototype._checkRightsManagement = function() {
-
+ReverseGeocode.prototype._checkRightsManagement = function () {
     var _resources = [];
     var _key;
     var _opts = null;
@@ -468,9 +460,9 @@ ReverseGeocode.prototype._checkRightsManagement = function() {
         ];
     }
     var rightManagementGeocode = RightManagement.check({
-        key: _key || this.options.apiKey,
-        resources: _resources,
-        services: ["Geocode"]
+        key : _key || this.options.apiKey,
+        resources : _resources,
+        services : ["Geocode"]
     });
     logger.log("rightManagementGeocode", rightManagementGeocode);
 
@@ -490,7 +482,6 @@ ReverseGeocode.prototype._checkRightsManagement = function() {
     if (rightManagementGeocode) {
         this._servicesRightManagement["Geocode"] = rightManagementGeocode["Geocode"];
     }
-
 };
 
 /**
@@ -498,8 +489,7 @@ ReverseGeocode.prototype._checkRightsManagement = function() {
  *
  * @private
  */
-ReverseGeocode.prototype._initContainer = function() {
-
+ReverseGeocode.prototype._initContainer = function () {
     // create main container
     var container = this._createMainContainerElement();
 
@@ -573,9 +563,8 @@ ReverseGeocode.prototype._initContainer = function() {
  * @param {ol.Map} map - control map.
  * @private
  */
-ReverseGeocode.prototype._activateMapInteraction = function(map) {
+ReverseGeocode.prototype._activateMapInteraction = function (map) {
     if (!this.collapsed) {
-
         // 1. Creation de la couche vectorielle sur laquelle on va dessiner
         if (this._inputFeaturesLayer == null) {
             // on crée une collection, qui accueillera les points saisis sur la carte par les interactions,
@@ -585,21 +574,21 @@ ReverseGeocode.prototype._activateMapInteraction = function(map) {
 
             // on crée la couche qui va accueillir les features
             this._inputFeaturesSource = new ol.source.Vector({
-                features: this._inputFeatures
+                features : this._inputFeatures
             });
             this._inputFeaturesLayer = new ol.layer.Vector({
-                source: this._inputFeaturesSource,
-                style: new ol.style.Style({
-                    fill: new ol.style.Fill({
-                        color: "rgba(0, 183, 152, 0.3)"
+                source : this._inputFeaturesSource,
+                style : new ol.style.Style({
+                    fill : new ol.style.Fill({
+                        color : "rgba(0, 183, 152, 0.3)"
                     }),
-                    stroke: new ol.style.Stroke({
-                        color: "rgba(0, 183, 152, 0.8)",
-                        width: 3
+                    stroke : new ol.style.Stroke({
+                        color : "rgba(0, 183, 152, 0.8)",
+                        width : 3
                     }),
-                    image: new ol.style.Icon({
-                        src: Markers["turquoiseBlue"],
-                        anchor: [0.5, 1]
+                    image : new ol.style.Icon({
+                        src : Markers["turquoiseBlue"],
+                        anchor : [0.5, 1]
                     })
                 })
             });
@@ -627,7 +616,7 @@ ReverseGeocode.prototype._activateMapInteraction = function(map) {
 
         // 3. Si un layer switcher est présent dans la carte, on lui affecte des informations pour cette couche
         map.getControls().forEach(
-            function(control) {
+            function (control) {
                 if (control instanceof LayerSwitcher) {
                     // un layer switcher est présent dans la carte
                     var layerId = this._inputFeaturesLayer.gpLayerId;
@@ -635,8 +624,8 @@ ReverseGeocode.prototype._activateMapInteraction = function(map) {
                     if (control._layers[layerId].title === layerId) {
                         control.addLayer(
                             this._inputFeaturesLayer, {
-                                title: "Saisie (recherche inverse)",
-                                description: "Couche de saisie d'une zone de recherche pour la recherche inverse"
+                                title : "Saisie (recherche inverse)",
+                                description : "Couche de saisie d'une zone de recherche pour la recherche inverse"
                             }
                         );
                         control.setRemovable(this._inputFeaturesLayer, false);
@@ -655,25 +644,24 @@ ReverseGeocode.prototype._activateMapInteraction = function(map) {
  * @param {ol.Map} map - control map.
  * @private
  */
-ReverseGeocode.prototype._activatePointInteraction = function(map) {
-
+ReverseGeocode.prototype._activatePointInteraction = function (map) {
     // interaction permettant de dessiner un point
     this._mapInteraction = new ol.interaction.Draw({
-        style: new ol.style.Style({
-            image: new ol.style.Circle({
-                radius: 0,
-                fill: new ol.style.Fill({
-                    color: "rgba(0, 183, 152, 0.8)"
+        style : new ol.style.Style({
+            image : new ol.style.Circle({
+                radius : 0,
+                fill : new ol.style.Fill({
+                    color : "rgba(0, 183, 152, 0.8)"
                 })
             })
         }),
-        type: ("Point"),
-        source: this._inputFeaturesSource
+        type : ("Point"),
+        source : this._inputFeaturesSource
     });
 
     this._mapInteraction.on(
         "drawstart",
-        function(e) {
+        function (e) {
             logger.log("on drawstart ", e);
 
             // on efface les points qui ont pu être saisis précédemment (on vide la collection des features de la couche)
@@ -696,32 +684,31 @@ ReverseGeocode.prototype._activatePointInteraction = function(map) {
  * @param {ol.Map} map - control map.
  * @private
  */
-ReverseGeocode.prototype._activateCircleInteraction = function(map) {
-
+ReverseGeocode.prototype._activateCircleInteraction = function (map) {
     // interaction permettant de dessiner un cercle
     this._mapInteraction = new ol.interaction.Draw({
-        style: new ol.style.Style({
-            fill: new ol.style.Fill({
-                color: "rgba(0, 183, 152, 0.3)"
+        style : new ol.style.Style({
+            fill : new ol.style.Fill({
+                color : "rgba(0, 183, 152, 0.3)"
             }),
-            stroke: new ol.style.Stroke({
-                color: "rgba(0, 183, 152, 0.8)",
-                width: 3
+            stroke : new ol.style.Stroke({
+                color : "rgba(0, 183, 152, 0.8)",
+                width : 3
             }),
-            image: new ol.style.Circle({
-                radius: 4,
-                fill: new ol.style.Fill({
-                    color: "rgba(0, 183, 152, 0.8)"
+            image : new ol.style.Circle({
+                radius : 4,
+                fill : new ol.style.Fill({
+                    color : "rgba(0, 183, 152, 0.8)"
                 })
             })
         }),
-        type: ("Circle"),
-        source: this._inputFeaturesSource
+        type : ("Circle"),
+        source : this._inputFeaturesSource
     });
 
     this._mapInteraction.on(
         "drawstart",
-        function(e) {
+        function (e) {
             logger.log("on drawstart ", e);
             // on efface les points qui ont pu être saisis précédemment (on vide la collection des features de la couche)
             this._inputFeatures.clear();
@@ -733,7 +720,7 @@ ReverseGeocode.prototype._activateCircleInteraction = function(map) {
 
     this._mapInteraction.on(
         "drawend",
-        function(e) {
+        function (e) {
             logger.log("on drawend", e);
 
             // on récupère le rayon du cercle qui vient d'être tracé
@@ -762,15 +749,14 @@ ReverseGeocode.prototype._activateCircleInteraction = function(map) {
  * @param {ol.Map} map - control map.
  * @private
  */
-ReverseGeocode.prototype._activateBoxInteraction = function(map) {
-
+ReverseGeocode.prototype._activateBoxInteraction = function (map) {
     // info : il n'y a pas de geometry de type rectangle, donc on va créer un objet de type "LineString",
     // avec seulement 2 points qui formeront les extrémités du rectangle.
     // on aura donc une géométrie LineString avec 5 coordonnées : start, point2, end, point4, start,
     // où les coordonnées de point2 et point4 sont calculées à partir de start et end, et start est répété à la fin pour fermer la géométrie.
 
     /** function to draw rectangle with only 2 points */
-    var geometryFunction = function(coordinates, geometry) {
+    var geometryFunction = function (coordinates, geometry) {
         if (!geometry) {
             geometry = new ol.geom.Polygon(null);
         }
@@ -785,30 +771,30 @@ ReverseGeocode.prototype._activateBoxInteraction = function(map) {
 
     // interaction permettant de dessiner un rectangle (= LineString de 5 points, à partir de 2 points saisis)
     this._mapInteraction = new ol.interaction.Draw({
-        style: new ol.style.Style({
-            fill: new ol.style.Fill({
-                color: "rgba(0, 183, 152, 0.3)"
+        style : new ol.style.Style({
+            fill : new ol.style.Fill({
+                color : "rgba(0, 183, 152, 0.3)"
             }),
-            stroke: new ol.style.Stroke({
-                color: "rgba(0, 183, 152, 0.8)",
-                width: 3
+            stroke : new ol.style.Stroke({
+                color : "rgba(0, 183, 152, 0.8)",
+                width : 3
             }),
-            image: new ol.style.Circle({
-                radius: 4,
-                fill: new ol.style.Fill({
-                    color: "rgba(0, 183, 152, 0.8)"
+            image : new ol.style.Circle({
+                radius : 4,
+                fill : new ol.style.Fill({
+                    color : "rgba(0, 183, 152, 0.8)"
                 })
             })
         }),
-        type: ("LineString"),
-        source: this._inputFeaturesSource,
-        maxPoints: 2,
-        geometryFunction: geometryFunction
+        type : ("LineString"),
+        source : this._inputFeaturesSource,
+        maxPoints : 2,
+        geometryFunction : geometryFunction
     });
 
     this._mapInteraction.on(
         "drawstart",
-        function(e) {
+        function (e) {
             logger.log("on drawstart", e);
             // on efface les points qui ont pu être saisis précédemment (on vide la collection des features de la couche)
             this._inputFeatures.clear();
@@ -818,7 +804,7 @@ ReverseGeocode.prototype._activateBoxInteraction = function(map) {
 
     this._mapInteraction.on(
         "drawend",
-        function(e) {
+        function (e) {
             logger.log("on drawend", e);
             // on va récupérer les coordonnées du rectangle qui vient d'être tracé
             this._onBoxDrawEnd(e);
@@ -835,7 +821,7 @@ ReverseGeocode.prototype._activateBoxInteraction = function(map) {
  * @param {ol.Map} map - control map.
  * @private
  */
-ReverseGeocode.prototype._removeMapInteraction = function(map) {
+ReverseGeocode.prototype._removeMapInteraction = function (map) {
     if (this._mapInteraction != null) {
         map.removeInteraction(this._mapInteraction);
         this._mapInteraction = null;
@@ -852,8 +838,7 @@ ReverseGeocode.prototype._removeMapInteraction = function(map) {
  * @param {String} type - geometry type : "point" or "circle"
  * @private
  */
-ReverseGeocode.prototype._onDrawStart = function(e, type) {
-
+ReverseGeocode.prototype._onDrawStart = function (e, type) {
     var coordinate;
     if (e.feature && e.feature.getGeometry) {
         var geometry = e.feature.getGeometry();
@@ -881,11 +866,10 @@ ReverseGeocode.prototype._onDrawStart = function(e, type) {
 
     var geoCoordinate = ol.proj.transform(coordinate, crs, "EPSG:4326");
     this._requestPosition = {
-        x: geoCoordinate[0],
-        y: geoCoordinate[1]
+        x : geoCoordinate[0],
+        y : geoCoordinate[1]
     };
     logger.log("position coordinates : ", this._requestPosition);
-
 };
 
 /**
@@ -896,7 +880,7 @@ ReverseGeocode.prototype._onDrawStart = function(e, type) {
  * @param {Object} e - HTMLElement
  * @private
  */
-ReverseGeocode.prototype._onBoxDrawEnd = function(e) {
+ReverseGeocode.prototype._onBoxDrawEnd = function (e) {
     // on va récupérer les coordonnées du rectangle qui vient d'être tracé
     if (e.feature && e.feature.getGeometry) {
         // info: coordinates est un tableau [start, point2, end, point4, start]
@@ -954,7 +938,7 @@ ReverseGeocode.prototype._onBoxDrawEnd = function(e) {
  * @param {ol.Map} map - control map (optional)
  * @private
  */
-ReverseGeocode.prototype._setCursor = function(cursor, map) {
+ReverseGeocode.prototype._setCursor = function (cursor, map) {
     map = map || this.getMap();
     if (!map) {
         return;
@@ -978,7 +962,7 @@ ReverseGeocode.prototype._setCursor = function(cursor, map) {
  *
  * @private
  */
-ReverseGeocode.prototype._reverseGeocodingRequest = function() {
+ReverseGeocode.prototype._reverseGeocodingRequest = function () {
     var map = this.getMap();
 
     // on construit les options pour la requête
@@ -1000,8 +984,7 @@ ReverseGeocode.prototype._reverseGeocodingRequest = function() {
  * @returns {Object} requestOptions - reverse geocode options
  * @private
  */
-ReverseGeocode.prototype._getReverseGeocodingRequestOptions = function() {
-
+ReverseGeocode.prototype._getReverseGeocodingRequestOptions = function () {
     var map = this.getMap();
 
     // on recupere les éventuelles options du service passées par l'utilisateur
@@ -1010,25 +993,25 @@ ReverseGeocode.prototype._getReverseGeocodingRequestOptions = function() {
     // on crée les options pour le service reverseGeocode
     var context = this;
     var requestOptions = {
-        apiKey: reverseGeocodeOptions.apiKey || this.options.apiKey,
-        position: this._requestPosition,
-        filterOptions: {
-            type: [this._currentGeocodingType]
+        apiKey : reverseGeocodeOptions.apiKey || this.options.apiKey,
+        position : this._requestPosition,
+        filterOptions : {
+            type : [this._currentGeocodingType]
         },
-        srs: "CRS:84",
-        returnFreeForm: false,
-        maximumResponses: reverseGeocodeOptions.maximumResponses || 25,
-        timeOut: reverseGeocodeOptions.timeOut || 30000,
-        protocol: reverseGeocodeOptions.protocol || "XHR",
+        srs : "CRS:84",
+        returnFreeForm : false,
+        maximumResponses : reverseGeocodeOptions.maximumResponses || 25,
+        timeOut : reverseGeocodeOptions.timeOut || 30000,
+        protocol : reverseGeocodeOptions.protocol || "XHR",
         /** callback onSuccess */
-        onSuccess: function(response) {
+        onSuccess : function (response) {
             if (response.locations) {
                 logger.log("reverseGeocode results : ", response.locations);
                 context._displayGeocodedLocations(response.locations);
             }
         },
         /** callback onFailure */
-        onFailure: function(error) {
+        onFailure : function (error) {
             // FIXME mise à jour du controle mais le service ne repond pas en 200 !?
 
             // on cache la patience
@@ -1069,8 +1052,7 @@ ReverseGeocode.prototype._getReverseGeocodingRequestOptions = function() {
  * @param {Array} locations - array of geocoded locations (reverse geocode results)
  * @private
  */
-ReverseGeocode.prototype._displayGeocodedLocations = function(locations) {
-
+ReverseGeocode.prototype._displayGeocodedLocations = function (locations) {
     // 1. on vide les résultats précédents
     this._clearResults();
     this._reverseGeocodingLocations = locations;
@@ -1101,8 +1083,7 @@ ReverseGeocode.prototype._displayGeocodedLocations = function(locations) {
  * @param {Array} locations - array of geocoded locations (reverse geocode results)
  * @private
  */
-ReverseGeocode.prototype._fillGeocodedLocationListContainer = function(locations) {
-
+ReverseGeocode.prototype._fillGeocodedLocationListContainer = function (locations) {
     //  ajout de la liste des résultats dans le container des resultats
     for (var i = 0; i < locations.length; i++) {
         var location = locations[i];
@@ -1124,8 +1105,7 @@ ReverseGeocode.prototype._fillGeocodedLocationListContainer = function(locations
  * @returns {String} locationDescription - geocoded location description to be displayed
  * @private
  */
-ReverseGeocode.prototype._fillGeocodedLocationDescription = function(location) {
-
+ReverseGeocode.prototype._fillGeocodedLocationDescription = function (location) {
     if (!location || !location.placeAttributes) {
         return;
     }
@@ -1134,7 +1114,6 @@ ReverseGeocode.prototype._fillGeocodedLocationDescription = function(location) {
     var locationDescription = "";
     // on sélectionne les infos à afficher selon le type
     switch (location.type) {
-
         case "StreetAddress":
             if (attr.street) {
                 locationDescription += attr.number ? attr.number + " " : "";
@@ -1193,9 +1172,8 @@ ReverseGeocode.prototype._fillGeocodedLocationDescription = function(location) {
  * @param {Object} locations - geocoded locations (reverse geocode result)
  * @private
  */
-ReverseGeocode.prototype._displayGeocodedLocationsOnMap = function(locations) {
+ReverseGeocode.prototype._displayGeocodedLocationsOnMap = function (locations) {
     if (this._reverseGeocodingLocations.length !== 0) {
-
         var map = this.getMap();
 
         // 1. création de la couche où seront ajoutés les résultats
@@ -1222,8 +1200,8 @@ ReverseGeocode.prototype._displayGeocodedLocationsOnMap = function(locations) {
         // 3. ajout des interactions (survol, click)
         // au survol : modification des styles (marker et list)
         this._resultsHoverInteraction = new ol.interaction.Select({
-            condition: ol.events.condition.pointerMove,
-            layers: [this._resultsFeaturesLayer]
+            condition : ol.events.condition.pointerMove,
+            layers : [this._resultsFeaturesLayer]
         });
         this._resultsHoverInteraction.on(
             "select",
@@ -1234,7 +1212,7 @@ ReverseGeocode.prototype._displayGeocodedLocationsOnMap = function(locations) {
 
         // au click : affichage popup
         this._resultsSelectInteraction = new ol.interaction.Select({
-            layers: [this._resultsFeaturesLayer]
+            layers : [this._resultsFeaturesLayer]
         });
         this._resultsSelectInteraction.on(
             "select",
@@ -1262,7 +1240,7 @@ ReverseGeocode.prototype._displayGeocodedLocationsOnMap = function(locations) {
                 break;
         }
         map.getControls().forEach(
-            function(control) {
+            function (control) {
                 if (control instanceof LayerSwitcher) {
                     // un layer switcher est présent dans la carte
                     var layerId = this._resultsFeaturesLayer.gpLayerId;
@@ -1270,8 +1248,8 @@ ReverseGeocode.prototype._displayGeocodedLocationsOnMap = function(locations) {
                     if (control._layers[layerId].title === layerId) {
                         control.addLayer(
                             this._resultsFeaturesLayer, {
-                                title: "Résultats de la recherche inverse",
-                                description: "Résultats de la recherche inverse sur les " + geocodeType
+                                title : "Résultats de la recherche inverse",
+                                description : "Résultats de la recherche inverse sur les " + geocodeType
                             }
                         );
                         control.setRemovable(this._resultsFeaturesLayer, false);
@@ -1289,18 +1267,17 @@ ReverseGeocode.prototype._displayGeocodedLocationsOnMap = function(locations) {
  *
  * @private
  */
-ReverseGeocode.prototype._createResultsLayer = function() {
-
+ReverseGeocode.prototype._createResultsLayer = function () {
     var map = this.getMap();
 
     this._resultsFeatures = new ol.Collection();
 
     // on crée la couche qui va accueillir les features
     this._resultsFeaturesSource = new ol.source.Vector({
-        features: this._resultsFeatures
+        features : this._resultsFeatures
     });
     this._resultsFeaturesLayer = new ol.layer.Vector({
-        source: this._resultsFeaturesSource
+        source : this._resultsFeaturesSource
     });
     // on rajoute le champ gpResultLayerId permettant d'identifier une couche crée par le composant. (pour layerSwitcher par ex)
     this._resultsFeaturesLayer.gpResultLayerId = "reverseGeocodingResults";
@@ -1316,7 +1293,7 @@ ReverseGeocode.prototype._createResultsLayer = function() {
  * @param {Number} i - geocoded location index in response list
  * @private
  */
-ReverseGeocode.prototype._addResultFeature = function(location, i) {
+ReverseGeocode.prototype._addResultFeature = function (location, i) {
     var map = this.getMap();
 
     // récupération de la position
@@ -1333,12 +1310,12 @@ ReverseGeocode.prototype._addResultFeature = function(location, i) {
 
     // on ajoute le résultat à la collection de points existantes (composant la couche vectorielle this._inputFeaturesLayer)
     var feature = new ol.Feature({
-        geometry: new ol.geom.Point(position)
+        geometry : new ol.geom.Point(position)
     });
     feature.setStyle(this._resultsDefaultStyle);
     feature.setId(i);
     feature.setProperties({
-        popupContent: this._fillPopupContent(location)
+        popupContent : this._fillPopupContent(location)
     });
     this._resultsFeatures.push(feature);
 };
@@ -1351,7 +1328,7 @@ ReverseGeocode.prototype._addResultFeature = function(location, i) {
  * @returns {String} popupContent - text to be displayed in popup
  * @private
  */
-ReverseGeocode.prototype._fillPopupContent = function(location) {
+ReverseGeocode.prototype._fillPopupContent = function (location) {
     var popupContent = "<ul>";
 
     var attributes = location.placeAttributes;
@@ -1378,13 +1355,11 @@ ReverseGeocode.prototype._fillPopupContent = function(location) {
  * @param {Object} e - on select event
  * @private
  */
-ReverseGeocode.prototype._onResultsFeatureMouseOver = function(e) {
-
+ReverseGeocode.prototype._onResultsFeatureMouseOver = function (e) {
     var f;
 
     // si on survole un résultat, on change son style (marker)
     if (e.selected.length !== 0) {
-
         // on change le style du marker (red)
         f = e.selected[0];
         f.setStyle(this._resultsSelectedStyle);
@@ -1401,7 +1376,6 @@ ReverseGeocode.prototype._onResultsFeatureMouseOver = function(e) {
 
     // si on déselectionne un résultat (mouseout), on rétablit un style normal pour le marker
     if (e.deselected.length !== 0) {
-
         // on change le style du marker (lightOrange)
         f = e.deselected[0];
         f.setStyle(this._resultsDefaultStyle);
@@ -1422,7 +1396,7 @@ ReverseGeocode.prototype._onResultsFeatureMouseOver = function(e) {
  * @param {Object} e - on select event
  * @private
  */
-ReverseGeocode.prototype._onResultsFeatureSelect = function(e) {
+ReverseGeocode.prototype._onResultsFeatureSelect = function (e) {
     var map = this.getMap();
     if (e.selected.length !== 0) {
         // si on a sélectionné un marker, on lui ajoute une popup
@@ -1432,17 +1406,15 @@ ReverseGeocode.prototype._onResultsFeatureSelect = function(e) {
         if (!this._popupOverlay) {
             // ajout de la popup a la carte comme un overlay
             this._popupOverlay = new ol.Overlay({
-                element: this._popupDiv,
-                positioning: "bottom-center",
-                position: e.mapBrowserEvent.coordinate
+                element : this._popupDiv,
+                positioning : "bottom-center",
+                position : e.mapBrowserEvent.coordinate
             });
             map.addOverlay(this._popupOverlay);
-
         } else {
             // si l'overlay est déjà créé, on modifie juste sa position
             this._popupOverlay.setPosition(e.mapBrowserEvent.coordinate);
         }
-
     } else {
         // si aucun troncon n'est sélectionné (click à côté du tracé),
         // on fait disparaitre la popup si elle existe
@@ -1463,7 +1435,7 @@ ReverseGeocode.prototype._onResultsFeatureSelect = function(e) {
  *
  * @private
  */
-ReverseGeocode.prototype.onShowReverseGeocodingClick = function() {
+ReverseGeocode.prototype.onShowReverseGeocodingClick = function () {
     this.collapsed = this._showReverseGeocodingInput.checked;
     // info : on génère nous même l'evenement OpenLayers de changement de propriété
     // (utiliser ol.control.ReverseGeocode.on("change:collapsed", function ) pour s'abonner à cet évènement)
@@ -1503,7 +1475,7 @@ ReverseGeocode.prototype.onShowReverseGeocodingClick = function() {
  * @param {Object} e - HTMLElement
  * @private
  */
-ReverseGeocode.prototype.onReverseGeocodingTypeChange = function(e) {
+ReverseGeocode.prototype.onReverseGeocodingTypeChange = function (e) {
     var idx = e.target.selectedIndex;
     var value = e.target.options[idx].value;
 
@@ -1522,7 +1494,7 @@ ReverseGeocode.prototype.onReverseGeocodingTypeChange = function(e) {
  * @param {Object} e - HTMLElement
  * @private
  */
-ReverseGeocode.prototype.onReverseGeocodingDelimitationChange = function(e) {
+ReverseGeocode.prototype.onReverseGeocodingDelimitationChange = function (e) {
     var idx = e.target.selectedIndex;
     var value = e.target.options[idx].value;
 
@@ -1550,7 +1522,7 @@ ReverseGeocode.prototype.onReverseGeocodingDelimitationChange = function(e) {
  *
  * @private
  */
-ReverseGeocode.prototype.onGPreverseGeocodingReturnPictoClick = function() {
+ReverseGeocode.prototype.onGPreverseGeocodingReturnPictoClick = function () {
     // suppression des résultats précédents
     this._clearResults();
     // on efface les points qui ont pu être saisis précédemment
@@ -1567,8 +1539,7 @@ ReverseGeocode.prototype.onGPreverseGeocodingReturnPictoClick = function() {
  *
  * @private
  */
-ReverseGeocode.prototype.onReverseGeocodingSubmit = function() {
-
+ReverseGeocode.prototype.onReverseGeocodingSubmit = function () {
     // le paramètre position est obligatoire
     if (!this._requestPosition) {
         logger.log("missing position");
@@ -1592,7 +1563,7 @@ ReverseGeocode.prototype.onReverseGeocodingSubmit = function() {
  * @param {Object} e - HTMLElement
  * @private
  */
-ReverseGeocode.prototype.onReverseGeocodingResultClick = function(e) {
+ReverseGeocode.prototype.onReverseGeocodingResultClick = function (e) {
     logger.log("onReverseGeocodingResultClick", e);
 };
 
@@ -1604,8 +1575,7 @@ ReverseGeocode.prototype.onReverseGeocodingResultClick = function(e) {
  * @param {Object} e - HTMLElement
  * @private
  */
-ReverseGeocode.prototype.onReverseGeocodingResultMouseOver = function(e) {
-
+ReverseGeocode.prototype.onReverseGeocodingResultMouseOver = function (e) {
     // récupération de l'id du résultat survolé
     var tagid = e.target.id; // ex ReverseGeocodedLocation_21
     var idx = tagid.substring(tagid.indexOf("_") + 1); // ex. 21
@@ -1633,8 +1603,7 @@ ReverseGeocode.prototype.onReverseGeocodingResultMouseOver = function(e) {
  * @param {Object} e - HTMLElement
  * @private
  */
-ReverseGeocode.prototype.onReverseGeocodingResultMouseOut = function(e) {
-
+ReverseGeocode.prototype.onReverseGeocodingResultMouseOut = function (e) {
     // récupération de l'id du résultat survolé
     var tagid = e.target.id; // ex GProuteResultsDetailsInstruction_125
     var idx = tagid.substring(tagid.indexOf("_") + 1); // ex. 125
@@ -1662,8 +1631,7 @@ ReverseGeocode.prototype.onReverseGeocodingResultMouseOut = function(e) {
  *
  * @private
  */
-ReverseGeocode.prototype._clearResults = function() {
-
+ReverseGeocode.prototype._clearResults = function () {
     var map = this.getMap();
 
     this._reverseGeocodingLocations = [];
@@ -1699,7 +1667,7 @@ ReverseGeocode.prototype._clearResults = function() {
  *
  * @private
  */
-ReverseGeocode.prototype._clearInputFeatures = function() {
+ReverseGeocode.prototype._clearInputFeatures = function () {
     // on efface les points qui ont pu être saisis précédemment (on vide la collection des features de la couche)
     if (this._inputFeatures) {
         this._inputFeatures.clear();
@@ -1716,8 +1684,7 @@ ReverseGeocode.prototype._clearInputFeatures = function() {
  *
  * @private
  */
-ReverseGeocode.prototype._displayWaitingContainer = function() {
-
+ReverseGeocode.prototype._displayWaitingContainer = function () {
     this._waitingContainer.className = "GProuteCalcWaitingContainerVisible";
     this._waiting = true;
 
@@ -1728,7 +1695,7 @@ ReverseGeocode.prototype._displayWaitingContainer = function() {
         this._timer = null;
     }
     var context = this;
-    this._timer = setTimeout(function() {
+    this._timer = setTimeout(function () {
         if (context._waiting === true) {
             context._hideWaitingContainer();
         } else {
@@ -1744,7 +1711,7 @@ ReverseGeocode.prototype._displayWaitingContainer = function() {
  *
  * @private
  */
-ReverseGeocode.prototype._hideWaitingContainer = function() {
+ReverseGeocode.prototype._hideWaitingContainer = function () {
     if (this._waiting) {
         this._waitingContainer.className = "GProuteCalcWaitingContainerHidden";
         this._waiting = false;

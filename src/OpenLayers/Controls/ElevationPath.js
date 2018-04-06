@@ -11,7 +11,6 @@ import ElevationPathDOM from "../../Common/Controls/ElevationPathDOM";
 import ProfileElevationPathDOM from "../../Common/Controls/ProfileElevationPathDOM";
 import ID from "../../Common/Utils/SelectorID";
 
-
 var logger = Logger.getLogger("elevationpath");
 
 /**
@@ -61,7 +60,7 @@ var logger = Logger.getLogger("elevationpath");
  * - displayProfileOptions.apply : ol.control.ElevationPath.DISPLAY_PROFILE_{LIB_AMCHARTS | LIB_D3 | RAW}
  *
  */
-function ElevationPath(options) {
+function ElevationPath (options) {
     logger.trace("ElevationPath()");
 
     /**
@@ -135,9 +134,9 @@ function ElevationPath(options) {
 
     // heritage
     ol.control.Control.call(this, {
-        element: container,
-        target: options.target,
-        render: options.render
+        element : container,
+        target : options.target,
+        render : options.render
     });
 }
 
@@ -157,7 +156,7 @@ Utils.assign(ElevationPath.prototype, ElevationPathDOM);
  *
  * @private
  */
-ElevationPath.__removeProfileMarker = function(context) {
+ElevationPath.__removeProfileMarker = function (context) {
     var self = context;
     // suppression de l'ancien marker
     if (self._marker) {
@@ -171,7 +170,7 @@ ElevationPath.__removeProfileMarker = function(context) {
  *
  * @private
  */
-ElevationPath.__createProfileMarker = function(context, d) {
+ElevationPath.__createProfileMarker = function (context, d) {
     var self = context;
     var map = self.getMap();
     var proj = map.getView().getProjection();
@@ -185,7 +184,7 @@ ElevationPath.__createProfileMarker = function(context, d) {
     var _geometry = new ol.geom.Point(_coordinateProj);
 
     self._marker = new ol.Feature({
-        geometry: _geometry
+        geometry : _geometry
     });
     logger.trace(_geometry);
 
@@ -201,7 +200,7 @@ ElevationPath.__createProfileMarker = function(context, d) {
  *
  * @private
  */
-ElevationPath.__updateProfileMarker = function(context, d) {
+ElevationPath.__updateProfileMarker = function (context, d) {
     var self = context;
     ElevationPath.__removeProfileMarker(self);
     ElevationPath.__createProfileMarker(self, d);
@@ -211,7 +210,7 @@ ElevationPath.__updateProfileMarker = function(context, d) {
  * TODO : customisation possible d'une opération sur le profil
  * @private
  */
-ElevationPath.__customRawProfileOperation = function(context, d) {
+ElevationPath.__customRawProfileOperation = function (context, d) {
     logger.log("__customRawProfileOperation");
 
     var self = context;
@@ -224,24 +223,24 @@ ElevationPath.__customRawProfileOperation = function(context, d) {
         var _geometry = new ol.geom.Point(_coordinate);
 
         self._marker = new ol.Feature({
-            geometry: _geometry
+            geometry : _geometry
         });
         logger.trace(_geometry);
 
         // TODO style en options ?
         var styles = ElevationPath.DEFAULT_STYLES.RESULTS;
         var _image = new ol.style.Circle({
-            radius: styles.imageRadius,
-            stroke: new ol.style.Stroke({
-                color: styles.imageStrokeColor,
-                width: styles.imageStrokeWidth
+            radius : styles.imageRadius,
+            stroke : new ol.style.Stroke({
+                color : styles.imageStrokeColor,
+                width : styles.imageStrokeWidth
             }),
-            fill: new ol.style.Fill({
-                color: styles.imageFillColor
+            fill : new ol.style.Fill({
+                color : styles.imageFillColor
             })
         });
         self._marker.setStyle(new ol.style.Style({
-            image: _image
+            image : _image
         }));
 
         // ajout du marker sur la map
@@ -254,7 +253,7 @@ ElevationPath.__customRawProfileOperation = function(context, d) {
  * Ex. Methode appélée dans le DOM : ProfileElevationPathDOM
  * @private
  */
-ElevationPath.__customRawProfileMouseOverEvent = function(context, e) {
+ElevationPath.__customRawProfileMouseOverEvent = function (context, e) {
     logger.log("__customRawProfileMouseOverEvent", context, e);
 };
 
@@ -265,7 +264,7 @@ ElevationPath.__customRawProfileMouseOverEvent = function(context, e) {
  * @param {HTMLElement} container - container
  * @param {Object} context - this control object
  */
-ElevationPath.DISPLAY_PROFILE_LIB_AMCHARTS = function(data, container, context) {
+ElevationPath.DISPLAY_PROFILE_LIB_AMCHARTS = function (data, container, context) {
     logger.trace("ElevationPath.DISPLAY_PROFILE_LIB_AMCHARTS");
 
     // Calcul du profile
@@ -288,7 +287,7 @@ ElevationPath.DISPLAY_PROFILE_LIB_AMCHARTS = function(data, container, context) 
  * @param {HTMLElement} container - html container where to display profile
  * @param {Object} context - this control object
  */
-ElevationPath.DISPLAY_PROFILE_LIB_D3 = function(data, container, context) {
+ElevationPath.DISPLAY_PROFILE_LIB_D3 = function (data, container, context) {
     logger.trace("ElevationPath.DISPLAY_PROFILE_LIB_D3");
 
     // Calcul du profile
@@ -311,7 +310,7 @@ ElevationPath.DISPLAY_PROFILE_LIB_D3 = function(data, container, context) {
  * @param {HTMLElement} container - html container where to display profile
  * @param {Object} context - this control object
  */
-ElevationPath.DISPLAY_PROFILE_RAW = function(data, container, context) {
+ElevationPath.DISPLAY_PROFILE_RAW = function (data, container, context) {
     logger.trace("ElevationPath.DISPLAY_PROFILE_RAW");
 
     var profile = ProfileElevationPathDOM.displayProfileRaw(data, container, context, ElevationPath);
@@ -328,7 +327,7 @@ ElevationPath.DISPLAY_PROFILE_RAW = function(data, container, context) {
  * @param {HTMLElement} container - html container where to display profile
  * @param {Object} context - this control object
  */
-ElevationPath.DISPLAY_PROFILE_BY_DEFAULT = function(data, container, context) {
+ElevationPath.DISPLAY_PROFILE_BY_DEFAULT = function (data, container, context) {
     logger.trace("ElevationPath.DISPLAY_PROFILE_BY_DEFAULT");
 
     var profile = ProfileElevationPathDOM.displayProfileByDefault(data, container, context, ElevationPath);
@@ -345,18 +344,18 @@ ElevationPath.DEFAULT_STYLES = {
     // styling drawing by default
     // see => Measures.DEFAULTS_STYLES
     // stying marker to the profile by default
-    MARKER: new ol.style.Icon({
-        src: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAsCAYAAAAATWqyAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAABTtJREFUeNq8WGtsFUUU/rb3gtdCAykFG9AUDTQUKimhxUewEusrJYoBo4FfEgoqotHERH6oP9TGmJhIrIlWAf9hjAaEiME2pgFfVVpFii8sWqIQLLSx3EJLW7p+Z2Z2b2l7d/b23vZLTmZ2duacb2fmnDk7DlKA67rXs1hJKacsohRQppjXFygnKT9TDlH2O47zFzIFGnco91EOuqnjoBnr2Ow4FhIlLN6m3DykFTh3BGj/Doj/CfSe082xPCDnBmDWTUBeyXDVjZTHOUNHUiZCEs+weI0ySTV0/w0c2wa07gIungn+vOx8YN46oPhpYOp1Xms/5TmSeSMUERKImFnYqBoGuPRNL5LEW8BgX2rrmjWZZLYApS8BUW8r4T0zO5eTEjFr+S6lSjV0HgPqVwNdf6S30abNB+7aDeQWey3bKZtIxvU5DxvyrE/izJfAvuXpkxCIDtElOjWqjK2RM8LZWMbiG0oEnUc5kB7a14WMYvI04H56du5ieZKluZWz8r0/IyQh5TuKRH8cqFuTeRIC0Sm6xYbYok1j21+ahyhLVO3wC8D5VowbRLfY0FhibOulIavDLEoRZyD8sJDeMWBXKG5ZsIobsdDsg+OMq3u1m1u9KQo8zP45EqjRxOUpk6i50IRl4FuGjpZtwUoiMYa314GFj/EzIsN8n8v+C1e4kfvwcm+wnhsZY27xQ8oiWZpKrWRQB6tAElfxpKnjsCdGklDzG9HvpI/0DYLYEpsalVnmAAM6fgR62oMHl70C5N9mn3rpI32DILbEpkZ5ljlFgbPNFtebzij5VPhNKX1lTBASNtXSzPZ3cxCuvVOH7FTCu4yxeZDGbCES0z5+PniQ3uGpwTYmYTOWCPGTpgYP6u9OnYhtzBCbQkSH0NiM4EEdP6VOxDYmYbNLiJxQ1elFwYPaG3XQCn3QHddjgpCweUKI6K2bvzw4YROf//rJob6fZl/H2FRoFiINfqo3qyzYwD8MVIeYLw32J+8j76SP9A2C2BKbGg1CZL+EF/W4YKP9a3/fCeyhkrY9DOOXEu1SlzZ5J31sSNjqURm/OfQkY9qgvkYOvXhbuH0g505Oga7HT9rPF9+t5+pDL0ulwzt46FV5ROax+JUSRRtP0LoHMK64+xNg7iqVEVOKSKRVxRGpsKhRnaRD4SPjR0J0axKCGmP7ilQxm4X8d8xXmfvHJZlPkCR3WfODl9FLMlxCIhevSJ5Nwzo1XdKxYpe3hpmB6BKdmoS43VqPxIgsni+aWOg8biZ3f+nLmSMiuvKWek/P01az7QdLyNVT7lC/l59WAKcb0iMxhzpW1nvmvpDtSiKD1l9OkpnDgv8UyMWFU9wvTP8vdY6NhJwnD1JVtso2OiiLSeL0iJUbNfg6zikVVwRTyOn2HWOfjfLtHgnBhtFIJCViyNDZUatdmnGlaFPqJIoe1WM1aqlz71ivJbLNobgAA9zgu7nZ/vstHAk5WVdzaPRqmGC5lER6kjpV4OWJdq+1kkshSk4VH9izcy/bV66qSPQZV+0J9G7rTY6+XNmqHmYwyJVV24kse1X31dhKHdasygkzy+a64oC4nWr47F4e858nSbLv4V/KAe9JKpVDrx/SImLIXMOiRUKdujESl+49O8xVZxpXzVc/C/I/RxL/hgq8YYkYhev9q6kVO4d9B+sr3vdICNaHJTHWW8Ya/87wqy2uWwstUk/gTYw3aCRGOarMDfS67kfFWqSuIe9imAjQEC272nJHixYNaSvGRIIGN49ywbsZEw1zI11N6TZSHeaGORn+F2AAJtRIMx4t+hUAAAAASUVORK5CYII=",
-        anchor: [0.5, 1],
-        snapToPixel: true
+    MARKER : new ol.style.Icon({
+        src : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAsCAYAAAAATWqyAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAABTtJREFUeNq8WGtsFUUU/rb3gtdCAykFG9AUDTQUKimhxUewEusrJYoBo4FfEgoqotHERH6oP9TGmJhIrIlWAf9hjAaEiME2pgFfVVpFii8sWqIQLLSx3EJLW7p+Z2Z2b2l7d/b23vZLTmZ2duacb2fmnDk7DlKA67rXs1hJKacsohRQppjXFygnKT9TDlH2O47zFzIFGnco91EOuqnjoBnr2Ow4FhIlLN6m3DykFTh3BGj/Doj/CfSe082xPCDnBmDWTUBeyXDVjZTHOUNHUiZCEs+weI0ySTV0/w0c2wa07gIungn+vOx8YN46oPhpYOp1Xms/5TmSeSMUERKImFnYqBoGuPRNL5LEW8BgX2rrmjWZZLYApS8BUW8r4T0zO5eTEjFr+S6lSjV0HgPqVwNdf6S30abNB+7aDeQWey3bKZtIxvU5DxvyrE/izJfAvuXpkxCIDtElOjWqjK2RM8LZWMbiG0oEnUc5kB7a14WMYvI04H56du5ieZKluZWz8r0/IyQh5TuKRH8cqFuTeRIC0Sm6xYbYok1j21+ahyhLVO3wC8D5VowbRLfY0FhibOulIavDLEoRZyD8sJDeMWBXKG5ZsIobsdDsg+OMq3u1m1u9KQo8zP45EqjRxOUpk6i50IRl4FuGjpZtwUoiMYa314GFj/EzIsN8n8v+C1e4kfvwcm+wnhsZY27xQ8oiWZpKrWRQB6tAElfxpKnjsCdGklDzG9HvpI/0DYLYEpsalVnmAAM6fgR62oMHl70C5N9mn3rpI32DILbEpkZ5ljlFgbPNFtebzij5VPhNKX1lTBASNtXSzPZ3cxCuvVOH7FTCu4yxeZDGbCES0z5+PniQ3uGpwTYmYTOWCPGTpgYP6u9OnYhtzBCbQkSH0NiM4EEdP6VOxDYmYbNLiJxQ1elFwYPaG3XQCn3QHddjgpCweUKI6K2bvzw4YROf//rJob6fZl/H2FRoFiINfqo3qyzYwD8MVIeYLw32J+8j76SP9A2C2BKbGg1CZL+EF/W4YKP9a3/fCeyhkrY9DOOXEu1SlzZ5J31sSNjqURm/OfQkY9qgvkYOvXhbuH0g505Oga7HT9rPF9+t5+pDL0ulwzt46FV5ROax+JUSRRtP0LoHMK64+xNg7iqVEVOKSKRVxRGpsKhRnaRD4SPjR0J0axKCGmP7ilQxm4X8d8xXmfvHJZlPkCR3WfODl9FLMlxCIhevSJ5Nwzo1XdKxYpe3hpmB6BKdmoS43VqPxIgsni+aWOg8biZ3f+nLmSMiuvKWek/P01az7QdLyNVT7lC/l59WAKcb0iMxhzpW1nvmvpDtSiKD1l9OkpnDgv8UyMWFU9wvTP8vdY6NhJwnD1JVtso2OiiLSeL0iJUbNfg6zikVVwRTyOn2HWOfjfLtHgnBhtFIJCViyNDZUatdmnGlaFPqJIoe1WM1aqlz71ivJbLNobgAA9zgu7nZ/vstHAk5WVdzaPRqmGC5lER6kjpV4OWJdq+1kkshSk4VH9izcy/bV66qSPQZV+0J9G7rTY6+XNmqHmYwyJVV24kse1X31dhKHdasygkzy+a64oC4nWr47F4e858nSbLv4V/KAe9JKpVDrx/SImLIXMOiRUKdujESl+49O8xVZxpXzVc/C/I/RxL/hgq8YYkYhev9q6kVO4d9B+sr3vdICNaHJTHWW8Ya/87wqy2uWwstUk/gTYw3aCRGOarMDfS67kfFWqSuIe9imAjQEC272nJHixYNaSvGRIIGN49ywbsZEw1zI11N6TZSHeaGORn+F2AAJtRIMx4t+hUAAAAASUVORK5CYII=",
+        anchor : [0.5, 1],
+        snapToPixel : true
     }),
     // styling service results points by default
-    RESULTS: {
+    RESULTS : {
         // INFO orienté maintenance !
-        imageRadius: 5,
-        imageFillColor: "rgba(128, 128, 128, 0.2)",
-        imageStrokeColor: "rgba(0, 0, 0, 0.7)",
-        imageStrokeWidth: 2
+        imageRadius : 5,
+        imageFillColor : "rgba(128, 128, 128, 0.2)",
+        imageStrokeColor : "rgba(0, 0, 0, 0.7)",
+        imageStrokeWidth : 2
     }
     // FIXME ???
     // PROFILE : {
@@ -446,7 +445,7 @@ ElevationPath.prototype.constructor = ElevationPath;
  *
  * @param {ol.Map} map - Map.
  */
-ElevationPath.prototype.setMap = function(map) {
+ElevationPath.prototype.setMap = function (map) {
     logger.trace("ElevationPath::setMap");
 
     if (map) {
@@ -470,7 +469,6 @@ ElevationPath.prototype.setMap = function(map) {
 
     // on appelle la méthode setMap originale d'OpenLayers
     ol.control.Control.prototype.setMap.call(this, map);
-
 };
 
 /**
@@ -479,7 +477,7 @@ ElevationPath.prototype.setMap = function(map) {
  *
  * @returns {Boolean} active - true or false
  */
-ElevationPath.prototype.getActive = function() {
+ElevationPath.prototype.getActive = function () {
     logger.trace("ElevationPath::getActive");
     return this.options.active;
 };
@@ -489,7 +487,7 @@ ElevationPath.prototype.getActive = function() {
  *
  * @param {Boolean} active - true / false
  */
-ElevationPath.prototype.setActive = function(active) {
+ElevationPath.prototype.setActive = function (active) {
     logger.trace("ElevationPath::setActive");
     this.options.active = active;
 };
@@ -497,7 +495,7 @@ ElevationPath.prototype.setActive = function(active) {
 /**
  * clean
  */
-ElevationPath.prototype.clean = function() {
+ElevationPath.prototype.clean = function () {
     logger.trace("ElevationPath::clean");
 
     var map = this.getMap();
@@ -518,7 +516,7 @@ ElevationPath.prototype.clean = function() {
  * Remove measure
  * @private
  */
-ElevationPath.prototype._removeMeasure = function() {
+ElevationPath.prototype._removeMeasure = function () {
     // sketch
     this._lastSketch = null;
     this._currentSketch = null;
@@ -542,8 +540,7 @@ ElevationPath.prototype._removeMeasure = function() {
  * Remove profile
  * @private
  */
-ElevationPath.prototype._removeProfile = function() {
-
+ElevationPath.prototype._removeProfile = function () {
     // graph
     this._profile = null;
 
@@ -564,29 +561,29 @@ ElevationPath.prototype._removeProfile = function() {
  *
  * @private
  */
-ElevationPath.prototype._initialize = function(options) {
+ElevationPath.prototype._initialize = function (options) {
     logger.trace("ElevationPath::_initialize : ", options);
 
     // liste des options
     this.options = {
-        target: null,
-        render: null,
-        active: false,
-        apiKey: null,
-        elevationOptions: {},
-        displayProfileOptions: {
-            greaterSlope: true,
-            meanSlope: true,
-            ascendingElevation: true,
-            descendingElevation: true,
-            currentSlope: true,
-            apply: null,
-            target: null
+        target : null,
+        render : null,
+        active : false,
+        apiKey : null,
+        elevationOptions : {},
+        displayProfileOptions : {
+            greaterSlope : true,
+            meanSlope : true,
+            ascendingElevation : true,
+            descendingElevation : true,
+            currentSlope : true,
+            apply : null,
+            target : null
         },
-        stylesOptions: {
-            profile: null,
-            draw: null,
-            marker: null
+        stylesOptions : {
+            profile : null,
+            draw : null,
+            marker : null
         }
     };
 
@@ -601,13 +598,13 @@ ElevationPath.prototype._initialize = function(options) {
 
     // gestion de la fonction du profil
     var displayFunction = _profile.apply;
-    this.options.displayProfileOptions.apply = (typeof displayFunction === "function") ?
-        displayFunction : ElevationPath.DISPLAY_PROFILE_BY_DEFAULT;
+    this.options.displayProfileOptions.apply = (typeof displayFunction === "function")
+        ? displayFunction : ElevationPath.DISPLAY_PROFILE_BY_DEFAULT;
 
     // gestion du container du profil
     var displayContainer = _profile.target;
-    this.options.displayProfileOptions.target = (typeof displayContainer !== "undefined") ?
-        displayContainer : null;
+    this.options.displayProfileOptions.target = (typeof displayContainer !== "undefined")
+        ? displayContainer : null;
 
     // gestion des styles
     var _styles = options.stylesOptions || {};
@@ -626,7 +623,6 @@ ElevationPath.prototype._initialize = function(options) {
     // gestion des styles du marker
     this.options.stylesOptions.marker = _styles.marker || {};
     this._createStylingMarker();
-
 };
 
 /**
@@ -634,7 +630,7 @@ ElevationPath.prototype._initialize = function(options) {
  *
  * @private
  */
-ElevationPath.prototype._initializeContainer = function() {
+ElevationPath.prototype._initializeContainer = function () {
     logger.trace("ElevationPath::_initializeContainer : ", this._uid);
 
     // create main container
@@ -683,13 +679,13 @@ ElevationPath.prototype._initializeContainer = function() {
  *
  * @private
  */
-ElevationPath.prototype._checkRightsManagement = function() {
+ElevationPath.prototype._checkRightsManagement = function () {
     logger.trace("ElevationPath::_checkRightsManagement");
 
     var rightManagement = RightManagement.check({
-        key: this.options.apiKey,
-        resources: ["SERVICE_CALCUL_ALTIMETRIQUE_RSC"],
-        services: ["Elevation"]
+        key : this.options.apiKey,
+        resources : ["SERVICE_CALCUL_ALTIMETRIQUE_RSC"],
+        services : ["Elevation"]
     });
 
     if (!rightManagement) {
@@ -703,7 +699,6 @@ ElevationPath.prototype._checkRightsManagement = function() {
     if (!this.options.apiKey) {
         this.options.apiKey = rightManagement.key;
     }
-
 };
 
 // ################################################################### //
@@ -715,7 +710,7 @@ ElevationPath.prototype._checkRightsManagement = function() {
  *
  * @private
  */
-ElevationPath.prototype._createStylingMarker = function() {
+ElevationPath.prototype._createStylingMarker = function () {
     logger.trace("ElevationPath::_createStylingMarker ");
 
     var marker = ElevationPath.DEFAULT_STYLES.MARKER;
@@ -728,7 +723,7 @@ ElevationPath.prototype._createStylingMarker = function() {
     }
 
     this._markerStyle = new ol.style.Style({
-        image: marker
+        image : marker
     });
 };
 
@@ -737,7 +732,7 @@ ElevationPath.prototype._createStylingMarker = function() {
  *
  * @private
  */
-ElevationPath.prototype._createStylingDraw = function() {
+ElevationPath.prototype._createStylingDraw = function () {
     logger.trace("ElevationPath::_createStylingDraw");
 
     // on interprete les params pour y creer un objet ol.Style
@@ -748,8 +743,8 @@ ElevationPath.prototype._createStylingDraw = function() {
 
     // Creation à partir des styles par défaut
     var startStyleOpts = {
-        image: Measures.DEFAULT_POINTER_STYLE,
-        stroke: Measures.DEFAULT_DRAW_START_STYLE.getStroke()
+        image : Measures.DEFAULT_POINTER_STYLE,
+        stroke : Measures.DEFAULT_DRAW_START_STYLE.getStroke()
     };
     // ecrasement à partir des propriétés renseignées
     if (styles.hasOwnProperty("pointer") && styles.pointer instanceof ol.style.Image) {
@@ -765,7 +760,7 @@ ElevationPath.prototype._createStylingDraw = function() {
     logger.trace("style finish", styles.finish);
 
     var finishStyleOpts = {
-        stroke: Measures.DEFAULT_DRAW_FINISH_STYLE.getStroke()
+        stroke : Measures.DEFAULT_DRAW_FINISH_STYLE.getStroke()
     };
     // ecrasement à partir des propriétés renseignées
     if (styles.hasOwnProperty("finish") && styles.finish instanceof ol.style.Stroke) {
@@ -781,7 +776,7 @@ ElevationPath.prototype._createStylingDraw = function() {
  *
  * @private
  */
-ElevationPath.prototype._createStylingProfile = function() {
+ElevationPath.prototype._createStylingProfile = function () {
     logger.trace("ElevationPath::_createStylingProfile");
 
     var userStyles = this.options.stylesOptions.profile;
@@ -789,12 +784,10 @@ ElevationPath.prototype._createStylingProfile = function() {
     logger.trace("style profile", userStyles);
 
     var defaultStyle = ElevationPath.DEFAULT_STYLES.PROFILE;
-    Object.keys(defaultStyle).forEach(function(key) {
-
+    Object.keys(defaultStyle).forEach(function (key) {
         if (!userStyles.hasOwnProperty(key)) {
             // si le style user n'existe pas, on ajoute celui par defaut
             userStyles[key] = defaultStyle[key];
-            return;
         } else {
             var _defaultStyle = defaultStyle[key];
             if (typeof _defaultStyle === "object") {
@@ -802,10 +795,8 @@ ElevationPath.prototype._createStylingProfile = function() {
                 // les styles user ecrasent ceux par defaut...
                 Utils.mergeParams(_defaultStyle, userStyles[key]);
                 userStyles[key] = _defaultStyle;
-                return;
             }
         }
-
     }, this);
 };
 
@@ -820,7 +811,7 @@ ElevationPath.prototype._createStylingProfile = function() {
  * @param {ol.Map} map - Map
  * @private
  */
-ElevationPath.prototype._initMeasureInteraction = function(map) {
+ElevationPath.prototype._initMeasureInteraction = function (map) {
     logger.trace("ElevationPath::_initMeasureInteraction()");
 
     // var map = this.getMap();
@@ -831,8 +822,8 @@ ElevationPath.prototype._initMeasureInteraction = function(map) {
     this._measureSource = new ol.source.Vector();
 
     this._measureVector = new ol.layer.Vector({
-        source: this._measureSource,
-        style: this._drawStyleFinish
+        source : this._measureSource,
+        style : this._drawStyleFinish
     });
 
     map.addLayer(this._measureVector);
@@ -845,7 +836,7 @@ ElevationPath.prototype._initMeasureInteraction = function(map) {
  * @param {ol.Map} map - Map
  * @private
  */
-ElevationPath.prototype._addMeasureInteraction = function(map) {
+ElevationPath.prototype._addMeasureInteraction = function (map) {
     logger.trace("ElevationPath::_addMeasureInteraction()");
 
     // var map = this.getMap();
@@ -855,21 +846,21 @@ ElevationPath.prototype._addMeasureInteraction = function(map) {
 
     // Creates and adds the interaction
     this._measureDraw = new ol.interaction.Draw({
-        source: this._measureSource,
-        type: "LineString",
-        style: this._drawStyleStart
+        source : this._measureSource,
+        type : "LineString",
+        style : this._drawStyleStart
     });
 
     this._measureDraw.setProperties({
-        name: "ElevationPath",
-        source: this
+        name : "ElevationPath",
+        source : this
     });
 
     map.addInteraction(this._measureDraw);
 
     // Event start
     var self = this;
-    this._measureDraw.on("drawstart", function(evt) {
+    this._measureDraw.on("drawstart", function (evt) {
         logger.trace("drawstart", evt);
 
         // delete marker current
@@ -890,11 +881,10 @@ ElevationPath.prototype._addMeasureInteraction = function(map) {
         for (var i = 0; i < _features.length; i++) {
             self._measureSource.removeFeature(_features[i]);
         }
-
     }, this);
 
     // Event end
-    this._measureDraw.on("drawend", function(evt) {
+    this._measureDraw.on("drawend", function (evt) {
         logger.trace("drawend", evt);
 
         // set feature
@@ -921,7 +911,7 @@ ElevationPath.prototype._addMeasureInteraction = function(map) {
  * @param {ol.Map} map - Map
  * @private
  */
-ElevationPath.prototype._removeMeasureInteraction = function(map) {
+ElevationPath.prototype._removeMeasureInteraction = function (map) {
     logger.trace("ElevationPath::_removeMeasureInteraction()");
 
     // var map = this.getMap();
@@ -949,8 +939,7 @@ ElevationPath.prototype._removeMeasureInteraction = function(map) {
  *
  * @private
  */
-ElevationPath.prototype._getGeometry = function() {
-
+ElevationPath.prototype._getGeometry = function () {
     // INFO
     // on transmet toujours des coordonnées au service en EPSG:4326
 
@@ -973,8 +962,8 @@ ElevationPath.prototype._getGeometry = function() {
             ll = ol.proj.transform(xy, projSrc, projDest);
         }
         geometry.push({
-            lon: ll[0],
-            lat: ll[1]
+            lon : ll[0],
+            lat : ll[1]
         });
     }
 
@@ -986,8 +975,7 @@ ElevationPath.prototype._getGeometry = function() {
  *
  * @private
  */
-ElevationPath.prototype._getLength = function() {
-
+ElevationPath.prototype._getLength = function () {
     if (this._currentSketch === null) {
         logger.warn("Current Feature undefined !?");
         return;
@@ -1017,7 +1005,7 @@ ElevationPath.prototype._getLength = function() {
  *
  * @private
  */
-ElevationPath.prototype._requestService = function() {
+ElevationPath.prototype._requestService = function () {
     logger.trace("ElevationPath::_requestService");
 
     // les coordonnées sont obligatoires
@@ -1042,14 +1030,14 @@ ElevationPath.prototype._requestService = function() {
 
     // au cas où ...
     Utils.mergeParams(options, {
-        apiKey: this.options.apiKey
+        apiKey : this.options.apiKey
     });
 
     // les callbacks
     var self = this;
 
     /** callback _requestServiceOnSuccess */
-    var _requestServiceOnSuccess = function(result) {
+    var _requestServiceOnSuccess = function (result) {
         logger.trace(result);
         if (result) {
             self._panelContainer.style.display = "block";
@@ -1061,7 +1049,7 @@ ElevationPath.prototype._requestService = function() {
     };
 
     /** callback _requestServiceOnFailure */
-    var _requestServiceOnFailure = function(error) {
+    var _requestServiceOnFailure = function (error) {
         // on ferme le panneau en cas d'erreur !
         self._panelContainer.style.display = "none";
         // self._panelContainer.style.visibility = "hidden";
@@ -1071,15 +1059,14 @@ ElevationPath.prototype._requestService = function() {
     };
 
     Utils.mergeParams(options, {
-        onSuccess: this.options.elevationOptions.onSuccess || _requestServiceOnSuccess,
-        onFailure: this.options.elevationOptions.onFailure || _requestServiceOnFailure
+        onSuccess : this.options.elevationOptions.onSuccess || _requestServiceOnSuccess,
+        onFailure : this.options.elevationOptions.onFailure || _requestServiceOnFailure
     });
 
     // le sampling est soit defini par l'utilisateur (opts),
     // ou soit calculé dynamiquement...
     var sampling = options.sampling;
     if (!sampling) {
-
         // computing sampling
         var _sampling = 50;
         var _length = this._getLength();
@@ -1092,13 +1079,13 @@ ElevationPath.prototype._requestService = function() {
         }
 
         Utils.mergeParams(options, {
-            sampling: _sampling || 50
+            sampling : _sampling || 50
         });
     }
 
     // et enfin, la geometrie
     Utils.mergeParams(options, {
-        positions: geometry
+        positions : geometry
     });
 
     logger.trace("options du service", options);
@@ -1121,7 +1108,7 @@ ElevationPath.prototype._requestService = function() {
  * @return {Array} elevations
  * @private
  */
-ElevationPath.prototype._computeElevationMeasure = function(elevations) {
+ElevationPath.prototype._computeElevationMeasure = function (elevations) {
     logger.trace("ElevationPath::_computeElevationMeasure", elevations);
 
     var _data = elevations;
@@ -1150,7 +1137,6 @@ ElevationPath.prototype._computeElevationMeasure = function(elevations) {
     var wgs84Sphere = new ol.Sphere(6378137);
 
     for (var i = 1; i < _data.length; i++) {
-
         var a = [_data[i].lon, _data[i].lat];
         var b = [_data[i - 1].lon, _data[i - 1].lat];
         var dist = wgs84Sphere.haversineDistance(a, b);
@@ -1235,17 +1221,17 @@ ElevationPath.prototype._computeElevationMeasure = function(elevations) {
     }
 
     return {
-        greaterSlope: _greaterSlope, // pente max
-        meanSlope: Math.round(_slopes / _data.length), // pente moyenne
-        distancePlus: _distancePlus.toLocaleString(), // distance cumulée positive
-        distanceMinus: _distanceMinus.toLocaleString(), // distance cumulée négative
-        ascendingElevation: _ascendingElevation, // dénivelé cumulée positive
-        descendingElevation: _descendingElevation, // dénivelé cumulée négative
-        altMin: _altMin.toLocaleString(), // altitude min
-        altMax: _altMax.toLocaleString(), // altitude max
-        distance: _distance.toLocaleString(), // distance totale
-        unit: _unit, // unité des mesures de distance
-        points: _data
+        greaterSlope : _greaterSlope, // pente max
+        meanSlope : Math.round(_slopes / _data.length), // pente moyenne
+        distancePlus : _distancePlus.toLocaleString(), // distance cumulée positive
+        distanceMinus : _distanceMinus.toLocaleString(), // distance cumulée négative
+        ascendingElevation : _ascendingElevation, // dénivelé cumulée positive
+        descendingElevation : _descendingElevation, // dénivelé cumulée négative
+        altMin : _altMin.toLocaleString(), // altitude min
+        altMax : _altMax.toLocaleString(), // altitude max
+        distance : _distance.toLocaleString(), // distance totale
+        unit : _unit, // unité des mesures de distance
+        points : _data
     };
 };
 
@@ -1256,7 +1242,7 @@ ElevationPath.prototype._computeElevationMeasure = function(elevations) {
  * @param {Array} elevations - array of elevation
  * @private
  */
-ElevationPath.prototype._displayProfile = function(elevations) {
+ElevationPath.prototype._displayProfile = function (elevations) {
     logger.trace("ElevationPath::_displayProfile", elevations);
 
     // data
@@ -1294,7 +1280,6 @@ ElevationPath.prototype._displayProfile = function(elevations) {
             element.style.display = "block";
         }
     }
-
 };
 
 // ################################################################### //
@@ -1307,11 +1292,10 @@ ElevationPath.prototype._displayProfile = function(elevations) {
  *
  * @private
  */
-ElevationPath.prototype.onShowElevationPathClick = function() {
-
+ElevationPath.prototype.onShowElevationPathClick = function () {
     var map = this.getMap();
     Interactions.unset(map, {
-        current: "ElevationPath"
+        current : "ElevationPath"
     });
 
     // Activation/Desactivation des interactions de dessins
@@ -1339,8 +1323,7 @@ ElevationPath.prototype.onShowElevationPathClick = function() {
  *
  * @private
  */
-ElevationPath.prototype.onOpenElevationPathInfoClick = function() {
-
+ElevationPath.prototype.onOpenElevationPathInfoClick = function () {
     // options d'affichage
     var meanSlope = this.options.displayProfileOptions.meanSlope;
     var greaterSlope = this.options.displayProfileOptions.greaterSlope;
@@ -1382,10 +1365,9 @@ ElevationPath.prototype.onOpenElevationPathInfoClick = function() {
     }
 
     // hidden des informations !
-    this._timerHdlr = setTimeout(function() {
+    this._timerHdlr = setTimeout(function () {
         div.className = "GPelevationPathInformationsContainerHidden";
     }, 4000);
-
 };
 
 export default ElevationPath;

@@ -1,7 +1,11 @@
 var MeasureAreaDOM = {
 
-    /** Add uuid to the tag ID */
-    _addUID: function(id) {
+    /**
+    * Add uuid to the tag ID
+    * @param {String} id - id selector
+    * @returns {String} uid - id selector with an unique id
+    */
+    _addUID : function (id) {
         var uid = (this._uid) ? id + "-" + this._uid : id;
         return uid;
     },
@@ -11,8 +15,7 @@ var MeasureAreaDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createMainContainerElement: function() {
-
+    _createMainContainerElement : function () {
         var container = document.createElement("div");
         container.id = this._addUID("GPmeasureArea");
         container.className = "GPwidget";
@@ -28,8 +31,7 @@ var MeasureAreaDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createShowMeasureAreaElement: function() {
-
+    _createShowMeasureAreaElement : function () {
         var input = document.createElement("input");
         input.id = this._addUID("GPshowMeasureArea");
         input.type = "checkbox";
@@ -42,8 +44,7 @@ var MeasureAreaDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createShowMeasureAreaPictoElement: function() {
-
+    _createShowMeasureAreaPictoElement : function () {
         // contexte d'execution
         var context = this;
 
@@ -58,11 +59,11 @@ var MeasureAreaDOM = {
         // L'ouverture/Fermeture permet de faire le menage
         // (reinitialisation)
         if (label.addEventListener) {
-            label.addEventListener("click", function(e) {
+            label.addEventListener("click", function (e) {
                 context.onShowMeasureAreaClick(e);
             });
         } else if (label.attachEvent) {
-            label.attachEvent("onclick", function(e) {
+            label.attachEvent("onclick", function (e) {
                 context.onShowMeasureAreaClick(e);
             });
         }

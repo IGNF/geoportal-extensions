@@ -33,8 +33,7 @@ import GetFeatureInfoDOM from "../../Common/Controls/GetFeatureInfoDOM";
  * @param {olx.OverlayPanOptions} [gfiOptions.options.autoPanAnimation] - Used to customize the auto-pan animation. See {@link https://openlayers.org/en/latest/apidoc/olx.html#.OverlayPanOptions olx.OverlayPanOptions}.
  * @param {Number} [gfiOptions.options.autoPanMargin] - Margin (in pixels) between the pop-up and the border of the map when autopanning. Default is 20.
  */
-function GetFeatureInfo(gfiOptions) {
-
+function GetFeatureInfo (gfiOptions) {
     gfiOptions = gfiOptions || {};
     var options = gfiOptions.options || {};
     var layers = gfiOptions.layers || [];
@@ -58,9 +57,9 @@ function GetFeatureInfo(gfiOptions) {
 
     // call ol.control.Control constructor
     ol.control.Control.call(this, {
-        element: container,
-        target: options.target,
-        render: options.render
+        element : container,
+        target : options.target,
+        render : options.render
     });
 };
 
@@ -93,17 +92,16 @@ GetFeatureInfo.prototype.constructor = GetFeatureInfo;
  * @param {Array.<Object>} layers - Array of ol layers with their configuration options (obj, event, infoFormat)
  * @private
  */
-GetFeatureInfo.prototype._initialize = function(options, layers) {
-
+GetFeatureInfo.prototype._initialize = function (options, layers) {
     // identifiant du contrôle : utile pour suffixer les identifiants CSS (pour gérer le cas où il y en a plusieurs dans la même page)
     this._uid = SelectorID.generate();
 
     // List of triggering events associated to a boolean indicating if the event is listened (there must be
     // almost one layer having this triggering event configured)
     this._events = {
-        dblclick: false,
-        singleclick: false,
-        contextmenu: false
+        dblclick : false,
+        singleclick : false,
+        contextmenu : false
     };
 
     // Object associating a event (key) to his handler (value) in order to unlisten events which have
@@ -207,7 +205,7 @@ GetFeatureInfo.prototype._initialize = function(options, layers) {
  *
  * @param {ol.Map} map - Map.
  */
-GetFeatureInfo.prototype.setMap = function(map) {
+GetFeatureInfo.prototype.setMap = function (map) {
     if (map) {
         // on active les evenements (si des couches sont configurees)
         this._updateEvents(map);
@@ -218,7 +216,7 @@ GetFeatureInfo.prototype.setMap = function(map) {
 
         map.getLayers().on(
             "remove",
-            function(evt) {
+            function (evt) {
                 for (var i = 0; i < this._layers.length; ++i) {
                     if (this._layers[i].obj === evt.element) {
                         this._layers.splice(i, 1);
@@ -233,16 +231,16 @@ GetFeatureInfo.prototype.setMap = function(map) {
         if (this._auto) {
             // ajout des couches vecteur deja dans la carte
             var updated = false;
-            map.getLayers().forEach(function(olLayer) {
-                    var layerFormat = GfiUtils.getLayerFormat(olLayer);
-                    if (!this._hasLayer(olLayer) && layerFormat == "vector") {
-                        this._layers.push({
-                            obj: olLayer
-                        });
-                        updated = true;
-                    }
-                },
-                this
+            map.getLayers().forEach(function (olLayer) {
+                var layerFormat = GfiUtils.getLayerFormat(olLayer);
+                if (!this._hasLayer(olLayer) && layerFormat == "vector") {
+                    this._layers.push({
+                        obj : olLayer
+                    });
+                    updated = true;
+                }
+            },
+            this
             );
 
             if (updated) {
@@ -251,11 +249,11 @@ GetFeatureInfo.prototype.setMap = function(map) {
 
             map.getLayers().on(
                 "add",
-                function(evt) {
+                function (evt) {
                     var layerFormat = GfiUtils.getLayerFormat(evt.element);
                     if (layerFormat == "vector") {
                         this._layers.push({
-                            obj: evt.element
+                            obj : evt.element
                         });
                     }
                     this._updateEvents(map);
@@ -284,7 +282,7 @@ GetFeatureInfo.prototype.setMap = function(map) {
  * @returns {String} gfiLayers.event Optional. Name of the mouse event triggering getFeatureInfo on this layer (that has been added to map). allowed values are : 'singleclick', 'dblclick' and 'contextmenu'.
  * @returns {String} gfiLayers.infoFormat Optional. Indicates the format mime-type of the response of GetFeatureInfo requests.
  */
-GetFeatureInfo.prototype.getLayers = function() {
+GetFeatureInfo.prototype.getLayers = function () {
     return this._layers;
 };
 
@@ -294,7 +292,7 @@ GetFeatureInfo.prototype.getLayers = function() {
  *
  * @param {String} eventName - name of the mouse event chosen in the list : 'singleclick', 'dblclick', 'contextmenu'.
  */
-GetFeatureInfo.prototype.setDefaultEvent = function(eventName) {
+GetFeatureInfo.prototype.setDefaultEvent = function (eventName) {
     if (typeof eventName !== "string") {
         console.log("[ERROR] GetFeatureInfo:setDefaultEvent - eventName parameter should be a string");
         return;
@@ -313,7 +311,7 @@ GetFeatureInfo.prototype.setDefaultEvent = function(eventName) {
  *
  * @param {String} cursorStyle - cursor style. The value must be choosen in the possible values of the css cursor property.
  */
-GetFeatureInfo.prototype.setCursorStyle = function(cursorStyle) {
+GetFeatureInfo.prototype.setCursorStyle = function (cursorStyle) {
     if (typeof cursorStyle !== "string") {
         console.log("[ERROR] GetFeatureInfo:setCursorStyle - cursorStyle parameter should be a string");
         return;
@@ -333,7 +331,7 @@ GetFeatureInfo.prototype.setCursorStyle = function(cursorStyle) {
  *
  * @param {Boolean} active - specify the value the active property must be set to.
  */
-GetFeatureInfo.prototype.setActive = function(active) {
+GetFeatureInfo.prototype.setActive = function (active) {
     this._setActive(active);
     var element = document.getElementById(this._addUID("GPactivateGetFeatureInfo"));
     if (element) {
@@ -348,7 +346,7 @@ GetFeatureInfo.prototype.setActive = function(active) {
  *
  * @private
  */
-GetFeatureInfo.prototype._setActive = function(active) {
+GetFeatureInfo.prototype._setActive = function (active) {
     if (typeof active !== "boolean") {
         console.log("[ERROR] GetFeatureInfo:_setActive - active parameter should be a boolean");
         return;
@@ -367,7 +365,7 @@ GetFeatureInfo.prototype._setActive = function(active) {
  *
  * @return {Boolean} active
  */
-GetFeatureInfo.prototype.isActive = function() {
+GetFeatureInfo.prototype.isActive = function () {
     return this._active;
 };
 
@@ -376,7 +374,7 @@ GetFeatureInfo.prototype.isActive = function() {
  *
  * @param {Boolean} hidden - specify if the widget must be hidden
  */
-GetFeatureInfo.prototype.setHidden = function(hidden) {
+GetFeatureInfo.prototype.setHidden = function (hidden) {
     this.element.style.visibility = (hidden) ? "hidden" : "";
 };
 
@@ -385,7 +383,7 @@ GetFeatureInfo.prototype.setHidden = function(hidden) {
  *
  * @return {Boolean} hidden
  */
-GetFeatureInfo.prototype.isHidden = function() {
+GetFeatureInfo.prototype.isHidden = function () {
     return this.element.style.visibility == "hidden";
 };
 
@@ -397,7 +395,7 @@ GetFeatureInfo.prototype.isHidden = function() {
  * @param {String} [gfiLayers.event] - Name of the mouse event triggering getFeatureInfo on this layer (that has been added to map). allowed values are : 'singleclick', 'dblclick' and 'contextmenu'.
  * @param {String} [gfiLayers.infoFormat] - Indicates the format mime-type of the response of GetFeatureInfo requests.
  */
-GetFeatureInfo.prototype.setLayers = function(gfiLayers) {
+GetFeatureInfo.prototype.setLayers = function (gfiLayers) {
     this._setLayers(gfiLayers);
     this._updateEvents();
 };
@@ -409,7 +407,7 @@ GetFeatureInfo.prototype.setLayers = function(gfiLayers) {
  *
  * @private
  */
-GetFeatureInfo.prototype._isValidEvent = function(eventName) {
+GetFeatureInfo.prototype._isValidEvent = function (eventName) {
     return Object.keys(this._events).indexOf(eventName) > -1;
 };
 
@@ -421,13 +419,13 @@ GetFeatureInfo.prototype._isValidEvent = function(eventName) {
  *
  * @private
  */
-GetFeatureInfo.prototype._activateEvent = function(eventName, map) {
+GetFeatureInfo.prototype._activateEvent = function (eventName, map) {
     var gfiObj = this;
 
     /**
      * getFeatureInfoHandler
      */
-    var getFeatureInfoHandler = function(e) {
+    var getFeatureInfoHandler = function (e) {
         GfiUtils.onDisplayFeatureInfo(e, gfiObj);
     };
 
@@ -455,7 +453,7 @@ GetFeatureInfo.prototype._activateEvent = function(eventName, map) {
  *
  * @private
  */
-GetFeatureInfo.prototype._deactivateEvent = function(eventName, map) {
+GetFeatureInfo.prototype._deactivateEvent = function (eventName, map) {
     if (eventName == "contextmenu") {
         map.getViewport().removeEventListener(
             eventName,
@@ -480,7 +478,7 @@ GetFeatureInfo.prototype._deactivateEvent = function(eventName, map) {
  *
  * @private
  */
-GetFeatureInfo.prototype._updateEvents = function(map) {
+GetFeatureInfo.prototype._updateEvents = function (map) {
     if (!map) {
         map = this.getMap();
     }
@@ -506,7 +504,7 @@ GetFeatureInfo.prototype._updateEvents = function(map) {
  *
  * @private
  */
-GetFeatureInfo.prototype._clearEvents = function() {
+GetFeatureInfo.prototype._clearEvents = function () {
     var map = this.getMap();
     for (var eventName in this._events) {
         if (this._events[eventName]) {
@@ -522,7 +520,7 @@ GetFeatureInfo.prototype._clearEvents = function() {
  *
  * @private
  */
-GetFeatureInfo.prototype._hasLayer = function(olLayer) {
+GetFeatureInfo.prototype._hasLayer = function (olLayer) {
     for (var i = 0; i < this._layers.length; ++i) {
         if (this._layers[i].obj === olLayer) {
             return true;
@@ -539,7 +537,7 @@ GetFeatureInfo.prototype._hasLayer = function(olLayer) {
  *
  * @private
  */
-GetFeatureInfo.prototype._activateCursor = function(activate, map) {
+GetFeatureInfo.prototype._activateCursor = function (activate, map) {
     if (!map) {
         map = this.getMap();
     }
@@ -554,8 +552,8 @@ GetFeatureInfo.prototype._activateCursor = function(activate, map) {
         /**
          * displayCursor
          */
-        var displayCursor = function(evt) {
-            var hit = map.forEachFeatureAtPixel(evt.pixel, function(feature, layer) {
+        var displayCursor = function (evt) {
+            var hit = map.forEachFeatureAtPixel(evt.pixel, function (feature, layer) {
                 // on ne prend en compte que les couches vecteurs connues du controle
                 var gfiLayers = gfiObj.getLayers();
                 for (var m = 0; m < gfiLayers.length; ++m) {
@@ -586,7 +584,7 @@ GetFeatureInfo.prototype._activateCursor = function(activate, map) {
  *
  * @private
  */
-GetFeatureInfo.prototype._setLayers = function(gfiLayers) {
+GetFeatureInfo.prototype._setLayers = function (gfiLayers) {
     if (!gfiLayers || !Array.isArray(gfiLayers)) {
         console.log("[ERROR] GetFeatureInfo:setLayers - gfiLayers parameter should be a array");
         return;
@@ -625,7 +623,7 @@ GetFeatureInfo.prototype._setLayers = function(gfiLayers) {
  *
  * @private
  */
-GetFeatureInfo.prototype.onActivateGetFeatureInfoElementChange = function(e) {
+GetFeatureInfo.prototype.onActivateGetFeatureInfoElementChange = function (e) {
     this._setActive(e.target.checked);
 };
 
@@ -638,7 +636,7 @@ GetFeatureInfo.prototype.onActivateGetFeatureInfoElementChange = function(e) {
  *
  * @private
  */
-GetFeatureInfo.prototype._initContainer = function(options) {
+GetFeatureInfo.prototype._initContainer = function (options) {
     // creation du container principal
     var container = this._createMainContainerElement();
 

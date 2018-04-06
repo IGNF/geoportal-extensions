@@ -18,35 +18,35 @@ var logger = Logger.getLogger("ElevationPath");
  *
  * Leaflet Control Class to compute and display Profil Elevation.
  *
- * Use {@link module:Controls.ElevationPath L.geoportalControl.ElevationPath()} factory to create instances of that class.
+ * Use {@link module :Controls.ElevationPath L.geoportalControl.ElevationPath()} factory to create instances of that class.
  *
  * **Extends** Leaflet <a href="http://leafletjs.com/reference.html#control" target="_blank">L.Control</a> native class.
  *
  * @namespace
  * @alias L.geoportalControl.ElevationPath
  */
-var ElevationPath = L.Control.extend( /** @lends L.geoportalControl.ElevationPath.prototype */ {
+var ElevationPath = L.Control.extend(/** @lends L.geoportalControl.ElevationPath.prototype */ {
 
-    includes: ElevationPathDOM,
+    includes : ElevationPathDOM,
 
     /**
      * Options du service
      *
      * @private
      */
-    options: {
-        position: "topleft",
-        active: false,
-        elevationPathOptions: {},
-        stylesOptions: {},
-        displayProfileOptions: {
-            greaterSlope: true,
-            meanSlope: true,
-            ascendingElevation: true,
-            descendingElevation: true,
-            currentSlope: true,
-            apply: null,
-            target: null
+    options : {
+        position : "topleft",
+        active : false,
+        elevationPathOptions : {},
+        stylesOptions : {},
+        displayProfileOptions : {
+            greaterSlope : true,
+            meanSlope : true,
+            ascendingElevation : true,
+            descendingElevation : true,
+            currentSlope : true,
+            apply : null,
+            target : null
         }
     },
 
@@ -83,8 +83,7 @@ var ElevationPath = L.Control.extend( /** @lends L.geoportalControl.ElevationPat
      * - displayProfileOptions.apply : ol.control.ElevationPath.DISPLAY_PROFILE_{LIB_AMCHARTS | LIB_D3 | RAW}
      * (detect auto lib. : d3 / AmCharts)
      */
-    initialize: function(options) {
-
+    initialize : function (options) {
         // on transmet les options au controle
         L.Util.setOptions(this, options);
 
@@ -132,7 +131,6 @@ var ElevationPath = L.Control.extend( /** @lends L.geoportalControl.ElevationPat
 
         // gestion des droits sur les ressources/services
         this._checkRightsManagement();
-
     },
 
     /**
@@ -142,8 +140,7 @@ var ElevationPath = L.Control.extend( /** @lends L.geoportalControl.ElevationPat
      *
      * @private
      */
-    onAdd: function(map) {
-
+    onAdd : function (map) {
         // initialisation du DOM du composant
         var container = this._container = this._initLayout();
 
@@ -173,7 +170,7 @@ var ElevationPath = L.Control.extend( /** @lends L.geoportalControl.ElevationPat
      *
      * @private
      */
-    onRemove: function( /* map */ ) {},
+    onRemove : function (/* map */) {},
 
     // ################################################################### //
     // ########################## init resources ######################### //
@@ -185,12 +182,11 @@ var ElevationPath = L.Control.extend( /** @lends L.geoportalControl.ElevationPat
      *
      * @private
      */
-    _checkRightsManagement: function() {
-
+    _checkRightsManagement : function () {
         var rightManagement = RightManagement.check({
-            key: this.options.apiKey,
-            resources: ["SERVICE_CALCUL_ALTIMETRIQUE_RSC"],
-            services: ["ElevationLine"]
+            key : this.options.apiKey,
+            resources : ["SERVICE_CALCUL_ALTIMETRIQUE_RSC"],
+            services : ["ElevationLine"]
         });
 
         if (!rightManagement) {
@@ -215,20 +211,19 @@ var ElevationPath = L.Control.extend( /** @lends L.geoportalControl.ElevationPat
      *
      * @private
      */
-    _initDisplayProfileOptions: function() {
-
+    _initDisplayProfileOptions : function () {
         // gestion de l'affichage du profil
         var _profileOpts = this.options.displayProfileOptions;
 
         // gestion de la fonction du profil
         var displayFunction = _profileOpts.apply;
-        _profileOpts.apply = (typeof displayFunction === "function") ?
-            displayFunction : ElevationPath.DISPLAY_PROFILE_BY_DEFAULT;
+        _profileOpts.apply = (typeof displayFunction === "function")
+            ? displayFunction : ElevationPath.DISPLAY_PROFILE_BY_DEFAULT;
 
         // gestion du container du profil
         var displayContainer = _profileOpts.target;
-        _profileOpts.target = (typeof displayContainer !== "undefined") ?
-            displayContainer : null;
+        _profileOpts.target = (typeof displayContainer !== "undefined")
+            ? displayContainer : null;
 
         // les autres options
         var _protoOpts = Object.getPrototypeOf(this.options);
@@ -247,7 +242,6 @@ var ElevationPath = L.Control.extend( /** @lends L.geoportalControl.ElevationPat
         if (typeof _profileOpts.currentSlope === "undefined") {
             _profileOpts.currentSlope = _protoOpts.displayProfileOptions.currentSlope;
         }
-
     },
 
     // ################################################################### //
@@ -260,8 +254,7 @@ var ElevationPath = L.Control.extend( /** @lends L.geoportalControl.ElevationPat
      *
      * @private
      */
-    _initLayout: function() {
-
+    _initLayout : function () {
         // create main container
         var container = this._createMainContainerElement();
 
@@ -312,7 +305,7 @@ var ElevationPath = L.Control.extend( /** @lends L.geoportalControl.ElevationPat
      *
      * @private
      */
-    onShowElevationPathClick: function(e) {
+    onShowElevationPathClick : function (e) {
         logger.trace(e);
         var map = this._map;
 
@@ -348,7 +341,7 @@ var ElevationPath = L.Control.extend( /** @lends L.geoportalControl.ElevationPat
      *
      * @private
      */
-    onReduceElevationPathPanelClick: function() {
+    onReduceElevationPathPanelClick : function () {
         this._reducePanel = true;
         this._pictoContainer.style.display = "block";
         this._panelContainer.style.display = "none";
@@ -362,8 +355,7 @@ var ElevationPath = L.Control.extend( /** @lends L.geoportalControl.ElevationPat
      *
      * @private
      */
-    onOpenElevationPathInfoClick: function() {
-
+    onOpenElevationPathInfoClick : function () {
         // options d'affichage
         var meanSlope = this.options.displayProfileOptions.meanSlope;
         var greaterSlope = this.options.displayProfileOptions.greaterSlope;
@@ -405,10 +397,9 @@ var ElevationPath = L.Control.extend( /** @lends L.geoportalControl.ElevationPat
         }
 
         // hidden des informations !
-        this._timerHdlr = setTimeout(function() {
+        this._timerHdlr = setTimeout(function () {
             div.className = "GPelevationPathInformationsContainerHidden";
         }, 4000);
-
     },
 
     // ################################################################### //
@@ -422,23 +413,21 @@ var ElevationPath = L.Control.extend( /** @lends L.geoportalControl.ElevationPat
      * @param {Object} map - control map.
      * @private
      */
-    _activateMapInteraction: function(map) {
-
+    _activateMapInteraction : function (map) {
         logger.info("_activateMapInteraction()");
 
         // Creation de la couche vectorielle sur laquelle on va dessiner
         if (this._featuresLayer === null) {
-
             this._featuresLayer = new L.FeatureGroup();
             map.addLayer(this._featuresLayer);
 
             var self = this;
             /* evenements : on desactive le menu systeme pour la saisie */
-            map.on("contextmenu", function() {});
+            map.on("contextmenu", function () {});
 
             /* evenement sur la carte lors d'une saisie,
             on y ajoute le layer, et on y stocke les coordonnées */
-            map.on("draw:created", function(e) {
+            map.on("draw:created", function (e) {
                 logger.trace("draw:created");
 
                 self._currentIdLayer = L.Util.stamp(e.layer);
@@ -448,14 +437,14 @@ var ElevationPath = L.Control.extend( /** @lends L.geoportalControl.ElevationPat
             });
 
             /* evenements */
-            map.on("draw:drawstart", function() {
+            map.on("draw:drawstart", function () {
                 logger.trace("draw:drawstart");
                 self._removeFeatureLayer(self._lastIdLayer);
                 self._lastIdLayer = self._currentIdLayer;
             });
 
             /* evenements */
-            map.on("draw:drawstop", function() {
+            map.on("draw:drawstop", function () {
                 logger.trace("draw:drawstop");
                 if (typeof self.options.elevationPathOptions.onSuccess === "undefined" && self.options.displayProfileOptions.target === null) {
                     self._pictoContainer.style.display = "none";
@@ -474,8 +463,7 @@ var ElevationPath = L.Control.extend( /** @lends L.geoportalControl.ElevationPat
      * @param {Object} map - control map.
      * @private
      */
-    _removeMapInteraction: function(map) {
-
+    _removeMapInteraction : function (map) {
         if (!map) {
             return;
         }
@@ -503,8 +491,7 @@ var ElevationPath = L.Control.extend( /** @lends L.geoportalControl.ElevationPat
      * @param {Object} map - control map.
      * @private
      */
-    _activatePolyLineInteraction: function(map) {
-
+    _activatePolyLineInteraction : function (map) {
         if (this._currentFeature) {
             this._currentFeature.disable();
         }
@@ -540,20 +527,20 @@ var ElevationPath = L.Control.extend( /** @lends L.geoportalControl.ElevationPat
         //     feet : true, // When not metric, to use feet instead of yards for display.
         //     nautic : false, // When not metric, not feet use nautic mile for display
         //     showLength : true, // Whether to display distance in the tooltip
-        //     zIndexOffset : 2000 // This should be > than the highest z-index any map layersallowIntersection: true,
+        //     zIndexOffset : 2000 // This should be > than the highest z-index any map layersallowIntersection : true,
         // };
 
         var styles = this.options.stylesOptions || {};
         var _shapeOptions = (Object.keys(styles).length !== 0) ? styles : {
-            stroke: true,
-            color: "#C77A04",
-            weight: 4,
-            opacity: 0.5,
-            fill: false
+            stroke : true,
+            color : "#C77A04",
+            weight : 4,
+            opacity : 0.5,
+            fill : false
         };
 
         this._currentFeature = new L.Draw.Polyline(map, {
-            shapeOptions: _shapeOptions
+            shapeOptions : _shapeOptions
         });
         this._currentFeature.enable();
     },
@@ -563,8 +550,7 @@ var ElevationPath = L.Control.extend( /** @lends L.geoportalControl.ElevationPat
      *
      * @private
      */
-    _getFeatureGeometry: function(layer) {
-
+    _getFeatureGeometry : function (layer) {
         // on transmet toujours des coordonnées au service en EPSG:4326
         logger.log(layer.getLatLngs());
 
@@ -581,8 +567,8 @@ var ElevationPath = L.Control.extend( /** @lends L.geoportalControl.ElevationPat
             var LatLngI = geometry[i];
             var LatLngJ = geometry[i + 1];
             this._geometry.push({
-                lon: LatLngI.lng,
-                lat: LatLngI.lat
+                lon : LatLngI.lng,
+                lat : LatLngI.lat
             });
             // on calcul la distance du segment
             if (LatLngJ) {
@@ -599,7 +585,7 @@ var ElevationPath = L.Control.extend( /** @lends L.geoportalControl.ElevationPat
      *
      * @private
      */
-    _addFeatureLayer: function(layer) {
+    _addFeatureLayer : function (layer) {
         if (!this._featuresLayer) {
             return;
         }
@@ -611,7 +597,7 @@ var ElevationPath = L.Control.extend( /** @lends L.geoportalControl.ElevationPat
      *
      * @private
      */
-    _removeFeatureLayer: function(id) {
+    _removeFeatureLayer : function (id) {
         if (!this._featuresLayer) {
             return;
         }
@@ -625,7 +611,6 @@ var ElevationPath = L.Control.extend( /** @lends L.geoportalControl.ElevationPat
         } else {
             this._featuresLayer.removeLayer(id);
         }
-
     },
 
     // ################################################################### //
@@ -638,7 +623,7 @@ var ElevationPath = L.Control.extend( /** @lends L.geoportalControl.ElevationPat
      *
      * @private
      */
-    _altiRequest: function() {
+    _altiRequest : function () {
         logger.log("_altiRequest");
 
         // les coordonnées sont obligatoires
@@ -661,14 +646,13 @@ var ElevationPath = L.Control.extend( /** @lends L.geoportalControl.ElevationPat
         // au cas où la clef API n'est pas renseignée dans les options du service,
         // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
         L.Util.extend(options, {
-            apiKey: options.apiKey || this.options.apiKey
+            apiKey : options.apiKey || this.options.apiKey
         });
 
         // le sampling est soit defini par l'utilisateur (opts),
         // ou soit calculé dynamiquement...
         var _sampling = options.sampling;
         if (!_sampling) {
-
             // computing sampling
             var _computeSampling = 50;
             var _length = this._currentFeature._measurementRunningTotal; // FIXME !!!
@@ -687,10 +671,10 @@ var ElevationPath = L.Control.extend( /** @lends L.geoportalControl.ElevationPat
         L.Util.extend(options, {
 
             /** sampling à 200 (iso portail) */
-            sampling: _sampling,
+            sampling : _sampling,
 
             /** callback onSuccess */
-            onSuccess: this.options.elevationPathOptions.onSuccess || function(result) {
+            onSuccess : this.options.elevationPathOptions.onSuccess || function (result) {
                 logger.log(result);
                 if (result) {
                     if (self.options.displayProfileOptions.target !== null) {
@@ -704,7 +688,7 @@ var ElevationPath = L.Control.extend( /** @lends L.geoportalControl.ElevationPat
             },
 
             /** callback onFailure */
-            onFailure: this.options.elevationPathOptions.onFailure || function(error) {
+            onFailure : this.options.elevationPathOptions.onFailure || function (error) {
                 logger.log(error.message);
                 self._pictoContainer.style.display = "block";
                 self._panelContainer.style.display = "none";
@@ -717,7 +701,7 @@ var ElevationPath = L.Control.extend( /** @lends L.geoportalControl.ElevationPat
         // et enfin, la geometrie
         var positions = this._geometry;
         L.Util.extend(options, {
-            positions: positions
+            positions : positions
         });
 
         logger.log(options);
@@ -740,10 +724,9 @@ var ElevationPath = L.Control.extend( /** @lends L.geoportalControl.ElevationPat
      * @return {Array} elevations
      * @private
      */
-    _computeElevationMeasure: function(elevations) {
-
+    _computeElevationMeasure : function (elevations) {
         /** Returns the distance from c1 to c2 using the haversine formula */
-        var _haversineDistance = function(c1, c2) {
+        var _haversineDistance = function (c1, c2) {
             var lat1 = PositionFormater.decimalToRadian(c1[1]);
             var lat2 = PositionFormater.decimalToRadian(c2[1]);
             var deltaLatBy2 = (lat2 - lat1) / 2;
@@ -777,7 +760,6 @@ var ElevationPath = L.Control.extend( /** @lends L.geoportalControl.ElevationPat
         var _slopes = 0;
 
         for (var i = 1; i < _data.length; i++) {
-
             var a = [_data[i].lon, _data[i].lat];
             var b = [_data[i - 1].lon, _data[i - 1].lat];
             var dist = _haversineDistance(a, b);
@@ -862,17 +844,17 @@ var ElevationPath = L.Control.extend( /** @lends L.geoportalControl.ElevationPat
         }
 
         return {
-            greaterSlope: _greaterSlope, // pente max
-            meanSlope: Math.round(_slopes / _data.length), // pente moyenne
-            distancePlus: _distancePlus.toLocaleString(), // distance cumulée positive
-            distanceMinus: _distanceMinus.toLocaleString(), // distance cumulée négative
-            ascendingElevation: _ascendingElevation, // dénivelé cumulée positive
-            descendingElevation: _descendingElevation, // dénivelé cumulée négative
-            altMin: _altMin.toLocaleString(), // altitude min
-            altMax: _altMax.toLocaleString(), // altitude max
-            distance: _distance.toLocaleString(), // distance totale
-            unit: _unit, // unité des mesures de distance
-            points: _data
+            greaterSlope : _greaterSlope, // pente max
+            meanSlope : Math.round(_slopes / _data.length), // pente moyenne
+            distancePlus : _distancePlus.toLocaleString(), // distance cumulée positive
+            distanceMinus : _distanceMinus.toLocaleString(), // distance cumulée négative
+            ascendingElevation : _ascendingElevation, // dénivelé cumulée positive
+            descendingElevation : _descendingElevation, // dénivelé cumulée négative
+            altMin : _altMin.toLocaleString(), // altitude min
+            altMax : _altMax.toLocaleString(), // altitude max
+            distance : _distance.toLocaleString(), // distance totale
+            unit : _unit, // unité des mesures de distance
+            points : _data
         };
     },
 
@@ -883,8 +865,7 @@ var ElevationPath = L.Control.extend( /** @lends L.geoportalControl.ElevationPat
      * @param {Array} elevations - array of elevation
      * @private
      */
-    _displayProfil: function(elevations) {
-
+    _displayProfil : function (elevations) {
         // on reactive le menu systeme en fin de saisie !
         var map = this._map;
         map.off("contextmenu");
@@ -929,7 +910,6 @@ var ElevationPath = L.Control.extend( /** @lends L.geoportalControl.ElevationPat
             // on affiche les informations
             element.style.display = "block";
         }
-
     },
 
     // ################################################################### //
@@ -941,7 +921,7 @@ var ElevationPath = L.Control.extend( /** @lends L.geoportalControl.ElevationPat
      *
      * @private
      */
-    _clear: function() {
+    _clear : function () {
         this._geometry = null;
         this._profile = null;
 
@@ -964,8 +944,7 @@ var ElevationPath = L.Control.extend( /** @lends L.geoportalControl.ElevationPat
 /**
  * create Profile Marker
  */
-ElevationPath.__createProfileMarker = function(context, data) {
-
+ElevationPath.__createProfileMarker = function (context, data) {
     logger.log("__createProfileMarker");
 
     var self = context;
@@ -978,10 +957,10 @@ ElevationPath.__createProfileMarker = function(context, data) {
 
     // creation d"un marker
     self._marker = L.marker(L.latLng(data), {
-        icon: new IconDefault("orange"),
-        draggable: false,
-        clickable: false,
-        zIndexOffset: 1000
+        icon : new IconDefault("orange"),
+        draggable : false,
+        clickable : false,
+        zIndexOffset : 1000
     });
 
     self._marker.addTo(map);
@@ -990,8 +969,7 @@ ElevationPath.__createProfileMarker = function(context, data) {
 /**
  * update Profile Marker
  */
-ElevationPath.__updateProfileMarker = function(context, data) {
-
+ElevationPath.__updateProfileMarker = function (context, data) {
     logger.log("__updateProfileMarker");
 
     var self = context;
@@ -1008,22 +986,20 @@ ElevationPath.__updateProfileMarker = function(context, data) {
     } else {
         // creation d"un marker
         self._marker = L.marker(L.latLng(data), {
-            icon: new IconDefault("orange"),
-            draggable: false,
-            clickable: false,
-            zIndexOffset: 1000
+            icon : new IconDefault("orange"),
+            draggable : false,
+            clickable : false,
+            zIndexOffset : 1000
         });
 
         self._marker.addTo(map);
     }
-
 };
 
 /**
  * remove Profile Marker
  */
-ElevationPath.__removeProfileMarker = function(context) {
-
+ElevationPath.__removeProfileMarker = function (context) {
     logger.log("__removeProfileMarker");
 
     var self = context;
@@ -1033,14 +1009,13 @@ ElevationPath.__removeProfileMarker = function(context) {
         map.removeLayer(self._marker);
         self._marker = null;
     }
-
 };
 
 /**
  * custom operation into raw profil...
  * TODO
  */
-ElevationPath.__customRawProfileOperation = function() {
+ElevationPath.__customRawProfileOperation = function () {
     logger.log("__customRawProfileOperation");
 };
 
@@ -1048,7 +1023,7 @@ ElevationPath.__customRawProfileOperation = function() {
  * custom operation into raw profil...
  * TODO
  */
-ElevationPath.__customRawProfileMouseOverEvent = function(context, e) {
+ElevationPath.__customRawProfileMouseOverEvent = function (context, e) {
     logger.log("__customRawProfileMouseOverEvent", context, e);
 };
 
@@ -1060,7 +1035,7 @@ ElevationPath.__customRawProfileMouseOverEvent = function(context, e) {
  * @param {HTMLElement} container - html container where to display profile
  * @param {Object} context - this control object
  */
-ElevationPath.DISPLAY_PROFILE_BY_DEFAULT = function(data, container, context) {
+ElevationPath.DISPLAY_PROFILE_BY_DEFAULT = function (data, container, context) {
     logger.trace("ElevationPath.DISPLAY_PROFILE_BY_DEFAULT");
 
     var profile = ProfileElevationPathDOM.displayProfileByDefault(data, container, context, ElevationPath);
@@ -1078,7 +1053,7 @@ ElevationPath.DISPLAY_PROFILE_BY_DEFAULT = function(data, container, context) {
  * @param {HTMLElement} container - html container where to display profile
  * @param {Object} context - this control object
  */
-ElevationPath.DISPLAY_PROFILE_RAW = function(data, container, context) {
+ElevationPath.DISPLAY_PROFILE_RAW = function (data, container, context) {
     logger.trace("ElevationPath.DISPLAY_PROFILE_RAW");
 
     var profile = ProfileElevationPathDOM.displayProfileRaw(data, container, context, ElevationPath);
@@ -1096,7 +1071,7 @@ ElevationPath.DISPLAY_PROFILE_RAW = function(data, container, context) {
  * @param {HTMLElement} container - html container where to display profile
  * @param {Object} context - this control object
  */
-ElevationPath.DISPLAY_PROFILE_LIB_D3 = function(data, container, context) {
+ElevationPath.DISPLAY_PROFILE_LIB_D3 = function (data, container, context) {
     logger.trace("ElevationPath.DISPLAY_PROFILE_LIB_D3");
 
     if (typeof d3 === "undefined") {
@@ -1119,7 +1094,7 @@ ElevationPath.DISPLAY_PROFILE_LIB_D3 = function(data, container, context) {
  * @param {HTMLElement} container - html container where to display profile
  * @param {Object} context - this control object
  */
-ElevationPath.DISPLAY_PROFILE_LIB_AMCHARTS = function(data, container, context) {
+ElevationPath.DISPLAY_PROFILE_LIB_AMCHARTS = function (data, container, context) {
     logger.trace("ElevationPath.DISPLAY_PROFILE_LIB_AMCHARTS");
 
     // Calcul du profile
@@ -1133,7 +1108,6 @@ ElevationPath.DISPLAY_PROFILE_LIB_AMCHARTS = function(data, container, context) 
     if (profile) {
         this._profile = profile;
     }
-
 };
 
 export default ElevationPath;

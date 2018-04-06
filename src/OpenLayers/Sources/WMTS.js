@@ -11,8 +11,7 @@ import Utils from "../../Common/Utils";
  * @extends {ol.source.WMTS}
  * @param {Object} options - Options
  */
-function WMTS(options) {
-
+function WMTS (options) {
     if (!(this instanceof WMTS)) {
         throw new TypeError("ERROR CLASS_CONSTRUCTOR");
     }
@@ -21,7 +20,6 @@ function WMTS(options) {
     ol.source.WMTS.call(this,
         options
     );
-
 }
 
 // Inherits
@@ -48,8 +46,7 @@ WMTS.prototype.constructor = WMTS;
  *     be provided.
  * @return {String|undefined} GetFeatureInfo URL.
  */
-WMTS.prototype.getGetFeatureInfoUrl = function(coordinate, resolution, projection, params) {
-
+WMTS.prototype.getGetFeatureInfoUrl = function (coordinate, resolution, projection, params) {
     var pixelRatio = (this.option && this.options.tilePixelRatio) ? this.options.tilePixelRatio : 1;
 
     var tileGrid = this.tileGrid;
@@ -58,8 +55,8 @@ WMTS.prototype.getGetFeatureInfoUrl = function(coordinate, resolution, projectio
     /**
      * this code is duplicated from createFromWMTSTemplate function
      */
-    var getTransformedTileCoord = function(tileCoord, tileGrid, projection) {
-        var tmpTileCoord = [0, 0, 0]; /*Note : [z(zoomLevel),x,y]*/
+    var getTransformedTileCoord = function (tileCoord, tileGrid, projection) {
+        var tmpTileCoord = [0, 0, 0]; /* Note : [z(zoomLevel),x,y] */
         var tmpExtent = ol.extent.createEmpty();
         var x = tileCoord[1];
         var y = -tileCoord[2] - 1;
@@ -75,7 +72,7 @@ WMTS.prototype.getGetFeatureInfoUrl = function(coordinate, resolution, projectio
             tmpTileCoord[2] = tileCoord[2];
             tileExtent = tileGrid.getTileCoordExtent(tmpTileCoord, tmpExtent);
         }
-        if (!ol.extent.intersects(tileExtent, extent) /*|| ol.extent.touches(tileExtent, extent) */ ) {
+        if (!ol.extent.intersects(tileExtent, extent) /* || ol.extent.touches(tileExtent, extent) */) {
             return null;
         }
         return [tileCoord[0], x, y];
@@ -92,23 +89,23 @@ WMTS.prototype.getGetFeatureInfoUrl = function(coordinate, resolution, projectio
     var tileMatrix = tileGrid.getMatrixIds()[tileCoord[0]];
 
     var baseParams = {
-        SERVICE: "WMTS",
-        VERSION: "1.0.0",
-        REQUEST: "GetFeatureInfo",
-        LAYER: this.getLayer(),
-        TILECOL: transformedTileCoord[1],
-        TILEROW: transformedTileCoord[2],
-        TILEMATRIX: tileMatrix,
-        TILEMATRIXSET: this.getMatrixSet(),
-        FORMAT: this.getFormat() || "image/png",
-        STYLE: this.getStyle() || "normal"
+        SERVICE : "WMTS",
+        VERSION : "1.0.0",
+        REQUEST : "GetFeatureInfo",
+        LAYER : this.getLayer(),
+        TILECOL : transformedTileCoord[1],
+        TILEROW : transformedTileCoord[2],
+        TILEMATRIX : tileMatrix,
+        TILEMATRIXSET : this.getMatrixSet(),
+        FORMAT : this.getFormat() || "image/png",
+        STYLE : this.getStyle() || "normal"
     };
 
     Utils.assign(baseParams, params);
 
-    /*var tileSize = tileGrid.getTileSize();
+    /* var tileSize = tileGrid.getTileSize();
     var x = Math.floor(tileSize*((coordinate[0]-tileExtent[0])/(tileExtent[2]-tileExtent[0])));
-    var y = Math.floor(tileSize*((tileExtent[3]-coordinate[1])/(tileExtent[3]-tileExtent[1])));*/
+    var y = Math.floor(tileSize*((tileExtent[3]-coordinate[1])/(tileExtent[3]-tileExtent[1]))); */
 
     var x = Math.floor((coordinate[0] - tileExtent[0]) / (tileResolution / pixelRatio));
     var y = Math.floor((tileExtent[3] - coordinate[1]) / (tileResolution / pixelRatio));

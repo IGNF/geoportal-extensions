@@ -1,7 +1,11 @@
 var MousePositionDOM = {
 
-    /** Add uuid to the tag ID */
-    _addUID: function(id) {
+    /**
+    * Add uuid to the tag ID
+    * @param {String} id - id selector
+    * @returns {String} uid - id selector with an unique id
+    */
+    _addUID : function (id) {
         var uid = (this._uid) ? id + "-" + this._uid : id;
         return uid;
     },
@@ -11,8 +15,7 @@ var MousePositionDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createMainContainerElement: function() {
-
+    _createMainContainerElement : function () {
         var container = document.createElement("div");
         container.id = this._addUID("GPmousePosition");
         container.className = "GPwidget";
@@ -28,8 +31,7 @@ var MousePositionDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createShowMousePositionElement: function() {
-
+    _createShowMousePositionElement : function () {
         var input = document.createElement("input");
         input.id = this._addUID("GPshowMousePosition");
         input.type = "checkbox";
@@ -41,8 +43,7 @@ var MousePositionDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createShowMousePositionPictoElement: function(isDesktop) {
-
+    _createShowMousePositionPictoElement : function (isDesktop) {
         // contexte d'execution
         var self = this;
 
@@ -73,7 +74,7 @@ var MousePositionDOM = {
         // }
 
         // Show map center localisation if panel opened and tactile support
-        label.addEventListener("click", function(e) {
+        label.addEventListener("click", function (e) {
             var mapCenterClass = "";
             if (!document.getElementById(self._addUID("GPshowMousePosition")).checked && !isDesktop) {
                 mapCenterClass = "GPmapCenterVisible";
@@ -98,7 +99,7 @@ var MousePositionDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createMousePositionPanelElement: function(displayAltitude, displayCoordinates, editCoordinates, currentProjectionUnits) {
+    _createMousePositionPanelElement : function (displayAltitude, displayCoordinates, editCoordinates, currentProjectionUnits) {
         // default Values
         displayAltitude = (typeof displayAltitude === "undefined") ? true : displayAltitude;
         displayCoordinates = (typeof displayCoordinates === "undefined") ? true : displayCoordinates;
@@ -121,11 +122,10 @@ var MousePositionDOM = {
         // div.appendChild(this._createMousePositionSettingsElement());
 
         return div;
-
     },
 
     /** Map center localisation (tactile use) */
-    _createMapCenter: function() {
+    _createMapCenter : function () {
         var div = document.createElement("div");
         div.id = "GPmapCenter";
         div.className = "";
@@ -137,8 +137,7 @@ var MousePositionDOM = {
     // ################################################################### //
 
     /** ... */
-    _createMousePositionPanelHeaderElement: function() {
-
+    _createMousePositionPanelHeaderElement : function () {
         var container = document.createElement("div");
         container.className = "GPpanelHeader";
 
@@ -155,11 +154,11 @@ var MousePositionDOM = {
         // Link panel close / visibility checkbox
         var self = this;
         if (divClose.addEventListener) {
-            divClose.addEventListener("click", function() {
+            divClose.addEventListener("click", function () {
                 document.getElementById(self._addUID("GPshowMousePositionPicto")).click();
             }, false);
         } else if (divClose.attachEvent) {
-            divClose.attachEvent("onclick", function() {
+            divClose.attachEvent("onclick", function () {
                 document.getElementById(self._addUID("GPshowMousePositionPicto")).click();
             });
         }
@@ -178,7 +177,7 @@ var MousePositionDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createMousePositionPanelBasicElement: function(displayAltitude, displayCoordinates, editCoordinates, currentProjectionUnits) {
+    _createMousePositionPanelBasicElement : function (displayAltitude, displayCoordinates, editCoordinates, currentProjectionUnits) {
         var container = document.createElement("div");
         container.id = this._addUID("GPmousePositionBasicPanel");
 
@@ -197,7 +196,7 @@ var MousePositionDOM = {
      * @param {String} coordType - ("Lon" ou "Lat")
      * @returns {Array}
      */
-    _createCoordinateElement: function(coordType, editCoordinates) {
+    _createCoordinateElement : function (coordType, editCoordinates) {
         var context = this;
 
         if (["Lon", "Lat"].indexOf(coordType) === -1) {
@@ -211,10 +210,10 @@ var MousePositionDOM = {
         input.readOnly = true;
 
         if (editCoordinates) {
-            input.addEventListener("click", function() {
+            input.addEventListener("click", function () {
                 context.onMousePositionEditModeClick(true);
             });
-            input.addEventListener("change", function(e) {
+            input.addEventListener("change", function (e) {
                 this.classList.remove("error");
                 var valid = context.validateExtentCoordinate(coordType, this.value, e);
                 valid ? this.classList.remove("error") : this.classList.add("error");
@@ -234,7 +233,7 @@ var MousePositionDOM = {
      * @param {String} coordType - ("Lon" ou "Lat")
      * @returns {Array}
      */
-    _createDMSCoordinateElement: function(coordType, editCoordinates) {
+    _createDMSCoordinateElement : function (coordType, editCoordinates) {
         if (["Lon", "Lat"].indexOf(coordType) === -1) {
             return [];
         }
@@ -252,10 +251,10 @@ var MousePositionDOM = {
         input.dataset.min = 0;
         input.dataset.max = (coordType === "Lon") ? 180 : 90;
         if (editCoordinates) {
-            input.addEventListener("click", function() {
+            input.addEventListener("click", function () {
                 context.onMousePositionEditModeClick(true);
             });
-            input.addEventListener("change", function() {
+            input.addEventListener("change", function () {
                 this.classList.remove("error");
                 var valid = context._checkDMSDegrees(coordType, this);
                 valid ? this.classList.remove("error") : this.classList.add("error");
@@ -277,10 +276,10 @@ var MousePositionDOM = {
         input1.dataset.min = 0;
         input1.dataset.max = 59;
         if (editCoordinates) {
-            input1.addEventListener("click", function() {
+            input1.addEventListener("click", function () {
                 context.onMousePositionEditModeClick(true);
             });
-            input1.addEventListener("change", function() {
+            input1.addEventListener("change", function () {
                 this.classList.remove("error");
                 var valid = context._checkDMSElement(this);
                 valid ? this.classList.remove("error") : this.classList.add("error");
@@ -302,10 +301,10 @@ var MousePositionDOM = {
         input2.dataset.min = 0;
         input2.dataset.max = 59;
         if (editCoordinates) {
-            input2.addEventListener("click", function() {
+            input2.addEventListener("click", function () {
                 context.onMousePositionEditModeClick(true);
             });
-            input2.addEventListener("change", function() {
+            input2.addEventListener("change", function () {
                 this.classList.remove("error");
                 var valid = context._checkDMSElement(this, true);
                 valid ? this.classList.remove("error") : this.classList.add("error");
@@ -339,7 +338,7 @@ var MousePositionDOM = {
     },
 
     /** ... */
-    _createMousePositionPanelBasicCoordinateElement: function(display, editCoordinates, currentProjectionUnits) {
+    _createMousePositionPanelBasicCoordinateElement : function (display, editCoordinates, currentProjectionUnits) {
         var div = document.createElement("div");
         div.id = this._addUID("GPmousePositionCoordinate");
         div.style.display = display ? "block" : "none";
@@ -396,8 +395,7 @@ var MousePositionDOM = {
     },
 
     /** ... */
-    _createMousePositionPanelBasicAltitudeElement: function(display) {
-
+    _createMousePositionPanelBasicAltitudeElement : function (display) {
         var div = document.createElement("div");
         div.id = this._addUID("GPmousePositionAltitude");
         div.style.display = display ? "block" : "none";
@@ -422,7 +420,7 @@ var MousePositionDOM = {
     },
 
     /** ... */
-    _createMousePositionPanelEditToolsElement: function(editCoordinates) {
+    _createMousePositionPanelEditToolsElement : function (editCoordinates) {
         var context = this;
 
         var div = document.createElement("div");
@@ -437,7 +435,7 @@ var MousePositionDOM = {
         span1.id = this._addUID("GPmousePositionLocate");
         span1.title = editCoordinates === true ? "Cliquer pour saisir des coordonnées" : "";
         if (editCoordinates) {
-            span1.addEventListener("click", function() {
+            span1.addEventListener("click", function () {
                 context.onMousePositionEditModeLocateClick();
             });
         }
@@ -449,7 +447,7 @@ var MousePositionDOM = {
         span2.title = "Quitter la saisie des coordonnées";
         span2.style.display = "none";
         if (editCoordinates) {
-            span2.addEventListener("click", function() {
+            span2.addEventListener("click", function () {
                 context.onMousePositionEditModeClick(false);
             });
         }
@@ -463,8 +461,7 @@ var MousePositionDOM = {
     // ################################################################### //
 
     /** ... */
-    _createShowMousePositionSettingsElement: function(display) {
-
+    _createShowMousePositionSettingsElement : function (display) {
         var list = [];
 
         var input = document.createElement("input");
@@ -493,8 +490,7 @@ var MousePositionDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createMousePositionSettingsElement: function(display) {
-
+    _createMousePositionSettingsElement : function (display) {
         var container = document.createElement("div");
         container.id = this._addUID("GPmousePositionSettings");
         container.style.display = (display === undefined || display) ? "block" : "none";
@@ -560,18 +556,17 @@ var MousePositionDOM = {
     },
 
     /** ... */
-    _createMousePositionSettingsSystemsElement: function(systems) {
-
+    _createMousePositionSettingsSystemsElement : function (systems) {
         // contexte d'execution
         var context = this;
 
         var selectSystem = document.createElement("select");
         selectSystem.id = this._addUID("GPmousePositionProjectionSystem");
         selectSystem.className = "GPinputSelect GPmousePositionSettingsSelect";
-        selectSystem.addEventListener("change", function(e) {
+        selectSystem.addEventListener("change", function (e) {
             context.onMousePositionProjectionSystemChange(e);
         });
-        selectSystem.addEventListener("mouseover", function(e) {
+        selectSystem.addEventListener("mouseover", function (e) {
             context.onMousePositionProjectionSystemMouseOver(e);
         });
 
@@ -588,15 +583,14 @@ var MousePositionDOM = {
     },
 
     /** ... */
-    _createMousePositionSettingsUnitsElement: function(units) {
-
+    _createMousePositionSettingsUnitsElement : function (units) {
         // contexte d'execution
         var context = this;
 
         var selectUnits = document.createElement("select");
         selectUnits.id = this._addUID("GPmousePositionProjectionUnits");
         selectUnits.className = "GPinputSelect GPmousePositionSettingsSelect";
-        selectUnits.addEventListener("change", function(e) {
+        selectUnits.addEventListener("change", function (e) {
             context.onMousePositionProjectionUnitsChange(e);
         });
 
@@ -613,7 +607,7 @@ var MousePositionDOM = {
     },
 
     /** ... **/
-    _resetLabelElements: function(currentProjectionType) {
+    _resetLabelElements : function (currentProjectionType) {
         // Changement des labels dans le formulaire de saisie
         var spanLat = document.getElementById(this._addUID("GPmousePositionLatLabel"));
         spanLat.innerHTML = currentProjectionType === "Geographical" ? "Latitude :" : "X :";
@@ -623,7 +617,7 @@ var MousePositionDOM = {
     },
 
     /** ... **/
-    _resetUnitElements: function(currentProjectionUnits) {
+    _resetUnitElements : function (currentProjectionUnits) {
         var value = "";
         if (currentProjectionUnits === "M" || currentProjectionUnits === "KM") {
             value = currentProjectionUnits.toLowerCase();
@@ -641,7 +635,7 @@ var MousePositionDOM = {
      * @param {String} currentProjectionType - current projection type
      * @param {String} currentProjectionUnits - current projection unit
      */
-    _resetCoordinateElements: function(editCoordinates, currentProjectionType, currentProjectionUnits) {
+    _resetCoordinateElements : function (editCoordinates, currentProjectionType, currentProjectionUnits) {
         // Suppression de tous les enfants de GPmousePositionLatCoordinate
         var latElt = document.getElementById(this._addUID("GPmousePositionLatCoordinate"));
         while (latElt.firstChild) {
@@ -684,7 +678,7 @@ var MousePositionDOM = {
      * @method _setEditMode
      * @param {Boolean} editing - active edit coordinates mode
      */
-    _setEditMode: function(editing) {
+    _setEditMode : function (editing) {
         var locateElt = document.getElementById(this._addUID("GPmousePositionLocate"));
         locateElt.title = editing ? "Aller à la position ..." : "Cliquer pour saisir des coordonnées";
 
@@ -712,8 +706,8 @@ var MousePositionDOM = {
      * @param {Boolean} isFloat - check for float value
      * @returns {Boolean}
      */
-    _checkDMSElement: function(input, isFloat) {
-        var b = (isFloat === undefined) ? false : true;
+    _checkDMSElement : function (input, isFloat) {
+        var b = isFloat !== undefined;
 
         var value = input.value;
         if (b) {
@@ -738,7 +732,7 @@ var MousePositionDOM = {
      * @param {DOMElement} input - input element
      * @returns {Boolean}
      */
-    _checkDMSDegrees: function(coordType, input) {
+    _checkDMSDegrees : function (coordType, input) {
         if (isNaN(input.value)) {
             return false;
         }
@@ -776,11 +770,9 @@ var MousePositionDOM = {
      * Function displaying coordinates from cursor position (desktop)
      * or map center (tactile)
      */
-    GPdisplayCoords: function(coordinate) {
-
+    GPdisplayCoords : function (coordinate) {
         // Compute coords in case of cursor position (desktop)
         if (coordinate && coordinate != null) {
-
             var labelLon = document.getElementById(this._addUID("GPmousePositionLonLabel"));
             var labelLat = document.getElementById(this._addUID("GPmousePositionLatLabel"));
 
@@ -797,8 +789,8 @@ var MousePositionDOM = {
 
             if (typeof coordinate.lat === "object" && typeof coordinate.lng === "object") {
                 var parts = {
-                    lng: "Lon",
-                    lat: "Lat"
+                    lng : "Lon",
+                    lat : "Lat"
                 };
                 var units = ["Degrees", "Minutes", "Seconds"];
                 for (var p in parts) {
@@ -833,8 +825,7 @@ var MousePositionDOM = {
      * Function displaying altitude from cursor position (desktop)
      * or map center (tactile)
      */
-    GPdisplayElevation: function(coordinate, altitudeTimeoutDelay, noDataValue, noDataValueTolerance) {
-
+    GPdisplayElevation : function (coordinate, altitudeTimeoutDelay, noDataValue, noDataValueTolerance) {
         // contexte d'execution
         var self = this;
 
@@ -858,11 +849,10 @@ var MousePositionDOM = {
 
         // Compute coords in case of cursor position (desktop)
         if (coordinate && coordinate != null) {
-
             // If no altitude panel, don't call altitude request
             if (document.getElementById(this._addUID("GPmousePositionAltitude"))) {
-                altitudeTimeout = setTimeout(function() {
-                    self.onRequestAltitude(coordinate, function(z) {
+                altitudeTimeout = setTimeout(function () {
+                    self.onRequestAltitude(coordinate, function (z) {
                         if (minThreshold < z && z < maxThreshold) {
                             self.GPresetElevation();
                         } else {
@@ -871,14 +861,13 @@ var MousePositionDOM = {
                     });
                 }, altitudeTimeoutDelay);
             }
-
         }
     },
 
     /**
      * Function reseting altitude value
      */
-    GPresetElevation: function() {
+    GPresetElevation : function () {
         if (document.getElementById(this._addUID("GPmousePositionAltitude"))) {
             document.getElementById(this._addUID("GPmousePositionAlt")).innerHTML = "---";
         }

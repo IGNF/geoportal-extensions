@@ -1,7 +1,6 @@
 import Gp from "gp";
 
-(function() {
-
+(function () {
     var scripts = document.getElementsByTagName("script");
 
     var key = scripts[scripts.length - 1].getAttribute("data-key");
@@ -20,13 +19,13 @@ import Gp from "gp";
     var timeout = scripts[scripts.length - 1].getAttribute("data-timeout");
 
     /** callback */
-    var success = function() {
+    var success = function () {
         // Pas de messages en mode prod
         // console.log("GetConfig success!");
     };
 
     /** callback */
-    var error = function(e) {
+    var error = function (e) {
         throw new Error("Configuration load failed : " + e.message);
     };
 
@@ -37,9 +36,9 @@ import Gp from "gp";
     }
 
     var options = {
-        apiKey: key,
-        onSuccess: success,
-        onFailure: error
+        apiKey : key,
+        onSuccess : success,
+        onFailure : error
     };
 
     if (url) {

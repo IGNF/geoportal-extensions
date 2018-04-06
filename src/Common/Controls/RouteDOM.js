@@ -1,14 +1,13 @@
-/**
- * desativation JSHINT
- * W083 - Don't make functions within a loop.
- */
-
 import ID from "../Utils/SelectorID";
 
 var RouteDOM = {
 
-    /** Add uuid to the tag ID */
-    _addUID: function(id) {
+    /**
+    * Add uuid to the tag ID
+    * @param {String} id - id selector
+    * @returns {String} uid - id selector with an unique id
+    */
+    _addUID : function (id) {
         var uid = (this._uid) ? id + "-" + this._uid : id;
         return uid;
     },
@@ -18,8 +17,7 @@ var RouteDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createMainContainerElement: function() {
-
+    _createMainContainerElement : function () {
         var container = document.createElement("div");
         container.id = this._addUID("GProute");
         container.className = "GPwidget";
@@ -35,7 +33,7 @@ var RouteDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createShowRouteElement: function() {
+    _createShowRouteElement : function () {
         var input = document.createElement("input");
         input.id = this._addUID("GPshowRoute");
         input.type = "checkbox";
@@ -48,8 +46,7 @@ var RouteDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createShowRoutePictoElement: function() {
-
+    _createShowRoutePictoElement : function () {
         // contexte d'execution
         var context = this;
 
@@ -64,11 +61,11 @@ var RouteDOM = {
         // L'ouverture/Fermeture permet de faire le menage
         // (reinitialisation)
         if (label.addEventListener) {
-            label.addEventListener("click", function(e) {
+            label.addEventListener("click", function (e) {
                 context.onShowRoutePanelClick(e);
             });
         } else if (label.attachEvent) {
-            label.attachEvent("onclick", function(e) {
+            label.attachEvent("onclick", function (e) {
                 context.onShowRoutePanelClick(e);
             });
         }
@@ -95,7 +92,7 @@ var RouteDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createRoutePanelElement: function() {
+    _createRoutePanelElement : function () {
         var div = document.createElement("div");
         div.id = this._addUID("GProutePanel");
         div.className = "GPpanel";
@@ -112,8 +109,7 @@ var RouteDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createRoutePanelHeaderElement: function() {
-
+    _createRoutePanelHeaderElement : function () {
         // contexte d'execution
         var self = this;
 
@@ -132,11 +128,11 @@ var RouteDOM = {
 
         // Link panel close / visibility checkbox
         if (divClose.addEventListener) {
-            divClose.addEventListener("click", function() {
+            divClose.addEventListener("click", function () {
                 document.getElementById(self._addUID("GPshowRoutePicto")).click();
             }, false);
         } else if (divClose.attachEvent) {
-            divClose.attachEvent("onclick", function() {
+            divClose.attachEvent("onclick", function () {
                 document.getElementById(self._addUID("GPshowRoutePicto")).click();
             });
         }
@@ -151,8 +147,7 @@ var RouteDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createRoutePanelFormElement: function() {
-
+    _createRoutePanelFormElement : function () {
         // contexte d'execution
         var self = this;
 
@@ -160,8 +155,7 @@ var RouteDOM = {
         form.id = this._addUID("GProuteForm");
         form.setAttribute("onkeypress", "return event.keyCode != 13;"); // FIXME hack pour desactiver l'execution via 'enter' au clavier !
 
-        form.addEventListener("submit", function(e) {
-
+        form.addEventListener("submit", function (e) {
             console.log(e);
             e.preventDefault();
 
@@ -198,7 +192,7 @@ var RouteDOM = {
                     resultStageValue.className = "GProuteResultStageValue";
                     var elementCoords = document.getElementById(self._addUID("GPlocationOriginCoords_" + id));
                     var stageCoords = elementCoords.value;
-                    var visible = (elementCoords.className === "GPlocationOriginVisible") ? true : false;
+                    var visible = (elementCoords.className === "GPlocationOriginVisible");
                     if (stageCoords != null && stageCoords != "" && visible) {
                         resultStageValue.innerHTML = stageCoords;
                     } else {
@@ -252,9 +246,9 @@ var RouteDOM = {
             }
 
             self.onRouteComputationSubmit({
-                computation: modeComputation,
-                transport: modeTransport,
-                exclusions: exclusions
+                computation : modeComputation,
+                transport : modeTransport,
+                exclusions : exclusions
             });
 
             // FIXME mise à jour du controle dans le composant JS !
@@ -262,7 +256,6 @@ var RouteDOM = {
             // document.getElementById(self._addUID("GProuteResultsPanel")).className = "";
 
             return false;
-
         });
 
         return form;
@@ -273,7 +266,7 @@ var RouteDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createRoutePanelResultsElement: function() {
+    _createRoutePanelResultsElement : function () {
         var container = document.createElement("div");
         container.id = this._addUID("GProuteResultsPanel");
         container.className = "GProuteComponentHidden";
@@ -311,7 +304,7 @@ var RouteDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createRouteWaitingElement: function() {
+    _createRouteWaitingElement : function () {
         var div = document.createElement("div");
         div.id = this._addUID("GProuteCalcWaitingContainer");
         div.className = "GProuteCalcWaitingContainerHidden";
@@ -334,7 +327,7 @@ var RouteDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createRouteResultsStagesElement: function() {
+    _createRouteResultsStagesElement : function () {
         var div = document.createElement("div");
         div.id = this._addUID("GProuteResultsStages");
         return div;
@@ -346,8 +339,7 @@ var RouteDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createRouteResultsElement: function() {
-
+    _createRouteResultsElement : function () {
         // contexte
         var self = this;
 
@@ -367,16 +359,16 @@ var RouteDOM = {
         select.className = "GPinputSelect";
         // gestionnaire d'evenement :
         // on stocke la valeur du mode de calcul, et on relance le calcul d'itiniraire
-        select.addEventListener("change", function(e) {
+        select.addEventListener("change", function (e) {
             self.onRouteModeComputationChangeAndRun(e);
         });
 
         var computes = [{
-            code: "fastest",
-            label: "Plus rapide"
+            code : "fastest",
+            label : "Plus rapide"
         }, {
-            code: "shortest",
-            label: "Plus court"
+            code : "shortest",
+            label : "Plus court"
         }];
 
         for (var i = 0; i < computes.length; i++) {
@@ -391,7 +383,7 @@ var RouteDOM = {
         var divNew = document.createElement("div");
         divNew.id = this._addUID("GProuteResultsNew");
         divNew.title = "Modifier le calcul";
-        divNew.addEventListener("click", function(e) {
+        divNew.addEventListener("click", function (e) {
             document.getElementById(self._addUID("GProuteResultsPanel")).className = "GProuteComponentHidden";
             document.getElementById(self._addUID("GProuteForm")).className = "";
             self.onShowRouteResultsNewClick(e);
@@ -408,7 +400,7 @@ var RouteDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _addRouteResultsValuesElement: function(distance, duration, fconvert) {
+    _addRouteResultsValuesElement : function (distance, duration, fconvert) {
         var div = document.getElementById(this._addUID("GProuteResultsValues"));
 
         // clean !
@@ -467,7 +459,7 @@ var RouteDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createRouteShowResultsDetailsElement: function() {
+    _createRouteShowResultsDetailsElement : function () {
         var input = document.createElement("input");
         input.id = this._addUID("GProuteResultsShowDetails");
         input.type = "checkbox";
@@ -479,7 +471,7 @@ var RouteDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createRouteResultsDetailsElement: function() {
+    _createRouteResultsDetailsElement : function () {
         // <!-- Route results details are dynamically filled in Javascript by route service -->
         var div = document.createElement("div");
         div.id = this._addUID("GProuteResultsDetails");
@@ -492,8 +484,7 @@ var RouteDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _addRouteResultsDetailsElement: function(instructions, fconvert) {
-
+    _addRouteResultsDetailsElement : function (instructions, fconvert) {
         // contexte
         var context = this;
 
@@ -540,20 +531,19 @@ var RouteDOM = {
             divIns.title = "distance : " + distance + " / " + "temps : " + fconvert(durationCumul);
             divIns.innerHTML = o.instruction;
 
-            divIns.addEventListener("mouseover", function(e) {
+            divIns.addEventListener("mouseover", function (e) {
                 context.onRouteResultsDetailsMouseOver(e);
             });
-            divIns.addEventListener("mouseout", function(e) {
+            divIns.addEventListener("mouseout", function (e) {
                 context.onRouteResultsDetailsMouseOut(e);
             });
-            divIns.addEventListener("click", function(e) {
+            divIns.addEventListener("click", function (e) {
                 // mode mobile !
                 if (typeof context.onRouteResultsDetailsClick === "function") {
                     context.onRouteResultsDetailsClick(e);
                 }
             });
             div.appendChild(divIns);
-
         }
 
         return div;
@@ -571,8 +561,7 @@ var RouteDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createRoutePanelFormPointElement: function(n, text, visibility) {
-
+    _createRoutePanelFormPointElement : function (n, text, visibility) {
         // contexte d'execution
         var context = this;
 
@@ -584,7 +573,7 @@ var RouteDOM = {
         labelOrigin.id = "GProuteOriginLabel" + n;
         labelOrigin.htmlFor = "GProuteOrigin" + n;
         labelOrigin.innerHTML = text;
-        labelOrigin.addEventListener("click", function() {
+        labelOrigin.addEventListener("click", function () {
             var i = this.id.charAt(this.id.length - 1);
             document.getElementById("GProuteOriginCoords" + i).value = "";
             for (var j = 1; j < 8; j++) {
@@ -602,7 +591,7 @@ var RouteDOM = {
         inputOrigin.className = "GProuteOriginVisible";
         inputOrigin.type = "text";
         inputOrigin.placeholder = "Saisir une adresse";
-        inputOrigin.addEventListener("keyup", function(e) {
+        inputOrigin.addEventListener("keyup", function (e) {
             var charCode = e.which || e.keyCode;
             if (charCode === 13 || charCode === 10) {
                 return;
@@ -618,7 +607,7 @@ var RouteDOM = {
             // le resultat de la requête nous permet de recuperer les coordonnées du point...
             context.onAutoCompleteSearchText(e);
         });
-        inputOrigin.addEventListener("blur", function() {
+        inputOrigin.addEventListener("blur", function () {
             var i = this.id.charAt(this.id.length - 1);
             document.getElementById("GProuteAutoCompleteList" + i).style.display = "none";
         });
@@ -641,7 +630,7 @@ var RouteDOM = {
         labelOriginPointer.htmlFor = "GProuteOriginPointer" + n;
         labelOriginPointer.className = "GProuteOriginPointerImg";
         labelOriginPointer.title = "Pointer un lieu sur la carte";
-        labelOriginPointer.addEventListener("click", function(evt) {
+        labelOriginPointer.addEventListener("click", function (evt) {
             evt.preventDefault();
             evt.stopPropagation();
             var i = this.id.charAt(this.id.length - 1);
@@ -696,8 +685,7 @@ var RouteDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createRoutePanelFormRemoveStageElement: function(n) {
-
+    _createRoutePanelFormRemoveStageElement : function (n) {
         // contexte d'execution
         var context = this;
 
@@ -706,7 +694,7 @@ var RouteDOM = {
         divRm.className = "GProuteStageRemove";
         divRm.title = "Supprimer l'étape";
         if (n != 1 && n != 7) {
-            divRm.addEventListener("click", function(e) {
+            divRm.addEventListener("click", function (e) {
                 var i = this.id.charAt(this.id.length - 1);
                 document.getElementById("GProutePoint" + i).className = "GPflexInput GProuteStageFlexInputHidden";
                 document.getElementById("GProuteOrigin" + i).value = "";
@@ -733,15 +721,14 @@ var RouteDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createRoutePanelFormAddStageElement: function() {
-
+    _createRoutePanelFormAddStageElement : function () {
         // contexte d'execution
         var context = this;
 
         var divAdd = document.createElement("div");
         divAdd.id = "GProuteStageAdd";
         divAdd.title = "Ajouter une étape";
-        divAdd.addEventListener("click", function(e) {
+        divAdd.addEventListener("click", function (e) {
             var lastStage = 1;
             var nbStages = 0;
             for (var i = 2; i < 7; i++) {
@@ -752,7 +739,6 @@ var RouteDOM = {
                 } else {
                     nbStages++;
                 }
-
             }
             if (lastStage < 7) {
                 document.getElementById("GProutePoint" + lastStage).className = "GPflexInput GProuteStageFlexInput";
@@ -779,8 +765,7 @@ var RouteDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createRoutePanelFormAutoCompleteListElement: function(n) {
-
+    _createRoutePanelFormAutoCompleteListElement : function (n) {
         // contexte d'execution
         var context = this;
 
@@ -789,12 +774,12 @@ var RouteDOM = {
         div.className = "GPadvancedAutoCompleteList";
 
         if (div.addEventListener) {
-            div.addEventListener("click", function(e) {
+            div.addEventListener("click", function (e) {
                 context.onAutoCompletedResultsItemClick(e);
                 document.getElementById("GProuteAutoCompleteList" + n).style.display = "none";
             }, false);
         } else if (div.attachEvent) {
-            div.attachEvent("onclick", function(e) {
+            div.attachEvent("onclick", function (e) {
                 context.onAutoCompletedResultsItemClick(e);
                 document.getElementById("GProuteAutoCompleteList" + n).style.display = "none";
             });
@@ -817,7 +802,7 @@ var RouteDOM = {
      * @param {Number} n  - number of the point
      * @param {Number} id - ID
      */
-    _createRouteAutoCompletedLocationElement: function(location, n, id) {
+    _createRouteAutoCompletedLocationElement : function (location, n, id) {
         var container = document.getElementById("GProuteAutoCompleteList" + n);
 
         var div = document.createElement("div");
@@ -837,7 +822,7 @@ var RouteDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createRoutePanelFormModeChoiceElement: function() {
+    _createRoutePanelFormModeChoiceElement : function () {
         var div = document.createElement("div");
         div.id = this._addUID("GProuteModeChoice");
 
@@ -854,8 +839,7 @@ var RouteDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createRoutePanelFormModeChoiceTransportElement: function(transports) {
-
+    _createRoutePanelFormModeChoiceTransportElement : function (transports) {
         // contexte d'execution
         var context = this;
 
@@ -872,7 +856,6 @@ var RouteDOM = {
             var transport = transports[i];
 
             if (transport === "Voiture") {
-
                 var inputCar = document.createElement("input");
                 inputCar.id = this._addUID("GProuteTransportCar");
                 inputCar.type = "radio";
@@ -885,11 +868,11 @@ var RouteDOM = {
                 // on stocke le mode de transport,
                 // utilisation pour la requête sur le service de calcul d'itiniraire
                 if (inputCar.addEventListener) {
-                    inputCar.addEventListener("change", function(e) {
+                    inputCar.addEventListener("change", function (e) {
                         context.onRouteModeTransportChange(e);
                     });
                 } else if (inputCar.attachEvent) {
-                    inputCar.attachEvent("onchange", function(e) {
+                    inputCar.attachEvent("onchange", function (e) {
                         context.onRouteModeTransportChange(e);
                     });
                 }
@@ -900,11 +883,9 @@ var RouteDOM = {
                 labelCar.htmlFor = this._addUID("GProuteTransportCar");
                 labelCar.title = "Voiture";
                 div.appendChild(labelCar);
-
             }
 
             if (transport === "Pieton") {
-
                 var inputPedestrian = document.createElement("input");
                 inputPedestrian.id = this._addUID("GProuteTransportPedestrian");
                 inputPedestrian.type = "radio";
@@ -917,11 +898,11 @@ var RouteDOM = {
                 // on stocke le mode de transport,
                 // utilisation pour la requête sur le service de calcul d'itiniraire
                 if (inputPedestrian.addEventListener) {
-                    inputPedestrian.addEventListener("change", function(e) {
+                    inputPedestrian.addEventListener("change", function (e) {
                         context.onRouteModeTransportChange(e);
                     });
                 } else if (inputPedestrian.attachEvent) {
-                    inputPedestrian.attachEvent("onchange", function(e) {
+                    inputPedestrian.attachEvent("onchange", function (e) {
                         context.onRouteModeTransportChange(e);
                     });
                 }
@@ -944,8 +925,7 @@ var RouteDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createRoutePanelFormModeChoiceComputeElement: function() {
-
+    _createRoutePanelFormModeChoiceComputeElement : function () {
         // contexte d'execution
         var context = this;
 
@@ -963,16 +943,16 @@ var RouteDOM = {
         // gestionnaire d'evenement :
         // on stocke la valeur du mode de calcul,
         // utilisation pour la requête sur le service de calcul d'itiniraire
-        select.addEventListener("change", function(e) {
+        select.addEventListener("change", function (e) {
             context.onRouteModeComputationChange(e);
         });
 
         var computes = [{
-            code: "fastest",
-            label: "Plus rapide"
+            code : "fastest",
+            label : "Plus rapide"
         }, {
-            code: "shortest",
-            label: "Plus court"
+            code : "shortest",
+            label : "Plus court"
         }];
 
         for (var i = 0; i < computes.length; i++) {
@@ -995,7 +975,7 @@ var RouteDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createShowRouteExclusionsElement: function() {
+    _createShowRouteExclusionsElement : function () {
         var input = document.createElement("input");
         input.id = this._addUID("GPshowRouteExclusions");
         input.type = "checkbox";
@@ -1009,8 +989,7 @@ var RouteDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createShowRouteExclusionsPictoElement: function() {
-
+    _createShowRouteExclusionsPictoElement : function () {
         // contexte d'execution
         var context = this;
 
@@ -1024,11 +1003,11 @@ var RouteDOM = {
         // gestionnaire d'evenement :
         // on ouvre le menu des options des exclusions
         if (label.addEventListener) {
-            label.addEventListener("click", function(e) {
+            label.addEventListener("click", function (e) {
                 context.onShowRouteExclusionsClick(e);
             });
         } else if (label.attachEvent) {
-            label.attachEvent("onclick", function(e) {
+            label.attachEvent("onclick", function (e) {
                 context.onShowRouteExclusionsClick(e);
             });
         }
@@ -1041,8 +1020,7 @@ var RouteDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createRoutePanelFormExclusionsElement: function() {
-
+    _createRoutePanelFormExclusionsElement : function () {
         var div = document.createElement("div");
         div.id = this._addUID("GProuteExclusions");
 
@@ -1063,8 +1041,7 @@ var RouteDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createRoutePanelFormExclusionOptionsElement: function(exclusions) {
-
+    _createRoutePanelFormExclusionOptionsElement : function (exclusions) {
         // contexte d'execution
         var context = this;
 
@@ -1074,7 +1051,6 @@ var RouteDOM = {
         /* jshint -W083 */
         for (var value in exclusions) {
             if (exclusions.hasOwnProperty(value)) {
-
                 var status = exclusions[value];
                 switch (value) {
                     case "toll":
@@ -1087,11 +1063,11 @@ var RouteDOM = {
                         // on stocke l'exclusion,
                         // utilisation pour la requête sur le service de calcul d'itiniraire
                         if (inputToll.addEventListener) {
-                            inputToll.addEventListener("change", function(e) {
+                            inputToll.addEventListener("change", function (e) {
                                 context.onRouteExclusionsChange(e);
                             });
                         } else if (inputToll.attachEvent) {
-                            inputToll.attachEvent("onchange", function(e) {
+                            inputToll.attachEvent("onchange", function (e) {
                                 context.onRouteExclusionsChange(e);
                             });
                         }
@@ -1114,11 +1090,11 @@ var RouteDOM = {
                         // on stocke l'exclusion,
                         // utilisation pour la requête sur le service de calcul d'itiniraire
                         if (inputTunnel.addEventListener) {
-                            inputTunnel.addEventListener("change", function(e) {
+                            inputTunnel.addEventListener("change", function (e) {
                                 context.onRouteExclusionsChange(e);
                             });
                         } else if (inputTunnel.attachEvent) {
-                            inputTunnel.attachEvent("onchange", function(e) {
+                            inputTunnel.attachEvent("onchange", function (e) {
                                 context.onRouteExclusionsChange(e);
                             });
                         }
@@ -1141,11 +1117,11 @@ var RouteDOM = {
                         // on stocke l'exclusion,
                         // utilisation pour la requête sur le service de calcul d'itiniraire
                         if (inputBridge.addEventListener) {
-                            inputBridge.addEventListener("change", function(e) {
+                            inputBridge.addEventListener("change", function (e) {
                                 context.onRouteExclusionsChange(e);
                             });
                         } else if (inputBridge.attachEvent) {
-                            inputBridge.attachEvent("onchange", function(e) {
+                            inputBridge.attachEvent("onchange", function (e) {
                                 context.onRouteExclusionsChange(e);
                             });
                         }
@@ -1173,8 +1149,7 @@ var RouteDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createRouteSubmitFormElement: function() {
-
+    _createRouteSubmitFormElement : function () {
         var input = document.createElement("input");
         input.id = this._addUID("GProuteSubmit");
         input.className = "GPinputSubmit";
@@ -1193,14 +1168,13 @@ var RouteDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createRouteFormResetElement: function() {
-
+    _createRouteFormResetElement : function () {
         var self = this;
 
         var divReset = document.createElement("div");
         divReset.id = this._addUID("GProuteReset");
         divReset.title = "Réinitialiser les paramètres";
-        divReset.addEventListener("click", function(e) {
+        divReset.addEventListener("click", function (e) {
             self.onRouteResetClick(e);
         });
 

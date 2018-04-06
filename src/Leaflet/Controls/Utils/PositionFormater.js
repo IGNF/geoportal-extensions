@@ -11,46 +11,46 @@
 var PositionFormater = {
 
     /** ... */
-    NORTH: "N",
+    NORTH : "N",
 
     /** ... */
-    SOUTH: "S",
+    SOUTH : "S",
 
     /** ... */
-    EAST: "E",
+    EAST : "E",
 
     /** ... */
-    WEST: "O",
+    WEST : "O",
 
     /** ... */
-    digitSecond: 2,
+    digitSecond : 2,
 
     /** ... */
-    digitDecimal: 5,
+    digitDecimal : 5,
 
     /** ... */
-    digitRadian: 8,
+    digitRadian : 8,
 
     /** ... */
-    roundToDecimal: function(inputNum, numPoints) {
+    roundToDecimal : function (inputNum, numPoints) {
         var multiplier = Math.pow(10, numPoints);
         return Math.round(inputNum * multiplier) / multiplier;
     },
 
     /** ... */
-    decimalToRadian: function(location) {
+    decimalToRadian : function (location) {
         var d = 0.01745329251994329577;
         return this.roundToDecimal(location * d, this.digitRadian);
     },
 
     /** ... */
-    decimalToGrade: function(location) {
+    decimalToGrade : function (location) {
         var d = 1.11111111111111111111;
         return this.roundToDecimal(location * d, this.digitRadian);
     },
 
     /** ... */
-    decimalToDMS: function(location, hemisphere, obj) {
+    decimalToDMS : function (location, hemisphere, obj) {
         if (location < 0) {
             location *= -1; // strip dash '-'
         }
@@ -68,10 +68,10 @@ var PositionFormater = {
 
         if (obj) {
             return {
-                d: degrees,
-                m: minutes,
-                s: seconds,
-                direction: hemisphere
+                d : degrees,
+                m : minutes,
+                s : seconds,
+                direction : hemisphere
             };
         }
 
@@ -79,21 +79,21 @@ var PositionFormater = {
     },
 
     /** ... */
-    decimalLatToDMS: function(location, obj) {
+    decimalLatToDMS : function (location, obj) {
         var hemisphere = (location < 0) ? this.SOUTH : this.NORTH; // south if negative
         return this.decimalToDMS(location, hemisphere, obj);
     },
 
     /** ... */
-    decimalLonToDMS: function(location, obj) {
+    decimalLonToDMS : function (location, obj) {
         var hemisphere = (location < 0) ? this.WEST : this.EAST; // west if negative
         return this.decimalToDMS(location, hemisphere, obj);
     },
 
     /** ... */
-    DMSToDecimal: function(degrees, minutes, seconds, hemisphere) {
+    DMSToDecimal : function (degrees, minutes, seconds, hemisphere) {
         var ddVal = degrees + minutes / 60 + seconds / 3600;
-        ddVal = (hemisphere == this.SOUTH || hemisphere == this.WEST) ? ddVal * -1 : ddVal;
+        ddVal = (hemisphere === this.SOUTH || hemisphere === this.WEST) ? ddVal * -1 : ddVal;
 
         var decimal = this.roundToDecimal(ddVal, this.digitDecimal);
         return decimal;

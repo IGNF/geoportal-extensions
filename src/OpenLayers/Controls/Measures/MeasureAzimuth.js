@@ -9,7 +9,6 @@ import ID from "../../../Common/Utils/SelectorID";
 // Derived from OpenLayers measure example
 // http://openlayers.org/en/latest/examples/measure.html
 
-
 var logger = Logger.getLogger("measureazimut");
 
 /**
@@ -32,8 +31,7 @@ var logger = Logger.getLogger("measureazimut");
  *   geodesic : true
  * });
  */
-function MeasureAzimuth(options) {
-
+function MeasureAzimuth (options) {
     /**
      * options
      * @private
@@ -65,9 +63,9 @@ function MeasureAzimuth(options) {
 
     // heritage
     ol.control.Control.call(this, {
-        element: container,
-        target: options.target,
-        render: options.render
+        element : container,
+        target : options.target,
+        render : options.render
     });
 }
 
@@ -99,7 +97,7 @@ MeasureAzimuth.prototype.constructor = MeasureAzimuth;
  *
  * @param {ol.Map} map - Map.
  */
-MeasureAzimuth.prototype.setMap = function(map) {
+MeasureAzimuth.prototype.setMap = function (map) {
     logger.trace("setMap()");
 
     var className = this.CLASSNAME;
@@ -107,7 +105,6 @@ MeasureAzimuth.prototype.setMap = function(map) {
     // on fait le choix de ne pas activer les events sur la map à l'init de l'outil,
     // mais uniquement à son utilisation !
     if (map) {
-
         // var self = this;
         // map.on("click", function (e) {
         //     logger.trace("event on map with click!");
@@ -136,7 +133,6 @@ MeasureAzimuth.prototype.setMap = function(map) {
 
     // on appelle la méthode setMap originale d'OpenLayers
     ol.control.Control.prototype.setMap.call(this, map);
-
 };
 
 /**
@@ -144,7 +140,7 @@ MeasureAzimuth.prototype.setMap = function(map) {
  *
  * @param {Boolean} value - geodesic value
  */
-MeasureAzimuth.prototype.setGeodesic = function(value) {
+MeasureAzimuth.prototype.setGeodesic = function (value) {
     this.options.geodesic = (typeof value !== "undefined") ? value : false;
 };
 
@@ -153,7 +149,7 @@ MeasureAzimuth.prototype.setGeodesic = function(value) {
  *
  * @return {Boolean} geodesic value
  */
-MeasureAzimuth.prototype.isGeodesic = function() {
+MeasureAzimuth.prototype.isGeodesic = function () {
     return this.options.geodesic;
 };
 
@@ -166,7 +162,7 @@ MeasureAzimuth.prototype.isGeodesic = function() {
  *
  * @private
  */
-MeasureAzimuth.prototype._initialize = function(options) {
+MeasureAzimuth.prototype._initialize = function (options) {
     logger.trace("call MeasureAzimuth::_initialize() : ", options);
 
     // liste des options
@@ -177,7 +173,6 @@ MeasureAzimuth.prototype._initialize = function(options) {
 
     // gestion des styles !
     this.createStylingMeasureInteraction(options.styles);
-
 };
 
 /**
@@ -185,10 +180,10 @@ MeasureAzimuth.prototype._initialize = function(options) {
  *
  * @private
  */
-MeasureAzimuth.prototype._initializeContainer = function() {
+MeasureAzimuth.prototype._initializeContainer = function () {
     logger.trace("call MeasureAzimuth::_initializeContainer() : ", this._uid);
 
-    var container = this._createMainContainerElement();;
+    var container = this._createMainContainerElement(); ;
 
     var show = this._showContainer = this._createShowMeasureAzimuthElement();
     container.appendChild(show);
@@ -211,7 +206,7 @@ MeasureAzimuth.prototype._initializeContainer = function() {
  *
  * @private
  */
-MeasureAzimuth.prototype.addMeasureEvents = function() {
+MeasureAzimuth.prototype.addMeasureEvents = function () {
     logger.trace("call MeasureAzimuth::addMeasureEvents()");
 
     var map = this.getMap();
@@ -225,7 +220,7 @@ MeasureAzimuth.prototype.addMeasureEvents = function() {
  *
  * @private
  */
-MeasureAzimuth.prototype.removeMeasureEvents = function() {
+MeasureAzimuth.prototype.removeMeasureEvents = function () {
     logger.trace("call MeasureAzimuth::removeMeasureEvents()");
 
     var map = this.getMap();
@@ -241,7 +236,7 @@ MeasureAzimuth.prototype.removeMeasureEvents = function() {
  * @return {String} The formatted output.
  * @private
  */
-MeasureAzimuth.prototype.format = function(line) {
+MeasureAzimuth.prototype.format = function (line) {
     logger.trace("call MeasureAzimuth::format()");
 
     var map = this.getMap();
@@ -298,7 +293,7 @@ MeasureAzimuth.prototype.format = function(line) {
  * @param {Object} e - HTMLElement
  * @private
  */
-MeasureAzimuth.prototype.onShowMeasureAzimuthClick = function(e) {
+MeasureAzimuth.prototype.onShowMeasureAzimuthClick = function (e) {
     logger.trace("call MeasureAzimuth::onShowMeasureAzimuthClick()", e);
 
     // appel de la methode commune
@@ -311,17 +306,15 @@ MeasureAzimuth.prototype.onShowMeasureAzimuthClick = function(e) {
  * @param {ol.MapBrowserEvent} e - The event.
  * @private
  */
-MeasureAzimuth.prototype.onPointerMoveAzimutHandler = function(e) {
-
+MeasureAzimuth.prototype.onPointerMoveAzimutHandler = function (e) {
     this.onPointerMoveHandler(e);
 
     if (this.sketch) {
-        var geom = ( /** @type {ol.geom.LineString} */ (this.sketch.getGeometry()));
+        var geom = (/** @type {ol.geom.LineString} */ (this.sketch.getGeometry()));
         if (geom.getCoordinates().length > 2) {
             this.measureDraw.finishDrawing();
         }
     }
-
 };
 
 export default MeasureAzimuth;
