@@ -103,7 +103,7 @@ GlobeViewExtended.prototype.constructor = GlobeViewExtended;
  */
 GlobeViewExtended.prototype.getGlobeView = function() {
     return this._globeView;
-};
+}
 
 /**
  * Indicates if the globe is initialized or not
@@ -113,27 +113,33 @@ GlobeViewExtended.prototype.getGlobeView = function() {
  */
 GlobeViewExtended.prototype.isInitialized = function() {
     return this._isInitialized;
-};
+}
+
+/**
+ * Detects when the camera movement stops, then launch the callback given as parameter
+ *
+ * @param {Function} cb - The function to execute when the event occures.
+ *
+ */
+GlobeViewExtended.prototype.onCameraMoveStop = function (cb) {
+    var self = this;
+    function afterRenderHandler () {
+        self._globeView.removeFrameRequester(self._itowns.MAIN_LOOP_EVENTS.AFTER_CAMERA_UPDATE, afterRenderHandler);
+        cb();
+    };
+    this._globeView.addFrameRequester(this._itowns.MAIN_LOOP_EVENTS.AFTER_CAMERA_UPDATE, afterRenderHandler);
+}
 
 /**
  * Disables globe controls until the globe rendering is completed
  */
-GlobeViewExtended.prototype.freezeControl = function() {
+GlobeViewExtended.prototype.freezeControl = function () {
     // disable navigation
     this._globeView.controls.enabled = false;
 
-    var self = this;
-    /**
-     * afterRenderHandler function (duplicated code from itowns?)
-     */
-    var afterRenderHandlerFunction = function afterRenderHandler() {
-        if (self._globeView.mainLoop.scheduler.commandsWaitingExecutionCount() == 0 && self._globeView._changeSources.size == 0) {
-            // enable navigation
-            self._globeView.controls.enabled = true;
-            self._globeView.removeFrameRequester(self._itowns.MAIN_LOOP_EVENTS.AFTER_RENDER, afterRenderHandler);
-        }
-    };
-    this._globeView.addFrameRequester(this._itowns.MAIN_LOOP_EVENTS.AFTER_RENDER, afterRenderHandlerFunction);
+    this.onCameraMoveStop((function () {
+        this._globeView.controls.enabled = true;
+    }).bind(this));
 };
 
 /**
@@ -166,7 +172,7 @@ GlobeViewExtended.prototype.listen = function(type, callback) {
         callback: callback,
         type: type
     };
-};
+}
 
 /**
  * Associates a function to trigger when a layer event is received.
@@ -188,7 +194,7 @@ GlobeViewExtended.prototype.addLayerListener = function(layer, type, callback) {
         callback: callback,
         type: type
     };
-};
+}
 
 /**
  * Returns the target of a given event type
@@ -217,7 +223,7 @@ GlobeViewExtended.prototype._getEventTarget = function(type) {
             console.log("unhandled event : " + type);
             return null;
     }
-};
+}
 
 /**
  * Cancels an event listening
@@ -231,7 +237,7 @@ GlobeViewExtended.prototype.forgetByKey = function(key) {
     } else {
         key.target.removeEventListener(key.type, key.callback);
     }
-};
+}
 
 /**
  * Cancels an layer event listening
@@ -247,7 +253,7 @@ GlobeViewExtended.prototype.removeLayerListener = function(layer, type, callback
         callback: callback,
         type: type
     });
-};
+}
 
 /**
  * Cancels an event listening
@@ -266,7 +272,7 @@ GlobeViewExtended.prototype.forget = function(type, callback) {
         callback: callback,
         type: type
     });
-};
+}
 
 /**
  * Overload itowns.GlobeView addLayer method
@@ -277,7 +283,7 @@ GlobeViewExtended.prototype.addLayer = function(layer) {
     var promise = this.getGlobeView().addLayer(layer);
     this.getGlobeView().notifyChange(true);
     return promise;
-};
+}
 
 /**
  * Overload itowns.GlobeView removeLayer method
@@ -285,7 +291,7 @@ GlobeViewExtended.prototype.addLayer = function(layer) {
 GlobeViewExtended.prototype.removeLayer = function(layerId) {
     this.getGlobeView().removeLayer(layerId);
     this.getGlobeView().notifyChange(true);
-};
+}
 
 /**
  * Set layer opacity
@@ -296,7 +302,7 @@ GlobeViewExtended.prototype.removeLayer = function(layerId) {
 GlobeViewExtended.prototype.setLayerOpacity = function(layerId, opacityValue) {
     this.getColorLayerById(layerId).opacity = opacityValue;
     this.getGlobeView().notifyChange(true);
-};
+}
 
 /**
  * Set layer visibility
@@ -307,7 +313,7 @@ GlobeViewExtended.prototype.setLayerOpacity = function(layerId, opacityValue) {
 GlobeViewExtended.prototype.setLayerVisibility = function(layerId, visible) {
     this.getColorLayerById(layerId).visible = visible;
     this.getGlobeView().notifyChange(true);
-};
+}
 
 /**
  * Move layer to the specified index
@@ -318,7 +324,7 @@ GlobeViewExtended.prototype.setLayerVisibility = function(layerId, visible) {
 GlobeViewExtended.prototype.moveLayerToIndex = function(layerId, index) {
     this._itowns.ColorLayersOrdering.moveLayerToIndex(this.getGlobeView(), layerId, index);
     this.getGlobeView().notifyChange(true);
-};
+}
 
 /**
  * Remove event listener from the globe
@@ -338,7 +344,7 @@ GlobeViewExtended.prototype.removeEventListener = function(type, callback) {
             this.getGlobeView().removeEventListener(type, callback);
             break;
     }
-};
+}
 
 /**
  * Defines if the current view extent have to be computed on pre-render event
@@ -348,7 +354,7 @@ GlobeViewExtended.prototype.preRenderEventFetchViewExtent = function(b) {
         b = true;
     }
     this._fetchExtent = b;
-};
+}
 
 /**
  * Defines if the list of the color layers displayed have to be computed on pre-render event
@@ -358,7 +364,7 @@ GlobeViewExtended.prototype.preRenderEventFetchColorLayersDisplayed = function(b
         b = true;
     }
     this._fetchVisibleColorLayers = b;
-};
+}
 
 /**
  * Defines if the list of the elevation layers displayed have to be computed on pre-render event
@@ -368,7 +374,7 @@ GlobeViewExtended.prototype.preRenderEventFetchElevationLayersDisplayed = functi
         b = true;
     }
     this._fetchVisibleElevationLayers = b;
-};
+}
 
 /**
  * Defines if the list of the layers of all types displayed have to be computed on pre-render event
@@ -379,7 +385,7 @@ GlobeViewExtended.prototype.preRenderEventFetchLayersDisplayed = function(b) {
     }
     this._fetchVisibleColorLayers = b;
     this._fetchVisibleElevationLayers = b;
-};
+}
 
 /**
  * Get layer by its id
@@ -398,7 +404,7 @@ GlobeViewExtended.prototype.getLayerById = function(layerId) {
         return;
     }
     return layer;
-};
+}
 
 /**
  * Get color layer by its id
@@ -417,7 +423,7 @@ GlobeViewExtended.prototype.getColorLayerById = function(layerId) {
         return;
     }
     return layer;
-};
+}
 
 /**
  * Get imagery layers
@@ -430,7 +436,7 @@ GlobeViewExtended.prototype.getColorLayers = function() {
             return layer;
         }
     });
-};
+}
 
 /**
  * Get vector layers
@@ -443,7 +449,7 @@ GlobeViewExtended.prototype.getVectorLayers = function() {
             return layer;
         }
     });
-};
+}
 
 /**
  * Get elevation layers
@@ -456,7 +462,7 @@ GlobeViewExtended.prototype.getElevationLayers = function() {
             return layer;
         }
     });
-};
+}
 
 /**
  * Get the current view extent
@@ -471,7 +477,7 @@ GlobeViewExtended.prototype.getExtent = function() {
     this._getCurrentSceneInfos(this.scene, options);
 
     return options.extent;
-};
+}
 
 /**
  * Recursive method to fetch information about the current view (extent, layers displayed...)
@@ -508,7 +514,7 @@ GlobeViewExtended.prototype._getCurrentSceneInfos = function(node, options) {
             this._getCurrentSceneInfos(node.children[child], options);
         }
     }
-};
+}
 
 /**
  * Add a widget to the globe
@@ -521,7 +527,7 @@ GlobeViewExtended.prototype.addWidget = function(widget) {
     }
     widget.setGlobe(this);
     this._widgets.push(widget);
-};
+}
 
 /**
  * Returns all widgets.
@@ -530,7 +536,7 @@ GlobeViewExtended.prototype.addWidget = function(widget) {
  */
 GlobeViewExtended.prototype.getWidgets = function() {
     return this._widgets;
-};
+}
 
 /**
  * Removes a widget.
@@ -544,8 +550,7 @@ GlobeViewExtended.prototype.removeWidget = function(widget) {
             this._widgets.splice(idx, 1);
         }
     }
-
-};
+}
 
 /**
  * Get html target element
@@ -554,7 +559,7 @@ GlobeViewExtended.prototype.removeWidget = function(widget) {
  */
 GlobeViewExtended.prototype.getTargetElement = function() {
     return this._viewerDiv;
-};
+}
 
 /**
  * Returns current view scale
@@ -563,7 +568,7 @@ GlobeViewExtended.prototype.getTargetElement = function() {
  */
 GlobeViewExtended.prototype.getScale = function() {
     return this.getGlobeView().controls.getScale();
-};
+}
 
 /**
  * Sets tilt
@@ -573,7 +578,7 @@ GlobeViewExtended.prototype.getScale = function() {
  */
 GlobeViewExtended.prototype.setTilt = function(tilt) {
     return this.getGlobeView().controls.setTilt(tilt, false);
-};
+}
 
 /**
  * Returns tilt
@@ -582,7 +587,7 @@ GlobeViewExtended.prototype.setTilt = function(tilt) {
  */
 GlobeViewExtended.prototype.getTilt = function() {
     return this.getGlobeView().controls.getCameraOrientation()[0];
-};
+}
 
 /**
  * Sets azimuth
@@ -592,7 +597,7 @@ GlobeViewExtended.prototype.getTilt = function() {
  */
 GlobeViewExtended.prototype.setAzimuth = function(azimuth) {
     return this.getGlobeView().controls.setHeading(azimuth, false);
-};
+}
 
 /**
  * Returns azimuth
@@ -601,7 +606,7 @@ GlobeViewExtended.prototype.setAzimuth = function(azimuth) {
  */
 GlobeViewExtended.prototype.getAzimuth = function() {
     return this.getGlobeView().controls.getCameraOrientation()[1];
-};
+}
 
 /**
  * Gets the coordinate in lat,lon for a given pixel.
@@ -615,7 +620,7 @@ GlobeViewExtended.prototype.getCoordinateFromPixel = function(x, y) {
         x: x,
         y: y
     });
-};
+}
 
 /**
  * Gets the coordinate in lat,lon for a given mouse position.
@@ -626,7 +631,7 @@ GlobeViewExtended.prototype.getCoordinateFromPixel = function(x, y) {
 GlobeViewExtended.prototype.getCoordinateFromMouseEvent = function(mouseEvent) {
     var coords = this.getGlobeView().eventToViewCoords(mouseEvent);
     return this.getGlobeView().controls.pickGeoPosition(coords);
-};
+}
 
 /**
  * Get all visible features that intersect a pixel
@@ -660,7 +665,7 @@ GlobeViewExtended.prototype.getFeaturesAtMousePosition = function(mouseEvent) {
         }
     }
     return visibleFeatures;
-};
+}
 
 /**
  * Changes the center of the scene on screen to the specified in lat, lon.
@@ -672,7 +677,7 @@ GlobeViewExtended.prototype.getFeaturesAtMousePosition = function(mouseEvent) {
  */
 GlobeViewExtended.prototype.setCameraTargetGeoPosition = function(center) {
     return this.getGlobeView().controls.setCameraTargetGeoPositionAdvanced(center, false);
-};
+}
 
 /**
  * Retuns the coordinates of the central point on screen in lat,lon and alt
@@ -687,7 +692,7 @@ GlobeViewExtended.prototype.getCenter = function() {
         alt: cameraCenter.altitude()
     };
     return center;
-};
+}
 
 /**
  * Returns the actual zoom.
@@ -696,7 +701,7 @@ GlobeViewExtended.prototype.getCenter = function() {
  */
 GlobeViewExtended.prototype.getZoom = function() {
     return this.getGlobeView().controls.getZoom();
-};
+}
 
 /**
  * Sets the current zoom.
@@ -706,7 +711,7 @@ GlobeViewExtended.prototype.getZoom = function() {
  */
 GlobeViewExtended.prototype.setZoom = function(zoom) {
     return this.getGlobeView().controls.setZoom(zoom, false);
-};
+}
 
 /**
  * To convert the projection in meters on the globe of a number of pixels of screen
@@ -715,7 +720,7 @@ GlobeViewExtended.prototype.setZoom = function(zoom) {
  */
 GlobeViewExtended.prototype.pixelsToMeters = function(pixels) {
     return this.getGlobeView().controls.pixelsToMeters(pixels);
-};
+}
 
 /**
  * Projection on screen in pixels of length in meter on globe
@@ -724,7 +729,7 @@ GlobeViewExtended.prototype.pixelsToMeters = function(pixels) {
  */
 GlobeViewExtended.prototype.metersToPixels = function(value) {
     return this.getGlobeView().controls.metersToPixels(value);
-};
+}
 
 /**
  * Returns the "range": the distance in meters between the camera and the current central point on the screen.
@@ -732,14 +737,14 @@ GlobeViewExtended.prototype.metersToPixels = function(value) {
  */
 GlobeViewExtended.prototype.getRange = function() {
     return this.getGlobeView().controls.getRange();
-};
+}
 
 /**
  * @return {THREE.Vector3} position
  */
 GlobeViewExtended.prototype.moveTarget = function() {
     return this.getGlobeView().controls.moveTarget();
-};
+}
 
 /**
  * To get the layer event infos
@@ -751,7 +756,7 @@ GlobeViewExtended.prototype.getLayerEventInfos = function(evt) {
         previousValue: evt.previous[propertyName],
         newValue: evt.new[propertyName]
     };
-};
+}
 
 /**
  * Sets background (specific to miniglobe)
@@ -761,7 +766,7 @@ GlobeViewExtended.prototype.setBackground = function() {
     // because we want a transparent background for the miniglobe view to be able
     // to see the main view "behind"
     this.getGlobeView().mainLoop.gfxEngine.renderer.setClearColor(0x000000, 0);
-};
+}
 
 /**
  * Sets camera position
@@ -770,7 +775,7 @@ GlobeViewExtended.prototype.setBackground = function() {
  */
 GlobeViewExtended.prototype.setCameraPosition = function(target, distance) {
     this.getGlobeView().camera.camera3D.position.copy(target).setLength(distance);
-};
+}
 
 /**
  * Sets camera orientation to look at specified target
@@ -778,14 +783,14 @@ GlobeViewExtended.prototype.setCameraPosition = function(target, distance) {
  */
 GlobeViewExtended.prototype.lookAt = function(target) {
     this.getGlobeView().camera.camera3D.lookAt(target);
-};
+}
 
 /**
  * Notifies the scene it needs to be updated
  */
 GlobeViewExtended.prototype.notifyChange = function() {
     this.getGlobeView().notifyChange(true);
-};
+}
 
 /**
 * Resizes itowns
@@ -793,6 +798,6 @@ GlobeViewExtended.prototype.notifyChange = function() {
 GlobeViewExtended.prototype.resize = function(width, height) {
     this.getGlobeView().mainLoop.gfxEngine.onWindowResize(width, height);
     this.getGlobeView().notifyChange(true);
-};
+}
 
 export default GlobeViewExtended;

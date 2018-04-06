@@ -37,21 +37,101 @@ function doubleDone (done) {
     else doubleDone.firstDone = true;
 };
 
+// convenience class to check if layers are correctly added/removed
+class LayerManager {
+  //
+  constructor(view) {
+    this._view = view;
+    this._layers = [];
+  }
+
+  //
+  add(layer){
+      if ( layer.type !== 'color' && layer.type !== 'elevation') throw (`unkown layer type '${layer.type}'`);
+
+      var promise = this._view.addLayer(layer);
+      this._layers.push(layer);
+      return promise;
+  }
+
+  //
+  remove(layerId) {
+    this._view.removeLayer(layerId);
+
+    var index = this._layers.findIndex( (layer) => layer.id === layerId );
+    assert( index >= 0 );
+
+    this._layers.splice(index, 1);
+  }
+
+  //
+  getColorLayers() {
+      return this._layers.filter(layer => layer.type === "color");
+  }
+
+  //
+  pickColorLayer() {
+      var layer = this._layers.find(layer => layer.type === "color");
+      assert( layer, 'no color layer found' );
+      return layer;
+  }
+
+  //
+  getElevationLayers() {
+      return this._layers.filter(layer => layer.type === "elevation");
+  }
+
+  //
+  getVectorLayers() {
+      return this._layers.filter(layer => layer.protocol === "rasterizer");
+  }
+
+  //
+  pickVectorLayer() {
+      var layer = this._layers.find(layer => layer.protocol === "rasterizer");
+      assert( layer, 'no vector layer found' );
+      return layer;
+  }
+}
+
 describe("-- [Itowns] Test GlobeViewExtended API --", function () {
 
-    this.timeout(2000);
-
     window.globeViewExtended = null;
-    var promises = [];
+    var layerManager = null;
     var div;
-    var viewWidth = 800;
-    var viewHeight = 600;
-    var initPosition = {};
-    var francePosition = {
-        longitude: 2.61825,
-        latitude: 46.71095,
-        zoom: 5
-    };
+    const viewWidth = 800;
+    const viewHeight = 600;
+    const initPosition = {
+        longitude: 2.35,
+        latitude: 47,
+        altitude : 25000000,
+        zoom: 1,
+        tilt: 0.573,
+        heading: 1.194
+    }
+    const francePosition = {
+        longitude: 2.6,
+        latitude: 47.5,
+        zoom: 5,
+        tilt: 0,
+        heading: 0
+    }
+    const MontBlancPosition = {
+        longitude: 6.86,
+        latitude: 45.833,
+        zoom: 12,
+        tilt: 0,
+        heading: 0
+    }
+    const colorLayer = {
+        id :  `ScanEX`,
+        url : `spec/itowns/resources/JSONLayers/ScanEX.json`
+    }
+    const zoomScale = {
+        zoom : 9,
+        scale : .00000257016,
+        precision : 11
+    }
 
     before(function () {
         div = document.createElement('div');
@@ -61,33 +141,24 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
 
         document.body.appendChild(div);
 
-        const positionOnGlobe = {
-            longitude : 2.3465,
-            latitude : 48.88,
-            altitude : 25000000
-        };
-
-        globeViewExtended = new GlobeViewExtended(div, positionOnGlobe);
+        globeViewExtended = new GlobeViewExtended(div, initPosition);
+        layerManager = new LayerManager(globeViewExtended);
 
         // ordered color layers
-        promises.push( window.itowns.Fetcher.json("test/spec/itowns/resources/JSONLayers/Ortho.json").then(result => globeViewExtended.addLayer(result)).then( () => {
-            return window.itowns.Fetcher.json("test/spec/itowns/resources/JSONLayers/Region.json").then(result => globeViewExtended.addLayer(result));
+        window.itowns.Fetcher.json("spec/itowns/resources/JSONLayers/Ortho.json").then(result => layerManager.add(result)).then( () => {
+            return window.itowns.Fetcher.json("spec/itowns/resources/JSONLayers/Region.json").then(result => layerManager.add(result));
         }).then( () => {
-            return globeViewExtended.addLayer({
-                url : "test/resources/KML/S_TOP100.kml",
+            return layerManager.add({
+                url : "resources/KML/S_TOP100.kml",
                 id : "S_TOP100",
                 type : "color",
                 protocol : "rasterizer"
             });
-            // .then( () => new Promise(function(resolve) { // FIXME
-            //     setTimeout(resolve, 2000); // pour laisser le temps a la couche vecteur de se charger
-            // }));
-        }));
+        });
 
         // elevation layers
-        promises.push( window.itowns.Fetcher.json("test/spec/itowns/resources/JSONLayers/IGN_MNT.json").then(result => globeViewExtended.addLayer(result)) );
-        promises.push( window.itowns.Fetcher.json("test/spec/itowns/resources/JSONLayers/IGN_MNT_HIGHRES.json").then(result => globeViewExtended.addLayer(result)) );
-
+        window.itowns.Fetcher.json("spec/itowns/resources/JSONLayers/IGN_MNT.json").then(result => layerManager.add(result));
+        window.itowns.Fetcher.json("spec/itowns/resources/JSONLayers/IGN_MNT_HIGHRES.json").then(result => layerManager.add(result));
     });
 
     after(function () {
@@ -108,44 +179,29 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
                 });
             }
         });
-
-        it('should load all layers', function (done) {
-            //this.timeout(4000); // FIXME
-            Promise.all(promises).then( () => {
-                done();
-            }).catch( e => done(e) );
-        });
-
     });
 
     describe('#getters', function () {
 
         it('should get zoom', () => {
-            initPosition.zoom = globeViewExtended.getZoom();
-            assertIsNumber(initPosition.zoom);
+            assertIsNumber(globeViewExtended.getZoom());
         });
 
         it('should get range', () => {
-            var range = globeViewExtended.getRange();
-            assertIsNumber(range);
+            assertIsNumber(globeViewExtended.getRange());
         });
 
         it('should get tilt', () => {
-            initPosition.tilt = globeViewExtended.getTilt();
-            assertIsNumber(initPosition.tilt);
+            assertIsNumber(globeViewExtended.getTilt());
         });
 
         it('should get azimuth', () => {
-            initPosition.heading = globeViewExtended.getAzimuth();
-            assertIsNumber(initPosition.heading);
+            assertIsNumber(globeViewExtended.getAzimuth());
         });
 
         it('should get center coordinates', () => {
-            initPosition.longitude = globeViewExtended.getCenter().lon;
-            initPosition.latitude = globeViewExtended.getCenter().lat;
-
-            assertIsNumber(initPosition.longitude);
-            assertIsNumber(initPosition.latitude);
+            assertIsNumber(globeViewExtended.getCenter().lon);
+            assertIsNumber(globeViewExtended.getCenter().lat);
         });
 
         it('should get scene extent', () => {
@@ -159,10 +215,10 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
         });
 
         it('should get current scale', (done) => {
-            globeViewExtended.setZoom(9).then( () => {
+            globeViewExtended.setZoom(zoomScale.zoom).then( () => {
                 var scale = globeViewExtended.getScale();
-                assert.equal(globeViewExtended.getZoom(), 9);
-                assertFloatEqual(scale, .00000257016, 11 );
+                assert.equal(globeViewExtended.getZoom(), zoomScale.zoom);
+                assertFloatEqual(scale, zoomScale.scale, zoomScale.precision );
                 done();
             }).catch(e => done(e));
         });
@@ -214,30 +270,33 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
             var colorLayers = globeViewExtended.getColorLayers();
 
             assert( colorLayers, 'no color layer found' );
-            assert.equal( colorLayers.length, 3 );
+            assert.equal( colorLayers.length, layerManager.getColorLayers().length );
 
-            assert( colorLayers.find(layer => layer.id === 'Ortho'), "layer 'Ortho' not found");
-            assert( colorLayers.find(layer => layer.id === 'Region'), "layer 'Region' not found");
-            assert( colorLayers.find(layer => layer.id === 'S_TOP100'), "layer 'S_TOP100' not found");
+            layerManager.getColorLayers().forEach( (layerRef) => {
+                assert( colorLayers.find(layer => layer.id === layerRef.id), `layer '${layerRef.id}' not found`);
+            });
         });
 
         it('should get all vector layers', () => {
             var vectorLayers = globeViewExtended.getVectorLayers();
 
             assert( vectorLayers, 'no vector layer found' );
-            assert.equal( vectorLayers.length, 1 );
+            assert.equal( vectorLayers.length, layerManager.getVectorLayers().length );
 
-            assert( vectorLayers.find(layer => layer.id === 'S_TOP100'), "layer 'S_TOP100' not found");
+            layerManager.getVectorLayers().forEach( (layerRef) => {
+                assert( vectorLayers.find(layer => layer.id === layerRef.id), `layer '${layerRef.id}' not found`);
+            });
         });
 
         it('should get all elevation layers', () => {
             var elevationLayers = globeViewExtended.getElevationLayers();
 
             assert( elevationLayers, 'no elevation layer found' );
-            assert.equal( elevationLayers.length, 2 );
+            assert.equal( elevationLayers.length, layerManager.getElevationLayers().length );
 
-            assert( elevationLayers.find(layer => layer.id === 'IGN_MNT'), "layer 'IGN_MNT' not found");
-            assert( elevationLayers.find(layer => layer.id === 'IGN_MNT_HIGHRES'), "layer 'IGN_MNT_HIGHRES' not found");
+            layerManager.getElevationLayers().forEach( (layerRef) => {
+                assert( elevationLayers.find(layer => layer.id === layerRef.id), `layer '${layerRef.id}' not found`);
+            });
         });
     });
 
@@ -252,49 +311,65 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
         });
 
         it('should correctly set layer opacity', () => {
-            var oldOpacity = globeViewExtended.getColorLayerById("Ortho").opacity;
-            globeViewExtended.setLayerOpacity("Ortho", 0.57);
-            assert.equal(globeViewExtended.getColorLayerById("Ortho").opacity, 0.57);
-            globeViewExtended.setLayerOpacity("Ortho", oldOpacity);
-            assert.equal(globeViewExtended.getColorLayerById("Ortho").opacity, oldOpacity);
+            var layerId = layerManager.pickColorLayer().id;
+            var oldOpacity = globeViewExtended.getColorLayerById(layerId).opacity;
+            var newOpacity = (oldOpacity + 0.1 ) % 1;
+
+
+            globeViewExtended.setLayerOpacity(layerId, newOpacity);
+            assert.equal(globeViewExtended.getColorLayerById(layerId).opacity, newOpacity);
+            globeViewExtended.setLayerOpacity(layerId, oldOpacity);
+            assert.equal(globeViewExtended.getColorLayerById(layerId).opacity, oldOpacity);
         });
 
         it('should correctly set layer visibility', () => {
-            globeViewExtended.setLayerVisibility("Ortho", false);
-            assert.equal(globeViewExtended.getColorLayerById("Ortho").visible, false);
-            globeViewExtended.setLayerVisibility("Ortho", true);
-            assert.equal(globeViewExtended.getColorLayerById("Ortho").visible, true);
+            var layerId = layerManager.pickColorLayer().id;
+            var oldVisible = globeViewExtended.getColorLayerById(layerId).visible;
+
+            globeViewExtended.setLayerVisibility(layerId, !oldVisible);
+            assert.equal(globeViewExtended.getColorLayerById(layerId).visible, !oldVisible);
+            globeViewExtended.setLayerVisibility(layerId, oldVisible);
+            assert.equal(globeViewExtended.getColorLayerById(layerId).visible, oldVisible);
         });
 
         it('should correctly set layer sequence', () => {
-            var sequence = globeViewExtended.getColorLayerById("Ortho").sequence + 1;
-            globeViewExtended.moveLayerToIndex("Ortho", sequence);
-            assert.equal(globeViewExtended.getColorLayerById("Ortho").sequence, sequence);
-            sequence -= 1;
-            globeViewExtended.moveLayerToIndex("Ortho", sequence);
-            assert.equal(globeViewExtended.getColorLayerById("Ortho").sequence, sequence);
+            var layerId = layerManager.pickColorLayer().id;
+            var oldSequence = globeViewExtended.getColorLayerById(layerId).sequence;
+            var newSequence = oldSequence === globeViewExtended.getColorLayers().length-1 ? oldSequence-1 :  oldSequence+1;
+
+            globeViewExtended.moveLayerToIndex(layerId, newSequence);
+            assert.equal(globeViewExtended.getColorLayerById(layerId).sequence, newSequence);
+            globeViewExtended.moveLayerToIndex(layerId, oldSequence);
+            assert.equal(globeViewExtended.getColorLayerById(layerId).sequence, oldSequence);
         });
 
         it('should correctly set tilt', (done) => {
+            var newTilt = (globeViewExtended.getTilt()+0.1) % 360;
+
             globeViewExtended.setCameraTargetGeoPosition(initPosition).then( () => {
-                return globeViewExtended.setTilt(25).then( () => {
-                    assertFloatEqual(globeViewExtended.getTilt(), 25);
+                return globeViewExtended.setTilt(newTilt).then( () => {
+                    assertFloatEqual(globeViewExtended.getTilt(), newTilt);
                 });
             }).then( () => done() ).catch( e => done(e) );
         });
 
         it('should correctly set azimuth', (done) => {
+            var newAzimuth = (globeViewExtended.getAzimuth()+0.1) % 360;
+
             globeViewExtended.setCameraTargetGeoPosition(initPosition).then( () => {
-                return globeViewExtended.setAzimuth(25).then( () => {
-                    assertFloatEqual(globeViewExtended.getAzimuth(), 25);
+                return globeViewExtended.setAzimuth(newAzimuth).then( () => {
+                    assertFloatEqual(globeViewExtended.getAzimuth(), newAzimuth);
                 });
             }).then( () => done() ).catch( e => done(e) );
         });
 
         it('should correctly set zoom', (done) => {
+            var oldZoom = globeViewExtended.getZoom();
+            var newZoom = oldZoom<10 ? oldZoom+1 : oldZoom-1;
+
             globeViewExtended.setCameraTargetGeoPosition(initPosition).then( () => {
-                return globeViewExtended.setZoom(8).then( () => {
-                    assert.equal(globeViewExtended.getZoom(), 8);
+                return globeViewExtended.setZoom(newZoom).then( () => {
+                    assert.equal(globeViewExtended.getZoom(), newZoom);
                 });
             }).then( () => done() ).catch( e => done(e) );
         });
@@ -335,17 +410,21 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
     });
 
     describe('#utility methods', function () {
+        this.timeout(4000);
         it('should get features at mouse position', (done) => {
             globeViewExtended.setCameraTargetGeoPosition( francePosition ).then( () => {
-                var mouseEvent = {
-                    offsetX:viewWidth / 2,
-                    offsetY:viewHeight / 2
-                }
-                var feats = globeViewExtended.getFeaturesAtMousePosition(mouseEvent);
+                setTimeout( function () {
+                    var mouseEvent = {
+                        offsetX:viewWidth / 2,
+                        offsetY:viewHeight / 2
+                    }
+                    var feats = globeViewExtended.getFeaturesAtMousePosition(mouseEvent);
 
-                assert( feats, "no features returned");
-                assert( feats.length > 0, "no features returned");
-                done();
+                    assert( feats, "no features returned");
+                    assert( feats.length > 0, "no features returned");
+                    done();
+
+                },2000);
             }).catch(e => done(e));
         });
 
@@ -370,10 +449,18 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
         });
 
         it('resize', () => {
-            var newWidth = 710;
-            var newHeight = 460;
+            var oldCenter = globeViewExtended.getCenter();
+
+            var newWidth = Math.floor(3*viewWidth / 4);
+            var newHeight = Math.floor(3*viewHeight / 4);
 
             globeViewExtended.resize(newWidth, newHeight);
+
+            var newCenter = globeViewExtended.getCenter();
+
+            //check that resize has not changed the camera target
+            assert.equal( oldCenter.lon, newCenter.lon );
+            assert.equal( oldCenter.lat, newCenter.lat );
 
             var canvas = globeViewExtended.getTargetElement().getElementsByTagName('canvas')[0];;
             assert.equal( canvas.width, newWidth );
@@ -386,65 +473,76 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
     describe('#layers management', function () {
         it('should correctly add a layer', (done) => {
             var nbLayers = globeViewExtended.getColorLayers().length;
-            window.itowns.Fetcher.json(`test/spec/itowns/resources/JSONLayers/ScanEX.json`).then( newLayer => {
-                return globeViewExtended.addLayer(newLayer).then( () => {
-                    assert.equal( nbLayers + 1, globeViewExtended.getColorLayers().length );
-                    var layer = globeViewExtended.getLayerById("ScanEX");
+            window.itowns.Fetcher.json(colorLayer.url).then( newLayer => {
+                return layerManager.add(newLayer).then( () => {
+                    assert.equal( globeViewExtended.getColorLayers().length, layerManager.getColorLayers().length );
+                    var layer = globeViewExtended.getLayerById(newLayer.id);
                     assert( layer, 'layer not found' );
                 })
             }).then( () => done() ).catch( e => done(e) );
         });
 
         it('should correctly remove a layer', () => {
-            var nbLayers = globeViewExtended.getColorLayers().length;
+            layerManager.remove(colorLayer.id);
 
-            globeViewExtended.removeLayer("ScanEX");
+            assert.equal( globeViewExtended.getColorLayers().length, layerManager.getColorLayers().length );
 
-            assert.equal( nbLayers - 1, globeViewExtended.getColorLayers().length );
-
-            var layer = globeViewExtended.getLayerById("ScanEX");
-            assert( !layer, 'layer not removed found' );
+            var layer = globeViewExtended.getLayerById(colorLayer.id);
+            assert( !layer, 'removed layer found' );
         });
     });
 
     describe('#events', function () {
+        this.timeout(4000);
 
         it('should correctly launch visible property changed event', function (done) {
-            var eventKey = globeViewExtended.addLayerListener(globeViewExtended.getColorLayerById("Ortho"), GlobeViewExtended.EVENTS.VISIBLE_PROPERTY_CHANGED, () => {
+            var layerId = layerManager.pickColorLayer().id;
+            var oldVisible = globeViewExtended.getColorLayerById(layerId).visible;
+
+            var eventKey = globeViewExtended.addLayerListener(globeViewExtended.getColorLayerById(layerId), GlobeViewExtended.EVENTS.VISIBLE_PROPERTY_CHANGED, () => {
                 assert.ok(true);
                 globeViewExtended.forgetByKey( eventKey );
-                globeViewExtended.setLayerVisibility("Ortho", true);
+                globeViewExtended.setLayerVisibility(layerId, oldVisible);
                 done();
             });
-            globeViewExtended.setLayerVisibility("Ortho", false);
+            globeViewExtended.setLayerVisibility(layerId, !oldVisible);
         });
 
         it('should correctly launch opacity property changed event', function (done) {
-            var oldOpacity = globeViewExtended.getColorLayerById("Ortho").opacity;
-            var eventKey = globeViewExtended.addLayerListener(globeViewExtended.getColorLayerById("Ortho"), GlobeViewExtended.EVENTS.OPACITY_PROPERTY_CHANGED, () => {
+            var layerId = layerManager.pickColorLayer().id;
+            var oldOpacity = globeViewExtended.getColorLayerById(layerId).opacity;
+            var newOpacity = (oldOpacity + 0.1 ) % 1;
+
+            var eventKey = globeViewExtended.addLayerListener(globeViewExtended.getColorLayerById(layerId), GlobeViewExtended.EVENTS.OPACITY_PROPERTY_CHANGED, () => {
                 assert.ok(true);
                 globeViewExtended.forgetByKey( eventKey );
-                globeViewExtended.setLayerOpacity("Ortho", oldOpacity);
+                globeViewExtended.setLayerOpacity(layerId, oldOpacity);
                 done();
             });
-            globeViewExtended.setLayerOpacity("Ortho", 0.56);
+            globeViewExtended.setLayerOpacity(layerId, newOpacity);
         });
 
         it('should correctly launch sequence property changed event', function (done) {
-            var oldLayerIndex = globeViewExtended.getColorLayerById("Ortho").sequence;
-            var eventKey = globeViewExtended.addLayerListener(globeViewExtended.getColorLayerById("Ortho"), GlobeViewExtended.EVENTS.SEQUENCE_PROPERTY_CHANGED, () => {
+            var layerId = layerManager.pickColorLayer().id;
+            var oldSequence = globeViewExtended.getColorLayerById(layerId).sequence;
+            var newSequence = oldSequence === globeViewExtended.getColorLayers().length-1 ? oldSequence-1 :  oldSequence+1;
+
+            var eventKey = globeViewExtended.addLayerListener(globeViewExtended.getColorLayerById(layerId), GlobeViewExtended.EVENTS.SEQUENCE_PROPERTY_CHANGED, () => {
                 assert.ok(true);
                 globeViewExtended.forgetByKey( eventKey );
-                globeViewExtended.moveLayerToIndex("Ortho", oldLayerIndex);
+                globeViewExtended.moveLayerToIndex(layerId, oldSequence);
                 done();
             });
-            globeViewExtended.moveLayerToIndex("Ortho", 1);
+            globeViewExtended.moveLayerToIndex(layerId, newSequence);
         });
 
         it('should get layer event infos', (done) => {
-            var oldOpacity = globeViewExtended.getColorLayerById("Ortho").opacity;
-            var newOpacity = 62;
-            var eventKey = globeViewExtended.addLayerListener(globeViewExtended.getColorLayerById("Ortho"), GlobeViewExtended.EVENTS.OPACITY_PROPERTY_CHANGED, (evt) => {
+            var layerId = layerManager.pickColorLayer().id;
+            var oldOpacity = globeViewExtended.getColorLayerById(layerId).opacity;
+            var newOpacity = (oldOpacity + 0.1 ) % 1;
+            var propertyName = "opacity";
+
+            var eventKey = globeViewExtended.addLayerListener(globeViewExtended.getColorLayerById(layerId), GlobeViewExtended.EVENTS.OPACITY_PROPERTY_CHANGED, (evt) => {
                 globeViewExtended.forgetByKey( eventKey );
 
                 var info = globeViewExtended.getLayerEventInfos(evt);
@@ -452,14 +550,14 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
                 assert( info.hasOwnProperty("propertyName"), 'no propertyName info' );
                 assert( info.hasOwnProperty("previousValue"), 'no previousValue info' );
                 assert( info.hasOwnProperty("newValue"), 'no newValue info' );
-                assert.equal( info.propertyName, "opacity", "erroneous info value" );
+                assert.equal( info.propertyName, propertyName, "erroneous info value" );
                 assert.equal( info.previousValue, oldOpacity, "erroneous info value" );
                 assert.equal( info.newValue, newOpacity, "erroneous info value" );
 
-                globeViewExtended.setLayerOpacity("Ortho", oldOpacity);
+                globeViewExtended.setLayerOpacity(layerId, oldOpacity);
                 done();
             });
-            globeViewExtended.setLayerOpacity("Ortho", newOpacity);
+            globeViewExtended.setLayerOpacity(layerId, newOpacity);
         });
 
         it('should correctly launch orientation changed event', function (done) {
@@ -470,31 +568,33 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
                     globeViewExtended.forgetByKey( eventKey );
                     doubleDone(done);
                 });
-                return globeViewExtended.setTilt(initPosition.tilt+0.1).then( () => doubleDone(done) );
+                return globeViewExtended.setTilt( (initPosition.tilt+0.1) % 360 ).then( () => doubleDone(done) );
             }).catch( e => done(e) );
         });
 
         it('should correctly launch range changed event', function (done) {
             globeViewExtended.setCameraTargetGeoPosition(initPosition).then( () => {
                 doubleDone(); //reset operator
+                var newZoom = initPosition.zoom<10 ? initPosition.zoom+1 : initPosition.zoom-1;
+
                 var eventKey = globeViewExtended.listen(GlobeViewExtended.EVENTS.RANGE_CHANGED, () => {
                     assert.ok(true);
                     globeViewExtended.forgetByKey( eventKey );
                     doubleDone(done);
                 });
-                return globeViewExtended.setZoom(10).then( () => doubleDone(done) );
+                return globeViewExtended.setZoom(newZoom).then( () => doubleDone(done) );
             }).catch( e => done(e) );
         });
 
         it('should correctly launch layer added event', function (done) {
             doubleDone(); //reset operator
-            window.itowns.Fetcher.json(`test/spec/itowns/resources/JSONLayers/ScanEX.json`).then( newLayer => {
+            window.itowns.Fetcher.json(colorLayer.url).then( newLayer => {
                 var eventKey = globeViewExtended.listen(GlobeViewExtended.EVENTS.LAYER_ADDED, () => {
                     assert.ok(true);
                     globeViewExtended.forgetByKey( eventKey );
                     doubleDone(done);
                 });
-                return globeViewExtended.addLayer(newLayer).then( () => doubleDone(done) );
+                return layerManager.add(newLayer).then( () => doubleDone(done) );
             }).catch( e => done(e) );
         });
 
@@ -504,32 +604,40 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
                 globeViewExtended.forgetByKey( eventKey );
                 done();
             });
-            globeViewExtended.removeLayer('ScanEX');
+            layerManager.remove(colorLayer.id);
         });
 
         it('should correctly launch layer order changed event', function (done) {
+            var layerId = layerManager.pickColorLayer().id;
+            var oldSequence = globeViewExtended.getColorLayerById(layerId).sequence;
+            var newSequence = oldSequence === globeViewExtended.getColorLayers().length-1 ? oldSequence-1 :  oldSequence+1;
+
             var eventKey = globeViewExtended.listen(GlobeViewExtended.EVENTS.LAYERS_ORDER_CHANGED, () => {
                 assert.ok(true);
                 globeViewExtended.forgetByKey( eventKey );
                 done();
             });
-            globeViewExtended.moveLayerToIndex("Region", 1);
+            globeViewExtended.moveLayerToIndex(layerId, newSequence);
         });
 
         it('should correctly launch after render event', function (done) {
             globeViewExtended.setCameraTargetGeoPosition(initPosition).then( () => {
+                var newZoom = initPosition.zoom<10 ? initPosition.zoom+1 : initPosition.zoom-1;
+
                 doubleDone(); //reset operator
                 var eventKey = globeViewExtended.listen(GlobeViewExtended.EVENTS.AFTER_RENDER, () => {
                     assert.ok(true);
                     globeViewExtended.forgetByKey( eventKey );
                     doubleDone(done);
                 });
-                return globeViewExtended.setZoom(10).then( () => doubleDone(done) );
+                return globeViewExtended.setZoom(newZoom).then( () => doubleDone(done) );
             }).catch( e => done(e) );
         });
 
         it('should correctly launch pre-render event', function (done) {
             globeViewExtended.setCameraTargetGeoPosition(initPosition).then( () => {
+                var newZoom = initPosition.zoom<10 ? initPosition.zoom+1 : initPosition.zoom-1;
+
                 doubleDone(); //reset operator
                 var eventKey = globeViewExtended.listen(GlobeViewExtended.EVENTS.PRE_RENDER, () => {
                     assert.ok(true);
@@ -539,7 +647,7 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
                 globeViewExtended.preRenderEventFetchColorLayersDisplayed(true);
                 globeViewExtended.preRenderEventFetchViewExtent(true);
 
-                return globeViewExtended.setZoom(10).then( () => doubleDone(done) );
+                return globeViewExtended.setZoom(newZoom).then( () => doubleDone(done) );
             }).catch( e => done(e) );
         });
 
@@ -558,13 +666,15 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
                         assertIsNumber(event.extent.south());
 
                         assert( event.colorLayersId, "info 'color layers id' not fetched");
-                        assert( event.colorLayersId.indexOf('Ortho') >= 0, "layer 'Ortho' not found");
-                        assert( event.colorLayersId.indexOf('Region') >= 0, "layer 'Region' not found");
+                        layerManager.getColorLayers().forEach( (layerRef) => {
+                            assert( event.colorLayersId.indexOf(layerRef.id) >= 0, `layer '${layerRef.id}' not found`);
+                        });
 
                         assert( event.elevationLayersId, "info 'elevation layers id' not fetched");
-                        assert( event.elevationLayersId.indexOf('IGN_MNT') >= 0, "layer 'IGN_MNT' not found");
-                        // TODO zoomer sur un endroit ou il y a un MNT haute resolution
-                        // assert( event.elevationLayersId.indexOf('IGN_MNT_HIGHRES') >= 0, "layer 'IGN_MNT_HIGHRES' not found");
+                        layerManager.getElevationLayers().forEach( (layerRef) => {
+                            assert( event.colorLayersId.indexOf(layerRef.id) >= 0, `layer '${layerRef.id}' not found`);
+                        });
+
                         doubleDone(done);
                     } catch (e) {
                         done(e);
@@ -575,7 +685,7 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
                 globeViewExtended.preRenderEventFetchViewExtent(true);
                 globeViewExtended.preRenderEventFetchElevationLayersDisplayed(true);
 
-                return globeViewExtended.setCameraTargetGeoPosition( francePosition ).then( () => doubleDone(done) );
+                return globeViewExtended.setCameraTargetGeoPosition( MontBlancPosition ).then( () => doubleDone(done) );
             }).catch( e => done(e) );
         });
     });
