@@ -9,8 +9,8 @@
  * copyright CeCILL-B
  * copyright IGN
  * @author IGN
- * @version 1.0.0
- * @date 2018-04-05
+ * @version 1.1.0
+ * @date 2018-04-09
  *
  */
 /*!
@@ -26510,7 +26510,7 @@ LeafletLayersWMS = function (L, Gp, woodman, LayerEvent) {
         initialize: function (url, options) {
             var settings = {};
             L.Util.extend(settings, options.paramsWms, options.paramsNative);
-            L.TileLayer.WMS.prototype.initialize.call(this, Gp.Helper.normalyzeUrl(url, { 'gp-leaflet-ext': '1.0.0' }, false), settings);
+            L.TileLayer.WMS.prototype.initialize.call(this, Gp.Helper.normalyzeUrl(url, { 'gp-leaflet-ext': '1.1.0' }, false), settings);
             this._originators = options.originators;
             this._legends = options.legends;
             this._metadata = options.metadata;
@@ -26589,7 +26589,7 @@ LeafletLayersWMTS = function (L, Gp, woodman, LayerEvent) {
         initialize: function (url, options) {
             this._wmtsParams = {};
             L.Util.extend(this._wmtsParams, this.defaultWmtsParams, options.paramsWmts);
-            L.TileLayer.prototype.initialize.call(this, Gp.Helper.normalyzeUrl(url, { 'gp-leaflet-ext': '1.0.0' }, false), options.paramsNative);
+            L.TileLayer.prototype.initialize.call(this, Gp.Helper.normalyzeUrl(url, { 'gp-leaflet-ext': '1.1.0' }, false), options.paramsNative);
             this._originators = options.originators;
             this._legends = options.legends;
             this._metadata = options.metadata;
@@ -26759,8 +26759,8 @@ LeafletLayersLayers = function (L, woodman, LayerConfig, WMS, WMTS) {
     return Layers;
 }(leaflet, {}, LeafletLayersLayerConfig, LeafletLayersWMS, LeafletLayersWMTS);
 LeafletGpPluginLeaflet = function (L, P, Gp, Controls, ElevationPath, Layers, CRS, Register) {
-    Gp.leafletExtVersion = '1.0.0';
-    Gp.leafletExtDate = '2018-04-05';
+    Gp.leafletExtVersion = '1.1.0';
+    Gp.leafletExtDate = '2018-04-09';
     Gp.Register = Register;
     L.geoportalLayer = Layers;
     L.geoportalControl = Controls;

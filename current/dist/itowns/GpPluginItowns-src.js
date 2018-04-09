@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 
- * @date 2018-04-05
+ * @date 2018-04-09
  *
  */
 /*!
@@ -16883,8 +16883,8 @@ ItownsControlsMiniGlobe = function (Itowns, GlobeViewExtended, Utils, SelectorID
     return MiniGlobe;
 }(itowns, ItownsGlobeViewExtended, CommonUtils, CommonUtilsSelectorID, CommonControlsMiniGlobeDOM, ItownsControlsWidget);
 ItownsGpPluginItowns = function (Itowns, Gp, Utils, LayerUtils, MousePosition, LayerSwitcher, Attributions, Scale, MiniGlobe, GlobeViewExtended) {
-    Gp.itownsextVersion = '1.0.0';
-    Gp.itownsextDate = '2018-04-05';
+    Gp.itownsextVersion = '1.1.0';
+    Gp.itownsextDate = '2018-04-09';
     Gp.LayerUtils = LayerUtils;
     var scope = typeof window !== 'undefined' ? window : {};
     var _itowns = Itowns || {};

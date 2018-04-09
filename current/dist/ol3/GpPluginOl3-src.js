@@ -9,8 +9,8 @@
  * copyright CeCILL-B
  * copyright IGN
  * @author IGN
- * @version 1.0.0
- * @date 2018-04-05
+ * @version 1.1.0
+ * @date 2018-04-09
  *
  */
 /*!
@@ -14469,7 +14469,7 @@ Ol3LayersSourceWMTS = function (ol, WMTSExtended, Gp, GfiUtils, Utils, Config, L
             this._legends = wmtsParams.legends;
             this._metadata = wmtsParams.metadata;
             var wmtsSourceOptions = {
-                url: Gp.Helper.normalyzeUrl(wmtsParams.url.replace(/(http|https):\/\//, protocol), { 'gp-ol3-ext': '1.0.0' }, false),
+                url: Gp.Helper.normalyzeUrl(wmtsParams.url.replace(/(http|https):\/\//, protocol), { 'gp-ol3-ext': '1.1.0' }, false),
                 version: wmtsParams.version,
                 style: wmtsParams.styles,
                 format: wmtsParams.format,
@@ -14527,7 +14527,7 @@ Ol3LayersSourceWMS = function (ol, Gp, Utils, Config) {
             var ctx = typeof window !== 'undefined' ? window : typeof self !== 'undefined' ? self : null;
             var protocol = ctx ? ctx.location && ctx.location.protocol && ctx.location.protocol.indexOf('https:') === 0 ? 'https://' : 'http://' : options.ssl ? 'https://' : 'http://';
             var wmsSourceOptions = {
-                url: Gp.Helper.normalyzeUrl(wmsParams.url.replace(/(http|https):\/\//, protocol), { 'gp-ol3-ext': '1.0.0' }, false),
+                url: Gp.Helper.normalyzeUrl(wmsParams.url.replace(/(http|https):\/\//, protocol), { 'gp-ol3-ext': '1.1.0' }, false),
                 params: {
                     SERVICE: 'WMS',
                     LAYERS: options.layer,
@@ -29959,8 +29959,8 @@ Ol3ControlsMeasuresMeasureAzimuth = function (ol, woodman, Utils, MeasureToolBox
     return MeasureAzimuth;
 }(ol, {}, CommonUtils, Ol3ControlsMeasureToolBox, Ol3ControlsMeasuresMeasures, CommonControlsMeasureAzimuthDOM, CommonUtilsSelectorID);
 Ol3GpPluginOl3 = function (ol, Gp, LayerUtils, Register, ProxyUtils, GfiUtils, Utils, KML, WMTS, CRS, SourceWMTS, SourceWMS, LayerWMTS, LayerWMS, LayerSwitcher, GetFeatureInfo, SearchEngine, MousePosition, Drawing, Route, Isocurve, ReverseGeocode, LayerImport, GeoportalAttribution, Markers, ElevationPath, MeasureLength, MeasureArea, MeasureAzimuth) {
-    Gp.ol3extVersion = '1.0.0';
-    Gp.ol3extDate = '2018-04-05';
+    Gp.ol3extVersion = '1.1.0';
+    Gp.ol3extDate = '2018-04-09';
     Gp.olUtils = Utils;
     Gp.LayerUtils = LayerUtils;
     Gp.ProxyUtils = ProxyUtils;
