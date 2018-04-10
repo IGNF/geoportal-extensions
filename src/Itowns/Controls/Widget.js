@@ -1,125 +1,120 @@
-define([], function () {
+/**
+* @classdesc
+* iTowns Widget class.
+* Every geoportal control inherits of this class.
+*
+* @constructor
+* @alias itowns.control.Widget
+* @param {Object} options - options for function call.
+* @param {String}  options.name - Name of the widget.
+* @param {Object}  options.element - HTML element of the widget
+* @param {Object}  options.target - HTML element where to put the widget
+* @param {String}  options.position - "absolute" or "relative"
+* @example
+* var myWidget = new itowns.control.Widget({
+*      name : "myWidget",
+*      element : myWidgetDiv,
+*      target : myWidgetTargetDiv,
+*      position: "absolute"
+* });
+*/
+function Widget (options) {
+    this.name = null;
+    this._element = null;
+    this._target = null;
+    this._globe = null;
 
-    "use strict";
+    this.setOptions(options);
+}
 
-    /**
-     * @classdesc
-     * iTowns Widget class. 
-     * Every geoportal control inherits of this class.
-     *
-     * @constructor
-     * @alias itowns.control.Widget
-     * @param {Object} options - options for function call.
-     * @param {String}  options.name - Name of the widget.
-     * @param {Object}  options.element - HTML element of the widget
-     * @param {Object}  options.target - HTML element where to put the widget
-     * @param {String}  options.position - "absolute" or "relative"
-     * @example
-     * var myWidget = new itowns.control.Widget({
-     *      name : "myWidget",
-     *      element : myWidgetDiv,
-     *      target : myWidgetTargetDiv,
-     *      position: "absolute"
-     * });
-     */
-    function Widget (options) {
-        this.name = null;
-        this._element = null;
-        this._target = null;
-        this._globe = null;
+/**
+ * Constructor (alias)
+ */
+Widget.prototype.constructor = Widget;
 
-        this.setOptions(options);
+/**
+ * Return the widget's container element.
+ *
+ * @method
+ * @return {HTMLElement} widget's container element.
+ */
+Widget.prototype.getElement = function getElement () {
+    return this._element;
+};
+
+/**
+ * Associates the widget to a specified target div.
+ *
+ * @method
+ * @param {HTMLElement} targetDiv - widget target div.
+ * @param {String} position - html position attribute.
+ */
+Widget.prototype.setTarget = function setTarget (targetDiv, position) {
+    if (!targetDiv) {
+        return;
     }
 
-    /**
-     * Constructor (alias)
-     */
-    Widget.prototype.constructor = Widget;
+    if (position && position !== "absolute" && position !== "relative") {
+        console.log("[ERROR] Widget:setTarget - position value should be 'absolute' or 'relative'");
+        return;
+    }
 
-    /**
-     * Return the widget's container element.
-     *
-     * @method
-     * @return {HTMLElement} widget's container element.
-    */
-    Widget.prototype.getElement = function getElement () {
-        return this._element;
-    };
+    if (this._target && this._element) {
+        this._target.removeChild(this._element);
+    }
 
-    /**
-     * Associates the widget to a specified target div.
-     *
-     * @method
-     * @param {HTMLElement} targetDiv - widget target div.
-     * @param {String} position - html position attribute.
-    */
-    Widget.prototype.setTarget = function setTarget (targetDiv, position) {
-        if (!targetDiv) {
-            return;
-        }
+    this._target = targetDiv;
 
-        if (position && position !== "absolute" && position !== "relative") {
-            console.log("[ERROR] Widget:setTarget - position value should be 'absolute' or 'relative'");
-            return;
-        }
+    if (!this._element) {
+        console.log("[ERROR] Widget:setTarget - widget element not created");
+        return;
+    }
 
-        if ( this._target && this._element ) {
-            this._target.removeChild(this._element);
-        }
+    this._element.style.position = position || "relative";
 
-        this._target = targetDiv;
+    targetDiv.appendChild(this._element);
+};
 
-        if (!this._element) {
-            console.log("[ERROR] Widget:setTarget - widget element not created");
-            return;
-        }
+/**
+ * Return the widget's target div.
+ *
+ * @method
+ * @return {HTMLElement} widget's target div.
+ */
+Widget.prototype.getTarget = function getTarget () {
+    return this._target;
+};
 
-        this._element.style.position =  position || "relative";
+/**
+ * Change the options of the widget.
+ *
+ * @method
+ * @param {Object} options - The new options of the control.
+ */
+Widget.prototype.setOptions = function setOptions (options) {
+    this.name = options.name;
+    this._element = options.element;
+    this.setTarget(options.target, options.position);
+};
 
-        targetDiv.appendChild(this._element);
-    };
+/**
+ * Get the globe associated with the widget. Undefined if the widget is not added to a globe.
+ *
+ * @method
+ * @return {Object} globe
+ */
+Widget.prototype.getGlobe = function getGlobe () {
+    return this._globe;
+};
 
-    /**
-     * Return the widget's target div.
-     *
-     * @method
-     * @return {HTMLElement} widget's target div.
-    */
-    Widget.prototype.getTarget = function getTarget () {
-        return this._target;
-    };
+/**
+ * Associate a globe to the widget.
+ *
+ * @method
+ * @param {Object} globe - Globe to associate to the widget.
+ */
+Widget.prototype.setGlobe = function setGlobe (globe) {
+    this._globe = globe;
+};
 
-    /**
-     * Change the options of the widget.
-     *
-     * @method
-     * @param {Object} options - The new options of the control.
-     */
-    Widget.prototype.setOptions = function setOptions (options) {
-        this.name = options.name;
-        this._element = options.element;
-        this.setTarget(options.target, options.position);
-    };
-
-    /**
-     * Get the globe associated with the widget. Undefined if the widget is not added to a globe.
-     *
-     * @method
-     * @return {Object} globe
-     */
-    Widget.prototype.getGlobe = function getGlobe () {
-        return this._globe;
-    };
-
-    /**
-     * Associate a globe to the widget.
-     *
-     * @method
-     * @param {Object} globe - Globe to associate to the widget.
-     */
-    Widget.prototype.setGlobe = function setGlobe (globe) {
-        this._globe = globe;
-    };
-
-    return Widget;
-});
+export default Widget;

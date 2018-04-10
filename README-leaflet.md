@@ -1,5 +1,7 @@
 # Extension Géoportail pour Leaflet
 
+[![release](https://img.shields.io/badge/release%20-leaflet%201.0.0-brightgreen.svg?style=flat)](https://github.com/IGNF/geoportal-extensions/releases/tag/leaflet-1.0.0)
+
 L'extension Géoportail pour Leaflet propose les fonctionnalités suivantes à utiliser en complément de la biblothèque [Leaflet](http://leafletjs.com/) :
 
 * [affichage des couches WMTS Géoportail](#WMTS)
@@ -48,7 +50,6 @@ L'extension Géoportail pour Leaflet comprend l'arborescence de fichiers suivant
     GpPluginLeaflet.css        (version minifiée des css pour une utilisation en production)
     GpPluginLeaflet-src.js     (version non minifiée du code javascript pour une utilisation en développement)
     GpPluginLeaflet-src.css    (version non minifiée des css pour une utilisation en développement)
-    img/                       (resources images utilisées par les fichiers CSS)
 ```
 
 Les scripts de Leaflet s'obtiennent sur [la page de téléchargement de Leaflet](http://leafletjs.com/download.html).

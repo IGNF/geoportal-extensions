@@ -46,8 +46,7 @@ cf. [COMPILE.md](COMPILE.md) pour plus d'infos.
 Les commandes :
 
 ``` bash
-gulp build [--ol3][--leaflet][--itowns][--production]
-gulp publish
+npm run build:[ol|leaflet|itowns][:prod]
 ```
 
 Vous permettent de générer les binaires de l'extension cible et de les placer dans le répertoire *dist/*. Des pages html de test d'utilisation sont dans le répertoire *samples-src/*. Elles utilisent les binaires présents dans le répertoire *dist/*.
@@ -55,16 +54,16 @@ Vous permettent de générer les binaires de l'extension cible et de les placer 
 La commande :
 
 ``` bash
-gulp server [--ol3][--leaflet]
+npm run test[:serve]
 ```
 
-Lance un navigateur avec les pages d'exemples servies sur l'adresse http://localhost:9000/samples/index-[ol3][leaflet].html
+Lance un navigateur avec les pages d'exemples servies sur l'adresse http://localhost:9001/
 
 
-- Suivez les règles de codage du projet. Elles sont définies dans les fichiers : .jscsrc (style et convention de codage) et .jshintrc (syntaxe javascript). Vous pouvez vérifier le bon respect de ces règles en lançant la tache :
+- Suivez les règles de codage du projet. Elles sont définies dans le fichier : .eslintrc (style et convention de codage + syntaxe javascript). Vous pouvez vérifier le bon respect de ces règles en lançant la tache :
 
 ``` bash
-gulp check
+npm run build:[ol|leaflet|itowns]
 ```
 
 - Vérifiez, ajoutez ou adaptez les tests si nécessaire.
@@ -74,14 +73,14 @@ gulp check
 
 - Ajoutez ou modifiez la `documentation` si nécessaire. Si votre PR apporte une modification d'interface à la bibliothèque, mettez à jour la jsDoc en conséquences et vérifiez quelle est bien prise en compte.
 
-La commande 
+La commande
 
 ``` bash
-gulp doc
+npm run doc:serve
 ```
 
-Vous permet de générer la jsDoc du projet dans le répertoire *target/doc/*
-
+Vous permet de générer la jsDoc du projet dans le répertoire *jsdoc/*.
+Un navigateur se lance avec la jsoc servie sur l'adresse http://localhost:9001/
 
 - Rajoutez vous dans le fichier [CONTRIBUTORS.md](CONTRIBUTORS.md]) si vous n'y êtes pas déjà.
 
@@ -115,5 +114,4 @@ avec les liens les plus utiles :
   https://help.github.com/articles/interactive-rebase
 
 Un exemple de contribution sur un projet (en français) :
-https://git-scm.com/book/fr/v2/GitHub-Contribution-%C3%A0-un-projet 
-
+https://git-scm.com/book/fr/v2/GitHub-Contribution-%C3%A0-un-projet

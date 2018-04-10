@@ -1,0 +1,8 @@
+# /node_modules/* and /bower_components/* in the project root are ignored by default
+
+# Ignore tests and samples files
+samples-src/*
+test/*
+
+# Ignore webpack.config files
+webpack.*

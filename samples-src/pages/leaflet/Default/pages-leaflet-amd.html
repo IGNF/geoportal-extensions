@@ -22,38 +22,22 @@
 {{#content "js"}}
         <script type="text/javascript">
           var map;
-          requirejs(
-            [
-              'gp',
-              'Leaflet/Layers/Layers',
-              'Leaflet/Controls/Route',
-              'Leaflet/Controls/LayerSwitcher',
-              'Leaflet/Controls/ReverseGeocoding',
-              'Leaflet/Controls/MousePosition',
-              'Leaflet/Controls/Isocurve',
-              'Leaflet/Controls/ElevationPath',
-              'Leaflet/Controls/SearchEngine'
-            ],
-            function (
-              Gp,
-              Layers,
-              Route,
-              LayerSwitcher,
-              ReverseGeocoding,
-              MousePosition,
-              Isocurve,
-              ElevationPath,
-              SearchEngine
-            ) {
+          requirejs([
+            'leaflet',
+            'Gp',
+          ], function (
+            L,
+            Gp
+          ) {
 
               Gp.Services.getConfig({
-                serverUrl : "{{ config.resources }}/AutoConf.js",
+                serverUrl : "{{ resources }}/AutoConf.js",
                 callbackSuffix : "",
                 // apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
                 timeOut : 20000,
                 onSuccess : function () {
 
-                  var wms = Layers.WMS({
+                  var wms = L.geoportalLayer.WMS({
                     layer : "ORTHOIMAGERY.ORTHOPHOTOS",
                   });
 
@@ -64,19 +48,19 @@
 
                   wms.addTo(map);
 
-                  var switcher = new LayerSwitcher();
+                  var switcher = new L.geoportalControl.LayerSwitcher();
                   map.addControl(switcher);
-                  var route = new Route();
+                  var route = new L.geoportalControl.Route();
                   map.addControl(route);
-                  var search = new SearchEngine();
+                  var search = new L.geoportalControl.SearchEngine();
                   map.addControl(search);
-                  var rev = new ReverseGeocoding();
+                  var rev = new L.geoportalControl.ReverseGeocode();
                   map.addControl(rev);
-                  var mouse = new MousePosition();
+                  var mouse = new L.geoportalControl.MousePosition();
                   map.addControl(mouse);
-                  var iso = new Isocurve();
+                  var iso = new L.geoportalControl.Isocurve();
                   map.addControl(iso);
-                  var el = new ElevationPath();
+                  var el = new L.geoportalControl.ElevationPath();
                   map.addControl(el);
                 }
               });

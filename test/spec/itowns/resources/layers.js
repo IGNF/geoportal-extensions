@@ -1,0 +1,194 @@
+
+var layerOrtho = {
+    "type": "color",
+    "protocol":   "wmts",
+    "id":         "Ortho",
+    "url":        "http://wxs.ign.fr/"+apiKey+"/geoportail/wmts",
+    "updateStrategy": {
+        "type": "0",
+        "options": {}
+    },
+    "networkOptions" : {
+        "crossOrigin" : "omit"
+    },
+    "options": {
+        "originators" :  [{
+            "name" : "IGN GE",
+            "attribution" : "IGN Grandes Echelles",
+            "url" : "http://www.ign.fr",
+            "constraints" : [{
+                "crs":"EPSG:4326"
+            }]
+        },
+        {
+            "name" : "IGN PE",
+            "url" : "http://www.ign.fr",
+            "constraints" : [{
+                "crs":"EPSG:4326",
+                "bbox":{
+                    "left":-173.154,
+                    "right":173.837,
+                    "top":90,
+                    "bottom":-90
+                },
+                "maxScaleDenominator":559082264,
+                "minScaleDenominator":272990
+            }]
+        },
+                {
+            "name" : "OSM NE",
+            "url" : "http://www.openstreetmap.org/",
+            "constraints" : [{
+                "crs":"EPSG:4326",
+                "bbox":{"left":2.3,"right":10,"top":51.093,"bottom":48.8}
+            }]
+                },
+                {
+              "name" : "OSM NW",
+              "url" : "http://www.openstreetmap.org/",
+              "constraints" : [{
+                  "crs":"EPSG:4326",
+                  "bbox":{"left":-10,"right":2.3,"top":51.093,"bottom":48.8}
+              }]
+        },
+                {
+              "name" : "OSM SW",
+              "url" : "http://www.openstreetmap.org/",
+              "constraints" : [{
+                  "crs":"EPSG:4326",
+                  "bbox":{"left":-10,"right":2.3,"top":48.8,"bottom":-21.39}
+              }]
+        },
+                {
+                         "name" : "OSM SE",
+                         "url" : "http://www.openstreetmap.org/",
+                         "constraints" : [{
+                                 "crs":"EPSG:4326",
+                                 "bbox":{"left":2.3,"right":55.837,"top":48.8,"bottom":-21.39}
+                         }]
+                }],
+        "attribution" : {
+            "name":"IGN",
+            "url":"http://www.ign.fr/"
+        },
+        "name": "ORTHOIMAGERY.ORTHOPHOTOS",
+        "mimetype": "image/jpeg",
+        "tileMatrixSet": "PM",
+        "tileMatrixSetLimits": {
+            "2": {
+                "minTileRow": 0,
+                "maxTileRow": 4,
+                "minTileCol": 0,
+                "maxTileCol": 4
+            },
+            "3": {
+                "minTileRow": 0,
+                "maxTileRow": 8,
+                "minTileCol": 0,
+                "maxTileCol": 8
+            },
+            "4": {
+                "minTileRow": 0,
+                "maxTileRow": 16,
+                "minTileCol": 0,
+                "maxTileCol": 16
+            },
+            "5": {
+                "minTileRow": 0,
+                "maxTileRow": 32,
+                "minTileCol": 0,
+                "maxTileCol": 32
+            },
+            "6": {
+                "minTileRow": 1,
+                "maxTileRow": 64,
+                "minTileCol": 0,
+                "maxTileCol": 64
+            },
+            "7": {
+                "minTileRow": 3,
+                "maxTileRow": 128,
+                "minTileCol": 0,
+                "maxTileCol": 128
+            },
+            "8": {
+                "minTileRow": 7,
+                "maxTileRow": 256,
+                "minTileCol": 0,
+                "maxTileCol": 256
+            },
+            "9": {
+                "minTileRow": 15,
+                "maxTileRow": 512,
+                "minTileCol": 0,
+                "maxTileCol": 512
+            },
+            "10": {
+                "minTileRow": 31,
+                "maxTileRow": 1024,
+                "minTileCol": 0,
+                "maxTileCol": 1024
+            },
+            "11": {
+                "minTileRow": 62,
+                "maxTileRow": 2048,
+                "minTileCol": 0,
+                "maxTileCol": 2048
+            },
+            "12": {
+                "minTileRow": 125,
+                "maxTileRow": 4096,
+                "minTileCol": 0,
+                "maxTileCol": 4096
+            },
+            "13": {
+                "minTileRow": 2739,
+                "maxTileRow": 4628,
+                "minTileCol": 41,
+                "maxTileCol": 7917
+            },
+            "14": {
+                "minTileRow": 5478,
+                "maxTileRow": 9256,
+                "minTileCol": 82,
+                "maxTileCol": 15835
+            },
+            "15": {
+                "minTileRow": 10956,
+                "maxTileRow": 18513,
+                "minTileCol": 165,
+                "maxTileCol": 31670
+            },
+            "16": {
+                "minTileRow": 21912,
+                "maxTileRow": 37026,
+                "minTileCol": 330,
+                "maxTileCol": 63341
+            },
+            "17": {
+                "minTileRow": 43825,
+                "maxTileRow": 74052,
+                "minTileCol": 660,
+                "maxTileCol": 126683
+            },
+            "18": {
+                "minTileRow": 87651,
+                "maxTileRow": 148105,
+                "minTileCol": 1320,
+                "maxTileCol": 253366
+            },
+            "19": {
+                "minTileRow": 175302,
+                "maxTileRow": 294060,
+                "minTileCol": 170159,
+                "maxTileCol": 343473
+            },
+            "20": {
+                "minTileRow": 376733,
+                "maxTileRow": 384679,
+                "minTileCol": 530773,
+                "maxTileCol": 540914
+            }
+        }
+    }
+}

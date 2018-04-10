@@ -1,33 +1,31 @@
 language: node_js
 node_js:
-  - "6"
+  - "8"
 stages:
   - name: deploy
     # require the branch name to be master
     if: branch = master
 before_script:
-  - npm install
+  - npm run setup
 script:
-  ./build.sh -a
+  - npm run build:ol
+  - npm run build:leaflet
+  - npm run build:itowns
+  - npm run build:mix
+  - npm run build:ol:prod
+  - npm run build:leaflet:prod
+  - npm run build:itowns:prod
+  - npm run build:mix:prod
 cache:
   directories:
     - node_modules
 before_deploy:
-    - git clone https://github.com/IGNF/geoportal-extensions --branch gh-pages deploy/
-    - mkdir -p deploy/current/
-    - cp -r target/build/Itowns/dist deploy/current/
-    - cp -r target/build/Ol3/dist deploy/current/
-    - cp -r target/build/Leaflet/dist deploy/current/
-    - cp -r target/build/Mix/dist deploy/current/
+    - git clone https://github.com/IGNF/geoportal-extensions.git --branch gh-pages deploy/
+    - mkdir -p deploy/current/dist/
+    - cp -r dist/. deploy/current/dist
     - mkdir -p deploy/current/jsdoc/
-    - cp -r target/build/Leaflet/jsdoc/. deploy/current/jsdoc/leaflet/
-    - cp -r target/build/Ol3/jsdoc/. deploy/current/jsdoc/ol3/
-    - cp -r target/build/Itowns/jsdoc/. deploy/current/jsdoc/itowns/
+    - cp -r jsdoc/. deploy/current/jsdoc
 deploy:
-  # fix : https://github.com/travis-ci/travis-ci/issues/9312
-  # ...wait for v1.9.1
-  edge:
-    branch: v1.8.47
   provider: pages
   skip-cleanup: true
   github-token: $ghkey  # Set in travis-ci.org dashboard, marked secure

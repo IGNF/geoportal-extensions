@@ -1,7 +1,7 @@
 
 # Compilation du projet
-
-[![Gulp build](https://img.shields.io/badge/build%20with-GULP-brightgreen.svg)](https://img.shields.io/badge/build%20with-GULP-brightgreen.svg)
+[![WEBPACK build](https://img.shields.io/badge/build%20with-WEBPACK-brightgreen.svg)](https://img.shields.io/badge/build%20with-WEBPACK-brightgreen.svg)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com)
 
 ## Prérequis (outils)
 
@@ -64,81 +64,77 @@ Possibilité d'utiliser le terminal de _Visual Studio Code_ dans le menu
 _Affichage > Integred Terminal_
 Pour plus d'information, cf. https://code.visualstudio.com/docs/editor/integrated-terminal
 
-## Commande de compilation
+## Commandes via NPM
 
-### Installation des dépendances via NPM
+Liste des targets disponibles :
+
+    npm run <target> <option>
+        target : (clean), setup,
+                 build[:ol|:leaflet|:itowns|:mix][:prod],
+                 sample, (doc)
+                 sample:serve, doc:serve
+        option : --env.production, (--env.clean)
+                 --env.leaflet, --env.openlayers, --env.itowns, --env.mix
+
+### Installation des dépendances
 
 **ouvrir une console :**
 
     npm install
 
-> **Note :** --*Windows only!*--
-Si votre connexion ne permet pas de télécharger _PhantomJS_, il est possible de
-le récuperer sur cette URL : http://phantomjs.org/download.html
-Puis, relancer l'installation...
+Si vous passez par les commandes du package.json, les dépendances sont installées via
+la target suivante :
 
-> **Attention :** --*Windows only!*--
-Pour installation manuelle, ne pas oublier de mettre l'executable _phantomjs.exe_
-dans l'environnement d'execution de windows (ex. https://www.java.com/fr/download/help/path.xml)
+**ouvrir une console :**
 
-### Installation d'une version spécifique d'une dépendance via NPM
+    npm run setup
 
-Orienté developpement
+
+### Installation d'une version spécifique d'une dépendance
+
+Orienté developpement :
 
 **ouvrir une console :**
 
     // branche master du depot "IGNF/geoportal-access-lib" (dev)
     npm install https://github.com/IGNF/geoportal-access-lib/tarball/master --no-save
 
-Upgrade de version
+Upgrade de version :
 
 **ouvrir une console :**
 
     // publication openlayers en version 4.4.4
     npm install openlayers@4.4.4 --no-save
 
-### Compilation via GULP
 
-**ouvrir une console :**
+### Compilation
 
-    gulp [--production] [--leaflet] [--ol3]
+**ouvrir une console (ex. avec openlayers) :**
+
+    npm run build (par défaut, openlayers)
+    ou npm run build:ol
+    ou npm run build -- --env.openlayers
+    ou npm run build:ol:prod
+    ou npm run build -- --env.production
+    ou npm run build -- --env.production --env.openlayers
 
 Les *bundles* sont disponibles dans le répertoire :
 
-```
-> gulp --production --leaflet --ol3
-> gulp publish
-> tree dist/
-dist/
-├── leaflet
-│   ├── GpPluginLeaflet.css
-│   ├── GpPluginLeaflet.js
-│   └── img
-│       ├── GPlayerInfoClose.png
-│       ├── GPlayerInfo.png
-│       ├── GPlayerTools.png
-│       ├── GPopacitySlider.png
-│       ├── GPshowLayersList.png
-│       └── ...
-└── ol3
-    ├── GpPluginOl3.css
-    ├── GpPluginOl3.js Leaflet
-    └── img
-        ├── GPlayerInfoClose.png
-        ├── GPlayerInfo.png
-        ├── GPlayerTools.png
-        ├── GPopacitySlider.png
-        ├── GPshowLayersList.png
-        └── ...
-```
+	dist/openlayers/GpPluginOpenLayers.js
+    dist/openlayers/GpPluginOpenLayers.css
+	dist/openlayers/GpPluginOpenLayers-src.js
+	dist/openlayers/GpPluginOpenLayers-src.js.map
+	dist/openlayers/GpPluginOpenLayers-src.css
+    (...)
 
-#### Erreur de fin de lignes
+Les sources sont validées (jshint, jscs et/ou eslint).
+La jsoc, les tests et les exemples sont générés.
 
-Si vous avez des erreurs de parsing tel que **Invalid line break**, vous devez
-modifier le paramètre du fichier _.jscs_ :
-> validateLineBreaks : { character : "CRLF" }
+#### JSDOC
 
-#### Exécution de la JSDOC
+#### Construction de la JSDOC
+
+La jsdoc est générée lors du build dans le répertoire *jsdoc*.
 
 Sous *Windows*, il est possible que la *JSDoc* ne soit pas compilée correctement
 (problème de *path* du binaire), on peut l’exécuter manuellement :
@@ -147,36 +143,44 @@ Sous *Windows*, il est possible que la *JSDoc* ne soit pas compilée correctemen
 
     node_modules\.bin\jsdoc -c jsdoc.json
 
-#### Publication
+#### Ouvrir la JSDOC sur un navigateur
 
 **ouvrir une console :**
 
-    gulp publish
+    npm run doc:serve
+    ou npm run doc:serve -- --env.openlayers
 
-### Exécution des exemples *Leaflet*
+Le navigateur s'ouvre sur la page de la JSDOC sur l'URL suivante :
+http://localhost:9001/
+
+### Les exemples
+
+#### Construction des exemples
+
+Les exemples sont générées lors du build dans le répertoire *samples*.
+Mais il est aussi possible de les executer autrement :
 
 **ouvrir une console :**
 
-    gulp server --leaflet
+    npm run sample
+    ou npm run sample -- --env.production --env.clean
+    ou npm run sample -- --env.itowns
+
+#### Ouvrir les exemples sur un navigateur
+
+**ouvrir une console :**
+
+    npm run sample:serve
+    ou npm run sample:serve -- --env.itowns
 
 Le navigateur s'ouvre sur la page des exemples sur l'URL suivante :
-http://localhost:9001/samples/index-leaflet.html
+http://localhost:9001/
 
-### Exécution des exemples *OpenLayers*
-
-**ouvrir une console :**
-
-    gulp server --ol3
-
-Le navigateur s'ouvre sur la page des exemples sur l'URL suivante :
-http://localhost:9001/samples/index-ol3.html
-
-### Exécution des tests
+### Les tests de rendu
 
 **ouvrir une console :**
 
-    gulp test
-
-> **Note :**
-> Pas de taches d’exécution des tests unitaires en mode **browser**
-(uniquement en mode **console**)
+    cd test_rendering
+    npm install
+    node server.js
+    npm run test[:ol|:it|:ll]

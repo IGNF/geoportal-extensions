@@ -43,9 +43,22 @@ nb-configuration.xml
 /node_modules/
 /dist/
 /samples/
-/lib/
+/samples/itowns/
+/samples/leaflet/
+/samples/openlayers/
+/samples/resources/
+/samples/*.html
+/jsdoc/
+/tests/
 /test_rendering/node_modules/
+
+# add other directories to ignore
+/samples-old/
+/tests-old/
 
 # Files #
 #########
 package-lock.json
+#_TODO.md
+#_FIXME.md
+#_TARGET.md

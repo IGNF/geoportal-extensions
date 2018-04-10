@@ -1,0 +1,24 @@
+{
+  "name": "geoportal-extensions-openlayers",
+  "version": "2.0.0",
+  "description": "French Geoportal Extensions for OpenLayers",
+  "main": "dist/GpPluginOpenLayers.js",
+  "directories": {},
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/IGNF/geoportal-extensions.git"
+  },
+  "author": "IGNF",
+  "keywords": [
+    "geoportail",
+    "plugin",
+    "javascript",
+    "OpenLayers"
+  ],
+  "license": "CECILL-B",
+  "bugs": {},
+  "homepage": "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
+  "dependencies": {},
+  "devDependencies": {}
+}

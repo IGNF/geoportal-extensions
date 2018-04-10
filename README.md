@@ -1,5 +1,7 @@
 # Extensions Géoportail
 
+[![Build Status](https://img.shields.io/travis/IGNF/geoportal-extensions/master.svg)](https://travis-ci.org/IGNF/geoportal-extensions)
+
 Ce projet a pour but de fournir des extensions facilitant l'accès aux ressources de la plateforme Géoportail pour les bibliothèques cartographiques Leaflet, OpenLayers (versions 3 et supérieures) et iTowns.
 
 Ces extensions proposent des classes et widgets utilisables en complément de la bibliothèque cartographique qu'elles étendent, permettant notamment :
@@ -25,7 +27,7 @@ Voir le détail des [fonctionnalités proposées par l'extension Géoportail pou
 
 ## OPENLAYERS
 
-Voir le détail des [fonctionnalités proposées par l'extension Géoportail pour OpenLayers](README-ol3.md)
+Voir le détail des [fonctionnalités proposées par l'extension Géoportail pour OpenLayers](README-openlayers.md)
 
 
 ## ITOWNS

@@ -21,24 +21,22 @@
 
 {{#content "js"}}
         <script type="text/javascript">
-          requirejs([
-            'gp',
-            'Leaflet/Layers/Layers',
-            'Leaflet/Controls/SearchEngine'
-          ], function (
-            Gp,
-            Layers,
-            SearchEngine
-          ) {
+        requirejs([
+          'leaflet',
+          'Gp',
+        ], function (
+          L,
+          Gp
+        ) {
 
             Gp.Services.getConfig({
-              serverUrl : "{{ config.resources }}/AutoConf.js",
+              serverUrl : "{{ resources }}/AutoConf.js",
               callbackSuffix : "",
               // apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
               timeOut : 20000,
               onSuccess : function () {
 
-                var wms = Layers.WMS({
+                var wms = L.geoportalLayer.WMS({
                   layer : "ORTHOIMAGERY.ORTHOPHOTOS",
                 });
 
@@ -49,7 +47,7 @@
 
                 wms.addTo(map);
 
-                var search = new SearchEngine({
+                var search = new L.geoportalControl.SearchEngine({
                   geocodeOptions : {},
                   autocompleteOptions : {
                     serviceOptions : {},

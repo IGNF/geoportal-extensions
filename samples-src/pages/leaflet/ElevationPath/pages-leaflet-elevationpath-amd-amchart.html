@@ -1,7 +1,7 @@
 {{#extend "layout-leaflet-sample-amd"}}
 
 {{#content "vendor"}}
-        <script src="{{ config.resources }}/vendor/amCharts-min.js"></script>
+        <script src="{{ resources }}/vendor/amCharts-min.js"></script>
 {{/content}}
 
 {{#content "head"}}
@@ -26,23 +26,21 @@
 {{#content "js"}}
         <script type="text/javascript">
           requirejs([
-            'gp',
-            'Leaflet/Layers/Layers',
-            'Leaflet/Controls/ElevationPath'
+            'leaflet',
+            'Gp'
           ], function (
-            Gp,
-            Layers,
-            ElevationPath
+            L,
+            Gp
           ) {
 
             Gp.Services.getConfig({
-              serverUrl : "{{ config.resources }}/AutoConf.js",
+              serverUrl : "{{ resources }}/AutoConf.js",
               callbackSuffix : "",
               // apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
               timeOut : 20000,
               onSuccess : function () {
 
-                var wms = Layers.WMS({
+                var wms = L.geoportalLayer.WMS({
                   layer : "ORTHOIMAGERY.ORTHOPHOTOS",
                 });
 
@@ -53,10 +51,10 @@
 
                 wms.addTo(map);
 
-                var search = new ElevationPath({
+                var search = new L.geoportalControl.ElevationPath({
                   active : true,
                   displayProfileOptions : {
-                    apply : ElevationPath.DISPLAY_PROFILE_LIB_AMCHARTS,
+                    apply : L.geoportalControl.ElevationPath.DISPLAY_PROFILE_LIB_AMCHARTS,
                     target : null, // par defaut
                     meanSlope : false,
                     greaterSlope : false,

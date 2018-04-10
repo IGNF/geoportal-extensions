@@ -1,0 +1,93 @@
+{
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module"
+    },
+    "env": {
+        "browser": true,
+        "node": true,
+        "es6": true
+    },
+    "extends": "standard",
+    "plugins": [],
+    "globals": {
+        "document": false,
+        "navigator": false,
+        "window": false
+    },
+    "rules": {
+        "curly": "error",
+        "key-spacing": [
+            "error",
+            {
+                "beforeColon": true,
+                "afterColon": true
+            }
+        ],
+        "keyword-spacing": [
+            "error",
+            {
+                "before": true,
+                "after": true
+            }
+        ],
+        "indent": [
+            "error",
+            4,
+            {
+                "SwitchCase": 1
+            }
+        ],
+        "no-console": "warn",
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],
+        "padded-blocks": [
+            "error",
+            {
+                "blocks": "never",
+                "switches": "never",
+                "classes": "always"
+            }
+        ],
+        "prefer-promise-reject-errors": [
+            "warn",
+            {
+                "allowEmptyReject": true
+            }
+        ],
+        "quotes": [
+            "error",
+            "double"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "space-before-function-paren": [
+            "error",
+            "always"
+        ],
+        "space-unary-ops": [
+            "error",
+            {
+                "words": true,
+                "nonwords": false
+            }
+        ],
+        "valid-jsdoc": [
+            "warn",
+            {
+                "preferType": {
+                    "boolean": "Boolean",
+                    "number": "Number",
+                    "object": "Object",
+                    "string": "String",
+                    "array": "Array"
+                },
+                "requireReturn": false
+            }
+        ]
+    }
+}

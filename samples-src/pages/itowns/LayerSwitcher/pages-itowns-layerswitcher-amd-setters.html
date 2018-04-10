@@ -1,8 +1,8 @@
 {{#extend "layout-itowns-sample-amd"}}
 
 {{#content "head"}}
-    <script> var apiKey = "{{ config.apikey }}"; </script>
-    <script src="{{ config.baseurl }}/samples-src/resources/itowns/layers.js"></script>
+    <script> var apiKey = "{{ apikey }}"; </script>
+    <script src="{{ baseurl }}/samples-src/resources/itowns/layers.js"></script>
     <title>Sample itowns LayerSwitcher</title>
 {{/content}}
 
@@ -75,10 +75,10 @@
         var itownsGlobal = null;
 
         const urlImageryLayers = [];
-        urlImageryLayers.push('{{ config.resources }}/itowns/JSONLayers/OrthosCRS.json');
-        urlImageryLayers.push('{{ config.resources }}/itowns/JSONLayers/Ortho.json');
-        urlImageryLayers.push('{{ config.resources }}/itowns/JSONLayers/ScanEX.json');
-        urlImageryLayers.push('{{ config.resources }}/itowns/JSONLayers/Region.json');
+        urlImageryLayers.push('{{ resources }}/itowns/JSONLayers/OrthosCRS.json');
+        urlImageryLayers.push('{{ resources }}/itowns/JSONLayers/Ortho.json');
+        urlImageryLayers.push('{{ resources }}/itowns/JSONLayers/ScanEX.json');
+        urlImageryLayers.push('{{ resources }}/itowns/JSONLayers/Region.json');
 
         const layersId = ["OrthoCRS","Ortho","ScanEX","Region"];
 
@@ -130,69 +130,69 @@
             return layerToChange.sequence;
         }
 
-        requirejs(
-            ["itowns", "proj4", "gp", "Itowns/GlobeViewExtended", "Itowns/Controls/LayerSwitcher"],
-            function (itowns, proj4, Gp, GlobeViewExtended, LayerSwitcher)
-        {
-            itowns.control = {};
-            itowns.control.LayerSwitcher = LayerSwitcher;
-            itowns.GlobeViewExtended = GlobeViewExtended;
+        requirejs([
+                "itowns",
+                "Gp"
+            ],
+            function (
+                itowns,
+                Gp
+            ){
+                var createMap = function() {
+                    /* global itowns,document,GuiTools*/
+                    const positionOnGlobe = { longitude: 2.3465, latitude: 48.88, altitude: 250000 };
 
-            var createMap = function() {
-                /* global itowns,document,GuiTools*/
-                const positionOnGlobe = { longitude: 2.3465, latitude: 48.88, altitude: 250000 };
+                    // iTowns namespace defined here
+                    const viewerDiv = document.getElementById('viewerDiv');
+                    globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
+                    itownsGlobal = itowns;
 
-                // iTowns namespace defined here
-                const viewerDiv = document.getElementById('viewerDiv');
-                globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
-                itownsGlobal = itowns;
+                    globeView.listen(itowns.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
+                        // ajout des couches
+                        var promises = [];
+                        promises.push( itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/IGN_MNT.json').then(result => globeView.addLayer(result)) );
+                        promises.push( itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/IGN_MNT_HIGHRES.json').then(result => globeView.addLayer(result)) );
+                        for ( var i = 0 ; i < urlImageryLayers.length ; ++i ) {
+                            promises.push( itowns.Fetcher.json(urlImageryLayers[i]).then(result => globeView.addLayer(result) ) );
+                        }
 
-                globeView.listen(itowns.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
-                    // ajout des couches
-                    var promises = [];
-                    promises.push( itowns.Fetcher.json('{{ config.resources }}/itowns/JSONLayers/IGN_MNT.json').then(result => globeView.addLayer(result)) );
-                    promises.push( itowns.Fetcher.json('{{ config.resources }}/itowns/JSONLayers/IGN_MNT_HIGHRES.json').then(result => globeView.addLayer(result)) );
-                    for ( var i = 0 ; i < urlImageryLayers.length ; ++i ) {
-                        promises.push( itowns.Fetcher.json(urlImageryLayers[i]).then(result => globeView.addLayer(result) ) );
-                    }
-
-                    Promise.all(promises).then( () => {
-                        // ajout du control
-                        var layerSwitcher = new itowns.control.LayerSwitcher({
-                            layers : [
-                                {
-                                    id : "Ortho",
-                                    config : {
-                                        title : "Couche de Photos IGNPO",
-                                        description : "Description de ma couche",
-                                        quicklookUrl : "lien/Vers/UnApercuRapide.png",
-                                        legends : [
-                                            {
-                                                url : "lien/Vers/UneLegende.png"
-                                            }
-                                        ],
-                                        metadata : [
-                                            {
-                                                url : "lien/Vers/Une/MetaDonnee.xml"
-                                            }
-                                        ]
+                        Promise.all(promises).then( () => {
+                            // ajout du control
+                            var layerSwitcher = new itowns.control.LayerSwitcher({
+                                layers : [
+                                    {
+                                        id : "Ortho",
+                                        config : {
+                                            title : "Couche de Photos IGNPO",
+                                            description : "Description de ma couche",
+                                            quicklookUrl : "lien/Vers/UnApercuRapide.png",
+                                            legends : [
+                                                {
+                                                    url : "lien/Vers/UneLegende.png"
+                                                }
+                                            ],
+                                            metadata : [
+                                                {
+                                                    url : "lien/Vers/Une/MetaDonnee.xml"
+                                                }
+                                            ]
+                                        }
                                     }
-                                }
-                            ]
+                                ]
+                            });
+                            globeView.addWidget( layerSwitcher );
                         });
-                        globeView.addWidget( layerSwitcher );
                     });
-                });
-            }
+                }
 
-            Gp.Services.getConfig({
-                // serverUrl : "./../resources/AutoConf.js",
-                // callbackSuffix : '',
-                apiKey : "{{ config.apikey }}",
-                timeOut : 20000,
-                onSuccess : createMap
+                Gp.Services.getConfig({
+                    // serverUrl : "./../resources/AutoConf.js",
+                    // callbackSuffix : '',
+                    apiKey : "{{ apikey }}",
+                    timeOut : 20000,
+                    onSuccess : createMap
+                });
             });
-        });
     </script>
 {{/content}}
 

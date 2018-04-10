@@ -9,12 +9,12 @@
     "echo": "node ./node_modules/backstopjs/cli/index.js echo",
     "genConfig": "node ./node_modules/backstopjs/cli/index.js genConfig",
     "openReport": "node ./node_modules/backstopjs/cli/index.js openReport",
-    "reference-ll": "node ./node_modules/backstopjs/cli/index.js --config backstop-ll.json reference",
-    "reference-ol": "node ./node_modules/backstopjs/cli/index.js --config backstop-ol.json reference",
-    "reference-it": "node ./node_modules/backstopjs/cli/index.js --config backstop-it.json reference",
-    "test-ll": "node ./node_modules/backstopjs/cli/index.js test --config backstop-ll.json",
-    "test-ol": "node ./node_modules/backstopjs/cli/index.js test --config backstop-ol.json",
-    "test-it": "node ./node_modules/backstopjs/cli/index.js test --config backstop-it.json"
+    "reference:ll": "node ./node_modules/backstopjs/cli/index.js --config backstop-ll.json reference",
+    "reference:ol": "node ./node_modules/backstopjs/cli/index.js --config backstop-ol.json reference",
+    "reference:it": "node ./node_modules/backstopjs/cli/index.js --config backstop-it.json reference",
+    "test:ll": "node ./node_modules/backstopjs/cli/index.js test --config backstop-ll.json",
+    "test:ol": "node ./node_modules/backstopjs/cli/index.js test --config backstop-ol.json",
+    "test:it": "node ./node_modules/backstopjs/cli/index.js test --config backstop-it.json"
   },
   "dependencies": {
     "backstopjs": "^3.0.25",

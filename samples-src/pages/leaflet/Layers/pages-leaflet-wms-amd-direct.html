@@ -22,25 +22,23 @@
 {{#content "js"}}
         <script type="text/javascript">
         var map;
-        requirejs(
-            [
-                "gp",
-                "Leaflet/Layers/WMS"
-            ],
-            function (
-                Gp,
-                WMS
-            ) {
+        requirejs([
+          'leaflet',
+          'Gp',
+        ], function (
+          L,
+          Gp
+        ) {
 
                 Gp.Services.getConfig({
-                    serverUrl : "{{ config.resources }}/AutoConf.js",
+                    serverUrl : "{{ resources }}/AutoConf.js",
                     callbackSuffix : "",
                     // apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
                     timeOut : 20000,
                     /** onsuccess */
                     onSuccess : function () {
 
-                        var wms = new WMS("http://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/geoportail/r/wms", {
+                        var wms = new L.geoportalLayer.WMS("http://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/geoportail/r/wms", {
                             paramsNative : {
                                 minZoom : 1,
                                 maxZoom : 21

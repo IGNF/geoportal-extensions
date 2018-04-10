@@ -1,20 +1,14 @@
         <!-- requirejs -->
-        <script src="{{ config.baseurl }}/node_modules/requirejs/require.js"></script>
+        <script src="{{ baseurl }}/node_modules/requirejs/require.js"></script>
         <script>
             /* global requirejs */
             requirejs.config({
-                'baseUrl' : "{{ config.baseurl }}/src/",
                 'paths': {
-                    "leaflet" : "../node_modules/leaflet/dist/leaflet{{ config.mode }}",
-                    "leaflet-draw" : "../node_modules/leaflet-draw/dist/leaflet.draw{{ config.mode }}",
-                    "gp"      : "../node_modules/geoportal-access-lib/dist/GpServices{{ config.mode }}",
-                    "proj4" : "../node_modules/proj4/dist/proj4{{ config.mode }}",
-                    "proj4leaflet" : "../node_modules/proj4leaflet/src/proj4leaflet",
-                    "woodman" : "../node_modules/woodman/dist/woodman-amd",
-                    "sortable": "../node_modules/sortablejs/Sortable"
+                    "leaflet" : "{{ baseurl }}/node_modules/leaflet/dist/leaflet{{ mode }}",
+                    "Gp"      : "{{ baseurl }}/dist/leaflet/GpPluginLeaflet{{ mode }}"
                 },
                 shim : {
-                    "leaflet-draw" : ["leaflet"]
+                    "Gp" : ["leaflet"]
                 }
             });
         </script>
