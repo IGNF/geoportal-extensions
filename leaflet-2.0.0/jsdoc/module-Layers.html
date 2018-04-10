@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <!-- meta IGN -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name = "viewport" content = "width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <!-- !meta IGN -->
+
+    <title>Module: Layers</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="scripts/jquery.min.js"></script>
+
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/jaguar.css">
+    <!-- css API Geoportail -->
+    <!-- FIXME : rename ? -->
+    <link type="text/css" rel="stylesheet" href="styles/sfd.css">
+
+    
+    <script>
+    var config = {"monospaceLinks":false,"cleverLinks":false,"applicationName":"Geoportal Extension for Leaflet","dateFormat":"ddd MMM Do YYYY","outputSourceFiles":true,"outputSourcePath":true,"systemName":"Geoportal Extension for Leaflet","footer":"API Extension version 1.0.0","copyright":"Geoportail - Copyright (c) IGN, released under the CECILL-B license","navType":"inline","theme":"darkly","linenums":true,"collapseSymbols":true,"inverseNav":true,"highlightTutorialCode":false,"syntaxTheme":"default","default":{}};
+    </script>
+    
+
+<!--
+    
+-->
+</head>
+<body>
+    <!-- Header API Geoportail -->
+    <header>
+    <div class="header-content">
+        <p class="logoIGN"><a href="./index.html"><img src="./images/logoIGN.png"/></a></p>
+        <h1>Geoportal Extension for Leaflet API Reference</h1>
+    </div>
+    </header>
+
+
+<div class="page">
+    <input id="showLeftMenu" type="checkbox" checked="">
+    
+
+<aside class="menu-left">
+    <label class="closeLeftMenu" for="showLeftMenu" title="Fermer le menu latéral"></label> 
+    <div class="header-menu">Geoportal Extension for Leaflet</div>
+<!--
+    <h3 class="applicationName"><a href="index.html">Geoportal Extension for Leaflet</a></h3>
+-->
+    <div class="search">
+        <input id="search" type="text" class="form-control input-sm" placeholder="Search Documentations">
+    </div>
+    <ul class="list">
+    
+<!--
+        <li class="item" data-alias= "L.geoportalCRS.EPSG2154" data-name="EPSG2154">
+-->
+        <li class="l1 item" data-alias= "L.geoportalCRS.EPSG2154" data-name="EPSG2154">
+                <a href="L.geoportalCRS.EPSG2154.html">L.geoportalCRS.EPSG2154</a>
+                
+<!--
+            <span class="title">
+                <a href="L.geoportalCRS.EPSG2154.html">L.geoportalCRS.EPSG2154</a>
+                
+            </span>
+-->
+
+            
+
+
+<!--
+            <ul class="members itemMembers">
+            
+            </ul>
+-->
+
+            
+
+
+<!--
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+-->
+            
+
+<!--
+            <ul class="methods itemMembers">
+            
+            </ul>
+-->
+
+            
+
+<!--
+            <ul class="events itemMembers">
+            
+            </ul>
+-->
+       </li>
+<!--
+        </li>
+-->
+    
+<!--
+        <li class="item" data-alias= "L.geoportalControl" data-name="Controls">
+-->
+        <li class="l1 item" data-alias= "L.geoportalControl" data-name="Controls">
+                <a href="module-Controls.html">L.geoportalControl</a>
+                
+<!--
+            <span class="title">
+                <a href="module-Controls.html">L.geoportalControl</a>
+                
+            </span>
+-->
+
+            
+
+
+<!--
+            <ul class="members itemMembers">
+            
+            </ul>
+-->
+
+            
+
+
+<!--
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+-->
+            
+            <div class="l2 itemMembers"> Methods </div>
+            
+                <div class="l3 itemMembers" data-name="module:Controls.ElevationPath"> <a href="module-Controls.html#.ElevationPath">ElevationPath</a> </div>
+            
+                <div class="l3 itemMembers" data-name="module:Controls.Isocurve"> <a href="module-Controls.html#.Isocurve">Isocurve</a> </div>
+            
+                <div class="l3 itemMembers" data-name="module:Controls.LayerSwitcher"> <a href="module-Controls.html#.LayerSwitcher">LayerSwitcher</a> </div>
+            
+                <div class="l3 itemMembers" data-name="module:Controls.MousePosition"> <a href="module-Controls.html#.MousePosition">MousePosition</a> </div>
+            
+                <div class="l3 itemMembers" data-name="module:Controls.ReverseGeocode"> <a href="module-Controls.html#.ReverseGeocode">ReverseGeocode</a> </div>
+            
+                <div class="l3 itemMembers" data-name="module:Controls.Route"> <a href="module-Controls.html#.Route">Route</a> </div>
+            
+                <div class="l3 itemMembers" data-name="module:Controls.SearchEngine"> <a href="module-Controls.html#.SearchEngine">SearchEngine</a> </div>
+            
+
+<!--
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="ElevationPath"><a href="module-Controls.html#.ElevationPath">ElevationPath</a></li>
+            
+                <li data-name="Isocurve"><a href="module-Controls.html#.Isocurve">Isocurve</a></li>
+            
+                <li data-name="LayerSwitcher"><a href="module-Controls.html#.LayerSwitcher">LayerSwitcher</a></li>
+            
+                <li data-name="MousePosition"><a href="module-Controls.html#.MousePosition">MousePosition</a></li>
+            
+                <li data-name="ReverseGeocode"><a href="module-Controls.html#.ReverseGeocode">ReverseGeocode</a></li>
+            
+                <li data-name="Route"><a href="module-Controls.html#.Route">Route</a></li>
+            
+                <li data-name="SearchEngine"><a href="module-Controls.html#.SearchEngine">SearchEngine</a></li>
+            
+            </ul>
+-->
+
+            
+
+<!--
+            <ul class="events itemMembers">
+            
+            </ul>
+-->
+       </li>
+<!--
+        </li>
+-->
+    
+<!--
+        <li class="item" data-alias= "L.geoportalControl.ElevationPath" data-name="ElevationPath">
+-->
+        <li class="l1 item" data-alias= "L.geoportalControl.ElevationPath" data-name="ElevationPath">
+                <a href="L.geoportalControl.ElevationPath.html">L.geoportalControl.ElevationPath</a>
+                
+<!--
+            <span class="title">
+                <a href="L.geoportalControl.ElevationPath.html">L.geoportalControl.ElevationPath</a>
+                
+            </span>
+-->
+
+            
+
+
+<!--
+            <ul class="members itemMembers">
+            
+            </ul>
+-->
+
+            
+
+
+<!--
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+-->
+            
+            <div class="l2 itemMembers"> Methods </div>
+            
+                <div class="l3 itemMembers" data-name="L.geoportalControl.ElevationPath.__createProfileMarker"> <a href="L.geoportalControl.ElevationPath.html#.__createProfileMarker">__createProfileMarker</a> </div>
+            
+                <div class="l3 itemMembers" data-name="L.geoportalControl.ElevationPath.__customRawProfileMouseOverEvent"> <a href="L.geoportalControl.ElevationPath.html#.__customRawProfileMouseOverEvent">__customRawProfileMouseOverEvent</a> </div>
+            
+                <div class="l3 itemMembers" data-name="L.geoportalControl.ElevationPath.__customRawProfileOperation"> <a href="L.geoportalControl.ElevationPath.html#.__customRawProfileOperation">__customRawProfileOperation</a> </div>
+            
+                <div class="l3 itemMembers" data-name="L.geoportalControl.ElevationPath.__removeProfileMarker"> <a href="L.geoportalControl.ElevationPath.html#.__removeProfileMarker">__removeProfileMarker</a> </div>
+            
+                <div class="l3 itemMembers" data-name="L.geoportalControl.ElevationPath.__updateProfileMarker"> <a href="L.geoportalControl.ElevationPath.html#.__updateProfileMarker">__updateProfileMarker</a> </div>
+            
+                <div class="l3 itemMembers" data-name="L.geoportalControl.ElevationPath.DISPLAY_PROFILE_BY_DEFAULT"> <a href="L.geoportalControl.ElevationPath.html#.DISPLAY_PROFILE_BY_DEFAULT">DISPLAY_PROFILE_BY_DEFAULT</a> </div>
+            
+                <div class="l3 itemMembers" data-name="L.geoportalControl.ElevationPath.DISPLAY_PROFILE_LIB_AMCHARTS"> <a href="L.geoportalControl.ElevationPath.html#.DISPLAY_PROFILE_LIB_AMCHARTS">DISPLAY_PROFILE_LIB_AMCHARTS</a> </div>
+            
+                <div class="l3 itemMembers" data-name="L.geoportalControl.ElevationPath.DISPLAY_PROFILE_LIB_D3"> <a href="L.geoportalControl.ElevationPath.html#.DISPLAY_PROFILE_LIB_D3">DISPLAY_PROFILE_LIB_D3</a> </div>
+            
+                <div class="l3 itemMembers" data-name="L.geoportalControl.ElevationPath.DISPLAY_PROFILE_RAW"> <a href="L.geoportalControl.ElevationPath.html#.DISPLAY_PROFILE_RAW">DISPLAY_PROFILE_RAW</a> </div>
+            
+
+<!--
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="__createProfileMarker"><a href="L.geoportalControl.ElevationPath.html#.__createProfileMarker">__createProfileMarker</a></li>
+            
+                <li data-name="__customRawProfileMouseOverEvent"><a href="L.geoportalControl.ElevationPath.html#.__customRawProfileMouseOverEvent">__customRawProfileMouseOverEvent</a></li>
+            
+                <li data-name="__customRawProfileOperation"><a href="L.geoportalControl.ElevationPath.html#.__customRawProfileOperation">__customRawProfileOperation</a></li>
+            
+                <li data-name="__removeProfileMarker"><a href="L.geoportalControl.ElevationPath.html#.__removeProfileMarker">__removeProfileMarker</a></li>
+            
+                <li data-name="__updateProfileMarker"><a href="L.geoportalControl.ElevationPath.html#.__updateProfileMarker">__updateProfileMarker</a></li>
+            
+                <li data-name="DISPLAY_PROFILE_BY_DEFAULT"><a href="L.geoportalControl.ElevationPath.html#.DISPLAY_PROFILE_BY_DEFAULT">DISPLAY_PROFILE_BY_DEFAULT</a></li>
+            
+                <li data-name="DISPLAY_PROFILE_LIB_AMCHARTS"><a href="L.geoportalControl.ElevationPath.html#.DISPLAY_PROFILE_LIB_AMCHARTS">DISPLAY_PROFILE_LIB_AMCHARTS</a></li>
+            
+                <li data-name="DISPLAY_PROFILE_LIB_D3"><a href="L.geoportalControl.ElevationPath.html#.DISPLAY_PROFILE_LIB_D3">DISPLAY_PROFILE_LIB_D3</a></li>
+            
+                <li data-name="DISPLAY_PROFILE_RAW"><a href="L.geoportalControl.ElevationPath.html#.DISPLAY_PROFILE_RAW">DISPLAY_PROFILE_RAW</a></li>
+            
+            </ul>
+-->
+
+            
+
+<!--
+            <ul class="events itemMembers">
+            
+            </ul>
+-->
+       </li>
+<!--
+        </li>
+-->
+    
+<!--
+        <li class="item" data-alias= "L.geoportalControl.Isocurve" data-name="Isocurve">
+-->
+        <li class="l1 item" data-alias= "L.geoportalControl.Isocurve" data-name="Isocurve">
+                <a href="L.geoportalControl.Isocurve.html">L.geoportalControl.Isocurve</a>
+                
+<!--
+            <span class="title">
+                <a href="L.geoportalControl.Isocurve.html">L.geoportalControl.Isocurve</a>
+                
+            </span>
+-->
+
+            
+
+
+<!--
+            <ul class="members itemMembers">
+            
+            </ul>
+-->
+
+            
+
+
+<!--
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+-->
+            
+            <div class="l2 itemMembers"> Methods </div>
+            
+                <div class="l3 itemMembers" data-name="L.geoportalControl.Isocurve#compute"> <a href="L.geoportalControl.Isocurve.html#compute">compute</a> </div>
+            
+
+<!--
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="compute"><a href="L.geoportalControl.Isocurve.html#compute">compute</a></li>
+            
+            </ul>
+-->
+
+            
+
+<!--
+            <ul class="events itemMembers">
+            
+            </ul>
+-->
+       </li>
+<!--
+        </li>
+-->
+    
+<!--
+        <li class="item" data-alias= "L.geoportalControl.LayerSwitcher" data-name="LayerSwitcher">
+-->
+        <li class="l1 item" data-alias= "L.geoportalControl.LayerSwitcher" data-name="LayerSwitcher">
+                <a href="L.geoportalControl.LayerSwitcher.html">L.geoportalControl.LayerSwitcher</a>
+                
+<!--
+            <span class="title">
+                <a href="L.geoportalControl.LayerSwitcher.html">L.geoportalControl.LayerSwitcher</a>
+                
+            </span>
+-->
+
+            
+
+
+<!--
+            <ul class="members itemMembers">
+            
+            </ul>
+-->
+
+            
+
+
+<!--
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+-->
+            
+            <div class="l2 itemMembers"> Methods </div>
+            
+                <div class="l3 itemMembers" data-name="L.geoportalControl.LayerSwitcher#addLayer"> <a href="L.geoportalControl.LayerSwitcher.html#addLayer">addLayer</a> </div>
+            
+                <div class="l3 itemMembers" data-name="L.geoportalControl.LayerSwitcher#addTo"> <a href="L.geoportalControl.LayerSwitcher.html#addTo">addTo</a> </div>
+            
+                <div class="l3 itemMembers" data-name="L.geoportalControl.LayerSwitcher#setOpacity"> <a href="L.geoportalControl.LayerSwitcher.html#setOpacity">setOpacity</a> </div>
+            
+                <div class="l3 itemMembers" data-name="L.geoportalControl.LayerSwitcher#setVisibility"> <a href="L.geoportalControl.LayerSwitcher.html#setVisibility">setVisibility</a> </div>
+            
+
+<!--
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="addLayer"><a href="L.geoportalControl.LayerSwitcher.html#addLayer">addLayer</a></li>
+            
+                <li data-name="addTo"><a href="L.geoportalControl.LayerSwitcher.html#addTo">addTo</a></li>
+            
+                <li data-name="setOpacity"><a href="L.geoportalControl.LayerSwitcher.html#setOpacity">setOpacity</a></li>
+            
+                <li data-name="setVisibility"><a href="L.geoportalControl.LayerSwitcher.html#setVisibility">setVisibility</a></li>
+            
+            </ul>
+-->
+
+            
+
+<!--
+            <ul class="events itemMembers">
+            
+            </ul>
+-->
+       </li>
+<!--
+        </li>
+-->
+    
+<!--
+        <li class="item" data-alias= "L.geoportalControl.MousePosition" data-name="MousePosition">
+-->
+        <li class="l1 item" data-alias= "L.geoportalControl.MousePosition" data-name="MousePosition">
+                <a href="L.geoportalControl.MousePosition.html">L.geoportalControl.MousePosition</a>
+                
+<!--
+            <span class="title">
+                <a href="L.geoportalControl.MousePosition.html">L.geoportalControl.MousePosition</a>
+                
+            </span>
+-->
+
+            
+
+
+<!--
+            <ul class="members itemMembers">
+            
+            </ul>
+-->
+
+            
+
+
+<!--
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+-->
+            
+            <div class="l2 itemMembers"> Methods </div>
+            
+                <div class="l3 itemMembers" data-name="L.geoportalControl.MousePosition#moveTo"> <a href="L.geoportalControl.MousePosition.html#moveTo">moveTo</a> </div>
+            
+                <div class="l3 itemMembers" data-name="L.geoportalControl.MousePosition#validateExtentCoordinate"> <a href="L.geoportalControl.MousePosition.html#validateExtentCoordinate">validateExtentCoordinate</a> </div>
+            
+
+<!--
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="moveTo"><a href="L.geoportalControl.MousePosition.html#moveTo">moveTo</a></li>
+            
+                <li data-name="validateExtentCoordinate"><a href="L.geoportalControl.MousePosition.html#validateExtentCoordinate">validateExtentCoordinate</a></li>
+            
+            </ul>
+-->
+
+            
+
+<!--
+            <ul class="events itemMembers">
+            
+            </ul>
+-->
+       </li>
+<!--
+        </li>
+-->
+    
+<!--
+        <li class="item" data-alias= "L.geoportalControl.ReverseGeocode" data-name="ReverseGeocode">
+-->
+        <li class="l1 item" data-alias= "L.geoportalControl.ReverseGeocode" data-name="ReverseGeocode">
+                <a href="L.geoportalControl.ReverseGeocode.html">L.geoportalControl.ReverseGeocode</a>
+                
+<!--
+            <span class="title">
+                <a href="L.geoportalControl.ReverseGeocode.html">L.geoportalControl.ReverseGeocode</a>
+                
+            </span>
+-->
+
+            
+
+
+<!--
+            <ul class="members itemMembers">
+            
+            </ul>
+-->
+
+            
+
+
+<!--
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+-->
+            
+
+<!--
+            <ul class="methods itemMembers">
+            
+            </ul>
+-->
+
+            
+
+<!--
+            <ul class="events itemMembers">
+            
+            </ul>
+-->
+       </li>
+<!--
+        </li>
+-->
+    
+<!--
+        <li class="item" data-alias= "L.geoportalControl.Route" data-name="Route">
+-->
+        <li class="l1 item" data-alias= "L.geoportalControl.Route" data-name="Route">
+                <a href="L.geoportalControl.Route.html">L.geoportalControl.Route</a>
+                
+<!--
+            <span class="title">
+                <a href="L.geoportalControl.Route.html">L.geoportalControl.Route</a>
+                
+            </span>
+-->
+
+            
+
+
+<!--
+            <ul class="members itemMembers">
+            
+            </ul>
+-->
+
+            
+
+
+<!--
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+-->
+            
+            <div class="l2 itemMembers"> Methods </div>
+            
+                <div class="l3 itemMembers" data-name="L.geoportalControl.Route#compute"> <a href="L.geoportalControl.Route.html#compute">compute</a> </div>
+            
+
+<!--
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="compute"><a href="L.geoportalControl.Route.html#compute">compute</a></li>
+            
+            </ul>
+-->
+
+            
+
+<!--
+            <ul class="events itemMembers">
+            
+            </ul>
+-->
+       </li>
+<!--
+        </li>
+-->
+    
+<!--
+        <li class="item" data-alias= "L.geoportalControl.SearchEngine" data-name="SearchEngine">
+-->
+        <li class="l1 item" data-alias= "L.geoportalControl.SearchEngine" data-name="SearchEngine">
+                <a href="L.geoportalControl.SearchEngine.html">L.geoportalControl.SearchEngine</a>
+                
+<!--
+            <span class="title">
+                <a href="L.geoportalControl.SearchEngine.html">L.geoportalControl.SearchEngine</a>
+                
+            </span>
+-->
+
+            
+
+
+<!--
+            <ul class="members itemMembers">
+            
+            </ul>
+-->
+
+            
+
+
+<!--
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+-->
+            
+            <div class="l2 itemMembers"> Methods </div>
+            
+                <div class="l3 itemMembers" data-name="L.geoportalControl.SearchEngine#setText"> <a href="L.geoportalControl.SearchEngine.html#setText">setText</a> </div>
+            
+
+<!--
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="setText"><a href="L.geoportalControl.SearchEngine.html#setText">setText</a></li>
+            
+            </ul>
+-->
+
+            
+
+<!--
+            <ul class="events itemMembers">
+            
+            </ul>
+-->
+       </li>
+<!--
+        </li>
+-->
+    
+<!--
+        <li class="item" data-alias= "L.geoportalLayer" data-name="Layers">
+-->
+        <li class="l1 item" data-alias= "L.geoportalLayer" data-name="Layers">
+                <a href="module-Layers.html">L.geoportalLayer</a>
+                
+<!--
+            <span class="title">
+                <a href="module-Layers.html">L.geoportalLayer</a>
+                
+            </span>
+-->
+
+            
+
+
+<!--
+            <ul class="members itemMembers">
+            
+            </ul>
+-->
+
+            
+
+
+<!--
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+-->
+            
+            <div class="l2 itemMembers"> Methods </div>
+            
+                <div class="l3 itemMembers" data-name="module:Layers.WMS"> <a href="module-Layers.html#.WMS">WMS</a> </div>
+            
+                <div class="l3 itemMembers" data-name="module:Layers.WMTS"> <a href="module-Layers.html#.WMTS">WMTS</a> </div>
+            
+
+<!--
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="WMS"><a href="module-Layers.html#.WMS">WMS</a></li>
+            
+                <li data-name="WMTS"><a href="module-Layers.html#.WMTS">WMTS</a></li>
+            
+            </ul>
+-->
+
+            
+
+<!--
+            <ul class="events itemMembers">
+            
+            </ul>
+-->
+       </li>
+<!--
+        </li>
+-->
+    
+<!--
+        <li class="item" data-alias= "L.geoportalLayer.WMS" data-name="WMS">
+-->
+        <li class="l1 item" data-alias= "L.geoportalLayer.WMS" data-name="WMS">
+                <a href="L.geoportalLayer.WMS.html">L.geoportalLayer.WMS</a>
+                
+<!--
+            <span class="title">
+                <a href="L.geoportalLayer.WMS.html">L.geoportalLayer.WMS</a>
+                
+            </span>
+-->
+
+            
+
+
+<!--
+            <ul class="members itemMembers">
+            
+            </ul>
+-->
+
+            
+
+
+<!--
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+-->
+            
+
+<!--
+            <ul class="methods itemMembers">
+            
+            </ul>
+-->
+
+            
+
+<!--
+            <ul class="events itemMembers">
+            
+            </ul>
+-->
+       </li>
+<!--
+        </li>
+-->
+    
+<!--
+        <li class="item" data-alias= "L.geoportalLayer.WMTS" data-name="WMTS">
+-->
+        <li class="l1 item" data-alias= "L.geoportalLayer.WMTS" data-name="WMTS">
+                <a href="L.geoportalLayer.WMTS.html">L.geoportalLayer.WMTS</a>
+                
+<!--
+            <span class="title">
+                <a href="L.geoportalLayer.WMTS.html">L.geoportalLayer.WMTS</a>
+                
+            </span>
+-->
+
+            
+
+
+<!--
+            <ul class="members itemMembers">
+            
+            </ul>
+-->
+
+            
+
+
+<!--
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+-->
+            
+
+<!--
+            <ul class="methods itemMembers">
+            
+            </ul>
+-->
+
+            
+
+<!--
+            <ul class="events itemMembers">
+            
+            </ul>
+-->
+       </li>
+<!--
+        </li>
+-->
+    
+    </ul>
+</aside>
+
+
+
+    <section class="content">
+        <label class="openLeftMenu" for="showLeftMenu" title="Ouvrir le menu latéral"></label>
+        <h1 class="page-title" data-filename="module-Layers.html">Module: Layers</h1>
+        
+
+
+
+<section>
+ 
+<!--   
+<header>
+-->
+    <h1>
+    <span class="main-title" data-classname=L.geoportalLayer> L.geoportalLayer </span>
+    </h1>
+    
+    
+<!--
+</header>  
+-->
+
+<article>
+    <div class="container-overview">
+    
+    
+    
+        
+            <div class="description"><p>Geoportal Layers Factory to be used together with Leaflet Maps.</p></div>
+        
+        
+        
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+        
+        
+            <h3>Example</h3>
+            
+
+    
+    <pre class="prettyprint"><code>var map = L.Map(...) ;
+var layer = L.geoportalLayer.WMTS({
+     layer : "ORTHOIMAGERY.ORTHOPHOTOS",
+}).addTo(map) ;</code></pre>
+    
+
+        
+    
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        <h3 class="subsection-title">Methods</h3>
+        
+        <dl>
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".WMS">
+            
+            <span class="type-signature static">static</span>WMS<span class="signature">(options, <span class="optional">settings</span>)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="L.geoportalLayer.WMS.html">L.geoportalLayer.WMS</a>}</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            Leaflet/Layers/Layers.js, line 88
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Factory function for Geoportal or INSPIRE WMS Layers creation.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name">options</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                    
+                        
+                    
+                
+                <p>options for function call.</p>
+                
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name">layer</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                    
+                        
+                    
+                
+                <p>layer name (e.g. &quot;ORTHOIMAGERY.ORTHOPHOTOS&quot;)</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name">ssl</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                
+                <p>if set true, enforce protocol https (only for nodejs)</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name">apiKey</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                
+                <p>access key to Geoportal platform, obtained <a href="http://professionnels.ign.fr/ign/contrats">here</a>.</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+
+            </td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name">settings</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                
+                <p>other options for L.TileLayer.WMS function (see <a href="http://leafletjs.com/reference.html#tilelayer-wms-options">http://leafletjs.com/reference.html#tilelayer-wms-options</a>)</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+
+
+
+    
+    
+    
+        <h5>Example</h5>
+        
+
+    
+    <pre class="prettyprint"><code>var map = L.Map('divmap').setView();
+ var lyr = L.geoportalLayer.WMS(
+   {
+     layer : "OI.OrthoimageCoverage"
+   },
+   {
+     opacity : 1,
+     transparent : true,
+     minZoom : 1,
+     maxZoom : 21
+     ...
+   });
+
+ lyr.addTo(map); // ou map.addLayer(lyr);</code></pre>
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".WMTS">
+            
+            <span class="type-signature static">static</span>WMTS<span class="signature">(options, <span class="optional">settings</span>)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="L.geoportalLayer.WMTS.html">L.geoportalLayer.WMTS</a>}</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            Leaflet/Layers/Layers.js, line 184
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Factory function for Geoportal WMTS Layers creation.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name">options</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                    
+                        
+                    
+                
+                <p>options for function call.</p>
+                
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name">layer</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                    
+                        
+                    
+                
+                <p>layer name (e.g. &quot;ORTHOIMAGERY.ORTHOPHOTOS&quot;)</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name">ssl</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                
+                <p>if set true, enforce protocol https (only for nodejs)</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name">apiKey</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                
+                <p>access key to Geoportal platform, obtained <a href="http://professionnels.ign.fr/ign/contrats">here</a>.</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+
+            </td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name">settings</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                
+                <p>other options for L.TileLayer function (see <a href="http://leafletjs.com/reference.html#tilelayer-options">http://leafletjs.com/reference.html#tilelayer-options</a>)</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+
+
+
+    
+    
+    
+        <h5>Example</h5>
+        
+
+    
+    <pre class="prettyprint"><code>var map = L.Map('divmap').setView();
+ var lyr = L.geoportalLayer.WMTS(
+   {
+     layer : "ORTHOIMAGERY.ORTHOPHOTOS"
+   },
+   {
+     opacity : 1,
+     transparent : true,
+     minZoom : 1,
+     maxZoom : 21
+     ...
+   });
+
+ lyr.addTo(map); // ou map.addLayer(lyr);</code></pre>
+    
+
+    
+</dd>
+
+        </dl>
+    
+    
+    
+    
+    
+</article>
+
+</section>  
+
+
+
+
+
+        
+
+    </section>
+</div>
+
+    <footer>
+        Copyright (c) IGN, released under the CECILL-B license
+        </br>
+        Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Apr 10 2018 17:51:25 GMT+0200 (CEST)
+    </footer>
+
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+<script src="scripts/main.js"></script>
+</body>
+</html>
