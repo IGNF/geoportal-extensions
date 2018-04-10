@@ -29,7 +29,7 @@
 
     
     <script>
-    var config = {"monospaceLinks":false,"cleverLinks":false,"applicationName":"Geoportal Extension for Leaflet","default":{}};
+    var config = {"monospaceLinks":false,"cleverLinks":false,"applicationName":"Geoportal Extension for Leaflet","dateFormat":"ddd MMM Do YYYY","outputSourceFiles":true,"outputSourcePath":true,"systemName":"Geoportal Extension for Leaflet","footer":"API Extension version 1.0.0","copyright":"Geoportail - Copyright (c) IGN, released under the CECILL-B license","navType":"inline","theme":"darkly","linenums":true,"collapseSymbols":true,"inverseNav":true,"highlightTutorialCode":false,"syntaxTheme":"default","default":{}};
     </script>
     
 
@@ -882,6 +882,51 @@
             
 <dt>
     <div class="nameContainer">
+        <h4 class="name" id="IconDefault">IconDefault</h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>cf. http://leafletjs.com/reference.html#icon</p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
         <h4 class="name" id="layeradd">layeradd</h4>
     </div>
     
@@ -1422,6 +1467,107 @@
             
 <dt>
     <div class="nameContainer">
+        <h4 class="name" id="PositionFormater">PositionFormater</h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>...</p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="Register">Register</h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Register definition for IGNF, and EPSG CRS.</p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+        <h5>Example</h5>
+        
+
+    
+    <pre class="prettyprint"><code>Gp.Register.IGNF.AMST63
+  // return : "+title=Amsterdam 1963 +proj=geocent +towgs84=109.753,-528.133,-362.244,0,0,0,0 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs"
+Gp.Register.get("IGNF:AMST63")
+  // same as Gp.Register.IGNF.AMST63</code></pre>
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
         <h4 class="name" id="sampling">sampling</h4>
     </div>
     
@@ -1431,6 +1577,52 @@
     
     <div class="description">
         <p>sampling à 200 (iso portail)</p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="SelectorID">SelectorID</h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>formalisme d'un tag ID :<br>-&gt; NAME(_ORDER)-1460636385836</p>
+<p>Ex.<br>  GProutePoints-1460636385836<br>  GProutePoint_10-1460636385836</p>
     </div>
     
     
@@ -1480,7 +1672,7 @@
     
         
         <div class="tag-source">
-            Common/Controls/MousePositionDOM.js, line 642
+            Common/Controls/MousePositionDOM.js, line 632
         </div>
         
     </div>
@@ -1639,7 +1831,7 @@
     
         
         <div class="tag-source">
-            Common/Controls/MousePositionDOM.js, line 685
+            Common/Controls/MousePositionDOM.js, line 675
         </div>
         
     </div>
@@ -1749,225 +1941,6 @@
             
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="check">
-            
-            check<span class="signature">(options)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Object}</span>
-        </h4>
-    
-        
-        <div class="tag-source">
-            Common/Utils/CheckRightManagement.js, line 24
-        </div>
-        
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>Contrôle des droits sur les ressources.</p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name">options</td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-            
-            
-            
-            <td class="description last">
-                
-                <p>liste des options</p>
-                
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name">key</td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-            
-            
-            
-            <td class="description last">
-                
-                <p>clef API</p></td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name">resources</td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">Array</span>
-
-
-            
-            </td>
-            
-            
-            
-            <td class="description last">
-                
-                <p>liste des ressources</p></td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name">services</td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">Array</span>
-
-
-            
-            </td>
-            
-            
-            
-            <td class="description last">
-                
-                <p>liste des services</p></td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-
-            </td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-
-
-<h5>Returns:</h5>
-- undefined ou {<br>      key : &quot;&quot;,<br>      service-1 : [resource-1, resource-2],<br>      service-2 : [resource-1, resource-2]<br>}
-<br />
-
-
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
         <h4 class="name" id="onEachFeature">
             
             onEachFeature<span class="signature">()</span>
@@ -1975,7 +1948,7 @@
     
         
         <div class="tag-source">
-            Leaflet/Controls/Route.js, line 1172
+            Leaflet/Controls/Route.js, line 1146
         </div>
         
     </div>
@@ -2046,7 +2019,7 @@
     
         
         <div class="tag-source">
-            Common/Controls/LayerSwitcherDOM.js, line 20
+            Common/Controls/LayerSwitcherDOM.js, line 18
         </div>
         
     </div>
@@ -2117,7 +2090,7 @@
     
         
         <div class="tag-source">
-            Leaflet/Controls/Isocurve.js, line 853
+            Leaflet/Controls/LocationSelector.js, line 855
         </div>
         
     </div>
@@ -2188,7 +2161,7 @@
     
         
         <div class="tag-source">
-            Leaflet/Controls/SearchEngine.js, line 1009
+            Leaflet/Controls/SearchEngine.js, line 1459
         </div>
         
     </div>
@@ -2259,7 +2232,7 @@
     
         
         <div class="tag-source">
-            Leaflet/Controls/SearchEngine.js, line 1706
+            Leaflet/Controls/SearchEngine.js, line 954
         </div>
         
     </div>
@@ -2330,7 +2303,7 @@
     
         
         <div class="tag-source">
-            Leaflet/Controls/MousePosition.js, line 1053
+            Leaflet/Controls/SearchEngine.js, line 1323
         </div>
         
     </div>
@@ -2401,7 +2374,7 @@
     
         
         <div class="tag-source">
-            Leaflet/Controls/SearchEngine.js, line 1535
+            Leaflet/Controls/SearchEngine.js, line 1626
         </div>
         
     </div>
@@ -2472,7 +2445,7 @@
     
         
         <div class="tag-source">
-            Leaflet/Controls/ReverseGeocoding.js, line 1136
+            Leaflet/Controls/Route.js, line 745
         </div>
         
     </div>
@@ -2543,7 +2516,7 @@
     
         
         <div class="tag-source">
-            Leaflet/Controls/SearchEngine.js, line 1437
+            Leaflet/Controls/Isocurve.js, line 832
         </div>
         
     </div>
@@ -2614,7 +2587,7 @@
     
         
         <div class="tag-source">
-            Leaflet/Controls/Route.js, line 766
+            Leaflet/Controls/ReverseGeocoding.js, line 1093
         </div>
         
     </div>
@@ -2685,7 +2658,7 @@
     
         
         <div class="tag-source">
-            Leaflet/Controls/SearchEngine.js, line 1398
+            Leaflet/Controls/SearchEngine.js, line 1362
         </div>
         
     </div>
@@ -2756,7 +2729,7 @@
     
         
         <div class="tag-source">
-            Leaflet/Controls/LocationSelector.js, line 887
+            Leaflet/Controls/MousePosition.js, line 1003
         </div>
         
     </div>
@@ -2827,7 +2800,7 @@
     
         
         <div class="tag-source">
-            Leaflet/Controls/LocationSelector.js, line 1068
+            Leaflet/Controls/LocationSelector.js, line 1032
         </div>
         
     </div>
@@ -2898,7 +2871,7 @@
     
         
         <div class="tag-source">
-            Leaflet/Controls/LocationSelector.js, line 1058
+            Leaflet/Controls/MousePosition.js, line 994
         </div>
         
     </div>
@@ -2969,7 +2942,7 @@
     
         
         <div class="tag-source">
-            Leaflet/Controls/SearchEngine.js, line 993
+            Leaflet/Controls/SearchEngine.js, line 1342
         </div>
         
     </div>
@@ -3040,7 +3013,7 @@
     
         
         <div class="tag-source">
-            Leaflet/Controls/SearchEngine.js, line 1417
+            Leaflet/Controls/ReverseGeocoding.js, line 1084
         </div>
         
     </div>
@@ -3111,7 +3084,7 @@
     
         
         <div class="tag-source">
-            Leaflet/Controls/Route.js, line 759
+            Leaflet/Controls/LocationSelector.js, line 847
         </div>
         
     </div>
@@ -3182,7 +3155,7 @@
     
         
         <div class="tag-source">
-            Leaflet/Controls/SearchEngine.js, line 1527
+            Leaflet/Controls/Route.js, line 738
         </div>
         
     </div>
@@ -3253,7 +3226,7 @@
     
         
         <div class="tag-source">
-            Leaflet/Controls/ReverseGeocoding.js, line 1127
+            Leaflet/Controls/Isocurve.js, line 824
         </div>
         
     </div>
@@ -3324,7 +3297,7 @@
     
         
         <div class="tag-source">
-            Leaflet/Controls/SearchEngine.js, line 1698
+            Leaflet/Controls/SearchEngine.js, line 1618
         </div>
         
     </div>
@@ -3395,7 +3368,7 @@
     
         
         <div class="tag-source">
-            Leaflet/Controls/MousePosition.js, line 1044
+            Leaflet/Controls/SearchEngine.js, line 1289
         </div>
         
     </div>
@@ -3466,7 +3439,7 @@
     
         
         <div class="tag-source">
-            Leaflet/Controls/SearchEngine.js, line 1364
+            Leaflet/Controls/LocationSelector.js, line 1022
         </div>
         
     </div>
@@ -3537,7 +3510,7 @@
     
         
         <div class="tag-source">
-            Leaflet/Controls/Isocurve.js, line 845
+            Leaflet/Controls/SearchEngine.js, line 1451
         </div>
         
     </div>
@@ -3608,7 +3581,7 @@
     
         
         <div class="tag-source">
-            Leaflet/Controls/LocationSelector.js, line 879
+            Leaflet/Controls/SearchEngine.js, line 938
         </div>
         
     </div>
@@ -3690,7 +3663,7 @@
     <footer>
         Copyright (c) IGN, released under the CECILL-B license
         </br>
-        Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Apr 09 2018 09:31:28 GMT+0000 (UTC)
+        Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Apr 10 2018 16:38:09 GMT+0000 (UTC)
     </footer>
 
 
