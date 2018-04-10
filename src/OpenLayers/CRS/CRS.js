@@ -27,7 +27,7 @@ var CRS = {
         /**
          * Transforms an extent from source projection to destination projection.  This
          * returns a new extent (and does not modify the original).
-         * Overload Geoportal Extension for OL3 : to manage EPSG:2154 extent restriction.
+         * Overload Geoportal Extension for Openlayers : to manage EPSG:2154 extent restriction.
          *
          * @param {ol.Extent} extent - The extent to transform.
          * @param {ol.proj.ProjectionLike} source - Source projection-like.

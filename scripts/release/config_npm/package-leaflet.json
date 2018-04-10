@@ -20,6 +20,6 @@
         "url":"https://github.com/IGNF/geoportal-extensions.git",
         "type":"git"
     },
-    "version":"1.0.0-beta.6",
+    "version":"2.0.0",
     "dependencies":{}
 }

@@ -14,7 +14,7 @@ var logger = Logger.getLogger("measurelength");
 /**
  * @classdesc
  *
- * Length measurement Control. Allows users to draw a path on OL3 map and have its length computed and displayed.
+ * Length measurement Control. Allows users to draw a path on Openlayers map and have its length computed and displayed.
  *
  * @constructor
  * @alias ol.control.MeasureLength

@@ -59,7 +59,7 @@ while true; do
         echo "    -h            Affiche cette aide."
         echo "    --verbose     Mode verbose,"
         echo "    --leaflet|l   Publication Leaflet (par defaut),"
-        echo "    --ol3|o       Publication Openlayers,"
+        echo "    --ol|o        Publication Openlayers,"
         echo "    --build|b     Execution de la tache de compilation,"
         echo "    --tag|t       Execution de la tache de git-tag,"
         echo "    --publish|p   Execution de la tache de publication npm et bower,"
@@ -84,7 +84,7 @@ while true; do
          _PACKAGE_LIBRARY_TARGET="leaflet"
          shift ;;
 
-    -o|--ol3)
+    -o|--ol)
           _PACKAGE_LIBRARY="openlayers"
           _PACKAGE_LIBRARY_TARGET="ol"
           shift ;;

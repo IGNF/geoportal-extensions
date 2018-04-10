@@ -1,4 +1,4 @@
-console.log("loading OL3 - WFS...");
+console.log("loading Openlayers - WFS...");
 
 var WFS = {};
 

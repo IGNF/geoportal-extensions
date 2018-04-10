@@ -39,7 +39,7 @@ var logger = Logger.getLogger("GeoportalMousePosition");
  * @param {Array}   [options.displayCoordinates = true] - activate (true) or deactivate (false) the coordinates panel. True by default
  * @param {Boolean} [options.editCoordinates = false] - add edit coordinates options. False by default.
  * @param {Object} [options.positionMarker] - options for position marker
- * @param {String} options.positionMarker.url - Marker url (define in src/Ol3/Controls/Utils/Markers.js)
+ * @param {String} options.positionMarker.url - Marker url (define in src/Openlayers/Controls/Utils/Markers.js)
  * @param {Array} options.positionMarker.offset - Offsets in pixels used when positioning the marker towards targeted point.
  *      The first element in the array is the horizontal offset. A positive value shifts the marker right.
  *      The second element in the array is the vertical offset. A positive value shifts the marker down. [0,0] value positions the top-left corner of the marker image to the targeted point.

@@ -120,13 +120,13 @@ module.exports = env => {
                         fallback : {
                             loader : "style-loader",
                             options : {
-                                sourceMap : false
+                                // sourceMap : false // FIXME ?
                             }
                         },
                         use : {
                             loader : "css-loader",
                             options : {
-                                sourceMap : false, // FIXME ?
+                                // sourceMap : false, // FIXME ?
                                 minimize : (production) ? true : false
                             }
                         }

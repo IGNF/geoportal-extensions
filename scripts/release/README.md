@@ -109,10 +109,10 @@ Le dépôt est à mettre vide, puis modifier les settings (no issues, ...)
 > release.sh -h
 Usage :
     release.sh
-    h (--help)        Affiche cette aide.
-    --verbose         Mode verbose.
-    l (--leaflet)     Publication Leaflet (par defaut),
-    o (--ol3)         Publication Openlayers,
+    h (--help)    Affiche cette aide.
+    --verbose     Mode verbose.
+    l (--leaflet) Publication Leaflet (par defaut),
+    o (--ol)      Publication Openlayers,
     b (--build)   Execution de la tache de compilation,
     d (--data)    Execution de la tache de git-clone,
     j (--json)    Execution de la tache de creation des json,

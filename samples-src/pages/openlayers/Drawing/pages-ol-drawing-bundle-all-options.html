@@ -3,8 +3,8 @@
 {{#content "head"}}
         <title>Sample OpenLayers Drawing</title>
         <!-- FIXME : utilite de ces dependances pour l'exemple ? -->
-        <script src="https://rawgit.com/walkermatt/ol3-popup/master/src/ol3-popup.js"></script>
-        <link rel="stylesheet" href="https://rawgit.com/walkermatt/ol3-popup/master/src/ol3-popup.css" />
+        <script src="https://rawgit.com/walkermatt/openlayers-popup/master/src/openlayers-popup.js"></script>
+        <link rel="stylesheet" href="https://rawgit.com/walkermatt/openlayers-popup/master/src/openlayers-popup.css" />
 {{/content}}
 
 {{#content "style"}}
@@ -96,7 +96,7 @@
                     var popup = new ol.Overlay.Popup();
                     map.addOverlay(popup);
 
-                    // cf. http://astuntechnology.github.io/osgis-ol3-leaflet/ol3/03-GEOJSON-INFO.html
+                    // cf. http://astuntechnology.github.io/osgis-openlayers-leaflet/openlayers/03-GEOJSON-INFO.html
                     map.on("click", function(evt) {
 
                       popup.hide();

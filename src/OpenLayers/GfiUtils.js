@@ -113,19 +113,19 @@ var GfiUtils = {
         contentDiv.innerHTML = content;
         /*
         if (content instanceof HTMLElement) {
-            this.logger.trace("[OL3] : _displayInfo : pure HTMLElement") ;
+            this.logger.trace("[Openlayers] : _displayInfo : pure HTMLElement") ;
             contentDiv.appendChild(content) ;
         } else {
             var parser = new DOMParser() ;
             var doc = null ;
             try {
                 doc = parser.parseFromString(content,contentType) ;
-                this.logger.trace("[OL3] : _displayInfo : HTMLElement from parser") ;
+                this.logger.trace("[Openlayers] : _displayInfo : HTMLElement from parser") ;
                 // FIXME : avec cette methode, on a une balise html + body qui s'insère...
                 contentDiv.appendChild(doc.documentElement) ;
             } catch (e) {
                 console.log(e) ;
-                this.logger.trace("[OL3] : _displayInfo : parsing content failed (not HTML)") ;
+                this.logger.trace("[Openlayers] : _displayInfo : parsing content failed (not HTML)") ;
                 // en cas d'erreur : on se contente de recopier le contenu.
                 contentDiv.innerHTML = content ;
             }
