@@ -1,3 +1,5 @@
+(obselète)
+
 # Publication des releases
 
 A partir de ce depot (central), on va publier sur **npm** ainsi que sur **bower (obselète)**,

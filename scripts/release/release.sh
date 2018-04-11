@@ -238,7 +238,7 @@ info () {
 --    build   : ${OPTS_RUN_BUILD}
 --    data    : ${OPTS_RUN_DATA}
 --    json    : ${OPTS_RUN_JSON}
---    git     : ${OPTS_RUN_COMMIT}
+--    commit  : ${OPTS_RUN_COMMIT}
 --    tag     : ${OPTS_RUN_TAG}
 --    publish : ${OPTS_RUN_PUBLISH}
 --    clean   : ${OPTS_RUN_CLEAN}
