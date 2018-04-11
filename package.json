@@ -6,7 +6,7 @@
   "version": "2.0.0",
   "leafletExtVersion": "2.0.0",
   "olExtVersion": "2.0.0",
-  "itownsExtVersion": "1.0.0",
+  "itownsExtVersion": "2.0.0",
   "description": "French Geoportal Extensions for OpenLayers, Leaflet and iTowns libraries",
   "main": "dist/leaflet/GpPluginLeaflet.js, dist/openlayers/GpPluginOpenLayers.js, dist/itowns/GpPluginItowns.js, dist/mix/GpPluginOlItowns.js",
   "directories": {},
