@@ -9,8 +9,8 @@
  * copyright CeCILL-B
  * copyright IGN
  * @author IGN
- * @version 1.0.0
- * @date 2018-04-10
+ * @version 2.0.0
+ * @date 2018-04-11
  *
  */
 
@@ -27812,10 +27812,10 @@ var _Register2 = _interopRequireDefault(_Register);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // Rajout des propriétés de l'extension dans le namespace Gp
-_gp2.default.leafletExtVersion = "1.0.0";
+_gp2.default.leafletExtVersion = "2.0.0";
 // import P from "leaflet-draw";
 
-_gp2.default.leafletExtDate = "2018-04-10";
+_gp2.default.leafletExtDate = "2018-04-11";
 
 // Classes utilitaires
 _gp2.default.Register = _Register2.default;
@@ -51534,7 +51534,7 @@ var WMS = _leaflet2.default.TileLayer.WMS.extend( /** @lends WMS.prototype */{
     // tracker extension leaflet
     // FIXME : gp-ext version en mode AMD
     _gp2.default.Helper.normalyzeUrl(url, {
-      "gp-leaflet-ext": "1.0.0"
+      "gp-leaflet-ext": "2.0.0"
     }, false), settings);
 
     // sauvegarde
@@ -51820,7 +51820,7 @@ var WMTS = _leaflet2.default.TileLayer.extend( /** @lends WMTS.prototype */{
         // tracker extension leaflet
         // FIXME : gp-ext version en mode AMD
         _gp2.default.Helper.normalyzeUrl(url, {
-            "gp-leaflet-ext": "1.0.0"
+            "gp-leaflet-ext": "2.0.0"
         }, false), options.paramsNative);
 
         // sauvegarde des originators

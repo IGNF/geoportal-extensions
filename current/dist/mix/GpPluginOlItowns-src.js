@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 1.0.0&1.0.0
- * @date 2018-04-10
+ * @date 2018-04-11
  *
  */
 
@@ -34018,7 +34018,7 @@ _gp2.default.LayerUtils = _LayerUtils2.default;
 
 // Adds extensions properties in the Gp namespace
 _gp2.default.itownsExtVersion = "1.0.0";
-_gp2.default.itownsExtDate = "2018-04-10";
+_gp2.default.itownsExtDate = "2018-04-11";
 
 // determines the execution environment l'environnement : browser or not ?
 var env = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : {};
@@ -39336,7 +39336,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // Rajout des propriétés de l'extension dans le namespace Gp
 _gp2.default.olExtVersion = "1.0.0";
-_gp2.default.olExtDate = "2018-04-10";
+_gp2.default.olExtDate = "2018-04-11";
 _gp2.default.olUtils = _Utils2.default;
 
 // Classes utilitaires
