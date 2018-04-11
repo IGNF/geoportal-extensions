@@ -59,6 +59,6 @@ nb-configuration.xml
 # Files #
 #########
 package-lock.json
-#_TODO.md
-#_FIXME.md
-#_TARGET.md
+_TODO.md
+_FIXME.md
+_TARGET.md
