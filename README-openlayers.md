@@ -74,7 +74,7 @@ Les scripts d'OpenLayers s'obtiennent sur [la page de téléchargement d'OpenLay
 
 Vous pouvez télécharger la dernière version de l'extension Géoportail pour OpenLayers directement sur [la page des releases des extensions Géoportail](https://github.com/IGNF/geoportal-extensions/releases).
 
-L'archive téléchargée (GpOpenLayers.zip) comprend l'arborescence décrite ci-dessus.
+L'archive téléchargée (.zip) comprend l'arborescence décrite ci-dessus.
 
 
 <a id="download-npm"/>
@@ -91,6 +91,17 @@ npm i geoportal-extensions-openlayers
 
 L'arborescence décrite ci-dessus sera alors accessible dans le répertoire `node_modules/geoportal-extensions-openlayers/dist/` de votre projet.
 
+
+#### Accès direct
+
+Vous pouvez aussi choisir d'utiliser des fichiers hébergés en ligne, pour y accéder directement, lors de vos tets par exemple. Cependant, pour une utilisation en production, nous vous conseillons de télécharger ces fichiers et de les héberger vous-même, sur le même serveur qui héberge votre application.
+Par exemple sur Github Pages :
+```
+http://ignf.github.io/geoportal-extensions/openlayers-latest/dist/GpPluginOpenLayers.js
+http://ignf.github.io/geoportal-extensions/openlayers-latest/dist/GpPluginOpenLayers.css
+http://ignf.github.io/geoportal-extensions/openlayers-latest/dist/GpPluginOpenLayers-src.js
+http://ignf.github.io/geoportal-extensions/openlayers-latest/dist/GpPluginOpenLayers-src.css
+```
 
 <a id="integration"/>
 
