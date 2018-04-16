@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 2.0.0
- * @date 2018-04-11
+ * @date 2018-04-16
  *
  */
 
@@ -20231,7 +20231,7 @@ _gp2.default.LayerUtils = _LayerUtils2.default;
 
 // Adds extensions properties in the Gp namespace
 _gp2.default.itownsExtVersion = "2.0.0";
-_gp2.default.itownsExtDate = "2018-04-11";
+_gp2.default.itownsExtDate = "2018-04-16";
 
 // determines the execution environment l'environnement : browser or not ?
 var env = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : {};

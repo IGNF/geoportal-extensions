@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 2.0.0
- * @date 2018-04-11
+ * @date 2018-04-16
  *
  */
 
@@ -21126,7 +21126,7 @@ var GfiUtils = {
         if (source instanceof _ol2.default.source.WMTS) {
             return "wmts";
         }
-        if (source instanceof _ol2.default.source.Vector) {
+        if (source instanceof _ol2.default.source.Vector || source instanceof _ol2.default.source.VectorTile) {
             return "vector";
         }
         return "unknown";
@@ -25184,7 +25184,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // Rajout des propriétés de l'extension dans le namespace Gp
 _gp2.default.olExtVersion = "2.0.0";
-_gp2.default.olExtDate = "2018-04-11";
+_gp2.default.olExtDate = "2018-04-16";
 _gp2.default.olUtils = _Utils2.default;
 
 // Classes utilitaires
