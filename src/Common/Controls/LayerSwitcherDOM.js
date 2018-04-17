@@ -143,8 +143,8 @@ var LayerSwitcherDOM = {
      * Creation du container du layer (DOM)
      *
      * @param {Object} obj - options de la couche à ajouter dans le layer switcher
-     * @param {Object} obj.layer - couche (ol3 ou leaflet)
-     * @param {String} obj.id - identifiant de la couche (pour ol3 ou leaflet)
+     * @param {Object} obj.layer - couche (ol ou leaflet)
+     * @param {String} obj.id - identifiant de la couche (pour ol ou leaflet)
      * @param {String} obj.title - nom de la couche à afficher dans le controle
      * @param {String} obj.description - description de la couche à afficher
      * @param {Boolean} obj.visibility - visibilité de la couche dans la carte (true or false)

@@ -1,6 +1,6 @@
-{  
+{
   "name": "geoportal-extensions-itowns",
-  "version": "1.0.0-dev",
+  "version": "2.0.0",
   "description": "French Geoportal Extensions for iTowns",
   "main": "dist/GpPluginItowns.js",
   "directories": {},
@@ -22,4 +22,3 @@
   "dependencies": {},
   "devDependencies": {}
 }
-

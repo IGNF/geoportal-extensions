@@ -1103,7 +1103,7 @@ LayerImport.prototype._displayGetCapResponseLayers = function (xmlResponse) {
         logger.log("getCapabilities response : ", getCapResponseWMS);
 
         if (getCapResponseWMS && getCapResponseWMS.Capability && getCapResponseWMS.Capability.Layer) {
-            // info: le parser OL3 récupère la première layer de <Capability> comme un unique objet (il écrase les précédents s'il y a pls <Layer> à la racine de <Capability>)
+            // info: le parser Openlayers récupère la première layer de <Capability> comme un unique objet (il écrase les précédents s'il y a pls <Layer> à la racine de <Capability>)
             // /!\ être vigilant si le parser est modifié (notamment pour récupérer les différentes layers à la racine. ex  http://geoservices.brgm.fr/geologie?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities)
 
             var getCapLayer = getCapResponseWMS.Capability.Layer;
@@ -1366,7 +1366,7 @@ LayerImport.prototype._addGetCapWMSLayer = function (layerInfo) {
         return;
     } else if (projection !== mapProjCode) {
         // si la projection de la carte n'est pas disponible pour cette couche,
-        // on spécifie une projection (qui doit avoir été définie dans proj4js) pour reprojection par OL3
+        // on spécifie une projection (qui doit avoir été définie dans proj4js) pour reprojection par Openlayers
         wmsSourceOptions.projection = projection;
     }
 
@@ -1451,7 +1451,7 @@ LayerImport.prototype._getWMSLayerProjection = function (layerInfo, mapProjCode)
 
     // on va parcourir la liste des CRS disponibles pour la couche
     // si on trouve la projection de la carte : c'est parfait
-    // si on trouve une projection qui est connue par ol.proj : OL3 gère la reprojection
+    // si on trouve une projection qui est connue par ol.proj : Openlayers gère la reprojection
     var CRSList = layerInfo.CRS;
     if (Array.isArray(CRSList)) {
         for (var i = 0; i < CRSList.length; i++) {

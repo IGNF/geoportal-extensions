@@ -16,7 +16,7 @@ var logger = Logger.getLogger("elevationpath");
 /**
  * @classdesc
  *
- * Elevation Path Control. Allows users to draw a path on a OL3 map see the elevation profile computed with geoportal elevation path web service along that path.
+ * Elevation Path Control. Allows users to draw a path on a Openlayers map see the elevation profile computed with geoportal elevation path web service along that path.
  *
  * @constructor
  * @alias ol.control.ElevationPath

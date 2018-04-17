@@ -14,7 +14,7 @@ var logger = Logger.getLogger("measureazimut");
 /**
  * @classdesc
  *
- * Azimuth measurement Control. Allows users to draw a line on an OL3 map and have its angle in decimal degrees clockwise from the geographical north.
+ * Azimuth measurement Control. Allows users to draw a line on an Openlayers map and have its angle in decimal degrees clockwise from the geographical north.
  *
  * @constructor
  * @alias ol.control.MeasureAzimuth

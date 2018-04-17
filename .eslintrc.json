@@ -38,7 +38,7 @@
                 "SwitchCase": 1
             }
         ],
-        "no-console": 1,
+        "no-console": "warn",
         "linebreak-style": [
             "error",
             "unix"

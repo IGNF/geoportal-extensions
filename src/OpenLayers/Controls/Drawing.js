@@ -19,7 +19,7 @@ var logger = Logger.getLogger("Drawing");
  * @extends {ol.control.Control}
  * @param {Object} options - options for function call.
  * @param {Boolean} [options.collapsed = true] - Specify if Drawing control should be collapsed at startup. Default is true.
- * @param {ol.layer.Vector} [options.layer = null] - OL3 layer that will hosts created features. If none, an empty vector layer will be created.
+ * @param {ol.layer.Vector} [options.layer = null] - Openlayers layer that will hosts created features. If none, an empty vector layer will be created.
  * @param {Object} options.tools - Tools to display in the drawing toolbox. All by default.
  * @param {Boolean} [options.tools.points = true] - Display points drawing tool
  * @param {Boolean} [options.tools.lines = true] - Display lines drawing tool
@@ -338,7 +338,7 @@ Drawing.prototype._getsMarkersOptionsFromSrc = function (src) {
 };
 
 /**
- * Converts markerElement options into OL3 IconStyles options.
+ * Converts markerElement options into Openlayers IconStyles options.
  *
  * @param {Object} markerElement - marker element
  * @returns {Object} - ol.Style.Icon constructor options.

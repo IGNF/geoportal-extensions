@@ -62,7 +62,7 @@ OPTS_VERBOSE=${_OPTS_VERBOSE}
 
 # read option
 # l (--leaflet) Publication Leaflet (par defaut),
-# i (--itowns)     Publication iTowns,
+# i (--itowns)  Publication iTowns,
 # o (--ol)      Publication Openlayers,
 # b (--build)   Execution de la tache de compilation,
 # d (--data)    Execution de la tache de git-clone,
@@ -72,7 +72,7 @@ OPTS_VERBOSE=${_OPTS_VERBOSE}
 # p (--publish) Execution de la tache de publication npm,
 # C (--clean)   Execution de la tache de nettoyage.
 
-_OPTS=`getopt -o hliob::d::j::c::t::p::C:: --long help,verbose,leaflet,itowns,ol3,password:,username:,token:,build::,data::,json::,commit::,tag::,publish::,clean:: -n 'release.sh' -- "$@"`
+_OPTS=`getopt -o hliob::d::j::c::t::p::C:: --long help,verbose,leaflet,itowns,ol,password:,username:,token:,build::,data::,json::,commit::,tag::,publish::,clean:: -n 'release.sh' -- "$@"`
 eval set -- "${_OPTS}"
 
 while true; do
@@ -238,7 +238,7 @@ info () {
 --    build   : ${OPTS_RUN_BUILD}
 --    data    : ${OPTS_RUN_DATA}
 --    json    : ${OPTS_RUN_JSON}
---    git     : ${OPTS_RUN_COMMIT}
+--    commit  : ${OPTS_RUN_COMMIT}
 --    tag     : ${OPTS_RUN_TAG}
 --    publish : ${OPTS_RUN_PUBLISH}
 --    clean   : ${OPTS_RUN_CLEAN}

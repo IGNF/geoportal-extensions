@@ -1144,7 +1144,7 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
             var unit = this._currentProjectionUnits;
 
             // on convertit un point..., mais on n'a pas de fonction
-            // de conversion comme pour ol3...
+            // de conversion comme pour openlayers...
             var oLatLon = this._unproject({
                 x : (coordType === "Lon") ? this._convertCoordinate(value, unit) : 0,
                 y : (coordType === "Lat") ? this._convertCoordinate(value, unit) : 0
