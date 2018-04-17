@@ -150,7 +150,7 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
             return window.itowns.Fetcher.json("spec/itowns/resources/JSONLayers/Region.json").then(result => layerManager.add(result));
         }).then( () => {
             return layerManager.add({
-                url : "spec/itowns/resources/KML/S_TOP100.kml",
+                url : "resources/KML/S_TOP100.kml",
                 id : "S_TOP100",
                 type : "color",
                 protocol : "rasterizer"
