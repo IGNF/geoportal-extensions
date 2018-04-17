@@ -1,4 +1,5 @@
-import * as Itowns from "itowns";
+import * as Itowns from "../../../node_modules/itowns/dist/itowns";
+// import * as Itowns from "itowns";
 import GlobeViewExtended from "../../../src/Itowns/GlobeViewExtended";
 import Logger from "../../../src/Common/Utils/LoggerByDefault";
 

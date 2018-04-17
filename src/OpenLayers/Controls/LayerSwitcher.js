@@ -308,7 +308,7 @@ LayerSwitcher.prototype.addLayer = function (layer, config) {
         // close layer info element if open, to update information.
         if (infodiv && infodiv.className === "GPlayerInfoOpened") {
             document.getElementById(this._addUID("GPlayerInfoPanel")).className = "GPlayerInfoPanelClosed";
-            infodiv.className === "GPlayerInfo";
+            infodiv.className = "GPlayerInfo";
         }
     }
 };
@@ -325,7 +325,7 @@ LayerSwitcher.prototype.removeLayer = function (layer) {
     var infodiv = document.getElementById(this._addUID("GPinfo_ID_" + layerID));
     if (infodiv && infodiv.className === "GPlayerInfoOpened") {
         document.getElementById(this._addUID("GPlayerInfoPanel")).className = "GPlayerInfoPanelClosed";
-        infodiv.className === "GPlayerInfo";
+        infodiv.className = "GPlayerInfo";
     }
     // remove layer div
     var layerDiv = document.getElementById(this._addUID("GPlayerSwitcher_ID_" + layerID));

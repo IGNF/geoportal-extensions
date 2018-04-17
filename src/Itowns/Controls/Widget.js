@@ -1,3 +1,7 @@
+import Logger from "../../Common/Utils/LoggerByDefault";
+
+var logger = Logger.getLogger("Widget");
+
 /**
 * @classdesc
 * iTowns Widget class.
@@ -55,7 +59,7 @@ Widget.prototype.setTarget = function setTarget (targetDiv, position) {
     }
 
     if (position && position !== "absolute" && position !== "relative") {
-        console.log("[ERROR] Widget:setTarget - position value should be 'absolute' or 'relative'");
+        logger.error("Widget:setTarget - position value should be 'absolute' or 'relative'");
         return;
     }
 
@@ -66,7 +70,7 @@ Widget.prototype.setTarget = function setTarget (targetDiv, position) {
     this._target = targetDiv;
 
     if (!this._element) {
-        console.log("[ERROR] Widget:setTarget - widget element not created");
+        logger.error("Widget:setTarget - widget element not created");
         return;
     }
 

@@ -113,6 +113,8 @@ MousePosition.prototype.constructor = MousePosition;
 
 /**
  * Bind globe to control
+ *
+ * @param {GlobeViewExtended} globe - the globe
  */
 MousePosition.prototype.setGlobe = function (globe) {
     if (globe) { // In the case of the adding of a control to the globe
@@ -151,15 +153,14 @@ MousePosition.prototype.setGlobe = function (globe) {
 /**
  * Sets additional projection system
  *
- * @method use system defined in the Itowns/CRS/CRS.js class
- * @param {Object} system - Projection system
+ * @param {Object} system - Projection system defined in the Itowns/CRS/CRS.js class
  * @param {String} system.crs - Proj4 crs alias (from proj4 defs) e.g. "EPSG:4326"
  * @param {String} [system.label] - CRS label to be displayed in control. Default is system.crs alias
  * @param {String} [system.type] - CRS units type for coordinates conversion (one of control options.units). Default is "Metric"
  */
 MousePosition.prototype.addSystem = function (system) {
     if (typeof system !== "object") {
-        console.log("[ERROR] MousePosition:addSystem - system parameter should be an object");
+        logger.error("MousePosition:addSystem - system parameter should be an object");
         return;
     }
     if (!system.crs) {
@@ -180,7 +181,7 @@ MousePosition.prototype.addSystem = function (system) {
         var obj = this._projectionSystems[j];
         if (system.crs === obj.crs) {
             // warn user
-            console.log("crs '{}' already configured", obj.crs);
+            logger.warn("crs '{}' already configured", obj.crs);
         }
     }
 
@@ -210,7 +211,7 @@ MousePosition.prototype.addSystems = function (systems) {
         return;
     }
     if (!Array.isArray(systems)) {
-        console.log("[ERROR] MousePosition:addSystems - systems parameter should be an array");
+        logger.error("MousePosition:addSystems - systems parameter should be an array");
         return;
     }
     for (var i = 0; i < systems.length; i++) {
@@ -225,7 +226,7 @@ MousePosition.prototype.addSystems = function (systems) {
  */
 MousePosition.prototype.removeSystem = function (systemCrs) {
     if (!systemCrs || typeof systemCrs !== "string") {
-        console.log("[ERROR] MousePosition:removeSystem - systemCode parameter should be a string");
+        logger.error("MousePosition:removeSystem - systemCode parameter should be a string");
         return;
     }
 
@@ -242,7 +243,7 @@ MousePosition.prototype.removeSystem = function (systemCrs) {
     }
 
     if (systemCode == null) {
-        console.log("[WARN] MousePosition:removeSystem - system not found");
+        logger.warn("MousePosition:removeSystem - system not found");
         return;
     }
 
@@ -257,7 +258,7 @@ MousePosition.prototype.removeSystem = function (systemCrs) {
     var indexChildToRemove = null;
     var systemList = document.getElementById(this._addUID("GPmousePositionProjectionSystem"));
     for (var j = 0; j < systemList.childNodes.length; j++) {
-        if (systemCode == systemList.childNodes[j].value) {
+        if (systemCode === systemList.childNodes[j].value) {
             indexChildToRemove = j;
             continue;
         }
@@ -269,7 +270,7 @@ MousePosition.prototype.removeSystem = function (systemCrs) {
     }
 
     // choose arbitrarily a new current system if needed
-    if (this._currentProjectionSystems.code == systemCode) {
+    if (this._currentProjectionSystems.code === systemCode) {
         systemList.childNodes[0].setAttribute("selected", "selected");
         this._setCurrentSystem(systemList.childNodes[0].value);
     }
@@ -354,7 +355,7 @@ MousePosition.prototype.displayCoordinates = function (displayCoordinates) {
  */
 MousePosition.prototype.setCollapsed = function (collapsed) {
     if (collapsed === undefined) {
-        console.log("[ERROR] MousePosition:setCollapsed - missing collapsed parameter");
+        logger.error("MousePosition:setCollapsed - missing collapsed parameter");
         return;
     }
     if ((collapsed && this.collapsed) || (!collapsed && !this.collapsed)) {
@@ -621,6 +622,11 @@ MousePosition.prototype._checkRightsManagement = function () {
  * Create control main container (called by MousePosition constructor)
  *
  * @method _initContainer
+ * @param {Object} options - options
+ * @param {Boolean} options.collapsed - Specify if MousePosition control should be collapsed
+ * @param {Array}   options.displayAltitude - activate (true) or deactivate (false) the altitude panel
+ * @param {Array}   options.displayCoordinates - activate (true) or deactivate (false) the coordinates panel
+ * @returns {DOMElement} container - widget container
  * @private
  */
 MousePosition.prototype._initContainer = function (options) {
@@ -871,7 +877,7 @@ MousePosition.prototype._setCoordinate = function (coords) {
     var crsProp = oSrs.crs;
 
     if (!oSrs || !crsProp) {
-        console.log("ERROR : system crs not found");
+        logger.error("system crs not found");
         return;
     }
     // reproject coordinates from their CRS of origin (WGS84) to the wanted CRS (crsProp)
@@ -899,7 +905,7 @@ MousePosition.prototype._setCoordinate = function (coords) {
         }
     }
     if (!convert || typeof convert !== "function") {
-        console.log("WARNING : coordinates format function not found");
+        logger.warn("coordinates format function not found");
         return;
     } else {
         coord = convert(coordinates);
@@ -1014,6 +1020,7 @@ MousePosition.prototype.onGlobeMove = function () {
  *
  * @method onRequestAltitude
  * @param {Object} coordinate - {lat:..., lng:...}
+ * @param {Function} callback - function callback
  * @private
  */
 MousePosition.prototype.onRequestAltitude = function (coordinate, callback) {
@@ -1035,7 +1042,7 @@ MousePosition.prototype.onRequestAltitude = function (coordinate, callback) {
 
     // if we don not have the rights on the requested resource, we just stop !
     if (this._noRightManagement) {
-        console.log("[WARNING] contract key configuration has no rights to load geoportal elevation ");
+        logger.warn("contract key configuration has no rights to load geoportal elevation ");
         document.getElementById(this._addUID("GPmousePositionAlt")).innerHTML = "No rights!";
         return;
     }
@@ -1055,22 +1062,19 @@ MousePosition.prototype.onRequestAltitude = function (coordinate, callback) {
 
     if (!options.rawResponse) {
         // in the general case
-        /** callback onSuccess */
         options.onSuccess = function (results) {
             if (results && Object.keys(results)) {
                 callback.call(this, results.elevations[0].z);
             }
         };
     } else {
-        /** callback onSuccess */
         options.onSuccess = function (results) {
-            console.log("alti service raw response : ", results);
+            logger.info("alti service raw response : ", results);
         };
     }
 
-    /** callback onFailure */
     options.onFailure = function (error) {
-        console.log("[getAltitude] ERROR : " + error.message);
+        logger.error("[getAltitude] " + error.message);
     };
     // in the case of the API key is not given as option of the service,
     // we use the key of the autoconf, or the key given in the control options
@@ -1149,7 +1153,7 @@ MousePosition.prototype._setCurrentSystem = function (systemCode) {
     // if we change of system type, we must change the unit type too !
     var type = null;
     for (var i = 0; i < this._projectionSystems.length; ++i) {
-        if (this._projectionSystems[i].code == systemCode) {
+        if (this._projectionSystems[i].code === systemCode) {
             type = this._projectionSystems[i].type;
             break;
         }
