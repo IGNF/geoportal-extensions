@@ -6,7 +6,7 @@ Extension Géoportail, version 2.0.0
 
 Migration du projet sous [Webpack](http://webpack.github.io/) ainsi que les sources en [ES6 modules](http://exploringjs.com/es6/ch_modules.html).
 
-### leaflet-2.0.0
+### leaflet-2.0.1
 
 ...
 
