@@ -24,7 +24,7 @@ var GfiUtils = {
         if (source instanceof ol.source.WMTS) {
             return "wmts";
         }
-        if (source instanceof ol.source.Vector) {
+        if (source instanceof ol.source.Vector || source instanceof ol.source.VectorTile) {
             return "vector";
         }
         return "unknown";
