@@ -89,7 +89,10 @@ module.exports = env => {
                         path.join(__dirname, "src", "Common"),
                         path.join(__dirname, "src", "Itowns")
                     ],
-                    exclude : /node_modules/,
+                    exclude : [
+                        /node_modules/,
+                        path.resolve(__dirname, "src", "Itowns", "CSS"),
+                    ],
                     use : [
                         {
                             loader : "eslint-loader",

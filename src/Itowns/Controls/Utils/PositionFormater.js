@@ -77,7 +77,7 @@ var PositionFormater = {
 
     DMSToDecimal : function (degrees, minutes, seconds, hemisphere) {
         var ddVal = degrees + minutes / 60 + seconds / 3600;
-        ddVal = (hemisphere == this.SOUTH || hemisphere == this.WEST) ? ddVal * -1 : ddVal;
+        ddVal = (hemisphere === this.SOUTH || hemisphere === this.WEST) ? ddVal * -1 : ddVal;
 
         var decimal = this.roundToDecimal(ddVal, this.digitDecimal);
         return decimal;

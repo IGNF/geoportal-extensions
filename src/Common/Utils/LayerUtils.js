@@ -2,6 +2,10 @@ var LayerUtils = {
 
     /**
      * Obtenir le ZoomLevel à partir du ScaleDenominator
+     * @param {Number} scaleDenominator - the scale denominator
+     * @param {String} crs - the crs
+     *
+     * @returns {Integer} zoom level
      */
     getZoomLevelFromScaleDenominator : function (scaleDenominator, crs) {
         // ------------------------------------------------- //

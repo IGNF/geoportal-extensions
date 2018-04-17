@@ -19,7 +19,12 @@ var SelectorID = {
         };
     })(),
 
-    /** nom du tag */
+    /**
+     * nom du tag
+     * @param {String} id - the id
+     *
+     * @returns {String} index
+     */
     name : function (id) {
         var name = null;
 
@@ -33,7 +38,12 @@ var SelectorID = {
         return name;
     },
 
-    /** numero d'identifiant du tag */
+    /**
+     * numero d'identifiant du tag
+     * @param {String} id - the id
+     *
+     * @returns {String} index
+     */
     index : function (id) {
         var index = null;
 
@@ -48,7 +58,12 @@ var SelectorID = {
         return index;
     },
 
-    /** uuid du tag */
+    /**
+     * uuid du tag
+     * @param {String} id - the id
+     *
+     * @returns {String} uuid
+     */
     uuid : function (id) {
         var uuid = null;
 
