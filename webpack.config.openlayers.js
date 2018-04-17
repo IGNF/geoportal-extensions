@@ -65,7 +65,7 @@ module.exports = env => {
                 amd : "require"
             }
         },
-        devtool : (production) ? false : "eval-source-map",
+        devtool : (production) ? false : "source-map",
         module : {
             rules : [
                 {
