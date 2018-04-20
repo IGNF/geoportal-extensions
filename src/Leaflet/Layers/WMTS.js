@@ -226,6 +226,8 @@ var WMTS = L.TileLayer.extend(/** @lends WMTS.prototype */ {
      * (overwritten)
      *
      * @param {Object} tilePoint - Point leaflet object
+     *
+     * @returns {String} url
      * @private
      */
     getTileUrl : function (tilePoint) {
@@ -257,6 +259,10 @@ var WMTS = L.TileLayer.extend(/** @lends WMTS.prototype */ {
      * event 'setParams'
      * (overwritten)
      *
+     * @param {Object} params - parameters
+     * @param {Object} noRedraw - no redraw
+     *
+     * @returns {Object} this
      * @private
      */
     setParams : function (params, noRedraw) {

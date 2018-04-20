@@ -154,6 +154,8 @@ Utils.assign(ElevationPath.prototype, ElevationPathDOM);
 /**
  * suppression du marker
  *
+ * @param {Object} context - context
+ *
  * @private
  */
 ElevationPath.__removeProfileMarker = function (context) {
@@ -167,6 +169,9 @@ ElevationPath.__removeProfileMarker = function (context) {
 
 /**
  * suppression du marker
+ *
+ * @param {Object} context - context
+ * @param {Object} d - d
  *
  * @private
  */
@@ -198,6 +203,9 @@ ElevationPath.__createProfileMarker = function (context, d) {
 /**
  * mise à jour du marker
  *
+ * @param {Object} context - context
+ * @param {Object} d - data
+ *
  * @private
  */
 ElevationPath.__updateProfileMarker = function (context, d) {
@@ -208,6 +216,10 @@ ElevationPath.__updateProfileMarker = function (context, d) {
 
 /**
  * TODO : customisation possible d'une opération sur le profil
+ *
+ * @param {Object} context - context
+ * @param {Object} d - data
+ *
  * @private
  */
 ElevationPath.__customRawProfileOperation = function (context, d) {
@@ -251,6 +263,9 @@ ElevationPath.__customRawProfileOperation = function (context, d) {
 /**
  * TODO : customisation possible d'une opération sur le profil
  * Ex. Methode appélée dans le DOM : ProfileElevationPathDOM
+ *
+ * @param {Object} context - context
+ * @param {Object} e - event
  * @private
  */
 ElevationPath.__customRawProfileMouseOverEvent = function (context, e) {
@@ -269,7 +284,7 @@ ElevationPath.DISPLAY_PROFILE_LIB_AMCHARTS = function (data, container, context)
 
     // Calcul du profile
     if (typeof AmCharts === "undefined") {
-        console.log("Lib. AmCharts is not loaded !");
+        logger.log("Lib. AmCharts is not loaded !");
         return;
     }
 
@@ -292,7 +307,7 @@ ElevationPath.DISPLAY_PROFILE_LIB_D3 = function (data, container, context) {
 
     // Calcul du profile
     if (typeof d3 === "undefined") {
-        console.log("Lib. D3 is not loaded !");
+        logger.log("Lib. D3 is not loaded !");
         return;
     }
 
@@ -559,6 +574,8 @@ ElevationPath.prototype._removeProfile = function () {
 /**
  * Initialize control (called by constructor)
  *
+ * @param {Object} options - options
+ *
  * @private
  */
 ElevationPath.prototype._initialize = function (options) {
@@ -627,6 +644,8 @@ ElevationPath.prototype._initialize = function (options) {
 
 /**
  * initialize component container (DOM)
+ *
+ * @returns {DOMElement} DOM element
  *
  * @private
  */
@@ -937,6 +956,8 @@ ElevationPath.prototype._removeMeasureInteraction = function (map) {
 /**
  * transforme geometry feature to position coordinate (service)
  *
+ * @returns {Object[]} geometry
+ *
  * @private
  */
 ElevationPath.prototype._getGeometry = function () {
@@ -972,6 +993,8 @@ ElevationPath.prototype._getGeometry = function () {
 
 /**
  * get geometry feature length
+ *
+ * @returns {Integer} length
  *
  * @private
  */
@@ -1036,7 +1059,7 @@ ElevationPath.prototype._requestService = function () {
     // les callbacks
     var self = this;
 
-    /** callback _requestServiceOnSuccess */
+    // callback _requestServiceOnSuccess
     var _requestServiceOnSuccess = function (result) {
         logger.trace(result);
         if (result) {
@@ -1048,7 +1071,7 @@ ElevationPath.prototype._requestService = function () {
         }
     };
 
-    /** callback _requestServiceOnFailure */
+    // callback _requestServiceOnFailure
     var _requestServiceOnFailure = function (error) {
         // on ferme le panneau en cas d'erreur !
         self._panelContainer.style.display = "none";

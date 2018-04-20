@@ -1,6 +1,5 @@
 import Gp from "gp";
 import L from "leaflet";
-import Draw from "leaflet-draw";
 import Logger from "../../Common/Utils/LoggerByDefault";
 import RightManagement from "../../Common/Utils/CheckRightManagement";
 import ID from "../../Common/Utils/SelectorID";
@@ -141,6 +140,10 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
      * and fills variable 'this._container = this.onAdd(map)',
      * and create events on map.
      *
+     * @param {Object} map - the map
+     *
+     * @returns {DOMElement} DOM element
+     *
      * @private
      */
     onAdd : function (map) {
@@ -166,6 +169,8 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
     /**
      * this method is called when the control is removed from the map
      * and removes events on map.
+     *
+     * @param {Object} map - the map
      *
      * @private
      */
@@ -247,7 +252,7 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
             var resources = this.options.resources;
             // on vérifie que la liste des ressources de geocodage est bien un tableau
             if (!Array.isArray(resources)) {
-                console.log("[ReverseGeocoding] 'options.resources' parameter should be an array");
+                logger.log("[ReverseGeocoding] 'options.resources' parameter should be an array");
                 resources = null;
             }
             var resourcesList = ["StreetAddress", "PositionOfInterest", "CadastralParcel", "Administratif"];
@@ -255,7 +260,7 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
                 if (resourcesList.indexOf(resources[i]) === -1) {
                     // si la resource n'est pas référencée, on l'enlève
                     // resources.splice(i, 1);
-                    console.log("[ReverseGeocoding] options.resources : " + resources[i] + " is not a resource for reverse geocode");
+                    logger.log("[ReverseGeocoding] options.resources : " + resources[i] + " is not a resource for reverse geocode");
                 }
             }
         }
@@ -264,7 +269,7 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
             var delimitations = this.options.delimitations;
             // on vérifie que la liste des delimitations est bien un tableau
             if (!Array.isArray(delimitations)) {
-                console.log("[ReverseGeocoding] 'options.delimitations' parameter should be an array");
+                logger.log("[ReverseGeocoding] 'options.delimitations' parameter should be an array");
                 delimitations = null;
             }
             var delimitationsList = ["Circle", "Point", "Extent"];
@@ -272,7 +277,7 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
                 if (delimitationsList.indexOf(delimitations[i]) === -1) {
                     // si la delimitations n'est pas référencée, on l'enlève
                     // resources.splice(i, 1);
-                    console.log("[ReverseGeocoding] options.delimitations : " + delimitations[i] + " is not a delimitation for reverse geocode");
+                    logger.log("[ReverseGeocoding] options.delimitations : " + delimitations[i] + " is not a delimitation for reverse geocode");
                 }
             }
         }
@@ -302,7 +307,7 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
                 if (this._servicesRightManagement["Geocode"].indexOf(resources[i]) < 0) {
                     // si on n'a pas les droits sur la ressource, on va la supprimer : on stocke son index
                     noRightsIndexes.push(i);
-                    console.log("[ReverseGeocode] no rights for options.resources : " + resources[i]);
+                    logger.log("[ReverseGeocode] no rights for options.resources : " + resources[i]);
                 }
             }
             // on retire les ressoures non autorisées qu'on a pu rencontrer
@@ -357,6 +362,8 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
     /**
      * this method is called by this.onAdd(map)
      * and initialize the container HTMLElement
+     *
+     * @returns {DOMElement} DOM element
      *
      * @private
      */
@@ -593,6 +600,9 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
     /**
      * set current position of feature
      *
+     * @param {Object} layer - layer
+     * @param {String} type - type
+     *
      * @private
      */
     _setFeaturePosition : function (layer, type) {
@@ -643,6 +653,8 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
     /**
      * set current layer of feature
      *
+     * @param {Object} layer - layer
+     *
      * @private
      */
     _setFeatureLayer : function (layer) {
@@ -654,6 +666,7 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
 
     /**
      * remove layer feature from group
+     * @param {Integer} id - id
      *
      * @private
      */
@@ -680,6 +693,7 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
     /**
      * this methode is called by this.onReverseGeocodingSubmit method,
      * it generates and sends reverse geocode request, then displays results
+     * @param {Object} settings - settings
      *
      * @private
      */
@@ -886,7 +900,7 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
         var map = this._map;
         var self = this;
 
-        /** function set style Highlight for results */
+        // function set style Highlight for results
         function _setHighLight (e) {
             var layer = e.target;
 
@@ -897,7 +911,7 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
             div.scrollIntoView(false);
         }
 
-        /** function reset style Highlight for results */
+        // function reset style Highlight for results
         function _resetHighLight (e) {
             var layer = e.target;
 
@@ -1080,7 +1094,7 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
             filterOptions : {
                 type : [self._currentGeocodingType]
             },
-            /** callback onSuccess */
+            // callback onSuccess
             onSuccess : function (results) {
                 logger.log(results);
                 if (results) {
@@ -1089,7 +1103,7 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
                     self._hideWaitingContainer();
                 }
             },
-            /** callback onFailure */
+            // callback onFailure
             onFailure : function (error) {
                 self._hideWaitingContainer();
 
@@ -1195,6 +1209,7 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
 
     /**
      * TODO this method clears previous location results marker
+     * @param {Object} map - the map
      *
      * @private
      */

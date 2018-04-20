@@ -5,6 +5,8 @@ import LayerConfig from "./LayerConfig";
 import WMS from "./WMS";
 import WMTS from "./WMTS";
 
+var logger = Logger.getLogger("layers");
+
 /**
  * Geoportal Layers Factory to be used together with Leaflet Maps.
  *
@@ -38,7 +40,7 @@ var Layers = {
 
         // FIXME est ce utile de le preciser ?
         if (!this.options.apiKey) {
-            console.log("PARAM_MISSING : apiKey !");
+            logger.log("PARAM_MISSING : apiKey !");
         }
 
         // par defaut
@@ -80,7 +82,7 @@ var Layers = {
             this.params = {};
             if (!this.options.apiKey) {
                 // FIXME on retire l'exception...
-                console.log("WARNING PARAM_MISSING : parameter 'apiKey' is mandatory if the contract key configuration has not been loaded !");
+                logger.log("WARNING PARAM_MISSING : parameter 'apiKey' is mandatory if the contract key configuration has not been loaded !");
             }
         }
     },
@@ -92,12 +94,15 @@ var Layers = {
      * @static
      * @alias L.geoportalLayer.WMS
      * @extends {L.TileLayer.WMS}
+     *
      * @param {Object} options - options for function call.
      * @param {String} options.layer - layer name (e.g. "ORTHOIMAGERY.ORTHOPHOTOS")
      * @param {Boolean} [options.ssl] - if set true, enforce protocol https (only for nodejs)
      * @param {String} [options.apiKey] - access key to Geoportal platform, obtained [here]{@link http://professionnels.ign.fr/ign/contrats}.
      * @param {Object} [settings] - other options for L.TileLayer.WMS function (see {@link http://leafletjs.com/reference.html#tilelayer-wms-options})
-     * @returns {L.geoportalLayer.WMS}
+     *
+     * @returns {L.geoportalLayer.WMS} WMS layer
+     *
      * @example
      *  var map = L.Map('divmap').setView();
      *  var lyr = L.geoportalLayer.WMS(
@@ -188,12 +193,15 @@ var Layers = {
      * @static
      * @alias L.geoportalLayer.WMTS
      * @extends {L.TileLayer}
+     *
      * @param {Object} options - options for function call.
      * @param {String} options.layer - layer name (e.g. "ORTHOIMAGERY.ORTHOPHOTOS")
      * @param {Boolean} [options.ssl] - if set true, enforce protocol https (only for nodejs)
      * @param {String} [options.apiKey] - access key to Geoportal platform, obtained [here]{@link http://professionnels.ign.fr/ign/contrats}.
      * @param {Object} [settings] - other options for L.TileLayer function (see {@link http://leafletjs.com/reference.html#tilelayer-options})
-     * @returns {L.geoportalLayer.WMTS}
+     *
+     * @returns {L.geoportalLayer.WMTS} WMTS layer
+     *
      * @example
      *  var map = L.Map('divmap').setView();
      *  var lyr = L.geoportalLayer.WMTS(

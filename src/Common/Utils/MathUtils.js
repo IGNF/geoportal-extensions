@@ -3,7 +3,7 @@ var MathUtils = {
      * Reste de la division euclidienne
      * @param {Number} a - divisor
      * @param {Number} b - quotient
-     * @returns {Number}
+     * @returns {Number} Modulo
      */
     modulo : function (a, b) {
         var r = a % b;
@@ -17,7 +17,7 @@ var MathUtils = {
      * @param {Number} degrees - decimal degrees
      * @param {Array} hemispheres - "NS" ou "EO"
      * @param {Number} numDigits - number of digits for seconds
-     * @returns {Object}
+     * @returns {Object} DMS coordinate
      */
     decimalToDMS : function (degrees, hemispheres, numDigits) {
         var normalizedDegrees = this.modulo(degrees + 180, 360) - 180;
@@ -54,7 +54,7 @@ var MathUtils = {
      *
      * @param {String} s - string number
      * @param {Numeric} base - between 2 and 36
-     * @returns {null|Numeric}
+     * @returns {null|Numeric} result
      */
     toInteger : function (s, base) {
         var _base = base || 10;
@@ -69,7 +69,7 @@ var MathUtils = {
      * check if s represents an integer
      *
      * @param {String} s - string number
-     * @returns {Boolean}
+     * @returns {Boolean} is integer
      */
     isInteger : function (s) {
         if (isNaN(s)) {
@@ -84,7 +84,7 @@ var MathUtils = {
      * Converts s to float
      *
      * @param {String} s - string number
-     * @returns {null|Numeric}
+     * @returns {null|Numeric} result
      */
     toFloat : function (s) {
         var n = parseFloat(s);

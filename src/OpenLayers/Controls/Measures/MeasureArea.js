@@ -142,6 +142,8 @@ MeasureArea.prototype.setMap = function (map) {
 /**
  * Initialize measure control (called by constructor)
  *
+ * @param {Object} options - options
+ *
  * @private
  */
 MeasureArea.prototype._initialize = function (options) {
@@ -159,6 +161,8 @@ MeasureArea.prototype._initialize = function (options) {
 
 /**
  * initialize component container (DOM)
+ *
+ * @returns {DOMElement} DOM element
  *
  * @private
  */

@@ -1,6 +1,9 @@
 import ol from "ol";
 import Proj4 from "proj4";
 import Register from "../../Common/Utils/Register";
+import Logger from "../../Common/Utils/LoggerByDefault";
+
+var logger = Logger.getLogger("CRS");
 
 /**
  * Autoload function that loads all defs into proj4
@@ -13,7 +16,7 @@ import Register from "../../Common/Utils/Register";
     if (!ol.proj.proj4_ && ol.proj.setProj4) {
         ol.proj.setProj4(Proj4);
     } else {
-        console.log("WARNING : OpenLayers library should manage proj4 dependency in order to add custom projections (Lambert 93 for instance)");
+        logger.log("WARNING : OpenLayers library should manage proj4 dependency in order to add custom projections (Lambert 93 for instance)");
     }
 })();
 

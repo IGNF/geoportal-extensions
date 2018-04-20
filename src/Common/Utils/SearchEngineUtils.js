@@ -89,7 +89,7 @@ var SearchEngineUtils = {
      * Provides default zoom based on results.
      *
      * @param {Object} info - location information
-     * @returns zoom level
+     * @returns {Integer} zoom level
      */
     zoomToResultsByDefault : function (info) {
         // FIXME

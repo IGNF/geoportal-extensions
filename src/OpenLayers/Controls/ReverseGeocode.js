@@ -99,7 +99,7 @@ ReverseGeocode.prototype.getCollapsed = function () {
  */
 ReverseGeocode.prototype.setCollapsed = function (collapsed) {
     if (collapsed === undefined) {
-        console.log("[ERROR] ReverseGeocode:setCollapsed - missing collapsed parameter");
+        logger.log("[ERROR] ReverseGeocode:setCollapsed - missing collapsed parameter");
         return;
     }
     if ((collapsed && this.collapsed) || (!collapsed && !this.collapsed)) {
@@ -275,6 +275,8 @@ ReverseGeocode.prototype.initialize = function (options) {
  * this method is called by this.initialize()
  * and makes sure input options are correctly formated
  *
+ * @param {Object} options - options
+ *
  * @private
  */
 ReverseGeocode.prototype._checkInputOptions = function (options) {
@@ -286,7 +288,7 @@ ReverseGeocode.prototype._checkInputOptions = function (options) {
         var resources = options.resources;
         // on vérifie que la liste des ressources de geocodage est bien un tableau
         if (!Array.isArray(resources)) {
-            console.log("[ReverseGeocode] 'options.resources' parameter should be an array");
+            logger.log("[ReverseGeocode] 'options.resources' parameter should be an array");
             resources = null;
         }
         var resourcesList = ["StreetAddress", "PositionOfInterest", "CadastralParcel", "Administratif"];
@@ -295,7 +297,7 @@ ReverseGeocode.prototype._checkInputOptions = function (options) {
             if (resourcesList.indexOf(resources[i]) === -1) {
                 // si la resource n'est pas référencée, on stocke son index pour la retirer du tableau (après avoir terminé de parcourir le tableau)
                 wrongResourcesIndexes.push(i);
-                console.log("[ReverseGeocode] options.resources : " + resources[i] + " is not a resource for reverse geocode");
+                logger.log("[ReverseGeocode] options.resources : " + resources[i] + " is not a resource for reverse geocode");
             }
         }
         // on retire les ressoures non référencées qu'on a pu rencontrer
@@ -311,7 +313,7 @@ ReverseGeocode.prototype._checkInputOptions = function (options) {
         var delimitations = options.delimitations;
         // on vérifie que la liste des delimitations est bien un tableau
         if (!Array.isArray(delimitations)) {
-            console.log("[ReverseGeocode] 'options.delimitations' parameter should be an array");
+            logger.log("[ReverseGeocode] 'options.delimitations' parameter should be an array");
             delimitations = null;
         }
         var delimitationsList = ["Circle", "Point", "Extent"];
@@ -320,7 +322,7 @@ ReverseGeocode.prototype._checkInputOptions = function (options) {
             if (delimitationsList.indexOf(delimitations[i]) === -1) {
                 // si la delimitations n'est pas référencée, on stocke son index pour la retirer du tableau (après avoir terminé de parcourir le tableau)
                 wrongDelimitationsIndexes.push(i);
-                console.log("[ReverseGeocode] options.delimitations : " + delimitations[i] + " is not a delimitation for reverse geocode");
+                logger.log("[ReverseGeocode] options.delimitations : " + delimitations[i] + " is not a delimitation for reverse geocode");
             }
         }
         // on retire les ressoures non référencées qu'on a pu rencontrer
@@ -356,7 +358,7 @@ ReverseGeocode.prototype._initGeocodingType = function () {
             if (this._servicesRightManagement["Geocode"].indexOf(resources[i]) < 0) {
                 // si on n'a pas les droits sur la ressource, on va la supprimer : on stocke son index
                 noRightsIndexes.push(i);
-                console.log("[ReverseGeocode] no rights for options.resources : " + resources[i]);
+                logger.log("[ReverseGeocode] no rights for options.resources : " + resources[i]);
             }
         }
         // on retire les ressoures non autorisées qu'on a pu rencontrer
@@ -418,7 +420,7 @@ ReverseGeocode.prototype._initPopupDiv = function () {
     var closer = document.createElement("input");
     closer.type = "button";
     closer.className = "gp-styling-button closer";
-    /** on closer click : remove popup */
+    // on closer click : remove popup
     closer.onclick = function () {
         if (context._popupOverlay != null) {
             context._popupOverlay.setPosition(undefined);
@@ -486,6 +488,8 @@ ReverseGeocode.prototype._checkRightsManagement = function () {
 
 /**
  * Create control main container (DOM initialize)
+ *
+ * @returns {DOMElement} DOM element
  *
  * @private
  */
@@ -755,7 +759,7 @@ ReverseGeocode.prototype._activateBoxInteraction = function (map) {
     // on aura donc une géométrie LineString avec 5 coordonnées : start, point2, end, point4, start,
     // où les coordonnées de point2 et point4 sont calculées à partir de start et end, et start est répété à la fin pour fermer la géométrie.
 
-    /** function to draw rectangle with only 2 points */
+    // function to draw rectangle with only 2 points
     var geometryFunction = function (coordinates, geometry) {
         if (!geometry) {
             geometry = new ol.geom.Polygon(null);
@@ -1003,14 +1007,14 @@ ReverseGeocode.prototype._getReverseGeocodingRequestOptions = function () {
         maximumResponses : reverseGeocodeOptions.maximumResponses || 25,
         timeOut : reverseGeocodeOptions.timeOut || 30000,
         protocol : reverseGeocodeOptions.protocol || "XHR",
-        /** callback onSuccess */
+        // callback onSuccess
         onSuccess : function (response) {
             if (response.locations) {
                 logger.log("reverseGeocode results : ", response.locations);
                 context._displayGeocodedLocations(response.locations);
             }
         },
-        /** callback onFailure */
+        // callback onFailure
         onFailure : function (error) {
             // FIXME mise à jour du controle mais le service ne repond pas en 200 !?
 
@@ -1032,7 +1036,7 @@ ReverseGeocode.prototype._getReverseGeocodingRequestOptions = function () {
     if (this._currentGeocodingDelimitation.toLowerCase() === "circle" && this._requestCircleFilter) {
         // FIXME : a confirmer !
         if (this._requestCircleFilter.radius > 1000) {
-            console.log("INFO : initial circle radius (" + this._requestCircleFilter.radius + ") limited to 1000m.");
+            logger.log("INFO : initial circle radius (" + this._requestCircleFilter.radius + ") limited to 1000m.");
             this._requestCircleFilter.radius = 1000;
         }
         requestOptions.filterOptions.circle = this._requestCircleFilter;

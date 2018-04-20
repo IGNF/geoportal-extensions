@@ -43,6 +43,7 @@ var Logo = L.Control.extend(/** @lends Logo.prototype */ {
     /**
      * constructor
      *
+     * @param {Object} options - options
      * @private
      */
     initialize : function (options) {
@@ -52,10 +53,12 @@ var Logo = L.Control.extend(/** @lends Logo.prototype */ {
     /**
      * event
      *
+     * @returns {DOMElement} DOM element
      * @private
      */
     onAdd : function (/* map */) {
-        var container = L.DomUtil.create("div", "gp-control-logo", container);
+        var container = null;
+        container = L.DomUtil.create("div", "gp-control-logo", container);
 
         var bLink = !!((this.options.url || this.options.text));
         var link = null;
@@ -65,7 +68,7 @@ var Logo = L.Control.extend(/** @lends Logo.prototype */ {
             link.target = "_blank";
             if (this.options.url) {
                 link.href = this.options.url;
-                (this.options.text) ? link.title = this.options.text : null;
+                if (this.options.text) link.title = this.options.text;
             }
         }
 

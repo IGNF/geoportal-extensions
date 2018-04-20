@@ -87,6 +87,8 @@ LocationSelector.prototype.constructor = LocationSelector;
 
 /**
  * initialize component
+ *
+ * @param {Object} options - options
  */
 LocationSelector.prototype.initialize = function (options) {
     // set default options
@@ -183,7 +185,7 @@ LocationSelector.prototype._initMarker = function () {
             if (Array.isArray(offset) && offset.length === 2) {
                 this._markerOffset = offset;
             } else {
-                console.log("markerOpts.offset should be an array. e.g. : [0,0]");
+                logger.log("markerOpts.offset should be an array. e.g. : [0,0]");
             }
         }
     } else {
@@ -255,6 +257,8 @@ LocationSelector.prototype._checkRightsManagement = function () {
 
 /**
  * initialize component container
+ *
+ * @returns {DOMElement} DOM element
  */
 LocationSelector.prototype._initContainer = function () {
     var id = this.options.tag.id;
@@ -336,7 +340,7 @@ LocationSelector.prototype.onAutoCompleteSearchText = function (e) {
     // aucun droits !
     // on evite une requête...
     if (this._noRightManagement) {
-        console.log("no rights for this service !?");
+        logger.log("no rights for this service !?");
         return;
     }
 
@@ -359,14 +363,14 @@ LocationSelector.prototype.onAutoCompleteSearchText = function (e) {
     this._requestAutoComplete({
         text : value,
         maximumResponses : 5, // FIXME je limite le nombre de reponse car le container DOM est limité dans l'affichage !!!
-        /** callback onSuccess */
+        // callback onSuccess
         onSuccess : function (results) {
             if (results) {
                 var locations = results.suggestedLocations;
                 context._fillAutoCompletedLocationListContainer(locations);
             }
         },
-        /** callback onFailure */
+        // callback onFailure
         onFailure : function (error) {
             // FIXME
             // où affiche t on les messages : ex. 'No suggestion matching the search' ?
@@ -779,6 +783,8 @@ LocationSelector.prototype._requestAutoComplete = function (settings) {
  * and fills the container of the location list.
  * it creates a HTML Element per location
  * (cf. this. ...)
+ *
+ * @param {Object[]} locations - locations
  *
  * @private
  */

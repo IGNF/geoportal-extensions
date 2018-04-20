@@ -820,7 +820,7 @@ var Isocurve = L.Control.extend(/** @lends L.geoportalControl.Isocurve.prototype
             timeout : 7000,
             protocol : "XHR",
 
-            /** callback onSuccess */
+            // callback onSuccess
             onSuccess : function (results) {
                 logger.log(results);
                 if (results) {
@@ -828,7 +828,7 @@ var Isocurve = L.Control.extend(/** @lends L.geoportalControl.Isocurve.prototype
                 }
             },
 
-            /** callback onFailure */
+            // callback onFailure
             onFailure : function (error) {
                 // FIXME mise à jour du controle mais le service ne repond pas en 200 !?
                 self._hideWaitingContainer();
@@ -894,7 +894,7 @@ var Isocurve = L.Control.extend(/** @lends L.geoportalControl.Isocurve.prototype
         }
         // on fait quoi ?
         if (!bFound) {
-            console.log("no rights for this service !?");
+            logger.log("no rights for this service !?");
             return;
         }
 

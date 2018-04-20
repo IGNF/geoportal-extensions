@@ -160,6 +160,8 @@ MeasureAzimuth.prototype.isGeodesic = function () {
 /**
  * Initialize measure control (called by constructor)
  *
+ * @param {Object} options - options
+ *
  * @private
  */
 MeasureAzimuth.prototype._initialize = function (options) {
@@ -177,6 +179,8 @@ MeasureAzimuth.prototype._initialize = function (options) {
 
 /**
  * initialize component container (DOM)
+ *
+ * @returns {DOMElement} DOM element
  *
  * @private
  */

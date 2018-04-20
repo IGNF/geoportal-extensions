@@ -321,6 +321,10 @@ var LayerSwitcher = L.Control.Layers.extend(/** @lends L.geoportalControl.LayerS
     /**
      * Method 'addTo'
      * (overwritten : L.Control.Layers because of exception with _expandIfNotCollapsed())
+     *
+     * @param {Object} map - the map
+     *
+     * @returns {Object} this
      */
     addTo : function (map) {
         L.Control.prototype.addTo.call(this, map);
@@ -779,12 +783,12 @@ var LayerSwitcher = L.Control.Layers.extend(/** @lends L.geoportalControl.LayerS
         var cfg = this._layersConfig;
 
         if (!layer) {
-            console.log("[ERROR] LayerSwitcher:addLayer - missing layer parameter !");
+            logger.log("[ERROR] LayerSwitcher:addLayer - missing layer parameter !");
             return;
         }
 
         if (!map.hasLayer(layer)) {
-            console.log("[WARN] LayerSwitcher:addLayer - layer has not been added on map !");
+            logger.log("[WARN] LayerSwitcher:addLayer - layer has not been added on map !");
             map.addLayer(layer);
         }
 

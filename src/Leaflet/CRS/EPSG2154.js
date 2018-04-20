@@ -32,6 +32,7 @@ var EPSG2154 = {
     /**
      * execution
      *
+     * @returns {Object} instance
      * @private
      */
     build : function () {
@@ -52,6 +53,7 @@ var EPSG2154 = {
     /**
      * resolutions
      *
+     * @returns {Number[]} resolutions
      * @private
      */
     _getResolutions : function () {
@@ -96,6 +98,7 @@ var EPSG2154 = {
     /**
      * origine
      *
+     * @returns {Number[]} origin
      * @private
      */
     _getOrigin : function () {

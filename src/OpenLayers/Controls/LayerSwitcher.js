@@ -2,6 +2,9 @@ import ol from "ol";
 import Utils from "../../Common/Utils";
 import SelectorID from "../../Common/Utils/SelectorID";
 import LayerSwitcherDOM from "../../Common/Controls/LayerSwitcherDOM";
+import Logger from "../../Common/Utils/LoggerByDefault";
+
+var logger = Logger.getLogger("layerswitcher");
 
 /**
  * @classdesc
@@ -107,7 +110,7 @@ LayerSwitcher.prototype.setMap = function (map) {
         this._listeners.onMoveListener = map.on(
             "moveend",
             function () {
-                this._onMapMoveEnd.call(this, map);
+                this._onMapMoveEnd(map);
             },
             this
         );
@@ -189,13 +192,13 @@ LayerSwitcher.prototype.addLayer = function (layer, config) {
     config = config || {};
 
     if (!layer) {
-        console.log("[ERROR] LayerSwitcher:addLayer - missing layer parameter");
+        logger.log("[ERROR] LayerSwitcher:addLayer - missing layer parameter");
         return;
     }
 
     var id = layer.gpLayerId;
     if (id === "undefined") {
-        console.log("[ERROR] LayerSwitcher:addLayer - configuration cannot be set for " + layer + " layer (layer id not found)");
+        logger.log("[ERROR] LayerSwitcher:addLayer - configuration cannot be set for " + layer + " layer (layer id not found)");
         return;
     }
 
@@ -210,7 +213,7 @@ LayerSwitcher.prototype.addLayer = function (layer, config) {
         this
     );
     if (!isLayerInMap) {
-        console.log("[ERROR] LayerSwitcher:addLayer - configuration cannot be set for ", layer, " layer (layer is not in map.getLayers() )");
+        logger.log("[ERROR] LayerSwitcher:addLayer - configuration cannot be set for ", layer, " layer (layer is not in map.getLayers() )");
         return;
     }
 
@@ -266,9 +269,9 @@ LayerSwitcher.prototype.addLayer = function (layer, config) {
         );
         // listener for zIndex change
         var context = this;
-        /** fonction de callback appelée au changement de zindex d'une couche  */
+        // fonction de callback appelée au changement de zindex d'une couche
         var updateLayersOrder = function (e) {
-            context._updateLayersOrder.call(context, e);
+            context._updateLayersOrder(e);
         };
         if (this._layers[id].onZIndexChangeEvent == null) {
             this._layers[id].onZIndexChangeEvent = layer.on(
@@ -351,7 +354,7 @@ LayerSwitcher.prototype.removeLayer = function (layer) {
  */
 LayerSwitcher.prototype.setCollapsed = function (collapsed) {
     if (collapsed === undefined) {
-        console.log("[ERROR] LayerSwitcher:setCollapsed - missing collapsed parameter");
+        logger.log("[ERROR] LayerSwitcher:setCollapsed - missing collapsed parameter");
         return;
     }
     var isCollapsed = !document.getElementById(this._addUID("GPshowLayersList")).checked;
@@ -371,6 +374,7 @@ LayerSwitcher.prototype.setCollapsed = function (collapsed) {
 
 /**
  * Returns true if widget is collapsed (minimize), false otherwise
+ * @returns {Boolean} is collapsed
  */
 LayerSwitcher.prototype.getCollapsed = function () {
     return this.collapsed;
@@ -388,11 +392,11 @@ LayerSwitcher.prototype.setRemovable = function (layer, removable) {
     }
     var layerID = layer.gpLayerId;
     if (layerID == null) { // on teste si layerID est null ou undefined
-        console.log("[LayerSwitcher:setRemovable] layer should be added to map before calling setRemovable method");
+        logger.log("[LayerSwitcher:setRemovable] layer should be added to map before calling setRemovable method");
         return;
     }
     var removalDiv = document.getElementById(this._addUID("GPremove_ID_" + layerID));
-    console.log(removalDiv.style.display);
+    logger.log(removalDiv.style.display);
     if (removalDiv) {
         if (removable === false) {
             removalDiv.style.display = "none";
@@ -498,7 +502,7 @@ LayerSwitcher.prototype._initContainer = function () {
     // on ajoute un écouteur d'évènement sur le bouton (checkbox) de dépliement/repliement des couches,
     // pour modifier la propriété this.collapsed quand on clique dessus
     var context = this;
-    /** event listener */
+    // event listener
     var changeCollapsed = function (e) {
         this.collapsed = !e.target.checked;
         // on génère nous même l'evenement OpenLayers de changement de pté
@@ -607,9 +611,9 @@ LayerSwitcher.prototype._addMapLayers = function (map) {
     );
 
     // on récupère l'ordre d'affichage des couches entre elles dans la carte, à partir de zindex.
-    /** fonction de callback appelée au changement de zindex d'une couche  */
+    // fonction de callback appelée au changement de zindex d'une couche
     var updateLayersOrder = function (e) {
-        context._updateLayersOrder.call(context, e);
+        context._updateLayersOrder(e);
     };
     for (var zindex in this._layersIndex) {
         if (this._layersIndex.hasOwnProperty(zindex)) {
@@ -644,6 +648,9 @@ LayerSwitcher.prototype._addMapLayers = function (map) {
  * create layer div (to append to control DOM element).
  *
  * @param {Object} layerOptions - layer options (id, title, description, legends, metadata, quicklookUrl ...)
+ *
+ * @returns {DOMElement} DOM element
+ *
  * @private
  */
 LayerSwitcher.prototype._createLayerDiv = function (layerOptions) {
@@ -779,9 +786,9 @@ LayerSwitcher.prototype._updateLayersOrder = function () {
     // on réordonne les couches entre elles dans la carte, à partir des zindex stockés ci-dessus.
     this._lastZIndex = 0;
     var context = this;
-    /** fonction de callback appelée au changement de zindex d'une couche  */
+    // fonction de callback appelée au changement de zindex d'une couche
     var updateLayersOrder = function (e) {
-        context._updateLayersOrder.call(context, e);
+        context._updateLayersOrder(e);
     };
     this._layersOrder = [];
     for (var zindex in this._layersIndex) {
@@ -815,7 +822,7 @@ LayerSwitcher.prototype._updateLayersOrder = function () {
             this._layerListContainer.appendChild(layerOptions.div);
         }
     } else {
-        console.log("[ol.control.LayerSwitcher] _updateLayersOrder : layer list container not found to update layers order ?!");
+        logger.log("[ol.control.LayerSwitcher] _updateLayersOrder : layer list container not found to update layers order ?!");
     }
 };
 
@@ -920,9 +927,9 @@ LayerSwitcher.prototype._onDragAndDropLayerClick = function () {
     // INFO : e.oldIndex et e.newIndex marchent en mode AMD mais pas Bundle.
     var map = this.getMap();
     var context = this;
-    /** fonction de callback appelée au changement de zindex d'une couche  */
+    // fonction de callback appelée au changement de zindex d'une couche
     var updateLayersOrder = function (e) {
-        context._updateLayersOrder.call(context, e);
+        context._updateLayersOrder(e);
     };
 
     // on récupère l'ordre des div dans le contrôle pour réordonner les couches (avec zindex)
@@ -1004,7 +1011,7 @@ LayerSwitcher.prototype.getLayerDOMId = function (olLayer) {
     var foundId = null;
 
     this.getMap().getLayers().forEach(function (layer) {
-        if (layer == olLayer) {
+        if (layer == olLayer) { // FIXME object comparison
             foundId = layer.hasOwnProperty("gpLayerId") ? layer.gpLayerId : null;
         }
     },

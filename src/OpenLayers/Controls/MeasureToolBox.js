@@ -1,4 +1,3 @@
-import ol from "ol";
 import Logger from "../../Common/Utils/LoggerByDefault";
 import Utils from "../../Common/Utils";
 import ID from "../../Common/Utils/SelectorID";

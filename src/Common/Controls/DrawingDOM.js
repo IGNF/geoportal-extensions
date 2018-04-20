@@ -1,3 +1,7 @@
+import Logger from "../../Common/Utils/LoggerByDefault";
+
+var logger = Logger.getLogger("DrawingDOM");
+
 var DrawingDOM = {
 
     /**
@@ -255,7 +259,7 @@ var DrawingDOM = {
         var ul = document.createElement("ul");
         ul.className = "drawing-tools-flex-display";
         var context = this;
-        /** li click handler function */
+        // li click handler function
         function liClickHandler (e) {
             /* jshint validthis: true */
             // this == elem clicked
@@ -318,10 +322,10 @@ var DrawingDOM = {
      * @returns {Object} hex and opacity formated values
      */
     rgbaToHex : function (rgba) {
-        /** number to hex conversion */
+        // number to hex conversion
         function hex (number) {
             if (number > 255) {
-                throw "'" + number + "'' is greater than 255(0xff);";
+                throw new Error("'" + number + "'' is greater than 255(0xff);");
             }
             var str = Number(number).toString(16);
             return ("0" + str).slice(-2);
@@ -329,7 +333,7 @@ var DrawingDOM = {
         var regex = /rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*(?:,\s*(0?.?\d+)\s*)?\)/;
         var parsed = regex.exec(rgba);
         if (!parsed) {
-            throw "Invalid format: " + rgba;
+            throw new Error("Invalid format: " + rgba);
         }
         var red = parsed[1];
         var green = parsed[2];
@@ -356,7 +360,7 @@ var DrawingDOM = {
         // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
         var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
         if (!hex) {
-            throw "Invalid format";
+            throw new Error("Invalid format");
         }
         hex = hex.replace(shorthandRegex, function (m, r, g, b) {
             return r + r + g + g + b + b;
@@ -560,7 +564,7 @@ var DrawingDOM = {
                 ul.appendChild(li);
                 break;
             default:
-                console.log("Unhandled geometry type for styling.");
+                logger.log("Unhandled geometry type for styling.");
         }
         div.appendChild(ul);
         // apply button
@@ -632,11 +636,11 @@ var DrawingDOM = {
         inputLabel.placeholder = options.placeholder;
         inputLabel.id = options.inputId;
         popup.appendChild(inputLabel);
-        /** blur */
+        // blur
         inputLabel.onblur = function () {
             options.applyFunc.call(this, inputLabel.value, true);
         };
-        /** keyup */
+        // keyup
         inputLabel.onkeyup = function (evtk) {
             if (options.geomType === "Text" && evtk.keyCode === 13) {
                 options.applyFunc.call(this, inputLabel.value, true);

@@ -19,6 +19,10 @@ var LayerEvent = {
 
     /**
      * activation du controle attribution
+     *
+     * @param {Object} map - the map
+     *
+     * @return {Boolean} attribution controle is enable
      */
     isEnable : function (map) {
         if (!map.attributionControl) {
@@ -49,10 +53,12 @@ var LayerEvent = {
 
     /**
      * fonction de suppresion d'un layer du controle des layers
+     *
+     * @param {Object} e - event
      */
     _onRemoveLayer : function (e) {
         logger.trace("onRemove event", e);
-        if (e.layer._geoportal_id != this._geoportal_id) {
+        if (e.layer._geoportal_id !== this._geoportal_id) {
             return;
         }
         // attributions non visibles
@@ -61,10 +67,12 @@ var LayerEvent = {
 
     /**
      * fonction d'ajout d'un layer du controle des layers
+     *
+     * @param {Object} e - event
      */
     _onAddLayer : function (e) {
         logger.trace("onAdd event", e);
-        if (e.layer._geoportal_id != this._geoportal_id) {
+        if (e.layer._geoportal_id !== this._geoportal_id) {
             return;
         }
         // attributions visibles
@@ -73,6 +81,8 @@ var LayerEvent = {
 
     /**
      * fonction de deplacement d'un layer
+     *
+     * @param {Object} e - event
      */
     _onMoveEndLayer : function (e) {
         logger.trace("moveend event", e);
@@ -80,7 +90,11 @@ var LayerEvent = {
         this.updateAttributions(this._map, this);
     },
 
-    /** updateAttributions */
+    /**
+     * updateAttributions
+     *
+     * @param {Object} map - the map
+     */
     updateAttributions : function (map) {
         // FIXME on peut realiser une mise à jour plus intelligente que cette manière brutale...
         // Ex. mise en place de la notion 'hidden' de l'originators à desactiver
@@ -95,7 +109,11 @@ var LayerEvent = {
         this.fire("attributionchange");
     },
 
-    /** removeAttributions */
+    /**
+     * removeAttributions
+     *
+     * @param {Object} map - the map
+     */
     removeAttributions : function (map) {
         logger.trace("removeAttributions...", this._geoportal_id);
         // suppression des attributions
@@ -117,7 +135,11 @@ var LayerEvent = {
         }
     },
 
-    /** addAttributions */
+    /**
+     * addAttributions
+     *
+     * @param {Object} map - the map
+     */
     addAttributions : function (map) {
         logger.trace("addAttributions...", this._geoportal_id);
         // on interroge les originators en options pour obtenir les infos

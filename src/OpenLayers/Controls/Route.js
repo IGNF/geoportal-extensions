@@ -122,7 +122,7 @@ Route.prototype.getCollapsed = function () {
  */
 Route.prototype.setCollapsed = function (collapsed) {
     if (collapsed === undefined) {
-        console.log("[ERROR] Route:setCollapsed - missing collapsed parameter");
+        logger.log("[ERROR] Route:setCollapsed - missing collapsed parameter");
         return;
     }
     if ((collapsed && this.collapsed) || (!collapsed && !this.collapsed)) {
@@ -294,6 +294,8 @@ Route.prototype.initialize = function (options) {
 /**
  * this method is called by this.initialize()
  *
+ * @param {Object} options - options
+ *
  * @private
  */
 Route.prototype._checkInputOptions = function (options) {
@@ -307,7 +309,7 @@ Route.prototype._checkInputOptions = function (options) {
             } else {
                 for (var i = 0; i < options.graphs.length; i++) {
                     if (typeof options.graphs[i] !== "string") {
-                        console.log("[ol.control.Route] ERROR : parameter 'graphs' elements should be of type 'string'");
+                        logger.log("[ol.control.Route] ERROR : parameter 'graphs' elements should be of type 'string'");
                         options.graphs = null;
                     } else {
                         if (options.graphs[i].toLowerCase() === "pieton") {
@@ -400,6 +402,10 @@ Route.prototype._checkRightsManagement = function () {
 /**
  * initialize component container (DOM)
  *
+ * @param {Object} map - the map
+ *
+ * @returns {DOMElement} DOM element
+ *
  * @private
  */
 Route.prototype._initContainer = function (map) {
@@ -468,7 +474,7 @@ Route.prototype._initContainer = function (map) {
     // hide autocomplete suggested locations on container click
     if (container.addEventListener) {
         container.addEventListener("click", function (e) {
-            context._hideRouteSuggestedLocations.call(context, e);
+            context._hideRouteSuggestedLocations(e);
         });
     }
 
@@ -578,7 +584,7 @@ Route.prototype._initPopupDiv = function () {
     var closer = document.createElement("input");
     closer.type = "button";
     closer.className = "gp-styling-button closer";
-    /** on closer click : remove popup */
+    // on closer click : remove popup
     closer.onclick = function () {
         if (context._popupOverlay != null) {
             context._popupOverlay.setPosition(undefined);
@@ -600,6 +606,8 @@ Route.prototype._initPopupDiv = function () {
 /**
  * Create List Points
  * Overwrite RouteDOM method !
+ *
+ * @param {Object} map - the map
  *
  * @returns {Array} List DOM element
  * @private
@@ -849,14 +857,14 @@ Route.prototype.onRouteComputationSubmit = function (options) {
         distanceUnit : "m",
         timeOut : _timeout,
         protocol : _protocol,
-        /** callback onSuccess */
+        // callback onSuccess
         onSuccess : function (results) {
             logger.log(results);
             if (results) {
                 context._fillRouteResultsDetails(results);
             }
         },
-        /** callback onFailure */
+        // callback onFailure
         onFailure : function (error) {
             context._hideWaitingContainer();
             context._clearRouteResultsDetails();
@@ -1197,7 +1205,7 @@ Route.prototype._requestRouting = function (options) {
 
     // on fait quoi ?
     if (!bFound) {
-        console.log("no rights for this service !?");
+        logger.log("no rights for this service !?");
         return;
     }
 
@@ -1218,6 +1226,8 @@ Route.prototype._requestRouting = function (options) {
  * this method is called by this.onRouteComputationSubmit() (in case of route computation success)
  * and fills the container of the route instructions list, distance and time
  * information, also, constructs the geometry route.
+ *
+ * @param {Object} results - results of the route calculation
  *
  * @private
  */
@@ -1271,6 +1281,10 @@ Route.prototype._fillRouteResultsDetails = function (results) {
  * this method is called by this._fillRouteResultsDetails()
  * and fills the container of the route instructions list, distance and time
  * information.
+ *
+ * @param {Number} distance - distance
+ * @param {Number} duration - duration
+ * @param {Object[]} instructions - list of instructions
  *
  * @private
  */
@@ -1465,6 +1479,8 @@ Route.prototype._fillRouteResultsDetailsFeatureGeometry = function (instructions
  * this method is called on route features hover
  * and highlight instruction label
  *
+ * @param {Object} e - event
+ *
  * @private
  */
 Route.prototype._onResultsFeatureMouseOver = function (e) {
@@ -1620,7 +1636,6 @@ Route.prototype._clearRouteInputOptions = function () {
  */
 Route.prototype._removeRouteStepLocations = function () {
     var points = document.querySelectorAll("div[id^=\"GPlocationPoint\"]");
-    var stepPoints = 0;
     if (points.length !== 0) {
         // on boucle sur les points intermédiaires
         for (var i = 1; i < (points.length - 1); i++) {
@@ -1631,7 +1646,6 @@ Route.prototype._removeRouteStepLocations = function () {
                     if (classList[j] === "GPlocationStageFlexInput") {
                         // si l'élément est visible, on le supprime en simulant un clic sur la croix (x)
                         document.getElementById(this._addUID("GPlocationStageRemove_" + (i + 1))).click();
-                        stepPoints += 1;
                     }
                 }
             }
@@ -1718,6 +1732,8 @@ Route.prototype._clearRouteResultsFeatureGeometry = function () {
  * this method is called by event 'click' on control main container
  * and hide suggested Locations (unless target is an autocomplete input)
  *
+ * @param {Object} e - event
+ *
  * @private
  */
 Route.prototype._hideRouteSuggestedLocations = function (e) {
@@ -1794,6 +1810,10 @@ Route.prototype._hideWaitingContainer = function () {
 /**
  * simplified instructions
  *
+ * @param {Object[]} instructions - list of instructions
+ *
+ * @returns {Object[]} simplified instructions
+ *
  * @private
  */
 Route.prototype._simplifiedInstructions = function (instructions) {
@@ -1834,6 +1854,10 @@ Route.prototype._simplifiedInstructions = function (instructions) {
 /**
  * convert seconds to time : HH:MM:SS
  *
+ * @param {Number} duration - duration in seconds
+ *
+ * @returns {String} time in hours/minutes/seconds
+ *
  * @private
  */
 Route.prototype._convertSecondsToTime = function (duration) {
@@ -1863,6 +1887,10 @@ Route.prototype._convertSecondsToTime = function (duration) {
 
 /**
  * convert distance in meters or kilometers
+ *
+ * @param {Number} distance - distance in meters
+ *
+ * @returns {String} distance in km
  *
  * @private
  */

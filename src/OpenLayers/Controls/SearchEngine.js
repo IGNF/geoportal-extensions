@@ -138,7 +138,7 @@ SearchEngine.prototype.getCollapsed = function () {
  */
 SearchEngine.prototype.setCollapsed = function (collapsed) {
     if (collapsed === undefined) {
-        console.log("[ERROR] SearchEngine:setCollapsed - missing collapsed parameter");
+        logger.log("[ERROR] SearchEngine:setCollapsed - missing collapsed parameter");
         return;
     }
     if ((collapsed && this.collapsed) || (!collapsed && !this.collapsed)) {
@@ -272,6 +272,8 @@ SearchEngine.prototype.initialize = function (options) {
  * this method is called by this.initialize()
  * and makes sure input options are correctly formated
  *
+ * @param {Object} options - options
+ *
  * @private
  */
 SearchEngine.prototype._checkInputOptions = function (options) {
@@ -285,7 +287,7 @@ SearchEngine.prototype._checkInputOptions = function (options) {
             if (geocodeResources) {
                 // on vérifie que la liste des ressources de geocodage est bien un tableau
                 if (!Array.isArray(geocodeResources)) {
-                    console.log("[SearchEngine] 'options.resources.geocode' parameter should be an array");
+                    logger.log("[SearchEngine] 'options.resources.geocode' parameter should be an array");
                     geocodeResources = null;
                 }
                 var geocodeResourcesList = ["StreetAddress", "PositionOfInterest", "CadastralParcel", "Administratif"];
@@ -293,7 +295,7 @@ SearchEngine.prototype._checkInputOptions = function (options) {
                     if (geocodeResourcesList.indexOf(geocodeResources[i]) === -1) {
                         // si la resource n'est pas référencée, on l'enlève
                         // geocodeResources.splice(i, 1);
-                        console.log("[SearchEngine] options.resources.geocode : " + geocodeResources[i] + " is not a resource for geocode");
+                        logger.log("[SearchEngine] options.resources.geocode : " + geocodeResources[i] + " is not a resource for geocode");
                     }
                 }
             }
@@ -303,7 +305,7 @@ SearchEngine.prototype._checkInputOptions = function (options) {
             if (autocompleteResources) {
                 // on vérifie que la liste des ressources d'autocompletion est bien un tableau
                 if (!Array.isArray(autocompleteResources)) {
-                    console.log("[SearchEngine] 'options.resources.autocomplete' parameter should be an array");
+                    logger.log("[SearchEngine] 'options.resources.autocomplete' parameter should be an array");
                     autocompleteResources = null;
                 }
                 var autocompleteResourcesList = ["StreetAddress", "PositionOfInterest"];
@@ -311,12 +313,12 @@ SearchEngine.prototype._checkInputOptions = function (options) {
                     if (autocompleteResourcesList.indexOf(autocompleteResources[i]) === -1) {
                         // si la resource n'est pas référencée, on l'enlève
                         // autocompleteResources.splice(i, 1);
-                        console.log("[SearchEngine] options.resources.autocomplete : " + autocompleteResources[i] + " is not a resource for autocomplete");
+                        logger.log("[SearchEngine] options.resources.autocomplete : " + autocompleteResources[i] + " is not a resource for autocomplete");
                     }
                 }
             }
         } else {
-            console.log("[SearchEngine] 'resources' parameter should be an object");
+            logger.log("[SearchEngine] 'resources' parameter should be an object");
             options.resources = null;
         }
     }
@@ -412,7 +414,7 @@ SearchEngine.prototype._initPopupDiv = function () {
     var closer = document.createElement("input");
     closer.type = "button";
     closer.className = "gp-styling-button closer";
-    /** on closer click : remove popup */
+    // on closer click : remove popup
     closer.onclick = function () {
         if (context._popupOverlay != null) {
             context._popupOverlay.setPosition(undefined);
@@ -434,6 +436,8 @@ SearchEngine.prototype._initPopupDiv = function () {
 
 /**
  * Create control main container
+ *
+ * @returns {DOMElement} DOM element
  *
  * @private
  */
@@ -511,6 +515,8 @@ SearchEngine.prototype._initContainer = function () {
  * to the geocoding advanced menu.
  *
  * @param {String} code - resource geocoding name
+ *
+ * @returns {DOMElement} DOM element
  * @private
  */
 SearchEngine.prototype._setFilter = function (code) {
@@ -820,6 +826,8 @@ SearchEngine.prototype._requestGeocoding = function (settings) {
  * it creates a HTML Element per location
  * (cf. this. ...)
  *
+ * @param {Object[]} locations - locations
+ *
  * @private
  */
 SearchEngine.prototype._fillGeocodedLocationListContainer = function (locations) {
@@ -880,6 +888,7 @@ SearchEngine.prototype._setPosition = function (position, zoom) {
  * FIXME
  *
  * @param {Array} position - ol.Coordinate object [lon, lat] ou [x, y]
+ * @param {Object} info - location information
  * @private
  */
 SearchEngine.prototype._setMarker = function (position, info) {
@@ -930,7 +939,9 @@ SearchEngine.prototype._setMarker = function (position, info) {
  * this method is called by this.on*ResultsItemClick()
  * and get zoom to results.
  *
- * @param {Object} info - {}
+ * @param {Object} info - info
+ *
+ * @returns {Integer} zoom
  * @private
  */
 SearchEngine.prototype._getZoom = function (info) {
@@ -1113,7 +1124,7 @@ SearchEngine.prototype.onAutoCompleteSearchText = function (e) {
     // aucun droits !
     // on evite une requête...
     if (this._noRightManagement) {
-        console.log("no rights for this service !");
+        logger.log("no rights for this service !");
         return;
     }
 
@@ -1134,11 +1145,10 @@ SearchEngine.prototype.onAutoCompleteSearchText = function (e) {
     // on met en place des callbacks afin de recuperer les resultats ou
     // les messages d'erreurs du service.
     // les resultats sont affichés dans une liste deroulante.
-    // les messages d'erreurs sont affichés sur la console (?)
     var context = this;
     this._requestAutoComplete({
         text : value,
-        /** callback onSuccess */
+        // callback onSuccess
         onSuccess : function (results) {
             logger.log("request from AutoComplete", results);
             if (results) {
@@ -1167,7 +1177,7 @@ SearchEngine.prototype.onAutoCompleteSearchText = function (e) {
                 }
             }
         },
-        /** callback onFailure */
+        // callback onFailure
         onFailure : function (error) {
             // FIXME
             // où affiche t on les messages : ex. 'No suggestion matching the search' ?
@@ -1186,7 +1196,7 @@ SearchEngine.prototype.onAutoCompleteSearchText = function (e) {
                         context._requestGeocoding({
                             location : value,
                             returnFreeForm : true,
-                            /** callback onSuccess */
+                            // callback onSuccess
                             onSuccess : function (results) {
                                 logger.log("request from Geocoding", results);
                                 if (results) {
@@ -1206,7 +1216,7 @@ SearchEngine.prototype.onAutoCompleteSearchText = function (e) {
                                     context._fillAutoCompletedLocationListContainer(locations);
                                 }
                             },
-                            /** callback onFailure */
+                            // callback onFailure
                             onFailure : function (error) {
                                 logger.log(error.message);
                             }
@@ -1248,7 +1258,7 @@ SearchEngine.prototype._getGeocodeCoordinatesFromFullText = function (suggestedL
         filterOptions : {
             type : suggestedLocation.type
         },
-        /** callback onSuccess */
+        // callback onSuccess
         onSuccess : function (response) {
             logger.log("request from Geocoding (coordinates null)", response);
             if (response.locations && response.locations.length !== 0 && response.locations[0].position) {
@@ -1352,7 +1362,7 @@ SearchEngine.prototype.onGeocodingSearchSubmit = function (e) {
     // aucun droits !
     // on evite une requête...
     if (this._noRightManagement) {
-        console.log("no rights for this service !");
+        logger.log("no rights for this service !");
         return;
     }
 
@@ -1363,7 +1373,7 @@ SearchEngine.prototype.onGeocodingSearchSubmit = function (e) {
     var context = this;
     this._requestGeocoding({
         location : value,
-        /** callback onSuccess */
+        // callback onSuccess
         onSuccess : function (results) {
             logger.log("request from Geocoding", results);
             if (results) {
@@ -1371,7 +1381,7 @@ SearchEngine.prototype.onGeocodingSearchSubmit = function (e) {
                 context._fillGeocodedLocationListContainer(locations);
             }
         },
-        /** callback onFailure */
+        // callback onFailure
         onFailure : function (error) {
             // FIXME cf. this.onAutoCompleteSearch()
             context._clearGeocodedLocation();
@@ -1520,7 +1530,7 @@ SearchEngine.prototype.onGeocodingAdvancedSearchSubmit = function (e, data) {
     this._requestGeocoding({
         location : _location,
         filterOptions : _filterOptions,
-        /** callback onSuccess */
+        // callback onSuccess
         onSuccess : function (results) {
             logger.log(results);
             if (results) {
@@ -1528,7 +1538,7 @@ SearchEngine.prototype.onGeocodingAdvancedSearchSubmit = function (e, data) {
                 context._fillGeocodedLocationListContainer(locations);
             }
         },
-        /** callback onFailure */
+        // callback onFailure
         onFailure : function (error) {
             // FIXME cf. this.onAutoCompleteSearch()
             context._clearGeocodedLocation();
@@ -1583,9 +1593,9 @@ SearchEngine.prototype._getCadastralParcelRequestParams = function (filterOption
         l = commune.length;
         if (l === 3) {
             _location += commune;
-        } else if (l == 2) {
+        } else if (l === 2) {
             _location += "_" + commune;
-        } else if (l == 1) {
+        } else if (l === 1) {
             _location += "__" + commune;
         } else { // l > 3
             _location += commune.substring(0, 3);
