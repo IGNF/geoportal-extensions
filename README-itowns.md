@@ -75,12 +75,12 @@ L'arborescence décrite ci-dessus sera alors accessible dans le répertoire `nod
 
 #### Accès direct
 
-Vous pouvez aussi choisir d'utiliser des fichiers hébergés en ligne, pour y accéder directement, lors de vos tets par exemple. Cependant, pour une utilisation en production, nous vous conseillons de télécharger ces fichiers et de les héberger vous-même, sur le même serveur qui héberge votre application.
+Vous pouvez aussi choisir d'utiliser des fichiers hébergés en ligne, pour y accéder directement, lors de vos tests par exemple. Cependant, pour une utilisation en production, nous vous conseillons de télécharger ces fichiers et de les héberger vous-même, sur le même serveur qui héberge votre application.
 Par exemple sur Github Pages :
 ```
 http://ignf.github.io/geoportal-extensions/itowns-latest/dist/GpPluginItowns.js
 http://ignf.github.io/geoportal-extensions/itowns-latest/dist/GpPluginItowns.css
-http://ignf.github.io/geoportal-extensions/itowns-latest/dist/GpPluginLeaflet-src.js
+http://ignf.github.io/geoportal-extensions/itowns-latest/dist/GpPluginItowns-src.js
 http://ignf.github.io/geoportal-extensions/itowns-latest/dist/GpPluginItowns-src.css
 ```
 
