@@ -93,7 +93,7 @@ Dézippez l'extension géoportail dans l'arborescence votre serveur web. Vous po
 Intégrez l'extension géoportail pour iTowns dans votre page web classiquement à l'aide d'une balise **script** pour charger le fichier javascript et d'une balise **link** pour charger le fichier css en plus des balises correspondantes utilisées pour charger la bibliothèque iTowns.
 
 ``` html
-<!-- Library iTowns -->
+<!-- Bibliothèque iTowns -->
 <link rel="stylesheet" href="chemin/vers/itowns/itowns.css" />
 <script src="chemin/vers/itowns/itowns.js"></script>
 
@@ -121,7 +121,7 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
 ``` html
 <html>
     <head>
-        <!-- Library iTowns -->
+        <!-- Bibliothèque iTowns -->
         <link rel="stylesheet" href="itowns.css" />
         <script src="itowns.js"></script>
         <!-- Extension Géoportail pour iTowns -->
@@ -143,7 +143,7 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
 ``` html
 <html>
     <head>
-        <!-- Library iTowns -->
+        <!-- Bibliothèque iTowns -->
         <link rel="stylesheet" href="itowns.css" />
         <script src="itowns.js"></script>
         <!-- Extension Géoportail pour iTowns -->
@@ -182,7 +182,7 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
 ``` html
 <html>
     <head>
-        <!-- Library iTowns -->
+        <!-- Bibliothèque iTowns -->
         ...
         <script data-url="chemin/vers/autoconf.json" src="chemin/vers/GpPluginItowns.js"></script>
     </head>
@@ -223,7 +223,7 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
 
 ### Versions d'iTowns supportées
 
-L'extension Géoportail pour iTowns peut s'utiliser avec la **version 3.1.0** d'iTowns.
+L'extension Géoportail pour iTowns peut s'utiliser avec la **version 2.3.0** d'iTowns. [Cliquer ici](https://github.com/iTowns/itowns/releases/) pour télécharger directement la version 2.3.0 de la librairie iTowns. [Cliquer ici](https://www.npmjs.com/package/itowns?activeTab=readme) pour accéder à la page du package npm iTowns.
 
 
 ### Navigateurs supportés
@@ -612,3 +612,75 @@ globeView.addWidget( attribution );
 ```
 
 **Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/r3or3tz9/embedded/result,js,html,css/)
+
+<a id="miniglobe"/>
+
+### Affichage d'une mini-vue dynamique
+
+Ce widget a pour but d'afficher une mini-vue. Cette mini-vue va suivre les déplacements de la vue principale, afin que l'utilisateur ait systématiquement un aperçu son positionnement global sur le globe. La couche par défaut affichée sur la mini-vue est la couche cartographique de l'IGN.
+
+Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe itowns.control.MiniGlobe que l'on peut ensuite ajouter au globe de la manière suivante :
+
+``` javascript
+var miniglobe = new itowns.control.MiniGlobe(opts);
+globeView.addWidget( miniglobe );
+```
+
+#### Exemples d'utilisation
+
+##### Utilisation simple
+
+Ajout du widget sans paramétrage particulier.
+
+``` javascript
+// Création du globe
+const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
+
+// Ajout d'une couche (voir plus haut ajout WMTS ou WMS)
+globeView.addLayer(orthoLayer);
+
+var miniglobe = new itowns.control.MiniGlobe({
+    target : viewerDiv,
+    position : "absolute"
+});
+
+globeView.addWidget( miniglobe );
+```
+
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/xfq98cr1/embedded/result,js,html,css/)
+
+<a id="scalebar"/>
+
+### Affichage d'une échelle graphique
+
+Ce widget a pour but d'afficher une échelle graphique. Cette échelle graphique se met à jour dynamiquement en fonction des déplacements de la caméra et permet d'indiquer approximativement à quelle échelle correspond la vue de l'utilisateur.
+
+Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe itowns.control.Scale que l'on peut ensuite ajouter au globe de la manière suivante :
+
+``` javascript
+var scalebar = new itowns.control.Scale(opts);
+globeView.addWidget( scalebar );
+```
+
+#### Exemples d'utilisation
+
+##### Utilisation simple
+
+Ajout du widget sans paramétrage particulier.
+
+``` javascript
+// Création du globe
+const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
+
+// Ajout d'une couche (voir plus haut ajout WMTS ou WMS)
+globeView.addLayer(orthoLayer);
+
+var scalebar = new itowns.control.Scale({
+    target : viewerDiv,
+    position : "absolute"
+});
+
+globeView.addWidget( scalebar );
+```
+
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/xwodbsfp/embedded/result,js,html,css/)
