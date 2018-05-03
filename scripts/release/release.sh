@@ -72,7 +72,7 @@ OPTS_VERBOSE=${_OPTS_VERBOSE}
 # p (--publish) Execution de la tache de publication npm,
 # C (--clean)   Execution de la tache de nettoyage.
 
-_OPTS=`getopt -o hliob::d::j::c::t::p::C:: --long help,verbose,leaflet,itowns,ol,password:,username:,token:,build::,data::,json::,commit::,tag::,publish::,clean:: -n 'release.sh' -- "$@"`
+_OPTS=`getopt -o hliomb::d::j::c::t::p::C:: --long help,verbose,leaflet,itowns,ol,mix,password:,username:,token:,build::,data::,json::,commit::,tag::,publish::,clean:: -n 'release.sh' -- "$@"`
 eval set -- "${_OPTS}"
 
 while true; do
