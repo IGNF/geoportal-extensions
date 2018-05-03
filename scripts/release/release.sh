@@ -127,6 +127,11 @@ while true; do
           _PACKAGE_LIBRARY_TARGET="ol"
           shift ;;
 
+    -m|--mix)
+          _PACKAGE_LIBRARY="openlayers-itowns"
+          _PACKAGE_LIBRARY_TARGET="ol-it"
+          shift ;;
+
     --username)
         case "$2" in
           "") shift 2 ;;
@@ -306,6 +311,13 @@ fi
   GIT_DIR_PUBLISH=${_GIT_DIR_PUBLISH_OPENLAYERS}
   GIT_REPOSITORY="${_GIT_REPOSITORY_PREFIX}${GIT_REPOSITORY_USER_NAME}/${_GIT_REPOSITORY_NAME_OPENLAYERS}.git"
 }
+
+# depot github ol-it (mix)
+[ ${_PACKAGE_LIBRARY} == "openlayers-itowns" ] && {
+  GIT_DIR_PUBLISH=${_GIT_DIR_PUBLISH_OPENLAYERS_ITOWNS}
+  GIT_REPOSITORY="${_GIT_REPOSITORY_PREFIX}${GIT_REPOSITORY_USER_NAME}/${_GIT_REPOSITORY_NAME_OPENLAYERS_ITOWNS}.git"
+}
+
 
 # authentification pour npm si besoin...
 [ -z ${NPM_OAUTH_PWD} ] && {
