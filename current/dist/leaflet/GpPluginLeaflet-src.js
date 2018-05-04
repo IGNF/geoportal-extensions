@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 2.0.1
- * @date 2018-05-03
+ * @date 2018-05-04
  *
  */
 
@@ -27815,7 +27815,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 _gp2.default.leafletExtVersion = "2.0.1";
 // import P from "leaflet-draw";
 
-_gp2.default.leafletExtDate = "2018-05-03";
+_gp2.default.leafletExtDate = "2018-05-04";
 
 // Classes utilitaires
 _gp2.default.Register = _Register2.default;
