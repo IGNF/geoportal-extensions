@@ -63,19 +63,20 @@ var Measures = {
     // ****************************************************************** //
     // > ToolBox : these tools work together
     // ****************************************************************** //
+    // sample :
+    // tools[name_control][0].(active|instance|map)
+    // tools : {
+    //      MeasureLength : [
+    //          { active : true, instance : [Object MeasureLength], map : "map1" },
+    //          { active : true, instance : [Object MeasureLength], map : "map2" }
+    //      ],
+    //      MeasureArea : [],
+    //      MeasureAzimuth : []
+    // }
     tools : {
-        MeasureLength : {
-            active : false,
-            instance : null
-        },
-        MeasureArea : {
-            active : false,
-            instance : null
-        },
-        MeasureAzimuth : {
-            active : false,
-            instance : null
-        }
+        MeasureLength : [],
+        MeasureArea : [],
+        MeasureAzimuth : []
     },
 
     // ****************************************************************** //
@@ -190,22 +191,27 @@ var Measures = {
      * @private
      */
     onShowMeasureClick : function (e, type) {
-        // desactivation des controles de mesures
+        var map = this.getMap();
+        var currentMapId = map.getTargetElement().id;
+
+        // desactivation des controles de mesures sur la carte courrante
         var self = this.CLASSNAME; // this.constructor.name : pas possible en mode minifié/manglifié !
         for (var className in this.tools) {
             if (this.tools.hasOwnProperty(className)) {
-                var o = this.tools[className];
-                if (o.active && className !== self) {
-                    o.active = false;
-                    if (o.instance !== null) { // au cas où le controle a été supprimé !
-                        o.instance.clean();
+                var measures = this.tools[className];
+                for (var i = 0; i < measures.length; i++) {
+                    var o = measures[i];
+                    if (o && o.active && className !== self && o.map === currentMapId) {
+                        o.active = false;
+                        if (o.instance !== null) { // au cas où le controle a été supprimé !
+                            o.instance.clean();
+                        }
                     }
                 }
             }
         }
 
         // desactivation des autres interactions parasites
-        var map = this.getMap();
         Interactions.unset(map, {
             current : "Measures"
         });
@@ -214,12 +220,20 @@ var Measures = {
             this.addMeasureEvents();
             this.initMeasureInteraction();
             this.addMeasureInteraction(type);
-            this.tools[self].active = true;
+            for (var j = 0; j < this.tools[self].length; j++) {
+                if (this.tools[self][j].map === currentMapId) {
+                    this.tools[self][j].active = true;
+                }
+            }
         } else {
             this.clearMeasure();
             this.clearMeasureToolTip();
             this.removeMeasureEvents();
-            this.tools[self].active = false;
+            for (var k = 0; k < this.tools[self].length; k++) {
+                if (this.tools[self][k].map === currentMapId) {
+                    this.tools[self][k].active = false;
+                }
+            }
         }
     },
 

@@ -1,0 +1,163 @@
+{{#extend "ol-sample-amd-layout"}}
+
+{{#content "head"}}
+        <title>Sample OpenLayers</title>
+{{/content}}
+
+{{#content "style"}}
+        <style>
+        div#map1, div#map2 {
+            background-position:center center;
+            background-repeat:no-repeat;
+            max-width: 400px;
+            height: 400px;
+            margin: 10px;
+        }
+        </style>
+{{/content}}
+
+{{#content "body"}}
+            <h2>Ajout de tous les widgets</h2>
+            <!-- map -->
+            <div id="map1">
+            </div>
+            <div id="map2">
+            </div>
+{{/content}}
+
+{{#content "js"}}
+        <script>
+            requirejs(
+              [
+                "ol",
+                "Gp"
+              ],
+              function (
+                ol,
+                Gp
+              ) {
+
+                var map;
+
+                var createMap = function () {
+                  // on cache l'image de chargement du Géoportail.
+                  document.getElementById("map1").style.backgroundImage = "none";
+                  document.getElementById("map2").style.backgroundImage = "none";
+
+                  // Création de la map
+                  var map1 = new ol.Map({
+                    target : "map1",
+                    layers : [
+                      new ol.layer.GeoportalWMTS({
+                        layer : "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+                      })
+                    ],
+                    view : new ol.View({
+                      center : [288074.8449901076, 6247982.515792289],
+                      zoom : 8
+                    })
+                  });
+
+                  var drawing = new ol.control.Drawing();
+                  map1.addControl(drawing);
+                  var iso = new ol.control.Isocurve();
+                  map1.addControl(iso);
+                  var layerImport = new ol.control.LayerImport();
+                  map1.addControl(layerImport);
+                  var layerSwitcher = new ol.control.LayerSwitcher();
+                  map1.addControl(layerSwitcher);
+                  var mp = new ol.control.GeoportalMousePosition();
+                  map1.addControl(mp);
+                  var route = new ol.control.Route();
+                  map1.addControl(route);
+                  var reverse = new ol.control.ReverseGeocode({});
+                  map1.addControl(reverse);
+                  var search = new ol.control.SearchEngine({});
+                  map1.addControl(search);
+
+                  var measureLength = new ol.control.MeasureLength();
+                  map1.addControl(measureLength);
+                  var measureArea = new ol.control.MeasureArea();
+                  map1.addControl(measureArea);
+                  var measureAzimuth = new ol.control.MeasureAzimuth();
+                  map1.addControl(measureAzimuth);
+                  var measureProfil = new ol.control.ElevationPath();
+                  map1.addControl(measureProfil);
+
+                  var attributions = new ol.control.GeoportalAttribution();
+                  map1.addControl(attributions);
+
+                  var getFeatureInfo = new ol.control.GetFeatureInfo(
+                    {
+                        options: {
+                            active : false
+                        }
+                    }
+                  );
+                  map1.addControl(getFeatureInfo);
+
+                  // Création de la map
+                  var map2 = new ol.Map({
+                    target : "map2",
+                    layers : [
+                      new ol.layer.GeoportalWMTS({
+                        layer : "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+                      })
+                    ],
+                    view : new ol.View({
+                      center : [288074.8449901076, 6247982.515792289],
+                      zoom : 8
+                    })
+                  });
+
+                  var drawing2 = new ol.control.Drawing();
+                  map2.addControl(drawing2);
+                  var iso2 = new ol.control.Isocurve();
+                  map2.addControl(iso2);
+                  var layerImport2 = new ol.control.LayerImport();
+                  map2.addControl(layerImport2);
+                  var layerSwitcher2 = new ol.control.LayerSwitcher();
+                  map2.addControl(layerSwitcher2);
+                  var mp2 = new ol.control.GeoportalMousePosition();
+                  map2.addControl(mp2);
+                  var route2 = new ol.control.Route();
+                  map2.addControl(route2);
+                  var reverse2 = new ol.control.ReverseGeocode({});
+                  map2.addControl(reverse2);
+                  var search2 = new ol.control.SearchEngine({});
+                  map2.addControl(search2);
+
+                  var measureLength2 = new ol.control.MeasureLength();
+                  map2.addControl(measureLength2);
+                  var measureArea2 = new ol.control.MeasureArea();
+                  map2.addControl(measureArea2);
+                  var measureAzimuth2 = new ol.control.MeasureAzimuth();
+                  map2.addControl(measureAzimuth2);
+                  var measureProfil2 = new ol.control.ElevationPath();
+                  map2.addControl(measureProfil2);
+
+                  var attributions2 = new ol.control.GeoportalAttribution();
+                  map2.addControl(attributions2);
+
+                  var getFeatureInfo = new ol.control.GetFeatureInfo(
+                    {
+                        options: {
+                            active : false
+                        }
+                    }
+                  );
+                  map2.addControl(getFeatureInfo);
+                };
+
+                Gp.Services.getConfig({
+                  serverUrl : "{{ resources }}/AutoConf.js",
+                  callbackSuffix : "",
+                  // apiKey: "jhyvi0fgmnuxvfv0zjzorvdn",
+                  timeOut : 20000,
+                  onSuccess : createMap
+                });
+
+              });
+          </script>
+{{/content}}
+{{/extend}}
