@@ -146,6 +146,7 @@ var LocationSelector = L.Control.extend(/** @lends LocationSelector.prototype */
      * this method is called by this.addTo(map)
      * and fills variable : this._container = this.onAdd(map)
      *
+     * @returns {DOMElement} DOM element
      * @private
      */
     onAdd : function (/* map */) {
@@ -186,7 +187,7 @@ var LocationSelector = L.Control.extend(/** @lends LocationSelector.prototype */
 
     /**
      * set coordinate : {lon,lat || x,y || N,E}
-     * @param {Object} Coordinate
+     * @param {Object} coordinate - Coordinate
      */
     setCoordinate : function (coordinate) {
         this._displayResultOfCoordinate(coordinate);
@@ -396,13 +397,8 @@ var LocationSelector = L.Control.extend(/** @lends LocationSelector.prototype */
         var lng = null;
 
         // decimal by default !
-        if (false) {
-            lat = PositionFormater.decimalLatToDMS(oLatLng.lat);
-            lng = PositionFormater.decimalLongToDMS(oLatLng.lng);
-        } else {
-            lat = PositionFormater.roundToDecimal(oLatLng.lat, 4);
-            lng = PositionFormater.roundToDecimal(oLatLng.lng, 4);
-        }
+        lat = PositionFormater.roundToDecimal(oLatLng.lat, 4);
+        lng = PositionFormater.roundToDecimal(oLatLng.lng, 4);
 
         // on envoie du lon/lat à l'affichage
         var value = lng + " , " + lat;
@@ -847,7 +843,6 @@ var LocationSelector = L.Control.extend(/** @lends LocationSelector.prototype */
         // on met en place des callbacks afin de recuperer les resultats ou
         // les messages d'erreurs du service.
         // les resultats sont affichés dans une liste deroulante.
-        // les messages d'erreurs sont affichés sur la console (?)
         var context = this;
         this._requestAutoComplete({
             text : value,

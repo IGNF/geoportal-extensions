@@ -1,6 +1,6 @@
 import Gp from "gp";
 import L from "leaflet";
-import Draw from "leaflet-draw";
+import "leaflet-draw";
 import Logger from "../../Common/Utils/LoggerByDefault";
 import RightManagement from "../../Common/Utils/CheckRightManagement";
 import ID from "../../Common/Utils/SelectorID";

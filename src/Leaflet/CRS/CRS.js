@@ -1,6 +1,5 @@
-import L from "leaflet";
-import proj4 from "proj4";
-import Proj4Leaflet from "proj4leaflet";
+import "proj4";
+import "proj4leaflet";
 import Register from "../../Common/Utils/Register";
 import Epsg2154 from "./EPSG2154";
 import Epsg27572 from "./EPSG27572";

@@ -1,7 +1,7 @@
 /* globals AmCharts, d3 */
 import Gp from "gp";
 import L from "leaflet";
-import Draw from "leaflet-draw";
+import "leaflet-draw";
 import Logger from "../../Common/Utils/LoggerByDefault";
 import RightManagement from "../../Common/Utils/CheckRightManagement";
 import ID from "../../Common/Utils/SelectorID";
@@ -137,6 +137,9 @@ var ElevationPath = L.Control.extend(/** @lends L.geoportalControl.ElevationPath
      * and fills variable 'this._container = this.onAdd(map)',
      * and create or disable events on map.
      *
+     * @param {Object} map - the map
+     *
+     * @returns {DOMElement} DOM element
      * @private
      */
     onAdd : function (map) {
@@ -251,6 +254,7 @@ var ElevationPath = L.Control.extend(/** @lends L.geoportalControl.ElevationPath
      * this method is called by this.onAdd(map)
      * and initialize the container HTMLElement
      *
+     * @returns {DOMElement} DOM element
      * @private
      */
     _initLayout : function () {
@@ -547,6 +551,7 @@ var ElevationPath = L.Control.extend(/** @lends L.geoportalControl.ElevationPath
     /**
      * set current position of feature
      *
+     * @param {Object} layer - layer
      * @private
      */
     _getFeatureGeometry : function (layer) {
@@ -726,7 +731,7 @@ var ElevationPath = L.Control.extend(/** @lends L.geoportalControl.ElevationPath
      * @private
      */
     _computeElevationMeasure : function (elevations) {
-        /** Returns the distance from c1 to c2 using the haversine formula */
+        // Returns the distance from c1 to c2 using the haversine formula
         var _haversineDistance = function (c1, c2) {
             var lat1 = PositionFormater.decimalToRadian(c1[1]);
             var lat2 = PositionFormater.decimalToRadian(c2[1]);
@@ -972,6 +977,9 @@ ElevationPath.__createProfileMarker = function (context, data) {
 
 /**
  * update Profile Marker
+ *
+ * @param {Object} context - context
+ * @param {Object} data - data
  */
 ElevationPath.__updateProfileMarker = function (context, data) {
     logger.log("__updateProfileMarker");
@@ -1028,6 +1036,9 @@ ElevationPath.__customRawProfileOperation = function () {
 /**
  * custom operation into raw profil...
  * TODO
+ *
+ * @param {Object} context - context
+ * @param {Object} e - event
  */
 ElevationPath.__customRawProfileMouseOverEvent = function (context, e) {
     logger.log("__customRawProfileMouseOverEvent", context, e);
@@ -1105,7 +1116,7 @@ ElevationPath.DISPLAY_PROFILE_LIB_AMCHARTS = function (data, container, context)
 
     // Calcul du profile
     if (typeof AmCharts === "undefined") {
-        console.log("Lib. AmCharts is not loaded !");
+        logger.log("Lib. AmCharts is not loaded !");
         return;
     }
 
