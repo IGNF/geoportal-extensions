@@ -141,7 +141,7 @@
 		exports["Gp"] = factory(require("leaflet"), require("xmldom"), require("request"));
 	else
 		root["Gp"] = factory(root["L"], root[undefined], root[undefined]);
-})(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_17__, __WEBPACK_EXTERNAL_MODULE_18__) {
+})(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE_0__, __WEBPACK_EXTERNAL_MODULE_18__, __WEBPACK_EXTERNAL_MODULE_19__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -204,11 +204,17 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 15);
+/******/ 	return __webpack_require__(__webpack_require__.s = 16);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_0__;
+
+/***/ }),
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -218,7 +224,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _loglevel = __webpack_require__(42);
+var _loglevel = __webpack_require__(43);
 
 var Log = _interopRequireWildcard(_loglevel);
 
@@ -240,12 +246,6 @@ var LoggerByDefault = {
     }
 }; /* global __PRODUCTION__ */
 exports.default = LoggerByDefault;
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_1__;
 
 /***/ }),
 /* 2 */
@@ -276,7 +276,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_1__;
 
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(true)
-		module.exports = factory(__webpack_require__(17), __webpack_require__(18));
+		module.exports = factory(__webpack_require__(18), __webpack_require__(19));
 	else if(typeof define === 'function' && define.amd)
 		define("Gp", ["require", "require"], factory);
 	else if(typeof exports === 'object')
@@ -18609,7 +18609,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _LoggerByDefault = __webpack_require__(0);
+var _LoggerByDefault = __webpack_require__(1);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
@@ -18786,7 +18786,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _LoggerByDefault = __webpack_require__(0);
+var _LoggerByDefault = __webpack_require__(1);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
@@ -19068,7 +19068,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _proj = __webpack_require__(51);
+var _proj = __webpack_require__(12);
 
 var _proj2 = _interopRequireDefault(_proj);
 
@@ -19592,11 +19592,11 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _leaflet = __webpack_require__(1);
+var _leaflet = __webpack_require__(0);
 
 var _leaflet2 = _interopRequireDefault(_leaflet);
 
-var _LoggerByDefault = __webpack_require__(0);
+var _LoggerByDefault = __webpack_require__(1);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
@@ -19858,11 +19858,11 @@ var _gp = __webpack_require__(2);
 
 var _gp2 = _interopRequireDefault(_gp);
 
-var _leaflet = __webpack_require__(1);
+var _leaflet = __webpack_require__(0);
 
 var _leaflet2 = _interopRequireDefault(_leaflet);
 
-var _LoggerByDefault = __webpack_require__(0);
+var _LoggerByDefault = __webpack_require__(1);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
@@ -19874,7 +19874,7 @@ var _SelectorID = __webpack_require__(3);
 
 var _SelectorID2 = _interopRequireDefault(_SelectorID);
 
-var _LocationSelectorDOM = __webpack_require__(46);
+var _LocationSelectorDOM = __webpack_require__(47);
 
 var _LocationSelectorDOM2 = _interopRequireDefault(_LocationSelectorDOM);
 
@@ -21018,6 +21018,8 @@ var _EPSG5 = __webpack_require__(55);
 
 var _EPSG6 = _interopRequireDefault(_EPSG5);
 
+__webpack_require__(56);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /** autoload function */
@@ -21096,6 +21098,13 @@ exports.default = CRS;
 /* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
+/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["proj4"] = __webpack_require__(52);
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 
 
@@ -21107,11 +21116,11 @@ var _gp = __webpack_require__(2);
 
 var _gp2 = _interopRequireDefault(_gp);
 
-var _leaflet = __webpack_require__(1);
+var _leaflet = __webpack_require__(0);
 
 var _leaflet2 = _interopRequireDefault(_leaflet);
 
-var _LoggerByDefault = __webpack_require__(0);
+var _LoggerByDefault = __webpack_require__(1);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
@@ -21131,11 +21140,11 @@ var _IconDefault = __webpack_require__(7);
 
 var _IconDefault2 = _interopRequireDefault(_IconDefault);
 
-var _ElevationPathDOM = __webpack_require__(63);
+var _ElevationPathDOM = __webpack_require__(64);
 
 var _ElevationPathDOM2 = _interopRequireDefault(_ElevationPathDOM);
 
-var _ProfileElevationPathDOM = __webpack_require__(64);
+var _ProfileElevationPathDOM = __webpack_require__(65);
 
 var _ProfileElevationPathDOM2 = _interopRequireDefault(_ProfileElevationPathDOM);
 
@@ -22253,7 +22262,7 @@ ElevationPath.DISPLAY_PROFILE_LIB_AMCHARTS = function (data, container, context)
 exports.default = ElevationPath;
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22565,7 +22574,7 @@ var LayerUtils = {
 exports.default = LayerUtils;
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22575,11 +22584,11 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _LoggerByDefault = __webpack_require__(0);
+var _LoggerByDefault = __webpack_require__(1);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
-var _LayerUtils = __webpack_require__(13);
+var _LayerUtils = __webpack_require__(14);
 
 var _LayerUtils2 = _interopRequireDefault(_LayerUtils);
 
@@ -22768,16 +22777,16 @@ var LayerEvent = {
 exports.default = LayerEvent;
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(16);
-__webpack_require__(19);
-module.exports = __webpack_require__(39);
+__webpack_require__(17);
+__webpack_require__(20);
+module.exports = __webpack_require__(40);
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22847,12 +22856,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 })();
 
 /***/ }),
-/* 17 */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_17__;
-
-/***/ }),
 /* 18 */
 /***/ (function(module, exports) {
 
@@ -22860,94 +22863,94 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_18__;
 
 /***/ }),
 /* 19 */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_19__;
+
+/***/ }),
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _GPgeneralWidget = __webpack_require__(20);
+var _GPgeneralWidget = __webpack_require__(21);
 
 var _GPgeneralWidget2 = _interopRequireDefault(_GPgeneralWidget);
 
-var _GPisochron = __webpack_require__(21);
+var _GPisochron = __webpack_require__(22);
 
 var _GPisochron2 = _interopRequireDefault(_GPisochron);
 
-var _GPreverseGeocoding = __webpack_require__(22);
+var _GPreverseGeocoding = __webpack_require__(23);
 
 var _GPreverseGeocoding2 = _interopRequireDefault(_GPreverseGeocoding);
 
-var _GPelevationPath = __webpack_require__(23);
+var _GPelevationPath = __webpack_require__(24);
 
 var _GPelevationPath2 = _interopRequireDefault(_GPelevationPath);
 
-var _GPlayerSwitcher = __webpack_require__(24);
+var _GPlayerSwitcher = __webpack_require__(25);
 
 var _GPlayerSwitcher2 = _interopRequireDefault(_GPlayerSwitcher);
 
-var _GProute = __webpack_require__(25);
+var _GProute = __webpack_require__(26);
 
 var _GProute2 = _interopRequireDefault(_GProute);
 
-var _GPlocation = __webpack_require__(26);
+var _GPlocation = __webpack_require__(27);
 
 var _GPlocation2 = _interopRequireDefault(_GPlocation);
 
-var _GPsearchEngine = __webpack_require__(27);
+var _GPsearchEngine = __webpack_require__(28);
 
 var _GPsearchEngine2 = _interopRequireDefault(_GPsearchEngine);
 
-var _GPmousePosition = __webpack_require__(28);
+var _GPmousePosition = __webpack_require__(29);
 
 var _GPmousePosition2 = _interopRequireDefault(_GPmousePosition);
 
-var _GPgeneralWidgetLeaflet = __webpack_require__(29);
+var _GPgeneralWidgetLeaflet = __webpack_require__(30);
 
 var _GPgeneralWidgetLeaflet2 = _interopRequireDefault(_GPgeneralWidgetLeaflet);
 
-var _GPelevationPathLeaflet = __webpack_require__(30);
+var _GPelevationPathLeaflet = __webpack_require__(31);
 
 var _GPelevationPathLeaflet2 = _interopRequireDefault(_GPelevationPathLeaflet);
 
-var _GPmousePositionLeaflet = __webpack_require__(31);
+var _GPmousePositionLeaflet = __webpack_require__(32);
 
 var _GPmousePositionLeaflet2 = _interopRequireDefault(_GPmousePositionLeaflet);
 
-var _GPisochronLeaflet = __webpack_require__(32);
+var _GPisochronLeaflet = __webpack_require__(33);
 
 var _GPisochronLeaflet2 = _interopRequireDefault(_GPisochronLeaflet);
 
-var _GPreverseGeocodingLeaflet = __webpack_require__(33);
+var _GPreverseGeocodingLeaflet = __webpack_require__(34);
 
 var _GPreverseGeocodingLeaflet2 = _interopRequireDefault(_GPreverseGeocodingLeaflet);
 
-var _GProuteLeaflet = __webpack_require__(34);
+var _GProuteLeaflet = __webpack_require__(35);
 
 var _GProuteLeaflet2 = _interopRequireDefault(_GProuteLeaflet);
 
-var _GPlayerSwitcherLeaflet = __webpack_require__(35);
+var _GPlayerSwitcherLeaflet = __webpack_require__(36);
 
 var _GPlayerSwitcherLeaflet2 = _interopRequireDefault(_GPlayerSwitcherLeaflet);
 
-var _GPsearchEngineLeaflet = __webpack_require__(36);
+var _GPsearchEngineLeaflet = __webpack_require__(37);
 
 var _GPsearchEngineLeaflet2 = _interopRequireDefault(_GPsearchEngineLeaflet);
 
-var _GPlocationLeaflet = __webpack_require__(37);
+var _GPlocationLeaflet = __webpack_require__(38);
 
 var _GPlocationLeaflet2 = _interopRequireDefault(_GPlocationLeaflet);
 
-var _leafletDrawSrc = __webpack_require__(38);
+var _leafletDrawSrc = __webpack_require__(39);
 
 var _leafletDrawSrc2 = _interopRequireDefault(_leafletDrawSrc);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
 
 /***/ }),
 /* 21 */
@@ -23059,6 +23062,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /***/ }),
 /* 39 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23072,19 +23081,19 @@ var _gp = __webpack_require__(2);
 
 var _gp2 = _interopRequireDefault(_gp);
 
-var _leaflet = __webpack_require__(1);
+var _leaflet = __webpack_require__(0);
 
 var _leaflet2 = _interopRequireDefault(_leaflet);
 
-var _Controls = __webpack_require__(40);
+var _Controls = __webpack_require__(41);
 
 var _Controls2 = _interopRequireDefault(_Controls);
 
-var _ElevationPath = __webpack_require__(12);
+var _ElevationPath = __webpack_require__(13);
 
 var _ElevationPath2 = _interopRequireDefault(_ElevationPath);
 
-var _Layers = __webpack_require__(66);
+var _Layers = __webpack_require__(67);
 
 var _Layers2 = _interopRequireDefault(_Layers);
 
@@ -23124,7 +23133,7 @@ _leaflet2.default.geoportalCRS.EPSG4326 = _CRS2.default.EPSG4326();
 exports.default = _gp2.default;
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23134,35 +23143,35 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _LayerSwitcher2 = __webpack_require__(41);
+var _LayerSwitcher2 = __webpack_require__(42);
 
 var _LayerSwitcher3 = _interopRequireDefault(_LayerSwitcher2);
 
-var _Isocurve2 = __webpack_require__(45);
+var _Isocurve2 = __webpack_require__(46);
 
 var _Isocurve3 = _interopRequireDefault(_Isocurve2);
 
-var _MousePosition2 = __webpack_require__(48);
+var _MousePosition2 = __webpack_require__(49);
 
 var _MousePosition3 = _interopRequireDefault(_MousePosition2);
 
-var _ReverseGeocoding = __webpack_require__(56);
+var _ReverseGeocoding = __webpack_require__(57);
 
 var _ReverseGeocoding2 = _interopRequireDefault(_ReverseGeocoding);
 
-var _Route2 = __webpack_require__(58);
+var _Route2 = __webpack_require__(59);
 
 var _Route3 = _interopRequireDefault(_Route2);
 
-var _SearchEngine2 = __webpack_require__(60);
+var _SearchEngine2 = __webpack_require__(61);
 
 var _SearchEngine3 = _interopRequireDefault(_SearchEngine2);
 
-var _ElevationPath2 = __webpack_require__(12);
+var _ElevationPath2 = __webpack_require__(13);
 
 var _ElevationPath3 = _interopRequireDefault(_ElevationPath2);
 
-var _Logo2 = __webpack_require__(65);
+var _Logo2 = __webpack_require__(66);
 
 var _Logo3 = _interopRequireDefault(_Logo2);
 
@@ -23528,7 +23537,7 @@ var Controls = {
 exports.default = Controls;
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23538,11 +23547,11 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _leaflet = __webpack_require__(1);
+var _leaflet = __webpack_require__(0);
 
 var _leaflet2 = _interopRequireDefault(_leaflet);
 
-var _LoggerByDefault = __webpack_require__(0);
+var _LoggerByDefault = __webpack_require__(1);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
@@ -23550,7 +23559,7 @@ var _SelectorID = __webpack_require__(3);
 
 var _SelectorID2 = _interopRequireDefault(_SelectorID);
 
-var _LayerSwitcherDOM = __webpack_require__(43);
+var _LayerSwitcherDOM = __webpack_require__(44);
 
 var _LayerSwitcherDOM2 = _interopRequireDefault(_LayerSwitcherDOM);
 
@@ -24401,7 +24410,7 @@ var LayerSwitcher = _leaflet2.default.Control.Layers.extend( /** @lends L.geopor
 exports.default = LayerSwitcher;
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -24661,7 +24670,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24671,7 +24680,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _sortable = __webpack_require__(44);
+var _sortable = __webpack_require__(45);
 
 var _sortable2 = _interopRequireDefault(_sortable);
 
@@ -25322,7 +25331,7 @@ var LayerSwitcherDOM = {
 exports.default = LayerSwitcherDOM;
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
@@ -26581,7 +26590,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26593,11 +26602,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _leaflet = __webpack_require__(1);
+var _leaflet = __webpack_require__(0);
 
 var _leaflet2 = _interopRequireDefault(_leaflet);
 
-var _LoggerByDefault = __webpack_require__(0);
+var _LoggerByDefault = __webpack_require__(1);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
@@ -26617,7 +26626,7 @@ var _LocationSelector = __webpack_require__(10);
 
 var _LocationSelector2 = _interopRequireDefault(_LocationSelector);
 
-var _IsoDOM = __webpack_require__(47);
+var _IsoDOM = __webpack_require__(48);
 
 var _IsoDOM2 = _interopRequireDefault(_IsoDOM);
 
@@ -27718,7 +27727,7 @@ var Isocurve = _leaflet2.default.Control.extend( /** @lends L.geoportalControl.I
 exports.default = Isocurve;
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27732,7 +27741,7 @@ var _SelectorID = __webpack_require__(3);
 
 var _SelectorID2 = _interopRequireDefault(_SelectorID);
 
-var _LoggerByDefault = __webpack_require__(0);
+var _LoggerByDefault = __webpack_require__(1);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
@@ -28224,7 +28233,7 @@ var LocationSelectorDOM = {
 exports.default = LocationSelectorDOM;
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29070,7 +29079,7 @@ var IsoDOM = {
 exports.default = IsoDOM;
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29086,11 +29095,11 @@ var _gp = __webpack_require__(2);
 
 var _gp2 = _interopRequireDefault(_gp);
 
-var _leaflet = __webpack_require__(1);
+var _leaflet = __webpack_require__(0);
 
 var _leaflet2 = _interopRequireDefault(_leaflet);
 
-var _LoggerByDefault = __webpack_require__(0);
+var _LoggerByDefault = __webpack_require__(1);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
@@ -29102,11 +29111,11 @@ var _SelectorID = __webpack_require__(3);
 
 var _SelectorID2 = _interopRequireDefault(_SelectorID);
 
-var _MathUtils = __webpack_require__(49);
+var _MathUtils = __webpack_require__(50);
 
 var _MathUtils2 = _interopRequireDefault(_MathUtils);
 
-var _MousePositionDOM = __webpack_require__(50);
+var _MousePositionDOM = __webpack_require__(51);
 
 var _MousePositionDOM2 = _interopRequireDefault(_MousePositionDOM);
 
@@ -30602,7 +30611,7 @@ var MousePosition = _leaflet2.default.Control.extend( /** @lends L.geoportalCont
 exports.default = MousePosition;
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30711,7 +30720,7 @@ var MathUtils = {
 exports.default = MathUtils;
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31659,13 +31668,6 @@ var MousePositionDOM = {
 };
 
 exports.default = MousePositionDOM;
-
-/***/ }),
-/* 51 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["proj4"] = __webpack_require__(52);
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
 
 /***/ }),
 /* 52 */
@@ -38011,7 +38013,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _leaflet = __webpack_require__(1);
+var _leaflet = __webpack_require__(0);
 
 var _leaflet2 = _interopRequireDefault(_leaflet);
 
@@ -38118,7 +38120,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _leaflet = __webpack_require__(1);
+var _leaflet = __webpack_require__(0);
 
 var _leaflet2 = _interopRequireDefault(_leaflet);
 
@@ -38237,7 +38239,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _leaflet = __webpack_require__(1);
+var _leaflet = __webpack_require__(0);
 
 var _leaflet2 = _interopRequireDefault(_leaflet);
 
@@ -38351,6 +38353,287 @@ exports.default = EPSG4326;
 /* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (factory) {
+	var L, proj4;
+	if (true) {
+		// AMD
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(0), __webpack_require__(12)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	} else if (typeof module === 'object' && typeof module.exports === "object") {
+		// Node/CommonJS
+		L = require('leaflet');
+		proj4 = require('proj4');
+		module.exports = factory(L, proj4);
+	} else {
+		// Browser globals
+		if (typeof window.L === 'undefined' || typeof window.proj4 === 'undefined')
+			throw 'Leaflet and proj4 must be loaded first';
+		factory(window.L, window.proj4);
+	}
+}(function (L, proj4) {
+	if (proj4.__esModule && proj4.default) {
+		// If proj4 was bundled as an ES6 module, unwrap it to get
+		// to the actual main proj4 object.
+		// See discussion in https://github.com/kartena/Proj4Leaflet/pull/147
+		proj4 = proj4.default;
+	}
+ 
+	L.Proj = {};
+
+	L.Proj._isProj4Obj = function(a) {
+		return (typeof a.inverse !== 'undefined' &&
+			typeof a.forward !== 'undefined');
+	};
+
+	L.Proj.Projection = L.Class.extend({
+		initialize: function(code, def, bounds) {
+			var isP4 = L.Proj._isProj4Obj(code);
+			this._proj = isP4 ? code : this._projFromCodeDef(code, def);
+			this.bounds = isP4 ? def : bounds;
+		},
+
+		project: function (latlng) {
+			var point = this._proj.forward([latlng.lng, latlng.lat]);
+			return new L.Point(point[0], point[1]);
+		},
+
+		unproject: function (point, unbounded) {
+			var point2 = this._proj.inverse([point.x, point.y]);
+			return new L.LatLng(point2[1], point2[0], unbounded);
+		},
+
+		_projFromCodeDef: function(code, def) {
+			if (def) {
+				proj4.defs(code, def);
+			} else if (proj4.defs[code] === undefined) {
+				var urn = code.split(':');
+				if (urn.length > 3) {
+					code = urn[urn.length - 3] + ':' + urn[urn.length - 1];
+				}
+				if (proj4.defs[code] === undefined) {
+					throw 'No projection definition for code ' + code;
+				}
+			}
+
+			return proj4(code);
+		}
+	});
+
+	L.Proj.CRS = L.Class.extend({
+		includes: L.CRS,
+
+		options: {
+			transformation: new L.Transformation(1, 0, -1, 0)
+		},
+
+		initialize: function(a, b, c) {
+			var code,
+			    proj,
+			    def,
+			    options;
+
+			if (L.Proj._isProj4Obj(a)) {
+				proj = a;
+				code = proj.srsCode;
+				options = b || {};
+
+				this.projection = new L.Proj.Projection(proj, options.bounds);
+			} else {
+				code = a;
+				def = b;
+				options = c || {};
+				this.projection = new L.Proj.Projection(code, def, options.bounds);
+			}
+
+			L.Util.setOptions(this, options);
+			this.code = code;
+			this.transformation = this.options.transformation;
+
+			if (this.options.origin) {
+				this.transformation =
+					new L.Transformation(1, -this.options.origin[0],
+						-1, this.options.origin[1]);
+			}
+
+			if (this.options.scales) {
+				this._scales = this.options.scales;
+			} else if (this.options.resolutions) {
+				this._scales = [];
+				for (var i = this.options.resolutions.length - 1; i >= 0; i--) {
+					if (this.options.resolutions[i]) {
+						this._scales[i] = 1 / this.options.resolutions[i];
+					}
+				}
+			}
+
+			this.infinite = !this.options.bounds;
+
+		},
+
+		scale: function(zoom) {
+			var iZoom = Math.floor(zoom),
+				baseScale,
+				nextScale,
+				scaleDiff,
+				zDiff;
+			if (zoom === iZoom) {
+				return this._scales[zoom];
+			} else {
+				// Non-integer zoom, interpolate
+				baseScale = this._scales[iZoom];
+				nextScale = this._scales[iZoom + 1];
+				scaleDiff = nextScale - baseScale;
+				zDiff = (zoom - iZoom);
+				return baseScale + scaleDiff * zDiff;
+			}
+		},
+
+		zoom: function(scale) {
+			// Find closest number in this._scales, down
+			var downScale = this._closestElement(this._scales, scale),
+				downZoom = this._scales.indexOf(downScale),
+				nextScale,
+				nextZoom,
+				scaleDiff;
+			// Check if scale is downScale => return array index
+			if (scale === downScale) {
+				return downZoom;
+			}
+			if (downScale === undefined) {
+				return -Infinity;
+			}
+			// Interpolate
+			nextZoom = downZoom + 1;
+			nextScale = this._scales[nextZoom];
+			if (nextScale === undefined) {
+				return Infinity;
+			}
+			scaleDiff = nextScale - downScale;
+			return (scale - downScale) / scaleDiff + downZoom;
+		},
+
+		distance: L.CRS.Earth.distance,
+
+		R: L.CRS.Earth.R,
+
+		/* Get the closest lowest element in an array */
+		_closestElement: function(array, element) {
+			var low;
+			for (var i = array.length; i--;) {
+				if (array[i] <= element && (low === undefined || low < array[i])) {
+					low = array[i];
+				}
+			}
+			return low;
+		}
+	});
+
+	L.Proj.GeoJSON = L.GeoJSON.extend({
+		initialize: function(geojson, options) {
+			this._callLevel = 0;
+			L.GeoJSON.prototype.initialize.call(this, geojson, options);
+		},
+
+		addData: function(geojson) {
+			var crs;
+
+			if (geojson) {
+				if (geojson.crs && geojson.crs.type === 'name') {
+					crs = new L.Proj.CRS(geojson.crs.properties.name);
+				} else if (geojson.crs && geojson.crs.type) {
+					crs = new L.Proj.CRS(geojson.crs.type + ':' + geojson.crs.properties.code);
+				}
+
+				if (crs !== undefined) {
+					this.options.coordsToLatLng = function(coords) {
+						var point = L.point(coords[0], coords[1]);
+						return crs.projection.unproject(point);
+					};
+				}
+			}
+
+			// Base class' addData might call us recursively, but
+			// CRS shouldn't be cleared in that case, since CRS applies
+			// to the whole GeoJSON, inluding sub-features.
+			this._callLevel++;
+			try {
+				L.GeoJSON.prototype.addData.call(this, geojson);
+			} finally {
+				this._callLevel--;
+				if (this._callLevel === 0) {
+					delete this.options.coordsToLatLng;
+				}
+			}
+		}
+	});
+
+	L.Proj.geoJson = function(geojson, options) {
+		return new L.Proj.GeoJSON(geojson, options);
+	};
+
+	L.Proj.ImageOverlay = L.ImageOverlay.extend({
+		initialize: function (url, bounds, options) {
+			L.ImageOverlay.prototype.initialize.call(this, url, null, options);
+			this._projectedBounds = bounds;
+		},
+
+		// Danger ahead: Overriding internal methods in Leaflet.
+		// Decided to do this rather than making a copy of L.ImageOverlay
+		// and doing very tiny modifications to it.
+		// Future will tell if this was wise or not.
+		_animateZoom: function (event) {
+			var scale = this._map.getZoomScale(event.zoom);
+			var northWest = L.point(this._projectedBounds.min.x, this._projectedBounds.max.y);
+			var offset = this._projectedToNewLayerPoint(northWest, event.zoom, event.center);
+
+			L.DomUtil.setTransform(this._image, offset, scale);
+		},
+
+		_reset: function () {
+			var zoom = this._map.getZoom();
+			var pixelOrigin = this._map.getPixelOrigin();
+			var bounds = L.bounds(
+				this._transform(this._projectedBounds.min, zoom)._subtract(pixelOrigin),
+				this._transform(this._projectedBounds.max, zoom)._subtract(pixelOrigin)
+			);
+			var size = bounds.getSize();
+
+			L.DomUtil.setPosition(this._image, bounds.min);
+			this._image.style.width = size.x + 'px';
+			this._image.style.height = size.y + 'px';
+		},
+
+		_projectedToNewLayerPoint: function (point, zoom, center) {
+			var viewHalf = this._map.getSize()._divideBy(2);
+			var newTopLeft = this._map.project(center, zoom)._subtract(viewHalf)._round();
+			var topLeft = newTopLeft.add(this._map._getMapPanePos());
+
+			return this._transform(point, zoom)._subtract(topLeft);
+		},
+
+		_transform: function (point, zoom) {
+			var crs = this._map.options.crs;
+			var transformation = crs.transformation;
+			var scale = crs.scale(zoom);
+
+			return transformation.transform(point, scale);
+		}
+	});
+
+	L.Proj.imageOverlay = function (url, bounds, options) {
+		return new L.Proj.ImageOverlay(url, bounds, options);
+	};
+
+	return L.Proj;
+}));
+
+
+/***/ }),
+/* 57 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 
 
@@ -38362,11 +38645,11 @@ var _gp = __webpack_require__(2);
 
 var _gp2 = _interopRequireDefault(_gp);
 
-var _leaflet = __webpack_require__(1);
+var _leaflet = __webpack_require__(0);
 
 var _leaflet2 = _interopRequireDefault(_leaflet);
 
-var _LoggerByDefault = __webpack_require__(0);
+var _LoggerByDefault = __webpack_require__(1);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
@@ -38382,7 +38665,7 @@ var _IconDefault = __webpack_require__(7);
 
 var _IconDefault2 = _interopRequireDefault(_IconDefault);
 
-var _ReverseGeocodingDOM = __webpack_require__(57);
+var _ReverseGeocodingDOM = __webpack_require__(58);
 
 var _ReverseGeocodingDOM2 = _interopRequireDefault(_ReverseGeocodingDOM);
 
@@ -39660,7 +39943,7 @@ var ReverseGeocoding = _leaflet2.default.Control.extend( /** @lends L.geoportalC
 exports.default = ReverseGeocoding;
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40134,7 +40417,7 @@ var ReverseGeocodingDOM = {
 exports.default = ReverseGeocodingDOM;
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40148,11 +40431,11 @@ var _gp = __webpack_require__(2);
 
 var _gp2 = _interopRequireDefault(_gp);
 
-var _leaflet = __webpack_require__(1);
+var _leaflet = __webpack_require__(0);
 
 var _leaflet2 = _interopRequireDefault(_leaflet);
 
-var _LoggerByDefault = __webpack_require__(0);
+var _LoggerByDefault = __webpack_require__(1);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
@@ -40168,7 +40451,7 @@ var _LocationSelector = __webpack_require__(10);
 
 var _LocationSelector2 = _interopRequireDefault(_LocationSelector);
 
-var _RouteDOM = __webpack_require__(59);
+var _RouteDOM = __webpack_require__(60);
 
 var _RouteDOM2 = _interopRequireDefault(_RouteDOM);
 
@@ -41633,7 +41916,7 @@ var Route = _leaflet2.default.Control.extend( /** @lends L.geoportalControl.Rout
 exports.default = Route;
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -41647,7 +41930,7 @@ var _SelectorID = __webpack_require__(3);
 
 var _SelectorID2 = _interopRequireDefault(_SelectorID);
 
-var _LoggerByDefault = __webpack_require__(0);
+var _LoggerByDefault = __webpack_require__(1);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
@@ -42849,7 +43132,7 @@ var RouteDOM = {
 exports.default = RouteDOM;
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -42863,11 +43146,11 @@ var _gp = __webpack_require__(2);
 
 var _gp2 = _interopRequireDefault(_gp);
 
-var _leaflet = __webpack_require__(1);
+var _leaflet = __webpack_require__(0);
 
 var _leaflet2 = _interopRequireDefault(_leaflet);
 
-var _LoggerByDefault = __webpack_require__(0);
+var _LoggerByDefault = __webpack_require__(1);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
@@ -42879,7 +43162,7 @@ var _SelectorID = __webpack_require__(3);
 
 var _SelectorID2 = _interopRequireDefault(_SelectorID);
 
-var _SearchEngineUtils = __webpack_require__(61);
+var _SearchEngineUtils = __webpack_require__(62);
 
 var _SearchEngineUtils2 = _interopRequireDefault(_SearchEngineUtils);
 
@@ -42887,7 +43170,7 @@ var _IconDefault = __webpack_require__(7);
 
 var _IconDefault2 = _interopRequireDefault(_IconDefault);
 
-var _SearchEngineDOM = __webpack_require__(62);
+var _SearchEngineDOM = __webpack_require__(63);
 
 var _SearchEngineDOM2 = _interopRequireDefault(_SearchEngineDOM);
 
@@ -44548,7 +44831,7 @@ var SearchEngine = _leaflet2.default.Control.extend( /** @lends L.geoportalContr
 exports.default = SearchEngine;
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44702,7 +44985,7 @@ var SearchEngineUtils = {
 exports.default = SearchEngineUtils;
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45468,7 +45751,7 @@ var SearchEngineDOM = {
 exports.default = SearchEngineDOM;
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45727,7 +46010,7 @@ var ElevationPathDOM = {
 exports.default = ElevationPathDOM;
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46171,7 +46454,7 @@ var ProfileElevationPathDOM = {
 exports.default = ProfileElevationPathDOM;
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46181,7 +46464,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _leaflet = __webpack_require__(1);
+var _leaflet = __webpack_require__(0);
 
 var _leaflet2 = _interopRequireDefault(_leaflet);
 
@@ -46289,7 +46572,7 @@ var Logo = _leaflet2.default.Control.extend( /** @lends Logo.prototype */{
 exports.default = Logo;
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46299,23 +46582,23 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _leaflet = __webpack_require__(1);
+var _leaflet = __webpack_require__(0);
 
 var _leaflet2 = _interopRequireDefault(_leaflet);
 
-var _LoggerByDefault = __webpack_require__(0);
+var _LoggerByDefault = __webpack_require__(1);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
-var _LayerConfig = __webpack_require__(67);
+var _LayerConfig = __webpack_require__(68);
 
 var _LayerConfig2 = _interopRequireDefault(_LayerConfig);
 
-var _WMS2 = __webpack_require__(68);
+var _WMS2 = __webpack_require__(69);
 
 var _WMS3 = _interopRequireDefault(_WMS2);
 
-var _WMTS2 = __webpack_require__(69);
+var _WMTS2 = __webpack_require__(70);
 
 var _WMTS3 = _interopRequireDefault(_WMTS2);
 
@@ -46609,7 +46892,7 @@ var Layers = {
 exports.default = Layers;
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46619,7 +46902,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _LoggerByDefault = __webpack_require__(0);
+var _LoggerByDefault = __webpack_require__(1);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
@@ -46627,7 +46910,7 @@ var _Config = __webpack_require__(5);
 
 var _Config2 = _interopRequireDefault(_Config);
 
-var _LayerUtils = __webpack_require__(13);
+var _LayerUtils = __webpack_require__(14);
 
 var _LayerUtils2 = _interopRequireDefault(_LayerUtils);
 
@@ -46677,7 +46960,7 @@ var LayerConfig = {
 exports.default = LayerConfig;
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46691,15 +46974,15 @@ var _gp = __webpack_require__(2);
 
 var _gp2 = _interopRequireDefault(_gp);
 
-var _leaflet = __webpack_require__(1);
+var _leaflet = __webpack_require__(0);
 
 var _leaflet2 = _interopRequireDefault(_leaflet);
 
-var _LoggerByDefault = __webpack_require__(0);
+var _LoggerByDefault = __webpack_require__(1);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
-var _LayerEvent = __webpack_require__(14);
+var _LayerEvent = __webpack_require__(15);
 
 var _LayerEvent2 = _interopRequireDefault(_LayerEvent);
 
@@ -46949,7 +47232,7 @@ var WMS = _leaflet2.default.TileLayer.WMS.extend( /** @lends WMS.prototype */{
 exports.default = WMS;
 
 /***/ }),
-/* 69 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46963,15 +47246,15 @@ var _gp = __webpack_require__(2);
 
 var _gp2 = _interopRequireDefault(_gp);
 
-var _leaflet = __webpack_require__(1);
+var _leaflet = __webpack_require__(0);
 
 var _leaflet2 = _interopRequireDefault(_leaflet);
 
-var _LoggerByDefault = __webpack_require__(0);
+var _LoggerByDefault = __webpack_require__(1);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
-var _LayerEvent = __webpack_require__(14);
+var _LayerEvent = __webpack_require__(15);
 
 var _LayerEvent2 = _interopRequireDefault(_LayerEvent);
 
