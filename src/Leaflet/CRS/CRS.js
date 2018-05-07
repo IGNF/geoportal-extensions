@@ -1,8 +1,9 @@
+import "proj4";
+import "proj4leaflet";
 import Register from "../../Common/Utils/Register";
 import Epsg2154 from "./EPSG2154";
 import Epsg27572 from "./EPSG27572";
 import Epsg4326 from "./EPSG4326";
-import "proj4leaflet";
 
 /** autoload function */
 (function () {

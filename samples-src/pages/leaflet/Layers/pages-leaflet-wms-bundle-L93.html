@@ -1,0 +1,41 @@
+{{#extend "layout-leaflet-sample-bundle"}}
+
+{{#content "head"}}
+        <title>Sample Leaflet</title>
+{{/content}}
+
+{{#content "style"}}
+        <style>
+          div#map {
+            width: 100%;
+            height: 500px;
+          }
+        </style>
+{{/content}}
+
+{{#content "body"}}
+        <h2>Ajout d'une couche WMS</h2>
+        <!-- map -->
+        <div id="map"></div>
+{{/content}}
+
+{{#content "js"}}
+        <script type="text/javascript">
+          /** onload */
+          window.onload = function () {
+
+              var wms = L.geoportalLayer.WMS({
+                  layer : "ORTHOIMAGERY.ORTHOPHOTOS"
+              });
+
+              var map  = L.map("map", {
+                  crs : L.geoportalCRS.EPSG2154,
+                  zoom : 2,
+                  center : L.latLng(48, 2)
+              });
+
+              wms.addTo(map);
+          };
+        </script>
+{{/content}}
+{{/extend}}

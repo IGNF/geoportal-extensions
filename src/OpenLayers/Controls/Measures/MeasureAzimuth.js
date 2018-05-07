@@ -129,7 +129,11 @@ MeasureAzimuth.prototype.setMap = function (map) {
     }
 
     // sauvegarde de l'état de l'outil
-    this.tools[className].instance = (map) ? this : null;
+    this.tools[className].push({
+        instance : (map) ? this : null,
+        active : false,
+        map : (map) ? map.getTargetElement().id : null
+    });
 
     // on appelle la méthode setMap originale d'OpenLayers
     ol.control.Control.prototype.setMap.call(this, map);

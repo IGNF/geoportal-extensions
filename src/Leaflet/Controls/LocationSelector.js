@@ -177,15 +177,25 @@ var LocationSelector = L.Control.extend(/** @lends LocationSelector.prototype */
     // ########################## publics methods ######################## //
     // ################################################################### //
 
-    // get coordinate
+    /**
+     * get coordinate
+     * @returns {Object} Coordinate
+     */
     getCoordinate : function () {
         return this._coordinate;
     },
-    // set coordinate : {lon,lat || x,y || N,E}
+
+    /**
+     * set coordinate : {lon,lat || x,y || N,E}
+     * @param {Object} coordinate - Coordinate
+     */
     setCoordinate : function (coordinate) {
         this._displayResultOfCoordinate(coordinate);
     },
-    // get coordinate inverse (EPSG:4326)
+    /**
+     * get coordinate inverse (EPSG:4326)
+     * @returns {Object} Coordinate
+     */
     getCoordinateInverse : function () {
         if (!this._coordinate) {
             return;

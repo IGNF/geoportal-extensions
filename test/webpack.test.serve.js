@@ -23,7 +23,7 @@ module.exports = {
             sortable : path.resolve("..", "node_modules", "sortablejs", "Sortable.js")
         }
     },
-    devtool : "source-map",
+    devtool : "eval-source-map",
     devServer : {
         stats : "errors-only",
         host : "localhost",
