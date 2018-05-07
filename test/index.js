@@ -6,7 +6,7 @@ if (module.hot) {
         /test(-|_)(common|leaflet|ol|itowns).*.js/ // Pick only files beging with .test.js
     );
     // debug...
-    console.log(context.keys());
+    console.log("LIST TEST FILE :", context.keys());
     // Execute each test suite
     context.keys().forEach(context);
 }
