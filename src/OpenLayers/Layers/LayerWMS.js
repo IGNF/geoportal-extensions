@@ -1,7 +1,6 @@
 import ol from "ol";
 import Utils from "../../Common/Utils";
 import Config from "../../Common/Utils/Config";
-import LayerUtils from "../../Common/Utils/LayerUtils";
 import SourceWMS from "./SourceWMS";
 
 /**

@@ -1,7 +1,6 @@
 import ol from "ol";
 import Gp from "gp";
 import LayerUtils from "../Common/Utils/LayerUtils";
-import Register from "../Common/Utils/Register";
 import ProxyUtils from "../Common/Utils/ProxyUtils";
 import GfiUtils from "./GfiUtils";
 import Utils from "../Common/Utils";

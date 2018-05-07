@@ -21,7 +21,7 @@ var Register = {
      * get the definition for a code
      *
      * @param {String} name - ie. EPSG:2154 (Lambert)
-     * @returns {Object}
+     * @returns {Object} definition
      */
     get : function (name) {
         if (name === "" || name === null || typeof name === "undefined") {

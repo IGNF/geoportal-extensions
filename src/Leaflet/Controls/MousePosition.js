@@ -192,7 +192,9 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
      * this method is called by this.addTo(map) when the control is added on the map
      * and fills variable 'this._container = this.onAdd(map)',
      * and create events on map.
+     * @param {Object} map - the map
      *
+     * @returns {DOMElement} DOM element
      * @private
      */
     onAdd : function (map) {
@@ -227,6 +229,7 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
     /**
      * this method is called when the control is removed from the map
      * and removes events on map.
+     * @param {Object} map - the map
      *
      * @private
      */
@@ -427,6 +430,7 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
      * this information is useful to switch to touch mode.
      * Detection : test for desktop or tactile
      *
+     * @returns {Boolean} is desktop
      * @private
      */
     _detectSupport : function () {
@@ -466,6 +470,7 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
      * this method is called by this.onAdd(map)
      * and initialize the container HTMLElement
      *
+     * @returns {DOMElement} DOM element
      * @private
      */
     _initLayout : function () {
@@ -613,7 +618,9 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
 
     /**
      * degreedecimal
+     * @param {Object} oLatLng - coordinates
      *
+     * @returns {Object} coordinates in decimal
      * @private
      */
     _displayDEC : function (oLatLng) {
@@ -626,7 +633,9 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
 
     /**
      * degreedecimal2sexagecimal
+     * @param {Object} oLatLng - coordinates
      *
+     * @returns {Object} coordinates in DMS
      * @private
      */
     _displayDMS : function (oLatLng) {
@@ -638,7 +647,9 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
 
     /**
      * degreedecimal2radian
+     * @param {Object} oLatLng - coordinates
      *
+     * @returns {Object} coordinates in radian
      * @private
      */
     _displayRAD : function (oLatLng) {
@@ -651,7 +662,9 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
 
     /**
      * degreedecimal2grade
+     * @param {Object} oLatLng - coordinates
      *
+     * @returns {Object} coordinates in gon
      * @private
      */
     _displayGON : function (oLatLng) {
@@ -664,7 +677,9 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
 
     /**
      * meter
+     * @param {Object} oXY - coordinates
      *
+     * @returns {Object} coordinates in meters
      * @private
      */
     _displayMeter : function (oXY) {
@@ -678,7 +693,9 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
 
     /**
      * kilometer
+     * @param {Object} oXY - coordinates
      *
+     * @returns {Object} coordinates in km
      * @private
      */
     _displayKMeter : function (oXY) {
@@ -944,6 +961,7 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
      * it executes a request to the elevation service.
      *
      * @param {Object} coordinate - {lat:..., lng:...}
+     * @param {Function} callback - callback
      *
      * @private
      */
@@ -990,7 +1008,7 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
         // et les callbacks
         L.Util.extend(options, {
             scope : this,
-            /** callback onSuccess */
+            // callback onSuccess
             onSuccess : function (results) {
                 logger.log(results);
                 if (results && Object.keys(results)) {
@@ -999,7 +1017,7 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
                     callback.call(this, results.elevations[0].z);
                 }
             },
-            /** callback onFailure */
+            // callback onFailure
             onFailure : function (error) {
                 logger.error(error.message);
             }
@@ -1091,7 +1109,8 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
      * Convert Coordinate value : km to meters, radians, grades to decimal degrees
      * @param {Number} value - value to convert
      * @param {String} unit - unit
-     * @returns {Number}
+     *
+     * @returns {Number} converted value
      * @private
      */
     _convertCoordinate : function (value, unit) {
@@ -1119,7 +1138,7 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
      * @param {String} coordType - Lat or Lon
      * @param {String} value - coordinate
      * @param {Event} e - event
-     * @returns {Boolean}
+     * @returns {Boolean} value is within extent
      */
     validateExtentCoordinate : function (coordType, value, e) {
         // FIXME pas de validation...

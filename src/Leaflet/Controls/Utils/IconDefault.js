@@ -51,6 +51,10 @@ var IconDefault = L.Icon.Default.extend(/** @lends IconDefault.prototype */ {
      * Overload function to ensure compatibility between versions 0.7.X and 1.0.X
      * (extend to L.Icon._getIconUrl)
      *
+     * @param {String} name - name
+     *
+     * @returns {String} url
+     *
      */
     _getIconUrl : function (name) {
         logger.trace("OVERWRITTEN L.Icon.Default._getIconUrl(" + name + ")");

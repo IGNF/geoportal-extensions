@@ -79,6 +79,7 @@ var SearchEngineDOM = {
 
     /**
      * Simple search input
+     * @param {String} placeholder - placeholder
      *
      * @returns {DOMElement} DOM element
      */
@@ -383,7 +384,9 @@ var SearchEngineDOM = {
     // ############### Geocoding with advanced container ################# //
     // ################################################################### //
 
-    /** ... */
+    /**
+     * @returns {DOMElement} DOM element
+     */
     _createAdvancedSearchPanelHeaderElement : function () {
         // contexte d'execution
         var self = this;
@@ -424,7 +427,11 @@ var SearchEngineDOM = {
         return container;
     },
 
-    /** ... */
+    /**
+     * @param {Object[]} advancedSearchCodes - codes
+     *
+     * @returns {DOMElement} DOM element
+     */
     _createAdvancedSearchPanelFormElement : function (advancedSearchCodes) {
         // contexte d'execution
         var self = this;
@@ -479,7 +486,10 @@ var SearchEngineDOM = {
         return form;
     },
 
-    /** ... */
+    /**
+     * @param {Object[]} codes - codes
+     * @returns {DOMElement} DOM element
+     */
     _createAdvancedSearchFormCodeElement : function (codes) {
         // contexte d'execution
         var self = this;
@@ -522,7 +532,9 @@ var SearchEngineDOM = {
         return select;
     },
 
-    /** ... */
+    /**
+     * @returns {DOMElement} DOM element
+     */
     _createAdvancedSearchFormInputElement : function () {
         var input = document.createElement("input");
         input.type = "submit";
@@ -549,6 +561,9 @@ var SearchEngineDOM = {
      * "PositionOfInterest", "StreetAddress", ...
      *
      * @param {String} code - code of geocoding resource
+     * @param {Boolean} display - display
+     *
+     * @returns {DOMElement} DOM element
      */
     _createAdvancedSearchFiltersTableElement : function (code, display) {
         var container = document.createElement("div");
@@ -571,6 +586,8 @@ var SearchEngineDOM = {
      * @param {String} filterAttributes.title - label
      * @param {String} filterAttributes.description - description
      * @param {String} filterAttributes.value - value
+     *
+     * @returns {DOMElement} DOM element
      */
     _createAdvancedSearchFiltersAttributElement : function (filterAttributes) {
         // INFORMATION
@@ -620,7 +637,9 @@ var SearchEngineDOM = {
     // ################## Geocoding results container #################### //
     // ################################################################### //
 
-    /** ... */
+    /**
+     * @returns {DOMElement} DOM element
+     */
     _createGeocodeResultsHeaderElement : function () {
         var self = this;
 

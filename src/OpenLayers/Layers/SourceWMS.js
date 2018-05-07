@@ -3,6 +3,9 @@ import ol from "ol";
 import Gp from "gp";
 import Utils from "../../Common/Utils";
 import Config from "../../Common/Utils/Config";
+import Logger from "../../Common/Utils/LoggerByDefault";
+
+var logger = Logger.getLogger("sourcewms");
 
 /**
  * @classdesc
@@ -93,7 +96,7 @@ function SourceWMS (options) {
         this._quicklookUrl = wmsParams.quicklookUrl;
     } else {
         // If layer is not in Gp.Config
-        console.log("[source WMS] ERROR : " + options.layer + " cannot be found in Geoportal Configuration. Make sure that this resource is included in your contract key.");
+        logger.log("[source WMS] ERROR : " + options.layer + " cannot be found in Geoportal Configuration. Make sure that this resource is included in your contract key.");
         return new ol.source.TileWMS({});
     }
 }

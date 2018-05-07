@@ -1,9 +1,11 @@
 import GlobeViewExtended from "../GlobeViewExtended";
+import Logger from "../../Common/Utils/LoggerByDefault";
 import Utils from "../../Common/Utils";
-import LayerUtils from "../../Common/Utils/LayerUtils";
 import SelectorID from "../../Common/Utils/SelectorID";
 import LayerSwitcherDOM from "../../Common/Controls/LayerSwitcherDOM";
 import Widget from "./Widget";
+
+var logger = Logger.getLogger("LayerSwitcher");
 
 /**
  * @classdesc
@@ -94,7 +96,9 @@ LayerSwitcher.prototype.constructor = LayerSwitcher;
 // ################################################################### //
 
 /**
- * Binds globe to control
+ * Bind globe to control
+ *
+ * @param {GlobeViewExtended} globe - the globe
  */
 LayerSwitcher.prototype.setGlobe = function (globe) {
     var layers;
@@ -139,26 +143,16 @@ LayerSwitcher.prototype.setGlobe = function (globe) {
         this._addGlobeLayers(globe);
 
         // adding of listeners
-
-        /**
-         * adds the onlayerchanged:opacity callback
-         */
         this._callbacks.onOpacityLayerCallBack = function (e) {
             self._updateLayerOpacity(e.target.id, e.new.opacity);
         };
 
-        /**
-         * adds the onlayerchanged:visible callback
-         */
         this._callbacks.onVisibilityLayerCallBack = function (e) {
             self._updateLayerVisibility(e.target.id, e.new.visible);
         };
 
         // At every globe movement, layer switcher may be updated,
         // according to layers on globe, and their range.
-        /**
-         * adds the onChangedViewCallBack callback
-         */
         this._callbacks.onChangedViewCallBack = function (e) {
             self._inRangeUpdate(e.colorLayersId);
         };
@@ -166,9 +160,6 @@ LayerSwitcher.prototype.setGlobe = function (globe) {
         // prerender events returns visible layers
         globe.preRenderEventFetchColorLayersDisplayed();
 
-        /**
-         * adds the onlayeradded
-         */
         this._callbacks.onAddedLayerCallBack = function (e) {
             var id = e.layerId;
             if (self) {
@@ -189,9 +180,6 @@ LayerSwitcher.prototype.setGlobe = function (globe) {
         };
         globe.listen(GlobeViewExtended.EVENTS.LAYER_ADDED, this._callbacks.onAddedLayerCallBack);
 
-        /**
-         * adds the onlayerremoved callback
-         */
         this._callbacks.onRemovedLayerCallBack = function (e) {
             var id = e.layerId;
 
@@ -202,11 +190,7 @@ LayerSwitcher.prototype.setGlobe = function (globe) {
         };
         globe.listen(GlobeViewExtended.EVENTS.LAYER_REMOVED, this._callbacks.onRemovedLayerCallBack);
 
-        /**
-         * adds the onlayerchanged:index callback
-         */
         this._callbacks.onIndexLayerCallBack = function (e) {
-            /** arraysEquals */
             var arraysEquals = function (a1, a2) {
                 if (a1.length !== a2.length) {
                     return false;
@@ -279,13 +263,13 @@ LayerSwitcher.prototype.addLayer = function (layer, config) {
     var globe = this.getGlobe();
 
     if (!layer) {
-        console.log("[ERROR] LayerSwitcher:addLayer - missing layer parameter");
+        logger.error("LayerSwitcher:addLayer - missing layer parameter");
         return;
     }
 
     var id = layer.id;
     if (id === "undefined") {
-        console.log("[ERROR] LayerSwitcher:addLayer - configuration cannot be set for " + layer + " layer (layer id not found)");
+        logger.error("LayerSwitcher:addLayer - configuration cannot be set for " + layer + " layer (layer id not found)");
         return;
     }
 
@@ -297,7 +281,7 @@ LayerSwitcher.prototype.addLayer = function (layer, config) {
     var LayerInGlobe = globe.getLayerById(id);
 
     if (!LayerInGlobe) {
-        console.log("[ERROR] LayerSwitcher:addLayer - configuration cannot be set for ", layer, " layer (layer is not in globe layers )");
+        logger.error("LayerSwitcher:addLayer - configuration cannot be set for ", layer, " layer (layer is not in globe layers )");
         return;
     }
 
@@ -372,7 +356,7 @@ LayerSwitcher.prototype.addLayer = function (layer, config) {
         // close layer info element if open, to update information.
         if (infodiv && infodiv.className === "GPlayerInfoOpened") {
             document.getElementById(this._addUID("GPlayerInfoPanel")).className = "GPlayerInfoPanelClosed";
-            infodiv.className === "GPlayerInfo";
+            infodiv.className = "GPlayerInfo";
         }
     }
 };
@@ -388,7 +372,7 @@ LayerSwitcher.prototype.removeLayer = function (layerId) {
     var infodiv = document.getElementById(this._addUID("GPinfo_ID_" + layerId));
     if (infodiv && infodiv.className === "GPlayerInfoOpened") {
         document.getElementById(this._addUID("GPlayerInfoPanel")).className = "GPlayerInfoPanelClosed";
-        infodiv.className === "GPlayerInfo";
+        infodiv.className = "GPlayerInfo";
     }
     // remove layer div
     var layerDiv = document.getElementById(this._addUID("GPlayerSwitcher_ID_" + layerId));
@@ -405,7 +389,7 @@ LayerSwitcher.prototype.removeLayer = function (layerId) {
  */
 LayerSwitcher.prototype.setCollapsed = function (collapsed) {
     if (collapsed === undefined) {
-        console.log("[ERROR] LayerSwitcher:setCollapsed - missing collapsed parameter");
+        logger.error("LayerSwitcher:setCollapsed - missing collapsed parameter");
         return;
     }
     var isCollapsed = this.getCollapsed();
@@ -425,6 +409,7 @@ LayerSwitcher.prototype.setCollapsed = function (collapsed) {
 
 /**
  * Returns true if widget is collapsed (minimize), false otherwise
+ * @return {Boolean} is collapsed
  */
 LayerSwitcher.prototype.getCollapsed = function () {
     return !document.getElementById(this._addUID("GPshowLayersList")).checked;
@@ -498,6 +483,7 @@ LayerSwitcher.prototype._layerDisplayedInLayerSwitcher = function (layerId) {
  *
  * @method _initContainer
  * @param {Object} options - control options
+ * @returns {DOMElement} container - widget container
  * @private
  */
 LayerSwitcher.prototype._initContainer = function (options) {
@@ -601,6 +587,7 @@ LayerSwitcher.prototype._addGlobeLayers = function (globe) {
  *
  * @method _createLayerDiv
  * @param {String} layerId - layer id
+ * @returns {DOMElement} layer div
  * @private
  */
 LayerSwitcher.prototype._createLayerDiv = function (layerId) {
@@ -824,6 +811,7 @@ LayerSwitcher.prototype._onDragAndDropLayerClick = function (e) {
  * Checks layers range
  *
  * @method _inRangeUpdate
+ * @param {Array} layersDisplayed - list of displayed layers id
  * @private
  */
 LayerSwitcher.prototype._inRangeUpdate = function (layersDisplayed) {
@@ -876,7 +864,7 @@ LayerSwitcher.prototype._updateLayerListContainer = function () {
             this._layerListContainer.appendChild(layerDiv);
         }
     } else {
-        console.log("[Itowns.control.LayerSwitcher] _updateLayerListContainer : layer list container not found to update layers order ?!");
+        logger.error("[Itowns.control.LayerSwitcher] _updateLayerListContainer : layer list container not found to update layers order ?!");
     }
 };
 
@@ -910,6 +898,7 @@ LayerSwitcher.prototype._getLayerInfo = function (layer) {
  *
  * @method _resolveLayerId
  * @param {String} divId - HTML div id
+ * @returns {String} layer id
  * @private
  */
 LayerSwitcher.prototype._resolveLayerId = function (divId) {

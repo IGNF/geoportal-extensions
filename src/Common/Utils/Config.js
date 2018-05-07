@@ -1,3 +1,7 @@
+import Logger from "../../Common/Utils/LoggerByDefault";
+
+var logger = Logger.getLogger("config");
+
 var Config = {
 
     /** autoconf */
@@ -59,7 +63,7 @@ var Config = {
             }
         }
         if (!layerId) {
-            console.log("ERROR layer id (layer name: " + layerName + " / service: " + service + ") was not found !?");
+            logger.error("ERROR layer id (layer name: " + layerName + " / service: " + service + ") was not found !?");
         }
 
         return layerId;
@@ -106,7 +110,7 @@ var Config = {
                 var key = layerConf.apiKeys[0];
                 if (apiKey) {
                     if (apiKey !== key) {
-                        console.log("ERROR different keys (" + apiKey + " !== " + key + ") !?");
+                        logger.error("ERROR different keys (" + apiKey + " !== " + key + ") !?");
                         return;
                     }
                 }
@@ -201,6 +205,8 @@ var Config = {
 
     /**
      * Resolution en geographique
+     *
+     * @returns {Array} resolutions
      */
     getResolutions : function () {
         var resolutions = [];
@@ -214,6 +220,9 @@ var Config = {
 
     /**
      * Recuperation des parametres TMS de la configuration
+     * @param {String} tmsName - tile matrix set name
+     *
+     * @returns {Object} tile matrix set
      */
     getTileMatrix : function (tmsName) {
         var tms = {};

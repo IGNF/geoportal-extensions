@@ -63,6 +63,9 @@ var Interactions = {
      * sauf l'interaction courrante (si elle est renseignée avec l'option 'current').
      * Il est possible d'ajouter des fonctionnalités via les options.
      * Par defaut, l'option 'clean' est renseignée...
+     *
+     * @param {Object} map - the map
+     * @param {Object} options - options
      */
     unset : function (map, options) {
         logger.trace("unset()");

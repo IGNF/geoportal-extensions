@@ -69,7 +69,7 @@ export default {
                 // si l'autoconfiguration n'est pas chargée,
                 // aucune vérification des droits est possible...
 
-                console.log("WARNING : " +
+                logger.warn("WARNING : " +
                     "The 'apiKey' parameter is missing, " +
                     "and the contract key configuration has not been loaded, " +
                     "so impossible to check yours rights !");
@@ -97,7 +97,7 @@ export default {
                 // d'obtenir des erreurs 403 forbidden...
                 // la responsabilité revient à l'utilisateur (message d'information)...
 
-                console.log("WARNING : " +
+                logger.warn("WARNING : " +
                     "the contract key configuration has not been loaded, " +
                     "so be carefull !");
 
@@ -137,7 +137,7 @@ export default {
 
                         var params = Config.getServiceParams(_resource, _service, _key);
                         if (!params || Object.keys(params).length === 0) {
-                            console.log("WARNING : " +
+                            logger.warn("WARNING : " +
                                 "The contract key configuration has no rights to load this geoportal " +
                                 "resource (" + _resource + ") " +
                                 "for this service (" + _service + ") ");
@@ -153,7 +153,7 @@ export default {
                 }
 
                 if (!_rightManagement || Object.keys(_rightManagement).length === 0) {
-                    console.log("WARNING : " +
+                    logger.warn("WARNING : " +
                         "The contract key configuration has been loaded, " +
                         "and the 'apiKey' parameter has been set, " +
                         "but, there is a problem on the mapping between the contract and the key !");

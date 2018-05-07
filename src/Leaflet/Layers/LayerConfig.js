@@ -13,6 +13,10 @@ var logger = Logger.getLogger("layer-config");
 var LayerConfig = {
     /**
      * options : key, layer, service
+     *
+     * @param {Object} options - options
+     *
+     * @returns {Object} layer parameters
      */
     get : function (options) {
         var params = {};

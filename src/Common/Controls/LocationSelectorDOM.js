@@ -1,4 +1,7 @@
 import ID from "../Utils/SelectorID";
+import Logger from "../../Common/Utils/LoggerByDefault";
+
+var logger = Logger.getLogger("LocationSelectorDOM");
 
 var LocationSelectorDOM = {
 
@@ -163,21 +166,21 @@ var LocationSelectorDOM = {
 
             switch (charCode) {
                 case 38: // arrow up
-                    console.log("arrow up");
+                    logger.log("arrow up");
                     current.className = "GPautoCompleteProposal";
                     prev.className = "GPautoCompleteProposal current";
                     prev.style.color = "#000000";
                     prev.style["background-color"] = "#CEDBEF";
                     break;
                 case 40: // arrow down
-                    console.log("arrow down");
+                    logger.log("arrow down");
                     current.className = "GPautoCompleteProposal";
                     next.className = "GPautoCompleteProposal current";
                     next.style.color = "#000000";
                     next.style["background-color"] = "#CEDBEF";
                     break;
                 case 13: // enter
-                    console.log("enter");
+                    logger.log("enter");
                     current.click(e);
                     break;
             }

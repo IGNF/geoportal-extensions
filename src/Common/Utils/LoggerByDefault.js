@@ -2,7 +2,12 @@
 import * as Log from "loglevel";
 
 var LoggerByDefault = {
-    /** logger statique */
+    /**
+     *logger statique
+     * @param {String} [name="default"] - the logger name
+     *
+     * @returns {Object} logger
+     */
     getLogger : function (name) {
         // Substitute global constants configured at compile time
         // cf. webpack.config.js

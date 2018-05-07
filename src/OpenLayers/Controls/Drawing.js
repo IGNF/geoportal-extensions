@@ -1,10 +1,8 @@
 import ol from "ol";
-import Gp from "gp";
 import Logger from "../../Common/Utils/LoggerByDefault";
 import SelectorID from "../../Common/Utils/SelectorID";
 import Interactions from "./Utils/Interactions";
 import DrawingDOM from "../../Common/Controls/DrawingDOM";
-import Utils from "../../Common/Utils";
 import KMLExtended from "../Formats/KML";
 
 var logger = Logger.getLogger("Drawing");
@@ -227,7 +225,7 @@ Drawing.prototype.setMap = function (map) {
 
     // gestion des suppressions "externes" de la couche de dessin.
     this.eventKey = this.getMap().getLayers().on("remove", function (evtRm) {
-        if (evtRm.element == this.layer) {
+        if (evtRm.element == this.layer) { // FIXME object comparison
             // found layer removed.
             this.layer = null;
             // on supprime l'interaction en cours si besoin
@@ -242,22 +240,22 @@ Drawing.prototype.setMap = function (map) {
 /**
  * Export features of current drawing layer in KML.
  *
- * @returns {String} - a KML representation of drawn features or null if not possible.
+ * @returns {String} a KML representation of drawn features or null if not possible.
  */
 Drawing.prototype.exportFeatures = function () {
     var result = null;
     if (ol.control.Control.prototype.getMap.call(this) == null) {
-        console.log("Impossible to export : control isn't attached to any map.");
+        logger.log("Impossible to export : control isn't attached to any map.");
         return result;
     }
     if (!this.layer) {
-        console.log("Impossible to export : no layer is hosting features.");
+        logger.log("Impossible to export : no layer is hosting features.");
         return result;
     }
     if (!this.layer.getSource() ||
         !this.layer.getSource().getFeatures() ||
         !this.layer.getSource().getFeatures().length) {
-        console.log("Impossible to export : no features found.");
+        logger.log("Impossible to export : no features found.");
         return result;
     }
     var featProj = this.layer.getSource().getProjection();
@@ -286,7 +284,7 @@ Drawing.prototype.exportFeatures = function () {
  */
 Drawing.prototype.setCollapsed = function (collapsed) {
     if (collapsed === undefined) {
-        console.log("[ERROR] Drawing:setCollapsed - missing collapsed parameter");
+        logger.error("[ERROR] Drawing:setCollapsed - missing collapsed parameter");
         return;
     }
     if ((collapsed && this.collapsed) || (!collapsed && !this.collapsed)) {
@@ -309,7 +307,7 @@ Drawing.prototype.setExportName = function (name) {
 /**
  * getter for Export Name.
  *
- * @returns {String} - export name
+ * @returns {String} export name
  */
 Drawing.prototype.getExportName = function () {
     return this._exportName;
@@ -323,13 +321,13 @@ Drawing.prototype.getExportName = function () {
  * Gets marker options in options.markersList given its src.
  *
  * @param {String} src - marker image URI,
- * @returns {Object} - markers options
+ * @returns {Object} markers options
  * @private
  */
 Drawing.prototype._getsMarkersOptionsFromSrc = function (src) {
     var markerOptions = null;
     for (var i = 0; i < this.options.markersList.length; i++) {
-        if (this.options.markersList[i].src == src) {
+        if (this.options.markersList[i].src === src) {
             markerOptions = this.options.markersList[i];
             return markerOptions;
         }
@@ -341,7 +339,7 @@ Drawing.prototype._getsMarkersOptionsFromSrc = function (src) {
  * Converts markerElement options into Openlayers IconStyles options.
  *
  * @param {Object} markerElement - marker element
- * @returns {Object} - ol.Style.Icon constructor options.
+ * @returns {Object} ol.Style.Icon constructor options.
  * @private
  */
 Drawing.prototype._getIconStyleOptions = function (markerElement) {
@@ -501,17 +499,17 @@ Drawing.prototype._initialize = function (options) {
             this.options.defaultStyles[key] = Drawing.DefaultStyles[key];
             return;
         }
-        if (key == "polyFillOpacity" &&
+        if (key === "polyFillOpacity" &&
             (options.defaultStyles[key] < 0 ||
                 options.defaultStyles[key] > 1)) {
-            console.log("Wrong value (" + options.defaultStyles[key] + ") for defaultStyles.polyFillOpactity. Must be between 0 and 1");
+            logger.log("Wrong value (" + options.defaultStyles[key] + ") for defaultStyles.polyFillOpactity. Must be between 0 and 1");
             this.options.defaultStyles[key] = Drawing.DefaultStyles[key];
             return;
         }
-        if (key == "strokeWidth" || key == "polyStrokeWidth") {
+        if (key === "strokeWidth" || key === "polyStrokeWidth") {
             var intValue = parseInt(options.defaultStyles[key], 10);
             if (isNaN(intValue) || intValue < 0) {
-                console.log("Wrong value (" + options.defaultStyles[key] + ") for defaultStyles.strokeWidth. Must be a positive interger value.");
+                logger.log("Wrong value (" + options.defaultStyles[key] + ") for defaultStyles.strokeWidth. Must be a positive interger value.");
                 this.options.defaultStyles[key] = Drawing.DefaultStyles[key];
                 return;
             }
@@ -564,7 +562,7 @@ Drawing.prototype.setLayer = function (vlayer) {
     }
 
     if (!(vlayer instanceof ol.layer.Vector)) {
-        console.log("no valid layer given for hosting drawn features.");
+        logger.log("no valid layer given for hosting drawn features.");
         return;
     }
 
@@ -573,7 +571,7 @@ Drawing.prototype.setLayer = function (vlayer) {
     if (layers) {
         var found = false;
         layers.forEach(function (mapLayer) {
-            if (mapLayer == vlayer) {
+            if (mapLayer == vlayer) { // FIXME object comparison
                 logger.trace("layer already in map. Not adding.");
                 found = true;
             }
@@ -604,6 +602,8 @@ Drawing.prototype.setLayer = function (vlayer) {
  * Detection : test for desktop or tactile
  *
  * @method _detectSupport
+ *
+ * @returns {Boolean} is desktop
  * @private
  */
 Drawing.prototype._detectSupport = function () {
@@ -643,6 +643,8 @@ Drawing.prototype._detectSupport = function () {
  * Create control main container (called by Drawing constructor)
  *
  * @method _initContainer
+ *
+ * @returns {DOMElement} DOM element
  * @private
  */
 Drawing.prototype._initContainer = function () {
@@ -668,6 +670,8 @@ Drawing.prototype._initContainer = function () {
 
 /**
  * Callback de fin de dessin de geometrie
+ * @param {Object} feature - ol feature
+ * @param {String} geomType - geometry type
  *
  * @private
  */
@@ -762,7 +766,7 @@ Drawing.prototype._createRemoveInteraction = function () {
         layers : [this.layer]
     });
     interaction.on("select", function (seEv) {
-        if (!seEv || !seEv.selected || seEv.selected.length == 0) {
+        if (!seEv || !seEv.selected || seEv.selected.length === 0) {
             return;
         }
         this.layer.getSource().removeFeature(seEv.selected[0]);
@@ -790,7 +794,7 @@ Drawing.prototype._createStylingInteraction = function () {
         if (this.stylingOvl) {
             this.getMap().removeOverlay(this.stylingOvl);
         }
-        if (!seEv || !seEv.selected || seEv.selected.length == 0) {
+        if (!seEv || !seEv.selected || seEv.selected.length === 0) {
             return;
         }
 
@@ -897,7 +901,7 @@ Drawing.prototype._createStylingInteraction = function () {
             initValues.fillOpacity = initValues.hasOwnProperty("fillOpacity") ? initValues.fillOpacity : this.options.defaultStyles.polyFillOpacity;
         }
         if (!geomType) {
-            console.log("Unhandled geometry type for styling.");
+            logger.log("Unhandled geometry type for styling.");
             return;
         }
         var dtObj = this;
@@ -907,11 +911,11 @@ Drawing.prototype._createStylingInteraction = function () {
              * @param {String} action - "apply" (to selected object), "default" (set as default), "cancel" (do nothing).
              */
         var applyStyle = function (action) {
-            if (action == "cancel") {
+            if (action === "cancel") {
                 dtObj.getMap().removeOverlay(popupOvl);
                 return;
             }
-            var setDefault = action != "apply";
+            var setDefault = action !== "apply";
 
             var fillColorElem = document.getElementById(dtObj._addUID("fillColor"));
             var fillOpacityElem = document.getElementById(dtObj._addUID("fillOpacity"));
@@ -945,7 +949,7 @@ Drawing.prototype._createStylingInteraction = function () {
                         if (dtObj.options.markersList.length > 1) {
                             // index du marker dans la liste des markers
                             var idxMarker = dtObj.options.markersList.findIndex(function (mrk) {
-                                if (mrk == markerSelected) {
+                                if (mrk == markerSelected) { // FIXME object comparison
                                     return true;
                                 }
                                 return false;
@@ -1042,7 +1046,7 @@ Drawing.prototype._createLabelInteraction = function () {
         if (this.labelOvl) {
             this.getMap().removeOverlay(this.labelOvl);
         }
-        if (!seEv || !seEv.selected || seEv.selected.length == 0) {
+        if (!seEv || !seEv.selected || seEv.selected.length === 0) {
             return;
         }
         var popupOvl = null;
@@ -1065,10 +1069,10 @@ Drawing.prototype._createLabelInteraction = function () {
             geomType = "Polygon";
         }
         if (!geomType) {
-            console.log("Unhandled geometry type for styling.");
+            logger.log("Unhandled geometry type for styling.");
             return;
         }
-        if (geomType == "Text") {
+        if (geomType === "Text") {
             // pour les labels on récupère la valeur dans le style
             _textValue = seEv.selected[0].getStyle().getText().getText();
         } else {
@@ -1094,7 +1098,7 @@ Drawing.prototype._createLabelInteraction = function () {
                 return;
             }
             var feature = seEv.selected[0];
-            if (geomType == "Text") {
+            if (geomType === "Text") {
                 var style = feature.getStyle();
                 style.getText().setText(value);
                 feature.setProperties({
@@ -1111,7 +1115,7 @@ Drawing.prototype._createLabelInteraction = function () {
         var popupDiv = this._createLabelDiv({
             applyFunc : setTextValue,
             inputId : this._addUID("label-input"),
-            placeholder : (geomType == "Text" ? "Saisir un label..." : "Saisir une description..."),
+            placeholder : (geomType === "Text" ? "Saisir un label..." : "Saisir une description..."),
             text : _textValue,
             measure : (this.options.tools.measure) ? _measure : null,
             geomType : geomType
@@ -1138,6 +1142,8 @@ Drawing.prototype._createLabelInteraction = function () {
 /**
  * Callback de fin de modification du dessin afin de mettre à jour la mesure
  * TODO
+ * @param {Object} feature - ol feature
+ * @param {String} geomType - geometry type
  *
  * @private
  */
@@ -1149,7 +1155,7 @@ Drawing.prototype._updateMeasure = function (feature, geomType) {
     var wgs84Sphere = new ol.Sphere(6378137);
     var projection = this.getMap().getView().getProjection();
 
-    /** arrondi */
+    // arrondi
     function __roundDecimal (nombre, precision) {
         precision = precision || 2;
         var factor = Math.pow(10, precision);
@@ -1419,7 +1425,7 @@ Drawing.prototype._handleToolClick = function (clickEvent, toolId, context) {
                             })
                         })
                     }),
-                    /** deleteCondition : aucune en mode "edition" */
+                    // deleteCondition : aucune en mode "edition"
                     deleteCondition : function (/* event */) {
                         return false;
                     }

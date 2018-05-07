@@ -14,7 +14,7 @@ var LayerSwitcherDOM = {
             draggable : ".draggable-layer",
             ghostClass : "GPghostLayer",
             animation : 200,
-            /** Call event function on drag and drop */
+            // Call event function on drag and drop
             onEnd : function (e) {
                 // FIXME pas terrrible, mais il faut bien passer ce contexte...
                 context._onDragAndDropLayerClick(e);
@@ -50,6 +50,8 @@ var LayerSwitcherDOM = {
 
     /**
      * Creation du container principal d"affichage des layers (DOM)
+     *
+     * @returns {DOMElement} input - element for minimizing/maximizing the layer switcher
      */
     _createMainLayersShowElement : function () {
         // <!-- Hidden checkbox for minimizing/maximizing -->
@@ -61,6 +63,8 @@ var LayerSwitcherDOM = {
 
     /**
      * Creation du container principal des layers (DOM)
+     *
+     * @returns {DOMElement} container - layers list container
      */
     _createMainLayersElement : function () {
         // ajout de la liste des layers dans le container principal
@@ -75,6 +79,8 @@ var LayerSwitcherDOM = {
 
     /**
      * Creation du container du picto du controle (DOM)
+     *
+     * @returns {DOMElement} label
      */
     _createMainPictoElement : function () {
         var self = this;
@@ -125,6 +131,8 @@ var LayerSwitcherDOM = {
 
     /**
      * Creation du container du panneau d"information (DOM)
+     *
+     * @returns {DOMElement} container
      */
     _createMainInfoElement : function () {
         // gestion du panneau d"information dans le container principal
@@ -150,6 +158,7 @@ var LayerSwitcherDOM = {
      * @param {Boolean} obj.visibility - visibilité de la couche dans la carte (true or false)
      * @param {Float} obj.opacity - opacité de la couche
      *
+     * @returns {DOMElement} container
      */
     _createContainerLayerElement : function (obj) {
         // exemple :
@@ -199,6 +208,8 @@ var LayerSwitcherDOM = {
      * Creation du container des outils basiques du layer (DOM)
      *
      * @param {Object} obj - options de la couche à ajouter dans le layer switcher
+     *
+     * @returns {DOMElement} container
      */
     _createBasicToolElement : function (obj) {
         // exemple :
@@ -225,6 +236,8 @@ var LayerSwitcherDOM = {
      * Creation du nom du layer (DOM)
      *
      * @param {Object} obj - options de la couche à ajouter dans le layer switcher
+     *
+     * @returns {DOMElement} container
      */
     _createBasicToolNameElement : function (obj) {
         // exemple :
@@ -242,6 +255,8 @@ var LayerSwitcherDOM = {
      * Creation de l'icone de visibilité du layer (DOM)
      *
      * @param {Object} obj - options de la couche à ajouter dans le layer switcher
+
+     * @returns {DOMElement[]} array containing input and label elements
      */
     _createBasicToolVisibilityElement : function (obj) {
         // exemple :
@@ -270,7 +285,7 @@ var LayerSwitcherDOM = {
             input.addEventListener(
                 "click",
                 function (e) {
-                    context._onVisibilityLayerClick.call(context, e);
+                    context._onVisibilityLayerClick(e);
                 }
             );
         } else if (input.attachEvent) {
@@ -278,7 +293,7 @@ var LayerSwitcherDOM = {
             input.attachEvent(
                 "onclick",
                 function (e) {
-                    context._onVisibilityLayerClick.call(context, e);
+                    context._onVisibilityLayerClick(e);
                 }
             );
         }
@@ -293,6 +308,8 @@ var LayerSwitcherDOM = {
      * Creation de l'affichage du menu des outils avancés du layer (DOM)
      *
      * @param {Object} obj - options de la couche à ajouter dans le layer switcher
+     *
+     * @returns {DOMElement[]} array containing input and label elements
      */
     _createAdvancedToolShowElement : function (obj) {
         // <input type="checkbox" id="GPshowAdvancedTools_ID_Layer1">
@@ -320,6 +337,8 @@ var LayerSwitcherDOM = {
      * Creation du container des outils avancés du layer (DOM)
      *
      * @param {Object} obj - options de la couche à ajouter dans le layer switcher
+     *
+     * @returns {DOMElement} container
      */
     _createAdvancedToolElement : function (obj) {
         // exemple :
@@ -353,6 +372,8 @@ var LayerSwitcherDOM = {
      * Creation de l'icone de suppression du layer (DOM)
      *
      * @param {Object} obj - options de la couche à ajouter dans le layer switcher
+     *
+     * @returns {DOMElement} container
      */
     _createAdvancedToolDeleteElement : function (obj) {
         // exemple :
@@ -369,7 +390,7 @@ var LayerSwitcherDOM = {
             div.addEventListener(
                 "click",
                 function (e) {
-                    context._onDropLayerClick.call(context, e);
+                    context._onDropLayerClick(e);
                 }
             );
         } else if (div.attachEvent) {
@@ -377,7 +398,7 @@ var LayerSwitcherDOM = {
             div.attachEvent(
                 "onclick",
                 function (e) {
-                    context._onDropLayerClick.call(context, e);
+                    context._onDropLayerClick(e);
                 }
             );
         }
@@ -389,6 +410,8 @@ var LayerSwitcherDOM = {
      * Creation de l'icone d'information du layer (DOM)
      *
      * @param {Object} obj - options de la couche à ajouter dans le layer switcher
+     *
+     * @returns {DOMElement} container
      */
     _createAdvancedToolInformationElement : function (obj) {
         // exemple :
@@ -405,7 +428,7 @@ var LayerSwitcherDOM = {
             div.addEventListener(
                 "click",
                 function (e) {
-                    context._onOpenLayerInfoClick.call(context, e);
+                    context._onOpenLayerInfoClick(e);
                 }
             );
         } else if (div.attachEvent) {
@@ -413,7 +436,7 @@ var LayerSwitcherDOM = {
             div.attachEvent(
                 "onclick",
                 function (e) {
-                    context._onOpenLayerInfoClick.call(context, e);
+                    context._onOpenLayerInfoClick(e);
                 }
             );
         }
@@ -425,6 +448,8 @@ var LayerSwitcherDOM = {
      * Creation de l'icone de gestion de l'opacité du layer (DOM)
      *
      * @param {Object} obj - options de la couche à ajouter dans le layer switcher
+     *
+     * @returns {DOMElement[]} array of two containers
      */
     _createAdvancedToolOpacityElement : function (obj) {
         // exemple :
@@ -458,7 +483,7 @@ var LayerSwitcherDOM = {
             input.addEventListener(
                 "change",
                 function (e) {
-                    context._onChangeLayerOpacity.call(context, e);
+                    context._onChangeLayerOpacity(e);
                 }
             );
         } else if (input.attachEvent) {
@@ -466,7 +491,7 @@ var LayerSwitcherDOM = {
             input.attachEvent(
                 "onchange",
                 function (e) {
-                    context._onChangeLayerOpacity.call(context, e);
+                    context._onChangeLayerOpacity(e);
                 }
             );
         }
@@ -475,7 +500,7 @@ var LayerSwitcherDOM = {
             input.addEventListener(
                 "input",
                 function (e) {
-                    context._onChangeLayerOpacity.call(context, e);
+                    context._onChangeLayerOpacity(e);
                 }
             );
         } else if (input.attachEvent) {
@@ -483,7 +508,7 @@ var LayerSwitcherDOM = {
             input.attachEvent(
                 "oninput",
                 function (e) {
-                    context._onChangeLayerOpacity.call(context, e);
+                    context._onChangeLayerOpacity(e);
                 }
             );
         }
@@ -518,6 +543,8 @@ var LayerSwitcherDOM = {
      * TODO GPlayerInfoLink  : mettre en forme les échelles !
      *
      * @param {Object} obj - options de la couche à ajouter dans le layer switcher
+     *
+     * @returns {DOMElement} container
      */
     _createContainerLayerInfoElement : function (obj) {
         var container = document.createElement("div");
@@ -619,7 +646,7 @@ var LayerSwitcherDOM = {
                 if (legends.hasOwnProperty(scale)) {
                     var urllgd = legends[scale].url;
                     // on n'affiche pas les légendes pointant vers "nolegend.jpg"
-                    if (typeof urllgd === "string" && urllgd.toLowerCase().indexOf("nolegend.jpg") == -1) {
+                    if (typeof urllgd === "string" && urllgd.toLowerCase().indexOf("nolegend.jpg") === -1) {
                         // TODO GPlayerInfoPopup
                         var lgdlink = document.createElement("div");
                         lgdlink.className = "GPlayerInfoLink";

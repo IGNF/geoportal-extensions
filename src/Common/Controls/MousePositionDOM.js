@@ -40,6 +40,7 @@ var MousePositionDOM = {
 
     /**
      * Show mouse position control
+     * @param {Boolean} isDesktop - specifies if the support is desktop or tactile
      *
      * @returns {DOMElement} DOM element
      */
@@ -93,6 +94,10 @@ var MousePositionDOM = {
 
     /**
      * mouse position panel
+     * @param {Boolean} [displayAltitude=true] - specifies if the altitude panel must be displayed
+     * @param {Boolean} [displayCoordinates=true] - specifies if the coordinates panel must be displayed
+     * @param {Boolean} [editCoordinates=false] - specifies if the coordinates edition is allowed
+     * @param {Boolean} [currentProjectionUnits] - specifies if the current projection units
      *
      * FIXME
      * don't call this._createMousePositionSettingsElement
@@ -124,7 +129,11 @@ var MousePositionDOM = {
         return div;
     },
 
-    /** Map center localisation (tactile use) */
+    /**
+     * Map center localisation (tactile use)
+     *
+     * @returns {DOMElement} container
+     */
     _createMapCenter : function () {
         var div = document.createElement("div");
         div.id = "GPmapCenter";
@@ -136,7 +145,9 @@ var MousePositionDOM = {
     // ####################### Panel container ########################### //
     // ################################################################### //
 
-    /** ... */
+    /**
+     * @returns {DOMElement} container
+     */
     _createMousePositionPanelHeaderElement : function () {
         var container = document.createElement("div");
         container.className = "GPpanelHeader";
@@ -170,6 +181,10 @@ var MousePositionDOM = {
 
     /**
      * coordinate panel
+     * @param {Boolean} [displayAltitude] - specifies if the altitude panel must be displayed
+     * @param {Boolean} [displayCoordinates] - specifies if the coordinates panel must be displayed
+     * @param {Boolean} [editCoordinates] - specifies if the coordinates edition is allowed
+     * @param {Boolean} [currentProjectionUnits] - specifies if the current projection units
      *
      * FIXME
      * call this._createMousePositionPanelBasicCoordinateElement
@@ -194,7 +209,9 @@ var MousePositionDOM = {
      * create coordinate elements
      *
      * @param {String} coordType - ("Lon" ou "Lat")
-     * @returns {Array}
+     * @param {Boolean} [editCoordinates=false] - specifies if the coordinates edition is allowed
+     *
+     * @returns {Array} list of DOM elements
      */
     _createCoordinateElement : function (coordType, editCoordinates) {
         var context = this;
@@ -231,7 +248,9 @@ var MousePositionDOM = {
     /**
      *
      * @param {String} coordType - ("Lon" ou "Lat")
-     * @returns {Array}
+     * @param {Boolean} [editCoordinates=false] - specifies if the coordinates edition is allowed
+     *
+     * @returns {Array} list of DOM elements
      */
     _createDMSCoordinateElement : function (coordType, editCoordinates) {
         if (["Lon", "Lat"].indexOf(coordType) === -1) {
@@ -337,7 +356,13 @@ var MousePositionDOM = {
         return list;
     },
 
-    /** ... */
+    /**
+     * @param {Boolean} [display=false] - specifies if the coordinates panel must be displayed
+     * @param {Boolean} [editCoordinates] - specifies if the coordinates edition is allowed
+     * @param {Boolean} [currentProjectionUnits] - specifies if the current projection units
+     *
+     * @returns {DOMElement} container
+     */
     _createMousePositionPanelBasicCoordinateElement : function (display, editCoordinates, currentProjectionUnits) {
         var div = document.createElement("div");
         div.id = this._addUID("GPmousePositionCoordinate");
@@ -394,7 +419,11 @@ var MousePositionDOM = {
         return div;
     },
 
-    /** ... */
+    /**
+     * @param {Boolean} [display=false] - specifies if the altitude panel must be displayed
+     *
+     * @returns {DOMElement} container
+     */
     _createMousePositionPanelBasicAltitudeElement : function (display) {
         var div = document.createElement("div");
         div.id = this._addUID("GPmousePositionAltitude");
@@ -419,7 +448,11 @@ var MousePositionDOM = {
         return div;
     },
 
-    /** ... */
+    /**
+     * @param {Boolean} [editCoordinates=false] - specifies if the coordinates edition is allowed
+     *
+     * @returns {DOMElement} container
+     */
     _createMousePositionPanelEditToolsElement : function (editCoordinates) {
         var context = this;
 
@@ -460,7 +493,11 @@ var MousePositionDOM = {
     // #################### Settings container ########################### //
     // ################################################################### //
 
-    /** ... */
+    /**
+     * @param {Boolean} [display=false] - specifies if the settings panel must be displayed
+     *
+     * @returns {DOMElement[]} array containing input and label elements
+     */
     _createShowMousePositionSettingsElement : function (display) {
         var list = [];
 
@@ -483,6 +520,7 @@ var MousePositionDOM = {
 
     /**
      * settings panel
+     * @param {Boolean} [display=true] - specifies if the settings panel must be displayed
      *
      * FIXME
      * don't call this._createMousePositionSettingsSystemsElement
@@ -555,7 +593,11 @@ var MousePositionDOM = {
         return container;
     },
 
-    /** ... */
+    /**
+     * @param {Object[]} systems - list of systems
+     *
+     * @returns {DOMElement} DOM element select
+     */
     _createMousePositionSettingsSystemsElement : function (systems) {
         // contexte d'execution
         var context = this;
@@ -582,7 +624,11 @@ var MousePositionDOM = {
         return selectSystem;
     },
 
-    /** ... */
+    /**
+     * @param {Object[]} units - list of units
+     *
+     * @returns {DOMElement} DOM element select
+     */
     _createMousePositionSettingsUnitsElement : function (units) {
         // contexte d'execution
         var context = this;
@@ -606,7 +652,9 @@ var MousePositionDOM = {
         return selectUnits;
     },
 
-    /** ... **/
+    /**
+     * @param {String} [currentProjectionType="Metric"] - "Geographical" or "Metric"
+     */
     _resetLabelElements : function (currentProjectionType) {
         // Changement des labels dans le formulaire de saisie
         var spanLat = document.getElementById(this._addUID("GPmousePositionLatLabel"));
@@ -616,7 +664,9 @@ var MousePositionDOM = {
         spanLon.innerHTML = currentProjectionType === "Geographical" ? "Longitude :" : "Y :";
     },
 
-    /** ... **/
+    /**
+     * @param {String} currentProjectionUnits - projection units
+     */
     _resetUnitElements : function (currentProjectionUnits) {
         var value = "";
         if (currentProjectionUnits === "M" || currentProjectionUnits === "KM") {
@@ -704,7 +754,8 @@ var MousePositionDOM = {
      *
      * @param {DOMElement} input - input element
      * @param {Boolean} isFloat - check for float value
-     * @returns {Boolean}
+     *
+     * @returns {Boolean} true if input value is within bounds
      */
     _checkDMSElement : function (input, isFloat) {
         var b = isFloat !== undefined;
@@ -730,7 +781,8 @@ var MousePositionDOM = {
     /**
      * @param {String} coordType - "Lon" or "Lat"
      * @param {DOMElement} input - input element
-     * @returns {Boolean}
+     *
+     * @returns {Boolean} true if input value is within bounds
      */
     _checkDMSDegrees : function (coordType, input) {
         if (isNaN(input.value)) {
@@ -769,6 +821,7 @@ var MousePositionDOM = {
     /**
      * Function displaying coordinates from cursor position (desktop)
      * or map center (tactile)
+     * @param {Object} coordinate - coordinates
      */
     GPdisplayCoords : function (coordinate) {
         // Compute coords in case of cursor position (desktop)
@@ -824,6 +877,10 @@ var MousePositionDOM = {
     /**
      * Function displaying altitude from cursor position (desktop)
      * or map center (tactile)
+     * @param {Object} coordinate - coordinates
+     * @param {Number} altitudeTimeoutDelay - when the mouse stop moving, delay before the altitude request is launched
+     * @param {Number} noDataValue - the no data value
+     * @param {Number} noDataValueTolerance - the no data value tolerance
      */
     GPdisplayElevation : function (coordinate, altitudeTimeoutDelay, noDataValue, noDataValueTolerance) {
         // contexte d'execution
