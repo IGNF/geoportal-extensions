@@ -45,7 +45,7 @@ var CRS = {
      * @method EPSG2154
      * @static
      * @alias L.geoportalCRS.EPSG2154
-     * @returns {EPSG2154}
+     * @returns {EPSG2154} epsg code
      */
     EPSG2154 : function () {
         return Epsg2154.build();
@@ -57,7 +57,7 @@ var CRS = {
      * @ignore
      * @method EPSG27572
      * @alias L.geoportalCRS.EPSG27572
-     * @returns {EPSG27572}
+     * @returns {EPSG27572} epsg code
      */
     EPSG27572 : function () {
         return Epsg27572.build();
@@ -69,7 +69,7 @@ var CRS = {
      * @ignore
      * @method EPSG4326
      * @alias L.geoportalCRS.EPSG4326
-     * @returns {EPSG4326}
+     * @returns {EPSG4326} epsg code
      */
     EPSG4326 : function () {
         return Epsg4326.build();

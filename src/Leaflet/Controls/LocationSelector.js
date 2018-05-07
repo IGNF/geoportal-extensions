@@ -178,6 +178,7 @@ var LocationSelector = L.Control.extend(/** @lends LocationSelector.prototype */
 
     /**
      * get coordinate
+     * @returns {Object} Coordinate
      */
     getCoordinate : function () {
         return this._coordinate;
@@ -185,12 +186,14 @@ var LocationSelector = L.Control.extend(/** @lends LocationSelector.prototype */
 
     /**
      * set coordinate : {lon,lat || x,y || N,E}
+     * @param {Object} Coordinate
      */
     setCoordinate : function (coordinate) {
         this._displayResultOfCoordinate(coordinate);
     },
     /**
      * get coordinate inverse (EPSG:4326)
+     * @returns {Object} Coordinate
      */
     getCoordinateInverse : function () {
         if (!this._coordinate) {
@@ -207,6 +210,8 @@ var LocationSelector = L.Control.extend(/** @lends LocationSelector.prototype */
 
     /**
      * set map
+     *
+     * @param {Object} map - the map
      */
     setMap : function (map) {
         if (!this._map) {
@@ -246,6 +251,8 @@ var LocationSelector = L.Control.extend(/** @lends LocationSelector.prototype */
     /**
      * this method is called by this.onAdd(map)
      * and initialize the container HTMLElement
+     *
+     * @returns {DOMElement} DOM element
      *
      * @private
      */
@@ -586,13 +593,13 @@ var LocationSelector = L.Control.extend(/** @lends LocationSelector.prototype */
 
         // on ne fait pas de requête si aucun droit !
         if (this._noRightManagement) {
-            console.log("no rights for all service !?");
+            logger.log("no rights for all service !?");
             return;
         }
 
         // gestion des droits !
         if (!this._resources["AutoCompletion"]) {
-            console.log("no rights for this service !?");
+            logger.log("no rights for this service !?");
             return;
         }
 
@@ -626,6 +633,8 @@ var LocationSelector = L.Control.extend(/** @lends LocationSelector.prototype */
      * and fills the container of the location list.
      * it creates a HTML Element per location
      * (cf. this. ...)
+     *
+     * @param {Object[]} locations - locations
      *
      * @private
      */
@@ -683,13 +692,13 @@ var LocationSelector = L.Control.extend(/** @lends LocationSelector.prototype */
 
         // on ne fait pas de requête si aucun droit !
         if (this._noRightManagement) {
-            console.log("no rights for all service !?");
+            logger.log("no rights for all service !?");
             return;
         }
 
         // gestion des droits !
         if (!this._resources["ReverseGeocode"]) {
-            console.log("no rights for this service !?");
+            logger.log("no rights for this service !?");
             return;
         }
 
@@ -821,7 +830,7 @@ var LocationSelector = L.Control.extend(/** @lends LocationSelector.prototype */
         // aucun droits !
         // on evite une requête...
         if (this._noRightManagement) {
-            console.log("no rights for this service !?");
+            logger.log("no rights for this service !?");
             return;
         }
 
@@ -843,7 +852,7 @@ var LocationSelector = L.Control.extend(/** @lends LocationSelector.prototype */
         this._requestAutoComplete({
             text : value,
             maximumResponses : 5, // FIXME je limite le nombre de reponse car le container DOM est limité dans l'affichage !!!
-            /** callback onSuccess */
+            // callback onSuccess
             onSuccess : function (results) {
                 logger.log(results);
                 if (results) {
@@ -851,7 +860,7 @@ var LocationSelector = L.Control.extend(/** @lends LocationSelector.prototype */
                     context._fillAutoCompletedLocationListContainer(locations);
                 }
             },
-            /** callback onFailure */
+            // callback onFailure
             onFailure : function (error) {
                 // FIXME
                 // où affiche t on les messages : ex. 'No suggestion matching the search' ?
@@ -1018,7 +1027,7 @@ var LocationSelector = L.Control.extend(/** @lends LocationSelector.prototype */
                     y : oLatLng.lng // on envoie Y->LON à l'API service IGN car on spécifie EPSG:4326
                 },
                 srs : "EPSG:4326",
-                /** callback onSuccess */
+                // callback onSuccess
                 onSuccess : function (results) {
                     logger.log(results);
                     if (results.locations.length !== 0) {
@@ -1028,7 +1037,7 @@ var LocationSelector = L.Control.extend(/** @lends LocationSelector.prototype */
                         self._displayResultOfCoordinate(oLatLng);
                     }
                 },
-                /** callback onFailure */
+                // callback onFailure
                 onFailure : function (error) {
                     logger.log(error.message);
                     self._displayResultOfCoordinate(oLatLng);

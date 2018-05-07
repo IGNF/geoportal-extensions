@@ -1,6 +1,9 @@
 
 import ol from "ol";
 import LayerUtils from "../../Common/Utils/LayerUtils";
+import Logger from "../../Common/Utils/LoggerByDefault";
+
+var logger = Logger.getLogger("geoportalattribution");
 
 /**
  * @classdesc
@@ -131,7 +134,7 @@ GeoportalAttribution.prototype._updateAttributions = function (map) {
                     if (lyr.getSource) {
                         context._updateLayerAttributions(lyr, mapAttributions, standardExtent, mapProjection, zoom);
                     } else {
-                        console.log("cannot find layer source in layergroup ", layers[i]);
+                        logger.log("cannot find layer source in layergroup ", layers[i]);
                     }
                 }
             );

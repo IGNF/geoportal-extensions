@@ -12,18 +12,19 @@ import Widget from "./Widget";
  * @alias itowns.control.Scale
  * @extends {itowns.control.Widget}
  * @alias itowns.control.Scale
+ * @param {Object} options - widget options
+ * @param {String}  options.target - HTML target element id
+ * @param {String}  options.position - "absolute" or "relative"
  * @example
  * var scale = new itowns.control.Scale();
  *
  */
 function Scale (options) {
-    options = options || {};
-
     if (!(this instanceof Scale)) {
         throw new TypeError("ERROR CLASS_CONSTRUCTOR");
     }
 
-    if (options && typeof options !== "object") {
+    if (typeof options !== "object") {
         throw new Error("ERROR WRONG_TYPE : options should be an object");
     }
 
@@ -65,7 +66,9 @@ Scale.prototype.constructor = Scale;
 // ################################################################### //
 
 /**
- * Binds globe to control
+ * Bind globe to control
+ *
+ * @param {GlobeViewExtended} globe - the globe
  */
 Scale.prototype.setGlobe = function (globe) {
     // info : this function is called after a globe.addWidget() or a globe.removeWidget()
@@ -141,6 +144,7 @@ Scale.prototype._initialize = function () {
  * Create control main container
  *
  * @method _initContainer
+ * @returns {DOMElement} container - widget container
  * @private
  */
 Scale.prototype._initContainer = function () {

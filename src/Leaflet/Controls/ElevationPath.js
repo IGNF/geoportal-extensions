@@ -5,7 +5,6 @@ import Draw from "leaflet-draw";
 import Logger from "../../Common/Utils/LoggerByDefault";
 import RightManagement from "../../Common/Utils/CheckRightManagement";
 import ID from "../../Common/Utils/SelectorID";
-import LocationSelector from "./LocationSelector";
 import PositionFormater from "./Utils/PositionFormater";
 import IconDefault from "./Utils/IconDefault";
 import ElevationPathDOM from "../../Common/Controls/ElevationPathDOM";
@@ -583,6 +582,7 @@ var ElevationPath = L.Control.extend(/** @lends L.geoportalControl.ElevationPath
     /**
      * set current layer of feature
      *
+     * @param {Object} layer - layer
      * @private
      */
     _addFeatureLayer : function (layer) {
@@ -595,6 +595,7 @@ var ElevationPath = L.Control.extend(/** @lends L.geoportalControl.ElevationPath
     /**
      * remove layer feature from group
      *
+     * @param {Integer} id - id
      * @private
      */
     _removeFeatureLayer : function (id) {
@@ -673,7 +674,7 @@ var ElevationPath = L.Control.extend(/** @lends L.geoportalControl.ElevationPath
             /** sampling à 200 (iso portail) */
             sampling : _sampling,
 
-            /** callback onSuccess */
+            // callback onSuccess
             onSuccess : this.options.elevationPathOptions.onSuccess || function (result) {
                 logger.log(result);
                 if (result) {
@@ -687,7 +688,7 @@ var ElevationPath = L.Control.extend(/** @lends L.geoportalControl.ElevationPath
                 }
             },
 
-            /** callback onFailure */
+            // callback onFailure
             onFailure : this.options.elevationPathOptions.onFailure || function (error) {
                 logger.log(error.message);
                 self._pictoContainer.style.display = "block";
@@ -943,6 +944,9 @@ var ElevationPath = L.Control.extend(/** @lends L.geoportalControl.ElevationPath
 
 /**
  * create Profile Marker
+ *
+ * @param {Object} context - context
+ * @param {Object} data - data
  */
 ElevationPath.__createProfileMarker = function (context, data) {
     logger.log("__createProfileMarker");
@@ -998,6 +1002,8 @@ ElevationPath.__updateProfileMarker = function (context, data) {
 
 /**
  * remove Profile Marker
+ *
+ * @param {Object} context - context
  */
 ElevationPath.__removeProfileMarker = function (context) {
     logger.log("__removeProfileMarker");
@@ -1075,7 +1081,7 @@ ElevationPath.DISPLAY_PROFILE_LIB_D3 = function (data, container, context) {
     logger.trace("ElevationPath.DISPLAY_PROFILE_LIB_D3");
 
     if (typeof d3 === "undefined") {
-        console.log("Lib. D3 is not loaded !");
+        logger.log("Lib. D3 is not loaded !");
         return;
     }
 

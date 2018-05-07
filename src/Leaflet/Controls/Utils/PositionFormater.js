@@ -31,25 +31,44 @@ var PositionFormater = {
     /** ... */
     digitRadian : 8,
 
-    /** ... */
+    /**
+     * @param {Number} inputNum -inputNum
+     * @param {Integer} numPoints - numPoints
+     *
+     * @returns {Number} rounded result
+     */
     roundToDecimal : function (inputNum, numPoints) {
         var multiplier = Math.pow(10, numPoints);
         return Math.round(inputNum * multiplier) / multiplier;
     },
 
-    /** ... */
+    /**
+     * @param {Number} location -location
+     *
+     * @returns {Number} location in radian
+     */
     decimalToRadian : function (location) {
         var d = 0.01745329251994329577;
         return this.roundToDecimal(location * d, this.digitRadian);
     },
 
-    /** ... */
+    /**
+     * @param {Number} location -location
+     *
+     * @returns {Number} location in grade
+     */
     decimalToGrade : function (location) {
         var d = 1.11111111111111111111;
         return this.roundToDecimal(location * d, this.digitRadian);
     },
 
-    /** ... */
+    /**
+     * @param {Number} location -location
+     * @param {String} hemisphere -hemisphere
+     * @param {Boolean} obj -specifies if an object must be returned
+     *
+     * @returns {String|Object} DMS (String or Object depending on obj parameter value)
+     */
     decimalToDMS : function (location, hemisphere, obj) {
         if (location < 0) {
             location *= -1; // strip dash '-'
@@ -78,19 +97,36 @@ var PositionFormater = {
         return dms;
     },
 
-    /** ... */
+    /**
+     * @param {Number} location -location
+     * @param {Boolean} obj -specifies if an object must be returned
+     *
+     * @returns {String|Object} DMS (String or Object depending on obj parameter value)
+     */
     decimalLatToDMS : function (location, obj) {
         var hemisphere = (location < 0) ? this.SOUTH : this.NORTH; // south if negative
         return this.decimalToDMS(location, hemisphere, obj);
     },
 
-    /** ... */
+    /**
+     * @param {Number} location -location
+     * @param {Boolean} obj -specifies if an object must be returned
+     *
+     * @returns {String|Object} DMS (String or Object depending on obj parameter value)
+     */
     decimalLonToDMS : function (location, obj) {
         var hemisphere = (location < 0) ? this.WEST : this.EAST; // west if negative
         return this.decimalToDMS(location, hemisphere, obj);
     },
 
-    /** ... */
+    /**
+     * @param {Number} degrees -degrees
+     * @param {Number} minutes -minutes
+     * @param {Number} seconds -seconds
+     * @param {String} hemisphere -hemisphere
+     *
+     * @returns {Number} decimal
+     */
     DMSToDecimal : function (degrees, minutes, seconds, hemisphere) {
         var ddVal = degrees + minutes / 60 + seconds / 3600;
         ddVal = (hemisphere === this.SOUTH || hemisphere === this.WEST) ? ddVal * -1 : ddVal;

@@ -118,7 +118,7 @@ Isocurve.prototype.getCollapsed = function () {
  */
 Isocurve.prototype.setCollapsed = function (collapsed) {
     if (collapsed === undefined) {
-        console.log("[ERROR] Isocurve:setCollapsed - missing collapsed parameter");
+        logger.log("[ERROR] Isocurve:setCollapsed - missing collapsed parameter");
         return;
     }
     if ((collapsed && this.collapsed) || (!collapsed && !this.collapsed)) {
@@ -256,6 +256,8 @@ Isocurve.prototype.initialize = function (options) {
 /**
  * this method is called by this.initialize()
  *
+ * @param {Object} options - options
+ *
  * @private
  */
 Isocurve.prototype._checkInputOptions = function (options) {
@@ -272,7 +274,7 @@ Isocurve.prototype._checkInputOptions = function (options) {
             } else {
                 for (i = 0; i < options.methods.length; i++) {
                     if (typeof options.methods[i] !== "string") {
-                        console.log("[ol.control.Isocurve] ERROR : parameter 'methods' elements should be of type 'string'");
+                        logger.log("[ol.control.Isocurve] ERROR : parameter 'methods' elements should be of type 'string'");
                     }
                 }
             }
@@ -291,7 +293,7 @@ Isocurve.prototype._checkInputOptions = function (options) {
             } else {
                 for (i = 0; i < options.graphs.length; i++) {
                     if (typeof options.graphs[i] !== "string") {
-                        console.log("[ol.control.Isocurve] ERROR : parameter 'graphs' elements should be of type 'string'");
+                        logger.log("[ol.control.Isocurve] ERROR : parameter 'graphs' elements should be of type 'string'");
                     } else {
                         if (options.graphs[i].toLowerCase() === "pieton") {
                             options.graphs[i] = "Pieton";
@@ -317,7 +319,7 @@ Isocurve.prototype._checkInputOptions = function (options) {
             } else {
                 for (i = 0; i < options.directions.length; i++) {
                     if (typeof options.directions[i] !== "string") {
-                        console.log("[ol.control.Isocurve] ERROR : parameter 'directions' elements should be of type 'string'");
+                        logger.log("[ol.control.Isocurve] ERROR : parameter 'directions' elements should be of type 'string'");
                     }
                 }
             }
@@ -546,6 +548,10 @@ Isocurve.prototype._checkRightsManagement = function () {
 /**
  * initialize component container (DOM)
  *
+ * @param {Object} map - the map
+ *
+ * @returns {DOMElement} DOM element
+ *
  * @private
  */
 Isocurve.prototype._initContainer = function (map) {
@@ -630,7 +636,7 @@ Isocurve.prototype._initContainer = function (map) {
     // hide autocomplete suggested locations on container click
     if (container.addEventListener) {
         container.addEventListener("click", function (e) {
-            context._hideIsoSuggestedLocations.call(context, e);
+            context._hideIsoSuggestedLocations(e);
         });
     }
 
@@ -639,6 +645,8 @@ Isocurve.prototype._initContainer = function (map) {
 
 /**
  * Create start point
+ *
+ * @param {Object} map - the map
  *
  * @returns {Object} DOM element
  * @private
@@ -717,7 +725,7 @@ Isocurve.prototype._createIsoPanelFormPointElement = function (map) {
 Isocurve.prototype.onIsoComputationSubmit = function () {
     // si on n'a pas de valeur récupérée pour notre point origine, on ne fait rien
     if (!this._originPoint || !this._originPoint.getCoordinate || !this._originPoint.getCoordinate()) {
-        console.log("[Isocurve] Missing position parameter to submit isocurve request");
+        logger.log("[Isocurve] Missing position parameter to submit isocurve request");
         return;
     }
 
@@ -756,14 +764,14 @@ Isocurve.prototype.onIsoComputationSubmit = function () {
 
     // si on n'a pas de valeur de calcul renseignée, on ne lance pas la requête.
     if (!time && !distance) {
-        console.log("[Isocurve] Missing time or distance parameter to submit isocurve request");
+        logger.log("[Isocurve] Missing time or distance parameter to submit isocurve request");
         return;
     }
 
     // oups, aucun droits !
     // on evite donc une requête inutile ...
     if (this._noRightManagement) {
-        console.log("[Isocurve] no rights for this service");
+        logger.log("[Isocurve] no rights for this service");
         return;
     }
 
@@ -789,14 +797,14 @@ Isocurve.prototype.onIsoComputationSubmit = function () {
         smoothing : options.smoothing || true,
         timeOut : _timeout,
         protocol : _protocol,
-        /** callback onSuccess */
+        // callback onSuccess
         onSuccess : function (results) {
             logger.log(results);
             if (results) {
                 context._drawIsoResults(results);
             }
         },
-        /** callback onFailure */
+        // callback onFailure
         onFailure : function (error) {
             // FIXME mise à jour du controle mais le service ne repond pas en 200 !?
             context._hideWaitingContainer();
@@ -957,14 +965,14 @@ Isocurve.prototype._requestIsoCurve = function (options) {
     }
     // ni si on n'a aucun droit
     if (this._noRightManagement || !this._resources["Isocurve"]) {
-        console.log("no rights for this service");
+        logger.log("no rights for this service");
         return;
     }
 
     // gestion des droits !
     var resources = this._resources["Isocurve"].resources;
     if (!resources || (typeof resources === "object" && Object.keys(resources).length === 0)) {
-        console.log("no rights for this service");
+        logger.log("no rights for this service");
         return;
     }
 
@@ -977,7 +985,7 @@ Isocurve.prototype._requestIsoCurve = function (options) {
     }
     // on fait quoi ?
     if (!bFound) {
-        console.log("no rights for this service !?");
+        logger.log("no rights for this service !?");
         return;
     }
 
@@ -1238,6 +1246,8 @@ Isocurve.prototype._clearGeojsonLayer = function () {
 /**
  * this method is called by event 'click' on control main container
  * and hide suggested Locations (unless target is an autocomplete input)
+ *
+ * @param {Object} e - event
  *
  * @private
  */

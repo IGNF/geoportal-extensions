@@ -2,10 +2,12 @@
 import ol from "ol";
 import Gp from "gp";
 import WMTSExtended from "../Sources/WMTS";
-import GfiUtils from "../GfiUtils";
 import Utils from "../../Common/Utils";
 import Config from "../../Common/Utils/Config";
 import LayerUtils from "../../Common/Utils/LayerUtils";
+import Logger from "../../Common/Utils/LoggerByDefault";
+
+var logger = Logger.getLogger("sourcewmts");
 
 /**
  * @classdesc
@@ -108,7 +110,7 @@ function SourceWMTS (options) {
         this._quicklookUrl = wmtsParams.quicklookUrl;
     } else {
         // If layer is not in Gp.Config
-        console.log("[source WMTS] ERROR : " + options.layer + " cannot be found in Geoportal Configuration. Make sure that this resource is included in your contract key.");
+        logger.log("[source WMTS] ERROR : " + options.layer + " cannot be found in Geoportal Configuration. Make sure that this resource is included in your contract key.");
         return new WMTSExtended({});
     }
 }

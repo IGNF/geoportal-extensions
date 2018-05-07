@@ -9,8 +9,10 @@ import Widget from "./Widget";
  * Control to display the MiniGlobe with itowns
  *
  * @constructor
- * @alias itowns.control.MiniGlobe
  * @extends {itowns.control.Widget}
+ * @alias itowns.control.MiniGlobe
+ * @param {Object} [options] - control options
+ * @param {Object} [options.layer] - custom itowns layer to display on the mini globe
  * @example
  * var miniglobe = new itowns.control.MiniGlobe();
  *
@@ -66,6 +68,8 @@ MiniGlobe.prototype.constructor = MiniGlobe;
 
 /**
  * Bind globe to control
+ *
+ * @param {GlobeViewExtended} globe - the globe
  */
 MiniGlobe.prototype.setGlobe = function (globe) {
     // info : this function is called after a globe.addWidget() or a globe.removeWidget()
@@ -87,9 +91,6 @@ MiniGlobe.prototype.setGlobe = function (globe) {
 
         miniView.setBackground();
 
-        /**
-         * update miniview's camera with the globeView's camera position
-         */
         var updateMiniGlobeHandler = function () {
             // clamp distance camera from globe
             var range = globe.getRange();
@@ -101,7 +102,7 @@ MiniGlobe.prototype.setGlobe = function (globe) {
         };
         globe.listen(GlobeViewExtended.EVENTS.AFTER_RENDER, updateMiniGlobeHandler);
         if (globe.isInitialized()) {
-            updateMiniGlobeHandler;
+            updateMiniGlobeHandler();
         } else {
             globe.listen(GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, updateMiniGlobeHandler);
         }
@@ -150,6 +151,7 @@ MiniGlobe.prototype._initialize = function () {
  * Creates control main container
  *
  * @method _initContainer
+ * @returns {DOMElement} container - widget container
  * @private
  */
 MiniGlobe.prototype._initContainer = function () {

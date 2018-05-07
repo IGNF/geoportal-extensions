@@ -1,9 +1,12 @@
 import GlobeViewExtended from "../GlobeViewExtended";
+import Logger from "../../Common/Utils/LoggerByDefault";
 import Utils from "../../Common/Utils";
 import SelectorID from "../../Common/Utils/SelectorID";
 import LayerUtils from "../../Common/Utils/LayerUtils";
 import AttributionDOM from "../../Common/Controls/AttributionDOM";
 import Widget from "./Widget";
+
+var logger = Logger.getLogger("Attributions");
 
 /**
  * @classdesc
@@ -69,6 +72,8 @@ Attributions.prototype.constructor = Attributions;
 
 /**
  * Bind globe to control
+ *
+ * @param {GlobeViewExtended} globe - the globe
  */
 Attributions.prototype.setGlobe = function (globe) {
     // info : this function is called after a globe.addWidget() or a globe.removeWidget()
@@ -80,9 +85,6 @@ Attributions.prototype.setGlobe = function (globe) {
 
         // At every globe movement, attributions may be updated,
         // according to layers on globe, and their visibility.
-        /**
-         * Adds the onPreRenderCallBack callback
-         */
         this._callbacks.onPreRenderCallBack = function (e) {
             var allLayers = e.colorLayersId.concat(e.elevationLayersId);
 
@@ -114,7 +116,7 @@ Attributions.prototype.setGlobe = function (globe) {
  */
 Attributions.prototype.setCollapsed = function (collapsed) {
     if (collapsed === undefined) {
-        console.log("[ERROR] Attributions:setCollapsed - missing collapsed parameter");
+        logger.error("Attributions:setCollapsed - missing collapsed parameter");
         return;
     }
     var isCollapsed = this.getCollapsed();
@@ -163,6 +165,7 @@ Attributions.prototype._initialize = function (options) {
  *
  * @method _initContainer
  * @param {Object} options - control options
+ * @returns {DOMElement} container - widget container
  * @private
  */
 Attributions.prototype._initContainer = function (options) {
@@ -203,7 +206,7 @@ Attributions.prototype._inRangeUpdate = function (layersDisplayed, extent) {
 
     var scaleDenominator = 1 / globe.getScale();
 
-    var attributions = new window.Map();
+    var attributions = new Map();
 
     for (var h = 0; h < layersDisplayed.length; h++) {
         var layer = globe.getLayerById(layersDisplayed[h]);
@@ -239,9 +242,8 @@ Attributions.prototype._inRangeUpdate = function (layersDisplayed, extent) {
                         if (!(maxAttributionScaleDenominator > scaleDenominator && scaleDenominator > minAttributionScaleDenominator)) {
                             continue;
                         }
-                    }
                     // either, we check we are located between the minScaleDenominator and the maxScaleDenominator
-                    else if (!(ori[j].constraints[0].minScaleDenominator < scaleDenominator && scaleDenominator < ori[j].constraints[0].maxScaleDenominator)) {
+                    } else if (!(ori[j].constraints[0].minScaleDenominator < scaleDenominator && scaleDenominator < ori[j].constraints[0].maxScaleDenominator)) {
                         continue;
                     }
                 }
@@ -270,6 +272,7 @@ Attributions.prototype._inRangeUpdate = function (layersDisplayed, extent) {
  * Updates the layer list container
  *
  * @method _updateAttributionListContainer
+ * @param {Map} attributions - map of attributions
  * @private
  */
 Attributions.prototype._updateAttributionListContainer = function (attributions) {

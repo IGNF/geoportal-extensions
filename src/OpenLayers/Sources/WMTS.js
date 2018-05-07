@@ -52,9 +52,7 @@ WMTS.prototype.getGetFeatureInfoUrl = function (coordinate, resolution, projecti
     var tileGrid = this.tileGrid;
     var tileCoord = this.tileGrid.getTileCoordForCoordAndResolution(coordinate, resolution);
 
-    /**
-     * this code is duplicated from createFromWMTSTemplate function
-     */
+    // this code is duplicated from createFromWMTSTemplate function
     var getTransformedTileCoord = function (tileCoord, tileGrid, projection) {
         var tmpTileCoord = [0, 0, 0]; /* Note : [z(zoomLevel),x,y] */
         var tmpExtent = ol.extent.createEmpty();

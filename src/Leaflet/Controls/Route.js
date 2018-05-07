@@ -146,6 +146,10 @@ var Route = L.Control.extend(/** @lends L.geoportalControl.Route.prototype */ {
      * and fills variable 'this._container = this.onAdd(map)',
      * and create or disable events on map.
      *
+     * @param {Object} map - the map
+     *
+     * @returns {DOMElement} DOM element
+     *
      * @private
      */
     onAdd : function (map) {
@@ -329,6 +333,8 @@ var Route = L.Control.extend(/** @lends L.geoportalControl.Route.prototype */ {
      * this information is useful to switch to touch mode.
      * Detection : test for desktop or tactile
      *
+     * @returns {Boolean} is desktop
+     *
      * @private
      */
     _detectSupport : function () {
@@ -367,6 +373,10 @@ var Route = L.Control.extend(/** @lends L.geoportalControl.Route.prototype */ {
     /**
      * this method is called by this.onAdd(map)
      * and initialize the container HTMLElement
+     *
+     * @param {Object} map - the map
+     *
+     * @returns {DOMElement} DOM element
      *
      * @private
      */
@@ -439,6 +449,8 @@ var Route = L.Control.extend(/** @lends L.geoportalControl.Route.prototype */ {
     /**
      * Create List Points
      * FIXME OVERWRITTEN RouteDOM._createRoutePanelFormPointsElement() !
+     *
+     * @param {Object} map - the map
      *
      * @returns {Array} List DOM element
      *
@@ -734,14 +746,14 @@ var Route = L.Control.extend(/** @lends L.geoportalControl.Route.prototype */ {
             exclusions : this._currentExclusions,
             geometryInInstructions : true, // surcharge obligatoire !
             distanceUnit : "m", // surcharge obligatoire !
-            /** callback onSuccess */
+            // callback onSuccess
             onSuccess : function (results) {
                 logger.log(results);
                 if (results) {
                     context._fillRouteResultsDetails(results);
                 }
             },
-            /** callback onFailure */
+            // callback onFailure
             onFailure : function (error) {
                 // FIXME mise à jour du controle mais le service ne repond pas en 200 !?
                 context._hideWaitingContainer();
@@ -934,13 +946,13 @@ var Route = L.Control.extend(/** @lends L.geoportalControl.Route.prototype */ {
 
         // on ne fait pas de requête si aucun droit !
         if (this._noRightManagement) {
-            console.log("no rights for all service !?");
+            logger.log("no rights for all service !?");
             return;
         }
 
         // gestion des droits !
         if (!this._resources["Itineraire"]) {
-            console.log("no rights for this service !?");
+            logger.log("no rights for this service !?");
             return;
         }
 
@@ -968,7 +980,7 @@ var Route = L.Control.extend(/** @lends L.geoportalControl.Route.prototype */ {
 
         // on fait quoi ?
         if (!bFound) {
-            console.log("no rights for this service !?");
+            logger.log("no rights for this service !?");
             return;
         }
 
@@ -987,6 +999,8 @@ var Route = L.Control.extend(/** @lends L.geoportalControl.Route.prototype */ {
      * this method is called by this.onRouteComputationSubmit()
      * and fills the container of the route instructions list, distance and time
      * information, aslo, constructs the geometry route.
+     *
+     * @param {Object} results - results of the route calculation
      *
      * @private
      */
@@ -1043,6 +1057,10 @@ var Route = L.Control.extend(/** @lends L.geoportalControl.Route.prototype */ {
      * and fills the container of the route instructions list, distance and time
      * information.
      *
+     * @param {Number} distance - distance
+     * @param {Number} duration - duration
+     * @param {Object[]} instructions - list of instructions
+     *
      * @private
      */
     _fillRouteResultsDetailsContainer : function (distance, duration, instructions) {
@@ -1058,6 +1076,8 @@ var Route = L.Control.extend(/** @lends L.geoportalControl.Route.prototype */ {
     /**
      * this method is called by this._fillRouteResultsDetails()
      * and constructs the simplified geometry route.
+     *
+     * @param {Object} geometry - geometry
      *
      * @private
      */
@@ -1082,6 +1102,8 @@ var Route = L.Control.extend(/** @lends L.geoportalControl.Route.prototype */ {
     /**
      * this method is called by this._fillRouteResultsDetails()
      * and constructs the geometries street with informations.
+     *
+     * @param {Object[]} instructions - instructions
      *
      * @private
      */
@@ -1119,7 +1141,7 @@ var Route = L.Control.extend(/** @lends L.geoportalControl.Route.prototype */ {
         }
 
         var self = this;
-        /** ... */
+
         function resetHighlight (e) {
             var layer = e.target;
             self._geojsonSections.resetStyle(layer);
@@ -1127,7 +1149,6 @@ var Route = L.Control.extend(/** @lends L.geoportalControl.Route.prototype */ {
             L.DomUtil.removeClass(div, "GProuteResultsDetailsHighlight");
         }
 
-        /** ... */
         function highlightFeature (e) {
             var layer = e.target;
             logger.log(layer);
@@ -1142,7 +1163,7 @@ var Route = L.Control.extend(/** @lends L.geoportalControl.Route.prototype */ {
 
         this._geojsonSections = L.geoJson(_geometry, {
             style : _style,
-            /** Function that will be called on each created feature layer. */
+            // Function that will be called on each created feature layer.
             onEachFeature : function (feature, layer) {
                 layer.on({
                     mouseover : highlightFeature,
@@ -1290,7 +1311,11 @@ var Route = L.Control.extend(/** @lends L.geoportalControl.Route.prototype */ {
     // ################################################################### //
 
     /**
-     * simplified instructions
+     * simplifies instructions
+     *
+     * @param {Object[]} instructions - instructions
+     *
+     * @returns {Object[]} simplified instructions
      *
      * @private
      */
@@ -1337,6 +1362,10 @@ var Route = L.Control.extend(/** @lends L.geoportalControl.Route.prototype */ {
     /**
      * convert seconds to time : HH:MM:SS
      *
+     * @param {Number} duration - duration in seconds
+     *
+     * @returns {String} duration in HH:MM:SS
+     *
      * @private
      */
     _convertSecondsToTime : function (duration) {
@@ -1366,6 +1395,10 @@ var Route = L.Control.extend(/** @lends L.geoportalControl.Route.prototype */ {
 
     /**
      * convert distance in meters or kilometers
+     *
+     * @param {Number} distance - distance in meters
+     *
+     * @returns {String} distance in km
      *
      * @private
      */

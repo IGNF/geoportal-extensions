@@ -1,10 +1,11 @@
 import ol from "ol";
-import Gp from "gp";
-import Proj4 from "proj4";
 import Utils from "../../Common/Utils";
 import GfiUtils from "../GfiUtils";
 import SelectorID from "../../Common/Utils/SelectorID";
 import GetFeatureInfoDOM from "../../Common/Controls/GetFeatureInfoDOM";
+import Logger from "../../Common/Utils/LoggerByDefault";
+
+var logger = Logger.getLogger("getfeatureinfo");
 
 /**
  * @classdesc
@@ -109,42 +110,42 @@ GetFeatureInfo.prototype._initialize = function (options, layers) {
     this._eventsHandler = {};
 
     if (typeof options.auto !== "undefined" && typeof options.auto !== "boolean") {
-        console.log("[ERROR] GetFeatureInfo:_initialize - auto parameter should be a boolean");
+        logger.log("[ERROR] GetFeatureInfo:_initialize - auto parameter should be a boolean");
         return;
     }
     this._auto = options.auto || false;
 
     if (typeof options.active !== "undefined" && typeof options.active !== "boolean") {
-        console.log("[ERROR] GetFeatureInfo:_initialize - active parameter should be a boolean");
+        logger.log("[ERROR] GetFeatureInfo:_initialize - active parameter should be a boolean");
         return;
     }
     this._active = (typeof options.active === "undefined") ? true : options.active;
 
     if (options.defaultEvent && typeof options.defaultEvent !== "string") {
-        console.log("[ERROR] GetFeatureInfo:_initialize - defaultEvent parameter should be a string");
+        logger.log("[ERROR] GetFeatureInfo:_initialize - defaultEvent parameter should be a string");
         return;
     }
     this._defaultEvent = options.defaultEvent || "singleclick";
     if (!this._isValidEvent(this._defaultEvent)) {
-        console.log("[ERROR] GetFeatureInfo:_initialize - _defaultEvent '" + this._defaultEvent + "' is not a valid event");
+        logger.log("[ERROR] GetFeatureInfo:_initialize - _defaultEvent '" + this._defaultEvent + "' is not a valid event");
         return;
     }
 
     if (options.defaultInfoFormat && typeof options.defaultInfoFormat !== "string") {
-        console.log("[ERROR] GetFeatureInfo:_initialize - defaultInfoFormat parameter should be a string");
+        logger.log("[ERROR] GetFeatureInfo:_initialize - defaultInfoFormat parameter should be a string");
         return;
     }
     this._defaultInfoFormat = options.defaultInfoFormat || "text/html";
 
     if (options.cursorStyle && typeof options.cursorStyle !== "string") {
-        console.log("[ERROR] GetFeatureInfo:_initialize - cursorStyle parameter should be a string");
+        logger.log("[ERROR] GetFeatureInfo:_initialize - cursorStyle parameter should be a string");
         return;
     }
     this._cursorStyle = options.cursorStyle || "pointer";
 
     if (options.proxyUrl) {
         if (typeof options.proxyUrl !== "string") {
-            console.log("[ERROR] GetFeatureInfo:_initialize - proxyUrl parameter should be a string");
+            logger.log("[ERROR] GetFeatureInfo:_initialize - proxyUrl parameter should be a string");
             return;
         }
         this._proxyUrl = options.proxyUrl;
@@ -152,14 +153,14 @@ GetFeatureInfo.prototype._initialize = function (options, layers) {
 
     if (options.noProxyDomains) {
         if (!Array.isArray(options.noProxyDomains)) {
-            console.log("[ERROR] GetFeatureInfo:_initialize - noProxyDomains parameter should be a array");
+            logger.log("[ERROR] GetFeatureInfo:_initialize - noProxyDomains parameter should be a array");
             return;
         }
         this._noProxyDomains = options.noProxyDomains;
     }
 
     if (typeof options.autoPan !== "undefined" && typeof options.autoPan !== "boolean") {
-        console.log("[ERROR] GetFeatureInfo:_initialize - autoPan parameter should be a boolean");
+        logger.log("[ERROR] GetFeatureInfo:_initialize - autoPan parameter should be a boolean");
         return;
     }
     this._autoPan = (typeof options.autoPan === "undefined") ? true : options.autoPan;
@@ -167,14 +168,14 @@ GetFeatureInfo.prototype._initialize = function (options, layers) {
     if (options.autoPanAnimation) {
         if (options.autoPanAnimation.duration) {
             if (typeof options.autoPanAnimation.duration !== "number") {
-                console.log("[ERROR] GetFeatureInfo:_initialize - autoPanAnimation parameter is invalid : duration should be a number.");
+                logger.log("[ERROR] GetFeatureInfo:_initialize - autoPanAnimation parameter is invalid : duration should be a number.");
                 return;
             }
         }
 
         if (options.autoPanAnimation.easing) {
             if (typeof options.autoPanAnimation.easing !== "function") {
-                console.log("[ERROR] GetFeatureInfo:_initialize - autoPanAnimation parameter is invalid : easing should be a ol.easing function or a custom function.");
+                logger.log("[ERROR] GetFeatureInfo:_initialize - autoPanAnimation parameter is invalid : easing should be a ol.easing function or a custom function.");
                 return;
             }
         }
@@ -183,7 +184,7 @@ GetFeatureInfo.prototype._initialize = function (options, layers) {
 
     if (options.autoPanMargin) {
         if (typeof options.autoPanMargin !== "number") {
-            console.log("[ERROR] GetFeatureInfo:_initialize - autoPanMargin parameter should be a number");
+            logger.log("[ERROR] GetFeatureInfo:_initialize - autoPanMargin parameter should be a number");
             return;
         }
         this._autoPanMargin = options.autoPanMargin;
@@ -191,7 +192,7 @@ GetFeatureInfo.prototype._initialize = function (options, layers) {
 
     // {Object} control layers list.
     if (!Array.isArray(layers)) {
-        console.log("[ERROR] GetFeatureInfo:_initialize - layers parameter should be an array");
+        logger.log("[ERROR] GetFeatureInfo:_initialize - layers parameter should be an array");
         return;
     }
     this._setLayers(layers);
@@ -233,7 +234,7 @@ GetFeatureInfo.prototype.setMap = function (map) {
             var updated = false;
             map.getLayers().forEach(function (olLayer) {
                 var layerFormat = GfiUtils.getLayerFormat(olLayer);
-                if (!this._hasLayer(olLayer) && layerFormat == "vector") {
+                if (!this._hasLayer(olLayer) && layerFormat === "vector") {
                     this._layers.push({
                         obj : olLayer
                     });
@@ -251,7 +252,7 @@ GetFeatureInfo.prototype.setMap = function (map) {
                 "add",
                 function (evt) {
                     var layerFormat = GfiUtils.getLayerFormat(evt.element);
-                    if (layerFormat == "vector") {
+                    if (layerFormat === "vector") {
                         this._layers.push({
                             obj : evt.element
                         });
@@ -294,11 +295,11 @@ GetFeatureInfo.prototype.getLayers = function () {
  */
 GetFeatureInfo.prototype.setDefaultEvent = function (eventName) {
     if (typeof eventName !== "string") {
-        console.log("[ERROR] GetFeatureInfo:setDefaultEvent - eventName parameter should be a string");
+        logger.log("[ERROR] GetFeatureInfo:setDefaultEvent - eventName parameter should be a string");
         return;
     }
     if (!eventName || !this._isValidEvent(eventName)) {
-        console.log("[ERROR] GetFeatureInfo:setDefaultEvent - event '" + eventName + "' is not allowed.");
+        logger.log("[ERROR] GetFeatureInfo:setDefaultEvent - event '" + eventName + "' is not allowed.");
         return;
     }
 
@@ -313,7 +314,7 @@ GetFeatureInfo.prototype.setDefaultEvent = function (eventName) {
  */
 GetFeatureInfo.prototype.setCursorStyle = function (cursorStyle) {
     if (typeof cursorStyle !== "string") {
-        console.log("[ERROR] GetFeatureInfo:setCursorStyle - cursorStyle parameter should be a string");
+        logger.log("[ERROR] GetFeatureInfo:setCursorStyle - cursorStyle parameter should be a string");
         return;
     }
     if (this._active) {
@@ -348,7 +349,7 @@ GetFeatureInfo.prototype.setActive = function (active) {
  */
 GetFeatureInfo.prototype._setActive = function (active) {
     if (typeof active !== "boolean") {
-        console.log("[ERROR] GetFeatureInfo:_setActive - active parameter should be a boolean");
+        logger.log("[ERROR] GetFeatureInfo:_setActive - active parameter should be a boolean");
         return;
     }
     if (this._active === active) {
@@ -381,10 +382,10 @@ GetFeatureInfo.prototype.setHidden = function (hidden) {
 /**
  * Indicates if the widget is hidden
  *
- * @return {Boolean} hidden
+ * @return {Boolean} is hidden
  */
 GetFeatureInfo.prototype.isHidden = function () {
-    return this.element.style.visibility == "hidden";
+    return this.element.style.visibility === "hidden";
 };
 
 /**
@@ -402,8 +403,10 @@ GetFeatureInfo.prototype.setLayers = function (gfiLayers) {
 
 /**
  * Indicates if an event is allowed
+ *
  * @param {String} eventName - name of the mouse event chosen in the list : 'singleclick', 'dblclick', 'contextmenu'.
- * @returns {Boolean}
+ *
+ * @returns {Boolean} is valid event
  *
  * @private
  */
@@ -422,14 +425,11 @@ GetFeatureInfo.prototype._isValidEvent = function (eventName) {
 GetFeatureInfo.prototype._activateEvent = function (eventName, map) {
     var gfiObj = this;
 
-    /**
-     * getFeatureInfoHandler
-     */
     var getFeatureInfoHandler = function (e) {
         GfiUtils.onDisplayFeatureInfo(e, gfiObj);
     };
 
-    if (eventName == "contextmenu") {
+    if (eventName === "contextmenu") {
         map.getViewport().addEventListener(
             eventName,
             getFeatureInfoHandler
@@ -454,7 +454,7 @@ GetFeatureInfo.prototype._activateEvent = function (eventName, map) {
  * @private
  */
 GetFeatureInfo.prototype._deactivateEvent = function (eventName, map) {
-    if (eventName == "contextmenu") {
+    if (eventName === "contextmenu") {
         map.getViewport().removeEventListener(
             eventName,
             this._eventsHandler[eventName]
@@ -515,8 +515,10 @@ GetFeatureInfo.prototype._clearEvents = function () {
 
 /**
  * Indicates if the control has the specified layer attached
+ *
  * @param {ol.layer.Layer} olLayer - layer openlayers
- * @returns {Boolean}
+ *
+ * @returns {Boolean} has layer
  *
  * @private
  */
@@ -544,14 +546,11 @@ GetFeatureInfo.prototype._activateCursor = function (activate, map) {
 
     if (activate) {
         if (this._eventsHandler.hasOwnProperty("pointermove")) {
-            console.log("[ERROR] _activateCursor - inconsistent state: pointermove event handler already registered");
+            logger.log("[ERROR] _activateCursor - inconsistent state: pointermove event handler already registered");
             return;
         }
         var gfiObj = this;
 
-        /**
-         * displayCursor
-         */
         var displayCursor = function (evt) {
             var hit = map.forEachFeatureAtPixel(evt.pixel, function (feature, layer) {
                 // on ne prend en compte que les couches vecteurs connues du controle
@@ -586,7 +585,7 @@ GetFeatureInfo.prototype._activateCursor = function (activate, map) {
  */
 GetFeatureInfo.prototype._setLayers = function (gfiLayers) {
     if (!gfiLayers || !Array.isArray(gfiLayers)) {
-        console.log("[ERROR] GetFeatureInfo:setLayers - gfiLayers parameter should be a array");
+        logger.log("[ERROR] GetFeatureInfo:setLayers - gfiLayers parameter should be a array");
         return;
     }
     this._layers = [];
@@ -596,7 +595,7 @@ GetFeatureInfo.prototype._setLayers = function (gfiLayers) {
 
         if (gfiLayers[i].event) {
             if (!this._isValidEvent(gfiLayers[i].event)) {
-                console.log("[ERROR] GetFeatureInfo:setLayers - layer event '" + this._layers[i].event + "' is not allowed.");
+                logger.log("[ERROR] GetFeatureInfo:setLayers - layer event '" + this._layers[i].event + "' is not allowed.");
             } else {
                 this._layers[ind].event = gfiLayers[i].event;
             }
@@ -632,6 +631,8 @@ GetFeatureInfo.prototype.onActivateGetFeatureInfoElementChange = function (e) {
  * @param {Object} [options] - options object to configure the widget :
  * @param {Boolean} [options.hidden] - specifies if the widget should be hidden.
  *
+ * @return {DOMElement} DOM element
+ *
  * @method _initContainer
  *
  * @private
@@ -649,7 +650,7 @@ GetFeatureInfo.prototype._initContainer = function (options) {
 
     if (typeof options.hidden !== "undefined") {
         if (typeof options.hidden !== "boolean") {
-            console.log("[ERROR] GetFeatureInfo:_initContainer - hidden parameter should be a boolean");
+            logger.log("[ERROR] GetFeatureInfo:_initContainer - hidden parameter should be a boolean");
             return;
         }
         if (options.hidden) {

@@ -83,6 +83,10 @@ KML.prototype.constructor = KML;
 /**
  * Fonction d'indentation d'une chaine de caractères KML ou XML
  * cf. https://stackoverflow.com/questions/376373/pretty-printing-xml-with-javascript/
+ *
+ * @param {String} xml - xml
+ *
+ * @returns {String} kml string
  */
 function _kmlFormattedToString (xml) {
     var reg = /(>)\s*(<)(\/*)/g; // updated Mar 30, 2015
@@ -127,7 +131,7 @@ function _kmlFormattedToString (xml) {
         for (var j = 0; j < indent; j++) {
             padding += "\t";
         }
-        if (fromTo == "opening->closing") {
+        if (fromTo === "opening->closing") {
             formatted = formatted.substr(0, formatted.length - 1) + ln + "\n"; // substr removes line break (\n) from prev loop
         } else {
             formatted += padding + ln + "\n";
@@ -140,6 +144,10 @@ function _kmlFormattedToString (xml) {
 
 /**
  * Fonction de parsing d'une chaine de caractères KML
+ *
+ * @param {String} kmlString - kml string
+ *
+ * @returns {DOMElement} kml document
  */
 function _kmlParse (kmlString) {
     var kmlDoc = null;
@@ -161,7 +169,7 @@ function _kmlParse (kmlString) {
         kmlDoc.async = false;
         kmlDoc.loadXML(kmlString);
     } else {
-        console.log("Incompatible environment for DOM Parser !");
+        logger.log("Incompatible environment for DOM Parser !");
     }
 
     logger.trace(kmlDoc);
@@ -170,6 +178,10 @@ function _kmlParse (kmlString) {
 
 /**
  * Fonction de convertion en chaine de caractères.
+ *
+ * @param {DOMElement} kmlDoc - kml document
+ *
+ * @returns {String} kml string
  */
 function _kmlToString (kmlDoc) {
     var oSerializer = new XMLSerializer();
@@ -185,6 +197,10 @@ function _kmlToString (kmlDoc) {
  * Les traitements sont de 2 types :
  *  - creation de styles étendus ou correctifs sur le KML
  *  - ajout de styles étendus sur les features
+ *
+ * @param {DOMElement} kmlDoc - kml document
+ * @param {Object[]} features - features
+ * @param {Object} process - process
  *
  * @example
  * // ajoute des fonctionnalités dans le KML
@@ -320,18 +336,14 @@ function _kmlRead (kmlDoc, features, process) {
                             if (fctLabel && typeof fctLabel === "function") {
                                 fctLabel(features[index], labelStyle);
                             }
-                        }
-
                         // C'est uniquement un marker !
-                        else if (iconStyle && !labelStyle) {
+                        } else if (iconStyle && !labelStyle) {
                             var fctIcon = process.iconStyle;
                             if (fctIcon && typeof fctIcon === "function") {
                                 fctIcon(features[index], iconStyle);
                             }
-                        }
-
                         // C'est un marker avec un label !
-                        else if (iconStyle && labelStyle) {
+                        } else if (iconStyle && labelStyle) {
                             var fctIconLabel = process.iconLabelStyle;
                             if (fctIconLabel && typeof fctIconLabel === "function") {
                                 fctIconLabel(features[index], iconStyle, labelStyle);
@@ -352,8 +364,9 @@ function _kmlRead (kmlDoc, features, process) {
  * This function overloads ol.format.KML.writeFeatures ...
  *
  * @see ol.format.KML.prototype.writeFeatures
- * @param {Array.<Object>} features - Features.
+ * @param {Object[]} features - Features.
  * @param {Object} options - Options.
+ *
  * @return {String} Result.
  */
 KML.prototype.writeFeatures = function (features, options) {
@@ -365,6 +378,11 @@ KML.prototype.writeFeatures = function (features, options) {
 
 /**
  * _writeExtendStylesFeatures
+ *
+ * @param {Object[]} features - features
+ * @param {Object} options - options
+ *
+ * @returns {String} kml string formatted
  *
  * @private
  */
@@ -385,6 +403,9 @@ KML.prototype._writeExtendStylesFeatures = function (features, options) {
      * On va donc y ajouter qq styles sur le Label (police, halo, ...) :
      * Insertion : PlaceMark>Style>LabelStyle
      *
+     * @param {Object} feature - feature
+     * @param {DOMElement} style - style
+     *
      * @example
      *      <LabelStyleSimpleExtensionGroup fontFamily="Arial" haloColor="16777215" haloRadius="2" haloOpacity="1"/>
      */
@@ -400,7 +421,7 @@ KML.prototype._writeExtendStylesFeatures = function (features, options) {
             return;
         }
 
-        /** RGB Colors (RRGGBB) To KML Colors (AABBGGRR) */
+        // RGB Colors (RRGGBB) To KML Colors (AABBGGRR)
         function __convertRGBColorsToKML (data) {
             var strColor = data.toString(16);
 
@@ -449,6 +470,9 @@ KML.prototype._writeExtendStylesFeatures = function (features, options) {
      *   - FRACTION
      *   - PIXELS
      *  Insertion du correctif dans le noeud : <PlaceMark><Style>IconStyle
+     *
+     * @param {Object} feature - ol feature
+     * @param {DOMElement} style - style
      *
      *  @example
      *  <Style><IconStyle>
@@ -499,14 +523,14 @@ KML.prototype._writeExtendStylesFeatures = function (features, options) {
         }
     };
 
-    /** TODO */
+    // TODO
     var __createStyleToFeatureIconLabel = function (feature, iconStyle, labelStyle) {
         logger.trace("write an icon with a label");
         __createHotSpotStyleIcon(feature, iconStyle);
         __createExtensionStyleLabel(feature, labelStyle);
     };
 
-    /** TODO */
+    // TODO
     var __setNameData = function (feature, tags) {
         for (var i = 0; i < tags.length; i++) {
             var tag = tags[i];
@@ -584,6 +608,11 @@ KML.prototype.readFeatures = function (source, options) {
 /**
  * _readExtendStylesFeatures
  *
+ * @param {(Document|Node|ArrayBuffer|Object|String)} source - source
+ * @param {olx.format.ReadOptions=} options - options
+ *
+ * @returns {Object[]} features
+ *
  * @private
  */
 KML.prototype._readExtendStylesFeatures = function (source, options) {
@@ -616,6 +645,9 @@ KML.prototype._readExtendStylesFeatures = function (source, options) {
      * s'il n'existe pas !
      * - lecture des styles étendus des labels
      *
+     * @param {Object} feature - ol feature
+     * @param {DOMElement} style - style
+     *
      * @example
      * <Placemark>
      *  <description>Un label</description>
@@ -645,7 +677,7 @@ KML.prototype._readExtendStylesFeatures = function (source, options) {
             return;
         }
 
-        /** KML Colors (AABBGGRR) To RGB Colors (RRGGBB) */
+        // KML Colors (AABBGGRR) To RGB Colors (RRGGBB)
         function __convertKMLColorsToRGB (data) {
             var color = "";
             color = color + data.substr(6, 2);
@@ -743,6 +775,9 @@ KML.prototype._readExtendStylesFeatures = function (source, options) {
     /**
      * Gestion de la balise kml:hostSpot sur les styles d'un Marker
      * - problème avec 'hotspot y === 0' (?)
+     *
+     * @param {Object} feature - ol feature
+     * @param {DOMElement} style - style
      *
      * @example
      * <Placemark>
@@ -865,6 +900,9 @@ KML.prototype._readExtendStylesFeatures = function (source, options) {
     /**
      * Gestion de la balise kml:ExtendedData
      *
+     * @param {Object} feature - ol feature
+     * @param {DOMElement[]} extend - extend
+     *
      * @example
      * //--> Marker (Point), LineString, Polygon
      * <ExtendedData>
@@ -936,7 +974,13 @@ KML.prototype._readExtendStylesFeatures = function (source, options) {
         });
     };
 
-    /** TODO */
+    /** TODO
+    * @param {Object} feature - ol feature
+    * @param {DOMElement} iconStyle - icon style
+    * @param {DOMElement} labelStyle - label style
+    *
+    *
+    */
     var __getStyleToFeatureIconLabel = function (feature, iconStyle, labelStyle) {
         logger.trace("display icon and label");
         __getExtensionStyleToFeatureLabel(feature, labelStyle);

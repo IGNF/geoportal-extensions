@@ -8,6 +8,8 @@ var ProxyUtils = {
      * @param {Object} [proxyOptions] - Object defining proxy options.
      * @param {String} proxyOptions.proxyUrl - Proxy URL.
      * @param {Array.<String>} [proxyOptions.noProxyDomains] - Proxy will not be used for this list of domain names.
+     *
+     * @returns {String} proxy url
      */
     proxifyUrl : function (url, proxyOptions) {
         // logger
@@ -17,7 +19,7 @@ var ProxyUtils = {
         if (!proxyOptions ||
             !proxyOptions.hasOwnProperty("proxyUrl") ||
             proxyOptions.proxyUrl === null ||
-            proxyOptions.proxyUrl.trim().length == 0) {
+            proxyOptions.proxyUrl.trim().length === 0) {
             return url;
         }
         // on regarde si l'url nest pas dans les domaines sans proxy

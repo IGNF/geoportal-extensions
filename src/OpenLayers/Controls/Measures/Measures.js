@@ -407,7 +407,7 @@ var Measures = {
         var self = this;
         this.measureDraw = new ol.interaction.Draw({
             source : this.measureSource,
-            /** condition : permet de gerer la suppression des derniers points saisis */
+            // condition : permet de gerer la suppression des derniers points saisis
             condition : function (event) {
                 if (event.originalEvent.ctrlKey) {
                     if (self.sketch) {

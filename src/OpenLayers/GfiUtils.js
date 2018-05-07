@@ -78,7 +78,7 @@ var GfiUtils = {
             _htmlDoc.async = false;
             _htmlDoc.loadXML(_content);
         } else {
-            console.log("Incompatible environment for DOM Parser !");
+            logger.log("Incompatible environment for DOM Parser !");
             return false;
         }
 
@@ -97,9 +97,7 @@ var GfiUtils = {
         closer.type = "button";
         closer.className = "gp-styling-button closer";
 
-        /**
-         * fait disparaître la popup au clic sur x
-         */
+        // fait disparaître la popup au clic sur x
         closer.onclick = function () {
             if (map.featuresOverlay) {
                 map.removeOverlay(map.featuresOverlay);
@@ -187,11 +185,11 @@ var GfiUtils = {
             var ul = null;
             var li = null;
             for (p in props) {
-                if (p == "geometry" || p == "value" || p == "name" || p == "description" || p == "styleUrl") {
+                if (p === "geometry" || p === "value" || p === "name" || p === "description" || p === "styleUrl") {
                     continue;
                 }
                 // FIXME La lecture des extensions GPX n'est pas gérée !
-                if (p == "extensionsNode_" && props[p] === undefined) {
+                if (p === "extensionsNode_" && props[p] === undefined) {
                     continue;
                 }
                 if (!others) {
@@ -228,7 +226,8 @@ var GfiUtils = {
      * @param {ol.Map} map - map openlayers
      * @param {ol.layer.Layer} olLayer - vector layer openlayers
      * @param {ol.Coordinate} olCoordinate - coordinates pointed by user
-     * @return {Boolean}
+     *
+     * @return {Boolean} has feature
      *
      */
     layerGetFeatureAtCoordinates : function (map, olLayer, olCoordinate) {
@@ -249,6 +248,9 @@ var GfiUtils = {
      * @param {ol.Map} map - map openlayers
      * @param {ol.Coordinate} olCoordinate - coordinates pointed by user
      * @param {Array.<ol.layer.Layer>} olLayers - layers requested
+     * @param {Object} autoPanOptions - autopan options
+     *
+     * @returns {Boolean} something is displayed
      *
      */
     displayVectorFeatureInfo : function (map, olCoordinate, olLayers, autoPanOptions) {
@@ -261,7 +263,7 @@ var GfiUtils = {
                 features.push(feature);
             }
         });
-        if (features.length == 0) {
+        if (features.length === 0) {
             // no features
             return false;
         }
@@ -342,7 +344,7 @@ var GfiUtils = {
 
                 if (l.getVisible() && minMaxResolutionOk) {
                     var format = this.getLayerFormat(l);
-                    if (format == "vector") {
+                    if (format === "vector") {
                         if (!foundFeature && this.layerGetFeatureAtCoordinates(map, l, olCoordinate)) {
                             requests.push({
                                 format : format,
@@ -351,14 +353,14 @@ var GfiUtils = {
                             });
                         }
                         continue;
-                    } else if (format != "wms" && format != "wmts") {
-                        console.log("[ERROR] DisplayFeatureInfo - layer format '" + format + "' not allowed");
+                    } else if (format !== "wms" && format !== "wmts") {
+                        logger.log("[ERROR] DisplayFeatureInfo - layer format '" + format + "' not allowed");
                         continue;
                     }
 
                     var _res = map.getView().getResolution();
                     var _url = null;
-                    if (format == "wmts") {
+                    if (format === "wmts") {
                         _url = l.getSource().getGetFeatureInfoUrl(
                             olCoordinate,
                             _res,
@@ -390,13 +392,13 @@ var GfiUtils = {
         // on recupere les couches vecteur ordonnees (a utiliser dans le cas de l'affichage de donnees vecteur)
         var vectorLayersOrdered = null;
 
-        /** call request sync */
+        // call request sync
         function requestsSync (list, iterator, callback) {
             if (list.length === 0) {
                 return;
             }
             var nextItemIndex = 0;
-            /** function report next request */
+            // function report next request
             function report (displayed) {
                 nextItemIndex++;
                 if (displayed || nextItemIndex === list.length) {
@@ -413,7 +415,7 @@ var GfiUtils = {
 
         requestsSync(requests,
             function (data, report) {
-                if (data.format == "vector") {
+                if (data.format === "vector") {
                     if (!vectorLayersOrdered) {
                         vectorLayersOrdered = [];
                         for (var m = 0; m < positions.length; m++) {
@@ -430,7 +432,7 @@ var GfiUtils = {
                         url : data.url,
                         method : "GET",
                         scope : data.scope,
-                        /** Handles GFI response */
+                        // Handles GFI response
                         onResponse : function (resp) {
                             var exception = false;
 
@@ -447,9 +449,9 @@ var GfiUtils = {
                             // on reporte sur la prochaine requête...
                             report(displayed);
                         },
-                        /** Handles GFI response error */
+                        // Handles GFI response error
                         onFailure : function (error) {
-                            console.log(error);
+                            logger.log(error);
                             report(false);
                         }
                     });
@@ -461,9 +463,7 @@ var GfiUtils = {
         );
     },
 
-    /**
-     * Function returning the clicked position of an event
-     */
+    // Function returning the clicked position of an event
     getPosition : function (e, map) {
         if (e.coordinate) {
             return e.coordinate;
@@ -487,9 +487,7 @@ var GfiUtils = {
         return coordinate;
     },
 
-    /**
-     * onDisplayFeatureInfo
-     */
+    // onDisplayFeatureInfo
     onDisplayFeatureInfo : function (e, gfiObj) {
         if (!gfiObj.isActive()) {
             return;
@@ -499,9 +497,9 @@ var GfiUtils = {
 
         var map = gfiObj.getMap();
 
-        if (e.type == "contextmenu" || e.type == "dblclick") {
+        if (e.type === "contextmenu" || e.type === "dblclick") {
             e.preventDefault();
-        } else if (e.type == "singleclick") {
+        } else if (e.type === "singleclick") {
             var interactions = map.getInteractions().getArray();
             for (var i = 0; i < interactions.length; i++) {
                 if (interactions[i].getActive() &&
@@ -537,7 +535,7 @@ var GfiUtils = {
         var eventLayers = [];
         for (var j = 0; j < gfiObj._layers.length; ++j) {
             var event = (gfiObj._layers[j].event) ? gfiObj._layers[j].event : gfiObj._defaultEvent;
-            if (event == e.type) {
+            if (event === e.type) {
                 var ind = eventLayers.push(gfiObj._layers[j]) - 1;
                 if (!eventLayers[ind].infoFormat) {
                     eventLayers[ind].infoFormat = gfiObj._defaultInfoFormat;

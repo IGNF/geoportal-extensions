@@ -50,6 +50,7 @@ var EPSG4326 = {
     /**
      * execution
      *
+     * @returns {Object} instance
      * @private
      */
     build : function () {
@@ -70,6 +71,7 @@ var EPSG4326 = {
     /**
      * resolutions
      *
+     * @returns {Number[]} resolutions
      * @private
      */
     _getResolutions : function () {

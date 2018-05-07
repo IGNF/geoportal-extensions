@@ -171,6 +171,7 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
      * this method is called by this.addTo(map)
      * and fills variable : this._container = this.onAdd(map)
      *
+     * @returns {DOMElement} DOM element
      * @private
      */
     onAdd : function (/* map */) {
@@ -194,6 +195,8 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
     /**
      * this method is called when the control is removed from the map
      * and removes events on map.
+     *
+     * @param {Object} map - the map
      *
      * @private
      */
@@ -332,6 +335,8 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
     /**
      * this method is called by this.onAdd(map)
      * and initialize the container HTMLElement
+     *
+     * @returns {DOMElement} DOM element
      *
      * @private
      */
@@ -650,6 +655,8 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
      *
      * @param {String} code - resource geocoding name
      *
+     * @returns {DOMElement} DOM element
+     *
      * @private
      */
     _setFilter : function (code) {
@@ -739,13 +746,13 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
 
         // on ne fait pas de requête si aucun droit !
         if (this._noRightManagement) {
-            console.log("no rights for all service !?");
+            logger.log("no rights for all service !?");
             return;
         }
 
         // gestion des droits !
         if (!this._servicesRightManagement["AutoCompletion"]) {
-            console.log("no rights for this service !?");
+            logger.log("no rights for this service !?");
             return;
         }
 
@@ -837,13 +844,13 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
 
         // on ne fait pas de requête si aucun droit !
         if (this._noRightManagement) {
-            console.log("no rights for all service !?");
+            logger.log("no rights for all service !?");
             return;
         }
 
         // gestion des droits !
         if (!this._servicesRightManagement["Geocode"]) {
-            console.log("no rights for this service !?");
+            logger.log("no rights for this service !?");
             return;
         }
 
@@ -892,6 +899,8 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
      * it creates a HTML Element per location
      * (cf. this. ...)
      *
+     * @param {Object[]} locations - locations
+     *
      * @private
      */
     _fillGeocodedLocationListContainer : function (locations) {
@@ -934,7 +943,7 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
         var context = this;
         this._requestGeocoding({
             location : _location,
-            /** callback onSuccess */
+            // callback onSuccess
             onSuccess : function (response) {
                 logger.log("request from Geocoding (coordinates null)", response);
                 if (response.locations && response.locations.length !== 0 && response.locations[0].position) {
@@ -998,7 +1007,9 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
      * this method is called by this.on*ResultsItemClick()
      * and get zoom.
      *
-     * @param {Object} info - {}
+     * @param {Object} info - info
+     *
+     * @returns {Integer} zoom level
      *
      * @private
      */
@@ -1099,7 +1110,7 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
                 _icon = marker;
             } else {
                 _icon = new IconDefault("blue");
-                console.log("Utilisation du marker par défaut !");
+                logger.log("Utilisation du marker par défaut !");
             }
 
             // cf. http://leafletjs.com/reference.html#marker-options
@@ -1285,7 +1296,7 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
         var context = this;
         this._requestAutoComplete({
             text : value,
-            /** callback onSuccess */
+            // callback onSuccess
             onSuccess : function (results) {
                 logger.log("request from AutoComplete", results);
                 if (results) {
@@ -1319,7 +1330,7 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
                     }
                 }
             },
-            /** callback onFailure */
+            // callback onFailure
             onFailure : function (error) {
                 // FIXME
                 // où affiche t on les messages : ex. 'No suggestion matching the search' ?
@@ -1338,7 +1349,7 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
                             context._requestGeocoding({
                                 location : value,
                                 returnFreeForm : true,
-                                /** callback onSuccess */
+                                // callback onSuccess
                                 onSuccess : function (results) {
                                     logger.log("request from Geocoding", results);
                                     if (results) {
@@ -1358,7 +1369,7 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
                                         context._fillAutoCompletedLocationListContainer(locations);
                                     }
                                 },
-                                /** callback onFailure */
+                                // callback onFailure
                                 onFailure : function (error) {
                                     logger.log(error.message);
                                 }
@@ -1447,7 +1458,7 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
         var context = this;
         this._requestGeocoding({
             location : value,
-            /** callback onSuccess */
+            // callback onSuccess
             onSuccess : function (results) {
                 logger.log("request from Geocoding", results);
                 if (results) {
@@ -1455,7 +1466,7 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
                     context._fillGeocodedLocationListContainer(locations);
                 }
             },
-            /** callback onFailure */
+            // callback onFailure
             onFailure : function (error) {
                 // FIXME cf. this.onAutoCompleteSearch()
                 context._clearGeocodedLocation();
@@ -1614,7 +1625,7 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
         this._requestGeocoding({
             location : _location,
             filterOptions : _filterOptions,
-            /** callback onSuccess */
+            // callback onSuccess
             onSuccess : function (results) {
                 logger.log(results);
                 if (results) {
@@ -1622,7 +1633,7 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
                     context._fillGeocodedLocationListContainer(locations);
                 }
             },
-            /** callback onFailure */
+            // callback onFailure
             onFailure : function (error) {
                 // FIXME cf. this.onAutoCompleteSearch()
                 context._clearGeocodedLocation();

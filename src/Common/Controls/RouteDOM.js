@@ -1,4 +1,7 @@
 import ID from "../Utils/SelectorID";
+import Logger from "../../Common/Utils/LoggerByDefault";
+
+var logger = Logger.getLogger("RouteDOM");
 
 var RouteDOM = {
 
@@ -156,7 +159,7 @@ var RouteDOM = {
         form.setAttribute("onkeypress", "return event.keyCode != 13;"); // FIXME hack pour desactiver l'execution via 'enter' au clavier !
 
         form.addEventListener("submit", function (e) {
-            console.log(e);
+            logger.log(e);
             e.preventDefault();
 
             // points
@@ -168,10 +171,10 @@ var RouteDOM = {
             var startID = ID.index(start);
             var endID = ID.index(end);
 
-            if ((document.getElementById(self._addUID("GPlocationOrigin_" + startID)).value == "" &&
-                    document.getElementById(self._addUID("GPlocationOriginCoords_" + startID)).value == "") ||
-                (document.getElementById(self._addUID("GPlocationOrigin_" + endID)).value == "" &&
-                    document.getElementById(self._addUID("GPlocationOriginCoords_" + endID)).value == "")) {
+            if ((document.getElementById(self._addUID("GPlocationOrigin_" + startID)).value === "" &&
+                    document.getElementById(self._addUID("GPlocationOriginCoords_" + startID)).value === "") ||
+                (document.getElementById(self._addUID("GPlocationOrigin_" + endID)).value === "" &&
+                    document.getElementById(self._addUID("GPlocationOriginCoords_" + endID)).value === "")) {
                 return false;
             }
 
@@ -181,7 +184,7 @@ var RouteDOM = {
             for (var i = 0; i < points.length; i++) {
                 var tag = points[i].childNodes[0].id;
                 id = ID.index(tag);
-                if (document.getElementById(self._addUID("GPlocationPoint_" + id)).className == "GPflexInput GPlocationStageFlexInput") {
+                if (document.getElementById(self._addUID("GPlocationPoint_" + id)).className === "GPflexInput GPlocationStageFlexInput") {
                     var resultStage = document.createElement("div");
                     resultStage.className = "GProuteResultsStages";
                     var resultStageLabel = document.createElement("div");
@@ -193,13 +196,13 @@ var RouteDOM = {
                     var elementCoords = document.getElementById(self._addUID("GPlocationOriginCoords_" + id));
                     var stageCoords = elementCoords.value;
                     var visible = (elementCoords.className === "GPlocationOriginVisible");
-                    if (stageCoords != null && stageCoords != "" && visible) {
+                    if (stageCoords !== null && stageCoords !== "" && visible) {
                         resultStageValue.innerHTML = stageCoords;
                     } else {
                         resultStageValue.innerHTML = document.getElementById(self._addUID("GPlocationOrigin_" + id)).value;
                     }
                     resultStage.appendChild(resultStageValue);
-                    if (resultStageValue.innerHTML != "") {
+                    if (resultStageValue.innerHTML !== "") {
                         document.getElementById(self._addUID("GProuteResultsStages")).appendChild(resultStage);
                     }
                 }
@@ -397,6 +400,9 @@ var RouteDOM = {
      * Add Results Duration and Distance
      * (results dynamically generate !)
      * see event!
+     * @param {Number} distance - distance
+     * @param {Number} duration - duration
+     * @param {Function} fconvert - fconvert
      *
      * @returns {DOMElement} DOM element
      */
@@ -481,6 +487,8 @@ var RouteDOM = {
     /**
      *  Add Results Details
      * (results dynamically generate !)
+     * @param {Object[]} instructions - instructions
+     * @param {Function} fconvert - fconvert
      *
      * @returns {DOMElement} DOM element
      */
@@ -558,6 +566,9 @@ var RouteDOM = {
      * see event !
      * OVERWRITTEN BY LOCATIONSELECTOR !
      * (version initial without LOCATIONSELECTOR PLUGIN)
+     * @param {Integer} n - n
+     * @param {String} text - text
+     * @param {Boolean} visibility - visibility
      *
      * @returns {DOMElement} DOM element
      */
@@ -636,9 +647,9 @@ var RouteDOM = {
             var i = this.id.charAt(this.id.length - 1);
             var j;
             for (j = 1; j < 8; j++) {
-                if (i != j) {
+                if (i !== j) {
                     document.getElementById("GProuteOriginPointer" + j).checked = false;
-                    if (document.getElementById("GProuteOriginCoords" + j).value == "Pointer un lieu sur la carte") {
+                    if (document.getElementById("GProuteOriginCoords" + j).value === "Pointer un lieu sur la carte") {
                         document.getElementById("GProuteOriginCoords" + j).value = "";
                         document.getElementById("GProuteOrigin" + j).className = "GProuteOriginVisible";
                         document.getElementById("GProuteOriginCoords" + j).className = "GProuteOriginHidden";
@@ -657,7 +668,7 @@ var RouteDOM = {
             } else {
                 document.getElementById("GProuteOriginCoords" + i).value = "Pointer un lieu sur la carte";
                 for (j = 1; j < 8; j++) {
-                    if (i == j) {
+                    if (i === j) {
                         document.getElementById("GProutePoint" + j).style.display = "flex";
                     } else {
                         document.getElementById("GProutePoint" + j).style.display = "none";
@@ -682,6 +693,7 @@ var RouteDOM = {
      * see event !
      * OVERWRITTEN BY LOCATIONSELECTOR !
      * (version initial without LOCATIONSELECTOR PLUGIN)
+     * @param {Integer} n - n
      *
      * @returns {DOMElement} DOM element
      */
@@ -693,7 +705,7 @@ var RouteDOM = {
         divRm.id = "GProuteStageRemove" + n;
         divRm.className = "GProuteStageRemove";
         divRm.title = "Supprimer l'étape";
-        if (n != 1 && n != 7) {
+        if (n !== 1 && n !== 7) {
             divRm.addEventListener("click", function (e) {
                 var i = this.id.charAt(this.id.length - 1);
                 document.getElementById("GProutePoint" + i).className = "GPflexInput GProuteStageFlexInputHidden";
@@ -732,8 +744,8 @@ var RouteDOM = {
             var lastStage = 1;
             var nbStages = 0;
             for (var i = 2; i < 7; i++) {
-                if (document.getElementById("GProutePoint" + i).className == "GPflexInput GProuteStageFlexInputHidden") {
-                    if (lastStage == 1) {
+                if (document.getElementById("GProutePoint" + i).className === "GPflexInput GProuteStageFlexInputHidden") {
+                    if (lastStage === 1) {
                         lastStage = i;
                     }
                 } else {
@@ -746,7 +758,7 @@ var RouteDOM = {
                 var exclusionsPictoTop = document.getElementById("GPshowRouteExclusionsPicto").style.top;
                 document.getElementById("GPshowRouteExclusionsPicto").style.top = (parseInt(exclusionsPictoTop, 10) + 33).toString() + "px";
             }
-            if (nbStages == 4) {
+            if (nbStages === 4) {
                 document.getElementById("GProuteStageAdd").style.display = "none";
             }
             // gestionnaire d'evenement :
@@ -762,6 +774,7 @@ var RouteDOM = {
      * see event!
      * OVERWRITTEN BY LOCATIONSELECTOR !
      * (version initial without LOCATIONSELECTOR PLUGIN)
+     * @param {Integer} n - n
      *
      * @returns {DOMElement} DOM element
      */
@@ -836,6 +849,7 @@ var RouteDOM = {
      * Create Mode choice transport
      * see event !
      * FIXME event not useful
+     * @param {String[]} transports - transports
      *
      * @returns {DOMElement} DOM element
      */
@@ -1038,6 +1052,7 @@ var RouteDOM = {
      * Create Exclusions Options
      * see event !
      * FIXME event not useful
+     * @param {Object[]} exclusions - exclusions
      *
      * @returns {DOMElement} DOM element
      */

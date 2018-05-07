@@ -140,6 +140,8 @@ MeasureLength.prototype.setMap = function (map) {
 /**
  * Initialize measure control (called by constructor)
  *
+ * @param {Object} options - options
+ *
  * @private
  */
 MeasureLength.prototype._initialize = function (options) {
@@ -157,6 +159,8 @@ MeasureLength.prototype._initialize = function (options) {
 
 /**
  * initialize component container (DOM)
+ *
+ * @returns {DOMElement} DOM element
  *
  * @private
  */

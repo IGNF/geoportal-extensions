@@ -211,6 +211,8 @@ var WMS = L.TileLayer.WMS.extend(/** @lends WMS.prototype */ {
      * (overwritten)
      *
      * @param {Object} tilePoint - Point object
+     *
+     * @returns {String} url
      * @private
      */
     getTileUrl : function (tilePoint) {
