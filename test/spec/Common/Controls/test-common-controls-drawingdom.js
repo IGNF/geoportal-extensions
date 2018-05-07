@@ -79,7 +79,7 @@ describe("-- Test Drawing DOM --", function () {
         try {
             DrawingDOM.rgbaToHex(rgba);
         } catch (e) {
-            expect(e).to.have.string("Invalid format");
+            expect(e.message).to.have.string("Invalid format");
         }
     });
     it('rgbaToHex : invalid value', function () {
@@ -87,7 +87,7 @@ describe("-- Test Drawing DOM --", function () {
         try {
             DrawingDOM.rgbaToHex(rgba);
         } catch (e) {
-            expect(e).to.have.string("Invalid format");
+            expect(e.message).to.have.string("Invalid format");
         }
     });
     it('hexToRgba', function () {
@@ -99,7 +99,7 @@ describe("-- Test Drawing DOM --", function () {
         try {
             DrawingDOM.hexToRgba(hex, opacity);
         } catch (e) {
-            expect(e).to.have.string("Invalid format");
+            expect(e.message).to.have.string("Invalid format");
         }
 
     });
@@ -108,7 +108,7 @@ describe("-- Test Drawing DOM --", function () {
         try {
             DrawingDOM.hexToRgba(hex, opacity);
         } catch (e) {
-            expect(e).to.have.string("Invalid format");
+            expect(e.message).to.have.string("Invalid format");
         }
 
     });
