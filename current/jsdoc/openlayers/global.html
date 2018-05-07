@@ -1769,12 +1769,12 @@ Gp.Register.get("IGNF:AMST63")
     <div class="nameContainer">
         <h4 class="name" id="_kmlFormattedToString">
             
-            _kmlFormattedToString<span class="signature">()</span>
+            _kmlFormattedToString<span class="signature">(xml)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{String}</span>
         </h4>
     
         
         <div class="tag-source">
-            OpenLayers/Formats/KML.js, line 87
+            OpenLayers/Formats/KML.js, line 91
         </div>
         
     </div>
@@ -1794,6 +1794,52 @@ Gp.Register.get("IGNF:AMST63")
     
     
     
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name">xml</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>xml</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+
+    
     
     
 <dl class="details">
@@ -1832,6 +1878,16 @@ Gp.Register.get("IGNF:AMST63")
     
     
     
+
+
+<h5>Returns:</h5>
+string
+<br />
+
+
+    
+    
+    
 </dd>
 
         
@@ -1840,12 +1896,12 @@ Gp.Register.get("IGNF:AMST63")
     <div class="nameContainer">
         <h4 class="name" id="_kmlParse">
             
-            _kmlParse<span class="signature">()</span>
+            _kmlParse<span class="signature">(kmlString)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{DOMElement}</span>
         </h4>
     
         
         <div class="tag-source">
-            OpenLayers/Formats/KML.js, line 144
+            OpenLayers/Formats/KML.js, line 152
         </div>
         
     </div>
@@ -1865,6 +1921,52 @@ Gp.Register.get("IGNF:AMST63")
     
     
     
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name">kmlString</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>kml string</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+
+    
     
     
 <dl class="details">
@@ -1903,6 +2005,16 @@ Gp.Register.get("IGNF:AMST63")
     
     
     
+
+
+<h5>Returns:</h5>
+document
+<br />
+
+
+    
+    
+    
 </dd>
 
         
@@ -1911,12 +2023,12 @@ Gp.Register.get("IGNF:AMST63")
     <div class="nameContainer">
         <h4 class="name" id="_kmlRead">
             
-            _kmlRead<span class="signature">()</span>
+            _kmlRead<span class="signature">(kmlDoc, features, process)</span>
         </h4>
     
         
         <div class="tag-source">
-            OpenLayers/Formats/KML.js, line 203
+            OpenLayers/Formats/KML.js, line 219
         </div>
         
     </div>
@@ -1939,6 +2051,98 @@ Gp.Register.get("IGNF:AMST63")
     
     
     
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name">kmlDoc</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">DOMElement</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>kml document</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name">features</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;Object></span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>features</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name">process</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>process</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+
     
     
     
@@ -2005,12 +2209,12 @@ _kmlRead(kmlDoc, {
     <div class="nameContainer">
         <h4 class="name" id="_kmlToString">
             
-            _kmlToString<span class="signature">()</span>
+            _kmlToString<span class="signature">(kmlDoc)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{String}</span>
         </h4>
     
         
         <div class="tag-source">
-            OpenLayers/Formats/KML.js, line 174
+            OpenLayers/Formats/KML.js, line 186
         </div>
         
     </div>
@@ -2029,6 +2233,52 @@ _kmlRead(kmlDoc, {
     
     
     
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name">kmlDoc</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">DOMElement</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>kml document</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+
     
     
     
@@ -2068,6 +2318,16 @@ _kmlRead(kmlDoc, {
     
     
     
+
+
+<h5>Returns:</h5>
+string
+<br />
+
+
+    
+    
+    
 </dd>
 
         
@@ -2081,7 +2341,7 @@ _kmlRead(kmlDoc, {
     
         
         <div class="tag-source">
-            Common/Controls/MousePositionDOM.js, line 632
+            Common/Controls/MousePositionDOM.js, line 682
         </div>
         
     </div>
@@ -2240,7 +2500,7 @@ _kmlRead(kmlDoc, {
     
         
         <div class="tag-source">
-            Common/Controls/MousePositionDOM.js, line 675
+            Common/Controls/MousePositionDOM.js, line 725
         </div>
         
     </div>
@@ -2357,7 +2617,7 @@ _kmlRead(kmlDoc, {
     
         
         <div class="tag-source">
-            OpenLayers/Controls/MousePosition.js, line 197
+            OpenLayers/Controls/MousePosition.js, line 199
         </div>
         
     </div>
@@ -2578,148 +2838,6 @@ _kmlRead(kmlDoc, {
             
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="condition">
-            
-            condition<span class="signature">()</span>
-        </h4>
-    
-        
-        <div class="tag-source">
-            OpenLayers/Controls/Measures/Measures.js, line 397
-        </div>
-        
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>condition : permet de gerer la suppression des derniers points saisis</p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="deleteCondition">
-            
-            deleteCondition<span class="signature">()</span>
-        </h4>
-    
-        
-        <div class="tag-source">
-            OpenLayers/Controls/Drawing.js, line 1423
-        </div>
-        
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>deleteCondition : aucune en mode &quot;edition&quot;</p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
         <h4 class="name" id="getLayerInfo">
             
             getLayerInfo<span class="signature">(layer)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Object}</span>
@@ -2727,7 +2845,7 @@ _kmlRead(kmlDoc, {
     
         
         <div class="tag-source">
-            OpenLayers/Controls/LayerSwitcher.js, line 1045
+            OpenLayers/Controls/LayerSwitcher.js, line 1052
         </div>
         
     </div>
@@ -2854,7 +2972,7 @@ _kmlRead(kmlDoc, {
     
         
         <div class="tag-source">
-            OpenLayers/Controls/LayerSwitcher.js, line 1017
+            OpenLayers/Controls/LayerSwitcher.js, line 1024
         </div>
         
     </div>
@@ -3657,77 +3775,6 @@ _kmlRead(kmlDoc, {
             
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="onEnd">
-            
-            onEnd<span class="signature">()</span>
-        </h4>
-    
-        
-        <div class="tag-source">
-            Common/Controls/LayerSwitcherDOM.js, line 18
-        </div>
-        
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>Call event function on drag and drop</p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
         <h4 class="name" id="onFailure">
             
             onFailure<span class="signature">()</span>
@@ -3735,646 +3782,7 @@ _kmlRead(kmlDoc, {
     
         
         <div class="tag-source">
-            OpenLayers/Controls/SearchEngine.js, line 1268
-        </div>
-        
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>callback onFailure</p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="onFailure">
-            
-            onFailure<span class="signature">()</span>
-        </h4>
-    
-        
-        <div class="tag-source">
-            OpenLayers/Controls/Route.js, line 860
-        </div>
-        
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>callback onFailure</p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="onFailure">
-            
-            onFailure<span class="signature">()</span>
-        </h4>
-    
-        
-        <div class="tag-source">
-            OpenLayers/Controls/SearchEngine.js, line 1171
-        </div>
-        
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>callback onFailure</p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="onFailure">
-            
-            onFailure<span class="signature">()</span>
-        </h4>
-    
-        
-        <div class="tag-source">
-            OpenLayers/Controls/SearchEngine.js, line 1210
-        </div>
-        
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>callback onFailure</p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="onFailure">
-            
-            onFailure<span class="signature">()</span>
-        </h4>
-    
-        
-        <div class="tag-source">
-            OpenLayers/Controls/SearchEngine.js, line 1375
-        </div>
-        
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>callback onFailure</p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="onFailure">
-            
-            onFailure<span class="signature">()</span>
-        </h4>
-    
-        
-        <div class="tag-source">
-            OpenLayers/Controls/LayerImport.js, line 1067
-        </div>
-        
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>on error callback : log error</p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="onFailure">
-            
-            onFailure<span class="signature">()</span>
-        </h4>
-    
-        
-        <div class="tag-source">
-            OpenLayers/GfiUtils.js, line 451
-        </div>
-        
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>Handles GFI response error</p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="onFailure">
-            
-            onFailure<span class="signature">()</span>
-        </h4>
-    
-        
-        <div class="tag-source">
-            OpenLayers/Controls/LocationSelector.js, line 370
-        </div>
-        
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>callback onFailure</p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="onFailure">
-            
-            onFailure<span class="signature">()</span>
-        </h4>
-    
-        
-        <div class="tag-source">
-            OpenLayers/Controls/LayerImport.js, line 730
-        </div>
-        
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>on error callback : log error</p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="onFailure">
-            
-            onFailure<span class="signature">()</span>
-        </h4>
-    
-        
-        <div class="tag-source">
-            OpenLayers/Controls/SearchEngine.js, line 1532
+            OpenLayers/Controls/SearchEngine.js, line 1278
         </div>
         
     </div>
@@ -4445,7 +3853,7 @@ _kmlRead(kmlDoc, {
     
         
         <div class="tag-source">
-            OpenLayers/Controls/MousePosition.js, line 1289
+            OpenLayers/Controls/MousePosition.js, line 1295
         </div>
         
     </div>
@@ -4551,716 +3959,6 @@ _kmlRead(kmlDoc, {
     
 </dd>
 
-        
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="onResponse">
-            
-            onResponse<span class="signature">()</span>
-        </h4>
-    
-        
-        <div class="tag-source">
-            OpenLayers/Controls/LayerImport.js, line 725
-        </div>
-        
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>on success callback : display results in container</p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="onResponse">
-            
-            onResponse<span class="signature">()</span>
-        </h4>
-    
-        
-        <div class="tag-source">
-            OpenLayers/GfiUtils.js, line 434
-        </div>
-        
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>Handles GFI response</p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="onResponse">
-            
-            onResponse<span class="signature">()</span>
-        </h4>
-    
-        
-        <div class="tag-source">
-            OpenLayers/Controls/LayerImport.js, line 1062
-        </div>
-        
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>on success callback : display results in container</p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="onSuccess">
-            
-            onSuccess<span class="signature">()</span>
-        </h4>
-    
-        
-        <div class="tag-source">
-            OpenLayers/Controls/SearchEngine.js, line 1524
-        </div>
-        
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>callback onSuccess</p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="onSuccess">
-            
-            onSuccess<span class="signature">()</span>
-        </h4>
-    
-        
-        <div class="tag-source">
-            OpenLayers/Controls/SearchEngine.js, line 1367
-        </div>
-        
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>callback onSuccess</p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="onSuccess">
-            
-            onSuccess<span class="signature">()</span>
-        </h4>
-    
-        
-        <div class="tag-source">
-            OpenLayers/Controls/SearchEngine.js, line 1252
-        </div>
-        
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>callback onSuccess</p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="onSuccess">
-            
-            onSuccess<span class="signature">()</span>
-        </h4>
-    
-        
-        <div class="tag-source">
-            OpenLayers/Controls/SearchEngine.js, line 1190
-        </div>
-        
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>callback onSuccess</p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="onSuccess">
-            
-            onSuccess<span class="signature">()</span>
-        </h4>
-    
-        
-        <div class="tag-source">
-            OpenLayers/Controls/SearchEngine.js, line 1142
-        </div>
-        
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>callback onSuccess</p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="onSuccess">
-            
-            onSuccess<span class="signature">()</span>
-        </h4>
-    
-        
-        <div class="tag-source">
-            OpenLayers/Controls/Route.js, line 853
-        </div>
-        
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>callback onSuccess</p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="onSuccess">
-            
-            onSuccess<span class="signature">()</span>
-        </h4>
-    
-        
-        <div class="tag-source">
-            OpenLayers/Controls/LocationSelector.js, line 363
-        </div>
-        
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>callback onSuccess</p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
         </dl>
     
     
@@ -5283,7 +3981,7 @@ _kmlRead(kmlDoc, {
     <footer>
         Copyright (c) IGN, released under the CECILL-B license
         </br>
-        Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri May 04 2018 16:30:07 GMT+0000 (UTC)
+        Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon May 07 2018 09:02:36 GMT+0000 (UTC)
     </footer>
 
 

@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 2.0.0
- * @date 2018-05-04
+ * @date 2018-05-07
  *
  */
 
@@ -93,7 +93,7 @@
 		exports["Gp"] = factory(require("openlayers"), require("xmldom"), require("request"));
 	else
 		root["Gp"] = factory(root["ol"], root[undefined], root[undefined]);
-})(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE_0__, __WEBPACK_EXTERNAL_MODULE_13__, __WEBPACK_EXTERNAL_MODULE_27__) {
+})(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_11__, __WEBPACK_EXTERNAL_MODULE_26__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -156,17 +156,51 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 25);
+/******/ 	return __webpack_require__(__webpack_require__.s = 24);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE_0__;
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _loglevel = __webpack_require__(61);
+
+var Log = _interopRequireWildcard(_loglevel);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var LoggerByDefault = {
+    /**
+     *logger statique
+     * @param {String} [name="default"] - the logger name
+     *
+     * @returns {Object} logger
+     */
+    getLogger: function getLogger(name) {
+        // Substitute global constants configured at compile time
+        // cf. webpack.config.js
+         false ? Log.disableAll() : Log.enableAll();
+        var logname = name || "default";
+        return Log.getLogger(logname);
+    }
+}; /* global __PRODUCTION__ */
+exports.default = LoggerByDefault;
 
 /***/ }),
 /* 1 */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_1__;
+
+/***/ }),
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -248,35 +282,6 @@ var Utils = {
 exports.default = Utils;
 
 /***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _loglevel = __webpack_require__(63);
-
-var Log = _interopRequireWildcard(_loglevel);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-var LoggerByDefault = {
-    /** logger statique */
-    getLogger: function getLogger(name) {
-        // Substitute global constants configured at compile time
-        // cf. webpack.config.js
-         false ? Log.disableAll() : Log.enableAll();
-        var logname = name || "default";
-        return Log.getLogger(logname);
-    }
-}; /* global __PRODUCTION__ */
-exports.default = LoggerByDefault;
-
-/***/ }),
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -307,7 +312,12 @@ var SelectorID = {
         };
     }(),
 
-    /** nom du tag */
+    /**
+     * nom du tag
+     * @param {String} id - the id
+     *
+     * @returns {String} index
+     */
     name: function name(id) {
         var name = null;
 
@@ -321,7 +331,12 @@ var SelectorID = {
         return name;
     },
 
-    /** numero d'identifiant du tag */
+    /**
+     * numero d'identifiant du tag
+     * @param {String} id - the id
+     *
+     * @returns {String} index
+     */
     index: function index(id) {
         var index = null;
 
@@ -336,7 +351,12 @@ var SelectorID = {
         return index;
     },
 
-    /** uuid du tag */
+    /**
+     * uuid du tag
+     * @param {String} id - the id
+     *
+     * @returns {String} uuid
+     */
     uuid: function uuid(id) {
         var uuid = null;
 
@@ -381,7 +401,7 @@ exports.default = SelectorID;
 
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(true)
-		module.exports = factory(__webpack_require__(13), __webpack_require__(27));
+		module.exports = factory(__webpack_require__(11), __webpack_require__(26));
 	else if(typeof define === 'function' && define.amd)
 		define("Gp", ["require", "require"], factory);
 	else if(typeof exports === 'object')
@@ -18643,11 +18663,11 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _LoggerByDefault = __webpack_require__(2);
+var _LoggerByDefault = __webpack_require__(0);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
-var _Config = __webpack_require__(8);
+var _Config = __webpack_require__(7);
 
 var _Config2 = _interopRequireDefault(_Config);
 
@@ -18718,7 +18738,7 @@ exports.default = {
                 // si l'autoconfiguration n'est pas chargée,
                 // aucune vérification des droits est possible...
 
-                console.log("WARNING : " + "The 'apiKey' parameter is missing, " + "and the contract key configuration has not been loaded, " + "so impossible to check yours rights !");
+                logger.warn("WARNING : " + "The 'apiKey' parameter is missing, " + "and the contract key configuration has not been loaded, " + "so impossible to check yours rights !");
 
                 return;
             } else {
@@ -18743,7 +18763,7 @@ exports.default = {
                 // d'obtenir des erreurs 403 forbidden...
                 // la responsabilité revient à l'utilisateur (message d'information)...
 
-                console.log("WARNING : " + "the contract key configuration has not been loaded, " + "so be carefull !");
+                logger.warn("WARNING : " + "the contract key configuration has not been loaded, " + "so be carefull !");
 
                 // les ressouces non controlées
                 var _noRightManagement = {};
@@ -18781,7 +18801,7 @@ exports.default = {
 
                         var params = _Config2.default.getServiceParams(_resource, _service, _key);
                         if (!params || Object.keys(params).length === 0) {
-                            console.log("WARNING : " + "The contract key configuration has no rights to load this geoportal " + "resource (" + _resource + ") " + "for this service (" + _service + ") ");
+                            logger.warn("WARNING : " + "The contract key configuration has no rights to load this geoportal " + "resource (" + _resource + ") " + "for this service (" + _service + ") ");
                             continue;
                         }
 
@@ -18794,7 +18814,7 @@ exports.default = {
                 }
 
                 if (!_rightManagement || Object.keys(_rightManagement).length === 0) {
-                    console.log("WARNING : " + "The contract key configuration has been loaded, " + "and the 'apiKey' parameter has been set, " + "but, there is a problem on the mapping between the contract and the key !");
+                    logger.warn("WARNING : " + "The contract key configuration has been loaded, " + "and the 'apiKey' parameter has been set, " + "but, there is a problem on the mapping between the contract and the key !");
                     return;
                 }
 
@@ -18814,319 +18834,20 @@ exports.default = {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-var LayerUtils = {
-
-    /**
-     * Obtenir le ZoomLevel à partir du ScaleDenominator
-     */
-    getZoomLevelFromScaleDenominator: function getZoomLevelFromScaleDenominator(scaleDenominator, crs) {
-        // ------------------------------------------------- //
-        // Code issu de l'API Geoportal/Catalogue/Config.js  //
-        // ------------------------------------------------- //
-        //     var configuration = Gp.Config;
-        //     var general = configuration.generalOptions;
-        //     var layers  = configuration.layersContext;
-        //
-        //     for (var tms in general.tileMatrixSets) {
-        //         var tileMatrixSet = general.tileMatrixSets[tms];
-        //         // IGN's WMTS bug : epsg:nnnn instead of EPSG:nnnn
-        //         var crs = tileMatrixSet.supportedCRS = tileMatrixSet.supportedCRS.replace(/epsg/,"EPSG");
-        //
-        //         if (!Geoportal.Catalogue.CRSRESOLUTIONS.hasOwnProperty(crs)) {
-        //             var p= new OpenLayers.Projection(crs);
-        //             Geoportal.Catalogue.CRSRESOLUTIONS[crs]= [];
-        //             var matrixIds= tileMatrixSet.matrixIds;
-        //             for (var i= 0, li= matrixIds.length; i<li; ++i) {
-        //                 var mid= matrixIds[i];
-        //                 Geoportal.Catalogue.CRSRESOLUTIONS[crs].push(
-        //                     0.00028*mid.scaleDenominator
-        //                     /(OpenLayers.METERS_PER_INCH*OpenLayers.INCHES_PER_UNIT[p.getUnits()]));
-        //                     mid.supportedCRS= mid.supportedCRS.replace(/epsg/,"EPSG");
-        //                 }
-        //                 Geoportal.Catalogue.CRSRESOLUTIONS[crs].sort(function (a,b){ return b-a; });
-        //             }
-        //         }
-        //         var llR= Geoportal.Catalogue.CRSRESOLUTIONS['CRS:84'];
-        //         if (!llR) {
-        //             llR= Geoportal.Catalogue.CRSRESOLUTIONS['CRS:84']= general.resolutions.slice();
-        //         }
-        //         var wmR= Geoportal.Catalogue.CRSRESOLUTIONS['EPSG:3857'];
-        //         if (!wmR) {//FIXME : should never happened !!
-        //             // reproject resolutions from CRS84 to WebMercator (transform resolutions from degree/px to meter/px)
-        //             wmR= Geoportal.Catalogue.CRSRESOLUTIONS['EPSG:3857']= new Array(llR.length);
-        //             for (var i= 0, len= llR.length; i<len; i++) {
-        //                 var pt= new OpenLayers.LonLat(llR[i], 0);
-        //                 pt.transform(OpenLayers.Projection.CRS84, OpenLayers.Projection.WebMercator);
-        //                 wmR[i]= pt.lon;
-        //             }
-        //         }
-        //         Geoportal.Catalogue.RESOLUTIONS= wmR;
-        //
-        //         var getResolutionsFromCRS= function(crs) {
-        //             if (OpenLayers.Projection.WebMercator.isAliasOf(crs)) {
-        //                 return wmR;
-        //             }
-        //             if (OpenLayers.Projection.CRS84.isAliasOf(crs)) {
-        //                 return llR;
-        //             }
-        //             return Geoportal.Catalogue.CRSRESOLUTIONS[crs]?Geoportal.Catalogue.CRSRESOLUTIONS[crs]:null ;
-        //         };
-        //
-        //         var retrieveZoomFromResolution= function(resolutions, resolution) {
-        //             for (var i= 0, li= resolutions.length; i<li; i++) {
-        //                 if (resolutions[i]-resolution <= resolutions[li-1]) {
-        //                     return i;
-        //                 }
-        //             }
-        //             return -1;
-        //         };
-        //
-        //         var getZoomLevelFromScaleDenominator= function(scaleDenominator,crs) {
-        //             var resolution= scaleDenominator * 0.00028;
-        //             var R= getResolutionsFromCRS(crs);
-        //             if (R) {
-        //                 return retrieveZoomFromResolution(R,resolution);
-        //             }
-        //             resolution= resolution/(OpenLayers.METERS_PER_INCH * OpenLayers.INCHES_PER_UNIT["degrees"]);
-        //             return retrieveZoomFromResolution(llR,resolution);
-        //         };
-        //
-        //         var getZoomLevelFromResolution= function(resolution,crs){
-        //             var R= getResolutionsFromCRS(crs);
-        //             if (R) {
-        //                 return retrieveZoomFromResolution(R,resolution);
-        //             }
-        //             var pt0= new OpenLayers.LonLat(0, 0);
-        //             var pt1= new OpenLayers.LonLat(1, 0);
-        //             pt0.transform(new OpenLayers.Projection(crs),OpenLayers.Projection.CRS84);
-        //             pt1.transform(new OpenLayers.Projection(crs),OpenLayers.Projection.CRS84);
-        //             resolution= resolution*(Math.abs(pt1.lon-pt0.lon));
-        //             return retrieveZoomFromResolution(llR,resolution);
-        //         };
-
-        // par defaut, on utilise la projection WebMercator (EPSG:3857 = PM)
-        // soit la liste des resolutions natives
-        var resolutionsNatives = {};
-        switch (crs) {
-            case "EPSG:2154":
-                resolutionsNatives = {
-                    0: 104579.224549894,
-                    1: 52277.5323537905,
-                    2: 26135.4870785954,
-                    3: 13066.8913818,
-                    4: 6533.2286041135,
-                    5: 3266.5595244627,
-                    6: 1633.2660045974,
-                    7: 816.629554986,
-                    8: 408.3139146768,
-                    9: 204.1567415109,
-                    10: 102.0783167832,
-                    11: 51.0391448966,
-                    12: 25.5195690743,
-                    13: 12.7597836936,
-                    14: 6.379891636,
-                    15: 3.1899457653,
-                    16: 1.5949728695,
-                    17: 0.7974864315,
-                    18: 0.3987432149,
-                    19: 0.1993716073,
-                    20: 0.0996858037,
-                    21: 0.0498429018
-                };
-                break;
-            default:
-                resolutionsNatives = {
-                    0: 156543.033928041,
-                    1: 78271.51696402048,
-                    2: 39135.758482010235,
-                    3: 19567.87924100512,
-                    4: 9783.93962050256,
-                    5: 4891.96981025128,
-                    6: 2445.98490512564,
-                    7: 1222.99245256282,
-                    8: 611.49622628141,
-                    9: 305.7481131407048,
-                    10: 152.8740565703525,
-                    11: 76.43702828517624,
-                    12: 38.21851414258813,
-                    13: 19.10925707129406,
-                    14: 9.554628535647032,
-                    15: 4.777314267823516,
-                    16: 2.388657133911758,
-                    17: 1.194328566955879,
-                    18: 0.5971642834779395,
-                    19: 0.2985821417389697,
-                    20: 0.1492910708694849,
-                    21: 0.0746455354347424
-                };
-                break;
-        }
-
-        // gestion des autres SRS
-        // TODO
-        // if (crs) {
-        // }
-
-        var resolution = scaleDenominator * 0.00028;
-
-        for (var index in resolutionsNatives) {
-            if (resolutionsNatives.hasOwnProperty(index)) {
-                if (resolutionsNatives[index] <= resolution) {
-                    index = parseInt(index, 10);
-                    return index;
-                }
-            }
-        }
-
-        return 0; // -1 ?
-    },
-
-    /**
-     * Get attributions list for a layer, based on current zoom and extent
-     *
-     * @param {Object} params - function params
-     * @param {Array.<Float>} params.extent - map current geographical extent (EPSG:4326) : [top, left, bottom, right] = [maxy, minx, miny, maxx]
-     * @param {Number} params.zoom - map current zoom
-     * @param {String} params.crs - map current projection code (ex "EPSG:2154")
-     * @param {Boolean} params.visibility - layer visibility
-     * @param {Gp.Services.Config.Originator} params.originators - resource originators (from Gp.Config.layers[].originators)
-     * @returns {Object} attributions - associative array, mapping originators url (keys) with their properties : html attributions elements
-     */
-    getAttributions: function getAttributions(params) {
-        var zoom = params.zoom;
-
-        var attributions = [];
-
-        if (params.originators != null && params.visibility) {
-            // drawLogo = boolean, true if attribution should be displayed (zoom, extent), false otherwise
-            var drawLogo;
-            for (var j = 0, jl = params.originators.length; j < jl; j++) {
-                drawLogo = true;
-                var originator = params.originators[j];
-
-                var constraints = params.originators[j].constraints || [];
-                for (var k = 0, kl = constraints.length; k < kl; k++) {
-                    var constraint = constraints[k];
-                    drawLogo = true;
-
-                    var minZoomLevel = this.getZoomLevelFromScaleDenominator(constraint.maxScaleDenominator, params.crs);
-                    var maxZoomLevel = this.getZoomLevelFromScaleDenominator(constraint.minScaleDenominator, params.crs) || 21;
-
-                    // min zoom constraints
-                    if (minZoomLevel && minZoomLevel > zoom) {
-                        drawLogo = false;
-                    }
-
-                    // max zoom constraints
-                    if (drawLogo && maxZoomLevel !== null && maxZoomLevel < zoom) {
-                        drawLogo = false;
-                    }
-
-                    // bbox constraints
-                    var bbox = constraint.bbox;
-                    if (drawLogo && bbox) {
-                        drawLogo = false;
-                        var viewExtent = params.extent;
-                        if (viewExtent) {
-                            var bounds = [bbox.top, bbox.left, bbox.bottom, bbox.right];
-                            if (this.intersects(viewExtent, bounds)) {
-                                // at least one constraint matches the map ones
-                                drawLogo = true;
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                if (drawLogo) {
-                    // on a un originator qui correspond au zoom et à l'étendue.
-
-                    var logo = originator.logo;
-                    var url = originator.url;
-                    var name = originator.name ? originator.name : "";
-                    var text = originator.attribution;
-
-                    var container = document.createElement("div");
-                    container.className = "gp-control-attribution";
-
-                    // on crée un lien dans tous les cas (même s'il ne pointe pas vers une référence), pour avoir accès à la class CSS (pour surcharge)
-                    var link = null;
-                    link = document.createElement("a");
-                    link.className = "gp-control-attribution-link";
-                    link.target = "_blank";
-                    container.appendChild(link);
-                    if (url) {
-                        link.href = url;
-                    }
-
-                    var bImage = !!logo;
-                    var image = null;
-                    // si on a un logo, on l'affiche à l'interieur du lien
-                    if (bImage) {
-                        image = document.createElement("img");
-                        if (link) {
-                            image.className = "gp-control-attribution-image";
-                            link.appendChild(image);
-                        } else {
-                            image.className = "";
-                            container.appendChild(image);
-                        }
-                        image.src = logo; // FIXME : mixContent !
-                        image.title = text || name;
-                        image.style.height = "30px";
-                        image.style.width = "30px";
-                    } else {
-                        // sinon, on affiche le nom de l'originator, ou sa description ou l'url.
-                        if (name) {
-                            link.textContent = name;
-                        } else if (text) {
-                            link.textContent = text;
-                        } else if (url) {
-                            link.textContent = url;
-                        } else {
-                            link.textContent = "";
-                        }
-                    }
-
-                    attributions.push(container.innerHTML + " ");
-                }
-            }
-        }
-
-        return attributions;
-    },
-
-    /**
-     * Determines if one extent (extent1) intersects another (extent2)
-     *
-     * @param {Array.<Float>} extent1 - First extent : [top, left, bottom, right] = [maxy, minx, miny, maxx]
-     * @param {Array.<Float>} extent2 - Second extent : [top, left, bottom, right] = [maxy, minx, miny, maxx]
-     * @return {Boolean} intersects - True if the two extents intersect, false otherwise.
-     */
-    intersects: function intersects(extent1, extent2) {
-        var intersectsX = extent1[1] <= extent2[3] && extent2[1] <= extent1[3];
-        var intersectsY = extent1[2] <= extent2[0] && extent2[2] <= extent1[0];
-        return intersectsX && intersectsY;
-    }
-};
-
-exports.default = LayerUtils;
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
 /* WEBPACK VAR INJECTION */(function(global) {
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+
+var _LoggerByDefault = __webpack_require__(0);
+
+var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var logger = _LoggerByDefault2.default.getLogger("config");
+
 var Config = {
 
     /** autoconf */
@@ -19188,7 +18909,7 @@ var Config = {
             }
         }
         if (!layerId) {
-            console.log("ERROR layer id (layer name: " + layerName + " / service: " + service + ") was not found !?");
+            logger.error("ERROR layer id (layer name: " + layerName + " / service: " + service + ") was not found !?");
         }
 
         return layerId;
@@ -19235,7 +18956,7 @@ var Config = {
                 var key = layerConf.apiKeys[0];
                 if (apiKey) {
                     if (apiKey !== key) {
-                        console.log("ERROR different keys (" + apiKey + " !== " + key + ") !?");
+                        logger.error("ERROR different keys (" + apiKey + " !== " + key + ") !?");
                         return;
                     }
                 }
@@ -19330,6 +19051,8 @@ var Config = {
 
     /**
      * Resolution en geographique
+     *
+     * @returns {Array} resolutions
      */
     getResolutions: function getResolutions() {
         var resolutions = [];
@@ -19343,6 +19066,9 @@ var Config = {
 
     /**
      * Recuperation des parametres TMS de la configuration
+     * @param {String} tmsName - tile matrix set name
+     *
+     * @returns {Object} tile matrix set
      */
     getTileMatrix: function getTileMatrix(tmsName) {
         var tms = {};
@@ -19383,17 +19109,10 @@ var Config = {
 };
 
 exports.default = Config;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(19)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)))
 
 /***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["proj4"] = __webpack_require__(62);
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(19)))
-
-/***/ }),
-/* 10 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19405,11 +19124,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _ol = __webpack_require__(0);
+var _ol = __webpack_require__(1);
 
 var _ol2 = _interopRequireDefault(_ol);
 
-var _Utils = __webpack_require__(1);
+var _Utils = __webpack_require__(2);
 
 var _Utils2 = _interopRequireDefault(_Utils);
 
@@ -19421,7 +19140,13 @@ var _LayerSwitcherDOM = __webpack_require__(66);
 
 var _LayerSwitcherDOM2 = _interopRequireDefault(_LayerSwitcherDOM);
 
+var _LoggerByDefault = __webpack_require__(0);
+
+var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var logger = _LoggerByDefault2.default.getLogger("layerswitcher");
 
 /**
  * @classdesc
@@ -19526,7 +19251,7 @@ LayerSwitcher.prototype.setMap = function (map) {
         // At every map movement, layer switcher may be updated,
         // according to layers on map, and their range.
         this._listeners.onMoveListener = map.on("moveend", function () {
-            this._onMapMoveEnd.call(this, map);
+            this._onMapMoveEnd(map);
         }, this);
 
         // add event listeners when a new layer is added to map, to add it in LayerSwitcher control (and DOM)
@@ -19598,13 +19323,13 @@ LayerSwitcher.prototype.addLayer = function (layer, config) {
     config = config || {};
 
     if (!layer) {
-        console.log("[ERROR] LayerSwitcher:addLayer - missing layer parameter");
+        logger.log("[ERROR] LayerSwitcher:addLayer - missing layer parameter");
         return;
     }
 
     var id = layer.gpLayerId;
     if (id === "undefined") {
-        console.log("[ERROR] LayerSwitcher:addLayer - configuration cannot be set for " + layer + " layer (layer id not found)");
+        logger.log("[ERROR] LayerSwitcher:addLayer - configuration cannot be set for " + layer + " layer (layer id not found)");
         return;
     }
 
@@ -19616,7 +19341,7 @@ LayerSwitcher.prototype.addLayer = function (layer, config) {
         }
     }, this);
     if (!isLayerInMap) {
-        console.log("[ERROR] LayerSwitcher:addLayer - configuration cannot be set for ", layer, " layer (layer is not in map.getLayers() )");
+        logger.log("[ERROR] LayerSwitcher:addLayer - configuration cannot be set for ", layer, " layer (layer is not in map.getLayers() )");
         return;
     }
 
@@ -19664,9 +19389,9 @@ LayerSwitcher.prototype.addLayer = function (layer, config) {
         layer.on("change:visible", this._updateLayerVisibility, this);
         // listener for zIndex change
         var context = this;
-        /** fonction de callback appelée au changement de zindex d'une couche  */
+        // fonction de callback appelée au changement de zindex d'une couche
         var updateLayersOrder = function updateLayersOrder(e) {
-            context._updateLayersOrder.call(context, e);
+            context._updateLayersOrder(e);
         };
         if (this._layers[id].onZIndexChangeEvent == null) {
             this._layers[id].onZIndexChangeEvent = layer.on("change:zIndex", updateLayersOrder);
@@ -19701,7 +19426,7 @@ LayerSwitcher.prototype.addLayer = function (layer, config) {
         // close layer info element if open, to update information.
         if (infodiv && infodiv.className === "GPlayerInfoOpened") {
             document.getElementById(this._addUID("GPlayerInfoPanel")).className = "GPlayerInfoPanelClosed";
-            infodiv.className === "GPlayerInfo";
+            infodiv.className = "GPlayerInfo";
         }
     }
 };
@@ -19718,7 +19443,7 @@ LayerSwitcher.prototype.removeLayer = function (layer) {
     var infodiv = document.getElementById(this._addUID("GPinfo_ID_" + layerID));
     if (infodiv && infodiv.className === "GPlayerInfoOpened") {
         document.getElementById(this._addUID("GPlayerInfoPanel")).className = "GPlayerInfoPanelClosed";
-        infodiv.className === "GPlayerInfo";
+        infodiv.className = "GPlayerInfo";
     }
     // remove layer div
     var layerDiv = document.getElementById(this._addUID("GPlayerSwitcher_ID_" + layerID));
@@ -19744,7 +19469,7 @@ LayerSwitcher.prototype.removeLayer = function (layer) {
  */
 LayerSwitcher.prototype.setCollapsed = function (collapsed) {
     if (collapsed === undefined) {
-        console.log("[ERROR] LayerSwitcher:setCollapsed - missing collapsed parameter");
+        logger.log("[ERROR] LayerSwitcher:setCollapsed - missing collapsed parameter");
         return;
     }
     var isCollapsed = !document.getElementById(this._addUID("GPshowLayersList")).checked;
@@ -19764,6 +19489,7 @@ LayerSwitcher.prototype.setCollapsed = function (collapsed) {
 
 /**
  * Returns true if widget is collapsed (minimize), false otherwise
+ * @returns {Boolean} is collapsed
  */
 LayerSwitcher.prototype.getCollapsed = function () {
     return this.collapsed;
@@ -19782,11 +19508,11 @@ LayerSwitcher.prototype.setRemovable = function (layer, removable) {
     var layerID = layer.gpLayerId;
     if (layerID == null) {
         // on teste si layerID est null ou undefined
-        console.log("[LayerSwitcher:setRemovable] layer should be added to map before calling setRemovable method");
+        logger.log("[LayerSwitcher:setRemovable] layer should be added to map before calling setRemovable method");
         return;
     }
     var removalDiv = document.getElementById(this._addUID("GPremove_ID_" + layerID));
-    console.log(removalDiv.style.display);
+    logger.log(removalDiv.style.display);
     if (removalDiv) {
         if (removable === false) {
             removalDiv.style.display = "none";
@@ -19890,7 +19616,7 @@ LayerSwitcher.prototype._initContainer = function () {
     // on ajoute un écouteur d'évènement sur le bouton (checkbox) de dépliement/repliement des couches,
     // pour modifier la propriété this.collapsed quand on clique dessus
     var context = this;
-    /** event listener */
+    // event listener
     var changeCollapsed = function changeCollapsed(e) {
         this.collapsed = !e.target.checked;
         // on génère nous même l'evenement OpenLayers de changement de pté
@@ -19985,9 +19711,9 @@ LayerSwitcher.prototype._addMapLayers = function (map) {
     }, this);
 
     // on récupère l'ordre d'affichage des couches entre elles dans la carte, à partir de zindex.
-    /** fonction de callback appelée au changement de zindex d'une couche  */
+    // fonction de callback appelée au changement de zindex d'une couche
     var updateLayersOrder = function updateLayersOrder(e) {
-        context._updateLayersOrder.call(context, e);
+        context._updateLayersOrder(e);
     };
     for (var zindex in this._layersIndex) {
         if (this._layersIndex.hasOwnProperty(zindex)) {
@@ -20020,6 +19746,9 @@ LayerSwitcher.prototype._addMapLayers = function (map) {
  * create layer div (to append to control DOM element).
  *
  * @param {Object} layerOptions - layer options (id, title, description, legends, metadata, quicklookUrl ...)
+ *
+ * @returns {DOMElement} DOM element
+ *
  * @private
  */
 LayerSwitcher.prototype._createLayerDiv = function (layerOptions) {
@@ -20153,9 +19882,9 @@ LayerSwitcher.prototype._updateLayersOrder = function () {
     // on réordonne les couches entre elles dans la carte, à partir des zindex stockés ci-dessus.
     this._lastZIndex = 0;
     var context = this;
-    /** fonction de callback appelée au changement de zindex d'une couche  */
+    // fonction de callback appelée au changement de zindex d'une couche
     var updateLayersOrder = function updateLayersOrder(e) {
-        context._updateLayersOrder.call(context, e);
+        context._updateLayersOrder(e);
     };
     this._layersOrder = [];
     for (var zindex in this._layersIndex) {
@@ -20187,7 +19916,7 @@ LayerSwitcher.prototype._updateLayersOrder = function () {
             this._layerListContainer.appendChild(layerOptions.div);
         }
     } else {
-        console.log("[ol.control.LayerSwitcher] _updateLayersOrder : layer list container not found to update layers order ?!");
+        logger.log("[ol.control.LayerSwitcher] _updateLayersOrder : layer list container not found to update layers order ?!");
     }
 };
 
@@ -20292,9 +20021,9 @@ LayerSwitcher.prototype._onDragAndDropLayerClick = function () {
     // INFO : e.oldIndex et e.newIndex marchent en mode AMD mais pas Bundle.
     var map = this.getMap();
     var context = this;
-    /** fonction de callback appelée au changement de zindex d'une couche  */
+    // fonction de callback appelée au changement de zindex d'une couche
     var updateLayersOrder = function updateLayersOrder(e) {
-        context._updateLayersOrder.call(context, e);
+        context._updateLayersOrder(e);
     };
 
     // on récupère l'ordre des div dans le contrôle pour réordonner les couches (avec zindex)
@@ -20371,6 +20100,7 @@ LayerSwitcher.prototype.getLayerDOMId = function (olLayer) {
 
     this.getMap().getLayers().forEach(function (layer) {
         if (layer == olLayer) {
+            // FIXME object comparison
             foundId = layer.hasOwnProperty("gpLayerId") ? layer.gpLayerId : null;
         }
     }, this);
@@ -20430,7 +20160,7 @@ LayerSwitcher.prototype.getLayerInfo = function (layer) {
 exports.default = LayerSwitcher;
 
 /***/ }),
-/* 11 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20440,15 +20170,15 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _ol = __webpack_require__(0);
+var _ol = __webpack_require__(1);
 
 var _ol2 = _interopRequireDefault(_ol);
 
-var _LoggerByDefault = __webpack_require__(2);
+var _LoggerByDefault = __webpack_require__(0);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
-var _Interactions = __webpack_require__(17);
+var _Interactions = __webpack_require__(15);
 
 var _Interactions2 = _interopRequireDefault(_Interactions);
 
@@ -20845,7 +20575,7 @@ var Measures = {
         var self = this;
         this.measureDraw = new _ol2.default.interaction.Draw({
             source: this.measureSource,
-            /** condition : permet de gerer la suppression des derniers points saisis */
+            // condition : permet de gerer la suppression des derniers points saisis
             condition: function condition(event) {
                 if (event.originalEvent.ctrlKey) {
                     if (self.sketch) {
@@ -20926,7 +20656,7 @@ var Measures = {
 exports.default = Measures;
 
 /***/ }),
-/* 12 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20936,15 +20666,11 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _ol = __webpack_require__(0);
-
-var _ol2 = _interopRequireDefault(_ol);
-
-var _LoggerByDefault = __webpack_require__(2);
+var _LoggerByDefault = __webpack_require__(0);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
-var _Utils = __webpack_require__(1);
+var _Utils = __webpack_require__(2);
 
 var _Utils2 = _interopRequireDefault(_Utils);
 
@@ -21018,13 +20744,325 @@ _Utils2.default.assign(MeasureToolBox, _MeasureToolBoxDOM2.default);
 exports.default = MeasureToolBox;
 
 /***/ }),
-/* 13 */
+/* 11 */
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE_13__;
+module.exports = __WEBPACK_EXTERNAL_MODULE_11__;
 
 /***/ }),
-/* 14 */
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var LayerUtils = {
+
+    /**
+     * Obtenir le ZoomLevel à partir du ScaleDenominator
+     * @param {Number} scaleDenominator - the scale denominator
+     * @param {String} crs - the crs
+     *
+     * @returns {Integer} zoom level
+     */
+    getZoomLevelFromScaleDenominator: function getZoomLevelFromScaleDenominator(scaleDenominator, crs) {
+        // ------------------------------------------------- //
+        // Code issu de l'API Geoportal/Catalogue/Config.js  //
+        // ------------------------------------------------- //
+        //     var configuration = Gp.Config;
+        //     var general = configuration.generalOptions;
+        //     var layers  = configuration.layersContext;
+        //
+        //     for (var tms in general.tileMatrixSets) {
+        //         var tileMatrixSet = general.tileMatrixSets[tms];
+        //         // IGN's WMTS bug : epsg:nnnn instead of EPSG:nnnn
+        //         var crs = tileMatrixSet.supportedCRS = tileMatrixSet.supportedCRS.replace(/epsg/,"EPSG");
+        //
+        //         if (!Geoportal.Catalogue.CRSRESOLUTIONS.hasOwnProperty(crs)) {
+        //             var p= new OpenLayers.Projection(crs);
+        //             Geoportal.Catalogue.CRSRESOLUTIONS[crs]= [];
+        //             var matrixIds= tileMatrixSet.matrixIds;
+        //             for (var i= 0, li= matrixIds.length; i<li; ++i) {
+        //                 var mid= matrixIds[i];
+        //                 Geoportal.Catalogue.CRSRESOLUTIONS[crs].push(
+        //                     0.00028*mid.scaleDenominator
+        //                     /(OpenLayers.METERS_PER_INCH*OpenLayers.INCHES_PER_UNIT[p.getUnits()]));
+        //                     mid.supportedCRS= mid.supportedCRS.replace(/epsg/,"EPSG");
+        //                 }
+        //                 Geoportal.Catalogue.CRSRESOLUTIONS[crs].sort(function (a,b){ return b-a; });
+        //             }
+        //         }
+        //         var llR= Geoportal.Catalogue.CRSRESOLUTIONS['CRS:84'];
+        //         if (!llR) {
+        //             llR= Geoportal.Catalogue.CRSRESOLUTIONS['CRS:84']= general.resolutions.slice();
+        //         }
+        //         var wmR= Geoportal.Catalogue.CRSRESOLUTIONS['EPSG:3857'];
+        //         if (!wmR) {//FIXME : should never happened !!
+        //             // reproject resolutions from CRS84 to WebMercator (transform resolutions from degree/px to meter/px)
+        //             wmR= Geoportal.Catalogue.CRSRESOLUTIONS['EPSG:3857']= new Array(llR.length);
+        //             for (var i= 0, len= llR.length; i<len; i++) {
+        //                 var pt= new OpenLayers.LonLat(llR[i], 0);
+        //                 pt.transform(OpenLayers.Projection.CRS84, OpenLayers.Projection.WebMercator);
+        //                 wmR[i]= pt.lon;
+        //             }
+        //         }
+        //         Geoportal.Catalogue.RESOLUTIONS= wmR;
+        //
+        //         var getResolutionsFromCRS= function(crs) {
+        //             if (OpenLayers.Projection.WebMercator.isAliasOf(crs)) {
+        //                 return wmR;
+        //             }
+        //             if (OpenLayers.Projection.CRS84.isAliasOf(crs)) {
+        //                 return llR;
+        //             }
+        //             return Geoportal.Catalogue.CRSRESOLUTIONS[crs]?Geoportal.Catalogue.CRSRESOLUTIONS[crs]:null ;
+        //         };
+        //
+        //         var retrieveZoomFromResolution= function(resolutions, resolution) {
+        //             for (var i= 0, li= resolutions.length; i<li; i++) {
+        //                 if (resolutions[i]-resolution <= resolutions[li-1]) {
+        //                     return i;
+        //                 }
+        //             }
+        //             return -1;
+        //         };
+        //
+        //         var getZoomLevelFromScaleDenominator= function(scaleDenominator,crs) {
+        //             var resolution= scaleDenominator * 0.00028;
+        //             var R= getResolutionsFromCRS(crs);
+        //             if (R) {
+        //                 return retrieveZoomFromResolution(R,resolution);
+        //             }
+        //             resolution= resolution/(OpenLayers.METERS_PER_INCH * OpenLayers.INCHES_PER_UNIT["degrees"]);
+        //             return retrieveZoomFromResolution(llR,resolution);
+        //         };
+        //
+        //         var getZoomLevelFromResolution= function(resolution,crs){
+        //             var R= getResolutionsFromCRS(crs);
+        //             if (R) {
+        //                 return retrieveZoomFromResolution(R,resolution);
+        //             }
+        //             var pt0= new OpenLayers.LonLat(0, 0);
+        //             var pt1= new OpenLayers.LonLat(1, 0);
+        //             pt0.transform(new OpenLayers.Projection(crs),OpenLayers.Projection.CRS84);
+        //             pt1.transform(new OpenLayers.Projection(crs),OpenLayers.Projection.CRS84);
+        //             resolution= resolution*(Math.abs(pt1.lon-pt0.lon));
+        //             return retrieveZoomFromResolution(llR,resolution);
+        //         };
+
+        // par defaut, on utilise la projection WebMercator (EPSG:3857 = PM)
+        // soit la liste des resolutions natives
+        var resolutionsNatives = {};
+        switch (crs) {
+            case "EPSG:2154":
+                resolutionsNatives = {
+                    0: 104579.224549894,
+                    1: 52277.5323537905,
+                    2: 26135.4870785954,
+                    3: 13066.8913818,
+                    4: 6533.2286041135,
+                    5: 3266.5595244627,
+                    6: 1633.2660045974,
+                    7: 816.629554986,
+                    8: 408.3139146768,
+                    9: 204.1567415109,
+                    10: 102.0783167832,
+                    11: 51.0391448966,
+                    12: 25.5195690743,
+                    13: 12.7597836936,
+                    14: 6.379891636,
+                    15: 3.1899457653,
+                    16: 1.5949728695,
+                    17: 0.7974864315,
+                    18: 0.3987432149,
+                    19: 0.1993716073,
+                    20: 0.0996858037,
+                    21: 0.0498429018
+                };
+                break;
+            default:
+                resolutionsNatives = {
+                    0: 156543.033928041,
+                    1: 78271.51696402048,
+                    2: 39135.758482010235,
+                    3: 19567.87924100512,
+                    4: 9783.93962050256,
+                    5: 4891.96981025128,
+                    6: 2445.98490512564,
+                    7: 1222.99245256282,
+                    8: 611.49622628141,
+                    9: 305.7481131407048,
+                    10: 152.8740565703525,
+                    11: 76.43702828517624,
+                    12: 38.21851414258813,
+                    13: 19.10925707129406,
+                    14: 9.554628535647032,
+                    15: 4.777314267823516,
+                    16: 2.388657133911758,
+                    17: 1.194328566955879,
+                    18: 0.5971642834779395,
+                    19: 0.2985821417389697,
+                    20: 0.1492910708694849,
+                    21: 0.0746455354347424
+                };
+                break;
+        }
+
+        // gestion des autres SRS
+        // TODO
+        // if (crs) {
+        // }
+
+        var resolution = scaleDenominator * 0.00028;
+
+        for (var index in resolutionsNatives) {
+            if (resolutionsNatives.hasOwnProperty(index)) {
+                if (resolutionsNatives[index] <= resolution) {
+                    index = parseInt(index, 10);
+                    return index;
+                }
+            }
+        }
+
+        return 0; // -1 ?
+    },
+
+    /**
+     * Get attributions list for a layer, based on current zoom and extent
+     *
+     * @param {Object} params - function params
+     * @param {Array.<Float>} params.extent - map current geographical extent (EPSG:4326) : [top, left, bottom, right] = [maxy, minx, miny, maxx]
+     * @param {Number} params.zoom - map current zoom
+     * @param {String} params.crs - map current projection code (ex "EPSG:2154")
+     * @param {Boolean} params.visibility - layer visibility
+     * @param {Gp.Services.Config.Originator} params.originators - resource originators (from Gp.Config.layers[].originators)
+     * @returns {Object} attributions - associative array, mapping originators url (keys) with their properties : html attributions elements
+     */
+    getAttributions: function getAttributions(params) {
+        var zoom = params.zoom;
+
+        var attributions = [];
+
+        if (params.originators != null && params.visibility) {
+            // drawLogo = boolean, true if attribution should be displayed (zoom, extent), false otherwise
+            var drawLogo;
+            for (var j = 0, jl = params.originators.length; j < jl; j++) {
+                drawLogo = true;
+                var originator = params.originators[j];
+
+                var constraints = params.originators[j].constraints || [];
+                for (var k = 0, kl = constraints.length; k < kl; k++) {
+                    var constraint = constraints[k];
+                    drawLogo = true;
+
+                    var minZoomLevel = this.getZoomLevelFromScaleDenominator(constraint.maxScaleDenominator, params.crs);
+                    var maxZoomLevel = this.getZoomLevelFromScaleDenominator(constraint.minScaleDenominator, params.crs) || 21;
+
+                    // min zoom constraints
+                    if (minZoomLevel && minZoomLevel > zoom) {
+                        drawLogo = false;
+                    }
+
+                    // max zoom constraints
+                    if (drawLogo && maxZoomLevel !== null && maxZoomLevel < zoom) {
+                        drawLogo = false;
+                    }
+
+                    // bbox constraints
+                    var bbox = constraint.bbox;
+                    if (drawLogo && bbox) {
+                        drawLogo = false;
+                        var viewExtent = params.extent;
+                        if (viewExtent) {
+                            var bounds = [bbox.top, bbox.left, bbox.bottom, bbox.right];
+                            if (this.intersects(viewExtent, bounds)) {
+                                // at least one constraint matches the map ones
+                                drawLogo = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if (drawLogo) {
+                    // on a un originator qui correspond au zoom et à l'étendue.
+
+                    var logo = originator.logo;
+                    var url = originator.url;
+                    var name = originator.name ? originator.name : "";
+                    var text = originator.attribution;
+
+                    var container = document.createElement("div");
+                    container.className = "gp-control-attribution";
+
+                    // on crée un lien dans tous les cas (même s'il ne pointe pas vers une référence), pour avoir accès à la class CSS (pour surcharge)
+                    var link = null;
+                    link = document.createElement("a");
+                    link.className = "gp-control-attribution-link";
+                    link.target = "_blank";
+                    container.appendChild(link);
+                    if (url) {
+                        link.href = url;
+                    }
+
+                    var bImage = !!logo;
+                    var image = null;
+                    // si on a un logo, on l'affiche à l'interieur du lien
+                    if (bImage) {
+                        image = document.createElement("img");
+                        if (link) {
+                            image.className = "gp-control-attribution-image";
+                            link.appendChild(image);
+                        } else {
+                            image.className = "";
+                            container.appendChild(image);
+                        }
+                        image.src = logo; // FIXME : mixContent !
+                        image.title = text || name;
+                        image.style.height = "30px";
+                        image.style.width = "30px";
+                    } else {
+                        // sinon, on affiche le nom de l'originator, ou sa description ou l'url.
+                        if (name) {
+                            link.textContent = name;
+                        } else if (text) {
+                            link.textContent = text;
+                        } else if (url) {
+                            link.textContent = url;
+                        } else {
+                            link.textContent = "";
+                        }
+                    }
+
+                    attributions.push(container.innerHTML + " ");
+                }
+            }
+        }
+
+        return attributions;
+    },
+
+    /**
+     * Determines if one extent (extent1) intersects another (extent2)
+     *
+     * @param {Array.<Float>} extent1 - First extent : [top, left, bottom, right] = [maxy, minx, miny, maxx]
+     * @param {Array.<Float>} extent2 - Second extent : [top, left, bottom, right] = [maxy, minx, miny, maxx]
+     * @return {Boolean} intersects - True if the two extents intersect, false otherwise.
+     */
+    intersects: function intersects(extent1, extent2) {
+        var intersectsX = extent1[1] <= extent2[3] && extent2[1] <= extent1[3];
+        var intersectsY = extent1[2] <= extent2[0] && extent2[2] <= extent1[0];
+        return intersectsX && intersectsY;
+    }
+};
+
+exports.default = LayerUtils;
+
+/***/ }),
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21034,7 +21072,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _LoggerByDefault = __webpack_require__(2);
+var _LoggerByDefault = __webpack_require__(0);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
@@ -21048,13 +21086,15 @@ var ProxyUtils = {
      * @param {Object} [proxyOptions] - Object defining proxy options.
      * @param {String} proxyOptions.proxyUrl - Proxy URL.
      * @param {Array.<String>} [proxyOptions.noProxyDomains] - Proxy will not be used for this list of domain names.
+     *
+     * @returns {String} proxy url
      */
     proxifyUrl: function proxifyUrl(url, proxyOptions) {
         // logger
 
         var logger = _LoggerByDefault2.default.getLogger("proxifyUrl");
 
-        if (!proxyOptions || !proxyOptions.hasOwnProperty("proxyUrl") || proxyOptions.proxyUrl === null || proxyOptions.proxyUrl.trim().length == 0) {
+        if (!proxyOptions || !proxyOptions.hasOwnProperty("proxyUrl") || proxyOptions.proxyUrl === null || proxyOptions.proxyUrl.trim().length === 0) {
             return url;
         }
         // on regarde si l'url nest pas dans les domaines sans proxy
@@ -21074,7 +21114,7 @@ var ProxyUtils = {
 exports.default = ProxyUtils;
 
 /***/ }),
-/* 15 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21086,577 +21126,15 @@ Object.defineProperty(exports, "__esModule", {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _ol = __webpack_require__(0);
+var _ol = __webpack_require__(1);
 
 var _ol2 = _interopRequireDefault(_ol);
 
-var _gp = __webpack_require__(4);
-
-var _gp2 = _interopRequireDefault(_gp);
-
-var _LoggerByDefault = __webpack_require__(2);
+var _LoggerByDefault = __webpack_require__(0);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
-var _ProxyUtils = __webpack_require__(14);
-
-var _ProxyUtils2 = _interopRequireDefault(_ProxyUtils);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// import $__xmldom from "xmldom";
-
-var logger = _LoggerByDefault2.default.getLogger("GfiUtils");
-
-var GfiUtils = {
-
-    /**
-     * Return layer format
-     *
-     * @param {ol.layer.Layer} l - layer openlayers
-     *
-     * @return {String} format - layer format can be wms, wmts, vector or unknown
-     *
-     */
-    getLayerFormat: function getLayerFormat(l) {
-        var source = l.getSource();
-        if (source instanceof _ol2.default.source.TileWMS || source instanceof _ol2.default.source.ImageWMS) {
-            return "wms";
-        }
-        if (source instanceof _ol2.default.source.WMTS) {
-            return "wmts";
-        }
-        if (source instanceof _ol2.default.source.Vector || source instanceof _ol2.default.source.VectorTile) {
-            return "vector";
-        }
-        return "unknown";
-    },
-
-    /**
-     * Info Popup creation and display
-     *
-     * @param {ol.Map} map - map openlayers
-     * @param {ol.Coordinate} coords - coordinates where to anchor popup.
-     * @param {String} content - content to display
-     * @param {String} [contentType='text/html'] - content mime-type
-     * @param {Object} autoPanOptions - Auto-pan pop-up options
-     * @param {Boolean} [autoPanOptions.autoPan] - Specifies whether the map should auto-pan if the pop-up is rendered outside of the canvas
-     * @param {olx.OverlayPanOptions} [autoPanOptions.autoPanAnimation] - Used to customize the auto-pan animation. See {@link https://openlayers.org/en/latest/apidoc/olx.html#.OverlayPanOptions olx.OverlayPanOptions}.
-     * @param {Number} [autoPanOptions.autoPanMargin] - Margin (in pixels) between the pop-up and the border of the map when autopanning. Default is 20.
-     * @return {Boolean} displayed - indicates if something has been displayed
-     */
-    displayInfo: function displayInfo(map, coords, content, contentType, autoPanOptions) {
-        logger.trace("[GfiUtils] : displayInfo...");
-
-        if (!contentType) {
-            contentType = "text/html";
-        }
-
-        if (content === null) {
-            return;
-        }
-
-        var _htmlDoc = null;
-        var _parser = null;
-
-        var _content = content;
-        _content = _content.replace(/\n/g, "");
-        _content = _content.replace(/(>)\s*(<)/g, "$1$2");
-
-        var scope = typeof window !== "undefined" ? window : null;
-
-        if (( false ? "undefined" : _typeof(exports)) === "object" && window === null) {
-            // code for nodejs
-            var DOMParser = __webpack_require__(13).DOMParser;
-            _parser = new DOMParser();
-            _htmlDoc = _parser.parseFromString(_content, contentType);
-        } else if (scope.DOMParser) {
-            // code for modern browsers
-            _parser = new scope.DOMParser();
-            _htmlDoc = _parser.parseFromString(_content, contentType);
-        } else if (scope.ActiveXObject) {
-            // code for old IE browsers
-            _htmlDoc = new scope.ActiveXObject("Microsoft.XMLDOM");
-            _htmlDoc.async = false;
-            _htmlDoc.loadXML(_content);
-        } else {
-            console.log("Incompatible environment for DOM Parser !");
-            return false;
-        }
-
-        var body = _htmlDoc.getElementsByTagName("body");
-        if (body && body.length === 1) {
-            if (!body[0].hasChildNodes()) {
-                return false;
-            }
-        }
-
-        // Affichage des features.
-        var element = document.createElement("div");
-        element.className = "gp-feature-info-div";
-
-        var closer = document.createElement("input");
-        closer.type = "button";
-        closer.className = "gp-styling-button closer";
-
-        /**
-         * fait disparaître la popup au clic sur x
-         */
-        closer.onclick = function () {
-            if (map.featuresOverlay) {
-                map.removeOverlay(map.featuresOverlay);
-                map.featuresOverlay = null;
-            }
-            return false;
-        };
-
-        var contentDiv = document.createElement("div");
-        contentDiv.className = "gp-features-content-div";
-        contentDiv.innerHTML = content;
-        /*
-        if (content instanceof HTMLElement) {
-            this.logger.trace("[Openlayers] : _displayInfo : pure HTMLElement") ;
-            contentDiv.appendChild(content) ;
-        } else {
-            var parser = new DOMParser() ;
-            var doc = null ;
-            try {
-                doc = parser.parseFromString(content,contentType) ;
-                this.logger.trace("[Openlayers] : _displayInfo : HTMLElement from parser") ;
-                // FIXME : avec cette methode, on a une balise html + body qui s'insère...
-                contentDiv.appendChild(doc.documentElement) ;
-            } catch (e) {
-                console.log(e) ;
-                this.logger.trace("[Openlayers] : _displayInfo : parsing content failed (not HTML)") ;
-                // en cas d'erreur : on se contente de recopier le contenu.
-                contentDiv.innerHTML = content ;
-            }
-        }
-        */
-        element.appendChild(contentDiv);
-        element.appendChild(closer);
-
-        if (map.featuresOverlay) {
-            // fermeture d'une éventuelle popup déjà ouverte.
-            map.removeOverlay(map.featuresOverlay);
-            map.featuresOverlay = null;
-        }
-        map.featuresOverlay = new _ol2.default.Overlay({
-            // id : id,
-            element: element,
-            autoPan: autoPanOptions.autoPan,
-            autoPanAnimation: autoPanOptions.autoPanAnimation,
-            autoPanMargin: autoPanOptions.autoPanMargin,
-            positioning: "bottom-center",
-            insertFirst: false, // popup appears on top of other overlays if any
-            stopEvent: true
-        });
-        map.addOverlay(map.featuresOverlay);
-        map.featuresOverlay.setPosition(coords);
-        map.featuresOverlay.render();
-
-        return true;
-    },
-
-    /**
-     * Gets HTML content from features array
-     *
-     * @param {ol.Map} map - map openlayers
-     * @param {Array.<ol.Features>} features - openlayers features Array
-     * @returns {HTMLElement} HTML content.
-     */
-    features2html: function features2html(map, features) {
-        var content = document.createElement("div");
-        features.forEach(function (f) {
-            var props = f.getProperties();
-            if (props.hasOwnProperty("name")) {
-                var nameDiv = document.createElement("div");
-                nameDiv.className = "gp-att-name-div";
-                // nameDiv.appendChild(document.createTextNode(props["name"])) ;
-                nameDiv.insertAdjacentHTML("afterbegin", props["name"]);
-                content.appendChild(nameDiv);
-            }
-            if (props.hasOwnProperty("description")) {
-                var descDiv = document.createElement("div");
-                descDiv.className = "gp-att-description-div";
-                // descDiv.appendChild(document.createTextNode(props["description"])) ;
-                descDiv.insertAdjacentHTML("afterbegin", props["description"]);
-                content.appendChild(descDiv);
-            }
-            var p = null;
-            var others = false;
-            var oDiv = null;
-            var ul = null;
-            var li = null;
-            for (p in props) {
-                if (p == "geometry" || p == "value" || p == "name" || p == "description" || p == "styleUrl") {
-                    continue;
-                }
-                // FIXME La lecture des extensions GPX n'est pas gérée !
-                if (p == "extensionsNode_" && props[p] === undefined) {
-                    continue;
-                }
-                if (!others) {
-                    oDiv = document.createElement("div");
-                    oDiv.className = "gp-att-others-div";
-                    ul = document.createElement("ul");
-                    others = true;
-                }
-                li = document.createElement("li");
-                var span = document.createElement("span");
-                span.className = "gp-attname-others-span";
-                span.appendChild(document.createTextNode(p + " : "));
-                li.appendChild(span);
-                li.appendChild(document.createTextNode(props[p]));
-                ul.appendChild(li);
-            }
-            if (ul) {
-                oDiv.appendChild(ul);
-                content.appendChild(oDiv);
-            }
-        }, map);
-
-        // pas de contenu !
-        if (!content.hasChildNodes()) {
-            content = null;
-        }
-
-        return content;
-    },
-
-    /**
-     * Indicates if there is a feature at the given coordinates for the given layer
-     *
-     * @param {ol.Map} map - map openlayers
-     * @param {ol.layer.Layer} olLayer - vector layer openlayers
-     * @param {ol.Coordinate} olCoordinate - coordinates pointed by user
-     * @return {Boolean}
-     *
-     */
-    layerGetFeatureAtCoordinates: function layerGetFeatureAtCoordinates(map, olLayer, olCoordinate) {
-        var pixel = map.getPixelFromCoordinate(olCoordinate);
-        return map.hasFeatureAtPixel(pixel, function (layer) {
-            if (layer === olLayer) {
-                return true;
-            }
-            return false;
-        });
-    },
-
-    /**
-     * Get information from all the features located at the specified coordinates
-     * and belonging to the layers list argument. Those information are gathered
-     * and displayed in an info popup.
-     *
-     * @param {ol.Map} map - map openlayers
-     * @param {ol.Coordinate} olCoordinate - coordinates pointed by user
-     * @param {Array.<ol.layer.Layer>} olLayers - layers requested
-     *
-     */
-    displayVectorFeatureInfo: function displayVectorFeatureInfo(map, olCoordinate, olLayers, autoPanOptions) {
-        var pixel = map.getPixelFromCoordinate(olCoordinate);
-
-        // couches vecteur : on remplit un tableau avec les features à proximité.
-        var features = [];
-        map.forEachFeatureAtPixel(pixel, function (feature, layer) {
-            if (!olLayers || olLayers.indexOf(layer) > -1) {
-                features.push(feature);
-            }
-        });
-        if (features.length == 0) {
-            // no features
-            return false;
-        }
-        var content = this.features2html(map, features);
-        // pas de contenu !
-        if (content === null) {
-            return false;
-        }
-        // Affichage des features.
-        this.displayInfo(map, olCoordinate, content.innerHTML, "text/html", autoPanOptions);
-        // this._displayInfo(evt.coordinate,content,"text/html") ;
-        return true;
-    },
-
-    /**
-     * Method to manage the request of information from a list of layers already added to the map.
-     * Among the given list of layers only the visible ones are requested.
-     * The priority is given to the upper layer having a feature at the pointed coordinates.
-     * If the first (upper) feature encountered is from a vector layer the info popup will
-     * display the information of the features from all visible vector layers and located at
-     * the specified coordinates.
-     *
-     * @param {ol.Map} map - map openlayers
-     * @param {ol.Coordinate} olCoordinate - coordinates pointed by user
-     * @param {Array.<Object>} gfiLayers - list of layers which can be requested through the control. Each array element is an object, with following properties :
-     * @param {ol.layer.Layer} gfiLayers.obj - ol.layer.Layer layer handled by the control (that has been added to map).
-     * @param {String} [gfiLayers.event] - name of the mouse event triggering getFeatureInfo on this layer (that has been added to map). allowed values are : 'singleclick', 'dblclick' and 'contextmenu'
-     * @param {String} [gfiLayers.infoFormat] - indicates the format mime-type of the response of GetFeatureInfo requests.
-     * @param {Object} [proxyOptions] - options for poxy configuration :
-     * @param {String} [proxyOptions.proxyUrl] - Proxy URL to avoid cross-domain problems, if not already set in mapOptions. Mandatory to import WMS and WMTS layer.
-     * @param {Array.<String>} [proxyOptions.noProxyDomains] - Proxy will not be used for this list of domain names. Only use if you know what you're doing (if not already set in mapOptions).
-     * @param {Object} [autoPanOptions] - Auto-pan pop-up options
-     * @param {Boolean} [autoPanOptions.autoPan = true] - Specifies whether the map should auto-pan if the pop-up is rendered outside of the canvas. Defaults to true.
-     * @param {olx.OverlayPanOptions} [autoPanOptions.autoPanAnimation] - Used to customize the auto-pan animation. See {@link https://openlayers.org/en/latest/apidoc/olx.html#.OverlayPanOptions olx.OverlayPanOptions}.
-     * @param {Number} [autoPanOptions.autoPanMargin] - Margin (in pixels) between the pop-up and the border of the map when autopanning. Default is 20.
-     *
-     */
-    displayFeatureInfo: function displayFeatureInfo(map, olCoordinate, gfiLayers, proxyOptions, autoPanOptions) {
-        // Layers orders
-        var layersOrdered = {};
-        for (var j = 0; j < gfiLayers.length; j++) {
-            var layer = gfiLayers[j];
-            var position = layer.obj.getZIndex();
-            if (!layersOrdered[position]) {
-                layersOrdered[position] = [];
-            }
-            layersOrdered[position].push(layer);
-        }
-
-        // affichage de la première popup d'informations en partant du dessus...
-        var requests = [];
-        // inversion de l'ordre des layers
-        var positions = Object.keys(layersOrdered);
-        positions.sort(function (a, b) {
-            return b - a;
-        });
-
-        // si la 1ere couche affichable est de type vecteur on affiche les infos de toutes
-        // les couches vecteur qui suivent. Par consequent, une seule requete vecteur suffit
-        // (celle correspondant au premier objet vecteur rencontre)
-        var foundFeature = false;
-
-        for (var k = 0; k < positions.length; k++) {
-            var p = positions[k];
-            for (var h = 0; h < layersOrdered[p].length; ++h) {
-                var l = layersOrdered[p][h].obj;
-                var infoFormat = layersOrdered[p][h].infoFormat || "text/html";
-                var minMaxResolutionOk = true;
-                if (l.minResolution && l.minResolution > map.getResolution()) {
-                    minMaxResolutionOk = false;
-                }
-                if (minMaxResolutionOk && l.maxResolution && l.maxResolution < map.getResolution()) {
-                    minMaxResolutionOk = false;
-                }
-
-                if (l.getVisible() && minMaxResolutionOk) {
-                    var format = this.getLayerFormat(l);
-                    if (format == "vector") {
-                        if (!foundFeature && this.layerGetFeatureAtCoordinates(map, l, olCoordinate)) {
-                            requests.push({
-                                format: format,
-                                scope: this,
-                                coordinate: olCoordinate
-                            });
-                        }
-                        continue;
-                    } else if (format != "wms" && format != "wmts") {
-                        console.log("[ERROR] DisplayFeatureInfo - layer format '" + format + "' not allowed");
-                        continue;
-                    }
-
-                    var _res = map.getView().getResolution();
-                    var _url = null;
-                    if (format == "wmts") {
-                        _url = l.getSource().getGetFeatureInfoUrl(olCoordinate, _res, map.getView().getProjection(), {
-                            INFOFORMAT: infoFormat
-                        });
-                    } else {
-                        _url = l.getSource().getGetFeatureInfoUrl(olCoordinate, _res, map.getView().getProjection(), {
-                            INFO_FORMAT: infoFormat
-                        });
-                    }
-
-                    requests.push({
-                        // id : _id,
-                        format: infoFormat,
-                        url: _ProxyUtils2.default.proxifyUrl(_url, proxyOptions),
-                        scope: this,
-                        coordinate: olCoordinate
-                    });
-                }
-            }
-        }
-
-        // on recupere les couches vecteur ordonnees (a utiliser dans le cas de l'affichage de donnees vecteur)
-        var vectorLayersOrdered = null;
-
-        /** call request sync */
-        function requestsSync(list, iterator, callback) {
-            if (list.length === 0) {
-                return;
-            }
-            var nextItemIndex = 0;
-            /** function report next request */
-            function report(displayed) {
-                nextItemIndex++;
-                if (displayed || nextItemIndex === list.length) {
-                    callback();
-                } else {
-                    iterator(list[nextItemIndex], report);
-                }
-            }
-            // instead of starting all the iterations, we only start the 1st one
-            iterator(list[0], report);
-        };
-
-        var context = this;
-
-        requestsSync(requests, function (data, report) {
-            if (data.format == "vector") {
-                if (!vectorLayersOrdered) {
-                    vectorLayersOrdered = [];
-                    for (var m = 0; m < positions.length; m++) {
-                        var p = positions[m];
-                        for (var n = 0; n < layersOrdered[p].length; ++n) {
-                            vectorLayersOrdered.push(layersOrdered[p][n].obj);
-                        }
-                    }
-                }
-                report(data.scope.displayVectorFeatureInfo(map, data.coordinate, vectorLayersOrdered, autoPanOptions));
-            } else {
-                // var self = data.scope;
-                _gp2.default.Protocols.XHR.call({
-                    url: data.url,
-                    method: "GET",
-                    scope: data.scope,
-                    /** Handles GFI response */
-                    onResponse: function onResponse(resp) {
-                        var exception = false;
-
-                        // a t on une exception ?
-                        if (resp.trim().length === 0 || resp.indexOf("java.lang.NullPointerException") !== -1 || resp.indexOf("not queryable") !== -1) {
-                            // rien à afficher
-                            exception = true;
-                        }
-
-                        // on affiche la popup GFI !
-                        var displayed = !exception && context.displayInfo(map, data.coordinate, resp, "text/html", autoPanOptions);
-                        // on reporte sur la prochaine requête...
-                        report(displayed);
-                    },
-                    /** Handles GFI response error */
-                    onFailure: function onFailure(error) {
-                        console.log(error);
-                        report(false);
-                    }
-                });
-            }
-        }, function () {
-            logger.trace("Finish sync to GFI !");
-        });
-    },
-
-    /**
-     * Function returning the clicked position of an event
-     */
-    getPosition: function getPosition(e, map) {
-        if (e.coordinate) {
-            return e.coordinate;
-        }
-
-        var pixel = [0, 0];
-
-        if (e.offsetX || e.offsetY) {
-            pixel[0] = e.offsetX; // + document.body.scrollLeft + document.documentElement.scrollLeft;
-            pixel[1] = e.offsetY; // + document.body.scrollTop + document.documentElement.scrollTop;
-        } else if (e.pointerType === "touch") {
-            // a implementer !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-            // Safari iOS / iPhone en mode Touch (cf. hammer)
-            var p = e.pointers[0];
-            pixel[0] = p.pageX;
-            pixel[1] = p.pageY;
-        }
-
-        var coordinate = map.getCoordinateFromPixel(pixel);
-        return coordinate;
-    },
-
-    /**
-     * onDisplayFeatureInfo
-     */
-    onDisplayFeatureInfo: function onDisplayFeatureInfo(e, gfiObj) {
-        if (!gfiObj.isActive()) {
-            return;
-        }
-
-        logger.trace(e);
-
-        var map = gfiObj.getMap();
-
-        if (e.type == "contextmenu" || e.type == "dblclick") {
-            e.preventDefault();
-        } else if (e.type == "singleclick") {
-            var interactions = map.getInteractions().getArray();
-            for (var i = 0; i < interactions.length; i++) {
-                if (interactions[i].getActive() && (interactions[i] instanceof _ol2.default.interaction.Select || interactions[i] instanceof _ol2.default.interaction.Modify || interactions[i] instanceof _ol2.default.interaction.Draw)) {
-                    // si on a une interaction de dessin ou de sélection en cours, on ne fait rien.
-                    return;
-                }
-            }
-        }
-
-        var proxyOptions = {};
-        if (gfiObj._proxyUrl) {
-            proxyOptions.proxyUrl = gfiObj._proxyUrl;
-        }
-        if (gfiObj._noProxyDomains) {
-            proxyOptions.noProxyDomains = gfiObj._noProxyDomains;
-        }
-
-        var autoPanOptions = {};
-        if (gfiObj._autoPan) {
-            autoPanOptions.autoPan = gfiObj._autoPan;
-        }
-        if (gfiObj._autoPanAnimation) {
-            autoPanOptions.autoPanAnimation = gfiObj._autoPanAnimation;
-        }
-        if (gfiObj._autoPanMargin) {
-            autoPanOptions.autoPanMargin = gfiObj._autoPanMargin;
-        }
-
-        var eventLayers = [];
-        for (var j = 0; j < gfiObj._layers.length; ++j) {
-            var event = gfiObj._layers[j].event ? gfiObj._layers[j].event : gfiObj._defaultEvent;
-            if (event == e.type) {
-                var ind = eventLayers.push(gfiObj._layers[j]) - 1;
-                if (!eventLayers[ind].infoFormat) {
-                    eventLayers[ind].infoFormat = gfiObj._defaultInfoFormat;
-                }
-            }
-        }
-
-        var coords = this.getPosition(e, map);
-
-        this.displayFeatureInfo(map, coords, eventLayers, proxyOptions, autoPanOptions);
-    }
-};
-
-exports.default = GfiUtils;
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var _ol = __webpack_require__(0);
-
-var _ol2 = _interopRequireDefault(_ol);
-
-var _LoggerByDefault = __webpack_require__(2);
-
-var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
-
-var _Utils = __webpack_require__(1);
+var _Utils = __webpack_require__(2);
 
 var _Utils2 = _interopRequireDefault(_Utils);
 
@@ -21742,6 +21220,10 @@ KML.prototype.constructor = KML;
 /**
  * Fonction d'indentation d'une chaine de caractères KML ou XML
  * cf. https://stackoverflow.com/questions/376373/pretty-printing-xml-with-javascript/
+ *
+ * @param {String} xml - xml
+ *
+ * @returns {String} kml string
  */
 function _kmlFormattedToString(xml) {
     var reg = /(>)\s*(<)(\/*)/g; // updated Mar 30, 2015
@@ -21786,7 +21268,7 @@ function _kmlFormattedToString(xml) {
         for (var j = 0; j < indent; j++) {
             padding += "\t";
         }
-        if (fromTo == "opening->closing") {
+        if (fromTo === "opening->closing") {
             formatted = formatted.substr(0, formatted.length - 1) + ln + "\n"; // substr removes line break (\n) from prev loop
         } else {
             formatted += padding + ln + "\n";
@@ -21799,6 +21281,10 @@ function _kmlFormattedToString(xml) {
 
 /**
  * Fonction de parsing d'une chaine de caractères KML
+ *
+ * @param {String} kmlString - kml string
+ *
+ * @returns {DOMElement} kml document
  */
 function _kmlParse(kmlString) {
     var kmlDoc = null;
@@ -21807,7 +21293,7 @@ function _kmlParse(kmlString) {
 
     if (( false ? "undefined" : _typeof(exports)) === "object" && window === null) {
         // code for nodejs
-        var DOMParser = __webpack_require__(13).DOMParser;
+        var DOMParser = __webpack_require__(11).DOMParser;
         parser = new DOMParser();
         kmlDoc = parser.parseFromString(kmlString, "text/xml");
     } else if (scope.DOMParser) {
@@ -21820,7 +21306,7 @@ function _kmlParse(kmlString) {
         kmlDoc.async = false;
         kmlDoc.loadXML(kmlString);
     } else {
-        console.log("Incompatible environment for DOM Parser !");
+        logger.log("Incompatible environment for DOM Parser !");
     }
 
     logger.trace(kmlDoc);
@@ -21829,6 +21315,10 @@ function _kmlParse(kmlString) {
 
 /**
  * Fonction de convertion en chaine de caractères.
+ *
+ * @param {DOMElement} kmlDoc - kml document
+ *
+ * @returns {String} kml string
  */
 function _kmlToString(kmlDoc) {
     var oSerializer = new XMLSerializer();
@@ -21844,6 +21334,10 @@ function _kmlToString(kmlDoc) {
  * Les traitements sont de 2 types :
  *  - creation de styles étendus ou correctifs sur le KML
  *  - ajout de styles étendus sur les features
+ *
+ * @param {DOMElement} kmlDoc - kml document
+ * @param {Object[]} features - features
+ * @param {Object} process - process
  *
  * @example
  * // ajoute des fonctionnalités dans le KML
@@ -21979,23 +21473,19 @@ function _kmlRead(kmlDoc, features, process) {
                             if (fctLabel && typeof fctLabel === "function") {
                                 fctLabel(features[index], labelStyle);
                             }
-                        }
-
-                        // C'est uniquement un marker !
-                        else if (iconStyle && !labelStyle) {
-                                var fctIcon = process.iconStyle;
-                                if (fctIcon && typeof fctIcon === "function") {
-                                    fctIcon(features[index], iconStyle);
-                                }
+                            // C'est uniquement un marker !
+                        } else if (iconStyle && !labelStyle) {
+                            var fctIcon = process.iconStyle;
+                            if (fctIcon && typeof fctIcon === "function") {
+                                fctIcon(features[index], iconStyle);
                             }
-
                             // C'est un marker avec un label !
-                            else if (iconStyle && labelStyle) {
-                                    var fctIconLabel = process.iconLabelStyle;
-                                    if (fctIconLabel && typeof fctIconLabel === "function") {
-                                        fctIconLabel(features[index], iconStyle, labelStyle);
-                                    }
-                                }
+                        } else if (iconStyle && labelStyle) {
+                            var fctIconLabel = process.iconLabelStyle;
+                            if (fctIconLabel && typeof fctIconLabel === "function") {
+                                fctIconLabel(features[index], iconStyle, labelStyle);
+                            }
+                        }
                     }
                 }
 
@@ -22011,8 +21501,9 @@ function _kmlRead(kmlDoc, features, process) {
  * This function overloads ol.format.KML.writeFeatures ...
  *
  * @see ol.format.KML.prototype.writeFeatures
- * @param {Array.<Object>} features - Features.
+ * @param {Object[]} features - Features.
  * @param {Object} options - Options.
+ *
  * @return {String} Result.
  */
 KML.prototype.writeFeatures = function (features, options) {
@@ -22024,6 +21515,11 @@ KML.prototype.writeFeatures = function (features, options) {
 
 /**
  * _writeExtendStylesFeatures
+ *
+ * @param {Object[]} features - features
+ * @param {Object} options - options
+ *
+ * @returns {String} kml string formatted
  *
  * @private
  */
@@ -22044,6 +21540,9 @@ KML.prototype._writeExtendStylesFeatures = function (features, options) {
      * On va donc y ajouter qq styles sur le Label (police, halo, ...) :
      * Insertion : PlaceMark>Style>LabelStyle
      *
+     * @param {Object} feature - feature
+     * @param {DOMElement} style - style
+     *
      * @example
      *      <LabelStyleSimpleExtensionGroup fontFamily="Arial" haloColor="16777215" haloRadius="2" haloOpacity="1"/>
      */
@@ -22059,7 +21558,7 @@ KML.prototype._writeExtendStylesFeatures = function (features, options) {
             return;
         }
 
-        /** RGB Colors (RRGGBB) To KML Colors (AABBGGRR) */
+        // RGB Colors (RRGGBB) To KML Colors (AABBGGRR)
         function __convertRGBColorsToKML(data) {
             var strColor = data.toString(16);
 
@@ -22108,6 +21607,9 @@ KML.prototype._writeExtendStylesFeatures = function (features, options) {
      *   - FRACTION
      *   - PIXELS
      *  Insertion du correctif dans le noeud : <PlaceMark><Style>IconStyle
+     *
+     * @param {Object} feature - ol feature
+     * @param {DOMElement} style - style
      *
      *  @example
      *  <Style><IconStyle>
@@ -22158,14 +21660,14 @@ KML.prototype._writeExtendStylesFeatures = function (features, options) {
         }
     };
 
-    /** TODO */
+    // TODO
     var __createStyleToFeatureIconLabel = function __createStyleToFeatureIconLabel(feature, iconStyle, labelStyle) {
         logger.trace("write an icon with a label");
         __createHotSpotStyleIcon(feature, iconStyle);
         __createExtensionStyleLabel(feature, labelStyle);
     };
 
-    /** TODO */
+    // TODO
     var __setNameData = function __setNameData(feature, tags) {
         for (var i = 0; i < tags.length; i++) {
             var tag = tags[i];
@@ -22243,6 +21745,11 @@ KML.prototype.readFeatures = function (source, options) {
 /**
  * _readExtendStylesFeatures
  *
+ * @param {(Document|Node|ArrayBuffer|Object|String)} source - source
+ * @param {olx.format.ReadOptions=} options - options
+ *
+ * @returns {Object[]} features
+ *
  * @private
  */
 KML.prototype._readExtendStylesFeatures = function (source, options) {
@@ -22275,6 +21782,9 @@ KML.prototype._readExtendStylesFeatures = function (source, options) {
      * s'il n'existe pas !
      * - lecture des styles étendus des labels
      *
+     * @param {Object} feature - ol feature
+     * @param {DOMElement} style - style
+     *
      * @example
      * <Placemark>
      *  <description>Un label</description>
@@ -22304,7 +21814,7 @@ KML.prototype._readExtendStylesFeatures = function (source, options) {
             return;
         }
 
-        /** KML Colors (AABBGGRR) To RGB Colors (RRGGBB) */
+        // KML Colors (AABBGGRR) To RGB Colors (RRGGBB)
         function __convertKMLColorsToRGB(data) {
             var color = "";
             color = color + data.substr(6, 2);
@@ -22402,6 +21912,9 @@ KML.prototype._readExtendStylesFeatures = function (source, options) {
     /**
      * Gestion de la balise kml:hostSpot sur les styles d'un Marker
      * - problème avec 'hotspot y === 0' (?)
+     *
+     * @param {Object} feature - ol feature
+     * @param {DOMElement} style - style
      *
      * @example
      * <Placemark>
@@ -22524,6 +22037,9 @@ KML.prototype._readExtendStylesFeatures = function (source, options) {
     /**
      * Gestion de la balise kml:ExtendedData
      *
+     * @param {Object} feature - ol feature
+     * @param {DOMElement[]} extend - extend
+     *
      * @example
      * //--> Marker (Point), LineString, Polygon
      * <ExtendedData>
@@ -22595,7 +22111,13 @@ KML.prototype._readExtendStylesFeatures = function (source, options) {
         });
     };
 
-    /** TODO */
+    /** TODO
+    * @param {Object} feature - ol feature
+    * @param {DOMElement} iconStyle - icon style
+    * @param {DOMElement} labelStyle - label style
+    *
+    *
+    */
     var __getStyleToFeatureIconLabel = function __getStyleToFeatureIconLabel(feature, iconStyle, labelStyle) {
         logger.trace("display icon and label");
         __getExtensionStyleToFeatureLabel(feature, labelStyle);
@@ -22616,7 +22138,7 @@ KML.prototype._readExtendStylesFeatures = function (source, options) {
 exports.default = KML;
 
 /***/ }),
-/* 17 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22626,15 +22148,15 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _ol = __webpack_require__(0);
+var _ol = __webpack_require__(1);
 
 var _ol2 = _interopRequireDefault(_ol);
 
-var _LoggerByDefault = __webpack_require__(2);
+var _LoggerByDefault = __webpack_require__(0);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
-var _Utils = __webpack_require__(1);
+var _Utils = __webpack_require__(2);
 
 var _Utils2 = _interopRequireDefault(_Utils);
 
@@ -22697,6 +22219,9 @@ var Interactions = {
      * sauf l'interaction courrante (si elle est renseignée avec l'option 'current').
      * Il est possible d'ajouter des fonctionnalités via les options.
      * Par defaut, l'option 'clean' est renseignée...
+     *
+     * @param {Object} map - the map
+     * @param {Object} options - options
      */
     unset: function unset(map, options) {
         logger.trace("unset()");
@@ -22741,7 +22266,7 @@ var Interactions = {
 exports.default = Interactions;
 
 /***/ }),
-/* 18 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22751,558 +22276,9 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _proj = __webpack_require__(9);
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _proj2 = _interopRequireDefault(_proj);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Register definition for IGNF, and EPSG CRS.
- * @example
- * Gp.Register.IGNF.AMST63
- *   // return : "+title=Amsterdam 1963 +proj=geocent +towgs84=109.753,-528.133,-362.244,0,0,0,0 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs"
- * Gp.Register.get("IGNF:AMST63")
- *   // same as Gp.Register.IGNF.AMST63
- */
-var Register = {
-
-    /**
-     * instance already loaded into proj4
-     *
-     * @private
-     */
-    isLoaded: false,
-
-    /**
-     * get the definition for a code
-     *
-     * @param {String} name - ie. EPSG:2154 (Lambert)
-     * @returns {Object}
-     */
-    get: function get(name) {
-        if (name === "" || name === null || typeof name === "undefined") {
-            return;
-        }
-
-        var s = name.split(":");
-        if (s.length !== 2) {
-            return;
-        }
-
-        var register = s[0];
-        var code = s[1];
-
-        if (!this.hasOwnProperty(register)) {
-            return;
-        }
-
-        if (!this[register].hasOwnProperty(code)) {
-            return;
-        }
-
-        return this[register][code];
-    },
-
-    /**
-     * load all defs to proj4
-     */
-    load: function load() {
-        if (!this.isLoaded) {
-            var registers = ["IGNF", "EPSG", "CRS"];
-            for (var i = 0; i < registers.length; i++) {
-                var register = registers[i];
-                var codes = this[register];
-                for (var code in codes) {
-                    if (codes.hasOwnProperty(code)) {
-                        var name = register + ":" + code;
-                        _proj2.default.defs(name, this.get(name));
-                    }
-                }
-            }
-            this.isLoaded = true;
-        }
-    },
-
-    // definitions
-    EPSG: {
-        4149: "+title=CH1903 +proj=longlat +ellps=bessel +towgs84=674.374,15.056,405.346,0,0,0,0 +no_defs ",
-        4150: "+title=CH1903plus +proj=longlat +ellps=bessel +towgs84=674.374,15.056,405.346,0,0,0,0 +no_defs ",
-        4151: "+title=CHTRF95 +proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs ",
-        4171: "+title=RGF93 +proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs ",
-        4230: "+title=ED50 +proj=longlat +ellps=intl +no_defs ",
-        4235: "+title=Guyane Francaise +proj=longlat +ellps=intl +no_defs ",
-        4258: "+title=ETRS89 +proj=longlat +ellps=GRS80 +no_defs ",
-        4275: "+title=NTF +proj=longlat +a=6378249.2 +b=6356515 +towgs84=-168,-60,320,0,0,0,0 +no_defs ",
-        4322: "+title=WGS 72 +proj=longlat +ellps=WGS72 +no_defs ",
-        4326: "+title=WGS 84 +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs ",
-        4467: "+proj=utm +zone=21 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
-        4470: "+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs ",
-        4471: "+proj=utm +zone=38 +south +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
-        4474: "+proj=utm +zone=38 +south +ellps=intl +towgs84=-382,-59,-262,0,0,0,0 +units=m +no_defs ",
-        4558: "+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs ",
-        4559: "+proj=utm +zone=20 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
-        4621: "+title=Fort Marigot +proj=longlat +ellps=intl +towgs84=137,248,-430,0,0,0,0 +no_defs ",
-        4622: "+title=Guadeloupe 1948 +proj=longlat +ellps=intl +no_defs ",
-        4623: "+title=CSG67 +proj=longlat +ellps=intl +towgs84=-186,230,110,0,0,0,0 +no_defs ",
-        4624: "+title=RGFG95 +proj=longlat +ellps=GRS80 +towgs84=2,2,-2,0,0,0,0 +no_defs ",
-        4625: "+title=Martinique 1938 +proj=longlat +ellps=intl +no_defs ",
-        4626: "+title=Reunion 1947 +proj=longlat +ellps=intl +no_defs ",
-        4627: "+title=RGR92 +proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs ",
-        4628: "+title=Tahiti 52 +proj=longlat +ellps=intl +towgs84=162,117,154,0,0,0,0 +no_defs ",
-        4629: "+title=Tahaa 54 +proj=longlat +ellps=intl +no_defs ",
-        4630: "+title=IGN72 Nuku Hiva +proj=longlat +ellps=intl +no_defs ",
-        4632: "+title=Combani 1950 +proj=longlat +ellps=intl +towgs84=-382,-59,-262,0,0,0,0 +no_defs ",
-        4633: "+title=IGN56 Lifou +proj=longlat +ellps=intl +no_defs ",
-        4634: "+title=IGN72 Grand Terre +proj=longlat +ellps=intl +no_defs ",
-        4637: "+title=Perroud 1950 +proj=longlat +ellps=intl +towgs84=325,154,172,0,0,0,0 +no_defs ",
-        4638: "+title=Saint Pierre et Miquelon 1950 +proj=longlat +ellps=clrk66 +towgs84=30,430,368,0,0,0,0 +no_defs ",
-        4640: "+title=RRAF 1991 +proj=longlat +ellps=WGS84 +towgs84=0,0,0,0,0,0,0 +no_defs ",
-        4641: "+title=IGN53 Mare +proj=longlat +ellps=intl +no_defs ",
-        4645: "+title=RGNC 1991 +proj=longlat +ellps=intl +towgs84=0,0,0,0,0,0,0 +no_defs ",
-        4687: "+proj=longlat +ellps=GRS80 +no_defs ",
-        4662: "+title=IGN72 Grande Terre +proj=longlat +ellps=intl +no_defs ",
-        4689: "+title=IGN63 Hiva Oa +proj=longlat +ellps=intl +no_defs ",
-        4690: "+title=Tahiti 79 +proj=longlat +ellps=intl +no_defs ",
-        4691: "+title=Moorea 87 +proj=longlat +ellps=intl +towgs84=215.525,149.593,176.229,-3.2624,-1.692,-1.1571,10.4773 +no_defs ",
-        4692: "+title=Maupiti 83 +proj=longlat +ellps=intl +towgs84=217.037,86.959,23.956,0,0,0,0 +no_defs ",
-        4698: "+title=IGN 1962 Kerguelen +proj=longlat +ellps=intl +towgs84=145,-187,103,0,0,0,0 +no_defs ",
-        4749: "+title=RGNC91-93 +proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs ",
-        4750: "+title=ST87 Ouvea +proj=longlat +ellps=WGS84 +towgs84=-56.263,16.136,-22.856,0,0,0,0 +no_defs ",
-        4807: "+title=NTF (Paris) +proj=longlat +a=6378249.2 +b=6356515 +towgs84=-168,-60,320,0,0,0,0 +pm=paris +no_defs ",
-        2056: "+title=CH1903+ / LV95 +proj=somerc +lat_0=46.95240555555556 +lon_0=7.439583333333333 +x_0=2600000 +y_0=1200000 +ellps=bessel +towgs84=674.374,15.056,405.346,0,0,0,0 +units=m +no_defs ",
-        2154: "+title=RGF93 / Lambert-93 +proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
-        2213: "+title=ETRS89 / TM 30 NE +proj=tmerc +lat_0=0 +lon_0=30 +k=0.9996 +x_0=500000 +y_0=0 +ellps=GRS80 +units=m +no_defs ",
-        2969: "+title=Fort Marigot / UTM zone 20N +proj=utm +zone=20 +ellps=intl +towgs84=137,248,-430,0,0,0,0 +units=m +no_defs ",
-        2970: "+title=Guadeloupe 1948 / UTM zone 20N +proj=utm +zone=20 +ellps=intl +units=m +no_defs ",
-        2971: "+title=CSG67 / UTM zone 22N +proj=utm +zone=22 +ellps=intl +towgs84=-186,230,110,0,0,0,0 +units=m +no_defs ",
-        2972: "+title=RGFG95 / UTM zone 22N +proj=utm +zone=22 +ellps=GRS80 +towgs84=2,2,-2,0,0,0,0 +units=m +no_defs ",
-        2973: "+title=Martinique 1938 / UTM zone 20N +proj=utm +zone=20 +ellps=intl +units=m +no_defs ",
-        2975: "+title=RGR92 / UTM zone 40S +proj=utm +zone=40 +south +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
-        2976: "+title=Tahiti 52 / UTM zone 6S +proj=utm +zone=6 +south +ellps=intl +towgs84=162,117,154,0,0,0,0 +units=m +no_defs ",
-        2977: "+title=Tahaa 54 / UTM zone 5S +proj=utm +zone=5 +south +ellps=intl +units=m +no_defs ",
-        2978: "+title=IGN72 Nuku Hiva / UTM zone 7S +proj=utm +zone=7 +south +ellps=intl +units=m +no_defs ",
-        2980: "+title=Combani 1950 / UTM zone 38S +proj=utm +zone=38 +south +ellps=intl +towgs84=-382,-59,-262,0,0,0,0 +units=m +no_defs ",
-        2981: "+title=IGN56 Lifou / UTM zone 58S +proj=utm +zone=58 +south +ellps=intl +units=m +no_defs ",
-        2982: "+title=IGN72 Grand Terre / UTM zone 58S (deprecated) +proj=utm +zone=58 +south +ellps=intl +units=m +no_defs ",
-        2984: "+title=RGNC 1991 / Lambert New Caledonia (deprecated) +proj=lcc +lat_1=-20.66666666666667 +lat_2=-22.33333333333333 +lat_0=-21.5 +lon_0=166 +x_0=400000 +y_0=300000 +ellps=intl +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
-        2986: "+title=Terre Adelie 1950 +proj=stere +towgs84=324.9120,153.2820,172.0260 +a=6378388.0000 +rf=297.0000000000000 +lat_0=-90.000000000 +lon_0=140.000000000 +lat_ts=-67.000000000 +k=0.96027295 +x_0=300000.000 +y_0=-2299363.482 +units=m +no_defs",
-        2987: "+title=Saint Pierre et Miquelon 1950 / UTM zone 21N +proj=utm +zone=21 +ellps=clrk66 +towgs84=30,430,368,0,0,0,0 +units=m +no_defs ",
-        2989: "+title=RRAF 1991 / UTM zone 20N +proj=utm +zone=20 +ellps=WGS84 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
-        2990: "+title=Reunion 1947 / TM Reunion (deprecated) +proj=tmerc +lat_0=-21.11666666666667 +lon_0=55.53333333333333 +k=1 +x_0=50000 +y_0=160000 +ellps=intl +units=m +no_defs ",
-        2995: "+title=IGN53 Mare / UTM zone 58S +proj=utm +zone=58 +south +ellps=intl +units=m +no_defs ",
-        3038: "+proj=utm +zone=26 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
-        3039: "+proj=utm +zone=27 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
-        3040: "+proj=utm +zone=28 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
-        3041: "+proj=utm +zone=29 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
-        // 3042 : "+proj=utm +zone=30 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
-        // 3043 : "+proj=utm +zone=31 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
-        // 3044 : "+proj=utm +zone=32 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
-        3045: "+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
-        3046: "+proj=utm +zone=34 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
-        3047: "+proj=utm +zone=35 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
-        3048: "+proj=utm +zone=36 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
-        3049: "+proj=utm +zone=37 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
-        3050: "+proj=utm +zone=38 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
-        3051: "+proj=utm +zone=39 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
-        3034: "+title=ETRS89 / ETRS-LCC +proj=lcc +lat_1=35 +lat_2=65 +lat_0=52 +lon_0=10 +x_0=4000000 +y_0=2800000 +ellps=GRS80 +units=m +no_defs ",
-        3035: "+title=ETRS89 / ETRS-LAEA +proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +units=m +no_defs ",
-        3042: "+title=ETRS89 / ETRS-TM30 +proj=utm +zone=30 +ellps=GRS80 +units=m +no_defs ",
-        3043: "+title=ETRS89 / ETRS-TM31 +proj=utm +zone=31 +ellps=GRS80 +units=m +no_defs ",
-        3044: "+title=ETRS89 / ETRS-TM32 +proj=utm +zone=32 +ellps=GRS80 +units=m +no_defs ",
-        25828: "+proj=utm +zone=28 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
-        25829: "+proj=utm +zone=29 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
-        // 25830 : "+proj=utm +zone=30 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
-        // 25831 : "+proj=utm +zone=31 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
-        // 25832 : "+proj=utm +zone=32 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
-        25833: "+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
-        25834: "+proj=utm +zone=34 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
-        25835: "+proj=utm +zone=35 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
-        25836: "+proj=utm +zone=36 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
-        25837: "+proj=utm +zone=37 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
-        25838: "+proj=utm +zone=38 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
-        3060: "+title=IGN72 Grande Terre / UTM zone 58S +proj=utm +zone=58 +south +ellps=intl +units=m +no_defs ",
-        3163: "+title=RGNC91-93 / Lambert New Caledonia +proj=lcc +lat_1=-20.66666666666667 +lat_2=-22.33333333333333 +lat_0=-21.5 +lon_0=166 +x_0=400000 +y_0=300000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
-        3164: "+title=ST87 Ouvea / UTM zone 58S +proj=utm +zone=58 +south +ellps=WGS84 +towgs84=-56.263,16.136,-22.856,0,0,0,0 +units=m +no_defs ",
-        3165: "+title=NEA74 Noumea / Noumea Lambert +proj=lcc +lat_1=-22.24469175 +lat_2=-22.29469175 +lat_0=-22.26969175 +lon_0=166.44242575 +x_0=0.66 +y_0=1.02 +ellps=intl +units=m +no_defs ",
-        3166: "+title=NEA74 Noumea / Noumea Lambert 2 +proj=lcc +lat_1=-22.24472222222222 +lat_2=-22.29472222222222 +lat_0=-22.26972222222222 +lon_0=166.4425 +x_0=8.313000000000001 +y_0=-2.354 +ellps=intl +units=m +no_defs ",
-        3169: "+title=RGNC91-93 / UTM zone 57S +proj=utm +zone=57 +south +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
-        3170: "+title=RGNC91-93 / UTM zone 58S +proj=utm +zone=58 +south +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
-        3171: "+title=RGNC91-93 / UTM zone 59S +proj=utm +zone=59 +south +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
-        3172: "+title=IGN53 Mare / UTM zone 59S +proj=utm +zone=59 +south +ellps=intl +units=m +no_defs ",
-        3296: "+title=RGPF / UTM zone 5S +proj=utm +zone=5 +south +ellps=GRS80 +units=m +no_defs ",
-        3297: "+title=RGPF / UTM zone 6S +proj=utm +zone=6 +south +ellps=GRS80 +units=m +no_defs ",
-        3298: "+title=RGPF / UTM zone 7S +proj=utm +zone=7 +south +ellps=GRS80 +units=m +no_defs ",
-        3299: "+title=RGPF / UTM zone 8S +proj=utm +zone=8 +south +ellps=GRS80 +units=m +no_defs ",
-        3302: "+title=IGN63 Hiva Oa / UTM zone 7S +proj=utm +zone=7 +south +ellps=intl +units=m +no_defs ",
-        3303: "+title=Fatu Iva 72 / UTM zone 7S +proj=utm +zone=7 +south +ellps=intl +towgs84=347.103,1078.12,2623.92,-33.8875,70.6773,-9.3943,186.074 +units=m +no_defs ",
-        3304: "+title=Tahiti 79 / UTM zone 6S +proj=utm +zone=6 +south +ellps=intl +units=m +no_defs ",
-        3305: "+title=Moorea 87 / UTM zone 6S +proj=utm +zone=6 +south +ellps=intl +towgs84=215.525,149.593,176.229,-3.2624,-1.692,-1.1571,10.4773 +units=m +no_defs ",
-        3306: "+title=Maupiti 83 / UTM zone 5S +proj=utm +zone=5 +south +ellps=intl +towgs84=217.037,86.959,23.956,0,0,0,0 +units=m +no_defs ",
-        3312: "+title=CSG67 / UTM zone 21N +proj=utm +zone=21 +ellps=intl +towgs84=-186,230,110,0,0,0,0 +units=m +no_defs ",
-        3313: "+title=RGFG95 / UTM zone 21N +proj=utm +zone=21 +ellps=GRS80 +towgs84=2,2,-2,0,0,0,0 +units=m +no_defs ",
-        3336: "+title=IGN 1962 Kerguelen / UTM zone 42S +proj=utm +zone=42 +south +ellps=intl +towgs84=145,-187,103,0,0,0,0 +units=m +no_defs ",
-        3395: "+title=WGS 84 / World Mercator +proj=merc +lon_0=0 +k=1 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        3727: "+title=Reunion 1947 / TM Reunion +proj=tmerc +lat_0=-21.11666666666667 +lon_0=55.53333333333333 +k=1 +x_0=160000 +y_0=50000 +ellps=intl +units=m +no_defs ",
-        21781: "+title=CH1903 / LV03 +proj=somerc +lat_0=46.95240555555556 +lon_0=7.439583333333333 +x_0=600000 +y_0=200000 +ellps=bessel +towgs84=674.374,15.056,405.346,0,0,0,0 +units=m +no_defs ",
-        25830: "+title=ETRS89 / UTM zone 30N +proj=utm +zone=30 +ellps=GRS80 +units=m +no_defs ",
-        25831: "+title=ETRS89 / UTM zone 31N +proj=utm +zone=31 +ellps=GRS80 +units=m +no_defs ",
-        25832: "+title=ETRS89 / UTM zone 32N +proj=utm +zone=32 +ellps=GRS80 +units=m +no_defs ",
-        27561: "+title=NTF (Paris) / Lambert Nord France +proj=lcc +lat_1=49.50000000000001 +lat_0=49.50000000000001 +lon_0=0 +k_0=0.999877341 +x_0=600000 +y_0=200000 +a=6378249.2 +b=6356515 +towgs84=-168,-60,320,0,0,0,0 +pm=paris +units=m +no_defs ",
-        27562: "+title=NTF (Paris) / Lambert Centre France +proj=lcc +lat_1=46.8 +lat_0=46.8 +lon_0=0 +k_0=0.99987742 +x_0=600000 +y_0=200000 +a=6378249.2 +b=6356515 +towgs84=-168,-60,320,0,0,0,0 +pm=paris +units=m +no_defs ",
-        27563: "+title=NTF (Paris) / Lambert Sud France +proj=lcc +lat_1=44.10000000000001 +lat_0=44.10000000000001 +lon_0=0 +k_0=0.9998774990000001 +x_0=600000 +y_0=200000 +a=6378249.2 +b=6356515 +towgs84=-168,-60,320,0,0,0,0 +pm=paris +units=m +no_defs ",
-        27564: "+title=NTF (Paris) / Lambert Corse +proj=lcc +lat_1=42.16500000000001 +lat_0=42.16500000000001 +lon_0=0 +k_0=0.9999447100000001 +x_0=234.358 +y_0=185861.369 +a=6378249.2 +b=6356515 +towgs84=-168,-60,320,0,0,0,0 +pm=paris +units=m +no_defs ",
-        27571: "+title=NTF (Paris) / Lambert zone I +proj=lcc +lat_1=49.50000000000001 +lat_0=49.50000000000001 +lon_0=0 +k_0=0.999877341 +x_0=600000 +y_0=1200000 +a=6378249.2 +b=6356515 +towgs84=-168,-60,320,0,0,0,0 +pm=paris +units=m +no_defs ",
-        27572: "+title=NTF (Paris) / Lambert zone II +proj=lcc +lat_1=46.8 +lat_0=46.8 +lon_0=0 +k_0=0.99987742 +x_0=600000 +y_0=2200000 +a=6378249.2 +b=6356515 +towgs84=-168,-60,320,0,0,0,0 +pm=paris +units=m +no_defs ",
-        27573: "+title=NTF (Paris) / Lambert zone III +proj=lcc +lat_1=44.10000000000001 +lat_0=44.10000000000001 +lon_0=0 +k_0=0.9998774990000001 +x_0=600000 +y_0=3200000 +a=6378249.2 +b=6356515 +towgs84=-168,-60,320,0,0,0,0 +pm=paris +units=m +no_defs ",
-        27574: "+title=NTF (Paris) / Lambert zone IV +proj=lcc +lat_1=42.16500000000001 +lat_0=42.16500000000001 +lon_0=0 +k_0=0.9999447100000001 +x_0=234.358 +y_0=4185861.369 +a=6378249.2 +b=6356515 +towgs84=-168,-60,320,0,0,0,0 +pm=paris +units=m +no_defs ",
-        27581: "+title=NTF (Paris) / France I (deprecated) +proj=lcc +lat_1=49.50000000000001 +lat_0=49.50000000000001 +lon_0=0 +k_0=0.999877341 +x_0=600000 +y_0=1200000 +a=6378249.2 +b=6356515 +towgs84=-168,-60,320,0,0,0,0 +pm=paris +units=m +no_defs ",
-        27582: "+title=NTF (Paris) / France II (deprecated) +proj=lcc +lat_1=46.8 +lat_0=46.8 +lon_0=0 +k_0=0.99987742 +x_0=600000 +y_0=2200000 +a=6378249.2 +b=6356515 +towgs84=-168,-60,320,0,0,0,0 +pm=paris +units=m +no_defs ",
-        27583: "+title=NTF (Paris) / France III (deprecated) +proj=lcc +lat_1=44.10000000000001 +lat_0=44.10000000000001 +lon_0=0 +k_0=0.9998774990000001 +x_0=600000 +y_0=3200000 +a=6378249.2 +b=6356515 +towgs84=-168,-60,320,0,0,0,0 +pm=paris +units=m +no_defs ",
-        27584: "+title=NTF (Paris) / France IV (deprecated) +proj=lcc +lat_1=42.16500000000001 +lat_0=42.16500000000001 +lon_0=0 +k_0=0.9999447100000001 +x_0=234.358 +y_0=4185861.369 +a=6378249.2 +b=6356515 +towgs84=-168,-60,320,0,0,0,0 +pm=paris +units=m +no_defs ",
-        27591: "+title=NTF (Paris) / Nord France (deprecated) +proj=lcc +lat_1=49.50000000000001 +lat_0=49.50000000000001 +lon_0=0 +k_0=0.999877341 +x_0=600000 +y_0=200000 +a=6378249.2 +b=6356515 +towgs84=-168,-60,320,0,0,0,0 +pm=paris +units=m +no_defs ",
-        27592: "+title=NTF (Paris) / Centre France (deprecated) +proj=lcc +lat_1=46.8 +lat_0=46.8 +lon_0=0 +k_0=0.99987742 +x_0=600000 +y_0=200000 +a=6378249.2 +b=6356515 +towgs84=-168,-60,320,0,0,0,0 +pm=paris +units=m +no_defs ",
-        27593: "+title=NTF (Paris) / Sud France (deprecated) +proj=lcc +lat_1=44.10000000000001 +lat_0=44.10000000000001 +lon_0=0 +k_0=0.9998774990000001 +x_0=600000 +y_0=200000 +a=6378249.2 +b=6356515 +towgs84=-168,-60,320,0,0,0,0 +pm=paris +units=m +no_defs ",
-        27594: "+title=NTF (Paris) / Corse (deprecated) +proj=lcc +lat_1=42.16500000000001 +lat_0=42.16500000000001 +lon_0=0 +k_0=0.9999447100000001 +x_0=234.358 +y_0=185861.369 +a=6378249.2 +b=6356515 +towgs84=-168,-60,320,0,0,0,0 +pm=paris +units=m +no_defs ",
-        32601: "+proj=utm +zone=1 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32602: "+proj=utm +zone=2 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32603: "+proj=utm +zone=3 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32604: "+proj=utm +zone=4 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32605: "+proj=utm +zone=5 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32606: "+proj=utm +zone=6 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32607: "+proj=utm +zone=7 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32608: "+proj=utm +zone=8 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32609: "+proj=utm +zone=9 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32610: "+proj=utm +zone=10 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32611: "+proj=utm +zone=11 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32612: "+proj=utm +zone=12 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32613: "+proj=utm +zone=13 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32614: "+proj=utm +zone=14 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32615: "+proj=utm +zone=15 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32616: "+proj=utm +zone=16 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32617: "+proj=utm +zone=17 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32618: "+proj=utm +zone=18 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32619: "+proj=utm +zone=19 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32620: "+proj=utm +zone=20 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32621: "+proj=utm +zone=21 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32622: "+proj=utm +zone=22 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32623: "+proj=utm +zone=23 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32624: "+proj=utm +zone=24 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32625: "+proj=utm +zone=25 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32626: "+proj=utm +zone=26 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32627: "+proj=utm +zone=27 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32628: "+proj=utm +zone=28 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32629: "+proj=utm +zone=29 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32630: "+proj=utm +zone=30 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32631: "+proj=utm +zone=31 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32632: "+proj=utm +zone=32 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32633: "+proj=utm +zone=33 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32634: "+proj=utm +zone=34 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32635: "+proj=utm +zone=35 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32636: "+proj=utm +zone=36 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32637: "+proj=utm +zone=37 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32638: "+proj=utm +zone=38 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32639: "+proj=utm +zone=39 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32640: "+proj=utm +zone=40 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32641: "+proj=utm +zone=41 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32642: "+proj=utm +zone=42 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32643: "+proj=utm +zone=43 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32644: "+proj=utm +zone=44 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32645: "+proj=utm +zone=45 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32646: "+proj=utm +zone=46 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32647: "+proj=utm +zone=47 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32648: "+proj=utm +zone=48 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32649: "+proj=utm +zone=49 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32650: "+proj=utm +zone=50 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32651: "+proj=utm +zone=51 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32652: "+proj=utm +zone=52 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32653: "+proj=utm +zone=53 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32654: "+proj=utm +zone=54 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32655: "+proj=utm +zone=55 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32656: "+proj=utm +zone=56 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32657: "+proj=utm +zone=57 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32658: "+proj=utm +zone=58 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32659: "+proj=utm +zone=59 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32660: "+proj=utm +zone=60 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32661: "+proj=stere +lat_0=90 +lat_ts=90 +lon_0=0 +k=0.994 +x_0=2000000 +y_0=2000000 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32662: "+title=WGS 84 / Plate Carree +proj=eqc +lat_ts=0 +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32701: "+proj=utm +zone=1 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32702: "+proj=utm +zone=2 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32703: "+proj=utm +zone=3 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32704: "+proj=utm +zone=4 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32705: "+proj=utm +zone=5 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32706: "+proj=utm +zone=6 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32707: "+proj=utm +zone=7 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32708: "+proj=utm +zone=8 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32709: "+proj=utm +zone=9 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32710: "+proj=utm +zone=10 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32711: "+proj=utm +zone=11 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32712: "+proj=utm +zone=12 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32713: "+proj=utm +zone=13 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32714: "+proj=utm +zone=14 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32715: "+proj=utm +zone=15 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32716: "+proj=utm +zone=16 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32717: "+proj=utm +zone=17 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32718: "+proj=utm +zone=18 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32719: "+proj=utm +zone=19 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32720: "+proj=utm +zone=20 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32721: "+proj=utm +zone=21 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32722: "+proj=utm +zone=22 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32723: "+proj=utm +zone=23 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32724: "+proj=utm +zone=24 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32725: "+proj=utm +zone=25 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32726: "+proj=utm +zone=26 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32727: "+proj=utm +zone=27 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32728: "+proj=utm +zone=28 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32729: "+proj=utm +zone=29 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32730: "+proj=utm +zone=30 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32731: "+proj=utm +zone=31 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32732: "+proj=utm +zone=32 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32733: "+proj=utm +zone=33 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32734: "+proj=utm +zone=34 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32735: "+proj=utm +zone=35 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32736: "+proj=utm +zone=36 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32737: "+proj=utm +zone=37 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32738: "+proj=utm +zone=38 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32739: "+proj=utm +zone=39 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32740: "+proj=utm +zone=40 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32741: "+proj=utm +zone=41 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32742: "+proj=utm +zone=42 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32743: "+proj=utm +zone=43 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32744: "+proj=utm +zone=44 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32745: "+proj=utm +zone=45 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32746: "+proj=utm +zone=46 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32747: "+proj=utm +zone=47 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32748: "+proj=utm +zone=48 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32749: "+proj=utm +zone=49 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32750: "+proj=utm +zone=50 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32751: "+proj=utm +zone=51 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32752: "+proj=utm +zone=52 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32753: "+proj=utm +zone=53 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32754: "+proj=utm +zone=54 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32755: "+proj=utm +zone=55 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32756: "+proj=utm +zone=56 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32757: "+proj=utm +zone=57 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32758: "+proj=utm +zone=58 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32759: "+proj=utm +zone=59 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32760: "+proj=utm +zone=60 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        32761: "+proj=stere +lat_0=-90 +lat_ts=-90 +lon_0=0 +k=0.994 +x_0=2000000 +y_0=2000000 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
-        310024802: "+title=Geoportail - France metropolitaine +proj=eqc +nadgrids=null +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=46.500000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
-        310915814: "+title=Geoportail - Antilles francaises +proj=eqc +nadgrids=null +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=15.000000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
-        310486805: "+title=Geoportail - Guyane +proj=eqc +nadgrids=null +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=4.000000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
-        310700806: "+title=Geoportail - Reunion et dependances +proj=eqc +nadgrids=null +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=-21.000000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
-        310702807: "+title=Geoportail - Mayotte +proj=eqc +nadgrids=null +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=-12.000000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
-        310706808: "+title=Geoportail - Saint-Pierre et Miquelon +proj=eqc +nadgrids=null +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=47.000000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
-        310547809: "+title=Geoportail - Nouvelle-Caledonie +proj=eqc +nadgrids=null +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=-22.000000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
-        310642810: "+title=Geoportail - Wallis et Futuna +proj=eqc +nadgrids=null +towgs84=0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.000000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=-14.000000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
-        310032811: "+title=Geoportail - Polynesie francaise +proj=eqc +nadgrids=null +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=-15.000000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
-        310642812: "+title=Geoportail - Kerguelen +proj=eqc +nadgrids=null +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=-49.500000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
-        310642801: "+title=Geoportail - Crozet +proj=eqc +nadgrids=null +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=-46.000000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
-        310642813: "+title=Geoportail - Amsterdam et Saint-Paul +proj=eqc +nadgrids=null +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=-38.000000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
-        310642901: "+title=Geoportail - Monde +proj=mill +towgs84=0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.000000 +a=6378137.0000 +rf=298.2572221010000 +lon_0=0.000000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
-        5489: "+title=RGAF09 geographiques (dms) +proj=longlat +nadgrids=@null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137 +rf=298.257222101 +units=m +no_defs",
-        5490: "+title=RGAF09 UTM Nord Fuseau 20 +proj=tmerc +nadgrids=@null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137 +rf=298.257222101 +lat_0=0.000000000 +lon_0=-63.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs"
-    },
-    CRS: {
-        84: "+title=WGS 84 longitude-latitude +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs "
-    },
-    IGNF: {
-        AMST63: "+title=Amsterdam 1963 +proj=geocent +towgs84=109.753,-528.133,-362.244,0,0,0,0 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-        CROZ63: "+title=Crozet 1963 +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-        CSG67: "+title=Guyane CSG67 +proj=geocent +towgs84=-193.0660,236.9930,105.4470,0.4814,-0.8074,0.1276,1.564900 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-        ED50: "+title=ED50 +proj=geocent +towgs84=-84.0000,-97.0000,-117.0000 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-        ETRS89: "+title=Systeme de reference terrestre Europeen (1989) +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
-        GUAD48: "+title=Guadeloupe Ste Anne +proj=geocent +towgs84=-472.2900,-5.6300,-304.1200,0.4362,-0.8374,0.2563,1.898400 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-        GUADFM49: "+title=Guadeloupe Fort Marigot +proj=geocent +towgs84=136.5960,248.1480,-429.7890 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-        IGN63: "+title=IGN 1963 (Hiva Oa, Tahuata, Mohotani) +proj=geocent +towgs84=410.7210,55.0490,80.7460,-2.5779,-2.3514,-0.6664,17.331100 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-        IGN72: "+title=IGN 1972 Grande-Terre / Ile des Pins +proj=geocent +towgs84=-11.6400,-348.6000,291.6800 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-        KERG62CAR: "+title=Kerguelen - K0 +proj=geocent +towgs84=144.8990,-186.7700,100.9230 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-        MART38: "+title=Martinique Fort-Desaix +proj=geocent +towgs84=126.9260,547.9390,130.4090,-2.7867,5.1612,-0.8584,13.822650 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-        MAYO50: "+title=Mayotte Combani +proj=geocent +towgs84=-599.9280,-275.5520,-195.6650,-0.0835,-0.4715,0.0602,49.281400 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-        MOOREA87: "+title=Moorea 1987 +proj=geocent +towgs84=215.9820,149.5930,176.2290,3.2624,1.6920,1.1571,10.477300 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-        NTF: "+title=Nouvelle Triangulation Francaise +proj=geocent +nadgrids=ntf_r93.gsb,null +wktext +towgs84=-168.0000,-60.0000,320.0000 +a=6378249.2000 +rf=293.4660210000000 +units=m +no_defs",
-        NUKU72: "+title=IGN 1972 Nuku Hiva +proj=geocent +towgs84=165.7320,216.7200,180.5050,-0.6434,-0.4512,-0.0791,7.420400 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-        REUN47: "+title=Reunion 1947 +proj=geocent +towgs84=789.5240,-626.4860,-89.9040,0.6006,76.7946,-10.5788,-32.324100 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-        RGF93: "+title=Reseau geodesique francais 1993 +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
-        RGFG95: "+title=Reseau geodesique francais de Guyane 1995 +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
-        RGM04: "+title=RGM04 (Reseau Geodesique de Mayotte 2004) +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
-        RGNC: "+title=Reseau Geodesique de Nouvelle-Caledonie +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
-        RGPF: "+title=RGPF (Reseau Geodesique de Polynesie Francaise) +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
-        RGR92: "+title=Reseau geodesique Reunion 1992 +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
-        RGSPM06: "+title=Reseau Geodesique Saint-Pierre-et-Miquelon (2006) +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
-        RGTAAF07: "+title=Reseau Geodesique des TAAF (2007) +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
-        RRAF91: "+title=RRAF 1991 (Reseau de Reference des Antilles Francaises) +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
-        STPL69: "+title=Saint-Paul 1969 +proj=geocent +towgs84=225.571,-346.608,-46.567,0,0,0,0 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-        STPM50: "+title=St Pierre et Miquelon 1950 +proj=geocent +towgs84=-95.5930,573.7630,173.4420,-0.9602,1.2510,-1.3918,42.626500 +a=6378206.4000 +rf=294.9786982000000 +units=m +no_defs",
-        TAHAA: "+title=Raiatea - Tahaa 51-54 (Tahaa, Base Terme Est) +proj=geocent +towgs84=72.4380,345.9180,79.4860,-1.6045,-0.8823,-0.5565,1.374600 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-        TAHI79: "+title=IGN79 (Tahiti) Iles de la Societe +proj=geocent +towgs84=221.5250,152.9480,176.7680,2.3847,1.3896,0.8770,11.474100 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-        TERA50: "+title=Pointe Geologie - Perroud 1950 +proj=geocent +towgs84=324.9120,153.2820,172.0260 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-        WALL78: "+title=Wallis-Uvea 1978 (MOP78) +proj=geocent +towgs84=253.0000,-133.0000,-127.0000 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-        WGS72: "+title=World Geodetic System 1972 +proj=geocent +towgs84=0.0000,12.0000,6.0000 +a=6378135.0000 +rf=298.2600000000000 +units=m +no_defs",
-        WGS84: "+title=World Geodetic System 1984 +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
-        AMST63GEO: "+title=Amsterdam 1963 +proj=longlat +towgs84=109.753,-528.133,-362.244,0,0,0,0 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-        CROZ63GEO: "+title=Crozet 1963 +proj=longlat +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-        CSG67GEO: "+title=Guyane CSG67 +proj=longlat +towgs84=-193.0660,236.9930,105.4470,0.4814,-0.8074,0.1276,1.564900 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-        ED50G: "+title=ED50 +proj=longlat +towgs84=-84.0000,-97.0000,-117.0000 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-        GUAD48GEO: "+title=Guadeloupe Ste Anne +proj=longlat +towgs84=-472.2900,-5.6300,-304.1200,0.4362,-0.8374,0.2563,1.898400 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-        GUADFM49GEO: "+title=Guadeloupe Fort Marigot +proj=longlat +towgs84=136.5960,248.1480,-429.7890 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-        IGN63GEO: "+title=IGN 1963 (Hiva Oa, Tahuata, Mohotani) +proj=longlat +towgs84=410.7210,55.0490,80.7460,-2.5779,-2.3514,-0.6664,17.331100 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-        IGN72GEO: "+title=IGN 1972 Grande-Terre / Ile des Pins +proj=longlat +towgs84=-11.6400,-348.6000,291.6800 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-        KERG62GEO: "+title=Kerguelen - K0 +proj=longlat +towgs84=144.8990,-186.7700,100.9230 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-        MART38GEO: "+title=Martinique Fort-Desaix +proj=longlat +towgs84=126.9260,547.9390,130.4090,-2.7867,5.1612,-0.8584,13.822650 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-        MAYO50GEO: "+title=Mayotte Combani +proj=longlat +towgs84=-599.9280,-275.5520,-195.6650,-0.0835,-0.4715,0.0602,49.281400 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-        MOOREA87GEO: "+title=Moorea 1987 +proj=longlat +towgs84=215.9820,149.5930,176.2290,3.2624,1.6920,1.1571,10.477300 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-        NTFG: "+title=Nouvelle Triangulation Francaise Greenwich degres sexagesimaux +proj=longlat +nadgrids=ntf_r93.gsb,null +wktext +towgs84=-168.0000,-60.0000,320.0000 +a=6378249.2000 +rf=293.4660210000000 +units=m +no_defs",
-        NTFP: "+title=Nouvelle Triangulation Francaise Paris grades +proj=longlat +nadgrids=ntf_r93.gsb,null +wktext +towgs84=-168.0000,-60.0000,320.0000 +a=6378249.2000 +rf=293.4660210000000 +pm=2.337229167 +units=m +no_defs",
-        NUKU72GEO: "+title=IGN 1972 Nuku Hiva +proj=longlat +towgs84=165.7320,216.7200,180.5050,-0.6434,-0.4512,-0.0791,7.420400 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-        REUN47GEO: "+title=Reunion 1947 +proj=longlat +towgs84=789.5240,-626.4860,-89.9040,0.6006,76.7946,-10.5788,-32.324100 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-        RGF93G: "+title=Reseau geodesique francais 1993 +proj=longlat +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
-        RGFG95GEO: "+title=Reseau geodesique francais de Guyane 1995 +proj=longlat +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
-        RGM04GEO: "+title=RGM04 (Reseau Geodesique de Mayotte 2004) +proj=longlat +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
-        RGNCGEO: "+title=Reseau Geodesique de Nouvelle-Caledonie +proj=longlat +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
-        RGPFGEO: "+title=RGPF (Reseau Geodesique de Polynesie Francaise) +proj=longlat +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
-        RGR92GEO: "+title=Reseau geodesique de la Reunion 1992 +proj=longlat +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
-        RGSPM06GEO: "+title=Saint-Pierre-et-Miquelon (2006) +proj=longlat +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
-        RGTAAF07G: "+title=Reseau Geodesique des TAAF (2007) (dms) +proj=longlat +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
-        STPL69GEO: "+title=Saint-Paul 1969 +proj=longlat +towgs84=225.571,-346.608,-46.567,0,0,0,0 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-        STPM50GEO: "+title=St Pierre et Miquelon 1950  +proj=longlat +towgs84=-95.5930,573.7630,173.4420,-0.9602,1.2510,-1.3918,42.626500 +a=6378206.4000 +rf=294.9786982000000 +units=m +no_defs",
-        TAHAAGEO: "+title=Raiatea - Tahaa 51-54 (Tahaa, Base Terme Est) +proj=longlat +towgs84=72.4380,345.9180,79.4860,-1.6045,-0.8823,-0.5565,1.374600 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-        TAHI79GEO: "+title=IGN79 (Tahiti) Iles de la Societe +proj=longlat +towgs84=221.5250,152.9480,176.7680,2.3847,1.3896,0.8770,11.474100 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-        TERA50G: "+title=Pointe Geologie - Perroud 1950 +proj=longlat +towgs84=324.9120,153.2820,172.0260 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-        WALL78GEO: "+title=Wallis - Uvea 1978 (MOP78) +proj=longlat +towgs84=253.0000,-133.0000,-127.0000 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-        WGS72G: "+title=WGS72 +proj=longlat +towgs84=0.0000,12.0000,6.0000 +a=6378135.0000 +rf=298.2600000000000 +units=m +no_defs",
-        WGS84G: "+title=World Geodetic System 1984 +proj=longlat +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
-        WGS84RRAFGEO: "+title=Reseau de reference des Antilles francaises (1988-1991) +proj=longlat +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
-        XGEO: "+title=Systeme CIO-BIH +proj=longlat +towgs84=0.0000,0.0000,0.5000,0.0000,0.0000,0.0140,-0.100000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
-        AMST63UTM43S: "+title=Amsterdam 1963 UTM fuseau 43 Sud +proj=tmerc +towgs84=109.753,-528.133,-362.244,0,0,0,0 +a=6378388.0000 +rf=297.0000000000000 +lat_0=0.000000000 +lon_0=75.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
-        CROZ63UTM39S: "+title=Crozet 1963 +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378388.0000 +rf=297.0000000000000 +lat_0=0.000000000 +lon_0=51.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
-        CSG67UTM21: "+title=Guyane CSG67 UTM fuseau 21 +proj=tmerc +towgs84=-193.0660,236.9930,105.4470,0.4814,-0.8074,0.1276,1.564900 +a=6378388.0000 +rf=297.0000000000000 +lat_0=0.000000000 +lon_0=-57.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs",
-        CSG67UTM22: "+title=Guyane CSG67 UTM fuseau 22 +proj=tmerc +towgs84=-193.0660,236.9930,105.4470,0.4814,-0.8074,0.1276,1.564900 +a=6378388.0000 +rf=297.0000000000000 +lat_0=0.000000000 +lon_0=-51.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs",
-        GEOPORTALANF: "+title=Geoportail - Antilles francaises +proj=eqc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=15.000000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
-        GEOPORTALASP: "+title=Geoportail - Amsterdam et Saint-Paul +proj=eqc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=-38.000000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
-        GEOPORTALCRZ: "+title=Geoportail - Crozet +proj=eqc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=-46.000000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
-        GEOPORTALFXX: "+title=Geoportail - France metropolitaine +proj=eqc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=46.500000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
-        GEOPORTALGUF: "+title=Geoportail - Guyane +proj=eqc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=4.000000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
-        GEOPORTALKER: "+title=Geoportail - Kerguelen +proj=eqc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=-49.500000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
-        GEOPORTALMYT: "+title=Geoportail - Mayotte +proj=eqc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=-12.000000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
-        GEOPORTALNCL: "+title=Geoportail - Nouvelle-Caledonie +proj=eqc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=-22.000000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
-        GEOPORTALPYF: "+title=Geoportail - Polynesie francaise +proj=eqc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=-15.000000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
-        GEOPORTALREU: "+title=Geoportail - Reunion et dependances +proj=eqc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=-21.000000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
-        GEOPORTALSPM: "+title=Geoportail - Saint-Pierre et Miquelon +proj=eqc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=47.000000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
-        GEOPORTALWLF: "+title=Geoportail - Wallis et Futuna +proj=eqc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=-14.000000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
-        GUAD48UTM20: "+title=Guadeloupe Ste Anne +proj=tmerc +towgs84=-472.2900,-5.6300,-304.1200,0.4362,-0.8374,0.2563,1.898400 +a=6378388.0000 +rf=297.0000000000000 +lat_0=0.000000000 +lon_0=-63.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs",
-        GUADFM49U20: "+title=Guadeloupe Fort Marigot  +proj=tmerc +towgs84=136.5960,248.1480,-429.7890 +a=6378388.0000 +rf=297.0000000000000 +lat_0=0.000000000 +lon_0=-63.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs",
-        IGN63UTM7S: "+title=IGN 1963 - Hiva Oa, Tahuata, Mohotani - UTM fuseau 7 Sud +proj=tmerc +towgs84=410.7210,55.0490,80.7460,-2.5779,-2.3514,-0.6664,17.331100 +a=6378388.0000 +rf=297.0000000000000 +lat_0=0.000000000 +lon_0=-141.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
-        IGN72UTM58S: "+title=IGN 1972 - UTM fuseau 58 Sud +proj=tmerc +towgs84=-11.6400,-348.6000,291.6800 +a=6378388.0000 +rf=297.0000000000000 +lat_0=0.000000000 +lon_0=165.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
-        KERG62UTM42S: "+title=Kerguelen 1962 +proj=tmerc +towgs84=144.8990,-186.7700,100.9230 +a=6378388.0000 +rf=297.0000000000000 +lat_0=0.000000000 +lon_0=69.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
-        LAMB1: "+title=Lambert I +proj=lcc +nadgrids=ntf_r93.gsb,null +wktext +towgs84=-168.0000,-60.0000,320.0000 +a=6378249.2000 +rf=293.4660210000000 +pm=2.337229167 +lat_0=49.500000000 +lon_0=0.000000000 +k_0=0.99987734 +lat_1=49.500000000 +x_0=600000.000 +y_0=200000.000 +units=m +no_defs",
-        LAMB1C: "+title=Lambert I Carto +proj=lcc +nadgrids=ntf_r93.gsb,null +wktext +towgs84=-168.0000,-60.0000,320.0000 +a=6378249.2000 +rf=293.4660210000000 +pm=2.337229167 +lat_0=49.500000000 +lon_0=0.000000000 +k_0=0.99987734 +lat_1=49.500000000 +x_0=600000.000 +y_0=1200000.000 +units=m +no_defs",
-        LAMB2: "+title=Lambert II +proj=lcc +nadgrids=ntf_r93.gsb,null +wktext +towgs84=-168.0000,-60.0000,320.0000 +a=6378249.2000 +rf=293.4660210000000 +pm=2.337229167 +lat_0=46.800000000 +lon_0=0.000000000 +k_0=0.99987742 +lat_1=46.800000000 +x_0=600000.000 +y_0=200000.000 +units=m +no_defs",
-        LAMB2C: "+title=Lambert II Carto +proj=lcc +nadgrids=ntf_r93.gsb,null +wktext +towgs84=-168.0000,-60.0000,320.0000 +a=6378249.2000 +rf=293.4660210000000 +pm=2.337229167 +lat_0=46.800000000 +lon_0=0.000000000 +k_0=0.99987742 +lat_1=46.800000000 +x_0=600000.000 +y_0=2200000.000 +units=m +no_defs",
-        LAMB3: "+title=Lambert III +proj=lcc +nadgrids=ntf_r93.gsb,null +wktext +towgs84=-168.0000,-60.0000,320.0000 +a=6378249.2000 +rf=293.4660210000000 +pm=2.337229167 +lat_0=44.100000000 +lon_0=0.000000000 +k_0=0.99987750 +lat_1=44.100000000 +x_0=600000.000 +y_0=200000.000 +units=m +no_defs",
-        LAMB3C: "+title=Lambert III Carto +proj=lcc +nadgrids=ntf_r93.gsb,null +wktext +towgs84=-168.0000,-60.0000,320.0000 +a=6378249.2000 +rf=293.4660210000000 +pm=2.337229167 +lat_0=44.100000000 +lon_0=0.000000000 +k_0=0.99987750 +lat_1=44.100000000 +x_0=600000.000 +y_0=3200000.000 +units=m +no_defs",
-        LAMB4: "+title=Lambert IV +proj=lcc +nadgrids=ntf_r93.gsb,null +wktext +towgs84=-168.0000,-60.0000,320.0000 +a=6378249.2000 +rf=293.4660210000000 +pm=2.337229167 +lat_0=42.165000000 +lon_0=0.000000000 +k_0=0.99994471 +lat_1=42.165000000 +x_0=234.358 +y_0=185861.369 +units=m +no_defs",
-        LAMB4C: "+title=Lambert IV Carto +proj=lcc +nadgrids=ntf_r93.gsb,null +wktext +towgs84=-168.0000,-60.0000,320.0000 +a=6378249.2000 +rf=293.4660210000000 +pm=2.337229167 +lat_0=42.165000000 +lon_0=0.000000000 +k_0=0.99994471 +lat_1=42.165000000 +x_0=234.358 +y_0=4185861.369 +units=m +no_defs",
-        LAMB93: "+title=Lambert 93 +proj=lcc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=46.500000000 +lon_0=3.000000000 +lat_1=44.000000000 +lat_2=49.000000000 +x_0=700000.000 +y_0=6600000.000 +units=m +no_defs",
-        RGF93CC42: "+title=Lambert conique conforme Zone 1 +proj=lcc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=42.000000000 +lon_0=3.000000000 +lat_1=41.200000000 +lat_2=42.800000000 +x_0=1700000.000 +y_0=1200000.000 +units=m +no_defs",
-        RGF93CC43: "+title=Lambert conique conforme Zone 2 +proj=lcc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=43.000000000 +lon_0=3.000000000 +lat_1=42.200000000 +lat_2=43.800000000 +x_0=1700000.000 +y_0=2200000.000 +units=m +no_defs",
-        RGF93CC44: "+title=Lambert conique conforme Zone 3 +proj=lcc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=44.000000000 +lon_0=3.000000000 +lat_1=43.200000000 +lat_2=44.800000000 +x_0=1700000.000 +y_0=3200000.000 +units=m +no_defs",
-        RGF93CC45: "+title=Lambert conique conforme Zone 4 +proj=lcc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=45.000000000 +lon_0=3.000000000 +lat_1=44.200000000 +lat_2=45.800000000 +x_0=1700000.000 +y_0=4200000.000 +units=m +no_defs",
-        RGF93CC46: "+title=Lambert conique conforme Zone 5 +proj=lcc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=46.000000000 +lon_0=3.000000000 +lat_1=45.200000000 +lat_2=46.800000000 +x_0=1700000.000 +y_0=5200000.000 +units=m +no_defs",
-        RGF93CC47: "+title=Lambert conique conforme Zone 6 +proj=lcc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=47.000000000 +lon_0=3.000000000 +lat_1=46.200000000 +lat_2=47.800000000 +x_0=1700000.000 +y_0=6200000.000 +units=m +no_defs",
-        RGF93CC48: "+title=Lambert conique conforme Zone 7 +proj=lcc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=48.000000000 +lon_0=3.000000000 +lat_1=47.200000000 +lat_2=48.800000000 +x_0=1700000.000 +y_0=7200000.000 +units=m +no_defs",
-        RGF93CC49: "+title=Lambert conique conforme Zone 8 +proj=lcc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=49.000000000 +lon_0=3.000000000 +lat_1=48.200000000 +lat_2=49.800000000 +x_0=1700000.000 +y_0=8200000.000 +units=m +no_defs",
-        RGF93CC50: "+title=Lambert conique conforme Zone 9 +proj=lcc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=50.000000000 +lon_0=3.000000000 +lat_1=49.200000000 +lat_2=50.800000000 +x_0=1700000.000 +y_0=9200000.000 +units=m +no_defs",
-        LAMBE: "+title=Lambert II etendu +proj=lcc +nadgrids=ntf_r93.gsb,null +wktext +towgs84=-168.0000,-60.0000,320.0000 +a=6378249.2000 +rf=293.4660210000000 +pm=2.337229167 +lat_0=46.800000000 +lon_0=0.000000000 +k_0=0.99987742 +lat_1=46.800000000 +x_0=600000.000 +y_0=2200000.000 +units=m +no_defs",
-        MART38UTM20: "+title=Martinique Fort-Desaix +proj=tmerc +towgs84=126.9260,547.9390,130.4090,-2.7867,5.1612,-0.8584,13.822650 +a=6378388.0000 +rf=297.0000000000000 +lat_0=0.000000000 +lon_0=-63.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs",
-        MAYO50UTM38S: "+title=Mayotte Combani +proj=tmerc +towgs84=-599.9280,-275.5520,-195.6650,-0.0835,-0.4715,0.0602,49.281400 +a=6378388.0000 +rf=297.0000000000000 +lat_0=0.000000000 +lon_0=45.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
-        MILLER: "+title=Geoportail - Monde +proj=mill +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lon_0=0.000000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
-        MOOREA87U6S: "+title=Moorea 1987 - UTM fuseau 6 Sud +proj=tmerc +towgs84=215.9820,149.5930,176.2290,3.2624,1.6920,1.1571,10.477300 +a=6378388.0000 +rf=297.0000000000000 +lat_0=0.000000000 +lon_0=-147.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
-        NUKU72U7S: "+title=IGN 1972 Nuku Hiva - UTM fuseau 7 Sud +proj=tmerc +towgs84=165.7320,216.7200,180.5050,-0.6434,-0.4512,-0.0791,7.420400 +a=6378388.0000 +rf=297.0000000000000 +lat_0=0.000000000 +lon_0=-141.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
-        REUN47GAUSSL: "+title=Reunion Gauss Laborde +proj=gstmerc +towgs84=789.5240,-626.4860,-89.9040,0.6006,76.7946,-10.5788,-32.324100 +a=6378388.0000 +rf=297.0000000000000 +lat_0=-21.116666667 +lon_0=55.533333333 +k_0=1.00000000 +x_0=160000.000 +y_0=50000.000 +units=m +no_defs",
-        RGM04UTM38S: "+title=UTM fuseau 38 Sud (Reseau Geodesique de Mayotte 2004) +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=45.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
-        RGNCUTM57S: "+title=Reseau Geodesique de Nouvelle-Caledonie - UTM fuseau 57 Sud +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=159.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
-        RGNCUTM58S: "+title=Reseau Geodesique de Nouvelle-Caledonie - UTM fuseau 58 Sud +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=165.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
-        RGNCUTM59S: "+title=Reseau Geodesique de Nouvelle-Caledonie - UTM fuseau 59 Sud +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=171.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
-        RGPFUTM5S: "+title=RGPF - UTM fuseau 5 Sud +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=-153.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
-        RGPFUTM6S: "+title=RGPF - UTM fuseau 6 Sud +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=-147.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
-        RGPFUTM7S: "+title=RGPF - UTM fuseau 7 Sud +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=-141.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
-        RGR92UTM40S: "+title=RGR92 UTM fuseau 40 Sud +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=57.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
-        RGSPM06U21: "+title=Saint-Pierre-et-Miquelon (2006) UTM Fuseau 21 Nord +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=-57.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs",
-        STPL69UTM43S: "+title=Saint-Paul 1969 UTM fuseau 43 Sud +proj=tmerc +towgs84=225.571,-346.608,-46.567,0,0,0,0 +a=6378388.0000 +rf=297.0000000000000 +lat_0=0.000000000 +lon_0=75.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
-        STPM50UTM21: "+title=St Pierre et Miquelon 1950 +proj=tmerc +towgs84=-95.5930,573.7630,173.4420,-0.9602,1.2510,-1.3918,42.626500 +a=6378206.4000 +rf=294.9786982000000 +lat_0=0.000000000 +lon_0=-57.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs",
-        TAHAAUTM05S: "+title=Tahaa 1951 +proj=tmerc +towgs84=72.4380,345.9180,79.4860,-1.6045,-0.8823,-0.5565,1.374600 +a=6378388.0000 +rf=297.0000000000000 +lat_0=0.000000000 +lon_0=-153.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
-        TAHI51UTM06S: "+title=Tahiti-Terme Nord UTM fuseau 6 Sud +proj=tmerc +towgs84=162.0000,117.0000,154.0000 +a=6378388.0000 +rf=297.0000000000000 +lat_0=0.000000000 +lon_0=-147.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
-        TAHI79UTM6S: "+title=Tahiti 1979 +proj=tmerc +towgs84=221.5250,152.9480,176.7680,2.3847,1.3896,0.8770,11.474100 +a=6378388.0000 +rf=297.0000000000000 +lat_0=0.000000000 +lon_0=-147.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
-        TERA50STEREO: "+title=Terre Adelie 1950 +proj=stere +towgs84=324.9120,153.2820,172.0260 +a=6378388.0000 +rf=297.0000000000000 +lat_0=-90.000000000 +lon_0=140.000000000 +lat_ts=-67 +k=0.96027295 +x_0=300000.000 +y_0=-2299363.482 +units=m +no_defs",
-        UTM01SW84: "+title=World Geodetic System 1984 UTM fuseau 01 Sud +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=-177.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
-        UTM20W84GUAD: "+title=World Geodetic System 1984 UTM fuseau 20 Nord-Guadeloupe +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=-63.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs",
-        UTM20W84MART: "+title=World Geodetic System 1984 UTM fuseau 20 Nord-Martinique +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=-63.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs",
-        UTM22RGFG95: "+title=RGFG95 UTM fuseau 22 Nord-Guyane +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=-51.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs",
-        UTM39SW84: "+title=World Geodetic System 1984 UTM fuseau 39 Sud +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=51.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
-        UTM42SW84: "+title=World Geodetic System 1984 UTM fuseau 42 Sud +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=69.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
-        UTM43SW84: "+title=World Geodetic System 1984 UTM fuseau 43 Sud +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=75.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
-        WALL78UTM1S: "+title=Wallis-Uvea 1978 (MOP78) UTM 1 SUD +proj=tmerc +towgs84=253.0000,-133.0000,-127.0000 +a=6378388.0000 +rf=297.0000000000000 +lat_0=0.000000000 +lon_0=-177.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
-        ETRS89GEO: "+title=ETRS89 geographiques (dms) +proj=longlat +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
-        ETRS89LAEA: "+title=ETRS89 Lambert Azimutal Equal Area +proj=laea +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=52.000000000 +lon_0=10.000000000 +x_0=4321000.000 +y_0=3210000.000 +units=m +no_defs",
-        ETRS89LCC: "+title=ETRS89 Lambert Conformal Conic +proj=lcc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=52.000000000 +lon_0=9.999999995 +lat_1=35.000000000 +lat_2=65.000000000 +x_0=4000000.000 +y_0=2800000.000 +units=m +no_defs",
-        UTM26ETRS89: "+title=Europe - de 30d a 24d Ouest +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=-27.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs",
-        UTM27ETRS89: "+title=Europe - de 24d a 18d Ouest +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=-21.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs",
-        UTM28ETRS89: "+title=Europe - de 18d a 12d Ouest +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=-15.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs",
-        UTM29ETRS89: "+title=Europe - de 12d a 6d Ouest +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=-9.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs",
-        UTM30ETRS89: "+title=Europe - de -6d a 0d Ouest +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=-3.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs",
-        UTM31ETRS89: "+title=Europe - de 0d a 6d Est +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=3.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs",
-        UTM32ETRS89: "+title=Europe - de 6d a 12d Est +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=9.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs",
-        UTM33ETRS89: "+title=Europe - de 12d a 18d Est +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=15.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs",
-        UTM34ETRS89: "+title=Europe - de 18d a 24d Est +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=21.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs",
-        UTM35ETRS89: "+title=Europe - de 24d a 30d Est +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=27.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs",
-        UTM36ETRS89: "+title=Europe - de 30d a 36d Est +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=33.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs",
-        UTM37ETRS89: "+title=Europe - de 36d a 42d Est +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=39.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs",
-        UTM38ETRS89: "+title=Europe - de 42d a 48d Est +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=45.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs"
-    }
-};
-
-exports.default = Register;
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _ol = __webpack_require__(0);
+var _ol = __webpack_require__(1);
 
 var _ol2 = _interopRequireDefault(_ol);
 
@@ -23310,7 +22286,565 @@ var _gp = __webpack_require__(4);
 
 var _gp2 = _interopRequireDefault(_gp);
 
-var _Utils = __webpack_require__(1);
+var _LoggerByDefault = __webpack_require__(0);
+
+var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
+
+var _ProxyUtils = __webpack_require__(13);
+
+var _ProxyUtils2 = _interopRequireDefault(_ProxyUtils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// import $__xmldom from "xmldom";
+
+var logger = _LoggerByDefault2.default.getLogger("GfiUtils");
+
+var GfiUtils = {
+
+    /**
+     * Return layer format
+     *
+     * @param {ol.layer.Layer} l - layer openlayers
+     *
+     * @return {String} format - layer format can be wms, wmts, vector or unknown
+     *
+     */
+    getLayerFormat: function getLayerFormat(l) {
+        var source = l.getSource();
+        if (source instanceof _ol2.default.source.TileWMS || source instanceof _ol2.default.source.ImageWMS) {
+            return "wms";
+        }
+        if (source instanceof _ol2.default.source.WMTS) {
+            return "wmts";
+        }
+        if (source instanceof _ol2.default.source.Vector || source instanceof _ol2.default.source.VectorTile) {
+            return "vector";
+        }
+        return "unknown";
+    },
+
+    /**
+     * Info Popup creation and display
+     *
+     * @param {ol.Map} map - map openlayers
+     * @param {ol.Coordinate} coords - coordinates where to anchor popup.
+     * @param {String} content - content to display
+     * @param {String} [contentType='text/html'] - content mime-type
+     * @param {Object} autoPanOptions - Auto-pan pop-up options
+     * @param {Boolean} [autoPanOptions.autoPan] - Specifies whether the map should auto-pan if the pop-up is rendered outside of the canvas
+     * @param {olx.OverlayPanOptions} [autoPanOptions.autoPanAnimation] - Used to customize the auto-pan animation. See {@link https://openlayers.org/en/latest/apidoc/olx.html#.OverlayPanOptions olx.OverlayPanOptions}.
+     * @param {Number} [autoPanOptions.autoPanMargin] - Margin (in pixels) between the pop-up and the border of the map when autopanning. Default is 20.
+     * @return {Boolean} displayed - indicates if something has been displayed
+     */
+    displayInfo: function displayInfo(map, coords, content, contentType, autoPanOptions) {
+        logger.trace("[GfiUtils] : displayInfo...");
+
+        if (!contentType) {
+            contentType = "text/html";
+        }
+
+        if (content === null) {
+            return;
+        }
+
+        var _htmlDoc = null;
+        var _parser = null;
+
+        var _content = content;
+        _content = _content.replace(/\n/g, "");
+        _content = _content.replace(/(>)\s*(<)/g, "$1$2");
+
+        var scope = typeof window !== "undefined" ? window : null;
+
+        if (( false ? "undefined" : _typeof(exports)) === "object" && window === null) {
+            // code for nodejs
+            var DOMParser = __webpack_require__(11).DOMParser;
+            _parser = new DOMParser();
+            _htmlDoc = _parser.parseFromString(_content, contentType);
+        } else if (scope.DOMParser) {
+            // code for modern browsers
+            _parser = new scope.DOMParser();
+            _htmlDoc = _parser.parseFromString(_content, contentType);
+        } else if (scope.ActiveXObject) {
+            // code for old IE browsers
+            _htmlDoc = new scope.ActiveXObject("Microsoft.XMLDOM");
+            _htmlDoc.async = false;
+            _htmlDoc.loadXML(_content);
+        } else {
+            logger.log("Incompatible environment for DOM Parser !");
+            return false;
+        }
+
+        var body = _htmlDoc.getElementsByTagName("body");
+        if (body && body.length === 1) {
+            if (!body[0].hasChildNodes()) {
+                return false;
+            }
+        }
+
+        // Affichage des features.
+        var element = document.createElement("div");
+        element.className = "gp-feature-info-div";
+
+        var closer = document.createElement("input");
+        closer.type = "button";
+        closer.className = "gp-styling-button closer";
+
+        // fait disparaître la popup au clic sur x
+        closer.onclick = function () {
+            if (map.featuresOverlay) {
+                map.removeOverlay(map.featuresOverlay);
+                map.featuresOverlay = null;
+            }
+            return false;
+        };
+
+        var contentDiv = document.createElement("div");
+        contentDiv.className = "gp-features-content-div";
+        contentDiv.innerHTML = content;
+        /*
+        if (content instanceof HTMLElement) {
+            this.logger.trace("[Openlayers] : _displayInfo : pure HTMLElement") ;
+            contentDiv.appendChild(content) ;
+        } else {
+            var parser = new DOMParser() ;
+            var doc = null ;
+            try {
+                doc = parser.parseFromString(content,contentType) ;
+                this.logger.trace("[Openlayers] : _displayInfo : HTMLElement from parser") ;
+                // FIXME : avec cette methode, on a une balise html + body qui s'insère...
+                contentDiv.appendChild(doc.documentElement) ;
+            } catch (e) {
+                console.log(e) ;
+                this.logger.trace("[Openlayers] : _displayInfo : parsing content failed (not HTML)") ;
+                // en cas d'erreur : on se contente de recopier le contenu.
+                contentDiv.innerHTML = content ;
+            }
+        }
+        */
+        element.appendChild(contentDiv);
+        element.appendChild(closer);
+
+        if (map.featuresOverlay) {
+            // fermeture d'une éventuelle popup déjà ouverte.
+            map.removeOverlay(map.featuresOverlay);
+            map.featuresOverlay = null;
+        }
+        map.featuresOverlay = new _ol2.default.Overlay({
+            // id : id,
+            element: element,
+            autoPan: autoPanOptions.autoPan,
+            autoPanAnimation: autoPanOptions.autoPanAnimation,
+            autoPanMargin: autoPanOptions.autoPanMargin,
+            positioning: "bottom-center",
+            insertFirst: false, // popup appears on top of other overlays if any
+            stopEvent: true
+        });
+        map.addOverlay(map.featuresOverlay);
+        map.featuresOverlay.setPosition(coords);
+        map.featuresOverlay.render();
+
+        return true;
+    },
+
+    /**
+     * Gets HTML content from features array
+     *
+     * @param {ol.Map} map - map openlayers
+     * @param {Array.<ol.Features>} features - openlayers features Array
+     * @returns {HTMLElement} HTML content.
+     */
+    features2html: function features2html(map, features) {
+        var content = document.createElement("div");
+        features.forEach(function (f) {
+            var props = f.getProperties();
+            if (props.hasOwnProperty("name")) {
+                var nameDiv = document.createElement("div");
+                nameDiv.className = "gp-att-name-div";
+                // nameDiv.appendChild(document.createTextNode(props["name"])) ;
+                nameDiv.insertAdjacentHTML("afterbegin", props["name"]);
+                content.appendChild(nameDiv);
+            }
+            if (props.hasOwnProperty("description")) {
+                var descDiv = document.createElement("div");
+                descDiv.className = "gp-att-description-div";
+                // descDiv.appendChild(document.createTextNode(props["description"])) ;
+                descDiv.insertAdjacentHTML("afterbegin", props["description"]);
+                content.appendChild(descDiv);
+            }
+            var p = null;
+            var others = false;
+            var oDiv = null;
+            var ul = null;
+            var li = null;
+            for (p in props) {
+                if (p === "geometry" || p === "value" || p === "name" || p === "description" || p === "styleUrl") {
+                    continue;
+                }
+                // FIXME La lecture des extensions GPX n'est pas gérée !
+                if (p === "extensionsNode_" && props[p] === undefined) {
+                    continue;
+                }
+                if (!others) {
+                    oDiv = document.createElement("div");
+                    oDiv.className = "gp-att-others-div";
+                    ul = document.createElement("ul");
+                    others = true;
+                }
+                li = document.createElement("li");
+                var span = document.createElement("span");
+                span.className = "gp-attname-others-span";
+                span.appendChild(document.createTextNode(p + " : "));
+                li.appendChild(span);
+                li.appendChild(document.createTextNode(props[p]));
+                ul.appendChild(li);
+            }
+            if (ul) {
+                oDiv.appendChild(ul);
+                content.appendChild(oDiv);
+            }
+        }, map);
+
+        // pas de contenu !
+        if (!content.hasChildNodes()) {
+            content = null;
+        }
+
+        return content;
+    },
+
+    /**
+     * Indicates if there is a feature at the given coordinates for the given layer
+     *
+     * @param {ol.Map} map - map openlayers
+     * @param {ol.layer.Layer} olLayer - vector layer openlayers
+     * @param {ol.Coordinate} olCoordinate - coordinates pointed by user
+     *
+     * @return {Boolean} has feature
+     *
+     */
+    layerGetFeatureAtCoordinates: function layerGetFeatureAtCoordinates(map, olLayer, olCoordinate) {
+        var pixel = map.getPixelFromCoordinate(olCoordinate);
+        return map.hasFeatureAtPixel(pixel, function (layer) {
+            if (layer === olLayer) {
+                return true;
+            }
+            return false;
+        });
+    },
+
+    /**
+     * Get information from all the features located at the specified coordinates
+     * and belonging to the layers list argument. Those information are gathered
+     * and displayed in an info popup.
+     *
+     * @param {ol.Map} map - map openlayers
+     * @param {ol.Coordinate} olCoordinate - coordinates pointed by user
+     * @param {Array.<ol.layer.Layer>} olLayers - layers requested
+     * @param {Object} autoPanOptions - autopan options
+     *
+     * @returns {Boolean} something is displayed
+     *
+     */
+    displayVectorFeatureInfo: function displayVectorFeatureInfo(map, olCoordinate, olLayers, autoPanOptions) {
+        var pixel = map.getPixelFromCoordinate(olCoordinate);
+
+        // couches vecteur : on remplit un tableau avec les features à proximité.
+        var features = [];
+        map.forEachFeatureAtPixel(pixel, function (feature, layer) {
+            if (!olLayers || olLayers.indexOf(layer) > -1) {
+                features.push(feature);
+            }
+        });
+        if (features.length === 0) {
+            // no features
+            return false;
+        }
+        var content = this.features2html(map, features);
+        // pas de contenu !
+        if (content === null) {
+            return false;
+        }
+        // Affichage des features.
+        this.displayInfo(map, olCoordinate, content.innerHTML, "text/html", autoPanOptions);
+        // this._displayInfo(evt.coordinate,content,"text/html") ;
+        return true;
+    },
+
+    /**
+     * Method to manage the request of information from a list of layers already added to the map.
+     * Among the given list of layers only the visible ones are requested.
+     * The priority is given to the upper layer having a feature at the pointed coordinates.
+     * If the first (upper) feature encountered is from a vector layer the info popup will
+     * display the information of the features from all visible vector layers and located at
+     * the specified coordinates.
+     *
+     * @param {ol.Map} map - map openlayers
+     * @param {ol.Coordinate} olCoordinate - coordinates pointed by user
+     * @param {Array.<Object>} gfiLayers - list of layers which can be requested through the control. Each array element is an object, with following properties :
+     * @param {ol.layer.Layer} gfiLayers.obj - ol.layer.Layer layer handled by the control (that has been added to map).
+     * @param {String} [gfiLayers.event] - name of the mouse event triggering getFeatureInfo on this layer (that has been added to map). allowed values are : 'singleclick', 'dblclick' and 'contextmenu'
+     * @param {String} [gfiLayers.infoFormat] - indicates the format mime-type of the response of GetFeatureInfo requests.
+     * @param {Object} [proxyOptions] - options for poxy configuration :
+     * @param {String} [proxyOptions.proxyUrl] - Proxy URL to avoid cross-domain problems, if not already set in mapOptions. Mandatory to import WMS and WMTS layer.
+     * @param {Array.<String>} [proxyOptions.noProxyDomains] - Proxy will not be used for this list of domain names. Only use if you know what you're doing (if not already set in mapOptions).
+     * @param {Object} [autoPanOptions] - Auto-pan pop-up options
+     * @param {Boolean} [autoPanOptions.autoPan = true] - Specifies whether the map should auto-pan if the pop-up is rendered outside of the canvas. Defaults to true.
+     * @param {olx.OverlayPanOptions} [autoPanOptions.autoPanAnimation] - Used to customize the auto-pan animation. See {@link https://openlayers.org/en/latest/apidoc/olx.html#.OverlayPanOptions olx.OverlayPanOptions}.
+     * @param {Number} [autoPanOptions.autoPanMargin] - Margin (in pixels) between the pop-up and the border of the map when autopanning. Default is 20.
+     *
+     */
+    displayFeatureInfo: function displayFeatureInfo(map, olCoordinate, gfiLayers, proxyOptions, autoPanOptions) {
+        // Layers orders
+        var layersOrdered = {};
+        for (var j = 0; j < gfiLayers.length; j++) {
+            var layer = gfiLayers[j];
+            var position = layer.obj.getZIndex();
+            if (!layersOrdered[position]) {
+                layersOrdered[position] = [];
+            }
+            layersOrdered[position].push(layer);
+        }
+
+        // affichage de la première popup d'informations en partant du dessus...
+        var requests = [];
+        // inversion de l'ordre des layers
+        var positions = Object.keys(layersOrdered);
+        positions.sort(function (a, b) {
+            return b - a;
+        });
+
+        // si la 1ere couche affichable est de type vecteur on affiche les infos de toutes
+        // les couches vecteur qui suivent. Par consequent, une seule requete vecteur suffit
+        // (celle correspondant au premier objet vecteur rencontre)
+        var foundFeature = false;
+
+        for (var k = 0; k < positions.length; k++) {
+            var p = positions[k];
+            for (var h = 0; h < layersOrdered[p].length; ++h) {
+                var l = layersOrdered[p][h].obj;
+                var infoFormat = layersOrdered[p][h].infoFormat || "text/html";
+                var minMaxResolutionOk = true;
+                if (l.minResolution && l.minResolution > map.getResolution()) {
+                    minMaxResolutionOk = false;
+                }
+                if (minMaxResolutionOk && l.maxResolution && l.maxResolution < map.getResolution()) {
+                    minMaxResolutionOk = false;
+                }
+
+                if (l.getVisible() && minMaxResolutionOk) {
+                    var format = this.getLayerFormat(l);
+                    if (format === "vector") {
+                        if (!foundFeature && this.layerGetFeatureAtCoordinates(map, l, olCoordinate)) {
+                            requests.push({
+                                format: format,
+                                scope: this,
+                                coordinate: olCoordinate
+                            });
+                        }
+                        continue;
+                    } else if (format !== "wms" && format !== "wmts") {
+                        logger.log("[ERROR] DisplayFeatureInfo - layer format '" + format + "' not allowed");
+                        continue;
+                    }
+
+                    var _res = map.getView().getResolution();
+                    var _url = null;
+                    if (format === "wmts") {
+                        _url = l.getSource().getGetFeatureInfoUrl(olCoordinate, _res, map.getView().getProjection(), {
+                            INFOFORMAT: infoFormat
+                        });
+                    } else {
+                        _url = l.getSource().getGetFeatureInfoUrl(olCoordinate, _res, map.getView().getProjection(), {
+                            INFO_FORMAT: infoFormat
+                        });
+                    }
+
+                    requests.push({
+                        // id : _id,
+                        format: infoFormat,
+                        url: _ProxyUtils2.default.proxifyUrl(_url, proxyOptions),
+                        scope: this,
+                        coordinate: olCoordinate
+                    });
+                }
+            }
+        }
+
+        // on recupere les couches vecteur ordonnees (a utiliser dans le cas de l'affichage de donnees vecteur)
+        var vectorLayersOrdered = null;
+
+        // call request sync
+        function requestsSync(list, iterator, callback) {
+            if (list.length === 0) {
+                return;
+            }
+            var nextItemIndex = 0;
+            // function report next request
+            function report(displayed) {
+                nextItemIndex++;
+                if (displayed || nextItemIndex === list.length) {
+                    callback();
+                } else {
+                    iterator(list[nextItemIndex], report);
+                }
+            }
+            // instead of starting all the iterations, we only start the 1st one
+            iterator(list[0], report);
+        };
+
+        var context = this;
+
+        requestsSync(requests, function (data, report) {
+            if (data.format === "vector") {
+                if (!vectorLayersOrdered) {
+                    vectorLayersOrdered = [];
+                    for (var m = 0; m < positions.length; m++) {
+                        var p = positions[m];
+                        for (var n = 0; n < layersOrdered[p].length; ++n) {
+                            vectorLayersOrdered.push(layersOrdered[p][n].obj);
+                        }
+                    }
+                }
+                report(data.scope.displayVectorFeatureInfo(map, data.coordinate, vectorLayersOrdered, autoPanOptions));
+            } else {
+                // var self = data.scope;
+                _gp2.default.Protocols.XHR.call({
+                    url: data.url,
+                    method: "GET",
+                    scope: data.scope,
+                    // Handles GFI response
+                    onResponse: function onResponse(resp) {
+                        var exception = false;
+
+                        // a t on une exception ?
+                        if (resp.trim().length === 0 || resp.indexOf("java.lang.NullPointerException") !== -1 || resp.indexOf("not queryable") !== -1) {
+                            // rien à afficher
+                            exception = true;
+                        }
+
+                        // on affiche la popup GFI !
+                        var displayed = !exception && context.displayInfo(map, data.coordinate, resp, "text/html", autoPanOptions);
+                        // on reporte sur la prochaine requête...
+                        report(displayed);
+                    },
+                    // Handles GFI response error
+                    onFailure: function onFailure(error) {
+                        logger.log(error);
+                        report(false);
+                    }
+                });
+            }
+        }, function () {
+            logger.trace("Finish sync to GFI !");
+        });
+    },
+
+    // Function returning the clicked position of an event
+    getPosition: function getPosition(e, map) {
+        if (e.coordinate) {
+            return e.coordinate;
+        }
+
+        var pixel = [0, 0];
+
+        if (e.offsetX || e.offsetY) {
+            pixel[0] = e.offsetX; // + document.body.scrollLeft + document.documentElement.scrollLeft;
+            pixel[1] = e.offsetY; // + document.body.scrollTop + document.documentElement.scrollTop;
+        } else if (e.pointerType === "touch") {
+            // a implementer !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+            // Safari iOS / iPhone en mode Touch (cf. hammer)
+            var p = e.pointers[0];
+            pixel[0] = p.pageX;
+            pixel[1] = p.pageY;
+        }
+
+        var coordinate = map.getCoordinateFromPixel(pixel);
+        return coordinate;
+    },
+
+    // onDisplayFeatureInfo
+    onDisplayFeatureInfo: function onDisplayFeatureInfo(e, gfiObj) {
+        if (!gfiObj.isActive()) {
+            return;
+        }
+
+        logger.trace(e);
+
+        var map = gfiObj.getMap();
+
+        if (e.type === "contextmenu" || e.type === "dblclick") {
+            e.preventDefault();
+        } else if (e.type === "singleclick") {
+            var interactions = map.getInteractions().getArray();
+            for (var i = 0; i < interactions.length; i++) {
+                if (interactions[i].getActive() && (interactions[i] instanceof _ol2.default.interaction.Select || interactions[i] instanceof _ol2.default.interaction.Modify || interactions[i] instanceof _ol2.default.interaction.Draw)) {
+                    // si on a une interaction de dessin ou de sélection en cours, on ne fait rien.
+                    return;
+                }
+            }
+        }
+
+        var proxyOptions = {};
+        if (gfiObj._proxyUrl) {
+            proxyOptions.proxyUrl = gfiObj._proxyUrl;
+        }
+        if (gfiObj._noProxyDomains) {
+            proxyOptions.noProxyDomains = gfiObj._noProxyDomains;
+        }
+
+        var autoPanOptions = {};
+        if (gfiObj._autoPan) {
+            autoPanOptions.autoPan = gfiObj._autoPan;
+        }
+        if (gfiObj._autoPanAnimation) {
+            autoPanOptions.autoPanAnimation = gfiObj._autoPanAnimation;
+        }
+        if (gfiObj._autoPanMargin) {
+            autoPanOptions.autoPanMargin = gfiObj._autoPanMargin;
+        }
+
+        var eventLayers = [];
+        for (var j = 0; j < gfiObj._layers.length; ++j) {
+            var event = gfiObj._layers[j].event ? gfiObj._layers[j].event : gfiObj._defaultEvent;
+            if (event === e.type) {
+                var ind = eventLayers.push(gfiObj._layers[j]) - 1;
+                if (!eventLayers[ind].infoFormat) {
+                    eventLayers[ind].infoFormat = gfiObj._defaultInfoFormat;
+                }
+            }
+        }
+
+        var coords = this.getPosition(e, map);
+
+        this.displayFeatureInfo(map, coords, eventLayers, proxyOptions, autoPanOptions);
+    }
+};
+
+exports.default = GfiUtils;
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _ol = __webpack_require__(1);
+
+var _ol2 = _interopRequireDefault(_ol);
+
+var _gp = __webpack_require__(4);
+
+var _gp2 = _interopRequireDefault(_gp);
+
+var _Utils = __webpack_require__(2);
 
 var _Utils2 = _interopRequireDefault(_Utils);
 
@@ -23364,9 +22898,7 @@ WMTS.prototype.getGetFeatureInfoUrl = function (coordinate, resolution, projecti
     var tileGrid = this.tileGrid;
     var tileCoord = this.tileGrid.getTileCoordForCoordAndResolution(coordinate, resolution);
 
-    /**
-     * this code is duplicated from createFromWMTSTemplate function
-     */
+    // this code is duplicated from createFromWMTSTemplate function
     var getTransformedTileCoord = function getTransformedTileCoord(tileCoord, tileGrid, projection) {
         var tmpTileCoord = [0, 0, 0]; /* Note : [z(zoomLevel),x,y] */
         var tmpExtent = _ol2.default.extent.createEmpty();
@@ -23435,7 +22967,7 @@ WMTS.prototype.getGetFeatureInfoUrl = function (coordinate, resolution, projecti
 exports.default = WMTS;
 
 /***/ }),
-/* 21 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23445,19 +22977,25 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _ol = __webpack_require__(0);
+var _ol = __webpack_require__(1);
 
 var _ol2 = _interopRequireDefault(_ol);
 
-var _proj = __webpack_require__(9);
+var _proj = __webpack_require__(19);
 
 var _proj2 = _interopRequireDefault(_proj);
 
-var _Register = __webpack_require__(18);
+var _Register = __webpack_require__(63);
 
 var _Register2 = _interopRequireDefault(_Register);
 
+var _LoggerByDefault = __webpack_require__(0);
+
+var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var logger = _LoggerByDefault2.default.getLogger("CRS");
 
 /**
  * Autoload function that loads all defs into proj4
@@ -23470,7 +23008,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
     if (!_ol2.default.proj.proj4_ && _ol2.default.proj.setProj4) {
         _ol2.default.proj.setProj4(_proj2.default);
     } else {
-        console.log("WARNING : OpenLayers library should manage proj4 dependency in order to add custom projections (Lambert 93 for instance)");
+        logger.log("WARNING : OpenLayers library should manage proj4 dependency in order to add custom projections (Lambert 93 for instance)");
     }
 })();
 
@@ -23528,7 +23066,41 @@ var CRS = {
 exports.default = CRS;
 
 /***/ }),
-/* 22 */
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["proj4"] = __webpack_require__(62);
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)))
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23538,7 +23110,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _ol = __webpack_require__(0);
+var _ol = __webpack_require__(1);
 
 var _ol2 = _interopRequireDefault(_ol);
 
@@ -23546,27 +23118,29 @@ var _gp = __webpack_require__(4);
 
 var _gp2 = _interopRequireDefault(_gp);
 
-var _WMTS = __webpack_require__(20);
+var _WMTS = __webpack_require__(17);
 
 var _WMTS2 = _interopRequireDefault(_WMTS);
 
-var _GfiUtils = __webpack_require__(15);
-
-var _GfiUtils2 = _interopRequireDefault(_GfiUtils);
-
-var _Utils = __webpack_require__(1);
+var _Utils = __webpack_require__(2);
 
 var _Utils2 = _interopRequireDefault(_Utils);
 
-var _Config = __webpack_require__(8);
+var _Config = __webpack_require__(7);
 
 var _Config2 = _interopRequireDefault(_Config);
 
-var _LayerUtils = __webpack_require__(7);
+var _LayerUtils = __webpack_require__(12);
 
 var _LayerUtils2 = _interopRequireDefault(_LayerUtils);
 
+var _LoggerByDefault = __webpack_require__(0);
+
+var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var logger = _LoggerByDefault2.default.getLogger("sourcewmts");
 
 /**
  * @classdesc
@@ -23585,6 +23159,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      layer  : "ORTHOIMAGERY.ORTHOPHOTOS"
  * });
  */
+/* globals self */
 function SourceWMTS(options) {
     if (!(this instanceof SourceWMTS)) {
         throw new TypeError("ERROR CLASS_CONSTRUCTOR");
@@ -23667,13 +23242,12 @@ function SourceWMTS(options) {
         this._quicklookUrl = wmtsParams.quicklookUrl;
     } else {
         // If layer is not in Gp.Config
-        console.log("[source WMTS] ERROR : " + options.layer + " cannot be found in Geoportal Configuration. Make sure that this resource is included in your contract key.");
+        logger.log("[source WMTS] ERROR : " + options.layer + " cannot be found in Geoportal Configuration. Make sure that this resource is included in your contract key.");
         return new _WMTS2.default({});
     }
 }
 
 // Inherits from ol.source.WMTS
-/* globals self */
 _ol2.default.inherits(SourceWMTS, _WMTS2.default);
 
 /*
@@ -23689,7 +23263,7 @@ SourceWMTS.prototype.constructor = SourceWMTS;
 exports.default = SourceWMTS;
 
 /***/ }),
-/* 23 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23699,7 +23273,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _ol = __webpack_require__(0);
+var _ol = __webpack_require__(1);
 
 var _ol2 = _interopRequireDefault(_ol);
 
@@ -23707,15 +23281,21 @@ var _gp = __webpack_require__(4);
 
 var _gp2 = _interopRequireDefault(_gp);
 
-var _Utils = __webpack_require__(1);
+var _Utils = __webpack_require__(2);
 
 var _Utils2 = _interopRequireDefault(_Utils);
 
-var _Config = __webpack_require__(8);
+var _Config = __webpack_require__(7);
 
 var _Config2 = _interopRequireDefault(_Config);
 
+var _LoggerByDefault = __webpack_require__(0);
+
+var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var logger = _LoggerByDefault2.default.getLogger("sourcewms");
 
 /**
  * @classdesc
@@ -23804,7 +23384,7 @@ function SourceWMS(options) {
         this._quicklookUrl = wmsParams.quicklookUrl;
     } else {
         // If layer is not in Gp.Config
-        console.log("[source WMS] ERROR : " + options.layer + " cannot be found in Geoportal Configuration. Make sure that this resource is included in your contract key.");
+        logger.log("[source WMS] ERROR : " + options.layer + " cannot be found in Geoportal Configuration. Make sure that this resource is included in your contract key.");
         return new _ol2.default.source.TileWMS({});
     }
 }
@@ -23825,7 +23405,7 @@ SourceWMS.prototype.constructor = SourceWMS;
 exports.default = SourceWMS;
 
 /***/ }),
-/* 24 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23835,7 +23415,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _ol = __webpack_require__(0);
+var _ol = __webpack_require__(1);
 
 var _ol2 = _interopRequireDefault(_ol);
 
@@ -23843,11 +23423,11 @@ var _gp = __webpack_require__(4);
 
 var _gp2 = _interopRequireDefault(_gp);
 
-var _LoggerByDefault = __webpack_require__(2);
+var _LoggerByDefault = __webpack_require__(0);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
-var _Utils = __webpack_require__(1);
+var _Utils = __webpack_require__(2);
 
 var _Utils2 = _interopRequireDefault(_Utils);
 
@@ -23949,6 +23529,8 @@ LocationSelector.prototype.constructor = LocationSelector;
 
 /**
  * initialize component
+ *
+ * @param {Object} options - options
  */
 LocationSelector.prototype.initialize = function (options) {
     // set default options
@@ -24045,7 +23627,7 @@ LocationSelector.prototype._initMarker = function () {
             if (Array.isArray(offset) && offset.length === 2) {
                 this._markerOffset = offset;
             } else {
-                console.log("markerOpts.offset should be an array. e.g. : [0,0]");
+                logger.log("markerOpts.offset should be an array. e.g. : [0,0]");
             }
         }
     } else {
@@ -24114,6 +23696,8 @@ LocationSelector.prototype._checkRightsManagement = function () {
 
 /**
  * initialize component container
+ *
+ * @returns {DOMElement} DOM element
  */
 LocationSelector.prototype._initContainer = function () {
     var id = this.options.tag.id;
@@ -24195,7 +23779,7 @@ LocationSelector.prototype.onAutoCompleteSearchText = function (e) {
     // aucun droits !
     // on evite une requête...
     if (this._noRightManagement) {
-        console.log("no rights for this service !?");
+        logger.log("no rights for this service !?");
         return;
     }
 
@@ -24218,14 +23802,14 @@ LocationSelector.prototype.onAutoCompleteSearchText = function (e) {
     this._requestAutoComplete({
         text: value,
         maximumResponses: 5, // FIXME je limite le nombre de reponse car le container DOM est limité dans l'affichage !!!
-        /** callback onSuccess */
+        // callback onSuccess
         onSuccess: function onSuccess(results) {
             if (results) {
                 var locations = results.suggestedLocations;
                 context._fillAutoCompletedLocationListContainer(locations);
             }
         },
-        /** callback onFailure */
+        // callback onFailure
         onFailure: function onFailure(error) {
             // FIXME
             // où affiche t on les messages : ex. 'No suggestion matching the search' ?
@@ -24613,6 +24197,8 @@ LocationSelector.prototype._requestAutoComplete = function (settings) {
  * it creates a HTML Element per location
  * (cf. this. ...)
  *
+ * @param {Object[]} locations - locations
+ *
  * @private
  */
 LocationSelector.prototype._fillAutoCompletedLocationListContainer = function (locations) {
@@ -24640,16 +24226,16 @@ LocationSelector.prototype._fillAutoCompletedLocationListContainer = function (l
 exports.default = LocationSelector;
 
 /***/ }),
-/* 25 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(26);
-__webpack_require__(28);
-module.exports = __webpack_require__(61);
+__webpack_require__(25);
+__webpack_require__(27);
+module.exports = __webpack_require__(60);
 
 
 /***/ }),
-/* 26 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24679,13 +24265,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
     var url = scripts[scripts.length - 1].getAttribute("data-url");
     var timeout = scripts[scripts.length - 1].getAttribute("data-timeout");
 
-    /** callback */
+    // callback
     var success = function success() {
         // Pas de messages en mode prod
         // console.log("GetConfig success!");
     };
 
-    /** callback */
+    // callback
     var error = function error(e) {
         throw new Error("Configuration load failed : " + e.message);
     };
@@ -24719,147 +24305,153 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 })();
 
 /***/ }),
-/* 27 */
+/* 26 */
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE_27__;
+module.exports = __WEBPACK_EXTERNAL_MODULE_26__;
 
 /***/ }),
-/* 28 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _GPgeneralWidget = __webpack_require__(29);
+var _GPgeneralWidget = __webpack_require__(28);
 
 var _GPgeneralWidget2 = _interopRequireDefault(_GPgeneralWidget);
 
-var _GPdrawing = __webpack_require__(30);
+var _GPdrawing = __webpack_require__(29);
 
 var _GPdrawing2 = _interopRequireDefault(_GPdrawing);
 
-var _GPisochron = __webpack_require__(31);
+var _GPisochron = __webpack_require__(30);
 
 var _GPisochron2 = _interopRequireDefault(_GPisochron);
 
-var _GPmeasureAzimuth = __webpack_require__(32);
+var _GPmeasureAzimuth = __webpack_require__(31);
 
 var _GPmeasureAzimuth2 = _interopRequireDefault(_GPmeasureAzimuth);
 
-var _GPreverseGeocoding = __webpack_require__(33);
+var _GPreverseGeocoding = __webpack_require__(32);
 
 var _GPreverseGeocoding2 = _interopRequireDefault(_GPreverseGeocoding);
 
-var _GPelevationPath = __webpack_require__(34);
+var _GPelevationPath = __webpack_require__(33);
 
 var _GPelevationPath2 = _interopRequireDefault(_GPelevationPath);
 
-var _GPlayerSwitcher = __webpack_require__(35);
+var _GPlayerSwitcher = __webpack_require__(34);
 
 var _GPlayerSwitcher2 = _interopRequireDefault(_GPlayerSwitcher);
 
-var _GPmeasureLength = __webpack_require__(36);
+var _GPmeasureLength = __webpack_require__(35);
 
 var _GPmeasureLength2 = _interopRequireDefault(_GPmeasureLength);
 
-var _GProute = __webpack_require__(37);
+var _GProute = __webpack_require__(36);
 
 var _GProute2 = _interopRequireDefault(_GProute);
 
-var _GPlocation = __webpack_require__(38);
+var _GPlocation = __webpack_require__(37);
 
 var _GPlocation2 = _interopRequireDefault(_GPlocation);
 
-var _GPmeasureToolTip = __webpack_require__(39);
+var _GPmeasureToolTip = __webpack_require__(38);
 
 var _GPmeasureToolTip2 = _interopRequireDefault(_GPmeasureToolTip);
 
-var _GPsearchEngine = __webpack_require__(40);
+var _GPsearchEngine = __webpack_require__(39);
 
 var _GPsearchEngine2 = _interopRequireDefault(_GPsearchEngine);
 
-var _GPgetFeatureInfo = __webpack_require__(41);
+var _GPgetFeatureInfo = __webpack_require__(40);
 
 var _GPgetFeatureInfo2 = _interopRequireDefault(_GPgetFeatureInfo);
 
-var _GPmeasureArea = __webpack_require__(42);
+var _GPmeasureArea = __webpack_require__(41);
 
 var _GPmeasureArea2 = _interopRequireDefault(_GPmeasureArea);
 
-var _GPmousePosition = __webpack_require__(43);
+var _GPmousePosition = __webpack_require__(42);
 
 var _GPmousePosition2 = _interopRequireDefault(_GPmousePosition);
 
-var _GPgeneralWidgetOpenLayers = __webpack_require__(44);
+var _GPgeneralWidgetOpenLayers = __webpack_require__(43);
 
 var _GPgeneralWidgetOpenLayers2 = _interopRequireDefault(_GPgeneralWidgetOpenLayers);
 
-var _GpattributionOpenLayers = __webpack_require__(45);
+var _GpattributionOpenLayers = __webpack_require__(44);
 
 var _GpattributionOpenLayers2 = _interopRequireDefault(_GpattributionOpenLayers);
 
-var _GPmeasureAreaOpenLayers = __webpack_require__(46);
+var _GPmeasureAreaOpenLayers = __webpack_require__(45);
 
 var _GPmeasureAreaOpenLayers2 = _interopRequireDefault(_GPmeasureAreaOpenLayers);
 
-var _GPdrawingOpenLayers = __webpack_require__(47);
+var _GPdrawingOpenLayers = __webpack_require__(46);
 
 var _GPdrawingOpenLayers2 = _interopRequireDefault(_GPdrawingOpenLayers);
 
-var _GPmeasureAzimuthOpenLayers = __webpack_require__(48);
+var _GPmeasureAzimuthOpenLayers = __webpack_require__(47);
 
 var _GPmeasureAzimuthOpenLayers2 = _interopRequireDefault(_GPmeasureAzimuthOpenLayers);
 
-var _GPelevationPathOpenLayers = __webpack_require__(49);
+var _GPelevationPathOpenLayers = __webpack_require__(48);
 
 var _GPelevationPathOpenLayers2 = _interopRequireDefault(_GPelevationPathOpenLayers);
 
-var _GPmeasureLengthOpenLayers = __webpack_require__(50);
+var _GPmeasureLengthOpenLayers = __webpack_require__(49);
 
 var _GPmeasureLengthOpenLayers2 = _interopRequireDefault(_GPmeasureLengthOpenLayers);
 
-var _GPgetFeatureInfoOpenLayers = __webpack_require__(51);
+var _GPgetFeatureInfoOpenLayers = __webpack_require__(50);
 
 var _GPgetFeatureInfoOpenLayers2 = _interopRequireDefault(_GPgetFeatureInfoOpenLayers);
 
-var _GPmousePositionOpenLayers = __webpack_require__(52);
+var _GPmousePositionOpenLayers = __webpack_require__(51);
 
 var _GPmousePositionOpenLayers2 = _interopRequireDefault(_GPmousePositionOpenLayers);
 
-var _GPisochronOpenLayers = __webpack_require__(53);
+var _GPisochronOpenLayers = __webpack_require__(52);
 
 var _GPisochronOpenLayers2 = _interopRequireDefault(_GPisochronOpenLayers);
 
-var _GPreverseGeocodingOpenLayers = __webpack_require__(54);
+var _GPreverseGeocodingOpenLayers = __webpack_require__(53);
 
 var _GPreverseGeocodingOpenLayers2 = _interopRequireDefault(_GPreverseGeocodingOpenLayers);
 
-var _GPimportOpenLayers = __webpack_require__(55);
+var _GPimportOpenLayers = __webpack_require__(54);
 
 var _GPimportOpenLayers2 = _interopRequireDefault(_GPimportOpenLayers);
 
-var _GProuteOpenLayers = __webpack_require__(56);
+var _GProuteOpenLayers = __webpack_require__(55);
 
 var _GProuteOpenLayers2 = _interopRequireDefault(_GProuteOpenLayers);
 
-var _GPlayerSwitcherOpenLayers = __webpack_require__(57);
+var _GPlayerSwitcherOpenLayers = __webpack_require__(56);
 
 var _GPlayerSwitcherOpenLayers2 = _interopRequireDefault(_GPlayerSwitcherOpenLayers);
 
-var _GPsearchEngineOpenLayers = __webpack_require__(58);
+var _GPsearchEngineOpenLayers = __webpack_require__(57);
 
 var _GPsearchEngineOpenLayers2 = _interopRequireDefault(_GPsearchEngineOpenLayers);
 
-var _GPlocationOpenLayers = __webpack_require__(59);
+var _GPlocationOpenLayers = __webpack_require__(58);
 
 var _GPlocationOpenLayers2 = _interopRequireDefault(_GPlocationOpenLayers);
 
-var _GPtoolBoxMeasureOpenLayers = __webpack_require__(60);
+var _GPtoolBoxMeasureOpenLayers = __webpack_require__(59);
 
 var _GPtoolBoxMeasureOpenLayers2 = _interopRequireDefault(_GPtoolBoxMeasureOpenLayers);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 /* 29 */
@@ -25049,12 +24641,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /***/ }),
 /* 60 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25064,7 +24650,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _ol = __webpack_require__(0);
+var _ol = __webpack_require__(1);
 
 var _ol2 = _interopRequireDefault(_ol);
 
@@ -25072,43 +24658,39 @@ var _gp = __webpack_require__(4);
 
 var _gp2 = _interopRequireDefault(_gp);
 
-var _LayerUtils = __webpack_require__(7);
+var _LayerUtils = __webpack_require__(12);
 
 var _LayerUtils2 = _interopRequireDefault(_LayerUtils);
 
-var _Register = __webpack_require__(18);
-
-var _Register2 = _interopRequireDefault(_Register);
-
-var _ProxyUtils = __webpack_require__(14);
+var _ProxyUtils = __webpack_require__(13);
 
 var _ProxyUtils2 = _interopRequireDefault(_ProxyUtils);
 
-var _GfiUtils = __webpack_require__(15);
+var _GfiUtils = __webpack_require__(16);
 
 var _GfiUtils2 = _interopRequireDefault(_GfiUtils);
 
-var _Utils = __webpack_require__(1);
+var _Utils = __webpack_require__(2);
 
 var _Utils2 = _interopRequireDefault(_Utils);
 
-var _KML = __webpack_require__(16);
+var _KML = __webpack_require__(14);
 
 var _KML2 = _interopRequireDefault(_KML);
 
-var _WMTS = __webpack_require__(20);
+var _WMTS = __webpack_require__(17);
 
 var _WMTS2 = _interopRequireDefault(_WMTS);
 
-var _CRS = __webpack_require__(21);
+var _CRS = __webpack_require__(18);
 
 var _CRS2 = _interopRequireDefault(_CRS);
 
-var _SourceWMTS = __webpack_require__(22);
+var _SourceWMTS = __webpack_require__(21);
 
 var _SourceWMTS2 = _interopRequireDefault(_SourceWMTS);
 
-var _SourceWMS = __webpack_require__(23);
+var _SourceWMS = __webpack_require__(22);
 
 var _SourceWMS2 = _interopRequireDefault(_SourceWMS);
 
@@ -25120,7 +24702,7 @@ var _LayerWMS = __webpack_require__(65);
 
 var _LayerWMS2 = _interopRequireDefault(_LayerWMS);
 
-var _LayerSwitcher = __webpack_require__(10);
+var _LayerSwitcher = __webpack_require__(8);
 
 var _LayerSwitcher2 = _interopRequireDefault(_LayerSwitcher);
 
@@ -25184,7 +24766,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // Rajout des propriétés de l'extension dans le namespace Gp
 _gp2.default.olExtVersion = "2.0.0";
-_gp2.default.olExtDate = "2018-05-04";
+_gp2.default.olExtDate = "2018-05-07";
 _gp2.default.olUtils = _Utils2.default;
 
 // Classes utilitaires
@@ -25223,6 +24805,266 @@ _ol2.default.control.DefaultMarkers = _Markers2.default;
 _ol2.default.control.ElevationPath = _ElevationPath2.default;
 
 exports.default = _gp2.default;
+
+/***/ }),
+/* 61 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
+* loglevel - https://github.com/pimterry/loglevel
+*
+* Copyright (c) 2013 Tim Perry
+* Licensed under the MIT license.
+*/
+(function (root, definition) {
+    "use strict";
+    if (true) {
+        !(__WEBPACK_AMD_DEFINE_FACTORY__ = (definition),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) :
+				__WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+    } else if (typeof module === 'object' && module.exports) {
+        module.exports = definition();
+    } else {
+        root.log = definition();
+    }
+}(this, function () {
+    "use strict";
+
+    // Slightly dubious tricks to cut down minimized file size
+    var noop = function() {};
+    var undefinedType = "undefined";
+
+    var logMethods = [
+        "trace",
+        "debug",
+        "info",
+        "warn",
+        "error"
+    ];
+
+    // Cross-browser bind equivalent that works at least back to IE6
+    function bindMethod(obj, methodName) {
+        var method = obj[methodName];
+        if (typeof method.bind === 'function') {
+            return method.bind(obj);
+        } else {
+            try {
+                return Function.prototype.bind.call(method, obj);
+            } catch (e) {
+                // Missing bind shim or IE8 + Modernizr, fallback to wrapping
+                return function() {
+                    return Function.prototype.apply.apply(method, [obj, arguments]);
+                };
+            }
+        }
+    }
+
+    // Build the best logging method possible for this env
+    // Wherever possible we want to bind, not wrap, to preserve stack traces
+    function realMethod(methodName) {
+        if (methodName === 'debug') {
+            methodName = 'log';
+        }
+
+        if (typeof console === undefinedType) {
+            return false; // No method possible, for now - fixed later by enableLoggingWhenConsoleArrives
+        } else if (console[methodName] !== undefined) {
+            return bindMethod(console, methodName);
+        } else if (console.log !== undefined) {
+            return bindMethod(console, 'log');
+        } else {
+            return noop;
+        }
+    }
+
+    // These private functions always need `this` to be set properly
+
+    function replaceLoggingMethods(level, loggerName) {
+        /*jshint validthis:true */
+        for (var i = 0; i < logMethods.length; i++) {
+            var methodName = logMethods[i];
+            this[methodName] = (i < level) ?
+                noop :
+                this.methodFactory(methodName, level, loggerName);
+        }
+
+        // Define log.log as an alias for log.debug
+        this.log = this.debug;
+    }
+
+    // In old IE versions, the console isn't present until you first open it.
+    // We build realMethod() replacements here that regenerate logging methods
+    function enableLoggingWhenConsoleArrives(methodName, level, loggerName) {
+        return function () {
+            if (typeof console !== undefinedType) {
+                replaceLoggingMethods.call(this, level, loggerName);
+                this[methodName].apply(this, arguments);
+            }
+        };
+    }
+
+    // By default, we use closely bound real methods wherever possible, and
+    // otherwise we wait for a console to appear, and then try again.
+    function defaultMethodFactory(methodName, level, loggerName) {
+        /*jshint validthis:true */
+        return realMethod(methodName) ||
+               enableLoggingWhenConsoleArrives.apply(this, arguments);
+    }
+
+    function Logger(name, defaultLevel, factory) {
+      var self = this;
+      var currentLevel;
+      var storageKey = "loglevel";
+      if (name) {
+        storageKey += ":" + name;
+      }
+
+      function persistLevelIfPossible(levelNum) {
+          var levelName = (logMethods[levelNum] || 'silent').toUpperCase();
+
+          if (typeof window === undefinedType) return;
+
+          // Use localStorage if available
+          try {
+              window.localStorage[storageKey] = levelName;
+              return;
+          } catch (ignore) {}
+
+          // Use session cookie as fallback
+          try {
+              window.document.cookie =
+                encodeURIComponent(storageKey) + "=" + levelName + ";";
+          } catch (ignore) {}
+      }
+
+      function getPersistedLevel() {
+          var storedLevel;
+
+          if (typeof window === undefinedType) return;
+
+          try {
+              storedLevel = window.localStorage[storageKey];
+          } catch (ignore) {}
+
+          // Fallback to cookies if local storage gives us nothing
+          if (typeof storedLevel === undefinedType) {
+              try {
+                  var cookie = window.document.cookie;
+                  var location = cookie.indexOf(
+                      encodeURIComponent(storageKey) + "=");
+                  if (location !== -1) {
+                      storedLevel = /^([^;]+)/.exec(cookie.slice(location))[1];
+                  }
+              } catch (ignore) {}
+          }
+
+          // If the stored level is not valid, treat it as if nothing was stored.
+          if (self.levels[storedLevel] === undefined) {
+              storedLevel = undefined;
+          }
+
+          return storedLevel;
+      }
+
+      /*
+       *
+       * Public logger API - see https://github.com/pimterry/loglevel for details
+       *
+       */
+
+      self.name = name;
+
+      self.levels = { "TRACE": 0, "DEBUG": 1, "INFO": 2, "WARN": 3,
+          "ERROR": 4, "SILENT": 5};
+
+      self.methodFactory = factory || defaultMethodFactory;
+
+      self.getLevel = function () {
+          return currentLevel;
+      };
+
+      self.setLevel = function (level, persist) {
+          if (typeof level === "string" && self.levels[level.toUpperCase()] !== undefined) {
+              level = self.levels[level.toUpperCase()];
+          }
+          if (typeof level === "number" && level >= 0 && level <= self.levels.SILENT) {
+              currentLevel = level;
+              if (persist !== false) {  // defaults to true
+                  persistLevelIfPossible(level);
+              }
+              replaceLoggingMethods.call(self, level, name);
+              if (typeof console === undefinedType && level < self.levels.SILENT) {
+                  return "No console available for logging";
+              }
+          } else {
+              throw "log.setLevel() called with invalid level: " + level;
+          }
+      };
+
+      self.setDefaultLevel = function (level) {
+          if (!getPersistedLevel()) {
+              self.setLevel(level, false);
+          }
+      };
+
+      self.enableAll = function(persist) {
+          self.setLevel(self.levels.TRACE, persist);
+      };
+
+      self.disableAll = function(persist) {
+          self.setLevel(self.levels.SILENT, persist);
+      };
+
+      // Initialize with the right level
+      var initialLevel = getPersistedLevel();
+      if (initialLevel == null) {
+          initialLevel = defaultLevel == null ? "WARN" : defaultLevel;
+      }
+      self.setLevel(initialLevel, false);
+    }
+
+    /*
+     *
+     * Top-level API
+     *
+     */
+
+    var defaultLogger = new Logger();
+
+    var _loggersByName = {};
+    defaultLogger.getLogger = function getLogger(name) {
+        if (typeof name !== "string" || name === "") {
+          throw new TypeError("You must supply a name when creating a logger.");
+        }
+
+        var logger = _loggersByName[name];
+        if (!logger) {
+          logger = _loggersByName[name] = new Logger(
+            name, defaultLogger.getLevel(), defaultLogger.methodFactory);
+        }
+        return logger;
+    };
+
+    // Grab the current global log variable in case of overwrite
+    var _log = (typeof window !== undefinedType) ? window.log : undefined;
+    defaultLogger.noConflict = function() {
+        if (typeof window !== undefinedType &&
+               window.log === defaultLogger) {
+            window.log = _log;
+        }
+
+        return defaultLogger;
+    };
+
+    defaultLogger.getLoggers = function getLoggers() {
+        return _loggersByName;
+    };
+
+    return defaultLogger;
+}));
+
 
 /***/ }),
 /* 62 */
@@ -31561,261 +31403,525 @@ exports.default = _gp2.default;
 /* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
-* loglevel - https://github.com/pimterry/loglevel
-*
-* Copyright (c) 2013 Tim Perry
-* Licensed under the MIT license.
-*/
-(function (root, definition) {
-    "use strict";
-    if (true) {
-        !(__WEBPACK_AMD_DEFINE_FACTORY__ = (definition),
-				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
-				(__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) :
-				__WEBPACK_AMD_DEFINE_FACTORY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-    } else if (typeof module === 'object' && module.exports) {
-        module.exports = definition();
-    } else {
-        root.log = definition();
-    }
-}(this, function () {
-    "use strict";
+"use strict";
 
-    // Slightly dubious tricks to cut down minimized file size
-    var noop = function() {};
-    var undefinedType = "undefined";
 
-    var logMethods = [
-        "trace",
-        "debug",
-        "info",
-        "warn",
-        "error"
-    ];
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 
-    // Cross-browser bind equivalent that works at least back to IE6
-    function bindMethod(obj, methodName) {
-        var method = obj[methodName];
-        if (typeof method.bind === 'function') {
-            return method.bind(obj);
-        } else {
-            try {
-                return Function.prototype.bind.call(method, obj);
-            } catch (e) {
-                // Missing bind shim or IE8 + Modernizr, fallback to wrapping
-                return function() {
-                    return Function.prototype.apply.apply(method, [obj, arguments]);
-                };
-            }
-        }
-    }
+var _proj = __webpack_require__(19);
 
-    // Build the best logging method possible for this env
-    // Wherever possible we want to bind, not wrap, to preserve stack traces
-    function realMethod(methodName) {
-        if (methodName === 'debug') {
-            methodName = 'log';
-        }
+var _proj2 = _interopRequireDefault(_proj);
 
-        if (typeof console === undefinedType) {
-            return false; // No method possible, for now - fixed later by enableLoggingWhenConsoleArrives
-        } else if (console[methodName] !== undefined) {
-            return bindMethod(console, methodName);
-        } else if (console.log !== undefined) {
-            return bindMethod(console, 'log');
-        } else {
-            return noop;
-        }
-    }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-    // These private functions always need `this` to be set properly
+/**
+ * Register definition for IGNF, and EPSG CRS.
+ * @example
+ * Gp.Register.IGNF.AMST63
+ *   // return : "+title=Amsterdam 1963 +proj=geocent +towgs84=109.753,-528.133,-362.244,0,0,0,0 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs"
+ * Gp.Register.get("IGNF:AMST63")
+ *   // same as Gp.Register.IGNF.AMST63
+ */
+var Register = {
 
-    function replaceLoggingMethods(level, loggerName) {
-        /*jshint validthis:true */
-        for (var i = 0; i < logMethods.length; i++) {
-            var methodName = logMethods[i];
-            this[methodName] = (i < level) ?
-                noop :
-                this.methodFactory(methodName, level, loggerName);
-        }
-
-        // Define log.log as an alias for log.debug
-        this.log = this.debug;
-    }
-
-    // In old IE versions, the console isn't present until you first open it.
-    // We build realMethod() replacements here that regenerate logging methods
-    function enableLoggingWhenConsoleArrives(methodName, level, loggerName) {
-        return function () {
-            if (typeof console !== undefinedType) {
-                replaceLoggingMethods.call(this, level, loggerName);
-                this[methodName].apply(this, arguments);
-            }
-        };
-    }
-
-    // By default, we use closely bound real methods wherever possible, and
-    // otherwise we wait for a console to appear, and then try again.
-    function defaultMethodFactory(methodName, level, loggerName) {
-        /*jshint validthis:true */
-        return realMethod(methodName) ||
-               enableLoggingWhenConsoleArrives.apply(this, arguments);
-    }
-
-    function Logger(name, defaultLevel, factory) {
-      var self = this;
-      var currentLevel;
-      var storageKey = "loglevel";
-      if (name) {
-        storageKey += ":" + name;
-      }
-
-      function persistLevelIfPossible(levelNum) {
-          var levelName = (logMethods[levelNum] || 'silent').toUpperCase();
-
-          if (typeof window === undefinedType) return;
-
-          // Use localStorage if available
-          try {
-              window.localStorage[storageKey] = levelName;
-              return;
-          } catch (ignore) {}
-
-          // Use session cookie as fallback
-          try {
-              window.document.cookie =
-                encodeURIComponent(storageKey) + "=" + levelName + ";";
-          } catch (ignore) {}
-      }
-
-      function getPersistedLevel() {
-          var storedLevel;
-
-          if (typeof window === undefinedType) return;
-
-          try {
-              storedLevel = window.localStorage[storageKey];
-          } catch (ignore) {}
-
-          // Fallback to cookies if local storage gives us nothing
-          if (typeof storedLevel === undefinedType) {
-              try {
-                  var cookie = window.document.cookie;
-                  var location = cookie.indexOf(
-                      encodeURIComponent(storageKey) + "=");
-                  if (location !== -1) {
-                      storedLevel = /^([^;]+)/.exec(cookie.slice(location))[1];
-                  }
-              } catch (ignore) {}
-          }
-
-          // If the stored level is not valid, treat it as if nothing was stored.
-          if (self.levels[storedLevel] === undefined) {
-              storedLevel = undefined;
-          }
-
-          return storedLevel;
-      }
-
-      /*
-       *
-       * Public logger API - see https://github.com/pimterry/loglevel for details
-       *
-       */
-
-      self.name = name;
-
-      self.levels = { "TRACE": 0, "DEBUG": 1, "INFO": 2, "WARN": 3,
-          "ERROR": 4, "SILENT": 5};
-
-      self.methodFactory = factory || defaultMethodFactory;
-
-      self.getLevel = function () {
-          return currentLevel;
-      };
-
-      self.setLevel = function (level, persist) {
-          if (typeof level === "string" && self.levels[level.toUpperCase()] !== undefined) {
-              level = self.levels[level.toUpperCase()];
-          }
-          if (typeof level === "number" && level >= 0 && level <= self.levels.SILENT) {
-              currentLevel = level;
-              if (persist !== false) {  // defaults to true
-                  persistLevelIfPossible(level);
-              }
-              replaceLoggingMethods.call(self, level, name);
-              if (typeof console === undefinedType && level < self.levels.SILENT) {
-                  return "No console available for logging";
-              }
-          } else {
-              throw "log.setLevel() called with invalid level: " + level;
-          }
-      };
-
-      self.setDefaultLevel = function (level) {
-          if (!getPersistedLevel()) {
-              self.setLevel(level, false);
-          }
-      };
-
-      self.enableAll = function(persist) {
-          self.setLevel(self.levels.TRACE, persist);
-      };
-
-      self.disableAll = function(persist) {
-          self.setLevel(self.levels.SILENT, persist);
-      };
-
-      // Initialize with the right level
-      var initialLevel = getPersistedLevel();
-      if (initialLevel == null) {
-          initialLevel = defaultLevel == null ? "WARN" : defaultLevel;
-      }
-      self.setLevel(initialLevel, false);
-    }
-
-    /*
+    /**
+     * instance already loaded into proj4
      *
-     * Top-level API
-     *
+     * @private
      */
+    isLoaded: false,
 
-    var defaultLogger = new Logger();
-
-    var _loggersByName = {};
-    defaultLogger.getLogger = function getLogger(name) {
-        if (typeof name !== "string" || name === "") {
-          throw new TypeError("You must supply a name when creating a logger.");
+    /**
+     * get the definition for a code
+     *
+     * @param {String} name - ie. EPSG:2154 (Lambert)
+     * @returns {Object} definition
+     */
+    get: function get(name) {
+        if (name === "" || name === null || typeof name === "undefined") {
+            return;
         }
 
-        var logger = _loggersByName[name];
-        if (!logger) {
-          logger = _loggersByName[name] = new Logger(
-            name, defaultLogger.getLevel(), defaultLogger.methodFactory);
-        }
-        return logger;
-    };
-
-    // Grab the current global log variable in case of overwrite
-    var _log = (typeof window !== undefinedType) ? window.log : undefined;
-    defaultLogger.noConflict = function() {
-        if (typeof window !== undefinedType &&
-               window.log === defaultLogger) {
-            window.log = _log;
+        var s = name.split(":");
+        if (s.length !== 2) {
+            return;
         }
 
-        return defaultLogger;
-    };
+        var register = s[0];
+        var code = s[1];
 
-    defaultLogger.getLoggers = function getLoggers() {
-        return _loggersByName;
-    };
+        if (!this.hasOwnProperty(register)) {
+            return;
+        }
 
-    return defaultLogger;
-}));
+        if (!this[register].hasOwnProperty(code)) {
+            return;
+        }
 
+        return this[register][code];
+    },
+
+    /**
+     * load all defs to proj4
+     */
+    load: function load() {
+        if (!this.isLoaded) {
+            var registers = ["IGNF", "EPSG", "CRS"];
+            for (var i = 0; i < registers.length; i++) {
+                var register = registers[i];
+                var codes = this[register];
+                for (var code in codes) {
+                    if (codes.hasOwnProperty(code)) {
+                        var name = register + ":" + code;
+                        _proj2.default.defs(name, this.get(name));
+                    }
+                }
+            }
+            this.isLoaded = true;
+        }
+    },
+
+    // definitions
+    EPSG: {
+        4149: "+title=CH1903 +proj=longlat +ellps=bessel +towgs84=674.374,15.056,405.346,0,0,0,0 +no_defs ",
+        4150: "+title=CH1903plus +proj=longlat +ellps=bessel +towgs84=674.374,15.056,405.346,0,0,0,0 +no_defs ",
+        4151: "+title=CHTRF95 +proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs ",
+        4171: "+title=RGF93 +proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs ",
+        4230: "+title=ED50 +proj=longlat +ellps=intl +no_defs ",
+        4235: "+title=Guyane Francaise +proj=longlat +ellps=intl +no_defs ",
+        4258: "+title=ETRS89 +proj=longlat +ellps=GRS80 +no_defs ",
+        4275: "+title=NTF +proj=longlat +a=6378249.2 +b=6356515 +towgs84=-168,-60,320,0,0,0,0 +no_defs ",
+        4322: "+title=WGS 72 +proj=longlat +ellps=WGS72 +no_defs ",
+        4326: "+title=WGS 84 +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs ",
+        4467: "+proj=utm +zone=21 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
+        4470: "+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs ",
+        4471: "+proj=utm +zone=38 +south +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
+        4474: "+proj=utm +zone=38 +south +ellps=intl +towgs84=-382,-59,-262,0,0,0,0 +units=m +no_defs ",
+        4558: "+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs ",
+        4559: "+proj=utm +zone=20 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
+        4621: "+title=Fort Marigot +proj=longlat +ellps=intl +towgs84=137,248,-430,0,0,0,0 +no_defs ",
+        4622: "+title=Guadeloupe 1948 +proj=longlat +ellps=intl +no_defs ",
+        4623: "+title=CSG67 +proj=longlat +ellps=intl +towgs84=-186,230,110,0,0,0,0 +no_defs ",
+        4624: "+title=RGFG95 +proj=longlat +ellps=GRS80 +towgs84=2,2,-2,0,0,0,0 +no_defs ",
+        4625: "+title=Martinique 1938 +proj=longlat +ellps=intl +no_defs ",
+        4626: "+title=Reunion 1947 +proj=longlat +ellps=intl +no_defs ",
+        4627: "+title=RGR92 +proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs ",
+        4628: "+title=Tahiti 52 +proj=longlat +ellps=intl +towgs84=162,117,154,0,0,0,0 +no_defs ",
+        4629: "+title=Tahaa 54 +proj=longlat +ellps=intl +no_defs ",
+        4630: "+title=IGN72 Nuku Hiva +proj=longlat +ellps=intl +no_defs ",
+        4632: "+title=Combani 1950 +proj=longlat +ellps=intl +towgs84=-382,-59,-262,0,0,0,0 +no_defs ",
+        4633: "+title=IGN56 Lifou +proj=longlat +ellps=intl +no_defs ",
+        4634: "+title=IGN72 Grand Terre +proj=longlat +ellps=intl +no_defs ",
+        4637: "+title=Perroud 1950 +proj=longlat +ellps=intl +towgs84=325,154,172,0,0,0,0 +no_defs ",
+        4638: "+title=Saint Pierre et Miquelon 1950 +proj=longlat +ellps=clrk66 +towgs84=30,430,368,0,0,0,0 +no_defs ",
+        4640: "+title=RRAF 1991 +proj=longlat +ellps=WGS84 +towgs84=0,0,0,0,0,0,0 +no_defs ",
+        4641: "+title=IGN53 Mare +proj=longlat +ellps=intl +no_defs ",
+        4645: "+title=RGNC 1991 +proj=longlat +ellps=intl +towgs84=0,0,0,0,0,0,0 +no_defs ",
+        4687: "+proj=longlat +ellps=GRS80 +no_defs ",
+        4662: "+title=IGN72 Grande Terre +proj=longlat +ellps=intl +no_defs ",
+        4689: "+title=IGN63 Hiva Oa +proj=longlat +ellps=intl +no_defs ",
+        4690: "+title=Tahiti 79 +proj=longlat +ellps=intl +no_defs ",
+        4691: "+title=Moorea 87 +proj=longlat +ellps=intl +towgs84=215.525,149.593,176.229,-3.2624,-1.692,-1.1571,10.4773 +no_defs ",
+        4692: "+title=Maupiti 83 +proj=longlat +ellps=intl +towgs84=217.037,86.959,23.956,0,0,0,0 +no_defs ",
+        4698: "+title=IGN 1962 Kerguelen +proj=longlat +ellps=intl +towgs84=145,-187,103,0,0,0,0 +no_defs ",
+        4749: "+title=RGNC91-93 +proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs ",
+        4750: "+title=ST87 Ouvea +proj=longlat +ellps=WGS84 +towgs84=-56.263,16.136,-22.856,0,0,0,0 +no_defs ",
+        4807: "+title=NTF (Paris) +proj=longlat +a=6378249.2 +b=6356515 +towgs84=-168,-60,320,0,0,0,0 +pm=paris +no_defs ",
+        2056: "+title=CH1903+ / LV95 +proj=somerc +lat_0=46.95240555555556 +lon_0=7.439583333333333 +x_0=2600000 +y_0=1200000 +ellps=bessel +towgs84=674.374,15.056,405.346,0,0,0,0 +units=m +no_defs ",
+        2154: "+title=RGF93 / Lambert-93 +proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
+        2213: "+title=ETRS89 / TM 30 NE +proj=tmerc +lat_0=0 +lon_0=30 +k=0.9996 +x_0=500000 +y_0=0 +ellps=GRS80 +units=m +no_defs ",
+        2969: "+title=Fort Marigot / UTM zone 20N +proj=utm +zone=20 +ellps=intl +towgs84=137,248,-430,0,0,0,0 +units=m +no_defs ",
+        2970: "+title=Guadeloupe 1948 / UTM zone 20N +proj=utm +zone=20 +ellps=intl +units=m +no_defs ",
+        2971: "+title=CSG67 / UTM zone 22N +proj=utm +zone=22 +ellps=intl +towgs84=-186,230,110,0,0,0,0 +units=m +no_defs ",
+        2972: "+title=RGFG95 / UTM zone 22N +proj=utm +zone=22 +ellps=GRS80 +towgs84=2,2,-2,0,0,0,0 +units=m +no_defs ",
+        2973: "+title=Martinique 1938 / UTM zone 20N +proj=utm +zone=20 +ellps=intl +units=m +no_defs ",
+        2975: "+title=RGR92 / UTM zone 40S +proj=utm +zone=40 +south +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
+        2976: "+title=Tahiti 52 / UTM zone 6S +proj=utm +zone=6 +south +ellps=intl +towgs84=162,117,154,0,0,0,0 +units=m +no_defs ",
+        2977: "+title=Tahaa 54 / UTM zone 5S +proj=utm +zone=5 +south +ellps=intl +units=m +no_defs ",
+        2978: "+title=IGN72 Nuku Hiva / UTM zone 7S +proj=utm +zone=7 +south +ellps=intl +units=m +no_defs ",
+        2980: "+title=Combani 1950 / UTM zone 38S +proj=utm +zone=38 +south +ellps=intl +towgs84=-382,-59,-262,0,0,0,0 +units=m +no_defs ",
+        2981: "+title=IGN56 Lifou / UTM zone 58S +proj=utm +zone=58 +south +ellps=intl +units=m +no_defs ",
+        2982: "+title=IGN72 Grand Terre / UTM zone 58S (deprecated) +proj=utm +zone=58 +south +ellps=intl +units=m +no_defs ",
+        2984: "+title=RGNC 1991 / Lambert New Caledonia (deprecated) +proj=lcc +lat_1=-20.66666666666667 +lat_2=-22.33333333333333 +lat_0=-21.5 +lon_0=166 +x_0=400000 +y_0=300000 +ellps=intl +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
+        2986: "+title=Terre Adelie 1950 +proj=stere +towgs84=324.9120,153.2820,172.0260 +a=6378388.0000 +rf=297.0000000000000 +lat_0=-90.000000000 +lon_0=140.000000000 +lat_ts=-67.000000000 +k=0.96027295 +x_0=300000.000 +y_0=-2299363.482 +units=m +no_defs",
+        2987: "+title=Saint Pierre et Miquelon 1950 / UTM zone 21N +proj=utm +zone=21 +ellps=clrk66 +towgs84=30,430,368,0,0,0,0 +units=m +no_defs ",
+        2989: "+title=RRAF 1991 / UTM zone 20N +proj=utm +zone=20 +ellps=WGS84 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
+        2990: "+title=Reunion 1947 / TM Reunion (deprecated) +proj=tmerc +lat_0=-21.11666666666667 +lon_0=55.53333333333333 +k=1 +x_0=50000 +y_0=160000 +ellps=intl +units=m +no_defs ",
+        2995: "+title=IGN53 Mare / UTM zone 58S +proj=utm +zone=58 +south +ellps=intl +units=m +no_defs ",
+        3038: "+proj=utm +zone=26 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
+        3039: "+proj=utm +zone=27 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
+        3040: "+proj=utm +zone=28 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
+        3041: "+proj=utm +zone=29 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
+        // 3042 : "+proj=utm +zone=30 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
+        // 3043 : "+proj=utm +zone=31 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
+        // 3044 : "+proj=utm +zone=32 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
+        3045: "+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
+        3046: "+proj=utm +zone=34 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
+        3047: "+proj=utm +zone=35 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
+        3048: "+proj=utm +zone=36 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
+        3049: "+proj=utm +zone=37 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
+        3050: "+proj=utm +zone=38 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
+        3051: "+proj=utm +zone=39 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
+        3034: "+title=ETRS89 / ETRS-LCC +proj=lcc +lat_1=35 +lat_2=65 +lat_0=52 +lon_0=10 +x_0=4000000 +y_0=2800000 +ellps=GRS80 +units=m +no_defs ",
+        3035: "+title=ETRS89 / ETRS-LAEA +proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +units=m +no_defs ",
+        3042: "+title=ETRS89 / ETRS-TM30 +proj=utm +zone=30 +ellps=GRS80 +units=m +no_defs ",
+        3043: "+title=ETRS89 / ETRS-TM31 +proj=utm +zone=31 +ellps=GRS80 +units=m +no_defs ",
+        3044: "+title=ETRS89 / ETRS-TM32 +proj=utm +zone=32 +ellps=GRS80 +units=m +no_defs ",
+        25828: "+proj=utm +zone=28 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
+        25829: "+proj=utm +zone=29 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
+        // 25830 : "+proj=utm +zone=30 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
+        // 25831 : "+proj=utm +zone=31 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
+        // 25832 : "+proj=utm +zone=32 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
+        25833: "+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
+        25834: "+proj=utm +zone=34 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
+        25835: "+proj=utm +zone=35 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
+        25836: "+proj=utm +zone=36 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
+        25837: "+proj=utm +zone=37 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
+        25838: "+proj=utm +zone=38 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
+        3060: "+title=IGN72 Grande Terre / UTM zone 58S +proj=utm +zone=58 +south +ellps=intl +units=m +no_defs ",
+        3163: "+title=RGNC91-93 / Lambert New Caledonia +proj=lcc +lat_1=-20.66666666666667 +lat_2=-22.33333333333333 +lat_0=-21.5 +lon_0=166 +x_0=400000 +y_0=300000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
+        3164: "+title=ST87 Ouvea / UTM zone 58S +proj=utm +zone=58 +south +ellps=WGS84 +towgs84=-56.263,16.136,-22.856,0,0,0,0 +units=m +no_defs ",
+        3165: "+title=NEA74 Noumea / Noumea Lambert +proj=lcc +lat_1=-22.24469175 +lat_2=-22.29469175 +lat_0=-22.26969175 +lon_0=166.44242575 +x_0=0.66 +y_0=1.02 +ellps=intl +units=m +no_defs ",
+        3166: "+title=NEA74 Noumea / Noumea Lambert 2 +proj=lcc +lat_1=-22.24472222222222 +lat_2=-22.29472222222222 +lat_0=-22.26972222222222 +lon_0=166.4425 +x_0=8.313000000000001 +y_0=-2.354 +ellps=intl +units=m +no_defs ",
+        3169: "+title=RGNC91-93 / UTM zone 57S +proj=utm +zone=57 +south +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
+        3170: "+title=RGNC91-93 / UTM zone 58S +proj=utm +zone=58 +south +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
+        3171: "+title=RGNC91-93 / UTM zone 59S +proj=utm +zone=59 +south +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
+        3172: "+title=IGN53 Mare / UTM zone 59S +proj=utm +zone=59 +south +ellps=intl +units=m +no_defs ",
+        3296: "+title=RGPF / UTM zone 5S +proj=utm +zone=5 +south +ellps=GRS80 +units=m +no_defs ",
+        3297: "+title=RGPF / UTM zone 6S +proj=utm +zone=6 +south +ellps=GRS80 +units=m +no_defs ",
+        3298: "+title=RGPF / UTM zone 7S +proj=utm +zone=7 +south +ellps=GRS80 +units=m +no_defs ",
+        3299: "+title=RGPF / UTM zone 8S +proj=utm +zone=8 +south +ellps=GRS80 +units=m +no_defs ",
+        3302: "+title=IGN63 Hiva Oa / UTM zone 7S +proj=utm +zone=7 +south +ellps=intl +units=m +no_defs ",
+        3303: "+title=Fatu Iva 72 / UTM zone 7S +proj=utm +zone=7 +south +ellps=intl +towgs84=347.103,1078.12,2623.92,-33.8875,70.6773,-9.3943,186.074 +units=m +no_defs ",
+        3304: "+title=Tahiti 79 / UTM zone 6S +proj=utm +zone=6 +south +ellps=intl +units=m +no_defs ",
+        3305: "+title=Moorea 87 / UTM zone 6S +proj=utm +zone=6 +south +ellps=intl +towgs84=215.525,149.593,176.229,-3.2624,-1.692,-1.1571,10.4773 +units=m +no_defs ",
+        3306: "+title=Maupiti 83 / UTM zone 5S +proj=utm +zone=5 +south +ellps=intl +towgs84=217.037,86.959,23.956,0,0,0,0 +units=m +no_defs ",
+        3312: "+title=CSG67 / UTM zone 21N +proj=utm +zone=21 +ellps=intl +towgs84=-186,230,110,0,0,0,0 +units=m +no_defs ",
+        3313: "+title=RGFG95 / UTM zone 21N +proj=utm +zone=21 +ellps=GRS80 +towgs84=2,2,-2,0,0,0,0 +units=m +no_defs ",
+        3336: "+title=IGN 1962 Kerguelen / UTM zone 42S +proj=utm +zone=42 +south +ellps=intl +towgs84=145,-187,103,0,0,0,0 +units=m +no_defs ",
+        3395: "+title=WGS 84 / World Mercator +proj=merc +lon_0=0 +k=1 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        3727: "+title=Reunion 1947 / TM Reunion +proj=tmerc +lat_0=-21.11666666666667 +lon_0=55.53333333333333 +k=1 +x_0=160000 +y_0=50000 +ellps=intl +units=m +no_defs ",
+        21781: "+title=CH1903 / LV03 +proj=somerc +lat_0=46.95240555555556 +lon_0=7.439583333333333 +x_0=600000 +y_0=200000 +ellps=bessel +towgs84=674.374,15.056,405.346,0,0,0,0 +units=m +no_defs ",
+        25830: "+title=ETRS89 / UTM zone 30N +proj=utm +zone=30 +ellps=GRS80 +units=m +no_defs ",
+        25831: "+title=ETRS89 / UTM zone 31N +proj=utm +zone=31 +ellps=GRS80 +units=m +no_defs ",
+        25832: "+title=ETRS89 / UTM zone 32N +proj=utm +zone=32 +ellps=GRS80 +units=m +no_defs ",
+        27561: "+title=NTF (Paris) / Lambert Nord France +proj=lcc +lat_1=49.50000000000001 +lat_0=49.50000000000001 +lon_0=0 +k_0=0.999877341 +x_0=600000 +y_0=200000 +a=6378249.2 +b=6356515 +towgs84=-168,-60,320,0,0,0,0 +pm=paris +units=m +no_defs ",
+        27562: "+title=NTF (Paris) / Lambert Centre France +proj=lcc +lat_1=46.8 +lat_0=46.8 +lon_0=0 +k_0=0.99987742 +x_0=600000 +y_0=200000 +a=6378249.2 +b=6356515 +towgs84=-168,-60,320,0,0,0,0 +pm=paris +units=m +no_defs ",
+        27563: "+title=NTF (Paris) / Lambert Sud France +proj=lcc +lat_1=44.10000000000001 +lat_0=44.10000000000001 +lon_0=0 +k_0=0.9998774990000001 +x_0=600000 +y_0=200000 +a=6378249.2 +b=6356515 +towgs84=-168,-60,320,0,0,0,0 +pm=paris +units=m +no_defs ",
+        27564: "+title=NTF (Paris) / Lambert Corse +proj=lcc +lat_1=42.16500000000001 +lat_0=42.16500000000001 +lon_0=0 +k_0=0.9999447100000001 +x_0=234.358 +y_0=185861.369 +a=6378249.2 +b=6356515 +towgs84=-168,-60,320,0,0,0,0 +pm=paris +units=m +no_defs ",
+        27571: "+title=NTF (Paris) / Lambert zone I +proj=lcc +lat_1=49.50000000000001 +lat_0=49.50000000000001 +lon_0=0 +k_0=0.999877341 +x_0=600000 +y_0=1200000 +a=6378249.2 +b=6356515 +towgs84=-168,-60,320,0,0,0,0 +pm=paris +units=m +no_defs ",
+        27572: "+title=NTF (Paris) / Lambert zone II +proj=lcc +lat_1=46.8 +lat_0=46.8 +lon_0=0 +k_0=0.99987742 +x_0=600000 +y_0=2200000 +a=6378249.2 +b=6356515 +towgs84=-168,-60,320,0,0,0,0 +pm=paris +units=m +no_defs ",
+        27573: "+title=NTF (Paris) / Lambert zone III +proj=lcc +lat_1=44.10000000000001 +lat_0=44.10000000000001 +lon_0=0 +k_0=0.9998774990000001 +x_0=600000 +y_0=3200000 +a=6378249.2 +b=6356515 +towgs84=-168,-60,320,0,0,0,0 +pm=paris +units=m +no_defs ",
+        27574: "+title=NTF (Paris) / Lambert zone IV +proj=lcc +lat_1=42.16500000000001 +lat_0=42.16500000000001 +lon_0=0 +k_0=0.9999447100000001 +x_0=234.358 +y_0=4185861.369 +a=6378249.2 +b=6356515 +towgs84=-168,-60,320,0,0,0,0 +pm=paris +units=m +no_defs ",
+        27581: "+title=NTF (Paris) / France I (deprecated) +proj=lcc +lat_1=49.50000000000001 +lat_0=49.50000000000001 +lon_0=0 +k_0=0.999877341 +x_0=600000 +y_0=1200000 +a=6378249.2 +b=6356515 +towgs84=-168,-60,320,0,0,0,0 +pm=paris +units=m +no_defs ",
+        27582: "+title=NTF (Paris) / France II (deprecated) +proj=lcc +lat_1=46.8 +lat_0=46.8 +lon_0=0 +k_0=0.99987742 +x_0=600000 +y_0=2200000 +a=6378249.2 +b=6356515 +towgs84=-168,-60,320,0,0,0,0 +pm=paris +units=m +no_defs ",
+        27583: "+title=NTF (Paris) / France III (deprecated) +proj=lcc +lat_1=44.10000000000001 +lat_0=44.10000000000001 +lon_0=0 +k_0=0.9998774990000001 +x_0=600000 +y_0=3200000 +a=6378249.2 +b=6356515 +towgs84=-168,-60,320,0,0,0,0 +pm=paris +units=m +no_defs ",
+        27584: "+title=NTF (Paris) / France IV (deprecated) +proj=lcc +lat_1=42.16500000000001 +lat_0=42.16500000000001 +lon_0=0 +k_0=0.9999447100000001 +x_0=234.358 +y_0=4185861.369 +a=6378249.2 +b=6356515 +towgs84=-168,-60,320,0,0,0,0 +pm=paris +units=m +no_defs ",
+        27591: "+title=NTF (Paris) / Nord France (deprecated) +proj=lcc +lat_1=49.50000000000001 +lat_0=49.50000000000001 +lon_0=0 +k_0=0.999877341 +x_0=600000 +y_0=200000 +a=6378249.2 +b=6356515 +towgs84=-168,-60,320,0,0,0,0 +pm=paris +units=m +no_defs ",
+        27592: "+title=NTF (Paris) / Centre France (deprecated) +proj=lcc +lat_1=46.8 +lat_0=46.8 +lon_0=0 +k_0=0.99987742 +x_0=600000 +y_0=200000 +a=6378249.2 +b=6356515 +towgs84=-168,-60,320,0,0,0,0 +pm=paris +units=m +no_defs ",
+        27593: "+title=NTF (Paris) / Sud France (deprecated) +proj=lcc +lat_1=44.10000000000001 +lat_0=44.10000000000001 +lon_0=0 +k_0=0.9998774990000001 +x_0=600000 +y_0=200000 +a=6378249.2 +b=6356515 +towgs84=-168,-60,320,0,0,0,0 +pm=paris +units=m +no_defs ",
+        27594: "+title=NTF (Paris) / Corse (deprecated) +proj=lcc +lat_1=42.16500000000001 +lat_0=42.16500000000001 +lon_0=0 +k_0=0.9999447100000001 +x_0=234.358 +y_0=185861.369 +a=6378249.2 +b=6356515 +towgs84=-168,-60,320,0,0,0,0 +pm=paris +units=m +no_defs ",
+        32601: "+proj=utm +zone=1 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32602: "+proj=utm +zone=2 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32603: "+proj=utm +zone=3 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32604: "+proj=utm +zone=4 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32605: "+proj=utm +zone=5 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32606: "+proj=utm +zone=6 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32607: "+proj=utm +zone=7 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32608: "+proj=utm +zone=8 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32609: "+proj=utm +zone=9 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32610: "+proj=utm +zone=10 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32611: "+proj=utm +zone=11 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32612: "+proj=utm +zone=12 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32613: "+proj=utm +zone=13 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32614: "+proj=utm +zone=14 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32615: "+proj=utm +zone=15 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32616: "+proj=utm +zone=16 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32617: "+proj=utm +zone=17 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32618: "+proj=utm +zone=18 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32619: "+proj=utm +zone=19 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32620: "+proj=utm +zone=20 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32621: "+proj=utm +zone=21 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32622: "+proj=utm +zone=22 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32623: "+proj=utm +zone=23 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32624: "+proj=utm +zone=24 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32625: "+proj=utm +zone=25 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32626: "+proj=utm +zone=26 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32627: "+proj=utm +zone=27 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32628: "+proj=utm +zone=28 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32629: "+proj=utm +zone=29 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32630: "+proj=utm +zone=30 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32631: "+proj=utm +zone=31 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32632: "+proj=utm +zone=32 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32633: "+proj=utm +zone=33 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32634: "+proj=utm +zone=34 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32635: "+proj=utm +zone=35 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32636: "+proj=utm +zone=36 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32637: "+proj=utm +zone=37 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32638: "+proj=utm +zone=38 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32639: "+proj=utm +zone=39 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32640: "+proj=utm +zone=40 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32641: "+proj=utm +zone=41 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32642: "+proj=utm +zone=42 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32643: "+proj=utm +zone=43 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32644: "+proj=utm +zone=44 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32645: "+proj=utm +zone=45 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32646: "+proj=utm +zone=46 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32647: "+proj=utm +zone=47 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32648: "+proj=utm +zone=48 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32649: "+proj=utm +zone=49 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32650: "+proj=utm +zone=50 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32651: "+proj=utm +zone=51 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32652: "+proj=utm +zone=52 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32653: "+proj=utm +zone=53 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32654: "+proj=utm +zone=54 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32655: "+proj=utm +zone=55 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32656: "+proj=utm +zone=56 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32657: "+proj=utm +zone=57 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32658: "+proj=utm +zone=58 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32659: "+proj=utm +zone=59 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32660: "+proj=utm +zone=60 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32661: "+proj=stere +lat_0=90 +lat_ts=90 +lon_0=0 +k=0.994 +x_0=2000000 +y_0=2000000 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32662: "+title=WGS 84 / Plate Carree +proj=eqc +lat_ts=0 +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32701: "+proj=utm +zone=1 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32702: "+proj=utm +zone=2 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32703: "+proj=utm +zone=3 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32704: "+proj=utm +zone=4 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32705: "+proj=utm +zone=5 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32706: "+proj=utm +zone=6 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32707: "+proj=utm +zone=7 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32708: "+proj=utm +zone=8 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32709: "+proj=utm +zone=9 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32710: "+proj=utm +zone=10 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32711: "+proj=utm +zone=11 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32712: "+proj=utm +zone=12 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32713: "+proj=utm +zone=13 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32714: "+proj=utm +zone=14 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32715: "+proj=utm +zone=15 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32716: "+proj=utm +zone=16 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32717: "+proj=utm +zone=17 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32718: "+proj=utm +zone=18 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32719: "+proj=utm +zone=19 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32720: "+proj=utm +zone=20 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32721: "+proj=utm +zone=21 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32722: "+proj=utm +zone=22 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32723: "+proj=utm +zone=23 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32724: "+proj=utm +zone=24 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32725: "+proj=utm +zone=25 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32726: "+proj=utm +zone=26 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32727: "+proj=utm +zone=27 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32728: "+proj=utm +zone=28 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32729: "+proj=utm +zone=29 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32730: "+proj=utm +zone=30 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32731: "+proj=utm +zone=31 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32732: "+proj=utm +zone=32 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32733: "+proj=utm +zone=33 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32734: "+proj=utm +zone=34 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32735: "+proj=utm +zone=35 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32736: "+proj=utm +zone=36 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32737: "+proj=utm +zone=37 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32738: "+proj=utm +zone=38 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32739: "+proj=utm +zone=39 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32740: "+proj=utm +zone=40 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32741: "+proj=utm +zone=41 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32742: "+proj=utm +zone=42 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32743: "+proj=utm +zone=43 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32744: "+proj=utm +zone=44 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32745: "+proj=utm +zone=45 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32746: "+proj=utm +zone=46 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32747: "+proj=utm +zone=47 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32748: "+proj=utm +zone=48 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32749: "+proj=utm +zone=49 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32750: "+proj=utm +zone=50 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32751: "+proj=utm +zone=51 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32752: "+proj=utm +zone=52 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32753: "+proj=utm +zone=53 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32754: "+proj=utm +zone=54 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32755: "+proj=utm +zone=55 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32756: "+proj=utm +zone=56 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32757: "+proj=utm +zone=57 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32758: "+proj=utm +zone=58 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32759: "+proj=utm +zone=59 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32760: "+proj=utm +zone=60 +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        32761: "+proj=stere +lat_0=-90 +lat_ts=-90 +lon_0=0 +k=0.994 +x_0=2000000 +y_0=2000000 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ",
+        310024802: "+title=Geoportail - France metropolitaine +proj=eqc +nadgrids=null +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=46.500000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
+        310915814: "+title=Geoportail - Antilles francaises +proj=eqc +nadgrids=null +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=15.000000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
+        310486805: "+title=Geoportail - Guyane +proj=eqc +nadgrids=null +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=4.000000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
+        310700806: "+title=Geoportail - Reunion et dependances +proj=eqc +nadgrids=null +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=-21.000000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
+        310702807: "+title=Geoportail - Mayotte +proj=eqc +nadgrids=null +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=-12.000000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
+        310706808: "+title=Geoportail - Saint-Pierre et Miquelon +proj=eqc +nadgrids=null +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=47.000000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
+        310547809: "+title=Geoportail - Nouvelle-Caledonie +proj=eqc +nadgrids=null +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=-22.000000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
+        310642810: "+title=Geoportail - Wallis et Futuna +proj=eqc +nadgrids=null +towgs84=0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.000000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=-14.000000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
+        310032811: "+title=Geoportail - Polynesie francaise +proj=eqc +nadgrids=null +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=-15.000000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
+        310642812: "+title=Geoportail - Kerguelen +proj=eqc +nadgrids=null +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=-49.500000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
+        310642801: "+title=Geoportail - Crozet +proj=eqc +nadgrids=null +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=-46.000000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
+        310642813: "+title=Geoportail - Amsterdam et Saint-Paul +proj=eqc +nadgrids=null +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=-38.000000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
+        310642901: "+title=Geoportail - Monde +proj=mill +towgs84=0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.000000 +a=6378137.0000 +rf=298.2572221010000 +lon_0=0.000000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
+        5489: "+title=RGAF09 geographiques (dms) +proj=longlat +nadgrids=@null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137 +rf=298.257222101 +units=m +no_defs",
+        5490: "+title=RGAF09 UTM Nord Fuseau 20 +proj=tmerc +nadgrids=@null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137 +rf=298.257222101 +lat_0=0.000000000 +lon_0=-63.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs"
+    },
+    CRS: {
+        84: "+title=WGS 84 longitude-latitude +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs "
+    },
+    IGNF: {
+        AMST63: "+title=Amsterdam 1963 +proj=geocent +towgs84=109.753,-528.133,-362.244,0,0,0,0 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+        CROZ63: "+title=Crozet 1963 +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+        CSG67: "+title=Guyane CSG67 +proj=geocent +towgs84=-193.0660,236.9930,105.4470,0.4814,-0.8074,0.1276,1.564900 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+        ED50: "+title=ED50 +proj=geocent +towgs84=-84.0000,-97.0000,-117.0000 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+        ETRS89: "+title=Systeme de reference terrestre Europeen (1989) +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
+        GUAD48: "+title=Guadeloupe Ste Anne +proj=geocent +towgs84=-472.2900,-5.6300,-304.1200,0.4362,-0.8374,0.2563,1.898400 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+        GUADFM49: "+title=Guadeloupe Fort Marigot +proj=geocent +towgs84=136.5960,248.1480,-429.7890 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+        IGN63: "+title=IGN 1963 (Hiva Oa, Tahuata, Mohotani) +proj=geocent +towgs84=410.7210,55.0490,80.7460,-2.5779,-2.3514,-0.6664,17.331100 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+        IGN72: "+title=IGN 1972 Grande-Terre / Ile des Pins +proj=geocent +towgs84=-11.6400,-348.6000,291.6800 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+        KERG62CAR: "+title=Kerguelen - K0 +proj=geocent +towgs84=144.8990,-186.7700,100.9230 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+        MART38: "+title=Martinique Fort-Desaix +proj=geocent +towgs84=126.9260,547.9390,130.4090,-2.7867,5.1612,-0.8584,13.822650 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+        MAYO50: "+title=Mayotte Combani +proj=geocent +towgs84=-599.9280,-275.5520,-195.6650,-0.0835,-0.4715,0.0602,49.281400 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+        MOOREA87: "+title=Moorea 1987 +proj=geocent +towgs84=215.9820,149.5930,176.2290,3.2624,1.6920,1.1571,10.477300 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+        NTF: "+title=Nouvelle Triangulation Francaise +proj=geocent +nadgrids=ntf_r93.gsb,null +wktext +towgs84=-168.0000,-60.0000,320.0000 +a=6378249.2000 +rf=293.4660210000000 +units=m +no_defs",
+        NUKU72: "+title=IGN 1972 Nuku Hiva +proj=geocent +towgs84=165.7320,216.7200,180.5050,-0.6434,-0.4512,-0.0791,7.420400 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+        REUN47: "+title=Reunion 1947 +proj=geocent +towgs84=789.5240,-626.4860,-89.9040,0.6006,76.7946,-10.5788,-32.324100 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+        RGF93: "+title=Reseau geodesique francais 1993 +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
+        RGFG95: "+title=Reseau geodesique francais de Guyane 1995 +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
+        RGM04: "+title=RGM04 (Reseau Geodesique de Mayotte 2004) +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
+        RGNC: "+title=Reseau Geodesique de Nouvelle-Caledonie +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
+        RGPF: "+title=RGPF (Reseau Geodesique de Polynesie Francaise) +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
+        RGR92: "+title=Reseau geodesique Reunion 1992 +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
+        RGSPM06: "+title=Reseau Geodesique Saint-Pierre-et-Miquelon (2006) +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
+        RGTAAF07: "+title=Reseau Geodesique des TAAF (2007) +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
+        RRAF91: "+title=RRAF 1991 (Reseau de Reference des Antilles Francaises) +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
+        STPL69: "+title=Saint-Paul 1969 +proj=geocent +towgs84=225.571,-346.608,-46.567,0,0,0,0 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+        STPM50: "+title=St Pierre et Miquelon 1950 +proj=geocent +towgs84=-95.5930,573.7630,173.4420,-0.9602,1.2510,-1.3918,42.626500 +a=6378206.4000 +rf=294.9786982000000 +units=m +no_defs",
+        TAHAA: "+title=Raiatea - Tahaa 51-54 (Tahaa, Base Terme Est) +proj=geocent +towgs84=72.4380,345.9180,79.4860,-1.6045,-0.8823,-0.5565,1.374600 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+        TAHI79: "+title=IGN79 (Tahiti) Iles de la Societe +proj=geocent +towgs84=221.5250,152.9480,176.7680,2.3847,1.3896,0.8770,11.474100 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+        TERA50: "+title=Pointe Geologie - Perroud 1950 +proj=geocent +towgs84=324.9120,153.2820,172.0260 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+        WALL78: "+title=Wallis-Uvea 1978 (MOP78) +proj=geocent +towgs84=253.0000,-133.0000,-127.0000 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+        WGS72: "+title=World Geodetic System 1972 +proj=geocent +towgs84=0.0000,12.0000,6.0000 +a=6378135.0000 +rf=298.2600000000000 +units=m +no_defs",
+        WGS84: "+title=World Geodetic System 1984 +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
+        AMST63GEO: "+title=Amsterdam 1963 +proj=longlat +towgs84=109.753,-528.133,-362.244,0,0,0,0 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+        CROZ63GEO: "+title=Crozet 1963 +proj=longlat +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+        CSG67GEO: "+title=Guyane CSG67 +proj=longlat +towgs84=-193.0660,236.9930,105.4470,0.4814,-0.8074,0.1276,1.564900 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+        ED50G: "+title=ED50 +proj=longlat +towgs84=-84.0000,-97.0000,-117.0000 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+        GUAD48GEO: "+title=Guadeloupe Ste Anne +proj=longlat +towgs84=-472.2900,-5.6300,-304.1200,0.4362,-0.8374,0.2563,1.898400 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+        GUADFM49GEO: "+title=Guadeloupe Fort Marigot +proj=longlat +towgs84=136.5960,248.1480,-429.7890 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+        IGN63GEO: "+title=IGN 1963 (Hiva Oa, Tahuata, Mohotani) +proj=longlat +towgs84=410.7210,55.0490,80.7460,-2.5779,-2.3514,-0.6664,17.331100 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+        IGN72GEO: "+title=IGN 1972 Grande-Terre / Ile des Pins +proj=longlat +towgs84=-11.6400,-348.6000,291.6800 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+        KERG62GEO: "+title=Kerguelen - K0 +proj=longlat +towgs84=144.8990,-186.7700,100.9230 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+        MART38GEO: "+title=Martinique Fort-Desaix +proj=longlat +towgs84=126.9260,547.9390,130.4090,-2.7867,5.1612,-0.8584,13.822650 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+        MAYO50GEO: "+title=Mayotte Combani +proj=longlat +towgs84=-599.9280,-275.5520,-195.6650,-0.0835,-0.4715,0.0602,49.281400 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+        MOOREA87GEO: "+title=Moorea 1987 +proj=longlat +towgs84=215.9820,149.5930,176.2290,3.2624,1.6920,1.1571,10.477300 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+        NTFG: "+title=Nouvelle Triangulation Francaise Greenwich degres sexagesimaux +proj=longlat +nadgrids=ntf_r93.gsb,null +wktext +towgs84=-168.0000,-60.0000,320.0000 +a=6378249.2000 +rf=293.4660210000000 +units=m +no_defs",
+        NTFP: "+title=Nouvelle Triangulation Francaise Paris grades +proj=longlat +nadgrids=ntf_r93.gsb,null +wktext +towgs84=-168.0000,-60.0000,320.0000 +a=6378249.2000 +rf=293.4660210000000 +pm=2.337229167 +units=m +no_defs",
+        NUKU72GEO: "+title=IGN 1972 Nuku Hiva +proj=longlat +towgs84=165.7320,216.7200,180.5050,-0.6434,-0.4512,-0.0791,7.420400 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+        REUN47GEO: "+title=Reunion 1947 +proj=longlat +towgs84=789.5240,-626.4860,-89.9040,0.6006,76.7946,-10.5788,-32.324100 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+        RGF93G: "+title=Reseau geodesique francais 1993 +proj=longlat +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
+        RGFG95GEO: "+title=Reseau geodesique francais de Guyane 1995 +proj=longlat +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
+        RGM04GEO: "+title=RGM04 (Reseau Geodesique de Mayotte 2004) +proj=longlat +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
+        RGNCGEO: "+title=Reseau Geodesique de Nouvelle-Caledonie +proj=longlat +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
+        RGPFGEO: "+title=RGPF (Reseau Geodesique de Polynesie Francaise) +proj=longlat +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
+        RGR92GEO: "+title=Reseau geodesique de la Reunion 1992 +proj=longlat +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
+        RGSPM06GEO: "+title=Saint-Pierre-et-Miquelon (2006) +proj=longlat +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
+        RGTAAF07G: "+title=Reseau Geodesique des TAAF (2007) (dms) +proj=longlat +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
+        STPL69GEO: "+title=Saint-Paul 1969 +proj=longlat +towgs84=225.571,-346.608,-46.567,0,0,0,0 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+        STPM50GEO: "+title=St Pierre et Miquelon 1950  +proj=longlat +towgs84=-95.5930,573.7630,173.4420,-0.9602,1.2510,-1.3918,42.626500 +a=6378206.4000 +rf=294.9786982000000 +units=m +no_defs",
+        TAHAAGEO: "+title=Raiatea - Tahaa 51-54 (Tahaa, Base Terme Est) +proj=longlat +towgs84=72.4380,345.9180,79.4860,-1.6045,-0.8823,-0.5565,1.374600 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+        TAHI79GEO: "+title=IGN79 (Tahiti) Iles de la Societe +proj=longlat +towgs84=221.5250,152.9480,176.7680,2.3847,1.3896,0.8770,11.474100 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+        TERA50G: "+title=Pointe Geologie - Perroud 1950 +proj=longlat +towgs84=324.9120,153.2820,172.0260 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+        WALL78GEO: "+title=Wallis - Uvea 1978 (MOP78) +proj=longlat +towgs84=253.0000,-133.0000,-127.0000 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+        WGS72G: "+title=WGS72 +proj=longlat +towgs84=0.0000,12.0000,6.0000 +a=6378135.0000 +rf=298.2600000000000 +units=m +no_defs",
+        WGS84G: "+title=World Geodetic System 1984 +proj=longlat +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
+        WGS84RRAFGEO: "+title=Reseau de reference des Antilles francaises (1988-1991) +proj=longlat +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
+        XGEO: "+title=Systeme CIO-BIH +proj=longlat +towgs84=0.0000,0.0000,0.5000,0.0000,0.0000,0.0140,-0.100000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
+        AMST63UTM43S: "+title=Amsterdam 1963 UTM fuseau 43 Sud +proj=tmerc +towgs84=109.753,-528.133,-362.244,0,0,0,0 +a=6378388.0000 +rf=297.0000000000000 +lat_0=0.000000000 +lon_0=75.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
+        CROZ63UTM39S: "+title=Crozet 1963 +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378388.0000 +rf=297.0000000000000 +lat_0=0.000000000 +lon_0=51.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
+        CSG67UTM21: "+title=Guyane CSG67 UTM fuseau 21 +proj=tmerc +towgs84=-193.0660,236.9930,105.4470,0.4814,-0.8074,0.1276,1.564900 +a=6378388.0000 +rf=297.0000000000000 +lat_0=0.000000000 +lon_0=-57.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs",
+        CSG67UTM22: "+title=Guyane CSG67 UTM fuseau 22 +proj=tmerc +towgs84=-193.0660,236.9930,105.4470,0.4814,-0.8074,0.1276,1.564900 +a=6378388.0000 +rf=297.0000000000000 +lat_0=0.000000000 +lon_0=-51.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs",
+        GEOPORTALANF: "+title=Geoportail - Antilles francaises +proj=eqc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=15.000000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
+        GEOPORTALASP: "+title=Geoportail - Amsterdam et Saint-Paul +proj=eqc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=-38.000000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
+        GEOPORTALCRZ: "+title=Geoportail - Crozet +proj=eqc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=-46.000000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
+        GEOPORTALFXX: "+title=Geoportail - France metropolitaine +proj=eqc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=46.500000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
+        GEOPORTALGUF: "+title=Geoportail - Guyane +proj=eqc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=4.000000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
+        GEOPORTALKER: "+title=Geoportail - Kerguelen +proj=eqc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=-49.500000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
+        GEOPORTALMYT: "+title=Geoportail - Mayotte +proj=eqc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=-12.000000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
+        GEOPORTALNCL: "+title=Geoportail - Nouvelle-Caledonie +proj=eqc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=-22.000000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
+        GEOPORTALPYF: "+title=Geoportail - Polynesie francaise +proj=eqc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=-15.000000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
+        GEOPORTALREU: "+title=Geoportail - Reunion et dependances +proj=eqc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=-21.000000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
+        GEOPORTALSPM: "+title=Geoportail - Saint-Pierre et Miquelon +proj=eqc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=47.000000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
+        GEOPORTALWLF: "+title=Geoportail - Wallis et Futuna +proj=eqc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=0.000000000 +lat_ts=-14.000000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
+        GUAD48UTM20: "+title=Guadeloupe Ste Anne +proj=tmerc +towgs84=-472.2900,-5.6300,-304.1200,0.4362,-0.8374,0.2563,1.898400 +a=6378388.0000 +rf=297.0000000000000 +lat_0=0.000000000 +lon_0=-63.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs",
+        GUADFM49U20: "+title=Guadeloupe Fort Marigot  +proj=tmerc +towgs84=136.5960,248.1480,-429.7890 +a=6378388.0000 +rf=297.0000000000000 +lat_0=0.000000000 +lon_0=-63.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs",
+        IGN63UTM7S: "+title=IGN 1963 - Hiva Oa, Tahuata, Mohotani - UTM fuseau 7 Sud +proj=tmerc +towgs84=410.7210,55.0490,80.7460,-2.5779,-2.3514,-0.6664,17.331100 +a=6378388.0000 +rf=297.0000000000000 +lat_0=0.000000000 +lon_0=-141.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
+        IGN72UTM58S: "+title=IGN 1972 - UTM fuseau 58 Sud +proj=tmerc +towgs84=-11.6400,-348.6000,291.6800 +a=6378388.0000 +rf=297.0000000000000 +lat_0=0.000000000 +lon_0=165.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
+        KERG62UTM42S: "+title=Kerguelen 1962 +proj=tmerc +towgs84=144.8990,-186.7700,100.9230 +a=6378388.0000 +rf=297.0000000000000 +lat_0=0.000000000 +lon_0=69.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
+        LAMB1: "+title=Lambert I +proj=lcc +nadgrids=ntf_r93.gsb,null +wktext +towgs84=-168.0000,-60.0000,320.0000 +a=6378249.2000 +rf=293.4660210000000 +pm=2.337229167 +lat_0=49.500000000 +lon_0=0.000000000 +k_0=0.99987734 +lat_1=49.500000000 +x_0=600000.000 +y_0=200000.000 +units=m +no_defs",
+        LAMB1C: "+title=Lambert I Carto +proj=lcc +nadgrids=ntf_r93.gsb,null +wktext +towgs84=-168.0000,-60.0000,320.0000 +a=6378249.2000 +rf=293.4660210000000 +pm=2.337229167 +lat_0=49.500000000 +lon_0=0.000000000 +k_0=0.99987734 +lat_1=49.500000000 +x_0=600000.000 +y_0=1200000.000 +units=m +no_defs",
+        LAMB2: "+title=Lambert II +proj=lcc +nadgrids=ntf_r93.gsb,null +wktext +towgs84=-168.0000,-60.0000,320.0000 +a=6378249.2000 +rf=293.4660210000000 +pm=2.337229167 +lat_0=46.800000000 +lon_0=0.000000000 +k_0=0.99987742 +lat_1=46.800000000 +x_0=600000.000 +y_0=200000.000 +units=m +no_defs",
+        LAMB2C: "+title=Lambert II Carto +proj=lcc +nadgrids=ntf_r93.gsb,null +wktext +towgs84=-168.0000,-60.0000,320.0000 +a=6378249.2000 +rf=293.4660210000000 +pm=2.337229167 +lat_0=46.800000000 +lon_0=0.000000000 +k_0=0.99987742 +lat_1=46.800000000 +x_0=600000.000 +y_0=2200000.000 +units=m +no_defs",
+        LAMB3: "+title=Lambert III +proj=lcc +nadgrids=ntf_r93.gsb,null +wktext +towgs84=-168.0000,-60.0000,320.0000 +a=6378249.2000 +rf=293.4660210000000 +pm=2.337229167 +lat_0=44.100000000 +lon_0=0.000000000 +k_0=0.99987750 +lat_1=44.100000000 +x_0=600000.000 +y_0=200000.000 +units=m +no_defs",
+        LAMB3C: "+title=Lambert III Carto +proj=lcc +nadgrids=ntf_r93.gsb,null +wktext +towgs84=-168.0000,-60.0000,320.0000 +a=6378249.2000 +rf=293.4660210000000 +pm=2.337229167 +lat_0=44.100000000 +lon_0=0.000000000 +k_0=0.99987750 +lat_1=44.100000000 +x_0=600000.000 +y_0=3200000.000 +units=m +no_defs",
+        LAMB4: "+title=Lambert IV +proj=lcc +nadgrids=ntf_r93.gsb,null +wktext +towgs84=-168.0000,-60.0000,320.0000 +a=6378249.2000 +rf=293.4660210000000 +pm=2.337229167 +lat_0=42.165000000 +lon_0=0.000000000 +k_0=0.99994471 +lat_1=42.165000000 +x_0=234.358 +y_0=185861.369 +units=m +no_defs",
+        LAMB4C: "+title=Lambert IV Carto +proj=lcc +nadgrids=ntf_r93.gsb,null +wktext +towgs84=-168.0000,-60.0000,320.0000 +a=6378249.2000 +rf=293.4660210000000 +pm=2.337229167 +lat_0=42.165000000 +lon_0=0.000000000 +k_0=0.99994471 +lat_1=42.165000000 +x_0=234.358 +y_0=4185861.369 +units=m +no_defs",
+        LAMB93: "+title=Lambert 93 +proj=lcc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=46.500000000 +lon_0=3.000000000 +lat_1=44.000000000 +lat_2=49.000000000 +x_0=700000.000 +y_0=6600000.000 +units=m +no_defs",
+        RGF93CC42: "+title=Lambert conique conforme Zone 1 +proj=lcc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=42.000000000 +lon_0=3.000000000 +lat_1=41.200000000 +lat_2=42.800000000 +x_0=1700000.000 +y_0=1200000.000 +units=m +no_defs",
+        RGF93CC43: "+title=Lambert conique conforme Zone 2 +proj=lcc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=43.000000000 +lon_0=3.000000000 +lat_1=42.200000000 +lat_2=43.800000000 +x_0=1700000.000 +y_0=2200000.000 +units=m +no_defs",
+        RGF93CC44: "+title=Lambert conique conforme Zone 3 +proj=lcc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=44.000000000 +lon_0=3.000000000 +lat_1=43.200000000 +lat_2=44.800000000 +x_0=1700000.000 +y_0=3200000.000 +units=m +no_defs",
+        RGF93CC45: "+title=Lambert conique conforme Zone 4 +proj=lcc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=45.000000000 +lon_0=3.000000000 +lat_1=44.200000000 +lat_2=45.800000000 +x_0=1700000.000 +y_0=4200000.000 +units=m +no_defs",
+        RGF93CC46: "+title=Lambert conique conforme Zone 5 +proj=lcc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=46.000000000 +lon_0=3.000000000 +lat_1=45.200000000 +lat_2=46.800000000 +x_0=1700000.000 +y_0=5200000.000 +units=m +no_defs",
+        RGF93CC47: "+title=Lambert conique conforme Zone 6 +proj=lcc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=47.000000000 +lon_0=3.000000000 +lat_1=46.200000000 +lat_2=47.800000000 +x_0=1700000.000 +y_0=6200000.000 +units=m +no_defs",
+        RGF93CC48: "+title=Lambert conique conforme Zone 7 +proj=lcc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=48.000000000 +lon_0=3.000000000 +lat_1=47.200000000 +lat_2=48.800000000 +x_0=1700000.000 +y_0=7200000.000 +units=m +no_defs",
+        RGF93CC49: "+title=Lambert conique conforme Zone 8 +proj=lcc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=49.000000000 +lon_0=3.000000000 +lat_1=48.200000000 +lat_2=49.800000000 +x_0=1700000.000 +y_0=8200000.000 +units=m +no_defs",
+        RGF93CC50: "+title=Lambert conique conforme Zone 9 +proj=lcc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=50.000000000 +lon_0=3.000000000 +lat_1=49.200000000 +lat_2=50.800000000 +x_0=1700000.000 +y_0=9200000.000 +units=m +no_defs",
+        LAMBE: "+title=Lambert II etendu +proj=lcc +nadgrids=ntf_r93.gsb,null +wktext +towgs84=-168.0000,-60.0000,320.0000 +a=6378249.2000 +rf=293.4660210000000 +pm=2.337229167 +lat_0=46.800000000 +lon_0=0.000000000 +k_0=0.99987742 +lat_1=46.800000000 +x_0=600000.000 +y_0=2200000.000 +units=m +no_defs",
+        MART38UTM20: "+title=Martinique Fort-Desaix +proj=tmerc +towgs84=126.9260,547.9390,130.4090,-2.7867,5.1612,-0.8584,13.822650 +a=6378388.0000 +rf=297.0000000000000 +lat_0=0.000000000 +lon_0=-63.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs",
+        MAYO50UTM38S: "+title=Mayotte Combani +proj=tmerc +towgs84=-599.9280,-275.5520,-195.6650,-0.0835,-0.4715,0.0602,49.281400 +a=6378388.0000 +rf=297.0000000000000 +lat_0=0.000000000 +lon_0=45.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
+        MILLER: "+title=Geoportail - Monde +proj=mill +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lon_0=0.000000000 +x_0=0.000 +y_0=0.000 +units=m +no_defs",
+        MOOREA87U6S: "+title=Moorea 1987 - UTM fuseau 6 Sud +proj=tmerc +towgs84=215.9820,149.5930,176.2290,3.2624,1.6920,1.1571,10.477300 +a=6378388.0000 +rf=297.0000000000000 +lat_0=0.000000000 +lon_0=-147.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
+        NUKU72U7S: "+title=IGN 1972 Nuku Hiva - UTM fuseau 7 Sud +proj=tmerc +towgs84=165.7320,216.7200,180.5050,-0.6434,-0.4512,-0.0791,7.420400 +a=6378388.0000 +rf=297.0000000000000 +lat_0=0.000000000 +lon_0=-141.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
+        REUN47GAUSSL: "+title=Reunion Gauss Laborde +proj=gstmerc +towgs84=789.5240,-626.4860,-89.9040,0.6006,76.7946,-10.5788,-32.324100 +a=6378388.0000 +rf=297.0000000000000 +lat_0=-21.116666667 +lon_0=55.533333333 +k_0=1.00000000 +x_0=160000.000 +y_0=50000.000 +units=m +no_defs",
+        RGM04UTM38S: "+title=UTM fuseau 38 Sud (Reseau Geodesique de Mayotte 2004) +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=45.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
+        RGNCUTM57S: "+title=Reseau Geodesique de Nouvelle-Caledonie - UTM fuseau 57 Sud +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=159.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
+        RGNCUTM58S: "+title=Reseau Geodesique de Nouvelle-Caledonie - UTM fuseau 58 Sud +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=165.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
+        RGNCUTM59S: "+title=Reseau Geodesique de Nouvelle-Caledonie - UTM fuseau 59 Sud +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=171.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
+        RGPFUTM5S: "+title=RGPF - UTM fuseau 5 Sud +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=-153.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
+        RGPFUTM6S: "+title=RGPF - UTM fuseau 6 Sud +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=-147.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
+        RGPFUTM7S: "+title=RGPF - UTM fuseau 7 Sud +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=-141.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
+        RGR92UTM40S: "+title=RGR92 UTM fuseau 40 Sud +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=57.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
+        RGSPM06U21: "+title=Saint-Pierre-et-Miquelon (2006) UTM Fuseau 21 Nord +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=-57.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs",
+        STPL69UTM43S: "+title=Saint-Paul 1969 UTM fuseau 43 Sud +proj=tmerc +towgs84=225.571,-346.608,-46.567,0,0,0,0 +a=6378388.0000 +rf=297.0000000000000 +lat_0=0.000000000 +lon_0=75.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
+        STPM50UTM21: "+title=St Pierre et Miquelon 1950 +proj=tmerc +towgs84=-95.5930,573.7630,173.4420,-0.9602,1.2510,-1.3918,42.626500 +a=6378206.4000 +rf=294.9786982000000 +lat_0=0.000000000 +lon_0=-57.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs",
+        TAHAAUTM05S: "+title=Tahaa 1951 +proj=tmerc +towgs84=72.4380,345.9180,79.4860,-1.6045,-0.8823,-0.5565,1.374600 +a=6378388.0000 +rf=297.0000000000000 +lat_0=0.000000000 +lon_0=-153.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
+        TAHI51UTM06S: "+title=Tahiti-Terme Nord UTM fuseau 6 Sud +proj=tmerc +towgs84=162.0000,117.0000,154.0000 +a=6378388.0000 +rf=297.0000000000000 +lat_0=0.000000000 +lon_0=-147.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
+        TAHI79UTM6S: "+title=Tahiti 1979 +proj=tmerc +towgs84=221.5250,152.9480,176.7680,2.3847,1.3896,0.8770,11.474100 +a=6378388.0000 +rf=297.0000000000000 +lat_0=0.000000000 +lon_0=-147.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
+        TERA50STEREO: "+title=Terre Adelie 1950 +proj=stere +towgs84=324.9120,153.2820,172.0260 +a=6378388.0000 +rf=297.0000000000000 +lat_0=-90.000000000 +lon_0=140.000000000 +lat_ts=-67 +k=0.96027295 +x_0=300000.000 +y_0=-2299363.482 +units=m +no_defs",
+        UTM01SW84: "+title=World Geodetic System 1984 UTM fuseau 01 Sud +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=-177.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
+        UTM20W84GUAD: "+title=World Geodetic System 1984 UTM fuseau 20 Nord-Guadeloupe +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=-63.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs",
+        UTM20W84MART: "+title=World Geodetic System 1984 UTM fuseau 20 Nord-Martinique +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=-63.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs",
+        UTM22RGFG95: "+title=RGFG95 UTM fuseau 22 Nord-Guyane +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=-51.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs",
+        UTM39SW84: "+title=World Geodetic System 1984 UTM fuseau 39 Sud +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=51.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
+        UTM42SW84: "+title=World Geodetic System 1984 UTM fuseau 42 Sud +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=69.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
+        UTM43SW84: "+title=World Geodetic System 1984 UTM fuseau 43 Sud +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=75.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
+        WALL78UTM1S: "+title=Wallis-Uvea 1978 (MOP78) UTM 1 SUD +proj=tmerc +towgs84=253.0000,-133.0000,-127.0000 +a=6378388.0000 +rf=297.0000000000000 +lat_0=0.000000000 +lon_0=-177.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=10000000.000 +units=m +no_defs",
+        ETRS89GEO: "+title=ETRS89 geographiques (dms) +proj=longlat +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
+        ETRS89LAEA: "+title=ETRS89 Lambert Azimutal Equal Area +proj=laea +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=52.000000000 +lon_0=10.000000000 +x_0=4321000.000 +y_0=3210000.000 +units=m +no_defs",
+        ETRS89LCC: "+title=ETRS89 Lambert Conformal Conic +proj=lcc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=52.000000000 +lon_0=9.999999995 +lat_1=35.000000000 +lat_2=65.000000000 +x_0=4000000.000 +y_0=2800000.000 +units=m +no_defs",
+        UTM26ETRS89: "+title=Europe - de 30d a 24d Ouest +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=-27.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs",
+        UTM27ETRS89: "+title=Europe - de 24d a 18d Ouest +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=-21.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs",
+        UTM28ETRS89: "+title=Europe - de 18d a 12d Ouest +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=-15.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs",
+        UTM29ETRS89: "+title=Europe - de 12d a 6d Ouest +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=-9.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs",
+        UTM30ETRS89: "+title=Europe - de -6d a 0d Ouest +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=-3.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs",
+        UTM31ETRS89: "+title=Europe - de 0d a 6d Est +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=3.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs",
+        UTM32ETRS89: "+title=Europe - de 6d a 12d Est +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=9.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs",
+        UTM33ETRS89: "+title=Europe - de 12d a 18d Est +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=15.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs",
+        UTM34ETRS89: "+title=Europe - de 18d a 24d Est +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=21.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs",
+        UTM35ETRS89: "+title=Europe - de 24d a 30d Est +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=27.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs",
+        UTM36ETRS89: "+title=Europe - de 30d a 36d Est +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=33.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs",
+        UTM37ETRS89: "+title=Europe - de 36d a 42d Est +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=39.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs",
+        UTM38ETRS89: "+title=Europe - de 42d a 48d Est +proj=tmerc +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +lat_0=0.000000000 +lon_0=45.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs"
+    }
+};
+
+exports.default = Register;
 
 /***/ }),
 /* 64 */
@@ -31828,23 +31934,19 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _ol = __webpack_require__(0);
+var _ol = __webpack_require__(1);
 
 var _ol2 = _interopRequireDefault(_ol);
 
-var _Utils = __webpack_require__(1);
+var _Utils = __webpack_require__(2);
 
 var _Utils2 = _interopRequireDefault(_Utils);
 
-var _Config = __webpack_require__(8);
+var _Config = __webpack_require__(7);
 
 var _Config2 = _interopRequireDefault(_Config);
 
-var _LayerUtils = __webpack_require__(7);
-
-var _LayerUtils2 = _interopRequireDefault(_LayerUtils);
-
-var _SourceWMTS = __webpack_require__(22);
+var _SourceWMTS = __webpack_require__(21);
 
 var _SourceWMTS2 = _interopRequireDefault(_SourceWMTS);
 
@@ -31988,23 +32090,19 @@ Object.defineProperty(exports, "__esModule", {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _ol = __webpack_require__(0);
+var _ol = __webpack_require__(1);
 
 var _ol2 = _interopRequireDefault(_ol);
 
-var _Utils = __webpack_require__(1);
+var _Utils = __webpack_require__(2);
 
 var _Utils2 = _interopRequireDefault(_Utils);
 
-var _Config = __webpack_require__(8);
+var _Config = __webpack_require__(7);
 
 var _Config2 = _interopRequireDefault(_Config);
 
-var _LayerUtils = __webpack_require__(7);
-
-var _LayerUtils2 = _interopRequireDefault(_LayerUtils);
-
-var _SourceWMS = __webpack_require__(23);
+var _SourceWMS = __webpack_require__(22);
 
 var _SourceWMS2 = _interopRequireDefault(_SourceWMS);
 
@@ -32165,7 +32263,7 @@ var LayerSwitcherDOM = {
             draggable: ".draggable-layer",
             ghostClass: "GPghostLayer",
             animation: 200,
-            /** Call event function on drag and drop */
+            // Call event function on drag and drop
             onEnd: function onEnd(e) {
                 // FIXME pas terrrible, mais il faut bien passer ce contexte...
                 context._onDragAndDropLayerClick(e);
@@ -32201,6 +32299,8 @@ var LayerSwitcherDOM = {
 
     /**
      * Creation du container principal d"affichage des layers (DOM)
+     *
+     * @returns {DOMElement} input - element for minimizing/maximizing the layer switcher
      */
     _createMainLayersShowElement: function _createMainLayersShowElement() {
         // <!-- Hidden checkbox for minimizing/maximizing -->
@@ -32212,6 +32312,8 @@ var LayerSwitcherDOM = {
 
     /**
      * Creation du container principal des layers (DOM)
+     *
+     * @returns {DOMElement} container - layers list container
      */
     _createMainLayersElement: function _createMainLayersElement() {
         // ajout de la liste des layers dans le container principal
@@ -32226,6 +32328,8 @@ var LayerSwitcherDOM = {
 
     /**
      * Creation du container du picto du controle (DOM)
+     *
+     * @returns {DOMElement} label
      */
     _createMainPictoElement: function _createMainPictoElement() {
         var self = this;
@@ -32276,6 +32380,8 @@ var LayerSwitcherDOM = {
 
     /**
      * Creation du container du panneau d"information (DOM)
+     *
+     * @returns {DOMElement} container
      */
     _createMainInfoElement: function _createMainInfoElement() {
         // gestion du panneau d"information dans le container principal
@@ -32301,6 +32407,7 @@ var LayerSwitcherDOM = {
      * @param {Boolean} obj.visibility - visibilité de la couche dans la carte (true or false)
      * @param {Float} obj.opacity - opacité de la couche
      *
+     * @returns {DOMElement} container
      */
     _createContainerLayerElement: function _createContainerLayerElement(obj) {
         // exemple :
@@ -32350,6 +32457,8 @@ var LayerSwitcherDOM = {
      * Creation du container des outils basiques du layer (DOM)
      *
      * @param {Object} obj - options de la couche à ajouter dans le layer switcher
+     *
+     * @returns {DOMElement} container
      */
     _createBasicToolElement: function _createBasicToolElement(obj) {
         // exemple :
@@ -32376,6 +32485,8 @@ var LayerSwitcherDOM = {
      * Creation du nom du layer (DOM)
      *
      * @param {Object} obj - options de la couche à ajouter dans le layer switcher
+     *
+     * @returns {DOMElement} container
      */
     _createBasicToolNameElement: function _createBasicToolNameElement(obj) {
         // exemple :
@@ -32393,6 +32504,7 @@ var LayerSwitcherDOM = {
      * Creation de l'icone de visibilité du layer (DOM)
      *
      * @param {Object} obj - options de la couche à ajouter dans le layer switcher
+      * @returns {DOMElement[]} array containing input and label elements
      */
     _createBasicToolVisibilityElement: function _createBasicToolVisibilityElement(obj) {
         // exemple :
@@ -32419,12 +32531,12 @@ var LayerSwitcherDOM = {
         var context = this;
         if (input.addEventListener) {
             input.addEventListener("click", function (e) {
-                context._onVisibilityLayerClick.call(context, e);
+                context._onVisibilityLayerClick(e);
             });
         } else if (input.attachEvent) {
             // internet explorer
             input.attachEvent("onclick", function (e) {
-                context._onVisibilityLayerClick.call(context, e);
+                context._onVisibilityLayerClick(e);
             });
         }
 
@@ -32438,6 +32550,8 @@ var LayerSwitcherDOM = {
      * Creation de l'affichage du menu des outils avancés du layer (DOM)
      *
      * @param {Object} obj - options de la couche à ajouter dans le layer switcher
+     *
+     * @returns {DOMElement[]} array containing input and label elements
      */
     _createAdvancedToolShowElement: function _createAdvancedToolShowElement(obj) {
         // <input type="checkbox" id="GPshowAdvancedTools_ID_Layer1">
@@ -32465,6 +32579,8 @@ var LayerSwitcherDOM = {
      * Creation du container des outils avancés du layer (DOM)
      *
      * @param {Object} obj - options de la couche à ajouter dans le layer switcher
+     *
+     * @returns {DOMElement} container
      */
     _createAdvancedToolElement: function _createAdvancedToolElement(obj) {
         // exemple :
@@ -32498,6 +32614,8 @@ var LayerSwitcherDOM = {
      * Creation de l'icone de suppression du layer (DOM)
      *
      * @param {Object} obj - options de la couche à ajouter dans le layer switcher
+     *
+     * @returns {DOMElement} container
      */
     _createAdvancedToolDeleteElement: function _createAdvancedToolDeleteElement(obj) {
         // exemple :
@@ -32512,12 +32630,12 @@ var LayerSwitcherDOM = {
         var context = this;
         if (div.addEventListener) {
             div.addEventListener("click", function (e) {
-                context._onDropLayerClick.call(context, e);
+                context._onDropLayerClick(e);
             });
         } else if (div.attachEvent) {
             // internet explorer
             div.attachEvent("onclick", function (e) {
-                context._onDropLayerClick.call(context, e);
+                context._onDropLayerClick(e);
             });
         }
 
@@ -32528,6 +32646,8 @@ var LayerSwitcherDOM = {
      * Creation de l'icone d'information du layer (DOM)
      *
      * @param {Object} obj - options de la couche à ajouter dans le layer switcher
+     *
+     * @returns {DOMElement} container
      */
     _createAdvancedToolInformationElement: function _createAdvancedToolInformationElement(obj) {
         // exemple :
@@ -32542,12 +32662,12 @@ var LayerSwitcherDOM = {
         var context = this;
         if (div.addEventListener) {
             div.addEventListener("click", function (e) {
-                context._onOpenLayerInfoClick.call(context, e);
+                context._onOpenLayerInfoClick(e);
             });
         } else if (div.attachEvent) {
             // internet explorer
             div.attachEvent("onclick", function (e) {
-                context._onOpenLayerInfoClick.call(context, e);
+                context._onOpenLayerInfoClick(e);
             });
         }
 
@@ -32558,6 +32678,8 @@ var LayerSwitcherDOM = {
      * Creation de l'icone de gestion de l'opacité du layer (DOM)
      *
      * @param {Object} obj - options de la couche à ajouter dans le layer switcher
+     *
+     * @returns {DOMElement[]} array of two containers
      */
     _createAdvancedToolOpacityElement: function _createAdvancedToolOpacityElement(obj) {
         // exemple :
@@ -32589,23 +32711,23 @@ var LayerSwitcherDOM = {
         var context = this;
         if (input.addEventListener) {
             input.addEventListener("change", function (e) {
-                context._onChangeLayerOpacity.call(context, e);
+                context._onChangeLayerOpacity(e);
             });
         } else if (input.attachEvent) {
             // internet explorer
             input.attachEvent("onchange", function (e) {
-                context._onChangeLayerOpacity.call(context, e);
+                context._onChangeLayerOpacity(e);
             });
         }
 
         if (input.addEventListener) {
             input.addEventListener("input", function (e) {
-                context._onChangeLayerOpacity.call(context, e);
+                context._onChangeLayerOpacity(e);
             });
         } else if (input.attachEvent) {
             // internet explorer
             input.attachEvent("oninput", function (e) {
-                context._onChangeLayerOpacity.call(context, e);
+                context._onChangeLayerOpacity(e);
             });
         }
 
@@ -32639,6 +32761,8 @@ var LayerSwitcherDOM = {
      * TODO GPlayerInfoLink  : mettre en forme les échelles !
      *
      * @param {Object} obj - options de la couche à ajouter dans le layer switcher
+     *
+     * @returns {DOMElement} container
      */
     _createContainerLayerInfoElement: function _createContainerLayerInfoElement(obj) {
         var container = document.createElement("div");
@@ -32740,7 +32864,7 @@ var LayerSwitcherDOM = {
                 if (legends.hasOwnProperty(scale)) {
                     var urllgd = legends[scale].url;
                     // on n'affiche pas les légendes pointant vers "nolegend.jpg"
-                    if (typeof urllgd === "string" && urllgd.toLowerCase().indexOf("nolegend.jpg") == -1) {
+                    if (typeof urllgd === "string" && urllgd.toLowerCase().indexOf("nolegend.jpg") === -1) {
                         // TODO GPlayerInfoPopup
                         var lgdlink = document.createElement("div");
                         lgdlink.className = "GPlayerInfoLink";
@@ -34041,23 +34165,15 @@ Object.defineProperty(exports, "__esModule", {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _ol = __webpack_require__(0);
+var _ol = __webpack_require__(1);
 
 var _ol2 = _interopRequireDefault(_ol);
 
-var _gp = __webpack_require__(4);
-
-var _gp2 = _interopRequireDefault(_gp);
-
-var _proj = __webpack_require__(9);
-
-var _proj2 = _interopRequireDefault(_proj);
-
-var _Utils = __webpack_require__(1);
+var _Utils = __webpack_require__(2);
 
 var _Utils2 = _interopRequireDefault(_Utils);
 
-var _GfiUtils = __webpack_require__(15);
+var _GfiUtils = __webpack_require__(16);
 
 var _GfiUtils2 = _interopRequireDefault(_GfiUtils);
 
@@ -34069,7 +34185,13 @@ var _GetFeatureInfoDOM = __webpack_require__(69);
 
 var _GetFeatureInfoDOM2 = _interopRequireDefault(_GetFeatureInfoDOM);
 
+var _LoggerByDefault = __webpack_require__(0);
+
+var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var logger = _LoggerByDefault2.default.getLogger("getfeatureinfo");
 
 /**
  * @classdesc
@@ -34174,42 +34296,42 @@ GetFeatureInfo.prototype._initialize = function (options, layers) {
     this._eventsHandler = {};
 
     if (typeof options.auto !== "undefined" && typeof options.auto !== "boolean") {
-        console.log("[ERROR] GetFeatureInfo:_initialize - auto parameter should be a boolean");
+        logger.log("[ERROR] GetFeatureInfo:_initialize - auto parameter should be a boolean");
         return;
     }
     this._auto = options.auto || false;
 
     if (typeof options.active !== "undefined" && typeof options.active !== "boolean") {
-        console.log("[ERROR] GetFeatureInfo:_initialize - active parameter should be a boolean");
+        logger.log("[ERROR] GetFeatureInfo:_initialize - active parameter should be a boolean");
         return;
     }
     this._active = typeof options.active === "undefined" ? true : options.active;
 
     if (options.defaultEvent && typeof options.defaultEvent !== "string") {
-        console.log("[ERROR] GetFeatureInfo:_initialize - defaultEvent parameter should be a string");
+        logger.log("[ERROR] GetFeatureInfo:_initialize - defaultEvent parameter should be a string");
         return;
     }
     this._defaultEvent = options.defaultEvent || "singleclick";
     if (!this._isValidEvent(this._defaultEvent)) {
-        console.log("[ERROR] GetFeatureInfo:_initialize - _defaultEvent '" + this._defaultEvent + "' is not a valid event");
+        logger.log("[ERROR] GetFeatureInfo:_initialize - _defaultEvent '" + this._defaultEvent + "' is not a valid event");
         return;
     }
 
     if (options.defaultInfoFormat && typeof options.defaultInfoFormat !== "string") {
-        console.log("[ERROR] GetFeatureInfo:_initialize - defaultInfoFormat parameter should be a string");
+        logger.log("[ERROR] GetFeatureInfo:_initialize - defaultInfoFormat parameter should be a string");
         return;
     }
     this._defaultInfoFormat = options.defaultInfoFormat || "text/html";
 
     if (options.cursorStyle && typeof options.cursorStyle !== "string") {
-        console.log("[ERROR] GetFeatureInfo:_initialize - cursorStyle parameter should be a string");
+        logger.log("[ERROR] GetFeatureInfo:_initialize - cursorStyle parameter should be a string");
         return;
     }
     this._cursorStyle = options.cursorStyle || "pointer";
 
     if (options.proxyUrl) {
         if (typeof options.proxyUrl !== "string") {
-            console.log("[ERROR] GetFeatureInfo:_initialize - proxyUrl parameter should be a string");
+            logger.log("[ERROR] GetFeatureInfo:_initialize - proxyUrl parameter should be a string");
             return;
         }
         this._proxyUrl = options.proxyUrl;
@@ -34217,14 +34339,14 @@ GetFeatureInfo.prototype._initialize = function (options, layers) {
 
     if (options.noProxyDomains) {
         if (!Array.isArray(options.noProxyDomains)) {
-            console.log("[ERROR] GetFeatureInfo:_initialize - noProxyDomains parameter should be a array");
+            logger.log("[ERROR] GetFeatureInfo:_initialize - noProxyDomains parameter should be a array");
             return;
         }
         this._noProxyDomains = options.noProxyDomains;
     }
 
     if (typeof options.autoPan !== "undefined" && typeof options.autoPan !== "boolean") {
-        console.log("[ERROR] GetFeatureInfo:_initialize - autoPan parameter should be a boolean");
+        logger.log("[ERROR] GetFeatureInfo:_initialize - autoPan parameter should be a boolean");
         return;
     }
     this._autoPan = typeof options.autoPan === "undefined" ? true : options.autoPan;
@@ -34232,14 +34354,14 @@ GetFeatureInfo.prototype._initialize = function (options, layers) {
     if (options.autoPanAnimation) {
         if (options.autoPanAnimation.duration) {
             if (typeof options.autoPanAnimation.duration !== "number") {
-                console.log("[ERROR] GetFeatureInfo:_initialize - autoPanAnimation parameter is invalid : duration should be a number.");
+                logger.log("[ERROR] GetFeatureInfo:_initialize - autoPanAnimation parameter is invalid : duration should be a number.");
                 return;
             }
         }
 
         if (options.autoPanAnimation.easing) {
             if (typeof options.autoPanAnimation.easing !== "function") {
-                console.log("[ERROR] GetFeatureInfo:_initialize - autoPanAnimation parameter is invalid : easing should be a ol.easing function or a custom function.");
+                logger.log("[ERROR] GetFeatureInfo:_initialize - autoPanAnimation parameter is invalid : easing should be a ol.easing function or a custom function.");
                 return;
             }
         }
@@ -34248,7 +34370,7 @@ GetFeatureInfo.prototype._initialize = function (options, layers) {
 
     if (options.autoPanMargin) {
         if (typeof options.autoPanMargin !== "number") {
-            console.log("[ERROR] GetFeatureInfo:_initialize - autoPanMargin parameter should be a number");
+            logger.log("[ERROR] GetFeatureInfo:_initialize - autoPanMargin parameter should be a number");
             return;
         }
         this._autoPanMargin = options.autoPanMargin;
@@ -34256,7 +34378,7 @@ GetFeatureInfo.prototype._initialize = function (options, layers) {
 
     // {Object} control layers list.
     if (!Array.isArray(layers)) {
-        console.log("[ERROR] GetFeatureInfo:_initialize - layers parameter should be an array");
+        logger.log("[ERROR] GetFeatureInfo:_initialize - layers parameter should be an array");
         return;
     }
     this._setLayers(layers);
@@ -34294,7 +34416,7 @@ GetFeatureInfo.prototype.setMap = function (map) {
             var updated = false;
             map.getLayers().forEach(function (olLayer) {
                 var layerFormat = _GfiUtils2.default.getLayerFormat(olLayer);
-                if (!this._hasLayer(olLayer) && layerFormat == "vector") {
+                if (!this._hasLayer(olLayer) && layerFormat === "vector") {
                     this._layers.push({
                         obj: olLayer
                     });
@@ -34308,7 +34430,7 @@ GetFeatureInfo.prototype.setMap = function (map) {
 
             map.getLayers().on("add", function (evt) {
                 var layerFormat = _GfiUtils2.default.getLayerFormat(evt.element);
-                if (layerFormat == "vector") {
+                if (layerFormat === "vector") {
                     this._layers.push({
                         obj: evt.element
                     });
@@ -34349,11 +34471,11 @@ GetFeatureInfo.prototype.getLayers = function () {
  */
 GetFeatureInfo.prototype.setDefaultEvent = function (eventName) {
     if (typeof eventName !== "string") {
-        console.log("[ERROR] GetFeatureInfo:setDefaultEvent - eventName parameter should be a string");
+        logger.log("[ERROR] GetFeatureInfo:setDefaultEvent - eventName parameter should be a string");
         return;
     }
     if (!eventName || !this._isValidEvent(eventName)) {
-        console.log("[ERROR] GetFeatureInfo:setDefaultEvent - event '" + eventName + "' is not allowed.");
+        logger.log("[ERROR] GetFeatureInfo:setDefaultEvent - event '" + eventName + "' is not allowed.");
         return;
     }
 
@@ -34368,7 +34490,7 @@ GetFeatureInfo.prototype.setDefaultEvent = function (eventName) {
  */
 GetFeatureInfo.prototype.setCursorStyle = function (cursorStyle) {
     if (typeof cursorStyle !== "string") {
-        console.log("[ERROR] GetFeatureInfo:setCursorStyle - cursorStyle parameter should be a string");
+        logger.log("[ERROR] GetFeatureInfo:setCursorStyle - cursorStyle parameter should be a string");
         return;
     }
     if (this._active) {
@@ -34403,7 +34525,7 @@ GetFeatureInfo.prototype.setActive = function (active) {
  */
 GetFeatureInfo.prototype._setActive = function (active) {
     if (typeof active !== "boolean") {
-        console.log("[ERROR] GetFeatureInfo:_setActive - active parameter should be a boolean");
+        logger.log("[ERROR] GetFeatureInfo:_setActive - active parameter should be a boolean");
         return;
     }
     if (this._active === active) {
@@ -34436,10 +34558,10 @@ GetFeatureInfo.prototype.setHidden = function (hidden) {
 /**
  * Indicates if the widget is hidden
  *
- * @return {Boolean} hidden
+ * @return {Boolean} is hidden
  */
 GetFeatureInfo.prototype.isHidden = function () {
-    return this.element.style.visibility == "hidden";
+    return this.element.style.visibility === "hidden";
 };
 
 /**
@@ -34457,8 +34579,10 @@ GetFeatureInfo.prototype.setLayers = function (gfiLayers) {
 
 /**
  * Indicates if an event is allowed
+ *
  * @param {String} eventName - name of the mouse event chosen in the list : 'singleclick', 'dblclick', 'contextmenu'.
- * @returns {Boolean}
+ *
+ * @returns {Boolean} is valid event
  *
  * @private
  */
@@ -34477,14 +34601,11 @@ GetFeatureInfo.prototype._isValidEvent = function (eventName) {
 GetFeatureInfo.prototype._activateEvent = function (eventName, map) {
     var gfiObj = this;
 
-    /**
-     * getFeatureInfoHandler
-     */
     var getFeatureInfoHandler = function getFeatureInfoHandler(e) {
         _GfiUtils2.default.onDisplayFeatureInfo(e, gfiObj);
     };
 
-    if (eventName == "contextmenu") {
+    if (eventName === "contextmenu") {
         map.getViewport().addEventListener(eventName, getFeatureInfoHandler);
     } else {
         map.on(eventName, getFeatureInfoHandler);
@@ -34503,7 +34624,7 @@ GetFeatureInfo.prototype._activateEvent = function (eventName, map) {
  * @private
  */
 GetFeatureInfo.prototype._deactivateEvent = function (eventName, map) {
-    if (eventName == "contextmenu") {
+    if (eventName === "contextmenu") {
         map.getViewport().removeEventListener(eventName, this._eventsHandler[eventName]);
     } else {
         map.un(eventName, this._eventsHandler[eventName]);
@@ -34558,8 +34679,10 @@ GetFeatureInfo.prototype._clearEvents = function () {
 
 /**
  * Indicates if the control has the specified layer attached
+ *
  * @param {ol.layer.Layer} olLayer - layer openlayers
- * @returns {Boolean}
+ *
+ * @returns {Boolean} has layer
  *
  * @private
  */
@@ -34587,14 +34710,11 @@ GetFeatureInfo.prototype._activateCursor = function (activate, map) {
 
     if (activate) {
         if (this._eventsHandler.hasOwnProperty("pointermove")) {
-            console.log("[ERROR] _activateCursor - inconsistent state: pointermove event handler already registered");
+            logger.log("[ERROR] _activateCursor - inconsistent state: pointermove event handler already registered");
             return;
         }
         var gfiObj = this;
 
-        /**
-         * displayCursor
-         */
         var displayCursor = function displayCursor(evt) {
             var hit = map.forEachFeatureAtPixel(evt.pixel, function (feature, layer) {
                 // on ne prend en compte que les couches vecteurs connues du controle
@@ -34629,7 +34749,7 @@ GetFeatureInfo.prototype._activateCursor = function (activate, map) {
  */
 GetFeatureInfo.prototype._setLayers = function (gfiLayers) {
     if (!gfiLayers || !Array.isArray(gfiLayers)) {
-        console.log("[ERROR] GetFeatureInfo:setLayers - gfiLayers parameter should be a array");
+        logger.log("[ERROR] GetFeatureInfo:setLayers - gfiLayers parameter should be a array");
         return;
     }
     this._layers = [];
@@ -34639,7 +34759,7 @@ GetFeatureInfo.prototype._setLayers = function (gfiLayers) {
 
         if (gfiLayers[i].event) {
             if (!this._isValidEvent(gfiLayers[i].event)) {
-                console.log("[ERROR] GetFeatureInfo:setLayers - layer event '" + this._layers[i].event + "' is not allowed.");
+                logger.log("[ERROR] GetFeatureInfo:setLayers - layer event '" + this._layers[i].event + "' is not allowed.");
             } else {
                 this._layers[ind].event = gfiLayers[i].event;
             }
@@ -34675,6 +34795,8 @@ GetFeatureInfo.prototype.onActivateGetFeatureInfoElementChange = function (e) {
  * @param {Object} [options] - options object to configure the widget :
  * @param {Boolean} [options.hidden] - specifies if the widget should be hidden.
  *
+ * @return {DOMElement} DOM element
+ *
  * @method _initContainer
  *
  * @private
@@ -34692,7 +34814,7 @@ GetFeatureInfo.prototype._initContainer = function (options) {
 
     if (typeof options.hidden !== "undefined") {
         if (typeof options.hidden !== "boolean") {
-            console.log("[ERROR] GetFeatureInfo:_initContainer - hidden parameter should be a boolean");
+            logger.log("[ERROR] GetFeatureInfo:_initContainer - hidden parameter should be a boolean");
             return;
         }
         if (options.hidden) {
@@ -34806,7 +34928,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _ol = __webpack_require__(0);
+var _ol = __webpack_require__(1);
 
 var _ol2 = _interopRequireDefault(_ol);
 
@@ -34814,11 +34936,11 @@ var _gp = __webpack_require__(4);
 
 var _gp2 = _interopRequireDefault(_gp);
 
-var _LoggerByDefault = __webpack_require__(2);
+var _LoggerByDefault = __webpack_require__(0);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
-var _Utils = __webpack_require__(1);
+var _Utils = __webpack_require__(2);
 
 var _Utils2 = _interopRequireDefault(_Utils);
 
@@ -34974,7 +35096,7 @@ SearchEngine.prototype.getCollapsed = function () {
  */
 SearchEngine.prototype.setCollapsed = function (collapsed) {
     if (collapsed === undefined) {
-        console.log("[ERROR] SearchEngine:setCollapsed - missing collapsed parameter");
+        logger.log("[ERROR] SearchEngine:setCollapsed - missing collapsed parameter");
         return;
     }
     if (collapsed && this.collapsed || !collapsed && !this.collapsed) {
@@ -35108,6 +35230,8 @@ SearchEngine.prototype.initialize = function (options) {
  * this method is called by this.initialize()
  * and makes sure input options are correctly formated
  *
+ * @param {Object} options - options
+ *
  * @private
  */
 SearchEngine.prototype._checkInputOptions = function (options) {
@@ -35121,7 +35245,7 @@ SearchEngine.prototype._checkInputOptions = function (options) {
             if (geocodeResources) {
                 // on vérifie que la liste des ressources de geocodage est bien un tableau
                 if (!Array.isArray(geocodeResources)) {
-                    console.log("[SearchEngine] 'options.resources.geocode' parameter should be an array");
+                    logger.log("[SearchEngine] 'options.resources.geocode' parameter should be an array");
                     geocodeResources = null;
                 }
                 var geocodeResourcesList = ["StreetAddress", "PositionOfInterest", "CadastralParcel", "Administratif"];
@@ -35129,7 +35253,7 @@ SearchEngine.prototype._checkInputOptions = function (options) {
                     if (geocodeResourcesList.indexOf(geocodeResources[i]) === -1) {
                         // si la resource n'est pas référencée, on l'enlève
                         // geocodeResources.splice(i, 1);
-                        console.log("[SearchEngine] options.resources.geocode : " + geocodeResources[i] + " is not a resource for geocode");
+                        logger.log("[SearchEngine] options.resources.geocode : " + geocodeResources[i] + " is not a resource for geocode");
                     }
                 }
             }
@@ -35139,7 +35263,7 @@ SearchEngine.prototype._checkInputOptions = function (options) {
             if (autocompleteResources) {
                 // on vérifie que la liste des ressources d'autocompletion est bien un tableau
                 if (!Array.isArray(autocompleteResources)) {
-                    console.log("[SearchEngine] 'options.resources.autocomplete' parameter should be an array");
+                    logger.log("[SearchEngine] 'options.resources.autocomplete' parameter should be an array");
                     autocompleteResources = null;
                 }
                 var autocompleteResourcesList = ["StreetAddress", "PositionOfInterest"];
@@ -35147,12 +35271,12 @@ SearchEngine.prototype._checkInputOptions = function (options) {
                     if (autocompleteResourcesList.indexOf(autocompleteResources[i]) === -1) {
                         // si la resource n'est pas référencée, on l'enlève
                         // autocompleteResources.splice(i, 1);
-                        console.log("[SearchEngine] options.resources.autocomplete : " + autocompleteResources[i] + " is not a resource for autocomplete");
+                        logger.log("[SearchEngine] options.resources.autocomplete : " + autocompleteResources[i] + " is not a resource for autocomplete");
                     }
                 }
             }
         } else {
-            console.log("[SearchEngine] 'resources' parameter should be an object");
+            logger.log("[SearchEngine] 'resources' parameter should be an object");
             options.resources = null;
         }
     }
@@ -35248,7 +35372,7 @@ SearchEngine.prototype._initPopupDiv = function () {
     var closer = document.createElement("input");
     closer.type = "button";
     closer.className = "gp-styling-button closer";
-    /** on closer click : remove popup */
+    // on closer click : remove popup
     closer.onclick = function () {
         if (context._popupOverlay != null) {
             context._popupOverlay.setPosition(undefined);
@@ -35270,6 +35394,8 @@ SearchEngine.prototype._initPopupDiv = function () {
 
 /**
  * Create control main container
+ *
+ * @returns {DOMElement} DOM element
  *
  * @private
  */
@@ -35347,6 +35473,8 @@ SearchEngine.prototype._initContainer = function () {
  * to the geocoding advanced menu.
  *
  * @param {String} code - resource geocoding name
+ *
+ * @returns {DOMElement} DOM element
  * @private
  */
 SearchEngine.prototype._setFilter = function (code) {
@@ -35650,6 +35778,8 @@ SearchEngine.prototype._requestGeocoding = function (settings) {
  * it creates a HTML Element per location
  * (cf. this. ...)
  *
+ * @param {Object[]} locations - locations
+ *
  * @private
  */
 SearchEngine.prototype._fillGeocodedLocationListContainer = function (locations) {
@@ -35710,6 +35840,7 @@ SearchEngine.prototype._setPosition = function (position, zoom) {
  * FIXME
  *
  * @param {Array} position - ol.Coordinate object [lon, lat] ou [x, y]
+ * @param {Object} info - location information
  * @private
  */
 SearchEngine.prototype._setMarker = function (position, info) {
@@ -35754,7 +35885,9 @@ SearchEngine.prototype._setMarker = function (position, info) {
  * this method is called by this.on*ResultsItemClick()
  * and get zoom to results.
  *
- * @param {Object} info - {}
+ * @param {Object} info - info
+ *
+ * @returns {Integer} zoom
  * @private
  */
 SearchEngine.prototype._getZoom = function (info) {
@@ -35935,7 +36068,7 @@ SearchEngine.prototype.onAutoCompleteSearchText = function (e) {
     // aucun droits !
     // on evite une requête...
     if (this._noRightManagement) {
-        console.log("no rights for this service !");
+        logger.log("no rights for this service !");
         return;
     }
 
@@ -35956,11 +36089,10 @@ SearchEngine.prototype.onAutoCompleteSearchText = function (e) {
     // on met en place des callbacks afin de recuperer les resultats ou
     // les messages d'erreurs du service.
     // les resultats sont affichés dans une liste deroulante.
-    // les messages d'erreurs sont affichés sur la console (?)
     var context = this;
     this._requestAutoComplete({
         text: value,
-        /** callback onSuccess */
+        // callback onSuccess
         onSuccess: function onSuccess(results) {
             logger.log("request from AutoComplete", results);
             if (results) {
@@ -35989,7 +36121,7 @@ SearchEngine.prototype.onAutoCompleteSearchText = function (e) {
                 }
             }
         },
-        /** callback onFailure */
+        // callback onFailure
         onFailure: function onFailure(error) {
             // FIXME
             // où affiche t on les messages : ex. 'No suggestion matching the search' ?
@@ -36007,7 +36139,7 @@ SearchEngine.prototype.onAutoCompleteSearchText = function (e) {
                         context._requestGeocoding({
                             location: value,
                             returnFreeForm: true,
-                            /** callback onSuccess */
+                            // callback onSuccess
                             onSuccess: function onSuccess(results) {
                                 logger.log("request from Geocoding", results);
                                 if (results) {
@@ -36027,7 +36159,7 @@ SearchEngine.prototype.onAutoCompleteSearchText = function (e) {
                                     context._fillAutoCompletedLocationListContainer(locations);
                                 }
                             },
-                            /** callback onFailure */
+                            // callback onFailure
                             onFailure: function onFailure(error) {
                                 logger.log(error.message);
                             }
@@ -36060,7 +36192,7 @@ SearchEngine.prototype._getGeocodeCoordinatesFromFullText = function (suggestedL
         filterOptions: {
             type: suggestedLocation.type
         },
-        /** callback onSuccess */
+        // callback onSuccess
         onSuccess: function onSuccess(response) {
             logger.log("request from Geocoding (coordinates null)", response);
             if (response.locations && response.locations.length !== 0 && response.locations[0].position) {
@@ -36161,7 +36293,7 @@ SearchEngine.prototype.onGeocodingSearchSubmit = function (e) {
     // aucun droits !
     // on evite une requête...
     if (this._noRightManagement) {
-        console.log("no rights for this service !");
+        logger.log("no rights for this service !");
         return;
     }
 
@@ -36172,7 +36304,7 @@ SearchEngine.prototype.onGeocodingSearchSubmit = function (e) {
     var context = this;
     this._requestGeocoding({
         location: value,
-        /** callback onSuccess */
+        // callback onSuccess
         onSuccess: function onSuccess(results) {
             logger.log("request from Geocoding", results);
             if (results) {
@@ -36180,7 +36312,7 @@ SearchEngine.prototype.onGeocodingSearchSubmit = function (e) {
                 context._fillGeocodedLocationListContainer(locations);
             }
         },
-        /** callback onFailure */
+        // callback onFailure
         onFailure: function onFailure(error) {
             // FIXME cf. this.onAutoCompleteSearch()
             context._clearGeocodedLocation();
@@ -36326,7 +36458,7 @@ SearchEngine.prototype.onGeocodingAdvancedSearchSubmit = function (e, data) {
     this._requestGeocoding({
         location: _location,
         filterOptions: _filterOptions,
-        /** callback onSuccess */
+        // callback onSuccess
         onSuccess: function onSuccess(results) {
             logger.log(results);
             if (results) {
@@ -36334,7 +36466,7 @@ SearchEngine.prototype.onGeocodingAdvancedSearchSubmit = function (e, data) {
                 context._fillGeocodedLocationListContainer(locations);
             }
         },
-        /** callback onFailure */
+        // callback onFailure
         onFailure: function onFailure(error) {
             // FIXME cf. this.onAutoCompleteSearch()
             context._clearGeocodedLocation();
@@ -36389,9 +36521,9 @@ SearchEngine.prototype._getCadastralParcelRequestParams = function (filterOption
         l = commune.length;
         if (l === 3) {
             _location += commune;
-        } else if (l == 2) {
+        } else if (l === 2) {
             _location += "_" + commune;
-        } else if (l == 1) {
+        } else if (l === 1) {
             _location += "__" + commune;
         } else {
             // l > 3
@@ -36650,7 +36782,7 @@ var SearchEngineUtils = {
      * Provides default zoom based on results.
      *
      * @param {Object} info - location information
-     * @returns zoom level
+     * @returns {Integer} zoom level
      */
     zoomToResultsByDefault: function zoomToResultsByDefault(info) {
         // FIXME
@@ -36801,6 +36933,7 @@ var SearchEngineDOM = {
 
     /**
      * Simple search input
+     * @param {String} placeholder - placeholder
      *
      * @returns {DOMElement} DOM element
      */
@@ -37108,7 +37241,9 @@ var SearchEngineDOM = {
     // ############### Geocoding with advanced container ################# //
     // ################################################################### //
 
-    /** ... */
+    /**
+     * @returns {DOMElement} DOM element
+     */
     _createAdvancedSearchPanelHeaderElement: function _createAdvancedSearchPanelHeaderElement() {
         // contexte d'execution
         var self = this;
@@ -37149,7 +37284,11 @@ var SearchEngineDOM = {
         return container;
     },
 
-    /** ... */
+    /**
+     * @param {Object[]} advancedSearchCodes - codes
+     *
+     * @returns {DOMElement} DOM element
+     */
     _createAdvancedSearchPanelFormElement: function _createAdvancedSearchPanelFormElement(advancedSearchCodes) {
         // contexte d'execution
         var self = this;
@@ -37204,7 +37343,10 @@ var SearchEngineDOM = {
         return form;
     },
 
-    /** ... */
+    /**
+     * @param {Object[]} codes - codes
+     * @returns {DOMElement} DOM element
+     */
     _createAdvancedSearchFormCodeElement: function _createAdvancedSearchFormCodeElement(codes) {
         // contexte d'execution
         var self = this;
@@ -37247,7 +37389,9 @@ var SearchEngineDOM = {
         return select;
     },
 
-    /** ... */
+    /**
+     * @returns {DOMElement} DOM element
+     */
     _createAdvancedSearchFormInputElement: function _createAdvancedSearchFormInputElement() {
         var input = document.createElement("input");
         input.type = "submit";
@@ -37274,6 +37418,9 @@ var SearchEngineDOM = {
      * "PositionOfInterest", "StreetAddress", ...
      *
      * @param {String} code - code of geocoding resource
+     * @param {Boolean} display - display
+     *
+     * @returns {DOMElement} DOM element
      */
     _createAdvancedSearchFiltersTableElement: function _createAdvancedSearchFiltersTableElement(code, display) {
         var container = document.createElement("div");
@@ -37296,6 +37443,8 @@ var SearchEngineDOM = {
      * @param {String} filterAttributes.title - label
      * @param {String} filterAttributes.description - description
      * @param {String} filterAttributes.value - value
+     *
+     * @returns {DOMElement} DOM element
      */
     _createAdvancedSearchFiltersAttributElement: function _createAdvancedSearchFiltersAttributElement(filterAttributes) {
         // INFORMATION
@@ -37345,7 +37494,9 @@ var SearchEngineDOM = {
     // ################## Geocoding results container #################### //
     // ################################################################### //
 
-    /** ... */
+    /**
+     * @returns {DOMElement} DOM element
+     */
     _createGeocodeResultsHeaderElement: function _createGeocodeResultsHeaderElement() {
         var self = this;
 
@@ -37465,7 +37616,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _ol = __webpack_require__(0);
+var _ol = __webpack_require__(1);
 
 var _ol2 = _interopRequireDefault(_ol);
 
@@ -37473,15 +37624,11 @@ var _gp = __webpack_require__(4);
 
 var _gp2 = _interopRequireDefault(_gp);
 
-var _proj = __webpack_require__(9);
-
-var _proj2 = _interopRequireDefault(_proj);
-
-var _LoggerByDefault = __webpack_require__(2);
+var _LoggerByDefault = __webpack_require__(0);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
-var _Utils = __webpack_require__(1);
+var _Utils = __webpack_require__(2);
 
 var _Utils2 = _interopRequireDefault(_Utils);
 
@@ -37505,7 +37652,7 @@ var _MousePositionDOM = __webpack_require__(75);
 
 var _MousePositionDOM2 = _interopRequireDefault(_MousePositionDOM);
 
-__webpack_require__(21);
+__webpack_require__(18);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -37619,6 +37766,9 @@ MousePosition.prototype.constructor = MousePosition;
 
 /**
  * Overload ol.control.Control setMap method, called when
+ *
+ * @param {Object} map - the map
+ *
  */
 MousePosition.prototype.setMap = function (map) {
     var context = this;
@@ -37697,7 +37847,7 @@ MousePosition.prototype.setMap = function (map) {
  */
 MousePosition.prototype.addSystem = function (system) {
     if ((typeof system === "undefined" ? "undefined" : _typeof(system)) !== "object") {
-        console.log("[ERROR] MousePosition:addSystem - system parameter should be an object");
+        logger.log("[ERROR] MousePosition:addSystem - system parameter should be an object");
         return;
     }
     if (!system.crs) {
@@ -37714,11 +37864,9 @@ MousePosition.prototype.addSystem = function (system) {
     }
 
     // 1. add system to control systems
-    var found = false;
     for (var j = 0; j < this._projectionSystems.length; j++) {
         var obj = this._projectionSystems[j];
         if (system.crs === obj.crs) {
-            found = true;
             // warn user
             logger.info("crs '{}' already configured", obj.crs);
         }
@@ -37749,7 +37897,7 @@ MousePosition.prototype.addSystems = function (systems) {
         return;
     }
     if (!Array.isArray(systems)) {
-        console.log("[ERROR] MousePosition:addSystems - systems parameter should be an array");
+        logger.log("[ERROR] MousePosition:addSystems - systems parameter should be an array");
         return;
     }
     for (var i = 0; i < systems.length; i++) {
@@ -37764,7 +37912,7 @@ MousePosition.prototype.addSystems = function (systems) {
  */
 MousePosition.prototype.removeSystem = function (systemCrs) {
     if (!systemCrs || typeof systemCrs !== "string") {
-        console.log("[ERROR] MousePosition:removeSystem - systemCode parameter should be a string");
+        logger.log("[ERROR] MousePosition:removeSystem - systemCode parameter should be a string");
         return;
     }
 
@@ -37783,7 +37931,7 @@ MousePosition.prototype.removeSystem = function (systemCrs) {
     }
 
     if (systemCode == null) {
-        console.log("[WARN] MousePosition:removeSystem - system not found");
+        logger.log("[WARN] MousePosition:removeSystem - system not found");
         return;
     }
 
@@ -37799,7 +37947,7 @@ MousePosition.prototype.removeSystem = function (systemCrs) {
     var indexChildToRemove = null;
 
     for (var k = 0; k < systemList.childNodes.length; k++) {
-        if (systemCode == systemList.childNodes[j].value) {
+        if (systemCode === systemList.childNodes[j].value) {
             indexChildToRemove = k;
             continue;
         }
@@ -37810,8 +37958,8 @@ MousePosition.prototype.removeSystem = function (systemCrs) {
         systemList.removeChild(systemList.childNodes[indexChildToRemove]);
     }
 
-    /* choose arbitrarily a new current system if needed */
-    if (this._currentProjectionSystems.code == systemCode) {
+    // choose arbitrarily a new current system if needed
+    if (this._currentProjectionSystems.code === systemCode) {
         systemList.childNodes[0].setAttribute("selected", "selected");
         this._setCurrentSystem(systemList.childNodes[0].value);
     }
@@ -37896,7 +38044,7 @@ MousePosition.prototype.displayCoordinates = function (displayCoordinates) {
  */
 MousePosition.prototype.setCollapsed = function (collapsed) {
     if (collapsed === undefined) {
-        console.log("[ERROR] MousePosition:setCollapsed - missing collapsed parameter");
+        logger.log("[ERROR] MousePosition:setCollapsed - missing collapsed parameter");
         return;
     }
     if (collapsed && this.collapsed || !collapsed && !this.collapsed) {
@@ -38039,7 +38187,7 @@ MousePosition.prototype._initMarker = function (option) {
         if (Array.isArray(option.offset) && option.offset.length === 2) {
             this._markerOffset = option.offset;
         } else {
-            console.log("positionMarker.offset should be an array. e.g. : [0,0]");
+            logger.log("positionMarker.offset should be an array. e.g. : [0,0]");
             this._markerOffset = _Markers2.default.defaultOffset;
         }
     } else {
@@ -38195,6 +38343,9 @@ MousePosition.prototype._initProjectionUnits = function () {
  * this method get label from the current projection units
  *
  * @method _getCurrentProjectionInformation
+ *
+ * @returns {String} projection information
+ *
  * @private
  */
 MousePosition.prototype._getCurrentProjectionInformation = function () {
@@ -38243,6 +38394,9 @@ MousePosition.prototype._checkRightsManagement = function () {
  * Create control main container (called by MousePosition constructor)
  *
  * @method _initContainer
+ *
+ * @returns {DOMElement} DOM element
+ *
  * @private
  */
 MousePosition.prototype._initContainer = function () {
@@ -38509,7 +38663,7 @@ MousePosition.prototype._setCoordinate = function (olCoordinate, crs) {
     // on projete le point dans le systeme demandé
     var oSrs = this._currentProjectionSystems.crs;
     if (!oSrs) {
-        console.log("ERROR : system crs not found");
+        logger.log("ERROR : system crs not found");
         return;
     }
     // on reprojette les coordonnées depuis leur CRS d'origine (CRS) vers le CRS demandé (oSrs)
@@ -38528,7 +38682,7 @@ MousePosition.prototype._setCoordinate = function (olCoordinate, crs) {
         }
     }
     if (!format || typeof format !== "function") {
-        console.log("WARNING : coordinates format function not found");
+        logger.log("WARNING : coordinates format function not found");
         return;
     } else {
         coordinate = format(olCoordinate);
@@ -38638,6 +38792,7 @@ MousePosition.prototype.onMapMove = function () {
  *
  * @method onRequestAltitude
  * @param {Object} coordinate - {lat:..., lng:...}
+ * @param {Function} callback - callback
  * @private
  */
 MousePosition.prototype.onRequestAltitude = function (coordinate, callback) {
@@ -38646,7 +38801,6 @@ MousePosition.prototype.onRequestAltitude = function (coordinate, callback) {
     // on met en place des callbacks afin de recuperer les resultats ou
     // les messages d'erreurs du service.
     // le resultat est affiché dans une balise du dom.
-    // les messages d'erreurs sont affichés sur la console (?)
 
     if (!coordinate || Object.keys(coordinate).length === 0) {
         return;
@@ -38660,7 +38814,7 @@ MousePosition.prototype.onRequestAltitude = function (coordinate, callback) {
     // si on n'a pas les droits sur la ressource, pas la peine de
     // continuer !
     if (this._noRightManagement) {
-        console.log("[WARNING] contract key configuration has no rights to load geoportal elevation ");
+        logger.log("[WARNING] contract key configuration has no rights to load geoportal elevation ");
         document.getElementById("GPmousePositionAlt-" + this._uid).innerHTML = "No rights!";
         return;
     }
@@ -38691,22 +38845,22 @@ MousePosition.prototype.onRequestAltitude = function (coordinate, callback) {
 
     if (!_rawResponse) {
         // dans le cas général
-        /** callback onSuccess */
+        // callback onSuccess
         _onSuccess = function _onSuccess(results) {
             if (results && Object.keys(results)) {
                 callback.call(this, results.elevations[0].z);
             }
         };
     } else {
-        /** callback onSuccess */
+        // callback onSuccess
         _onSuccess = function _onSuccess(results) {
-            console.log("alti service raw response : ", results);
+            logger.log("alti service raw response : ", results);
         };
     }
 
-    /** callback onFailure */
+    // callback onFailure
     _onFailure = function _onFailure(error) {
-        console.log("[getAltitude] ERROR : " + error.message);
+        logger.log("[getAltitude] ERROR : " + error.message);
     };
 
     // cas où la clef API n'est pas renseignée dans les options du service,
@@ -38890,7 +39044,7 @@ MousePosition.prototype.locateDMSCoordinates = function () {
 
     var oSrs = this._currentProjectionSystems.crs;
     if (!oSrs) {
-        console.log("ERROR : system crs not found");
+        logger.log("ERROR : system crs not found");
         return;
     }
 
@@ -38928,7 +39082,7 @@ MousePosition.prototype.locateCoordinates = function () {
 
     var oSrs = this._currentProjectionSystems.crs;
     if (!oSrs) {
-        console.log("ERROR : system crs not found");
+        logger.log("ERROR : system crs not found");
         return;
     }
 
@@ -39004,14 +39158,14 @@ MousePosition.prototype.onMousePositionProjectionSystemChange = function (e) {
  * this method selects the current system projection.
  *
  * @method _setCurrentSystem
- * @param {Object} systemCode - inner code (rank in array _projectionSystems)
+ * @param {String} systemCode - inner code (rank in array _projectionSystems)
  * @private
  */
 MousePosition.prototype._setCurrentSystem = function (systemCode) {
     // si on change de type de systeme, on doit aussi changer le type d'unités !
     var type = null;
     for (var i = 0; i < this._projectionSystems.length; ++i) {
-        if (this._projectionSystems[i].code == systemCode) {
+        if (this._projectionSystems[i].code === systemCode) {
             type = this._projectionSystems[i].type;
             break;
         }
@@ -39155,7 +39309,9 @@ MousePosition.prototype.convert = function (value) {
 /**
  * @param {String} coordType - "Lon" or "Lat"
  * @param {String} value - input value
- * @returns {Boolean}
+ *
+ * @returns {Boolean} value is within extent
+ *
  * @private
  */
 MousePosition.prototype.validateExtentCoordinate = function (coordType, value) {
@@ -39209,7 +39365,7 @@ var MathUtils = {
      * Reste de la division euclidienne
      * @param {Number} a - divisor
      * @param {Number} b - quotient
-     * @returns {Number}
+     * @returns {Number} Modulo
      */
     modulo: function modulo(a, b) {
         var r = a % b;
@@ -39223,7 +39379,7 @@ var MathUtils = {
      * @param {Number} degrees - decimal degrees
      * @param {Array} hemispheres - "NS" ou "EO"
      * @param {Number} numDigits - number of digits for seconds
-     * @returns {Object}
+     * @returns {Object} DMS coordinate
      */
     decimalToDMS: function decimalToDMS(degrees, hemispheres, numDigits) {
         var normalizedDegrees = this.modulo(degrees + 180, 360) - 180;
@@ -39260,7 +39416,7 @@ var MathUtils = {
      *
      * @param {String} s - string number
      * @param {Numeric} base - between 2 and 36
-     * @returns {null|Numeric}
+     * @returns {null|Numeric} result
      */
     toInteger: function toInteger(s, base) {
         var _base = base || 10;
@@ -39275,7 +39431,7 @@ var MathUtils = {
      * check if s represents an integer
      *
      * @param {String} s - string number
-     * @returns {Boolean}
+     * @returns {Boolean} is integer
      */
     isInteger: function isInteger(s) {
         if (isNaN(s)) {
@@ -39290,7 +39446,7 @@ var MathUtils = {
      * Converts s to float
      *
      * @param {String} s - string number
-     * @returns {null|Numeric}
+     * @returns {null|Numeric} result
      */
     toFloat: function toFloat(s) {
         var n = parseFloat(s);
@@ -39358,6 +39514,7 @@ var MousePositionDOM = {
 
     /**
      * Show mouse position control
+     * @param {Boolean} isDesktop - specifies if the support is desktop or tactile
      *
      * @returns {DOMElement} DOM element
      */
@@ -39411,6 +39568,10 @@ var MousePositionDOM = {
 
     /**
      * mouse position panel
+     * @param {Boolean} [displayAltitude=true] - specifies if the altitude panel must be displayed
+     * @param {Boolean} [displayCoordinates=true] - specifies if the coordinates panel must be displayed
+     * @param {Boolean} [editCoordinates=false] - specifies if the coordinates edition is allowed
+     * @param {Boolean} [currentProjectionUnits] - specifies if the current projection units
      *
      * FIXME
      * don't call this._createMousePositionSettingsElement
@@ -39442,7 +39603,11 @@ var MousePositionDOM = {
         return div;
     },
 
-    /** Map center localisation (tactile use) */
+    /**
+     * Map center localisation (tactile use)
+     *
+     * @returns {DOMElement} container
+     */
     _createMapCenter: function _createMapCenter() {
         var div = document.createElement("div");
         div.id = "GPmapCenter";
@@ -39454,7 +39619,9 @@ var MousePositionDOM = {
     // ####################### Panel container ########################### //
     // ################################################################### //
 
-    /** ... */
+    /**
+     * @returns {DOMElement} container
+     */
     _createMousePositionPanelHeaderElement: function _createMousePositionPanelHeaderElement() {
         var container = document.createElement("div");
         container.className = "GPpanelHeader";
@@ -39488,6 +39655,10 @@ var MousePositionDOM = {
 
     /**
      * coordinate panel
+     * @param {Boolean} [displayAltitude] - specifies if the altitude panel must be displayed
+     * @param {Boolean} [displayCoordinates] - specifies if the coordinates panel must be displayed
+     * @param {Boolean} [editCoordinates] - specifies if the coordinates edition is allowed
+     * @param {Boolean} [currentProjectionUnits] - specifies if the current projection units
      *
      * FIXME
      * call this._createMousePositionPanelBasicCoordinateElement
@@ -39512,7 +39683,9 @@ var MousePositionDOM = {
      * create coordinate elements
      *
      * @param {String} coordType - ("Lon" ou "Lat")
-     * @returns {Array}
+     * @param {Boolean} [editCoordinates=false] - specifies if the coordinates edition is allowed
+     *
+     * @returns {Array} list of DOM elements
      */
     _createCoordinateElement: function _createCoordinateElement(coordType, editCoordinates) {
         var context = this;
@@ -39549,7 +39722,9 @@ var MousePositionDOM = {
     /**
      *
      * @param {String} coordType - ("Lon" ou "Lat")
-     * @returns {Array}
+     * @param {Boolean} [editCoordinates=false] - specifies if the coordinates edition is allowed
+     *
+     * @returns {Array} list of DOM elements
      */
     _createDMSCoordinateElement: function _createDMSCoordinateElement(coordType, editCoordinates) {
         if (["Lon", "Lat"].indexOf(coordType) === -1) {
@@ -39655,7 +39830,13 @@ var MousePositionDOM = {
         return list;
     },
 
-    /** ... */
+    /**
+     * @param {Boolean} [display=false] - specifies if the coordinates panel must be displayed
+     * @param {Boolean} [editCoordinates] - specifies if the coordinates edition is allowed
+     * @param {Boolean} [currentProjectionUnits] - specifies if the current projection units
+     *
+     * @returns {DOMElement} container
+     */
     _createMousePositionPanelBasicCoordinateElement: function _createMousePositionPanelBasicCoordinateElement(display, editCoordinates, currentProjectionUnits) {
         var div = document.createElement("div");
         div.id = this._addUID("GPmousePositionCoordinate");
@@ -39712,7 +39893,11 @@ var MousePositionDOM = {
         return div;
     },
 
-    /** ... */
+    /**
+     * @param {Boolean} [display=false] - specifies if the altitude panel must be displayed
+     *
+     * @returns {DOMElement} container
+     */
     _createMousePositionPanelBasicAltitudeElement: function _createMousePositionPanelBasicAltitudeElement(display) {
         var div = document.createElement("div");
         div.id = this._addUID("GPmousePositionAltitude");
@@ -39737,7 +39922,11 @@ var MousePositionDOM = {
         return div;
     },
 
-    /** ... */
+    /**
+     * @param {Boolean} [editCoordinates=false] - specifies if the coordinates edition is allowed
+     *
+     * @returns {DOMElement} container
+     */
     _createMousePositionPanelEditToolsElement: function _createMousePositionPanelEditToolsElement(editCoordinates) {
         var context = this;
 
@@ -39778,7 +39967,11 @@ var MousePositionDOM = {
     // #################### Settings container ########################### //
     // ################################################################### //
 
-    /** ... */
+    /**
+     * @param {Boolean} [display=false] - specifies if the settings panel must be displayed
+     *
+     * @returns {DOMElement[]} array containing input and label elements
+     */
     _createShowMousePositionSettingsElement: function _createShowMousePositionSettingsElement(display) {
         var list = [];
 
@@ -39801,6 +39994,7 @@ var MousePositionDOM = {
 
     /**
      * settings panel
+     * @param {Boolean} [display=true] - specifies if the settings panel must be displayed
      *
      * FIXME
      * don't call this._createMousePositionSettingsSystemsElement
@@ -39873,7 +40067,11 @@ var MousePositionDOM = {
         return container;
     },
 
-    /** ... */
+    /**
+     * @param {Object[]} systems - list of systems
+     *
+     * @returns {DOMElement} DOM element select
+     */
     _createMousePositionSettingsSystemsElement: function _createMousePositionSettingsSystemsElement(systems) {
         // contexte d'execution
         var context = this;
@@ -39900,7 +40098,11 @@ var MousePositionDOM = {
         return selectSystem;
     },
 
-    /** ... */
+    /**
+     * @param {Object[]} units - list of units
+     *
+     * @returns {DOMElement} DOM element select
+     */
     _createMousePositionSettingsUnitsElement: function _createMousePositionSettingsUnitsElement(units) {
         // contexte d'execution
         var context = this;
@@ -39924,7 +40126,9 @@ var MousePositionDOM = {
         return selectUnits;
     },
 
-    /** ... **/
+    /**
+     * @param {String} [currentProjectionType="Metric"] - "Geographical" or "Metric"
+     */
     _resetLabelElements: function _resetLabelElements(currentProjectionType) {
         // Changement des labels dans le formulaire de saisie
         var spanLat = document.getElementById(this._addUID("GPmousePositionLatLabel"));
@@ -39934,7 +40138,9 @@ var MousePositionDOM = {
         spanLon.innerHTML = currentProjectionType === "Geographical" ? "Longitude :" : "Y :";
     },
 
-    /** ... **/
+    /**
+     * @param {String} currentProjectionUnits - projection units
+     */
     _resetUnitElements: function _resetUnitElements(currentProjectionUnits) {
         var value = "";
         if (currentProjectionUnits === "M" || currentProjectionUnits === "KM") {
@@ -40022,7 +40228,8 @@ var MousePositionDOM = {
      *
      * @param {DOMElement} input - input element
      * @param {Boolean} isFloat - check for float value
-     * @returns {Boolean}
+     *
+     * @returns {Boolean} true if input value is within bounds
      */
     _checkDMSElement: function _checkDMSElement(input, isFloat) {
         var b = isFloat !== undefined;
@@ -40049,7 +40256,8 @@ var MousePositionDOM = {
     /**
      * @param {String} coordType - "Lon" or "Lat"
      * @param {DOMElement} input - input element
-     * @returns {Boolean}
+     *
+     * @returns {Boolean} true if input value is within bounds
      */
     _checkDMSDegrees: function _checkDMSDegrees(coordType, input) {
         if (isNaN(input.value)) {
@@ -40089,6 +40297,7 @@ var MousePositionDOM = {
     /**
      * Function displaying coordinates from cursor position (desktop)
      * or map center (tactile)
+     * @param {Object} coordinate - coordinates
      */
     GPdisplayCoords: function GPdisplayCoords(coordinate) {
         // Compute coords in case of cursor position (desktop)
@@ -40144,6 +40353,10 @@ var MousePositionDOM = {
     /**
      * Function displaying altitude from cursor position (desktop)
      * or map center (tactile)
+     * @param {Object} coordinate - coordinates
+     * @param {Number} altitudeTimeoutDelay - when the mouse stop moving, delay before the altitude request is launched
+     * @param {Number} noDataValue - the no data value
+     * @param {Number} noDataValueTolerance - the no data value tolerance
      */
     GPdisplayElevation: function GPdisplayElevation(coordinate, altitudeTimeoutDelay, noDataValue, noDataValueTolerance) {
         // contexte d'execution
@@ -40207,15 +40420,11 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _ol = __webpack_require__(0);
+var _ol = __webpack_require__(1);
 
 var _ol2 = _interopRequireDefault(_ol);
 
-var _gp = __webpack_require__(4);
-
-var _gp2 = _interopRequireDefault(_gp);
-
-var _LoggerByDefault = __webpack_require__(2);
+var _LoggerByDefault = __webpack_require__(0);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
@@ -40223,7 +40432,7 @@ var _SelectorID = __webpack_require__(3);
 
 var _SelectorID2 = _interopRequireDefault(_SelectorID);
 
-var _Interactions = __webpack_require__(17);
+var _Interactions = __webpack_require__(15);
 
 var _Interactions2 = _interopRequireDefault(_Interactions);
 
@@ -40231,11 +40440,7 @@ var _DrawingDOM = __webpack_require__(77);
 
 var _DrawingDOM2 = _interopRequireDefault(_DrawingDOM);
 
-var _Utils = __webpack_require__(1);
-
-var _Utils2 = _interopRequireDefault(_Utils);
-
-var _KML = __webpack_require__(16);
+var _KML = __webpack_require__(14);
 
 var _KML2 = _interopRequireDefault(_KML);
 
@@ -40462,6 +40667,7 @@ Drawing.prototype.setMap = function (map) {
     // gestion des suppressions "externes" de la couche de dessin.
     this.eventKey = this.getMap().getLayers().on("remove", function (evtRm) {
         if (evtRm.element == this.layer) {
+            // FIXME object comparison
             // found layer removed.
             this.layer = null;
             // on supprime l'interaction en cours si besoin
@@ -40476,20 +40682,20 @@ Drawing.prototype.setMap = function (map) {
 /**
  * Export features of current drawing layer in KML.
  *
- * @returns {String} - a KML representation of drawn features or null if not possible.
+ * @returns {String} a KML representation of drawn features or null if not possible.
  */
 Drawing.prototype.exportFeatures = function () {
     var result = null;
     if (_ol2.default.control.Control.prototype.getMap.call(this) == null) {
-        console.log("Impossible to export : control isn't attached to any map.");
+        logger.log("Impossible to export : control isn't attached to any map.");
         return result;
     }
     if (!this.layer) {
-        console.log("Impossible to export : no layer is hosting features.");
+        logger.log("Impossible to export : no layer is hosting features.");
         return result;
     }
     if (!this.layer.getSource() || !this.layer.getSource().getFeatures() || !this.layer.getSource().getFeatures().length) {
-        console.log("Impossible to export : no features found.");
+        logger.log("Impossible to export : no features found.");
         return result;
     }
     var featProj = this.layer.getSource().getProjection();
@@ -40518,7 +40724,7 @@ Drawing.prototype.exportFeatures = function () {
  */
 Drawing.prototype.setCollapsed = function (collapsed) {
     if (collapsed === undefined) {
-        console.log("[ERROR] Drawing:setCollapsed - missing collapsed parameter");
+        logger.error("[ERROR] Drawing:setCollapsed - missing collapsed parameter");
         return;
     }
     if (collapsed && this.collapsed || !collapsed && !this.collapsed) {
@@ -40541,7 +40747,7 @@ Drawing.prototype.setExportName = function (name) {
 /**
  * getter for Export Name.
  *
- * @returns {String} - export name
+ * @returns {String} export name
  */
 Drawing.prototype.getExportName = function () {
     return this._exportName;
@@ -40555,13 +40761,13 @@ Drawing.prototype.getExportName = function () {
  * Gets marker options in options.markersList given its src.
  *
  * @param {String} src - marker image URI,
- * @returns {Object} - markers options
+ * @returns {Object} markers options
  * @private
  */
 Drawing.prototype._getsMarkersOptionsFromSrc = function (src) {
     var markerOptions = null;
     for (var i = 0; i < this.options.markersList.length; i++) {
-        if (this.options.markersList[i].src == src) {
+        if (this.options.markersList[i].src === src) {
             markerOptions = this.options.markersList[i];
             return markerOptions;
         }
@@ -40573,7 +40779,7 @@ Drawing.prototype._getsMarkersOptionsFromSrc = function (src) {
  * Converts markerElement options into Openlayers IconStyles options.
  *
  * @param {Object} markerElement - marker element
- * @returns {Object} - ol.Style.Icon constructor options.
+ * @returns {Object} ol.Style.Icon constructor options.
  * @private
  */
 Drawing.prototype._getIconStyleOptions = function (markerElement) {
@@ -40733,15 +40939,15 @@ Drawing.prototype._initialize = function (options) {
             this.options.defaultStyles[key] = Drawing.DefaultStyles[key];
             return;
         }
-        if (key == "polyFillOpacity" && (options.defaultStyles[key] < 0 || options.defaultStyles[key] > 1)) {
-            console.log("Wrong value (" + options.defaultStyles[key] + ") for defaultStyles.polyFillOpactity. Must be between 0 and 1");
+        if (key === "polyFillOpacity" && (options.defaultStyles[key] < 0 || options.defaultStyles[key] > 1)) {
+            logger.log("Wrong value (" + options.defaultStyles[key] + ") for defaultStyles.polyFillOpactity. Must be between 0 and 1");
             this.options.defaultStyles[key] = Drawing.DefaultStyles[key];
             return;
         }
-        if (key == "strokeWidth" || key == "polyStrokeWidth") {
+        if (key === "strokeWidth" || key === "polyStrokeWidth") {
             var intValue = parseInt(options.defaultStyles[key], 10);
             if (isNaN(intValue) || intValue < 0) {
-                console.log("Wrong value (" + options.defaultStyles[key] + ") for defaultStyles.strokeWidth. Must be a positive interger value.");
+                logger.log("Wrong value (" + options.defaultStyles[key] + ") for defaultStyles.strokeWidth. Must be a positive interger value.");
                 this.options.defaultStyles[key] = Drawing.DefaultStyles[key];
                 return;
             }
@@ -40794,7 +41000,7 @@ Drawing.prototype.setLayer = function (vlayer) {
     }
 
     if (!(vlayer instanceof _ol2.default.layer.Vector)) {
-        console.log("no valid layer given for hosting drawn features.");
+        logger.log("no valid layer given for hosting drawn features.");
         return;
     }
 
@@ -40804,6 +41010,7 @@ Drawing.prototype.setLayer = function (vlayer) {
         var found = false;
         layers.forEach(function (mapLayer) {
             if (mapLayer == vlayer) {
+                // FIXME object comparison
                 logger.trace("layer already in map. Not adding.");
                 found = true;
             }
@@ -40833,6 +41040,8 @@ Drawing.prototype.setLayer = function (vlayer) {
  * Detection : test for desktop or tactile
  *
  * @method _detectSupport
+ *
+ * @returns {Boolean} is desktop
  * @private
  */
 Drawing.prototype._detectSupport = function () {
@@ -40863,6 +41072,8 @@ Drawing.prototype._detectSupport = function () {
  * Create control main container (called by Drawing constructor)
  *
  * @method _initContainer
+ *
+ * @returns {DOMElement} DOM element
  * @private
  */
 Drawing.prototype._initContainer = function () {
@@ -40888,6 +41099,8 @@ Drawing.prototype._initContainer = function () {
 
 /**
  * Callback de fin de dessin de geometrie
+ * @param {Object} feature - ol feature
+ * @param {String} geomType - geometry type
  *
  * @private
  */
@@ -40977,7 +41190,7 @@ Drawing.prototype._createRemoveInteraction = function () {
         layers: [this.layer]
     });
     interaction.on("select", function (seEv) {
-        if (!seEv || !seEv.selected || seEv.selected.length == 0) {
+        if (!seEv || !seEv.selected || seEv.selected.length === 0) {
             return;
         }
         this.layer.getSource().removeFeature(seEv.selected[0]);
@@ -41004,7 +41217,7 @@ Drawing.prototype._createStylingInteraction = function () {
         if (this.stylingOvl) {
             this.getMap().removeOverlay(this.stylingOvl);
         }
-        if (!seEv || !seEv.selected || seEv.selected.length == 0) {
+        if (!seEv || !seEv.selected || seEv.selected.length === 0) {
             return;
         }
 
@@ -41105,7 +41318,7 @@ Drawing.prototype._createStylingInteraction = function () {
             initValues.fillOpacity = initValues.hasOwnProperty("fillOpacity") ? initValues.fillOpacity : this.options.defaultStyles.polyFillOpacity;
         }
         if (!geomType) {
-            console.log("Unhandled geometry type for styling.");
+            logger.log("Unhandled geometry type for styling.");
             return;
         }
         var dtObj = this;
@@ -41115,11 +41328,11 @@ Drawing.prototype._createStylingInteraction = function () {
              * @param {String} action - "apply" (to selected object), "default" (set as default), "cancel" (do nothing).
              */
         var applyStyle = function applyStyle(action) {
-            if (action == "cancel") {
+            if (action === "cancel") {
                 dtObj.getMap().removeOverlay(popupOvl);
                 return;
             }
-            var setDefault = action != "apply";
+            var setDefault = action !== "apply";
 
             var fillColorElem = document.getElementById(dtObj._addUID("fillColor"));
             var fillOpacityElem = document.getElementById(dtObj._addUID("fillOpacity"));
@@ -41154,6 +41367,7 @@ Drawing.prototype._createStylingInteraction = function () {
                             // index du marker dans la liste des markers
                             var idxMarker = dtObj.options.markersList.findIndex(function (mrk) {
                                 if (mrk == markerSelected) {
+                                    // FIXME object comparison
                                     return true;
                                 }
                                 return false;
@@ -41249,7 +41463,7 @@ Drawing.prototype._createLabelInteraction = function () {
         if (this.labelOvl) {
             this.getMap().removeOverlay(this.labelOvl);
         }
-        if (!seEv || !seEv.selected || seEv.selected.length == 0) {
+        if (!seEv || !seEv.selected || seEv.selected.length === 0) {
             return;
         }
         var popupOvl = null;
@@ -41270,10 +41484,10 @@ Drawing.prototype._createLabelInteraction = function () {
             geomType = "Polygon";
         }
         if (!geomType) {
-            console.log("Unhandled geometry type for styling.");
+            logger.log("Unhandled geometry type for styling.");
             return;
         }
-        if (geomType == "Text") {
+        if (geomType === "Text") {
             // pour les labels on récupère la valeur dans le style
             _textValue = seEv.selected[0].getStyle().getText().getText();
         } else {
@@ -41299,7 +41513,7 @@ Drawing.prototype._createLabelInteraction = function () {
                 return;
             }
             var feature = seEv.selected[0];
-            if (geomType == "Text") {
+            if (geomType === "Text") {
                 var style = feature.getStyle();
                 style.getText().setText(value);
                 feature.setProperties({
@@ -41316,7 +41530,7 @@ Drawing.prototype._createLabelInteraction = function () {
         var popupDiv = this._createLabelDiv({
             applyFunc: setTextValue,
             inputId: this._addUID("label-input"),
-            placeholder: geomType == "Text" ? "Saisir un label..." : "Saisir une description...",
+            placeholder: geomType === "Text" ? "Saisir un label..." : "Saisir une description...",
             text: _textValue,
             measure: this.options.tools.measure ? _measure : null,
             geomType: geomType
@@ -41342,6 +41556,8 @@ Drawing.prototype._createLabelInteraction = function () {
 /**
  * Callback de fin de modification du dessin afin de mettre à jour la mesure
  * TODO
+ * @param {Object} feature - ol feature
+ * @param {String} geomType - geometry type
  *
  * @private
  */
@@ -41353,7 +41569,7 @@ Drawing.prototype._updateMeasure = function (feature, geomType) {
     var wgs84Sphere = new _ol2.default.Sphere(6378137);
     var projection = this.getMap().getView().getProjection();
 
-    /** arrondi */
+    // arrondi
     function __roundDecimal(nombre, precision) {
         precision = precision || 2;
         var factor = Math.pow(10, precision);
@@ -41612,7 +41828,7 @@ Drawing.prototype._handleToolClick = function (clickEvent, toolId, context) {
                             })
                         })
                     }),
-                    /** deleteCondition : aucune en mode "edition" */
+                    // deleteCondition : aucune en mode "edition"
                     deleteCondition: function deleteCondition() /* event */{
                         return false;
                     }
@@ -41726,6 +41942,15 @@ exports.default = Drawing;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+
+var _LoggerByDefault = __webpack_require__(0);
+
+var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var logger = _LoggerByDefault2.default.getLogger("DrawingDOM");
+
 var DrawingDOM = {
 
     /**
@@ -41974,7 +42199,7 @@ var DrawingDOM = {
         var ul = document.createElement("ul");
         ul.className = "drawing-tools-flex-display";
         var context = this;
-        /** li click handler function */
+        // li click handler function
         function liClickHandler(e) {
             /* jshint validthis: true */
             // this == elem clicked
@@ -42037,10 +42262,10 @@ var DrawingDOM = {
      * @returns {Object} hex and opacity formated values
      */
     rgbaToHex: function rgbaToHex(rgba) {
-        /** number to hex conversion */
+        // number to hex conversion
         function hex(number) {
             if (number > 255) {
-                throw "'" + number + "'' is greater than 255(0xff);";
+                throw new Error("'" + number + "'' is greater than 255(0xff);");
             }
             var str = Number(number).toString(16);
             return ("0" + str).slice(-2);
@@ -42048,7 +42273,7 @@ var DrawingDOM = {
         var regex = /rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*(?:,\s*(0?.?\d+)\s*)?\)/;
         var parsed = regex.exec(rgba);
         if (!parsed) {
-            throw "Invalid format: " + rgba;
+            throw new Error("Invalid format: " + rgba);
         }
         var red = parsed[1];
         var green = parsed[2];
@@ -42075,7 +42300,7 @@ var DrawingDOM = {
         // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
         var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
         if (!hex) {
-            throw "Invalid format";
+            throw new Error("Invalid format");
         }
         hex = hex.replace(shorthandRegex, function (m, r, g, b) {
             return r + r + g + g + b + b;
@@ -42279,7 +42504,7 @@ var DrawingDOM = {
                 ul.appendChild(li);
                 break;
             default:
-                console.log("Unhandled geometry type for styling.");
+                logger.log("Unhandled geometry type for styling.");
         }
         div.appendChild(ul);
         // apply button
@@ -42351,11 +42576,11 @@ var DrawingDOM = {
         inputLabel.placeholder = options.placeholder;
         inputLabel.id = options.inputId;
         popup.appendChild(inputLabel);
-        /** blur */
+        // blur
         inputLabel.onblur = function () {
             options.applyFunc.call(this, inputLabel.value, true);
         };
-        /** keyup */
+        // keyup
         inputLabel.onkeyup = function (evtk) {
             if (options.geomType === "Text" && evtk.keyCode === 13) {
                 options.applyFunc.call(this, inputLabel.value, true);
@@ -42443,7 +42668,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _ol = __webpack_require__(0);
+var _ol = __webpack_require__(1);
 
 var _ol2 = _interopRequireDefault(_ol);
 
@@ -42451,11 +42676,11 @@ var _gp = __webpack_require__(4);
 
 var _gp2 = _interopRequireDefault(_gp);
 
-var _LoggerByDefault = __webpack_require__(2);
+var _LoggerByDefault = __webpack_require__(0);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
-var _Utils = __webpack_require__(1);
+var _Utils = __webpack_require__(2);
 
 var _Utils2 = _interopRequireDefault(_Utils);
 
@@ -42467,11 +42692,11 @@ var _SelectorID = __webpack_require__(3);
 
 var _SelectorID2 = _interopRequireDefault(_SelectorID);
 
-var _LocationSelector = __webpack_require__(24);
+var _LocationSelector = __webpack_require__(23);
 
 var _LocationSelector2 = _interopRequireDefault(_LocationSelector);
 
-var _LayerSwitcher = __webpack_require__(10);
+var _LayerSwitcher = __webpack_require__(8);
 
 var _LayerSwitcher2 = _interopRequireDefault(_LayerSwitcher);
 
@@ -42598,7 +42823,7 @@ Route.prototype.getCollapsed = function () {
  */
 Route.prototype.setCollapsed = function (collapsed) {
     if (collapsed === undefined) {
-        console.log("[ERROR] Route:setCollapsed - missing collapsed parameter");
+        logger.log("[ERROR] Route:setCollapsed - missing collapsed parameter");
         return;
     }
     if (collapsed && this.collapsed || !collapsed && !this.collapsed) {
@@ -42770,6 +42995,8 @@ Route.prototype.initialize = function (options) {
 /**
  * this method is called by this.initialize()
  *
+ * @param {Object} options - options
+ *
  * @private
  */
 Route.prototype._checkInputOptions = function (options) {
@@ -42783,7 +43010,7 @@ Route.prototype._checkInputOptions = function (options) {
             } else {
                 for (var i = 0; i < options.graphs.length; i++) {
                     if (typeof options.graphs[i] !== "string") {
-                        console.log("[ol.control.Route] ERROR : parameter 'graphs' elements should be of type 'string'");
+                        logger.log("[ol.control.Route] ERROR : parameter 'graphs' elements should be of type 'string'");
                         options.graphs = null;
                     } else {
                         if (options.graphs[i].toLowerCase() === "pieton") {
@@ -42873,6 +43100,10 @@ Route.prototype._checkRightsManagement = function () {
 /**
  * initialize component container (DOM)
  *
+ * @param {Object} map - the map
+ *
+ * @returns {DOMElement} DOM element
+ *
  * @private
  */
 Route.prototype._initContainer = function (map) {
@@ -42941,7 +43172,7 @@ Route.prototype._initContainer = function (map) {
     // hide autocomplete suggested locations on container click
     if (container.addEventListener) {
         container.addEventListener("click", function (e) {
-            context._hideRouteSuggestedLocations.call(context, e);
+            context._hideRouteSuggestedLocations(e);
         });
     }
 
@@ -43051,7 +43282,7 @@ Route.prototype._initPopupDiv = function () {
     var closer = document.createElement("input");
     closer.type = "button";
     closer.className = "gp-styling-button closer";
-    /** on closer click : remove popup */
+    // on closer click : remove popup
     closer.onclick = function () {
         if (context._popupOverlay != null) {
             context._popupOverlay.setPosition(undefined);
@@ -43073,6 +43304,8 @@ Route.prototype._initPopupDiv = function () {
 /**
  * Create List Points
  * Overwrite RouteDOM method !
+ *
+ * @param {Object} map - the map
  *
  * @returns {Array} List DOM element
  * @private
@@ -43298,14 +43531,14 @@ Route.prototype.onRouteComputationSubmit = function (options) {
         distanceUnit: "m",
         timeOut: _timeout,
         protocol: _protocol,
-        /** callback onSuccess */
+        // callback onSuccess
         onSuccess: function onSuccess(results) {
             logger.log(results);
             if (results) {
                 context._fillRouteResultsDetails(results);
             }
         },
-        /** callback onFailure */
+        // callback onFailure
         onFailure: function onFailure(error) {
             context._hideWaitingContainer();
             context._clearRouteResultsDetails();
@@ -43637,7 +43870,7 @@ Route.prototype._requestRouting = function (options) {
 
     // on fait quoi ?
     if (!bFound) {
-        console.log("no rights for this service !?");
+        logger.log("no rights for this service !?");
         return;
     }
 
@@ -43658,6 +43891,8 @@ Route.prototype._requestRouting = function (options) {
  * this method is called by this.onRouteComputationSubmit() (in case of route computation success)
  * and fills the container of the route instructions list, distance and time
  * information, also, constructs the geometry route.
+ *
+ * @param {Object} results - results of the route calculation
  *
  * @private
  */
@@ -43711,6 +43946,10 @@ Route.prototype._fillRouteResultsDetails = function (results) {
  * this method is called by this._fillRouteResultsDetails()
  * and fills the container of the route instructions list, distance and time
  * information.
+ *
+ * @param {Number} distance - distance
+ * @param {Number} duration - duration
+ * @param {Object[]} instructions - list of instructions
  *
  * @private
  */
@@ -43887,6 +44126,8 @@ Route.prototype._fillRouteResultsDetailsFeatureGeometry = function (instructions
  * this method is called on route features hover
  * and highlight instruction label
  *
+ * @param {Object} e - event
+ *
  * @private
  */
 Route.prototype._onResultsFeatureMouseOver = function (e) {
@@ -44042,7 +44283,6 @@ Route.prototype._clearRouteInputOptions = function () {
  */
 Route.prototype._removeRouteStepLocations = function () {
     var points = document.querySelectorAll("div[id^=\"GPlocationPoint\"]");
-    var stepPoints = 0;
     if (points.length !== 0) {
         // on boucle sur les points intermédiaires
         for (var i = 1; i < points.length - 1; i++) {
@@ -44053,7 +44293,6 @@ Route.prototype._removeRouteStepLocations = function () {
                     if (classList[j] === "GPlocationStageFlexInput") {
                         // si l'élément est visible, on le supprime en simulant un clic sur la croix (x)
                         document.getElementById(this._addUID("GPlocationStageRemove_" + (i + 1))).click();
-                        stepPoints += 1;
                     }
                 }
             }
@@ -44140,6 +44379,8 @@ Route.prototype._clearRouteResultsFeatureGeometry = function () {
  * this method is called by event 'click' on control main container
  * and hide suggested Locations (unless target is an autocomplete input)
  *
+ * @param {Object} e - event
+ *
  * @private
  */
 Route.prototype._hideRouteSuggestedLocations = function (e) {
@@ -44216,6 +44457,10 @@ Route.prototype._hideWaitingContainer = function () {
 /**
  * simplified instructions
  *
+ * @param {Object[]} instructions - list of instructions
+ *
+ * @returns {Object[]} simplified instructions
+ *
  * @private
  */
 Route.prototype._simplifiedInstructions = function (instructions) {
@@ -44256,6 +44501,10 @@ Route.prototype._simplifiedInstructions = function (instructions) {
 /**
  * convert seconds to time : HH:MM:SS
  *
+ * @param {Number} duration - duration in seconds
+ *
+ * @returns {String} time in hours/minutes/seconds
+ *
  * @private
  */
 Route.prototype._convertSecondsToTime = function (duration) {
@@ -44285,6 +44534,10 @@ Route.prototype._convertSecondsToTime = function (duration) {
 
 /**
  * convert distance in meters or kilometers
+ *
+ * @param {Number} distance - distance in meters
+ *
+ * @returns {String} distance in km
  *
  * @private
  */
@@ -44318,7 +44571,13 @@ var _SelectorID = __webpack_require__(3);
 
 var _SelectorID2 = _interopRequireDefault(_SelectorID);
 
+var _LoggerByDefault = __webpack_require__(0);
+
+var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var logger = _LoggerByDefault2.default.getLogger("LocationSelectorDOM");
 
 var LocationSelectorDOM = {
 
@@ -44484,7 +44743,7 @@ var LocationSelectorDOM = {
             switch (charCode) {
                 case 38:
                     // arrow up
-                    console.log("arrow up");
+                    logger.log("arrow up");
                     current.className = "GPautoCompleteProposal";
                     prev.className = "GPautoCompleteProposal current";
                     prev.style.color = "#000000";
@@ -44492,7 +44751,7 @@ var LocationSelectorDOM = {
                     break;
                 case 40:
                     // arrow down
-                    console.log("arrow down");
+                    logger.log("arrow down");
                     current.className = "GPautoCompleteProposal";
                     next.className = "GPautoCompleteProposal current";
                     next.style.color = "#000000";
@@ -44500,7 +44759,7 @@ var LocationSelectorDOM = {
                     break;
                 case 13:
                     // enter
-                    console.log("enter");
+                    logger.log("enter");
                     current.click(e);
                     break;
             }
@@ -44818,7 +45077,13 @@ var _SelectorID = __webpack_require__(3);
 
 var _SelectorID2 = _interopRequireDefault(_SelectorID);
 
+var _LoggerByDefault = __webpack_require__(0);
+
+var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var logger = _LoggerByDefault2.default.getLogger("RouteDOM");
 
 var RouteDOM = {
 
@@ -44976,7 +45241,7 @@ var RouteDOM = {
         form.setAttribute("onkeypress", "return event.keyCode != 13;"); // FIXME hack pour desactiver l'execution via 'enter' au clavier !
 
         form.addEventListener("submit", function (e) {
-            console.log(e);
+            logger.log(e);
             e.preventDefault();
 
             // points
@@ -44988,7 +45253,7 @@ var RouteDOM = {
             var startID = _SelectorID2.default.index(start);
             var endID = _SelectorID2.default.index(end);
 
-            if (document.getElementById(self._addUID("GPlocationOrigin_" + startID)).value == "" && document.getElementById(self._addUID("GPlocationOriginCoords_" + startID)).value == "" || document.getElementById(self._addUID("GPlocationOrigin_" + endID)).value == "" && document.getElementById(self._addUID("GPlocationOriginCoords_" + endID)).value == "") {
+            if (document.getElementById(self._addUID("GPlocationOrigin_" + startID)).value === "" && document.getElementById(self._addUID("GPlocationOriginCoords_" + startID)).value === "" || document.getElementById(self._addUID("GPlocationOrigin_" + endID)).value === "" && document.getElementById(self._addUID("GPlocationOriginCoords_" + endID)).value === "") {
                 return false;
             }
 
@@ -44998,7 +45263,7 @@ var RouteDOM = {
             for (var i = 0; i < points.length; i++) {
                 var tag = points[i].childNodes[0].id;
                 id = _SelectorID2.default.index(tag);
-                if (document.getElementById(self._addUID("GPlocationPoint_" + id)).className == "GPflexInput GPlocationStageFlexInput") {
+                if (document.getElementById(self._addUID("GPlocationPoint_" + id)).className === "GPflexInput GPlocationStageFlexInput") {
                     var resultStage = document.createElement("div");
                     resultStage.className = "GProuteResultsStages";
                     var resultStageLabel = document.createElement("div");
@@ -45010,13 +45275,13 @@ var RouteDOM = {
                     var elementCoords = document.getElementById(self._addUID("GPlocationOriginCoords_" + id));
                     var stageCoords = elementCoords.value;
                     var visible = elementCoords.className === "GPlocationOriginVisible";
-                    if (stageCoords != null && stageCoords != "" && visible) {
+                    if (stageCoords !== null && stageCoords !== "" && visible) {
                         resultStageValue.innerHTML = stageCoords;
                     } else {
                         resultStageValue.innerHTML = document.getElementById(self._addUID("GPlocationOrigin_" + id)).value;
                     }
                     resultStage.appendChild(resultStageValue);
-                    if (resultStageValue.innerHTML != "") {
+                    if (resultStageValue.innerHTML !== "") {
                         document.getElementById(self._addUID("GProuteResultsStages")).appendChild(resultStage);
                     }
                 }
@@ -45214,6 +45479,9 @@ var RouteDOM = {
      * Add Results Duration and Distance
      * (results dynamically generate !)
      * see event!
+     * @param {Number} distance - distance
+     * @param {Number} duration - duration
+     * @param {Function} fconvert - fconvert
      *
      * @returns {DOMElement} DOM element
      */
@@ -45298,6 +45566,8 @@ var RouteDOM = {
     /**
      *  Add Results Details
      * (results dynamically generate !)
+     * @param {Object[]} instructions - instructions
+     * @param {Function} fconvert - fconvert
      *
      * @returns {DOMElement} DOM element
      */
@@ -45375,6 +45645,9 @@ var RouteDOM = {
      * see event !
      * OVERWRITTEN BY LOCATIONSELECTOR !
      * (version initial without LOCATIONSELECTOR PLUGIN)
+     * @param {Integer} n - n
+     * @param {String} text - text
+     * @param {Boolean} visibility - visibility
      *
      * @returns {DOMElement} DOM element
      */
@@ -45453,9 +45726,9 @@ var RouteDOM = {
             var i = this.id.charAt(this.id.length - 1);
             var j;
             for (j = 1; j < 8; j++) {
-                if (i != j) {
+                if (i !== j) {
                     document.getElementById("GProuteOriginPointer" + j).checked = false;
-                    if (document.getElementById("GProuteOriginCoords" + j).value == "Pointer un lieu sur la carte") {
+                    if (document.getElementById("GProuteOriginCoords" + j).value === "Pointer un lieu sur la carte") {
                         document.getElementById("GProuteOriginCoords" + j).value = "";
                         document.getElementById("GProuteOrigin" + j).className = "GProuteOriginVisible";
                         document.getElementById("GProuteOriginCoords" + j).className = "GProuteOriginHidden";
@@ -45474,7 +45747,7 @@ var RouteDOM = {
             } else {
                 document.getElementById("GProuteOriginCoords" + i).value = "Pointer un lieu sur la carte";
                 for (j = 1; j < 8; j++) {
-                    if (i == j) {
+                    if (i === j) {
                         document.getElementById("GProutePoint" + j).style.display = "flex";
                     } else {
                         document.getElementById("GProutePoint" + j).style.display = "none";
@@ -45499,6 +45772,7 @@ var RouteDOM = {
      * see event !
      * OVERWRITTEN BY LOCATIONSELECTOR !
      * (version initial without LOCATIONSELECTOR PLUGIN)
+     * @param {Integer} n - n
      *
      * @returns {DOMElement} DOM element
      */
@@ -45510,7 +45784,7 @@ var RouteDOM = {
         divRm.id = "GProuteStageRemove" + n;
         divRm.className = "GProuteStageRemove";
         divRm.title = "Supprimer l'étape";
-        if (n != 1 && n != 7) {
+        if (n !== 1 && n !== 7) {
             divRm.addEventListener("click", function (e) {
                 var i = this.id.charAt(this.id.length - 1);
                 document.getElementById("GProutePoint" + i).className = "GPflexInput GProuteStageFlexInputHidden";
@@ -45549,8 +45823,8 @@ var RouteDOM = {
             var lastStage = 1;
             var nbStages = 0;
             for (var i = 2; i < 7; i++) {
-                if (document.getElementById("GProutePoint" + i).className == "GPflexInput GProuteStageFlexInputHidden") {
-                    if (lastStage == 1) {
+                if (document.getElementById("GProutePoint" + i).className === "GPflexInput GProuteStageFlexInputHidden") {
+                    if (lastStage === 1) {
                         lastStage = i;
                     }
                 } else {
@@ -45563,7 +45837,7 @@ var RouteDOM = {
                 var exclusionsPictoTop = document.getElementById("GPshowRouteExclusionsPicto").style.top;
                 document.getElementById("GPshowRouteExclusionsPicto").style.top = (parseInt(exclusionsPictoTop, 10) + 33).toString() + "px";
             }
-            if (nbStages == 4) {
+            if (nbStages === 4) {
                 document.getElementById("GProuteStageAdd").style.display = "none";
             }
             // gestionnaire d'evenement :
@@ -45579,6 +45853,7 @@ var RouteDOM = {
      * see event!
      * OVERWRITTEN BY LOCATIONSELECTOR !
      * (version initial without LOCATIONSELECTOR PLUGIN)
+     * @param {Integer} n - n
      *
      * @returns {DOMElement} DOM element
      */
@@ -45653,6 +45928,7 @@ var RouteDOM = {
      * Create Mode choice transport
      * see event !
      * FIXME event not useful
+     * @param {String[]} transports - transports
      *
      * @returns {DOMElement} DOM element
      */
@@ -45855,6 +46131,7 @@ var RouteDOM = {
      * Create Exclusions Options
      * see event !
      * FIXME event not useful
+     * @param {Object[]} exclusions - exclusions
      *
      * @returns {DOMElement} DOM element
      */
@@ -46014,7 +46291,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _ol = __webpack_require__(0);
+var _ol = __webpack_require__(1);
 
 var _ol2 = _interopRequireDefault(_ol);
 
@@ -46022,11 +46299,11 @@ var _gp = __webpack_require__(4);
 
 var _gp2 = _interopRequireDefault(_gp);
 
-var _LoggerByDefault = __webpack_require__(2);
+var _LoggerByDefault = __webpack_require__(0);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
-var _Utils = __webpack_require__(1);
+var _Utils = __webpack_require__(2);
 
 var _Utils2 = _interopRequireDefault(_Utils);
 
@@ -46038,11 +46315,11 @@ var _SelectorID = __webpack_require__(3);
 
 var _SelectorID2 = _interopRequireDefault(_SelectorID);
 
-var _LocationSelector = __webpack_require__(24);
+var _LocationSelector = __webpack_require__(23);
 
 var _LocationSelector2 = _interopRequireDefault(_LocationSelector);
 
-var _LayerSwitcher = __webpack_require__(10);
+var _LayerSwitcher = __webpack_require__(8);
 
 var _LayerSwitcher2 = _interopRequireDefault(_LayerSwitcher);
 
@@ -46165,7 +46442,7 @@ Isocurve.prototype.getCollapsed = function () {
  */
 Isocurve.prototype.setCollapsed = function (collapsed) {
     if (collapsed === undefined) {
-        console.log("[ERROR] Isocurve:setCollapsed - missing collapsed parameter");
+        logger.log("[ERROR] Isocurve:setCollapsed - missing collapsed parameter");
         return;
     }
     if (collapsed && this.collapsed || !collapsed && !this.collapsed) {
@@ -46303,6 +46580,8 @@ Isocurve.prototype.initialize = function (options) {
 /**
  * this method is called by this.initialize()
  *
+ * @param {Object} options - options
+ *
  * @private
  */
 Isocurve.prototype._checkInputOptions = function (options) {
@@ -46319,7 +46598,7 @@ Isocurve.prototype._checkInputOptions = function (options) {
             } else {
                 for (i = 0; i < options.methods.length; i++) {
                     if (typeof options.methods[i] !== "string") {
-                        console.log("[ol.control.Isocurve] ERROR : parameter 'methods' elements should be of type 'string'");
+                        logger.log("[ol.control.Isocurve] ERROR : parameter 'methods' elements should be of type 'string'");
                     }
                 }
             }
@@ -46338,7 +46617,7 @@ Isocurve.prototype._checkInputOptions = function (options) {
             } else {
                 for (i = 0; i < options.graphs.length; i++) {
                     if (typeof options.graphs[i] !== "string") {
-                        console.log("[ol.control.Isocurve] ERROR : parameter 'graphs' elements should be of type 'string'");
+                        logger.log("[ol.control.Isocurve] ERROR : parameter 'graphs' elements should be of type 'string'");
                     } else {
                         if (options.graphs[i].toLowerCase() === "pieton") {
                             options.graphs[i] = "Pieton";
@@ -46364,7 +46643,7 @@ Isocurve.prototype._checkInputOptions = function (options) {
             } else {
                 for (i = 0; i < options.directions.length; i++) {
                     if (typeof options.directions[i] !== "string") {
-                        console.log("[ol.control.Isocurve] ERROR : parameter 'directions' elements should be of type 'string'");
+                        logger.log("[ol.control.Isocurve] ERROR : parameter 'directions' elements should be of type 'string'");
                     }
                 }
             }
@@ -46590,6 +46869,10 @@ Isocurve.prototype._checkRightsManagement = function () {
 /**
  * initialize component container (DOM)
  *
+ * @param {Object} map - the map
+ *
+ * @returns {DOMElement} DOM element
+ *
  * @private
  */
 Isocurve.prototype._initContainer = function (map) {
@@ -46674,7 +46957,7 @@ Isocurve.prototype._initContainer = function (map) {
     // hide autocomplete suggested locations on container click
     if (container.addEventListener) {
         container.addEventListener("click", function (e) {
-            context._hideIsoSuggestedLocations.call(context, e);
+            context._hideIsoSuggestedLocations(e);
         });
     }
 
@@ -46683,6 +46966,8 @@ Isocurve.prototype._initContainer = function (map) {
 
 /**
  * Create start point
+ *
+ * @param {Object} map - the map
  *
  * @returns {Object} DOM element
  * @private
@@ -46752,7 +47037,7 @@ Isocurve.prototype._createIsoPanelFormPointElement = function (map) {
 Isocurve.prototype.onIsoComputationSubmit = function () {
     // si on n'a pas de valeur récupérée pour notre point origine, on ne fait rien
     if (!this._originPoint || !this._originPoint.getCoordinate || !this._originPoint.getCoordinate()) {
-        console.log("[Isocurve] Missing position parameter to submit isocurve request");
+        logger.log("[Isocurve] Missing position parameter to submit isocurve request");
         return;
     }
 
@@ -46791,14 +47076,14 @@ Isocurve.prototype.onIsoComputationSubmit = function () {
 
     // si on n'a pas de valeur de calcul renseignée, on ne lance pas la requête.
     if (!time && !distance) {
-        console.log("[Isocurve] Missing time or distance parameter to submit isocurve request");
+        logger.log("[Isocurve] Missing time or distance parameter to submit isocurve request");
         return;
     }
 
     // oups, aucun droits !
     // on evite donc une requête inutile ...
     if (this._noRightManagement) {
-        console.log("[Isocurve] no rights for this service");
+        logger.log("[Isocurve] no rights for this service");
         return;
     }
 
@@ -46824,14 +47109,14 @@ Isocurve.prototype.onIsoComputationSubmit = function () {
         smoothing: options.smoothing || true,
         timeOut: _timeout,
         protocol: _protocol,
-        /** callback onSuccess */
+        // callback onSuccess
         onSuccess: function onSuccess(results) {
             logger.log(results);
             if (results) {
                 context._drawIsoResults(results);
             }
         },
-        /** callback onFailure */
+        // callback onFailure
         onFailure: function onFailure(error) {
             // FIXME mise à jour du controle mais le service ne repond pas en 200 !?
             context._hideWaitingContainer();
@@ -46992,14 +47277,14 @@ Isocurve.prototype._requestIsoCurve = function (options) {
     }
     // ni si on n'a aucun droit
     if (this._noRightManagement || !this._resources["Isocurve"]) {
-        console.log("no rights for this service");
+        logger.log("no rights for this service");
         return;
     }
 
     // gestion des droits !
     var resources = this._resources["Isocurve"].resources;
     if (!resources || (typeof resources === "undefined" ? "undefined" : _typeof(resources)) === "object" && Object.keys(resources).length === 0) {
-        console.log("no rights for this service");
+        logger.log("no rights for this service");
         return;
     }
 
@@ -47012,7 +47297,7 @@ Isocurve.prototype._requestIsoCurve = function (options) {
     }
     // on fait quoi ?
     if (!bFound) {
-        console.log("no rights for this service !?");
+        logger.log("no rights for this service !?");
         return;
     }
 
@@ -47266,6 +47551,8 @@ Isocurve.prototype._clearGeojsonLayer = function () {
 /**
  * this method is called by event 'click' on control main container
  * and hide suggested Locations (unless target is an autocomplete input)
+ *
+ * @param {Object} e - event
  *
  * @private
  */
@@ -48183,7 +48470,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _ol = __webpack_require__(0);
+var _ol = __webpack_require__(1);
 
 var _ol2 = _interopRequireDefault(_ol);
 
@@ -48191,11 +48478,11 @@ var _gp = __webpack_require__(4);
 
 var _gp2 = _interopRequireDefault(_gp);
 
-var _LoggerByDefault = __webpack_require__(2);
+var _LoggerByDefault = __webpack_require__(0);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
-var _Utils = __webpack_require__(1);
+var _Utils = __webpack_require__(2);
 
 var _Utils2 = _interopRequireDefault(_Utils);
 
@@ -48203,7 +48490,7 @@ var _Markers = __webpack_require__(5);
 
 var _Markers2 = _interopRequireDefault(_Markers);
 
-var _LayerSwitcher = __webpack_require__(10);
+var _LayerSwitcher = __webpack_require__(8);
 
 var _LayerSwitcher2 = _interopRequireDefault(_LayerSwitcher);
 
@@ -48312,7 +48599,7 @@ ReverseGeocode.prototype.getCollapsed = function () {
  */
 ReverseGeocode.prototype.setCollapsed = function (collapsed) {
     if (collapsed === undefined) {
-        console.log("[ERROR] ReverseGeocode:setCollapsed - missing collapsed parameter");
+        logger.log("[ERROR] ReverseGeocode:setCollapsed - missing collapsed parameter");
         return;
     }
     if (collapsed && this.collapsed || !collapsed && !this.collapsed) {
@@ -48488,6 +48775,8 @@ ReverseGeocode.prototype.initialize = function (options) {
  * this method is called by this.initialize()
  * and makes sure input options are correctly formated
  *
+ * @param {Object} options - options
+ *
  * @private
  */
 ReverseGeocode.prototype._checkInputOptions = function (options) {
@@ -48499,7 +48788,7 @@ ReverseGeocode.prototype._checkInputOptions = function (options) {
         var resources = options.resources;
         // on vérifie que la liste des ressources de geocodage est bien un tableau
         if (!Array.isArray(resources)) {
-            console.log("[ReverseGeocode] 'options.resources' parameter should be an array");
+            logger.log("[ReverseGeocode] 'options.resources' parameter should be an array");
             resources = null;
         }
         var resourcesList = ["StreetAddress", "PositionOfInterest", "CadastralParcel", "Administratif"];
@@ -48508,7 +48797,7 @@ ReverseGeocode.prototype._checkInputOptions = function (options) {
             if (resourcesList.indexOf(resources[i]) === -1) {
                 // si la resource n'est pas référencée, on stocke son index pour la retirer du tableau (après avoir terminé de parcourir le tableau)
                 wrongResourcesIndexes.push(i);
-                console.log("[ReverseGeocode] options.resources : " + resources[i] + " is not a resource for reverse geocode");
+                logger.log("[ReverseGeocode] options.resources : " + resources[i] + " is not a resource for reverse geocode");
             }
         }
         // on retire les ressoures non référencées qu'on a pu rencontrer
@@ -48524,7 +48813,7 @@ ReverseGeocode.prototype._checkInputOptions = function (options) {
         var delimitations = options.delimitations;
         // on vérifie que la liste des delimitations est bien un tableau
         if (!Array.isArray(delimitations)) {
-            console.log("[ReverseGeocode] 'options.delimitations' parameter should be an array");
+            logger.log("[ReverseGeocode] 'options.delimitations' parameter should be an array");
             delimitations = null;
         }
         var delimitationsList = ["Circle", "Point", "Extent"];
@@ -48533,7 +48822,7 @@ ReverseGeocode.prototype._checkInputOptions = function (options) {
             if (delimitationsList.indexOf(delimitations[i]) === -1) {
                 // si la delimitations n'est pas référencée, on stocke son index pour la retirer du tableau (après avoir terminé de parcourir le tableau)
                 wrongDelimitationsIndexes.push(i);
-                console.log("[ReverseGeocode] options.delimitations : " + delimitations[i] + " is not a delimitation for reverse geocode");
+                logger.log("[ReverseGeocode] options.delimitations : " + delimitations[i] + " is not a delimitation for reverse geocode");
             }
         }
         // on retire les ressoures non référencées qu'on a pu rencontrer
@@ -48569,7 +48858,7 @@ ReverseGeocode.prototype._initGeocodingType = function () {
             if (this._servicesRightManagement["Geocode"].indexOf(resources[i]) < 0) {
                 // si on n'a pas les droits sur la ressource, on va la supprimer : on stocke son index
                 noRightsIndexes.push(i);
-                console.log("[ReverseGeocode] no rights for options.resources : " + resources[i]);
+                logger.log("[ReverseGeocode] no rights for options.resources : " + resources[i]);
             }
         }
         // on retire les ressoures non autorisées qu'on a pu rencontrer
@@ -48631,7 +48920,7 @@ ReverseGeocode.prototype._initPopupDiv = function () {
     var closer = document.createElement("input");
     closer.type = "button";
     closer.className = "gp-styling-button closer";
-    /** on closer click : remove popup */
+    // on closer click : remove popup
     closer.onclick = function () {
         if (context._popupOverlay != null) {
             context._popupOverlay.setPosition(undefined);
@@ -48696,6 +48985,8 @@ ReverseGeocode.prototype._checkRightsManagement = function () {
 
 /**
  * Create control main container (DOM initialize)
+ *
+ * @returns {DOMElement} DOM element
  *
  * @private
  */
@@ -48948,7 +49239,7 @@ ReverseGeocode.prototype._activateBoxInteraction = function (map) {
     // on aura donc une géométrie LineString avec 5 coordonnées : start, point2, end, point4, start,
     // où les coordonnées de point2 et point4 sont calculées à partir de start et end, et start est répété à la fin pour fermer la géométrie.
 
-    /** function to draw rectangle with only 2 points */
+    // function to draw rectangle with only 2 points
     var geometryFunction = function geometryFunction(coordinates, geometry) {
         if (!geometry) {
             geometry = new _ol2.default.geom.Polygon(null);
@@ -49186,14 +49477,14 @@ ReverseGeocode.prototype._getReverseGeocodingRequestOptions = function () {
         maximumResponses: reverseGeocodeOptions.maximumResponses || 25,
         timeOut: reverseGeocodeOptions.timeOut || 30000,
         protocol: reverseGeocodeOptions.protocol || "XHR",
-        /** callback onSuccess */
+        // callback onSuccess
         onSuccess: function onSuccess(response) {
             if (response.locations) {
                 logger.log("reverseGeocode results : ", response.locations);
                 context._displayGeocodedLocations(response.locations);
             }
         },
-        /** callback onFailure */
+        // callback onFailure
         onFailure: function onFailure(error) {
             // FIXME mise à jour du controle mais le service ne repond pas en 200 !?
 
@@ -49215,7 +49506,7 @@ ReverseGeocode.prototype._getReverseGeocodingRequestOptions = function () {
     if (this._currentGeocodingDelimitation.toLowerCase() === "circle" && this._requestCircleFilter) {
         // FIXME : a confirmer !
         if (this._requestCircleFilter.radius > 1000) {
-            console.log("INFO : initial circle radius (" + this._requestCircleFilter.radius + ") limited to 1000m.");
+            logger.log("INFO : initial circle radius (" + this._requestCircleFilter.radius + ") limited to 1000m.");
             this._requestCircleFilter.radius = 1000;
         }
         requestOptions.filterOptions.circle = this._requestCircleFilter;
@@ -50379,7 +50670,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _ol = __webpack_require__(0);
+var _ol = __webpack_require__(1);
 
 var _ol2 = _interopRequireDefault(_ol);
 
@@ -50387,11 +50678,11 @@ var _gp = __webpack_require__(4);
 
 var _gp2 = _interopRequireDefault(_gp);
 
-var _LoggerByDefault = __webpack_require__(2);
+var _LoggerByDefault = __webpack_require__(0);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
-var _Utils = __webpack_require__(1);
+var _Utils = __webpack_require__(2);
 
 var _Utils2 = _interopRequireDefault(_Utils);
 
@@ -50407,11 +50698,11 @@ var _SelectorID = __webpack_require__(3);
 
 var _SelectorID2 = _interopRequireDefault(_SelectorID);
 
-var _ProxyUtils = __webpack_require__(14);
+var _ProxyUtils = __webpack_require__(13);
 
 var _ProxyUtils2 = _interopRequireDefault(_ProxyUtils);
 
-var _KML = __webpack_require__(16);
+var _KML = __webpack_require__(14);
 
 var _KML2 = _interopRequireDefault(_KML);
 
@@ -50584,7 +50875,7 @@ LayerImport.prototype.getCollapsed = function () {
  */
 LayerImport.prototype.setCollapsed = function (collapsed) {
     if (collapsed === undefined) {
-        console.log("[ERROR] LayerImport:setCollapsed - missing collapsed parameter");
+        logger.log("[ERROR] LayerImport:setCollapsed - missing collapsed parameter");
         return;
     }
     if (collapsed && this.collapsed || !collapsed && !this.collapsed) {
@@ -50763,7 +51054,7 @@ LayerImport.prototype._checkInputOptions = function (options) {
         var layerTypes = options.layerTypes;
         // on vérifie que la liste des types est bien un tableau
         if (!Array.isArray(layerTypes)) {
-            console.log("[ol.control.LayerImport] 'options.layerTypes' parameter should be an array. Set default values [\"KML\", \"GPX\", \"GeoJSON\", \"WMS\", \"WMTS\"]");
+            logger.log("[ol.control.LayerImport] 'options.layerTypes' parameter should be an array. Set default values [\"KML\", \"GPX\", \"GeoJSON\", \"WMS\", \"WMTS\"]");
             options.layerTypes = ["KML", "GPX", "GeoJSON", "WMS", "WMTS"];
         } else {
             var typesList = ["KML", "GPX", "GEOJSON", "WMS", "WMTS", "WFS"];
@@ -50772,14 +51063,14 @@ LayerImport.prototype._checkInputOptions = function (options) {
                 if (typeof layerTypes[i] !== "string") {
                     // si l'élément du tableau n'est pas une chaine de caractères, on stocke l'index pour le retirer du tableau
                     wrongTypesIndexes.push(i);
-                    console.log("[ol.control.LayerImport] 'options.layerTypes' elements should be of type string (" + layerTypes[i] + ")");
+                    logger.log("[ol.control.LayerImport] 'options.layerTypes' elements should be of type string (" + layerTypes[i] + ")");
                 } else {
                     // on passe en majuscules pour comparer
                     layerTypes[i] = layerTypes[i].toUpperCase();
                     if (typesList.indexOf(layerTypes[i]) === -1) {
                         // si le type n'est pas référencé, on stocke son index pour le retirer du tableau (après avoir terminé de parcourir le tableau)
                         wrongTypesIndexes.push(i);
-                        console.log("[ol.control.LayerImport] options.layerTypes : " + layerTypes[i] + " is not a supported type");
+                        logger.log("[ol.control.LayerImport] options.layerTypes : " + layerTypes[i] + " is not a supported type");
                     }
                     // cas spécial du GeoJSON qu'on ne laisse pas en majuscules
                     if (layerTypes[i] === "GEOJSON") {
@@ -51093,7 +51384,7 @@ LayerImport.prototype._importStaticLayerFromUrl = function (layerName) {
     var url = this._staticUrlImportInput.value;
     logger.log("url : ", url);
     if (url.length === 0) {
-        console.log("[ol.control.LayerImport] url parameter is mandatory");
+        logger.log("[ol.control.LayerImport] url parameter is mandatory");
         return;
     }
     // on supprime les éventuels espaces avant ou après
@@ -51103,7 +51394,7 @@ LayerImport.prototype._importStaticLayerFromUrl = function (layerName) {
 
     // 2. récupération proxy
     if (!this.options.webServicesOptions || !this.options.webServicesOptions.proxyUrl && !this.options.webServicesOptions.noProxyDomains) {
-        console.log("[ol.control.LayerImport] options.webServicesOptions.proxyUrl parameter is mandatory to request resources on another domain (cross-domain)");
+        logger.log("[ol.control.LayerImport] options.webServicesOptions.proxyUrl parameter is mandatory to request resources on another domain (cross-domain)");
         return;
     };
     url = _ProxyUtils2.default.proxifyUrl(url, this.options.webServicesOptions);
@@ -51117,16 +51408,16 @@ LayerImport.prototype._importStaticLayerFromUrl = function (layerName) {
         url: url,
         method: "GET",
         timeOut: 15000,
-        /** on success callback : display results in container */
+        // on success callback : display results in container
         onResponse: function onResponse(response) {
             context._hideWaitingContainer();
             context._addFeaturesFromImportStaticLayer(response, layerName);
         },
-        /** on error callback : log error */
+        // on error callback : log error
         onFailure: function onFailure(error) {
             // en cas d'erreur, on revient au panel initial et on cache la patience
             context._hideWaitingContainer();
-            console.log("[ol.control.LayerImport] KML/GPX/GeoJSON request failed : ", error);
+            logger.log("[ol.control.LayerImport] KML/GPX/GeoJSON request failed : ", error);
         }
     });
 };
@@ -51141,7 +51432,7 @@ LayerImport.prototype._importStaticLayerFromUrl = function (layerName) {
 LayerImport.prototype._importStaticLayerFromLocalFile = function (layerName) {
     var file = this._staticLocalImportInput.files[0];
     if (!file) {
-        console.log("[ol.control.LayerImport] missing file");
+        logger.log("[ol.control.LayerImport] missing file");
         return;
     }
 
@@ -51151,7 +51442,7 @@ LayerImport.prototype._importStaticLayerFromLocalFile = function (layerName) {
     // Définition des fonctions de callbacks associées au reader,
     // notamment la fonction onload qui affichera les entités chargées à la carte
     var context = this;
-    /** on readAsText error */
+    // on readAsText error
     fReader.onerror = function (e) {
         // en cas d'erreur, on revient au panel initial et on cache la patience
         context._hideWaitingContainer();
@@ -51173,7 +51464,7 @@ LayerImport.prototype._importStaticLayerFromLocalFile = function (layerName) {
         context._hideWaitingContainer();
         logger.log("onabort");
     };
-    /** on readAsText loadend */
+    // on readAsText loadend
     fReader.onloadend = function (e) {
         // fReader = null ?
         // en cas d'erreur, on revient au panel initial et on cache la patience
@@ -51181,7 +51472,7 @@ LayerImport.prototype._importStaticLayerFromLocalFile = function (layerName) {
         // TODO : replier le formulaire ?
         logger.log("onloadend : ", e);
     };
-    /** on readAsText load */
+    // on readAsText load
     fReader.onload = function (e) {
         logger.log("fileReader onload - file content : ", e.target.result);
 
@@ -51378,7 +51669,7 @@ LayerImport.prototype._addFeaturesFromImportStaticLayerUrl = function (url, laye
  */
 LayerImport.prototype._importServiceLayers = function () {
     if (this._currentImportType === "WFS") {
-        console.log("[ol.control.LayerImport] WFS layer import is not implemented yet");
+        logger.log("[ol.control.LayerImport] WFS layer import is not implemented yet");
         return;
     }
 
@@ -51388,7 +51679,7 @@ LayerImport.prototype._importServiceLayers = function () {
     // 1. récupération de l'url renseignée
     var url = this._getCapRequestUrl = this._serviceUrlImportInput.value;
     if (!url) {
-        console.log("[ol.control.LayerImport] url parameter is mandatory");
+        logger.log("[ol.control.LayerImport] url parameter is mandatory");
         return;
     }
     logger.log("url : ", url);
@@ -51410,7 +51701,7 @@ LayerImport.prototype._importServiceLayers = function () {
 
     // 2. récupération proxy
     if (!this.options.webServicesOptions || !this.options.webServicesOptions.proxyUrl && !this.options.webServicesOptions.noProxyDomains) {
-        console.log("[ol.control.LayerImport] options.webServicesOptions.proxyUrl parameter is mandatory to request web service layers (getcapabilities request)");
+        logger.log("[ol.control.LayerImport] options.webServicesOptions.proxyUrl parameter is mandatory to request web service layers (getcapabilities request)");
         return;
     };
     var proxyUrl = this.options.webServicesOptions.proxyUrl;
@@ -51440,16 +51731,16 @@ LayerImport.prototype._importServiceLayers = function () {
         url: url,
         method: "GET",
         timeOut: 15000,
-        /** on success callback : display results in container */
+        // on success callback : display results in container
         onResponse: function onResponse(response) {
             context._hideWaitingContainer();
-            context._displayGetCapResponseLayers.call(context, response);
+            context._displayGetCapResponseLayers(response);
         },
-        /** on error callback : log error */
+        // on error callback : log error
         onFailure: function onFailure(error) {
             // en cas d'erreur, on revient au panel initial et on cache la patience
             context._hideWaitingContainer();
-            console.log("[ol.control.LayerImport] getCapabilities request failed : ", error);
+            logger.log("[ol.control.LayerImport] getCapabilities request failed : ", error);
         }
     });
 };
@@ -51530,7 +51821,7 @@ LayerImport.prototype._displayGetCapResponseLayers = function (xmlResponse) {
                         } else {
                             // si la projection de la couche n'est pas connue par ol.proj,
                             // on n'affiche pas la couche dans le panel des résultats
-                            console.log("[ol.control.LayerImport] wmts layer cannot be added to map : unknown projection", layers[j]);
+                            logger.log("[ol.control.LayerImport] wmts layer cannot be added to map : unknown projection", layers[j]);
                             continue;
                         }
                     }
@@ -51550,7 +51841,7 @@ LayerImport.prototype._displayGetCapResponseLayers = function (xmlResponse) {
  */
 LayerImport.prototype._displayGetCapResponseWMSLayer = function (layerObj, parentLayersInfos) {
     if (!layerObj) {
-        console.log("[ol.control.LayerImport] _displayGetCapResponseWMSLayer : getCapabilities layer object not found");
+        logger.log("[ol.control.LayerImport] _displayGetCapResponseWMSLayer : getCapabilities layer object not found");
     } else {
         logger.log("[ol.control.LayerImport] _displayGetCapResponseWMSLayer - layerObj : ", layerObj);
     }
@@ -51624,7 +51915,7 @@ LayerImport.prototype._displayGetCapResponseWMSLayer = function (layerObj, paren
         if (!projection) {
             // si aucune projection n'est compatible avec celle de la carte ou connue par ol.proj,
             // on n'affiche pas la couche dans le panel des résultats
-            console.log("[ol.control.LayerImport] wms layer cannot be added to map : unknown projection", layerObj);
+            logger.log("[ol.control.LayerImport] wms layer cannot be added to map : unknown projection", layerObj);
         } else {
             // si on a une projection compatible : on la stocke et la couche sera éventuellement reprojetée à l'ajout
             layerObj._projection = projection;
@@ -51684,11 +51975,11 @@ LayerImport.prototype._onGetCapResponseLayerClick = function (e) {
 LayerImport.prototype._addGetCapWMSLayer = function (layerInfo) {
     var map = this.getMap();
     if (!map) {
-        console.log("[ol.control.LayerImport] _addGetCapWMSLayer error : map is not defined");
+        logger.log("[ol.control.LayerImport] _addGetCapWMSLayer error : map is not defined");
         return;
     }
     if (!layerInfo) {
-        console.log("[ol.control.LayerImport] _addGetCapWMSLayer error : layerInfo is not defined");
+        logger.log("[ol.control.LayerImport] _addGetCapWMSLayer error : layerInfo is not defined");
         return;
     }
 
@@ -51716,7 +52007,7 @@ LayerImport.prototype._addGetCapWMSLayer = function (layerInfo) {
     if (layerInfo.Name) {
         wmsSourceOptions.params["LAYERS"] = layerInfo.Name;
     } else {
-        console.log("[ol.control.LayerImport] unable to add wms layer : mandatory layer 'name' parameter cannot be found", layerInfo);
+        logger.log("[ol.control.LayerImport] unable to add wms layer : mandatory layer 'name' parameter cannot be found", layerInfo);
         return;
     }
     wmsSourceOptions.params["SERVICE"] = "WMS";
@@ -51729,7 +52020,7 @@ LayerImport.prototype._addGetCapWMSLayer = function (layerInfo) {
     // ou soit connue par proj4js
     var projection = layerInfo._projection;
     if (!projection) {
-        console.log("[ol.control.LayerImport] wms layer cannot be added to map : unknown projection");
+        logger.log("[ol.control.LayerImport] wms layer cannot be added to map : unknown projection");
         return;
     } else if (projection !== mapProjCode) {
         // si la projection de la carte n'est pas disponible pour cette couche,
@@ -51882,7 +52173,7 @@ LayerImport.prototype._getWMSLayerMinMaxResolution = function (layerInfo, mapPro
  */
 LayerImport.prototype._getWMSLayerExtent = function (layerInfo, mapProjCode, layerTileOptions) {
     if (!layerInfo) {
-        console.log("[ol.control.LayerImport] _getWMSLayerExtent error : layerInfo is not defined");
+        logger.log("[ol.control.LayerImport] _getWMSLayerExtent error : layerInfo is not defined");
         return;
     }
 
@@ -52003,7 +52294,7 @@ LayerImport.prototype._getWMSLayerInfoForLayerSwitcher = function (layerInfo, le
  */
 LayerImport.prototype._addGetCapWMTSLayer = function (layerInfo) {
     if (!layerInfo || !layerInfo.Identifier) {
-        console.log("[ol.control.LayerImport] layer information not found in getCapabilities response for layer ");
+        logger.log("[ol.control.LayerImport] layer information not found in getCapabilities response for layer ");
         return;
     }
 
@@ -52063,7 +52354,7 @@ LayerImport.prototype._addGetCapWMTSLayer = function (layerInfo) {
         }
     }
     if (defaultStyle == null) {
-        console.log("[ol.control.LayerImport] style information not found in getCapabilities response for layer " + layerInfo.Identifier);
+        logger.log("[ol.control.LayerImport] style information not found in getCapabilities response for layer " + layerInfo.Identifier);
     }
     wmtsSourceOptions.style = defaultStyle;
 
@@ -52073,7 +52364,7 @@ LayerImport.prototype._addGetCapWMTSLayer = function (layerInfo) {
         format = layerInfo.Format[0];
     }
     if (format == null) {
-        console.log("[ol.control.LayerImport] format information not found in getCapabilities response for layer " + layerInfo.Identifier);
+        logger.log("[ol.control.LayerImport] format information not found in getCapabilities response for layer " + layerInfo.Identifier);
     }
     wmtsSourceOptions.format = format;
 
@@ -52103,7 +52394,7 @@ LayerImport.prototype._addGetCapWMTSLayer = function (layerInfo) {
     try {
         wmtsLayer = new _ol2.default.layer.Tile(layerTileOptions);
     } catch (e) {
-        console.log("[ol.control.LayerImport] an error occured while trying to create ol.layer.Tile from getCapabilities information. error : ", e);
+        logger.log("[ol.control.LayerImport] an error occured while trying to create ol.layer.Tile from getCapabilities information. error : ", e);
         return;
     }
     // on rajoute le champ gpResultLayerId permettant d'identifier une couche crée par le composant. (pour layerSwitcher par ex)
@@ -52266,7 +52557,7 @@ LayerImport.prototype._getTMSParams = function (layerInfo) {
                 }
             }
         } else {
-            console.log("[ol.control.LayerImport] TileMatrixSet data not found in getCapabilities response for layer " + layerInfo.Identifier);
+            logger.log("[ol.control.LayerImport] TileMatrixSet data not found in getCapabilities response for layer " + layerInfo.Identifier);
         }
     } else {
         return;
@@ -53086,15 +53377,21 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _ol = __webpack_require__(0);
+var _ol = __webpack_require__(1);
 
 var _ol2 = _interopRequireDefault(_ol);
 
-var _LayerUtils = __webpack_require__(7);
+var _LayerUtils = __webpack_require__(12);
 
 var _LayerUtils2 = _interopRequireDefault(_LayerUtils);
 
+var _LoggerByDefault = __webpack_require__(0);
+
+var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var logger = _LoggerByDefault2.default.getLogger("geoportalattribution");
 
 /**
  * @classdesc
@@ -53207,7 +53504,7 @@ GeoportalAttribution.prototype._updateAttributions = function (map) {
                 if (lyr.getSource) {
                     context._updateLayerAttributions(lyr, mapAttributions, standardExtent, mapProjection, zoom);
                 } else {
-                    console.log("cannot find layer source in layergroup ", layers[i]);
+                    logger.log("cannot find layer source in layergroup ", layers[i]);
                 }
             });
         }
@@ -53284,7 +53581,7 @@ Object.defineProperty(exports, "__esModule", {
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; /* globals AmCharts, d3 */
 
 
-var _ol = __webpack_require__(0);
+var _ol = __webpack_require__(1);
 
 var _ol2 = _interopRequireDefault(_ol);
 
@@ -53292,11 +53589,11 @@ var _gp = __webpack_require__(4);
 
 var _gp2 = _interopRequireDefault(_gp);
 
-var _LoggerByDefault = __webpack_require__(2);
+var _LoggerByDefault = __webpack_require__(0);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
-var _Utils = __webpack_require__(1);
+var _Utils = __webpack_require__(2);
 
 var _Utils2 = _interopRequireDefault(_Utils);
 
@@ -53304,15 +53601,15 @@ var _CheckRightManagement = __webpack_require__(6);
 
 var _CheckRightManagement2 = _interopRequireDefault(_CheckRightManagement);
 
-var _Measures = __webpack_require__(11);
+var _Measures = __webpack_require__(9);
 
 var _Measures2 = _interopRequireDefault(_Measures);
 
-var _MeasureToolBox = __webpack_require__(12);
+var _MeasureToolBox = __webpack_require__(10);
 
 var _MeasureToolBox2 = _interopRequireDefault(_MeasureToolBox);
 
-var _Interactions = __webpack_require__(17);
+var _Interactions = __webpack_require__(15);
 
 var _Interactions2 = _interopRequireDefault(_Interactions);
 
@@ -53473,6 +53770,8 @@ _Utils2.default.assign(ElevationPath.prototype, _ElevationPathDOM2.default);
 /**
  * suppression du marker
  *
+ * @param {Object} context - context
+ *
  * @private
  */
 ElevationPath.__removeProfileMarker = function (context) {
@@ -53486,6 +53785,9 @@ ElevationPath.__removeProfileMarker = function (context) {
 
 /**
  * suppression du marker
+ *
+ * @param {Object} context - context
+ * @param {Object} d - d
  *
  * @private
  */
@@ -53514,6 +53816,9 @@ ElevationPath.__createProfileMarker = function (context, d) {
 /**
  * mise à jour du marker
  *
+ * @param {Object} context - context
+ * @param {Object} d - data
+ *
  * @private
  */
 ElevationPath.__updateProfileMarker = function (context, d) {
@@ -53524,6 +53829,10 @@ ElevationPath.__updateProfileMarker = function (context, d) {
 
 /**
  * TODO : customisation possible d'une opération sur le profil
+ *
+ * @param {Object} context - context
+ * @param {Object} d - data
+ *
  * @private
  */
 ElevationPath.__customRawProfileOperation = function (context, d) {
@@ -53567,6 +53876,9 @@ ElevationPath.__customRawProfileOperation = function (context, d) {
 /**
  * TODO : customisation possible d'une opération sur le profil
  * Ex. Methode appélée dans le DOM : ProfileElevationPathDOM
+ *
+ * @param {Object} context - context
+ * @param {Object} e - event
  * @private
  */
 ElevationPath.__customRawProfileMouseOverEvent = function (context, e) {
@@ -53585,7 +53897,7 @@ ElevationPath.DISPLAY_PROFILE_LIB_AMCHARTS = function (data, container, context)
 
     // Calcul du profile
     if (typeof AmCharts === "undefined") {
-        console.log("Lib. AmCharts is not loaded !");
+        logger.log("Lib. AmCharts is not loaded !");
         return;
     }
 
@@ -53608,7 +53920,7 @@ ElevationPath.DISPLAY_PROFILE_LIB_D3 = function (data, container, context) {
 
     // Calcul du profile
     if (typeof d3 === "undefined") {
-        console.log("Lib. D3 is not loaded !");
+        logger.log("Lib. D3 is not loaded !");
         return;
     }
 
@@ -53874,6 +54186,8 @@ ElevationPath.prototype._removeProfile = function () {
 /**
  * Initialize control (called by constructor)
  *
+ * @param {Object} options - options
+ *
  * @private
  */
 ElevationPath.prototype._initialize = function (options) {
@@ -53940,6 +54254,8 @@ ElevationPath.prototype._initialize = function (options) {
 
 /**
  * initialize component container (DOM)
+ *
+ * @returns {DOMElement} DOM element
  *
  * @private
  */
@@ -54250,6 +54566,8 @@ ElevationPath.prototype._removeMeasureInteraction = function (map) {
 /**
  * transforme geometry feature to position coordinate (service)
  *
+ * @returns {Object[]} geometry
+ *
  * @private
  */
 ElevationPath.prototype._getGeometry = function () {
@@ -54285,6 +54603,8 @@ ElevationPath.prototype._getGeometry = function () {
 
 /**
  * get geometry feature length
+ *
+ * @returns {Integer} length
  *
  * @private
  */
@@ -54349,7 +54669,7 @@ ElevationPath.prototype._requestService = function () {
     // les callbacks
     var self = this;
 
-    /** callback _requestServiceOnSuccess */
+    // callback _requestServiceOnSuccess
     var _requestServiceOnSuccess = function _requestServiceOnSuccess(result) {
         logger.trace(result);
         if (result) {
@@ -54361,7 +54681,7 @@ ElevationPath.prototype._requestService = function () {
         }
     };
 
-    /** callback _requestServiceOnFailure */
+    // callback _requestServiceOnFailure
     var _requestServiceOnFailure = function _requestServiceOnFailure(error) {
         // on ferme le panneau en cas d'erreur !
         self._panelContainer.style.display = "none";
@@ -55505,23 +55825,23 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _ol = __webpack_require__(0);
+var _ol = __webpack_require__(1);
 
 var _ol2 = _interopRequireDefault(_ol);
 
-var _LoggerByDefault = __webpack_require__(2);
+var _LoggerByDefault = __webpack_require__(0);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
-var _Utils = __webpack_require__(1);
+var _Utils = __webpack_require__(2);
 
 var _Utils2 = _interopRequireDefault(_Utils);
 
-var _MeasureToolBox = __webpack_require__(12);
+var _MeasureToolBox = __webpack_require__(10);
 
 var _MeasureToolBox2 = _interopRequireDefault(_MeasureToolBox);
 
-var _Measures = __webpack_require__(11);
+var _Measures = __webpack_require__(9);
 
 var _Measures2 = _interopRequireDefault(_Measures);
 
@@ -55665,6 +55985,8 @@ MeasureLength.prototype.setMap = function (map) {
 /**
  * Initialize measure control (called by constructor)
  *
+ * @param {Object} options - options
+ *
  * @private
  */
 MeasureLength.prototype._initialize = function (options) {
@@ -55682,6 +56004,8 @@ MeasureLength.prototype._initialize = function (options) {
 
 /**
  * initialize component container (DOM)
+ *
+ * @returns {DOMElement} DOM element
  *
  * @private
  */
@@ -55892,23 +56216,23 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _ol = __webpack_require__(0);
+var _ol = __webpack_require__(1);
 
 var _ol2 = _interopRequireDefault(_ol);
 
-var _LoggerByDefault = __webpack_require__(2);
+var _LoggerByDefault = __webpack_require__(0);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
-var _Utils = __webpack_require__(1);
+var _Utils = __webpack_require__(2);
 
 var _Utils2 = _interopRequireDefault(_Utils);
 
-var _MeasureToolBox = __webpack_require__(12);
+var _MeasureToolBox = __webpack_require__(10);
 
 var _MeasureToolBox2 = _interopRequireDefault(_MeasureToolBox);
 
-var _Measures = __webpack_require__(11);
+var _Measures = __webpack_require__(9);
 
 var _Measures2 = _interopRequireDefault(_Measures);
 
@@ -56058,6 +56382,8 @@ MeasureArea.prototype.setMap = function (map) {
 /**
  * Initialize measure control (called by constructor)
  *
+ * @param {Object} options - options
+ *
  * @private
  */
 MeasureArea.prototype._initialize = function (options) {
@@ -56075,6 +56401,8 @@ MeasureArea.prototype._initialize = function (options) {
 
 /**
  * initialize component container (DOM)
+ *
+ * @returns {DOMElement} DOM element
  *
  * @private
  */
@@ -56285,23 +56613,23 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _ol = __webpack_require__(0);
+var _ol = __webpack_require__(1);
 
 var _ol2 = _interopRequireDefault(_ol);
 
-var _LoggerByDefault = __webpack_require__(2);
+var _LoggerByDefault = __webpack_require__(0);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
-var _Utils = __webpack_require__(1);
+var _Utils = __webpack_require__(2);
 
 var _Utils2 = _interopRequireDefault(_Utils);
 
-var _MeasureToolBox = __webpack_require__(12);
+var _MeasureToolBox = __webpack_require__(10);
 
 var _MeasureToolBox2 = _interopRequireDefault(_MeasureToolBox);
 
-var _Measures = __webpack_require__(11);
+var _Measures = __webpack_require__(9);
 
 var _Measures2 = _interopRequireDefault(_Measures);
 
@@ -56469,6 +56797,8 @@ MeasureAzimuth.prototype.isGeodesic = function () {
 /**
  * Initialize measure control (called by constructor)
  *
+ * @param {Object} options - options
+ *
  * @private
  */
 MeasureAzimuth.prototype._initialize = function (options) {
@@ -56486,6 +56816,8 @@ MeasureAzimuth.prototype._initialize = function (options) {
 
 /**
  * initialize component container (DOM)
+ *
+ * @returns {DOMElement} DOM element
  *
  * @private
  */

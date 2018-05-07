@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 2.0.0
- * @date 2018-05-04
+ * @date 2018-05-07
  *
  */
 
@@ -170,7 +170,41 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _LoggerByDefault = __webpack_require__(6);
+var _loglevel = __webpack_require__(37);
+
+var Log = _interopRequireWildcard(_loglevel);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var LoggerByDefault = {
+    /**
+     *logger statique
+     * @param {String} [name="default"] - the logger name
+     *
+     * @returns {Object} logger
+     */
+    getLogger: function getLogger(name) {
+        // Substitute global constants configured at compile time
+        // cf. webpack.config.js
+         false ? Log.disableAll() : Log.enableAll();
+        var logname = name || "default";
+        return Log.getLogger(logname);
+    }
+}; /* global __PRODUCTION__ */
+exports.default = LoggerByDefault;
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _LoggerByDefault = __webpack_require__(0);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
@@ -187,6 +221,10 @@ var logger = _LoggerByDefault2.default.getLogger("GlobeViewExtended");
  *
  * @constructor
  * @extends {itowns.GlobeView}
+ * @param {HTMLElement} viewerDiv - Where to instanciate the Three.js scene in the DOM
+ * @param {Object} coordCarto - longitude, latitude, altitude
+ * @param {Object} [options] - Optional properties.
+ * @param {String} [options.position="relative"] - "absolute" or "relative"
  */
 function GlobeViewExtended(viewerDiv, coordCarto, options) {
     viewerDiv.style.position = !options || !options.position ? "relative" : options.position;
@@ -275,6 +313,7 @@ GlobeViewExtended.prototype.constructor = GlobeViewExtended;
 
 /**
  * Get GlobeViex Object (parent)
+ * @returns {Object} itowns GlobeView object
  */
 GlobeViewExtended.prototype.getGlobeView = function () {
     return this._globeView;
@@ -327,7 +366,7 @@ GlobeViewExtended.prototype.freezeControl = function () {
  */
 GlobeViewExtended.prototype.listen = function (type, callback) {
     if (typeof callback !== "function") {
-        console.log("no callback provided for event : " + type);
+        logger.warn("no callback provided for event : " + type);
         return null;
     }
 
@@ -360,7 +399,7 @@ GlobeViewExtended.prototype.listen = function (type, callback) {
  */
 GlobeViewExtended.prototype.addLayerListener = function (layer, type, callback) {
     if (typeof callback !== "function") {
-        console.log("no callback provided for event : " + type);
+        logger.warn("no callback provided for event : " + type);
         return null;
     }
     layer.addEventListener(type, callback);
@@ -395,7 +434,7 @@ GlobeViewExtended.prototype._getEventTarget = function (type) {
         case GlobeViewExtended.EVENTS.MOUSE_MOVE:
             return this._viewerDiv;
         default:
-            console.log("unhandled event : " + type);
+            logger.warn("unhandled event : " + type);
             return null;
     }
 };
@@ -403,7 +442,7 @@ GlobeViewExtended.prototype._getEventTarget = function (type) {
 /**
  * Cancels an event listening
  *
- * @param {Object} key - The event key.
+ * @param {Object} key - The event key
  *
  */
 GlobeViewExtended.prototype.forgetByKey = function (key) {
@@ -417,9 +456,9 @@ GlobeViewExtended.prototype.forgetByKey = function (key) {
 /**
  * Cancels an layer event listening
  *
- * @param {Object} layer - The itowns layer.
- * @param {String} type - the event type.
- * @param {Function} callback - The function to execute when the event occures.
+ * @param {Object} layer - The itowns layer
+ * @param {String} type - the event type
+ * @param {Function} callback - The function to execute when the event occures
  *
  */
 GlobeViewExtended.prototype.removeLayerListener = function (layer, type, callback) {
@@ -433,14 +472,12 @@ GlobeViewExtended.prototype.removeLayerListener = function (layer, type, callbac
 /**
  * Cancels an event listening
  *
- * @param {Object} type - The event type.
- *
+ * @param {Object} type - The event type
+ * @param {Function} callback - The event handler
  */
 GlobeViewExtended.prototype.forget = function (type, callback) {
     var target = this._getEventTarget(type);
-    if (!target) {
-        return null;
-    }
+    if (!target) return;
 
     this.forgetByKey({
         target: target,
@@ -451,8 +488,9 @@ GlobeViewExtended.prototype.forget = function (type, callback) {
 
 /**
  * Overload itowns.GlobeView addLayer method
- * @param {Object} layer - The itowns layer.
- * @return {Promise}
+ *
+ * @param {Object} layer - The itowns layer
+ * @return {Promise} promise
  */
 GlobeViewExtended.prototype.addLayer = function (layer) {
     var promise = this.getGlobeView().addLayer(layer);
@@ -462,6 +500,8 @@ GlobeViewExtended.prototype.addLayer = function (layer) {
 
 /**
  * Overload itowns.GlobeView removeLayer method
+ *
+ * @param {String} layerId - The layer id
  */
 GlobeViewExtended.prototype.removeLayer = function (layerId) {
     this.getGlobeView().removeLayer(layerId);
@@ -505,7 +545,7 @@ GlobeViewExtended.prototype.moveLayerToIndex = function (layerId, index) {
  * Remove event listener from the globe
  *
  * @param {String} type - event type
- * @param {Boolean} callback - event handler
+ * @param {Function} callback - event handler
  */
 GlobeViewExtended.prototype.removeEventListener = function (type, callback) {
     switch (type) {
@@ -523,6 +563,8 @@ GlobeViewExtended.prototype.removeEventListener = function (type, callback) {
 
 /**
  * Defines if the current view extent have to be computed on pre-render event
+ *
+ * @param {Boolean} b - tells if the view extent info should be fetched by the event PRE_RENDER
  */
 GlobeViewExtended.prototype.preRenderEventFetchViewExtent = function (b) {
     if (typeof b === "undefined") {
@@ -533,6 +575,8 @@ GlobeViewExtended.prototype.preRenderEventFetchViewExtent = function (b) {
 
 /**
  * Defines if the list of the color layers displayed have to be computed on pre-render event
+ *
+ * @param {Boolean} b - tells if the displayed color layers info should be fetched by the event PRE_RENDER
  */
 GlobeViewExtended.prototype.preRenderEventFetchColorLayersDisplayed = function (b) {
     if (typeof b === "undefined") {
@@ -543,6 +587,8 @@ GlobeViewExtended.prototype.preRenderEventFetchColorLayersDisplayed = function (
 
 /**
  * Defines if the list of the elevation layers displayed have to be computed on pre-render event
+ *
+ * @param {Boolean} b - tells if the displayed elevation layers info should be fetched by the event PRE_RENDER
  */
 GlobeViewExtended.prototype.preRenderEventFetchElevationLayersDisplayed = function (b) {
     if (typeof b === "undefined") {
@@ -553,6 +599,8 @@ GlobeViewExtended.prototype.preRenderEventFetchElevationLayersDisplayed = functi
 
 /**
  * Defines if the list of the layers of all types displayed have to be computed on pre-render event
+ *
+ * @param {Boolean} b - tells if both displayed color layers and displayed elevation layers infos should be fetched by the event PRE_RENDER
  */
 GlobeViewExtended.prototype.preRenderEventFetchLayersDisplayed = function (b) {
     if (typeof b === "undefined") {
@@ -642,7 +690,7 @@ GlobeViewExtended.prototype.getElevationLayers = function () {
 /**
  * Get the current view extent
  *
- * @return {Array} current view extent
+ * @returns {Array} current view extent
  */
 GlobeViewExtended.prototype.getExtent = function () {
     var options = {
@@ -657,6 +705,8 @@ GlobeViewExtended.prototype.getExtent = function () {
 /**
  * Recursive method to fetch information about the current view (extent, layers displayed...)
  *
+ * @param {Object} node - itowns node
+ * @param {Object} options - object containing objects to fill with info if specified
  * @private
  */
 GlobeViewExtended.prototype._getCurrentSceneInfos = function (node, options) {
@@ -749,7 +799,7 @@ GlobeViewExtended.prototype.getScale = function () {
  * Sets tilt
  *
  * @param {Number} tilt - Tilt value
- * @return {Promise}
+ * @return {Promise} promise
  */
 GlobeViewExtended.prototype.setTilt = function (tilt) {
     return this.getGlobeView().controls.setTilt(tilt, false);
@@ -768,7 +818,7 @@ GlobeViewExtended.prototype.getTilt = function () {
  * Sets azimuth
  *
  * @param {Number} azimuth - Azimuth value
- * @return {Promise}
+ * @return {Promise} promise
  */
 GlobeViewExtended.prototype.setAzimuth = function (azimuth) {
     return this.getGlobeView().controls.setHeading(azimuth, false);
@@ -882,7 +932,7 @@ GlobeViewExtended.prototype.getZoom = function () {
  * Sets the current zoom.
  *
  * @param {Number} zoom - The zoom
- * @return {Promise}
+ * @return {Promise} promise
  */
 GlobeViewExtended.prototype.setZoom = function (zoom) {
     return this.getGlobeView().controls.setZoom(zoom, false);
@@ -923,6 +973,9 @@ GlobeViewExtended.prototype.moveTarget = function () {
 
 /**
  * To get the layer event infos
+ *
+ * @param {Object} evt - event
+ * @returns {Object} object with event properties
  */
 GlobeViewExtended.prototype.getLayerEventInfos = function (evt) {
     var propertyName = evt.type.replace("-property-changed", "");
@@ -969,6 +1022,9 @@ GlobeViewExtended.prototype.notifyChange = function () {
 
 /**
 * Resizes itowns
+*
+* @param {Integer} width - canvas width in pixels
+* @param {Integer} height - canvas height in pixels
 */
 GlobeViewExtended.prototype.resize = function (width, height) {
     this.getGlobeView().mainLoop.gfxEngine.onWindowResize(width, height);
@@ -978,7 +1034,7 @@ GlobeViewExtended.prototype.resize = function (width, height) {
 exports.default = GlobeViewExtended;
 
 /***/ }),
-/* 1 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1060,7 +1116,7 @@ var Utils = {
 exports.default = Utils;
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1090,7 +1146,12 @@ var SelectorID = {
         };
     }(),
 
-    /** nom du tag */
+    /**
+     * nom du tag
+     * @param {String} id - the id
+     *
+     * @returns {String} index
+     */
     name: function name(id) {
         var name = null;
 
@@ -1104,7 +1165,12 @@ var SelectorID = {
         return name;
     },
 
-    /** numero d'identifiant du tag */
+    /**
+     * numero d'identifiant du tag
+     * @param {String} id - the id
+     *
+     * @returns {String} index
+     */
     index: function index(id) {
         var index = null;
 
@@ -1119,7 +1185,12 @@ var SelectorID = {
         return index;
     },
 
-    /** uuid du tag */
+    /**
+     * uuid du tag
+     * @param {String} id - the id
+     *
+     * @returns {String} uuid
+     */
     uuid: function uuid(id) {
         var uuid = null;
 
@@ -1136,7 +1207,7 @@ var SelectorID = {
 exports.default = SelectorID;
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1145,6 +1216,15 @@ exports.default = SelectorID;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+
+var _LoggerByDefault = __webpack_require__(0);
+
+var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var logger = _LoggerByDefault2.default.getLogger("Widget");
+
 /**
 * @classdesc
 * iTowns Widget class.
@@ -1202,7 +1282,7 @@ Widget.prototype.setTarget = function setTarget(targetDiv, position) {
     }
 
     if (position && position !== "absolute" && position !== "relative") {
-        console.log("[ERROR] Widget:setTarget - position value should be 'absolute' or 'relative'");
+        logger.error("Widget:setTarget - position value should be 'absolute' or 'relative'");
         return;
     }
 
@@ -1213,7 +1293,7 @@ Widget.prototype.setTarget = function setTarget(targetDiv, position) {
     this._target = targetDiv;
 
     if (!this._element) {
-        console.log("[ERROR] Widget:setTarget - widget element not created");
+        logger.error("Widget:setTarget - widget element not created");
         return;
     }
 
@@ -1267,7 +1347,7 @@ Widget.prototype.setGlobe = function setGlobe(globe) {
 exports.default = Widget;
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -19527,7 +19607,7 @@ function __getChildValue (node) {
 //# sourceMappingURL=GpServices-src.js.map
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19540,6 +19620,10 @@ var LayerUtils = {
 
     /**
      * Obtenir le ZoomLevel à partir du ScaleDenominator
+     * @param {Number} scaleDenominator - the scale denominator
+     * @param {String} crs - the crs
+     *
+     * @returns {Integer} zoom level
      */
     getZoomLevelFromScaleDenominator: function getZoomLevelFromScaleDenominator(scaleDenominator, crs) {
         // ------------------------------------------------- //
@@ -19835,35 +19919,6 @@ var LayerUtils = {
 exports.default = LayerUtils;
 
 /***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _loglevel = __webpack_require__(37);
-
-var Log = _interopRequireWildcard(_loglevel);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-var LoggerByDefault = {
-    /** logger statique */
-    getLogger: function getLogger(name) {
-        // Substitute global constants configured at compile time
-        // cf. webpack.config.js
-         false ? Log.disableAll() : Log.enableAll();
-        var logname = name || "default";
-        return Log.getLogger(logname);
-    }
-}; /* global __PRODUCTION__ */
-exports.default = LoggerByDefault;
-
-/***/ }),
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19879,7 +19934,7 @@ module.exports = __webpack_require__(33);
 "use strict";
 
 
-var _gp = __webpack_require__(4);
+var _gp = __webpack_require__(5);
 
 var _gp2 = _interopRequireDefault(_gp);
 
@@ -19903,13 +19958,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
     var url = scripts[scripts.length - 1].getAttribute("data-url");
     var timeout = scripts[scripts.length - 1].getAttribute("data-timeout");
 
-    /** callback */
+    // callback
     var success = function success() {
         // Pas de messages en mode prod
         // console.log("GetConfig success!");
     };
 
-    /** callback */
+    // callback
     var error = function error(e) {
         throw new Error("Configuration load failed : " + e.message);
     };
@@ -20186,7 +20241,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _gp = __webpack_require__(4);
+var _gp = __webpack_require__(5);
 
 var _gp2 = _interopRequireDefault(_gp);
 
@@ -20194,7 +20249,7 @@ var _itowns = __webpack_require__(34);
 
 var Itowns = _interopRequireWildcard(_itowns);
 
-var _LayerUtils = __webpack_require__(5);
+var _LayerUtils = __webpack_require__(6);
 
 var _LayerUtils2 = _interopRequireDefault(_LayerUtils);
 
@@ -20218,7 +20273,7 @@ var _MiniGlobe = __webpack_require__(51);
 
 var _MiniGlobe2 = _interopRequireDefault(_MiniGlobe);
 
-var _GlobeViewExtended = __webpack_require__(0);
+var _GlobeViewExtended = __webpack_require__(1);
 
 var _GlobeViewExtended2 = _interopRequireDefault(_GlobeViewExtended);
 
@@ -20231,7 +20286,7 @@ _gp2.default.LayerUtils = _LayerUtils2.default;
 
 // Adds extensions properties in the Gp namespace
 _gp2.default.itownsExtVersion = "2.0.0";
-_gp2.default.itownsExtDate = "2018-05-04";
+_gp2.default.itownsExtDate = "2018-05-07";
 
 // determines the execution environment l'environnement : browser or not ?
 var env = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : {};
@@ -20289,19 +20344,19 @@ var _proj = __webpack_require__(36);
 
 var _proj2 = _interopRequireDefault(_proj);
 
-var _LoggerByDefault = __webpack_require__(6);
+var _LoggerByDefault = __webpack_require__(0);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
-var _gp = __webpack_require__(4);
+var _gp = __webpack_require__(5);
 
 var _gp2 = _interopRequireDefault(_gp);
 
-var _GlobeViewExtended = __webpack_require__(0);
+var _GlobeViewExtended = __webpack_require__(1);
 
 var _GlobeViewExtended2 = _interopRequireDefault(_GlobeViewExtended);
 
-var _Utils = __webpack_require__(1);
+var _Utils = __webpack_require__(2);
 
 var _Utils2 = _interopRequireDefault(_Utils);
 
@@ -20309,7 +20364,7 @@ var _CheckRightManagement = __webpack_require__(38);
 
 var _CheckRightManagement2 = _interopRequireDefault(_CheckRightManagement);
 
-var _SelectorID = __webpack_require__(2);
+var _SelectorID = __webpack_require__(3);
 
 var _SelectorID2 = _interopRequireDefault(_SelectorID);
 
@@ -20317,7 +20372,7 @@ var _MousePositionDOM = __webpack_require__(41);
 
 var _MousePositionDOM2 = _interopRequireDefault(_MousePositionDOM);
 
-var _Widget = __webpack_require__(3);
+var _Widget = __webpack_require__(4);
 
 var _Widget2 = _interopRequireDefault(_Widget);
 
@@ -20432,6 +20487,8 @@ MousePosition.prototype.constructor = MousePosition;
 
 /**
  * Bind globe to control
+ *
+ * @param {GlobeViewExtended} globe - the globe
  */
 MousePosition.prototype.setGlobe = function (globe) {
     if (globe) {
@@ -20472,15 +20529,14 @@ MousePosition.prototype.setGlobe = function (globe) {
 /**
  * Sets additional projection system
  *
- * @method use system defined in the Itowns/CRS/CRS.js class
- * @param {Object} system - Projection system
+ * @param {Object} system - Projection system defined in the Itowns/CRS/CRS.js class
  * @param {String} system.crs - Proj4 crs alias (from proj4 defs) e.g. "EPSG:4326"
  * @param {String} [system.label] - CRS label to be displayed in control. Default is system.crs alias
  * @param {String} [system.type] - CRS units type for coordinates conversion (one of control options.units). Default is "Metric"
  */
 MousePosition.prototype.addSystem = function (system) {
     if ((typeof system === "undefined" ? "undefined" : _typeof(system)) !== "object") {
-        console.log("[ERROR] MousePosition:addSystem - system parameter should be an object");
+        logger.error("MousePosition:addSystem - system parameter should be an object");
         return;
     }
     if (!system.crs) {
@@ -20501,7 +20557,7 @@ MousePosition.prototype.addSystem = function (system) {
         var obj = this._projectionSystems[j];
         if (system.crs === obj.crs) {
             // warn user
-            console.log("crs '{}' already configured", obj.crs);
+            logger.warn("crs '{}' already configured", obj.crs);
         }
     }
 
@@ -20531,7 +20587,7 @@ MousePosition.prototype.addSystems = function (systems) {
         return;
     }
     if (!Array.isArray(systems)) {
-        console.log("[ERROR] MousePosition:addSystems - systems parameter should be an array");
+        logger.error("MousePosition:addSystems - systems parameter should be an array");
         return;
     }
     for (var i = 0; i < systems.length; i++) {
@@ -20546,7 +20602,7 @@ MousePosition.prototype.addSystems = function (systems) {
  */
 MousePosition.prototype.removeSystem = function (systemCrs) {
     if (!systemCrs || typeof systemCrs !== "string") {
-        console.log("[ERROR] MousePosition:removeSystem - systemCode parameter should be a string");
+        logger.error("MousePosition:removeSystem - systemCode parameter should be a string");
         return;
     }
 
@@ -20563,7 +20619,7 @@ MousePosition.prototype.removeSystem = function (systemCrs) {
     }
 
     if (systemCode == null) {
-        console.log("[WARN] MousePosition:removeSystem - system not found");
+        logger.warn("MousePosition:removeSystem - system not found");
         return;
     }
 
@@ -20578,7 +20634,7 @@ MousePosition.prototype.removeSystem = function (systemCrs) {
     var indexChildToRemove = null;
     var systemList = document.getElementById(this._addUID("GPmousePositionProjectionSystem"));
     for (var j = 0; j < systemList.childNodes.length; j++) {
-        if (systemCode == systemList.childNodes[j].value) {
+        if (systemCode === systemList.childNodes[j].value) {
             indexChildToRemove = j;
             continue;
         }
@@ -20590,7 +20646,7 @@ MousePosition.prototype.removeSystem = function (systemCrs) {
     }
 
     // choose arbitrarily a new current system if needed
-    if (this._currentProjectionSystems.code == systemCode) {
+    if (this._currentProjectionSystems.code === systemCode) {
         systemList.childNodes[0].setAttribute("selected", "selected");
         this._setCurrentSystem(systemList.childNodes[0].value);
     }
@@ -20675,7 +20731,7 @@ MousePosition.prototype.displayCoordinates = function (displayCoordinates) {
  */
 MousePosition.prototype.setCollapsed = function (collapsed) {
     if (collapsed === undefined) {
-        console.log("[ERROR] MousePosition:setCollapsed - missing collapsed parameter");
+        logger.error("MousePosition:setCollapsed - missing collapsed parameter");
         return;
     }
     if (collapsed && this.collapsed || !collapsed && !this.collapsed) {
@@ -20942,6 +20998,11 @@ MousePosition.prototype._checkRightsManagement = function () {
  * Create control main container (called by MousePosition constructor)
  *
  * @method _initContainer
+ * @param {Object} options - options
+ * @param {Boolean} options.collapsed - Specify if MousePosition control should be collapsed
+ * @param {Array}   options.displayAltitude - activate (true) or deactivate (false) the altitude panel
+ * @param {Array}   options.displayCoordinates - activate (true) or deactivate (false) the coordinates panel
+ * @returns {DOMElement} container - widget container
  * @private
  */
 MousePosition.prototype._initContainer = function (options) {
@@ -21192,7 +21253,7 @@ MousePosition.prototype._setCoordinate = function (coords) {
     var crsProp = oSrs.crs;
 
     if (!oSrs || !crsProp) {
-        console.log("ERROR : system crs not found");
+        logger.error("system crs not found");
         return;
     }
     // reproject coordinates from their CRS of origin (WGS84) to the wanted CRS (crsProp)
@@ -21220,7 +21281,7 @@ MousePosition.prototype._setCoordinate = function (coords) {
         }
     }
     if (!convert || typeof convert !== "function") {
-        console.log("WARNING : coordinates format function not found");
+        logger.warn("coordinates format function not found");
         return;
     } else {
         coord = convert(coordinates);
@@ -21335,6 +21396,7 @@ MousePosition.prototype.onGlobeMove = function () {
  *
  * @method onRequestAltitude
  * @param {Object} coordinate - {lat:..., lng:...}
+ * @param {Function} callback - function callback
  * @private
  */
 MousePosition.prototype.onRequestAltitude = function (coordinate, callback) {
@@ -21356,7 +21418,7 @@ MousePosition.prototype.onRequestAltitude = function (coordinate, callback) {
 
     // if we don not have the rights on the requested resource, we just stop !
     if (this._noRightManagement) {
-        console.log("[WARNING] contract key configuration has no rights to load geoportal elevation ");
+        logger.warn("contract key configuration has no rights to load geoportal elevation ");
         document.getElementById(this._addUID("GPmousePositionAlt")).innerHTML = "No rights!";
         return;
     }
@@ -21376,22 +21438,19 @@ MousePosition.prototype.onRequestAltitude = function (coordinate, callback) {
 
     if (!options.rawResponse) {
         // in the general case
-        /** callback onSuccess */
         options.onSuccess = function (results) {
             if (results && Object.keys(results)) {
                 callback.call(this, results.elevations[0].z);
             }
         };
     } else {
-        /** callback onSuccess */
         options.onSuccess = function (results) {
-            console.log("alti service raw response : ", results);
+            logger.info("alti service raw response : ", results);
         };
     }
 
-    /** callback onFailure */
     options.onFailure = function (error) {
-        console.log("[getAltitude] ERROR : " + error.message);
+        logger.error("[getAltitude] " + error.message);
     };
     // in the case of the API key is not given as option of the service,
     // we use the key of the autoconf, or the key given in the control options
@@ -21470,7 +21529,7 @@ MousePosition.prototype._setCurrentSystem = function (systemCode) {
     // if we change of system type, we must change the unit type too !
     var type = null;
     for (var i = 0; i < this._projectionSystems.length; ++i) {
-        if (this._projectionSystems[i].code == systemCode) {
+        if (this._projectionSystems[i].code === systemCode) {
             type = this._projectionSystems[i].type;
             break;
         }
@@ -28173,7 +28232,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _LoggerByDefault = __webpack_require__(6);
+var _LoggerByDefault = __webpack_require__(0);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
@@ -28248,7 +28307,7 @@ exports.default = {
                 // si l'autoconfiguration n'est pas chargée,
                 // aucune vérification des droits est possible...
 
-                console.log("WARNING : " + "The 'apiKey' parameter is missing, " + "and the contract key configuration has not been loaded, " + "so impossible to check yours rights !");
+                logger.warn("WARNING : " + "The 'apiKey' parameter is missing, " + "and the contract key configuration has not been loaded, " + "so impossible to check yours rights !");
 
                 return;
             } else {
@@ -28273,7 +28332,7 @@ exports.default = {
                 // d'obtenir des erreurs 403 forbidden...
                 // la responsabilité revient à l'utilisateur (message d'information)...
 
-                console.log("WARNING : " + "the contract key configuration has not been loaded, " + "so be carefull !");
+                logger.warn("WARNING : " + "the contract key configuration has not been loaded, " + "so be carefull !");
 
                 // les ressouces non controlées
                 var _noRightManagement = {};
@@ -28311,7 +28370,7 @@ exports.default = {
 
                         var params = _Config2.default.getServiceParams(_resource, _service, _key);
                         if (!params || Object.keys(params).length === 0) {
-                            console.log("WARNING : " + "The contract key configuration has no rights to load this geoportal " + "resource (" + _resource + ") " + "for this service (" + _service + ") ");
+                            logger.warn("WARNING : " + "The contract key configuration has no rights to load this geoportal " + "resource (" + _resource + ") " + "for this service (" + _service + ") ");
                             continue;
                         }
 
@@ -28324,7 +28383,7 @@ exports.default = {
                 }
 
                 if (!_rightManagement || Object.keys(_rightManagement).length === 0) {
-                    console.log("WARNING : " + "The contract key configuration has been loaded, " + "and the 'apiKey' parameter has been set, " + "but, there is a problem on the mapping between the contract and the key !");
+                    logger.warn("WARNING : " + "The contract key configuration has been loaded, " + "and the 'apiKey' parameter has been set, " + "but, there is a problem on the mapping between the contract and the key !");
                     return;
                 }
 
@@ -28349,6 +28408,15 @@ exports.default = {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+
+var _LoggerByDefault = __webpack_require__(0);
+
+var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var logger = _LoggerByDefault2.default.getLogger("config");
+
 var Config = {
 
     /** autoconf */
@@ -28410,7 +28478,7 @@ var Config = {
             }
         }
         if (!layerId) {
-            console.log("ERROR layer id (layer name: " + layerName + " / service: " + service + ") was not found !?");
+            logger.error("ERROR layer id (layer name: " + layerName + " / service: " + service + ") was not found !?");
         }
 
         return layerId;
@@ -28457,7 +28525,7 @@ var Config = {
                 var key = layerConf.apiKeys[0];
                 if (apiKey) {
                     if (apiKey !== key) {
-                        console.log("ERROR different keys (" + apiKey + " !== " + key + ") !?");
+                        logger.error("ERROR different keys (" + apiKey + " !== " + key + ") !?");
                         return;
                     }
                 }
@@ -28552,6 +28620,8 @@ var Config = {
 
     /**
      * Resolution en geographique
+     *
+     * @returns {Array} resolutions
      */
     getResolutions: function getResolutions() {
         var resolutions = [];
@@ -28565,6 +28635,9 @@ var Config = {
 
     /**
      * Recuperation des parametres TMS de la configuration
+     * @param {String} tmsName - tile matrix set name
+     *
+     * @returns {Object} tile matrix set
      */
     getTileMatrix: function getTileMatrix(tmsName) {
         var tms = {};
@@ -28689,6 +28762,7 @@ var MousePositionDOM = {
 
     /**
      * Show mouse position control
+     * @param {Boolean} isDesktop - specifies if the support is desktop or tactile
      *
      * @returns {DOMElement} DOM element
      */
@@ -28742,6 +28816,10 @@ var MousePositionDOM = {
 
     /**
      * mouse position panel
+     * @param {Boolean} [displayAltitude=true] - specifies if the altitude panel must be displayed
+     * @param {Boolean} [displayCoordinates=true] - specifies if the coordinates panel must be displayed
+     * @param {Boolean} [editCoordinates=false] - specifies if the coordinates edition is allowed
+     * @param {Boolean} [currentProjectionUnits] - specifies if the current projection units
      *
      * FIXME
      * don't call this._createMousePositionSettingsElement
@@ -28773,7 +28851,11 @@ var MousePositionDOM = {
         return div;
     },
 
-    /** Map center localisation (tactile use) */
+    /**
+     * Map center localisation (tactile use)
+     *
+     * @returns {DOMElement} container
+     */
     _createMapCenter: function _createMapCenter() {
         var div = document.createElement("div");
         div.id = "GPmapCenter";
@@ -28785,7 +28867,9 @@ var MousePositionDOM = {
     // ####################### Panel container ########################### //
     // ################################################################### //
 
-    /** ... */
+    /**
+     * @returns {DOMElement} container
+     */
     _createMousePositionPanelHeaderElement: function _createMousePositionPanelHeaderElement() {
         var container = document.createElement("div");
         container.className = "GPpanelHeader";
@@ -28819,6 +28903,10 @@ var MousePositionDOM = {
 
     /**
      * coordinate panel
+     * @param {Boolean} [displayAltitude] - specifies if the altitude panel must be displayed
+     * @param {Boolean} [displayCoordinates] - specifies if the coordinates panel must be displayed
+     * @param {Boolean} [editCoordinates] - specifies if the coordinates edition is allowed
+     * @param {Boolean} [currentProjectionUnits] - specifies if the current projection units
      *
      * FIXME
      * call this._createMousePositionPanelBasicCoordinateElement
@@ -28843,7 +28931,9 @@ var MousePositionDOM = {
      * create coordinate elements
      *
      * @param {String} coordType - ("Lon" ou "Lat")
-     * @returns {Array}
+     * @param {Boolean} [editCoordinates=false] - specifies if the coordinates edition is allowed
+     *
+     * @returns {Array} list of DOM elements
      */
     _createCoordinateElement: function _createCoordinateElement(coordType, editCoordinates) {
         var context = this;
@@ -28880,7 +28970,9 @@ var MousePositionDOM = {
     /**
      *
      * @param {String} coordType - ("Lon" ou "Lat")
-     * @returns {Array}
+     * @param {Boolean} [editCoordinates=false] - specifies if the coordinates edition is allowed
+     *
+     * @returns {Array} list of DOM elements
      */
     _createDMSCoordinateElement: function _createDMSCoordinateElement(coordType, editCoordinates) {
         if (["Lon", "Lat"].indexOf(coordType) === -1) {
@@ -28986,7 +29078,13 @@ var MousePositionDOM = {
         return list;
     },
 
-    /** ... */
+    /**
+     * @param {Boolean} [display=false] - specifies if the coordinates panel must be displayed
+     * @param {Boolean} [editCoordinates] - specifies if the coordinates edition is allowed
+     * @param {Boolean} [currentProjectionUnits] - specifies if the current projection units
+     *
+     * @returns {DOMElement} container
+     */
     _createMousePositionPanelBasicCoordinateElement: function _createMousePositionPanelBasicCoordinateElement(display, editCoordinates, currentProjectionUnits) {
         var div = document.createElement("div");
         div.id = this._addUID("GPmousePositionCoordinate");
@@ -29043,7 +29141,11 @@ var MousePositionDOM = {
         return div;
     },
 
-    /** ... */
+    /**
+     * @param {Boolean} [display=false] - specifies if the altitude panel must be displayed
+     *
+     * @returns {DOMElement} container
+     */
     _createMousePositionPanelBasicAltitudeElement: function _createMousePositionPanelBasicAltitudeElement(display) {
         var div = document.createElement("div");
         div.id = this._addUID("GPmousePositionAltitude");
@@ -29068,7 +29170,11 @@ var MousePositionDOM = {
         return div;
     },
 
-    /** ... */
+    /**
+     * @param {Boolean} [editCoordinates=false] - specifies if the coordinates edition is allowed
+     *
+     * @returns {DOMElement} container
+     */
     _createMousePositionPanelEditToolsElement: function _createMousePositionPanelEditToolsElement(editCoordinates) {
         var context = this;
 
@@ -29109,7 +29215,11 @@ var MousePositionDOM = {
     // #################### Settings container ########################### //
     // ################################################################### //
 
-    /** ... */
+    /**
+     * @param {Boolean} [display=false] - specifies if the settings panel must be displayed
+     *
+     * @returns {DOMElement[]} array containing input and label elements
+     */
     _createShowMousePositionSettingsElement: function _createShowMousePositionSettingsElement(display) {
         var list = [];
 
@@ -29132,6 +29242,7 @@ var MousePositionDOM = {
 
     /**
      * settings panel
+     * @param {Boolean} [display=true] - specifies if the settings panel must be displayed
      *
      * FIXME
      * don't call this._createMousePositionSettingsSystemsElement
@@ -29204,7 +29315,11 @@ var MousePositionDOM = {
         return container;
     },
 
-    /** ... */
+    /**
+     * @param {Object[]} systems - list of systems
+     *
+     * @returns {DOMElement} DOM element select
+     */
     _createMousePositionSettingsSystemsElement: function _createMousePositionSettingsSystemsElement(systems) {
         // contexte d'execution
         var context = this;
@@ -29231,7 +29346,11 @@ var MousePositionDOM = {
         return selectSystem;
     },
 
-    /** ... */
+    /**
+     * @param {Object[]} units - list of units
+     *
+     * @returns {DOMElement} DOM element select
+     */
     _createMousePositionSettingsUnitsElement: function _createMousePositionSettingsUnitsElement(units) {
         // contexte d'execution
         var context = this;
@@ -29255,7 +29374,9 @@ var MousePositionDOM = {
         return selectUnits;
     },
 
-    /** ... **/
+    /**
+     * @param {String} [currentProjectionType="Metric"] - "Geographical" or "Metric"
+     */
     _resetLabelElements: function _resetLabelElements(currentProjectionType) {
         // Changement des labels dans le formulaire de saisie
         var spanLat = document.getElementById(this._addUID("GPmousePositionLatLabel"));
@@ -29265,7 +29386,9 @@ var MousePositionDOM = {
         spanLon.innerHTML = currentProjectionType === "Geographical" ? "Longitude :" : "Y :";
     },
 
-    /** ... **/
+    /**
+     * @param {String} currentProjectionUnits - projection units
+     */
     _resetUnitElements: function _resetUnitElements(currentProjectionUnits) {
         var value = "";
         if (currentProjectionUnits === "M" || currentProjectionUnits === "KM") {
@@ -29353,7 +29476,8 @@ var MousePositionDOM = {
      *
      * @param {DOMElement} input - input element
      * @param {Boolean} isFloat - check for float value
-     * @returns {Boolean}
+     *
+     * @returns {Boolean} true if input value is within bounds
      */
     _checkDMSElement: function _checkDMSElement(input, isFloat) {
         var b = isFloat !== undefined;
@@ -29380,7 +29504,8 @@ var MousePositionDOM = {
     /**
      * @param {String} coordType - "Lon" or "Lat"
      * @param {DOMElement} input - input element
-     * @returns {Boolean}
+     *
+     * @returns {Boolean} true if input value is within bounds
      */
     _checkDMSDegrees: function _checkDMSDegrees(coordType, input) {
         if (isNaN(input.value)) {
@@ -29420,6 +29545,7 @@ var MousePositionDOM = {
     /**
      * Function displaying coordinates from cursor position (desktop)
      * or map center (tactile)
+     * @param {Object} coordinate - coordinates
      */
     GPdisplayCoords: function GPdisplayCoords(coordinate) {
         // Compute coords in case of cursor position (desktop)
@@ -29475,6 +29601,10 @@ var MousePositionDOM = {
     /**
      * Function displaying altitude from cursor position (desktop)
      * or map center (tactile)
+     * @param {Object} coordinate - coordinates
+     * @param {Number} altitudeTimeoutDelay - when the mouse stop moving, delay before the altitude request is launched
+     * @param {Number} noDataValue - the no data value
+     * @param {Number} noDataValueTolerance - the no data value tolerance
      */
     GPdisplayElevation: function GPdisplayElevation(coordinate, altitudeTimeoutDelay, noDataValue, noDataValueTolerance) {
         // contexte d'execution
@@ -29570,25 +29700,21 @@ var PositionFormater = {
     /** ... */
     digitRadian: 8,
 
-    /** ... */
     roundToDecimal: function roundToDecimal(inputNum, numPoints) {
         var multiplier = Math.pow(10, numPoints);
         return Math.round(inputNum * multiplier) / multiplier;
     },
 
-    /** ... */
     decimalToRadian: function decimalToRadian(location) {
         var d = 0.01745329251994329577;
         return this.roundToDecimal(location * d, this.digitRadian);
     },
 
-    /** ... */
     decimalToGrade: function decimalToGrade(location) {
         var d = 1.11111111111111111111;
         return this.roundToDecimal(location * d, this.digitRadian);
     },
 
-    /** ... */
     decimalToDMS: function decimalToDMS(location, hemisphere) {
         if (location < 0) {
             location *= -1; // strip dash '-'
@@ -29608,22 +29734,19 @@ var PositionFormater = {
         return dms;
     },
 
-    /** ... */
     decimalLatToDMS: function decimalLatToDMS(location) {
         var hemisphere = location < 0 ? this.SOUTH : this.NORTH; // south if negative
         return this.decimalToDMS(location, hemisphere);
     },
 
-    /** ... */
     decimalLongToDMS: function decimalLongToDMS(location) {
         var hemisphere = location < 0 ? this.WEST : this.EAST; // west if negative
         return this.decimalToDMS(location, hemisphere);
     },
 
-    /** ... */
     DMSToDecimal: function DMSToDecimal(degrees, minutes, seconds, hemisphere) {
         var ddVal = degrees + minutes / 60 + seconds / 3600;
-        ddVal = hemisphere == this.SOUTH || hemisphere == this.WEST ? ddVal * -1 : ddVal;
+        ddVal = hemisphere === this.SOUTH || hemisphere === this.WEST ? ddVal * -1 : ddVal;
 
         var decimal = this.roundToDecimal(ddVal, this.digitDecimal);
         return decimal;
@@ -29861,19 +29984,19 @@ Object.defineProperty(exports, "__esModule", {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _GlobeViewExtended = __webpack_require__(0);
+var _GlobeViewExtended = __webpack_require__(1);
 
 var _GlobeViewExtended2 = _interopRequireDefault(_GlobeViewExtended);
 
-var _Utils = __webpack_require__(1);
+var _LoggerByDefault = __webpack_require__(0);
+
+var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
+
+var _Utils = __webpack_require__(2);
 
 var _Utils2 = _interopRequireDefault(_Utils);
 
-var _LayerUtils = __webpack_require__(5);
-
-var _LayerUtils2 = _interopRequireDefault(_LayerUtils);
-
-var _SelectorID = __webpack_require__(2);
+var _SelectorID = __webpack_require__(3);
 
 var _SelectorID2 = _interopRequireDefault(_SelectorID);
 
@@ -29881,11 +30004,13 @@ var _LayerSwitcherDOM = __webpack_require__(45);
 
 var _LayerSwitcherDOM2 = _interopRequireDefault(_LayerSwitcherDOM);
 
-var _Widget = __webpack_require__(3);
+var _Widget = __webpack_require__(4);
 
 var _Widget2 = _interopRequireDefault(_Widget);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var logger = _LoggerByDefault2.default.getLogger("LayerSwitcher");
 
 /**
  * @classdesc
@@ -29974,7 +30099,9 @@ LayerSwitcher.prototype.constructor = LayerSwitcher;
 // ################################################################### //
 
 /**
- * Binds globe to control
+ * Bind globe to control
+ *
+ * @param {GlobeViewExtended} globe - the globe
  */
 LayerSwitcher.prototype.setGlobe = function (globe) {
     var layers;
@@ -30020,26 +30147,16 @@ LayerSwitcher.prototype.setGlobe = function (globe) {
         this._addGlobeLayers(globe);
 
         // adding of listeners
-
-        /**
-         * adds the onlayerchanged:opacity callback
-         */
         this._callbacks.onOpacityLayerCallBack = function (e) {
             self._updateLayerOpacity(e.target.id, e.new.opacity);
         };
 
-        /**
-         * adds the onlayerchanged:visible callback
-         */
         this._callbacks.onVisibilityLayerCallBack = function (e) {
             self._updateLayerVisibility(e.target.id, e.new.visible);
         };
 
         // At every globe movement, layer switcher may be updated,
         // according to layers on globe, and their range.
-        /**
-         * adds the onChangedViewCallBack callback
-         */
         this._callbacks.onChangedViewCallBack = function (e) {
             self._inRangeUpdate(e.colorLayersId);
         };
@@ -30047,9 +30164,6 @@ LayerSwitcher.prototype.setGlobe = function (globe) {
         // prerender events returns visible layers
         globe.preRenderEventFetchColorLayersDisplayed();
 
-        /**
-         * adds the onlayeradded
-         */
         this._callbacks.onAddedLayerCallBack = function (e) {
             var id = e.layerId;
             if (self) {
@@ -30070,9 +30184,6 @@ LayerSwitcher.prototype.setGlobe = function (globe) {
         };
         globe.listen(_GlobeViewExtended2.default.EVENTS.LAYER_ADDED, this._callbacks.onAddedLayerCallBack);
 
-        /**
-         * adds the onlayerremoved callback
-         */
         this._callbacks.onRemovedLayerCallBack = function (e) {
             var id = e.layerId;
 
@@ -30083,11 +30194,7 @@ LayerSwitcher.prototype.setGlobe = function (globe) {
         };
         globe.listen(_GlobeViewExtended2.default.EVENTS.LAYER_REMOVED, this._callbacks.onRemovedLayerCallBack);
 
-        /**
-         * adds the onlayerchanged:index callback
-         */
         this._callbacks.onIndexLayerCallBack = function (e) {
-            /** arraysEquals */
             var arraysEquals = function arraysEquals(a1, a2) {
                 if (a1.length !== a2.length) {
                     return false;
@@ -30160,13 +30267,13 @@ LayerSwitcher.prototype.addLayer = function (layer, config) {
     var globe = this.getGlobe();
 
     if (!layer) {
-        console.log("[ERROR] LayerSwitcher:addLayer - missing layer parameter");
+        logger.error("LayerSwitcher:addLayer - missing layer parameter");
         return;
     }
 
     var id = layer.id;
     if (id === "undefined") {
-        console.log("[ERROR] LayerSwitcher:addLayer - configuration cannot be set for " + layer + " layer (layer id not found)");
+        logger.error("LayerSwitcher:addLayer - configuration cannot be set for " + layer + " layer (layer id not found)");
         return;
     }
 
@@ -30178,7 +30285,7 @@ LayerSwitcher.prototype.addLayer = function (layer, config) {
     var LayerInGlobe = globe.getLayerById(id);
 
     if (!LayerInGlobe) {
-        console.log("[ERROR] LayerSwitcher:addLayer - configuration cannot be set for ", layer, " layer (layer is not in globe layers )");
+        logger.error("LayerSwitcher:addLayer - configuration cannot be set for ", layer, " layer (layer is not in globe layers )");
         return;
     }
 
@@ -30251,7 +30358,7 @@ LayerSwitcher.prototype.addLayer = function (layer, config) {
         // close layer info element if open, to update information.
         if (infodiv && infodiv.className === "GPlayerInfoOpened") {
             document.getElementById(this._addUID("GPlayerInfoPanel")).className = "GPlayerInfoPanelClosed";
-            infodiv.className === "GPlayerInfo";
+            infodiv.className = "GPlayerInfo";
         }
     }
 };
@@ -30267,7 +30374,7 @@ LayerSwitcher.prototype.removeLayer = function (layerId) {
     var infodiv = document.getElementById(this._addUID("GPinfo_ID_" + layerId));
     if (infodiv && infodiv.className === "GPlayerInfoOpened") {
         document.getElementById(this._addUID("GPlayerInfoPanel")).className = "GPlayerInfoPanelClosed";
-        infodiv.className === "GPlayerInfo";
+        infodiv.className = "GPlayerInfo";
     }
     // remove layer div
     var layerDiv = document.getElementById(this._addUID("GPlayerSwitcher_ID_" + layerId));
@@ -30284,7 +30391,7 @@ LayerSwitcher.prototype.removeLayer = function (layerId) {
  */
 LayerSwitcher.prototype.setCollapsed = function (collapsed) {
     if (collapsed === undefined) {
-        console.log("[ERROR] LayerSwitcher:setCollapsed - missing collapsed parameter");
+        logger.error("LayerSwitcher:setCollapsed - missing collapsed parameter");
         return;
     }
     var isCollapsed = this.getCollapsed();
@@ -30304,6 +30411,7 @@ LayerSwitcher.prototype.setCollapsed = function (collapsed) {
 
 /**
  * Returns true if widget is collapsed (minimize), false otherwise
+ * @return {Boolean} is collapsed
  */
 LayerSwitcher.prototype.getCollapsed = function () {
     return !document.getElementById(this._addUID("GPshowLayersList")).checked;
@@ -30377,6 +30485,7 @@ LayerSwitcher.prototype._layerDisplayedInLayerSwitcher = function (layerId) {
  *
  * @method _initContainer
  * @param {Object} options - control options
+ * @returns {DOMElement} container - widget container
  * @private
  */
 LayerSwitcher.prototype._initContainer = function (options) {
@@ -30477,6 +30586,7 @@ LayerSwitcher.prototype._addGlobeLayers = function (globe) {
  *
  * @method _createLayerDiv
  * @param {String} layerId - layer id
+ * @returns {DOMElement} layer div
  * @private
  */
 LayerSwitcher.prototype._createLayerDiv = function (layerId) {
@@ -30700,6 +30810,7 @@ LayerSwitcher.prototype._onDragAndDropLayerClick = function (e) {
  * Checks layers range
  *
  * @method _inRangeUpdate
+ * @param {Array} layersDisplayed - list of displayed layers id
  * @private
  */
 LayerSwitcher.prototype._inRangeUpdate = function (layersDisplayed) {
@@ -30752,7 +30863,7 @@ LayerSwitcher.prototype._updateLayerListContainer = function () {
             this._layerListContainer.appendChild(layerDiv);
         }
     } else {
-        console.log("[Itowns.control.LayerSwitcher] _updateLayerListContainer : layer list container not found to update layers order ?!");
+        logger.error("[Itowns.control.LayerSwitcher] _updateLayerListContainer : layer list container not found to update layers order ?!");
     }
 };
 
@@ -30786,6 +30897,7 @@ LayerSwitcher.prototype._getLayerInfo = function (layer) {
  *
  * @method _resolveLayerId
  * @param {String} divId - HTML div id
+ * @returns {String} layer id
  * @private
  */
 LayerSwitcher.prototype._resolveLayerId = function (divId) {
@@ -30826,7 +30938,7 @@ var LayerSwitcherDOM = {
             draggable: ".draggable-layer",
             ghostClass: "GPghostLayer",
             animation: 200,
-            /** Call event function on drag and drop */
+            // Call event function on drag and drop
             onEnd: function onEnd(e) {
                 // FIXME pas terrrible, mais il faut bien passer ce contexte...
                 context._onDragAndDropLayerClick(e);
@@ -30862,6 +30974,8 @@ var LayerSwitcherDOM = {
 
     /**
      * Creation du container principal d"affichage des layers (DOM)
+     *
+     * @returns {DOMElement} input - element for minimizing/maximizing the layer switcher
      */
     _createMainLayersShowElement: function _createMainLayersShowElement() {
         // <!-- Hidden checkbox for minimizing/maximizing -->
@@ -30873,6 +30987,8 @@ var LayerSwitcherDOM = {
 
     /**
      * Creation du container principal des layers (DOM)
+     *
+     * @returns {DOMElement} container - layers list container
      */
     _createMainLayersElement: function _createMainLayersElement() {
         // ajout de la liste des layers dans le container principal
@@ -30887,6 +31003,8 @@ var LayerSwitcherDOM = {
 
     /**
      * Creation du container du picto du controle (DOM)
+     *
+     * @returns {DOMElement} label
      */
     _createMainPictoElement: function _createMainPictoElement() {
         var self = this;
@@ -30937,6 +31055,8 @@ var LayerSwitcherDOM = {
 
     /**
      * Creation du container du panneau d"information (DOM)
+     *
+     * @returns {DOMElement} container
      */
     _createMainInfoElement: function _createMainInfoElement() {
         // gestion du panneau d"information dans le container principal
@@ -30962,6 +31082,7 @@ var LayerSwitcherDOM = {
      * @param {Boolean} obj.visibility - visibilité de la couche dans la carte (true or false)
      * @param {Float} obj.opacity - opacité de la couche
      *
+     * @returns {DOMElement} container
      */
     _createContainerLayerElement: function _createContainerLayerElement(obj) {
         // exemple :
@@ -31011,6 +31132,8 @@ var LayerSwitcherDOM = {
      * Creation du container des outils basiques du layer (DOM)
      *
      * @param {Object} obj - options de la couche à ajouter dans le layer switcher
+     *
+     * @returns {DOMElement} container
      */
     _createBasicToolElement: function _createBasicToolElement(obj) {
         // exemple :
@@ -31037,6 +31160,8 @@ var LayerSwitcherDOM = {
      * Creation du nom du layer (DOM)
      *
      * @param {Object} obj - options de la couche à ajouter dans le layer switcher
+     *
+     * @returns {DOMElement} container
      */
     _createBasicToolNameElement: function _createBasicToolNameElement(obj) {
         // exemple :
@@ -31054,6 +31179,7 @@ var LayerSwitcherDOM = {
      * Creation de l'icone de visibilité du layer (DOM)
      *
      * @param {Object} obj - options de la couche à ajouter dans le layer switcher
+      * @returns {DOMElement[]} array containing input and label elements
      */
     _createBasicToolVisibilityElement: function _createBasicToolVisibilityElement(obj) {
         // exemple :
@@ -31080,12 +31206,12 @@ var LayerSwitcherDOM = {
         var context = this;
         if (input.addEventListener) {
             input.addEventListener("click", function (e) {
-                context._onVisibilityLayerClick.call(context, e);
+                context._onVisibilityLayerClick(e);
             });
         } else if (input.attachEvent) {
             // internet explorer
             input.attachEvent("onclick", function (e) {
-                context._onVisibilityLayerClick.call(context, e);
+                context._onVisibilityLayerClick(e);
             });
         }
 
@@ -31099,6 +31225,8 @@ var LayerSwitcherDOM = {
      * Creation de l'affichage du menu des outils avancés du layer (DOM)
      *
      * @param {Object} obj - options de la couche à ajouter dans le layer switcher
+     *
+     * @returns {DOMElement[]} array containing input and label elements
      */
     _createAdvancedToolShowElement: function _createAdvancedToolShowElement(obj) {
         // <input type="checkbox" id="GPshowAdvancedTools_ID_Layer1">
@@ -31126,6 +31254,8 @@ var LayerSwitcherDOM = {
      * Creation du container des outils avancés du layer (DOM)
      *
      * @param {Object} obj - options de la couche à ajouter dans le layer switcher
+     *
+     * @returns {DOMElement} container
      */
     _createAdvancedToolElement: function _createAdvancedToolElement(obj) {
         // exemple :
@@ -31159,6 +31289,8 @@ var LayerSwitcherDOM = {
      * Creation de l'icone de suppression du layer (DOM)
      *
      * @param {Object} obj - options de la couche à ajouter dans le layer switcher
+     *
+     * @returns {DOMElement} container
      */
     _createAdvancedToolDeleteElement: function _createAdvancedToolDeleteElement(obj) {
         // exemple :
@@ -31173,12 +31305,12 @@ var LayerSwitcherDOM = {
         var context = this;
         if (div.addEventListener) {
             div.addEventListener("click", function (e) {
-                context._onDropLayerClick.call(context, e);
+                context._onDropLayerClick(e);
             });
         } else if (div.attachEvent) {
             // internet explorer
             div.attachEvent("onclick", function (e) {
-                context._onDropLayerClick.call(context, e);
+                context._onDropLayerClick(e);
             });
         }
 
@@ -31189,6 +31321,8 @@ var LayerSwitcherDOM = {
      * Creation de l'icone d'information du layer (DOM)
      *
      * @param {Object} obj - options de la couche à ajouter dans le layer switcher
+     *
+     * @returns {DOMElement} container
      */
     _createAdvancedToolInformationElement: function _createAdvancedToolInformationElement(obj) {
         // exemple :
@@ -31203,12 +31337,12 @@ var LayerSwitcherDOM = {
         var context = this;
         if (div.addEventListener) {
             div.addEventListener("click", function (e) {
-                context._onOpenLayerInfoClick.call(context, e);
+                context._onOpenLayerInfoClick(e);
             });
         } else if (div.attachEvent) {
             // internet explorer
             div.attachEvent("onclick", function (e) {
-                context._onOpenLayerInfoClick.call(context, e);
+                context._onOpenLayerInfoClick(e);
             });
         }
 
@@ -31219,6 +31353,8 @@ var LayerSwitcherDOM = {
      * Creation de l'icone de gestion de l'opacité du layer (DOM)
      *
      * @param {Object} obj - options de la couche à ajouter dans le layer switcher
+     *
+     * @returns {DOMElement[]} array of two containers
      */
     _createAdvancedToolOpacityElement: function _createAdvancedToolOpacityElement(obj) {
         // exemple :
@@ -31250,23 +31386,23 @@ var LayerSwitcherDOM = {
         var context = this;
         if (input.addEventListener) {
             input.addEventListener("change", function (e) {
-                context._onChangeLayerOpacity.call(context, e);
+                context._onChangeLayerOpacity(e);
             });
         } else if (input.attachEvent) {
             // internet explorer
             input.attachEvent("onchange", function (e) {
-                context._onChangeLayerOpacity.call(context, e);
+                context._onChangeLayerOpacity(e);
             });
         }
 
         if (input.addEventListener) {
             input.addEventListener("input", function (e) {
-                context._onChangeLayerOpacity.call(context, e);
+                context._onChangeLayerOpacity(e);
             });
         } else if (input.attachEvent) {
             // internet explorer
             input.attachEvent("oninput", function (e) {
-                context._onChangeLayerOpacity.call(context, e);
+                context._onChangeLayerOpacity(e);
             });
         }
 
@@ -31300,6 +31436,8 @@ var LayerSwitcherDOM = {
      * TODO GPlayerInfoLink  : mettre en forme les échelles !
      *
      * @param {Object} obj - options de la couche à ajouter dans le layer switcher
+     *
+     * @returns {DOMElement} container
      */
     _createContainerLayerInfoElement: function _createContainerLayerInfoElement(obj) {
         var container = document.createElement("div");
@@ -31401,7 +31539,7 @@ var LayerSwitcherDOM = {
                 if (legends.hasOwnProperty(scale)) {
                     var urllgd = legends[scale].url;
                     // on n'affiche pas les légendes pointant vers "nolegend.jpg"
-                    if (typeof urllgd === "string" && urllgd.toLowerCase().indexOf("nolegend.jpg") == -1) {
+                    if (typeof urllgd === "string" && urllgd.toLowerCase().indexOf("nolegend.jpg") === -1) {
                         // TODO GPlayerInfoPopup
                         var lgdlink = document.createElement("div");
                         lgdlink.className = "GPlayerInfoLink";
@@ -32702,19 +32840,23 @@ Object.defineProperty(exports, "__esModule", {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _GlobeViewExtended = __webpack_require__(0);
+var _GlobeViewExtended = __webpack_require__(1);
 
 var _GlobeViewExtended2 = _interopRequireDefault(_GlobeViewExtended);
 
-var _Utils = __webpack_require__(1);
+var _LoggerByDefault = __webpack_require__(0);
+
+var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
+
+var _Utils = __webpack_require__(2);
 
 var _Utils2 = _interopRequireDefault(_Utils);
 
-var _SelectorID = __webpack_require__(2);
+var _SelectorID = __webpack_require__(3);
 
 var _SelectorID2 = _interopRequireDefault(_SelectorID);
 
-var _LayerUtils = __webpack_require__(5);
+var _LayerUtils = __webpack_require__(6);
 
 var _LayerUtils2 = _interopRequireDefault(_LayerUtils);
 
@@ -32722,11 +32864,13 @@ var _AttributionDOM = __webpack_require__(48);
 
 var _AttributionDOM2 = _interopRequireDefault(_AttributionDOM);
 
-var _Widget = __webpack_require__(3);
+var _Widget = __webpack_require__(4);
 
 var _Widget2 = _interopRequireDefault(_Widget);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var logger = _LoggerByDefault2.default.getLogger("Attributions");
 
 /**
  * @classdesc
@@ -32790,6 +32934,8 @@ Attributions.prototype.constructor = Attributions;
 
 /**
  * Bind globe to control
+ *
+ * @param {GlobeViewExtended} globe - the globe
  */
 Attributions.prototype.setGlobe = function (globe) {
     // info : this function is called after a globe.addWidget() or a globe.removeWidget()
@@ -32802,9 +32948,6 @@ Attributions.prototype.setGlobe = function (globe) {
 
         // At every globe movement, attributions may be updated,
         // according to layers on globe, and their visibility.
-        /**
-         * Adds the onPreRenderCallBack callback
-         */
         this._callbacks.onPreRenderCallBack = function (e) {
             var allLayers = e.colorLayersId.concat(e.elevationLayersId);
 
@@ -32836,7 +32979,7 @@ Attributions.prototype.setGlobe = function (globe) {
  */
 Attributions.prototype.setCollapsed = function (collapsed) {
     if (collapsed === undefined) {
-        console.log("[ERROR] Attributions:setCollapsed - missing collapsed parameter");
+        logger.error("Attributions:setCollapsed - missing collapsed parameter");
         return;
     }
     var isCollapsed = this.getCollapsed();
@@ -32885,6 +33028,7 @@ Attributions.prototype._initialize = function (options) {
  *
  * @method _initContainer
  * @param {Object} options - control options
+ * @returns {DOMElement} container - widget container
  * @private
  */
 Attributions.prototype._initContainer = function (options) {
@@ -32925,7 +33069,7 @@ Attributions.prototype._inRangeUpdate = function (layersDisplayed, extent) {
 
     var scaleDenominator = 1 / globe.getScale();
 
-    var attributions = new window.Map();
+    var attributions = new Map();
 
     for (var h = 0; h < layersDisplayed.length; h++) {
         var layer = globe.getLayerById(layersDisplayed[h]);
@@ -32961,11 +33105,10 @@ Attributions.prototype._inRangeUpdate = function (layersDisplayed, extent) {
                         if (!(maxAttributionScaleDenominator > scaleDenominator && scaleDenominator > minAttributionScaleDenominator)) {
                             continue;
                         }
+                        // either, we check we are located between the minScaleDenominator and the maxScaleDenominator
+                    } else if (!(ori[j].constraints[0].minScaleDenominator < scaleDenominator && scaleDenominator < ori[j].constraints[0].maxScaleDenominator)) {
+                        continue;
                     }
-                    // either, we check we are located between the minScaleDenominator and the maxScaleDenominator
-                    else if (!(ori[j].constraints[0].minScaleDenominator < scaleDenominator && scaleDenominator < ori[j].constraints[0].maxScaleDenominator)) {
-                            continue;
-                        }
                 }
                 // checks if 'bbox" exists
                 if (ori[j].constraints[0].bbox) {
@@ -32992,6 +33135,7 @@ Attributions.prototype._inRangeUpdate = function (layersDisplayed, extent) {
  * Updates the layer list container
  *
  * @method _updateAttributionListContainer
+ * @param {Map} attributions - map of attributions
  * @private
  */
 Attributions.prototype._updateAttributionListContainer = function (attributions) {
@@ -33157,15 +33301,15 @@ Object.defineProperty(exports, "__esModule", {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _GlobeViewExtended = __webpack_require__(0);
+var _GlobeViewExtended = __webpack_require__(1);
 
 var _GlobeViewExtended2 = _interopRequireDefault(_GlobeViewExtended);
 
-var _Utils = __webpack_require__(1);
+var _Utils = __webpack_require__(2);
 
 var _Utils2 = _interopRequireDefault(_Utils);
 
-var _SelectorID = __webpack_require__(2);
+var _SelectorID = __webpack_require__(3);
 
 var _SelectorID2 = _interopRequireDefault(_SelectorID);
 
@@ -33173,7 +33317,7 @@ var _ScaleDOM = __webpack_require__(50);
 
 var _ScaleDOM2 = _interopRequireDefault(_ScaleDOM);
 
-var _Widget = __webpack_require__(3);
+var _Widget = __webpack_require__(4);
 
 var _Widget2 = _interopRequireDefault(_Widget);
 
@@ -33187,18 +33331,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @alias itowns.control.Scale
  * @extends {itowns.control.Widget}
  * @alias itowns.control.Scale
+ * @param {Object} options - widget options
+ * @param {String}  options.target - HTML target element id
+ * @param {String}  options.position - "absolute" or "relative"
  * @example
  * var scale = new itowns.control.Scale();
  *
  */
 function Scale(options) {
-    options = options || {};
-
     if (!(this instanceof Scale)) {
         throw new TypeError("ERROR CLASS_CONSTRUCTOR");
     }
 
-    if (options && (typeof options === "undefined" ? "undefined" : _typeof(options)) !== "object") {
+    if ((typeof options === "undefined" ? "undefined" : _typeof(options)) !== "object") {
         throw new Error("ERROR WRONG_TYPE : options should be an object");
     }
 
@@ -33238,7 +33383,9 @@ Scale.prototype.constructor = Scale;
 // ################################################################### //
 
 /**
- * Binds globe to control
+ * Bind globe to control
+ *
+ * @param {GlobeViewExtended} globe - the globe
  */
 Scale.prototype.setGlobe = function (globe) {
     // info : this function is called after a globe.addWidget() or a globe.removeWidget()
@@ -33315,6 +33462,7 @@ Scale.prototype._initialize = function () {
  * Create control main container
  *
  * @method _initContainer
+ * @returns {DOMElement} container - widget container
  * @private
  */
 Scale.prototype._initContainer = function () {
@@ -33375,15 +33523,15 @@ Object.defineProperty(exports, "__esModule", {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _GlobeViewExtended = __webpack_require__(0);
+var _GlobeViewExtended = __webpack_require__(1);
 
 var _GlobeViewExtended2 = _interopRequireDefault(_GlobeViewExtended);
 
-var _Utils = __webpack_require__(1);
+var _Utils = __webpack_require__(2);
 
 var _Utils2 = _interopRequireDefault(_Utils);
 
-var _SelectorID = __webpack_require__(2);
+var _SelectorID = __webpack_require__(3);
 
 var _SelectorID2 = _interopRequireDefault(_SelectorID);
 
@@ -33391,7 +33539,7 @@ var _MiniGlobeDOM = __webpack_require__(52);
 
 var _MiniGlobeDOM2 = _interopRequireDefault(_MiniGlobeDOM);
 
-var _Widget = __webpack_require__(3);
+var _Widget = __webpack_require__(4);
 
 var _Widget2 = _interopRequireDefault(_Widget);
 
@@ -33402,8 +33550,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * Control to display the MiniGlobe with itowns
  *
  * @constructor
- * @alias itowns.control.MiniGlobe
  * @extends {itowns.control.Widget}
+ * @alias itowns.control.MiniGlobe
+ * @param {Object} [options] - control options
+ * @param {Object} [options.layer] - custom itowns layer to display on the mini globe
  * @example
  * var miniglobe = new itowns.control.MiniGlobe();
  *
@@ -33457,6 +33607,8 @@ MiniGlobe.prototype.constructor = MiniGlobe;
 
 /**
  * Bind globe to control
+ *
+ * @param {GlobeViewExtended} globe - the globe
  */
 MiniGlobe.prototype.setGlobe = function (globe) {
     // info : this function is called after a globe.addWidget() or a globe.removeWidget()
@@ -33479,9 +33631,6 @@ MiniGlobe.prototype.setGlobe = function (globe) {
 
         miniView.setBackground();
 
-        /**
-         * update miniview's camera with the globeView's camera position
-         */
         var updateMiniGlobeHandler = function updateMiniGlobeHandler() {
             // clamp distance camera from globe
             var range = globe.getRange();
@@ -33493,7 +33642,7 @@ MiniGlobe.prototype.setGlobe = function (globe) {
         };
         globe.listen(_GlobeViewExtended2.default.EVENTS.AFTER_RENDER, updateMiniGlobeHandler);
         if (globe.isInitialized()) {
-            updateMiniGlobeHandler;
+            updateMiniGlobeHandler();
         } else {
             globe.listen(_GlobeViewExtended2.default.EVENTS.GLOBE_INITIALIZED, updateMiniGlobeHandler);
         }
@@ -33542,6 +33691,7 @@ MiniGlobe.prototype._initialize = function () {
  * Creates control main container
  *
  * @method _initContainer
+ * @returns {DOMElement} container - widget container
  * @private
  */
 MiniGlobe.prototype._initContainer = function () {
