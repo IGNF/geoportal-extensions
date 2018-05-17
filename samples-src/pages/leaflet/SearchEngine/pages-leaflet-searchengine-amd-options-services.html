@@ -14,7 +14,29 @@
 {{/content}}
 
 {{#content "body"}}
-        <h2>Ajout du Widget du moteur de recherche</h2>
+        <h2>Ajout du Widget du moteur de recherche avec les options des services</h2>
+        <pre>
+          <code>
+              var search = new L.geoportalControl.SearchEngine({
+                  collapsed : false,
+                  geocodeOptions : {
+                    returnFreeForm : false,
+                    filterOptions : {
+                      type : ["PositionOfInterest"],
+                      department : "77",
+                      nature : "Commune"
+                    }
+                  },
+                  autocompleteOptions : {
+                    serverUrl : "http://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/ols/apis/completion",
+                    filterOptions : {
+                      territory : ["DOMTOM"],
+                      type : ["PositionOfInterest"]
+                    }
+                  }
+                });
+          </code>
+        </pre>
         <!-- map -->
         <div id="map"></div>
 {{/content}}

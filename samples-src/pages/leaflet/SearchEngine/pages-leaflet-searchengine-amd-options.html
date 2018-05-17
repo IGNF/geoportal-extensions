@@ -14,7 +14,23 @@
 {{/content}}
 
 {{#content "body"}}
-        <h2>Ajout du Widget du moteur de recherche</h2>
+        <h2>Ajout du Widget du moteur de recherche avec options</h2>
+        <pre>
+          <code>
+              var search = new L.geoportalControl.SearchEngine({
+                  collapsed : false,
+                  displayInfo : true,
+                  placeholder : "Recherche...",
+                  displayMarker : true,
+                  markerStyle : "orange",
+                  zoomTo : "auto",
+                  resources : ["PositionOfInterest", "StreetAddress", "CadastralParcel", "Administratif"],
+                  position : "bottomright",
+                  displayAdvancedSearch : true,
+                  advancedSearch : {}
+                });
+          </code>
+        </pre>
         <!-- map -->
         <div id="map"></div>
 {{/content}}
