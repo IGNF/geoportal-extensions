@@ -6,6 +6,8 @@ import LayerSwitcher from "./Controls/LayerSwitcher";
 import Attributions from "./Controls/Attributions";
 import Scale from "./Controls/Scale";
 import MiniGlobe from "./Controls/MiniGlobe";
+import GeoportalWMTS from "./Layer/LayerWMTS";
+import GeoportalWMS from "./Layer/LayerWMS";
 import GlobeViewExtended from "./GlobeViewExtended";
 
 // Adds the extensions properties in the Gp namespace
@@ -25,6 +27,9 @@ Itowns.control.LayerSwitcher = LayerSwitcher;
 Itowns.control.Attributions = Attributions;
 Itowns.control.Scale = Scale;
 Itowns.control.MiniGlobe = MiniGlobe;
+Itowns.layer = {};
+Itowns.layer.GeoportalWMTS = GeoportalWMTS;
+Itowns.layer.GeoportalWMS = GeoportalWMS;
 Itowns.GlobeViewExtended = GlobeViewExtended;
 
 // FIXME saves in the global variable !
