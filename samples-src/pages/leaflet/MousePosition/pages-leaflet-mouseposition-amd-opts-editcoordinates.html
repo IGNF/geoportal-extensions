@@ -1,7 +1,7 @@
 {{#extend "layout-leaflet-sample-amd"}}
 
 {{#content "head"}}
-        <title>Sample Leaflet SearchEngine</title>
+        <title>Sample Leaflet MousePosition</title>
 {{/content}}
 
 {{#content "style"}}
@@ -14,17 +14,11 @@
 {{/content}}
 
 {{#content "body"}}
-        <h2>Ajout du Widget du moteur de recherche</h2>
+        <h2>Ajout du Widget d'affichage des coordonnées de la Souris avec edition des coordonnées</h2>
         <pre>
           <code>
-              // recherche par geocodage si l'autocompletion échoue...
-              var search = new L.geoportalControl.SearchEngine({
-                  geocodeOptions : {},
-                  autocompleteOptions : {
-                    serviceOptions : {},
-                    triggerGeocode : true, // trigger a geocoding request if the autocompletion does not return any suggestions, false by default
-                    triggerDelay : 1500 // waiting time before sending the geocoding request, 1000ms by default
-                  }
+                var mouse = new L.geoportalControl.MousePosition({
+                    editCoordinates : true
                 });
           </code>
         </pre>
@@ -60,16 +54,11 @@
 
                 wms.addTo(map);
 
-                var search = new L.geoportalControl.SearchEngine({
-                  geocodeOptions : {},
-                  autocompleteOptions : {
-                    serviceOptions : {},
-                    triggerGeocode : true, // trigger a geocoding request if the autocompletion does not return any suggestions, false by default
-                    triggerDelay : 1500 // waiting time before sending the geocoding request, 1000ms by default
-                  }
+                var mouse = new L.geoportalControl.MousePosition({
+                    editCoordinates : true
                 });
 
-                map.addControl(search);
+                map.addControl(mouse);
               }
             })
           });

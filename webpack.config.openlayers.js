@@ -42,9 +42,9 @@ module.exports = env => {
         },
         resolve : {
             alias : {
-                proj4 : path.resolve(__dirname, "node_modules", "proj4", "dist", "proj4-src.js"),
-                gp : path.resolve(__dirname, "node_modules", "geoportal-access-lib", "dist", "GpServices-src.js"),
-                sortable : path.resolve(__dirname, "node_modules", "sortablejs", "Sortable.js")
+                gp : path.resolve(__dirname, "node_modules", "geoportal-access-lib", "dist", (production) ? "GpServices.js" : "GpServices-src.js"),
+                proj4 : path.resolve(__dirname, "node_modules", "proj4", "dist", (production) ? "proj4.js" : "proj4-src.js"),
+                sortable : path.resolve(__dirname, "node_modules", "sortablejs", (production) ? "Sortable.min.js" : "Sortable.js")
             }
         },
         externals : {
