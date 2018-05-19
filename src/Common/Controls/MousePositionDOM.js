@@ -721,8 +721,8 @@ var MousePositionDOM = {
             lonElt.appendChild(arrayCoords1[j]);
         }
 
-        // on simule un deplacement
-        this.onMapMove();
+        // FIXME on simule un deplacement ?
+        // this.onMapMove();
     },
 
     /**

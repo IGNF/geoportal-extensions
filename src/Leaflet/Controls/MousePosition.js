@@ -1370,7 +1370,7 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
         // si on change de type de systeme, on doit aussi changer le type d'unités !
         var type = null;
         for (var i = 0; i < this._projectionSystems.length; ++i) {
-            if (this._projectionSystems[i].code === systemCode) {
+            if (this._projectionSystems[i].code === Number(systemCode)) {
                 type = this._projectionSystems[i].type;
                 break;
             }

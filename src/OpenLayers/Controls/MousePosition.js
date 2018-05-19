@@ -319,7 +319,7 @@ MousePosition.prototype.removeSystem = function (systemCrs) {
     }
 
     // choose arbitrarily a new current system if needed
-    if (this._currentProjectionSystems.code === systemCode) {
+    if (this._currentProjectionSystems.code === Number(systemCode)) {
         systemList.childNodes[0].setAttribute("selected", "selected");
         this._setCurrentSystem(systemList.childNodes[0].value);
     }
@@ -1530,7 +1530,7 @@ MousePosition.prototype._setCurrentSystem = function (systemCode) {
     // si on change de type de systeme, on doit aussi changer le type d'unités !
     var type = null;
     for (var i = 0; i < this._projectionSystems.length; ++i) {
-        if (this._projectionSystems[i].code === systemCode) {
+        if (this._projectionSystems[i].code === Number(systemCode)) {
             type = this._projectionSystems[i].type;
             break;
         }
