@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 2.0.0
- * @date 2018-05-07
+ * @date 2018-05-19
  *
  */
 
@@ -2640,11 +2640,11 @@ input:read-only.GPSexagesimal, input:read-only.GPSexagesimalsec {
 }
 
 .GPSexagesimal {
-    width: 25px;
+    width: 30px;
 }
 
 .GPSexagesimalsec {
-    width: 38px;
+    width: 45px;
 }
 .GPmousePositionSexagesimalLabel {
     font-size: 1.2em;
