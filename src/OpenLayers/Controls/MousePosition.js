@@ -36,7 +36,7 @@ var logger = Logger.getLogger("GeoportalMousePosition");
  *      and "M" or "KM" for metric coordinates
  * @param {Array}   [options.displayAltitude = true] - activate (true) or deactivate (false) the altitude panel. True by default
  * @param {Array}   [options.displayCoordinates = true] - activate (true) or deactivate (false) the coordinates panel. True by default
- * @param {Boolean} [options.editCoordinates = false] - add edit coordinates options. False by default.
+ * @param {Boolean} [options.editCoordinates = false] - If true, coordinates from the MousePosition control can be edited by users to re-center the view. False by default.
  * @param {Object} [options.positionMarker] - options for position marker
  * @param {String} options.positionMarker.url - Marker url (define in src/Openlayers/Controls/Utils/Markers.js)
  * @param {Array} options.positionMarker.offset - Offsets in pixels used when positioning the marker towards targeted point.
