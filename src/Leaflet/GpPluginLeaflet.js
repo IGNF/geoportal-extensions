@@ -1,18 +1,20 @@
-import Gp from "gp";
 import L from "leaflet";
-// import P from "leaflet-draw";
 import Controls from "./Controls/Controls";
 import ElevationPath from "./Controls/ElevationPath";
 import Layers from "./Layers/Layers";
 import CRS from "./CRS/CRS";
-import Register from "../Common/Utils/Register";
+import "./CSS.js";
+import "../Common/Utils/AutoLoadConfig.js";
+import Pkg from "../../package.json";
+
+export * from "gp";
 
 // Rajout des propriétés de l'extension dans le namespace Gp
-Gp.leafletExtVersion = "__GPLEAFLETEXTVERSION__";
-Gp.leafletExtDate = "__GPDATE__";
+export const leafletExtVersion = Pkg.leafletExtVersion;
+export const leafletExtDate = new Date().toISOString().split("T")[0];
 
 // Classes utilitaires
-Gp.Register = Register;
+export {default as Register} from "../Common/Utils/Register";
 
 // creation du namespace pour les extensions leaflet
 L.geoportalLayer = Layers; // WMS et WMTS
@@ -28,4 +30,4 @@ L.geoportalCRS.EPSG2154 = CRS.EPSG2154(); // lambert 93
 L.geoportalCRS.EPSG27572 = CRS.EPSG27572(); // lambert 2 étendu
 L.geoportalCRS.EPSG4326 = CRS.EPSG4326();
 
-export default Gp;
+export {L as LExtended};

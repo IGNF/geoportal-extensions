@@ -11,7 +11,6 @@ var DefineWebpackPlugin = webpack.DefinePlugin;
 var ExtractTextWebPackPlugin = require("extract-text-webpack-plugin");
 var BannerWebPackPlugin = webpack.BannerPlugin;
 var UglifyJsWebPackPlugin = webpack.optimize.UglifyJsPlugin;
-var ReplaceWebpackPlugin = require("replace-bundle-webpack-plugin");
 
 // -- variables
 var date = new Date().toISOString().split("T")[0];
@@ -22,26 +21,19 @@ module.exports = env => {
     var production = (env) ? env.production : false;
 
     return {
-        entry : [
-            path.join(__dirname, "src", "Common", "Utils", "AutoLoadConfig"),
-            path.join(__dirname, "src", "Itowns", "CSS"),
-            path.join(__dirname, "src", "OpenLayers", "CSS"),
-            path.join(__dirname, "src", "Itowns", "GpPluginItowns"),
-            path.join(__dirname, "src", "OpenLayers", "GpPluginOpenLayers")
-        ],
+        entry : path.join(__dirname, "src", "Mix", "GpPluginOlItowns"),
         output : {
             path : path.join(__dirname, "dist", "mix"),
             filename : (production) ? "GpPluginOlItowns.js" : "GpPluginOlItowns-src.js",
             library : "Gp",
             libraryTarget : "umd",
-            libraryExport : "default",
             umdNamedDefine : true
         },
         resolve : {
             alias : {
-                proj4 : path.resolve(__dirname, "node_modules", "proj4", "dist", "proj4-src.js"),
-                gp : path.resolve(__dirname, "node_modules", "geoportal-access-lib", "dist", "GpServices-src.js"),
-                sortable : path.resolve(__dirname, "node_modules", "sortablejs", "Sortable.js")
+                gp : path.resolve(__dirname, "node_modules", "geoportal-access-lib", "dist", (production) ? "GpServices.js" : "GpServices-src.js"),
+                proj4 : path.resolve(__dirname, "node_modules", "proj4", "dist", (production) ? "proj4.js" : "proj4-src.js"),
+                sortable : path.resolve(__dirname, "node_modules", "sortablejs", (production) ? "Sortable.min.js" : "Sortable.js")
             }
         },
         externals : {
@@ -134,32 +126,6 @@ module.exports = env => {
             ]
         },
         plugins : [
-            /** REPLACEMENT DE VALEURS */
-            new ReplaceWebpackPlugin(
-                [
-                    {
-                        partten : /__GPITOWNSEXTVERSION__/g,
-                        /** replacement de la clef __GPVERSION__ par la version du package */
-                        replacement : function () {
-                            return pkg.itownsExtVersion;
-                        }
-                    },
-                    {
-                        partten : /__GPOLEXTVERSION__/g,
-                        /** replacement de la clef __GPVERSION__ par la version du package */
-                        replacement : function () {
-                            return pkg.olExtVersion;
-                        }
-                    },
-                    {
-                        partten : /__GPDATE__/g,
-                        /** replacement de la clef __GPDATE__ par la date du build */
-                        replacement : function () {
-                            return date;
-                        }
-                    }
-                ]
-            ),
             /** GESTION DU LOGGER */
             new DefineWebpackPlugin({
                 __PRODUCTION__ : JSON.stringify(production)
@@ -198,8 +164,8 @@ module.exports = env => {
             }),
             new BannerWebPackPlugin({
                 banner : header(fs.readFileSync(path.join(__dirname, "licences", "licence-ign.tmpl"), "utf8"), {
-                    __BRIEF__ : pkg.olExtName + "&" + pkg.itownsExtName,
-                    __VERSION__ : pkg.olExtVersion + "&" + pkg.itownsExtVersion,
+                    __BRIEF__ : pkg.olItownsExtName,
+                    __VERSION__ : pkg.olItownsExtVersion,
                     __DATE__ : date
                 }),
                 raw : true,

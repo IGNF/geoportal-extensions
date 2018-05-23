@@ -12,7 +12,6 @@ var DefineWebpackPlugin = webpack.DefinePlugin;
 var ExtractTextWebPackPlugin = require("extract-text-webpack-plugin");
 var BannerWebPackPlugin = webpack.BannerPlugin;
 var UglifyJsWebPackPlugin = webpack.optimize.UglifyJsPlugin;
-var ReplaceWebpackPlugin = require("replace-bundle-webpack-plugin");
 var JsDocWebPackPlugin = require("jsdoc-webpack-plugin");
 var HandlebarsPlugin = require("./scripts/webpackPlugins/handlebars-plugin");
 var HandlebarsLayoutPlugin = require("handlebars-layouts");
@@ -27,27 +26,21 @@ module.exports = env => {
     var production = (env) ? env.production : false;
 
     return {
-        entry : [
-            path.join(__dirname, "src", "Common", "Utils", "AutoLoadConfig"),
-            path.join(__dirname, "src", "Leaflet", "CSS"),
-            path.join(__dirname, "src", "Leaflet", "GpPluginLeaflet")
-        ],
+        entry : path.join(__dirname, "src", "Leaflet", "GpPluginLeaflet"),
         output : {
             path : path.join(__dirname, "dist", "leaflet"),
             filename : (production) ? "GpPluginLeaflet.js" : "GpPluginLeaflet-src.js",
             library : "Gp",
             libraryTarget : "umd",
-            libraryExport : "default",
             umdNamedDefine : true
         },
         resolve : {
             alias : {
-                gp : path.resolve(__dirname, "node_modules", "geoportal-access-lib", "dist", "GpServices-src.js"),
-                proj4 : path.resolve(__dirname, "node_modules", "proj4", "dist", "proj4-src.js"),
-                proj4leaflet : path.resolve(__dirname, "node_modules", "proj4leaflet", "src", "proj4leaflet.js"),
-                sortable : path.resolve(__dirname, "node_modules", "sortablejs", "Sortable.js"),
+                gp : path.resolve(__dirname, "node_modules", "geoportal-access-lib", "dist", (production) ? "GpServices.js" : "GpServices-src.js"),
+                proj4 : path.resolve(__dirname, "node_modules", "proj4", "dist", (production) ? "proj4.js" : "proj4-src.js"),
+                sortable : path.resolve(__dirname, "node_modules", "sortablejs", (production) ? "Sortable.min.js" : "Sortable.js"),
                 // plugin Leaflet pour le dessin
-                "leaflet-draw" : path.resolve(__dirname, "node_modules", "leaflet-draw", "dist", "leaflet.draw-src.js")
+                "leaflet-draw" : path.resolve(__dirname, "node_modules", "leaflet-draw", "dist", (production) ? "leaflet.draw.js" : "leaflet.draw-src.js")
             }
         },
         externals : {
@@ -142,31 +135,6 @@ module.exports = env => {
             ]
         },
         plugins : [
-            /** REPLACEMENT DE VALEURS */
-            new ReplaceWebpackPlugin(
-                [
-                    {
-                        partten : /__GPLEAFLETEXTVERSION__/g,
-                        /**
-                        * replacement de la clef __GPVERSION__ par la version du package
-                        * @returns {String} leafletExtVersion
-                        */
-                        replacement : function () {
-                            return pkg.leafletExtVersion;
-                        }
-                    },
-                    {
-                        partten : /__GPDATE__/g,
-                        /**
-                        * replacement de la clef __GPDATE__ par la date du build
-                        * @returns {String} date
-                        */
-                        replacement : function () {
-                            return date;
-                        }
-                    }
-                ]
-            ),
             /** GESTION DU LOGGER */
             new DefineWebpackPlugin({
                 __PRODUCTION__ : JSON.stringify(production)
