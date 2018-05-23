@@ -38,10 +38,6 @@ module.exports = env => {
             alias : {
                 gp : path.resolve(__dirname, "node_modules", "geoportal-access-lib", "dist", (production) ? "GpServices.js" : "GpServices-src.js"),
                 proj4 : path.resolve(__dirname, "node_modules", "proj4", "dist", (production) ? "proj4.js" : "proj4-src.js"),
-<<<<<<< HEAD
-=======
-                proj4leaflet : path.resolve(__dirname, "node_modules", "proj4leaflet", "src", "proj4leaflet.js"),
->>>>>>> master
                 sortable : path.resolve(__dirname, "node_modules", "sortablejs", (production) ? "Sortable.min.js" : "Sortable.js"),
                 // plugin Leaflet pour le dessin
                 "leaflet-draw" : path.resolve(__dirname, "node_modules", "leaflet-draw", "dist", (production) ? "leaflet.draw.js" : "leaflet.draw-src.js")
