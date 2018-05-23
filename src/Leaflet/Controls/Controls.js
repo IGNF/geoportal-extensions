@@ -125,6 +125,7 @@ var Controls = {
      *      and "M" or "KM" for metric coordinates
      * @param {Boolean} [options.displayAltitude] - active/desactivate the altitude panel, if desactivate, have just the coordinate panel, true by default
      * @param {Boolean} [options.displayCoordinates] - active/desactivate the coordinate panel, if desactivate, have just the altitude panel, true by default
+     * @param {Boolean} [options.editCoordinates = false] - If true, coordinates from the MousePosition control can be edited by users to re-center the view. False by default.
      * @param {Object}  [options.altitude] - elevation configuration
      * @param {Object}  [options.altitude.serviceOptions] - options of elevation service. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~getAltitude Gp.Services.getAltitude}
      * @param {Number}  [options.altitude.responseDelay] - latency for altitude request, 500 ms by default
@@ -139,6 +140,7 @@ var Controls = {
      *      position : 'bottomleft',
      *      collapsed : false,
      *      displayAltitude : true,
+     *      editCoordinates : false,
      *      altitude : {
      *           triggerDelay : 100,
      *           responseDelay : 500,

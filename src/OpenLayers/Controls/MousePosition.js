@@ -36,7 +36,7 @@ var logger = Logger.getLogger("GeoportalMousePosition");
  *      and "M" or "KM" for metric coordinates
  * @param {Array}   [options.displayAltitude = true] - activate (true) or deactivate (false) the altitude panel. True by default
  * @param {Array}   [options.displayCoordinates = true] - activate (true) or deactivate (false) the coordinates panel. True by default
- * @param {Boolean} [options.editCoordinates = false] - add edit coordinates options. False by default.
+ * @param {Boolean} [options.editCoordinates = false] - If true, coordinates from the MousePosition control can be edited by users to re-center the view. False by default.
  * @param {Object} [options.positionMarker] - options for position marker
  * @param {String} options.positionMarker.url - Marker url (define in src/Openlayers/Controls/Utils/Markers.js)
  * @param {Array} options.positionMarker.offset - Offsets in pixels used when positioning the marker towards targeted point.
@@ -319,7 +319,7 @@ MousePosition.prototype.removeSystem = function (systemCrs) {
     }
 
     // choose arbitrarily a new current system if needed
-    if (this._currentProjectionSystems.code === systemCode) {
+    if (this._currentProjectionSystems.code === Number(systemCode)) {
         systemList.childNodes[0].setAttribute("selected", "selected");
         this._setCurrentSystem(systemList.childNodes[0].value);
     }
@@ -1530,7 +1530,7 @@ MousePosition.prototype._setCurrentSystem = function (systemCode) {
     // si on change de type de systeme, on doit aussi changer le type d'unités !
     var type = null;
     for (var i = 0; i < this._projectionSystems.length; ++i) {
-        if (this._projectionSystems[i].code === systemCode) {
+        if (this._projectionSystems[i].code === Number(systemCode)) {
             type = this._projectionSystems[i].type;
             break;
         }

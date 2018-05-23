@@ -667,6 +667,7 @@ map.addControl(mpCtrl);
 
 **Exemple d'utilisation avec appel d'un système de coordonnées défini** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/ggx4u7n8/embedded/result,js,html,css/)
 
+**Exemple d'utilisation avec activation de l'édition de coordonnées pour localisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/jLcgeng9/embedded/result,js,html,css/)
 
 <a id="ep"/>
 
