@@ -23,9 +23,9 @@ import ElevationPath from "./Controls/ElevationPath";
 import MeasureLength from "./Controls/Measures/MeasureLength";
 import MeasureArea from "./Controls/Measures/MeasureArea";
 import MeasureAzimuth from "./Controls/Measures/MeasureAzimuth";
-import "./CSS.js";
-import "../Common/Utils/AutoLoadConfig.js";
-import Pkg from "../../package.json";
+import "./CSS";
+import "../Common/Utils/AutoLoadConfig";
+import Pkg from "../../package";
 
 export * from "gp";
 

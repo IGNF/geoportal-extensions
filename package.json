@@ -99,8 +99,6 @@
     "requirejs": "^2.3.5",
     "string-template": "^1.0.0",
     "style-loader": "^0.20.2",
-    "three": "^0.91.0",
-    "three.meshline": "^1.0.3",
     "url-loader": "^1.0.1",
     "webpack": "^3.11.0",
     "webpack-dev-server": "^2.11.1",

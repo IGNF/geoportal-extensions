@@ -3,9 +3,9 @@ import Controls from "./Controls/Controls";
 import ElevationPath from "./Controls/ElevationPath";
 import Layers from "./Layers/Layers";
 import CRS from "./CRS/CRS";
-import "./CSS.js";
-import "../Common/Utils/AutoLoadConfig.js";
-import Pkg from "../../package.json";
+import "./CSS";
+import "../Common/Utils/AutoLoadConfig";
+import Pkg from "../../package";
 
 export * from "gp";
 

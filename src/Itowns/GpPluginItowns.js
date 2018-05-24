@@ -5,9 +5,9 @@ import Attributions from "./Controls/Attributions";
 import Scale from "./Controls/Scale";
 import MiniGlobe from "./Controls/MiniGlobe";
 import GlobeViewExtended from "./GlobeViewExtended";
-import "./CSS.js";
-import "../Common/Utils/AutoLoadConfig.js";
-import Pkg from "../../package.json";
+import "./CSS";
+import "../Common/Utils/AutoLoadConfig";
+import Pkg from "../../package";
 
 export * from "gp";
 
