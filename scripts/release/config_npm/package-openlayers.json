@@ -19,6 +19,11 @@
   "license": "CECILL-B",
   "bugs": {},
   "homepage": "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
-  "dependencies": {},
-  "devDependencies": {}
+  "dependencies": {
+      "request": "^2.83.0",
+      "xmldom": "^0.1.27"
+  },
+  "peerDependencies": {
+      "openlayers": "^4.0.1"
+  }
 }
