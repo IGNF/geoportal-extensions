@@ -17,7 +17,12 @@
     ],
     "license": "CECILL-B",
     "bugs": {},
-    "dependencies": {},
-    "devDependencies": {}
+    "dependencies": {
+        "request": "^2.83.0",
+        "xmldom": "^0.1.27"
+    },
+    "peerDependencies": {
+        "itowns": "2.3.0",
+        "openlayers": "^4.0.1"
+    }
   }
-  
