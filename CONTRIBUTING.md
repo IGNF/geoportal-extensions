@@ -46,7 +46,7 @@ cf. [COMPILE.md](COMPILE.md) pour plus d'infos.
 Les commandes :
 
 ``` bash
-npm run build:[ol|leaflet|itowns][:prod]
+npm run build[:dev|:prod|:ol[:prod]|:leaflet[:prod]|:itowns[:prod]|:mix[:prod]]
 ```
 
 Vous permettent de générer les binaires de l'extension cible et de les placer dans le répertoire *dist/*. Des pages html de test d'utilisation sont dans le répertoire *samples-src/*. Elles utilisent les binaires présents dans le répertoire *dist/*.
