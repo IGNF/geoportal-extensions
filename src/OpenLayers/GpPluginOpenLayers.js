@@ -27,16 +27,40 @@ import "./CSS";
 import "../Common/Utils/AutoLoadConfig";
 import Pkg from "../../package";
 
+/**
+ * The Geoportal extension for Openlayers module.
+ * In browser mode a global variable named 'Gp' which contains every module exports is exposed.
+ * @module OpenLayersExtension
+ */
+
+/**
+ * The openlayers extension module wrap the geoportal access library and exports all its exported symbols.
+ * See [Geoportal access library module]{@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/}
+ * @name *
+ * @static
+ */
 export * from "gp";
 
-// Rajout des propriétés de l'extension dans le namespace Gp
+/** Openlayers extension version */
 export const olExtVersion = Pkg.olExtVersion;
-export const olExtDate = new Date().toISOString().split("T")[0];
-export {default as olUtils} from "../Common/Utils";
 
-// Classes utilitaires
-export {default as LayerUtils} from "../Common/Utils/LayerUtils";
-export {default as ProxyUtils} from "../Common/Utils/ProxyUtils";
+/** Openlayers extension creation date */
+export const olExtDate = new Date().toISOString().split("T")[0];
+
+export {
+    /** Openlayers utils set */
+    default as olUtils
+} from "../Common/Utils";
+
+export {
+    /** Layers utils set */
+    default as LayerUtils
+} from "../Common/Utils/LayerUtils";
+
+export {
+    /** Proxy utils set */
+    default as ProxyUtils
+} from "../Common/Utils/ProxyUtils";
 
 Ol.gp = {};
 Ol.gp.GfiUtils = GfiUtils;
@@ -70,4 +94,9 @@ Ol.control.MeasureAzimuth = MeasureAzimuth;
 Ol.control.DefaultMarkers = Markers;
 Ol.control.ElevationPath = ElevationPath;
 
-export {Ol as olExtended};
+export {
+    /**
+     * Extended openlayers library
+     */
+    Ol as olExtended
+};

@@ -7,14 +7,32 @@ import "./CSS";
 import "../Common/Utils/AutoLoadConfig";
 import Pkg from "../../package";
 
+/**
+ * The Geoportal extension for Leaflet module.
+ * In browser mode a global variable named 'Gp' which contains every module exports is exposed.
+ * @module LeafletExtension
+ */
+
+/**
+ * This module wrap the geoportal access library and exports all its exported symbols.
+ * See [Geoportal access library module]{@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/}
+ * @name *
+ * @static
+ */
 export * from "gp";
 
-// Rajout des propriétés de l'extension dans le namespace Gp
+/** Leaflet extension version */
 export const leafletExtVersion = Pkg.leafletExtVersion;
+
+/** Leaflet extension creation date */
 export const leafletExtDate = new Date().toISOString().split("T")[0];
 
-// Classes utilitaires
-export {default as Register} from "../Common/Utils/Register";
+export {
+    /**
+     * Register definition for IGNF, and EPSG CRS
+     */
+    default as Register
+} from "../Common/Utils/Register";
 
 // creation du namespace pour les extensions leaflet
 L.geoportalLayer = Layers; // WMS et WMTS
@@ -30,4 +48,9 @@ L.geoportalCRS.EPSG2154 = CRS.EPSG2154(); // lambert 93
 L.geoportalCRS.EPSG27572 = CRS.EPSG27572(); // lambert 2 étendu
 L.geoportalCRS.EPSG4326 = CRS.EPSG4326();
 
-export {L as LExtended};
+export {
+    /**
+     * Extended itowns library
+     */
+    L as LExtended
+};

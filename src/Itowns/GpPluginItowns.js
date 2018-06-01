@@ -9,14 +9,31 @@ import "./CSS";
 import "../Common/Utils/AutoLoadConfig";
 import Pkg from "../../package";
 
+/**
+ * The Geoportal extension for Itowns module.
+ * In browser mode a global variable named 'Gp' which contains every module exports is exposed.
+ * @module ItownsExtension
+ */
+
+/**
+ * This module wrap the geoportal access library and exports all its exported symbols.
+ * See [Geoportal access library module]{@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/}
+ * @name *
+ * @static
+ */
 export * from "gp";
 
-// Adds the extensions properties in the Gp namespace
-export {default as LayerUtils} from "../Common/Utils/LayerUtils";
-
-// Adds extensions properties in the Gp namespace
+/** Itowns extension version */
 export const itownsExtVersion = Pkg.itownsExtVersion;
+
+/** Itowns extension creation date */
 export const itownsExtDate = new Date().toISOString().split("T")[0];
+
+export {
+    /** Layers utils set */
+    default as LayerUtils
+} from "../Common/Utils/LayerUtils";
+
 
 // creation of the namespace for the itowns extensions
 Itowns.control = {};
@@ -27,4 +44,9 @@ Itowns.control.Scale = Scale;
 Itowns.control.MiniGlobe = MiniGlobe;
 Itowns.GlobeViewExtended = GlobeViewExtended;
 
-export {Itowns as itownsExtended};
+export {
+    /**
+     * Extended itowns library
+     */
+    Itowns as itownsExtended
+};
