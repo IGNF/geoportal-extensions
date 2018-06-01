@@ -8,6 +8,7 @@ import Scale from "./Controls/Scale";
 import MiniGlobe from "./Controls/MiniGlobe";
 import GeoportalWMTS from "./Layer/LayerWMTS";
 import GeoportalWMS from "./Layer/LayerWMS";
+import GeoportalElevation from "./Layer/LayerElevation";
 import GlobeViewExtended from "./GlobeViewExtended";
 
 // Adds the extensions properties in the Gp namespace
@@ -30,6 +31,7 @@ Itowns.control.MiniGlobe = MiniGlobe;
 Itowns.layer = {};
 Itowns.layer.GeoportalWMTS = GeoportalWMTS;
 Itowns.layer.GeoportalWMS = GeoportalWMS;
+Itowns.layer.GeoportalElevation = GeoportalElevation;
 Itowns.GlobeViewExtended = GlobeViewExtended;
 
 // FIXME saves in the global variable !

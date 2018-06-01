@@ -7,22 +7,22 @@ var logger = Logger.getLogger("wmtsLayer");
 
 /**
  * @classdesc
- * Geoportal WMTS source creation
+ * Geoportal elevation source creation
  *
  * @constructor
- * @alias itowns.Layer.GeoportalWMTS
+ * @alias itowns.Layer.GeoportalElevation
  * @param {Object} options            - options for function call.
  * @param {String} options.layer      - Layer name (e.g. "ORTHOIMAGERY.ORTHOPHOTOS")
  * @param {Boolean} [options.ssl]     - if set true, enforce protocol https (only for nodejs)
  * @param {String} [options.apiKey]   - Access key to Geoportal platform
- * @param {Object} [options.itownsParams] - other options for itowns.GlobeView.addLayer function (see {@link http://www.itowns-project.org/itowns/API_Doc/GlobeView.html#addLayer GlobeView.addLayer})
+ * @param {Object} [options.itownsParams] - options to overload default geoportal layer options for itowns.GlobeView.addLayer function (see {@link http://www.itowns-project.org/itowns/API_Doc/GlobeView.html#addLayer GlobeView.addLayer})
  * @example
- * var geoportalWMTS = new itowns.Layer.GeoportalWMTS({
- *      layer  : "ORTHOIMAGERY.ORTHOPHOTOS"
+ * var geoportalElevation = new itowns.Layer.GeoportalElevation({
+ *      layer  : "ELEVATION.ELEVATIONGRIDCOVERAGE"
  * });
  */
-function LayerWMTS (options) {
-    if (!(this instanceof LayerWMTS)) {
+function LayerElevation(options) {
+    if (!(this instanceof LayerElevation)) {
         throw new TypeError("ERROR CLASS_CONSTRUCTOR");
     }
 
@@ -62,13 +62,16 @@ function LayerWMTS (options) {
         this._legends = wmtsParams.legends;
         this._metadata = wmtsParams.metadata;
 
-        this.type = "color";
+        this.type = "elevation";
         this.protocol = "wmts";
         this.id = layerId;
         this.url = wmtsParams.url.replace(/(http|https):\/\//, protocol);
+        this.noDataValue = -99999;
         this.updateStrategy = {
-            type : 0,
-            options : {}
+            type : 1,
+            options : {
+                groups : [3, 7, 11, 14]
+            }
         };
         this.networkOptions = {
             crossOrigin : "omit"
@@ -77,7 +80,7 @@ function LayerWMTS (options) {
         this.options = {
             originators : wmtsParams.originators,
             name : options.layer,
-            mimetype : wmtsParams.format,
+            mimetype : "image/x-bil;bits=32",
             tileMatrixSet : wmtsParams.TMSLink,
             extent : {
                 west : wmtsParams.extent.left,
@@ -102,13 +105,13 @@ function LayerWMTS (options) {
         this.quicklookUrl = wmtsParams.quicklookUrl;
     } else {
         // If layer is not in Gp.Config
-        logger.error("ERROR layer id (layer name: " + options.layer + " / service: WMTS ) was not found !?");
+        logger.log("[source WMTS] ERROR : " + options.layer + " cannot be found in Geoportal Configuration. Make sure that this resource is included in your contract key.");
     }
 }
 
 /*
  * Constructor (alias)
  */
-LayerWMTS.prototype.constructor = LayerWMTS;
+LayerElevation.prototype.constructor = LayerElevation;
 
-export default LayerWMTS;
+export default LayerElevation;

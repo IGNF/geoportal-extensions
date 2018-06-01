@@ -282,8 +282,13 @@ GlobeViewExtended.prototype.forget = function (type, callback) {
  * @return {Promise} promise
  */
 GlobeViewExtended.prototype.addLayer = function (layer) {
-    var promise = this.getGlobeView().addLayer(layer);
-    this.getGlobeView().notifyChange(true);
+    try {
+        var promise = this.getGlobeView().addLayer(layer);
+        this.getGlobeView().notifyChange(true);
+    } catch (error) {
+        return Promise.reject(error);
+    }
+
     return promise;
 };
 
