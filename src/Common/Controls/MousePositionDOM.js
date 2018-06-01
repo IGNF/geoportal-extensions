@@ -609,7 +609,10 @@ var MousePositionDOM = {
             context.onMousePositionProjectionSystemChange(e);
         });
         selectSystem.addEventListener("mouseover", function (e) {
-            context.onMousePositionProjectionSystemMouseOver(e);
+            // FIXME mettre une condition si target === option
+            if (e.target.nodeName !== "OPTION") {
+                context.onMousePositionProjectionSystemMouseOver(e);
+            }
         });
 
         for (var i = 0; i < systems.length; i++) {
@@ -718,8 +721,8 @@ var MousePositionDOM = {
             lonElt.appendChild(arrayCoords1[j]);
         }
 
-        // on simule un deplacement
-        this.onMapMove();
+        // FIXME on simule un deplacement ?
+        // this.onMapMove();
     },
 
     /**

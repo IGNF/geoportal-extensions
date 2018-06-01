@@ -1348,6 +1348,8 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
      * @private
      */
     onMousePositionProjectionSystemChange : function (e) {
+        logger.log("onMousePositionProjectionSystemChange", e);
+
         var idx = e.target.selectedIndex; // index
         var value = e.target.options[idx].value; // crs, ex. MERCATOR (optionnel)
         var label = e.target.options[idx].label; // etiquette, ex Géographiques
@@ -1368,7 +1370,7 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
         // si on change de type de systeme, on doit aussi changer le type d'unités !
         var type = null;
         for (var i = 0; i < this._projectionSystems.length; ++i) {
-            if (this._projectionSystems[i].code === systemCode) {
+            if (this._projectionSystems[i].code === Number(systemCode)) {
                 type = this._projectionSystems[i].type;
                 break;
             }
@@ -1403,7 +1405,7 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
      * @private
      */
     onMousePositionProjectionSystemMouseOver : function (e) {
-        logger.log(e);
+        logger.log("onMousePositionProjectionSystemMouseOver", e);
 
         var map = this._map;
         if (!map) {
@@ -1460,6 +1462,8 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
      * @private
      */
     onMousePositionProjectionUnitsChange : function (e) {
+        logger.log("onMousePositionProjectionUnitsChange", e);
+
         var idx = e.target.selectedIndex;
         var value = e.target.options[idx].value;
         var label = e.target.options[idx].label;

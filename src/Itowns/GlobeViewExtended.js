@@ -1,5 +1,5 @@
 import Logger from "../Common/Utils/LoggerByDefault";
-// import * as Itowns from "itowns"; // itowns globale !?
+import * as Itowns from "itowns";
 
 var logger = Logger.getLogger("GlobeViewExtended");
 
@@ -18,9 +18,7 @@ var logger = Logger.getLogger("GlobeViewExtended");
 function GlobeViewExtended (viewerDiv, coordCarto, options) {
     viewerDiv.style.position = (!options || !options.position) ? "relative" : options.position;
 
-    // FIXME itowns globale !?
-    var env = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : {};
-    this._itowns = env.itowns;
+    this._itowns = Itowns;
 
     // stockage de l'élément html porteur du globe
     this._viewerDiv = viewerDiv;

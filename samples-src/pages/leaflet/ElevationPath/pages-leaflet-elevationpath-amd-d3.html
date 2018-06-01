@@ -18,7 +18,23 @@
 {{/content}}
 
 {{#content "body"}}
-        <h2>Ajout du Widget de profil alti</h2>
+        <h2>Ajout du Widget de profil alti avec D3</h2>
+        <pre>
+          <code>
+              var search = new L.geoportalControl.ElevationPath({
+                active : true,
+                displayProfileOptions : {
+                  apply : L.geoportalControl.ElevationPath.DISPLAY_PROFILE_LIB_D3,
+                  target : null, // par defaut
+                  meanSlope : false,
+                  greaterSlope : false,
+                  ascendingElevation : false,
+                  descendingElevation : false,
+                  currentSlope : true // par defaut
+                }
+              });
+          </code>
+        </pre>
         <!-- map -->
         <div id="map"></div>
 {{/content}}

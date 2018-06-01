@@ -70,7 +70,7 @@ Liste des targets disponibles :
 
     npm run <target> <option>
         target : (clean), setup,
-                 build[:ol|:leaflet|:itowns|:mix][:prod],
+                 build[:dev|:prod|:ol[:prod]|:leaflet[:prod]|:itowns[:prod]|:mix[:prod]],
                  sample, (doc)
                  sample:serve, doc:serve
         option : --env.production, (--env.clean)
@@ -111,8 +111,7 @@ Upgrade de version :
 
 **ouvrir une console (ex. avec openlayers) :**
 
-    npm run build (par défaut, openlayers)
-    ou npm run build:ol
+    npm run build:ol
     ou npm run build -- --env.openlayers
     ou npm run build:ol:prod
     ou npm run build -- --env.production
@@ -123,12 +122,20 @@ Les *bundles* sont disponibles dans le répertoire :
 	dist/openlayers/GpPluginOpenLayers.js
     dist/openlayers/GpPluginOpenLayers.css
 	dist/openlayers/GpPluginOpenLayers-src.js
-	dist/openlayers/GpPluginOpenLayers-src.js.map
 	dist/openlayers/GpPluginOpenLayers-src.css
     (...)
 
 Les sources sont validées (jshint, jscs et/ou eslint).
 La jsoc, les tests et les exemples sont générés.
+
+Il est possible de lancer la génération des bundles pour l'ensemble des extensions :
+
+    // génération des bundles en mode développement
+    npm run build:dev
+    // génération des bundles en mode production
+    npm run build:prod
+    // génération des bundles dans les deux modes : développement et production
+    npm run build
 
 #### JSDOC
 

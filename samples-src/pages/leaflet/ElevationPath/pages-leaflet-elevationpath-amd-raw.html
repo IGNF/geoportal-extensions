@@ -14,7 +14,17 @@
 {{/content}}
 
 {{#content "body"}}
-        <h2>Ajout du Widget de profil alti</h2>
+        <h2>Ajout du Widget de profil alti (affichage brute)</h2>
+        <pre>
+          <code>
+              var search = new L.geoportalControl.ElevationPath({
+                active : true,
+                  displayProfileOptions : {
+                    apply : L.geoportalControl.ElevationPath.DISPLAY_PROFILE_RAW
+                  }
+              });
+          </code>
+        </pre>
         <!-- map -->
         <div id="map"></div>
 {{/content}}

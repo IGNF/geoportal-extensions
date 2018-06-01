@@ -1,6 +1,4 @@
-import Gp from "gp";
 import * as Itowns from "itowns";
-import LayerUtils from "../Common/Utils/LayerUtils";
 import MousePosition from "./Controls/MousePosition";
 import LayerSwitcher from "./Controls/LayerSwitcher";
 import Attributions from "./Controls/Attributions";
@@ -10,16 +8,18 @@ import GeoportalWMTS from "./Layer/LayerWMTS";
 import GeoportalWMS from "./Layer/LayerWMS";
 import GeoportalElevation from "./Layer/LayerElevation";
 import GlobeViewExtended from "./GlobeViewExtended";
+import "./CSS";
+import "../Common/Utils/AutoLoadConfig";
+import Pkg from "../../package";
+
+export * from "gp";
 
 // Adds the extensions properties in the Gp namespace
-Gp.LayerUtils = LayerUtils;
+export {default as LayerUtils} from "../Common/Utils/LayerUtils";
 
 // Adds extensions properties in the Gp namespace
-Gp.itownsExtVersion = "__GPITOWNSEXTVERSION__";
-Gp.itownsExtDate = "__GPDATE__";
-
-// determines the execution environment l'environnement : browser or not ?
-var env = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : {};
+export const itownsExtVersion = Pkg.itownsExtVersion;
+export const itownsExtDate = new Date().toISOString().split("T")[0];
 
 // creation of the namespace for the itowns extensions
 Itowns.control = {};
@@ -34,23 +34,4 @@ Itowns.layer.GeoportalWMS = GeoportalWMS;
 Itowns.layer.GeoportalElevation = GeoportalElevation;
 Itowns.GlobeViewExtended = GlobeViewExtended;
 
-// FIXME saves in the global variable !
-if (!env.itowns) {
-    env.itowns = {};
-}
-
-deepCopy(Itowns, env.itowns);
-
-function deepCopy (source, target) {
-    for (var prop in source) {
-        if (source.hasOwnProperty(prop)) {
-            if (!target.hasOwnProperty(prop)) {
-                target[prop] = source[prop];
-            } else if (typeof source[prop] === "object") {
-                deepCopy(source[prop], target[prop]);
-            }
-        }
-    }
-}
-
-export default Gp;
+export {Itowns as itownsExtended};
