@@ -233,8 +233,8 @@ L'utilisateur a le choix entre plusieurs méthodes d'import.
 import {Services, LExtended as L} from 'geoportal-extensions-leaflet';
 
 // votre utilisation de l'extension
-var map  = L.map(...
-Services.getConfig(...
+var map  = L.map(...)
+Services.getConfig(...)
 ```
 
 **Méthode 2** : import d'un objet d’espace de noms pour le module
@@ -245,8 +245,8 @@ import * as Gp from 'geoportal-extensions-leaflet';
 
 // votre utilisation de l'extension
 const L = Gp.LExtended;
-var map  = L.map(...
-Gp.Services.getConfig(...
+var map  = L.map(...)
+Gp.Services.getConfig(...)
 ```
 ***Variante 2*** : le module leaflet est importé indépendamment de l'extension
 ``` javascript
@@ -254,8 +254,8 @@ import L from 'leaflet';
 import * as Gp from 'geoportal-extensions-leaflet';
 
 // votre utilisation de l'extension
-var map  = L.map(...
-Gp.Services.getConfig(...
+var map  = L.map(...)
+Gp.Services.getConfig(...)
 ```
 
 ## Compatibilités

@@ -228,8 +228,8 @@ L'utilisateur a le choix entre plusieurs méthodes d'import.
 import {Services, itownsExtended as It} from 'geoportal-extensions-itowns';
 
 // votre utilisation de l'extension
-const globeView = new It.GlobeViewExtended(...
-Services.getConfig(...
+const globeView = new It.GlobeViewExtended(...)
+Services.getConfig(...)
 ```
 
 **Méthode 2** : import d'un objet d’espace de noms pour le module
@@ -240,8 +240,8 @@ import * as Gp from 'geoportal-extensions-itowns';
 
 // votre utilisation de l'extension
 const It = Gp.itownsExtended;
-const globeView = new It.GlobeViewExtended(...
-Gp.Services.getConfig(...
+const globeView = new It.GlobeViewExtended(...)
+Gp.Services.getConfig(...)
 ```
 ***Variante 2*** : le module itowns est importé indépendamment de l'extension
 ``` javascript
@@ -249,8 +249,8 @@ import It from 'itowns';
 import * as Gp from 'geoportal-extensions-itowns';
 
 // votre utilisation de l'extension
-const globeView = new It.GlobeViewExtended(...
-Gp.Services.getConfig(...
+const globeView = new It.GlobeViewExtended(...)
+Gp.Services.getConfig(...)
 ```
 
 ## Compatibilités

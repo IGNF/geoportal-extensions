@@ -247,8 +247,8 @@ L'utilisateur a le choix entre plusieurs méthodes d'import.
 import {Services, olExtended as Ol} from 'geoportal-extensions-openlayers';
 
 // votre utilisation de l'extension
-var map = new Ol.Map(...
-Services.getConfig(...
+var map = new Ol.Map(...)
+Services.getConfig(...)
 ```
 
 **Méthode 2** : import d'un objet d’espace de noms pour le module
@@ -259,8 +259,8 @@ import * as Gp from 'geoportal-extensions-openlayers';
 
 // votre utilisation de l'extension
 const Ol = Gp.olExtended;
-var map = new Ol.Map(...
-Gp.Services.getConfig(...
+var map = new Ol.Map(...)
+Gp.Services.getConfig(...)
 ```
 ***Variante 2*** : le module openlayers est importé indépendamment de l'extension
 ``` javascript
@@ -268,8 +268,8 @@ import Ol from 'openlayers';
 import * as Gp from 'geoportal-extensions-openlayers';
 
 // votre utilisation de l'extension
-var map = new Ol.Map(...
-Gp.Services.getConfig(...
+var map = new Ol.Map(...)
+Gp.Services.getConfig(...)
 ```
 
 ## Compatibilités
