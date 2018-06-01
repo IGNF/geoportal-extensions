@@ -1,7 +1,4 @@
-import ol from "ol";
-import Gp from "gp";
-import LayerUtils from "../Common/Utils/LayerUtils";
-import ProxyUtils from "../Common/Utils/ProxyUtils";
+import Ol from "ol";
 import GfiUtils from "./GfiUtils";
 import Utils from "../Common/Utils";
 import KML from "./Formats/KML";
@@ -26,45 +23,51 @@ import ElevationPath from "./Controls/ElevationPath";
 import MeasureLength from "./Controls/Measures/MeasureLength";
 import MeasureArea from "./Controls/Measures/MeasureArea";
 import MeasureAzimuth from "./Controls/Measures/MeasureAzimuth";
+import "./CSS";
+import "../Common/Utils/AutoLoadConfig";
+import Pkg from "../../package";
+
+export * from "gp";
 
 // Rajout des propriétés de l'extension dans le namespace Gp
-Gp.olExtVersion = "__GPOLEXTVERSION__";
-Gp.olExtDate = "__GPDATE__";
-Gp.olUtils = Utils;
+export const olExtVersion = Pkg.olExtVersion;
+export const olExtDate = new Date().toISOString().split("T")[0];
+export {default as olUtils} from "../Common/Utils";
 
 // Classes utilitaires
-Gp.LayerUtils = LayerUtils;
-Gp.ProxyUtils = ProxyUtils;
-ol.gp = {};
-ol.gp.GfiUtils = GfiUtils;
+export {default as LayerUtils} from "../Common/Utils/LayerUtils";
+export {default as ProxyUtils} from "../Common/Utils/ProxyUtils";
+
+Ol.gp = {};
+Ol.gp.GfiUtils = GfiUtils;
 
 // FIXME overload or not ? name Gp.format.kml ?
-ol.format.KMLExtended = KML;
-ol.source.WMTSExtended = WMTS;
+Ol.format.KMLExtended = KML;
+Ol.source.WMTSExtended = WMTS;
 
-// Surcharge sur les functions ol/proj4 par défaut
+// Surcharge sur les functions Ol/proj4 par défaut
 CRS.overload();
 
-// Rajout des propriétés dans le namespace ol
-ol.source.GeoportalWMTS = SourceWMTS;
-ol.source.GeoportalWMS = SourceWMS;
-ol.layer.GeoportalWMTS = LayerWMTS;
-ol.layer.GeoportalWMS = LayerWMS;
-ol.control.GeoportalAttribution = GeoportalAttribution;
-ol.control.LayerSwitcher = LayerSwitcher;
-ol.control.GetFeatureInfo = GetFeatureInfo;
-ol.control.SearchEngine = SearchEngine;
-ol.control.Route = Route;
-ol.control.Isocurve = Isocurve;
-ol.control.GeoportalMousePosition = MousePosition;
-ol.control.Drawing = Drawing;
-ol.control.ReverseGeocode = ReverseGeocode;
-ol.control.LayerImport = LayerImport;
-ol.control.MeasureLength = MeasureLength;
-ol.control.MeasureArea = MeasureArea;
-ol.control.MeasureAzimuth = MeasureAzimuth;
+// Rajout des propriétés dans le namespace Ol
+Ol.source.GeoportalWMTS = SourceWMTS;
+Ol.source.GeoportalWMS = SourceWMS;
+Ol.layer.GeoportalWMTS = LayerWMTS;
+Ol.layer.GeoportalWMS = LayerWMS;
+Ol.control.GeoportalAttribution = GeoportalAttribution;
+Ol.control.LayerSwitcher = LayerSwitcher;
+Ol.control.GetFeatureInfo = GetFeatureInfo;
+Ol.control.SearchEngine = SearchEngine;
+Ol.control.Route = Route;
+Ol.control.Isocurve = Isocurve;
+Ol.control.GeoportalMousePosition = MousePosition;
+Ol.control.Drawing = Drawing;
+Ol.control.ReverseGeocode = ReverseGeocode;
+Ol.control.LayerImport = LayerImport;
+Ol.control.MeasureLength = MeasureLength;
+Ol.control.MeasureArea = MeasureArea;
+Ol.control.MeasureAzimuth = MeasureAzimuth;
 // export default markers definitions
-ol.control.DefaultMarkers = Markers;
-ol.control.ElevationPath = ElevationPath;
+Ol.control.DefaultMarkers = Markers;
+Ol.control.ElevationPath = ElevationPath;
 
-export default Gp;
+export {Ol as olExtended};

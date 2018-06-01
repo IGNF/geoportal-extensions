@@ -93,7 +93,7 @@ http://ignf.github.io/geoportal-extensions/leaflet-latest/dist/GpPluginLeaflet-s
 
 ### Intégration dans une page web
 
-Dézippez l'extension géoportail dans l'arborescence votre serveur web. Vous pouvez positionner à votre guise les fichiers css et javascript. Le répertoire img doit cependant être positionné au même niveau que le fichier css pour que les ressources images qui y sont référencées soient correctement chargées.
+Dézippez l'extension géoportail dans l'arborescence de votre serveur web. Vous pouvez positionner à votre guise les fichiers css et javascript.
 
 Intégrez l'extension géoportail pour leaflet dans votre page web classiquement à l'aide d'une balise **script** pour charger le fichier javascript et d'une balise **link** pour charger le fichier css en plus des balises correspondantes utilisées pour charger la bibliothèque Leaflet.
 
@@ -223,6 +223,40 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
 </html>
 ```
 
+### Appel de l'extension dans un module ES6
+
+Le module de l'extension expose de multiples exports nommés (dont le module leaflet étendu).
+L'utilisateur a le choix entre plusieurs méthodes d'import.
+
+**Méthode 1** : import des exports nommés du module
+``` javascript
+import {Services, LExtended as L} from 'geoportal-extensions-leaflet';
+
+// votre utilisation de l'extension
+var map  = L.map(...)
+Services.getConfig(...)
+```
+
+**Méthode 2** : import d'un objet d’espace de noms pour le module
+
+***Variante 1*** : le module leaflet étendu est récupéré depuis l'espace de noms
+``` javascript
+import * as Gp from 'geoportal-extensions-leaflet';
+
+// votre utilisation de l'extension
+const L = Gp.LExtended;
+var map  = L.map(...)
+Gp.Services.getConfig(...)
+```
+***Variante 2*** : le module leaflet est importé indépendamment de l'extension
+``` javascript
+import L from 'leaflet';
+import * as Gp from 'geoportal-extensions-leaflet';
+
+// votre utilisation de l'extension
+var map  = L.map(...)
+Gp.Services.getConfig(...)
+```
 
 ## Compatibilités
 

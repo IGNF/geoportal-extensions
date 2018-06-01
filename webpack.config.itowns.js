@@ -12,7 +12,6 @@ var DefineWebpackPlugin = webpack.DefinePlugin;
 var ExtractTextWebPackPlugin = require("extract-text-webpack-plugin");
 var BannerWebPackPlugin = webpack.BannerPlugin;
 var UglifyJsWebPackPlugin = webpack.optimize.UglifyJsPlugin;
-var ReplaceWebpackPlugin = require("replace-bundle-webpack-plugin");
 var JsDocWebPackPlugin = require("jsdoc-webpack-plugin");
 var HandlebarsPlugin = require("./scripts/webpackPlugins/handlebars-plugin");
 var HandlebarsLayoutPlugin = require("handlebars-layouts");
@@ -27,17 +26,12 @@ module.exports = env => {
     var production = (env) ? env.production : false;
 
     return {
-        entry : [
-            path.join(__dirname, "src", "Common", "Utils", "AutoLoadConfig"),
-            path.join(__dirname, "src", "Itowns", "CSS"),
-            path.join(__dirname, "src", "Itowns", "GpPluginItowns")
-        ],
+        entry : path.join(__dirname, "src", "Itowns", "GpPluginItowns"),
         output : {
             path : path.join(__dirname, "dist", "itowns"),
             filename : (production) ? "GpPluginItowns.js" : "GpPluginItowns-src.js",
             library : "Gp",
             libraryTarget : "umd",
-            libraryExport : "default",
             umdNamedDefine : true
         },
         resolve : {
@@ -131,25 +125,6 @@ module.exports = env => {
             ]
         },
         plugins : [
-            /** REPLACEMENT DE VALEURS */
-            new ReplaceWebpackPlugin(
-                [
-                    {
-                        partten : /__GPITOWNSEXTVERSION__/g,
-                        /** replacement de la clef __GPVERSION__ par la version du package */
-                        replacement : function () {
-                            return pkg.itownsExtVersion;
-                        }
-                    },
-                    {
-                        partten : /__GPDATE__/g,
-                        /** replacement de la clef __GPDATE__ par la date du build */
-                        replacement : function () {
-                            return date;
-                        }
-                    }
-                ]
-            ),
             /** GESTION DU LOGGER */
             new DefineWebpackPlugin({
                 __PRODUCTION__ : JSON.stringify(production)

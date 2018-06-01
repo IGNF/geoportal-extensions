@@ -21,5 +21,11 @@
         "type":"git"
     },
     "version":"2.0.0",
-    "dependencies":{}
+    "peerDepencies":{
+        "leaflet": "^1.3.1"
+    },
+    "dependencies":{
+        "request": "^2.83.0",
+        "xmldom": "^0.1.27"
+    }
 }
