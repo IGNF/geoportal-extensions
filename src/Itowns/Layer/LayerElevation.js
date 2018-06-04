@@ -10,18 +10,18 @@ var logger = Logger.getLogger("wmtsLayer");
  * Geoportal elevation source creation
  *
  * @constructor
- * @alias itowns.Layer.GeoportalElevation
+ * @alias itowns.layer.GeoportalElevation
  * @param {Object} options            - options for function call.
  * @param {String} options.layer      - Layer name (e.g. "ORTHOIMAGERY.ORTHOPHOTOS")
  * @param {Boolean} [options.ssl]     - if set true, enforce protocol https (only for nodejs)
  * @param {String} [options.apiKey]   - Access key to Geoportal platform
  * @param {Object} [options.itownsParams] - options to overload default geoportal layer options for itowns.GlobeView.addLayer function (see {@link http://www.itowns-project.org/itowns/API_Doc/GlobeView.html#addLayer GlobeView.addLayer})
  * @example
- * var geoportalElevation = new itowns.Layer.GeoportalElevation({
+ * var geoportalElevation = new itowns.layer.GeoportalElevation({
  *      layer  : "ELEVATION.ELEVATIONGRIDCOVERAGE"
  * });
  */
-function LayerElevation(options) {
+function LayerElevation (options) {
     if (!(this instanceof LayerElevation)) {
         throw new TypeError("ERROR CLASS_CONSTRUCTOR");
     }

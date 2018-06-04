@@ -311,7 +311,7 @@ Le modèle de données iTowns prend en entrée des couches matérialisées sous 
 
 #### Utilisation de l'accès privilégié aux couches WMTS Géoportail
 
-L'affichage se fait par la création d'une nouvelle instance de la classe [Itowns.layer.GeoportalWMTS](http://ignf.github.io/geoportal-extensions/itowns-latest/jsdoc/itowns.Layer.GeoportalWMTS.html), de la manière suivante :
+L'affichage se fait par la création d'une nouvelle instance de la classe [Itowns.layer.GeoportalWMTS](http://ignf.github.io/geoportal-extensions/itowns-latest/jsdoc/itowns.layer.GeoportalWMTS.html), de la manière suivante :
 
 ``` javascript
 new itowns.layer.GeoportalWMTS(options);
@@ -324,7 +324,7 @@ Il est possible de surcharger le paramétrage par défaut de la couche en passan
 ``` javascript
 const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
 
-globeView.addLayer(new itowns.layer.GeoportalWMTS({ 
+globeView.addLayer(new itowns.layer.GeoportalWMTS({
     layer: "ORTHOIMAGERY.ORTHOPHOTOS",
     itownsParams : {
         opacity : 0.5
@@ -488,7 +488,7 @@ Le modèle de données iTowns prend en entrée des couches matérialisées sous 
 
 #### Utilisation de l'accès privilégié aux couches WMS Géoportail
 
-L'affichage se fait par la création d'une nouvelle instance de la classe [Itowns.layer.GeoportalWMS](http://ignf.github.io/geoportal-extensions/itowns-latest/jsdoc/itowns.Layer.GeoportalWMS.html), de la manière suivante :
+L'affichage se fait par la création d'une nouvelle instance de la classe [Itowns.layer.GeoportalWMS](http://ignf.github.io/geoportal-extensions/itowns-latest/jsdoc/itowns.layer.GeoportalWMS.html), de la manière suivante :
 
 ``` javascript
 new itowns.layer.GeoportalWMS(options);
@@ -501,7 +501,7 @@ Il est possible de surcharger le paramétrage par défaut de la couche en passan
 ``` javascript
 const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
 
-globeView.addLayer(new itowns.layer.GeoportalWMS({ 
+globeView.addLayer(new itowns.layer.GeoportalWMS({
     layer: "ORTHOIMAGERY.ORTHOPHOTOS",
     itownsParams : {
         opacity : 0.5
@@ -580,7 +580,7 @@ Le modèle de données iTowns prend en entrée des couches matérialisées sous 
 
 #### Utilisation de l'accès privilégié aux couches WMTS Géoportail pour afficher un MNT
 
-L'affichage se fait par la création d'une nouvelle instance de la classe [Itowns.layer.GeoportalElevation](http://ignf.github.io/geoportal-extensions/itowns-latest/jsdoc/itowns.Layer.GeoportalElevation.html), de la manière suivante :
+L'affichage se fait par la création d'une nouvelle instance de la classe [Itowns.layer.GeoportalElevation](http://ignf.github.io/geoportal-extensions/itowns-latest/jsdoc/itowns.layer.GeoportalElevation.html), de la manière suivante :
 
 ``` javascript
 new itowns.layer.GeoportalElevation(options);

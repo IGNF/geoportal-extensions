@@ -10,18 +10,18 @@ var logger = Logger.getLogger("wmsLayer");
  * Geoportal WMTS source creation
  *
  * @constructor
- * @alias itowns.Layer.GeoportalWMS
+ * @alias itowns.layer.GeoportalWMS
  * @param {Object} options            - options for function call.
  * @param {String} options.layer      - Layer name (e.g. "ORTHOIMAGERY.ORTHOPHOTOS")
  * @param {Boolean} [options.ssl]     - if set true, enforce protocol https (only for nodejs)
  * @param {String} [options.apiKey]   - Access key to Geoportal platform
  * @param {Object} [options.itownsParams] - other options for itowns.GlobeView.addLayer function (see {@link http://www.itowns-project.org/itowns/API_Doc/GlobeView.html#addLayer GlobeView.addLayer})
  * @example
- * var geoportalWMS = new itowns.Layer.GeoportalWMS({
+ * var geoportalWMS = new itowns.layer.GeoportalWMS({
  *      layer  : "ORTHOIMAGERY.ORTHOPHOTOS"
  * });
  */
-function LayerWMS(options) {
+function LayerWMS (options) {
     if (!(this instanceof LayerWMS)) {
         throw new TypeError("ERROR CLASS_CONSTRUCTOR");
     }
