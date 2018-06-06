@@ -61,13 +61,20 @@
                                 }),
                                 opacity : 0.8
                             }),
-                            maps,
-                            osm
+                            osm,
+                            maps
                         ]
                     });
 
 					// Appel du LayerSwitcher
-                    layerSwitcher = new ol.control.LayerSwitcher({});
+                    layerSwitcher = new ol.control.LayerSwitcher({
+                        layers : [{
+                            layer : osm,
+                            config : {
+                                title : "OSM",
+                                description : "description"
+                            }
+                        }]});
 
 					// Ajout du LayerSwitcher à la carte
                     map.addControl(layerSwitcher);

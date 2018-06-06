@@ -351,25 +351,10 @@ LayerSwitcher.prototype.removeLayer = function (layer) {
     // on retire la couche de la liste des layers
     delete this._layers[layerID];
 
-    // on supprime le layer et ses ecouteurs !
-    layer.un(
-        "change:opacity",
-        this._updateLayerOpacity,
-        this
-    );
-
-    layer.un(
-        "change:visible",
-        this._updateLayerVisibility,
-        this
-    );
-
-    // FIXME zindex ?
-    // layer.un("change:zIndex");
-
     // FIXME
     // cette methode fait elle correctement le job ?
-    this.getMap().getLayers().remove(layer);
+    this.getMap().removeLayer(layer);
+    logger.trace(layer);
 };
 
 /**
