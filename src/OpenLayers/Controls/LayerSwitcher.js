@@ -325,6 +325,11 @@ LayerSwitcher.prototype.removeLayer = function (layer) {
     if (!layer) {
         return;
     }
+    // FIXME
+    // cette methode fait elle correctement le job ?
+    this.getMap().removeLayer(layer);
+    logger.trace(layer);
+
     var layerID = layer.gpLayerId;
     var layerList = document.getElementById(this._addUID("GPlayersList"));
     // close layer info element if open.
@@ -350,11 +355,6 @@ LayerSwitcher.prototype.removeLayer = function (layer) {
     }
     // on retire la couche de la liste des layers
     delete this._layers[layerID];
-
-    // FIXME
-    // cette methode fait elle correctement le job ?
-    this.getMap().removeLayer(layer);
-    logger.trace(layer);
 };
 
 /**
