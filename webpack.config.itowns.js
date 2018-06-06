@@ -156,7 +156,7 @@ module.exports = env => {
                         path.join(__dirname, "samples-src", "templates", "partials", "itowns", "*.hbs")
                     ],
                     context : [
-                        path.join(__dirname, "samples-src", "config.json"),
+                        path.join(__dirname, "samples-src", "config-itowns.json"),
                         {
                             mode : (production) ? "" : "-src"
                         }

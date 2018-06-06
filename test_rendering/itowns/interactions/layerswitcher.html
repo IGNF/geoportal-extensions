@@ -20,7 +20,7 @@
     <!-- code -->
     <script>
 
-        window.onload = function () {
+        var createMap =  function () {
             const positionOnGlobe = { longitude: 2.3465, latitude: 48.88, altitude: 250000 };
 
             const viewerDiv = document.getElementById('viewerDiv');
@@ -68,6 +68,14 @@
                 globeView.removeLayer("ScanEX");
             }
         };
+
+        Gp.Services.getConfig({
+            // serverUrl : "./../resources/AutoConf.js",
+            // callbackSuffix : '',
+            apiKey: "ptlp78g6fvz9daz5mg2fztvr",
+            timeOut: 20000,
+            onSuccess: createMap
+        });
     </script>
 
 

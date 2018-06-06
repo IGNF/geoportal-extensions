@@ -18,15 +18,21 @@
     <!-- code -->
     <script>
 
-        window.onload = function () {
+        var createMap =  function () {
             const positionOnGlobe = { longitude: 6.47, latitude: 44.28, altitude: 8000 };
 
             const viewerDiv = document.getElementById('viewerDiv');
             const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
 
-            itowns.Fetcher.json('../../samples/resources/itowns/JSONLayers/Ortho.json').then(result => globeView.addLayer(result));
-
-            itowns.Fetcher.json('../../samples/resources/itowns/JSONLayers/IGN_MNT.json').then(result => globeView.addLayer(result));
+            // ajout des couches
+            // Couche MNT Geoportail (WMTS)
+            globeView.addLayer(new itowns.layer.GeoportalElevation({
+                layer: "ELEVATION.ELEVATIONGRIDCOVERAGE"
+            }))
+            // Couche WMTS Geoportail
+            globeView.addLayer(new itowns.layer.GeoportalWMTS({
+                layer: "ORTHOIMAGERY.ORTHOPHOTOS"
+            }))
 
             globeView.listen(itowns.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
                 // eslint-disable-next-line no-console
@@ -34,6 +40,14 @@
                 globeView.getGlobeView().controls.setTilt(60, false);
             });
         };
+
+        Gp.Services.getConfig({
+            // serverUrl : "./../resources/AutoConf.js",
+            // callbackSuffix : '',
+            apiKey: "ptlp78g6fvz9daz5mg2fztvr",
+            timeOut: 20000,
+            onSuccess: createMap
+        });
     </script>
 
 

@@ -4,6 +4,12 @@
 
 L'extension Géoportail pour iTowns étend la librairie 3D iTowns afin de proposer l'ajout de widgets au globe. Les fonctionnalités suivantes sont proposées en complément de la bibliothèque [iTowns](http://www.itowns-project.org/) :
 
+* [affichage des couches WMTS Géoportail](#WMTS)
+
+* [affichage des couches WMS Géoportail](#WMS)
+
+* [affichage des couches MNT Géoportail pour affichage du relief](#Elevation)
+
 * [affichage dynamique des attributions](#attributions)
 
 * [widget de gestion d'empilement des couches](#layerswitcher)
@@ -295,9 +301,40 @@ NB :
 
 <a id="WMTS"/>
 
-### Affichage des couche WMTS Géoportail
+### Affichage des couches WMTS Géoportail
 
-Le modèle de données iTowns prend en entrée des couches matérialisées sous forme d'objet JavaScript. Il n'y a pour le moment pas d'accès privilégié aux couches WMTS Géoportail avec l'extension Géoportail pour iTowns. Pour afficher des couches WMTS (Géoportail ou autre), il faut se référer à la [documentation d'iTowns pour l'ajout d'une couche](http://www.itowns-project.org/itowns/API_Doc/GlobeView.html#addLayer).
+Le modèle de données iTowns prend en entrée des couches matérialisées sous forme d'objet JavaScript. Deux moyens existent pour afficher les couches WMTS Géoportail.
+
+1 - Via l'accès privilégié aux couches WMTS Géoportail fourni par l'extension Géoportail pour iTowns.
+
+2 - Directement avec la librairie iTowns. Pour cela, il faut se référer à la [documentation d'iTowns pour l'ajout d'une couche](http://www.itowns-project.org/itowns/API_Doc/GlobeView.html#addLayer).
+
+#### Utilisation de l'accès privilégié aux couches WMTS Géoportail
+
+L'affichage se fait par la création d'une nouvelle instance de la classe [Itowns.layer.GeoportalWMTS](http://ignf.github.io/geoportal-extensions/itowns-latest/jsdoc/itowns.layer.GeoportalWMTS.html), de la manière suivante :
+
+``` javascript
+new itowns.layer.GeoportalWMTS(options);
+```
+Cette fonction retourne un objet **itowns.layer.GeoportalWMTS**, qui peut ainsi être interprété par la fonction addLayer de la librairie Itowns pour l'ajout dans la carte.
+
+Il est possible de surcharger le paramétrage par défaut de la couche en passant l'option "itownsParams" lors de la création de l'instance de la couche Géoportail WMTS.
+
+#### Exemple d'utilisation
+``` javascript
+const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
+
+globeView.addLayer(new itowns.layer.GeoportalWMTS({
+    layer: "ORTHOIMAGERY.ORTHOPHOTOS",
+    itownsParams : {
+        opacity : 0.5
+    }
+}));
+```
+
+#### Utilisation directe de la librairie iTowns
+
+Il est possible d'ajouter une couche WMTS Géoportail (ou autre) en utilisant directement le paramétrage d'iTowns. Ci-après, un exemple d'utilisation.
 
 #### Exemple d'utilisation
 ``` javascript
@@ -443,7 +480,38 @@ globeView.addLayer(orthoLayer);
 
 ### Affichage des couches WMS Géoportail
 
-Le modèle de données iTowns prend en entrée des couches matérialisées sous forme d'objet javascript. Il n'y a pour le moment pas d'accès privilégié aux couches WMS géoportail avec l'extension Géoportail pour iTowns. Pour afficher des couches WMS (Géoportail ou autre), il faut se référer à la [documentation d'iTowns pour l'ajout d'une couche](http://www.itowns-project.org/itowns/API_Doc/GlobeView.html#addLayer).
+Le modèle de données iTowns prend en entrée des couches matérialisées sous forme d'objet JavaScript. Deux moyens existent pour afficher les couches WMS Géoportail.
+
+1 - Via l'accès privilégié aux couches WMS Géoportail fourni par l'extension Géoportail pour iTowns.
+
+2 - Directement avec la librairie iTowns. Pour cela, il faut se référer à la [documentation d'iTowns pour l'ajout d'une couche](http://www.itowns-project.org/itowns/API_Doc/GlobeView.html#addLayer).
+
+#### Utilisation de l'accès privilégié aux couches WMS Géoportail
+
+L'affichage se fait par la création d'une nouvelle instance de la classe [Itowns.layer.GeoportalWMS](http://ignf.github.io/geoportal-extensions/itowns-latest/jsdoc/itowns.layer.GeoportalWMS.html), de la manière suivante :
+
+``` javascript
+new itowns.layer.GeoportalWMS(options);
+```
+Cette fonction retourne un objet **itowns.layer.GeoportalWMS**, qui peut ainsi être interprété par la fonction addLayer de la librairie Itowns pour l'ajout dans la carte.
+
+Il est possible de surcharger le paramétrage par défaut de la couche en passant l'option "itownsParams" lors de la création de l'instance de la couche Géoportail WMS.
+
+#### Exemple d'utilisation
+``` javascript
+const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
+
+globeView.addLayer(new itowns.layer.GeoportalWMS({
+    layer: "ORTHOIMAGERY.ORTHOPHOTOS",
+    itownsParams : {
+        opacity : 0.5
+    }
+}));
+```
+
+#### Utilisation directe de la librairie iTowns
+
+Il est possible d'ajouter une couche WMS Géoportail (ou autre) en utilisant directement le paramétrage d'iTowns. Ci-après, un exemple d'utilisation.
 
 #### Exemple d'utilisation
 ``` javascript
@@ -499,6 +567,133 @@ var regionLayer{
 
 globeView.addLayer(regionLayer);
 ```
+
+<a id="Elevation"/>
+
+### Affichage des couches MNT WMTS Géoportail pour affichage du relief
+
+Le modèle de données iTowns prend en entrée des couches matérialisées sous forme d'objet JavaScript. Deux moyens existent pour afficher les couches WMTS MNT Géoportail.
+
+1 - Via l'accès privilégié aux couches WMTS Géoportail fourni par l'extension Géoportail pour iTowns.
+
+2 - Directement avec la librairie iTowns. Pour cela, il faut se référer à la [documentation d'iTowns pour l'ajout d'une couche](http://www.itowns-project.org/itowns/API_Doc/GlobeView.html#addLayer).
+
+#### Utilisation de l'accès privilégié aux couches WMTS Géoportail pour afficher un MNT
+
+L'affichage se fait par la création d'une nouvelle instance de la classe [Itowns.layer.GeoportalElevation](http://ignf.github.io/geoportal-extensions/itowns-latest/jsdoc/itowns.layer.GeoportalElevation.html), de la manière suivante :
+
+``` javascript
+new itowns.layer.GeoportalElevation(options);
+```
+Cette fonction retourne un objet **itowns.layer.GeoportalElevation**, qui peut ainsi être interprété par la fonction addLayer de la librairie Itowns pour l'affichage du MNT sur la carte 3D.
+
+Il est possible de surcharger le paramétrage par défaut de la couche en passant l'option "itownsParams" lors de la création de l'instance de la couche Géoportail WMTS.
+
+#### Exemple d'utilisation
+``` javascript
+const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
+
+globeView.addLayer(new itowns.layer.GeoportalElevation({ layer: "ELEVATION.ELEVATIONGRIDCOVERAGE" }));
+```
+
+#### Utilisation directe de la librairie iTowns
+
+Il est possible d'ajouter une couche WMTS Géoportail (ou autre) de type "élévation" en utilisant directement le paramétrage d'iTowns. Ci-après, un exemple d'utilisation.
+
+#### Exemple d'utilisation
+``` javascript
+const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
+
+var MNTLayer = {
+    type : "elevation",
+	protocol : "wmts",
+	id : "IGN_MNT",
+	url : "http://wxs.ign.fr/maCLEF/geoportail/wmts",
+	noDataValue : -99999,
+	updateStrategy : {
+		type : 1,
+		options: {
+			groups : [3, 7, 11, 14]
+		}
+	},
+    networkOptions : {
+        crossOrigin : "omit"
+    },
+	options : {
+		name : "ELEVATION.ELEVATIONGRIDCOVERAGE",
+        originators :  [{
+            name : "IGN",
+            attribution : "IGN Grandes Echelles",
+            url : "http://www.ign.fr",
+            constraints : [{
+                crs :"EPSG:4326"
+            }]
+        }],
+		mimetype : "image/x-bil;bits=32",
+		tileMatrixSet : "WGS84G",
+		tileMatrixSetLimits : {
+			"3": {
+				"minTileRow": 1,
+				"maxTileRow": 5,
+				"minTileCol": 5,
+				"maxTileCol": 15
+			},
+			"4": {
+				"minTileRow": 3,
+				"maxTileRow": 10,
+				"minTileCol": 10,
+				"maxTileCol": 30
+			},
+			"5": {
+				"minTileRow": 6,
+				"maxTileRow": 20,
+				"minTileCol": 20,
+				"maxTileCol": 61
+			},
+			"6": {
+				"minTileRow": 13,
+				"maxTileRow": 40,
+				"minTileCol": 41,
+				"maxTileCol": 123
+			},
+			"7": {
+				"minTileRow": 27,
+				"maxTileRow": 80,
+				"minTileCol": 82,
+				"maxTileCol": 247
+			},
+			"8": {
+				"minTileRow": 54,
+				"maxTileRow": 160,
+				"minTileCol": 164,
+				"maxTileCol": 494
+			},
+			"9": {
+				"minTileRow": 108,
+				"maxTileRow": 321,
+				"minTileCol": 329,
+				"maxTileCol": 989
+			},
+			"10": {
+				"minTileRow": 216,
+				"maxTileRow": 642,
+				"minTileCol": 659,
+				"maxTileCol": 1979
+			},
+			"11": {
+				"minTileRow": 432,
+				"maxTileRow": 1285,
+				"minTileCol": 1319,
+				"maxTileCol": 3959
+			}
+		}
+	}
+};
+
+
+globeView.addLayer(ElevationLayer);
+```
+
 
 <a id="layerswitcher"/>
 

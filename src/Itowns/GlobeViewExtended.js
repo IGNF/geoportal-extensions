@@ -280,8 +280,15 @@ GlobeViewExtended.prototype.forget = function (type, callback) {
  * @return {Promise} promise
  */
 GlobeViewExtended.prototype.addLayer = function (layer) {
-    var promise = this.getGlobeView().addLayer(layer);
-    this.getGlobeView().notifyChange(true);
+    // FIXME : to delete when itowns commit 2e9ed61eb4aa2a4bbe0e17c8e2650953844b099e
+    // is integrated into an iTowns release 
+    try {
+        var promise = this.getGlobeView().addLayer(layer);
+        this.getGlobeView().notifyChange(true);
+    } catch (error) {
+        return Promise.reject(error);
+    }
+
     return promise;
 };
 
