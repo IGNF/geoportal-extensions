@@ -55,13 +55,6 @@ function LayerWMS (options) {
             ? (ctx.location && ctx.location.protocol && ctx.location.protocol.indexOf("https:") === 0 ? "https://" : "http://")
             : (options.ssl ? "https://" : "http://");
 
-        // save originators (to be updated by Originators control)
-        this._originators = wmsParams.originators;
-
-        // save legends and metadata (to be added to LayerSwitcher control)
-        this._legends = wmsParams.legends;
-        this._metadata = wmsParams.metadata;
-
         this.type = "color";
         this.protocol = "wms";
         this.version = wmsParams.version;
