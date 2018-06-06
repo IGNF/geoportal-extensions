@@ -85,9 +85,6 @@ function LayerWMS (options) {
         // récupération des autres paramètres passés par l'utilisateur
         Utils.mergeParams(this, options.itownsParams);
 
-        // add originators to layer source (to be updated by Originators control)
-        this._originators = wmsParams.originators;
-
         // add legends and metadata (to be added to LayerSwitcher control)
         this.legends = wmsParams.legends;
         this.metadata = wmsParams.metadata;

@@ -3,7 +3,7 @@ import Utils from "../../Common/Utils";
 import Config from "../../Common/Utils/Config";
 import Logger from "../../Common/Utils/LoggerByDefault";
 
-var logger = Logger.getLogger("wmtsLayer");
+var logger = Logger.getLogger("elevationLayer");
 
 /**
  * @classdesc
@@ -12,7 +12,7 @@ var logger = Logger.getLogger("wmtsLayer");
  * @constructor
  * @alias itowns.layer.GeoportalElevation
  * @param {Object} options            - options for function call.
- * @param {String} options.layer      - Layer name (e.g. "ORTHOIMAGERY.ORTHOPHOTOS")
+ * @param {String} options.layer      - Elevation layer name (e.g. "ELEVATION.ELEVATIONGRIDCOVERAGE")
  * @param {Boolean} [options.ssl]     - if set true, enforce protocol https (only for nodejs)
  * @param {String} [options.apiKey]   - Access key to Geoportal platform
  * @param {Object} [options.itownsParams] - options to overload default geoportal layer options for itowns.GlobeView.addLayer function (see {@link http://www.itowns-project.org/itowns/API_Doc/GlobeView.html#addLayer GlobeView.addLayer})
@@ -86,9 +86,6 @@ function LayerElevation (options) {
 
         // récupération des autres paramètres passés par l'utilisateur
         Utils.mergeParams(this, options.itownsParams);
-
-        // add originators to layer source (to be updated by Originators control)
-        this._originators = wmtsParams.originators;
 
         // add legends and metadata (to be added to LayerSwitcher control)
         this.legends = wmtsParams.legends;
