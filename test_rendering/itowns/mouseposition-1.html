@@ -15,7 +15,7 @@
     <!-- code -->
     <script>
 
-          window.onload = function () {
+        var createMap =  function () {
             const positionOnGlobe = { longitude : 2.3465, latitude : 48.88, altitude : 2500000 };
 
             // iTowns namespace defined here
@@ -26,16 +26,23 @@
                     // eslint-disable-next-line no-console
                     console.info('Globe initialized');
                     var mousePosition = new itowns.control.MousePosition({
-                        apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
+                        apiKey : "ptlp78g6fvz9daz5mg2fztvr",
                         collapsed : false,
                         units : ["m", "dec"]
-                    }
-                    );
+                    });
                     globeView.addWidget( mousePosition );
                 });
 
                 itowns.Fetcher.json('../../samples/resources/itowns/JSONLayers/Ortho.json').then(result => globeView.addLayer(result));
         }
+
+        Gp.Services.getConfig({
+            // serverUrl : "./../resources/AutoConf.js",
+            // callbackSuffix : '',
+            apiKey: "ptlp78g6fvz9daz5mg2fztvr",
+            timeOut: 20000,
+            onSuccess: createMap
+        });
     </script>
 
     <!-- map -->
