@@ -322,6 +322,9 @@ LayerSwitcher.prototype.addLayer = function (layer, config) {
  * @param {ol.layer.Layer} layer - layer.
  */
 LayerSwitcher.prototype.removeLayer = function (layer) {
+    if (!layer) {
+        return;
+    }
     var layerID = layer.gpLayerId;
     var layerList = document.getElementById(this._addUID("GPlayersList"));
     // close layer info element if open.
@@ -332,7 +335,9 @@ LayerSwitcher.prototype.removeLayer = function (layer) {
     }
     // remove layer div
     var layerDiv = document.getElementById(this._addUID("GPlayerSwitcher_ID_" + layerID));
-    layerList.removeChild(layerDiv);
+    if (layerDiv) {
+        layerList.removeChild(layerDiv);
+    }
 
     var layerIndex = Math.abs(layer.getZIndex() - this._lastZIndex);
     // on retire la couche de la liste ordonnée des layers
@@ -345,6 +350,26 @@ LayerSwitcher.prototype.removeLayer = function (layer) {
     }
     // on retire la couche de la liste des layers
     delete this._layers[layerID];
+
+    // on supprime le layer et ses ecouteurs !
+    layer.un(
+        "change:opacity",
+        this._updateLayerOpacity,
+        this
+    );
+
+    layer.un(
+        "change:visible",
+        this._updateLayerVisibility,
+        this
+    );
+
+    // FIXME zindex ?
+    // layer.un("change:zIndex");
+
+    // FIXME
+    // cette methode fait elle correctement le job ?
+    this.getMap().getLayers().remove(layer);
 };
 
 /**
@@ -709,10 +734,16 @@ LayerSwitcher.prototype._updateLayerOpacity = function (e) {
         opacity = 0;
     }
     var id = e.target.gpLayerId;
+
     var layerOpacityInput = document.getElementById(this._addUID("GPopacityValueDiv_ID_" + id));
-    layerOpacityInput.value = Math.round(opacity * 100);
+    if (layerOpacityInput) {
+        layerOpacityInput.value = Math.round(opacity * 100);
+    }
+
     var layerOpacitySpan = document.getElementById(this._addUID("GPopacityValue_ID_" + id));
-    layerOpacitySpan.innerHTML = Math.round(opacity * 100) + "%";
+    if (layerOpacitySpan) {
+        layerOpacitySpan.innerHTML = Math.round(opacity * 100) + "%";
+    }
 };
 
 /**
