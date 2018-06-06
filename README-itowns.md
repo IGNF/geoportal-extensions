@@ -691,7 +691,7 @@ var MNTLayer = {
 };
 
 
-globeView.addLayer(orthoLayer);
+globeView.addLayer(ElevationLayer);
 ```
 
 
