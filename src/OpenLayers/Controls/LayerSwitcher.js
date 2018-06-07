@@ -320,6 +320,7 @@ LayerSwitcher.prototype.addLayer = function (layer, config) {
  * Remove a layer from control
  *
  * @param {ol.layer.Layer} layer - layer.
+ * @deprecated on the future version ...
  */
 LayerSwitcher.prototype.removeLayer = function (layer) {
     if (!layer) {
@@ -336,6 +337,7 @@ LayerSwitcher.prototype.removeLayer = function (layer) {
         this._updateLayerVisibility,
         this
     );
+    // FIXME !?
     layer.un(
         "change:zIndex",
         this._updateLayersOrder,
