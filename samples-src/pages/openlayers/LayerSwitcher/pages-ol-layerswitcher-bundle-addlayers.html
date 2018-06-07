@@ -19,7 +19,10 @@
             <div id="map">
             </div>
             <button type="button" id="addMapsLayer">Ajouter une couche Maps</button>
+            <br>
             <button type="button" id="addOSMLayer">Ajouter une couche OSM</button>
+            <button type="button" id="modifyVisibilityOSMLayer">Visibilité sur la couche OSM</button>
+            <button type="button" id="modifyOpacityOSMLayer">Opacité sur la couche OSM</button>
 {{/content}}
 
 {{#content "js"}}
@@ -71,17 +74,20 @@
                         // zIndex : 4,
                         opacity: 0.5
                     });
-                    map.addLayer(osm);
-                    layerSwitcher.addLayer(
-                        osm,
-                        {
-                            title : "OSM layer",
-                            description : "OSM layer"
-                        }
-                    )
+                    map.addLayer(osm); // pas d'autoconf sur une couche utilisateur donc description et nom par defaut !
+                };
+                modifyVisibilityOSMLayer = function () {
+                    var visibility = osm.getVisible();
+                    osm.setVisible(!visibility);
+                };
+                modifyOpacityOSMLayer = function () {
+                    var opacity = (osm.getOpacity() === 1.0) ? 0.5 : 1.0;
+                    osm.setOpacity(opacity);
                 };
                 document.getElementById("addMapsLayer").onclick = addMapsLayer;
                 document.getElementById("addOSMLayer").onclick = addOSMLayer;
+                document.getElementById("modifyVisibilityOSMLayer").onclick = modifyVisibilityOSMLayer;
+                document.getElementById("modifyOpacityOSMLayer").onclick = modifyOpacityOSMLayer;
            </script>
 {{/content}}
 

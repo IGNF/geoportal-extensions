@@ -325,9 +325,23 @@ LayerSwitcher.prototype.removeLayer = function (layer) {
     if (!layer) {
         return;
     }
-    // FIXME
-    // cette methode fait elle correctement le job ?
-    this.getMap().removeLayer(layer);
+
+    layer.un(
+        "change:opacity",
+        this._updateLayerOpacity,
+        this
+    );
+    layer.un(
+        "change:visible",
+        this._updateLayerVisibility,
+        this
+    );
+    layer.un(
+        "change:zIndex",
+        this._updateLayersOrder,
+        this
+    );
+
     logger.trace(layer);
 
     var layerID = layer.gpLayerId;
@@ -755,7 +769,9 @@ LayerSwitcher.prototype._updateLayerVisibility = function (e) {
     var visible = e.target.getVisible();
     var id = e.target.gpLayerId;
     var layerVisibilityInput = document.getElementById(this._addUID("GPvisibility_ID_" + id));
-    layerVisibilityInput.checked = visible;
+    if (layerVisibilityInput) {
+        layerVisibilityInput.checked = visible;
+    }
 };
 
 /**

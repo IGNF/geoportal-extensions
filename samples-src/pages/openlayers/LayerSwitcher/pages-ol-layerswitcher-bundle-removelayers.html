@@ -19,7 +19,11 @@
             <div id="map">
             </div>
             <button type="button" id="removeMapsLayer">Supprimer la couche carte</button>
+            <br>
             <button type="button" id="removeOSMLayer">Supprimer la couche OSM</button>
+            <button type="button" id="modifyVisibilityOSMLayer">Visibilité sur la couche OSM</button>
+            <button type="button" id="modifyOpacityOSMLayer">Opacité sur la couche OSM</button>
+            <br>
             <button type="button" id="removeLastLayer">Supprimer la dernière couche</button>
 
 {{/content}}
@@ -68,13 +72,23 @@
 
 					// Appel du LayerSwitcher
                     layerSwitcher = new ol.control.LayerSwitcher({
-                        layers : [{
-                            layer : osm,
-                            config : {
-                                title : "OSM",
-                                description : "description"
+                        layers : [
+                            {
+                                layer : osm,
+                                config : {
+                                    title : "OSM",
+                                    description : "description..."
+                                }
+                            },
+                            {
+                                layer : maps,
+                                config : {
+                                    title : "Carte",
+                                    description : "description..."
+                                }
                             }
-                        }]});
+                    ]
+                    });
 
 					// Ajout du LayerSwitcher à la carte
                     map.addControl(layerSwitcher);
@@ -89,14 +103,24 @@
                     }
                 };
                 removeMapsLayer = function () {
-                    layerSwitcher.removeLayer(maps);
+                    map.removeLayer(maps);
                 };
                 removeOSMLayer = function () {
-                    layerSwitcher.removeLayer(osm);
+                    map.removeLayer(osm);
+                };
+                modifyVisibilityOSMLayer = function () {
+                    var visibility = osm.getVisible();
+                    osm.setVisible(!visibility);
+                };
+                modifyOpacityOSMLayer = function () {
+                    var opacity = (osm.getOpacity() === 1.0) ? 0.5 : 1.0;
+                    osm.setOpacity(opacity);
                 };
                 document.getElementById("removeMapsLayer").onclick = removeMapsLayer;
                 document.getElementById("removeOSMLayer").onclick = removeOSMLayer;
                 document.getElementById("removeLastLayer").onclick = removeLastLayer;
+                document.getElementById("modifyVisibilityOSMLayer").onclick = modifyVisibilityOSMLayer;
+                document.getElementById("modifyOpacityOSMLayer").onclick = modifyOpacityOSMLayer;
            </script>
 {{/content}}
 
