@@ -4,6 +4,7 @@ import SelectorID from "../../Common/Utils/SelectorID";
 import Interactions from "./Utils/Interactions";
 import DrawingDOM from "../../Common/Controls/DrawingDOM";
 import KMLExtended from "../Formats/KML";
+import LayerSwitcher from "./LayerSwitcher";
 
 var logger = Logger.getLogger("Drawing");
 
@@ -592,8 +593,28 @@ Drawing.prototype.setLayer = function (vlayer) {
                 }
             }
         });
+        this.layer = vlayer;
+
+        // Si un layer switcher est présent dans la carte, on lui affecte des informations pour cette couche
+        this.getMap().getControls().forEach(
+            function (control) {
+                if (control instanceof LayerSwitcher) {
+                    // un layer switcher est présent dans la carte
+                    var layerId = this.layer.gpLayerId;
+                    // on n'ajoute des informations que s'il n'y en a pas déjà (si le titre est le numéro par défaut)
+                    if (control._layers[layerId].title === layerId) {
+                        control.addLayer(
+                            this.layer, {
+                                title : "Croquis",
+                                description : "Mon croquis"
+                            }
+                        );
+                    }
+                }
+            },
+            this
+        );
     }
-    this.layer = vlayer;
 };
 
 /**

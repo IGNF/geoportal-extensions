@@ -6,6 +6,7 @@ import Utils from "../../Common/Utils";
 import RightManagement from "../../Common/Utils/CheckRightManagement";
 import Measures from "./Measures/Measures";
 import MeasureToolBox from "./MeasureToolBox";
+import LayerSwitcher from "./LayerSwitcher";
 import Interactions from "./Utils/Interactions";
 import ElevationPathDOM from "../../Common/Controls/ElevationPathDOM";
 import ProfileElevationPathDOM from "../../Common/Controls/ProfileElevationPathDOM";
@@ -845,7 +846,30 @@ ElevationPath.prototype._initMeasureInteraction = function (map) {
         style : this._drawStyleFinish
     });
 
+    // on rajoute le champ gpResultLayerId permettant d'identifier une couche crée par le composant.
+    this._measureVector.gpResultLayerId = "measure";
+
     map.addLayer(this._measureVector);
+
+    // Si un layer switcher est présent dans la carte, on lui affecte des informations pour cette couche
+    this.getMap().getControls().forEach(
+        function (control) {
+            if (control instanceof LayerSwitcher) {
+                // un layer switcher est présent dans la carte
+                var layerId = this._measureVector.gpLayerId;
+                // on n'ajoute des informations que s'il n'y en a pas déjà (si le titre est le numéro par défaut)
+                if (control._layers[layerId].title === layerId) {
+                    control.addLayer(
+                        this._measureVector, {
+                            title : "Profil altimétrique",
+                            description : "Mon profil altimétrique"
+                        }
+                    );
+                }
+            }
+        },
+        this
+    );
 };
 
 /**
