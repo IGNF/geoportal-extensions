@@ -320,8 +320,32 @@ LayerSwitcher.prototype.addLayer = function (layer, config) {
  * Remove a layer from control
  *
  * @param {ol.layer.Layer} layer - layer.
+ * @deprecated on the future version ...
  */
 LayerSwitcher.prototype.removeLayer = function (layer) {
+    if (!layer) {
+        return;
+    }
+
+    layer.un(
+        "change:opacity",
+        this._updateLayerOpacity,
+        this
+    );
+    layer.un(
+        "change:visible",
+        this._updateLayerVisibility,
+        this
+    );
+    // FIXME !?
+    layer.un(
+        "change:zIndex",
+        this._updateLayersOrder,
+        this
+    );
+
+    logger.trace(layer);
+
     var layerID = layer.gpLayerId;
     var layerList = document.getElementById(this._addUID("GPlayersList"));
     // close layer info element if open.
@@ -332,7 +356,9 @@ LayerSwitcher.prototype.removeLayer = function (layer) {
     }
     // remove layer div
     var layerDiv = document.getElementById(this._addUID("GPlayerSwitcher_ID_" + layerID));
-    layerList.removeChild(layerDiv);
+    if (layerDiv) {
+        layerList.removeChild(layerDiv);
+    }
 
     var layerIndex = Math.abs(layer.getZIndex() - this._lastZIndex);
     // on retire la couche de la liste ordonnée des layers
@@ -709,10 +735,16 @@ LayerSwitcher.prototype._updateLayerOpacity = function (e) {
         opacity = 0;
     }
     var id = e.target.gpLayerId;
+
     var layerOpacityInput = document.getElementById(this._addUID("GPopacityValueDiv_ID_" + id));
-    layerOpacityInput.value = Math.round(opacity * 100);
+    if (layerOpacityInput) {
+        layerOpacityInput.value = Math.round(opacity * 100);
+    }
+
     var layerOpacitySpan = document.getElementById(this._addUID("GPopacityValue_ID_" + id));
-    layerOpacitySpan.innerHTML = Math.round(opacity * 100) + "%";
+    if (layerOpacitySpan) {
+        layerOpacitySpan.innerHTML = Math.round(opacity * 100) + "%";
+    }
 };
 
 /**
@@ -739,7 +771,9 @@ LayerSwitcher.prototype._updateLayerVisibility = function (e) {
     var visible = e.target.getVisible();
     var id = e.target.gpLayerId;
     var layerVisibilityInput = document.getElementById(this._addUID("GPvisibility_ID_" + id));
-    layerVisibilityInput.checked = visible;
+    if (layerVisibilityInput) {
+        layerVisibilityInput.checked = visible;
+    }
 };
 
 /**

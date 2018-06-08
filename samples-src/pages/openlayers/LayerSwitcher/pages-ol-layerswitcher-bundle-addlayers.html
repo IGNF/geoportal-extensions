@@ -1,0 +1,109 @@
+{{#extend "ol-sample-bundle-layout"}}
+
+{{#content "head"}}
+        <title>Sample openlayers LayerSwitcher</title>
+{{/content}}
+
+{{#content "style"}}
+        <style>
+            div#map {
+                width: 100%;
+                height: 500px;
+            }
+        </style>
+{{/content}}
+
+{{#content "body"}}
+            <h2>Ajout du gestionnaire de couches avec formulaire d'ajout de couche</h2>
+            <!-- map -->
+            <div id="map">
+            </div>
+            <button type="button" id="addMapsLayer">Ajouter une couche Map</button>
+            <br>
+            <button type="button" id="addOSMLayer">Ajouter une couche OSM</button>
+            <button type="button" id="modifyVisibilityOSMLayer">Visibilité sur la couche OSM</button>
+            <button type="button" id="modifyOpacityOSMLayer">Opacité sur la couche OSM</button>
+            <button type="button" id="modifyIndexOSMLayerMin">Position (-) de la couche OSM</button>
+            <button type="button" id="modifyIndexOSMLayerMax">Position (+) de la couche OSM</button>
+{{/content}}
+
+{{#content "js"}}
+            <script type="text/javascript">
+                var map;
+                var layerSwitcher;
+                var addMapsLayer, addOSMLayer;
+                var osm, maps;
+
+                window.onload = function() {
+                    // on cache l'image de chargement du Géoportail.
+                    document.getElementById('map').style.backgroundImage = 'none';
+
+					// Création de la map
+                    map = new ol.Map({
+                        target : "map",
+                        view : new ol.View({
+                            center : [288074.8449901076, 6247982.515792289],
+                            zoom : 6
+                        }),
+                        layers : [
+                            new ol.layer.Tile({
+                                source : new ol.source.GeoportalWMTS({
+                                    layer: "ORTHOIMAGERY.ORTHOPHOTOS"
+                                }),
+                                opacity : 0.8
+                            })
+                        ]
+                    });
+
+					// Appel du LayerSwitcher
+                    layerSwitcher = new ol.control.LayerSwitcher({});
+
+					// Ajout du LayerSwitcher à la carte
+                    map.addControl(layerSwitcher);
+                };
+
+                addMapsLayer = function() {
+                    maps = new ol.layer.Tile({
+                        source : new ol.source.GeoportalWMTS({
+                            layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+                        }) // , zIndex : 0
+                    });
+                    map.addLayer(maps);
+                };
+                addOSMLayer = function() {
+                    osm = new ol.layer.Tile({
+                        source: new ol.source.OSM(),
+                        // zIndex : 4,
+                        opacity: 0.5
+                    });
+                    map.addLayer(osm); // pas d'autoconf sur une couche utilisateur donc description et nom par defaut !
+                };
+                modifyVisibilityOSMLayer = function () {
+                    var visibility = osm.getVisible();
+                    osm.setVisible(!visibility);
+                };
+                modifyOpacityOSMLayer = function () {
+                    var opacity = (osm.getOpacity() === 1.0) ? 0.5 : 1.0;
+                    osm.setOpacity(opacity);
+                };
+                modifyIndexOSMLayerMin = function () {
+                    var cidx = osm.getZIndex();
+                    if (cidx === 0) {
+                        return;
+                    }
+                    osm.setZIndex(--cidx);
+                };
+                modifyIndexOSMLayerMax = function () {
+                    var cidx = osm.getZIndex();
+                    osm.setZIndex(++cidx);
+                };
+                document.getElementById("addMapsLayer").onclick = addMapsLayer;
+                document.getElementById("addOSMLayer").onclick = addOSMLayer;
+                document.getElementById("modifyVisibilityOSMLayer").onclick = modifyVisibilityOSMLayer;
+                document.getElementById("modifyOpacityOSMLayer").onclick = modifyOpacityOSMLayer;
+                document.getElementById("modifyIndexOSMLayerMin").onclick = modifyIndexOSMLayerMin;
+                document.getElementById("modifyIndexOSMLayerMax").onclick = modifyIndexOSMLayerMax;
+           </script>
+{{/content}}
+
+{{/extend}}
