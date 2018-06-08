@@ -494,8 +494,8 @@ var Measures = {
                     if (control._layers[layerId].title === layerId) {
                         control.addLayer(
                             this.measureVector, {
-                                title : "Mesures",
-                                description : "Mes mesures"
+                                title : this.options.layerswitcher.title,
+                                description : this.options.layerswitcher.description
                             }
                         );
                     }

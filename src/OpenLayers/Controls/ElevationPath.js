@@ -24,6 +24,9 @@ var logger = Logger.getLogger("elevationpath");
  * @extends ol.control.Control
  * @param {Object} options - options for function call.
  * @param {Boolean} [options.active = false] - specify if control should be actived at startup. Default is false.
+ * @param {Object} [options.layerswitcher = {}] - ...
+ * @param {String} [options.layerswitcher.title] - ...
+ * @param {String} [options.layerswitcher.description] - ...
  * @param {Object} [options.stylesOptions = DEFAULT_STYLES] - styles management
  * @param {Object} [options.stylesOptions.marker = {}] - styles management of marker displayed on map when the user follows the elevation path. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Image.html ol.style.Image} subclass object
  * @param {Object} [options.stylesOptions.draw = {}] - styles used when drawing. Specified with following properties.
@@ -589,6 +592,10 @@ ElevationPath.prototype._initialize = function (options) {
         active : false,
         apiKey : null,
         elevationOptions : {},
+        layerswitcher : {
+            title : "Profil altimétrique",
+            description : "Mon profil altimétrique"
+        },
         displayProfileOptions : {
             greaterSlope : true,
             meanSlope : true,
@@ -861,8 +868,8 @@ ElevationPath.prototype._initMeasureInteraction = function (map) {
                 if (control._layers[layerId].title === layerId) {
                     control.addLayer(
                         this._measureVector, {
-                            title : "Profil altimétrique",
-                            description : "Mon profil altimétrique"
+                            title : this.options.layerswitcher.title,
+                            description : this.options.layerswitcher.description
                         }
                     );
                 }

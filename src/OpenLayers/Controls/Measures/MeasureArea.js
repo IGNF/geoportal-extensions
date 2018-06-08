@@ -26,6 +26,9 @@ var logger = Logger.getLogger("measurearea");
  * @param {Object} [options.styles.start = {}] - Polygon Style when drawing. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Style.html ol.style.Style} object.
  * @param {Object} [options.styles.finish = {}] - Polygon Style when finished drawing. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Style.html ol.style.Style} object.
  * <!-- @param {Object} [options.tooltip = {}] - NOT YET IMPLEMENTED ! -->
+ * @param {Object} [options.layerswitcher = {}] - ...
+ * @param {String} [options.layerswitcher.title] - ...
+ * @param {String} [options.layerswitcher.description] - ...
  * @example
  * var measureArea = new ol.control.MeasureArea({
  *    geodesic : false
@@ -158,7 +161,11 @@ MeasureArea.prototype._initialize = function (options) {
     this.options.geodesic = (typeof options.geodesic !== "undefined") ? options.geodesic : true;
     this.options.target = (typeof options.target !== "undefined") ? options.target : null;
     this.options.render = (typeof options.render !== "undefined") ? options.render : null;
-
+    this.options.layerswitcher = (typeof options.layerswitcher !== "undefined") ? options.layerswitcher : {
+        title : "Mesures de surface",
+        description : "Mes mesures"
+    };
+    
     // gestion des styles !
     this.createStylingMeasureInteraction(options.styles);
 };

@@ -26,6 +26,9 @@ var logger = Logger.getLogger("measureazimut");
  * @param {Object} [options.styles.start = {}] - Line Style when drawing. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Style.html ol.style.Style} object.
  * @param {Object} [options.styles.finish = {}] - Line Style when finished drawing. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Style.html ol.style.Style} object.
  * <!-- @param {Object} [options.tooltip = {}] - NOT YET IMPLEMENTED ! -->
+ * @param {Object} [options.layerswitcher = {}] - ...
+ * @param {String} [options.layerswitcher.title] - ...
+ * @param {String} [options.layerswitcher.description] - ...
  * @example
  * var measure = new ol.control.MeasureAzimuth({
  *   geodesic : true
@@ -176,6 +179,10 @@ MeasureAzimuth.prototype._initialize = function (options) {
     this.options.geodesic = (typeof options.geodesic !== "undefined") ? options.geodesic : false;
     this.options.target = (typeof options.target !== "undefined") ? options.target : null;
     this.options.render = (typeof options.render !== "undefined") ? options.render : null;
+    this.options.layerswitcher = (typeof options.layerswitcher !== "undefined") ? options.layerswitcher : {
+        title : "Mesures d'azimuth",
+        description : "Mes mesures"
+    };
 
     // gestion des styles !
     this.createStylingMeasureInteraction(options.styles);
