@@ -18,11 +18,13 @@
             <!-- map -->
             <div id="map">
             </div>
-            <button type="button" id="addMapsLayer">Ajouter une couche Maps</button>
+            <button type="button" id="addMapsLayer">Ajouter une couche Map</button>
             <br>
             <button type="button" id="addOSMLayer">Ajouter une couche OSM</button>
             <button type="button" id="modifyVisibilityOSMLayer">Visibilité sur la couche OSM</button>
             <button type="button" id="modifyOpacityOSMLayer">Opacité sur la couche OSM</button>
+            <button type="button" id="modifyIndexOSMLayerMin">Position (-) de la couche OSM</button>
+            <button type="button" id="modifyIndexOSMLayerMax">Position (+) de la couche OSM</button>
 {{/content}}
 
 {{#content "js"}}
@@ -84,10 +86,23 @@
                     var opacity = (osm.getOpacity() === 1.0) ? 0.5 : 1.0;
                     osm.setOpacity(opacity);
                 };
+                modifyIndexOSMLayerMin = function () {
+                    var cidx = osm.getZIndex();
+                    if (cidx === 0) {
+                        return;
+                    }
+                    osm.setZIndex(--cidx);
+                };
+                modifyIndexOSMLayerMax = function () {
+                    var cidx = osm.getZIndex();
+                    osm.setZIndex(++cidx);
+                };
                 document.getElementById("addMapsLayer").onclick = addMapsLayer;
                 document.getElementById("addOSMLayer").onclick = addOSMLayer;
                 document.getElementById("modifyVisibilityOSMLayer").onclick = modifyVisibilityOSMLayer;
                 document.getElementById("modifyOpacityOSMLayer").onclick = modifyOpacityOSMLayer;
+                document.getElementById("modifyIndexOSMLayerMin").onclick = modifyIndexOSMLayerMin;
+                document.getElementById("modifyIndexOSMLayerMax").onclick = modifyIndexOSMLayerMax;
            </script>
 {{/content}}
 
