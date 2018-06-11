@@ -859,7 +859,7 @@ ElevationPath.prototype._initMeasureInteraction = function (map) {
     map.addLayer(this._measureVector);
 
     // Si un layer switcher est présent dans la carte, on lui affecte des informations pour cette couche
-    this.getMap().getControls().forEach(
+    map.getControls().forEach(
         function (control) {
             if (control instanceof LayerSwitcher) {
                 // un layer switcher est présent dans la carte
