@@ -165,7 +165,7 @@ MeasureArea.prototype._initialize = function (options) {
         title : "Mesures de surface",
         description : "Mes mesures"
     };
-    
+
     // gestion des styles !
     this.createStylingMeasureInteraction(options.styles);
 };
