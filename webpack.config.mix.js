@@ -12,6 +12,10 @@ var ExtractTextWebPackPlugin = require("extract-text-webpack-plugin");
 var BannerWebPackPlugin = webpack.BannerPlugin;
 var UglifyJsWebPackPlugin = webpack.optimize.UglifyJsPlugin;
 
+// -- performances
+var SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
+var smp = new SpeedMeasurePlugin();
+
 // -- variables
 var date = new Date().toISOString().split("T")[0];
 var pkg = require(path.join(__dirname, "package.json"));
@@ -19,12 +23,15 @@ var pkg = require(path.join(__dirname, "package.json"));
 module.exports = env => {
     // environnement d'execution
     var production = (env) ? env.production : false;
+    var development = (env) ? env.development : false;
 
-    return {
+    var _mode = (production) ? "" : (development) ? "-map" : "-src";
+
+    return smp.wrap({
         entry : path.join(__dirname, "src", "Mix", "GpPluginOlItowns"),
         output : {
             path : path.join(__dirname, "dist", "mix"),
-            filename : (production) ? "GpPluginOlItowns.js" : "GpPluginOlItowns-src.js",
+            filename : "GpPluginOlItowns" + _mode + ".js",
             library : "Gp",
             libraryTarget : "umd",
             umdNamedDefine : true
@@ -60,7 +67,7 @@ module.exports = env => {
                 amd : "require"
             }
         },
-        devtool : (production) ? false : "eval-source-map",
+        devtool : (development) ? "eval-source-map" : false,
         module : {
             rules : [
                 {
@@ -131,7 +138,7 @@ module.exports = env => {
                 __PRODUCTION__ : JSON.stringify(production)
             }),
             /** CSS / IMAGES */
-            new ExtractTextWebPackPlugin((production) ? "GpPluginOlItowns.css" : "GpPluginOlItowns-src.css")
+            new ExtractTextWebPackPlugin("GpPluginOlItowns" + _mode + ".css")
         ]
         /** MINIFICATION */
         .concat(
@@ -172,5 +179,5 @@ module.exports = env => {
                 entryOnly : true
             })
         ])
-    };
+    });
 };

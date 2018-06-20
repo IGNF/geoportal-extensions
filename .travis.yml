@@ -16,6 +16,10 @@ script:
   - npm run build:leaflet:prod
   - npm run build:itowns:prod
   - npm run build:mix:prod
+  - npm run build:ol:dev
+  - npm run build:leaflet:dev
+  - npm run build:itowns:dev
+  - npm run build:mix:dev
 cache:
   directories:
     - node_modules

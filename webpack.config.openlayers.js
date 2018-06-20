@@ -17,6 +17,10 @@ var HandlebarsPlugin = require("./scripts/webpackPlugins/handlebars-plugin");
 var HandlebarsLayoutPlugin = require("handlebars-layouts");
 var CopyWebpackPlugin = require("copy-webpack-plugin");
 
+// -- performances
+var SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
+var smp = new SpeedMeasurePlugin();
+
 // -- variables
 var date = new Date().toISOString().split("T")[0];
 var pkg = require(path.join(__dirname, "package.json"));
@@ -24,12 +28,15 @@ var pkg = require(path.join(__dirname, "package.json"));
 module.exports = env => {
     // environnement d'execution
     var production = (env) ? env.production : false;
+    var development = (env) ? env.development : false;
 
-    return {
+    var _mode = (production) ? "" : (development) ? "-map" : "-src";
+
+    return smp.wrap({
         entry : path.join(__dirname, "src", "OpenLayers", "GpPluginOpenLayers"),
         output : {
             path : path.join(__dirname, "dist", "openlayers"),
-            filename : (production) ? "GpPluginOpenLayers.js" : "GpPluginOpenLayers-src.js",
+            filename : "GpPluginOpenLayers" + _mode + ".js",
             library : "Gp",
             libraryTarget : "umd",
             umdNamedDefine : true
@@ -59,7 +66,7 @@ module.exports = env => {
                 amd : "require"
             }
         },
-        devtool : (production) ? false : "eval-source-map",
+        devtool : (development) ? "eval-source-map" : false,
         module : {
             rules : [
                 {
@@ -120,7 +127,7 @@ module.exports = env => {
                         use : {
                             loader : "css-loader",
                             options : {
-                                sourceMap : true, // FIXME ?
+                                sourceMap : false, // FIXME ?
                                 minimize : (production) ? true : false
                             }
                         }
@@ -143,7 +150,7 @@ module.exports = env => {
                 conf : path.join(__dirname, "doc/jsdoc-openlayers.json")
             }),
             /** CSS / IMAGES */
-            new ExtractTextWebPackPlugin((production) ? "GpPluginOpenLayers.css" : "GpPluginOpenLayers-src.css"),
+            new ExtractTextWebPackPlugin("GpPluginOpenLayers" + _mode + ".css"),
             /** HANDLEBARS TEMPLATES */
             new HandlebarsPlugin(
                 {
@@ -154,7 +161,7 @@ module.exports = env => {
                     output : {
                         path : path.join(__dirname, "samples", "openlayers"),
                         flatten : false,
-                        filename : (production) ? "[name].html" : "[name]-src.html"
+                        filename : "[name]" + _mode + ".html"
                     },
                     helpers : [
                         HandlebarsLayoutPlugin
@@ -167,7 +174,7 @@ module.exports = env => {
                     context : [
                         path.join(__dirname, "samples-src", "config.json"),
                         {
-                            mode : (production) ? "" : "-src",
+                            mode : _mode,
                             debug : (production) ? "" : "-debug"
                         }
                     ]
@@ -179,7 +186,7 @@ module.exports = env => {
                     entry : path.join(__dirname, "samples-src", "pages", "index-openlayers.html"),
                     output : {
                         path : path.join(__dirname, "samples"),
-                        filename : (production) ? "[name].html" : "[name]-src.html"
+                        filename : "[name]" + _mode + ".html"
                     },
                     context : {
                         samples : () => {
@@ -190,7 +197,7 @@ module.exports = env => {
                                 var label = relativePath.replace("/", " -- ");
                                 var pathObj = path.parse(relativePath);
                                 return {
-                                    filePath : path.join("openlayers", pathObj.dir, pathObj.name.concat((production) ? "" : "-src").concat(pathObj.ext)),
+                                    filePath : path.join("openlayers", pathObj.dir, pathObj.name.concat(_mode).concat(pathObj.ext)),
                                     label : label
                                 };
                             });
@@ -247,5 +254,5 @@ module.exports = env => {
                     entryOnly : true
                 })
             ])
-    };
+    });
 };

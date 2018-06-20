@@ -70,10 +70,10 @@ Liste des targets disponibles :
 
     npm run <target> <option>
         target : (clean), setup,
-                 build[:dev|:prod|:ol[:prod]|:leaflet[:prod]|:itowns[:prod]|:mix[:prod]],
+                 build[:dev|:prod|:ol[:dev|:prod]|:leaflet[:dev|:prod]|:itowns[:dev|:prod]|:mix[:dev|:prod]],
                  sample, (doc)
                  sample:serve, doc:serve
-        option : --env.production, (--env.clean)
+        option : --env.production, --env.development, (--env.clean)
                  --env.leaflet, --env.openlayers, --env.itowns, --env.mix
 
 ### Installation des dépendances
@@ -112,10 +112,10 @@ Upgrade de version :
 **ouvrir une console (ex. avec openlayers) :**
 
     npm run build:ol
-    ou npm run build -- --env.openlayers
     ou npm run build:ol:prod
-    ou npm run build -- --env.production
-    ou npm run build -- --env.production --env.openlayers
+    ou npm run build:ol:dev
+    ou npm run build:ol -- --env.production
+    ou npm run build:ol -- --env.development
 
 Les *bundles* sont disponibles dans le répertoire :
 
@@ -123,18 +123,19 @@ Les *bundles* sont disponibles dans le répertoire :
     dist/openlayers/GpPluginOpenLayers.css
 	dist/openlayers/GpPluginOpenLayers-src.js
 	dist/openlayers/GpPluginOpenLayers-src.css
-    (...)
+    dist/openlayers/GpPluginOpenLayers-map.js
+	dist/openlayers/GpPluginOpenLayers-map.css
 
 Les sources sont validées (jshint, jscs et/ou eslint).
 La jsoc, les tests et les exemples sont générés.
 
 Il est possible de lancer la génération des bundles pour l'ensemble des extensions :
 
-    // génération des bundles en mode développement
+    // génération des bundles en mode développement (cad sourcemap)
     npm run build:dev
     // génération des bundles en mode production
     npm run build:prod
-    // génération des bundles dans les deux modes : développement et production
+    // génération des bundles en mode sources
     npm run build
 
 #### JSDOC
@@ -191,3 +192,22 @@ http://localhost:9001/
     npm install
     node server.js
     npm run test[:ol|:it|:ll]
+
+## Carte des sources et des dépendances
+
+cf. https://github.com/webpack-contrib/webpack-bundle-analyzer
+
+**ouvrir une console :**
+
+    sudo npm install -g webpack-bundle-analyzer
+    webpack-bundle-analyzer map-ol.json
+
+Le navigateur s'ouvre  sur l'URL suivante :
+http://localhost:8888/
+
+## Analyse (The Official Analyse Tool)
+
+Aller sur l'URL suivante :
+http://webpack.github.io/analyse/
+
+puis, utiliser le fichier *map-[ol|it|mix|ll].json*

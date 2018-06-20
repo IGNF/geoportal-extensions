@@ -359,6 +359,7 @@ then
   doCmd "cd ${_PWD}"
   doCmd "npm run build:${_PACKAGE_LIBRARY_TARGET}" > /dev/null 2>&1
   doCmd "npm run build:${_PACKAGE_LIBRARY_TARGET}:prod" > /dev/null 2>&1
+  doCmd "npm run build:${_PACKAGE_LIBRARY_TARGET}:dev" > /dev/null 2>&1
 fi
 
 ################################################################################

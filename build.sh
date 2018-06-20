@@ -50,6 +50,8 @@ function leaflet() {
   doCmd "npm run build:leaflet"
   printTo "####### LEAFLET production !"
   doCmd "npm run build:leaflet:prod"
+  printTo "####### LEAFLET development !"
+  doCmd "npm run build:leaflet:dev"
 }
 
 ##########
@@ -59,6 +61,8 @@ function ol() {
   doCmd "npm run build:ol"
   printTo "####### OL production !"
   doCmd "npm run build:ol:prod"
+  printTo "####### OL development !"
+  doCmd "npm run build:ol:dev"
 }
 
 ##########
@@ -68,6 +72,8 @@ function itowns() {
   doCmd "npm run build:itowns"
   printTo "####### iTowns production !"
   doCmd "npm run build:itowns:prod"
+  printTo "####### iTowns development !"
+  doCmd "npm run build:itowns:dev"
 }
 
 ##########
@@ -77,6 +83,8 @@ function mix() {
   doCmd "npm run build:mix"
   printTo "####### Mixte OL/iTowns production !"
   doCmd "npm run build:mix:prod"
+  printTo "####### Mixte OL/iTowns development !"
+  doCmd "npm run build:mix:dev"
 }
 
 printTo "###########  NPM  ##############"
