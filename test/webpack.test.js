@@ -18,6 +18,14 @@ module.exports = {
     module : {
         rules : [
             {
+                test: /\.js$/,
+                include: path.resolve('..', 'src'), // instrument only testing sources with Istanbul, after ts-loader runs
+                loader: 'istanbul-instrumenter-loader',
+                query: {
+                    esModules: true
+                }
+            },
+            {
                 test : /\.js$/,
                 exclude : /node_modules/,
                 loader : "babel-loader"
