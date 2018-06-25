@@ -55,6 +55,8 @@ nb-configuration.xml
 # add other directories to ignore
 /samples-old/
 /tests-old/
+/coverage/
+/.nyc_output/
 
 # Files #
 #########

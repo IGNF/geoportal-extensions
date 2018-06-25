@@ -57,6 +57,8 @@
                 map.addControl(reverse);
                 var search = new ol.control.SearchEngine({});
                 map.addControl(search);
+                var feature =  new ol.control.GetFeatureInfo({});
+                map.addControl(feature);
 
                 var measureLength = new ol.control.MeasureLength();
                 map.addControl(measureLength);
