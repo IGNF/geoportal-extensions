@@ -211,6 +211,22 @@ div[id^="GPimportGetCapResults-"] {
   overflow-y: auto;
 }
 
+input[id^="GPimportGetCapRubrique-"] {
+  display: none;
+}
+input[id^="GPimportGetCapRubrique-"] ~ li {
+ display: none;
+}
+input[id^="GPimportGetCapRubrique-"]:checked ~ li {
+ display: block;
+}
+/* input[id^="GPimportGetCapRubrique-"] ~ ul {
+ display: block;
+}
+input[id^="GPimportGetCapRubrique-"]:checked ~ ul {
+ display: none;
+} */
+
 .GPimportGetCapProposal {
   width: 100%;
   height: 28px;

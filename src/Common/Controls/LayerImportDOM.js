@@ -1,3 +1,5 @@
+import SelectorID from "../Utils/SelectorID";
+
 var LayerImportDOM = {
 
     /**
@@ -638,38 +640,76 @@ var LayerImportDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createImportGetCapResultsListElement : function () {
+    _createImportGetCapResultsContainer : function () {
         var container = document.createElement("div");
+        container.className = "GPimportGetCapRoot";
         container.id = this._addUID("GPimportGetCapResults");
+
         return container;
     },
 
-    /**
-     * Create GetCap Result Element ( = layer description)
-     *
-     * @param {String} layerDescription - description to be displayed for layer
-     * @param {Number} id - layer identifier in getCapabilities response layers list
-     * @returns {DOMElement} DOM element
-     */
-    _createImportGetCapResultElement : function (layerDescription, id) {
-        var div = document.createElement("div");
-        div.className = "GPimportGetCapProposal";
-        div.innerHTML = layerDescription;
-        div.title = layerDescription;
+    _addImportGetCapResultListRubrique : function (description, container) {
+        var ul = document.createElement("ul");
+        ul.className = "GPimportGetCapListRubrique";
+        ul.title = description;
+
+        container.appendChild(ul);
+        return container;
+    },
+
+    _addImportGetCapResultRubrique : function (description, container) {
+        var li = document.createElement("li");
+        li.className = "GPimportGetCapRubrique";
+
+        // input
+        var input = document.createElement("input");
+        input.id = "GPimportGetCapRubrique-" + SelectorID.generate();
+        input.className = "GPimportGetCapRubrique";
+        input.type = "checkbox";
+        li.appendChild(input);
+
+        // TODO picto
+
+        // label for
+        var label = document.createElement("label");
+        label.className = "GPimportGetCapRubriqueTitle";
+        label.htmlFor = input.id;
+        label.innerHTML = description;
+        label.title = description;
+        li.appendChild(label);
+
+        container.appendChild(li);
+        return container;
+    },
+
+    _addImportGetCapResultListLayer : function (container) {
+        var ul = document.createElement("ul");
+        ul.className = "GPimportGetCapListLayer";
+
+        container.appendChild(ul);
+        return container;
+    },
+
+    _addImportGetCapResultLayer : function (description, id, container) {
+        var li = document.createElement("li");
+        li.className = "GPimportGetCapProposal";
+        li.innerHTML = description;
+        li.title = description;
+        li.id = "GPimportGetCapProposal_" + id;
 
         var context = this;
-        if (div.addEventListener) {
-            div.addEventListener("click", function (e) {
+        if (li.addEventListener) {
+            li.addEventListener("click", function (e) {
                 context._onGetCapResponseLayerClick(e);
             });
-        } else if (div.attachEvent) {
-            div.attachEvent("onclick", function () {
+        } else if (li.attachEvent) {
+            li.attachEvent("onclick", function () {
                 context._onGetCapResponseLayerClick();
             });
         }
-        div.id = "GPimportGetCapProposal_" + id;
 
-        return div;
+        container.appendChild(li);
+        return container;
     }
 
 };
