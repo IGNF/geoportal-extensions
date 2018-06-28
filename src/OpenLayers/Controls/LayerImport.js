@@ -1256,7 +1256,7 @@ LayerImport.prototype._displayGetCapResponseWMSLayer = function (layerObj, paren
                     }
                 }
                 if (!bRubriqueExist) {
-                    layerObj.Layer[j]._container = this._addImportGetCapResultRubrique(layerObj.Title, layerObj._container);
+                    layerObj.Layer[j]._container = this._addImportGetCapResultRubrique(layerObj.Title, layerObj._container).lastChild;
                 }
                 this._displayGetCapResponseWMSLayer(layerObj.Layer[j], layerObj);
             }

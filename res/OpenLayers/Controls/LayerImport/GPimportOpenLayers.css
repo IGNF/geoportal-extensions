@@ -220,12 +220,12 @@ input[id^="GPimportGetCapRubrique-"] ~ li {
 input[id^="GPimportGetCapRubrique-"]:checked ~ li {
  display: block;
 }
-/* input[id^="GPimportGetCapRubrique-"] ~ ul {
+input[id^="GPimportGetCapRubrique-"] ~ ul {
  display: block;
 }
 input[id^="GPimportGetCapRubrique-"]:checked ~ ul {
  display: none;
-} */
+}
 
 .GPimportGetCapProposal {
   width: 100%;
