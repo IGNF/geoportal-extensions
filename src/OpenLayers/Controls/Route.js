@@ -29,6 +29,9 @@ var logger = Logger.getLogger("route");
  * @param {Array} [options.markersOpts[property].offset] - Offsets in pixels used when positioning the overlay. The first element in the array is the horizontal offset. A positive value shifts the overlay right. The second element in the array is the vertical offset. A positive value shifts the overlay down. Default is [0, 0]. (see http://openlayers.org/en/latest/apidoc/ol.Overlay.html)
  * @param {Object} [options.routeOptions = {}] - route service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~route Gp.Services.route()} to know all route options.
  * @param {Object} [options.autocompleteOptions = {}] - autocomplete service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~autoComplete Gp.Services.autoComplete()} to know all autocomplete options
+ * @param {Object} [options.layerDescription = {}] - Layer informations to be displayed in LayerSwitcher widget (only if a LayerSwitcher is also added to the map)
+ * @param {String} [options.layerDescription.title = "Itinéraire"] - Layer title to be displayed in LayerSwitcher
+ * @param {String} [options.layerDescription.description = "Itinéraire basé sur un graphe"] - Layer description to be displayed in LayerSwitcher
  * @example
  *  var route = ol.control.Route({
  *      collapsed : true
@@ -183,7 +186,11 @@ Route.prototype.initialize = function (options) {
             bridge : false
         },
         routeOptions : {},
-        autocompleteOptions : {}
+        autocompleteOptions : {},
+        layerDescription : {
+            title : "Itinéraire",
+            description : "Itinéraire basé sur un graphe"
+        }
     };
 
     // merge with user options
@@ -1438,8 +1445,8 @@ Route.prototype._fillRouteResultsDetailsFeatureGeometry = function (instructions
                 if (control._layers[layerId].title === layerId) {
                     control.addLayer(
                         this._geojsonSections, {
-                            title : " Itinéraire " + graph,
-                            description : " Itinéraire basé sur un graphe " + graph
+                            title : this.options.layerDescription.title + " (" + graph + ")",
+                            description : this.options.layerDescription.description
                         }
                     );
                 }

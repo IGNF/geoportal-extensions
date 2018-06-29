@@ -19,9 +19,9 @@ var logger = Logger.getLogger("Drawing");
  * @param {Object} options - options for function call.
  * @param {Boolean} [options.collapsed = true] - Specify if Drawing control should be collapsed at startup. Default is true.
  * @param {ol.layer.Vector} [options.layer = null] - Openlayers layer that will hosts created features. If none, an empty vector layer will be created.
- * @param {Object} [options.layerswitcher = {}] - ...
- * @param {String} [options.layerswitcher.title] - ...
- * @param {String} [options.layerswitcher.description] - ...
+ * @param {Object} [options.layerDescription = {}] - Layer informations to be displayed in LayerSwitcher widget (only if a LayerSwitcher is also added to the map)
+ * @param {String} [options.layerDescription.title = "Croquis"] - Layer title to be displayed in LayerSwitcher
+ * @param {String} [options.layerDescription.description = "Mon croquis"] - Layer description to be displayed in LayerSwitcher
  * @param {Object} options.tools - Tools to display in the drawing toolbox. All by default.
  * @param {Boolean} [options.tools.points = true] - Display points drawing tool
  * @param {Boolean} [options.tools.lines = true] - Display lines drawing tool
@@ -382,8 +382,8 @@ Drawing.prototype._initialize = function (options) {
     // Set default options
     this.options = options || {};
 
-    if (!this.options.layerswitcher) {
-        this.options.layerswitcher = {
+    if (!this.options.layerDescription) {
+        this.options.layerDescription = {
             title : "Croquis",
             description : "Mon croquis"
         };
@@ -616,8 +616,8 @@ Drawing.prototype.setLayer = function (vlayer) {
                     if (control._layers[layerId].title === layerId) {
                         control.addLayer(
                             this.layer, {
-                                title : this.options.layerswitcher.title,
-                                description : this.options.layerswitcher.description
+                                title : this.options.layerDescription.title,
+                                description : this.options.layerDescription.description
                             }
                         );
                     }

@@ -24,6 +24,9 @@ var logger = Logger.getLogger("reversegeocoding");
  * @param {Object}   [options.resources =  ["StreetAddress", "PositionOfInterest", "CadastralParcel"]] - resources for geocoding, by default : ["StreetAddress", "PositionOfInterest", "CadastralParcel"]. Possible values are : "StreetAddress", "PositionOfInterest", "CadastralParcel", "Administratif". Resources will be displayed in the same order in widget list.
  * @param {Object}   [options.delimitations = ["Point", "Circle", "Extent"]] - delimitations for reverse geocoding, by default : ["Point", "Circle", "Extent"]. Possible values are : "Point", "Circle", "Extent". Delimitations will be displayed in the same order in widget list.
  * @param {Object}  [options.reverseGeocodeOptions = {}] - reverse geocode service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~reverseGeocode Gp.Services.reverseGeocode()} to know all reverse geocode options.
+ * @param {Object} [options.layerDescription = {}] - Layer informations to be displayed in LayerSwitcher widget (only if a LayerSwitcher is also added to the map)
+ * @param {String} [options.layerDescription.title = "Saisie (recherche inverse)"] - Layer title to be displayed in LayerSwitcher
+ * @param {String} [options.layerDescription.description = "Couche de saisie d'une zone de recherche pour la recherche inverse"] - Layer description to be displayed in LayerSwitcher
  * @example
  *  var iso = ol.control.ReverseGeocode({
  *      collapsed : false,
@@ -167,7 +170,11 @@ ReverseGeocode.prototype.initialize = function (options) {
         collapsed : true,
         resources : ["StreetAddress", "PositionOfInterest", "CadastralParcel"],
         delimitations : ["Point", "Circle", "Extent"],
-        reverseGeocodeOptions : {}
+        reverseGeocodeOptions : {},
+        layerDescription : {
+            title : "Saisie (recherche inverse)",
+            description : "Couche de saisie d'une zone de recherche pour la recherche inverse"
+        }
     };
 
     // merge with user options
@@ -628,8 +635,8 @@ ReverseGeocode.prototype._activateMapInteraction = function (map) {
                     if (control._layers[layerId].title === layerId) {
                         control.addLayer(
                             this._inputFeaturesLayer, {
-                                title : "Saisie (recherche inverse)",
-                                description : "Couche de saisie d'une zone de recherche pour la recherche inverse"
+                                title : this.options.layerDescription.title,
+                                description : this.options.layerDescription.description
                             }
                         );
                         control.setRemovable(this._inputFeaturesLayer, false);
