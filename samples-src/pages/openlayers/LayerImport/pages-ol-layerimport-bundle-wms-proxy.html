@@ -45,13 +45,14 @@
                     collapsed : false,
                     layerTypes : ["WMS"],
                     webServicesOptions : {
-                        proxyUrl : "https://localhost/proxy/proxy.php?url="
+                        proxyUrl : "http://localhost/proxy/proxy.php?url="
                     }
                 });
                 map.addControl(layerImport);
 
                 var input = document.querySelector("input[id^=GPimportServiceUrl-]");
                 input.value = "http://carto.atlasante.fr/cgi-bin/mapserv";
+                // input.value = "http://wxs-gpu.mongeoportail.ign.fr/externe/vkd1evhid6jdj5h4hkhyzjto/wms/v";
               };
 
             </script>
