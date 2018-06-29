@@ -240,7 +240,30 @@ input[id^="GPimportGetCapRubrique-"]:checked ~ ul {
   cursor: pointer;
 }
 
+.GPimportGetCapRubriqueTitle {
+    color: #5E5E5E;
+}
+
+.GPimportGetCapRubrique,
+.GPimportGetCapListRubrique {
+    list-style-type: none;
+}
+
+li.GPimportGetCapRubrique:before,
+li.GPimportGetCapListRubrique:before {
+	/* content: "→ "; caractère UTF-8 */
+    content: "» ";
+}
+
+.GPimportGetCapProposal:hover,
+.GPimportGetCapRubrique:hover {
+
+}
+
+.GPimportGetCapRubriqueTitle:hover {
+    color: #000000;
+}
+
 .GPimportGetCapProposal:hover {
   color: #000000;
-  background-color: #CEDBEF
 }
