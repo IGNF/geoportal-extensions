@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 2.0.0
- * @date 2018-06-25
+ * @date 2018-06-29
  *
  */
 
@@ -18663,465 +18663,6 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _LoggerByDefault = __webpack_require__(0);
-
-var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
-
-var _Config = __webpack_require__(7);
-
-var _Config2 = _interopRequireDefault(_Config);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = {
-    /**
-     * Contrôle des droits sur les ressources.
-     *
-     * @param {Object} options - liste des options
-     * @param {String} options.key - clef API
-     * @param {Array} options.resources - liste des ressources
-     * @param {Array} options.services - liste des services
-     * @returns {Object} rightManagement - undefined ou {
-     *       key : "",
-     *       service-1 : [resource-1, resource-2],
-     *       service-2 : [resource-1, resource-2]
-     * }
-     */
-    check: function check(options) {
-        // logger
-
-        var logger = _LoggerByDefault2.default.getLogger("checkrightmanagement");
-
-        // si aucune option n'est renseignée...
-        if (!options) {
-            // message orienté pour le developpeur !
-            logger.error("WARNING : " + "no parameter specified !");
-            return;
-        }
-
-        // les options
-        var _key = options.key;
-        var _resources = options.resources || [];
-        var _services = options.services || [];
-
-        // si aucune information sur les ressources,
-        // il est impossible de controler quelquechose !!!
-        if (!_resources || _resources.length === 0) {
-            // message orienté pour le developpeur !
-            logger.error("WARNING : " + "no parameter 'resources' specified !");
-            return;
-        }
-
-        // si aucune information sur les services,
-        // il est impossible de controler quelquechose !!!
-        if (!_services || _services.length === 0) {
-            // message orienté pour le developpeur !
-            logger.error("WARNING : " + "no parameter 'services' specified !");
-            return;
-        }
-
-        // les ressources controlées :
-        // Ex.
-        // {
-        //   "Itineraire"     : ["Pieton", "Voiture"],
-        //   "Geocode"        : ["PositionOfInterest", "StreetAddress", "CadastralParcel", "Administratif"],
-        //   "AutoCompletion" : ["PositionOfInterest", "StreetAddress", "CadastralParcel", "Administratif"],
-        //   "Elevation"      : ["SERVICE_CALCUL_ALTIMETRIQUE_RSC"]
-        // }
-        var _rightManagement = {};
-
-        // la clef API n'est pas renseignée
-        if (!_key) {
-            // on verifie si l'autoconfiguration est disponible
-
-            if (!_Config2.default.isConfigLoaded()) {
-                // si l'autoconfiguration n'est pas chargée,
-                // aucune vérification des droits est possible...
-
-                logger.warn("WARNING : " + "The 'apiKey' parameter is missing, " + "and the contract key configuration has not been loaded, " + "so impossible to check yours rights !");
-
-                return;
-            } else {
-                // si l'autoconfiguration est chargée,
-                // on recupere la clef API, et on en profitera ensuite pour controler
-                // les droits sur les ressources.
-
-                // FIXME par defaut, on recupere toujours la première...
-                _key = Object.keys(_Config2.default.configuration.generalOptions.apiKeys)[0];
-                logger.log(_key);
-            }
-        }
-
-        // la clef API est renseignée ou recuperée de l'autoconfiguration
-        if (_key) {
-            // on verifie si l'autoconfiguration est disponible
-
-            if (!_Config2.default.isConfigLoaded()) {
-                // si l'autoconfiguration n'est pas chargée,
-                // il est toujours possible de requeter le service avec une clef API,
-                // mais les droits sur les ressources ne sont pas garantis, on risque
-                // d'obtenir des erreurs 403 forbidden...
-                // la responsabilité revient à l'utilisateur (message d'information)...
-
-                logger.warn("WARNING : " + "the contract key configuration has not been loaded, " + "so be carefull !");
-
-                // les ressouces non controlées
-                var _noRightManagement = {};
-
-                for (var i = 0; i < _services.length; i++) {
-                    var service = _services[i];
-                    _noRightManagement[service] = [];
-
-                    for (var j = 0; j < _resources.length; j++) {
-                        var resource = _resources[j];
-                        _noRightManagement[service].push(resource);
-                    }
-                }
-
-                // on ajoute la clef
-                _noRightManagement.key = _key;
-
-                logger.log("right management not checked", _noRightManagement);
-
-                return _noRightManagement;
-            } else {
-                // si l'autoconf est chargée,
-                // on verifie la correspondance entre la clef et l'autoconfiguration,
-                // on previent l'utilisateur (message d'information) s'il n'a
-                // pas de droits sur certaines ressources ...
-
-                // doit on ecarter les ressources sans droit ?
-                // oui, si possible avec un message d'information pour l'utilisateur...
-
-                for (var k = 0; k < _resources.length; k++) {
-                    var _resource = _resources[k];
-
-                    for (var l = 0; l < _services.length; l++) {
-                        var _service = _services[l];
-
-                        var params = _Config2.default.getServiceParams(_resource, _service, _key);
-                        if (!params || Object.keys(params).length === 0) {
-                            logger.warn("WARNING : " + "The contract key configuration has no rights to load this geoportal " + "resource (" + _resource + ") " + "for this service (" + _service + ") ");
-                            continue;
-                        }
-
-                        if (!_rightManagement[_service]) {
-                            _rightManagement[_service] = [];
-                        }
-
-                        _rightManagement[_service].push(_resource);
-                    }
-                }
-
-                if (!_rightManagement || Object.keys(_rightManagement).length === 0) {
-                    logger.warn("WARNING : " + "The contract key configuration has been loaded, " + "and the 'apiKey' parameter has been set, " + "but, there is a problem on the mapping between the contract and the key !");
-                    return;
-                }
-
-                // on ajoute la clef
-                _rightManagement.key = _key;
-
-                logger.log("right management checked", _rightManagement);
-
-                return _rightManagement;
-            }
-        }
-    }
-};
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(global) {
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _LoggerByDefault = __webpack_require__(0);
-
-var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var logger = _LoggerByDefault2.default.getLogger("config");
-
-var Config = {
-
-    /** autoconf */
-    configuration: null,
-
-    /**
-     * Controle du chargement de l'autoconf
-     *
-     * @returns {Boolean} isConfigLoaded - True si l'autoconf a déjà été chargée, False sinon.
-     */
-    isConfigLoaded: function isConfigLoaded() {
-        var scope = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : typeof global !== "undefined" ? global : {};
-        if (scope.Gp && scope.Gp.Config && Object.keys(scope.Gp.Config).length !== 0) {
-            this.configuration = scope.Gp.Config;
-            return true;
-        }
-        return false;
-    },
-
-    /**
-     * Recuperation de l'identifiant d'une couche donnée
-     *
-     * @param {String} layerName - nom de la couche (par ex. "ORTHOIMAGERY.ORTHOPHOTOS")
-     * @param {String} service   - nom du service (par ex. "WMS" ou "WMTS")
-     * @returns {String} layerId - identifiant de la couche (par ex. "ORTHOIMAGERY.ORTHOPHOTOS$GEOPORTAIL:OGC:WMTS")
-     */
-    getLayerId: function getLayerId(layerName, service) {
-        var layerId = null;
-
-        // layer
-        // key : [layerName]$[contexte]:OGC:[service]
-        // ex : "ORTHOIMAGERY.ORTHOPHOTOS$GEOPORTAIL:OGC:WMTS"
-
-        // service
-        // key : [layerName]$[contexte];[service]
-        // ex : PositionOfInterest$OGC:OPENLS;ReverseGeocode
-
-        if (this.configuration) {
-            var layers = this.configuration["layers"];
-            for (var key in layers) {
-                if (layers.hasOwnProperty(key)) {
-                    var parts = key.split("$");
-                    if (layerName === parts[0]) {
-                        if (parts[1]) {
-                            var servicePartsLayer = parts[1].split(":");
-                            var servicePartsService = parts[1].split(";");
-
-                            if (servicePartsService[1] === service) {
-                                layerId = key;
-                                break;
-                            }
-                            if (servicePartsLayer[2] === service) {
-                                layerId = key;
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        if (!layerId) {
-            logger.error("ERROR layer id (layer name: " + layerName + " / service: " + service + ") was not found !?");
-        }
-
-        return layerId;
-    },
-
-    /**
-     * Récupération des paramètres nécessaires à l'affichage d'une couche WMS ou WMTS
-     *
-     * @param {String} layerName - nom de la couche (par ex. "ORTHOIMAGERY.ORTHOPHOTOS")
-     * @param {String} service   - nom du service (par ex. "WMS" ou "WMTS")
-     * @param {String} [apiKey]  - Clé de contrat API
-     * @returns {Object} params  - paramètres du service (WMS ou WMTS) pour la couche donnée
-     * @returns {String} params.url        - Url du service à requêter pour afficher la couche
-     * @returns {String} params.version    - Version du service
-     * @returns {String} params.styles     - Style par défaut de la couche
-     * @returns {String} params.format     - Format par défaut de la couche
-     * @returns {String} params.projection - Projection par défaut de la couche
-     * @returns {Number} params.minScale   - Dénominateur d'échelle minimum de la couche
-     * @returns {Number} params.maxScale   - Dénominateur d'échelle maximum de la couche
-     * @returns {Gp.BBox} params.extent    - Etendue de la couche, dans la projection de la couche
-     * @returns {Array} params.legends     - Tableau des légendes associées à la couche
-     * @returns {Array} params.metadata    - Tableau des métadonnées associées à la couche
-     * @returns {Array} params.originators - Tableau des originators associés à la couche
-     * @returns {Array} params.title       - Nom de la resource, lisible par un humain.
-     * @returns {Array} params.description - Url de l'image d'aperçu rapide de la ressource.
-     * @returns {Array} params.quicklookUrl- Tableau des originators associés à la couche
-     * @returns {String} params.[TMSLink]          - Identifiant de la pyramide (TMS), dans le cas d'une couche WMTS
-     * @returns {Gp.Point} params.[matrixOrigin]   - Origine de la matrice (top left corner), dans le cas d'une couche WMTS
-     * @returns {Array} params.[nativeResolutions] - Tableau regroupant les résolutions de chaque niveau de la matrice, dans le cas d'une couche WMTS
-     * @returns {Array} params.[matrixIds]         - Tableau regroupant les identifiants de chaque niveau de la matrice, dans le cas d'une couche WMTS
-     */
-    getLayerParams: function getLayerParams(layerName, service, apiKey) {
-        var params = {};
-
-        if (this.configuration) {
-            // récupération de l'identifiant complet de la couche.
-            var layerId = this.getLayerId(layerName, service);
-
-            if (layerId) {
-                // récupération de l'objet de configuration de la couche
-                var layerConf = this.configuration.layers[layerId];
-
-                // controle de la clef
-                var key = layerConf.apiKeys[0];
-                if (apiKey) {
-                    if (apiKey !== key) {
-                        logger.error("ERROR different keys (" + apiKey + " !== " + key + ") !?");
-                        return;
-                    }
-                }
-
-                apiKey = apiKey || key;
-                params.key = apiKey;
-                // récupération des paramètres du service
-                params.url = layerConf.getServerUrl(apiKey);
-                params.version = layerConf.getServiceParams().version;
-                params.styles = layerConf.getDefaultStyle();
-                params.format = layerConf.getDefaultFormat();
-                params.projection = layerConf.getDefaultProjection();
-
-                // récupération des infos de la couche
-                params.minScale = layerConf.getMinScaleDenominator();
-                params.maxScale = layerConf.getMaxScaleDenominator();
-                params.extent = layerConf.getBBOX();
-                params.legends = layerConf.getLegends();
-                params.metadata = layerConf.getMetadata();
-                params.originators = layerConf.getOriginators();
-                params.title = layerConf.getTitle();
-                params.description = layerConf.getDescription();
-                params.quicklookUrl = layerConf.getQuicklookUrl();
-
-                // WMTS : récupération des tileMatrixSetLimits
-                if (layerConf.wmtsOptions) {
-                    params.tileMatrixSetLimits = layerConf.wmtsOptions.tileMatrixSetLimits;
-                }
-
-                // WMTS : récupération des paramètres de la pyramide (TMS)
-                var TMSLink = layerConf.getTMSID();
-                if (TMSLink) {
-                    params.TMSLink = TMSLink;
-                    var tmsConf = this.configuration.getTMSConf(TMSLink);
-                    // Get matrix origin : Gp.Point = Object{x:Float, y:Float}
-                    params.matrixOrigin = tmsConf.getTopLeftCorner();
-                    params.nativeResolutions = tmsConf.nativeResolutions;
-                    params.matrixIds = tmsConf.matrixIds;
-                    params.tileMatrices = tmsConf.tileMatrices;
-                }
-            }
-        }
-
-        return params;
-    },
-
-    /**
-     * Recuperation des parametres d'un service
-     *
-     * @param {String} [resource] - "PositionOfInterest", "StreetAddress", "Voiture", "Pieton", ...
-     * @param {String} [service] - Geocode, Itineraire, ...
-     * @param {String} [apiKey]  - Clé de contrat API
-     * @returns {Object} params - paramètres de la ressource
-     * @returns {String} params. -
-     * @returns {String} params. -
-     * @returns {String} params. -
-     */
-    getServiceParams: function getServiceParams(resource, service, apiKey) {
-        var params = {};
-
-        if (this.configuration) {
-            // récupération de l'identifiant complet de la couche.
-            var layerId = this.getLayerId(resource, service);
-
-            if (layerId) {
-                // récupération de l'objet de configuration de la couche
-                var layerConf = this.configuration.layers[layerId];
-
-                // controle de la clef
-                var key = layerConf.apiKeys[0];
-                if (apiKey) {
-                    if (apiKey !== key) {
-                        return;
-                    }
-                }
-
-                apiKey = apiKey || key;
-                params.key = apiKey;
-                // récupération des paramètres du service
-                params.url = layerConf.getServerUrl(apiKey);
-                params.version = layerConf.getServiceParams().version;
-
-                // récupération des infos de la couche
-                params.extent = layerConf.getBBOX();
-                params.title = layerConf.getTitle();
-                params.description = layerConf.getDescription();
-            }
-        }
-
-        return params;
-    },
-
-    /**
-     * Resolution en geographique
-     *
-     * @returns {Array} resolutions
-     */
-    getResolutions: function getResolutions() {
-        var resolutions = [];
-
-        if (this.configuration) {
-            resolutions = this.configuration["generalOptions"]["wgs84Resolutions"];
-        }
-
-        return resolutions;
-    },
-
-    /**
-     * Recuperation des parametres TMS de la configuration
-     * @param {String} tmsName - tile matrix set name
-     *
-     * @returns {Object} tile matrix set
-     */
-    getTileMatrix: function getTileMatrix(tmsName) {
-        var tms = {};
-
-        if (this.configuration) {
-            if (tmsName) {
-                tms = this.configuration["tileMatrixSets"][tmsName.toUpperCase()];
-            }
-        }
-
-        return tms;
-    },
-
-    /**
-     * Récupération des contraintes générales d'une couche donnée : extent, minScale, maxScale, projection
-     *
-     * @param {String} layerId - identifiant de la couche
-     * @returns {Object} params - contraintes de la couche
-     * @returns {String} params.projection - Projection par défaut de la couche
-     * @returns {Number} params.minScale   - Dénominateur d'échelle minimum de la couche
-     * @returns {Number} params.maxScale   - Dénominateur d'échelle maximum de la couche
-     * @returns {Gp.BBox} params.extent    - Etendue de la couche, dans la projection de la couche
-     */
-    getGlobalConstraints: function getGlobalConstraints(layerId) {
-        var params = {};
-
-        if (layerId) {
-            // récupération de l'objet de configuration de la couche
-            var layerConf = this.configuration.layers[layerId];
-            params.projection = layerConf.getDefaultProjection();
-            params.minScale = layerConf.getMinScaleDenominator();
-            params.maxScale = layerConf.getMaxScaleDenominator();
-            params.extent = layerConf.getBBOX();
-        }
-
-        return params;
-    }
-};
-
-exports.default = Config;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)))
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _ol = __webpack_require__(1);
@@ -20182,6 +19723,465 @@ LayerSwitcher.prototype.getLayerInfo = function (layer) {
 exports.default = LayerSwitcher;
 
 /***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _LoggerByDefault = __webpack_require__(0);
+
+var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
+
+var _Config = __webpack_require__(8);
+
+var _Config2 = _interopRequireDefault(_Config);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+    /**
+     * Contrôle des droits sur les ressources.
+     *
+     * @param {Object} options - liste des options
+     * @param {String} options.key - clef API
+     * @param {Array} options.resources - liste des ressources
+     * @param {Array} options.services - liste des services
+     * @returns {Object} rightManagement - undefined ou {
+     *       key : "",
+     *       service-1 : [resource-1, resource-2],
+     *       service-2 : [resource-1, resource-2]
+     * }
+     */
+    check: function check(options) {
+        // logger
+
+        var logger = _LoggerByDefault2.default.getLogger("checkrightmanagement");
+
+        // si aucune option n'est renseignée...
+        if (!options) {
+            // message orienté pour le developpeur !
+            logger.error("WARNING : " + "no parameter specified !");
+            return;
+        }
+
+        // les options
+        var _key = options.key;
+        var _resources = options.resources || [];
+        var _services = options.services || [];
+
+        // si aucune information sur les ressources,
+        // il est impossible de controler quelquechose !!!
+        if (!_resources || _resources.length === 0) {
+            // message orienté pour le developpeur !
+            logger.error("WARNING : " + "no parameter 'resources' specified !");
+            return;
+        }
+
+        // si aucune information sur les services,
+        // il est impossible de controler quelquechose !!!
+        if (!_services || _services.length === 0) {
+            // message orienté pour le developpeur !
+            logger.error("WARNING : " + "no parameter 'services' specified !");
+            return;
+        }
+
+        // les ressources controlées :
+        // Ex.
+        // {
+        //   "Itineraire"     : ["Pieton", "Voiture"],
+        //   "Geocode"        : ["PositionOfInterest", "StreetAddress", "CadastralParcel", "Administratif"],
+        //   "AutoCompletion" : ["PositionOfInterest", "StreetAddress", "CadastralParcel", "Administratif"],
+        //   "Elevation"      : ["SERVICE_CALCUL_ALTIMETRIQUE_RSC"]
+        // }
+        var _rightManagement = {};
+
+        // la clef API n'est pas renseignée
+        if (!_key) {
+            // on verifie si l'autoconfiguration est disponible
+
+            if (!_Config2.default.isConfigLoaded()) {
+                // si l'autoconfiguration n'est pas chargée,
+                // aucune vérification des droits est possible...
+
+                logger.warn("WARNING : " + "The 'apiKey' parameter is missing, " + "and the contract key configuration has not been loaded, " + "so impossible to check yours rights !");
+
+                return;
+            } else {
+                // si l'autoconfiguration est chargée,
+                // on recupere la clef API, et on en profitera ensuite pour controler
+                // les droits sur les ressources.
+
+                // FIXME par defaut, on recupere toujours la première...
+                _key = Object.keys(_Config2.default.configuration.generalOptions.apiKeys)[0];
+                logger.log(_key);
+            }
+        }
+
+        // la clef API est renseignée ou recuperée de l'autoconfiguration
+        if (_key) {
+            // on verifie si l'autoconfiguration est disponible
+
+            if (!_Config2.default.isConfigLoaded()) {
+                // si l'autoconfiguration n'est pas chargée,
+                // il est toujours possible de requeter le service avec une clef API,
+                // mais les droits sur les ressources ne sont pas garantis, on risque
+                // d'obtenir des erreurs 403 forbidden...
+                // la responsabilité revient à l'utilisateur (message d'information)...
+
+                logger.warn("WARNING : " + "the contract key configuration has not been loaded, " + "so be carefull !");
+
+                // les ressouces non controlées
+                var _noRightManagement = {};
+
+                for (var i = 0; i < _services.length; i++) {
+                    var service = _services[i];
+                    _noRightManagement[service] = [];
+
+                    for (var j = 0; j < _resources.length; j++) {
+                        var resource = _resources[j];
+                        _noRightManagement[service].push(resource);
+                    }
+                }
+
+                // on ajoute la clef
+                _noRightManagement.key = _key;
+
+                logger.log("right management not checked", _noRightManagement);
+
+                return _noRightManagement;
+            } else {
+                // si l'autoconf est chargée,
+                // on verifie la correspondance entre la clef et l'autoconfiguration,
+                // on previent l'utilisateur (message d'information) s'il n'a
+                // pas de droits sur certaines ressources ...
+
+                // doit on ecarter les ressources sans droit ?
+                // oui, si possible avec un message d'information pour l'utilisateur...
+
+                for (var k = 0; k < _resources.length; k++) {
+                    var _resource = _resources[k];
+
+                    for (var l = 0; l < _services.length; l++) {
+                        var _service = _services[l];
+
+                        var params = _Config2.default.getServiceParams(_resource, _service, _key);
+                        if (!params || Object.keys(params).length === 0) {
+                            logger.warn("WARNING : " + "The contract key configuration has no rights to load this geoportal " + "resource (" + _resource + ") " + "for this service (" + _service + ") ");
+                            continue;
+                        }
+
+                        if (!_rightManagement[_service]) {
+                            _rightManagement[_service] = [];
+                        }
+
+                        _rightManagement[_service].push(_resource);
+                    }
+                }
+
+                if (!_rightManagement || Object.keys(_rightManagement).length === 0) {
+                    logger.warn("WARNING : " + "The contract key configuration has been loaded, " + "and the 'apiKey' parameter has been set, " + "but, there is a problem on the mapping between the contract and the key !");
+                    return;
+                }
+
+                // on ajoute la clef
+                _rightManagement.key = _key;
+
+                logger.log("right management checked", _rightManagement);
+
+                return _rightManagement;
+            }
+        }
+    }
+};
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global) {
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _LoggerByDefault = __webpack_require__(0);
+
+var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var logger = _LoggerByDefault2.default.getLogger("config");
+
+var Config = {
+
+    /** autoconf */
+    configuration: null,
+
+    /**
+     * Controle du chargement de l'autoconf
+     *
+     * @returns {Boolean} isConfigLoaded - True si l'autoconf a déjà été chargée, False sinon.
+     */
+    isConfigLoaded: function isConfigLoaded() {
+        var scope = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : typeof global !== "undefined" ? global : {};
+        if (scope.Gp && scope.Gp.Config && Object.keys(scope.Gp.Config).length !== 0) {
+            this.configuration = scope.Gp.Config;
+            return true;
+        }
+        return false;
+    },
+
+    /**
+     * Recuperation de l'identifiant d'une couche donnée
+     *
+     * @param {String} layerName - nom de la couche (par ex. "ORTHOIMAGERY.ORTHOPHOTOS")
+     * @param {String} service   - nom du service (par ex. "WMS" ou "WMTS")
+     * @returns {String} layerId - identifiant de la couche (par ex. "ORTHOIMAGERY.ORTHOPHOTOS$GEOPORTAIL:OGC:WMTS")
+     */
+    getLayerId: function getLayerId(layerName, service) {
+        var layerId = null;
+
+        // layer
+        // key : [layerName]$[contexte]:OGC:[service]
+        // ex : "ORTHOIMAGERY.ORTHOPHOTOS$GEOPORTAIL:OGC:WMTS"
+
+        // service
+        // key : [layerName]$[contexte];[service]
+        // ex : PositionOfInterest$OGC:OPENLS;ReverseGeocode
+
+        if (this.configuration) {
+            var layers = this.configuration["layers"];
+            for (var key in layers) {
+                if (layers.hasOwnProperty(key)) {
+                    var parts = key.split("$");
+                    if (layerName === parts[0]) {
+                        if (parts[1]) {
+                            var servicePartsLayer = parts[1].split(":");
+                            var servicePartsService = parts[1].split(";");
+
+                            if (servicePartsService[1] === service) {
+                                layerId = key;
+                                break;
+                            }
+                            if (servicePartsLayer[2] === service) {
+                                layerId = key;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (!layerId) {
+            logger.error("ERROR layer id (layer name: " + layerName + " / service: " + service + ") was not found !?");
+        }
+
+        return layerId;
+    },
+
+    /**
+     * Récupération des paramètres nécessaires à l'affichage d'une couche WMS ou WMTS
+     *
+     * @param {String} layerName - nom de la couche (par ex. "ORTHOIMAGERY.ORTHOPHOTOS")
+     * @param {String} service   - nom du service (par ex. "WMS" ou "WMTS")
+     * @param {String} [apiKey]  - Clé de contrat API
+     * @returns {Object} params  - paramètres du service (WMS ou WMTS) pour la couche donnée
+     * @returns {String} params.url        - Url du service à requêter pour afficher la couche
+     * @returns {String} params.version    - Version du service
+     * @returns {String} params.styles     - Style par défaut de la couche
+     * @returns {String} params.format     - Format par défaut de la couche
+     * @returns {String} params.projection - Projection par défaut de la couche
+     * @returns {Number} params.minScale   - Dénominateur d'échelle minimum de la couche
+     * @returns {Number} params.maxScale   - Dénominateur d'échelle maximum de la couche
+     * @returns {Gp.BBox} params.extent    - Etendue de la couche, dans la projection de la couche
+     * @returns {Array} params.legends     - Tableau des légendes associées à la couche
+     * @returns {Array} params.metadata    - Tableau des métadonnées associées à la couche
+     * @returns {Array} params.originators - Tableau des originators associés à la couche
+     * @returns {Array} params.title       - Nom de la resource, lisible par un humain.
+     * @returns {Array} params.description - Url de l'image d'aperçu rapide de la ressource.
+     * @returns {Array} params.quicklookUrl- Tableau des originators associés à la couche
+     * @returns {String} params.[TMSLink]          - Identifiant de la pyramide (TMS), dans le cas d'une couche WMTS
+     * @returns {Gp.Point} params.[matrixOrigin]   - Origine de la matrice (top left corner), dans le cas d'une couche WMTS
+     * @returns {Array} params.[nativeResolutions] - Tableau regroupant les résolutions de chaque niveau de la matrice, dans le cas d'une couche WMTS
+     * @returns {Array} params.[matrixIds]         - Tableau regroupant les identifiants de chaque niveau de la matrice, dans le cas d'une couche WMTS
+     */
+    getLayerParams: function getLayerParams(layerName, service, apiKey) {
+        var params = {};
+
+        if (this.configuration) {
+            // récupération de l'identifiant complet de la couche.
+            var layerId = this.getLayerId(layerName, service);
+
+            if (layerId) {
+                // récupération de l'objet de configuration de la couche
+                var layerConf = this.configuration.layers[layerId];
+
+                // controle de la clef
+                var key = layerConf.apiKeys[0];
+                if (apiKey) {
+                    if (apiKey !== key) {
+                        logger.error("ERROR different keys (" + apiKey + " !== " + key + ") !?");
+                        return;
+                    }
+                }
+
+                apiKey = apiKey || key;
+                params.key = apiKey;
+                // récupération des paramètres du service
+                params.url = layerConf.getServerUrl(apiKey);
+                params.version = layerConf.getServiceParams().version;
+                params.styles = layerConf.getDefaultStyle();
+                params.format = layerConf.getDefaultFormat();
+                params.projection = layerConf.getDefaultProjection();
+
+                // récupération des infos de la couche
+                params.minScale = layerConf.getMinScaleDenominator();
+                params.maxScale = layerConf.getMaxScaleDenominator();
+                params.extent = layerConf.getBBOX();
+                params.legends = layerConf.getLegends();
+                params.metadata = layerConf.getMetadata();
+                params.originators = layerConf.getOriginators();
+                params.title = layerConf.getTitle();
+                params.description = layerConf.getDescription();
+                params.quicklookUrl = layerConf.getQuicklookUrl();
+
+                // WMTS : récupération des tileMatrixSetLimits
+                if (layerConf.wmtsOptions) {
+                    params.tileMatrixSetLimits = layerConf.wmtsOptions.tileMatrixSetLimits;
+                }
+
+                // WMTS : récupération des paramètres de la pyramide (TMS)
+                var TMSLink = layerConf.getTMSID();
+                if (TMSLink) {
+                    params.TMSLink = TMSLink;
+                    var tmsConf = this.configuration.getTMSConf(TMSLink);
+                    // Get matrix origin : Gp.Point = Object{x:Float, y:Float}
+                    params.matrixOrigin = tmsConf.getTopLeftCorner();
+                    params.nativeResolutions = tmsConf.nativeResolutions;
+                    params.matrixIds = tmsConf.matrixIds;
+                    params.tileMatrices = tmsConf.tileMatrices;
+                }
+            }
+        }
+
+        return params;
+    },
+
+    /**
+     * Recuperation des parametres d'un service
+     *
+     * @param {String} [resource] - "PositionOfInterest", "StreetAddress", "Voiture", "Pieton", ...
+     * @param {String} [service] - Geocode, Itineraire, ...
+     * @param {String} [apiKey]  - Clé de contrat API
+     * @returns {Object} params - paramètres de la ressource
+     * @returns {String} params. -
+     * @returns {String} params. -
+     * @returns {String} params. -
+     */
+    getServiceParams: function getServiceParams(resource, service, apiKey) {
+        var params = {};
+
+        if (this.configuration) {
+            // récupération de l'identifiant complet de la couche.
+            var layerId = this.getLayerId(resource, service);
+
+            if (layerId) {
+                // récupération de l'objet de configuration de la couche
+                var layerConf = this.configuration.layers[layerId];
+
+                // controle de la clef
+                var key = layerConf.apiKeys[0];
+                if (apiKey) {
+                    if (apiKey !== key) {
+                        return;
+                    }
+                }
+
+                apiKey = apiKey || key;
+                params.key = apiKey;
+                // récupération des paramètres du service
+                params.url = layerConf.getServerUrl(apiKey);
+                params.version = layerConf.getServiceParams().version;
+
+                // récupération des infos de la couche
+                params.extent = layerConf.getBBOX();
+                params.title = layerConf.getTitle();
+                params.description = layerConf.getDescription();
+            }
+        }
+
+        return params;
+    },
+
+    /**
+     * Resolution en geographique
+     *
+     * @returns {Array} resolutions
+     */
+    getResolutions: function getResolutions() {
+        var resolutions = [];
+
+        if (this.configuration) {
+            resolutions = this.configuration["generalOptions"]["wgs84Resolutions"];
+        }
+
+        return resolutions;
+    },
+
+    /**
+     * Recuperation des parametres TMS de la configuration
+     * @param {String} tmsName - tile matrix set name
+     *
+     * @returns {Object} tile matrix set
+     */
+    getTileMatrix: function getTileMatrix(tmsName) {
+        var tms = {};
+
+        if (this.configuration) {
+            if (tmsName) {
+                tms = this.configuration["tileMatrixSets"][tmsName.toUpperCase()];
+            }
+        }
+
+        return tms;
+    },
+
+    /**
+     * Récupération des contraintes générales d'une couche donnée : extent, minScale, maxScale, projection
+     *
+     * @param {String} layerId - identifiant de la couche
+     * @returns {Object} params - contraintes de la couche
+     * @returns {String} params.projection - Projection par défaut de la couche
+     * @returns {Number} params.minScale   - Dénominateur d'échelle minimum de la couche
+     * @returns {Number} params.maxScale   - Dénominateur d'échelle maximum de la couche
+     * @returns {Gp.BBox} params.extent    - Etendue de la couche, dans la projection de la couche
+     */
+    getGlobalConstraints: function getGlobalConstraints(layerId) {
+        var params = {};
+
+        if (layerId) {
+            // récupération de l'objet de configuration de la couche
+            var layerConf = this.configuration.layers[layerId];
+            params.projection = layerConf.getDefaultProjection();
+            params.minScale = layerConf.getMinScaleDenominator();
+            params.maxScale = layerConf.getMaxScaleDenominator();
+            params.extent = layerConf.getBBOX();
+        }
+
+        return params;
+    }
+};
+
+exports.default = Config;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)))
+
+/***/ }),
 /* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -20203,6 +20203,10 @@ var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 var _Interactions = __webpack_require__(15);
 
 var _Interactions2 = _interopRequireDefault(_Interactions);
+
+var _LayerSwitcher = __webpack_require__(6);
+
+var _LayerSwitcher2 = _interopRequireDefault(_LayerSwitcher);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -20686,6 +20690,21 @@ var Measures = {
         this.measureVector.gpResultLayerId = "measure";
 
         map.addLayer(this.measureVector);
+
+        // Si un layer switcher est présent dans la carte, on lui affecte des informations pour cette couche
+        map.getControls().forEach(function (control) {
+            if (control instanceof _LayerSwitcher2.default) {
+                // un layer switcher est présent dans la carte
+                var layerId = this.measureVector.gpLayerId;
+                // on n'ajoute des informations que s'il n'y en a pas déjà (si le titre est le numéro par défaut)
+                if (control._layers[layerId].title === layerId) {
+                    control.addLayer(this.measureVector, {
+                        title: this.options.layerDescription.title,
+                        description: this.options.layerDescription.description
+                    });
+                }
+            }
+        }, this);
     }
 };
 
@@ -23162,7 +23181,7 @@ var _Utils = __webpack_require__(2);
 
 var _Utils2 = _interopRequireDefault(_Utils);
 
-var _Config = __webpack_require__(7);
+var _Config = __webpack_require__(8);
 
 var _Config2 = _interopRequireDefault(_Config);
 
@@ -23321,7 +23340,7 @@ var _Utils = __webpack_require__(2);
 
 var _Utils2 = _interopRequireDefault(_Utils);
 
-var _Config = __webpack_require__(7);
+var _Config = __webpack_require__(8);
 
 var _Config2 = _interopRequireDefault(_Config);
 
@@ -23467,7 +23486,7 @@ var _Utils = __webpack_require__(2);
 
 var _Utils2 = _interopRequireDefault(_Utils);
 
-var _CheckRightManagement = __webpack_require__(6);
+var _CheckRightManagement = __webpack_require__(7);
 
 var _CheckRightManagement2 = _interopRequireDefault(_CheckRightManagement);
 
@@ -24350,7 +24369,7 @@ var _LayerWMS = __webpack_require__(30);
 
 var _LayerWMS2 = _interopRequireDefault(_LayerWMS);
 
-var _LayerSwitcher = __webpack_require__(8);
+var _LayerSwitcher = __webpack_require__(6);
 
 var _LayerSwitcher2 = _interopRequireDefault(_LayerSwitcher);
 
@@ -31601,7 +31620,7 @@ var _Utils = __webpack_require__(2);
 
 var _Utils2 = _interopRequireDefault(_Utils);
 
-var _Config = __webpack_require__(7);
+var _Config = __webpack_require__(8);
 
 var _Config2 = _interopRequireDefault(_Config);
 
@@ -31757,7 +31776,7 @@ var _Utils = __webpack_require__(2);
 
 var _Utils2 = _interopRequireDefault(_Utils);
 
-var _Config = __webpack_require__(7);
+var _Config = __webpack_require__(8);
 
 var _Config2 = _interopRequireDefault(_Config);
 
@@ -34607,7 +34626,7 @@ var _Markers = __webpack_require__(5);
 
 var _Markers2 = _interopRequireDefault(_Markers);
 
-var _CheckRightManagement = __webpack_require__(6);
+var _CheckRightManagement = __webpack_require__(7);
 
 var _CheckRightManagement2 = _interopRequireDefault(_CheckRightManagement);
 
@@ -37295,7 +37314,7 @@ var _Markers = __webpack_require__(5);
 
 var _Markers2 = _interopRequireDefault(_Markers);
 
-var _CheckRightManagement = __webpack_require__(6);
+var _CheckRightManagement = __webpack_require__(7);
 
 var _CheckRightManagement2 = _interopRequireDefault(_CheckRightManagement);
 
@@ -40106,6 +40125,10 @@ var _KML = __webpack_require__(14);
 
 var _KML2 = _interopRequireDefault(_KML);
 
+var _LayerSwitcher = __webpack_require__(6);
+
+var _LayerSwitcher2 = _interopRequireDefault(_LayerSwitcher);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var logger = _LoggerByDefault2.default.getLogger("Drawing");
@@ -40121,6 +40144,9 @@ var logger = _LoggerByDefault2.default.getLogger("Drawing");
  * @param {Object} options - options for function call.
  * @param {Boolean} [options.collapsed = true] - Specify if Drawing control should be collapsed at startup. Default is true.
  * @param {ol.layer.Vector} [options.layer = null] - Openlayers layer that will hosts created features. If none, an empty vector layer will be created.
+ * @param {Object} [options.layerDescription = {}] - Layer informations to be displayed in LayerSwitcher widget (only if a LayerSwitcher is also added to the map)
+ * @param {String} [options.layerDescription.title = "Croquis"] - Layer title to be displayed in LayerSwitcher
+ * @param {String} [options.layerDescription.description = "Mon croquis"] - Layer description to be displayed in LayerSwitcher
  * @param {Object} options.tools - Tools to display in the drawing toolbox. All by default.
  * @param {Boolean} [options.tools.points = true] - Display points drawing tool
  * @param {Boolean} [options.tools.lines = true] - Display lines drawing tool
@@ -40479,6 +40505,14 @@ Drawing.prototype._initialize = function (options) {
 
     // Set default options
     this.options = options || {};
+
+    if (!this.options.layerDescription) {
+        this.options.layerDescription = {
+            title: "Croquis",
+            description: "Mon croquis"
+        };
+    }
+
     // applying default tools
     if (!this.options.tools) {
         this.options.tools = {};
@@ -40692,8 +40726,23 @@ Drawing.prototype.setLayer = function (vlayer) {
                 }
             }
         });
+        this.layer = vlayer;
+
+        // Si un layer switcher est présent dans la carte, on lui affecte des informations pour cette couche
+        this.getMap().getControls().forEach(function (control) {
+            if (control instanceof _LayerSwitcher2.default) {
+                // un layer switcher est présent dans la carte
+                var layerId = this.layer.gpLayerId;
+                // on n'ajoute des informations que s'il n'y en a pas déjà (si le titre est le numéro par défaut)
+                if (control._layers[layerId].title === layerId) {
+                    control.addLayer(this.layer, {
+                        title: this.options.layerDescription.title,
+                        description: this.options.layerDescription.description
+                    });
+                }
+            }
+        }, this);
     }
-    this.layer = vlayer;
 };
 
 /**
@@ -42346,7 +42395,7 @@ var _Utils = __webpack_require__(2);
 
 var _Utils2 = _interopRequireDefault(_Utils);
 
-var _CheckRightManagement = __webpack_require__(6);
+var _CheckRightManagement = __webpack_require__(7);
 
 var _CheckRightManagement2 = _interopRequireDefault(_CheckRightManagement);
 
@@ -42358,7 +42407,7 @@ var _LocationSelector = __webpack_require__(23);
 
 var _LocationSelector2 = _interopRequireDefault(_LocationSelector);
 
-var _LayerSwitcher = __webpack_require__(8);
+var _LayerSwitcher = __webpack_require__(6);
 
 var _LayerSwitcher2 = _interopRequireDefault(_LayerSwitcher);
 
@@ -42392,6 +42441,9 @@ var logger = _LoggerByDefault2.default.getLogger("route");
  * @param {Array} [options.markersOpts[property].offset] - Offsets in pixels used when positioning the overlay. The first element in the array is the horizontal offset. A positive value shifts the overlay right. The second element in the array is the vertical offset. A positive value shifts the overlay down. Default is [0, 0]. (see http://openlayers.org/en/latest/apidoc/ol.Overlay.html)
  * @param {Object} [options.routeOptions = {}] - route service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~route Gp.Services.route()} to know all route options.
  * @param {Object} [options.autocompleteOptions = {}] - autocomplete service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~autoComplete Gp.Services.autoComplete()} to know all autocomplete options
+ * @param {Object} [options.layerDescription = {}] - Layer informations to be displayed in LayerSwitcher widget (only if a LayerSwitcher is also added to the map)
+ * @param {String} [options.layerDescription.title = "Itinéraire"] - Layer title to be displayed in LayerSwitcher
+ * @param {String} [options.layerDescription.description = "Itinéraire basé sur un graphe"] - Layer description to be displayed in LayerSwitcher
  * @example
  *  var route = ol.control.Route({
  *      collapsed : true
@@ -42546,7 +42598,11 @@ Route.prototype.initialize = function (options) {
             bridge: false
         },
         routeOptions: {},
-        autocompleteOptions: {}
+        autocompleteOptions: {},
+        layerDescription: {
+            title: "Itinéraire",
+            description: "Itinéraire basé sur un graphe"
+        }
     };
 
     // merge with user options
@@ -43758,8 +43814,8 @@ Route.prototype._fillRouteResultsDetailsFeatureGeometry = function (instructions
             // on n'ajoute des informations que s'il n'y en a pas déjà (si le titre est le numéro par défaut)
             if (control._layers[layerId].title === layerId) {
                 control.addLayer(this._geojsonSections, {
-                    title: " Itinéraire " + graph,
-                    description: " Itinéraire basé sur un graphe " + graph
+                    title: this.options.layerDescription.title + " (" + graph + ")",
+                    description: this.options.layerDescription.description
                 });
             }
         }
@@ -45969,7 +46025,7 @@ var _Utils = __webpack_require__(2);
 
 var _Utils2 = _interopRequireDefault(_Utils);
 
-var _CheckRightManagement = __webpack_require__(6);
+var _CheckRightManagement = __webpack_require__(7);
 
 var _CheckRightManagement2 = _interopRequireDefault(_CheckRightManagement);
 
@@ -45981,7 +46037,7 @@ var _LocationSelector = __webpack_require__(23);
 
 var _LocationSelector2 = _interopRequireDefault(_LocationSelector);
 
-var _LayerSwitcher = __webpack_require__(8);
+var _LayerSwitcher = __webpack_require__(6);
 
 var _LayerSwitcher2 = _interopRequireDefault(_LayerSwitcher);
 
@@ -46018,6 +46074,9 @@ var logger = _LoggerByDefault2.default.getLogger("isocurve");
  * @param {Array} [options.markerOpts.offset] - Offsets in pixels used when positioning the overlay. The first element in the array is the horizontal offset. A positive value shifts the overlay right. The second element in the array is the vertical offset. A positive value shifts the overlay down. Default is [0, 0]. (see http://openlayers.org/en/latest/apidoc/ol.Overlay.html)
  * @param {Object} [options.isocurveOptions = {}] - isocurve service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~isoCurve Gp.Services.isoCurve()} to know all isocurve options.
  * @param {Object} [options.autocompleteOptions = {}] - autocomplete service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~autoComplete Gp.Services.autoComplete()} to know all autocomplete options
+ * @param {Object} [options.layerDescription = {}] - Layer informations to be displayed in LayerSwitcher widget (only if a LayerSwitcher is also added to the map)
+ * @param {String} [options.layerDescription.title = "Isochrone/Isodistance"] - Layer title to be displayed in LayerSwitcher
+ * @param {String} [options.layerDescription.description = "isochrones/isodistance basé sur un graphe"] - Layer description to be displayed in LayerSwitcher
  * @example
  *  var iso = ol.control.Isocurve({
  *      collapsed : false
@@ -46171,7 +46230,11 @@ Isocurve.prototype.initialize = function (options) {
             offset: _Markers2.default.defaultOffset
         },
         isocurveOptions: {},
-        autocompleteOptions: {}
+        autocompleteOptions: {},
+        layerDescription: {
+            title: "Isochrone/Isodistance",
+            description: "isochrones/isodistance basé sur un graphe"
+        }
     };
 
     // merge with user options
@@ -47054,8 +47117,8 @@ Isocurve.prototype._drawIsoResults = function (results) {
             // on n'ajoute des informations que s'il n'y en a pas déjà (si le titre est le numéro par défaut)
             if (control._layers[layerId].title === layerId) {
                 control.addLayer(this._geojsonLayer, {
-                    title: method + " " + graph,
-                    description: method + " basé sur un graphe " + graph
+                    title: this.options.layerDescription.title + " (" + method + "/" + graph + ")",
+                    description: this.options.layerDescription.description
                 });
             }
         }
@@ -48152,11 +48215,11 @@ var _Markers = __webpack_require__(5);
 
 var _Markers2 = _interopRequireDefault(_Markers);
 
-var _LayerSwitcher = __webpack_require__(8);
+var _LayerSwitcher = __webpack_require__(6);
 
 var _LayerSwitcher2 = _interopRequireDefault(_LayerSwitcher);
 
-var _CheckRightManagement = __webpack_require__(6);
+var _CheckRightManagement = __webpack_require__(7);
 
 var _CheckRightManagement2 = _interopRequireDefault(_CheckRightManagement);
 
@@ -48186,6 +48249,9 @@ var logger = _LoggerByDefault2.default.getLogger("reversegeocoding");
  * @param {Object}   [options.resources =  ["StreetAddress", "PositionOfInterest", "CadastralParcel"]] - resources for geocoding, by default : ["StreetAddress", "PositionOfInterest", "CadastralParcel"]. Possible values are : "StreetAddress", "PositionOfInterest", "CadastralParcel", "Administratif". Resources will be displayed in the same order in widget list.
  * @param {Object}   [options.delimitations = ["Point", "Circle", "Extent"]] - delimitations for reverse geocoding, by default : ["Point", "Circle", "Extent"]. Possible values are : "Point", "Circle", "Extent". Delimitations will be displayed in the same order in widget list.
  * @param {Object}  [options.reverseGeocodeOptions = {}] - reverse geocode service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~reverseGeocode Gp.Services.reverseGeocode()} to know all reverse geocode options.
+ * @param {Object} [options.layerDescription = {}] - Layer informations to be displayed in LayerSwitcher widget (only if a LayerSwitcher is also added to the map)
+ * @param {String} [options.layerDescription.title = "Saisie (recherche inverse)"] - Layer title to be displayed in LayerSwitcher
+ * @param {String} [options.layerDescription.description = "Couche de saisie d'une zone de recherche pour la recherche inverse"] - Layer description to be displayed in LayerSwitcher
  * @example
  *  var iso = ol.control.ReverseGeocode({
  *      collapsed : false,
@@ -48329,7 +48395,11 @@ ReverseGeocode.prototype.initialize = function (options) {
         collapsed: true,
         resources: ["StreetAddress", "PositionOfInterest", "CadastralParcel"],
         delimitations: ["Point", "Circle", "Extent"],
-        reverseGeocodeOptions: {}
+        reverseGeocodeOptions: {},
+        layerDescription: {
+            title: "Saisie (recherche inverse)",
+            description: "Couche de saisie d'une zone de recherche pour la recherche inverse"
+        }
     };
 
     // merge with user options
@@ -48785,8 +48855,8 @@ ReverseGeocode.prototype._activateMapInteraction = function (map) {
                 // on n'ajoute des informations que s'il n'y en a pas déjà (si le titre est le numéro par défaut)
                 if (control._layers[layerId].title === layerId) {
                     control.addLayer(this._inputFeaturesLayer, {
-                        title: "Saisie (recherche inverse)",
-                        description: "Couche de saisie d'une zone de recherche pour la recherche inverse"
+                        title: this.options.layerDescription.title,
+                        description: this.options.layerDescription.description
                     });
                     control.setRemovable(this._inputFeaturesLayer, false);
                 }
@@ -53259,7 +53329,7 @@ var _Utils = __webpack_require__(2);
 
 var _Utils2 = _interopRequireDefault(_Utils);
 
-var _CheckRightManagement = __webpack_require__(6);
+var _CheckRightManagement = __webpack_require__(7);
 
 var _CheckRightManagement2 = _interopRequireDefault(_CheckRightManagement);
 
@@ -53270,6 +53340,10 @@ var _Measures2 = _interopRequireDefault(_Measures);
 var _MeasureToolBox = __webpack_require__(10);
 
 var _MeasureToolBox2 = _interopRequireDefault(_MeasureToolBox);
+
+var _LayerSwitcher = __webpack_require__(6);
+
+var _LayerSwitcher2 = _interopRequireDefault(_LayerSwitcher);
 
 var _Interactions = __webpack_require__(15);
 
@@ -53301,6 +53375,9 @@ var logger = _LoggerByDefault2.default.getLogger("elevationpath");
  * @extends ol.control.Control
  * @param {Object} options - options for function call.
  * @param {Boolean} [options.active = false] - specify if control should be actived at startup. Default is false.
+ * @param {Object} [options.layerDescription = {}] - Layer informations to be displayed in LayerSwitcher widget (only if a LayerSwitcher is also added to the map)
+ * @param {String} [options.layerDescription.title = "Profil altimétrique"] - Layer title to be displayed in LayerSwitcher
+ * @param {String} [options.layerDescription.description = "Mon profil altimétrique"] - Layer description to be displayed in LayerSwitcher
  * @param {Object} [options.stylesOptions = DEFAULT_STYLES] - styles management
  * @param {Object} [options.stylesOptions.marker = {}] - styles management of marker displayed on map when the user follows the elevation path. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Image.html ol.style.Image} subclass object
  * @param {Object} [options.stylesOptions.draw = {}] - styles used when drawing. Specified with following properties.
@@ -53862,6 +53939,10 @@ ElevationPath.prototype._initialize = function (options) {
         active: false,
         apiKey: null,
         elevationOptions: {},
+        layerDescription: {
+            title: "Profil altimétrique",
+            description: "Mon profil altimétrique"
+        },
         displayProfileOptions: {
             greaterSlope: true,
             meanSlope: true,
@@ -54117,7 +54198,25 @@ ElevationPath.prototype._initMeasureInteraction = function (map) {
         style: this._drawStyleFinish
     });
 
+    // on rajoute le champ gpResultLayerId permettant d'identifier une couche crée par le composant.
+    this._measureVector.gpResultLayerId = "measure";
+
     map.addLayer(this._measureVector);
+
+    // Si un layer switcher est présent dans la carte, on lui affecte des informations pour cette couche
+    map.getControls().forEach(function (control) {
+        if (control instanceof _LayerSwitcher2.default) {
+            // un layer switcher est présent dans la carte
+            var layerId = this._measureVector.gpLayerId;
+            // on n'ajoute des informations que s'il n'y en a pas déjà (si le titre est le numéro par défaut)
+            if (control._layers[layerId].title === layerId) {
+                control.addLayer(this._measureVector, {
+                    title: this.options.layerDescription.title,
+                    description: this.options.layerDescription.description
+                });
+            }
+        }
+    }, this);
 };
 
 /**
@@ -55537,6 +55636,9 @@ var logger = _LoggerByDefault2.default.getLogger("measurelength");
  * @param {Object} [options.styles.start = {}] - Line Style when drawing. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Style.html ol.style.Style} object.
  * @param {Object} [options.styles.finish = {}] - Line Style when finished drawing. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Style.html ol.style.Style} object.
  * <!-- @param {Object} [options.tooltip = {}] - NOT YET IMPLEMENTED ! -->
+ * @param {Object} [options.layerDescription = {}] - Layer informations to be displayed in LayerSwitcher widget (only if a LayerSwitcher is also added to the map)
+ * @param {String} [options.layerDescription.title = "Mesures de distance"] - Layer title to be displayed in LayerSwitcher
+ * @param {String} [options.layerDescription.description = "Mes mesures"] - Layer description to be displayed in LayerSwitcher
  * @example
  * var measureLength = new ol.control.MeasureLength({
  *    geodesic : false
@@ -55663,6 +55765,10 @@ MeasureLength.prototype._initialize = function (options) {
     this.options.geodesic = typeof options.geodesic !== "undefined" ? options.geodesic : true;
     this.options.target = typeof options.target !== "undefined" ? options.target : null;
     this.options.render = typeof options.render !== "undefined" ? options.render : null;
+    this.options.layerDescription = typeof options.layerDescription !== "undefined" ? options.layerDescription : {
+        title: "Mesures de distance",
+        description: "Mes mesures"
+    };
 
     // gestion des styles !
     this.createStylingMeasureInteraction(options.styles);
@@ -55932,6 +56038,9 @@ var logger = _LoggerByDefault2.default.getLogger("measurearea");
  * @param {Object} [options.styles.start = {}] - Polygon Style when drawing. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Style.html ol.style.Style} object.
  * @param {Object} [options.styles.finish = {}] - Polygon Style when finished drawing. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Style.html ol.style.Style} object.
  * <!-- @param {Object} [options.tooltip = {}] - NOT YET IMPLEMENTED ! -->
+ * @param {Object} [options.layerDescription = {}] - Layer informations to be displayed in LayerSwitcher widget (only if a LayerSwitcher is also added to the map)
+ * @param {String} [options.layerDescription.title = "Mesures de surface"] - Layer title to be displayed in LayerSwitcher
+ * @param {String} [options.layerDescription.description = "Mes mesures"] - Layer description to be displayed in LayerSwitcher
  * @example
  * var measureArea = new ol.control.MeasureArea({
  *    geodesic : false
@@ -56064,6 +56173,10 @@ MeasureArea.prototype._initialize = function (options) {
     this.options.geodesic = typeof options.geodesic !== "undefined" ? options.geodesic : true;
     this.options.target = typeof options.target !== "undefined" ? options.target : null;
     this.options.render = typeof options.render !== "undefined" ? options.render : null;
+    this.options.layerDescription = typeof options.layerDescription !== "undefined" ? options.layerDescription : {
+        title: "Mesures de surface",
+        description: "Mes mesures"
+    };
 
     // gestion des styles !
     this.createStylingMeasureInteraction(options.styles);
@@ -56333,6 +56446,9 @@ var logger = _LoggerByDefault2.default.getLogger("measureazimut");
  * @param {Object} [options.styles.start = {}] - Line Style when drawing. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Style.html ol.style.Style} object.
  * @param {Object} [options.styles.finish = {}] - Line Style when finished drawing. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Style.html ol.style.Style} object.
  * <!-- @param {Object} [options.tooltip = {}] - NOT YET IMPLEMENTED ! -->
+ * @param {Object} [options.layerDescription = {}] - Layer informations to be displayed in LayerSwitcher widget (only if a LayerSwitcher is also added to the map)
+ * @param {String} [options.layerDescription.title = "Mesures d'azimuth"] - Layer title to be displayed in LayerSwitcher
+ * @param {String} [options.layerDescription.description = "Mes mesures"] - Layer description to be displayed in LayerSwitcher
  * @example
  * var measure = new ol.control.MeasureAzimuth({
  *   geodesic : true
@@ -56483,6 +56599,10 @@ MeasureAzimuth.prototype._initialize = function (options) {
     this.options.geodesic = typeof options.geodesic !== "undefined" ? options.geodesic : false;
     this.options.target = typeof options.target !== "undefined" ? options.target : null;
     this.options.render = typeof options.render !== "undefined" ? options.render : null;
+    this.options.layerDescription = typeof options.layerDescription !== "undefined" ? options.layerDescription : {
+        title: "Mesures d'azimuth",
+        description: "Mes mesures"
+    };
 
     // gestion des styles !
     this.createStylingMeasureInteraction(options.styles);

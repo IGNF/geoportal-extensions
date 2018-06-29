@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 2.0.1
- * @date 2018-06-25
+ * @date 2018-06-29
  *
  */
 
@@ -19122,1307 +19122,6 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _LoggerByDefault = __webpack_require__(0);
-
-var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
-
-var _itowns = __webpack_require__(44);
-
-var Itowns = _interopRequireWildcard(_itowns);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var logger = _LoggerByDefault2.default.getLogger("GlobeViewExtended");
-
-/**
- * @classdesc
- *
- * Extended itowns.GlobeView.
- *
- * @constructor
- * @extends {itowns.GlobeView}
- * @param {HTMLElement} viewerDiv - Where to instanciate the Three.js scene in the DOM
- * @param {Object} coordCarto - longitude, latitude, altitude
- * @param {Object} [options] - Optional properties.
- * @param {String} [options.position="relative"] - "absolute" or "relative"
- */
-function GlobeViewExtended(viewerDiv, coordCarto, options) {
-    viewerDiv.style.position = !options || !options.position ? "relative" : options.position;
-
-    this._itowns = Itowns;
-
-    // stockage de l'élément html porteur du globe
-    this._viewerDiv = viewerDiv;
-
-    // widget container
-    this._widgets = [];
-
-    // mapping des evenements
-    this._initEventMap();
-
-    // pour savoir si le globe est initialise
-    this._isInitialized = false;
-
-    // call constructor
-    this._globeView = new this._itowns.GlobeView(viewerDiv, coordCarto, options);
-
-    var self = this;
-    this.listen(GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, function () {
-        self._isInitialized = true;
-    });
-
-    this._globeView.addFrameRequester(this._itowns.MAIN_LOOP_EVENTS.BEFORE_RENDER, function () {
-        clearTimeout(this._preRenderTimer);
-        self._preRenderTimer = setTimeout(function () {
-            if (self._fetchVisibleColorLayers || self._fetchVisibleElevationLayers || self._fetchExtent) {
-                var event = {
-                    type: GlobeViewExtended.EVENTS.PRE_RENDER
-                };
-                if (self._fetchExtent) {
-                    event.extent = new self._itowns.Extent("EPSG:4326", 180, -180, 90, -90);
-                }
-                if (self._fetchVisibleColorLayers) {
-                    event.colorLayersId = [];
-                }
-                if (self._fetchVisibleElevationLayers) {
-                    event.elevationLayersId = [];
-                }
-
-                self._getCurrentSceneInfos(self._globeView.scene, event);
-
-                self._globeView.dispatchEvent(event);
-            }
-        }, 100);
-    }.bind(this));
-
-    if (this._globeView.controls) {
-        this.freezeControl();
-    }
-}
-
-/**
- * intializes the evenements map
- */
-GlobeViewExtended.prototype._initEventMap = function () {
-    if (!GlobeViewExtended.EVENTS) {
-        GlobeViewExtended.EVENTS = {
-            RANGE_CHANGED: this._itowns.CONTROL_EVENTS.RANGE_CHANGED,
-            CENTER_CHANGED: this._itowns.CONTROL_EVENTS.CAMERA_TARGET_CHANGED,
-            ORIENTATION_CHANGED: this._itowns.CONTROL_EVENTS.ORIENTATION_CHANGED,
-            LAYER_ADDED: this._itowns.GLOBE_VIEW_EVENTS.LAYER_ADDED,
-            LAYER_REMOVED: this._itowns.GLOBE_VIEW_EVENTS.LAYER_REMOVED,
-            LAYERS_ORDER_CHANGED: this._itowns.GLOBE_VIEW_EVENTS.COLOR_LAYERS_ORDER_CHANGED,
-            GLOBE_INITIALIZED: this._itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED,
-            VIEW_INITIALIZED: "viewinitialized",
-            PRE_RENDER: "prerender",
-            MOUSE_MOVE: "mousemove",
-            AFTER_RENDER: this._itowns.MAIN_LOOP_EVENTS.AFTER_RENDER,
-            OPACITY_PROPERTY_CHANGED: "opacity-property-changed",
-            VISIBLE_PROPERTY_CHANGED: "visible-property-changed",
-            SEQUENCE_PROPERTY_CHANGED: "sequence-property-changed"
-        };
-    }
-};
-
-/**
- * Constructor (alias)
- */
-GlobeViewExtended.prototype.constructor = GlobeViewExtended;
-
-/**
- * Get GlobeViex Object (parent)
- * @returns {Object} itowns GlobeView object
- */
-GlobeViewExtended.prototype.getGlobeView = function () {
-    return this._globeView;
-};
-
-/**
- * Indicates if the globe is initialized or not
- *
- * @return {Boolean} isInitialized
- *
- */
-GlobeViewExtended.prototype.isInitialized = function () {
-    return this._isInitialized;
-};
-
-/**
- * Detects when the camera movement stops, then launch the callback given as parameter
- *
- * @param {Function} cb - The function to execute when the event occures.
- *
- */
-GlobeViewExtended.prototype.onCameraMoveStop = function (cb) {
-    var self = this;
-    function afterRenderHandler() {
-        self._globeView.removeFrameRequester(self._itowns.MAIN_LOOP_EVENTS.AFTER_CAMERA_UPDATE, afterRenderHandler);
-        cb();
-    };
-    this._globeView.addFrameRequester(this._itowns.MAIN_LOOP_EVENTS.AFTER_CAMERA_UPDATE, afterRenderHandler);
-};
-
-/**
- * Disables globe controls until the globe rendering is completed
- */
-GlobeViewExtended.prototype.freezeControl = function () {
-    // disable navigation
-    this._globeView.controls.enabled = false;
-
-    this.onCameraMoveStop(function () {
-        this._globeView.controls.enabled = true;
-    }.bind(this));
-};
-
-/**
- * Associates a function to trigger when an event is received.
- *
- * @param {String} type - the event type. Can be any of {@link EVENTS}
- * @param {Function} callback - The function to execute when the event occures.
- * @return {Object} key - The event key
- *
- */
-GlobeViewExtended.prototype.listen = function (type, callback) {
-    if (typeof callback !== "function") {
-        logger.warn("no callback provided for event : " + type);
-        return null;
-    }
-
-    var target = this._getEventTarget(type);
-    if (!target) {
-        return null;
-    }
-
-    if (type === GlobeViewExtended.EVENTS.AFTER_RENDER) {
-        target.addFrameRequester(type, callback);
-    } else {
-        target.addEventListener(type, callback);
-    }
-
-    return {
-        target: target,
-        callback: callback,
-        type: type
-    };
-};
-
-/**
- * Associates a function to trigger when a layer event is received.
- *
- * @param {Object} layer - The itowns layer.
- * @param {String} type - the event type. Can be any of {@link EVENTS}.
- * @param {Function} callback - The function to execute when the event occures.
- * @return {Object} key - The event key
- *
- */
-GlobeViewExtended.prototype.addLayerListener = function (layer, type, callback) {
-    if (typeof callback !== "function") {
-        logger.warn("no callback provided for event : " + type);
-        return null;
-    }
-    layer.addEventListener(type, callback);
-    return {
-        target: layer,
-        callback: callback,
-        type: type
-    };
-};
-
-/**
- * Returns the target of a given event type
- *
- * @param {String} type - the event type. Can be any of {@link EVENTS}
- * @return {Object} target - The event target.
- *
- */
-GlobeViewExtended.prototype._getEventTarget = function (type) {
-    switch (type) {
-        case GlobeViewExtended.EVENTS.RANGE_CHANGED:
-        case GlobeViewExtended.EVENTS.CENTER_CHANGED:
-        case GlobeViewExtended.EVENTS.ORIENTATION_CHANGED:
-            return this.getGlobeView().controls;
-        case GlobeViewExtended.EVENTS.LAYER_ADDED:
-        case GlobeViewExtended.EVENTS.LAYER_REMOVED:
-        case GlobeViewExtended.EVENTS.LAYERS_ORDER_CHANGED:
-        case GlobeViewExtended.EVENTS.GLOBE_INITIALIZED:
-        case GlobeViewExtended.EVENTS.PRE_RENDER:
-        case GlobeViewExtended.EVENTS.AFTER_RENDER:
-        case GlobeViewExtended.EVENTS.VIEW_INITIALIZED:
-            return this.getGlobeView();
-        case GlobeViewExtended.EVENTS.MOUSE_MOVE:
-            return this._viewerDiv;
-        default:
-            logger.warn("unhandled event : " + type);
-            return null;
-    }
-};
-
-/**
- * Cancels an event listening
- *
- * @param {Object} key - The event key
- *
- */
-GlobeViewExtended.prototype.forgetByKey = function (key) {
-    if (key.type === GlobeViewExtended.EVENTS.AFTER_RENDER) {
-        key.target.removeFrameRequester(key.type, key.callback);
-    } else {
-        key.target.removeEventListener(key.type, key.callback);
-    }
-};
-
-/**
- * Cancels an layer event listening
- *
- * @param {Object} layer - The itowns layer
- * @param {String} type - the event type
- * @param {Function} callback - The function to execute when the event occures
- *
- */
-GlobeViewExtended.prototype.removeLayerListener = function (layer, type, callback) {
-    this.forgetByKey({
-        target: layer,
-        callback: callback,
-        type: type
-    });
-};
-
-/**
- * Cancels an event listening
- *
- * @param {Object} type - The event type
- * @param {Function} callback - The event handler
- */
-GlobeViewExtended.prototype.forget = function (type, callback) {
-    var target = this._getEventTarget(type);
-    if (!target) return;
-
-    this.forgetByKey({
-        target: target,
-        callback: callback,
-        type: type
-    });
-};
-
-/**
- * Overload itowns.GlobeView addLayer method
- *
- * @param {Object} layer - The itowns layer
- * @return {Promise} promise
- */
-GlobeViewExtended.prototype.addLayer = function (layer) {
-    // FIXME : to delete when itowns commit 2e9ed61eb4aa2a4bbe0e17c8e2650953844b099e
-    // is integrated into an iTowns release 
-    try {
-        var promise = this.getGlobeView().addLayer(layer);
-        this.getGlobeView().notifyChange(true);
-    } catch (error) {
-        return Promise.reject(error);
-    }
-
-    return promise;
-};
-
-/**
- * Overload itowns.GlobeView removeLayer method
- *
- * @param {String} layerId - The layer id
- */
-GlobeViewExtended.prototype.removeLayer = function (layerId) {
-    this.getGlobeView().removeLayer(layerId);
-    this.getGlobeView().notifyChange(true);
-};
-
-/**
- * Set layer opacity
- *
- * @param {String} layerId - Layer id
- * @param {Number} opacityValue - opacity value in [0 1]
- */
-GlobeViewExtended.prototype.setLayerOpacity = function (layerId, opacityValue) {
-    this.getColorLayerById(layerId).opacity = opacityValue;
-    this.getGlobeView().notifyChange(true);
-};
-
-/**
- * Set layer visibility
- *
- * @param {String} layerId - Layer id
- * @param {Boolean} visible - New visibility of the layer
- */
-GlobeViewExtended.prototype.setLayerVisibility = function (layerId, visible) {
-    this.getColorLayerById(layerId).visible = visible;
-    this.getGlobeView().notifyChange(true);
-};
-
-/**
- * Move layer to the specified index
- *
- * @param {String} layerId - Layer id
- * @param {Boolean} index - new index of the layer
- */
-GlobeViewExtended.prototype.moveLayerToIndex = function (layerId, index) {
-    this._itowns.ColorLayersOrdering.moveLayerToIndex(this.getGlobeView(), layerId, index);
-    this.getGlobeView().notifyChange(true);
-};
-
-/**
- * Remove event listener from the globe
- *
- * @param {String} type - event type
- * @param {Function} callback - event handler
- */
-GlobeViewExtended.prototype.removeEventListener = function (type, callback) {
-    switch (type) {
-        case "mousemove":
-            this._viewerDiv.removeEventListener(type, callback);
-            break;
-        case "centerchanged":
-            this.getGlobeView().controls.removeEventListener(type, callback);
-            break;
-        default:
-            this.getGlobeView().removeEventListener(type, callback);
-            break;
-    }
-};
-
-/**
- * Defines if the current view extent have to be computed on pre-render event
- *
- * @param {Boolean} b - tells if the view extent info should be fetched by the event PRE_RENDER
- */
-GlobeViewExtended.prototype.preRenderEventFetchViewExtent = function (b) {
-    if (typeof b === "undefined") {
-        b = true;
-    }
-    this._fetchExtent = b;
-};
-
-/**
- * Defines if the list of the color layers displayed have to be computed on pre-render event
- *
- * @param {Boolean} b - tells if the displayed color layers info should be fetched by the event PRE_RENDER
- */
-GlobeViewExtended.prototype.preRenderEventFetchColorLayersDisplayed = function (b) {
-    if (typeof b === "undefined") {
-        b = true;
-    }
-    this._fetchVisibleColorLayers = b;
-};
-
-/**
- * Defines if the list of the elevation layers displayed have to be computed on pre-render event
- *
- * @param {Boolean} b - tells if the displayed elevation layers info should be fetched by the event PRE_RENDER
- */
-GlobeViewExtended.prototype.preRenderEventFetchElevationLayersDisplayed = function (b) {
-    if (typeof b === "undefined") {
-        b = true;
-    }
-    this._fetchVisibleElevationLayers = b;
-};
-
-/**
- * Defines if the list of the layers of all types displayed have to be computed on pre-render event
- *
- * @param {Boolean} b - tells if both displayed color layers and displayed elevation layers infos should be fetched by the event PRE_RENDER
- */
-GlobeViewExtended.prototype.preRenderEventFetchLayersDisplayed = function (b) {
-    if (typeof b === "undefined") {
-        b = true;
-    }
-    this._fetchVisibleColorLayers = b;
-    this._fetchVisibleElevationLayers = b;
-};
-
-/**
- * Get layer by its id
- *
- * @param {String} layerId - Layer id
- * @return {Object} layer Object
- */
-GlobeViewExtended.prototype.getLayerById = function (layerId) {
-    var layer = this.getGlobeView().getLayers(function (l) {
-        if (l.id === layerId) {
-            return l;
-        }
-    })[0];
-    if (!layer) {
-        logger.trace("[GlobeViewExtended]  : no Layer found for the id '" + layerId + "'");
-        return;
-    }
-    return layer;
-};
-
-/**
- * Get color layer by its id
- *
- * @param {String} layerId - Color layer id
- * @return {Object} layer Object
- */
-GlobeViewExtended.prototype.getColorLayerById = function (layerId) {
-    var layer = this.getGlobeView().getLayers(function (l) {
-        if (l.id === layerId && l.type === "color") {
-            return l;
-        }
-    })[0];
-    if (!layer) {
-        logger.trace("[GlobeViewExtended]  : no colorLayer found for the id '" + layerId + "'");
-        return;
-    }
-    return layer;
-};
-
-/**
- * Get imagery layers
- *
- * @return {Array} imagery layers
- */
-GlobeViewExtended.prototype.getColorLayers = function () {
-    return this.getGlobeView().getLayers(function (layer) {
-        if (layer.type === "color") {
-            return layer;
-        }
-    });
-};
-
-/**
- * Get vector layers
- *
- * @return {Array} vector layers
- */
-GlobeViewExtended.prototype.getVectorLayers = function () {
-    return this.getGlobeView().getLayers(function (layer) {
-        if (layer.protocol === "rasterizer") {
-            return layer;
-        }
-    });
-};
-
-/**
- * Get elevation layers
- *
- * @return {Array} elevation layers
- */
-GlobeViewExtended.prototype.getElevationLayers = function () {
-    return this.getGlobeView().getLayers(function (layer) {
-        if (layer.type === "elevation") {
-            return layer;
-        }
-    });
-};
-
-/**
- * Get the current view extent
- *
- * @returns {Array} current view extent
- */
-GlobeViewExtended.prototype.getExtent = function () {
-    var options = {
-        extent: new this._itowns.Extent("EPSG:4326", 180, -180, 90, -90)
-    };
-
-    this._getCurrentSceneInfos(this.scene, options);
-
-    return options.extent;
-};
-
-/**
- * Recursive method to fetch information about the current view (extent, layers displayed...)
- *
- * @param {Object} node - itowns node
- * @param {Object} options - object containing objects to fill with info if specified
- * @private
- */
-GlobeViewExtended.prototype._getCurrentSceneInfos = function (node, options) {
-    if (!node || !node.visible) {
-        return;
-    }
-    if (node.level) {
-        if (node.material.visible) {
-            if (options.colorLayersId) {
-                for (var i = 0; i < node.material.colorLayersId.length; ++i) {
-                    if (options.colorLayersId.indexOf(node.material.colorLayersId[i]) < 0) {
-                        options.colorLayersId.push(node.material.colorLayersId[i]);
-                    }
-                }
-            }
-            if (options.elevationLayersId) {
-                for (var j = 0; j < node.material.elevationLayersId.length; ++j) {
-                    if (options.elevationLayersId.indexOf(node.material.elevationLayersId[j]) < 0) {
-                        options.elevationLayersId.push(node.material.elevationLayersId[j]);
-                    }
-                }
-            }
-            if (options.extent) {
-                options.extent.union(node.extent);
-            }
-        }
-    }
-    if (node.children) {
-        for (var child in node.children) {
-            this._getCurrentSceneInfos(node.children[child], options);
-        }
-    }
-};
-
-/**
- * Add a widget to the globe
- *
- * @param {Object} widget - The Widget object to add
- */
-GlobeViewExtended.prototype.addWidget = function (widget) {
-    if (!widget.getTarget()) {
-        widget.setTarget(this._viewerDiv, "absolute");
-    }
-    widget.setGlobe(this);
-    this._widgets.push(widget);
-};
-
-/**
- * Returns all widgets.
- *
- * @return {Array} widgets - The array of widgets.
- */
-GlobeViewExtended.prototype.getWidgets = function () {
-    return this._widgets;
-};
-
-/**
- * Removes a widget.
- *
- * @param {Object} widget - The Widget object to remove
- */
-GlobeViewExtended.prototype.removeWidget = function (widget) {
-    widget.setGlobe();
-    for (var idx = 0; idx < this._widgets.length; idx++) {
-        if (this._widgets[idx] === widget) {
-            this._widgets.splice(idx, 1);
-        }
-    }
-};
-
-/**
- * Get html target element
- *
- * @return {HTMLElement} Globe container element
- */
-GlobeViewExtended.prototype.getTargetElement = function () {
-    return this._viewerDiv;
-};
-
-/**
- * Returns current view scale
- *
- * @return {Number} Scale
- */
-GlobeViewExtended.prototype.getScale = function () {
-    return this.getGlobeView().controls.getScale();
-};
-
-/**
- * Sets tilt
- *
- * @param {Number} tilt - Tilt value
- * @return {Promise} promise
- */
-GlobeViewExtended.prototype.setTilt = function (tilt) {
-    return this.getGlobeView().controls.setTilt(tilt, false);
-};
-
-/**
- * Returns tilt
- *
- * @return {Number} - Tilt
- */
-GlobeViewExtended.prototype.getTilt = function () {
-    return this.getGlobeView().controls.getCameraOrientation()[0];
-};
-
-/**
- * Sets azimuth
- *
- * @param {Number} azimuth - Azimuth value
- * @return {Promise} promise
- */
-GlobeViewExtended.prototype.setAzimuth = function (azimuth) {
-    return this.getGlobeView().controls.setHeading(azimuth, false);
-};
-
-/**
- * Returns azimuth
- *
- * @return {Number} azimuth
- */
-GlobeViewExtended.prototype.getAzimuth = function () {
-    return this.getGlobeView().controls.getCameraOrientation()[1];
-};
-
-/**
- * Gets the coordinate in lat,lon for a given pixel.
- *
- * @param {Number} x - The pixel x-position inside the Globe element.
- * @param {Number} y - The pixel y-position inside the Globe element.
- * @return {Coordinates} position
- */
-GlobeViewExtended.prototype.getCoordinateFromPixel = function (x, y) {
-    return this.getGlobeView().controls.pickGeoPosition({
-        x: x,
-        y: y
-    });
-};
-
-/**
- * Gets the coordinate in lat,lon for a given mouse position.
- *
- * @param {MouseEvent} mouseEvent - A mouse event.
- * @return {Coordinates} position
- */
-GlobeViewExtended.prototype.getCoordinateFromMouseEvent = function (mouseEvent) {
-    var coords = this.getGlobeView().eventToViewCoords(mouseEvent);
-    return this.getGlobeView().controls.pickGeoPosition(coords);
-};
-
-/**
- * Get all visible features that intersect a pixel
- *
- * @param {MouseEvent} mouseEvent - A mouse event.
- * @return {Array} visibleFeatures - The array of visible features.
- */
-GlobeViewExtended.prototype.getFeaturesAtMousePosition = function (mouseEvent) {
-    var vectorLayers = this.getVectorLayers();
-    if (!vectorLayers) {
-        return;
-    }
-    // array of the visible features on the clicker coord
-    var visibleFeatures = [];
-    var geoCoord = this.getCoordinateFromMouseEvent(mouseEvent);
-    if (geoCoord) {
-        // buffer around the click inside we retrieve the features
-        var precision = this.getGlobeView().controls.pixelsToDegrees(5);
-        for (var i = 0; i < vectorLayers.length; i++) {
-            var idx;
-            var layer = vectorLayers[i];
-            // if the layer is not visible, we ignore it
-            if (!layer.visible) {
-                continue;
-            }
-            var result = this._itowns.FeaturesUtils.filterFeaturesUnderCoordinate(geoCoord, layer.feature, precision);
-            // we add the features to the visible features array
-            for (idx = 0; idx < result.length; idx++) {
-                visibleFeatures.push(result[idx]);
-            }
-        }
-    }
-    return visibleFeatures;
-};
-
-/**
- * Changes the center of the scene on screen to the specified in lat, lon.
- *
- * @param {Object} center - Center object
- * @param {Number} center.longitude - Coordinate longitude WGS84 in degree
- * @param {Number} center.latitude - Coordinate latitude WGS84 in degree
- * @return {Promise} A promise that resolves when the next 'globe initilazed' event fires.
- */
-GlobeViewExtended.prototype.setCameraTargetGeoPosition = function (center) {
-    return this.getGlobeView().controls.setCameraTargetGeoPositionAdvanced(center, false);
-};
-
-/**
- * Retuns the coordinates of the central point on screen in lat,lon and alt
- *
- * @return {Object} center
- */
-GlobeViewExtended.prototype.getCenter = function () {
-    var cameraCenter = this.getGlobeView().controls.getCameraTargetGeoPosition();
-    var center = {
-        lon: cameraCenter.longitude(),
-        lat: cameraCenter.latitude(),
-        alt: cameraCenter.altitude()
-    };
-    return center;
-};
-
-/**
- * Returns the actual zoom.
- *
- * @return {Number} zoom
- */
-GlobeViewExtended.prototype.getZoom = function () {
-    return this.getGlobeView().controls.getZoom();
-};
-
-/**
- * Sets the current zoom.
- *
- * @param {Number} zoom - The zoom
- * @return {Promise} promise
- */
-GlobeViewExtended.prototype.setZoom = function (zoom) {
-    return this.getGlobeView().controls.setZoom(zoom, false);
-};
-
-/**
- * To convert the projection in meters on the globe of a number of pixels of screen
- * @param {Number} pixels - count pixels to project
- * @return {Number} projection in meters on globe
- */
-GlobeViewExtended.prototype.pixelsToMeters = function (pixels) {
-    return this.getGlobeView().controls.pixelsToMeters(pixels);
-};
-
-/**
- * Projection on screen in pixels of length in meter on globe
- * @param {Number} value - Length in meter on globe
- * @return {Number} projection in pixels on screen
- */
-GlobeViewExtended.prototype.metersToPixels = function (value) {
-    return this.getGlobeView().controls.metersToPixels(value);
-};
-
-/**
- * Returns the "range": the distance in meters between the camera and the current central point on the screen.
- * @return {Number} number
- */
-GlobeViewExtended.prototype.getRange = function () {
-    return this.getGlobeView().controls.getRange();
-};
-
-/**
- * @return {THREE.Vector3} position
- */
-GlobeViewExtended.prototype.moveTarget = function () {
-    return this.getGlobeView().controls.moveTarget();
-};
-
-/**
- * To get the layer event infos
- *
- * @param {Object} evt - event
- * @returns {Object} object with event properties
- */
-GlobeViewExtended.prototype.getLayerEventInfos = function (evt) {
-    var propertyName = evt.type.replace("-property-changed", "");
-    return {
-        propertyName: propertyName,
-        previousValue: evt.previous[propertyName],
-        newValue: evt.new[propertyName]
-    };
-};
-
-/**
- * Sets background (specific to miniglobe)
- */
-GlobeViewExtended.prototype.setBackground = function () {
-    // Set a 0 alpha clear value (instead of the default '1')
-    // because we want a transparent background for the miniglobe view to be able
-    // to see the main view "behind"
-    this.getGlobeView().mainLoop.gfxEngine.renderer.setClearColor(0x000000, 0);
-};
-
-/**
- * Sets camera position
- * @param {THREE.Vector3} target - Target position
- * @param {Number} distance - Distance from target
- */
-GlobeViewExtended.prototype.setCameraPosition = function (target, distance) {
-    this.getGlobeView().camera.camera3D.position.copy(target).setLength(distance);
-};
-
-/**
- * Sets camera orientation to look at specified target
- * @param {THREE.Vector3} target - Target position
- */
-GlobeViewExtended.prototype.lookAt = function (target) {
-    this.getGlobeView().camera.camera3D.lookAt(target);
-};
-
-/**
- * Notifies the scene it needs to be updated
- */
-GlobeViewExtended.prototype.notifyChange = function () {
-    this.getGlobeView().notifyChange(true);
-};
-
-/**
-* Resizes itowns
-*
-* @param {Integer} width - canvas width in pixels
-* @param {Integer} height - canvas height in pixels
-*/
-GlobeViewExtended.prototype.resize = function (width, height) {
-    this.getGlobeView().mainLoop.gfxEngine.onWindowResize(width, height);
-    this.getGlobeView().notifyChange(true);
-};
-
-exports.default = GlobeViewExtended;
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-var LayerUtils = {
-
-    /**
-     * Obtenir le ZoomLevel à partir du ScaleDenominator
-     * @param {Number} scaleDenominator - the scale denominator
-     * @param {String} crs - the crs
-     *
-     * @returns {Integer} zoom level
-     */
-    getZoomLevelFromScaleDenominator: function getZoomLevelFromScaleDenominator(scaleDenominator, crs) {
-        // ------------------------------------------------- //
-        // Code issu de l'API Geoportal/Catalogue/Config.js  //
-        // ------------------------------------------------- //
-        //     var configuration = Gp.Config;
-        //     var general = configuration.generalOptions;
-        //     var layers  = configuration.layersContext;
-        //
-        //     for (var tms in general.tileMatrixSets) {
-        //         var tileMatrixSet = general.tileMatrixSets[tms];
-        //         // IGN's WMTS bug : epsg:nnnn instead of EPSG:nnnn
-        //         var crs = tileMatrixSet.supportedCRS = tileMatrixSet.supportedCRS.replace(/epsg/,"EPSG");
-        //
-        //         if (!Geoportal.Catalogue.CRSRESOLUTIONS.hasOwnProperty(crs)) {
-        //             var p= new OpenLayers.Projection(crs);
-        //             Geoportal.Catalogue.CRSRESOLUTIONS[crs]= [];
-        //             var matrixIds= tileMatrixSet.matrixIds;
-        //             for (var i= 0, li= matrixIds.length; i<li; ++i) {
-        //                 var mid= matrixIds[i];
-        //                 Geoportal.Catalogue.CRSRESOLUTIONS[crs].push(
-        //                     0.00028*mid.scaleDenominator
-        //                     /(OpenLayers.METERS_PER_INCH*OpenLayers.INCHES_PER_UNIT[p.getUnits()]));
-        //                     mid.supportedCRS= mid.supportedCRS.replace(/epsg/,"EPSG");
-        //                 }
-        //                 Geoportal.Catalogue.CRSRESOLUTIONS[crs].sort(function (a,b){ return b-a; });
-        //             }
-        //         }
-        //         var llR= Geoportal.Catalogue.CRSRESOLUTIONS['CRS:84'];
-        //         if (!llR) {
-        //             llR= Geoportal.Catalogue.CRSRESOLUTIONS['CRS:84']= general.resolutions.slice();
-        //         }
-        //         var wmR= Geoportal.Catalogue.CRSRESOLUTIONS['EPSG:3857'];
-        //         if (!wmR) {//FIXME : should never happened !!
-        //             // reproject resolutions from CRS84 to WebMercator (transform resolutions from degree/px to meter/px)
-        //             wmR= Geoportal.Catalogue.CRSRESOLUTIONS['EPSG:3857']= new Array(llR.length);
-        //             for (var i= 0, len= llR.length; i<len; i++) {
-        //                 var pt= new OpenLayers.LonLat(llR[i], 0);
-        //                 pt.transform(OpenLayers.Projection.CRS84, OpenLayers.Projection.WebMercator);
-        //                 wmR[i]= pt.lon;
-        //             }
-        //         }
-        //         Geoportal.Catalogue.RESOLUTIONS= wmR;
-        //
-        //         var getResolutionsFromCRS= function(crs) {
-        //             if (OpenLayers.Projection.WebMercator.isAliasOf(crs)) {
-        //                 return wmR;
-        //             }
-        //             if (OpenLayers.Projection.CRS84.isAliasOf(crs)) {
-        //                 return llR;
-        //             }
-        //             return Geoportal.Catalogue.CRSRESOLUTIONS[crs]?Geoportal.Catalogue.CRSRESOLUTIONS[crs]:null ;
-        //         };
-        //
-        //         var retrieveZoomFromResolution= function(resolutions, resolution) {
-        //             for (var i= 0, li= resolutions.length; i<li; i++) {
-        //                 if (resolutions[i]-resolution <= resolutions[li-1]) {
-        //                     return i;
-        //                 }
-        //             }
-        //             return -1;
-        //         };
-        //
-        //         var getZoomLevelFromScaleDenominator= function(scaleDenominator,crs) {
-        //             var resolution= scaleDenominator * 0.00028;
-        //             var R= getResolutionsFromCRS(crs);
-        //             if (R) {
-        //                 return retrieveZoomFromResolution(R,resolution);
-        //             }
-        //             resolution= resolution/(OpenLayers.METERS_PER_INCH * OpenLayers.INCHES_PER_UNIT["degrees"]);
-        //             return retrieveZoomFromResolution(llR,resolution);
-        //         };
-        //
-        //         var getZoomLevelFromResolution= function(resolution,crs){
-        //             var R= getResolutionsFromCRS(crs);
-        //             if (R) {
-        //                 return retrieveZoomFromResolution(R,resolution);
-        //             }
-        //             var pt0= new OpenLayers.LonLat(0, 0);
-        //             var pt1= new OpenLayers.LonLat(1, 0);
-        //             pt0.transform(new OpenLayers.Projection(crs),OpenLayers.Projection.CRS84);
-        //             pt1.transform(new OpenLayers.Projection(crs),OpenLayers.Projection.CRS84);
-        //             resolution= resolution*(Math.abs(pt1.lon-pt0.lon));
-        //             return retrieveZoomFromResolution(llR,resolution);
-        //         };
-
-        // par defaut, on utilise la projection WebMercator (EPSG:3857 = PM)
-        // soit la liste des resolutions natives
-        var resolutionsNatives = {};
-        switch (crs) {
-            case "EPSG:2154":
-                resolutionsNatives = {
-                    0: 104579.224549894,
-                    1: 52277.5323537905,
-                    2: 26135.4870785954,
-                    3: 13066.8913818,
-                    4: 6533.2286041135,
-                    5: 3266.5595244627,
-                    6: 1633.2660045974,
-                    7: 816.629554986,
-                    8: 408.3139146768,
-                    9: 204.1567415109,
-                    10: 102.0783167832,
-                    11: 51.0391448966,
-                    12: 25.5195690743,
-                    13: 12.7597836936,
-                    14: 6.379891636,
-                    15: 3.1899457653,
-                    16: 1.5949728695,
-                    17: 0.7974864315,
-                    18: 0.3987432149,
-                    19: 0.1993716073,
-                    20: 0.0996858037,
-                    21: 0.0498429018
-                };
-                break;
-            default:
-                resolutionsNatives = {
-                    0: 156543.033928041,
-                    1: 78271.51696402048,
-                    2: 39135.758482010235,
-                    3: 19567.87924100512,
-                    4: 9783.93962050256,
-                    5: 4891.96981025128,
-                    6: 2445.98490512564,
-                    7: 1222.99245256282,
-                    8: 611.49622628141,
-                    9: 305.7481131407048,
-                    10: 152.8740565703525,
-                    11: 76.43702828517624,
-                    12: 38.21851414258813,
-                    13: 19.10925707129406,
-                    14: 9.554628535647032,
-                    15: 4.777314267823516,
-                    16: 2.388657133911758,
-                    17: 1.194328566955879,
-                    18: 0.5971642834779395,
-                    19: 0.2985821417389697,
-                    20: 0.1492910708694849,
-                    21: 0.0746455354347424
-                };
-                break;
-        }
-
-        // gestion des autres SRS
-        // TODO
-        // if (crs) {
-        // }
-
-        var resolution = scaleDenominator * 0.00028;
-
-        for (var index in resolutionsNatives) {
-            if (resolutionsNatives.hasOwnProperty(index)) {
-                if (resolutionsNatives[index] <= resolution) {
-                    index = parseInt(index, 10);
-                    return index;
-                }
-            }
-        }
-
-        return 0; // -1 ?
-    },
-
-    /**
-     * Get attributions list for a layer, based on current zoom and extent
-     *
-     * @param {Object} params - function params
-     * @param {Array.<Float>} params.extent - map current geographical extent (EPSG:4326) : [top, left, bottom, right] = [maxy, minx, miny, maxx]
-     * @param {Number} params.zoom - map current zoom
-     * @param {String} params.crs - map current projection code (ex "EPSG:2154")
-     * @param {Boolean} params.visibility - layer visibility
-     * @param {Gp.Services.Config.Originator} params.originators - resource originators (from Gp.Config.layers[].originators)
-     * @returns {Object} attributions - associative array, mapping originators url (keys) with their properties : html attributions elements
-     */
-    getAttributions: function getAttributions(params) {
-        var zoom = params.zoom;
-
-        var attributions = [];
-
-        if (params.originators != null && params.visibility) {
-            // drawLogo = boolean, true if attribution should be displayed (zoom, extent), false otherwise
-            var drawLogo;
-            for (var j = 0, jl = params.originators.length; j < jl; j++) {
-                drawLogo = true;
-                var originator = params.originators[j];
-
-                var constraints = params.originators[j].constraints || [];
-                for (var k = 0, kl = constraints.length; k < kl; k++) {
-                    var constraint = constraints[k];
-                    drawLogo = true;
-
-                    var minZoomLevel = this.getZoomLevelFromScaleDenominator(constraint.maxScaleDenominator, params.crs);
-                    var maxZoomLevel = this.getZoomLevelFromScaleDenominator(constraint.minScaleDenominator, params.crs) || 21;
-
-                    // min zoom constraints
-                    if (minZoomLevel && minZoomLevel > zoom) {
-                        drawLogo = false;
-                    }
-
-                    // max zoom constraints
-                    if (drawLogo && maxZoomLevel !== null && maxZoomLevel < zoom) {
-                        drawLogo = false;
-                    }
-
-                    // bbox constraints
-                    var bbox = constraint.bbox;
-                    if (drawLogo && bbox) {
-                        drawLogo = false;
-                        var viewExtent = params.extent;
-                        if (viewExtent) {
-                            var bounds = [bbox.top, bbox.left, bbox.bottom, bbox.right];
-                            if (this.intersects(viewExtent, bounds)) {
-                                // at least one constraint matches the map ones
-                                drawLogo = true;
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                if (drawLogo) {
-                    // on a un originator qui correspond au zoom et à l'étendue.
-
-                    var logo = originator.logo;
-                    var url = originator.url;
-                    var name = originator.name ? originator.name : "";
-                    var text = originator.attribution;
-
-                    var container = document.createElement("div");
-                    container.className = "gp-control-attribution";
-
-                    // on crée un lien dans tous les cas (même s'il ne pointe pas vers une référence), pour avoir accès à la class CSS (pour surcharge)
-                    var link = null;
-                    link = document.createElement("a");
-                    link.className = "gp-control-attribution-link";
-                    link.target = "_blank";
-                    container.appendChild(link);
-                    if (url) {
-                        link.href = url;
-                    }
-
-                    var bImage = !!logo;
-                    var image = null;
-                    // si on a un logo, on l'affiche à l'interieur du lien
-                    if (bImage) {
-                        image = document.createElement("img");
-                        if (link) {
-                            image.className = "gp-control-attribution-image";
-                            link.appendChild(image);
-                        } else {
-                            image.className = "";
-                            container.appendChild(image);
-                        }
-                        image.src = logo; // FIXME : mixContent !
-                        image.title = text || name;
-                        image.style.height = "30px";
-                        image.style.width = "30px";
-                    } else {
-                        // sinon, on affiche le nom de l'originator, ou sa description ou l'url.
-                        if (name) {
-                            link.textContent = name;
-                        } else if (text) {
-                            link.textContent = text;
-                        } else if (url) {
-                            link.textContent = url;
-                        } else {
-                            link.textContent = "";
-                        }
-                    }
-
-                    attributions.push(container.innerHTML + " ");
-                }
-            }
-        }
-
-        return attributions;
-    },
-
-    /**
-     * Determines if one extent (extent1) intersects another (extent2)
-     *
-     * @param {Array.<Float>} extent1 - First extent : [top, left, bottom, right] = [maxy, minx, miny, maxx]
-     * @param {Array.<Float>} extent2 - Second extent : [top, left, bottom, right] = [maxy, minx, miny, maxx]
-     * @return {Boolean} intersects - True if the two extents intersect, false otherwise.
-     */
-    intersects: function intersects(extent1, extent2) {
-        var intersectsX = extent1[1] <= extent2[3] && extent2[1] <= extent1[3];
-        var intersectsY = extent1[2] <= extent2[0] && extent2[2] <= extent1[0];
-        return intersectsX && intersectsY;
-    }
-};
-
-exports.default = LayerUtils;
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _LoggerByDefault = __webpack_require__(0);
-
-var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var logger = _LoggerByDefault2.default.getLogger("Widget");
-
-/**
-* @classdesc
-* iTowns Widget class.
-* Every geoportal control inherits of this class.
-*
-* @constructor
-* @alias itowns.control.Widget
-* @param {Object} options - options for function call.
-* @param {String}  options.name - Name of the widget.
-* @param {Object}  options.element - HTML element of the widget
-* @param {Object}  options.target - HTML element where to put the widget
-* @param {String}  options.position - "absolute" or "relative"
-* @example
-* var myWidget = new itowns.control.Widget({
-*      name : "myWidget",
-*      element : myWidgetDiv,
-*      target : myWidgetTargetDiv,
-*      position: "absolute"
-* });
-*/
-function Widget(options) {
-    this.name = null;
-    this._element = null;
-    this._target = null;
-    this._globe = null;
-
-    this.setOptions(options);
-}
-
-/**
- * Constructor (alias)
- */
-Widget.prototype.constructor = Widget;
-
-/**
- * Return the widget's container element.
- *
- * @method
- * @return {HTMLElement} widget's container element.
- */
-Widget.prototype.getElement = function getElement() {
-    return this._element;
-};
-
-/**
- * Associates the widget to a specified target div.
- *
- * @method
- * @param {HTMLElement} targetDiv - widget target div.
- * @param {String} position - html position attribute.
- */
-Widget.prototype.setTarget = function setTarget(targetDiv, position) {
-    if (!targetDiv) {
-        return;
-    }
-
-    if (position && position !== "absolute" && position !== "relative") {
-        logger.error("Widget:setTarget - position value should be 'absolute' or 'relative'");
-        return;
-    }
-
-    if (this._target && this._element) {
-        this._target.removeChild(this._element);
-    }
-
-    this._target = targetDiv;
-
-    if (!this._element) {
-        logger.error("Widget:setTarget - widget element not created");
-        return;
-    }
-
-    this._element.style.position = position || "relative";
-
-    targetDiv.appendChild(this._element);
-};
-
-/**
- * Return the widget's target div.
- *
- * @method
- * @return {HTMLElement} widget's target div.
- */
-Widget.prototype.getTarget = function getTarget() {
-    return this._target;
-};
-
-/**
- * Change the options of the widget.
- *
- * @method
- * @param {Object} options - The new options of the control.
- */
-Widget.prototype.setOptions = function setOptions(options) {
-    this.name = options.name;
-    this._element = options.element;
-    this.setTarget(options.target, options.position);
-};
-
-/**
- * Get the globe associated with the widget. Undefined if the widget is not added to a globe.
- *
- * @method
- * @return {Object} globe
- */
-Widget.prototype.getGlobe = function getGlobe() {
-    return this._globe;
-};
-
-/**
- * Associate a globe to the widget.
- *
- * @method
- * @param {Object} globe - Globe to associate to the widget.
- */
-Widget.prototype.setGlobe = function setGlobe(globe) {
-    this._globe = globe;
-};
-
-exports.default = Widget;
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _ol = __webpack_require__(2);
@@ -21483,6 +20182,1307 @@ LayerSwitcher.prototype.getLayerInfo = function (layer) {
 exports.default = LayerSwitcher;
 
 /***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _LoggerByDefault = __webpack_require__(0);
+
+var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
+
+var _itowns = __webpack_require__(44);
+
+var Itowns = _interopRequireWildcard(_itowns);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var logger = _LoggerByDefault2.default.getLogger("GlobeViewExtended");
+
+/**
+ * @classdesc
+ *
+ * Extended itowns.GlobeView.
+ *
+ * @constructor
+ * @extends {itowns.GlobeView}
+ * @param {HTMLElement} viewerDiv - Where to instanciate the Three.js scene in the DOM
+ * @param {Object} coordCarto - longitude, latitude, altitude
+ * @param {Object} [options] - Optional properties.
+ * @param {String} [options.position="relative"] - "absolute" or "relative"
+ */
+function GlobeViewExtended(viewerDiv, coordCarto, options) {
+    viewerDiv.style.position = !options || !options.position ? "relative" : options.position;
+
+    this._itowns = Itowns;
+
+    // stockage de l'élément html porteur du globe
+    this._viewerDiv = viewerDiv;
+
+    // widget container
+    this._widgets = [];
+
+    // mapping des evenements
+    this._initEventMap();
+
+    // pour savoir si le globe est initialise
+    this._isInitialized = false;
+
+    // call constructor
+    this._globeView = new this._itowns.GlobeView(viewerDiv, coordCarto, options);
+
+    var self = this;
+    this.listen(GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, function () {
+        self._isInitialized = true;
+    });
+
+    this._globeView.addFrameRequester(this._itowns.MAIN_LOOP_EVENTS.BEFORE_RENDER, function () {
+        clearTimeout(this._preRenderTimer);
+        self._preRenderTimer = setTimeout(function () {
+            if (self._fetchVisibleColorLayers || self._fetchVisibleElevationLayers || self._fetchExtent) {
+                var event = {
+                    type: GlobeViewExtended.EVENTS.PRE_RENDER
+                };
+                if (self._fetchExtent) {
+                    event.extent = new self._itowns.Extent("EPSG:4326", 180, -180, 90, -90);
+                }
+                if (self._fetchVisibleColorLayers) {
+                    event.colorLayersId = [];
+                }
+                if (self._fetchVisibleElevationLayers) {
+                    event.elevationLayersId = [];
+                }
+
+                self._getCurrentSceneInfos(self._globeView.scene, event);
+
+                self._globeView.dispatchEvent(event);
+            }
+        }, 100);
+    }.bind(this));
+
+    if (this._globeView.controls) {
+        this.freezeControl();
+    }
+}
+
+/**
+ * intializes the evenements map
+ */
+GlobeViewExtended.prototype._initEventMap = function () {
+    if (!GlobeViewExtended.EVENTS) {
+        GlobeViewExtended.EVENTS = {
+            RANGE_CHANGED: this._itowns.CONTROL_EVENTS.RANGE_CHANGED,
+            CENTER_CHANGED: this._itowns.CONTROL_EVENTS.CAMERA_TARGET_CHANGED,
+            ORIENTATION_CHANGED: this._itowns.CONTROL_EVENTS.ORIENTATION_CHANGED,
+            LAYER_ADDED: this._itowns.GLOBE_VIEW_EVENTS.LAYER_ADDED,
+            LAYER_REMOVED: this._itowns.GLOBE_VIEW_EVENTS.LAYER_REMOVED,
+            LAYERS_ORDER_CHANGED: this._itowns.GLOBE_VIEW_EVENTS.COLOR_LAYERS_ORDER_CHANGED,
+            GLOBE_INITIALIZED: this._itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED,
+            VIEW_INITIALIZED: "viewinitialized",
+            PRE_RENDER: "prerender",
+            MOUSE_MOVE: "mousemove",
+            AFTER_RENDER: this._itowns.MAIN_LOOP_EVENTS.AFTER_RENDER,
+            OPACITY_PROPERTY_CHANGED: "opacity-property-changed",
+            VISIBLE_PROPERTY_CHANGED: "visible-property-changed",
+            SEQUENCE_PROPERTY_CHANGED: "sequence-property-changed"
+        };
+    }
+};
+
+/**
+ * Constructor (alias)
+ */
+GlobeViewExtended.prototype.constructor = GlobeViewExtended;
+
+/**
+ * Get GlobeViex Object (parent)
+ * @returns {Object} itowns GlobeView object
+ */
+GlobeViewExtended.prototype.getGlobeView = function () {
+    return this._globeView;
+};
+
+/**
+ * Indicates if the globe is initialized or not
+ *
+ * @return {Boolean} isInitialized
+ *
+ */
+GlobeViewExtended.prototype.isInitialized = function () {
+    return this._isInitialized;
+};
+
+/**
+ * Detects when the camera movement stops, then launch the callback given as parameter
+ *
+ * @param {Function} cb - The function to execute when the event occures.
+ *
+ */
+GlobeViewExtended.prototype.onCameraMoveStop = function (cb) {
+    var self = this;
+    function afterRenderHandler() {
+        self._globeView.removeFrameRequester(self._itowns.MAIN_LOOP_EVENTS.AFTER_CAMERA_UPDATE, afterRenderHandler);
+        cb();
+    };
+    this._globeView.addFrameRequester(this._itowns.MAIN_LOOP_EVENTS.AFTER_CAMERA_UPDATE, afterRenderHandler);
+};
+
+/**
+ * Disables globe controls until the globe rendering is completed
+ */
+GlobeViewExtended.prototype.freezeControl = function () {
+    // disable navigation
+    this._globeView.controls.enabled = false;
+
+    this.onCameraMoveStop(function () {
+        this._globeView.controls.enabled = true;
+    }.bind(this));
+};
+
+/**
+ * Associates a function to trigger when an event is received.
+ *
+ * @param {String} type - the event type. Can be any of {@link EVENTS}
+ * @param {Function} callback - The function to execute when the event occures.
+ * @return {Object} key - The event key
+ *
+ */
+GlobeViewExtended.prototype.listen = function (type, callback) {
+    if (typeof callback !== "function") {
+        logger.warn("no callback provided for event : " + type);
+        return null;
+    }
+
+    var target = this._getEventTarget(type);
+    if (!target) {
+        return null;
+    }
+
+    if (type === GlobeViewExtended.EVENTS.AFTER_RENDER) {
+        target.addFrameRequester(type, callback);
+    } else {
+        target.addEventListener(type, callback);
+    }
+
+    return {
+        target: target,
+        callback: callback,
+        type: type
+    };
+};
+
+/**
+ * Associates a function to trigger when a layer event is received.
+ *
+ * @param {Object} layer - The itowns layer.
+ * @param {String} type - the event type. Can be any of {@link EVENTS}.
+ * @param {Function} callback - The function to execute when the event occures.
+ * @return {Object} key - The event key
+ *
+ */
+GlobeViewExtended.prototype.addLayerListener = function (layer, type, callback) {
+    if (typeof callback !== "function") {
+        logger.warn("no callback provided for event : " + type);
+        return null;
+    }
+    layer.addEventListener(type, callback);
+    return {
+        target: layer,
+        callback: callback,
+        type: type
+    };
+};
+
+/**
+ * Returns the target of a given event type
+ *
+ * @param {String} type - the event type. Can be any of {@link EVENTS}
+ * @return {Object} target - The event target.
+ *
+ */
+GlobeViewExtended.prototype._getEventTarget = function (type) {
+    switch (type) {
+        case GlobeViewExtended.EVENTS.RANGE_CHANGED:
+        case GlobeViewExtended.EVENTS.CENTER_CHANGED:
+        case GlobeViewExtended.EVENTS.ORIENTATION_CHANGED:
+            return this.getGlobeView().controls;
+        case GlobeViewExtended.EVENTS.LAYER_ADDED:
+        case GlobeViewExtended.EVENTS.LAYER_REMOVED:
+        case GlobeViewExtended.EVENTS.LAYERS_ORDER_CHANGED:
+        case GlobeViewExtended.EVENTS.GLOBE_INITIALIZED:
+        case GlobeViewExtended.EVENTS.PRE_RENDER:
+        case GlobeViewExtended.EVENTS.AFTER_RENDER:
+        case GlobeViewExtended.EVENTS.VIEW_INITIALIZED:
+            return this.getGlobeView();
+        case GlobeViewExtended.EVENTS.MOUSE_MOVE:
+            return this._viewerDiv;
+        default:
+            logger.warn("unhandled event : " + type);
+            return null;
+    }
+};
+
+/**
+ * Cancels an event listening
+ *
+ * @param {Object} key - The event key
+ *
+ */
+GlobeViewExtended.prototype.forgetByKey = function (key) {
+    if (key.type === GlobeViewExtended.EVENTS.AFTER_RENDER) {
+        key.target.removeFrameRequester(key.type, key.callback);
+    } else {
+        key.target.removeEventListener(key.type, key.callback);
+    }
+};
+
+/**
+ * Cancels an layer event listening
+ *
+ * @param {Object} layer - The itowns layer
+ * @param {String} type - the event type
+ * @param {Function} callback - The function to execute when the event occures
+ *
+ */
+GlobeViewExtended.prototype.removeLayerListener = function (layer, type, callback) {
+    this.forgetByKey({
+        target: layer,
+        callback: callback,
+        type: type
+    });
+};
+
+/**
+ * Cancels an event listening
+ *
+ * @param {Object} type - The event type
+ * @param {Function} callback - The event handler
+ */
+GlobeViewExtended.prototype.forget = function (type, callback) {
+    var target = this._getEventTarget(type);
+    if (!target) return;
+
+    this.forgetByKey({
+        target: target,
+        callback: callback,
+        type: type
+    });
+};
+
+/**
+ * Overload itowns.GlobeView addLayer method
+ *
+ * @param {Object} layer - The itowns layer
+ * @return {Promise} promise
+ */
+GlobeViewExtended.prototype.addLayer = function (layer) {
+    // FIXME : to delete when itowns commit 2e9ed61eb4aa2a4bbe0e17c8e2650953844b099e
+    // is integrated into an iTowns release 
+    try {
+        var promise = this.getGlobeView().addLayer(layer);
+        this.getGlobeView().notifyChange(true);
+    } catch (error) {
+        return Promise.reject(error);
+    }
+
+    return promise;
+};
+
+/**
+ * Overload itowns.GlobeView removeLayer method
+ *
+ * @param {String} layerId - The layer id
+ */
+GlobeViewExtended.prototype.removeLayer = function (layerId) {
+    this.getGlobeView().removeLayer(layerId);
+    this.getGlobeView().notifyChange(true);
+};
+
+/**
+ * Set layer opacity
+ *
+ * @param {String} layerId - Layer id
+ * @param {Number} opacityValue - opacity value in [0 1]
+ */
+GlobeViewExtended.prototype.setLayerOpacity = function (layerId, opacityValue) {
+    this.getColorLayerById(layerId).opacity = opacityValue;
+    this.getGlobeView().notifyChange(true);
+};
+
+/**
+ * Set layer visibility
+ *
+ * @param {String} layerId - Layer id
+ * @param {Boolean} visible - New visibility of the layer
+ */
+GlobeViewExtended.prototype.setLayerVisibility = function (layerId, visible) {
+    this.getColorLayerById(layerId).visible = visible;
+    this.getGlobeView().notifyChange(true);
+};
+
+/**
+ * Move layer to the specified index
+ *
+ * @param {String} layerId - Layer id
+ * @param {Boolean} index - new index of the layer
+ */
+GlobeViewExtended.prototype.moveLayerToIndex = function (layerId, index) {
+    this._itowns.ColorLayersOrdering.moveLayerToIndex(this.getGlobeView(), layerId, index);
+    this.getGlobeView().notifyChange(true);
+};
+
+/**
+ * Remove event listener from the globe
+ *
+ * @param {String} type - event type
+ * @param {Function} callback - event handler
+ */
+GlobeViewExtended.prototype.removeEventListener = function (type, callback) {
+    switch (type) {
+        case "mousemove":
+            this._viewerDiv.removeEventListener(type, callback);
+            break;
+        case "centerchanged":
+            this.getGlobeView().controls.removeEventListener(type, callback);
+            break;
+        default:
+            this.getGlobeView().removeEventListener(type, callback);
+            break;
+    }
+};
+
+/**
+ * Defines if the current view extent have to be computed on pre-render event
+ *
+ * @param {Boolean} b - tells if the view extent info should be fetched by the event PRE_RENDER
+ */
+GlobeViewExtended.prototype.preRenderEventFetchViewExtent = function (b) {
+    if (typeof b === "undefined") {
+        b = true;
+    }
+    this._fetchExtent = b;
+};
+
+/**
+ * Defines if the list of the color layers displayed have to be computed on pre-render event
+ *
+ * @param {Boolean} b - tells if the displayed color layers info should be fetched by the event PRE_RENDER
+ */
+GlobeViewExtended.prototype.preRenderEventFetchColorLayersDisplayed = function (b) {
+    if (typeof b === "undefined") {
+        b = true;
+    }
+    this._fetchVisibleColorLayers = b;
+};
+
+/**
+ * Defines if the list of the elevation layers displayed have to be computed on pre-render event
+ *
+ * @param {Boolean} b - tells if the displayed elevation layers info should be fetched by the event PRE_RENDER
+ */
+GlobeViewExtended.prototype.preRenderEventFetchElevationLayersDisplayed = function (b) {
+    if (typeof b === "undefined") {
+        b = true;
+    }
+    this._fetchVisibleElevationLayers = b;
+};
+
+/**
+ * Defines if the list of the layers of all types displayed have to be computed on pre-render event
+ *
+ * @param {Boolean} b - tells if both displayed color layers and displayed elevation layers infos should be fetched by the event PRE_RENDER
+ */
+GlobeViewExtended.prototype.preRenderEventFetchLayersDisplayed = function (b) {
+    if (typeof b === "undefined") {
+        b = true;
+    }
+    this._fetchVisibleColorLayers = b;
+    this._fetchVisibleElevationLayers = b;
+};
+
+/**
+ * Get layer by its id
+ *
+ * @param {String} layerId - Layer id
+ * @return {Object} layer Object
+ */
+GlobeViewExtended.prototype.getLayerById = function (layerId) {
+    var layer = this.getGlobeView().getLayers(function (l) {
+        if (l.id === layerId) {
+            return l;
+        }
+    })[0];
+    if (!layer) {
+        logger.trace("[GlobeViewExtended]  : no Layer found for the id '" + layerId + "'");
+        return;
+    }
+    return layer;
+};
+
+/**
+ * Get color layer by its id
+ *
+ * @param {String} layerId - Color layer id
+ * @return {Object} layer Object
+ */
+GlobeViewExtended.prototype.getColorLayerById = function (layerId) {
+    var layer = this.getGlobeView().getLayers(function (l) {
+        if (l.id === layerId && l.type === "color") {
+            return l;
+        }
+    })[0];
+    if (!layer) {
+        logger.trace("[GlobeViewExtended]  : no colorLayer found for the id '" + layerId + "'");
+        return;
+    }
+    return layer;
+};
+
+/**
+ * Get imagery layers
+ *
+ * @return {Array} imagery layers
+ */
+GlobeViewExtended.prototype.getColorLayers = function () {
+    return this.getGlobeView().getLayers(function (layer) {
+        if (layer.type === "color") {
+            return layer;
+        }
+    });
+};
+
+/**
+ * Get vector layers
+ *
+ * @return {Array} vector layers
+ */
+GlobeViewExtended.prototype.getVectorLayers = function () {
+    return this.getGlobeView().getLayers(function (layer) {
+        if (layer.protocol === "rasterizer") {
+            return layer;
+        }
+    });
+};
+
+/**
+ * Get elevation layers
+ *
+ * @return {Array} elevation layers
+ */
+GlobeViewExtended.prototype.getElevationLayers = function () {
+    return this.getGlobeView().getLayers(function (layer) {
+        if (layer.type === "elevation") {
+            return layer;
+        }
+    });
+};
+
+/**
+ * Get the current view extent
+ *
+ * @returns {Array} current view extent
+ */
+GlobeViewExtended.prototype.getExtent = function () {
+    var options = {
+        extent: new this._itowns.Extent("EPSG:4326", 180, -180, 90, -90)
+    };
+
+    this._getCurrentSceneInfos(this.scene, options);
+
+    return options.extent;
+};
+
+/**
+ * Recursive method to fetch information about the current view (extent, layers displayed...)
+ *
+ * @param {Object} node - itowns node
+ * @param {Object} options - object containing objects to fill with info if specified
+ * @private
+ */
+GlobeViewExtended.prototype._getCurrentSceneInfos = function (node, options) {
+    if (!node || !node.visible) {
+        return;
+    }
+    if (node.level) {
+        if (node.material.visible) {
+            if (options.colorLayersId) {
+                for (var i = 0; i < node.material.colorLayersId.length; ++i) {
+                    if (options.colorLayersId.indexOf(node.material.colorLayersId[i]) < 0) {
+                        options.colorLayersId.push(node.material.colorLayersId[i]);
+                    }
+                }
+            }
+            if (options.elevationLayersId) {
+                for (var j = 0; j < node.material.elevationLayersId.length; ++j) {
+                    if (options.elevationLayersId.indexOf(node.material.elevationLayersId[j]) < 0) {
+                        options.elevationLayersId.push(node.material.elevationLayersId[j]);
+                    }
+                }
+            }
+            if (options.extent) {
+                options.extent.union(node.extent);
+            }
+        }
+    }
+    if (node.children) {
+        for (var child in node.children) {
+            this._getCurrentSceneInfos(node.children[child], options);
+        }
+    }
+};
+
+/**
+ * Add a widget to the globe
+ *
+ * @param {Object} widget - The Widget object to add
+ */
+GlobeViewExtended.prototype.addWidget = function (widget) {
+    if (!widget.getTarget()) {
+        widget.setTarget(this._viewerDiv, "absolute");
+    }
+    widget.setGlobe(this);
+    this._widgets.push(widget);
+};
+
+/**
+ * Returns all widgets.
+ *
+ * @return {Array} widgets - The array of widgets.
+ */
+GlobeViewExtended.prototype.getWidgets = function () {
+    return this._widgets;
+};
+
+/**
+ * Removes a widget.
+ *
+ * @param {Object} widget - The Widget object to remove
+ */
+GlobeViewExtended.prototype.removeWidget = function (widget) {
+    widget.setGlobe();
+    for (var idx = 0; idx < this._widgets.length; idx++) {
+        if (this._widgets[idx] === widget) {
+            this._widgets.splice(idx, 1);
+        }
+    }
+};
+
+/**
+ * Get html target element
+ *
+ * @return {HTMLElement} Globe container element
+ */
+GlobeViewExtended.prototype.getTargetElement = function () {
+    return this._viewerDiv;
+};
+
+/**
+ * Returns current view scale
+ *
+ * @return {Number} Scale
+ */
+GlobeViewExtended.prototype.getScale = function () {
+    return this.getGlobeView().controls.getScale();
+};
+
+/**
+ * Sets tilt
+ *
+ * @param {Number} tilt - Tilt value
+ * @return {Promise} promise
+ */
+GlobeViewExtended.prototype.setTilt = function (tilt) {
+    return this.getGlobeView().controls.setTilt(tilt, false);
+};
+
+/**
+ * Returns tilt
+ *
+ * @return {Number} - Tilt
+ */
+GlobeViewExtended.prototype.getTilt = function () {
+    return this.getGlobeView().controls.getCameraOrientation()[0];
+};
+
+/**
+ * Sets azimuth
+ *
+ * @param {Number} azimuth - Azimuth value
+ * @return {Promise} promise
+ */
+GlobeViewExtended.prototype.setAzimuth = function (azimuth) {
+    return this.getGlobeView().controls.setHeading(azimuth, false);
+};
+
+/**
+ * Returns azimuth
+ *
+ * @return {Number} azimuth
+ */
+GlobeViewExtended.prototype.getAzimuth = function () {
+    return this.getGlobeView().controls.getCameraOrientation()[1];
+};
+
+/**
+ * Gets the coordinate in lat,lon for a given pixel.
+ *
+ * @param {Number} x - The pixel x-position inside the Globe element.
+ * @param {Number} y - The pixel y-position inside the Globe element.
+ * @return {Coordinates} position
+ */
+GlobeViewExtended.prototype.getCoordinateFromPixel = function (x, y) {
+    return this.getGlobeView().controls.pickGeoPosition({
+        x: x,
+        y: y
+    });
+};
+
+/**
+ * Gets the coordinate in lat,lon for a given mouse position.
+ *
+ * @param {MouseEvent} mouseEvent - A mouse event.
+ * @return {Coordinates} position
+ */
+GlobeViewExtended.prototype.getCoordinateFromMouseEvent = function (mouseEvent) {
+    var coords = this.getGlobeView().eventToViewCoords(mouseEvent);
+    return this.getGlobeView().controls.pickGeoPosition(coords);
+};
+
+/**
+ * Get all visible features that intersect a pixel
+ *
+ * @param {MouseEvent} mouseEvent - A mouse event.
+ * @return {Array} visibleFeatures - The array of visible features.
+ */
+GlobeViewExtended.prototype.getFeaturesAtMousePosition = function (mouseEvent) {
+    var vectorLayers = this.getVectorLayers();
+    if (!vectorLayers) {
+        return;
+    }
+    // array of the visible features on the clicker coord
+    var visibleFeatures = [];
+    var geoCoord = this.getCoordinateFromMouseEvent(mouseEvent);
+    if (geoCoord) {
+        // buffer around the click inside we retrieve the features
+        var precision = this.getGlobeView().controls.pixelsToDegrees(5);
+        for (var i = 0; i < vectorLayers.length; i++) {
+            var idx;
+            var layer = vectorLayers[i];
+            // if the layer is not visible, we ignore it
+            if (!layer.visible) {
+                continue;
+            }
+            var result = this._itowns.FeaturesUtils.filterFeaturesUnderCoordinate(geoCoord, layer.feature, precision);
+            // we add the features to the visible features array
+            for (idx = 0; idx < result.length; idx++) {
+                visibleFeatures.push(result[idx]);
+            }
+        }
+    }
+    return visibleFeatures;
+};
+
+/**
+ * Changes the center of the scene on screen to the specified in lat, lon.
+ *
+ * @param {Object} center - Center object
+ * @param {Number} center.longitude - Coordinate longitude WGS84 in degree
+ * @param {Number} center.latitude - Coordinate latitude WGS84 in degree
+ * @return {Promise} A promise that resolves when the next 'globe initilazed' event fires.
+ */
+GlobeViewExtended.prototype.setCameraTargetGeoPosition = function (center) {
+    return this.getGlobeView().controls.setCameraTargetGeoPositionAdvanced(center, false);
+};
+
+/**
+ * Retuns the coordinates of the central point on screen in lat,lon and alt
+ *
+ * @return {Object} center
+ */
+GlobeViewExtended.prototype.getCenter = function () {
+    var cameraCenter = this.getGlobeView().controls.getCameraTargetGeoPosition();
+    var center = {
+        lon: cameraCenter.longitude(),
+        lat: cameraCenter.latitude(),
+        alt: cameraCenter.altitude()
+    };
+    return center;
+};
+
+/**
+ * Returns the actual zoom.
+ *
+ * @return {Number} zoom
+ */
+GlobeViewExtended.prototype.getZoom = function () {
+    return this.getGlobeView().controls.getZoom();
+};
+
+/**
+ * Sets the current zoom.
+ *
+ * @param {Number} zoom - The zoom
+ * @return {Promise} promise
+ */
+GlobeViewExtended.prototype.setZoom = function (zoom) {
+    return this.getGlobeView().controls.setZoom(zoom, false);
+};
+
+/**
+ * To convert the projection in meters on the globe of a number of pixels of screen
+ * @param {Number} pixels - count pixels to project
+ * @return {Number} projection in meters on globe
+ */
+GlobeViewExtended.prototype.pixelsToMeters = function (pixels) {
+    return this.getGlobeView().controls.pixelsToMeters(pixels);
+};
+
+/**
+ * Projection on screen in pixels of length in meter on globe
+ * @param {Number} value - Length in meter on globe
+ * @return {Number} projection in pixels on screen
+ */
+GlobeViewExtended.prototype.metersToPixels = function (value) {
+    return this.getGlobeView().controls.metersToPixels(value);
+};
+
+/**
+ * Returns the "range": the distance in meters between the camera and the current central point on the screen.
+ * @return {Number} number
+ */
+GlobeViewExtended.prototype.getRange = function () {
+    return this.getGlobeView().controls.getRange();
+};
+
+/**
+ * @return {THREE.Vector3} position
+ */
+GlobeViewExtended.prototype.moveTarget = function () {
+    return this.getGlobeView().controls.moveTarget();
+};
+
+/**
+ * To get the layer event infos
+ *
+ * @param {Object} evt - event
+ * @returns {Object} object with event properties
+ */
+GlobeViewExtended.prototype.getLayerEventInfos = function (evt) {
+    var propertyName = evt.type.replace("-property-changed", "");
+    return {
+        propertyName: propertyName,
+        previousValue: evt.previous[propertyName],
+        newValue: evt.new[propertyName]
+    };
+};
+
+/**
+ * Sets background (specific to miniglobe)
+ */
+GlobeViewExtended.prototype.setBackground = function () {
+    // Set a 0 alpha clear value (instead of the default '1')
+    // because we want a transparent background for the miniglobe view to be able
+    // to see the main view "behind"
+    this.getGlobeView().mainLoop.gfxEngine.renderer.setClearColor(0x000000, 0);
+};
+
+/**
+ * Sets camera position
+ * @param {THREE.Vector3} target - Target position
+ * @param {Number} distance - Distance from target
+ */
+GlobeViewExtended.prototype.setCameraPosition = function (target, distance) {
+    this.getGlobeView().camera.camera3D.position.copy(target).setLength(distance);
+};
+
+/**
+ * Sets camera orientation to look at specified target
+ * @param {THREE.Vector3} target - Target position
+ */
+GlobeViewExtended.prototype.lookAt = function (target) {
+    this.getGlobeView().camera.camera3D.lookAt(target);
+};
+
+/**
+ * Notifies the scene it needs to be updated
+ */
+GlobeViewExtended.prototype.notifyChange = function () {
+    this.getGlobeView().notifyChange(true);
+};
+
+/**
+* Resizes itowns
+*
+* @param {Integer} width - canvas width in pixels
+* @param {Integer} height - canvas height in pixels
+*/
+GlobeViewExtended.prototype.resize = function (width, height) {
+    this.getGlobeView().mainLoop.gfxEngine.onWindowResize(width, height);
+    this.getGlobeView().notifyChange(true);
+};
+
+exports.default = GlobeViewExtended;
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var LayerUtils = {
+
+    /**
+     * Obtenir le ZoomLevel à partir du ScaleDenominator
+     * @param {Number} scaleDenominator - the scale denominator
+     * @param {String} crs - the crs
+     *
+     * @returns {Integer} zoom level
+     */
+    getZoomLevelFromScaleDenominator: function getZoomLevelFromScaleDenominator(scaleDenominator, crs) {
+        // ------------------------------------------------- //
+        // Code issu de l'API Geoportal/Catalogue/Config.js  //
+        // ------------------------------------------------- //
+        //     var configuration = Gp.Config;
+        //     var general = configuration.generalOptions;
+        //     var layers  = configuration.layersContext;
+        //
+        //     for (var tms in general.tileMatrixSets) {
+        //         var tileMatrixSet = general.tileMatrixSets[tms];
+        //         // IGN's WMTS bug : epsg:nnnn instead of EPSG:nnnn
+        //         var crs = tileMatrixSet.supportedCRS = tileMatrixSet.supportedCRS.replace(/epsg/,"EPSG");
+        //
+        //         if (!Geoportal.Catalogue.CRSRESOLUTIONS.hasOwnProperty(crs)) {
+        //             var p= new OpenLayers.Projection(crs);
+        //             Geoportal.Catalogue.CRSRESOLUTIONS[crs]= [];
+        //             var matrixIds= tileMatrixSet.matrixIds;
+        //             for (var i= 0, li= matrixIds.length; i<li; ++i) {
+        //                 var mid= matrixIds[i];
+        //                 Geoportal.Catalogue.CRSRESOLUTIONS[crs].push(
+        //                     0.00028*mid.scaleDenominator
+        //                     /(OpenLayers.METERS_PER_INCH*OpenLayers.INCHES_PER_UNIT[p.getUnits()]));
+        //                     mid.supportedCRS= mid.supportedCRS.replace(/epsg/,"EPSG");
+        //                 }
+        //                 Geoportal.Catalogue.CRSRESOLUTIONS[crs].sort(function (a,b){ return b-a; });
+        //             }
+        //         }
+        //         var llR= Geoportal.Catalogue.CRSRESOLUTIONS['CRS:84'];
+        //         if (!llR) {
+        //             llR= Geoportal.Catalogue.CRSRESOLUTIONS['CRS:84']= general.resolutions.slice();
+        //         }
+        //         var wmR= Geoportal.Catalogue.CRSRESOLUTIONS['EPSG:3857'];
+        //         if (!wmR) {//FIXME : should never happened !!
+        //             // reproject resolutions from CRS84 to WebMercator (transform resolutions from degree/px to meter/px)
+        //             wmR= Geoportal.Catalogue.CRSRESOLUTIONS['EPSG:3857']= new Array(llR.length);
+        //             for (var i= 0, len= llR.length; i<len; i++) {
+        //                 var pt= new OpenLayers.LonLat(llR[i], 0);
+        //                 pt.transform(OpenLayers.Projection.CRS84, OpenLayers.Projection.WebMercator);
+        //                 wmR[i]= pt.lon;
+        //             }
+        //         }
+        //         Geoportal.Catalogue.RESOLUTIONS= wmR;
+        //
+        //         var getResolutionsFromCRS= function(crs) {
+        //             if (OpenLayers.Projection.WebMercator.isAliasOf(crs)) {
+        //                 return wmR;
+        //             }
+        //             if (OpenLayers.Projection.CRS84.isAliasOf(crs)) {
+        //                 return llR;
+        //             }
+        //             return Geoportal.Catalogue.CRSRESOLUTIONS[crs]?Geoportal.Catalogue.CRSRESOLUTIONS[crs]:null ;
+        //         };
+        //
+        //         var retrieveZoomFromResolution= function(resolutions, resolution) {
+        //             for (var i= 0, li= resolutions.length; i<li; i++) {
+        //                 if (resolutions[i]-resolution <= resolutions[li-1]) {
+        //                     return i;
+        //                 }
+        //             }
+        //             return -1;
+        //         };
+        //
+        //         var getZoomLevelFromScaleDenominator= function(scaleDenominator,crs) {
+        //             var resolution= scaleDenominator * 0.00028;
+        //             var R= getResolutionsFromCRS(crs);
+        //             if (R) {
+        //                 return retrieveZoomFromResolution(R,resolution);
+        //             }
+        //             resolution= resolution/(OpenLayers.METERS_PER_INCH * OpenLayers.INCHES_PER_UNIT["degrees"]);
+        //             return retrieveZoomFromResolution(llR,resolution);
+        //         };
+        //
+        //         var getZoomLevelFromResolution= function(resolution,crs){
+        //             var R= getResolutionsFromCRS(crs);
+        //             if (R) {
+        //                 return retrieveZoomFromResolution(R,resolution);
+        //             }
+        //             var pt0= new OpenLayers.LonLat(0, 0);
+        //             var pt1= new OpenLayers.LonLat(1, 0);
+        //             pt0.transform(new OpenLayers.Projection(crs),OpenLayers.Projection.CRS84);
+        //             pt1.transform(new OpenLayers.Projection(crs),OpenLayers.Projection.CRS84);
+        //             resolution= resolution*(Math.abs(pt1.lon-pt0.lon));
+        //             return retrieveZoomFromResolution(llR,resolution);
+        //         };
+
+        // par defaut, on utilise la projection WebMercator (EPSG:3857 = PM)
+        // soit la liste des resolutions natives
+        var resolutionsNatives = {};
+        switch (crs) {
+            case "EPSG:2154":
+                resolutionsNatives = {
+                    0: 104579.224549894,
+                    1: 52277.5323537905,
+                    2: 26135.4870785954,
+                    3: 13066.8913818,
+                    4: 6533.2286041135,
+                    5: 3266.5595244627,
+                    6: 1633.2660045974,
+                    7: 816.629554986,
+                    8: 408.3139146768,
+                    9: 204.1567415109,
+                    10: 102.0783167832,
+                    11: 51.0391448966,
+                    12: 25.5195690743,
+                    13: 12.7597836936,
+                    14: 6.379891636,
+                    15: 3.1899457653,
+                    16: 1.5949728695,
+                    17: 0.7974864315,
+                    18: 0.3987432149,
+                    19: 0.1993716073,
+                    20: 0.0996858037,
+                    21: 0.0498429018
+                };
+                break;
+            default:
+                resolutionsNatives = {
+                    0: 156543.033928041,
+                    1: 78271.51696402048,
+                    2: 39135.758482010235,
+                    3: 19567.87924100512,
+                    4: 9783.93962050256,
+                    5: 4891.96981025128,
+                    6: 2445.98490512564,
+                    7: 1222.99245256282,
+                    8: 611.49622628141,
+                    9: 305.7481131407048,
+                    10: 152.8740565703525,
+                    11: 76.43702828517624,
+                    12: 38.21851414258813,
+                    13: 19.10925707129406,
+                    14: 9.554628535647032,
+                    15: 4.777314267823516,
+                    16: 2.388657133911758,
+                    17: 1.194328566955879,
+                    18: 0.5971642834779395,
+                    19: 0.2985821417389697,
+                    20: 0.1492910708694849,
+                    21: 0.0746455354347424
+                };
+                break;
+        }
+
+        // gestion des autres SRS
+        // TODO
+        // if (crs) {
+        // }
+
+        var resolution = scaleDenominator * 0.00028;
+
+        for (var index in resolutionsNatives) {
+            if (resolutionsNatives.hasOwnProperty(index)) {
+                if (resolutionsNatives[index] <= resolution) {
+                    index = parseInt(index, 10);
+                    return index;
+                }
+            }
+        }
+
+        return 0; // -1 ?
+    },
+
+    /**
+     * Get attributions list for a layer, based on current zoom and extent
+     *
+     * @param {Object} params - function params
+     * @param {Array.<Float>} params.extent - map current geographical extent (EPSG:4326) : [top, left, bottom, right] = [maxy, minx, miny, maxx]
+     * @param {Number} params.zoom - map current zoom
+     * @param {String} params.crs - map current projection code (ex "EPSG:2154")
+     * @param {Boolean} params.visibility - layer visibility
+     * @param {Gp.Services.Config.Originator} params.originators - resource originators (from Gp.Config.layers[].originators)
+     * @returns {Object} attributions - associative array, mapping originators url (keys) with their properties : html attributions elements
+     */
+    getAttributions: function getAttributions(params) {
+        var zoom = params.zoom;
+
+        var attributions = [];
+
+        if (params.originators != null && params.visibility) {
+            // drawLogo = boolean, true if attribution should be displayed (zoom, extent), false otherwise
+            var drawLogo;
+            for (var j = 0, jl = params.originators.length; j < jl; j++) {
+                drawLogo = true;
+                var originator = params.originators[j];
+
+                var constraints = params.originators[j].constraints || [];
+                for (var k = 0, kl = constraints.length; k < kl; k++) {
+                    var constraint = constraints[k];
+                    drawLogo = true;
+
+                    var minZoomLevel = this.getZoomLevelFromScaleDenominator(constraint.maxScaleDenominator, params.crs);
+                    var maxZoomLevel = this.getZoomLevelFromScaleDenominator(constraint.minScaleDenominator, params.crs) || 21;
+
+                    // min zoom constraints
+                    if (minZoomLevel && minZoomLevel > zoom) {
+                        drawLogo = false;
+                    }
+
+                    // max zoom constraints
+                    if (drawLogo && maxZoomLevel !== null && maxZoomLevel < zoom) {
+                        drawLogo = false;
+                    }
+
+                    // bbox constraints
+                    var bbox = constraint.bbox;
+                    if (drawLogo && bbox) {
+                        drawLogo = false;
+                        var viewExtent = params.extent;
+                        if (viewExtent) {
+                            var bounds = [bbox.top, bbox.left, bbox.bottom, bbox.right];
+                            if (this.intersects(viewExtent, bounds)) {
+                                // at least one constraint matches the map ones
+                                drawLogo = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if (drawLogo) {
+                    // on a un originator qui correspond au zoom et à l'étendue.
+
+                    var logo = originator.logo;
+                    var url = originator.url;
+                    var name = originator.name ? originator.name : "";
+                    var text = originator.attribution;
+
+                    var container = document.createElement("div");
+                    container.className = "gp-control-attribution";
+
+                    // on crée un lien dans tous les cas (même s'il ne pointe pas vers une référence), pour avoir accès à la class CSS (pour surcharge)
+                    var link = null;
+                    link = document.createElement("a");
+                    link.className = "gp-control-attribution-link";
+                    link.target = "_blank";
+                    container.appendChild(link);
+                    if (url) {
+                        link.href = url;
+                    }
+
+                    var bImage = !!logo;
+                    var image = null;
+                    // si on a un logo, on l'affiche à l'interieur du lien
+                    if (bImage) {
+                        image = document.createElement("img");
+                        if (link) {
+                            image.className = "gp-control-attribution-image";
+                            link.appendChild(image);
+                        } else {
+                            image.className = "";
+                            container.appendChild(image);
+                        }
+                        image.src = logo; // FIXME : mixContent !
+                        image.title = text || name;
+                        image.style.height = "30px";
+                        image.style.width = "30px";
+                    } else {
+                        // sinon, on affiche le nom de l'originator, ou sa description ou l'url.
+                        if (name) {
+                            link.textContent = name;
+                        } else if (text) {
+                            link.textContent = text;
+                        } else if (url) {
+                            link.textContent = url;
+                        } else {
+                            link.textContent = "";
+                        }
+                    }
+
+                    attributions.push(container.innerHTML + " ");
+                }
+            }
+        }
+
+        return attributions;
+    },
+
+    /**
+     * Determines if one extent (extent1) intersects another (extent2)
+     *
+     * @param {Array.<Float>} extent1 - First extent : [top, left, bottom, right] = [maxy, minx, miny, maxx]
+     * @param {Array.<Float>} extent2 - Second extent : [top, left, bottom, right] = [maxy, minx, miny, maxx]
+     * @return {Boolean} intersects - True if the two extents intersect, false otherwise.
+     */
+    intersects: function intersects(extent1, extent2) {
+        var intersectsX = extent1[1] <= extent2[3] && extent2[1] <= extent1[3];
+        var intersectsY = extent1[2] <= extent2[0] && extent2[2] <= extent1[0];
+        return intersectsX && intersectsY;
+    }
+};
+
+exports.default = LayerUtils;
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _LoggerByDefault = __webpack_require__(0);
+
+var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var logger = _LoggerByDefault2.default.getLogger("Widget");
+
+/**
+* @classdesc
+* iTowns Widget class.
+* Every geoportal control inherits of this class.
+*
+* @constructor
+* @alias itowns.control.Widget
+* @param {Object} options - options for function call.
+* @param {String}  options.name - Name of the widget.
+* @param {Object}  options.element - HTML element of the widget
+* @param {Object}  options.target - HTML element where to put the widget
+* @param {String}  options.position - "absolute" or "relative"
+* @example
+* var myWidget = new itowns.control.Widget({
+*      name : "myWidget",
+*      element : myWidgetDiv,
+*      target : myWidgetTargetDiv,
+*      position: "absolute"
+* });
+*/
+function Widget(options) {
+    this.name = null;
+    this._element = null;
+    this._target = null;
+    this._globe = null;
+
+    this.setOptions(options);
+}
+
+/**
+ * Constructor (alias)
+ */
+Widget.prototype.constructor = Widget;
+
+/**
+ * Return the widget's container element.
+ *
+ * @method
+ * @return {HTMLElement} widget's container element.
+ */
+Widget.prototype.getElement = function getElement() {
+    return this._element;
+};
+
+/**
+ * Associates the widget to a specified target div.
+ *
+ * @method
+ * @param {HTMLElement} targetDiv - widget target div.
+ * @param {String} position - html position attribute.
+ */
+Widget.prototype.setTarget = function setTarget(targetDiv, position) {
+    if (!targetDiv) {
+        return;
+    }
+
+    if (position && position !== "absolute" && position !== "relative") {
+        logger.error("Widget:setTarget - position value should be 'absolute' or 'relative'");
+        return;
+    }
+
+    if (this._target && this._element) {
+        this._target.removeChild(this._element);
+    }
+
+    this._target = targetDiv;
+
+    if (!this._element) {
+        logger.error("Widget:setTarget - widget element not created");
+        return;
+    }
+
+    this._element.style.position = position || "relative";
+
+    targetDiv.appendChild(this._element);
+};
+
+/**
+ * Return the widget's target div.
+ *
+ * @method
+ * @return {HTMLElement} widget's target div.
+ */
+Widget.prototype.getTarget = function getTarget() {
+    return this._target;
+};
+
+/**
+ * Change the options of the widget.
+ *
+ * @method
+ * @param {Object} options - The new options of the control.
+ */
+Widget.prototype.setOptions = function setOptions(options) {
+    this.name = options.name;
+    this._element = options.element;
+    this.setTarget(options.target, options.position);
+};
+
+/**
+ * Get the globe associated with the widget. Undefined if the widget is not added to a globe.
+ *
+ * @method
+ * @return {Object} globe
+ */
+Widget.prototype.getGlobe = function getGlobe() {
+    return this._globe;
+};
+
+/**
+ * Associate a globe to the widget.
+ *
+ * @method
+ * @param {Object} globe - Globe to associate to the widget.
+ */
+Widget.prototype.setGlobe = function setGlobe(globe) {
+    this._globe = globe;
+};
+
+exports.default = Widget;
+
+/***/ }),
 /* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -21504,6 +21504,10 @@ var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 var _Interactions = __webpack_require__(18);
 
 var _Interactions2 = _interopRequireDefault(_Interactions);
+
+var _LayerSwitcher = __webpack_require__(8);
+
+var _LayerSwitcher2 = _interopRequireDefault(_LayerSwitcher);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21987,6 +21991,21 @@ var Measures = {
         this.measureVector.gpResultLayerId = "measure";
 
         map.addLayer(this.measureVector);
+
+        // Si un layer switcher est présent dans la carte, on lui affecte des informations pour cette couche
+        map.getControls().forEach(function (control) {
+            if (control instanceof _LayerSwitcher2.default) {
+                // un layer switcher est présent dans la carte
+                var layerId = this.measureVector.gpLayerId;
+                // on n'ajoute des informations que s'il n'y en a pas déjà (si le titre est le numéro par défaut)
+                if (control._layers[layerId].title === layerId) {
+                    control.addLayer(this.measureVector, {
+                        title: this.options.layerDescription.title,
+                        description: this.options.layerDescription.description
+                    });
+                }
+            }
+        }, this);
     }
 };
 
@@ -30460,7 +30479,7 @@ var _Config = __webpack_require__(5);
 
 var _Config2 = _interopRequireDefault(_Config);
 
-var _LayerUtils = __webpack_require__(9);
+var _LayerUtils = __webpack_require__(10);
 
 var _LayerUtils2 = _interopRequireDefault(_LayerUtils);
 
@@ -33395,7 +33414,7 @@ Object.defineProperty(exports, "olUtils", {
   }
 });
 
-var _LayerUtils = __webpack_require__(9);
+var _LayerUtils = __webpack_require__(10);
 
 Object.defineProperty(exports, "LayerUtils", {
   enumerable: true,
@@ -33451,7 +33470,7 @@ var _LayerWMS = __webpack_require__(52);
 
 var _LayerWMS2 = _interopRequireDefault(_LayerWMS);
 
-var _LayerSwitcher = __webpack_require__(11);
+var _LayerSwitcher = __webpack_require__(8);
 
 var _LayerSwitcher2 = _interopRequireDefault(_LayerSwitcher);
 
@@ -41287,6 +41306,10 @@ var _KML = __webpack_require__(16);
 
 var _KML2 = _interopRequireDefault(_KML);
 
+var _LayerSwitcher = __webpack_require__(8);
+
+var _LayerSwitcher2 = _interopRequireDefault(_LayerSwitcher);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var logger = _LoggerByDefault2.default.getLogger("Drawing");
@@ -41302,6 +41325,9 @@ var logger = _LoggerByDefault2.default.getLogger("Drawing");
  * @param {Object} options - options for function call.
  * @param {Boolean} [options.collapsed = true] - Specify if Drawing control should be collapsed at startup. Default is true.
  * @param {ol.layer.Vector} [options.layer = null] - Openlayers layer that will hosts created features. If none, an empty vector layer will be created.
+ * @param {Object} [options.layerDescription = {}] - Layer informations to be displayed in LayerSwitcher widget (only if a LayerSwitcher is also added to the map)
+ * @param {String} [options.layerDescription.title = "Croquis"] - Layer title to be displayed in LayerSwitcher
+ * @param {String} [options.layerDescription.description = "Mon croquis"] - Layer description to be displayed in LayerSwitcher
  * @param {Object} options.tools - Tools to display in the drawing toolbox. All by default.
  * @param {Boolean} [options.tools.points = true] - Display points drawing tool
  * @param {Boolean} [options.tools.lines = true] - Display lines drawing tool
@@ -41660,6 +41686,14 @@ Drawing.prototype._initialize = function (options) {
 
     // Set default options
     this.options = options || {};
+
+    if (!this.options.layerDescription) {
+        this.options.layerDescription = {
+            title: "Croquis",
+            description: "Mon croquis"
+        };
+    }
+
     // applying default tools
     if (!this.options.tools) {
         this.options.tools = {};
@@ -41873,8 +41907,23 @@ Drawing.prototype.setLayer = function (vlayer) {
                 }
             }
         });
+        this.layer = vlayer;
+
+        // Si un layer switcher est présent dans la carte, on lui affecte des informations pour cette couche
+        this.getMap().getControls().forEach(function (control) {
+            if (control instanceof _LayerSwitcher2.default) {
+                // un layer switcher est présent dans la carte
+                var layerId = this.layer.gpLayerId;
+                // on n'ajoute des informations que s'il n'y en a pas déjà (si le titre est le numéro par défaut)
+                if (control._layers[layerId].title === layerId) {
+                    control.addLayer(this.layer, {
+                        title: this.options.layerDescription.title,
+                        description: this.options.layerDescription.description
+                    });
+                }
+            }
+        }, this);
     }
-    this.layer = vlayer;
 };
 
 /**
@@ -43539,7 +43588,7 @@ var _LocationSelector = __webpack_require__(27);
 
 var _LocationSelector2 = _interopRequireDefault(_LocationSelector);
 
-var _LayerSwitcher = __webpack_require__(11);
+var _LayerSwitcher = __webpack_require__(8);
 
 var _LayerSwitcher2 = _interopRequireDefault(_LayerSwitcher);
 
@@ -43573,6 +43622,9 @@ var logger = _LoggerByDefault2.default.getLogger("route");
  * @param {Array} [options.markersOpts[property].offset] - Offsets in pixels used when positioning the overlay. The first element in the array is the horizontal offset. A positive value shifts the overlay right. The second element in the array is the vertical offset. A positive value shifts the overlay down. Default is [0, 0]. (see http://openlayers.org/en/latest/apidoc/ol.Overlay.html)
  * @param {Object} [options.routeOptions = {}] - route service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~route Gp.Services.route()} to know all route options.
  * @param {Object} [options.autocompleteOptions = {}] - autocomplete service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~autoComplete Gp.Services.autoComplete()} to know all autocomplete options
+ * @param {Object} [options.layerDescription = {}] - Layer informations to be displayed in LayerSwitcher widget (only if a LayerSwitcher is also added to the map)
+ * @param {String} [options.layerDescription.title = "Itinéraire"] - Layer title to be displayed in LayerSwitcher
+ * @param {String} [options.layerDescription.description = "Itinéraire basé sur un graphe"] - Layer description to be displayed in LayerSwitcher
  * @example
  *  var route = ol.control.Route({
  *      collapsed : true
@@ -43727,7 +43779,11 @@ Route.prototype.initialize = function (options) {
             bridge: false
         },
         routeOptions: {},
-        autocompleteOptions: {}
+        autocompleteOptions: {},
+        layerDescription: {
+            title: "Itinéraire",
+            description: "Itinéraire basé sur un graphe"
+        }
     };
 
     // merge with user options
@@ -44939,8 +44995,8 @@ Route.prototype._fillRouteResultsDetailsFeatureGeometry = function (instructions
             // on n'ajoute des informations que s'il n'y en a pas déjà (si le titre est le numéro par défaut)
             if (control._layers[layerId].title === layerId) {
                 control.addLayer(this._geojsonSections, {
-                    title: " Itinéraire " + graph,
-                    description: " Itinéraire basé sur un graphe " + graph
+                    title: this.options.layerDescription.title + " (" + graph + ")",
+                    description: this.options.layerDescription.description
                 });
             }
         }
@@ -47162,7 +47218,7 @@ var _LocationSelector = __webpack_require__(27);
 
 var _LocationSelector2 = _interopRequireDefault(_LocationSelector);
 
-var _LayerSwitcher = __webpack_require__(11);
+var _LayerSwitcher = __webpack_require__(8);
 
 var _LayerSwitcher2 = _interopRequireDefault(_LayerSwitcher);
 
@@ -47199,6 +47255,9 @@ var logger = _LoggerByDefault2.default.getLogger("isocurve");
  * @param {Array} [options.markerOpts.offset] - Offsets in pixels used when positioning the overlay. The first element in the array is the horizontal offset. A positive value shifts the overlay right. The second element in the array is the vertical offset. A positive value shifts the overlay down. Default is [0, 0]. (see http://openlayers.org/en/latest/apidoc/ol.Overlay.html)
  * @param {Object} [options.isocurveOptions = {}] - isocurve service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~isoCurve Gp.Services.isoCurve()} to know all isocurve options.
  * @param {Object} [options.autocompleteOptions = {}] - autocomplete service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~autoComplete Gp.Services.autoComplete()} to know all autocomplete options
+ * @param {Object} [options.layerDescription = {}] - Layer informations to be displayed in LayerSwitcher widget (only if a LayerSwitcher is also added to the map)
+ * @param {String} [options.layerDescription.title = "Isochrone/Isodistance"] - Layer title to be displayed in LayerSwitcher
+ * @param {String} [options.layerDescription.description = "isochrones/isodistance basé sur un graphe"] - Layer description to be displayed in LayerSwitcher
  * @example
  *  var iso = ol.control.Isocurve({
  *      collapsed : false
@@ -47352,7 +47411,11 @@ Isocurve.prototype.initialize = function (options) {
             offset: _Markers2.default.defaultOffset
         },
         isocurveOptions: {},
-        autocompleteOptions: {}
+        autocompleteOptions: {},
+        layerDescription: {
+            title: "Isochrone/Isodistance",
+            description: "isochrones/isodistance basé sur un graphe"
+        }
     };
 
     // merge with user options
@@ -48235,8 +48298,8 @@ Isocurve.prototype._drawIsoResults = function (results) {
             // on n'ajoute des informations que s'il n'y en a pas déjà (si le titre est le numéro par défaut)
             if (control._layers[layerId].title === layerId) {
                 control.addLayer(this._geojsonLayer, {
-                    title: method + " " + graph,
-                    description: method + " basé sur un graphe " + graph
+                    title: this.options.layerDescription.title + " (" + method + "/" + graph + ")",
+                    description: this.options.layerDescription.description
                 });
             }
         }
@@ -49333,7 +49396,7 @@ var _Markers = __webpack_require__(6);
 
 var _Markers2 = _interopRequireDefault(_Markers);
 
-var _LayerSwitcher = __webpack_require__(11);
+var _LayerSwitcher = __webpack_require__(8);
 
 var _LayerSwitcher2 = _interopRequireDefault(_LayerSwitcher);
 
@@ -49367,6 +49430,9 @@ var logger = _LoggerByDefault2.default.getLogger("reversegeocoding");
  * @param {Object}   [options.resources =  ["StreetAddress", "PositionOfInterest", "CadastralParcel"]] - resources for geocoding, by default : ["StreetAddress", "PositionOfInterest", "CadastralParcel"]. Possible values are : "StreetAddress", "PositionOfInterest", "CadastralParcel", "Administratif". Resources will be displayed in the same order in widget list.
  * @param {Object}   [options.delimitations = ["Point", "Circle", "Extent"]] - delimitations for reverse geocoding, by default : ["Point", "Circle", "Extent"]. Possible values are : "Point", "Circle", "Extent". Delimitations will be displayed in the same order in widget list.
  * @param {Object}  [options.reverseGeocodeOptions = {}] - reverse geocode service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~reverseGeocode Gp.Services.reverseGeocode()} to know all reverse geocode options.
+ * @param {Object} [options.layerDescription = {}] - Layer informations to be displayed in LayerSwitcher widget (only if a LayerSwitcher is also added to the map)
+ * @param {String} [options.layerDescription.title = "Saisie (recherche inverse)"] - Layer title to be displayed in LayerSwitcher
+ * @param {String} [options.layerDescription.description = "Couche de saisie d'une zone de recherche pour la recherche inverse"] - Layer description to be displayed in LayerSwitcher
  * @example
  *  var iso = ol.control.ReverseGeocode({
  *      collapsed : false,
@@ -49510,7 +49576,11 @@ ReverseGeocode.prototype.initialize = function (options) {
         collapsed: true,
         resources: ["StreetAddress", "PositionOfInterest", "CadastralParcel"],
         delimitations: ["Point", "Circle", "Extent"],
-        reverseGeocodeOptions: {}
+        reverseGeocodeOptions: {},
+        layerDescription: {
+            title: "Saisie (recherche inverse)",
+            description: "Couche de saisie d'une zone de recherche pour la recherche inverse"
+        }
     };
 
     // merge with user options
@@ -49966,8 +50036,8 @@ ReverseGeocode.prototype._activateMapInteraction = function (map) {
                 // on n'ajoute des informations que s'il n'y en a pas déjà (si le titre est le numéro par défaut)
                 if (control._layers[layerId].title === layerId) {
                     control.addLayer(this._inputFeaturesLayer, {
-                        title: "Saisie (recherche inverse)",
-                        description: "Couche de saisie d'une zone de recherche pour la recherche inverse"
+                        title: this.options.layerDescription.title,
+                        description: this.options.layerDescription.description
                     });
                     control.setRemovable(this._inputFeaturesLayer, false);
                 }
@@ -54224,7 +54294,7 @@ var _ol = __webpack_require__(2);
 
 var _ol2 = _interopRequireDefault(_ol);
 
-var _LayerUtils = __webpack_require__(9);
+var _LayerUtils = __webpack_require__(10);
 
 var _LayerUtils2 = _interopRequireDefault(_LayerUtils);
 
@@ -54452,6 +54522,10 @@ var _MeasureToolBox = __webpack_require__(13);
 
 var _MeasureToolBox2 = _interopRequireDefault(_MeasureToolBox);
 
+var _LayerSwitcher = __webpack_require__(8);
+
+var _LayerSwitcher2 = _interopRequireDefault(_LayerSwitcher);
+
 var _Interactions = __webpack_require__(18);
 
 var _Interactions2 = _interopRequireDefault(_Interactions);
@@ -54482,6 +54556,9 @@ var logger = _LoggerByDefault2.default.getLogger("elevationpath");
  * @extends ol.control.Control
  * @param {Object} options - options for function call.
  * @param {Boolean} [options.active = false] - specify if control should be actived at startup. Default is false.
+ * @param {Object} [options.layerDescription = {}] - Layer informations to be displayed in LayerSwitcher widget (only if a LayerSwitcher is also added to the map)
+ * @param {String} [options.layerDescription.title = "Profil altimétrique"] - Layer title to be displayed in LayerSwitcher
+ * @param {String} [options.layerDescription.description = "Mon profil altimétrique"] - Layer description to be displayed in LayerSwitcher
  * @param {Object} [options.stylesOptions = DEFAULT_STYLES] - styles management
  * @param {Object} [options.stylesOptions.marker = {}] - styles management of marker displayed on map when the user follows the elevation path. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Image.html ol.style.Image} subclass object
  * @param {Object} [options.stylesOptions.draw = {}] - styles used when drawing. Specified with following properties.
@@ -55043,6 +55120,10 @@ ElevationPath.prototype._initialize = function (options) {
         active: false,
         apiKey: null,
         elevationOptions: {},
+        layerDescription: {
+            title: "Profil altimétrique",
+            description: "Mon profil altimétrique"
+        },
         displayProfileOptions: {
             greaterSlope: true,
             meanSlope: true,
@@ -55298,7 +55379,25 @@ ElevationPath.prototype._initMeasureInteraction = function (map) {
         style: this._drawStyleFinish
     });
 
+    // on rajoute le champ gpResultLayerId permettant d'identifier une couche crée par le composant.
+    this._measureVector.gpResultLayerId = "measure";
+
     map.addLayer(this._measureVector);
+
+    // Si un layer switcher est présent dans la carte, on lui affecte des informations pour cette couche
+    map.getControls().forEach(function (control) {
+        if (control instanceof _LayerSwitcher2.default) {
+            // un layer switcher est présent dans la carte
+            var layerId = this._measureVector.gpLayerId;
+            // on n'ajoute des informations que s'il n'y en a pas déjà (si le titre est le numéro par défaut)
+            if (control._layers[layerId].title === layerId) {
+                control.addLayer(this._measureVector, {
+                    title: this.options.layerDescription.title,
+                    description: this.options.layerDescription.description
+                });
+            }
+        }
+    }, this);
 };
 
 /**
@@ -56718,6 +56817,9 @@ var logger = _LoggerByDefault2.default.getLogger("measurelength");
  * @param {Object} [options.styles.start = {}] - Line Style when drawing. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Style.html ol.style.Style} object.
  * @param {Object} [options.styles.finish = {}] - Line Style when finished drawing. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Style.html ol.style.Style} object.
  * <!-- @param {Object} [options.tooltip = {}] - NOT YET IMPLEMENTED ! -->
+ * @param {Object} [options.layerDescription = {}] - Layer informations to be displayed in LayerSwitcher widget (only if a LayerSwitcher is also added to the map)
+ * @param {String} [options.layerDescription.title = "Mesures de distance"] - Layer title to be displayed in LayerSwitcher
+ * @param {String} [options.layerDescription.description = "Mes mesures"] - Layer description to be displayed in LayerSwitcher
  * @example
  * var measureLength = new ol.control.MeasureLength({
  *    geodesic : false
@@ -56844,6 +56946,10 @@ MeasureLength.prototype._initialize = function (options) {
     this.options.geodesic = typeof options.geodesic !== "undefined" ? options.geodesic : true;
     this.options.target = typeof options.target !== "undefined" ? options.target : null;
     this.options.render = typeof options.render !== "undefined" ? options.render : null;
+    this.options.layerDescription = typeof options.layerDescription !== "undefined" ? options.layerDescription : {
+        title: "Mesures de distance",
+        description: "Mes mesures"
+    };
 
     // gestion des styles !
     this.createStylingMeasureInteraction(options.styles);
@@ -57113,6 +57219,9 @@ var logger = _LoggerByDefault2.default.getLogger("measurearea");
  * @param {Object} [options.styles.start = {}] - Polygon Style when drawing. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Style.html ol.style.Style} object.
  * @param {Object} [options.styles.finish = {}] - Polygon Style when finished drawing. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Style.html ol.style.Style} object.
  * <!-- @param {Object} [options.tooltip = {}] - NOT YET IMPLEMENTED ! -->
+ * @param {Object} [options.layerDescription = {}] - Layer informations to be displayed in LayerSwitcher widget (only if a LayerSwitcher is also added to the map)
+ * @param {String} [options.layerDescription.title = "Mesures de surface"] - Layer title to be displayed in LayerSwitcher
+ * @param {String} [options.layerDescription.description = "Mes mesures"] - Layer description to be displayed in LayerSwitcher
  * @example
  * var measureArea = new ol.control.MeasureArea({
  *    geodesic : false
@@ -57245,6 +57354,10 @@ MeasureArea.prototype._initialize = function (options) {
     this.options.geodesic = typeof options.geodesic !== "undefined" ? options.geodesic : true;
     this.options.target = typeof options.target !== "undefined" ? options.target : null;
     this.options.render = typeof options.render !== "undefined" ? options.render : null;
+    this.options.layerDescription = typeof options.layerDescription !== "undefined" ? options.layerDescription : {
+        title: "Mesures de surface",
+        description: "Mes mesures"
+    };
 
     // gestion des styles !
     this.createStylingMeasureInteraction(options.styles);
@@ -57514,6 +57627,9 @@ var logger = _LoggerByDefault2.default.getLogger("measureazimut");
  * @param {Object} [options.styles.start = {}] - Line Style when drawing. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Style.html ol.style.Style} object.
  * @param {Object} [options.styles.finish = {}] - Line Style when finished drawing. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Style.html ol.style.Style} object.
  * <!-- @param {Object} [options.tooltip = {}] - NOT YET IMPLEMENTED ! -->
+ * @param {Object} [options.layerDescription = {}] - Layer informations to be displayed in LayerSwitcher widget (only if a LayerSwitcher is also added to the map)
+ * @param {String} [options.layerDescription.title = "Mesures d'azimuth"] - Layer title to be displayed in LayerSwitcher
+ * @param {String} [options.layerDescription.description = "Mes mesures"] - Layer description to be displayed in LayerSwitcher
  * @example
  * var measure = new ol.control.MeasureAzimuth({
  *   geodesic : true
@@ -57664,6 +57780,10 @@ MeasureAzimuth.prototype._initialize = function (options) {
     this.options.geodesic = typeof options.geodesic !== "undefined" ? options.geodesic : false;
     this.options.target = typeof options.target !== "undefined" ? options.target : null;
     this.options.render = typeof options.render !== "undefined" ? options.render : null;
+    this.options.layerDescription = typeof options.layerDescription !== "undefined" ? options.layerDescription : {
+        title: "Mesures d'azimuth",
+        description: "Mes mesures"
+    };
 
     // gestion des styles !
     this.createStylingMeasureInteraction(options.styles);
@@ -58103,7 +58223,7 @@ Object.keys(_gp).forEach(function (key) {
   });
 });
 
-var _LayerUtils = __webpack_require__(9);
+var _LayerUtils = __webpack_require__(10);
 
 Object.defineProperty(exports, "LayerUtils", {
   enumerable: true,
@@ -58148,7 +58268,7 @@ var _LayerElevation = __webpack_require__(114);
 
 var _LayerElevation2 = _interopRequireDefault(_LayerElevation);
 
-var _GlobeViewExtended = __webpack_require__(8);
+var _GlobeViewExtended = __webpack_require__(9);
 
 var _GlobeViewExtended2 = _interopRequireDefault(_GlobeViewExtended);
 
@@ -58208,7 +58328,7 @@ var _gp = __webpack_require__(4);
 
 var _gp2 = _interopRequireDefault(_gp);
 
-var _GlobeViewExtended = __webpack_require__(8);
+var _GlobeViewExtended = __webpack_require__(9);
 
 var _GlobeViewExtended2 = _interopRequireDefault(_GlobeViewExtended);
 
@@ -58228,7 +58348,7 @@ var _MousePositionDOM = __webpack_require__(26);
 
 var _MousePositionDOM2 = _interopRequireDefault(_MousePositionDOM);
 
-var _Widget = __webpack_require__(10);
+var _Widget = __webpack_require__(11);
 
 var _Widget2 = _interopRequireDefault(_Widget);
 
@@ -59811,7 +59931,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _GlobeViewExtended = __webpack_require__(8);
+var _GlobeViewExtended = __webpack_require__(9);
 
 var _GlobeViewExtended2 = _interopRequireDefault(_GlobeViewExtended);
 
@@ -59831,7 +59951,7 @@ var _LayerSwitcherDOM = __webpack_require__(25);
 
 var _LayerSwitcherDOM2 = _interopRequireDefault(_LayerSwitcherDOM);
 
-var _Widget = __webpack_require__(10);
+var _Widget = __webpack_require__(11);
 
 var _Widget2 = _interopRequireDefault(_Widget);
 
@@ -60747,7 +60867,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _GlobeViewExtended = __webpack_require__(8);
+var _GlobeViewExtended = __webpack_require__(9);
 
 var _GlobeViewExtended2 = _interopRequireDefault(_GlobeViewExtended);
 
@@ -60763,7 +60883,7 @@ var _SelectorID = __webpack_require__(3);
 
 var _SelectorID2 = _interopRequireDefault(_SelectorID);
 
-var _LayerUtils = __webpack_require__(9);
+var _LayerUtils = __webpack_require__(10);
 
 var _LayerUtils2 = _interopRequireDefault(_LayerUtils);
 
@@ -60771,7 +60891,7 @@ var _AttributionDOM = __webpack_require__(107);
 
 var _AttributionDOM2 = _interopRequireDefault(_AttributionDOM);
 
-var _Widget = __webpack_require__(10);
+var _Widget = __webpack_require__(11);
 
 var _Widget2 = _interopRequireDefault(_Widget);
 
@@ -61208,7 +61328,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _GlobeViewExtended = __webpack_require__(8);
+var _GlobeViewExtended = __webpack_require__(9);
 
 var _GlobeViewExtended2 = _interopRequireDefault(_GlobeViewExtended);
 
@@ -61224,7 +61344,7 @@ var _ScaleDOM = __webpack_require__(109);
 
 var _ScaleDOM2 = _interopRequireDefault(_ScaleDOM);
 
-var _Widget = __webpack_require__(10);
+var _Widget = __webpack_require__(11);
 
 var _Widget2 = _interopRequireDefault(_Widget);
 
@@ -61430,7 +61550,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _GlobeViewExtended = __webpack_require__(8);
+var _GlobeViewExtended = __webpack_require__(9);
 
 var _GlobeViewExtended2 = _interopRequireDefault(_GlobeViewExtended);
 
@@ -61446,7 +61566,7 @@ var _MiniGlobeDOM = __webpack_require__(111);
 
 var _MiniGlobeDOM2 = _interopRequireDefault(_MiniGlobeDOM);
 
-var _Widget = __webpack_require__(10);
+var _Widget = __webpack_require__(11);
 
 var _Widget2 = _interopRequireDefault(_Widget);
 
