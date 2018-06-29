@@ -4,6 +4,7 @@ import SelectorID from "../../Common/Utils/SelectorID";
 import Interactions from "./Utils/Interactions";
 import DrawingDOM from "../../Common/Controls/DrawingDOM";
 import KMLExtended from "../Formats/KML";
+import LayerSwitcher from "./LayerSwitcher";
 
 var logger = Logger.getLogger("Drawing");
 
@@ -18,6 +19,9 @@ var logger = Logger.getLogger("Drawing");
  * @param {Object} options - options for function call.
  * @param {Boolean} [options.collapsed = true] - Specify if Drawing control should be collapsed at startup. Default is true.
  * @param {ol.layer.Vector} [options.layer = null] - Openlayers layer that will hosts created features. If none, an empty vector layer will be created.
+ * @param {Object} [options.layerDescription = {}] - Layer informations to be displayed in LayerSwitcher widget (only if a LayerSwitcher is also added to the map)
+ * @param {String} [options.layerDescription.title = "Croquis"] - Layer title to be displayed in LayerSwitcher
+ * @param {String} [options.layerDescription.description = "Mon croquis"] - Layer description to be displayed in LayerSwitcher
  * @param {Object} options.tools - Tools to display in the drawing toolbox. All by default.
  * @param {Boolean} [options.tools.points = true] - Display points drawing tool
  * @param {Boolean} [options.tools.lines = true] - Display lines drawing tool
@@ -377,6 +381,14 @@ Drawing.prototype._initialize = function (options) {
 
     // Set default options
     this.options = options || {};
+
+    if (!this.options.layerDescription) {
+        this.options.layerDescription = {
+            title : "Croquis",
+            description : "Mon croquis"
+        };
+    }
+
     // applying default tools
     if (!this.options.tools) {
         this.options.tools = {};
@@ -592,8 +604,28 @@ Drawing.prototype.setLayer = function (vlayer) {
                 }
             }
         });
+        this.layer = vlayer;
+
+        // Si un layer switcher est présent dans la carte, on lui affecte des informations pour cette couche
+        this.getMap().getControls().forEach(
+            function (control) {
+                if (control instanceof LayerSwitcher) {
+                    // un layer switcher est présent dans la carte
+                    var layerId = this.layer.gpLayerId;
+                    // on n'ajoute des informations que s'il n'y en a pas déjà (si le titre est le numéro par défaut)
+                    if (control._layers[layerId].title === layerId) {
+                        control.addLayer(
+                            this.layer, {
+                                title : this.options.layerDescription.title,
+                                description : this.options.layerDescription.description
+                            }
+                        );
+                    }
+                }
+            },
+            this
+        );
     }
-    this.layer = vlayer;
 };
 
 /**

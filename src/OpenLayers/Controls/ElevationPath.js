@@ -6,6 +6,7 @@ import Utils from "../../Common/Utils";
 import RightManagement from "../../Common/Utils/CheckRightManagement";
 import Measures from "./Measures/Measures";
 import MeasureToolBox from "./MeasureToolBox";
+import LayerSwitcher from "./LayerSwitcher";
 import Interactions from "./Utils/Interactions";
 import ElevationPathDOM from "../../Common/Controls/ElevationPathDOM";
 import ProfileElevationPathDOM from "../../Common/Controls/ProfileElevationPathDOM";
@@ -23,6 +24,9 @@ var logger = Logger.getLogger("elevationpath");
  * @extends ol.control.Control
  * @param {Object} options - options for function call.
  * @param {Boolean} [options.active = false] - specify if control should be actived at startup. Default is false.
+ * @param {Object} [options.layerDescription = {}] - Layer informations to be displayed in LayerSwitcher widget (only if a LayerSwitcher is also added to the map)
+ * @param {String} [options.layerDescription.title = "Profil altimétrique"] - Layer title to be displayed in LayerSwitcher
+ * @param {String} [options.layerDescription.description = "Mon profil altimétrique"] - Layer description to be displayed in LayerSwitcher
  * @param {Object} [options.stylesOptions = DEFAULT_STYLES] - styles management
  * @param {Object} [options.stylesOptions.marker = {}] - styles management of marker displayed on map when the user follows the elevation path. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Image.html ol.style.Image} subclass object
  * @param {Object} [options.stylesOptions.draw = {}] - styles used when drawing. Specified with following properties.
@@ -588,6 +592,10 @@ ElevationPath.prototype._initialize = function (options) {
         active : false,
         apiKey : null,
         elevationOptions : {},
+        layerDescription : {
+            title : "Profil altimétrique",
+            description : "Mon profil altimétrique"
+        },
         displayProfileOptions : {
             greaterSlope : true,
             meanSlope : true,
@@ -845,7 +853,30 @@ ElevationPath.prototype._initMeasureInteraction = function (map) {
         style : this._drawStyleFinish
     });
 
+    // on rajoute le champ gpResultLayerId permettant d'identifier une couche crée par le composant.
+    this._measureVector.gpResultLayerId = "measure";
+
     map.addLayer(this._measureVector);
+
+    // Si un layer switcher est présent dans la carte, on lui affecte des informations pour cette couche
+    map.getControls().forEach(
+        function (control) {
+            if (control instanceof LayerSwitcher) {
+                // un layer switcher est présent dans la carte
+                var layerId = this._measureVector.gpLayerId;
+                // on n'ajoute des informations que s'il n'y en a pas déjà (si le titre est le numéro par défaut)
+                if (control._layers[layerId].title === layerId) {
+                    control.addLayer(
+                        this._measureVector, {
+                            title : this.options.layerDescription.title,
+                            description : this.options.layerDescription.description
+                        }
+                    );
+                }
+            }
+        },
+        this
+    );
 };
 
 /**

@@ -1,6 +1,7 @@
 import ol from "ol";
 import Logger from "../../../Common/Utils/LoggerByDefault";
 import Interactions from "../Utils/Interactions";
+import LayerSwitcher from "../LayerSwitcher";
 
 // Derived from OpenLayers measure example
 // http://openlayers.org/en/latest/examples/measure.html
@@ -482,6 +483,26 @@ var Measures = {
         this.measureVector.gpResultLayerId = "measure";
 
         map.addLayer(this.measureVector);
+
+        // Si un layer switcher est présent dans la carte, on lui affecte des informations pour cette couche
+        map.getControls().forEach(
+            function (control) {
+                if (control instanceof LayerSwitcher) {
+                    // un layer switcher est présent dans la carte
+                    var layerId = this.measureVector.gpLayerId;
+                    // on n'ajoute des informations que s'il n'y en a pas déjà (si le titre est le numéro par défaut)
+                    if (control._layers[layerId].title === layerId) {
+                        control.addLayer(
+                            this.measureVector, {
+                                title : this.options.layerDescription.title,
+                                description : this.options.layerDescription.description
+                            }
+                        );
+                    }
+                }
+            },
+            this
+        );
     }
 };
 

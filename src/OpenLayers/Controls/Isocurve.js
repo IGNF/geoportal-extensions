@@ -32,6 +32,9 @@ var logger = Logger.getLogger("isocurve");
  * @param {Array} [options.markerOpts.offset] - Offsets in pixels used when positioning the overlay. The first element in the array is the horizontal offset. A positive value shifts the overlay right. The second element in the array is the vertical offset. A positive value shifts the overlay down. Default is [0, 0]. (see http://openlayers.org/en/latest/apidoc/ol.Overlay.html)
  * @param {Object} [options.isocurveOptions = {}] - isocurve service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~isoCurve Gp.Services.isoCurve()} to know all isocurve options.
  * @param {Object} [options.autocompleteOptions = {}] - autocomplete service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~autoComplete Gp.Services.autoComplete()} to know all autocomplete options
+ * @param {Object} [options.layerDescription = {}] - Layer informations to be displayed in LayerSwitcher widget (only if a LayerSwitcher is also added to the map)
+ * @param {String} [options.layerDescription.title = "Isochrone/Isodistance"] - Layer title to be displayed in LayerSwitcher
+ * @param {String} [options.layerDescription.description = "isochrones/isodistance basé sur un graphe"] - Layer description to be displayed in LayerSwitcher
  * @example
  *  var iso = ol.control.Isocurve({
  *      collapsed : false
@@ -185,7 +188,11 @@ Isocurve.prototype.initialize = function (options) {
             offset : Markers.defaultOffset
         },
         isocurveOptions : {},
-        autocompleteOptions : {}
+        autocompleteOptions : {},
+        layerDescription : {
+            title : "Isochrone/Isodistance",
+            description : "isochrones/isodistance basé sur un graphe"
+        }
     };
 
     // merge with user options
@@ -1084,8 +1091,8 @@ Isocurve.prototype._drawIsoResults = function (results) {
                 if (control._layers[layerId].title === layerId) {
                     control.addLayer(
                         this._geojsonLayer, {
-                            title : method + " " + graph,
-                            description : method + " basé sur un graphe " + graph
+                            title : this.options.layerDescription.title + " (" + method + "/" + graph + ")",
+                            description : this.options.layerDescription.description
                         }
                     );
                 }

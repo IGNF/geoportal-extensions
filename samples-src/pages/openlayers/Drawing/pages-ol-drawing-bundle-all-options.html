@@ -26,7 +26,6 @@
 {{#content "js"}}
             <script type="text/javascript">
                 var map;
-                var drawing;
                 window.onload = function() {
                     // on cache l'image de chargement du Géoportail.
                     document.getElementById('map').style.backgroundImage = 'none';
@@ -43,10 +42,16 @@
                         })
                     });
 
-                    var mp = new ol.control.GeoportalMousePosition({
-                    });
-                    drawing = new ol.control.Drawing({
+                    var ls = new ol.control.LayerSwitcher();
+                    map.addControl(ls);
+
+                    var mp = new ol.control.GeoportalMousePosition();
+                    var drawing = new ol.control.Drawing({
                         collapsed : false,
+                        layerswitcher : {
+                            title : "Dessins",
+                            description : "Mes dessins..."
+                        },
                         markersList : [
                             {
                                 src : "http://api.ign.fr/api/images/api/markers/marker_01.png",
@@ -89,9 +94,6 @@
                     });
                     map.addControl(drawing);
                     map.addControl(mp);
-
-                    var ls = new ol.control.LayerSwitcher();
-                    map.addControl(ls);
 
                     var popup = new ol.Overlay.Popup();
                     map.addOverlay(popup);
