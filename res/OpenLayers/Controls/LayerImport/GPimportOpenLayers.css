@@ -238,6 +238,7 @@ input[id^="GPimportGetCapRubrique-"]:checked ~ ul {
   white-space: nowrap;
   text-overflow:ellipsis;
   cursor: pointer;
+  list-style-type: none;
 }
 
 .GPimportGetCapRubriqueTitle {
