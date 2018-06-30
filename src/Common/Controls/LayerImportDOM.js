@@ -648,16 +648,16 @@ var LayerImportDOM = {
         return container;
     },
 
-    _addImportGetCapResultListRubrique : function (description, container) {
+    _addImportGetCapResultListRubrique : function (title, container) {
         var ul = document.createElement("ul");
         ul.className = "GPimportGetCapListRubrique";
-        ul.title = description;
+        ul.title = title;
 
         container.appendChild(ul);
         return container;
     },
 
-    _addImportGetCapResultRubrique : function (description, container) {
+    _addImportGetCapResultRubrique : function (title, container) {
         var li = document.createElement("li");
         li.className = "GPimportGetCapRubrique";
 
@@ -668,14 +668,12 @@ var LayerImportDOM = {
         input.type = "checkbox";
         li.appendChild(input);
 
-        // TODO picto
-
         // label for
         var label = document.createElement("label");
         label.className = "GPimportGetCapRubriqueTitle";
         label.htmlFor = input.id;
-        label.innerHTML = description;
-        label.title = description;
+        label.innerHTML = title;
+        label.title = title;
         li.appendChild(label);
 
         container.appendChild(li);
@@ -693,8 +691,8 @@ var LayerImportDOM = {
     _addImportGetCapResultLayer : function (description, id, container) {
         var li = document.createElement("li");
         li.className = "GPimportGetCapProposal";
-        li.innerHTML = description;
-        li.title = description;
+        li.innerHTML = description.content;
+        li.title = description.title;
         li.id = "GPimportGetCapProposal_" + id;
 
         var context = this;

@@ -1082,7 +1082,10 @@ LayerImport.prototype._importServiceLayers = function () {
 LayerImport.prototype._displayGetCapResponseLayers = function (xmlResponse) {
     var parser;
     var layers;
-    var layerDescription;
+    var layerDescription = {
+        content : null,
+        title : null
+    };
     var projection;
     this._getCapResponseWMSLayers = [];
 
@@ -1141,7 +1144,10 @@ LayerImport.prototype._displayGetCapResponseLayers = function (xmlResponse) {
                         if (ol.proj.get(projection) || ol.proj.get(projection.toUpperCase())) {
                             // si la projection de la couche est connue par ol.proj,
                             // on ajoute chaque couche de la réponse dans la liste des couches accessibles
-                            layerDescription = layers[j].Title;
+                            layerDescription = {
+                                content : layers[j].Title,
+                                title : layers[j].Abstract || layers[j].Title
+                            };
                             if (this._getCapResultsListContainer) {
                                 this._addImportGetCapResultLayer(layerDescription, j, this._getCapResultsListContainer);
                             }
@@ -1176,7 +1182,10 @@ LayerImport.prototype._displayGetCapResponseWMSLayer = function (layerObj, paren
     // récupération de la projection de la map (pour vérifier que l'on peut reprojeter les couches disponibles)
     var mapProjCode = this._getMapProjectionCode();
     var projection;
-    var layerDescription;
+    var layerDescription = {
+        content : null,
+        title : null
+    };
 
     // 1. héritage éventuels des informations de la couche parent
     if (parentLayersInfos) {
@@ -1276,7 +1285,10 @@ LayerImport.prototype._displayGetCapResponseWMSLayer = function (layerObj, paren
             // si on a une projection compatible : on la stocke et la couche sera éventuellement reprojetée à l'ajout
             layerObj._projection = projection;
             // on ajoute chaque couche de la réponse dans la liste des couches accessibles
-            layerDescription = layerObj.Title;
+            layerDescription = {
+                content : layerObj.Title,
+                title : layerObj.Abstract || layerObj.Title
+            };
             // FIXME beurk !?
             var _isGoodContainer = layerObj._container;
             if (_isGoodContainer.localName === "ul") {
