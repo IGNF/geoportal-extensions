@@ -211,6 +211,22 @@ div[id^="GPimportGetCapResults-"] {
   overflow-y: auto;
 }
 
+input[id^="GPimportGetCapRubrique-"] {
+  display: none;
+}
+input[id^="GPimportGetCapRubrique-"] ~ li {
+ display: none;
+}
+input[id^="GPimportGetCapRubrique-"]:checked ~ li {
+ display: block;
+}
+input[id^="GPimportGetCapRubrique-"] ~ ul {
+ display: block;
+}
+input[id^="GPimportGetCapRubrique-"]:checked ~ ul {
+ display: none;
+}
+
 .GPimportGetCapProposal {
   width: 100%;
   height: 28px;
@@ -222,9 +238,33 @@ div[id^="GPimportGetCapResults-"] {
   white-space: nowrap;
   text-overflow:ellipsis;
   cursor: pointer;
+  list-style-type: none;
+}
+
+.GPimportGetCapRubriqueTitle {
+    color: #5E5E5E;
+}
+
+.GPimportGetCapRubrique,
+.GPimportGetCapListRubrique {
+    list-style-type: none;
+}
+
+li.GPimportGetCapRubrique:before,
+li.GPimportGetCapListRubrique:before {
+	/* content: "→ "; caractère UTF-8 */
+    content: "» ";
+}
+
+.GPimportGetCapProposal:hover,
+.GPimportGetCapRubrique:hover {
+
+}
+
+.GPimportGetCapRubriqueTitle:hover {
+    color: #000000;
 }
 
 .GPimportGetCapProposal:hover {
   color: #000000;
-  background-color: #CEDBEF
 }
