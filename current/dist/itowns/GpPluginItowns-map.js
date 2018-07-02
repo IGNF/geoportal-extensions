@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 2.0.0
- * @date 2018-06-29
+ * @date 2018-07-02
  *
  */
 
