@@ -2,6 +2,8 @@
 
 {{#content "head"}}
         <title>Sample openlayers LayerImport</title>
+        <script src="https://unpkg.com/ol-popup@3.0.0"></script>
+        <link rel="stylesheet" href="https://unpkg.com/ol-popup@3.0.0/src/ol-popup.css" />
 {{/content}}
 
 {{#content "style"}}
@@ -43,6 +45,32 @@
 
                 var layerImport = new ol.control.LayerImport();
                 map.addControl(layerImport);
+
+                var popup = new ol.Overlay.Popup();
+                map.addOverlay(popup);
+
+                // cf. http://astuntechnology.github.io/osgis-openlayers-leaflet/openlayers/03-GEOJSON-INFO.html
+                map.on("click", function(evt) {
+
+                  popup.hide();
+                  popup.setOffset([0, 0]);
+
+                  // Attempt to find a feature in one of the visible vector layers
+                  var feature = map.forEachFeatureAtPixel(evt.pixel, function(feature, layer) {
+                      return feature;
+                  });
+
+                  if (feature) {
+
+                      var coord = feature.getGeometry().getCoordinates();
+                      var props = feature.getProperties();
+                      var content = props["description"] || props["name"];
+                      // Offset the popup so it points at the middle of the marker not the tip
+                      popup.setOffset([0, -22]);
+                      popup.show(coord, content);
+
+                  }
+                });
               };
 
             </script>
