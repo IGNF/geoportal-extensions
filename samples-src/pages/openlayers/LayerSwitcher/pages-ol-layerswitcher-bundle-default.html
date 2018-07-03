@@ -27,7 +27,6 @@
                     // on cache l'image de chargement du Géoportail.
                     document.getElementById('map').style.backgroundImage = 'none';
 
-					// 1. Création de la map
                     map = new ol.Map({
                         target : "map",
                         view : new ol.View({
@@ -49,10 +48,7 @@
                         ]
                     });
 
-					// 2. Appel du LayerSwitcher
-                    layerSwitcher = new ol.control.LayerSwitcher({});
-
-					// 3. Ajout du LayerSwitcher à la carte
+                    var layerSwitcher = new ol.control.LayerSwitcher({});
                     map.addControl(layerSwitcher);
                 };
            </script>

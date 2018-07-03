@@ -1,13 +1,13 @@
-# DEPENDENCIES (26/03/2018)
+# DEPENDENCIES (02/07/2018)
 
 * openlayers
 
 last
-└── openlayers@4.4.1
+└── openlayers@4.6.5
 
 > **Utilisation de la version suivante**
 ```
-└── openlayers@4.0.1
+└── openlayers@4.4.2
 ```
 
 * proj4
