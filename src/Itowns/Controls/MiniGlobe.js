@@ -96,8 +96,8 @@ MiniGlobe.prototype.setGlobe = function (globe) {
             var range = globe.getRange();
             var distance = Math.min(Math.max(range * 1.5, minDistance), maxDistance);
             // Update target miniview's camera
-            miniView.setCameraPosition(globe.moveTarget(), distance);
-            miniView.lookAt(globe.moveTarget());
+            miniView.setCameraPosition(globe.getCameraTargetPosition(), distance);
+            miniView.lookAt(globe.getCameraTargetPosition());
             miniView.notifyChange();
         };
         globe.listen(GlobeViewExtended.EVENTS.AFTER_RENDER, updateMiniGlobeHandler);

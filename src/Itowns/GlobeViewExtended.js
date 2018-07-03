@@ -281,7 +281,7 @@ GlobeViewExtended.prototype.forget = function (type, callback) {
  */
 GlobeViewExtended.prototype.addLayer = function (layer) {
     // FIXME : to delete when itowns commit 2e9ed61eb4aa2a4bbe0e17c8e2650953844b099e
-    // is integrated into an iTowns release 
+    // is integrated into an iTowns release
     try {
         var promise = this.getGlobeView().addLayer(layer);
         this.getGlobeView().notifyChange(true);
@@ -695,7 +695,8 @@ GlobeViewExtended.prototype.getFeaturesAtMousePosition = function (mouseEvent) {
  * @return {Promise} A promise that resolves when the next 'globe initilazed' event fires.
  */
 GlobeViewExtended.prototype.setCameraTargetGeoPosition = function (center) {
-    return this.getGlobeView().controls.setCameraTargetGeoPositionAdvanced(center, false);
+    let itownsCoord = this._transformCoords(center);
+    return this.getGlobeView().controls.setCameraTargetGeoPositionAdvanced(itownsCoord, false);
 };
 
 /**
@@ -705,12 +706,7 @@ GlobeViewExtended.prototype.setCameraTargetGeoPosition = function (center) {
  */
 GlobeViewExtended.prototype.getCenter = function () {
     var cameraCenter = this.getGlobeView().controls.getCameraTargetGeoPosition();
-    var center = {
-        lon : cameraCenter.longitude(),
-        lat : cameraCenter.latitude(),
-        alt : cameraCenter.altitude()
-    };
-    return center;
+    return this._fromItownsCoords(cameraCenter);
 };
 
 /**
@@ -761,8 +757,8 @@ GlobeViewExtended.prototype.getRange = function () {
 /**
  * @return {THREE.Vector3} position
  */
-GlobeViewExtended.prototype.moveTarget = function () {
-    return this.getGlobeView().controls.moveTarget();
+GlobeViewExtended.prototype.getCameraTargetPosition = function () {
+    return this.getGlobeView().controls.getCameraTargetPosition();
 };
 
 /**
@@ -823,6 +819,42 @@ GlobeViewExtended.prototype.notifyChange = function () {
 GlobeViewExtended.prototype.resize = function (width, height) {
     this.getGlobeView().mainLoop.gfxEngine.onWindowResize(width, height);
     this.getGlobeView().notifyChange(true);
+};
+
+/**
+* Transform to itowns coordinates
+*
+* @param {Object} coordCarto - longitude, latitude, altitude
+* @returns {Object} itowns coordinates
+*/
+GlobeViewExtended.prototype._transformCoords = function (coordCarto) {
+    if( coordCarto === undefined ) return;
+
+    let itownsCoord = {};
+
+    if( coordCarto.zoom !== undefined ) itownsCoord.zoom = coordCarto.zoom;
+    if( coordCarto.tilt !== undefined ) itownsCoord.tilt = coordCarto.tilt;
+    if( coordCarto.heading !== undefined ) itownsCoord.heading = coordCarto.heading;
+
+    if ( coordCarto.longitude !== undefined && coordCarto.latitude !== undefined ) {
+        let altitude = coordCarto.altitude || 0;
+        itownsCoord.coord = new Itowns.Coordinates('EPSG:4326', coordCarto.longitude, coordCarto.latitude, altitude);
+    }
+    return itownsCoord;
+};
+
+/**
+* Transform from itowns coordinates
+*
+* @param {Object} itownsCoord - itowns coordinates
+* @returns {Object} coordinates
+*/
+GlobeViewExtended.prototype._fromItownsCoords = function (itownsCoord) {
+    return {
+        lon : itownsCoord.longitude(),
+        lat : itownsCoord.latitude(),
+        alt : itownsCoord.altitude()
+    };
 };
 
 export default GlobeViewExtended;
