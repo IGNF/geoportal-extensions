@@ -1,0 +1,44 @@
+.GpMessageBox {
+    width: 100%;
+    transition: all 200ms ease-in-out;
+    cursor: pointer;
+    border-radius: 5px;
+    color: black;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+}
+
+.GpBoxSeverityInfo {
+    background-color: white;
+}
+
+.GpBoxSeverityWarning {
+    background-color: orange;
+}
+
+.GpBoxSeverityError {
+    background-color: red;
+    color: white;
+}
+
+.GpBoxClose {
+    width: 26px;
+    height: 26px;
+    position: relative;
+    background-image: url("img/GpMessageBoxOpen.png");
+    cursor: pointer;
+}
+
+.GpBoxText {
+    text-align: center;
+}
+
+.GpBoxDuration {}
+
+.GpBoxCenter {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

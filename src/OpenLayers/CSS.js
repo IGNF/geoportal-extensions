@@ -14,6 +14,7 @@ import "../../res/Common/GPsearchEngine.css";
 import "../../res/Common/GPgetFeatureInfo.css";
 import "../../res/Common/GPmeasureArea.css";
 import "../../res/Common/GPmousePosition.css";
+import "../../res/Common/GpMessageBox.css";
 
 import "../../res/OpenLayers/GPgeneralWidgetOpenLayers.css";
 

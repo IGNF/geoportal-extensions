@@ -7,6 +7,7 @@ import LayerImportDOM from "../../Common/Controls/LayerImportDOM";
 import SelectorID from "../../Common/Utils/SelectorID";
 import ProxyUtils from "../../Common/Utils/ProxyUtils";
 import KMLExtended from "../Formats/KML";
+import MessageBox from "../../Common/Controls/MessageBox";
 
 var logger = Logger.getLogger("layerimport");
 
@@ -731,6 +732,11 @@ LayerImport.prototype._importStaticLayerFromUrl = function (layerName) {
             // en cas d'erreur, on revient au panel initial et on cache la patience
             context._hideWaitingContainer();
             logger.error("[ol.control.LayerImport] KML/GPX/GeoJSON request failed : ", error);
+            MessageBox.show({
+                message : "KML/GPX/GeoJSON request failed : " + error.message,
+                severity : 2,
+                target : context._importPanel
+            });
         }
     });
 };
@@ -1068,6 +1074,11 @@ LayerImport.prototype._importServiceLayers = function () {
             // en cas d'erreur, on revient au panel initial et on cache la patience
             context._hideWaitingContainer();
             logger.error("[ol.control.LayerImport] getCapabilities request failed : ", error);
+            MessageBox.show({
+                message : "GetCapabilities request failed : " + error.message,
+                severity : 2,
+                target : context._importPanel
+            });
         }
     });
 };
