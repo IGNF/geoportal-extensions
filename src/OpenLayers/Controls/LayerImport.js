@@ -355,7 +355,7 @@ LayerImport.prototype._checkInputOptions = function (options) {
         var layerTypes = options.layerTypes;
         // on vérifie que la liste des types est bien un tableau
         if (!Array.isArray(layerTypes)) {
-            logger.warn("[ol.control.LayerImport] 'options.layerTypes' parameter should be an array. Set default values [\"KML\", \"GPX\", \"GeoJSON\", \"WMS\", \"WMTS\"]");
+            MessageBox.warning("'options.layerTypes' parameter should be an array. Set default values [\"KML\", \"GPX\", \"GeoJSON\", \"WMS\", \"WMTS\"]");
             options.layerTypes = [
                 "KML",
                 "GPX",
@@ -698,7 +698,7 @@ LayerImport.prototype._importStaticLayerFromUrl = function (layerName) {
     var url = this._staticUrlImportInput.value;
     logger.log("url : ", url);
     if (url.length === 0) {
-        logger.error("[ol.control.LayerImport] url parameter is mandatory");
+        MessageBox.warning("url parameter is mandatory !");
         return;
     }
     // on supprime les éventuels espaces avant ou après
@@ -708,7 +708,7 @@ LayerImport.prototype._importStaticLayerFromUrl = function (layerName) {
 
     // 2. récupération proxy
     if (!this.options.webServicesOptions || (!this.options.webServicesOptions.proxyUrl && !this.options.webServicesOptions.noProxyDomains)) {
-        logger.error("[ol.control.LayerImport] options.webServicesOptions.proxyUrl parameter is mandatory to request resources on another domain (cross-domain)");
+        MessageBox.warning("'options.webServicesOptions.proxyUrl' parameter is mandatory to request resources on another domain (cross-domain)");
         return;
     };
     url = ProxyUtils.proxifyUrl(url, this.options.webServicesOptions);
@@ -731,12 +731,7 @@ LayerImport.prototype._importStaticLayerFromUrl = function (layerName) {
         onFailure : function (error) {
             // en cas d'erreur, on revient au panel initial et on cache la patience
             context._hideWaitingContainer();
-            logger.error("[ol.control.LayerImport] KML/GPX/GeoJSON request failed : ", error);
-            MessageBox.show({
-                message : "KML/GPX/GeoJSON request failed : " + error.message,
-                severity : 2,
-                target : context._importPanel
-            });
+            MessageBox.error("KML/GPX/GeoJSON request failed : " + error.message);
         }
     });
 };
@@ -751,7 +746,7 @@ LayerImport.prototype._importStaticLayerFromUrl = function (layerName) {
 LayerImport.prototype._importStaticLayerFromLocalFile = function (layerName) {
     var file = this._staticLocalImportInput.files[0];
     if (!file) {
-        logger.warn("[ol.control.LayerImport] missing file");
+        MessageBox.warning("missing file !");
         return;
     }
 
@@ -1002,7 +997,7 @@ LayerImport.prototype._addFeaturesFromImportStaticLayerUrl = function (url, laye
  */
 LayerImport.prototype._importServiceLayers = function () {
     if (this._currentImportType === "WFS") {
-        logger.warn("[ol.control.LayerImport] WFS layer import is not implemented yet");
+        MessageBox.warning("WFS layer import is not implemented yet");
         return;
     }
 
@@ -1012,7 +1007,7 @@ LayerImport.prototype._importServiceLayers = function () {
     // 1. récupération de l'url renseignée
     var url = this._getCapRequestUrl = this._serviceUrlImportInput.value;
     if (!url) {
-        logger.error("[ol.control.LayerImport] url parameter is mandatory");
+        MessageBox.warning("url parameter is mandatory !");
         return;
     }
     logger.log("url : ", url);
@@ -1034,7 +1029,7 @@ LayerImport.prototype._importServiceLayers = function () {
 
     // 2. récupération proxy
     if (!this.options.webServicesOptions || (!this.options.webServicesOptions.proxyUrl && !this.options.webServicesOptions.noProxyDomains)) {
-        logger.error("[ol.control.LayerImport] options.webServicesOptions.proxyUrl parameter is mandatory to request web service layers (getcapabilities request)");
+        MessageBox.warning("'options.webServicesOptions.proxyUrl' parameter is mandatory to request web service layers (getcapabilities request)");
         return;
     };
     var proxyUrl = this.options.webServicesOptions.proxyUrl;
@@ -1073,12 +1068,14 @@ LayerImport.prototype._importServiceLayers = function () {
         onFailure : function (error) {
             // en cas d'erreur, on revient au panel initial et on cache la patience
             context._hideWaitingContainer();
-            logger.error("[ol.control.LayerImport] getCapabilities request failed : ", error);
-            MessageBox.show({
-                message : "GetCapabilities request failed : " + error.message,
-                severity : 2,
-                target : context._importPanel
-            });
+            MessageBox.error("GetCapabilities request failed : " + error.message);
+            // MessageBox.show({
+            //     message : "GetCapabilities request failed : " + error.message,
+            //     severity : 2,
+            //     close : true,
+            //     duration : 0,
+            //     target : context._importPanel
+            // });
         }
     });
 };
@@ -1165,7 +1162,7 @@ LayerImport.prototype._displayGetCapResponseLayers = function (xmlResponse) {
                         } else {
                             // si la projection de la couche n'est pas connue par ol.proj,
                             // on n'affiche pas la couche dans le panel des résultats
-                            logger.warn("[ol.control.LayerImport] wmts layer cannot be added to map : unknown projection", layers[j]);
+                            MessageBox.warning("WMTS layer cannot be added to map : unknown projection " + layers[j]);
                             continue;
                         }
                     }
@@ -1185,7 +1182,7 @@ LayerImport.prototype._displayGetCapResponseLayers = function (xmlResponse) {
  */
 LayerImport.prototype._displayGetCapResponseWMSLayer = function (layerObj, parentLayersInfos) {
     if (!layerObj) {
-        logger.warn("[ol.control.LayerImport] _displayGetCapResponseWMSLayer : getCapabilities layer object not found");
+        MessageBox.warning("GetCapabilities layer object not found");
     } else {
         logger.log("[ol.control.LayerImport] _displayGetCapResponseWMSLayer - layerObj : ", layerObj);
     }
@@ -1291,7 +1288,7 @@ LayerImport.prototype._displayGetCapResponseWMSLayer = function (layerObj, paren
         if (!projection) {
             // si aucune projection n'est compatible avec celle de la carte ou connue par ol.proj,
             // on n'affiche pas la couche dans le panel des résultats
-            logger.warn("[ol.control.LayerImport] wms layer cannot be added to map : unknown projection", layerObj);
+            MessageBox.warning("WMS layer cannot be added to map : unknown projection " + layerObj);
         } else {
             // si on a une projection compatible : on la stocke et la couche sera éventuellement reprojetée à l'ajout
             layerObj._projection = projection;
@@ -1358,11 +1355,11 @@ LayerImport.prototype._onGetCapResponseLayerClick = function (e) {
 LayerImport.prototype._addGetCapWMSLayer = function (layerInfo) {
     var map = this.getMap();
     if (!map) {
-        logger.warn("[ol.control.LayerImport] _addGetCapWMSLayer error : map is not defined");
+        MessageBox.warning("map is not defined !");
         return;
     }
     if (!layerInfo) {
-        logger.warn("[ol.control.LayerImport] _addGetCapWMSLayer error : layerInfo is not defined");
+        MessageBox.warning("layerInfo is not defined !");
         return;
     }
 
@@ -1390,7 +1387,7 @@ LayerImport.prototype._addGetCapWMSLayer = function (layerInfo) {
     if (layerInfo.Name) {
         wmsSourceOptions.params["LAYERS"] = layerInfo.Name;
     } else {
-        logger.warn("[ol.control.LayerImport] unable to add wms layer : mandatory layer 'name' parameter cannot be found", layerInfo);
+        MessageBox.warning("unable to add wms layer : mandatory layer 'name' parameter cannot be found", layerInfo);
         return;
     }
     wmsSourceOptions.params["SERVICE"] = "WMS";
@@ -1403,7 +1400,7 @@ LayerImport.prototype._addGetCapWMSLayer = function (layerInfo) {
     // ou soit connue par proj4js
     var projection = layerInfo._projection;
     if (!projection) {
-        logger.warn("[ol.control.LayerImport] wms layer cannot be added to map : unknown projection");
+        MessageBox.warning("WMS layer cannot be added to map : unknown projection !");
         return;
     } else if (projection !== mapProjCode) {
         // si la projection de la carte n'est pas disponible pour cette couche,
@@ -1486,7 +1483,7 @@ LayerImport.prototype._getWMSLayerProjection = function (layerInfo, mapProjCode)
     var projection;
 
     if (!layerInfo || typeof layerInfo !== "object") {
-        logger.warn("missing layer information (from getCapabilities)");
+        MessageBox.warning("missing layer information (from getCapabilities)");
         return;
     }
 
@@ -1556,7 +1553,7 @@ LayerImport.prototype._getWMSLayerMinMaxResolution = function (layerInfo, mapPro
  */
 LayerImport.prototype._getWMSLayerExtent = function (layerInfo, mapProjCode, layerTileOptions) {
     if (!layerInfo) {
-        logger.warn("[ol.control.LayerImport] _getWMSLayerExtent error : layerInfo is not defined");
+        MessageBox.warning("layerInfo is not defined !");
         return;
     }
 
@@ -1676,7 +1673,7 @@ LayerImport.prototype._getWMSLayerInfoForLayerSwitcher = function (layerInfo, le
  */
 LayerImport.prototype._addGetCapWMTSLayer = function (layerInfo) {
     if (!layerInfo || !layerInfo.Identifier) {
-        logger.warn("[ol.control.LayerImport] layer information not found in getCapabilities response for layer ");
+        MessageBox.warning("layer information not found in getCapabilities response for layer ");
         return;
     }
 
@@ -1736,7 +1733,7 @@ LayerImport.prototype._addGetCapWMTSLayer = function (layerInfo) {
         }
     }
     if (defaultStyle == null) {
-        logger.warn("[ol.control.LayerImport] style information not found in getCapabilities response for layer " + layerInfo.Identifier);
+        MessageBox.warning("style information not found in getCapabilities response for layer " + layerInfo.Identifier);
     }
     wmtsSourceOptions.style = defaultStyle;
 
@@ -1746,7 +1743,7 @@ LayerImport.prototype._addGetCapWMTSLayer = function (layerInfo) {
         format = layerInfo.Format[0];
     }
     if (format == null) {
-        logger.warn("[ol.control.LayerImport] format information not found in getCapabilities response for layer " + layerInfo.Identifier);
+        MessageBox.warning("format information not found in getCapabilities response for layer " + layerInfo.Identifier);
     }
     wmtsSourceOptions.format = format;
 
@@ -1776,7 +1773,7 @@ LayerImport.prototype._addGetCapWMTSLayer = function (layerInfo) {
     try {
         wmtsLayer = new ol.layer.Tile(layerTileOptions);
     } catch (e) {
-        logger.warn("[ol.control.LayerImport] an error occured while trying to create ol.layer.Tile from getCapabilities information. error : ", e);
+        MessageBox.warning("an error occured while trying to create ol.layer.Tile from getCapabilities information. error : " + e.message);
         return;
     }
     // on rajoute le champ gpResultLayerId permettant d'identifier une couche crée par le composant. (pour layerSwitcher par ex)
@@ -1816,12 +1813,12 @@ LayerImport.prototype._getWMTSLayerProjection = function (layerInfo, getCapRespo
     var projection;
 
     if (!layerInfo || typeof layerInfo !== "object") {
-        logger.warn("missing layer information (from getCapabilities)");
+        MessageBox.warning("missing layer information (from getCapabilities)");
         return;
     }
 
     if (!getCapResponseWMTS || typeof getCapResponseWMTS !== "object") {
-        logger.warn("missing getCapabilities response");
+        MessageBox.warning("missing getCapabilities response !");
         return;
     }
 
@@ -1943,7 +1940,7 @@ LayerImport.prototype._getTMSParams = function (layerInfo) {
                 }
             }
         } else {
-            logger.warn("[ol.control.LayerImport] TileMatrixSet data not found in getCapabilities response for layer " + layerInfo.Identifier);
+            MessageBox.warning("TileMatrixSet data not found in getCapabilities response for layer " + layerInfo.Identifier);
         }
     } else {
         return;
@@ -1991,7 +1988,7 @@ LayerImport.prototype._getWMTSLayerExtent = function (layerInfo) {
 LayerImport.prototype._getMapProjectionCode = function () {
     var map = this.getMap();
     if (!map || !map.getView || !map.getView().getProjection) {
-        logger.warn("unable to get layerimport's map");
+        MessageBox.warning("unable to get layerimport's map !");
         return;
     }
     var mapProjCode = map.getView().getProjection().getCode();

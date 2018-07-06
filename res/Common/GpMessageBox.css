@@ -31,7 +31,9 @@
 }
 
 .GpBoxText {
+    width: inherit;
     text-align: center;
+    overflow-y: auto;
 }
 
 .GpBoxDuration {}

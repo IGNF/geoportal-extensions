@@ -87,6 +87,19 @@ var MessageBox = {
         var dom = this._setDOM(opts);
         logger.trace("MessageBox:DOM", dom);
 
+        switch (opts.severity) {
+            case 0:
+                logger.info(opts.message);
+                break;
+            case 1:
+                logger.warn(opts.message);
+                break;
+            case 2:
+                logger.error(opts.message);
+                break;
+            default:
+                console.log(opts.message);
+        }
         return dom;
     },
 
@@ -97,7 +110,6 @@ var MessageBox = {
     * @returns {HTMLElement} dom
     */
     info : function (message) {
-        logger.trace("MessageBox:info()", message);
         return this.show({
             message : message,
             severity : 0
@@ -111,7 +123,6 @@ var MessageBox = {
     * @returns {HTMLElement} dom
     */
     warning : function (message) {
-        logger.trace("MessageBox:warning()", message);
         return this.show({
             message : message,
             severity : 1
@@ -125,7 +136,6 @@ var MessageBox = {
     * @returns {HTMLElement} dom
     */
     error : function (message) {
-        logger.trace("MessageBox:error()", message);
         return this.show({
             message : message,
             severity : 2
