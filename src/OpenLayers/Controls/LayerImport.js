@@ -731,7 +731,13 @@ LayerImport.prototype._importStaticLayerFromUrl = function (layerName) {
         onFailure : function (error) {
             // en cas d'erreur, on revient au panel initial et on cache la patience
             context._hideWaitingContainer();
-            MessageBox.error("KML/GPX/GeoJSON request failed : " + error.message);
+            // MessageBox.error("KML/GPX/GeoJSON request failed : " + error.message);
+            MessageBox.show({
+                message : "KML/GPX/GeoJSON request failed : " + error.message,
+                severity : 2,
+                close : true,
+                target : context._importPanel
+            });
         }
     });
 };
@@ -1068,14 +1074,13 @@ LayerImport.prototype._importServiceLayers = function () {
         onFailure : function (error) {
             // en cas d'erreur, on revient au panel initial et on cache la patience
             context._hideWaitingContainer();
-            MessageBox.error("GetCapabilities request failed : " + error.message);
-            // MessageBox.show({
-            //     message : "GetCapabilities request failed : " + error.message,
-            //     severity : 2,
-            //     close : true,
-            //     duration : 0,
-            //     target : context._importPanel
-            // });
+            // MessageBox.error("GetCapabilities request failed : " + error.message);
+            MessageBox.show({
+                message : "GetCapabilities request failed : " + error.message,
+                severity : 2,
+                close : true,
+                target : context._importPanel
+            });
         }
     });
 };

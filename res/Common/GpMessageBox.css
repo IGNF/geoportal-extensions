@@ -10,11 +10,13 @@
 }
 
 .GpBoxSeverityInfo {
-    background-color: white;
+    background-color: lightblue;
+    color: black;
 }
 
 .GpBoxSeverityWarning {
     background-color: orange;
+    color: black;
 }
 
 .GpBoxSeverityError {
@@ -36,7 +38,12 @@
     overflow-y: auto;
 }
 
-.GpBoxDuration {}
+.GpBoxDuration {
+    transition-property: all;
+    transition-duration: .5s;
+    transition-timing-function: ease-in;
+    transition-delay: 1s;
+}
 
 .GpBoxCenter {
     position: fixed;
