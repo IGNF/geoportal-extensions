@@ -11,14 +11,14 @@ const assert = require('assert');
 
 // Asserts two float number are equals (difference under or equal to 1/precision)
 function assertFloatEqual(float1, float2, precision = 5) {
-    if( assertFloatEqual.epsilon === undefined ) assertFloatEqual.epsilon = 1/precision;
-    assert(Math.abs(float1-float2)<=assertFloatEqual.epsilon, `${float1} == ${float2}`);
+    var epsilon = 1/precision;
+    assert(Math.abs(float1-float2)<=epsilon, `${float1} == ${float2}`);
 }
 
 // Asserts two float number are not equals (difference upper to 1/precision)
 function assertFloatNotEqual(float1, float2, precision = 5) {
-    if( assertFloatEqual.epsilon === undefined ) assertFloatEqual.epsilon = 1/precision;
-    assert(Math.abs(float1-float2)>assertFloatEqual.epsilon, `${float1} != ${float2}`);
+    var epsilon = 1/precision;
+    assert(Math.abs(float1-float2)>epsilon, `${float1} != ${float2}`);
 }
 
 // Asserts a value is a number
@@ -345,21 +345,21 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
         });
 
         it('should correctly set tilt', (done) => {
-            var newTilt = (globeViewExtended.getTilt()+0.1) % 360;
+            var newTilt = (globeViewExtended.getTilt()+45) % 360;
 
             globeViewExtended.setCameraTargetGeoPosition(initPosition).then( () => {
                 return globeViewExtended.setTilt(newTilt).then( () => {
-                    assertFloatEqual(globeViewExtended.getTilt(), newTilt);
+                    assertFloatEqual(globeViewExtended.getTilt(), newTilt, 2);
                 });
             }).then( () => done() ).catch( e => done(e) );
         });
 
         it('should correctly set azimuth', (done) => {
-            var newAzimuth = (globeViewExtended.getAzimuth()+0.1) % 360;
+            var newAzimuth = (globeViewExtended.getAzimuth()+30) % 360;
 
             globeViewExtended.setCameraTargetGeoPosition(initPosition).then( () => {
                 return globeViewExtended.setAzimuth(newAzimuth).then( () => {
-                    assertFloatEqual(globeViewExtended.getAzimuth(), newAzimuth);
+                    assertFloatEqual(globeViewExtended.getAzimuth(), newAzimuth, 1);
                 });
             }).then( () => done() ).catch( e => done(e) );
         });
@@ -389,9 +389,9 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
 
             var cameraPos2 = globeViewExtended.getGlobeView().camera.camera3D.position;
 
-            assertFloatNotEqual(cameraPos1.x, cameraPos2.x, 0);
-            assertFloatNotEqual(cameraPos1.y, cameraPos2.y, 0);
-            assertFloatNotEqual(cameraPos1.z, cameraPos2.z, 0);
+            assertFloatNotEqual(cameraPos1.x, cameraPos2.x, 10);
+            assertFloatNotEqual(cameraPos1.y, cameraPos2.y, 10);
+            assertFloatNotEqual(cameraPos1.z, cameraPos2.z, 10);
 
             globeViewExtended.getGlobeView().camera.camera3D.position.copy(cameraPos1);
         });
