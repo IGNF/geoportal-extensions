@@ -31,11 +31,9 @@ function MiniGlobe (options) {
     this._initialize();
 
     var container = this._initContainer();
-    var vDiv = document.getElementById("viewerDiv");
     this._options = options;
 
-    // by default, adds the control on the viewerDiv
-    var targetDiv = document.getElementById(options.target) || vDiv;
+    var targetDiv = document.getElementById(options.target) || null;
 
     Widget.call(
         this, {

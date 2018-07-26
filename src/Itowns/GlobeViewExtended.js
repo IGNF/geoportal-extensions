@@ -59,6 +59,13 @@ function GlobeViewExtended (viewerDiv, coordCarto, options) {
 
                 self._getCurrentSceneInfos(self._globeView.scene, event);
 
+                // FIXME itowns bug : itowns should only returns visible layers
+                if (event.colorLayersId) {
+                    for ( var i = event.colorLayersId.length-1 ; i >= 0 ; i-- ) {
+                        if (!self.getLayerById(event.colorLayersId[i]).visible) event.colorLayersId.splice(i,1);
+                    }
+                }
+
                 self._globeView.dispatchEvent(event);
             }
         }, 100);
@@ -517,10 +524,14 @@ GlobeViewExtended.prototype._getCurrentSceneInfos = function (node, options) {
                 }
             }
             if (options.elevationLayersId) {
-                for (var j = 0; j < node.material.elevationLayersId.length; ++j) {
-                    if (options.elevationLayersId.indexOf(node.material.elevationLayersId[j]) < 0) {
-                        options.elevationLayersId.push(node.material.elevationLayersId[j]);
-                    }
+                let layerLevel = node.material.getElevationLayerLevel();
+                if (layerLevel >= 0) {
+                    this.getElevationLayers().forEach((layer) => {
+                        if (layerLevel<layer.options.zoom.min || layerLevel>layer.options.zoom.max) return;
+                        if (options.elevationLayersId.indexOf(layer.id) < 0) {
+                            options.elevationLayersId.push(layer.id);
+                        }
+                    });
                 }
             }
             if (options.extent) {
@@ -605,7 +616,7 @@ GlobeViewExtended.prototype.setTilt = function (tilt) {
  * @return {Number} - Tilt
  */
 GlobeViewExtended.prototype.getTilt = function () {
-    return this.getGlobeView().controls.getCameraOrientation()[0];
+    return this.getGlobeView().controls.getTilt();
 };
 
 /**
@@ -624,7 +635,7 @@ GlobeViewExtended.prototype.setAzimuth = function (azimuth) {
  * @return {Number} azimuth
  */
 GlobeViewExtended.prototype.getAzimuth = function () {
-    return this.getGlobeView().controls.getCameraOrientation()[1];
+    return this.getGlobeView().controls.getHeading();
 };
 
 /**
@@ -696,7 +707,7 @@ GlobeViewExtended.prototype.getFeaturesAtMousePosition = function (mouseEvent) {
  */
 GlobeViewExtended.prototype.setCameraTargetGeoPosition = function (center) {
     let itownsCoord = this._transformCoords(center);
-    return this.getGlobeView().controls.setCameraTargetGeoPositionAdvanced(itownsCoord, false);
+    return this.getGlobeView().controls.lookAtCoordinateAdvanced(itownsCoord, false);
 };
 
 /**
@@ -705,7 +716,7 @@ GlobeViewExtended.prototype.setCameraTargetGeoPosition = function (center) {
  * @return {Object} center
  */
 GlobeViewExtended.prototype.getCenter = function () {
-    var cameraCenter = this.getGlobeView().controls.getCameraTargetGeoPosition();
+    var cameraCenter = this.getGlobeView().controls.getLookAtCoordinate();
     return this._fromItownsCoords(cameraCenter);
 };
 
@@ -828,17 +839,17 @@ GlobeViewExtended.prototype.resize = function (width, height) {
 * @returns {Object} itowns coordinates
 */
 GlobeViewExtended.prototype._transformCoords = function (coordCarto) {
-    if( coordCarto === undefined ) return;
+    if (coordCarto === undefined) return;
 
     let itownsCoord = {};
 
-    if( coordCarto.zoom !== undefined ) itownsCoord.zoom = coordCarto.zoom;
-    if( coordCarto.tilt !== undefined ) itownsCoord.tilt = coordCarto.tilt;
-    if( coordCarto.heading !== undefined ) itownsCoord.heading = coordCarto.heading;
+    if (coordCarto.zoom !== undefined) itownsCoord.zoom = coordCarto.zoom;
+    if (coordCarto.tilt !== undefined) itownsCoord.tilt = coordCarto.tilt;
+    if (coordCarto.heading !== undefined) itownsCoord.heading = coordCarto.heading;
 
-    if ( coordCarto.longitude !== undefined && coordCarto.latitude !== undefined ) {
+    if (coordCarto.longitude !== undefined && coordCarto.latitude !== undefined) {
         let altitude = coordCarto.altitude || 0;
-        itownsCoord.coord = new Itowns.Coordinates('EPSG:4326', coordCarto.longitude, coordCarto.latitude, altitude);
+        itownsCoord.coord = new Itowns.Coordinates("EPSG:4326", coordCarto.longitude, coordCarto.latitude, altitude);
     }
     return itownsCoord;
 };
