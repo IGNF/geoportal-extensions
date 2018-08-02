@@ -210,7 +210,7 @@ var LayerImportDOM = {
         // gestionnaire d'evenement : on stocke la valeur du type d'import
         if (select.addEventListener) {
             select.addEventListener("change", function (e) {
-                if (this.value === "KML" || this.value === "GPX" || this.value === "GeoJSON") {
+                if (this.value === "KML" || this.value === "GPX" || this.value === "GeoJSON" || this.value === "MapBox") {
                     // static import
                     document.getElementById(context._addUID("GPimportStaticParams")).className = "GPimportVisibleParams";
                     document.getElementById(context._addUID("GPimportServiceParams")).className = "GPimportHiddenParams";
@@ -223,7 +223,7 @@ var LayerImportDOM = {
             });
         } else if (select.attachEvent) {
             select.attachEvent("onchange", function () {
-                if (this.value === "KML" || this.value === "GPX" || this.value === "GeoJSON") {
+                if (this.value === "KML" || this.value === "GPX" || this.value === "GeoJSON" || this.value === "MapBox") {
                     // static import
                     document.getElementById(context._addUID("GPimportStaticParams")).className = "GPimportVisibleParams";
                     document.getElementById(context._addUID("GPimportServiceParams")).className = "GPimportHiddenParams";
@@ -243,6 +243,7 @@ var LayerImportDOM = {
                 "KML",
                 "GPX",
                 "GeoJSON",
+                "MapBox",
                 "WMS",
                 "WMTS",
                 "WFS"
@@ -281,7 +282,7 @@ var LayerImportDOM = {
     },
 
     // ################################################################### //
-    // ############### Params for static import (KML / GPX / GeoJSON) ############## //
+    // ##### Params for static import (KML / GPX / GeoJSON) ############## //
     // ################################################################### //
 
     /**
@@ -292,7 +293,7 @@ var LayerImportDOM = {
     _createImportStaticParamsContainer : function (currentType) {
         var div = document.createElement("div");
         div.id = this._addUID("GPimportStaticParams");
-        if (currentType === "KML" || currentType === "GPX" || currentType === "GeoJSON") {
+        if (currentType === "KML" || currentType === "GPX" || currentType === "GeoJSON" || currentType === "MapBox") {
             div.className = "GPimportVisibleParams";
         } else {
             div.className = "GPimportHiddenParams";
@@ -708,8 +709,87 @@ var LayerImportDOM = {
 
         container.appendChild(li);
         return container;
-    }
+    },
 
+    // ################################################################### //
+    // ########################### MapBox Panel ########################## //
+    // ################################################################### //
+
+    /**
+     * Create MapBox Panel Element
+     *
+     * @returns {DOMElement} DOM element
+     */
+    _createImportMapBoxPanelElement : function () {
+        var div = document.createElement("div");
+        div.id = this._addUID("GPimportMapBoxPanel");
+        div.className = "GPpanel";
+        return div;
+    },
+
+    /**
+     * Create MapBox Panel Header Element
+     *
+     * @returns {DOMElement} DOM element
+     */
+    _createImportMapBoxPanelHeaderElement : function () {
+        // contexte
+        var context = this;
+
+        var container = document.createElement("div");
+        container.className = "GPpanelHeader";
+
+        // panel title
+        var panelTitle = document.createElement("div");
+        panelTitle.className = "GPpanelTitle";
+        panelTitle.innerHTML = "Edition des styles";
+        panelTitle.title = "Edition des styles";
+        container.appendChild(panelTitle);
+
+        // close picto
+        var closeDiv = document.createElement("div");
+        if (closeDiv.addEventListener) {
+            closeDiv.addEventListener("click", function () {
+                document.getElementById(context._addUID("GPimportMapBoxPanel")).style.display = "none";
+                document.getElementById(context._addUID("GPimportPanel")).style.display = "";
+                context._onGetCapPanelClose();
+            });
+        } else if (closeDiv.attachEvent) {
+            closeDiv.attachEvent("click", function () {
+                document.getElementById(context._addUID("GPimportMapBoxPanel")).style.display = "none";
+                document.getElementById(context._addUID("GPimportPanel")).style.display = "";
+                context._onGetCapPanelClose();
+            });
+        }
+        closeDiv.className = "GPpanelClose";
+        closeDiv.title = "Fermer le panneau";
+        closeDiv.id = this._addUID("GPimportMapBoxPanelClose");
+        container.appendChild(closeDiv);
+
+        return container;
+    },
+
+    /**
+     * Create MapBox Results List Element
+     *
+     * @returns {DOMElement} DOM element
+     */
+    _createImportMapBoxResultsContainer : function () {
+        var container = document.createElement("div");
+        container.className = "GPimportMapBoxpRoot";
+        container.id = this._addUID("GPimportMapBoxResults");
+        var message = "<b>Exemple (TODO)</b> <br>" +
+        ">> |x| table n°1 (clic pour desactiver le rendu de la couche)<br>" +
+        "   (clic pour deplier) <br>" +
+        "   --> clic pour visualiser/editer les styles <br>" +
+        "       Ex. fill-color   : o--------x-o <br>" +
+        "   --> clic pour visualiser/editer les filtres <br>" +
+        "       Ex. ???  <br>" +
+        ">> |x| table n°2 <br>" +
+        ">> |x| table n°3 <br>";
+        container.innerHTML = message;
+        return container;
+    }
 };
 
 export default LayerImportDOM;

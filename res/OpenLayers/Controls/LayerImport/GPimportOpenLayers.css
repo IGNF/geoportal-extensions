@@ -34,27 +34,27 @@ input[id^="GPshowImport-"]:checked + label + div {
 /* General panels */
 
 div[id^="GPimportPanel-"],
-div[id^="GPimportGetCapPanel-"]
- {
+div[id^="GPimportGetCapPanel-"],
+div[id^="GPimportMapBoxPanel-"] {
   left: 8px;
 }
 
-div[id^="GPimportPanel-"]
- {
+div[id^="GPimportPanel-"] {
   width: 280px;
 }
 
-div[id^="GPimportGetCapPanel-"]
- {
+div[id^="GPimportGetCapPanel-"],
+div[id^="GPimportMapBoxPanel-"] {
   width: 340px;
 }
 
 div[id^="GPimportPanelClose-"],
-div[id^="GPimportGetCapPanelClose-"] {
+div[id^="GPimportGetCapPanelClose-"],
+div[id^="GPimportMapBoxPanelClose-"] {
   background-image: url("img/GPimportOpen.png");
 }
 
-div[id^="GPimportGetCapPanel-"] {
+div[id^="GPimportGetCapPanel-"], div[id^="GPimportMapBoxPanel-"] {
   display: none;
 }
 

@@ -1,4 +1,5 @@
 import ol from "ol";
+import olms from "olms";
 import Gp from "gp";
 import Logger from "../../Common/Utils/LoggerByDefault";
 import Utils from "../../Common/Utils";
@@ -20,7 +21,7 @@ var logger = Logger.getLogger("layerimport");
  * @extends {ol.control.Control}
  * @param {Object} options - options for function call.
  * @param {Boolean} [options.collapsed = false] - Specify if LayerImport control should be collapsed at startup. Default is true.
- * @param {Array} [options.layerTypes = ["KML", "GPX", "GeoJSON", "WMS", "WMTS"]] - data types that could be imported : "KML", "GPX", "GeoJSON", "WMS" and "WMTS". Values will be displayed in the same order in widget list.
+ * @param {Array} [options.layerTypes = ["KML", "GPX", "GeoJSON", "WMS", "WMTS", "MapBox"]] - data types that could be imported : "KML", "GPX", "GeoJSON", "WMS", "WMTS" and "Mapbox". Values will be displayed in the same order in widget list.
  * @param {Object} [options.webServicesOptions = {}] - Options to import WMS or WMTS layers
  * @param {String} [options.webServicesOptions.proxyUrl] - Proxy URL to avoid cross-domain problems. Mandatory to import WMS and WMTS layer.
  * @param {Array.<String>} [options.webServicesOptions.noProxyDomains] - Proxy will not be used for this list of domain names. Only use if you know what you're doing.
@@ -227,7 +228,7 @@ LayerImport.prototype._initialize = function (options) {
     // set default options
     this.options = {
         collapsed : true,
-        layerTypes : ["KML", "GPX", "GeoJSON", "WMS", "WMTS"],
+        layerTypes : ["KML", "GPX", "GeoJSON", "WMS", "WMTS", "MapBox"],
         webServicesOptions : {},
         vectorStyleOptions : {
             KML : {
@@ -329,6 +330,8 @@ LayerImport.prototype._initialize = function (options) {
     this._serviceUrlImportInput = null;
     this._getCapPanel = null;
     this._getCapResultsListContainer = null;
+    this._mapBoxPanel = null;
+    this._mapBoxResultsListContainer = null;
     this._waitingContainer = null;
 
     // ################################################################## //
@@ -360,7 +363,8 @@ LayerImport.prototype._checkInputOptions = function (options) {
                 "GPX",
                 "GeoJSON",
                 "WMS",
-                "WMTS"
+                "WMTS",
+                "MapBox"
             ];
         } else {
             var typesList = [
@@ -369,7 +373,8 @@ LayerImport.prototype._checkInputOptions = function (options) {
                 "GEOJSON",
                 "WMS",
                 "WMTS",
-                "WFS"
+                "WFS",
+                "MAPBOX"
             ];
             var wrongTypesIndexes = [];
             for (var i = 0; i < layerTypes.length; i++) {
@@ -388,6 +393,9 @@ LayerImport.prototype._checkInputOptions = function (options) {
                     // cas spécial du GeoJSON qu'on ne laisse pas en majuscules
                     if (layerTypes[i] === "GEOJSON") {
                         layerTypes[i] = "GeoJSON";
+                    }
+                    if (layerTypes[i] === "MAPBOX") {
+                        layerTypes[i] = "MapBox";
                     }
                 }
             }
@@ -437,7 +445,7 @@ LayerImport.prototype._initDefaultStyles = function () {
  */
 LayerImport.prototype._initImportTypes = function () {
     this._currentImportType = this.options.layerTypes[0] || "KML";
-    if (this._currentImportType === "KML" || this._currentImportType === "GPX" || this._currentImportType === "GeoJSON") {
+    if (this._currentImportType === "KML" || this._currentImportType === "GPX" || this._currentImportType === "GeoJSON" || this._currentImportType === "MapBox") {
         this._isCurrentImportTypeStatic = true;
     } else if (this._currentImportType === "WMS" || this._currentImportType === "WMTS" || this._currentImportType === "WFS") {
         this._isCurrentImportTypeStatic = false;
@@ -488,6 +496,14 @@ LayerImport.prototype._initContainer = function () {
     getCapPanel.appendChild(importGetCapResultsList);
 
     container.appendChild(getCapPanel);
+
+    // mapbox panel results
+    var mapBoxPanel = this._mapBoxPanel = this._createImportMapBoxPanelElement();
+    mapBoxPanel.appendChild(this._createImportMapBoxPanelHeaderElement());
+    var importMapBoxResultsList = this._mapBoxResultsListContainer = this._createImportMapBoxResultsContainer();
+    mapBoxPanel.appendChild(importMapBoxResultsList);
+
+    container.appendChild(mapBoxPanel);
 
     // waiting
     var waiting = this._waitingContainer = this._createImportWaitingElement();
@@ -598,7 +614,7 @@ LayerImport.prototype._onShowImportClick = function () {
  */
 LayerImport.prototype._onImportTypeChange = function (e) {
     this._currentImportType = e.target.value;
-    if (this._currentImportType === "KML" || this._currentImportType === "GPX" || this._currentImportType === "GeoJSON") {
+    if (this._currentImportType === "KML" || this._currentImportType === "GPX" || this._currentImportType === "GeoJSON" || this._currentImportType === "MapBox") {
         this._isCurrentImportTypeStatic = true;
     } else if (this._currentImportType === "WMS" || this._currentImportType === "WMTS" || this._currentImportType === "WFS") {
         this._isCurrentImportTypeStatic = false;
@@ -626,7 +642,7 @@ LayerImport.prototype._onStaticImportTypeChange = function (e) {
  */
 LayerImport.prototype._onGetCapPanelClose = function () {
     this._clearGetCapParams();
-    this._emptyGetCapResultsList();
+    this.cleanGetCapResultsList();
 };
 
 // ################################################################### //
@@ -670,7 +686,7 @@ LayerImport.prototype._importStaticLayer = function () {
     var layerName;
     var staticImportNameInput = document.getElementById(this._addUID("GPimportName"));
     if (staticImportNameInput) {
-        layerName = staticImportNameInput.value;
+        layerName = staticImportNameInput.value || "";
         logger.log("import layer name : " + layerName);
     }
 
@@ -710,7 +726,9 @@ LayerImport.prototype._importStaticLayerFromUrl = function (layerName) {
         logger.error("[ol.control.LayerImport] options.webServicesOptions.proxyUrl parameter is mandatory to request resources on another domain (cross-domain)");
         return;
     };
+
     url = ProxyUtils.proxifyUrl(url, this.options.webServicesOptions);
+    // url = this.options.webServicesOptions.proxyUrl + url;
 
     // FIXME pb de surcharge en mode UMD !? ça ne marche pas...
     // this._hideWaitingContainer();
@@ -813,82 +831,182 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
         return;
     }
 
-    // sauvegarde du content KML/GPX/GeoJSON
+    // sauvegarde du content KML/GPX/GeoJSON/MapBox
     this.contentStatic = fileContent;
 
-    var format;
+    // contexte
+    var self = this;
+
+    var vectorSource;
+    var vectorLayer;
+    var vectorFormat;
     var vectorStyle;
-    if (this._currentImportType === "KML") {
-        // lecture du fichier KML : création d'un format ol.format.KML, qui possède une méthode readFeatures (et readProjection)
-        format = new KMLExtended({
-            showPointNames : this.options.vectorStyleOptions.KML.showPointNames,
-            extractStyles : this.options.vectorStyleOptions.KML.extractStyles,
-            defaultStyle : [
-                this.options.vectorStyleOptions.KML.defaultStyle
-            ]
-        });
-        vectorStyle = this.options.vectorStyleOptions.KML.defaultStyle;
-    } else if (this._currentImportType === "GPX") {
-        // lecture du fichier GPX : création d'un format ol.format.GPX, qui possède une méthode readFeatures (et readProjection)
-        format = new ol.format.GPX();
-        vectorStyle = this.options.vectorStyleOptions.GPX.defaultStyle;
-    } else if (this._currentImportType === "GeoJSON") {
-        // lecture du fichier GeoJSON : création d'un format ol.format.GeoJSON, qui possède une méthode readFeatures (et readProjection)
-        format = new ol.format.GeoJSON();
-        vectorStyle = this.options.vectorStyleOptions.GeoJSON.defaultStyle;
-    }
+    if (this._currentImportType === "MapBox") {
+        var proxyUrl = "";
+        var opts = this.options.webServicesOptions;
+        if (opts && opts.proxyUrl) {
+            proxyUrl = opts.proxyUrl;
+        };
 
-    // lecture de la géométrie des entités à partir du fichier, pour éventuelle reprojection.
-    var fileProj = format.readProjection(fileContent);
-    // récupération de la projection de la carte pour reprojection des géométries
-    var mapProj = this._getMapProjectionCode();
+        // - mapbox file json
+        var mapbox = JSON.parse(fileContent);
 
-    // récupération des entités avec reprojection éventuelle des géométries
-    var features = null;
-    features = format.readFeatures(
-        fileContent, {
-            dataProjection : fileProj,
-            featureProjection : mapProj
+        // - list of id sources
+        for (var id in mapbox.sources) {
+            if (mapbox.sources.hasOwnProperty(id)) {
+                // - vectorFormat
+                vectorFormat = (mapbox.sources[id].type === "vector")
+                    ? new ol.format.MVT() : (mapbox.sources[id].type === "geojson")
+                        ? new ol.format.GeoJSON() : null;
+
+                if (!vectorFormat) {
+                    logger.error("Format not yet implemented or unknown !");
+                    return;
+                }
+
+                // - vectorSource
+                vectorSource = new ol.source.VectorTile({
+                    attributions : mapbox.sources[id].attribution, // TODO tableau []
+                    tilePixelRatio : 1, // oversampling when > 1
+                    tileGrid : ol.tilegrid.createXYZ({ // TODO scheme ?
+                        extent : mapbox.sources[id].bounds, // TODO [minx, miny, maxx, maxy]
+                        maxZoom : mapbox.sources[id].maxzoom,
+                        minZoom : mapbox.sources[id].minzoom,
+                        tileSize : 256
+                    }),
+                    format : vectorFormat,
+                    url : mapbox.sources[id].data || proxyUrl + mapbox.sources[id].url // FIXME path local !?
+                    // urls: mapbox.sources[id].tiles // TODO ?
+                });
+
+                // ajout des informations pour le layerSwitcher (titre, description)
+                if (layerName) {
+                    vectorSource._title = layerName;
+                    vectorSource._description = JSON.stringify(mapbox.metadata, null, 2) || layerName;
+                } else {
+                    vectorSource._title = "Import MapBox";
+                    vectorSource._description = JSON.stringify(mapbox.metadata, null, 2) || "Import MapBox";
+                }
+
+                // - vectorLayer
+                vectorLayer = new ol.layer.VectorTile({
+                    id : id,
+                    metadata : mapbox.metadata || {},
+                    visible : true, // TODO
+                    source : vectorSource,
+                    // minResolution : , // TODO ?
+                    // maxResolution : , // TODO ?
+                    declutter : true
+                });
+
+                // - styles
+                olms.applyStyle(vectorLayer, mapbox, id)
+                    .then(function () {
+                        map.addLayer(vectorLayer);
+                    })
+                    .then(function () {
+                        if (map.getView() && map.getSize() && vectorSource.getExtent) {
+                            var sourceExtent = vectorSource.getExtent();
+                            if (sourceExtent && sourceExtent[0] !== Infinity) {
+                                map.getView().fit(vectorSource.getExtent(), map.getSize());
+                            }
+                        } else {
+                            var projCode = map.getView().getProjection().getCode();
+                            if (mapbox.center && mapbox.center.length) {
+                                logger.warn("mapbox:center is empty !");
+                                map.getView().setCenter(ol.proj.transform(mapbox.center, "EPSG:4326", projCode));
+                            }
+                            if (mapbox.zoom) {
+                                logger.warn("mapbox:zoom is empty !");
+                                map.getView().setZoom(mapbox.zoom);
+                            }
+                        }
+                    })
+                    .then(function () {
+                        // Affichage du panel des couches accessibles à l'edition
+                        self._importPanel.style.display = "none";
+                        self._mapBoxPanel.style.display = "block";
+                    })
+                    .catch(function (error) {
+                        logger.error(error);
+                    });
+            }
         }
-    );
-
-    logger.log("loaded features : ", features);
-
-    // création d'une couche vectorielle à partir de ces features
-    var vectorSource = new ol.source.Vector({
-        features : new ol.Collection()
-    });
-    vectorSource.addFeatures(features);
-
-    logger.trace(vectorSource);
-
-    // ajout des informations pour le layerSwitcher (titre, description)
-    if (layerName) {
-        vectorSource._title = vectorSource._description = layerName;
     } else {
-        if (format.readName && format.readName(fileContent)) {
-            vectorSource._title = vectorSource._description = format.readName(fileContent);
-        } else {
-            vectorSource._title = vectorSource._description = "Import " + this._currentImportType;
-            logger.log("[ol.control.LayerImport] set default name \"Import " + this._currentImportType + "\"");
+        if (this._currentImportType === "KML") {
+            // lecture du fichier KML : création d'un format ol.format.KML, qui possède une méthode readFeatures (et readProjection)
+            vectorFormat = new KMLExtended({
+                showPointNames : this.options.vectorStyleOptions.KML.showPointNames,
+                extractStyles : this.options.vectorStyleOptions.KML.extractStyles,
+                defaultStyle : [
+                    this.options.vectorStyleOptions.KML.defaultStyle
+                ]
+            });
+            vectorStyle = this.options.vectorStyleOptions.KML.defaultStyle;
+        } else
+        if (this._currentImportType === "GPX") {
+            // lecture du fichier GPX : création d'un format ol.format.GPX, qui possède une méthode readFeatures (et readProjection)
+            vectorFormat = new ol.format.GPX();
+            vectorStyle = this.options.vectorStyleOptions.GPX.defaultStyle;
+        } else
+        if (this._currentImportType === "GeoJSON") {
+            // lecture du fichier GeoJSON : création d'un format ol.format.GeoJSON, qui possède une méthode readFeatures (et readProjection)
+            vectorFormat = new ol.format.GeoJSON();
+            vectorStyle = this.options.vectorStyleOptions.GeoJSON.defaultStyle;
         }
-    }
 
-    var vectorLayer = new ol.layer.Vector({
-        source : vectorSource,
-        style : vectorStyle
-    });
+        // lecture de la géométrie des entités à partir du fichier, pour éventuelle reprojection.
+        var fileProj = vectorFormat.readProjection(fileContent);
+        // récupération de la projection de la carte pour reprojection des géométries
+        var mapProj = this._getMapProjectionCode();
 
-    // on rajoute le champ gpResultLayerId permettant d'identifier une couche crée par le composant. (pour layerSwitcher par ex)
-    vectorLayer.gpResultLayerId = "layerimport:" + this._currentImportType;
-    map.addLayer(vectorLayer);
+        // récupération des entités avec reprojection éventuelle des géométries
+        var features = null;
+        features = vectorFormat.readFeatures(
+            fileContent, {
+                dataProjection : fileProj,
+                featureProjection : mapProj
+            }
+        );
 
-    // TODO : appeler fonction commune
-    // zoom sur l'étendue des entités récupérées (si possible)
-    if (map.getView() && map.getSize() && vectorSource.getExtent) {
-        var sourceExtent = vectorSource.getExtent();
-        if (sourceExtent && sourceExtent[0] !== Infinity) {
-            map.getView().fit(vectorSource.getExtent(), map.getSize());
+        logger.log("loaded features : ", features);
+
+        // création d'une couche vectorielle à partir de ces features
+        vectorSource = new ol.source.Vector({
+            features : new ol.Collection()
+        });
+        vectorSource.addFeatures(features);
+
+        logger.trace(vectorSource);
+
+        // ajout des informations pour le layerSwitcher (titre, description)
+        if (layerName) {
+            vectorSource._title = vectorSource._description = layerName;
+        } else {
+            if (vectorFormat.readName && vectorFormat.readName(fileContent)) {
+                vectorSource._title = vectorSource._description = vectorFormat.readName(fileContent);
+            } else {
+                vectorSource._title = vectorSource._description = "Import " + this._currentImportType;
+                logger.log("[ol.control.LayerImport] set default name \"Import " + this._currentImportType + "\"");
+            }
+        }
+
+        vectorLayer = new ol.layer.Vector({
+            source : vectorSource,
+            style : vectorStyle
+        });
+
+        // on rajoute le champ gpResultLayerId permettant d'identifier une couche crée par le composant. (pour layerSwitcher par ex)
+        vectorLayer.gpResultLayerId = "layerimport:" + this._currentImportType;
+        map.addLayer(vectorLayer);
+
+        // TODO : appeler fonction commune
+        // zoom sur l'étendue des entités récupérées (si possible)
+        if (map.getView() && map.getSize() && vectorSource.getExtent) {
+            var sourceExtent = vectorSource.getExtent();
+            if (sourceExtent && sourceExtent[0] !== Infinity) {
+                map.getView().fit(vectorSource.getExtent(), map.getSize());
+            }
         }
     }
 };
@@ -908,67 +1026,74 @@ LayerImport.prototype._addFeaturesFromImportStaticLayerUrl = function (url, laye
         return;
     }
 
-    var format;
-    if (this._currentImportType === "KML") {
-        // lecture du fichier KML : création d'un format ol.format.KML, qui possède une méthode readFeatures (et readProjection)
-        format = new KMLExtended({
-            showPointNames : true, // FIXME option !
-            extractStyles : this.options.vectorStyleOptions.KML.extractStyles,
-            defaultStyle : [
-                this.options.vectorStyleOptions.KML.defaultStyle
-            ]
-        });
-    } else if (this._currentImportType === "GPX") {
-        // lecture du fichier GPX : création d'un format ol.format.GPX, qui possède une méthode readFeatures (et readProjection)
-        format = new ol.format.GPX();
-    } else if (this._currentImportType === "GeoJSON") {
-        // lecture du fichier GeoJSON : création d'un format ol.format.GeoJSON, qui possède une méthode readFeatures (et readProjection)
-        format = new ol.format.GeoJSON();
-    }
-
-    // création d'une couche vectorielle à partir de ces features
-    var vectorSource = new ol.source.Vector({
-        url : url,
-        format : format
-    });
-
-    if (this._currentImportType === "GPX") {
-        vectorSource.forEachFeature(
-            function (feature) {
-                // si aucun style n'est associé au feature
-                if (feature.getStyle() == null) {
-                    logger.log("[ol.control.LayerImport] set default style for GPX feature");
-                    feature.setStyle(
-                        this.options.vectorStyleOptions.GPX.defaultStyle
-                    );
-                }
-            }
-        );
-    }
-    if (this._currentImportType === "GeoJSON") {
-        vectorSource.forEachFeature(
-            function (feature) {
-                // si aucun style n'est associé au feature
-                if (feature.getStyle() == null) {
-                    logger.log("[ol.control.LayerImport] set default style for GeoJSON feature");
-                    feature.setStyle(
-                        this.options.vectorStyleOptions.GeoJSON.defaultStyle
-                    );
-                }
-            }
-        );
-    }
-
-    // ajout des informations pour le layerSwitcher (titre, description)
-    if (layerName) {
-        vectorSource._title = vectorSource._description = layerName;
+    var vectorSource;
+    var vectorLayer;
+    var vectorFormat;
+    if (this._currentImportType === "MapBox") {
+        // TODO
+        logger.trace("Not yet implemented !");
     } else {
-        vectorSource._title = vectorSource._description = "Import " + this._currentImportType;
-    }
+        if (this._currentImportType === "KML") {
+            // lecture du fichier KML : création d'un format ol.format.KML, qui possède une méthode readFeatures (et readProjection)
+            vectorFormat = new KMLExtended({
+                showPointNames : true, // FIXME option !
+                extractStyles : this.options.vectorStyleOptions.KML.extractStyles,
+                defaultStyle : [
+                    this.options.vectorStyleOptions.KML.defaultStyle
+                ]
+            });
+        } else if (this._currentImportType === "GPX") {
+            // lecture du fichier GPX : création d'un format ol.format.GPX, qui possède une méthode readFeatures (et readProjection)
+            vectorFormat = new ol.format.GPX();
+        } else if (this._currentImportType === "GeoJSON") {
+            // lecture du fichier GeoJSON : création d'un format ol.format.GeoJSON, qui possède une méthode readFeatures (et readProjection)
+            vectorFormat = new ol.format.GeoJSON();
+        }
 
-    var vectorLayer = new ol.layer.Vector({
-        source : vectorSource
-    });
+        // création d'une couche vectorielle à partir de ces features
+        vectorSource = new ol.source.Vector({
+            url : url,
+            format : vectorFormat
+        });
+
+        if (this._currentImportType === "GPX") {
+            vectorSource.forEachFeature(
+                function (feature) {
+                    // si aucun style n'est associé au feature
+                    if (feature.getStyle() == null) {
+                        logger.log("[ol.control.LayerImport] set default style for GPX feature");
+                        feature.setStyle(
+                            this.options.vectorStyleOptions.GPX.defaultStyle
+                        );
+                    }
+                }
+            );
+        }
+        if (this._currentImportType === "GeoJSON") {
+            vectorSource.forEachFeature(
+                function (feature) {
+                    // si aucun style n'est associé au feature
+                    if (feature.getStyle() == null) {
+                        logger.log("[ol.control.LayerImport] set default style for GeoJSON feature");
+                        feature.setStyle(
+                            this.options.vectorStyleOptions.GeoJSON.defaultStyle
+                        );
+                    }
+                }
+            );
+        }
+
+        // ajout des informations pour le layerSwitcher (titre, description)
+        if (layerName) {
+            vectorSource._title = vectorSource._description = layerName;
+        } else {
+            vectorSource._title = vectorSource._description = "Import " + this._currentImportType;
+        }
+
+        vectorLayer = new ol.layer.Vector({
+            source : vectorSource
+        });
+    }
 
     // on rajoute le champ gpResultLayerId permettant d'identifier une couche crée par le composant. (pour layerSwitcher par ex)
     vectorLayer.gpResultLayerId = "layerimport:" + this._currentImportType;
@@ -1001,7 +1126,7 @@ LayerImport.prototype._importServiceLayers = function () {
     }
 
     // 0. on vide d'éventuels résultats précédents dans le panel GetCapResults
-    this._emptyGetCapResultsList();
+    this.cleanGetCapResultsList();
 
     // 1. récupération de l'url renseignée
     var url = this._getCapRequestUrl = this._serviceUrlImportInput.value;
@@ -1121,7 +1246,8 @@ LayerImport.prototype._displayGetCapResponseLayers = function (xmlResponse) {
                 this._displayGetCapResponseWMSLayer(getCapLayer);
             }
         }
-    } else if (this._currentImportType === "WMTS") {
+    } else
+    if (this._currentImportType === "WMTS") {
         parser = new ol.format.WMTSCapabilities();
         if (!parser) {
             return;
@@ -2050,7 +2176,7 @@ LayerImport.prototype._clearGetCapParams = function () {
  *
  * @private
  */
-LayerImport.prototype._emptyGetCapResultsList = function () {
+LayerImport.prototype.cleanGetCapResultsList = function () {
     if (this._getCapResultsListContainer) {
         while (this._getCapResultsListContainer.firstChild) {
             this._getCapResultsListContainer.removeChild(this._getCapResultsListContainer.firstChild);
