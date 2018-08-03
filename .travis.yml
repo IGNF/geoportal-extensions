@@ -9,17 +9,17 @@ before_script:
   - npm run setup
 script:
   - npm run build:ol
-  - npm run build:leaflet
-  - npm run build:itowns
-  - npm run build:mix
+  # - npm run build:leaflet
+  # - npm run build:itowns
+  # - npm run build:mix
   - npm run build:ol:prod
-  - npm run build:leaflet:prod
-  - npm run build:itowns:prod
-  - npm run build:mix:prod
+  # - npm run build:leaflet:prod
+  # - npm run build:itowns:prod
+  # - npm run build:mix:prod
   - npm run build:ol:dev
-  - npm run build:leaflet:dev
-  - npm run build:itowns:dev
-  - npm run build:mix:dev
+  # - npm run build:leaflet:dev
+  # - npm run build:itowns:dev
+  # - npm run build:mix:dev
 cache:
   directories:
     - node_modules
