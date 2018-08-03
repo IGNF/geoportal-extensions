@@ -781,15 +781,15 @@ var LayerImportDOM = {
         return container;
     },
 
-    _addImportMapBoxResultListSource : function (name, source, container) {
+    _addImportMapBoxResultListSource : function (id, source, container) {
         var ul = document.createElement("ul");
         ul.className = "GPimportMapBoxListSource";
-        ul.title = name;
+        ul.title = id;
 
         var label = document.createElement("label");
         label.className = "GPimportMapBoxListSourceTitle";
-        label.innerHTML = "Listes des couches pour la source '" + name + "' :";
-        label.title = source.attribution || name;
+        label.innerHTML = "Listes des couches pour la source '" + id + "' :";
+        label.title = source.attribution || id;
         ul.appendChild(label);
 
         container.appendChild(ul);
@@ -808,21 +808,21 @@ var LayerImportDOM = {
         li.appendChild(input);
 
         // label for
-        var layerName = layer["source-layer"] || layer.id;
+        var name = layer["source-layer"] || layer.id || layer.source;
         var label = document.createElement("label");
         label.className = "GPimportMapBoxSourceTitle";
         label.htmlFor = input.id;
-        label.innerHTML = layerName;
-        label.title = JSON.stringify(layer.metadata) || layerName;
+        label.innerHTML = name;
+        label.title = JSON.stringify(layer.metadata) || name;
         li.appendChild(label);
 
         container.appendChild(li);
         return container;
     },
 
-    _addImportMapBoxStyleSource : function (style, container) {
+    _addImportMapBoxStyleSource : function (layer, container) {
         var _style = false;
-        if (style && Object.keys(style).length) {
+        if (layer.paint && Object.keys(layer.paint).length) {
             _style = true;
         }
 
@@ -850,12 +850,13 @@ var LayerImportDOM = {
         div.innerHTML = (_style) ? "" : "pas de styles...";
 
         if (_style) {
-            var strJson = JSON.stringify(style, null, 4);
+            var strJson = JSON.stringify(layer.paint, null, 4);
 
             var label = document.createElement("label");
-            label.innerHTML = "STYLES:";
+            label.innerHTML = "Styles :";
             div.appendChild(label);
             var pre = document.createElement("pre");
+            pre.className = ""; // TODO
             pre.innerHTML = syntaxHighlight(strJson);
             div.appendChild(pre);
         }
@@ -864,9 +865,9 @@ var LayerImportDOM = {
         return container;
     },
 
-    _addImportMapBoxFilterSource : function (filter, container) {
+    _addImportMapBoxFilterSource : function (layer, container) {
         var _filter = false;
-        if (filter && filter.length) {
+        if (layer.filter && layer.filter.length) {
             _filter = true;
         }
 
@@ -876,10 +877,11 @@ var LayerImportDOM = {
 
         if (_filter) {
             var label = document.createElement("label");
-            label.innerHTML = "FILTRES:";
+            label.innerHTML = "Filtres :";
             div.appendChild(label);
             var pre = document.createElement("pre");
-            pre.innerHTML = JSON.stringify(filter, null, 4);
+            pre.className = ""; // TODO
+            pre.innerHTML = JSON.stringify(layer.filter, null, 4);
             div.appendChild(pre);
         }
 
@@ -887,9 +889,12 @@ var LayerImportDOM = {
         return container;
     },
 
-    _addImportMapBoxVisibilitySource : function (layout, container) {
+    _addImportMapBoxVisibilitySource : function (layer, container) {
+        // contexte
+        var self = this;
+
         var _visibility = true;
-        if (layout && layout.visibility && layout.visibility === "none") {
+        if (layer.layout && layer.layout.visibility && layer.layout.visibility === "none") {
             _visibility = false;
         }
 
@@ -898,20 +903,22 @@ var LayerImportDOM = {
 
         var label = document.createElement("label");
         label.className = "GPimportMapBoxSourceVisibilityLabel";
-        label.innerHTML = "ACTIF:";
+        label.innerHTML = "Visibilité :";
         div.appendChild(label);
 
         var input = document.createElement("input");
         input.className = "GPimportMapBoxSourceVisibilityInput";
         input.type = "checkbox";
         input.checked = _visibility;
+        input.disabled = false;
         if (input.addEventListener) {
             input.addEventListener("change", function (e) {
-                // TODO supprimer la couche ou reappliquer un style avec :
-                //   layout.visibility : "none"
+                self._onChangeVisibilitySourceMapBox(e, layer);
             });
         } else if (input.appendChild) {
-            input.appendChild("onchange", function (e) {});
+            input.appendChild("onchange", function (e) {
+                self._onChangeVisibilitySourceMapBox(e, layer);
+            });
         }
         div.appendChild(input);
 

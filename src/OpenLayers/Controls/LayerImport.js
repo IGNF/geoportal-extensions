@@ -342,6 +342,11 @@ LayerImport.prototype._initialize = function (options) {
     this._getCapResponseWMSLayers = [];
     this._getCapResponseWMTS = null;
     this._getCapResponseWMTSLayers = [];
+
+    // ################################################################## //
+    // ########################### MapBox ############################### //
+    this._mapBoxObj = null;
+    this._mapBoxFile = null;
 };
 
 /**
@@ -833,7 +838,7 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
     }
 
     // sauvegarde du content KML/GPX/GeoJSON/MapBox
-    this.contentStatic = fileContent;
+    this.contentStatic = this._mapBoxFile = fileContent;
 
     // contexte
     var self = this;
@@ -851,6 +856,11 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
 
         // - mapbox file json
         var mapbox = JSON.parse(fileContent);
+
+        // - save
+        if (mapbox) {
+            this._mapBoxObj = mapbox;
+        }
 
         // - list of id sources
         for (var id in mapbox.sources) {
@@ -933,9 +943,9 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
                             var layer = mapbox.layers[i];
                             if (layer.source === id) {
                                 var _containerSrc = self._addImportMapBoxResultSource(layer, _containerLstSrc).lastChild;
-                                self._addImportMapBoxVisibilitySource(layer.layout, _containerSrc);
-                                self._addImportMapBoxStyleSource(layer.paint, _containerSrc);
-                                self._addImportMapBoxFilterSource(layer.filter, _containerSrc);
+                                self._addImportMapBoxVisibilitySource(layer, _containerSrc);
+                                self._addImportMapBoxStyleSource(layer, _containerSrc);
+                                self._addImportMapBoxFilterSource(layer, _containerSrc);
                             }
                         }
                     })
@@ -1119,6 +1129,50 @@ LayerImport.prototype._addFeaturesFromImportStaticLayerUrl = function (url, laye
             map.getView().fit(vectorSource.getExtent(), map.getSize());
         }
     }
+};
+
+/**
+ * this method is called on '_addImportMapBoxVisibilitySource' input click
+ * and change visibility source to map
+ *
+ * @param {Object} e - HTMLElement
+ * @param {String} mapboxLayer - layer of source mapbox
+ * @private
+ */
+LayerImport.prototype._onChangeVisibilitySourceMapBox = function (e, mapboxLayer) {
+    logger.trace(e, mapboxLayer);
+    var map = this.getMap();
+    map.getLayers().forEach(function (layer) {
+        logger.trace(layer);
+        if (layer.get("id") === mapboxLayer.source) {
+            // reload style with new param :
+            //      layout.visibility : "visible" or "none"...
+            var layers = this._mapBoxObj.layers;
+            for (var i = 0; i < layers.length; i++) {
+                if (layers[i].id === mapboxLayer.id) {
+                    var layout = layers[i].layout;
+                    if (layout && layout.visibility) {
+                        layout.visibility = (e.target.checked) ? "visible" : "none";
+                    } else {
+                        layers[i].layout = {
+                            "visibility" : (e.target.checked) ? "visible" : "none"
+                        };
+                    }
+                    break;
+                }
+            }
+            // FIXME on force un update mais exception !?
+            // https://openlayers.org/en/v4.6.5/doc/errors/#58
+            olms.applyStyle(layer, this._mapBoxObj, mapboxLayer.source)
+                .then(function () {
+                    map.addLayer(layer);
+                })
+                .catch(function (error) {
+                    logger.error(error);
+                });
+        }
+    },
+    this);
 };
 
 // ################################################################### //
