@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 2.0.0
- * @date 2018-07-25
+ * @date 2018-08-03
  *
  */
 
@@ -1652,8 +1652,8 @@ exports.default = Config;
  * copyright CeCILL-B
  * copyright IGN
  * @author IGN
- * @version 2.0.0
- * @date 2018-04-05
+ * @version 2.1.0
+ * @date 2018-08-01
  *
  */
 /*!
@@ -2013,10 +2013,10 @@ ErrorService.prototype = Object.create(Error.prototype, {
  *      (code HTTP de retour différent de 200 ou pas de réponse).
  *
  * @param {Function} [options.onBeforeParse] - Fonction appelée avant le parsing de la réponse
- *      Permet de modifier la réponse avant parsing si la fonction retourne une String.
- *      Cette fonction prend en paramètre la réponse XML telle que renvoyée par le service,
- *      sous la forme d'une chaîne de caractères (comportement par défaut).
- *      Si le paramètre "rawResponse" a été précisé avec la valeur "true",
+ *      Permet de modifier la réponse avant parsing et la fonction doit retourner une String.
+ *      Cette fonction prend en paramètre la réponse telle que renvoyée par le service
+ *      (cad au format json ou xml).
+ *      Pour le JSONP, si le paramètre "rawResponse" a été précisé avec la valeur "true",
  *      la fonction prend en paramètre un Object JavaScript contenant la réponse XML.
  *
  * @example
@@ -2232,19 +2232,19 @@ CommonService.prototype = {
 
         run.call(context);
 
-        /** callback de fin de construction de la requête */
+        // callback de fin de construction de la requête
         function onBuildRequest (result) {
             this.logger.trace("CommonService::onBuildRequest : ", result);
             this.callService.call(context, onError, onCallService);
         }
 
-        /** callback de fin d'appel au service */
+        // callback de fin d'appel au service
         function onCallService (result) {
             this.logger.trace("CommonService::onCallService : ", result);
             this.analyzeResponse.call(context, onError, onAnalyzeResponse);
         }
 
-        /** callback de fin de lecture de la reponse */
+        // callback de fin de lecture de la reponse
         function onAnalyzeResponse (result) {
             this.logger.trace("CommonService::onAnalyzeResponse : ", result);
             if (result) {
@@ -2254,7 +2254,7 @@ CommonService.prototype = {
             }
         }
 
-        /** callback de gestion des erreurs : renvoit un objet de type ErrorService */
+        // callback de gestion des erreurs : renvoit un objet de type ErrorService
         function onError (error) {
             this.logger.trace("CommonService::onError()");
             // error : l'objet est du type ErrorService ou Error
@@ -2268,6 +2268,8 @@ CommonService.prototype = {
 
     /**
      * Création de la requête
+     * @param {Function} error - callback
+     * @param {Function} success - callback
      */
     buildRequest : function (error, success) {
         // INFO
@@ -2281,15 +2283,16 @@ CommonService.prototype = {
 
     /**
      * Appel du service
+     * @param {Function} error - callback
+     * @param {Function} success - callback
      */
     callService : function (error, success) {
         // INFO
         // retourne l'objet 'this.response'
 
         // NOTES
-        //  Pour le mode XHR, on recupère une reponse sous forme d'une string. Le content
-        //  est donc du JSON natif ou du XML en fonction du service demandé (pas d'encapsulation !).
-        //  Pour le mode JSONP, on a toujours un objet JSON mais sous 2 formats :
+        //  Pour le mode XHR, on recupère une reponse sous forme d'un json ou xml (#document).
+        //  Pour le mode JSONP, on a toujours un objet JSON mais sous 2 formes :
         //      - natif
         //      - XML encapsulé :
         //          {http : {status:200, error:null},xml :'réponse du service'}
@@ -2307,13 +2310,9 @@ CommonService.prototype = {
         var bUrlProxified = !!((this.options.proxyURL && this.options.protocol === "XHR"));
 
         // rajout de l'option gpbibaccess
-        // FIXME : acces au numero de version de package.conf
-        /*
-        var scope = typeof window !== "undefined" ? window : {};
-        var servicesVersion = scope.Gp ? scope.Gp.servicesVersion : "2.0.0";
-        */
+        // INFO : acces au numero de version de package.conf aprés compilation !
         this.options.serverUrl = __WEBPACK_IMPORTED_MODULE_1__Utils_Helper__["a" /* default */].normalyzeUrl(this.options.serverUrl, {
-            "gp-access-lib" : "2.0.0"
+            "gp-access-lib" : "2.1.0"
         }, false);
 
         // si le proxy est renseigné, on proxifie l'url du service
@@ -2346,26 +2345,29 @@ CommonService.prototype = {
             headers : null, // TODO...
             content : this.options.contentType || "application/xml",
             scope : this.options.scope || this,
-            /** callback de reponse */
+            // callback de reponse
             onResponse : function (response) {
                 self.logger.trace("callService::onResponse()");
 
                 // le contenu de la reponse à renvoyer !
                 var content = null;
 
-                // XHR : on renvoie la reponse brute (string)
+                // XHR : on renvoie toujours la reponse brute du service (json ou xml)
+                // au parser du composant...
                 if (self.options.protocol === "XHR") {
-                    // on ne peut pas savoir si la reponse est en XML ou JSON
-                    // donc on laisse le boulot à l'analyse de la reponse !
-                    content = response;
+                    self.logger.trace("Response XHR", response);
+                    content = response; // par defaut, la reponse du service  !
                 }
 
-                // JSONP : on doit analyser le contenu (json)
+                // JSONP : on pre-analyse la reponse brute du service (encapsuler ou pas)
+                // avant de l'envoyer au parser du composant...
                 if (self.options.protocol === "JSONP") {
                     self.logger.trace("Response JSON", response);
                     if (response) {
-                        // reponse encapsulée : {http : {status:200, error:null},xml :'réponse du service'}
                         if (response.http) {
+                            // reponse encapsulée :
+                            // ex. reponse du service en xml
+                            // > {http : {status:200, error:null},xml :'réponse du service'}
                             if (response.http.status !== 200) {
                                 error.call(self, new __WEBPACK_IMPORTED_MODULE_4__Exceptions_ErrorService__["a" /* default */]({
                                     status : response.http.status,
@@ -2378,14 +2380,10 @@ CommonService.prototype = {
                                 if (self.options.rawResponse) {
                                     content = response;
                                 }
-                                if (typeof self.options.onBeforeParse === "function") {
-                                    var newResponse = self.options.onBeforeParse(content);
-                                    if (typeof newResponse === "string") {
-                                        content = newResponse;
-                                    }
-                                }
                             }
                         } else {
+                            // reponse non encapsulée :
+                            // ex. reponse du service en json ou xml
                             content = response;
                         }
                     } else {
@@ -2394,20 +2392,28 @@ CommonService.prototype = {
                     }
                 }
 
+                // si on souhaite parser la reponse du service
+                if (typeof self.options.onBeforeParse === "function") {
+                    var newResponse = self.options.onBeforeParse(content);
+                    if (typeof newResponse === "string") {
+                        // la reponse parsée par l'utilisateur est retournée sous
+                        // forme de string !
+                        content = newResponse;
+                    }
+                }
                 // sauvegarde de la reponse dans l'objet parent (CommonService)
                 self.response = content;
-
                 // on renvoie la reponse...
                 success.call(self, content);
             },
-            /** callback des erreurs */
+            // callback des erreurs
             onFailure : function (e) {
                 self.logger.trace("callService::onFailure()");
                 // on est forcement sur une erreur levée par un service !
                 e.type = __WEBPACK_IMPORTED_MODULE_4__Exceptions_ErrorService__["a" /* default */].TYPE_SRVERR;
                 error.call(self, new __WEBPACK_IMPORTED_MODULE_4__Exceptions_ErrorService__["a" /* default */](e));
             },
-            /** callback de timeOut */
+            // callback de timeOut
             onTimeOut : function () {
                 self.logger.trace("callService::onTimeOut()");
                 error.call(self, new __WEBPACK_IMPORTED_MODULE_4__Exceptions_ErrorService__["a" /* default */]("TimeOut!"));
@@ -2419,6 +2425,8 @@ CommonService.prototype = {
 
     /**
      * Analyse de la réponse
+     * @param {Function} error - callback
+     * @param {Function} success - callback
      */
     analyzeResponse : function (error, success) {
         // INFO
@@ -3282,14 +3290,14 @@ var WKT = {
             }
 
             if (!success) {
-                /** callback success par defaut */
+                // callback success par defaut
                 success = function (json) {
                     console.log(json);
                 };
             }
 
             if (!error) {
-                /** callback error par defaut */
+                // callback error par defaut
                 error = function (e) {
                     console.log(e);
                 };
@@ -3749,7 +3757,7 @@ XLS.prototype = {
     /**
      * Namespace par defaut.
      *
-     * @returns {String}
+     * @returns {String} namespace
      */
     namespaceByDefault : function () {
         var ns = [
@@ -3764,7 +3772,7 @@ XLS.prototype = {
     /**
      * Schemalocation par defaut
      *
-     * @returns {String}
+     * @returns {String} schemaLocation
      */
     schemaLocationByDefault : function () {
         return "xsi:schemaLocation=\"http://www.opengis.net/xls http://schemas.opengis.net/ols/1.2/olsAll.xsd\"";
@@ -3794,7 +3802,7 @@ XLS.prototype = {
      * Retourne un objet de type LocationUtilityService (LUS) ou RouteService
      * ex. GeoceodeRequest / ReverseGeocodeRequest ou RouteRequest
      *
-     * @returns {Object}
+     * @returns {Object} service (LocationUtilityService|RouteService)
      */
     getService : function () {
         return this.oService;
@@ -3806,6 +3814,8 @@ XLS.prototype = {
  *
  * @todo impl. l'ajout de namespace
  * @param {Object} ns - ex. {key:xls, url:http://www.opengis.net/xls}
+ * @param {String} request - requête
+ * @returns {String} requête
  */
 XLS.prototype.addNamespace = function (ns, request) {
     // INFO
@@ -3860,6 +3870,7 @@ XLS.prototype.addNamespace = function (ns, request) {
 
 /**
  * Construction de la requête
+ * @returns {String} requête
  */
 XLS.prototype.build = function () {
     // out ->
@@ -4118,7 +4129,7 @@ GeocodeFilterExtension.prototype = {
     /**
      * Tableau de noms (tables de geocodage)
      *
-     * @returns {Array.<String>}
+     * @returns {Array.<String>} liste des noms de filtres
      */
     getNames : function () {
         var names = [];
@@ -4133,7 +4144,7 @@ GeocodeFilterExtension.prototype = {
      * Retourne une table de geocodage
      *
      * @param {String} name - nom de la table de geocodage
-     * @returns {Object}
+     * @returns {Object} filtre
      */
     getFilter : function (name) {
         var filter = null;
@@ -4149,7 +4160,7 @@ GeocodeFilterExtension.prototype = {
     /**
      * Tableau d'objects (tables de geocodage)
      *
-     * @returns {Array.<Object>}
+     * @returns {Array.<Object>} liste des filtres
      */
     getFilters : function () {
         this.logger.trace(this.filters);
@@ -4160,7 +4171,7 @@ GeocodeFilterExtension.prototype = {
      * Récupère la liste des attributs (filtres) sur une table de geocodage
      *
      * @param {String} name - nom de la table de geocodage
-     * @returns {Array}
+     * @returns {Array} liste des attributs d'un filtre
      */
     getAttributs : function (name) {
         var attributs = [];
@@ -4194,6 +4205,7 @@ GeocodeFilterExtension.prototype = {
      * Retourne les attributs (filtres) sur une table de geocodage
      *
      * @param {String} name - nom de la table de geocodage
+     * @returns {Array} liste des attributs d'un filtre
      */
     getPlaceAttributs : function (name) {
         var places = {};
@@ -4731,7 +4743,8 @@ var XHR = {
                          * @method ontimeout
                          * @private
                          */
-                        hXHR.ontimeout = function () {
+                        hXHR.ontimeout = function (e) {
+                            console.log(e);
                             reject(new Error("TimeOut Occured on Http Request with XMLHttpRequest !"));
                         };
 
@@ -4741,14 +4754,14 @@ var XHR = {
                          * @method onreadystatechange
                          * @private
                          */
-                        hXHR.onreadystatechange = function () {
+                        hXHR.onreadystatechange = function (e) {
                             if (hXHR.readyState === 4) { // DONE
                                 if (hXHR.status === 200) {
                                     window.clearTimeout(onTimeOutTrigger);
                                     resolve(hXHR.response);
                                 } else {
-                                    var message = "Errors Occured on Http Request (status : '" + hXHR.status + "' | response : '" + hXHR.response + "')";
-                                    var status = hXHR.status;
+                                    var message = "Errors Occured on Http Request (status : '" + e.target.statusText + "' | url : '" + e.target.responseURL + "')";
+                                    var status = e.target.status;
                                     reject({
                                         message : message,
                                         status : status
@@ -4810,12 +4823,12 @@ var XHR = {
                          * @method onload
                          * @private
                          */
-                        hXHR.onload = function () {
+                        hXHR.onload = function (e) {
                             if (hXHR.status === 200) {
                                 resolve(hXHR.responseText);
                             } else {
-                                var message = "Errors Occured on Http Request (status : '" + hXHR.status + "' | response : '" + hXHR.responseText + "')";
-                                var status = hXHR.status;
+                                var message = "Errors Occured on Http Request (status : '" + e.target.statusText + "' | url : '" + e.target.responseURL + "')";
+                                var status = e.target.status;
                                 reject({
                                     message : message,
                                     status : status
@@ -6623,7 +6636,7 @@ LocationUtilityService.prototype.addFilter = function (oFilter) {
 /**
  * (overwrite) toString
  *
- * @returns {String}
+ * @returns {String} requête
  */
 LocationUtilityService.prototype.toString = function () {
     // soit, on a un objet LUS Request déjà instancié
@@ -6962,6 +6975,63 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__Protocols_XHR__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__Exceptions_ErrorService__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__Utils_Helper__ = __webpack_require__(4);
+/**
+* Global variable Gp.
+*
+* @module Gp
+* @alias Gp
+* @desc
+*
+* This is the global variable that is exposed in the browser environment.
+* Content is composed of constructor, functions and properties...
+*
+* > Error()
+*     - .TYPE_SRVERR : "SERVICE_ERROR"
+*     - .TYPE_UNKERR : "UNKNOWN_ERROR"
+*     - .TYPE_USEERR : "USAGE_ERROR"
+*
+* > Helper
+*     - .indent()
+*     - .normalyzeParameters()
+*     - .normalyzeUrl()
+*
+* > Protocols
+*     - .XHR.call()
+*
+* > Services
+*     - .Alti
+*         - {@link Gp.Services.Alti.Elevation .Elevation()}
+*     - {@link Gp.Services.AltiResponse .AltiResponse()}
+*     - .AutoComplete
+*         - {@link Gp.Services.AutoComplete.SuggestedLocation .SuggestedLocation()}
+*     - {@link Gp.Services.AutoCompleteResponse .AutoCompleteResponse()}
+*     - {@link Gp.Services.Config .Config()}
+*     - {@link Gp.Services.DefaultUrl .DefaultUrl()}
+*     - .Geocode
+*         - {@link Gp.Services.Geocode.GeocodedLocation .GeocodedLocation()}
+*         - {@link Gp.Services.Geocode.ReverseGeocodedLocation .ReverseGeocodedLocation()}
+*         - {@link Gp.Services.Geocode.DirectGeocodedLocation .DirectGeocodedLocation()}
+*     - {@link Gp.Services.GeocodeResponse .GeocodeResponse()}
+*     - {@link Gp.Services.GetConfigResponse .GetConfigResponse()}
+*     - {@link Gp.Services.IsoCurveResponse .IsoCurveResponse()}
+*     - .Route
+*         - {@link Gp.Services.Route.RouteInstruction .RouteInstruction()}
+*     - {@link Gp.Services.RouteResponse .RouteResponse()}
+*     - {@link module:Services~autoComplete .autoComplete()}
+*     - {@link module:Services~geocode .geocode()}
+*     - {@link module:Services~getAltitude .getAltitude()}
+*     - {@link module:Services~getConfig .getConfig()}
+*     - {@link module:Services~isoCurve .isoCurve()}
+*     - {@link module:Services~reverseGeocode .reverseGeocode()}
+*     - {@link module:Services~route .route()}
+*
+* > servicesDate : "YYYY-MM-DD"
+*
+* > servicesVersion : "X.X.X"
+*
+*
+*/
+
 
 
 
@@ -6994,11 +7064,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 var Gp = {
-    servicesVersion : "2.0.0",
-    servicesDate : "2018-04-05",
+    servicesVersion : "2.1.0",
+    servicesDate : "2018-08-01",
     /**
      * Methode pour rajouter une classe / objet au namespace global.
      *
+     * @private
      * @method extend
      * @param {String} strNS - nom sous lequel on veut présenter la
      *        classe / objet (Gp."strNS").
@@ -7119,7 +7190,7 @@ var Services = {
      * @param {String} [options.httpMethod=GET] - HTTP method to use when requesting underlying web service in case of a XHR protocol use (see above). Possible values are 'GET' and 'POST'. Ignored when options.protocol is set to 'JSONP' value. Only use if you know what you are doing.
      * @param {String} [options.contentType="application/xml"] - Content-Type to use when requesting underlying web service in case of a XHR protocol use (see above) and if method HTTP is POST. Ignored when options.protocol is set to 'JSONP' value. Only use if you know what you are doing.
      * @param {Boolean} [options.rawResponse=false] - Setting this parameter to true implies you want to handle the service response by yourself : it will be returned as an unparsed String in onSuccess callback parameter. Only use if you know what you are doing.
-     * @param {Function} [options.onBeforeParse] - Callback function for handling service response before parsing (as an unparsed String). Takes a String as a parameter (the raw service response). Returns a String that will be parsed as the service response. Ignored when options.protocol is set to 'XHR' value. Only use if you know what you are doing.
+     * @param {Function} [options.onBeforeParse] - Callback function for handling service response before parsing (as an unparsed String). Takes a String as a parameter (the raw service response). Returns a String that will be parsed as the service response. Only use if you know what you are doing.
      */
     getConfig : function (options) {
         var autoconfService = new __WEBPACK_IMPORTED_MODULE_1__AutoConf_AutoConf__["a" /* default */](options);
@@ -7149,7 +7220,7 @@ var Services = {
      * @param {String} [options.httpMethod=GET] - HTTP method to use when requesting underlying web service in case of a XHR protocol use (see above). Possible values are 'GET' and 'POST'. Ignored when options.protocol is set to 'JSONP' value. Only use if you know what you are doing.
      * @param {String} [options.contentType="application/xml"] - Content-Type to use when requesting underlying web service in case of a XHR protocol use (see above) and if method HTTP is POST. Ignored when options.protocol is set to 'JSONP' value. Only use if you know what you are doing.
      * @param {Boolean} [options.rawResponse=false] - Setting this parameter to true implies you want to handle the service response by yourself : it will be returned as an unparsed String in onSuccess callback parameter. Only use if you know what you are doing.
-     * @param {Function} [options.onBeforeParse] - Callback function for handling service response before parsing (as an unparsed String). Takes a String as a parameter (the raw service response). Returns a String that will be parsed as the service response. Ignored when options.protocol is set to 'XHR' value. Only use if you know what you are doing.
+     * @param {Function} [options.onBeforeParse] - Callback function for handling service response before parsing (as an unparsed String). Takes a String as a parameter (the raw service response). Returns a String that will be parsed as the service response. Only use if you know what you are doing.
      * @param {String} [options.api='REST'] - What API to use for interacting with underlying web service : 'REST' or 'WPS'. Only use if you know what you are doing.
      * @param {String} [options.outputFormat='xml'] - Output format for underlying web service response : 'xml' or 'json'. Only use if you know what you are doing.
      */
@@ -7209,7 +7280,7 @@ var Services = {
      * @param {String} [options.httpMethod=GET] - HTTP method to use when requesting underlying web service in case of a XHR protocol use (see above). Possible values are 'GET' and 'POST'. Ignored when options.protocol is set to 'JSONP' value. Only use if you know what you are doing.
      * @param {String} [options.contentType="application/xml"] - Content-Type to use when requesting underlying web service in case of a XHR protocol use (see above) and if method HTTP is POST. Ignored when options.protocol is set to 'JSONP' value. Only use if you know what you are doing.
      * @param {Boolean} [options.rawResponse=false] - Setting this parameter to true implies you want to handle the service response by yourself : it will be returned as an unparsed String in onSuccess callback parameter. Only use if you know what you are doing.
-     * @param {Function} [options.onBeforeParse] - Callback function for handling service response before parsing (as an unparsed String). Takes a String as a parameter (the raw service response). Returns a String that will be parsed as the service response. Ignored when options.protocol is set to 'XHR' value. Only use if you know what you are doing.
+     * @param {Function} [options.onBeforeParse] - Callback function for handling service response before parsing (as an unparsed String). Takes a String as a parameter (the raw service response). Returns a String that will be parsed as the service response. Only use if you know what you are doing.
      */
     geocode : function (options) {
         var geocodeService = new __WEBPACK_IMPORTED_MODULE_2__Geocode_Geocode__["a" /* default */](options);
@@ -7240,7 +7311,7 @@ var Services = {
      * @param {String} [options.httpMethod=GET] - HTTP method to use when requesting underlying web service in case of a XHR protocol use (see above). Possible values are 'GET' and 'POST'. Ignored when options.protocol is set to 'JSONP' value. Only use if you know what you are doing.
      * @param {String} [options.contentType="application/xml"] - Content-Type to use when requesting underlying web service in case of a XHR protocol use (see above) and if method HTTP is POST. Ignored when options.protocol is set to 'JSONP' value. Only use if you know what you are doing.
      * @param {Boolean} [options.rawResponse=false] - Setting this parameter to true implies you want to handle the service response by yourself : it will be returned as an unparsed String in onSuccess callback parameter. Only use if you know what you are doing.
-     * @param {Function} [options.onBeforeParse] - Callback function for handling service response before parsing (as an unparsed String). Takes a String as a parameter (the raw service response). Returns a String that will be parsed as the service response. Ignored when options.protocol is set to 'XHR' value. Only use if you know what you are doing.
+     * @param {Function} [options.onBeforeParse] - Callback function for handling service response before parsing (as an unparsed String). Takes a String as a parameter (the raw service response). Returns a String that will be parsed as the service response. Only use if you know what you are doing.
      */
     reverseGeocode : function (options) {
         var reverseGeocodeService = new __WEBPACK_IMPORTED_MODULE_3__Geocode_ReverseGeocode__["a" /* default */](options);
@@ -7266,7 +7337,7 @@ var Services = {
      * @param {String} [options.httpMethod=GET] - HTTP method to use when requesting underlying web service in case of a XHR protocol use (see above). Possible values are 'GET' and 'POST'. Ignored when options.protocol is set to 'JSONP' value. Only use if you know what you are doing.
      * @param {String} [options.contentType="application/xml"] - Content-Type to use when requesting underlying web service in case of a XHR protocol use (see above) and if method HTTP is POST. Ignored when options.protocol is set to 'JSONP' value. Only use if you know what you are doing.
      * @param {Boolean} [options.rawResponse=false] - Setting this parameter to true implies you want to handle the service response by yourself : it will be returned as an unparsed String in onSuccess callback parameter. Only use if you know what you are doing.
-     * @param {Function} [options.onBeforeParse] - Callback function for handling service response before parsing (as an unparsed String). Takes a String as a parameter (the raw service response). Returns a String that will be parsed as the service response. Ignored when options.protocol is set to 'XHR' value. Only use if you know what you are doing.
+     * @param {Function} [options.onBeforeParse] - Callback function for handling service response before parsing (as an unparsed String). Takes a String as a parameter (the raw service response). Returns a String that will be parsed as the service response. Only use if you know what you are doing.
      */
     autoComplete : function (options) {
         var autoCompleteService = new __WEBPACK_IMPORTED_MODULE_4__AutoComplete_AutoComplete__["a" /* default */](options);
@@ -7298,7 +7369,7 @@ var Services = {
      * @param {String} [options.httpMethod=GET] - HTTP method to use when requesting underlying web service in case of a XHR protocol use (see above). Possible values are 'GET' and 'POST'. Ignored when options.protocol is set to 'JSONP' value. Only use if you know what you are doing.
      * @param {String} [options.contentType="application/xml"] - Content-Type to use when requesting underlying web service in case of a XHR protocol use (see above) and if method HTTP is POST. Ignored when options.protocol is set to 'JSONP' value. Only use if you know what you are doing.
      * @param {Boolean} [options.rawResponse=false] - Setting this parameter to true implies you want to handle the service response by yourself : it will be returned as an unparsed String in onSuccess callback parameter. Only use if you know what you are doing.
-     * @param {Function} [options.onBeforeParse] - Callback function for handling service response before parsing (as an unparsed String). Takes a String as a parameter (the raw service response). Returns a String that will be parsed as the service response. Ignored when options.protocol is set to 'XHR' value. Only use if you know what you are doing.
+     * @param {Function} [options.onBeforeParse] - Callback function for handling service response before parsing (as an unparsed String). Takes a String as a parameter (the raw service response). Returns a String that will be parsed as the service response. Only use if you know what you are doing.
      */
     route : function (options) {
         var routeService = new __WEBPACK_IMPORTED_MODULE_5__Route_Route__["a" /* default */](options);
@@ -7330,7 +7401,7 @@ var Services = {
      * @param {String} [options.httpMethod=GET] - HTTP method to use when requesting underlying web service in case of a XHR protocol use (see above). Possible values are 'GET' and 'POST'. Ignored when options.protocol is set to 'JSONP' value. Only use if you know what you are doing.
      * @param {String} [options.contentType="application/xml"] - Content-Type to use when requesting underlying web service in case of a XHR protocol use (see above) and if method HTTP is POST. Ignored when options.protocol is set to 'JSONP' value. Only use if you know what you are doing.
      * @param {Boolean} [options.rawResponse=false] - Setting this parameter to true implies you want to handle the service response by yourself : it will be returned as an unparsed String in onSuccess callback parameter. Only use if you know what you are doing.
-     * @param {Function} [options.onBeforeParse] - Callback function for handling service response before parsing (as an unparsed String). Takes a String as a parameter (the raw service response). Returns a String that will be parsed as the service response. Ignored when options.protocol is set to 'XHR' value. Only use if you know what you are doing.
+     * @param {Function} [options.onBeforeParse] - Callback function for handling service response before parsing (as an unparsed String). Takes a String as a parameter (the raw service response). Returns a String that will be parsed as the service response. Only use if you know what you are doing.
      */
     isoCurve : function (options) {
         var processIsoCurveService = new __WEBPACK_IMPORTED_MODULE_6__ProcessIsoCurve_ProcessIsoCurve__["a" /* default */](options);
@@ -7578,7 +7649,7 @@ Alti.prototype.buildRequest = function (error, success) {
     // utilisation en mode callback
     var options = {
         httpMethod : this.options.httpMethod,
-        /** callback */
+        // callback
         onSuccess : function (result) {
             // sauvegarde de la requete !
             this.request = result;
@@ -10318,7 +10389,7 @@ WPS.prototype = {
     /**
      * Namespace par defaut de la requete POST.
      *
-     * @returns {String}
+     * @returns {String} namespace
      */
     namespaceByDefault : function () {
         var ns = [
@@ -10339,7 +10410,7 @@ WPS.prototype = {
     /**
      * Schemalocation par defaut.
      *
-     * @returns {String}
+     * @returns {String} schemaLocation
      */
     schemaLocationByDefault : function () {
         return "xsi:schemaLocation=\"http://www.opengis.net/wps/1.0.0 http://schemas.opengis.net/wps/1.0.0/wpsAll.xsd\"";
@@ -10380,7 +10451,7 @@ WPS.prototype = {
      * //                  </wps:Data>
      * //              </wps:Input>
      *
-     * @returns {Boolean}
+     * @returns {Boolean} validation de la construction de la requete
      */
     processRequestString : function () {
         this.logger.trace("WPS::processRequestString ()");
@@ -10424,7 +10495,7 @@ WPS.prototype = {
     /**
      * Ajout des données
      *
-     * @returns {String}
+     * @returns {String} Données concaténées dans une chaine
      */
     __addDataInputs : function () {
         this.logger.trace("WPS::__addDataInputs ()");
@@ -10450,12 +10521,12 @@ WPS.prototype = {
     },
 
     /**
-     * Ajout d'une données.
+     * Ajout d'une donnée.
      *
      * @param {String} tmpl - template
      * @param {String} key - clef
      * @param {String} data - valeur
-     * @returns {String}
+     * @returns {String} chaine avec les substitutions clef/valeur
      */
     __addDataInput : function (tmpl, key, data) {
         var tmp = tmpl;
@@ -10480,7 +10551,7 @@ WPS.prototype = {
     /**
      * Retourne le mode de requete (GET|POST).
      *
-     * @returns {AltiRequest.options.mode|String}
+     * @returns {AltiRequest.options.mode|String} methode (GET|POST)
      */
     getMethod : function () {
         return this.method;
@@ -10763,6 +10834,7 @@ AltiResponseReader.READERS = {
      * @param {DOMElement} root - racine de la réponse XML
      * @static
      * @memberof AltiResponseReader
+     * @returns {Object} Retourne un objet de type AltiResponse
      */
     elevations : function (root) {
         // INFO : on passe en paramètre l'objet en entrée elevations, vide, à remplir.
@@ -13069,6 +13141,7 @@ RequestHeader.prototype = {
 
     /**
      * toString
+     * @returns {String} requête
      */
     toString : function () {
         var template = null;
@@ -13171,6 +13244,7 @@ Request.prototype = {
 
     /**
      * an rfc4122 version 4 compliant guid
+     * @returns {String} guid
      */
     guid : function () {
         // INFO
@@ -13184,6 +13258,7 @@ Request.prototype = {
 
     /**
      * toString
+     * @returns {String} requête
      */
     toString : function () {
         var template = null;
@@ -13364,7 +13439,7 @@ GeocodeRequest.prototype = {
     /**
      * toString
      *
-     * @returns {String}
+     * @returns {String} requête
      */
     toString : function () {
         var template = "";
@@ -13639,7 +13714,7 @@ Address.prototype = {
 /**
  * toString
  *
- * @returns {String}
+ * @returns {String} requête
  */
 Address.prototype.toString = function () {
     var template = null;
@@ -13875,6 +13950,7 @@ ReverseGeocodeRequest.prototype = {
 
     /**
      * toString
+     * @returns {String} requête
      */
     toString : function () {
         var template = "";
@@ -14046,7 +14122,7 @@ Position.prototype = {
 /**
  * toString
  *
- * @returns {String}
+ * @returns {String} requête
  */
 Position.prototype.toString = function () {
     var template = this.template.position;
@@ -14185,7 +14261,7 @@ Preference.prototype = {
 /**
  * toString
  *
- * @returns {String}
+ * @returns {String} requête
  */
 Preference.prototype.toString = function () {
     var Preferences = [];
@@ -17146,7 +17222,7 @@ RouteService.prototype.addFilter = function (oFilter) {
 /**
  * (overwrite) toString
  *
- * @returns {String}
+ * @returns {String} requête
  */
 RouteService.prototype.toString = function () {
     // soit, on a un objet Request déjà instancié
@@ -17369,7 +17445,7 @@ DetermineRouteRequest.prototype = {
     /**
      * toString
      *
-     * @returns {String}
+     * @returns {String} requête
      */
     toString : function () {
         var template = "";
@@ -17600,7 +17676,7 @@ RoutePlan.prototype = {
     /**
      * toString
      *
-     * @returns {String}
+     * @returns {String} requête
      */
     toString : function () {
         var template = "";
@@ -18363,7 +18439,11 @@ var RouteResponseRESTReader = {};
 
 RouteResponseRESTReader.READERS = {
 
-    /** TODO : jsdoc block */
+    /**
+     * Route response
+     * @param {Object} node - node
+     * @returns {Object} response
+     */
     routeResult : function (node) {
         var response = new __WEBPACK_IMPORTED_MODULE_3__Response_model_RouteResponse__["a" /* default */]();
 
@@ -18383,7 +18463,11 @@ RouteResponseRESTReader.READERS = {
         return response;
     },
 
-    /** TODO : jsdoc block */
+    /**
+     * Route status
+     * @param {Object} node - node
+     * @param {Object} response - response
+     */
     status : function (node, response) {
         var status = __getChildValue(node);
         if (status === "ERROR" || status === "error") {
@@ -18393,28 +18477,44 @@ RouteResponseRESTReader.READERS = {
         }
     },
 
-    /** TODO : jsdoc block */
+    /**
+     * Route message
+     * @param {Object} node - node
+     * @param {Object} response - response
+     */
     message : function (node, response) {
         if (response) {
             response.message = __getChildValue(node);
         }
     },
 
-    /** TODO : jsdoc block */
+    /**
+     * Route distance
+     * @param {Object} node - node
+     * @param {Object} response - response
+     */
     distance : function (node, response) {
         if (response) {
             response.totalDistance = __getChildValue(node);
         }
     },
 
-    /** TODO : jsdoc block */
+    /**
+     * Route duration
+     * @param {Object} node - node
+     * @param {Object} response - response
+     */
     durationSeconds : function (node, response) {
         if (response) {
             response.totalTime = parseFloat(__getChildValue(node));
         }
     },
 
-    /** TODO : jsdoc block */
+    /**
+     * Route bounds
+     * @param {Object} node - node
+     * @param {Object} response - response
+     */
     bounds : function (node, response) {
         // get value et split et parseFloat
         if (response && response.bbox) {
@@ -18426,17 +18526,19 @@ RouteResponseRESTReader.READERS = {
         }
     },
 
-    /** TODO : jsdoc block */
+    /**
+     * Route geometry
+     * @param {Object} node - node
+     * @param {Object} response - response
+     */
     geometryWkt : function (node, response) {
         if (response) {
             var geomWkt = node.innerHTML;
 
-            /** TODO : jsdoc block */
             var onWKTSuccess = function (json) {
                 response.routeGeometry = json;
             };
 
-            /** TODO : jsdoc block */
             var onWKTError = function () {
                 var msg = __WEBPACK_IMPORTED_MODULE_0__Utils_MessagesResources__["a" /* default */].getMessage("PARAM_FORMAT", ["geometryWkt"]);
                 throw new Error(msg);
@@ -18446,7 +18548,11 @@ RouteResponseRESTReader.READERS = {
         }
     },
 
-    /** TODO : jsdoc block */
+    /**
+     * Route step
+     * @param {Object} node - node
+     * @param {Object} response - response
+     */
     step : function (node, response) {
         // création d'une nouvelle instruction
         var routeInstruction = new __WEBPACK_IMPORTED_MODULE_4__Response_model_RouteInstruction__["a" /* default */]();
@@ -18530,7 +18636,16 @@ RouteResponseRESTReader.READERS = {
 
 };
 
-/** TODO : jsdoc block */
+/**
+ * Méthode permettant de lancer la lecture d'une réponse XML du service de calcul d'itineraire,
+ * à l'aide des readers de la classe.
+ *
+ * @method RouteResponseRESTReader.read
+ * @param {DOMElement} root - racine de la réponse XML à lire
+ * @static
+ * @memberof RouteResponseRESTReader
+ * @returns {DOMElement} response
+ */
 RouteResponseRESTReader.read = function (root) {
     var response;
 
@@ -19128,7 +19243,7 @@ ProcessIsoCurveRequest.prototype = {
      *   //   <holes></holes>
      *   // </isochroneRequest>
      *
-     * @returns {String}
+     * @returns {String} request
      */
     processRequestString : function () {
         var request = "";
@@ -19331,6 +19446,7 @@ ProcessIsoCurveParam.prototype = {
 
     /**
      * Retourne la liste des exclusions
+     * @returns {String} x,y
      */
     getLocation : function () {
         return this.location.x + "," + this.location.y;
@@ -19338,6 +19454,7 @@ ProcessIsoCurveParam.prototype = {
 
     /**
      * Retourne la liste des exclusions
+     * @returns {String} exclusions
      */
     getExclusions : function () {
         return this.exclusions.join(";");
@@ -19347,7 +19464,7 @@ ProcessIsoCurveParam.prototype = {
 /**
  * Tableau de clefs/valeurs pour param.
  *
- * @returns {Object[]}
+ * @returns {Object[]} KVP
  */
 ProcessIsoCurveParam.prototype.getParams = function () {
     var map = [];
@@ -19532,11 +19649,11 @@ var ProcessIsoCurveResponseFactory = {
                                 data.message = JSONResponse.message;
                                 data.id = JSONResponse.id;
                                 data.srs = JSONResponse.srs;
-                                /** callback de la reponse */
+                                // callback de la reponse
                                 var onWKTSuccess = function (json) {
                                     data.geometry = json;
                                 };
-                                /** callback d'erreur */
+                                // callback d'erreur
                                 var onWKTError = function () {
                                     options.onError.call(options.scope, new __WEBPACK_IMPORTED_MODULE_2__Exceptions_ErrorService__["a" /* default */]({
                                         message : __WEBPACK_IMPORTED_MODULE_1__Utils_MessagesResources__["a" /* default */].getMessage("PARAM_FORMAT", "wktGeometry")
@@ -19895,7 +20012,6 @@ function __getChildValue (node) {
 /***/ })
 /******/ ])["default"];
 });
-//# sourceMappingURL=GpServices-src.js.map
 
 /***/ }),
 /* 7 */
@@ -34224,7 +34340,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /* 55 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"geoportal-extensions","leafletExtName":"French Geoportal Extension for Leaflet","olExtName":"French Geoportal Extension for OpenLayers","itownsExtName":"French Geoportal Extension for Itowns","olItownsExtName":"French Geoportal Extension for OpenLayers & Itowns","version":"2.0.0","leafletExtVersion":"2.0.1","olExtVersion":"2.0.0","itownsExtVersion":"2.0.0","olItownsExtVersion":"2.0.1","description":"French Geoportal Extensions for OpenLayers, Leaflet and iTowns libraries","main":"dist/leaflet/GpPluginLeaflet.js, dist/openlayers/GpPluginOpenLayers.js, dist/itowns/GpPluginItowns.js, dist/mix/GpPluginOlItowns.js","directories":{},"scripts":{"setup":"npm install","clean":"echo \"Warning: target not yet implemented!\" && exit 0","test":"cd test && mocha-webpack --require setup.js --webpack-config webpack.test.js --glob \"test-*.js\" spec/Common/*/*","test:serve":"cd test && webpack-dev-server --hot --config webpack.test.serve.js","cover":"nyc --reporter=lcov --reporter=text npm run test","sample":"npm run sample:serve","sample:serve":"npm run sample:ol:serve","sample:itowns:serve":"webpack-dev-server --config webpack.config.itowns --open-page samples/index-itowns-src.html --contentBase . --port 9001 --open","sample:leaflet:serve":"webpack-dev-server --config webpack.config.leaflet --open-page samples/index-leaflet-src.html --contentBase . --port 9001 --open","sample:ol:serve":"webpack-dev-server --config webpack.config.openlayers --open-page samples/index-openlayers-src.html --contentBase . --port 9001 --open","doc":"npm run doc:serve","doc:serve":"npm run doc:ol:serve","doc:itowns:serve":"webpack-dev-server --config webpack.config.itowns --contentBase jsdoc/itowns --port 9001 --open","doc:leaflet:serve":"webpack-dev-server --config webpack.config.leaflet --contentBase jsdoc/leaflet --port 9001 --open","doc:ol:serve":"webpack-dev-server --config webpack.config.openlayers --contentBase jsdoc/openlayers --port 9001 --open","build:dev":"npm run build:ol:dev; npm run build:itowns:dev; npm run build:mix:dev; npm run build:leaflet:dev","build:prod":"npm run build:ol:prod; npm run build:itowns:prod; npm run build:mix:prod; npm run build:leaflet:prod","build":"npm run build:ol; npm run build:itowns; npm run build:mix; npm run build:leaflet","build:itowns:dev":"webpack --config webpack.config.itowns --env.development","build:itowns:prod":"webpack --config webpack.config.itowns --env.production","build:itowns":"webpack --config webpack.config.itowns","build:mix:dev":"webpack --config webpack.config.mix --env.development","build:mix:prod":"webpack --config webpack.config.mix --env.production","build:mix":"webpack --config webpack.config.mix","build:ol:dev":"webpack --config webpack.config.openlayers --env.development","build:ol:prod":"webpack --config webpack.config.openlayers --env.production","build:ol":"webpack --config webpack.config.openlayers","build:leaflet:dev":"webpack --config webpack.config.leaflet --env.development","build:leaflet:prod":"webpack --config webpack.config.leaflet --env.production","build:leaflet":"webpack --config webpack.config.leaflet"},"nyc":{"include":["src/**/*.js"],"instrument":false,"sourceMap":false},"repository":{"type":"git","url":"https://github.com/IGNF/geoportal-extensions.git"},"author":"IGNF","keywords":["geoportail","javascript","OpenLayers","Leaflet","Itowns","3D"],"license":"CECILL-B","bugs":{"url":"https://github.com/IGNF/geoportal-extensions/issues"},"homepage":"https://github.com/IGNF/geoportal-extensions#readme","dependencies":{"geoportal-access-lib":"^2.0.0","itowns":"2.3.0","leaflet":"^1.3.1","leaflet-draw":"^1.0.2","loglevel":"^1.6.1","openlayers":"^4.4.2","proj4":"2.4.4","proj4leaflet":"^1.0.2","sortablejs":"1.4.0","three":"^0.93.0","three.meshline":"^1.1.0"},"devDependencies":{"babel-core":"^6.26.0","babel-loader":"^7.1.2","babel-preset-env":"^1.6.1","chai":"^4.1.2","clean-webpack-plugin":"^0.1.19","copy-webpack-plugin":"^4.5.1","css-loader":"^0.28.10","eslint":"^4.18.2","eslint-config-standard":"^11.0.0","eslint-loader":"^2.0.0","eslint-plugin-import":"^2.9.0","eslint-plugin-node":"^6.0.1","eslint-plugin-promise":"^3.7.0","eslint-plugin-standard":"^3.0.1","expose-loader":"^0.7.4","extract-text-webpack-plugin":"^3.0.2","handlebars-layouts":"^3.1.4","handlebars-webpack-plugin":"^1.4.1","html-webpack-plugin":"^3.1.0","istanbul-instrumenter-loader":"^3.0.1","jsdoc-webpack-plugin":"0.0.1","jsdom":"^9.9.1","mocha":"^5.0.5","mocha-loader":"^1.1.3","mocha-webpack":"^1.1.0","nyc":"^12.0.2","path":"^0.12.7","requirejs":"^2.3.5","speed-measure-webpack-plugin":"^1.2.2","string-template":"^1.0.0","style-loader":"^0.20.2","url-loader":"^1.0.1","webpack":"^3.11.0","webpack-dev-server":"^2.11.1","webpack-merge":"^4.1.2","webpack-node-externals":"^1.6.0"}}
+module.exports = {"name":"geoportal-extensions","leafletExtName":"French Geoportal Extension for Leaflet","olExtName":"French Geoportal Extension for OpenLayers","itownsExtName":"French Geoportal Extension for Itowns","olItownsExtName":"French Geoportal Extension for OpenLayers & Itowns","version":"2.0.0","leafletExtVersion":"2.0.1","olExtVersion":"2.0.0","itownsExtVersion":"2.0.0","olItownsExtVersion":"2.0.1","description":"French Geoportal Extensions for OpenLayers, Leaflet and iTowns libraries","main":"dist/leaflet/GpPluginLeaflet.js, dist/openlayers/GpPluginOpenLayers.js, dist/itowns/GpPluginItowns.js, dist/mix/GpPluginOlItowns.js","directories":{},"scripts":{"setup":"npm install","clean":"echo \"Warning: target not yet implemented!\" && exit 0","test":"cd test && mocha-webpack --require setup.js --webpack-config webpack.test.js --glob \"test-*.js\" spec/Common/*/*","test:serve":"cd test && webpack-dev-server --hot --config webpack.test.serve.js","cover":"nyc --reporter=lcov --reporter=text npm run test","sample":"npm run sample:serve","sample:serve":"npm run sample:ol:serve","sample:itowns:serve":"webpack-dev-server --config webpack.config.itowns --open-page samples/index-itowns-src.html --contentBase . --port 9001 --open","sample:leaflet:serve":"webpack-dev-server --config webpack.config.leaflet --open-page samples/index-leaflet-src.html --contentBase . --port 9001 --open","sample:ol:serve":"webpack-dev-server --config webpack.config.openlayers --open-page samples/index-openlayers-src.html --contentBase . --port 9001 --open","doc":"npm run doc:serve","doc:serve":"npm run doc:ol:serve","doc:itowns:serve":"webpack-dev-server --config webpack.config.itowns --contentBase jsdoc/itowns --port 9001 --open","doc:leaflet:serve":"webpack-dev-server --config webpack.config.leaflet --contentBase jsdoc/leaflet --port 9001 --open","doc:ol:serve":"webpack-dev-server --config webpack.config.openlayers --contentBase jsdoc/openlayers --port 9001 --open","build:dev":"npm run build:ol:dev; npm run build:itowns:dev; npm run build:mix:dev; npm run build:leaflet:dev","build:prod":"npm run build:ol:prod; npm run build:itowns:prod; npm run build:mix:prod; npm run build:leaflet:prod","build":"npm run build:ol; npm run build:itowns; npm run build:mix; npm run build:leaflet","build:itowns:dev":"webpack --config webpack.config.itowns --env.development","build:itowns:prod":"webpack --config webpack.config.itowns --env.production","build:itowns":"webpack --config webpack.config.itowns","build:mix:dev":"webpack --config webpack.config.mix --env.development","build:mix:prod":"webpack --config webpack.config.mix --env.production","build:mix":"webpack --config webpack.config.mix","build:ol:dev":"webpack --config webpack.config.openlayers --env.development","build:ol:prod":"webpack --config webpack.config.openlayers --env.production","build:ol":"webpack --config webpack.config.openlayers","build:leaflet:dev":"webpack --config webpack.config.leaflet --env.development","build:leaflet:prod":"webpack --config webpack.config.leaflet --env.production","build:leaflet":"webpack --config webpack.config.leaflet"},"nyc":{"include":["src/**/*.js"],"instrument":false,"sourceMap":false},"repository":{"type":"git","url":"https://github.com/IGNF/geoportal-extensions.git"},"author":"IGNF","keywords":["geoportail","javascript","OpenLayers","Leaflet","Itowns","3D"],"license":"CECILL-B","bugs":{"url":"https://github.com/IGNF/geoportal-extensions/issues"},"homepage":"https://github.com/IGNF/geoportal-extensions#readme","dependencies":{"geoportal-access-lib":"2.1.0","itowns":"2.3.0","leaflet":"1.3.1","leaflet-draw":"1.0.2","loglevel":"~1.6.1","openlayers":"4.4.2","proj4":"2.4.4","proj4leaflet":"~1.0.2","sortablejs":"1.4.0","three":"~0.93.0","three.meshline":"~1.1.0"},"devDependencies":{"babel-core":"^6.26.0","babel-loader":"^7.1.2","babel-preset-env":"^1.6.1","chai":"^4.1.2","clean-webpack-plugin":"^0.1.19","copy-webpack-plugin":"^4.5.1","css-loader":"^0.28.10","eslint":"^4.18.2","eslint-config-standard":"^11.0.0","eslint-loader":"^2.0.0","eslint-plugin-import":"^2.9.0","eslint-plugin-node":"^6.0.1","eslint-plugin-promise":"^3.7.0","eslint-plugin-standard":"^3.0.1","expose-loader":"^0.7.4","extract-text-webpack-plugin":"^3.0.2","handlebars-layouts":"^3.1.4","handlebars-webpack-plugin":"^1.4.1","html-webpack-plugin":"^3.1.0","istanbul-instrumenter-loader":"^3.0.1","jsdoc-webpack-plugin":"0.0.1","jsdom":"^9.9.1","mocha":"^5.0.5","mocha-loader":"^1.1.3","mocha-webpack":"^1.1.0","nyc":"^12.0.2","path":"^0.12.7","requirejs":"^2.3.5","speed-measure-webpack-plugin":"^1.2.2","string-template":"^1.0.0","style-loader":"^0.20.2","url-loader":"^1.0.1","webpack":"^3.11.0","webpack-dev-server":"^2.11.1","webpack-merge":"^4.1.2","webpack-node-externals":"^1.6.0"}}
 
 /***/ })
 /******/ ]);
