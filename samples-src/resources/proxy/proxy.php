@@ -17,8 +17,8 @@
     $sUrl= '';
     $sReponse= '';
     // via un proxy d'entreprise/IP
-    $proxy_host= 'proxy.ign.fr';
-    $proxy_port= 3128;
+    // $proxy_host= 'proxy.ign.fr';
+    // $proxy_port= 3128;
     $content_types= array(
         'application/vnd.google-earth.kml+xml',
         'application/vnd.google-earth.kml',

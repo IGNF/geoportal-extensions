@@ -641,8 +641,9 @@ LayerImport.prototype._onStaticImportTypeChange = function (e) {
  * @private
  */
 LayerImport.prototype._onGetCapPanelClose = function () {
-    this._clearGetCapParams();
+    // this._clearGetCapParams();
     this.cleanGetCapResultsList();
+    this.cleanMapBoxResultsList();
 };
 
 // ################################################################### //
@@ -880,6 +881,7 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
                 });
 
                 // ajout des informations pour le layerSwitcher (titre, description)
+                // TODO traiter plus finement les metadonnées !
                 if (layerName) {
                     vectorSource._title = layerName;
                     vectorSource._description = JSON.stringify(mapbox.metadata, null, 2) || layerName;
@@ -913,11 +915,11 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
                         } else {
                             var projCode = map.getView().getProjection().getCode();
                             if (mapbox.center && mapbox.center.length) {
-                                logger.warn("mapbox:center is empty !");
+                                logger.warn("mapbox:center !");
                                 map.getView().setCenter(ol.proj.transform(mapbox.center, "EPSG:4326", projCode));
                             }
                             if (mapbox.zoom) {
-                                logger.warn("mapbox:zoom is empty !");
+                                logger.warn("mapbox:zoom !");
                                 map.getView().setZoom(mapbox.zoom);
                             }
                         }
@@ -926,6 +928,16 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
                         // Affichage du panel des couches accessibles à l'edition
                         self._importPanel.style.display = "none";
                         self._mapBoxPanel.style.display = "block";
+                        var _containerLstSrc = self._addImportMapBoxResultListSource(id, mapbox.sources[id], self._mapBoxResultsListContainer).lastChild;
+                        for (var i = 0; i < mapbox.layers.length; i++) {
+                            var layer = mapbox.layers[i];
+                            if (layer.source === id) {
+                                var _containerSrc = self._addImportMapBoxResultSource(layer, _containerLstSrc).lastChild;
+                                self._addImportMapBoxVisibilitySource(layer.layout, _containerSrc);
+                                self._addImportMapBoxStyleSource(layer.paint, _containerSrc);
+                                self._addImportMapBoxFilterSource(layer.filter, _containerSrc);
+                            }
+                        }
                     })
                     .catch(function (error) {
                         logger.error(error);
@@ -2159,27 +2171,32 @@ LayerImport.prototype._hideWaitingContainer = function () {
 };
 
 /**
- * this method clears previous getCap request url or response information
- *
- * @private
- */
-LayerImport.prototype._clearGetCapParams = function () {
-    this._getCapRequestUrl = null;
-    this._getCapResponseWMS = null;
-    this._getCapResponseWMTS = null;
-    this._getCapResponseWMSLayers = null;
-    this._getCapResponseWMTSLayers = null;
-};
-
-/**
  * this method empties getCap results list (DOM element)
  *
  * @private
  */
 LayerImport.prototype.cleanGetCapResultsList = function () {
+    this._getCapRequestUrl = null;
+    this._getCapResponseWMS = null;
+    this._getCapResponseWMTS = null;
+    this._getCapResponseWMSLayers = null;
+    this._getCapResponseWMTSLayers = null;
     if (this._getCapResultsListContainer) {
         while (this._getCapResultsListContainer.firstChild) {
             this._getCapResultsListContainer.removeChild(this._getCapResultsListContainer.firstChild);
+        }
+    }
+};
+
+/**
+ * this method empties MapBox results list (DOM element)
+ *
+ * @private
+ */
+LayerImport.prototype.cleanMapBoxResultsList = function () {
+    if (this._mapBoxResultsListContainer) {
+        while (this._mapBoxResultsListContainer.firstChild) {
+            this._mapBoxResultsListContainer.removeChild(this._mapBoxResultsListContainer.firstChild);
         }
     }
 };

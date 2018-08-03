@@ -54,7 +54,8 @@ div[id^="GPimportMapBoxPanelClose-"] {
   background-image: url("img/GPimportOpen.png");
 }
 
-div[id^="GPimportGetCapPanel-"], div[id^="GPimportMapBoxPanel-"] {
+div[id^="GPimportGetCapPanel-"],
+div[id^="GPimportMapBoxPanel-"] {
   display: none;
 }
 
@@ -205,19 +206,23 @@ input[id^="GPimportSubmit-"] {
 
 /* Get cap results */
 
-div[id^="GPimportGetCapResults-"] {
+div[id^="GPimportGetCapResults-"],
+div[id^="GPimportMapBoxResults-"] {
   background-color: #FFF;
   max-height: 140px;
   overflow-y: auto;
 }
 
-input[id^="GPimportGetCapRubrique-"] {
+input[id^="GPimportGetCapRubrique-"],
+input[id^="GPimportMapBoxSource-"] {
   display: none;
 }
-input[id^="GPimportGetCapRubrique-"] ~ li {
+input[id^="GPimportGetCapRubrique-"] ~ li,
+input[id^="GPimportMapBoxSource-"] ~ div {
  display: none;
 }
-input[id^="GPimportGetCapRubrique-"]:checked ~ li {
+input[id^="GPimportGetCapRubrique-"]:checked ~ li,
+input[id^="GPimportMapBoxSource-"]:checked ~ div {
  display: block;
 }
 input[id^="GPimportGetCapRubrique-"] ~ ul {
@@ -241,30 +246,63 @@ input[id^="GPimportGetCapRubrique-"]:checked ~ ul {
   list-style-type: none;
 }
 
-.GPimportGetCapRubriqueTitle {
+.GPimportGetCapRubriqueTitle,
+.GPimportMapBoxSourceTitle,
+.GPimportMapBoxListSourceTitle {
     color: #5E5E5E;
 }
 
 .GPimportGetCapRubrique,
-.GPimportGetCapListRubrique {
+.GPimportGetCapListRubrique,
+.GPimportMapBoxSource,
+.GPimportMapBoxListSource {
     list-style-type: none;
 }
 
 li.GPimportGetCapRubrique:before,
-li.GPimportGetCapListRubrique:before {
+li.GPimportGetCapListRubrique:before,
+li.GPimportMapBoxSource:before,
+li.GPimportMapBoxListSource:before {
 	/* content: "→ "; caractère UTF-8 */
     content: "» ";
 }
 
 .GPimportGetCapProposal:hover,
-.GPimportGetCapRubrique:hover {
+.GPimportGetCapRubrique:hover,
+.GPimportMapBoxSource {
 
 }
 
-.GPimportGetCapRubriqueTitle:hover {
+.GPimportGetCapRubriqueTitle:hover,
+.GPimportMapBoxSourceTitle:hover {
     color: #000000;
 }
 
 .GPimportGetCapProposal:hover {
   color: #000000;
+}
+
+.GPimportMapBoxSourceVisibility,
+.GPimportMapBoxSourceStyle,
+.GPimportMapBoxSourceFilter {
+    margin-left: 15px;
+}
+
+pre {
+    outline: 1px solid #ccc;
+    padding: 5px;
+    margin: 5px;
+}
+.string { color: green; }
+.number { color: darkorange; }
+.boolean { color: blue; }
+.null { color: magenta; }
+.key { color: red; }
+
+.GPimportMapBoxSourceVisibilityInput {
+    display: block  !important;
+}
+
+.GPimportMapBoxSourceVisibilityLabel {
+
 }
