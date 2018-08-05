@@ -9,5 +9,4 @@
     * attributions
     * urls
     * scheme
-    * visible
 * TODO : interface edition des styles et des filtres

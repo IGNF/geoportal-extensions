@@ -10,11 +10,14 @@
                 width: 100%;
                 height: 500px;
             }
+            #zoom-container,
+            #zoom-level {}
         </style>
 {{/content}}
 
 {{#content "body"}}
             <h2>Ajout du widget d'import de couches sur un service MapBox de type GeoJSON</h2>
+            <div id="zoom-container">Niveau de zoom : <span id="zoom-level">?</span></div>
             <!-- map -->
             <div id="map">
             </div>
@@ -59,7 +62,12 @@
                 var input = document.querySelector("input[id^=GPimportUrl-]");
                 input.value = location.href.substring(0, location.href.lastIndexOf('/')) + "/../../resources/data/geojson/mapbox-states.json";
 
-
+                var zoomContainer = document.getElementById('zoom-level');
+                map.on('moveend', function (event) {
+                    var map = event.map;
+                    var zoom = map.getView().getZoom();
+                    zoomContainer.innerHTML = zoom;
+                });
               };
 
             </script>

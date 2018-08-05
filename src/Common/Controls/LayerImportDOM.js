@@ -822,8 +822,24 @@ var LayerImportDOM = {
 
     _addImportMapBoxStyleSource : function (layer, container) {
         var _style = false;
-        if (layer.paint && Object.keys(layer.paint).length) {
+        var _obj = {};
+        var _layer = JSON.parse(JSON.stringify(layer)); // on utilise une copie  !
+        if (_layer.paint && Object.keys(_layer.paint).length) {
             _style = true;
+            _obj = _layer.paint;
+        }
+
+        // pas de style dans paint, on teste dans layout !
+        if (!_style) {
+            if (_layer.layout && Object.keys(_layer.layout).length) {
+                _style = true;
+                _obj = _layer.layout;
+                // on supprime visibility à l'affichage uniquement
+                // cf. _addImportMapBoxVisibilitySource !
+                if (_layer.layout.visibility) {
+                    delete _obj.visibility;
+                }
+            }
         }
 
         function syntaxHighlight (json) {
@@ -847,10 +863,10 @@ var LayerImportDOM = {
 
         var div = document.createElement("div");
         div.className = "GPimportMapBoxSourceStyle";
-        div.innerHTML = (_style) ? "" : "pas de styles...";
+        div.innerHTML = (_style) ? "" : "Styles : pas de styles...";
 
         if (_style) {
-            var strJson = JSON.stringify(layer.paint, null, 4);
+            var strJson = JSON.stringify(_obj, null, 4);
 
             var label = document.createElement("label");
             label.innerHTML = "Styles :";
@@ -875,7 +891,7 @@ var LayerImportDOM = {
 
         var div = document.createElement("div");
         div.className = "GPimportMapBoxSourceFilter";
-        div.innerHTML = (_filter) ? "" : "pas de filtres...";
+        div.innerHTML = (_filter) ? "" : "Filtres : pas de filtres...";
 
         if (_filter) {
             var label = document.createElement("label");

@@ -945,7 +945,7 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
                             var mapboxLayer = mapbox.layers[i];
                             if (mapboxLayer.source === id) {
                                 var _containerSrc = self._addImportMapBoxResultSource(mapboxLayer, _containerLstSrc).lastChild;
-                                // TODO CSS et fonctionnalité d'edition à mettre en place
+                                // TODO améliorer les CSS et fonctionnalité d'edition à mettre en place
                                 self._addImportMapBoxVisibilitySource(mapboxLayer, _containerSrc);
                                 self._addImportMapBoxScaleSource(mapboxLayer, _containerSrc);
                                 self._addImportMapBoxStyleSource(mapboxLayer, _containerSrc);
@@ -1147,7 +1147,7 @@ LayerImport.prototype._onChangeVisibilitySourceMapBox = function (e, mapboxLayer
     logger.trace(e, mapboxLayer);
     var map = this.getMap();
     map.getLayers().forEach(function (layer) {
-        logger.trace(layer);
+        // logger.trace(layer);
         if (layer.get("id") === mapboxLayer.source) {
             // reload style with new param : layout.visibility : "visible" or "none"...
             var layers = this._mapBoxObj.layers;
@@ -1164,11 +1164,13 @@ LayerImport.prototype._onChangeVisibilitySourceMapBox = function (e, mapboxLayer
                     break;
                 }
             }
-            // FIXME on force un update mais exception !?
-            // https://openlayers.org/en/v4.6.5/doc/errors/#58
             olms.applyStyle(layer, this._mapBoxObj, mapboxLayer.source)
                 .then(function () {
-                    map.addLayer(layer);
+                    // on force un update mais exception !?
+                    // https://openlayers.org/en/v4.6.5/doc/errors/#58
+                    var copyLayer = layer;
+                    map.removeLayer(layer);
+                    map.addLayer(copyLayer);
                 })
                 .catch(function (error) {
                     logger.error(error);
@@ -1190,7 +1192,7 @@ LayerImport.prototype._onChangeScaleMinSourceMapBox = function (e, mapboxLayer) 
     logger.trace(e, mapboxLayer);
     var map = this.getMap();
     map.getLayers().forEach(function (layer) {
-        logger.trace(layer);
+        // logger.trace(layer);
         if (layer.get("id") === mapboxLayer.source) {
             // reload style with new param : minZoom = ...
             var layers = this._mapBoxObj.layers;
@@ -1201,11 +1203,13 @@ LayerImport.prototype._onChangeScaleMinSourceMapBox = function (e, mapboxLayer) 
                     break;
                 }
             }
-            // FIXME on force un update mais exception !?
-            // https://openlayers.org/en/v4.6.5/doc/errors/#58
             olms.applyStyle(layer, this._mapBoxObj, mapboxLayer.source)
                 .then(function () {
-                    map.addLayer(layer);
+                    // on force un update mais exception !?
+                    // https://openlayers.org/en/v4.6.5/doc/errors/#58
+                    var copyLayer = layer;
+                    map.removeLayer(layer);
+                    map.addLayer(copyLayer);
                 })
                 .catch(function (error) {
                     logger.error(error);
@@ -1227,7 +1231,7 @@ LayerImport.prototype._onChangeScaleMaxSourceMapBox = function (e, mapboxLayer) 
     logger.trace(e, mapboxLayer);
     var map = this.getMap();
     map.getLayers().forEach(function (layer) {
-        logger.trace(layer);
+        // logger.trace(layer);
         if (layer.get("id") === mapboxLayer.source) {
             // reload style with new param : minZoom = ...
             var layers = this._mapBoxObj.layers;
@@ -1238,11 +1242,13 @@ LayerImport.prototype._onChangeScaleMaxSourceMapBox = function (e, mapboxLayer) 
                     break;
                 }
             }
-            // FIXME on force un update mais exception !?
-            // https://openlayers.org/en/v4.6.5/doc/errors/#58
             olms.applyStyle(layer, this._mapBoxObj, mapboxLayer.source)
                 .then(function () {
-                    map.addLayer(layer);
+                    // on force un update mais exception !?
+                    // https://openlayers.org/en/v4.6.5/doc/errors/#58
+                    var copyLayer = layer;
+                    map.removeLayer(layer);
+                    map.addLayer(copyLayer);
                 })
                 .catch(function (error) {
                     logger.error(error);
