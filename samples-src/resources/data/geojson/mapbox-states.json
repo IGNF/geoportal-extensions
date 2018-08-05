@@ -19,6 +19,7 @@
     "states": {
       "type": "geojson",
       "data": "../../resources/data/geojson/states.geojson",
+      "attribution": "Data Open Source",
       "maxzoom": 18,
       "buffer": 128,
       "tolerance": 0.375,

@@ -879,7 +879,7 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
 
                 // - vectorSource
                 vectorSource = new ol.source.VectorTile({
-                    attributions : mapbox.sources[id].attribution, // TODO tableau []
+                    attributions : mapbox.sources[id].attribution, // TODO tableau [] ?
                     tilePixelRatio : 1, // oversampling when > 1
                     tileGrid : ol.tilegrid.createXYZ({ // TODO scheme tms ?
                         extent : mapbox.sources[id].bounds, // TODO [minx, miny, maxx, maxy]
@@ -893,13 +893,16 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
                 });
 
                 // ajout des informations pour le layerSwitcher (titre, description)
-                // TODO formater les metadonnées !
-                if (layerName) {
-                    vectorSource._title = layerName;
-                    vectorSource._description = JSON.stringify(mapbox.metadata, null, 2) || layerName;
-                } else {
-                    vectorSource._title = "Import MapBox";
-                    vectorSource._description = JSON.stringify(mapbox.metadata, null, 2) || "Import MapBox";
+                vectorSource._title = layerName || "Import MapBox";
+                vectorSource._description = layerName || "Import MapBox";
+                if (mapbox.metadata) {
+                    vectorSource._description = "";
+                    for (var key in mapbox.metadata) {
+                        if (mapbox.metadata.hasOwnProperty(key)) {
+                            vectorSource._description += key + " : " + mapbox.metadata[key];
+                            vectorSource._description += "<br>";
+                        }
+                    }
                 }
 
                 // - vectorLayer
