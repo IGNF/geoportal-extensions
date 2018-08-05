@@ -284,21 +284,23 @@ li.GPimportMapBoxListSource:before {
 
 .GPimportMapBoxSourceVisibility,
 .GPimportMapBoxSourceStyle,
-.GPimportMapBoxSourceFilter {
+.GPimportMapBoxSourceFilter,
+.GPimportMapBoxSourceScale {
+    display: inline-block;
     margin-left: 15px;
 }
 
-pre {
+.GPimportMapBoxJsonEdit {
     outline: 1px solid #ccc;
     padding: 5px;
     margin: 5px;
 }
 
-.string { color: green; }
-.number { color: darkorange; }
-.boolean { color: blue; }
-.null { color: magenta; }
-.key { color: red; }
+.gp-json-string { color: green; }
+.gp-json-number { color: darkorange; }
+.gp-json-boolean { color: blue; }
+.gp-json-null { color: magenta; }
+.gp-json-key { color: red; }
 
 .GPimportMapBoxSourceVisibilityInput {
     display: block  !important;
@@ -306,4 +308,7 @@ pre {
 
 .GPimportMapBoxSourceVisibilityLabel {
 
+}
+
+.GPimportMapBoxSourceScale {
 }

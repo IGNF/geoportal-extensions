@@ -829,17 +829,17 @@ var LayerImportDOM = {
         function syntaxHighlight (json) {
             json = json.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
             return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?)/g, function (match) {
-                var cls = "number";
+                var cls = "gp-json-number";
                 if (/^"/.test(match)) {
                     if (/:$/.test(match)) {
-                        cls = "key";
+                        cls = "gp-json-key";
                     } else {
-                        cls = "string";
+                        cls = "gp-json-string";
                     }
                 } else if (/true|false/.test(match)) {
-                    cls = "boolean";
+                    cls = "gp-json-boolean";
                 } else if (/null/.test(match)) {
-                    cls = "null";
+                    cls = "gp-json-null";
                 }
                 return "<span class='" + cls + "'>" + match + "</span>";
             });
@@ -856,7 +856,7 @@ var LayerImportDOM = {
             label.innerHTML = "Styles :";
             div.appendChild(label);
             var pre = document.createElement("pre");
-            pre.className = ""; // TODO
+            pre.className = "GPimportMapBoxJsonEdit";
             pre.innerHTML = syntaxHighlight(strJson);
             div.appendChild(pre);
         }
@@ -867,6 +867,8 @@ var LayerImportDOM = {
 
     _addImportMapBoxFilterSource : function (layer, container) {
         var _filter = false;
+        // FIXME tag filter est obselete !
+        // on doit utiliser les expressions dans "paint" ou "layout" !
         if (layer.filter && layer.filter.length) {
             _filter = true;
         }
@@ -880,10 +882,74 @@ var LayerImportDOM = {
             label.innerHTML = "Filtres :";
             div.appendChild(label);
             var pre = document.createElement("pre");
-            pre.className = ""; // TODO
+            pre.className = "GPimportMapBoxJsonEdit";
             pre.innerHTML = JSON.stringify(layer.filter, null, 4);
             div.appendChild(pre);
         }
+
+        container.appendChild(div);
+        return container;
+    },
+
+    _addImportMapBoxScaleSource : function (layer, container) {
+        // contexte
+        var self = this;
+
+        var _scaleMin = layer.minzoom || 0;
+        var _scaleMax = layer.maxzoom || 21;
+
+        var div = document.createElement("div");
+        div.className = "GPimportMapBoxSourceScale";
+
+        var labelMin = document.createElement("label");
+        labelMin.className = "GPimportMapBoxSourceScaleLabel";
+        labelMin.innerHTML = "minZoom :";
+        div.appendChild(labelMin);
+
+        var inputMin = document.createElement("input");
+        inputMin.className = "GPimportMapBoxSourceScaleInput";
+        inputMin.type = "range";
+        inputMin.value = _scaleMin;
+        inputMin.title = _scaleMin;
+        inputMin.disabled = false;
+        inputMin.min = 0;
+        inputMin.max = 21;
+        if (inputMin.addEventListener) {
+            inputMin.addEventListener("change", function (e) {
+                self._onChangeScaleMinSourceMapBox(e, layer);
+            });
+        } else if (inputMin.appendChild) {
+            inputMin.appendChild("onchange", function (e) {
+                self._onChangeScaleMinSourceMapBox(e, layer);
+            });
+        }
+        div.appendChild(inputMin);
+
+        div.appendChild(document.createElement("br"));
+
+        var labelMax = document.createElement("label");
+        labelMax.className = "GPimportMapBoxSourceScaleLabel";
+        labelMax.innerHTML = "maxZoom :";
+        div.appendChild(labelMax);
+
+        var inputMax = document.createElement("input");
+        inputMax.className = "GPimportMapBoxSourceScaleInput";
+        inputMax.type = "range";
+        inputMax.value = _scaleMax;
+        inputMax.title = _scaleMax;
+        inputMax.disabled = false;
+        inputMax.min = 0;
+        inputMax.max = 21;
+        if (inputMax.addEventListener) {
+            inputMax.addEventListener("change", function (e) {
+                self._onChangeScaleMaxSourceMapBox(e, layer);
+            });
+        } else if (inputMax.appendChild) {
+            inputMax.appendChild("onchange", function (e) {
+                self._onChangeScaleMaxSourceMapBox(e, layer);
+            });
+        }
+        div.appendChild(inputMax);
 
         container.appendChild(div);
         return container;

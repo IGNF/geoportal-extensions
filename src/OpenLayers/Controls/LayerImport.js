@@ -245,6 +245,8 @@ LayerImport.prototype._initialize = function (options) {
         }
     };
 
+    // TODO gestion du proxy
+
     // set extractStyles parameter
     if (options.vectorStyleOptions && options.vectorStyleOptions.KML && options.vectorStyleOptions.KML.extractStyles) {
         this.options.vectorStyleOptions.KML.extractStyles = options.vectorStyleOptions.KML.extractStyles;
@@ -734,7 +736,6 @@ LayerImport.prototype._importStaticLayerFromUrl = function (layerName) {
     };
 
     url = ProxyUtils.proxifyUrl(url, this.options.webServicesOptions);
-    // url = this.options.webServicesOptions.proxyUrl + url;
 
     // FIXME pb de surcharge en mode UMD !? ça ne marche pas...
     // this._hideWaitingContainer();
@@ -848,16 +849,17 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
     var vectorFormat;
     var vectorStyle;
     if (this._currentImportType === "MapBox") {
-        var proxyUrl = "";
+        // TODO mettre en place l'option noProxyDomain !
         var opts = this.options.webServicesOptions;
+        var _proxyUrl = "";
         if (opts && opts.proxyUrl) {
-            proxyUrl = opts.proxyUrl;
+            _proxyUrl = opts.proxyUrl;
         };
 
         // - mapbox file json
         var mapbox = JSON.parse(fileContent);
 
-        // - save
+        // - save for update style
         if (mapbox) {
             this._mapBoxObj = mapbox;
         }
@@ -879,19 +881,19 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
                 vectorSource = new ol.source.VectorTile({
                     attributions : mapbox.sources[id].attribution, // TODO tableau []
                     tilePixelRatio : 1, // oversampling when > 1
-                    tileGrid : ol.tilegrid.createXYZ({ // TODO scheme ?
+                    tileGrid : ol.tilegrid.createXYZ({ // TODO scheme tms ?
                         extent : mapbox.sources[id].bounds, // TODO [minx, miny, maxx, maxy]
                         maxZoom : mapbox.sources[id].maxzoom,
                         minZoom : mapbox.sources[id].minzoom,
                         tileSize : 256
                     }),
                     format : vectorFormat,
-                    url : mapbox.sources[id].data || proxyUrl + mapbox.sources[id].url // FIXME path local !?
+                    url : mapbox.sources[id].data || _proxyUrl + mapbox.sources[id].url // FIXME path local !?
                     // urls: mapbox.sources[id].tiles // TODO ?
                 });
 
                 // ajout des informations pour le layerSwitcher (titre, description)
-                // TODO traiter plus finement les metadonnées !
+                // TODO formater les metadonnées !
                 if (layerName) {
                     vectorSource._title = layerName;
                     vectorSource._description = JSON.stringify(mapbox.metadata, null, 2) || layerName;
@@ -903,7 +905,7 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
                 // - vectorLayer
                 vectorLayer = new ol.layer.VectorTile({
                     id : id,
-                    metadata : mapbox.metadata || {},
+                    metadata : mapbox.metadata || {}, // TODO
                     visible : true, // TODO
                     source : vectorSource,
                     // minResolution : , // TODO ?
@@ -935,17 +937,19 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
                         }
                     })
                     .then(function () {
-                        // Affichage du panel des couches accessibles à l'edition
+                        // Affichage du panneau des couches accessibles à l'edition
                         self._importPanel.style.display = "none";
                         self._mapBoxPanel.style.display = "block";
                         var _containerLstSrc = self._addImportMapBoxResultListSource(id, mapbox.sources[id], self._mapBoxResultsListContainer).lastChild;
                         for (var i = 0; i < mapbox.layers.length; i++) {
-                            var layer = mapbox.layers[i];
-                            if (layer.source === id) {
-                                var _containerSrc = self._addImportMapBoxResultSource(layer, _containerLstSrc).lastChild;
-                                self._addImportMapBoxVisibilitySource(layer, _containerSrc);
-                                self._addImportMapBoxStyleSource(layer, _containerSrc);
-                                self._addImportMapBoxFilterSource(layer, _containerSrc);
+                            var mapboxLayer = mapbox.layers[i];
+                            if (mapboxLayer.source === id) {
+                                var _containerSrc = self._addImportMapBoxResultSource(mapboxLayer, _containerLstSrc).lastChild;
+                                // TODO CSS et fonctionnalité d'edition à mettre en place
+                                self._addImportMapBoxVisibilitySource(mapboxLayer, _containerSrc);
+                                self._addImportMapBoxScaleSource(mapboxLayer, _containerSrc);
+                                self._addImportMapBoxStyleSource(mapboxLayer, _containerSrc);
+                                self._addImportMapBoxFilterSource(mapboxLayer, _containerSrc);
                             }
                         }
                     })
@@ -1145,8 +1149,7 @@ LayerImport.prototype._onChangeVisibilitySourceMapBox = function (e, mapboxLayer
     map.getLayers().forEach(function (layer) {
         logger.trace(layer);
         if (layer.get("id") === mapboxLayer.source) {
-            // reload style with new param :
-            //      layout.visibility : "visible" or "none"...
+            // reload style with new param : layout.visibility : "visible" or "none"...
             var layers = this._mapBoxObj.layers;
             for (var i = 0; i < layers.length; i++) {
                 if (layers[i].id === mapboxLayer.id) {
@@ -1158,6 +1161,80 @@ LayerImport.prototype._onChangeVisibilitySourceMapBox = function (e, mapboxLayer
                             "visibility" : (e.target.checked) ? "visible" : "none"
                         };
                     }
+                    break;
+                }
+            }
+            // FIXME on force un update mais exception !?
+            // https://openlayers.org/en/v4.6.5/doc/errors/#58
+            olms.applyStyle(layer, this._mapBoxObj, mapboxLayer.source)
+                .then(function () {
+                    map.addLayer(layer);
+                })
+                .catch(function (error) {
+                    logger.error(error);
+                });
+        }
+    },
+    this);
+};
+
+/**
+ * this method is called on '_addImportMapBoxScaleSource' input slide
+ * and change zoom source to map
+ *
+ * @param {Object} e - HTMLElement
+ * @param {String} mapboxLayer - layer of source mapbox
+ * @private
+ */
+LayerImport.prototype._onChangeScaleMinSourceMapBox = function (e, mapboxLayer) {
+    logger.trace(e, mapboxLayer);
+    var map = this.getMap();
+    map.getLayers().forEach(function (layer) {
+        logger.trace(layer);
+        if (layer.get("id") === mapboxLayer.source) {
+            // reload style with new param : minZoom = ...
+            var layers = this._mapBoxObj.layers;
+            for (var i = 0; i < layers.length; i++) {
+                if (layers[i].id === mapboxLayer.id) {
+                    layers[i].minzoom = e.target.value;
+                    e.target.title = e.target.value;
+                    break;
+                }
+            }
+            // FIXME on force un update mais exception !?
+            // https://openlayers.org/en/v4.6.5/doc/errors/#58
+            olms.applyStyle(layer, this._mapBoxObj, mapboxLayer.source)
+                .then(function () {
+                    map.addLayer(layer);
+                })
+                .catch(function (error) {
+                    logger.error(error);
+                });
+        }
+    },
+    this);
+};
+
+/**
+ * this method is called on '_addImportMapBoxScaleSource' input slide
+ * and change zoom source to map
+ *
+ * @param {Object} e - HTMLElement
+ * @param {String} mapboxLayer - layer of source mapbox
+ * @private
+ */
+LayerImport.prototype._onChangeScaleMaxSourceMapBox = function (e, mapboxLayer) {
+    logger.trace(e, mapboxLayer);
+    var map = this.getMap();
+    map.getLayers().forEach(function (layer) {
+        logger.trace(layer);
+        if (layer.get("id") === mapboxLayer.source) {
+            // reload style with new param : minZoom = ...
+            var layers = this._mapBoxObj.layers;
+            for (var i = 0; i < layers.length; i++) {
+                if (layers[i].id === mapboxLayer.id) {
+                    layers[i].maxzoom = e.target.value;
+                    e.target.title = e.target.value;
                     break;
                 }
             }
