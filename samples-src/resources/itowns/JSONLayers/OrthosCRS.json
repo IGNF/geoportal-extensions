@@ -4,6 +4,7 @@
     "id":         "OrthoCRS",
     "url":        "http://wxs.ign.fr/va5orxd0pgzvq3jxutqfuy0b/geoportail/wmts",
     "fx" :        1.0,
+    "format": "image/jpeg",
     "updateStrategy": {
         "type": 0,
         "options": {}
@@ -22,7 +23,6 @@
             "name":"IGN",
             "url":"http://www.ign.fr/"
         },
-        "mimetype": "image/jpeg",
         "tileMatrixSet": "WGS84G",
         "extent": {
             "west": "-178.187",

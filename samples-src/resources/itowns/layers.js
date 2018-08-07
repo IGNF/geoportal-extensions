@@ -4,6 +4,7 @@ var layerOrtho = {
     "protocol":   "wmts",
     "id":         "Ortho",
     "url":        "http://wxs.ign.fr/"+apiKey+"/geoportail/wmts",
+    "format": "image/jpeg",
     "updateStrategy": {
         "type": "0",
         "options": {}
@@ -72,7 +73,6 @@ var layerOrtho = {
             "url":"http://www.ign.fr/"
         },
         "name": "ORTHOIMAGERY.ORTHOPHOTOS",
-        "mimetype": "image/jpeg",
         "tileMatrixSet": "PM",
         "tileMatrixSetLimits": {
             "2": {

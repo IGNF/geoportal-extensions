@@ -3,6 +3,7 @@
     "protocol":   "wmts",
     "id":         "Ortho",
     "url":        "http://wxs.ign.fr/va5orxd0pgzvq3jxutqfuy0b/geoportail/wmts",
+    "format": "image/jpeg",
     "updateStrategy": {
         "type": "0",
         "options": {}
@@ -71,7 +72,6 @@
             "url":"http://www.ign.fr/"
         },
         "name": "ORTHOIMAGERY.ORTHOPHOTOS",
-        "mimetype": "image/jpeg",
         "tileMatrixSet": "PM",
         "tileMatrixSetLimits": {
             "2": {

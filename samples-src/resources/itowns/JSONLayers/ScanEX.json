@@ -4,6 +4,7 @@
     "id":         "ScanEX",
     "url":        "http://wxs.ign.fr/va5orxd0pgzvq3jxutqfuy0b/geoportail/wmts",
     "fx" :        2.5,
+    "format": "image/jpeg",
     "updateStrategy": {
         "type": 0,
         "options": {}
@@ -21,7 +22,6 @@
           }]
       }],
         "name": "GEOGRAPHICALGRIDSYSTEMS.MAPS.SCAN-EXPRESS.STANDARD",
-        "mimetype": "image/jpeg",
         "tileMatrixSet": "PM",
         "extent": {
             "west": "-63.2838",

@@ -12,6 +12,7 @@
     "dateTime"  : "",
     "heightMapWidth" : 256,
     "waterMask"      : false,
+    "format"  : "image/png",
     "updateStrategy": {
         "type": 0,
         "options": {}
@@ -26,7 +27,6 @@
         "north": "51.0890011990783"
     },
     "options": {
-        "mimetype"  : "image/png",
         "originators" :  [{
             "name" : "IGNRegion",
             "attribution" : "IGN Grandes Echelles",

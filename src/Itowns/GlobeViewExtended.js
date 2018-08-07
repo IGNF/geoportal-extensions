@@ -291,7 +291,7 @@ GlobeViewExtended.prototype.addLayer = function (layer) {
     // is integrated into an iTowns release
     try {
         var promise = this.getGlobeView().addLayer(layer);
-        this.getGlobeView().notifyChange(true);
+        this.getGlobeView().notifyChange(layer);
     } catch (error) {
         return Promise.reject(error);
     }
@@ -306,7 +306,6 @@ GlobeViewExtended.prototype.addLayer = function (layer) {
  */
 GlobeViewExtended.prototype.removeLayer = function (layerId) {
     this.getGlobeView().removeLayer(layerId);
-    this.getGlobeView().notifyChange(true);
 };
 
 /**
@@ -316,8 +315,9 @@ GlobeViewExtended.prototype.removeLayer = function (layerId) {
  * @param {Number} opacityValue - opacity value in [0 1]
  */
 GlobeViewExtended.prototype.setLayerOpacity = function (layerId, opacityValue) {
-    this.getColorLayerById(layerId).opacity = opacityValue;
-    this.getGlobeView().notifyChange(true);
+    var layer = this.getColorLayerById(layerId);
+    layer.opacity = opacityValue;
+    this.getGlobeView().notifyChange(layer);
 };
 
 /**
@@ -327,8 +327,9 @@ GlobeViewExtended.prototype.setLayerOpacity = function (layerId, opacityValue) {
  * @param {Boolean} visible - New visibility of the layer
  */
 GlobeViewExtended.prototype.setLayerVisibility = function (layerId, visible) {
-    this.getColorLayerById(layerId).visible = visible;
-    this.getGlobeView().notifyChange(true);
+    var layer = this.getColorLayerById(layerId);
+    layer.visible = visible;
+    this.getGlobeView().notifyChange(layer);
 };
 
 /**
@@ -339,7 +340,6 @@ GlobeViewExtended.prototype.setLayerVisibility = function (layerId, visible) {
  */
 GlobeViewExtended.prototype.moveLayerToIndex = function (layerId, index) {
     this._itowns.ColorLayersOrdering.moveLayerToIndex(this.getGlobeView(), layerId, index);
-    this.getGlobeView().notifyChange(true);
 };
 
 /**
@@ -707,7 +707,7 @@ GlobeViewExtended.prototype.getFeaturesAtMousePosition = function (mouseEvent) {
  */
 GlobeViewExtended.prototype.setCameraTargetGeoPosition = function (center) {
     let itownsCoord = this._transformCoords(center);
-    return this.getGlobeView().controls.lookAtCoordinateAdvanced(itownsCoord, false);
+    return this.getGlobeView().controls.lookAtCoordinate(itownsCoord, false);
 };
 
 /**
@@ -818,7 +818,7 @@ GlobeViewExtended.prototype.lookAt = function (target) {
  * Notifies the scene it needs to be updated
  */
 GlobeViewExtended.prototype.notifyChange = function () {
-    this.getGlobeView().notifyChange(true);
+    this.getGlobeView().notifyChange(this.getGlobeView().camera.camera3D);
 };
 
 /**
@@ -829,7 +829,7 @@ GlobeViewExtended.prototype.notifyChange = function () {
 */
 GlobeViewExtended.prototype.resize = function (width, height) {
     this.getGlobeView().mainLoop.gfxEngine.onWindowResize(width, height);
-    this.getGlobeView().notifyChange(true);
+    this.notifyChange();
 };
 
 /**

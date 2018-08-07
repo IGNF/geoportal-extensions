@@ -163,6 +163,7 @@ MiniGlobe.prototype._baseLayer = {
     protocol : "wmts",
     id : "Maps",
     url : "https://wxs.ign.fr/an7nvfzojv5wa96dsga5nk8w/geoportail/wmts",
+    format : "image/jpeg",
     updateStrategy : {
         type : "0",
         options : {}
@@ -172,7 +173,6 @@ MiniGlobe.prototype._baseLayer = {
     },
     options : {
         name : "GEOGRAPHICALGRIDSYSTEMS.MAPS",
-        mimetype : "image/jpeg",
         tileMatrixSet : "PM",
         tileMatrixSetLimits : {
             0 : {
