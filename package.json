@@ -110,6 +110,7 @@
     "mocha-webpack": "^1.1.0",
     "nyc": "^12.0.2",
     "path": "^0.12.7",
+    "replace-bundle-webpack-plugin": "^1.0.0",
     "requirejs": "^2.3.5",
     "speed-measure-webpack-plugin": "^1.2.2",
     "string-template": "^1.0.0",
