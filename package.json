@@ -6,7 +6,7 @@
   "olItownsExtName": "French Geoportal Extension for OpenLayers & Itowns",
   "version": "2.0.0",
   "leafletExtVersion": "2.0.1",
-  "olExtVersion": "2.0.0",
+  "olExtVersion": "2.1.0",
   "itownsExtVersion": "2.0.0",
   "olItownsExtVersion": "2.0.1",
   "description": "French Geoportal Extensions for OpenLayers, Leaflet and iTowns libraries",
