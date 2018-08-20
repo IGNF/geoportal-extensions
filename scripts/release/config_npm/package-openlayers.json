@@ -1,6 +1,6 @@
 {
   "name": "geoportal-extensions-openlayers",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "French Geoportal Extensions for OpenLayers",
   "main": "dist/GpPluginOpenLayers.js",
   "directories": {},
@@ -24,6 +24,6 @@
       "xmldom": "^0.1.27"
   },
   "peerDependencies": {
-      "openlayers": "^4.0.1"
+      "openlayers": "4.4.2"
   }
 }
