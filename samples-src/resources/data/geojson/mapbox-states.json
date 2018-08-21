@@ -1,8 +1,8 @@
 {
   "version": 8,
   "pitch": 0,
-  "sprite": "",
-  "glyphs": "mapbox://fonts/mapbox/{fontstack}/{range}.pbf",
+  "sprite": "../../resources/data/geojson/sprite/sprite-states",
+  "glyphs": "",
   "name": "states",
   "metadata": {
       "metadata:title": "Vecteur tuilé GeoJSON",
@@ -133,6 +133,8 @@
             "STATE_NAME"
           ]
         ],
+        "icon-image": "accommodation_camping",
+        "icon-size": 1,
         "text-size": 12,
         "text-justify": "center",
         "text-font": [

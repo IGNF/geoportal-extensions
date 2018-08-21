@@ -821,24 +821,25 @@ var LayerImportDOM = {
     },
 
     _addImportMapBoxStyleSource : function (layer, container) {
+        // contexte
+        var self = this;
+
         var _style = false;
         var _obj = {};
         var _layer = JSON.parse(JSON.stringify(layer)); // on utilise une copie  !
         if (_layer.paint && Object.keys(_layer.paint).length) {
             _style = true;
-            _obj = _layer.paint;
+            _obj.paint = _layer.paint;
         }
 
         // pas de style dans paint, on teste dans layout !
-        if (!_style) {
-            if (_layer.layout && Object.keys(_layer.layout).length) {
-                _style = true;
-                _obj = _layer.layout;
-                // on supprime visibility à l'affichage uniquement
-                // cf. _addImportMapBoxVisibilitySource !
-                if (_layer.layout.visibility) {
-                    delete _obj.visibility;
-                }
+        if (_layer.layout && Object.keys(_layer.layout).length) {
+            _style = true;
+            _obj.layout = _layer.layout;
+            // on supprime visibility à l'affichage uniquement
+            // cf. _addImportMapBoxVisibilitySource !
+            if (_layer.layout.visibility) {
+                delete _obj.visibility;
             }
         }
 
@@ -863,17 +864,25 @@ var LayerImportDOM = {
 
         var div = document.createElement("div");
         div.className = "GPimportMapBoxSourceStyle";
-        div.innerHTML = (_style) ? "" : "Styles : pas de styles...";
 
         if (_style) {
             var strJson = JSON.stringify(_obj, null, 4);
 
             var label = document.createElement("label");
-            label.innerHTML = "Styles :";
+            label.innerHTML = "JSON Styles :";
             div.appendChild(label);
             var pre = document.createElement("pre");
             pre.className = "GPimportMapBoxJsonEdit";
             pre.innerHTML = syntaxHighlight(strJson);
+            if (pre.addEventListener) {
+                pre.addEventListener("click", function (e) {
+                    self._onSwitchStyleEditSourceMapBox(e);
+                });
+            } else if (pre.appendChild) {
+                pre.appendChild("onclick", function (e) {
+                    self._onSwitchStyleEditSourceMapBox(e);
+                });
+            }
             div.appendChild(pre);
         }
 
@@ -882,6 +891,9 @@ var LayerImportDOM = {
     },
 
     _addImportMapBoxFilterSource : function (layer, container) {
+        // contexte
+        var self = this;
+
         var _filter = false;
         // FIXME tag filter est obselete !
         // on doit utiliser les expressions dans "paint" ou "layout" !
@@ -891,15 +903,23 @@ var LayerImportDOM = {
 
         var div = document.createElement("div");
         div.className = "GPimportMapBoxSourceFilter";
-        div.innerHTML = (_filter) ? "" : "Filtres : pas de filtres...";
 
         if (_filter) {
             var label = document.createElement("label");
-            label.innerHTML = "Filtres :";
+            label.innerHTML = "JSON Filtres :";
             div.appendChild(label);
             var pre = document.createElement("pre");
             pre.className = "GPimportMapBoxJsonEdit";
             pre.innerHTML = JSON.stringify(layer.filter, null, 4);
+            if (pre.addEventListener) {
+                pre.addEventListener("click", function (e) {
+                    self._onSwitchFilterEditSourceMapBox(e);
+                });
+            } else if (pre.appendChild) {
+                pre.appendChild("onclick", function (e) {
+                    self._onSwitchFilterEditSourceMapBox(e);
+                });
+            }
             div.appendChild(pre);
         }
 

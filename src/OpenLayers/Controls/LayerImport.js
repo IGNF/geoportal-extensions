@@ -888,7 +888,7 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
                         tileSize : 256
                     }),
                     format : vectorFormat,
-                    url : mapbox.sources[id].data || _proxyUrl + mapbox.sources[id].url // FIXME path local !?
+                    url : mapbox.sources[id].data || _proxyUrl + mapbox.sources[id].url // FIXME pas possible de recuperer le path local !?
                     // urls: mapbox.sources[id].tiles // TODO ?
                 });
 
@@ -916,10 +916,14 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
                     declutter : true
                 });
 
-                // - styles
+                // - divers actions lors de l'application des styles !
                 olms.applyStyle(vectorLayer, mapbox, id)
                     .then(function () {
                         map.addLayer(vectorLayer);
+                    })
+                    .then(function () {
+                        // TODO event sur la suppression de la couche afin de
+                        // fermer le panneau !
                     })
                     .then(function () {
                         if (map.getView() && map.getSize() && vectorSource.getExtent) {
@@ -930,11 +934,11 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
                         } else {
                             var projCode = map.getView().getProjection().getCode();
                             if (mapbox.center && mapbox.center.length) {
-                                logger.warn("mapbox:center !");
+                                logger.trace("mapbox:center !");
                                 map.getView().setCenter(ol.proj.transform(mapbox.center, "EPSG:4326", projCode));
                             }
                             if (mapbox.zoom) {
-                                logger.warn("mapbox:zoom !");
+                                logger.trace("mapbox:zoom !");
                                 map.getView().setZoom(mapbox.zoom);
                             }
                         }
@@ -1259,6 +1263,28 @@ LayerImport.prototype._onChangeScaleMaxSourceMapBox = function (e, mapboxLayer) 
         }
     },
     this);
+};
+
+/**
+ * this method is called on '' tag pre
+ * and edit style
+ *
+ * @param {Object} e - HTMLElement
+ * @private
+ */
+LayerImport.prototype._onSwitchStyleEditSourceMapBox = function (e) {
+    logger.info("TODO edition des style", e);
+};
+
+/**
+ * this method is called on '' tag pre
+ * and edit Filter
+ *
+ * @param {Object} e - HTMLElement
+ * @private
+ */
+LayerImport.prototype._onSwitchFilterEditSourceMapBox = function (e) {
+    logger.info("TODO edition des filtres", e);
 };
 
 // ################################################################### //

@@ -1,6 +1,6 @@
 {
   "type": "FeatureCollection",
-  "totalFeatures": 53,
+  "totalFeatures": 54,
   "features": [{
     "type": "Feature",
     "id": "states.1",
@@ -11791,6 +11791,23 @@
     "properties": {
       "STATE_ABBR": null,
       "STATE_NAME": null,
+      "AREA_LAND": null,
+      "AREA_WATER": null,
+      "PERSONS": null,
+      "MALE": null,
+      "FEMALE": null
+    }
+  }, {
+    "type": "Feature",
+    "id": "states.54",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [-69.5, 30.5]
+    },
+    "geometry_name": "the_geom",
+    "properties": {
+      "STATE_ABBR": "T",
+      "STATE_NAME": "TEST",
       "AREA_LAND": null,
       "AREA_WATER": null,
       "PERSONS": null,

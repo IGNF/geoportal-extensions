@@ -209,8 +209,9 @@ input[id^="GPimportSubmit-"] {
 div[id^="GPimportGetCapResults-"],
 div[id^="GPimportMapBoxResults-"] {
   background-color: #FFF;
-  max-height: 140px;
+  height: 140px;
   overflow-y: auto;
+  resize: vertical;
 }
 
 input[id^="GPimportGetCapRubrique-"],
@@ -294,6 +295,9 @@ li.GPimportMapBoxListSource:before {
     outline: 1px solid #ccc;
     padding: 5px;
     margin: 5px;
+}
+.GPimportMapBoxJsonEdithidden {
+    display: none;
 }
 
 .gp-json-string { color: green; }
