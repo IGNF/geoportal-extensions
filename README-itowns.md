@@ -332,6 +332,8 @@ globeView.addLayer(new itowns.layer.GeoportalWMTS({
 }));
 ```
 
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/ua47rmvb/embedded/result,js,html,css/)
+
 #### Utilisation directe de la librairie iTowns
 
 Il est possible d'ajouter une couche WMTS Géoportail (ou autre) en utilisant directement le paramétrage d'iTowns. Ci-après, un exemple d'utilisation.
@@ -509,6 +511,9 @@ globeView.addLayer(new itowns.layer.GeoportalWMS({
 }));
 ```
 
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/o4ma7xdz/embedded/result,js,html,css/)
+
+
 #### Utilisation directe de la librairie iTowns
 
 Il est possible d'ajouter une couche WMS Géoportail (ou autre) en utilisant directement le paramétrage d'iTowns. Ci-après, un exemple d'utilisation.
@@ -595,6 +600,9 @@ const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
 
 globeView.addLayer(new itowns.layer.GeoportalElevation({ layer: "ELEVATION.ELEVATIONGRIDCOVERAGE" }));
 ```
+
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/cL7jz8kp/embedded/result,js,html,css/)
+
 
 #### Utilisation directe de la librairie iTowns
 
