@@ -1146,14 +1146,14 @@ MousePosition.prototype.onMousePositionProjectionSystemChange = function (e) {
  * this method selects the current system projection.
  *
  * @method _setCurrentSystem
- * @param {Object} systemCode - inner code (rank in array _projectionSystems)
+ * @param {String} systemCode - inner code (rank in array _projectionSystems)
  * @private
  */
 MousePosition.prototype._setCurrentSystem = function (systemCode) {
     // if we change of system type, we must change the unit type too !
     var type = null;
     for (var i = 0; i < this._projectionSystems.length; ++i) {
-        if (this._projectionSystems[i].code === systemCode) {
+        if (this._projectionSystems[i].code === Number(systemCode)) {
             type = this._projectionSystems[i].type;
             break;
         }
