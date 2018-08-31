@@ -1,6 +1,6 @@
 # Extension Géoportail pour OpenLayers
 
-[![release](https://img.shields.io/badge/release%20-ol%202.0.0-brightgreen.svg?style=flat)](https://github.com/IGNF/geoportal-extensions/releases/tag/ol-2.0.0)
+[![release](https://img.shields.io/badge/release%20-ol%202.1.0-brightgreen.svg?style=flat)](https://github.com/IGNF/geoportal-extensions/releases/tag/ol-2.1.0)
 
 L'extension Géoportail pour OpenLayers propose les fonctionnalités suivantes à utiliser en complément de la bibliothèque [OpenLayers dans ses versions 3 et supérieures](http://openlayers.org/) :
 
@@ -26,7 +26,7 @@ L'extension Géoportail pour OpenLayers propose les fonctionnalités suivantes �
 
 * [import de couches](#layerimport)
 
-* [profil altimétrique d'un traçé à l'aide du service d'altimétrie de la plateforme Géoportail](#ep)
+* [profil altimétrique d'un tracé à l'aide du service d'altimétrie de la plateforme Géoportail](#ep)
 
 * [outils de mesures](#measure)
 
@@ -92,7 +92,7 @@ npm i geoportal-extensions-openlayers
 L'arborescence décrite ci-dessus sera alors accessible dans le répertoire `node_modules/geoportal-extensions-openlayers/dist/` de votre projet.
 
 
-#### Accès direct
+#### Accès direct (tests uniquement)
 
 Vous pouvez aussi choisir d'utiliser des fichiers hébergés en ligne, pour y accéder directement, lors de vos tests par exemple. Cependant, pour une utilisation en production, nous vous conseillons de télécharger ces fichiers et de les héberger vous-même, sur le même serveur qui héberge votre application.
 Par exemple sur Github Pages :
@@ -276,9 +276,11 @@ Gp.Services.getConfig(...)
 
 ### Versions de OpenLayers supportées
 
-L'extension Géoportail pour OpenLayers peut s'utiliser avec les **versions 3.14 et supérieures** d'OpenLayers.
-La compatibilité avec la **version 4.0.1** a été complètement testée, ainsi que la version 3.20.1.
+L'extension Géoportail pour OpenLayers peut s'utiliser avec les **versions 3.14 et supérieures** d'OpenLayers, et jusqu'à la **version 4.4.2**.
+
 Le support des versions d'OpenLayers antérieures à la version 3.14 n'a pas été complètement testé.
+
+Le support des versions 4.5 et supérieures d'OpenLayers n'est pas garanti (évolutions d'OpenLayers impactant l'extension Géoportail), nous essayerons de faire évoluer l'extension Géoportail pour assurer la compatibilité avec les dernières versions d'OpenLayers.
 
 
 ### Navigateurs supportés
@@ -299,7 +301,7 @@ Safari     | Versions récentes (6.1+)
 
 ### Systèmes de coordonnées
 
-OpenLayers utilise par défaut les systèmes de coordonnées mondiaux "standards" : EPSG:4326 (coordonnées géographiques) et EPSG:3857 (Projection Web Mercator utilisée par Google, Bings, OSM ... et le Géoportail) comme expliqué [ici](http://openlayers.org/en/latest/apidoc/ol.proj.html).
+OpenLayers utilise par défaut les systèmes de coordonnées mondiaux "standards" : EPSG:4326 (coordonnées géographiques) et EPSG:3857 (Projection Web Mercator utilisée par Google, Bings, OSM ... et le Géoportail) comme expliqué [ici](http://openlayers.org/en/v4.4.2/apidoc/ol.proj.html).
 
 L'extension Géoportail pour OpenLayers embarque de nombreuses projections en *EPSG*, *CRS* ainsi que sous le registre *IGNF*.
 Il est possible d'utiliser ces projections :
@@ -820,6 +822,8 @@ var mpControl = new ol.control.GeoportalMousePosition({
 map.addControl(mpControl);
 ```
 
+**Exemple d'utilisation simple, sans paramétrage particulier** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/uy3hq6gx/embedded/result,js,html,css/)
+
 **Exemple d'utilisation avec affichage unique de l'altitude** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/jhg5fhor/embedded/result,js,html,css/)
 
 **Exemple d'utilisation avec paramétrage des systèmes de coordonnées** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/myg4t6qo/embedded/result,js,html,css/)
@@ -1009,9 +1013,9 @@ map.addControl(lyrImport);
 
 <a id="ep"/>
 
-### Profil altimétrique le long d'un traçé
+### Profil altimétrique le long d'un tracé
 
-Ce widget permet d'afficher le profil altimétrique d'un traçé saisi par l'internaute sur une carte OpenLayers. Le profil est calculé à l'aide du service d'altimétrie de la plateforme Géoportail.
+Ce widget permet d'afficher le profil altimétrique d'un tracé saisi par l'internaute sur une carte OpenLayers. Le profil est calculé à l'aide du service d'altimétrie de la plateforme Géoportail.
 
 Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe [ol.control.ElevationPath](http://ignf.github.io/geoportal-extensions/ol-latest/jsdoc/ol.control.ElevationPath.html), que l'on peut ensuite ajouter à la carte comme [les autres contrôles OpenLayers](http://openlayers.org/en/latest/apidoc/ol.Map.html#addControl), de la manière suivante :
 

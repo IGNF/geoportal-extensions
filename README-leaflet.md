@@ -1,6 +1,6 @@
 # Extension Géoportail pour Leaflet
 
-[![release](https://img.shields.io/badge/release%20-leaflet%202.0.0-brightgreen.svg?style=flat)](https://github.com/IGNF/geoportal-extensions/releases/tag/leaflet-2.0.0)
+[![release](https://img.shields.io/badge/release%20-leaflet%202.0.2-brightgreen.svg?style=flat)](https://github.com/IGNF/geoportal-extensions/releases/tag/leaflet-2.0.2)
 
 L'extension Géoportail pour Leaflet propose les fonctionnalités suivantes à utiliser en complément de la biblothèque [Leaflet](http://leafletjs.com/) :
 
@@ -20,7 +20,7 @@ L'extension Géoportail pour Leaflet propose les fonctionnalités suivantes à u
 
 * [altitude en un point de la carte à l'aide du service d'altimétrie de la plateforme Géoportail](#mp)
 
-* [profil altimétrique d'un traçé à l'aide du service d'altimétrie de la plateforme Géoportail](#ep)
+* [profil altimétrique d'un tracé à l'aide du service d'altimétrie de la plateforme Géoportail](#ep)
 
 
 ## Mise en oeuvre
@@ -78,7 +78,7 @@ npm i geoportal-extensions-leaflet
 L'arborescence décrite ci-dessus sera alors accessible dans le répertoire `node_modules/geoportal-extensions-leaflet/dist/` de votre projet.
 
 
-#### Accès direct
+#### Accès direct (tests uniquement)
 
 Vous pouvez aussi choisir d'utiliser des fichiers hébergés en ligne, pour y accéder directement, lors de vos tests par exemple. Cependant, pour une utilisation en production, nous vous conseillons de télécharger ces fichiers et de les héberger vous-même, sur le même serveur qui héberge votre application.
 Par exemple sur Github Pages :
@@ -705,9 +705,9 @@ map.addControl(mpCtrl);
 
 <a id="ep"/>
 
-### Profil altimétrique le long d'un traçé
+### Profil altimétrique le long d'un tracé
 
-Ce widget permet d'afficher le profil altimétrique d'un traçé saisi par l'internaute sur une carte Leaflet. Le profil est calculé à l'aide du service d'altimétrie de la plateforme Géoportail.
+Ce widget permet d'afficher le profil altimétrique d'un tracé saisi par l'internaute sur une carte Leaflet. Le profil est calculé à l'aide du service d'altimétrie de la plateforme Géoportail.
 
 Son utilisation se fait par la création d'un nouveau contrôle à l'aide de la fonction [L.geoportalControl.ElevationPath()](http://ignf.github.io/geoportal-extensions/leaflet-latest/jsdoc/module-Controls.html#.ElevationPath), que l'on peut ensuite ajouter à la carte comme [les autres contrôles Leaflet](http://leafletjs.com/reference.html#map-stuff-methods), par exemple de la manière suivante :
 

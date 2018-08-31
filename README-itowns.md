@@ -1,6 +1,6 @@
 # Extension Géoportail pour iTowns
 
-[![release](https://img.shields.io/badge/release%20-itowns%202.0.0-brightgreen.svg?style=flat)](https://github.com/IGNF/geoportal-extensions/releases/tag/itowns-2.0.0)
+[![release](https://img.shields.io/badge/release%20-itowns%202.1.0-brightgreen.svg?style=flat)](https://github.com/IGNF/geoportal-extensions/releases/tag/itowns-2.1.0)
 
 L'extension Géoportail pour iTowns étend la librairie 3D iTowns afin de proposer l'ajout de widgets au globe. Les fonctionnalités suivantes sont proposées en complément de la bibliothèque [iTowns](http://www.itowns-project.org/) :
 
@@ -79,7 +79,7 @@ npm i geoportal-extensions-itowns
 
 L'arborescence décrite ci-dessus sera alors accessible dans le répertoire `node_modules/geoportal-extensions-itowns/dist/` de votre projet.
 
-#### Accès direct
+#### Accès direct (tests uniquement)
 
 Vous pouvez aussi choisir d'utiliser des fichiers hébergés en ligne, pour y accéder directement, lors de vos tests par exemple. Cependant, pour une utilisation en production, nous vous conseillons de télécharger ces fichiers et de les héberger vous-même, sur le même serveur qui héberge votre application.
 Par exemple sur Github Pages :
@@ -311,7 +311,7 @@ Le modèle de données iTowns prend en entrée des couches matérialisées sous 
 
 #### Utilisation de l'accès privilégié aux couches WMTS Géoportail
 
-L'affichage se fait par la création d'une nouvelle instance de la classe [Itowns.layer.GeoportalWMTS](http://ignf.github.io/geoportal-extensions/itowns-latest/jsdoc/itowns.layer.GeoportalWMTS.html), de la manière suivante :
+L'affichage se fait par la création d'une nouvelle instance de la classe [itowns.layer.GeoportalWMTS](http://ignf.github.io/geoportal-extensions/itowns-latest/jsdoc/itowns.layer.GeoportalWMTS.html), de la manière suivante :
 
 ``` javascript
 new itowns.layer.GeoportalWMTS(options);
@@ -331,6 +331,8 @@ globeView.addLayer(new itowns.layer.GeoportalWMTS({
     }
 }));
 ```
+
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/ua47rmvb/embedded/result,js,html,css/)
 
 #### Utilisation directe de la librairie iTowns
 
@@ -488,7 +490,7 @@ Le modèle de données iTowns prend en entrée des couches matérialisées sous 
 
 #### Utilisation de l'accès privilégié aux couches WMS Géoportail
 
-L'affichage se fait par la création d'une nouvelle instance de la classe [Itowns.layer.GeoportalWMS](http://ignf.github.io/geoportal-extensions/itowns-latest/jsdoc/itowns.layer.GeoportalWMS.html), de la manière suivante :
+L'affichage se fait par la création d'une nouvelle instance de la classe [itowns.layer.GeoportalWMS](http://ignf.github.io/geoportal-extensions/itowns-latest/jsdoc/itowns.layer.GeoportalWMS.html), de la manière suivante :
 
 ``` javascript
 new itowns.layer.GeoportalWMS(options);
@@ -508,6 +510,9 @@ globeView.addLayer(new itowns.layer.GeoportalWMS({
     }
 }));
 ```
+
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/o4ma7xdz/embedded/result,js,html,css/)
+
 
 #### Utilisation directe de la librairie iTowns
 
@@ -580,7 +585,7 @@ Le modèle de données iTowns prend en entrée des couches matérialisées sous 
 
 #### Utilisation de l'accès privilégié aux couches WMTS Géoportail pour afficher un MNT
 
-L'affichage se fait par la création d'une nouvelle instance de la classe [Itowns.layer.GeoportalElevation](http://ignf.github.io/geoportal-extensions/itowns-latest/jsdoc/itowns.layer.GeoportalElevation.html), de la manière suivante :
+L'affichage se fait par la création d'une nouvelle instance de la classe [itowns.layer.GeoportalElevation](http://ignf.github.io/geoportal-extensions/itowns-latest/jsdoc/itowns.layer.GeoportalElevation.html), de la manière suivante :
 
 ``` javascript
 new itowns.layer.GeoportalElevation(options);
@@ -595,6 +600,9 @@ const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
 
 globeView.addLayer(new itowns.layer.GeoportalElevation({ layer: "ELEVATION.ELEVATIONGRIDCOVERAGE" }));
 ```
+
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/cL7jz8kp/embedded/result,js,html,css/)
+
 
 #### Utilisation directe de la librairie iTowns
 
@@ -701,7 +709,7 @@ globeView.addLayer(ElevationLayer);
 
 Ce widget permet à l'utilisateur de gérer l'empilement des couches ajoutées au globe iTowns et, pour chacune d'elles, d'agir sur la visibilité, l'opacité et d'afficher des informations qui lui sont associées (titre, description, métadonnées, légende).
 
-Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe [itowns.control.LayerSwitcher]().
+Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe [itowns.control.LayerSwitcher](http://ignf.github.io/geoportal-extensions/itowns-latest/jsdoc/itowns.control.LayerSwitcher.html).
 
 ``` javascript
 var layerSwitcher = new itowns.control.LayerSwitcher(opts);
@@ -769,7 +777,7 @@ globeView.addWidget(layerSwitcher);
 
 Ce widget permet d'afficher les coordonnées d'un point choisi par l'internaute sur le globe iTowns dans un ou plusieurs systèmes de coordonnées. Ces coordonnées peuvent comprendre l'altitude obtenue à l'aide du service d'altimétrie de la plateforme Géoportail.
 
-Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe itowns.control.LayerSwitcher, que l'on peut ensuite ajouter au globe via la méthode addWidget de l'extension d'iTowns globeViewExtended, de la manière suivante :
+Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe [itowns.control.MousePosition](http://ignf.github.io/geoportal-extensions/itowns-latest/jsdoc/itowns.control.MousePosition.html), que l'on peut ensuite ajouter au globe via la méthode addWidget de l'extension d'iTowns globeViewExtended, de la manière suivante :
 
 ``` javascript
 var mp = new itowns.control.MousePosition(opts);
@@ -813,7 +821,7 @@ Ce widget a pour but d'afficher les attributions associées aux couches visibles
 
 Les couches Géoportail (de type [WMS](#WMS) ou [WMTS](#WMTS)) possèdent nativement cette propriété. Pour les autres, le paramétrage dynamique des originators se fait par l'adjonction à l'objet source de la couche de la propriété "\_originators", tableau de [Gp.Services.Config.Originator](http://ignf.github.io/geoportal-access-lib/latest/jsdoc/Gp.Services.Config.Originator.html).
 
-Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe itowns.control.GeoportalAttribution que l'on peut ensuite ajouter au globe de la manière suivante :
+Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe [itowns.control.Attributions](http://ignf.github.io/geoportal-extensions/itowns-latest/jsdoc/itowns.control.Attributions.html) que l'on peut ensuite ajouter au globe de la manière suivante :
 
 ``` javascript
 var attribution = new itowns.control.Attributions(opts);
@@ -848,7 +856,7 @@ globeView.addWidget( attribution );
 
 Ce widget a pour but d'afficher une mini-vue. Cette mini-vue va suivre les déplacements de la vue principale, afin que l'utilisateur ait systématiquement un aperçu son positionnement global sur le globe. La couche par défaut affichée sur la mini-vue est la couche cartographique de l'IGN.
 
-Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe itowns.control.MiniGlobe que l'on peut ensuite ajouter au globe de la manière suivante :
+Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe [itowns.control.MiniGlobe](http://ignf.github.io/geoportal-extensions/itowns-latest/jsdoc/itowns.control.MiniGlobe.html) que l'on peut ensuite ajouter au globe de la manière suivante :
 
 ``` javascript
 var miniglobe = new itowns.control.MiniGlobe(opts);
@@ -884,7 +892,7 @@ globeView.addWidget( miniglobe );
 
 Ce widget a pour but d'afficher une échelle graphique. Cette échelle graphique se met à jour dynamiquement en fonction des déplacements de la caméra et permet d'indiquer approximativement à quelle échelle correspond la vue de l'utilisateur.
 
-Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe itowns.control.Scale que l'on peut ensuite ajouter au globe de la manière suivante :
+Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe [itowns.control.Scale](http://ignf.github.io/geoportal-extensions/itowns-latest/jsdoc/itowns.control.Scale.html) que l'on peut ensuite ajouter au globe de la manière suivante :
 
 ``` javascript
 var scalebar = new itowns.control.Scale(opts);
