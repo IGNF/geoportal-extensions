@@ -1,6 +1,6 @@
 {
     "name": "geoportal-extensions-openlayers-itowns",
-    "version": "2.1.0",
+    "version": "2.1.1",
     "description": "French Geoportal Extensions for Openlayers and iTowns",
     "main": "dist/GpPluginOlItowns.js",
     "directories": {},
