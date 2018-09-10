@@ -698,34 +698,36 @@ Route.prototype._addFormPointsEventListeners = function (formPoint) {
         // display form on origin label click
         formPoint._inputLabelContainer.addEventListener(
             "click",
-            function () {
+            function (e) {
                 context.onRouteOriginLabelClick.call(this, context);
             }
         );
         // minimize form on input show pointer, and set map event listeners (see this.onRouteOriginPointerClick)
         formPoint._inputShowPointer.addEventListener(
             "click",
-            function () {
+            function (e) {
                 context.onRouteOriginPointerClick.call(this, context, formPoint);
             }
         );
         if (formPoint._removePointElement) {
             formPoint._removePointElement.addEventListener(
                 "click",
-                function () {
+                function (e) {
+                    logger.trace("click on _removePointElement", e);
                     // Moving up exclusions picto
-                    var exclusionsPictoTop = context._showRouteExclusionsElement.style.top;
-                    context._showRouteExclusionsElement.style.top = (parseInt(exclusionsPictoTop, 10) - 33).toString() + "px";
+                    // var exclusionsPictoTop = context._showRouteExclusionsElement.style.top;
+                    // context._showRouteExclusionsElement.style.top = (parseInt(exclusionsPictoTop, 10) - 33).toString() + "px";
                 }
             );
         }
         if (formPoint._addPointElement) {
             formPoint._addPointElement.addEventListener(
                 "click",
-                function () {
+                function (e) {
+                    logger.trace("click on _addPointElement", e);
                     // Moving down exclusions picto
-                    var exclusionsPictoTop = context._showRouteExclusionsElement.style.top;
-                    context._showRouteExclusionsElement.style.top = (parseInt(exclusionsPictoTop, 10) + 33).toString() + "px";
+                    // var exclusionsPictoTop = context._showRouteExclusionsElement.style.top;
+                    // context._showRouteExclusionsElement.style.top = (parseInt(exclusionsPictoTop, 10) + 33).toString() + "px";
                 }
             );
         }
@@ -733,33 +735,33 @@ Route.prototype._addFormPointsEventListeners = function (formPoint) {
         // attachEvent: Internet explorer event listeners management
         formPoint._inputLabelContainer.attachEvent(
             "onclick",
-            function () {
+            function (e) {
                 context.onRouteOriginLabelClick.call(this, context);
             }
         );
         formPoint._inputShowPointer.attachEvent(
             "onclick",
-            function () {
+            function (e) {
                 context.onRouteOriginPointerClick.call(this, context, formPoint);
             }
         );
         if (formPoint._removePointElement) {
             formPoint._removePointElement.attachEvent(
                 "onclick",
-                function () {
+                function (e) {
                     // Moving up exclusions picto
-                    var exclusionsPictoTop = context._showRouteExclusionsElement.style.top;
-                    context._showRouteExclusionsElement.style.top = (parseInt(exclusionsPictoTop, 10) - 33).toString() + "px";
+                    // var exclusionsPictoTop = context._showRouteExclusionsElement.style.top;
+                    // context._showRouteExclusionsElement.style.top = (parseInt(exclusionsPictoTop, 10) - 33).toString() + "px";
                 }
             );
         }
         if (formPoint._addPointElement) {
             formPoint._addPointElement.attachEvent(
                 "onclick",
-                function () {
+                function (e) {
                     // Moving down exclusions picto
-                    var exclusionsPictoTop = context._showRouteExclusionsElement.style.top;
-                    context._showRouteExclusionsElement.style.top = (parseInt(exclusionsPictoTop, 10) + 33).toString() + "px";
+                    // var exclusionsPictoTop = context._showRouteExclusionsElement.style.top;
+                    // context._showRouteExclusionsElement.style.top = (parseInt(exclusionsPictoTop, 10) + 33).toString() + "px";
                 }
             );
         }
@@ -946,9 +948,10 @@ Route.prototype.onRouteOriginPointerClick = function (routeControl, locationSele
  * tag label (cf. this._createShowRoutePictoElement),
  * and it cleans all value of input.
  *
+ * @param {Object} e - HTMLElement
  * @private
  */
-Route.prototype.onShowRoutePanelClick = function () {
+Route.prototype.onShowRoutePanelClick = function (e) {
     // clean !
     if (!this._geojsonSections && !this._waiting) {
         this._clear();
@@ -1644,10 +1647,16 @@ Route.prototype._clearRouteInputOptions = function () {
 Route.prototype._removeRouteStepLocations = function () {
     var points = document.querySelectorAll("div[id^=\"GPlocationPoint\"]");
     if (points.length !== 0) {
+        var goodPoints = [];
+        for (var k = 0; k < points.length; k++) {
+            if (points[k].id.indexOf(this._uid) !== -1) {
+                goodPoints.push(points[k]);
+            }
+        }
         // on boucle sur les points intermédiaires
-        for (var i = 1; i < (points.length - 1); i++) {
+        for (var i = 1; i < (goodPoints.length - 1); i++) {
             // on va regarder les classes associées
-            var classList = points[i].classList;
+            var classList = goodPoints[i].classList;
             if (classList.length !== 0) {
                 for (var j = 0; j < classList.length; j++) {
                     if (classList[j] === "GPlocationStageFlexInput") {

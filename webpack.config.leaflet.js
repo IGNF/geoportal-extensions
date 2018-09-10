@@ -175,7 +175,8 @@ module.exports = env => {
                     context : [
                         path.join(__dirname, "samples-src", "config.json"),
                         {
-                            mode : _mode
+                            mode : _mode,
+                            debug : (production) ? "" : "-src"
                         }
                     ]
                 }

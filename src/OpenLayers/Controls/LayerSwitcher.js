@@ -1094,11 +1094,13 @@ LayerSwitcher.prototype.getLayerInfo = function (layer) {
     var layerInfo = {};
     if (layer.getSource !== undefined) {
         var src = layer.getSource();
-        layerInfo._title = src._title || "";
-        layerInfo._description = src._description || "";
-        layerInfo._quicklookUrl = src._quicklookUrl || "";
-        layerInfo._metadata = src._metadata || [];
-        layerInfo._legends = src._legends || [];
+        if (src) {
+            layerInfo._title = src._title || "";
+            layerInfo._description = src._description || "";
+            layerInfo._quicklookUrl = src._quicklookUrl || "";
+            layerInfo._metadata = src._metadata || [];
+            layerInfo._legends = src._legends || [];
+        }
     }
     return layerInfo;
 };

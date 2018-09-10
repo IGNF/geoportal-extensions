@@ -207,7 +207,8 @@ input[id^=GPshowRouteExclusions] {
 }
 
 .GPshowRouteExclusionsPicto {
-  top: 185px;
+  /* top: 185px; */
+  /* bottom: 25px; */
   right: 0;
   transition: all 0.3s ease-out 0s;
 }

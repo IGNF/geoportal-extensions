@@ -8,6 +8,7 @@ import LayerImportDOM from "../../Common/Controls/LayerImportDOM";
 import SelectorID from "../../Common/Utils/SelectorID";
 import ProxyUtils from "../../Common/Utils/ProxyUtils";
 import KMLExtended from "../Formats/KML";
+import LayerSwitcher from "./LayerSwitcher";
 
 var logger = Logger.getLogger("layerimport");
 
@@ -681,7 +682,7 @@ LayerImport.prototype._onImportSubmit = function () {
 };
 
 // ################################################################### //
-// ################## Import KML/GPX/GeoJSON layers ################## //
+// ############## Import KML/GPX/GeoJSON/MapBox layers ############### //
 // ################################################################### //
 
 /**
@@ -841,131 +842,136 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
     // sauvegarde du content KML/GPX/GeoJSON/MapBox
     this.contentStatic = this._mapBoxFile = fileContent;
 
-    // contexte
-    var self = this;
-
-    var vectorSource;
-    var vectorLayer;
-    var vectorFormat;
-    var vectorStyle;
     if (this._currentImportType === "MapBox") {
-        // TODO mettre en place l'option noProxyDomain !
-        var opts = this.options.webServicesOptions;
-        var _proxyUrl = "";
-        if (opts && opts.proxyUrl) {
-            _proxyUrl = opts.proxyUrl;
-        };
-
         // - mapbox file json
         var mapbox = JSON.parse(fileContent);
+
+        // - TODO mettre en place l'option Proxy sur les urls / noProxyDomain
+        // sur les serveurs non CORS !
+        // var opts = this.options.webServicesOptions;
+        // var proxyUrl = "";
+        // if (opts && opts.proxyUrl) {
+        //     _proxyUrl = opts.proxyUrl;
+        // };
 
         // - save for update style
         if (mapbox) {
             this._mapBoxObj = mapbox;
         }
 
-        // - list of id sources
-        for (var id in mapbox.sources) {
-            if (mapbox.sources.hasOwnProperty(id)) {
-                // - vectorFormat
-                vectorFormat = (mapbox.sources[id].type === "vector")
-                    ? new ol.format.MVT() : (mapbox.sources[id].type === "geojson")
-                        ? new ol.format.GeoJSON() : null;
+        // - appliquer le style
+        olms.apply(map, mapbox);
 
-                if (!vectorFormat) {
-                    logger.error("Format not yet implemented or unknown !");
-                    return;
-                }
+        // - gestion du centre de la cate sur la carte
+        var projCode = map.getView().getProjection().getCode();
+        if (mapbox.center && mapbox.center.length) {
+            logger.trace("mapbox:center !");
+            map.getView().setCenter(ol.proj.transform(mapbox.center, "EPSG:4326", projCode));
+        }
 
-                // - vectorSource
-                vectorSource = new ol.source.VectorTile({
-                    attributions : mapbox.sources[id].attribution, // TODO tableau [] ?
-                    tilePixelRatio : 1, // oversampling when > 1
-                    tileGrid : ol.tilegrid.createXYZ({ // TODO scheme tms ?
-                        extent : mapbox.sources[id].bounds, // TODO [minx, miny, maxx, maxy]
-                        maxZoom : mapbox.sources[id].maxzoom,
-                        minZoom : mapbox.sources[id].minzoom,
-                        tileSize : 256
-                    }),
-                    format : vectorFormat,
-                    url : mapbox.sources[id].data || _proxyUrl + mapbox.sources[id].url // FIXME pas possible de recuperer le path local !?
-                    // urls: mapbox.sources[id].tiles // TODO ?
-                });
+        // - gestion du zoom sur la carte
+        if (mapbox.zoom || mapbox.zoom === 0) {
+            logger.trace("mapbox:zoom !");
+            map.getView().setZoom(mapbox.zoom);
+        }
 
-                // ajout des informations pour le layerSwitcher (titre, description)
-                vectorSource._title = layerName || "Import MapBox";
-                vectorSource._description = layerName || "Import MapBox";
-                if (mapbox.metadata) {
-                    vectorSource._description = "";
-                    for (var key in mapbox.metadata) {
-                        if (mapbox.metadata.hasOwnProperty(key)) {
-                            vectorSource._description += key + " : " + mapbox.metadata[key];
-                            vectorSource._description += "<br>";
+        // - TODO au niveau de la couche : minResolution et maxResolution
+        // - ajout des informations pour le layerSwitcher (titre, description, legende, ...)
+        var self = this;
+        map.getLayerGroup().on("change", function (e) {
+            var layers = e.target.getLayers();
+            logger.trace("layers", layers);
+            layers.forEach(function (layer) {
+                // - la couche mapbox n'est pas encore inserée dans le gestionnaire de couches
+                if (typeof layer.gpLayerId === "undefined") {
+                    // - ajout de l'identifiant du type de couche crée par le composant
+                    layer.gpResultLayerId = "layerimport:" + self._currentImportType;
+                    // - ajout des informations
+                    var _source = layer.getSource();
+                    if (_source) {
+                        logger.trace("informations sur la couche", _source);
+                        _source._title = "Import MapBox";
+                        _source._description = "Import MapBox";
+                        _source._quicklookUrl = "";
+                        _source._legends = [];
+                        _source._metadata = "";
+                        // - FIXME formaliser les informations contenues dans le tag 'metadata'
+                        if (self._mapBoxObj.metadata) {
+                            _source._description = "";
+                            for (var key in self._mapBoxObj.metadata) {
+                                if (self._mapBoxObj.metadata.hasOwnProperty(key)) {
+                                    if (key === "quicklookUrl") {
+                                        _source._quicklookUrl = self._mapBoxObj.metadata[key];
+                                        continue;
+                                    }
+                                    if (key === "legends") {
+                                        _source._legends = self._mapBoxObj.metadata[key];
+                                        continue;
+                                    }
+                                    if (key === "metadata") {
+                                        _source._metadata = self._mapBoxObj.metadata[key];
+                                        continue;
+                                    }
+                                    _source._description += key + " : " + self._mapBoxObj.metadata[key];
+                                    _source._description += "<br>";
+                                }
+                            }
                         }
                     }
+                } else if (layer.get("mapbox-source") && layer.gpResultLayerId === "layerimport:MapBox") {
+                    // - maj du gestionnaire de couches pour une couche mapbox chargée dans la carte
+                    var _src = layer.getSource();
+                    var _descr = _src._description || "Import MapBox";
+                    var _title = _src._title || "Import MapBox";
+                    if (_src && _title === "Import MapBox") {
+                        map.getControls().forEach(
+                            function (control) {
+                                if (control instanceof LayerSwitcher) {
+                                    control.addLayer(
+                                        layer, {
+                                            title : _title + " '" + layer.get("mapbox-source") + "'",
+                                            description : _descr
+                                        }
+                                    );
+                                }
+                            },
+                            this
+                        );
+                    }
                 }
+            });
+        });
 
-                // - vectorLayer
-                vectorLayer = new ol.layer.VectorTile({
-                    id : id,
-                    metadata : mapbox.metadata || {}, // TODO
-                    visible : true, // TODO
-                    source : vectorSource,
-                    // minResolution : , // TODO ?
-                    // maxResolution : , // TODO ?
-                    declutter : true
-                });
+        // - FIXME event sur la suppression de la couche afin de fermer le panneau !
 
-                // - divers actions lors de l'application des styles !
-                olms.applyStyle(vectorLayer, mapbox, id)
-                    .then(function () {
-                        map.addLayer(vectorLayer);
-                    })
-                    .then(function () {
-                        // TODO event sur la suppression de la couche afin de
-                        // fermer le panneau !
-                    })
-                    .then(function () {
-                        if (map.getView() && map.getSize() && vectorSource.getExtent) {
-                            var sourceExtent = vectorSource.getExtent();
-                            if (sourceExtent && sourceExtent[0] !== Infinity) {
-                                map.getView().fit(vectorSource.getExtent(), map.getSize());
-                            }
-                        } else {
-                            var projCode = map.getView().getProjection().getCode();
-                            if (mapbox.center && mapbox.center.length) {
-                                logger.trace("mapbox:center !");
-                                map.getView().setCenter(ol.proj.transform(mapbox.center, "EPSG:4326", projCode));
-                            }
-                            if (mapbox.zoom) {
-                                logger.trace("mapbox:zoom !");
-                                map.getView().setZoom(mapbox.zoom);
-                            }
-                        }
-                    })
-                    .then(function () {
-                        // Affichage du panneau des couches accessibles à l'edition
-                        self._importPanel.style.display = "none";
-                        self._mapBoxPanel.style.display = "block";
-                        var _containerLstSrc = self._addImportMapBoxResultListSource(id, mapbox.sources[id], self._mapBoxResultsListContainer).lastChild;
-                        for (var i = 0; i < mapbox.layers.length; i++) {
-                            var mapboxLayer = mapbox.layers[i];
-                            if (mapboxLayer.source === id) {
-                                var _containerSrc = self._addImportMapBoxResultSource(mapboxLayer, _containerLstSrc).lastChild;
-                                // TODO améliorer les CSS et fonctionnalité d'edition à mettre en place
-                                self._addImportMapBoxVisibilitySource(mapboxLayer, _containerSrc);
-                                self._addImportMapBoxScaleSource(mapboxLayer, _containerSrc);
-                                self._addImportMapBoxStyleSource(mapboxLayer, _containerSrc);
-                                self._addImportMapBoxFilterSource(mapboxLayer, _containerSrc);
-                            }
-                        }
-                    })
-                    .catch(function (error) {
-                        logger.error(error);
-                    });
+        // - affichage du panneau des couches accessibles à l'edition
+        this._importPanel.style.display = "none";
+        this._mapBoxPanel.style.display = "block";
+        for (var mapboxSourceId in mapbox.sources) {
+            if (mapbox.sources.hasOwnProperty(mapboxSourceId)) {
+                logger.trace("mapbox:source", mapboxSourceId);
+                // - liste des informations du panneau
+                var _containerLstSrc = this._addImportMapBoxResultListSource(mapboxSourceId, mapbox.sources[mapboxSourceId], this._mapBoxResultsListContainer).lastChild;
+                for (var i = 0; i < mapbox.layers.length; i++) {
+                    var mapboxLayer = mapbox.layers[i];
+                    logger.trace("mapbox:layer", mapboxLayer);
+                    if (mapboxLayer.source === mapboxSourceId) {
+                        var _containerSrc = this._addImportMapBoxResultSource(mapboxLayer, _containerLstSrc).lastChild;
+                        // FIXME améliorer les CSS et fonctionnalité d'edition à mettre en place
+                        this._addImportMapBoxVisibilitySource(mapboxLayer, _containerSrc);
+                        this._addImportMapBoxScaleSource(mapboxLayer, _containerSrc);
+                        this._addImportMapBoxStyleSource(mapboxLayer, _containerSrc);
+                        this._addImportMapBoxFilterSource(mapboxLayer, _containerSrc);
+                    }
+                }
             }
         }
     } else {
+        var vectorSource;
+        var vectorLayer;
+        var vectorFormat;
+        var vectorStyle;
+
         if (this._currentImportType === "KML") {
             // lecture du fichier KML : création d'un format ol.format.KML, qui possède une méthode readFeatures (et readProjection)
             vectorFormat = new KMLExtended({
@@ -1142,6 +1148,8 @@ LayerImport.prototype._addFeaturesFromImportStaticLayerUrl = function (url, laye
     }
 };
 
+// Events MapBox DOM
+
 /**
  * this method is called on '_addImportMapBoxVisibilitySource' input click
  * and change visibility source to map
@@ -1152,10 +1160,11 @@ LayerImport.prototype._addFeaturesFromImportStaticLayerUrl = function (url, laye
  */
 LayerImport.prototype._onChangeVisibilitySourceMapBox = function (e, mapboxLayer) {
     logger.trace(e, mapboxLayer);
+
     var map = this.getMap();
     map.getLayers().forEach(function (layer) {
         // logger.trace(layer);
-        if (layer.get("id") === mapboxLayer.source) {
+        if (layer.get("mapbox-source") === mapboxLayer.source) {
             // reload style with new param : layout.visibility : "visible" or "none"...
             var layers = this._mapBoxObj.layers;
             for (var i = 0; i < layers.length; i++) {
@@ -1200,7 +1209,7 @@ LayerImport.prototype._onChangeScaleMinSourceMapBox = function (e, mapboxLayer) 
     var map = this.getMap();
     map.getLayers().forEach(function (layer) {
         // logger.trace(layer);
-        if (layer.get("id") === mapboxLayer.source) {
+        if (layer.get("mapbox-source") === mapboxLayer.source) {
             // reload style with new param : minZoom = ...
             var layers = this._mapBoxObj.layers;
             for (var i = 0; i < layers.length; i++) {
@@ -1239,7 +1248,7 @@ LayerImport.prototype._onChangeScaleMaxSourceMapBox = function (e, mapboxLayer) 
     var map = this.getMap();
     map.getLayers().forEach(function (layer) {
         // logger.trace(layer);
-        if (layer.get("id") === mapboxLayer.source) {
+        if (layer.get("mapbox-source") === mapboxLayer.source) {
             // reload style with new param : minZoom = ...
             var layers = this._mapBoxObj.layers;
             for (var i = 0; i < layers.length; i++) {

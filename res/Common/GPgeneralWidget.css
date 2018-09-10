@@ -222,4 +222,5 @@ input.GPinputSubmit:hover {
 input[type="checkbox"]:checked + .GPshowMoreOptions {
   -webkit-transform: rotateX(180deg);
   transform: rotateX(180deg);
+  /* bottom: 90px; */
 }

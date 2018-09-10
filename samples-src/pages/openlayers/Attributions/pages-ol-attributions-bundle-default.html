@@ -35,7 +35,9 @@
                                 new ol.Attribution({
                                     html : "Deuxième attribution sans lien !"
                                 }),
-                                ol.source.OSM.ATTRIBUTION
+                                new ol.Attribution({
+                                    html : ol.source.OSM.ATTRIBUTION
+                                })
                             ]
                         })
                     });

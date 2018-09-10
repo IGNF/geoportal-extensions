@@ -56,6 +56,13 @@ module.exports = env => {
                 amd : "ol",
                 root : "ol"
             },
+            // plugin style MapBox
+            olms : {
+                commonjs : "olms",
+                commonjs2 : "olms",
+                amd : "olms",
+                root : "olms"
+            },
             request : {
                 commonjs2 : "request",
                 commonjs : "request",

@@ -715,8 +715,8 @@ var RouteDOM = {
                 document.getElementById("GProuteOriginCoords" + i).className = "GProuteOriginHidden";
                 document.getElementById("GProuteStageAdd").style.display = "";
                 // Moving up exclusions picto
-                var exclusionsPictoTop = document.getElementById("GPshowRouteExclusionsPicto").style.top;
-                document.getElementById("GPshowRouteExclusionsPicto").style.top = (parseInt(exclusionsPictoTop, 10) - 33).toString() + "px";
+                // var exclusionsPictoTop = document.getElementById("GPshowRouteExclusionsPicto").style.top;
+                // document.getElementById("GPshowRouteExclusionsPicto").style.top = (parseInt(exclusionsPictoTop, 10) - 33).toString() + "px";
                 // gestionnaire d'evenement :
                 // on supprime le point, utilisé pour la requête sur le service d'itiniraire
                 context.onRouteRemovePointClick(e);
@@ -755,8 +755,8 @@ var RouteDOM = {
             if (lastStage < 7) {
                 document.getElementById("GProutePoint" + lastStage).className = "GPflexInput GProuteStageFlexInput";
                 // Moving down exclusions picto
-                var exclusionsPictoTop = document.getElementById("GPshowRouteExclusionsPicto").style.top;
-                document.getElementById("GPshowRouteExclusionsPicto").style.top = (parseInt(exclusionsPictoTop, 10) + 33).toString() + "px";
+                // var exclusionsPictoTop = document.getElementById("GPshowRouteExclusionsPicto").style.top;
+                // document.getElementById("GPshowRouteExclusionsPicto").style.top = (parseInt(exclusionsPictoTop, 10) + 33).toString() + "px";
             }
             if (nbStages === 4) {
                 document.getElementById("GProuteStageAdd").style.display = "none";
@@ -1012,7 +1012,7 @@ var RouteDOM = {
         label.className = "GPshowMoreOptions GPshowRouteExclusionsPicto";
         label.htmlFor = this._addUID("GPshowRouteExclusions");
         label.title = "Exclusions";
-        label.style.top = "185px";
+        // label.style.top = "185px";
 
         // gestionnaire d'evenement :
         // on ouvre le menu des options des exclusions

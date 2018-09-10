@@ -16,16 +16,15 @@
     51
   ],
   "sources": {
-    "states": {
+    "states-1": {
       "type": "geojson",
       "data": "https://rawgit.com/lowzonenose/editor/master/data/states.geojson",
-      "attribution": "Data Open Source",
-      "maxzoom": 18,
-      "buffer": 128,
-      "tolerance": 0.375,
-      "cluster": false,
-      "clusterRadius": 50,
-      "clusterMaxZoom": 5
+      "attribution": "Data Open Source 1"
+    },
+    "states-2": {
+      "type": "geojson",
+      "data": "https://rawgit.com/lowzonenose/editor/master/data/states.geojson",
+      "attribution": "Data Open Source 2"
     }
   },
   "layers": [
@@ -39,7 +38,7 @@
     {
       "id": "population_lt_2m",
       "type": "fill",
-      "source": "states",
+      "source": "states-1",
       "filter": [
         "<=",
         "PERSONS",
@@ -53,7 +52,7 @@
     {
       "id": "2m_lt_population_lte_4m",
       "type": "fill",
-      "source": "states",
+      "source": "states-1",
       "filter": [
         "all",
         [
@@ -75,7 +74,7 @@
     {
       "id": "population_gt_4m",
       "type": "fill",
-      "source": "states",
+      "source": "states-1",
       "filter": [
         ">",
         "PERSONS",
@@ -89,7 +88,7 @@
     {
       "id": "state_outlines",
       "type": "line",
-      "source": "states",
+      "source": "states-2",
       "minzoom": 0,
       "maxzoom": 6,
       "paint": {
@@ -100,7 +99,7 @@
     {
       "id": "state_abbreviations",
       "type": "symbol",
-      "source": "states",
+      "source": "states-2",
       "minzoom": 4,
       "maxzoom": 5,
       "layout": {
@@ -117,7 +116,7 @@
     {
       "id": "state_names",
       "type": "symbol",
-      "source": "states",
+      "source": "states-2",
       "minzoom": 5,
       "layout": {
         "visibility": "none",
