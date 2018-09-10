@@ -5,11 +5,6 @@
 last
 └── openlayers@4.6.5
 
-> **Utilisation de la version suivante**
-```
-└── openlayers@4.4.2
-```
-
 * proj4
 
 └─┬ proj4@2.4.4
@@ -56,3 +51,7 @@ last
 * "xmldom"
 
 └── "xmldom@0.1.27"
+
+* "olms"
+
+└── "ol-mapbox-style@3.0.1"
