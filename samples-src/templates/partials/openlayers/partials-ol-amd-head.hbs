@@ -5,17 +5,17 @@
                 requirejs.config({
                     "paths": {
                     "ol"       : "{{ baseurl }}/node_modules/openlayers/dist/ol{{ debug }}",
-                    "olms"     : "{{ baseurl }}/node_modules/ol-mapbox-style/dist/olms",
+                    // "olms"     : "{{ baseurl }}/node_modules/ol-mapbox-style/dist/olms",
                     "Gp"       : "{{ baseurl }}/dist/openlayers/GpPluginOpenLayers{{ mode }}"
                     },
                     shim :{
                         "Gp" : {
                             deps:["ol"]
-                        },
-                        "olms" : {
-                            deps:["ol"],
-                            exports: "olms"
                         }
+                        // "olms" : {
+                        //     deps:["ol"],
+                        //     exports: "olms"
+                        // }
                     }
                 });
         </script>

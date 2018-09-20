@@ -197,8 +197,8 @@ LayerSwitcher.prototype.addLayer = function (layer, config) {
     }
 
     var id = layer.gpLayerId;
-    if (id === "undefined") {
-        logger.log("[ERROR] LayerSwitcher:addLayer - configuration cannot be set for " + layer + " layer (layer id not found)");
+    if (typeof id === "undefined") {
+        logger.trace("[WARN] LayerSwitcher:addLayer - configuration cannot be set for this layer (layer id not found)", layer);
         return;
     }
 

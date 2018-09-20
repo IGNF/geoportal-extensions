@@ -1,6 +1,6 @@
 import Ol from "ol";
+import Olms from "olms";
 import GfiUtils from "./GfiUtils";
-import Utils from "../Common/Utils";
 import KML from "./Formats/KML";
 import WMTS from "./Sources/WMTS";
 import CRS from "./CRS/CRS";
@@ -32,9 +32,9 @@ export * from "gp";
 // Rajout des propriétés de l'extension dans le namespace Gp
 export const olExtVersion = Pkg.olExtVersion;
 export const olExtDate = new Date().toISOString().split("T")[0];
-export {default as olUtils} from "../Common/Utils";
 
 // Classes utilitaires
+export {default as olUtils} from "../Common/Utils";
 export {default as LayerUtils} from "../Common/Utils/LayerUtils";
 export {default as ProxyUtils} from "../Common/Utils/ProxyUtils";
 
@@ -44,6 +44,9 @@ Ol.gp.GfiUtils = GfiUtils;
 // FIXME overload or not ? name Gp.format.kml ?
 Ol.format.KMLExtended = KML;
 Ol.source.WMTSExtended = WMTS;
+
+// Rajout de l'extension olms (ol mapbox style)
+Ol.olms = Olms;
 
 // Surcharge sur les functions Ol/proj4 par défaut
 CRS.overload();
@@ -66,7 +69,6 @@ Ol.control.LayerImport = LayerImport;
 Ol.control.MeasureLength = MeasureLength;
 Ol.control.MeasureArea = MeasureArea;
 Ol.control.MeasureAzimuth = MeasureAzimuth;
-// export default markers definitions
 Ol.control.DefaultMarkers = Markers;
 Ol.control.ElevationPath = ElevationPath;
 

@@ -854,6 +854,14 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
         //     _proxyUrl = opts.proxyUrl;
         // };
 
+        // maj du titre ("title === layerName")
+        if (layerName) {
+            if (!mapbox.metadata) {
+                mapbox.metadata = {};
+            }
+            mapbox.metadata["geoportail:title"] = layerName;
+        }
+
         // - save for update style
         if (mapbox) {
             this._mapBoxObj = mapbox;
@@ -878,7 +886,7 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
         // - TODO au niveau de la couche : minResolution et maxResolution
         // - ajout des informations pour le layerSwitcher (titre, description, legende, ...)
         var self = this;
-        map.getLayerGroup().on("change", function (e) {
+        var _key = map.getLayerGroup().on("change", function (e) {
             var layers = e.target.getLayers();
             logger.trace("layers", layers);
             layers.forEach(function (layer) {
@@ -895,25 +903,42 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
                         _source._quicklookUrl = "";
                         _source._legends = [];
                         _source._metadata = "";
-                        // - FIXME formaliser les informations contenues dans le tag 'metadata'
+                        _source._originators = [];
+                        // - les informations contenues dans le tag 'metadata'
+                        // ex. metadata : {
+                        //     geoportail:[title | description | quicklookUrl | legends | originators | metadata]
+                        // }
                         if (self._mapBoxObj.metadata) {
-                            _source._description = "";
-                            for (var key in self._mapBoxObj.metadata) {
-                                if (self._mapBoxObj.metadata.hasOwnProperty(key)) {
-                                    if (key === "quicklookUrl") {
-                                        _source._quicklookUrl = self._mapBoxObj.metadata[key];
-                                        continue;
+                            for (var ns in self._mapBoxObj.metadata) {
+                                if (self._mapBoxObj.metadata.hasOwnProperty(ns)) {
+                                    var _keys = ns.split(":");
+                                    if (_keys[0] === "geoportail") {
+                                        var key = _keys[1];
+                                        if (key === "title") {
+                                            _source._title = self._mapBoxObj.metadata[ns];
+                                            continue;
+                                        }
+                                        if (key === "description") {
+                                            _source._description = self._mapBoxObj.metadata[ns];
+                                            continue;
+                                        }
+                                        if (key === "quicklookUrl") {
+                                            _source._quicklookUrl = self._mapBoxObj.metadata[ns];
+                                            continue;
+                                        }
+                                        if (key === "legends") {
+                                            _source._legends = self._mapBoxObj.metadata[ns];
+                                            continue;
+                                        }
+                                        if (key === "metadata") {
+                                            _source._metadata = self._mapBoxObj.metadata[ns];
+                                            continue;
+                                        }
+                                        if (key === "originators") {
+                                            _source._originators = self._mapBoxObj.metadata[ns];
+                                            continue;
+                                        }
                                     }
-                                    if (key === "legends") {
-                                        _source._legends = self._mapBoxObj.metadata[key];
-                                        continue;
-                                    }
-                                    if (key === "metadata") {
-                                        _source._metadata = self._mapBoxObj.metadata[key];
-                                        continue;
-                                    }
-                                    _source._description += key + " : " + self._mapBoxObj.metadata[key];
-                                    _source._description += "<br>";
                                 }
                             }
                         }
@@ -921,22 +946,21 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
                 } else if (layer.get("mapbox-source") && layer.gpResultLayerId === "layerimport:MapBox") {
                     // - maj du gestionnaire de couches pour une couche mapbox chargée dans la carte
                     var _src = layer.getSource();
-                    var _descr = _src._description || "Import MapBox";
-                    var _title = _src._title || "Import MapBox";
-                    if (_src && _title === "Import MapBox") {
+                    if (_src && _src._title === "Import MapBox") {
+                        _src._title += " ('" + layer.get("mapbox-source") + "')";
                         map.getControls().forEach(
                             function (control) {
                                 if (control instanceof LayerSwitcher) {
                                     control.addLayer(
                                         layer, {
-                                            title : _title + " '" + layer.get("mapbox-source") + "'",
-                                            description : _descr
+                                            title : _src._title
                                         }
                                     );
                                 }
                             },
                             this
                         );
+                        ol.Observable.unByKey(_key);
                     }
                 }
             });

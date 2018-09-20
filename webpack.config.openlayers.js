@@ -44,6 +44,7 @@ module.exports = env => {
         resolve : {
             alias : {
                 ol : path.resolve(__dirname, "node_modules", "openalyers", "dist", (production) ? "ol.js" : "ol-debug.js"),
+                olms : path.resolve(__dirname, "node_modules", "ol-mapbox-style", "dist", "olms.js"), // optional...
                 gp : path.resolve(__dirname, "node_modules", "geoportal-access-lib", "dist", (production) ? "GpServices.js" : "GpServices-src.js"),
                 proj4 : path.resolve(__dirname, "node_modules", "proj4", "dist", (production) ? "proj4.js" : "proj4-src.js"),
                 sortable : path.resolve(__dirname, "node_modules", "sortablejs", (production) ? "Sortable.min.js" : "Sortable.js")
@@ -56,13 +57,13 @@ module.exports = env => {
                 amd : "ol",
                 root : "ol"
             },
-            // plugin style MapBox
-            olms : {
-                commonjs : "olms",
-                commonjs2 : "olms",
-                amd : "olms",
-                root : "olms"
-            },
+            // FIXME plugin style MapBox external / internal ?
+            // olms : {
+            //     commonjs : "olms",    // FIXME "ol-mapbox-style" => call index.js so dependencies are ol > 5 !
+            //     commonjs2 : "olms",   //       "olms" => call olms.js, it's a bundle !
+            //     amd : "olms",
+            //     root : "olms"
+            // },
             request : {
                 commonjs2 : "request",
                 commonjs : "request",
@@ -117,6 +118,10 @@ module.exports = env => {
                         loader : "expose-loader",
                         options : "proj4"
                     }]
+                },
+                {
+                    test : path.resolve(__dirname, "node_modules", "ol-mapbox-style", "dist", "olms.js"),
+                    use : "exports-loader?olms"
                 },
                 {
                     test : /\.css$/,

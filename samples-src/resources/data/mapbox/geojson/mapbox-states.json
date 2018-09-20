@@ -5,9 +5,27 @@
   "glyphs": "",
   "name": "states",
   "metadata": {
-      "metadata:title": "Vecteur tuilé GeoJSON",
-      "metadata:description": "Exemple de vecteur tuilé sur un GeoJSON avec filtres",
-      "metadata:other": "..."
+      "geoportail:title": "Vecteur tuilé GeoJSON",
+      "geoportail:description": "Exemple de vecteur tuilé sur un GeoJSON avec filtres",
+      "geoportail:quicklookUrl" : "https://wxs.ign.fr/static/pictures/test.jpg",
+      "geoportail:metadata" : [
+          {"format":"xml","url":"http://wxs.ign.fr/geoportail/csw?service=CSW&version=2.0.2&request=GetRecordById&Id=TEST1.xml"},
+          {"format":"xml","url":"http://wxs.ign.fr/geoportail/csw?service=CSW&version=2.0.2&request=GetRecordById&Id=TEST2.xml"}
+      ],
+      "geoportail:legends" : [
+          {
+             "format" : "image/jpg",
+             "url" : "http://www.geoportail.gouv.fr/depot/fiches/test.png",
+             "minScaleDenominator": null
+          }
+      ],
+      "geoportail:htmlAdditionalContent" : "Contenu additionnel de test...",
+      "geoportail:originators" : [{
+              "name":"Test",
+              "attribution":"Test",
+              "url":"http://www.test.fr"
+          }
+      ]
   },
   "bearing": 0,
   "zoom": 3,

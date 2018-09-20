@@ -153,7 +153,16 @@ GeoportalAttribution.prototype._updateAttributions = function (map) {
  * @private
  */
 GeoportalAttribution.prototype._updateLayerAttributions = function (layer, mapAttributions, mapExtent, mapCrs, mapZoom) {
+    if (!layer) {
+        logger.trace("layer is null !?");
+        return;
+    }
+
     var src = layer.getSource();
+    if (!src) {
+        logger.trace("source is not yet loaded !");
+        return;
+    }
 
     var attributions = [];
 
