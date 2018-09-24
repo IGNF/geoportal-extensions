@@ -6,7 +6,7 @@
   "name": "states",
   "metadata": {
       "geoportail:title": "Vecteur tuilé GeoJSON",
-      "geoportail:description": "Exemple de vecteur tuilé sur un GeoJSON avec filtres",
+      "geoportail:description" : "Exemple de vecteur tuilé sur un GeoJSON avec filtres",
       "geoportail:quicklookUrl" : "https://wxs.ign.fr/static/pictures/test.jpg",
       "geoportail:metadata" : [
           {"format":"xml","url":"http://wxs.ign.fr/geoportail/csw?service=CSW&version=2.0.2&request=GetRecordById&Id=TEST1.xml"},

@@ -57,13 +57,6 @@ module.exports = env => {
                 amd : "ol",
                 root : "ol"
             },
-            // FIXME plugin style MapBox external / internal ?
-            // olms : {
-            //     commonjs : "olms",    // FIXME "ol-mapbox-style" => call index.js so dependencies are ol > 5 !
-            //     commonjs2 : "olms",   //       "olms" => call olms.js, it's a bundle !
-            //     amd : "olms",
-            //     root : "olms"
-            // },
             request : {
                 commonjs2 : "request",
                 commonjs : "request",

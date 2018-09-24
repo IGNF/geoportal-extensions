@@ -60,7 +60,7 @@
                 var div = document.querySelector("input[id^=GPimportChoiceAltUrl-");
                 div.click();
                 var input = document.querySelector("input[id^=GPimportUrl-]");
-                input.value = location.href.substring(0, location.href.lastIndexOf('/')) + "/../../resources/data/mapbox/geojson/mapbox-states-without-metadata.json";
+                input.value = location.href.substring(0, location.href.lastIndexOf('/')) + "/../../resources/data/mapbox/geojson/mapbox-states-with-metadata.json";
 
                 var zoomContainer = document.getElementById('zoom-level');
                 map.on('moveend', function (event) {

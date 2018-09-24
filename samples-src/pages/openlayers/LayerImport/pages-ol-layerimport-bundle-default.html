@@ -43,9 +43,16 @@
                   })
                 });
 
-                var layerImport = new ol.control.LayerImport();
+                var layerImport = new ol.control.LayerImport({
+                    webServicesOptions : {
+                        proxyUrl : "{{ resources }}/proxy/proxy.php?url="
+                    }
+                });
                 map.addControl(layerImport);
 
+                var layerSwitcher = new ol.control.LayerSwitcher({});
+                map.addControl(layerSwitcher);
+                
                 var popup = new ol.Overlay.Popup();
                 map.addOverlay(popup);
 

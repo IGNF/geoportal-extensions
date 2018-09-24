@@ -854,7 +854,7 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
         //     _proxyUrl = opts.proxyUrl;
         // };
 
-        // maj du titre ("title === layerName")
+        // - maj du titre ("title === layerName")
         if (layerName) {
             if (!mapbox.metadata) {
                 mapbox.metadata = {};
@@ -865,6 +865,8 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
         // - save for update style
         if (mapbox) {
             this._mapBoxObj = mapbox;
+            // - multisources ?
+            this._mapBoxObj.count = Object.keys(mapbox.sources).length;
         }
 
         // - appliquer le style
@@ -891,12 +893,25 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
             logger.trace("layers", layers);
             layers.forEach(function (layer) {
                 // - la couche mapbox n'est pas encore inserée dans le gestionnaire de couches
-                if (typeof layer.gpLayerId === "undefined") {
-                    // - ajout de l'identifiant du type de couche crée par le composant
+                // et/ou la source n'est pas encore chargée...
+                if (typeof layer.gpLayerId === "undefined" ||
+                   (typeof layer.gpStatusSourceLoaded !== "undefined" && !layer.gpStatusSourceLoaded)
+                ) {
+                    // - attention, ce n'est pas une couche mapbox !
+                    if (layer.gpResultLayerId && layer.gpResultLayerId !== "layerimport:MapBox") {
+                        return;
+                    }
+                    // - ajout de l'identifiant du type de couche crée par le composant,
+                    // cad layerimport:MapBox !
                     layer.gpResultLayerId = "layerimport:" + self._currentImportType;
-                    // - ajout des informations
+                    // - ajout d'une information sur la statut en cours du chargement de la couche
+                    layer.gpStatusSourceLoaded = false;
+                    // - ajout des informations directement dans la source
                     var _source = layer.getSource();
                     if (_source) {
+                        // - maj du statut
+                        layer.gpStatusSourceLoaded = true;
+                        // - ajout des informations par defaut dans la source
                         logger.trace("informations sur la couche", _source);
                         _source._title = "Import MapBox";
                         _source._description = "Import MapBox";
@@ -904,7 +919,7 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
                         _source._legends = [];
                         _source._metadata = "";
                         _source._originators = [];
-                        // - les informations contenues dans le tag 'metadata'
+                        // - ajout des informations contenues dans le tag 'metadata'
                         // ex. metadata : {
                         //     geoportail:[title | description | quicklookUrl | legends | originators | metadata]
                         // }
@@ -943,24 +958,44 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
                             }
                         }
                     }
-                } else if (layer.get("mapbox-source") && layer.gpResultLayerId === "layerimport:MapBox") {
-                    // - maj du gestionnaire de couches pour une couche mapbox chargée dans la carte
+                } else if (layer.get("mapbox-source") &&
+                    layer.gpResultLayerId === "layerimport:MapBox" &&
+                    typeof layer.gpStatusSourceLoaded !== "undefined" &&
+                    layer.gpStatusSourceLoaded
+                ) {
+                    // - on supprime le statut de la couche, on n'en a plus besoin...
+                    delete layer.gpStatusSourceLoaded;
+                    // - maj du gestionnaire de couches (LS) pour une couche mapbox
+                    // entierement chargée dans la carte
                     var _src = layer.getSource();
-                    if (_src && _src._title === "Import MapBox") {
-                        _src._title += " ('" + layer.get("mapbox-source") + "')";
+                    if (_src) {
+                        // - ajout de l'identifiant de la source pour un titre par defaut
+                        if (_src._title === "Import MapBox") {
+                            _src._title += " ('" + layer.get("mapbox-source") + "')";
+                        }
                         map.getControls().forEach(
                             function (control) {
                                 if (control instanceof LayerSwitcher) {
                                     control.addLayer(
                                         layer, {
-                                            title : _src._title
+                                            title : _src._title,
+                                            description : _src._description,
+                                            legends : _src._legends,
+                                            metadata : _src._metadata,
+                                            originators : _src._originators
                                         }
                                     );
+                                    // - LS à jour, donc la couche est mise à jour, on se desabonne...
+                                    // mais, attention aux couches multisources, on se desabonne sur la dernière
+                                    // maj de la couche !
+                                    self._mapBoxObj.count--;
+                                    if (self._mapBoxObj.count === 0) {
+                                        ol.Observable.unByKey(_key);
+                                    }
                                 }
                             },
                             this
                         );
-                        ol.Observable.unByKey(_key);
                     }
                 }
             });

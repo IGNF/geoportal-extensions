@@ -1,0 +1,143 @@
+{
+  "version": 8,
+  "pitch": 0,
+  "sprite": "https://rawgit.com/lowzonenose/editor/master/data/sprite/sprite-states",
+  "glyphs": "",
+  "name": "states",
+  "metadata": {},
+  "bearing": 0,
+  "zoom": 3,
+  "center": [
+    -122,
+    51
+  ],
+  "sources": {
+    "states": {
+      "type": "geojson",
+      "data": "https://rawgit.com/lowzonenose/editor/master/data/states.geojson",
+      "attribution": "Data Open Source",
+      "maxzoom": 18,
+      "buffer": 128,
+      "tolerance": 0.375,
+      "cluster": false,
+      "clusterRadius": 50,
+      "clusterMaxZoom": 5
+    }
+  },
+  "layers": [
+    {
+      "id": "background",
+      "type": "background",
+      "paint": {
+        "background-color": "rgba(0,0,0,0)"
+      }
+    },
+    {
+      "id": "population_lt_2m",
+      "type": "fill",
+      "source": "states",
+      "filter": [
+        "<=",
+        "PERSONS",
+        2000000
+      ],
+      "paint": {
+        "fill-color": "#A6CEE3",
+        "fill-opacity": 0.7
+      }
+    },
+    {
+      "id": "2m_lt_population_lte_4m",
+      "type": "fill",
+      "source": "states",
+      "filter": [
+        "all",
+        [
+          ">",
+          "PERSONS",
+          2000000
+        ],
+        [
+          "<=",
+          "PERSONS",
+          4000000
+        ]
+      ],
+      "paint": {
+        "fill-color": "#0F78B4",
+        "fill-opacity": 0.7
+      }
+    },
+    {
+      "id": "population_gt_4m",
+      "type": "fill",
+      "source": "states",
+      "filter": [
+        ">",
+        "PERSONS",
+        4000000
+      ],
+      "paint": {
+        "fill-color": "#B2DF8A",
+        "fill-opacity": 0.7
+      }
+    },
+    {
+      "id": "state_outlines",
+      "type": "line",
+      "source": "states",
+      "minzoom": 0,
+      "maxzoom": 6,
+      "paint": {
+        "line-color": "#ffffff",
+        "line-width": 1
+      }
+    },
+    {
+      "id": "state_abbreviations",
+      "type": "symbol",
+      "source": "states",
+      "minzoom": 4,
+      "maxzoom": 5,
+      "layout": {
+        "visibility": "none",
+        "text-field": "{STATE_ABBR}",
+        "text-justify": "center",
+        "text-size": 12,
+        "text-font": [
+          "Arial Normal",
+          "sans-serif Normal"
+        ]
+      }
+    },
+    {
+      "id": "state_names",
+      "type": "symbol",
+      "source": "states",
+      "minzoom": 5,
+      "layout": {
+        "visibility": "none",
+        "text-field": [
+          "concat",
+          [
+            "get",
+            "STATE_ABBR"
+          ],
+          "\n",
+          [
+            "get",
+            "STATE_NAME"
+          ]
+        ],
+        "icon-image": "accommodation_camping",
+        "icon-size": 1,
+        "text-size": 12,
+        "text-justify": "center",
+        "text-font": [
+          "Arial Normal",
+          "sans-serif Normal"
+        ]
+      }
+    }
+  ]
+}
