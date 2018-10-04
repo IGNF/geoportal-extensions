@@ -23,8 +23,16 @@ import ElevationPath from "./Controls/ElevationPath";
 import MeasureLength from "./Controls/Measures/MeasureLength";
 import MeasureArea from "./Controls/Measures/MeasureArea";
 import MeasureAzimuth from "./Controls/Measures/MeasureAzimuth";
+
+import Style from "./Controls/Editor/Style";
+import Filter from "./Controls/Editor/Filter";
+import Layer from "./Controls/Editor/Layer";
+import Themes from "./Controls/Editor/Themes";
+import Editor from "./Controls/Editor";
+
 import "./CSS";
 import "../Common/Utils/AutoLoadConfig";
+
 import Pkg from "../../package";
 
 export * from "gp";
@@ -40,6 +48,14 @@ export {default as ProxyUtils} from "../Common/Utils/ProxyUtils";
 
 Ol.gp = {};
 Ol.gp.GfiUtils = GfiUtils;
+
+// Editeur MapBox
+Ol.editor = {};
+Ol.editor.Style = Style;
+Ol.editor.Filter = Filter;
+Ol.editor.Layer = Layer;
+Ol.editor.Themes = Themes;
+Ol.editor.View = Editor;
 
 // FIXME overload or not ? name Gp.format.kml ?
 Ol.format.KMLExtended = KML;

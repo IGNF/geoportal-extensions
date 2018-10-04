@@ -779,254 +779,254 @@ var LayerImportDOM = {
         container.className = "GPimportMapBoxpRoot";
         container.id = this._addUID("GPimportMapBoxResults");
         return container;
-    },
-
-    _addImportMapBoxResultListSource : function (id, source, container) {
-        var ul = document.createElement("ul");
-        ul.className = "GPimportMapBoxListSource";
-        ul.title = id;
-
-        var label = document.createElement("label");
-        label.className = "GPimportMapBoxListSourceTitle";
-        label.innerHTML = "Listes des couches pour la source '" + id + "' :";
-        label.title = source.attribution || id;
-        ul.appendChild(label);
-
-        container.appendChild(ul);
-        return container;
-    },
-
-    _addImportMapBoxResultSource : function (layer, container) {
-        var li = document.createElement("li");
-        li.className = "GPimportMapBoxSource";
-
-        // input
-        var input = document.createElement("input");
-        input.id = "GPimportMapBoxSource-" + SelectorID.generate();
-        input.className = "GPimportMapBoxSource";
-        input.type = "checkbox";
-        li.appendChild(input);
-
-        // label for
-        var name = layer["source-layer"] || layer.id || layer.source;
-        var label = document.createElement("label");
-        label.className = "GPimportMapBoxSourceTitle";
-        label.htmlFor = input.id;
-        label.innerHTML = name;
-        label.title = JSON.stringify(layer.metadata) || name;
-        li.appendChild(label);
-
-        container.appendChild(li);
-        return container;
-    },
-
-    _addImportMapBoxStyleSource : function (layer, container) {
-        // contexte
-        var self = this;
-
-        var _style = false;
-        var _obj = {};
-        var _layer = JSON.parse(JSON.stringify(layer)); // on utilise une copie  !
-        if (_layer.paint && Object.keys(_layer.paint).length) {
-            _style = true;
-            _obj.paint = _layer.paint;
-        }
-
-        // pas de style dans paint, on teste dans layout !
-        if (_layer.layout && Object.keys(_layer.layout).length) {
-            _style = true;
-            _obj.layout = _layer.layout;
-            // on supprime visibility à l'affichage uniquement
-            // cf. _addImportMapBoxVisibilitySource !
-            if (_layer.layout.visibility) {
-                delete _obj.visibility;
-            }
-        }
-
-        function syntaxHighlight (json) {
-            json = json.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-            return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?)/g, function (match) {
-                var cls = "gp-json-number";
-                if (/^"/.test(match)) {
-                    if (/:$/.test(match)) {
-                        cls = "gp-json-key";
-                    } else {
-                        cls = "gp-json-string";
-                    }
-                } else if (/true|false/.test(match)) {
-                    cls = "gp-json-boolean";
-                } else if (/null/.test(match)) {
-                    cls = "gp-json-null";
-                }
-                return "<span class='" + cls + "'>" + match + "</span>";
-            });
-        }
-
-        var div = document.createElement("div");
-        div.className = "GPimportMapBoxSourceStyle";
-
-        if (_style) {
-            var strJson = JSON.stringify(_obj, null, 4);
-
-            var label = document.createElement("label");
-            label.innerHTML = "JSON Styles :";
-            div.appendChild(label);
-            var pre = document.createElement("pre");
-            pre.className = "GPimportMapBoxJsonEdit";
-            pre.innerHTML = syntaxHighlight(strJson);
-            if (pre.addEventListener) {
-                pre.addEventListener("click", function (e) {
-                    self._onSwitchStyleEditSourceMapBox(e);
-                });
-            } else if (pre.appendChild) {
-                pre.appendChild("onclick", function (e) {
-                    self._onSwitchStyleEditSourceMapBox(e);
-                });
-            }
-            div.appendChild(pre);
-        }
-
-        container.appendChild(div);
-        return container;
-    },
-
-    _addImportMapBoxFilterSource : function (layer, container) {
-        // contexte
-        var self = this;
-
-        var _filter = false;
-        // FIXME tag filter est obselete !
-        // on doit utiliser les expressions dans "paint" ou "layout" !
-        if (layer.filter && layer.filter.length) {
-            _filter = true;
-        }
-
-        var div = document.createElement("div");
-        div.className = "GPimportMapBoxSourceFilter";
-
-        if (_filter) {
-            var label = document.createElement("label");
-            label.innerHTML = "JSON Filtres :";
-            div.appendChild(label);
-            var pre = document.createElement("pre");
-            pre.className = "GPimportMapBoxJsonEdit";
-            pre.innerHTML = JSON.stringify(layer.filter, null, 4);
-            if (pre.addEventListener) {
-                pre.addEventListener("click", function (e) {
-                    self._onSwitchFilterEditSourceMapBox(e);
-                });
-            } else if (pre.appendChild) {
-                pre.appendChild("onclick", function (e) {
-                    self._onSwitchFilterEditSourceMapBox(e);
-                });
-            }
-            div.appendChild(pre);
-        }
-
-        container.appendChild(div);
-        return container;
-    },
-
-    _addImportMapBoxScaleSource : function (layer, container) {
-        // contexte
-        var self = this;
-
-        var _scaleMin = layer.minzoom || 0;
-        var _scaleMax = layer.maxzoom || 21;
-
-        var div = document.createElement("div");
-        div.className = "GPimportMapBoxSourceScale";
-
-        var labelMin = document.createElement("label");
-        labelMin.className = "GPimportMapBoxSourceScaleLabel";
-        labelMin.innerHTML = "minZoom :";
-        div.appendChild(labelMin);
-
-        var inputMin = document.createElement("input");
-        inputMin.className = "GPimportMapBoxSourceScaleInput";
-        inputMin.type = "range";
-        inputMin.value = _scaleMin;
-        inputMin.title = _scaleMin;
-        inputMin.disabled = false;
-        inputMin.min = 0;
-        inputMin.max = 21;
-        if (inputMin.addEventListener) {
-            inputMin.addEventListener("change", function (e) {
-                self._onChangeScaleMinSourceMapBox(e, layer);
-            });
-        } else if (inputMin.appendChild) {
-            inputMin.appendChild("onchange", function (e) {
-                self._onChangeScaleMinSourceMapBox(e, layer);
-            });
-        }
-        div.appendChild(inputMin);
-
-        div.appendChild(document.createElement("br"));
-
-        var labelMax = document.createElement("label");
-        labelMax.className = "GPimportMapBoxSourceScaleLabel";
-        labelMax.innerHTML = "maxZoom :";
-        div.appendChild(labelMax);
-
-        var inputMax = document.createElement("input");
-        inputMax.className = "GPimportMapBoxSourceScaleInput";
-        inputMax.type = "range";
-        inputMax.value = _scaleMax;
-        inputMax.title = _scaleMax;
-        inputMax.disabled = false;
-        inputMax.min = 0;
-        inputMax.max = 21;
-        if (inputMax.addEventListener) {
-            inputMax.addEventListener("change", function (e) {
-                self._onChangeScaleMaxSourceMapBox(e, layer);
-            });
-        } else if (inputMax.appendChild) {
-            inputMax.appendChild("onchange", function (e) {
-                self._onChangeScaleMaxSourceMapBox(e, layer);
-            });
-        }
-        div.appendChild(inputMax);
-
-        container.appendChild(div);
-        return container;
-    },
-
-    _addImportMapBoxVisibilitySource : function (layer, container) {
-        // contexte
-        var self = this;
-
-        var _visibility = true;
-        if (layer.layout && layer.layout.visibility && layer.layout.visibility === "none") {
-            _visibility = false;
-        }
-
-        var div = document.createElement("div");
-        div.className = "GPimportMapBoxSourceVisibility";
-
-        var label = document.createElement("label");
-        label.className = "GPimportMapBoxSourceVisibilityLabel";
-        label.innerHTML = "Visibilité :";
-        div.appendChild(label);
-
-        var input = document.createElement("input");
-        input.className = "GPimportMapBoxSourceVisibilityInput";
-        input.type = "checkbox";
-        input.checked = _visibility;
-        input.disabled = false;
-        if (input.addEventListener) {
-            input.addEventListener("change", function (e) {
-                self._onChangeVisibilitySourceMapBox(e, layer);
-            });
-        } else if (input.appendChild) {
-            input.appendChild("onchange", function (e) {
-                self._onChangeVisibilitySourceMapBox(e, layer);
-            });
-        }
-        div.appendChild(input);
-
-        container.appendChild(div);
-        return container;
     }
+
+    // _addImportMapBoxResultListSource : function (id, source, container) {
+    //     var ul = document.createElement("ul");
+    //     ul.className = "GPimportMapBoxListSource";
+    //     ul.title = id;
+    //
+    //     var label = document.createElement("label");
+    //     label.className = "GPimportMapBoxListSourceTitle";
+    //     label.innerHTML = "Listes des couches pour la source '" + id + "' :";
+    //     label.title = source.attribution || id;
+    //     ul.appendChild(label);
+    //
+    //     container.appendChild(ul);
+    //     return container;
+    // },
+    //
+    // _addImportMapBoxResultSource : function (layer, container) {
+    //     var li = document.createElement("li");
+    //     li.className = "GPimportMapBoxSource";
+    //
+    //     // input
+    //     var input = document.createElement("input");
+    //     input.id = "GPimportMapBoxSource-" + SelectorID.generate();
+    //     input.className = "GPimportMapBoxSource";
+    //     input.type = "checkbox";
+    //     li.appendChild(input);
+    //
+    //     // label for
+    //     var name = layer["source-layer"] || layer.id || layer.source;
+    //     var label = document.createElement("label");
+    //     label.className = "GPimportMapBoxSourceTitle";
+    //     label.htmlFor = input.id;
+    //     label.innerHTML = name;
+    //     label.title = JSON.stringify(layer.metadata) || name;
+    //     li.appendChild(label);
+    //
+    //     container.appendChild(li);
+    //     return container;
+    // },
+    //
+    // _addImportMapBoxStyleSource : function (layer, container) {
+    //     // contexte
+    //     var self = this;
+    //
+    //     var _style = false;
+    //     var _obj = {};
+    //     var _layer = JSON.parse(JSON.stringify(layer)); // on utilise une copie  !
+    //     if (_layer.paint && Object.keys(_layer.paint).length) {
+    //         _style = true;
+    //         _obj.paint = _layer.paint;
+    //     }
+    //
+    //     // pas de style dans paint, on teste dans layout !
+    //     if (_layer.layout && Object.keys(_layer.layout).length) {
+    //         _style = true;
+    //         _obj.layout = _layer.layout;
+    //         // on supprime visibility à l'affichage uniquement
+    //         // cf. _addImportMapBoxVisibilitySource !
+    //         if (_layer.layout.visibility) {
+    //             delete _obj.visibility;
+    //         }
+    //     }
+    //
+    //     function syntaxHighlight (json) {
+    //         json = json.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    //         return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?)/g, function (match) {
+    //             var cls = "gp-json-number";
+    //             if (/^"/.test(match)) {
+    //                 if (/:$/.test(match)) {
+    //                     cls = "gp-json-key";
+    //                 } else {
+    //                     cls = "gp-json-string";
+    //                 }
+    //             } else if (/true|false/.test(match)) {
+    //                 cls = "gp-json-boolean";
+    //             } else if (/null/.test(match)) {
+    //                 cls = "gp-json-null";
+    //             }
+    //             return "<span class='" + cls + "'>" + match + "</span>";
+    //         });
+    //     }
+    //
+    //     var div = document.createElement("div");
+    //     div.className = "GPimportMapBoxSourceStyle";
+    //
+    //     if (_style) {
+    //         var strJson = JSON.stringify(_obj, null, 4);
+    //
+    //         var label = document.createElement("label");
+    //         label.innerHTML = "JSON Styles :";
+    //         div.appendChild(label);
+    //         var pre = document.createElement("pre");
+    //         pre.className = "GPimportMapBoxJsonEdit";
+    //         pre.innerHTML = syntaxHighlight(strJson);
+    //         if (pre.addEventListener) {
+    //             pre.addEventListener("click", function (e) {
+    //                 self._onSwitchStyleEditSourceMapBox(e);
+    //             });
+    //         } else if (pre.appendChild) {
+    //             pre.appendChild("onclick", function (e) {
+    //                 self._onSwitchStyleEditSourceMapBox(e);
+    //             });
+    //         }
+    //         div.appendChild(pre);
+    //     }
+    //
+    //     container.appendChild(div);
+    //     return container;
+    // },
+    //
+    // _addImportMapBoxFilterSource : function (layer, container) {
+    //     // contexte
+    //     var self = this;
+    //
+    //     var _filter = false;
+    //     // FIXME tag filter est obselete !
+    //     // on doit utiliser les expressions dans "paint" ou "layout" !
+    //     if (layer.filter && layer.filter.length) {
+    //         _filter = true;
+    //     }
+    //
+    //     var div = document.createElement("div");
+    //     div.className = "GPimportMapBoxSourceFilter";
+    //
+    //     if (_filter) {
+    //         var label = document.createElement("label");
+    //         label.innerHTML = "JSON Filtres :";
+    //         div.appendChild(label);
+    //         var pre = document.createElement("pre");
+    //         pre.className = "GPimportMapBoxJsonEdit";
+    //         pre.innerHTML = JSON.stringify(layer.filter, null, 4);
+    //         if (pre.addEventListener) {
+    //             pre.addEventListener("click", function (e) {
+    //                 self._onSwitchFilterEditSourceMapBox(e);
+    //             });
+    //         } else if (pre.appendChild) {
+    //             pre.appendChild("onclick", function (e) {
+    //                 self._onSwitchFilterEditSourceMapBox(e);
+    //             });
+    //         }
+    //         div.appendChild(pre);
+    //     }
+    //
+    //     container.appendChild(div);
+    //     return container;
+    // },
+    //
+    // _addImportMapBoxScaleSource : function (layer, container) {
+    //     // contexte
+    //     var self = this;
+    //
+    //     var _scaleMin = layer.minzoom || 0;
+    //     var _scaleMax = layer.maxzoom || 21;
+    //
+    //     var div = document.createElement("div");
+    //     div.className = "GPimportMapBoxSourceScale";
+    //
+    //     var labelMin = document.createElement("label");
+    //     labelMin.className = "GPimportMapBoxSourceScaleLabel";
+    //     labelMin.innerHTML = "minZoom :";
+    //     div.appendChild(labelMin);
+    //
+    //     var inputMin = document.createElement("input");
+    //     inputMin.className = "GPimportMapBoxSourceScaleInput";
+    //     inputMin.type = "range";
+    //     inputMin.value = _scaleMin;
+    //     inputMin.title = _scaleMin;
+    //     inputMin.disabled = false;
+    //     inputMin.min = 0;
+    //     inputMin.max = 21;
+    //     if (inputMin.addEventListener) {
+    //         inputMin.addEventListener("change", function (e) {
+    //             self._onChangeScaleMinSourceMapBox(e, layer);
+    //         });
+    //     } else if (inputMin.appendChild) {
+    //         inputMin.appendChild("onchange", function (e) {
+    //             self._onChangeScaleMinSourceMapBox(e, layer);
+    //         });
+    //     }
+    //     div.appendChild(inputMin);
+    //
+    //     div.appendChild(document.createElement("br"));
+    //
+    //     var labelMax = document.createElement("label");
+    //     labelMax.className = "GPimportMapBoxSourceScaleLabel";
+    //     labelMax.innerHTML = "maxZoom :";
+    //     div.appendChild(labelMax);
+    //
+    //     var inputMax = document.createElement("input");
+    //     inputMax.className = "GPimportMapBoxSourceScaleInput";
+    //     inputMax.type = "range";
+    //     inputMax.value = _scaleMax;
+    //     inputMax.title = _scaleMax;
+    //     inputMax.disabled = false;
+    //     inputMax.min = 0;
+    //     inputMax.max = 21;
+    //     if (inputMax.addEventListener) {
+    //         inputMax.addEventListener("change", function (e) {
+    //             self._onChangeScaleMaxSourceMapBox(e, layer);
+    //         });
+    //     } else if (inputMax.appendChild) {
+    //         inputMax.appendChild("onchange", function (e) {
+    //             self._onChangeScaleMaxSourceMapBox(e, layer);
+    //         });
+    //     }
+    //     div.appendChild(inputMax);
+    //
+    //     container.appendChild(div);
+    //     return container;
+    // },
+    //
+    // _addImportMapBoxVisibilitySource : function (layer, container) {
+    //     // contexte
+    //     var self = this;
+    //
+    //     var _visibility = true;
+    //     if (layer.layout && layer.layout.visibility && layer.layout.visibility === "none") {
+    //         _visibility = false;
+    //     }
+    //
+    //     var div = document.createElement("div");
+    //     div.className = "GPimportMapBoxSourceVisibility";
+    //
+    //     var label = document.createElement("label");
+    //     label.className = "GPimportMapBoxSourceVisibilityLabel";
+    //     label.innerHTML = "Visibilité :";
+    //     div.appendChild(label);
+    //
+    //     var input = document.createElement("input");
+    //     input.className = "GPimportMapBoxSourceVisibilityInput";
+    //     input.type = "checkbox";
+    //     input.checked = _visibility;
+    //     input.disabled = false;
+    //     if (input.addEventListener) {
+    //         input.addEventListener("change", function (e) {
+    //             self._onChangeVisibilitySourceMapBox(e, layer);
+    //         });
+    //     } else if (input.appendChild) {
+    //         input.appendChild("onchange", function (e) {
+    //             self._onChangeVisibilitySourceMapBox(e, layer);
+    //         });
+    //     }
+    //     div.appendChild(input);
+    //
+    //     container.appendChild(div);
+    //     return container;
+    // }
 };
 
 export default LayerImportDOM;

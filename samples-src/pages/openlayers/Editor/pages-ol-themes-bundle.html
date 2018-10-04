@@ -1,0 +1,110 @@
+{{#extend "ol-sample-bundle-layout"}}
+
+{{#content "head"}}
+        <title>Sample openlayers Themes Mapbox</title>
+{{/content}}
+
+{{#content "style"}}
+        <style>
+            body {
+                margin: unset;
+            }
+        </style>
+{{/content}}
+
+{{#content "body"}}
+            <h2>Ajout du widget d'édition des themes MapBox</h2>
+            <button id="displayFalse">Hidden</button>
+            <button id="displayTrue">Show</button>
+            <div id="themes">
+            </div>
+{{/content}}
+
+{{#content "js"}}
+            <script type="text/javascript">
+
+            // themes vide et target par defaut
+            var themes1 = new ol.editor.Themes();
+            themes1.add();
+
+            // themes en échec car chemin vide !
+            var themes2 = new ol.editor.Themes({
+                obj: {
+                    "themes" : [{
+                        "image" : "", // path ?
+                        "label" : "", // name ?
+                        "style" : ""  // path ?
+                    }]
+                },
+            });
+            themes2.add();
+
+            // themes reussi sans imagette !
+            var themes3 = new ol.editor.Themes({
+                target: document.getElementById("themes"),
+                obj: {
+                    "themes" : [
+                    {
+                        "label" : "style standard",
+                        "style" : "{{ resources }}/data/mapbox/themes/styles/style0.json"
+                    },
+                    {
+                        "label" : "style standard...................",
+                        "style" : "{{ resources }}/data/mapbox/themes/styles/null"
+                    },
+                    {
+                        "label" : "style standard................................",
+                        "style" : "{{ resources }}/data/mapbox/themes/styles/null"
+                    },
+                ]
+                },
+            });
+            themes3.add();
+
+            // liste de themes reussi avec imagette !
+            var themes4 = new ol.editor.Themes({
+                target: document.getElementById("themes"),
+                obj: {
+                    "themes" : [
+                    {
+                        "image" : "{{ resources }}/data/mapbox/themes/images/layer0.png",
+                        "label" : "standard0",
+                        "style" : "{{ resources }}/data/mapbox/themes/styles/style0.json"
+                    },
+                    {
+                        "image" : "{{ resources }}/data/mapbox/themes/images/layer1.png",
+                        "label" : "standard1",
+                        "style" : "{{ resources }}/data/mapbox/themes/styles/style1.json"
+                    },
+                    {
+                        "image" : "{{ resources }}/data/mapbox/themes/images/layer2.png",
+                        "label" : "standard2",
+                        "style" : "{{ resources }}/data/mapbox/themes/styles/style2.json"
+                    },
+                    {
+                        "image" : "{{ resources }}/data/mapbox/themes/images/layer3.png",
+                        "label" : "standard3",
+                        "style" : "{{ resources }}/data/mapbox/themes/styles/style3.json"
+                    }
+                ]
+                },
+            });
+            themes4.add();
+
+            document.getElementById("displayTrue").addEventListener("click", function () {
+                themes1.display(true);
+                themes2.display(true);
+                themes3.display(true);
+                themes4.display(true);
+            });
+
+            document.getElementById("displayFalse").addEventListener("click", function () {
+                themes1.display(false);
+                themes2.display(false);
+                themes3.display(false);
+                themes4.display(false);
+            });
+
+            </script>
+{{/content}}
+{{/extend}}

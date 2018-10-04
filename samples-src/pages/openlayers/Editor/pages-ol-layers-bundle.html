@@ -1,0 +1,134 @@
+{{#extend "ol-sample-bundle-layout"}}
+
+{{#content "head"}}
+        <title>Sample openlayers Layers Mapbox</title>
+{{/content}}
+
+{{#content "style"}}
+        <style>
+            body {
+                margin: unset;
+            }
+            #layers {
+
+            }
+        </style>
+{{/content}}
+
+{{#content "body"}}
+            <h2>Ajout du widget d'édition des layers MapBox</h2>
+            <button id="displayFalse">Hidden</button>
+            <button id="displayTrue">Show</button>
+            <div id="layers">
+            </div>
+{{/content}}
+
+{{#content "js"}}
+            <script type="text/javascript">
+
+            // layers vide
+            var layers0 = new ol.editor.Layer();
+            layers0.add();
+
+            // layers vide et target par defaut
+            var layers1 = new ol.editor.Layer({
+                target: document.getElementById("layers"),
+                position : 1
+            });
+            layers1.add();
+
+            // layers
+            var layers2 = new ol.editor.Layer({
+                tools : {
+                    visibility : true,
+                    remove : false,
+                    clone : false
+                },
+                position : 2,
+                obj: {
+                    id : "Titre2",
+                    "source-layer" : "Description2",
+                    type: "fill"
+                },
+            });
+            layers2.add();
+
+            var layers3 = new ol.editor.Layer({
+                target: document.getElementById("layers"),
+                tools : {
+                    visibility : true,
+                    remove : true,
+                    clone : true
+                },
+                position : 3,
+                obj: {
+                    id : "Titre3",
+                    "source-layer" : "Description3",
+                    type: "fill"
+                },
+            });
+            layers3.add();
+            layers3.visibility(false);
+            layers3.toggle();
+
+            var layers4 = new ol.editor.Layer({
+                target: document.getElementById("layers"),
+                position : 4,
+                obj: {
+                    id : "Titre4",
+                    "source-layer" : "Description4",
+                    type: "fill"
+                },
+            });
+            layers4.add();
+            var filter = new ol.editor.Filter({
+                target: document.getElementById("layers"),
+                obj: {
+                    "filter": [
+                        "all",
+                        [
+                            ">",
+                            "PERSONS",
+                            2000000
+                        ],
+                        [
+                            "<=",
+                            "PERSONS",
+                            4000000
+                        ]
+                    ]
+                }
+            });
+            filter.add();
+            layers4.addFilter(filter);
+            var style = new ol.editor.Style({
+                target: document.getElementById("layers"),
+                obj: {
+                    "paint": {
+                      "fill-color": "#0F78B4",
+                      "fill-opacity": 0.7
+                    }
+                }
+            });
+            style.add();
+            layers4.addStyle(style);
+
+            document.getElementById("displayTrue").addEventListener("click", function () {
+                layers0.display(true);
+                layers1.display(true);
+                layers2.display(true);
+                layers3.display(true);
+                layers4.display(true);
+            });
+
+            document.getElementById("displayFalse").addEventListener("click", function () {
+                layers0.display(false);
+                layers1.display(false);
+                layers2.display(false);
+                layers3.display(false);
+                layers4.display(false);
+            });
+
+            </script>
+{{/content}}
+{{/extend}}

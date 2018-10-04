@@ -1,0 +1,37 @@
+{{#extend "ol-sample-bundle-layout"}}
+
+{{#content "head"}}
+        <title>Sample openlayers Themes Mapbox</title>
+{{/content}}
+
+{{#content "style"}}
+        <style>
+            body {
+                margin: unset;
+            }
+        </style>
+{{/content}}
+
+{{#content "body"}}
+            <h2>Ajout du widget d'édition des themes MapBox</h2>
+            <div id="editor">
+            </div>
+{{/content}}
+
+{{#content "js"}}
+            <script type="text/javascript">
+
+            // liste de themes reussi avec imagette !
+            var editor = new ol.editor.View({
+                target: document.getElementById("editor"),
+                style: "{{ resources }}/data/mapbox/styles/ign-direct.json",
+                tools : {
+                    themes : true,
+                    filter : true,
+                    style :true
+                }
+            });
+
+            </script>
+{{/content}}
+{{/extend}}

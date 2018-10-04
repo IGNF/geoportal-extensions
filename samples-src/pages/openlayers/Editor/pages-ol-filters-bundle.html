@@ -1,0 +1,69 @@
+{{#extend "ol-sample-bundle-layout"}}
+
+{{#content "head"}}
+        <title>Sample openlayers Filters Mapbox</title>
+{{/content}}
+
+{{#content "style"}}
+        <style>
+            body {
+                margin: unset;
+            }
+        </style>
+{{/content}}
+
+{{#content "body"}}
+            <h2>Ajout du widget d'édition des filtres MapBox</h2>
+            <button id="displayFalse">Hidden</button>
+            <button id="displayTrue">Show</button>
+            <div id="filter"></div>
+{{/content}}
+
+{{#content "js"}}
+            <script type="text/javascript">
+
+            // filter vide
+            var filter0 = new ol.editor.Filter({
+                target: document.getElementById("filter")
+            });
+            filter0.add();
+
+            // filter vide et target par defaut
+            var filter1 = new ol.editor.Filter();
+            filter1.add();
+
+            // filter
+            var filter2 = new ol.editor.Filter({
+                obj: {
+                    "filter": [
+                      "all",
+                      [
+                        ">",
+                        "PERSONS",
+                        2000000
+                      ],
+                      [
+                        "<=",
+                        "PERSONS",
+                        4000000
+                      ]
+                    ]
+                },
+            });
+            filter2.add();
+
+            document.getElementById("displayTrue").addEventListener("click", function () {
+                filter0.display(true);
+                filter1.display(true);
+                filter2.display(true);
+            });
+
+            document.getElementById("displayFalse").addEventListener("click", function () {
+                filter0.display(false);
+                filter1.display(false);
+                filter2.display(false);
+            });
+
+            </script>
+{{/content}}
+{{/extend}}

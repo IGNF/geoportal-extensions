@@ -1,6 +1,7 @@
 import ol from "ol";
 import olms from "olms";
 import Gp from "gp";
+import EventBus from "eventbus";
 import Logger from "../../Common/Utils/LoggerByDefault";
 import Utils from "../../Common/Utils";
 import Markers from "./Utils/Markers";
@@ -9,6 +10,7 @@ import SelectorID from "../../Common/Utils/SelectorID";
 import ProxyUtils from "../../Common/Utils/ProxyUtils";
 import KMLExtended from "../Formats/KML";
 import LayerSwitcher from "./LayerSwitcher";
+import Editor from "./Editor";
 
 var logger = Logger.getLogger("layerimport");
 
@@ -348,6 +350,7 @@ LayerImport.prototype._initialize = function (options) {
 
     // ################################################################## //
     // ########################### MapBox ############################### //
+    this.editor = null;
     this._mapBoxObj = null;
     this._mapBoxFile = null;
 };
@@ -885,6 +888,21 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
             map.getView().setZoom(mapbox.zoom);
         }
 
+        // - affichage du panneau des couches accessibles à l'edition
+        this._importPanel.style.display = "none";
+        this._mapBoxPanel.style.display = "block";
+        // - editeur de styles
+        //  - TODO sauvegarde pour un reaffichage du panneau ?
+        //  - FIXME bug avec le geojson !?
+        this.editor = new Editor({
+            target : this._mapBoxResultsListContainer,
+            style : this._mapBoxObj
+        });
+        // - abonements sur les evenements suivants :
+        EventBus.addEventListener("editor:layer:visibility", this._onChangeVisibilitySourceMapBox, this);
+        EventBus.addEventListener("editor:style:minScale", this._onChangeScaleMinSourceMapBox, this);
+        EventBus.addEventListener("editor:style:maxScale", this._onChangeScaleMaxSourceMapBox, this);
+        // - FIXME event sur la suppression de la couche afin de fermer le panneau !
         // - TODO au niveau de la couche : minResolution et maxResolution
         // - ajout des informations pour le layerSwitcher (titre, description, legende, ...)
         var self = this;
@@ -1000,31 +1018,6 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
                 }
             });
         });
-
-        // - FIXME event sur la suppression de la couche afin de fermer le panneau !
-
-        // - affichage du panneau des couches accessibles à l'edition
-        this._importPanel.style.display = "none";
-        this._mapBoxPanel.style.display = "block";
-        for (var mapboxSourceId in mapbox.sources) {
-            if (mapbox.sources.hasOwnProperty(mapboxSourceId)) {
-                logger.trace("mapbox:source", mapboxSourceId);
-                // - liste des informations du panneau
-                var _containerLstSrc = this._addImportMapBoxResultListSource(mapboxSourceId, mapbox.sources[mapboxSourceId], this._mapBoxResultsListContainer).lastChild;
-                for (var i = 0; i < mapbox.layers.length; i++) {
-                    var mapboxLayer = mapbox.layers[i];
-                    logger.trace("mapbox:layer", mapboxLayer);
-                    if (mapboxLayer.source === mapboxSourceId) {
-                        var _containerSrc = this._addImportMapBoxResultSource(mapboxLayer, _containerLstSrc).lastChild;
-                        // FIXME améliorer les CSS et fonctionnalité d'edition à mettre en place
-                        this._addImportMapBoxVisibilitySource(mapboxLayer, _containerSrc);
-                        this._addImportMapBoxScaleSource(mapboxLayer, _containerSrc);
-                        this._addImportMapBoxStyleSource(mapboxLayer, _containerSrc);
-                        this._addImportMapBoxFilterSource(mapboxLayer, _containerSrc);
-                    }
-                }
-            }
-        }
     } else {
         var vectorSource;
         var vectorLayer;
@@ -1214,32 +1207,31 @@ LayerImport.prototype._addFeaturesFromImportStaticLayerUrl = function (url, laye
  * and change visibility source to map
  *
  * @param {Object} e - HTMLElement
- * @param {String} mapboxLayer - layer of source mapbox
  * @private
  */
-LayerImport.prototype._onChangeVisibilitySourceMapBox = function (e, mapboxLayer) {
-    logger.trace(e, mapboxLayer);
+LayerImport.prototype._onChangeVisibilitySourceMapBox = function (e) {
+    var target = e.target.srcElement;
 
     var map = this.getMap();
     map.getLayers().forEach(function (layer) {
         // logger.trace(layer);
-        if (layer.get("mapbox-source") === mapboxLayer.source) {
+        if (layer.get("mapbox-source") === target.data.source) {
             // reload style with new param : layout.visibility : "visible" or "none"...
             var layers = this._mapBoxObj.layers;
             for (var i = 0; i < layers.length; i++) {
-                if (layers[i].id === mapboxLayer.id) {
+                if (layers[i].id === target.data.id) {
                     var layout = layers[i].layout;
                     if (layout && layout.visibility) {
-                        layout.visibility = (e.target.checked) ? "visible" : "none";
+                        layout.visibility = (target.checked) ? "visible" : "none";
                     } else {
                         layers[i].layout = {
-                            "visibility" : (e.target.checked) ? "visible" : "none"
+                            "visibility" : (target.checked) ? "visible" : "none"
                         };
                     }
                     break;
                 }
             }
-            olms.applyStyle(layer, this._mapBoxObj, mapboxLayer.source)
+            olms.applyStyle(layer, this._mapBoxObj, target.data.source)
                 .then(function () {
                     // on force un update mais exception !?
                     // https://openlayers.org/en/v4.6.5/doc/errors/#58
@@ -1260,25 +1252,25 @@ LayerImport.prototype._onChangeVisibilitySourceMapBox = function (e, mapboxLayer
  * and change zoom source to map
  *
  * @param {Object} e - HTMLElement
- * @param {String} mapboxLayer - layer of source mapbox
  * @private
  */
-LayerImport.prototype._onChangeScaleMinSourceMapBox = function (e, mapboxLayer) {
-    logger.trace(e, mapboxLayer);
+LayerImport.prototype._onChangeScaleMinSourceMapBox = function (e) {
+    var target = e.target.srcElement;
+
     var map = this.getMap();
     map.getLayers().forEach(function (layer) {
         // logger.trace(layer);
-        if (layer.get("mapbox-source") === mapboxLayer.source) {
+        if (layer.get("mapbox-source") === target.data.source) {
             // reload style with new param : minZoom = ...
             var layers = this._mapBoxObj.layers;
             for (var i = 0; i < layers.length; i++) {
-                if (layers[i].id === mapboxLayer.id) {
-                    layers[i].minzoom = e.target.value;
-                    e.target.title = e.target.value;
+                if (layers[i].id === target.data.id) {
+                    layers[i].minzoom = target.value;
+                    target.title = target.value;
                     break;
                 }
             }
-            olms.applyStyle(layer, this._mapBoxObj, mapboxLayer.source)
+            olms.applyStyle(layer, this._mapBoxObj, target.data.source)
                 .then(function () {
                     // on force un update mais exception !?
                     // https://openlayers.org/en/v4.6.5/doc/errors/#58
@@ -1299,25 +1291,25 @@ LayerImport.prototype._onChangeScaleMinSourceMapBox = function (e, mapboxLayer) 
  * and change zoom source to map
  *
  * @param {Object} e - HTMLElement
- * @param {String} mapboxLayer - layer of source mapbox
  * @private
  */
-LayerImport.prototype._onChangeScaleMaxSourceMapBox = function (e, mapboxLayer) {
-    logger.trace(e, mapboxLayer);
+LayerImport.prototype._onChangeScaleMaxSourceMapBox = function (e) {
+    var target = e.target.srcElement;
+
     var map = this.getMap();
     map.getLayers().forEach(function (layer) {
         // logger.trace(layer);
-        if (layer.get("mapbox-source") === mapboxLayer.source) {
+        if (layer.get("mapbox-source") === target.data.source) {
             // reload style with new param : minZoom = ...
             var layers = this._mapBoxObj.layers;
             for (var i = 0; i < layers.length; i++) {
-                if (layers[i].id === mapboxLayer.id) {
+                if (layers[i].id === target.data.id) {
                     layers[i].maxzoom = e.target.value;
-                    e.target.title = e.target.value;
+                    target.title = target.value;
                     break;
                 }
             }
-            olms.applyStyle(layer, this._mapBoxObj, mapboxLayer.source)
+            olms.applyStyle(layer, this._mapBoxObj, target.data.source)
                 .then(function () {
                     // on force un update mais exception !?
                     // https://openlayers.org/en/v4.6.5/doc/errors/#58
@@ -1331,28 +1323,6 @@ LayerImport.prototype._onChangeScaleMaxSourceMapBox = function (e, mapboxLayer) 
         }
     },
     this);
-};
-
-/**
- * this method is called on '' tag pre
- * and edit style
- *
- * @param {Object} e - HTMLElement
- * @private
- */
-LayerImport.prototype._onSwitchStyleEditSourceMapBox = function (e) {
-    logger.info("TODO edition des style", e);
-};
-
-/**
- * this method is called on '' tag pre
- * and edit Filter
- *
- * @param {Object} e - HTMLElement
- * @private
- */
-LayerImport.prototype._onSwitchFilterEditSourceMapBox = function (e) {
-    logger.info("TODO edition des filtres", e);
 };
 
 // ################################################################### //

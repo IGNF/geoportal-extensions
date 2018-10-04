@@ -1,0 +1,1950 @@
+{
+	"version": 8,
+	"name": "Style pyramide ecran",
+	"sources": {
+		"pyramide_proto": {
+			"type": "vector",
+			"tiles": [
+				"http://calac-4.ign.fr:8080/geoserver/gwc/service/tms/1.0.0/INCA:pyramide_proto_pbf@EPSG%3A3857@pbf/{z}/{x}/{-y}.pbf"
+			]
+		}
+	},
+	"transition": {
+		"duration": 300,
+		"delay": 0
+	},
+	"layers": [
+        {
+            "id": "ocs - vegetation",
+            "type": "fill",
+            "source": "pyramide_proto",
+            "source-layer": "ocs_vegetation_surf",
+            "layout": {
+                "visibility": "visible"
+            },
+            "paint": {
+                "fill-color": [
+                    "match",
+                    ["get","symbo"],
+                    "ZONE_BOISEE","#A7DA81",
+                    "ZONE_FORET_OUVERTE","#A7DA81",
+                    "ZONE_PEUPLERAIE","#A7DA81",
+                    "ZONE_FORET_FERMEE_FEUIL","#80A664",
+                    "ZONE_FORET_FERMEE_CONI","#80A664",
+                    "ZONE_FORET_FERMEE_MIXTE","#80A664",
+                    "ZONE_LANDE_LIGNEUSE","#D5D897",
+                    "ZONE_VIGNE","#DED2EE",
+                    "ZONE_VERGER","#BBD8CB",
+                    "ZONE_CANNE_BANANE","#EEE3A2",
+                    "ZONE_MARAIS","#7E8AB5",
+                    "ZONE_MARAIS_SALANT","#7E8AB5",
+                    "ZONE_MANGROVE","#7E8AB5",
+                    "#A7DA81"
+                ]
+            }
+        },
+        {
+            "id": "zone batie",
+            "type": "fill",
+            "source": "pyramide_proto",
+            "source-layer": "bati_zone_surf",
+            "layout": {
+                "visibility": "visible"
+            },
+            "paint": {
+                "fill-color": [
+                    "match",
+                    ["get","symbo"],
+                    "ZONE_BATI","#C1A47D",
+                    "ZONE_INDUS_ACTI","#808080",
+                    "#FF0000"
+                ]
+            }
+        },
+        {
+			"id": "hydro surfacique",
+			"type": "fill",
+			"source": "pyramide_proto",
+			"source-layer": "hydro_surf",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "SURFACE_D_EAU",
+                                    "BASSIN",
+                                    "ZONE_MARINE"
+            ],
+			"paint": {
+				"fill-color": "#2BB3E1"
+			}
+		},
+        {
+			"id": "hydro surfacique temporaire",
+			"type": "fill",
+			"source": "pyramide_proto",
+			"source-layer": "hydro_surf",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["==","symbo","SURFACE_D_EAU_TEMP"],
+			"paint": {
+				"fill-color": "#93D6E6"
+			}
+		},
+        {
+			"id": "limite admin",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "limite_lin",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "LIM_COMMUNE",
+                                    "LIM_CANTON",
+                                    "LIM_ARRONDISSEMENT",
+                                    "LIM_DEPARTEMENT",
+                                    "LIM_REGION"
+            ],
+			"paint": {
+				"line-color": "#7F6EA0",
+                "line-width": "3",
+                "line-dasharray": [1, 1],
+                "line-cap": "round"
+			}
+		},
+        {
+			"id": "limite etat 1",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "limite_lin",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "LIM_ETAT",
+                                    "LIM_ETAT_ETRANGER"
+            ],
+			"paint": {
+				"line-color": "#D3C8E7",
+                "line-width": "10",
+                "line-cap": "round"
+			}
+		},
+        {
+			"id": "limite etat 2",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "limite_lin",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "LIM_ETAT",
+                                    "LIM_ETAT_ETRANGER"
+            ],
+			"paint": {
+				"line-color": "#7F6EA0",
+                "line-width": "3",
+                "line-dasharray": [1, 1, 1, 1],
+                "line-cap": "round"
+			}
+		},
+        {
+			"id": "cloture et limite militaire",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "limite_lin",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "CLOTURE",
+                                    "TRANCHEE",
+                                    "LAYON",
+                                    "LIM_ZONE_REGLEMENTEE",
+                                    "LIM_ENCEINTE_MILITAIRE",
+                                    "LIM_CHAMP_TIR"
+            ],
+			"paint": {
+				"line-color": "#000000",
+                "line-width": "2",
+                "line-dasharray": [0.5, 1],
+                "line-cap": "round"
+			}
+		},
+        {
+			"id": "limite zone naturelle",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "limite_lin",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "LIM_FORET_DOMANIALE",
+                                    "LIM_PARC_NATUREL",
+                                    "LIM_PARC_NATUREL_MARIN",
+                                    "LIM_ZONE_PERI_PARC",
+                                    "LIM_ZONE_NATURELLE",
+                                    "LIM_PARCELLE_FOR"
+            ],
+			"paint": {
+				"line-color": "#257444",
+                "line-width": "4",
+                "line-dasharray": [1, 1],
+                "line-cap": "butt"
+			}
+		},
+        {
+			"id": "ocs lineaire",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "ocs_lin",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "COULEE_EBOULIS",
+                                    "BARRE_ROCH_ISOLEE",
+                                    "CREVASSE",
+                                    "LIGNE_DESC_ZONE_ROCHEUSE"
+            ],
+			"paint": {
+				"line-color": "#000000",
+                "line-width": "1",
+                "line-dasharray": [5, 5],
+                "line-cap": "butt"
+			}
+		},
+		{
+			"id": "bati surfacique fonctionnel",
+			"type": "fill",
+			"source": "pyramide_proto",
+			"source-layer": "bati_surf",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "BATI_COMMERCIAL",
+                                    "BATI_REMARQUABLE",
+                                    "BATI_TOURI_SURF",
+                                    "BATI_SUP_ROUTIER",
+                                    "BATI_INDUSTRIEL",
+                                    "BATI_SPORTIF",
+                                    "BATI_PUBLIC",
+                                    "MAIRIE",
+                                    "HANGAR",
+                                    "HANGAR_COMMERCIAL",
+                                    "HANGAR_INDUSTRIEL",
+                                    "HANGAR_PUBLIC"
+            ],
+			"paint": {
+				"fill-color": "#EFA5E4"
+			}
+		},
+		{
+			"id": "bati surfacique quelqconque",
+			"type": "fill",
+			"source": "pyramide_proto",
+			"source-layer": "bati_surf",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["==","symbo","BATI"],
+			"paint": {
+				"fill-color": "#C1A47D"
+			}
+		},
+		{
+			"id": "cimetiere surfacique",
+			"type": "fill",
+			"source": "pyramide_proto",
+			"source-layer": "bati_surf",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "CIMETIERE_SURF",
+                                    "CIM_MUSULMAN",
+                                    "CIM_ISRAELITE",
+                                    "CIMETIERE_MILI_SURF"
+            ],
+			"paint": {
+				"fill-color": "#BABABA"
+			}
+		},
+		{
+			"id": "bati hydro surfacique",
+			"type": "fill",
+			"source": "pyramide_proto",
+			"source-layer": "bati_surf",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "ECLUSE_SURF",
+                                    "BARRAGE_SURF",
+                                    "RESERVOIR_EAU_SURF",
+                                    "PECHERIE_SURF"
+            ],
+			"paint": {
+				"fill-color": "#5DAACC"
+			}
+		},
+		{
+			"id": "bati infra surfacique",
+			"type": "fill",
+			"source": "pyramide_proto",
+			"source-layer": "bati_surf",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "SERRE_SURF",
+                                    "SILO_SURF",
+                                    "RESERVOIR_INDUS_SURF",
+                                    "POSTE_ELEC_SURF"
+            ],
+			"paint": {
+				"fill-color": "#4C4C4C"
+			}
+		},
+		{
+			"id": "bati religieux surfacique",
+			"type": "fill",
+			"source": "pyramide_proto",
+			"source-layer": "bati_surf",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "EGLISE_SURF",
+                                    "SYNAGOGUE_SURF",
+                                    "MOSQUEE_SURF",
+                                    "AUTRE_CULTE_SURF"
+            ],
+			"paint": {
+				"fill-color": "#665A4C"
+			}
+		},
+		{
+			"id": "bati remarquable surfacique",
+			"type": "fill",
+			"source": "pyramide_proto",
+			"source-layer": "bati_surf",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "FORTIF_SURF",
+                                    "CHATEAU_SURF",
+                                    "TOUR_MOULIN_SURF",
+                                    "ARENE_THEATRE",
+                                    "ARC_TRIOMPHE",
+                                    "MONUMENT_SURF"
+            ],
+			"paint": {
+				"fill-color": "#D38A1D"
+			}
+		},
+		{
+			"id": "bati sportif surfacique",
+			"type": "fill",
+			"source": "pyramide_proto",
+			"source-layer": "bati_surf",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "TENNIS_SURF",
+                                    "SPORT_INDIF_SURF",
+                                    "FOOT_SURF",
+                                    "MULTI_SPORTS_SURF",
+                                    "PISTE_SPORT_SURF",
+                                    "NATATION_SURF"
+            ],
+			"paint": {
+				"fill-color": "#CFD646"
+			}
+		},
+		{
+			"id": "bati transport surfacique",
+			"type": "fill",
+			"source": "pyramide_proto",
+			"source-layer": "bati_surf",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "PISTE_DUR",
+                                    "PISTE_HERBE",
+                                    "BATI_GARE",
+                                    "BATI_PEAGE"
+            ],
+			"paint": {
+				"fill-color": "#808080"
+			}
+		},
+        {
+			"id": "construction linéaire",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "bati_lin",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "RUINE_LIN",
+                                    "MUR",
+                                    "MUR_SOUTENEMENT",
+                                    "TERRASSE",
+                                    "MUR_PIERRES_SECHES"
+            ],
+			"paint": {
+				"line-color": "#000000",
+		        "line-width": 1
+			}
+		},
+        {
+			"id": "construction hydrographique linéaire",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "bati_lin",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "BARRAGE_LIN",
+                                    "PORTIQUE_PORTUAIRE",
+                                    "QUAI",
+                                    "DIGUE",
+                                    "PECHERIE_LIN",
+                                    "PECHE_AU_CARRELET"
+            ],
+			"paint": {
+				"line-color": "#0000FF",
+		        "line-width": 2
+			}
+		},
+        {
+			"id": "autre construction linéaire",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "bati_lin",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "CABLE",
+                                    "REMONTEE_MEC",
+                                    "LIGNE_ELECTRIQUE",
+                                    "HYDROCARBURES",
+                                    "CONDUITE_MATIERES_P",
+                                    "PELOTE_BASQ_LIN",
+                                    "SPORT_MONTAGNE_LIN",
+                                    "PISTE_AERO_LIN"
+            ],
+			"paint": {
+				"line-color": "#808080",
+		        "line-width": 1
+			}
+		},
+		{
+			"id": "bati ponctuel",
+			"type": "circle",
+			"source": "pyramide_proto",
+			"source-layer": "bati_ponc",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "PREFECTURE",
+                                    "HOTEL_DE_REGION",
+                                    "ETABLISSEMENT",
+                                    "HOPITAL_PONC",
+                                    "BORNE",
+                                    "BORNE_FRONTIERE",
+                                    "MINE_SOUTERRAINE",
+                                    "STADE_PONC",
+                                    "CIMETIERE_MILI_PONC"
+            ],
+			"paint": {
+                "circle-radius" : 2,
+                "circle-color" : "#FF0000"
+			}
+		},
+		{
+			"id": "bati ponctuel hydrographique",
+			"type": "circle",
+			"source": "pyramide_proto",
+			"source-layer": "bati_ponc",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "PHARE",
+                                    "AMER",
+                                    "FEU",
+                                    "BALISE",
+                                    "ECLUSE_PONC",
+                                    "BARRAGE_PONC",
+                                    "CHATEAU_EAU_PONC",
+                                    "RESERVOIR_EAU_PONC",
+                                    "CITERNE",
+                                    "LAVOIR",
+                                    "USINE_TRAIT_DES_EAUX",
+                                    "STATION_DE_POMPAGE"
+            ],
+			"paint": {
+                "circle-radius" : 2,
+                "circle-color" : "#3DC8FF"
+			}
+		},
+		{
+			"id": "bati ponctuel infrastructure",
+			"type": "circle",
+			"source": "pyramide_proto",
+			"source-layer": "bati_ponc",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "SILO_PONC",
+                                    "ANTENNE",
+                                    "CONSTR_SPE_TECHNIQUE",
+                                    "EOLIENNE",
+                                    "RESERVOIR_PONC",
+                                    "CONSTR_INDIF_PONC",
+                                    "PYLONE_ELEC"
+            ],
+			"paint": {
+                "circle-radius" : 2,
+                "circle-color" : "#000000"
+			}
+		},
+		{
+			"id": "bati ponctuel religieux",
+			"type": "circle",
+			"source": "pyramide_proto",
+			"source-layer": "bati_ponc",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "CATHEDRALE_T",
+                                    "ABBAYE_T",
+                                    "EGLISE",
+                                    "EGLISE_T",
+                                    "CHAPELLE",
+                                    "CHAPELLE_T",
+                                    "SYNAGOGUE",
+                                    "MOSQUEE",
+                                    "AUTRE_CULTE",
+                                    "CLOCHER",
+                                    "MINARET",
+                                    "CROIX",
+                                    "CALVAIRE"
+            ],
+			"paint": {
+                "circle-radius": 4,
+                "circle-color": "#FFFFFF",
+                "circle-opacity": 1,
+                "circle-stroke-width": 1,
+                "circle-stroke-color": "#000000"
+			}
+		},
+		{
+			"id": "bati ponctuel remarquable",
+			"type": "circle",
+			"source": "pyramide_proto",
+			"source-layer": "bati_ponc",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "CHATEAU_OUV_T",
+                                    "CHATEAU_FER_T",
+                                    "CHATEAU_FOND_NT",
+                                    "BATI_TOURI_PONC_T",
+                                    "MAISON_DU_PARC_T",
+                                    "DOLMEN",
+                                    "HABITATION_TROGLO",
+                                    "MENHIR",
+                                    "MEGALITHE_T",
+                                    "RUINE_T",
+                                    "VESTIGE_T",
+                                    "EDIFICE_REMARQUABLE_T",
+                                    "SITE_REM_PONC_T",
+                                    "FORTIF_PONC",
+                                    "FORTIF_PONC_T",
+                                    "TOUR_MOULIN_PONC",
+                                    "MONUMENT_PONC"
+            ],
+			"paint": {
+                "circle-radius": 4,
+                "circle-color": "#FFFFFF",
+                "circle-stroke-width": 2,
+                "circle-stroke-color": "#FF4284"
+			}
+		},
+		{
+			"id": "bati ponctuel transport",
+			"type": "circle",
+			"source": "pyramide_proto",
+			"source-layer": "bati_ponc",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "AEROPORT_PONC",
+                                    "AERODROME_PONC",
+                                    "GARE_VOYAGEURS",
+                                    "GARE_NON_VOYAGEURS",
+                                    "AEROGARE"
+            ],
+			"paint": {
+                "circle-radius" : 2,
+                "circle-color" : "#000000"
+			}
+		},
+		{
+			"id": "localité ponctuelle",
+			"type": "circle",
+			"source": "pyramide_proto",
+			"source-layer": "bati_ponc",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["==","symbo","LOCALITE_PONC"],
+			"paint": {
+                "circle-radius": 4,
+                "circle-color": "#E2CFE6",
+                "circle-stroke-width": 2,
+                "circle-stroke-color": "#5A08A6"
+			}
+		},
+		{
+			"id": "réseau hydro  - cours d'eau souterrain",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "hydro_reseau_sou",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["==","symbo","COURS_D_EAU_SOU"],
+			"paint": {
+				"line-color": "#93D6E6",
+		        "line-width": 3
+			}
+		},
+        {
+			"id": "réseau hydro - aqueduc souterrain",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "hydro_reseau_sou",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["==","symbo","AQUEDUC_SOU"],
+			"paint": {
+				"line-color": "#93D6E6",
+		        "line-width": 4
+			}
+		},
+        {
+			"id": "Chemin souterrain - filet extérieur",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "routier_chemin_sou",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "NON_REVETUE_CARRO_SOU",
+                                    "CHEMIN_SOU",
+                                    "ESCALIER_SOU",
+                                    "PISTE_CYCLABLE_SOU",
+                                    "SENTIER_SOU"
+            ],
+			"paint": {
+				"line-color": "#84785F",
+		        "line-width": 2.5,
+                "line-dasharray": [2,1]
+			}
+		},
+        {
+			"id": "Routier souterrain - filet extérieur - route locale et non classee",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "routier_route_sou",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "BRET_LOCALE_SOU",
+                                    "LOCALE_4_SOU",
+                                    "LOCALE_3_SOU",
+                                    "LOCALE_2_SOU",
+                                    "LOCALE_1_SOU",
+                                    "LOCALE_CONSTR_SOU",
+                                    "NON_CLASSEE_4_SOU",
+                                    "NON_CLASSEE_SOU",
+                                    "ROUTE_CONSTR_SOU"
+            ],
+			"paint": {
+				"line-color": "#A8A8A8",
+		        "line-width": 4.5
+			}
+		},
+        {
+			"id": "Routier souterrain - filet extérieur - route regionale",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "routier_route_sou",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "BRET_REGIONALE_SOU",
+                                    "REGIONALE_4_SOU",
+                                    "REGIONALE_3_SOU",
+                                    "REGIONALE_2_SOU",
+                                    "REGIONALE_1_SOU",
+                                    "REGIONALE_CONSTR_SOU"
+            ],
+			"paint": {
+				"line-color": "#A8A8A8",
+		        "line-width": 5
+			}
+		},
+        {
+			"id": "Routier souterrain - filet extérieur - route principale",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "routier_route_sou",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "BRET_PRINCIPALE_SOU",
+                                    "PRINCIPALE_4_SOU",
+                                    "PRINCIPALE_3_SOU",
+                                    "PRINCIPALE_2_SOU",
+                                    "PRINCIPALE_1_SOU",
+                                    "PRINCIPALE_CONSTR_SOU"
+            ],
+			"paint": {
+				"line-color": "#A8A8A8",
+		        "line-width": 6
+			}
+		},
+        {
+			"id": "Routier souterrain - filet extérieur - bretelle autoroute",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "routier_route_sou",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "BRET_AUTO_PEAGE_3_SOU",
+                                    "BRET_AUTO_PEAGE_2_SOU",
+                                    "BRET_AUTO_PEAGE_1_SOU",
+                                    "BRET_AUTO_LIBRE_3_SOU",
+                                    "BRET_AUTO_LIBRE_2_SOU",
+                                    "BRET_AUTO_LIBRE_1_SOU"
+            ],
+			"paint": {
+				"line-color": "#A8A8A8",
+		        "line-width": 5
+			}
+		},
+        {
+			"id": "Routier souterrain - filet extérieur - autoroute",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "routier_route_sou",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "AUTOROU_PEAGE_SOU",
+                                    "AUTOROU_LIBRE_SOU",
+                                    "AUTOROU_CONSTR_SOU"
+            ],
+			"paint": {
+				"line-color": "#A8A8A8",
+		        "line-width": 7
+			}
+		},
+        {
+			"id": "Routier souterrain - filet interieur - route locale et non classee",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "routier_route_sou",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "BRET_LOCALE_SOU",
+                                    "LOCALE_4_SOU",
+                                    "LOCALE_3_SOU",
+                                    "LOCALE_2_SOU",
+                                    "LOCALE_1_SOU",
+                                    "LOCALE_CONSTR_SOU",
+                                    "NON_CLASSEE_4_SOU",
+                                    "NON_CLASSEE_SOU",
+                                    "ROUTE_CONSTR_SOU"
+            ],
+			"paint": {
+				"line-color": "#FFFFFF",
+		        "line-width": 3.5
+			}
+		},
+        {
+			"id": "Routier souterrain - filet interieur - route regionale",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "routier_route_sou",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "BRET_REGIONALE_SOU",
+                                    "REGIONALE_4_SOU",
+                                    "REGIONALE_3_SOU",
+                                    "REGIONALE_2_SOU",
+                                    "REGIONALE_1_SOU",
+                                    "REGIONALE_CONSTR_SOU"
+            ],
+			"paint": {
+				"line-color": "#FFFFFF",
+		        "line-width": 4
+			}
+		},
+        {
+			"id": "Routier souterrain - filet interieur - route principale",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "routier_route_sou",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "BRET_PRINCIPALE_SOU",
+                                    "PRINCIPALE_4_SOU",
+                                    "PRINCIPALE_3_SOU",
+                                    "PRINCIPALE_2_SOU",
+                                    "PRINCIPALE_1_SOU",
+                                    "PRINCIPALE_CONSTR_SOU"
+            ],
+			"paint": {
+				"line-color": "#FFEEA3",
+		        "line-width": 5
+			}
+		},
+        {
+			"id": "Routier souterrain - filet interieur - bretelle autoroute",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "routier_route_sou",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "BRET_AUTO_PEAGE_3_SOU",
+                                    "BRET_AUTO_PEAGE_2_SOU",
+                                    "BRET_AUTO_PEAGE_1_SOU",
+                                    "BRET_AUTO_LIBRE_3_SOU",
+                                    "BRET_AUTO_LIBRE_2_SOU",
+                                    "BRET_AUTO_LIBRE_1_SOU",
+                                    "BRET_AUTO_PEAGE_SOU",
+                                    "BRET_AUTO_LIBRE_SOU"
+            ],
+			"paint": {
+				"line-color": "#F3CD79",
+		        "line-width": 4
+			}
+		},
+        {
+			"id": "Routier souterrain - filet interieur - autoroute",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "routier_route_sou",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "AUTOROU_PEAGE_SOU",
+                                    "AUTOROU_LIBRE_SOU",
+                                    "AUTOROU_CONSTR_SOU"
+            ],
+			"paint": {
+				"line-color": "#F3CD79",
+		        "line-width": 6
+			}
+		},
+        {
+			"id": "Routier souterrain - filet interieur - autoroute en construction",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "routier_route_sou",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["==","symbo","AUTOROU_CONSTR_SOU"],
+			"paint": {
+				"line-color": "#F3CD79",
+		        "line-width": 6,
+                "line-dasharray": [2,2]
+			}
+		},
+        {
+			"id": "Ferre souterrain - voie normale",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "ferre_sou",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "VF_1_SOU",
+                                    "VF_ELEC_1_SOU",
+                                    "FUNI_CREMAILLERE_SOU",
+                                    "TRANSPORT_URBAIN_SOU",
+                                    "VF_FERRO_ROUTIER_SOU"
+            ],
+			"paint": {
+				"line-color": "#929292",
+		        "line-width": 2
+			}
+		},
+        {
+			"id": "Ferre souterrain - voie etroite",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "ferre_sou",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "VF_ETROITE_1_SOU",
+                                    "VF_SERVICE_SOU",
+                                    "VF_NON_EXPLOITEE_SOU"
+            ],
+			"paint": {
+				"line-color": "#929292",
+		        "line-width": 1
+			}
+		},
+        {
+			"id": "réseau hydro - cours d'eau",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "hydro_reseau",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["==","symbo","COURS_D_EAU"],
+			"paint": {
+				"line-color": "#2BB3E1",
+		        "line-width": 3
+			}
+		},
+        {
+			"id": "réseau hydro - cours d'eau temporaire",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "hydro_reseau",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["==","symbo","COURS_D_EAU_TEMP"],
+			"paint": {
+				"line-color": "#2BB3E1",
+		        "line-width": 3,
+                "line-dasharray": [3,2]
+			}
+		},
+        {
+			"id": "réseau hydro - canal/aqueduc",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "hydro_reseau",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo","CANAL","AQUEDUC_AU_SOL"],
+			"paint": {
+				"line-color": "#2BB3E1",
+		        "line-width": 4
+			}
+		},
+        {
+			"id": "réseau hydro - cours d'eau moyen ",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "hydro_reseau",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["==","symbo","COURS_D_EAU_MOY"],
+			"paint": {
+				"line-color": "#2BB3E1",
+		        "line-width": 5
+			}
+		},
+        {
+			"id": "réseau hydro - cours d'eau moyen temporaire",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "hydro_reseau",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["==","symbo","COURS_D_EAU_TEMP_MOY"],
+			"paint": {
+				"line-color": "#2BB3E1",
+		        "line-width": 5,
+                "line-dasharray": [5,3]
+			}
+		},
+        {
+			"id": "hydro - laisse",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "hydro_laisse",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "LAISSE_HAUTES_MERS",
+                                    "LAISSE_BASSES_MERS"
+            ],
+			"paint": {
+				"line-color": "#1C6D96",
+		        "line-width": 2
+			}
+		},
+        {
+			"id": "Chemin a niveau - filet extérieur",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "routier_chemin",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "NON_REVETUE_CARRO",
+                                    "CHEMIN",
+                                    "ESCALIER",
+                                    "PISTE_CYCLABLE",
+                                    "SENTIER"
+            ],
+			"paint": {
+				"line-color": "#84785F",
+		        "line-width": 2.5
+			}
+		},
+        {
+			"id": "Routier a niveau - filet extérieur - route locale et non classee",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "routier_route",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "BRET_LOCALE",
+                                    "LOCALE_4",
+                                    "LOCALE_3",
+                                    "LOCALE_2",
+                                    "LOCALE_1",
+                                    "LOCALE_CONSTR",
+                                    "NON_CLASSEE_4",
+                                    "NON_CLASSEE",
+                                    "ROUTE_CONSTR"
+            ],
+			"paint": {
+				"line-color": "#808080",
+		        "line-width": 4.5
+			}
+		},
+        {
+			"id": "Routier a niveau - filet extérieur - route regionale",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "routier_route",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "BRET_REGIONALE",
+                                    "REGIONALE_4",
+                                    "REGIONALE_3",
+                                    "REGIONALE_2",
+                                    "REGIONALE_1",
+                                    "REGIONALE_CONSTR"
+            ],
+			"paint": {
+				"line-color": "#808080",
+		        "line-width": 5
+			}
+		},
+        {
+			"id": "Routier a niveau - filet extérieur - route principale",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "routier_route",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "BRET_PRINCIPALE",
+                                    "PRINCIPALE_4",
+                                    "PRINCIPALE_3",
+                                    "PRINCIPALE_2",
+                                    "PRINCIPALE_1",
+                                    "PRINCIPALE_CONSTR"
+            ],
+			"paint": {
+				"line-color": "#808080",
+		        "line-width": 6
+			}
+		},
+        {
+			"id": "Routier a niveau - filet extérieur - bretelle autoroute",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "routier_route",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "BRET_AUTO_PEAGE_3",
+                                    "BRET_AUTO_PEAGE_2",
+                                    "BRET_AUTO_PEAGE_1",
+                                    "BRET_AUTO_LIBRE_3",
+                                    "BRET_AUTO_LIBRE_2",
+                                    "BRET_AUTO_LIBRE_1"
+            ],
+			"paint": {
+				"line-color": "#808080",
+		        "line-width": 5
+			}
+		},
+        {
+			"id": "Routier a niveau - filet extérieur - autoroute",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "routier_route",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "AUTOROU_PEAGE",
+                                    "AUTOROU_LIBRE",
+                                    "AUTOROU_CONSTR"
+            ],
+			"paint": {
+				"line-color": "#808080",
+		        "line-width": 7
+			}
+		},
+        {
+			"id": "Routier a niveau - filet interieur - route locale et non classee",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "routier_route",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "BRET_LOCALE",
+                                    "LOCALE_4",
+                                    "LOCALE_3",
+                                    "LOCALE_2",
+                                    "LOCALE_1",
+                                    "LOCALE_CONSTR",
+                                    "NON_CLASSEE_4",
+                                    "NON_CLASSEE",
+                                    "ROUTE_CONSTR"
+            ],
+			"paint": {
+				"line-color": "#FFFFFF",
+		        "line-width": 3.5
+			}
+		},
+        {
+			"id": "Routier a niveau - filet interieur - route regionale",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "routier_route",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "BRET_REGIONALE",
+                                    "REGIONALE_4",
+                                    "REGIONALE_3",
+                                    "REGIONALE_2",
+                                    "REGIONALE_1",
+                                    "REGIONALE_CONSTR"
+            ],
+			"paint": {
+				"line-color": "#FFFFFF",
+		        "line-width": 4
+			}
+		},
+        {
+			"id": "Routier a niveau - filet interieur - route principale",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "routier_route",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "BRET_PRINCIPALE",
+                                    "PRINCIPALE_4",
+                                    "PRINCIPALE_3",
+                                    "PRINCIPALE_2",
+                                    "PRINCIPALE_1",
+                                    "PRINCIPALE_CONSTR"
+            ],
+			"paint": {
+				"line-color": "#FFE16A",
+		        "line-width": 5
+			}
+		},
+        {
+			"id": "Routier a niveau - filet interieur - bretelle autoroute",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "routier_route",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "BRET_AUTO_PEAGE_3",
+                                    "BRET_AUTO_PEAGE_2",
+                                    "BRET_AUTO_PEAGE_1",
+                                    "BRET_AUTO_LIBRE_3",
+                                    "BRET_AUTO_LIBRE_2",
+                                    "BRET_AUTO_LIBRE_1",
+                                    "BRET_AUTO_PEAGE",
+                                    "BRET_AUTO_LIBRE"
+            ],
+			"paint": {
+				"line-color": "#F3AF6A",
+		        "line-width": 4
+			}
+		},
+        {
+			"id": "Routier a niveau - filet interieur - autoroute",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "routier_route",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "AUTOROU_PEAGE",
+                                    "AUTOROU_LIBRE",
+                                    "AUTOROU_CONSTR"
+            ],
+			"paint": {
+				"line-color": "#F3AF6A",
+		        "line-width": 6
+			}
+		},
+        {
+			"id": "Routier a niveau - filet interieur - autoroute en construction",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "routier_route",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["==","symbo","AUTOROU_CONSTR"],
+			"paint": {
+				"line-color": "#F3AF6A",
+		        "line-width": 6,
+                "line-dasharray": [2,2]
+			}
+		},
+        {
+			"id": "Ferre a niveau - voie normale",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "ferre",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "VF_1",
+                                    "VF_2",
+                                    "VF_3",
+                                    "VF_4",
+                                    "VF_ELEC_1",
+                                    "VF_ELEC_2",
+                                    "VF_ELEC_3",
+                                    "VF_ELEC_4",
+                                    "FUNI_CREMAILLERE",
+                                    "TRANSPORT_URBAIN"
+            ],
+			"paint": {
+				"line-color": "#585858",
+		        "line-width": 2
+			}
+		},
+        {
+			"id": "Ferre a niveau - voie etroite",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "ferre",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "VF_ETROITE_1",
+                                    "VF_ETROITE_2",
+                                    "VF_SERVICE",
+                                    "VF_NON_EXPLOITEE"
+            ],
+			"paint": {
+				"line-color": "#585858",
+		        "line-width": 1
+			}
+		},
+        {
+			"id": "Ferre a niveau - voie en construction",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "ferre",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["==","symbo","VF_EN_CONSTR"],
+			"paint": {
+				"line-color": "#585858",
+		        "line-width": 2,
+                "line-dasharray": [2,1]
+			}
+		},
+        {
+			"id": "liaison routiere",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "routier_liaison",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "GUE_ROUTE",
+                                    "GUE_CHEMIN",
+                                    "BAC_AUTO",
+                                    "BAC_PIETON",
+                                    "PONT_PASSERELLE",
+                                    "VIADUC",
+                                    "LIAISON_MARITIME"
+            ],
+			"paint": {
+				"line-color": "#1C6D96",
+		        "line-width": 4
+			}
+		},
+        {
+			"id": "Routier surfacique",
+			"type": "fill",
+			"source": "pyramide_proto",
+			"source-layer": "routier_surf",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "SURF_PEAGE",
+                                    "SURF_ROUT_PRINC",
+                                    "SURF_ROUTE_REG",
+                                    "SURF_ROUT_LOC",
+                                    "SURF_ROUT_NON_CLA",
+                                    "ESCALIER_SURF",
+                                    "DALLE_DE_PROTECTION"],
+			"paint": {
+				"fill-color": "#FFFFFF",
+                "fill-outline-color": "#000000"
+			}
+		},
+        {
+			"id": "réseau hydro - canal/aqueduc superieur",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "hydro_reseau_sup",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo","CANAL_SUP","AQUEDUC_SUP"],
+			"paint": {
+				"line-color": "#2BB3E1",
+		        "line-width": 4
+			}
+		},
+        {
+			"id": "Chemin superieur - filet extérieur",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "routier_chemin_sup",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "NON_REVETUE_CARRO_SUP",
+                                    "CHEMIN_SUP",
+                                    "ESCALIER_SUP",
+                                    "PISTE_CYCLABLE_SUP",
+                                    "SENTIER_SUP"
+            ],
+			"paint": {
+				"line-color": "#84785F",
+		        "line-width": 2.5
+			}
+		},
+        {
+			"id": "Routier superieur - filet extérieur - route locale et non classee",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "routier_route_sup",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "BRET_LOCALE_SUP",
+                                    "LOCALE_4_SUP",
+                                    "LOCALE_3_SUP",
+                                    "LOCALE_2_SUP",
+                                    "LOCALE_1_SUP",
+                                    "LOCALE_CONSTR_SUP",
+                                    "NON_CLASSEE_4_SUP",
+                                    "NON_CLASSEE_SUP",
+                                    "ROUTE_CONSTR_SUP"
+            ],
+			"paint": {
+				"line-color": "#808080",
+		        "line-width": 4.5
+			}
+		},
+        {
+			"id": "Routier superieur - filet extérieur - route regionale",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "routier_route_sup",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "BRET_REGIONALE_SUP",
+                                    "REGIONALE_4_SUP",
+                                    "REGIONALE_3_SUP",
+                                    "REGIONALE_2_SUP",
+                                    "REGIONALE_1_SUP",
+                                    "REGIONALE_CONSTR_SUP"
+            ],
+			"paint": {
+				"line-color": "#808080",
+		        "line-width": 5
+			}
+		},
+        {
+			"id": "Routier superieur - filet extérieur - route principale",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "routier_route_sup",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "BRET_PRINCIPALE_SUP",
+                                    "PRINCIPALE_4_SUP",
+                                    "PRINCIPALE_3_SUP",
+                                    "PRINCIPALE_2_SUP",
+                                    "PRINCIPALE_1_SUP",
+                                    "PRINCIPALE_CONSTR_SUP"
+            ],
+			"paint": {
+				"line-color": "#808080",
+		        "line-width": 6
+			}
+		},
+        {
+			"id": "Routier superieur - filet extérieur - bretelle autoroute",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "routier_route_sup",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "BRET_AUTO_PEAGE_3_SUP",
+                                    "BRET_AUTO_PEAGE_2_SUP",
+                                    "BRET_AUTO_PEAGE_1_SUP",
+                                    "BRET_AUTO_LIBRE_3_SUP",
+                                    "BRET_AUTO_LIBRE_2_SUP",
+                                    "BRET_AUTO_LIBRE_1_SUP"
+            ],
+			"paint": {
+				"line-color": "#808080",
+		        "line-width": 5
+			}
+		},
+        {
+			"id": "Routier superieur - filet extérieur - autoroute",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "routier_route_sup",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "AUTOROU_PEAGE_SUP",
+                                    "AUTOROU_LIBRE_SUP",
+                                    "AUTOROU_CONSTR_SUP"
+            ],
+			"paint": {
+				"line-color": "#808080",
+		        "line-width": 7
+			}
+		},
+        {
+			"id": "Routier superieur - filet interieur - route locale et non classee",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "routier_route_sup",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "BRET_LOCALE_SUP",
+                                    "LOCALE_4_SUP",
+                                    "LOCALE_3_SUP",
+                                    "LOCALE_2_SUP",
+                                    "LOCALE_1_SUP",
+                                    "LOCALE_CONSTR_SUP",
+                                    "NON_CLASSEE_4_SUP",
+                                    "NON_CLASSEE_SUP",
+                                    "ROUTE_CONSTR_SUP"
+            ],
+			"paint": {
+				"line-color": "#FFFFFF",
+		        "line-width": 3.5
+			}
+		},
+        {
+			"id": "Routier superieur - filet interieur - route regionale",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "routier_route_sup",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "BRET_REGIONALE_SUP",
+                                    "REGIONALE_4_SUP",
+                                    "REGIONALE_3_SUP",
+                                    "REGIONALE_2_SUP",
+                                    "REGIONALE_1_SUP",
+                                    "REGIONALE_CONSTR_SUP"
+            ],
+			"paint": {
+				"line-color": "#FFFFFF",
+		        "line-width": 4
+			}
+		},
+        {
+			"id": "Routier superieur - filet interieur - route principale",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "routier_route_sup",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "BRET_PRINCIPALE_SUP",
+                                    "PRINCIPALE_4_SUP",
+                                    "PRINCIPALE_3_SUP",
+                                    "PRINCIPALE_2_SUP",
+                                    "PRINCIPALE_1_SUP",
+                                    "PRINCIPALE_CONSTR_SUP"
+            ],
+			"paint": {
+				"line-color": "#FFE16A",
+		        "line-width": 5
+			}
+		},
+        {
+			"id": "Routier superieur - filet interieur - bretelle autoroute",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "routier_route_sup",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "BRET_AUTO_PEAGE_3_SUP",
+                                    "BRET_AUTO_PEAGE_2_SUP",
+                                    "BRET_AUTO_PEAGE_1_SUP",
+                                    "BRET_AUTO_LIBRE_3_SUP",
+                                    "BRET_AUTO_LIBRE_2_SUP",
+                                    "BRET_AUTO_LIBRE_1_SUP",
+                                    "BRET_AUTO_PEAGE_SUP",
+                                    "BRET_AUTO_LIBRE_SUP"
+            ],
+			"paint": {
+				"line-color": "#F3AF6A",
+		        "line-width": 4
+			}
+		},
+        {
+			"id": "Routier superieur - filet interieur - autoroute",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "routier_route_sup",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "AUTOROU_PEAGE_SUP",
+                                    "AUTOROU_LIBRE_SUP",
+                                    "AUTOROU_CONSTR_SUP"
+            ],
+			"paint": {
+				"line-color": "#F3AF6A",
+		        "line-width": 6
+			}
+		},
+        {
+			"id": "Routier superieur - filet interieur - autoroute en construction",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "routier_route_sup",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["==","symbo","AUTOROU_CONSTR_SUP"],
+			"paint": {
+				"line-color": "#F3AF6A",
+		        "line-width": 6,
+                "line-dasharray": [2,2]
+			}
+		},
+        {
+			"id": "Ferre superieur - voie normale",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "ferre_sup",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "VF_1_SUP",
+                                    "VF_ELEC_1_SUP",
+                                    "FUNI_CREMAILLERE_SUP",
+                                    "TRANSPORT_URBAIN_SUP"
+            ],
+			"paint": {
+				"line-color": "#585858",
+		        "line-width": 2
+			}
+		},
+        {
+			"id": "Ferre superieur - voie etroite",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "ferre_sup",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "VF_ETROITE_1_SUP",
+                                    "VF_SERVICE_SUP",
+                                    "VF_NON_EXPLOITEE_SUP"
+            ],
+			"paint": {
+				"line-color": "#585858",
+		        "line-width": 1
+			}
+		},
+        {
+			"id": "Ferre superieur - voie en construction",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "ferre_sup",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["==","symbo","VF_EN_CONSTR_SUP"],
+			"paint": {
+				"line-color": "#585858",
+		        "line-width": 2,
+                "line-dasharray": [2,1]
+			}
+		},
+		{
+			"id": "routier ponctuel - peage ponctuel",
+			"type": "circle",
+			"source": "pyramide_proto",
+			"source-layer": "routier_ponc",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["==","symbo","PEAGE_PONC"],
+			"paint": {
+                "circle-radius": 4.5,
+                "circle-color": "#156AF2"
+			}
+		},
+		{
+			"id": "routier ponctuel - rond-point",
+			"type": "circle",
+			"source": "pyramide_proto",
+			"source-layer": "routier_ponc",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["==","symbo","ROND_POINT_PONC"],
+			"paint": {
+                "circle-radius": 4.5,
+                "circle-color": "#FFFFFF",
+                "circle-stroke-width": 2,
+                "circle-stroke-color": "#808080"
+			}
+		},
+		{
+			"id": "hydro ponctuel",
+			"type": "circle",
+			"source": "pyramide_proto",
+			"source-layer": "hydro_ponc",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": ["in","symbo",
+                                    "FONTAINE",
+                                    "POINT_D_EAU",
+                                    "SOURCE",
+                                    "SOURCE_CAPTEE",
+                                    "PERTE",
+                                    "RESURGENCE",
+                                    "CASCADE"
+            ],
+			"paint": {
+                "circle-radius": 3,
+                "circle-color": "#2BB3E1"
+			}
+		},
+
+
+
+
+
+
+
+
+
+		{
+			"id": "INCA:n0_routier_auto",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "n0_routier_auto",
+			"minzoom": 12,
+			"layout": {
+				"visibility": "visible"
+			},
+			"paint": {
+				"line-color": "rgba(216, 50, 154, 1)",
+		        "line-width": 10
+			}
+		},
+		{
+			"id": "INCA:n10_bati_surf",
+			"type": "fill",
+			"source": "pyramide_proto",
+			"source-layer": "n10_bati_surf",
+			"minzoom": 12,
+			"layout": {
+				"visibility": "visible"
+			},
+			"paint": {
+				"fill-color": "rgba(128, 128, 128, 1)",
+				"fill-opacity": 0.3
+			}
+		},
+		{
+			"id": "INCA:n10_routier_route",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "n10_routier_route",
+			"minzoom": 12,
+			"layout": {
+				"visibility": "visible"
+			},
+			"paint": {
+				"line-color": "rgba(128, 128, 128, 1)",
+		        "line-width": 1
+			}
+		},
+		{
+			"id": "INCA:n10_routier_auto",
+			"type": "line",
+			"source": "pyramide_proto",
+			"source-layer": "n10_routier_auto",
+			"minzoom": 12,
+			"layout": {
+				"visibility": "visible"
+			},
+			"paint": {
+				"line-color": "rgba(128, 128, 128, 1)",
+		        "line-width": 3
+			}
+		},
+		{
+			"id": "INCA:n99_oro_relief_0",
+			"type": "fill",
+			"source": "pyramide_proto",
+			"source-layer": "n99_oro_relief_0",
+			"minzoom": 1,
+			"layout": {
+				"visibility": "visible"
+			},
+			"paint": {
+				"fill-color": "#D6E5BA",
+		        "fill-opacity": 1
+			}
+		},
+		{
+			"id": "INCA:n99_oro_relief_100",
+			"type": "fill",
+			"source": "pyramide_proto",
+			"source-layer": "n99_oro_relief_100",
+			"minzoom": 1,
+			"layout": {
+				"visibility": "visible"
+			},
+			"paint": {
+				"fill-color": "#F7F2DA",
+		        "fill-opacity": 1
+			}
+		},
+		{
+			"id": "INCA:n99_oro_relief_200",
+			"type": "fill",
+			"source": "pyramide_proto",
+			"source-layer": "n99_oro_relief_200",
+			"minzoom": 1,
+			"layout": {
+				"visibility": "visible"
+			},
+			"paint": {
+				"fill-color": "#EBDEBF",
+		        "fill-opacity": 1
+			}
+		},
+		{
+			"id": "INCA:n99_oro_relief_1000",
+			"type": "fill",
+			"source": "pyramide_proto",
+			"source-layer": "n99_oro_relief_1000",
+			"minzoom": 1,
+			"layout": {
+				"visibility": "visible"
+			},
+			"paint": {
+				"fill-color": "#CCA37F",
+		        "fill-opacity": 1
+			}
+		},
+		{
+			"id": "INCA:n99_oro_relief_3000",
+			"type": "fill",
+			"source": "pyramide_proto",
+			"source-layer": "n99_oro_relief_3000",
+			"minzoom": 1,
+			"layout": {
+				"visibility": "visible"
+			},
+			"paint": {
+				"fill-color": "#A88575",
+		        "fill-opacity": 1
+			}
+		},
+		{
+			"id": "INCA:n99_oro_relief_4000",
+			"type": "fill",
+			"source": "pyramide_proto",
+			"source-layer": "n99_oro_relief_4000",
+			"minzoom": 1,
+			"layout": {
+				"visibility": "visible"
+			},
+			"paint": {
+				"fill-color": "#8F522B",
+		        "fill-opacity": 1
+			}
+		},
+		{
+			"id": "INCA:n99_oro_relief_5000",
+			"type": "fill",
+			"source": "pyramide_proto",
+			"source-layer": "n99_oro_relief_5000",
+			"minzoom": 1,
+			"layout": {
+				"visibility": "visible"
+			},
+			"paint": {
+				"fill-color": "#732600",
+				"fill-opacity": 1
+			}
+		},
+		{
+			"id": "INCA:n99_oro_glacier",
+			"type": "fill",
+			"source": "pyramide_proto",
+			"source-layer": "n99_oro_glacier",
+			"minzoom": 1,
+			"layout": {
+				"visibility": "visible"
+			},
+			"paint": {
+				"fill-color": "#FFFFFF",
+				"fill-opacity": 1
+			}
+		},
+		{
+			"id": "INCA:n99_hydro_mer_ocean",
+			"type": "fill",
+			"source": "pyramide_proto",
+			"source-layer": "n99_hydro_mer_ocean",
+			"minzoom": 1,
+			"layout": {
+				"visibility": "visible"
+			},
+			"paint": {
+				"fill-color": "#94EFEB",
+				"fill-opacity": 1
+			}
+		},
+		{
+			"id": "INCA:n99_hydro_surf",
+			"type": "fill",
+			"source": "pyramide_proto",
+			"source-layer": "n99_hydro_surf",
+			"minzoom": 1,
+			"layout": {
+				"visibility": "visible"
+			},
+			"paint": {
+				"fill-color": "#94EFEB",
+				"fill-opacity": 1
+			}
+		}
+	]
+}

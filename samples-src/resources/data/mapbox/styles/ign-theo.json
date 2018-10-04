@@ -1,0 +1,55 @@
+{
+	"version": 8,
+	"name": "",
+	"sources": {
+		"theo": {
+			"type": "vector",
+			"tiles": [
+				"http://localhost/proxy/proxy.php?url=http://oubliette.ign.fr/rok4/TMS/1.0.1/1.0.0/vector/{z}/{x}/{y}.pbf"
+			]
+		}
+	},
+	"layers": [
+        {
+            "id": "limites administratives : regions",
+			"type": "line",
+			"source": "theo",
+			"source-layer": "limites_administrativesregions",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": [],
+            "paint": {
+				"line-color": "#000000",
+                "line-width": "3"
+			}
+        },
+        {
+            "id": "limites administratives : noms",
+			"type": "symbol",
+			"source": "theo",
+			"source-layer": "limites_administrativesregions",
+            "layout": {
+              "visibility": "visible",
+              "text-field": [
+                "concat",
+                [
+                  "get",
+                  "nom_reg"
+                ],
+                "\n",
+                [
+                  "get",
+                  "code_reg"
+                ]
+              ],
+              "text-justify": "center",
+              "text-size": 12,
+              "text-font": [
+                "Arial Normal",
+                "sans-serif Normal"
+              ]
+            }
+        }
+    ]
+}

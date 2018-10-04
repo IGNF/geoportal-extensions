@@ -51,23 +51,33 @@ var Utils = {
     /**
      * Merge two objects parameters (deeper than assign)
      *
-     * @param {Object} dest   - destination object where properties and method will be merge
-     * @param {Object} source - source object from which properties and method will be merge
+     * @param {Object} dest     - destination object where properties and method will be merge
+     * @param {Object} source   - source object from which properties and method will be merge
+     * @param {Boolean} replace - replace destination value by source if exists or not (true by default)
      */
-    mergeParams : function (dest, source) {
+    mergeParams : function (dest, source, replace) {
         if (!dest || !source) {
             return;
+        }
+        if (typeof replace === "undefined") {
+            replace = true;
         }
         for (var param in source) {
             if (source.hasOwnProperty(param)) {
                 if (typeof source[param] === "object") {
                     if (dest.hasOwnProperty(param)) {
-                        this.mergeParams(dest[param], source[param]);
+                        this.mergeParams(dest[param], source[param], replace);
                     } else {
                         dest[param] = source[param];
                     }
                 } else {
-                    dest[param] = source[param];
+                    if (dest.hasOwnProperty(param)) {
+                        if (replace) {
+                            dest[param] = source[param];
+                        }
+                    } else {
+                        dest[param] = source[param];
+                    }
                 }
             }
         }

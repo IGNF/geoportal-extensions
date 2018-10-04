@@ -1,0 +1,127 @@
+{{#extend "ol-sample-bundle-layout"}}
+
+{{#content "head"}}
+        <title>Sample openlayers Styles Mapbox</title>
+{{/content}}
+
+{{#content "style"}}
+        <style>
+            body {
+                margin: unset;
+            }
+        </style>
+{{/content}}
+
+{{#content "body"}}
+            <h2>Ajout du widget d'édition des styles MapBox</h2>
+            <button id="displayFalse">Hidden</button>
+            <button id="displayTrue">Show</button>
+            <div id="style"></div>
+{{/content}}
+
+{{#content "js"}}
+            <script type="text/javascript">
+
+            // style vide
+            var style0 = new ol.editor.Style({
+                target: document.getElementById("style")
+            });
+            style0.add();
+
+            // style vide et target par defaut
+            var style1 = new ol.editor.Style();
+            style1.add();
+
+            // style paint
+            var style2 = new ol.editor.Style({
+                obj: {
+                    "paint": {
+                      "fill-color": "#0F78B4",
+                      "fill-opacity": 0.7
+                    }
+                },
+            });
+            style2.add();
+
+            // style layout
+            var style3 = new ol.editor.Style({
+                obj: {
+                    "layout": {
+                      "visibility": "none",
+                      "text-field": [
+                        "concat",
+                        [
+                          "get",
+                          "STATE_ABBR"
+                        ],
+                        "\n",
+                        [
+                          "get",
+                          "STATE_NAME"
+                        ]
+                      ],
+                      "icon-image": "accommodation_camping",
+                      "icon-size": 1,
+                      "text-size": 12,
+                      "text-justify": "center",
+                      "text-font": [
+                        "Arial Normal",
+                        "sans-serif Normal"
+                      ]
+                    }
+                },
+            });
+            style3.add();
+
+            // style layout + paint
+            var style4 = new ol.editor.Style({
+                obj: {
+                    "paint": {
+                      "fill-color": "#0F78B4",
+                      "fill-opacity": 0.7
+                    },
+                    "layout": {
+                      "visibility": "none",
+                      "text-field": [
+                        "concat",
+                        [
+                          "get",
+                          "STATE_ABBR"
+                        ],
+                        "\n",
+                        [
+                          "get",
+                          "STATE_NAME"
+                        ]
+                      ],
+                      "icon-image": "accommodation_camping",
+                      "icon-size": 1,
+                      "text-size": 12,
+                      "text-justify": "center",
+                      "text-font": [
+                        "Arial Normal",
+                        "sans-serif Normal"
+                      ]
+                    }
+                },
+            });
+            style4.add();
+
+            document.getElementById("displayTrue").addEventListener("click", function () {
+                style0.display(true);
+                style1.display(true);
+                style2.display(true);
+                style3.display(true);
+                style4.display(true);
+            });
+
+            document.getElementById("displayFalse").addEventListener("click", function () {
+                style0.display(false);
+                style1.display(false);
+                style2.display(false);
+                style3.display(false);
+                style4.display(false);
+            });
+            </script>
+{{/content}}
+{{/extend}}

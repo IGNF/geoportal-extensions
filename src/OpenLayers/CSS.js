@@ -33,3 +33,4 @@ import "../../res/OpenLayers/Controls/SearchEngine/GPsearchEngineOpenLayers.css"
 import "../../res/OpenLayers/Controls/LocationSelector/GPlocationOpenLayers.css";
 import "../../res/OpenLayers/Controls/GetFeatureInfo/GPgetFeatureInfoOpenLayers.css";
 import "../../res/OpenLayers/Controls/MousePosition/GPmousePositionOpenLayers.css";
+import "../../res/OpenLayers/Controls/Editor/GPeditorOpenLayers.css";
