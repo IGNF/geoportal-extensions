@@ -16,7 +16,7 @@ var logger = Logger.getLogger("editor-themes");
  *        target: ...,
  *        obj: {
  *          description: "",
- *          themes: [{
+ *          styles: [{
  *             image: "data/images/layer0.png",
  *             label: "standard0",
  *             style: "data/styles/layer0.json",
@@ -67,7 +67,7 @@ Themes.prototype._initialize = function () {
         // FIXME vide ?
         this.options.obj = {
             description : "", // TODO une description au survol de l'image ou titre...
-            themes : []
+            styles : []
         };
     }
 
@@ -110,8 +110,8 @@ Themes.prototype._initContainer = function () {
     var div = document.createElement("div");
     div.className = this.name.container;
 
-    for (var i = 0; i < obj.themes.length; i++) {
-        var _theme = obj.themes[i];
+    for (var i = 0; i < obj.styles.length; i++) {
+        var _theme = obj.styles[i];
 
         var divTheme = document.createElement("div");
         divTheme.id = this.name.containertheme + "-" + i;

@@ -59,6 +59,21 @@ div[id^="GPimportMapBoxPanel-"] {
   display: none;
 }
 
+div[id^=GPimportMapBoxPanelReturnPicto-] {
+  background-color: #366291;
+  background-image: url("img/GPimportMapBoxReturn.png");
+}
+
+div[id^="GPimportMapBoxPanelReturnPicto-"] {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border-radius: 3px;
+  opacity: 1;
+  background-position: 0 0;
+  cursor: pointer;
+}
+
 /* Import waiting */
 
 .GPimportWaitingContainerVisible,

@@ -37,6 +37,11 @@ var logger = Logger.getLogger("layerimport");
  * @param {Object} [options.vectorStyleOptions.GPX.defaultStyle] - default style to be applied to GPX imports in case no style is defined. defaultStyle is an {@link http://openlayers.org/en/latest/apidoc/ol.style.Style.html ol.style.Style} object.
  * @param {Object} [options.vectorStyleOptions.GeoJSON] - Options for GeoJSON layer styling
  * @param {Object} [options.vectorStyleOptions.GeoJSON.defaultStyle] - default style to be applied to GeoJSON imports in case no style is defined. defaultStyle is an {@link http://openlayers.org/en/latest/apidoc/ol.style.Style.html ol.style.Style} object.
+ * @param {Object} [options.vectorStyleOptions.MapBox] - Options for MapBox layer styling
+ * @param {Object} [options.vectorStyleOptions.MapBox.defaultStyle] - default style to be applied to MapBox imports in case no style is defined. defaultStyle is an {@link http://openlayers.org/en/latest/apidoc/ol.style.Style.html ol.style.Style} object.
+ * @param {Object} [options.vectorStyleOptions.MapBox.tools] - options for style editor
+ * @param {Boolean} [options.vectorStyleOptions.MapBox.tools.style] - display edit style menu for every layers. By default, no display.
+ * @param {Boolean} [options.vectorStyleOptions.MapBox.tools.filter] - display edit filter menu for every layers By default, no display.
  * @example
  *  var LayerImport = new ol.control.LayerImport({
  *      collapsed : false,
@@ -244,6 +249,13 @@ LayerImport.prototype._initialize = function (options) {
             },
             GeoJSON : {
                 defaultStyle : {}
+            },
+            MapBox : {
+                defaultStyle : {}, // TODO
+                tools : {
+                    filter : false,
+                    style : false
+                }
             }
         }
     };
@@ -259,7 +271,7 @@ LayerImport.prototype._initialize = function (options) {
         this.options.vectorStyleOptions.KML.showPointNames = options.vectorStyleOptions.KML.showPointNames;
     }
 
-    // set vector layers default styles (KML, GPX, GeoJSON)
+    // set vector layers default styles (KML, GPX, GeoJSON, MapBox)
     if (options.vectorStyleOptions && options.vectorStyleOptions.KML && options.vectorStyleOptions.KML.defaultStyle) {
         // get from options if specified
         this.options.vectorStyleOptions.KML.defaultStyle = options.vectorStyleOptions.KML.defaultStyle;
@@ -292,6 +304,18 @@ LayerImport.prototype._initialize = function (options) {
             image : LayerImport.DefaultStyles.image,
             stroke : LayerImport.DefaultStyles.stroke,
             fill : LayerImport.DefaultStyles.fill
+        });
+    }
+    if (options.vectorStyleOptions && options.vectorStyleOptions.MapBox && options.vectorStyleOptions.MapBox.defaultStyle) {
+        // get from options if specified
+        this.options.vectorStyleOptions.MapBox.defaultStyle = options.vectorStyleOptions.MapBox.defaultStyle;
+    } else {
+        // get from control default options otherwise
+        this.options.vectorStyleOptions.MapBox.defaultStyle = new ol.style.Style({
+            image : LayerImport.DefaultStyles.image,
+            stroke : LayerImport.DefaultStyles.stroke,
+            fill : LayerImport.DefaultStyles.fill,
+            text : LayerImport.DefaultStyles.text
         });
     }
 
@@ -352,7 +376,12 @@ LayerImport.prototype._initialize = function (options) {
     // ########################### MapBox ############################### //
     this.editor = null;
     this._mapBoxObj = null;
-    this._mapBoxFile = null;
+
+    // ################################################################## //
+    // ########################### file or url ########################## //
+    this.contentStatic = null;
+    this._url = null;
+    this._file = null;
 };
 
 /**
@@ -445,6 +474,13 @@ LayerImport.prototype._initDefaultStyles = function () {
         image : geoJSONDefaultStyles.image,
         stroke : geoJSONDefaultStyles.stroke,
         fill : geoJSONDefaultStyles.fill
+    });
+    var MapBoxDefaultStyles = this.options.vectorStyleOptions.MapBox.defaultStyle;
+    this._defaultMapBoxStyle = new ol.style.Style({
+        image : MapBoxDefaultStyles.image,
+        stroke : MapBoxDefaultStyles.stroke,
+        fill : MapBoxDefaultStyles.fill,
+        text : MapBoxDefaultStyles.text
     });
 };
 
@@ -609,9 +645,13 @@ LayerImport.prototype._initInputFormElement = function () {
  * @private
  */
 LayerImport.prototype._onShowImportClick = function () {
-    this.collapsed = this._showImportInput.checked;
+    // on affiche les resultats d'une couche MapBox
+    if (this._mapBoxObj) {
+        this._mapBoxPanel.style.display = "block";
+    }
     // info : on génère nous même l'evenement OpenLayers de changement de propriété
     // (utiliser ol.control.LayerImport.on("change:collapsed", function ) pour s'abonner à cet évènement)
+    this.collapsed = this._showImportInput.checked;
     this.dispatchEvent("change:collapsed");
 };
 
@@ -653,8 +693,36 @@ LayerImport.prototype._onStaticImportTypeChange = function (e) {
  */
 LayerImport.prototype._onGetCapPanelClose = function () {
     // this._clearGetCapParams();
-    this.cleanGetCapResultsList();
+    if (this._currentImportType === "WMS" ||
+    this._currentImportType === "WMTS" ||
+    this._currentImportType === "WFS") {
+        this.cleanGetCapResultsList();
+    }
+};
+
+/**
+ * this method is called by event 'click' on 'GPimportMapBoxPanelClose' tag form
+ * (cf. LayerImportDOM._createImportMapBoxPanelHeaderElement),
+ * and reset mapbox information
+ *
+ * @private
+ */
+LayerImport.prototype._onMapBoxPanelClose = function () {
     this.cleanMapBoxResultsList();
+};
+
+/**
+ * this method is called by event 'click' on 'GPimportMapBoxPanelReturnPicto' tag form
+ * (cf. LayerImportDOM._createImportMapBoxPanelHeaderElement),
+ * and return to information
+ *
+ * @param {Object} e - HTMLElement
+ * @private
+ */
+LayerImport.prototype._onMapBoxReturnPictoClick = function (e) {
+    // on bascule sur l'icone d'ouverture du composant
+    this._mapBoxPanel.style.display = "none";
+    this._showImportInput.checked = false;
 };
 
 // ################################################################### //
@@ -733,6 +801,9 @@ LayerImport.prototype._importStaticLayerFromUrl = function (layerName) {
         url = url.trim();
     }
 
+    // sauvegarde
+    this._url = url;
+
     // 2. récupération proxy
     if (!this.options.webServicesOptions || (!this.options.webServicesOptions.proxyUrl && !this.options.webServicesOptions.noProxyDomains)) {
         logger.error("[ol.control.LayerImport] options.webServicesOptions.proxyUrl parameter is mandatory to request resources on another domain (cross-domain)");
@@ -777,6 +848,9 @@ LayerImport.prototype._importStaticLayerFromLocalFile = function (layerName) {
         logger.warn("[ol.control.LayerImport] missing file");
         return;
     }
+
+    // sauvegarde
+    this._file = file;
 
     // Création d'un objet FileReader qui permet de lire le contenu du fichier chargé
     var fReader = new FileReader();
@@ -842,188 +916,341 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
         return;
     }
 
+    var vectorSource = null;
+    var vectorLayer = null;
+    var vectorFormat = null;
+    var vectorStyle = null;
+
     // sauvegarde du content KML/GPX/GeoJSON/MapBox
-    this.contentStatic = this._mapBoxFile = fileContent;
+    this.contentStatic = fileContent;
 
     if (this._currentImportType === "MapBox") {
-        // - mapbox file json
-        var mapbox = JSON.parse(fileContent);
+        // nettoyage
+        this.cleanMapBoxResultsList();
 
-        // - TODO mettre en place l'option Proxy sur les urls / noProxyDomain
-        // sur les serveurs non CORS !
-        // var opts = this.options.webServicesOptions;
-        // var proxyUrl = "";
-        // if (opts && opts.proxyUrl) {
-        //     _proxyUrl = opts.proxyUrl;
-        // };
+        var _glStyle = this._mapBoxObj = JSON.parse(fileContent);
 
-        // - maj du titre ("title === layerName")
-        if (layerName) {
-            if (!mapbox.metadata) {
-                mapbox.metadata = {};
-            }
-            mapbox.metadata["geoportail:title"] = layerName;
-        }
+        var _glSources = _glStyle.sources;
 
-        // - save for update style
-        if (mapbox) {
-            this._mapBoxObj = mapbox;
-            // - multisources ?
-            this._mapBoxObj.count = Object.keys(mapbox.sources).length;
-        }
+        // multisources ?
+        var _multiSources = (Object.keys(_glSources).length > 1) ? 1 : 0;
 
-        // - appliquer le style
-        olms.apply(map, mapbox);
+        for (var _glSourceId in _glSources) {
+            if (_glSources.hasOwnProperty(_glSourceId)) {
+                var _title = "";
+                var _description = "";
+                var _quicklookUrl = null;
+                var _legends = null;
+                var _metadata = null;
+                var _originators = null;
 
-        // - gestion du centre de la cate sur la carte
-        var projCode = map.getView().getProjection().getCode();
-        if (mapbox.center && mapbox.center.length) {
-            logger.trace("mapbox:center !");
-            map.getView().setCenter(ol.proj.transform(mapbox.center, "EPSG:4326", projCode));
-        }
-
-        // - gestion du zoom sur la carte
-        if (mapbox.zoom || mapbox.zoom === 0) {
-            logger.trace("mapbox:zoom !");
-            map.getView().setZoom(mapbox.zoom);
-        }
-
-        // - affichage du panneau des couches accessibles à l'edition
-        this._importPanel.style.display = "none";
-        this._mapBoxPanel.style.display = "block";
-        // - editeur de styles
-        //  - TODO sauvegarde pour un reaffichage du panneau ?
-        //  - FIXME bug avec le geojson !?
-        this.editor = new Editor({
-            target : this._mapBoxResultsListContainer,
-            style : this._mapBoxObj
-        });
-        // - abonements sur les evenements suivants :
-        EventBus.addEventListener("editor:layer:visibility", this._onChangeVisibilitySourceMapBox, this);
-        EventBus.addEventListener("editor:style:minScale", this._onChangeScaleMinSourceMapBox, this);
-        EventBus.addEventListener("editor:style:maxScale", this._onChangeScaleMaxSourceMapBox, this);
-        // - FIXME event sur la suppression de la couche afin de fermer le panneau !
-        // - TODO au niveau de la couche : minResolution et maxResolution
-        // - ajout des informations pour le layerSwitcher (titre, description, legende, ...)
-        var self = this;
-        var _key = map.getLayerGroup().on("change", function (e) {
-            var layers = e.target.getLayers();
-            logger.trace("layers", layers);
-            layers.forEach(function (layer) {
-                // - la couche mapbox n'est pas encore inserée dans le gestionnaire de couches
-                // et/ou la source n'est pas encore chargée...
-                if (typeof layer.gpLayerId === "undefined" ||
-                   (typeof layer.gpStatusSourceLoaded !== "undefined" && !layer.gpStatusSourceLoaded)
-                ) {
-                    // - attention, ce n'est pas une couche mapbox !
-                    if (layer.gpResultLayerId && layer.gpResultLayerId !== "layerimport:MapBox") {
-                        return;
-                    }
-                    // - ajout de l'identifiant du type de couche crée par le composant,
-                    // cad layerimport:MapBox !
-                    layer.gpResultLayerId = "layerimport:" + self._currentImportType;
-                    // - ajout d'une information sur la statut en cours du chargement de la couche
-                    layer.gpStatusSourceLoaded = false;
-                    // - ajout des informations directement dans la source
-                    var _source = layer.getSource();
-                    if (_source) {
-                        // - maj du statut
-                        layer.gpStatusSourceLoaded = true;
-                        // - ajout des informations par defaut dans la source
-                        logger.trace("informations sur la couche", _source);
-                        _source._title = "Import MapBox";
-                        _source._description = "Import MapBox";
-                        _source._quicklookUrl = "";
-                        _source._legends = [];
-                        _source._metadata = "";
-                        _source._originators = [];
-                        // - ajout des informations contenues dans le tag 'metadata'
-                        // ex. metadata : {
-                        //     geoportail:[title | description | quicklookUrl | legends | originators | metadata]
-                        // }
-                        if (self._mapBoxObj.metadata) {
-                            for (var ns in self._mapBoxObj.metadata) {
-                                if (self._mapBoxObj.metadata.hasOwnProperty(ns)) {
-                                    var _keys = ns.split(":");
-                                    if (_keys[0] === "geoportail") {
-                                        var key = _keys[1];
-                                        if (key === "title") {
-                                            _source._title = self._mapBoxObj.metadata[ns];
-                                            continue;
-                                        }
-                                        if (key === "description") {
-                                            _source._description = self._mapBoxObj.metadata[ns];
-                                            continue;
-                                        }
-                                        if (key === "quicklookUrl") {
-                                            _source._quicklookUrl = self._mapBoxObj.metadata[ns];
-                                            continue;
-                                        }
-                                        if (key === "legends") {
-                                            _source._legends = self._mapBoxObj.metadata[ns];
-                                            continue;
-                                        }
-                                        if (key === "metadata") {
-                                            _source._metadata = self._mapBoxObj.metadata[ns];
-                                            continue;
-                                        }
-                                        if (key === "originators") {
-                                            _source._originators = self._mapBoxObj.metadata[ns];
-                                            continue;
-                                        }
-                                    }
+                // lecture des informations dans le style
+                // ex. metadata : {
+                //    geoportail:[title | description | quicklookUrl | legends | originators | metadata]
+                // }
+                if (_glStyle.metadata) {
+                    for (var ns in _glStyle.metadata) {
+                        if (_glStyle.metadata.hasOwnProperty(ns)) {
+                            var _keys = ns.split(":");
+                            if (_keys[0] === "geoportail") {
+                                var key = _keys[1];
+                                if (key === "title") {
+                                    _title = _glStyle.metadata[ns];
+                                    continue;
+                                }
+                                if (key === "description") {
+                                    _description = _glStyle.metadata[ns];
+                                    continue;
+                                }
+                                if (key === "quicklookUrl") {
+                                    _quicklookUrl = _glStyle.metadata[ns];
+                                    continue;
+                                }
+                                if (key === "legends") {
+                                    _legends = _glStyle.metadata[ns];
+                                    continue;
+                                }
+                                if (key === "metadata") {
+                                    _metadata = _glStyle.metadata[ns];
+                                    continue;
+                                }
+                                if (key === "originators") {
+                                    _originators = _glStyle.metadata[ns];
+                                    continue;
                                 }
                             }
                         }
                     }
-                } else if (layer.get("mapbox-source") &&
-                    layer.gpResultLayerId === "layerimport:MapBox" &&
-                    typeof layer.gpStatusSourceLoaded !== "undefined" &&
-                    layer.gpStatusSourceLoaded
-                ) {
-                    // - on supprime le statut de la couche, on n'en a plus besoin...
-                    delete layer.gpStatusSourceLoaded;
-                    // - maj du gestionnaire de couches (LS) pour une couche mapbox
-                    // entierement chargée dans la carte
-                    var _src = layer.getSource();
-                    if (_src) {
-                        // - ajout de l'identifiant de la source pour un titre par defaut
-                        if (_src._title === "Import MapBox") {
-                            _src._title += " ('" + layer.get("mapbox-source") + "')";
+                }
+
+                // titre par defaut
+                if (!_title) {
+                    _title = "Couche MapBox";
+                }
+                // description par defaut
+                if (!_description) {
+                    _description = "Couche MapBox";
+                }
+                // cas des multisources
+                _title = (_multiSources) ? _title + "(" + _glSourceId + ")" : _title;
+
+                // source mapbox
+                var _glSource = _glSources[_glSourceId];
+
+                // construction de la couche en fonction du type
+                var _glType = _glSource.type;
+
+                if (_glType === "vector") {
+                    // url du tilejson ou flux mapbox
+                    var _glUrl = _glSource.url;
+                    // url du service tuilé
+                    var _glTiles = _glSource.tiles;
+                    // sprites
+                    var _glSprite = _glStyle.sprite;
+
+                    // FIXME et si on a un import par fichier local (this._file) ?
+                    // remplacement d'un flux mapbox en service tuilé
+                    if (_glUrl && _glUrl.indexOf("mapbox://") === 0) {
+                        var _urlService = this._url;
+                        if (_urlService) {
+                            _glTiles = ["a", "b", "c", "d"].map(function (host) {
+                                var path = _glUrl.replace("mapbox://", "");
+                                var accessToken = _urlService.split("?")[1];
+                                return "https://" +
+                                host + ".tiles.mapbox.com/v4/" +
+                                path + "/{z}/{x}/{y}.vector.pbf?" +
+                                accessToken;
+                            });
+                            // conversion des sprites sur un autre scheme que "mapbox://"
+                            if (_glSprite.indexOf("mapbox://") === 0) {
+                                var s = _urlService.split("?");
+                                _glStyle.sprite = s[0] + "/sprite" + "?" + s[1];
+                            }
                         }
-                        map.getControls().forEach(
-                            function (control) {
-                                if (control instanceof LayerSwitcher) {
-                                    control.addLayer(
-                                        layer, {
-                                            title : _src._title,
-                                            description : _src._description,
-                                            legends : _src._legends,
-                                            metadata : _src._metadata,
-                                            originators : _src._originators
-                                        }
-                                    );
-                                    // - LS à jour, donc la couche est mise à jour, on se desabonne...
-                                    // mais, attention aux couches multisources, on se desabonne sur la dernière
-                                    // maj de la couche !
-                                    self._mapBoxObj.count--;
-                                    if (self._mapBoxObj.count === 0) {
-                                        ol.Observable.unByKey(_key);
+                    }
+
+                    if (_glTiles) {
+                        // service tuilé et/ou mapbox
+                        vectorFormat = new ol.format.MVT();
+                        vectorSource = new ol.source.VectorTile({
+                            attributions : _glSource.attribution,
+                            format : vectorFormat,
+                            tileGrid : ol.tilegrid.createXYZ({ // TODO scheme tms ?
+                                extent : _glSource.bounds, // [minx, miny, maxx, maxy]
+                                maxZoom : _glSource.maxzoom || 22,
+                                minZoom : _glSource.minzoom || 1,
+                                tileSize : _glSource.tileSize || 256
+                            }),
+                            urls : _glTiles,
+                            _title : _title,
+                            _description : _description,
+                            _quicklookUrl : _quicklookUrl,
+                            _metadata : _metadata,
+                            _legends : _legends,
+                            _originators : _originators
+                        });
+                        vectorLayer = new ol.layer.VectorTile({
+                            id : _glSourceId,
+                            gpResultLayerId : "layerimport:" + this._currentImportType,
+                            // metadata : _glStyle.metadata, // TODO utile ?
+                            source : vectorSource,
+                            visible : false,
+                            // zIndex: 0, // FIXME gerer l'ordre sur des multisources ?
+                            declutter : true // TODO utile ?
+                        });
+                    } else if (_glUrl) {
+                        // service avec un tilejson
+                        vectorFormat = new ol.format.MVT();
+                        vectorLayer = new ol.layer.VectorTile({
+                            id : _glSourceId,
+                            gpResultLayerId : "layerimport:" + this._currentImportType,
+                            visible : false,
+                            // zIndex : 0
+                            declutter : true
+                        });
+                        var vectorTileJson = new ol.source.TileJSON({
+                            url : _glUrl
+                        });
+                        // lecture du tilejson avec extension IGN
+                        // les extensions sont enregistrées
+                        // dans les propriétés de la couche : layer.set(mapbox-extension)
+                        // pour une utilisation ulterieur (ex. editeur)
+                        var _key = vectorTileJson.on("change", function () {
+                            if (vectorTileJson.getState() === "ready") {
+                                var _tileJSONDoc = vectorTileJson.getTileJSON();
+
+                                var tiles = Array.isArray(_tileJSONDoc.tiles) ? _tileJSONDoc.tiles : [_tileJSONDoc.tiles];
+                                for (var i = 0; i < tiles.length; i++) {
+                                    var tile = tiles[i];
+                                    if (tile.indexOf("http") !== 0) {
+                                        tiles[i] = _glUrl + tile;
                                     }
                                 }
-                            },
-                            this
-                        );
+                                vectorSource = new ol.source.VectorTile({
+                                    attributions : vectorTileJson.getAttributions() || _tileJSONDoc.attribution,
+                                    format : vectorFormat,
+                                    tileGrid : ol.tilegrid.createXYZ({
+                                        extent : _glSource.bounds, // [minx, miny, maxx, maxy]
+                                        maxZoom : _tileJSONDoc.maxzoom || _glSource.maxzoom || 22,
+                                        minZoom : _tileJSONDoc.minzoom || _glSource.minzoom || 0,
+                                        tileSize : _tileJSONDoc.tileSize || _glSource.tileSize || 256
+                                    }),
+                                    urls : tiles,
+                                    _title : _title,
+                                    _description : _description,
+                                    _quicklookUrl : _quicklookUrl,
+                                    _metadata : _metadata,
+                                    _legends : _legends,
+                                    _originators : _originators
+                                });
+                                vectorLayer.setSource(vectorSource);
+                                vectorLayer.set("mapbox-extension", _tileJSONDoc["vector_layers"]);
+                                ol.Observable.unByKey(_key);
+                            }
+                        });
                     }
+                } else if (_glType === "geojson") {
+                    // FIXME
+                    // - cas avec un objet de type features ?
+                    // - cas avec une url relative ?
+                    var _glData = _glSource.data;
+
+                    vectorFormat = new ol.format.GeoJSON();
+                    vectorSource = new ol.source.VectorTile({
+                        attributions : _glSource.attribution,
+                        format : vectorFormat,
+                        url : _glData,
+                        _title : _title,
+                        _description : _description,
+                        _quicklookUrl : _quicklookUrl,
+                        _metadata : _metadata,
+                        _legends : _legends,
+                        _originators : _originators
+                    });
+                    vectorLayer = new ol.layer.VectorTile({
+                        id : _glSourceId,
+                        gpResultLayerId : "layerimport:" + this._currentImportType,
+                        source : vectorSource,
+                        visible : false,
+                        // zIndex: 0, // FIXME gerer l'ordre sur des multisources ?
+                        declutter : true // TODO utile ?
+                    });
+                } else {
+                    logger.warn("Type MapBox format unknown !");
+                    return;
+                }
+
+                // TODO ajouter le style de type background !
+                // fonction de style de la couche
+                var setStyle = function () {
+                    ol.olms.applyStyle(vectorLayer, _glStyle, _glSourceId)
+                        .then(function () {
+                            var visibility = true;
+                            vectorLayer.setVisible(visibility);
+                            var opacity = 1;
+                            vectorLayer.setOpacity(opacity);
+                        })
+                        .then(function () {
+                            // gestion du centre de la cate sur la carte si center renseigné !
+                            var projCode = map.getView().getProjection().getCode();
+                            if (map.getView() && _glStyle.center && _glStyle.center.length) {
+                                map.getView().setCenter(ol.proj.transform(_glStyle.center, "EPSG:4326", projCode));
+                            }
+
+                            // gestion du zoom sur la carte si zoom renseigné !
+                            if (map.getView() && (_glStyle.zoom || _glStyle.zoom === 0)) {
+                                map.getView().setZoom(_glStyle.zoom);
+                            }
+
+                            // zoom sur l'étendue des entités récupérées (si possible)
+                            if (map.getView() && map.getSize() && vectorSource.getExtent) {
+                                var sourceExtent = vectorSource.getExtent();
+                                if (sourceExtent && sourceExtent[0] !== Infinity) {
+                                    map.getView().fit(vectorSource.getExtent(), map.getSize());
+                                }
+                            }
+                        })
+                        .catch(function (e) {
+                            logger.error(e);
+                        });
+                };
+
+                // ajout des styles dans la carte pour une utilisation
+                // eventuelle (ex. editeur)
+                // > map.set("mapbox-styles")
+                var _objStyles = map.get("mapbox-styles") || {};
+                _objStyles[_glSourceId] = _glStyle;
+                map.set("mapbox-styles", _objStyles);
+
+                // TODO ajout des differents styles de la couche
+                // pour une utilisation eventuelle (ex. editeur)
+                // > layer.set("mapbox-styles")
+
+                // ajout du layer sur la carte
+                map.addLayer(vectorLayer);
+
+                // application du style
+                if (vectorLayer.getSource()) {
+                    setStyle();
+                } else {
+                    vectorLayer.once("change:source", setStyle);
+                }
+
+                // maj du gestionnaire de couche
+                map.getControls().forEach(
+                    function (control) {
+                        if (control instanceof LayerSwitcher) {
+                            control.addLayer(
+                                vectorLayer, {
+                                    title : layerName || _title,
+                                    description : _description,
+                                    quicklookUrl : _quicklookUrl,
+                                    metadata : _metadata,
+                                    legends : _legends,
+                                    originators : _originators
+                                }
+                            );
+                        }
+                    }
+                );
+            }
+        }
+
+        // affichage du panneau des couches accessibles à l'edition
+        this._importPanel.style.display = "none";
+        this._mapBoxPanel.style.display = "block";
+
+        // editeur de styles
+        var that = this;
+        setTimeout(function () {
+            this.editor = new Editor({
+                target : that._mapBoxResultsListContainer,
+                style : that._mapBoxObj,
+                events : { // TODO...
+                    "editor:layer:visibility" : that._onChangeVisibilitySourceMapBox,
+                    "editor:style:minScale" : that._onChangeScaleMinSourceMapBox,
+                    "editor:style:maxScale" : that._onChangeScaleMaxSourceMapBox
+                },
+                tools : {
+                    themes : false,
+                    layers : true,
+                    style : that.options.vectorStyleOptions.MapBox.tools.style,
+                    filter : that.options.vectorStyleOptions.MapBox.tools.filter
                 }
             });
-        });
-    } else {
-        var vectorSource;
-        var vectorLayer;
-        var vectorFormat;
-        var vectorStyle;
+            // abonements sur les evenements suivants :
+            EventBus.addEventListener("editor:layer:visibility", that._onChangeVisibilitySourceMapBox, that);
+            EventBus.addEventListener("editor:style:minScale", that._onChangeScaleMinSourceMapBox, that);
+            EventBus.addEventListener("editor:style:maxScale", that._onChangeScaleMaxSourceMapBox, that);
+        }, 300);
 
+        // TODO style par defaut au cas où l'application du style échoue !
+        // FIXME bug avec le geojson, très bizarre !?
+        //      Si on desactive l'editeur, OK
+        //      Sinon NOK !?
+        // FIXME event sur la suppression de la couche afin de fermer le panneau !
+        // TODO au niveau de la couche : minResolution et maxResolution
+    } else {
         if (this._currentImportType === "KML") {
             // lecture du fichier KML : création d'un format ol.format.KML, qui possède une méthode readFeatures (et readProjection)
             vectorFormat = new KMLExtended({
@@ -1233,11 +1460,11 @@ LayerImport.prototype._onChangeVisibilitySourceMapBox = function (e) {
             }
             olms.applyStyle(layer, this._mapBoxObj, target.data.source)
                 .then(function () {
-                    // on force un update mais exception !?
+                    // comment on force un update mais exception !?
                     // https://openlayers.org/en/v4.6.5/doc/errors/#58
-                    var copyLayer = layer;
-                    map.removeLayer(layer);
-                    map.addLayer(copyLayer);
+                    // var copyLayer = layer;
+                    // map.removeLayer(layer);
+                    // map.addLayer(copyLayer);
                 })
                 .catch(function (error) {
                     logger.error(error);
@@ -1272,11 +1499,11 @@ LayerImport.prototype._onChangeScaleMinSourceMapBox = function (e) {
             }
             olms.applyStyle(layer, this._mapBoxObj, target.data.source)
                 .then(function () {
-                    // on force un update mais exception !?
+                    // comment on force un update mais exception !?
                     // https://openlayers.org/en/v4.6.5/doc/errors/#58
-                    var copyLayer = layer;
-                    map.removeLayer(layer);
-                    map.addLayer(copyLayer);
+                    // var copyLayer = layer;
+                    // map.removeLayer(layer);
+                    // map.addLayer(copyLayer);
                 })
                 .catch(function (error) {
                     logger.error(error);
@@ -1311,11 +1538,11 @@ LayerImport.prototype._onChangeScaleMaxSourceMapBox = function (e) {
             }
             olms.applyStyle(layer, this._mapBoxObj, target.data.source)
                 .then(function () {
-                    // on force un update mais exception !?
+                    // comment on force un update mais exception !?
                     // https://openlayers.org/en/v4.6.5/doc/errors/#58
-                    var copyLayer = layer;
-                    map.removeLayer(layer);
-                    map.addLayer(copyLayer);
+                    // var copyLayer = layer;
+                    // map.removeLayer(layer);
+                    // map.addLayer(copyLayer);
                 })
                 .catch(function (error) {
                     logger.error(error);
@@ -2398,6 +2625,8 @@ LayerImport.prototype.cleanGetCapResultsList = function () {
  * @private
  */
 LayerImport.prototype.cleanMapBoxResultsList = function () {
+    this.editor = null;
+    this._mapBoxObj = null;
     if (this._mapBoxResultsListContainer) {
         while (this._mapBoxResultsListContainer.firstChild) {
             this._mapBoxResultsListContainer.removeChild(this._mapBoxResultsListContainer.firstChild);

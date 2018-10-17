@@ -1,3 +1,4 @@
+// TODO import EventBus from "eventbus";
 import Utils from "../../Common/Utils";
 import Logger from "../../Common/Utils/LoggerByDefault";
 import Style from "./Editor/Style";
@@ -19,8 +20,20 @@ var logger = Logger.getLogger("editor");
  *   var editor = new Editor ({
  *      target : "",
  *      style : "",
+ *      events : {
+ *          "editor:layer:visibility" : ...,
+ *          "editor:layer:clone" : ...,
+ *          "editor:layer:remove" : ...,
+ *          "editor:style:edit" : ...,
+ *          "editor:style:minScale" : ...,
+ *          "editor:style:maxScale" : ...,
+ *          "editor:filter:edit" : ...,
+ *          "editor:themes:image" : ...,
+ *          "editor:themes:title" : ...
+ *      },
  *      tools : {
  *          themes : true,
+ *          layers : true,
  *          style : true,
  *          filter : true
  *      }
@@ -69,10 +82,15 @@ Editor.prototype._initialize = function () {
         return;
     }
 
+    if (this.options.events) {
+        // TODO
+    }
+
     var _toolsDefault = {
-        themes : true,
-        style : true,
-        filter : true
+        themes : false,
+        layers : true,
+        style : false,
+        filter : false
     };
 
     if (!this.options.tools) {
@@ -84,7 +102,8 @@ Editor.prototype._initialize = function () {
     this.container = null;
     this.name = {
         target : "GPEditorMapBoxTarget",
-        container : "GPEditorMapBoxContainer"
+        container : "GPEditorMapBoxContainer",
+        sep : "GPEditorMapBoxSep"
     };
 
     this.mapbox = {};
@@ -142,58 +161,73 @@ Editor.prototype._initContainer = function () {
         themes.add();
     }
 
-    // Ex. Layers, Styles et Filtres
-    //  "id": "ocs - vegetation",
-    //  "type": "fill",
-    //  "source": "pyramide_proto",
-    //  "source-layer": "ocs_vegetation_surf"
-    //  "layout": {
-    //    "visibility": "visible"
-    //  },
-    //  "filter": ["in","symbo",
-    //      "SURFACE_D_EAU",
-    //      "BASSIN",
-    //      "ZONE_MARINE"
-    //  ],
-    //  "paint": {
-    //    "fill-color": "#2BB3E1"
-    //  }
-    for (var i = 0; i < this.mapbox.layers.length; i++) {
-        var data = this.mapbox.layers[i];
-
-        // Layers
-        var oLayer = new Layer({
-            target : div,
-            position : i,
-            obj : data
-        });
-        oLayer.add();
-
-        // Style
-        if (this.options.tools.style) {
-            var oStyle = new Style({
-                target : div,
-                position : i,
-                obj : data
-            });
-            oStyle.add();
-            oStyle.display(false);
-            oLayer.addStyle(oStyle);
-            // update visibility layer
-            if (data.layout && data.layout.visibility && data.layout.visibility === "none") {
-                oLayer.visibility(false);
+    for (var source in this.mapbox.sources) {
+        if (this.mapbox.sources.hasOwnProperty(source)) {
+            // multisources ? Si oui, on renseigne un titre...
+            if (Object.keys(this.mapbox.sources).length > 1) {
+                var hr = document.createElement("hr");
+                hr.className = this.name.sep;
+                div.appendChild(hr);
             }
-        }
-        // Filter
-        if (this.options.tools.filter) {
-            var oFilter = new Filter({
-                target : div,
-                position : i,
-                obj : data
-            });
-            oFilter.add();
-            oFilter.display(false);
-            oLayer.addFilter(oFilter);
+
+            // Ex. Layers, Styles et Filtres
+            //  "id": "ocs - vegetation",
+            //  "type": "fill",
+            //  "source": "pyramide_proto",
+            //  "source-layer": "ocs_vegetation_surf"
+            //  "layout": {
+            //    "visibility": "visible"
+            //  },
+            //  "filter": ["in","symbo",
+            //      "SURFACE_D_EAU",
+            //      "BASSIN",
+            //      "ZONE_MARINE"
+            //  ],
+            //  "paint": {
+            //    "fill-color": "#2BB3E1"
+            //  }
+            for (var i = 0; i < this.mapbox.layers.length; i++) {
+                var data = this.mapbox.layers[i];
+
+                // traitement dans l'ordre des sources
+                if (data.source === source) {
+                    // Layers
+                    if (this.options.tools.layers) {
+                        var oLayer = new Layer({
+                            target : div,
+                            position : i,
+                            obj : data
+                        });
+                        oLayer.add();
+                    }
+                    // Style
+                    if (this.options.tools.style) {
+                        var oStyle = new Style({
+                            target : div,
+                            position : i,
+                            obj : data
+                        });
+                        oStyle.add();
+                        oStyle.display(false);
+                        oLayer.addStyle(oStyle);
+                        // update visibility layer
+                        if (data.layout && data.layout.visibility && data.layout.visibility === "none") {
+                            oLayer.visibility(false);
+                        }
+                    }
+                    // Filter
+                    if (this.options.tools.filter) {
+                        var oFilter = new Filter({
+                            target : div,
+                            position : i,
+                            obj : data
+                        });
+                        oFilter.add();
+                        oFilter.display(false);
+                        oLayer.addFilter(oFilter);
+                    }
+                }
+            }
         }
     }
 
@@ -222,9 +256,13 @@ Editor.prototype._initContainer = function () {
 // ################################################################### //
 
 /**
- * Get Editor
+ * Set display container (DOM)
+ *
+ * @param {Boolean} display - show/hidden container
  */
-Editor.prototype.getEditor = function () {};
+Editor.prototype.display = function (display) {
+    this.container.style.display = (display) ? "block" : "none";
+};
 
 // ################################################################### //
 // ####################### handlers events to dom #################### //

@@ -1,0 +1,220 @@
+{
+    "name": "VEK4_INDEP_LIMADMCOMPLETE",
+    "description": "Couche de vecteur tuilé",
+    "minzoom": 0,
+    "maxzoom": 13,
+    "crs": "EPSG:3857",
+    "center": [
+        1.669922,
+        46.134652
+    ],
+    "bounds": [
+        -6.503906,
+        40.979898,
+        9.84375,
+        51.289406
+    ],
+    "format": "pbf",
+    "tiles": [
+        "http://rok4server.ide.ign.fr/rok4/1.0.0/VEK4_INDEP_LIMADMCOMPLETE/{z}/{x}/{y}.pbf"
+    ],
+    "tilestats": {
+        "layerCount": 2,
+        "layers": [
+            {
+                "layer": "regions",
+                "geometry": "MULTIPOLYGON",
+                "attributeCount": "4",
+                "attributes": [
+                    {
+                        "attribute": "nom_reg",
+                        "count": "18",
+                        "type": "character varying",
+                        "values": [
+                            "AQUITAINE-LIMOUSIN-POITOU-CHARENTES",
+                            "MARTINIQUE",
+                            "GUYANE",
+                            "CORSE",
+                            "BOURGOGNE-FRANCHE-COMTE",
+                            "GUADELOUPE",
+                            "NORD-PAS-DE-CALAIS-PICARDIE",
+                            "NORMANDIE",
+                            "LANGUEDOC-ROUSSILLON-MIDI-PYRENEES",
+                            "CENTRE-VAL DE LOIRE",
+                            "MAYOTTE",
+                            "ALSACE-CHAMPAGNE-ARDENNE-LORRAINE",
+                            "AUVERGNE-RHONE-ALPES",
+                            "ILE-DE-FRANCE",
+                            "LA REUNION",
+                            "PROVENCE-ALPES-COTE D'AZUR",
+                            "PAYS DE LA LOIRE",
+                            "BRETAGNE"
+                        ]
+                    },
+                    {
+                        "attribute": "code_reg",
+                        "count": "18",
+                        "type": "character varying",
+                        "values": [
+                            "93",
+                            "53",
+                            "02",
+                            "94",
+                            "03",
+                            "24",
+                            "01",
+                            "06",
+                            "11",
+                            "52",
+                            "04",
+                            "27",
+                            "28",
+                            "44",
+                            "32",
+                            "75",
+                            "84",
+                            "76"
+                        ]
+                    },
+                    {
+                        "attribute": "id",
+                        "count": "18",
+                        "type": "integer",
+                        "min": 1,
+                        "max": 18
+                    },
+                    {
+                        "attribute": "gid",
+                        "count": "18",
+                        "type": "integer",
+                        "min": 1,
+                        "max": 101
+                    }
+                ]
+            },
+            {
+                "layer": "departements",
+                "geometry": "MULTIPOLYGON",
+                "attributeCount": "9",
+                "attributes": [
+                    {
+                        "attribute": "nom_chf",
+                        "count": "101",
+                        "type": "character varying"
+                    },
+                    {
+                        "attribute": "code_chf",
+                        "count": "90",
+                        "type": "character varying"
+                    },
+                    {
+                        "attribute": "chef_lieu",
+                        "count": "101",
+                        "type": "USER-DEFINED"
+                    },
+                    {
+                        "attribute": "id_geofla",
+                        "count": "96",
+                        "type": "character varying"
+                    },
+                    {
+                        "attribute": "code_dept",
+                        "count": "97",
+                        "type": "character varying"
+                    },
+                    {
+                        "attribute": "nom_reg",
+                        "count": "18",
+                        "type": "character varying",
+                        "values": [
+                            "AQUITAINE-LIMOUSIN-POITOU-CHARENTES",
+                            "MARTINIQUE",
+                            "GUYANE",
+                            "BOURGOGNE-FRANCHE-COMTE",
+                            "CORSE",
+                            "GUADELOUPE",
+                            "NORMANDIE",
+                            "NORD-PAS-DE-CALAIS-PICARDIE",
+                            "LANGUEDOC-ROUSSILLON-MIDI-PYRENEES",
+                            "CENTRE-VAL DE LOIRE",
+                            "MAYOTTE",
+                            "ALSACE-CHAMPAGNE-ARDENNE-LORRAINE",
+                            "AUVERGNE-RHONE-ALPES",
+                            "ILE-DE-FRANCE",
+                            "LA REUNION",
+                            "PROVENCE-ALPES-COTE D'AZUR",
+                            "PAYS DE LA LOIRE",
+                            "BRETAGNE"
+                        ]
+                    },
+                    {
+                        "attribute": "code_reg",
+                        "count": "18",
+                        "type": "character varying",
+                        "values": [
+                            "93",
+                            "53",
+                            "02",
+                            "94",
+                            "03",
+                            "24",
+                            "01",
+                            "06",
+                            "11",
+                            "52",
+                            "04",
+                            "27",
+                            "28",
+                            "44",
+                            "32",
+                            "75",
+                            "84",
+                            "76"
+                        ]
+                    },
+                    {
+                        "attribute": "gid",
+                        "count": "101",
+                        "type": "integer",
+                        "min": 1,
+                        "max": 101
+                    },
+                    {
+                        "attribute": "nom_dept",
+                        "count": "101",
+                        "type": "character varying"
+                    }
+                ]
+            }
+        ]
+    },
+    "vector_layers": [
+        {
+            "id": "regions",
+            "maxzoom": "13",
+            "minzoom": "0",
+            "fields": {
+                "nom_reg": "character varying",
+                "code_reg": "character varying",
+                "id": "integer",
+                "gid": "integer"
+            }
+        },
+        {
+            "id": "departements",
+            "maxzoom": "13",
+            "minzoom": "11",
+            "fields": {
+                "nom_chf": "character varying",
+                "code_chf": "character varying",
+                "chef_lieu": "USER-DEFINED",
+                "id_geofla": "character varying",
+                "code_dept": "character varying",
+                "nom_reg": "character varying",
+                "code_reg": "character varying",
+                "gid": "integer",
+                "nom_dept": "character varying"
+            }
+        }
+    ]
+}

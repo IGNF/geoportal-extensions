@@ -1,3 +1,10 @@
+.GPEditorMapBoxSep {
+    display: block;
+    width: 50%;
+    border-style: double;
+    border-width: 4px;
+    border-color: lightskyblue;
+}
 /*******************************************************************************
 LAYERS
 *******************************************************************************/

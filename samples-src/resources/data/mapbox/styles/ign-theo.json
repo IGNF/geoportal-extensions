@@ -2,33 +2,61 @@
 	"version": 8,
 	"name": "",
 	"sources": {
-		"theo": {
+		"admin": {
 			"type": "vector",
 			"tiles": [
-				"http://localhost/proxy/proxy.php?url=http://oubliette.ign.fr/rok4/TMS/1.0.1/1.0.0/vector/{z}/{x}/{y}.pbf"
+				"http://rok4server.ide.ign.fr/rok4/1.0.0/VEK4_INDEP_LIMADMCOMPLETE/{z}/{x}/{y}.pbf"
 			]
 		}
 	},
 	"layers": [
         {
             "id": "limites administratives : regions",
-			"type": "line",
-			"source": "theo",
-			"source-layer": "limites_administrativesregions",
+			"type": "fill",
+			"source": "admin",
+			"source-layer": "regions",
 			"layout": {
 				"visibility": "visible"
 			},
             "filter": [],
             "paint": {
-				"line-color": "#000000",
+				"fill-color": "#A6CEE3",
+		        "fill-opacity": 0.7
+			}
+        },
+		{
+            "id": "limites administratives : regions",
+			"type": "line",
+			"source": "admin",
+			"source-layer": "regions",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": [],
+            "paint": {
+				"line-color": "#0000FF",
                 "line-width": "3"
+			}
+        },
+		{
+            "id": "limites administratives : departements",
+			"type": "line",
+			"source": "admin",
+			"source-layer": "departements",
+			"layout": {
+				"visibility": "visible"
+			},
+            "filter": [],
+            "paint": {
+				"line-color": "#0000FF",
+                "line-width": "1"
 			}
         },
         {
             "id": "limites administratives : noms",
 			"type": "symbol",
-			"source": "theo",
-			"source-layer": "limites_administrativesregions",
+			"source": "admin",
+			"source-layer": "regions",
             "layout": {
               "visibility": "visible",
               "text-field": [

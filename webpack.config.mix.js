@@ -38,7 +38,7 @@ module.exports = env => {
         },
         resolve : {
             alias : {
-                ol : path.resolve(__dirname, "node_modules", "openalyers", "dist", (production) ? "ol.js" : "ol-debug.js"),
+                ol : path.resolve(__dirname, "node_modules", "openlayers", "dist", (production) ? "ol.js" : "ol-debug.js"),
                 gp : path.resolve(__dirname, "node_modules", "geoportal-access-lib", "dist", (production) ? "GpServices.js" : "GpServices-src.js"),
                 olms : path.resolve(__dirname, "node_modules", "ol-mapbox-style", "dist", "olms.js"), // optional...
                 proj4 : path.resolve(__dirname, "node_modules", "proj4", "dist", (production) ? "proj4.js" : "proj4-src.js"),

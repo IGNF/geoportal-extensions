@@ -9,8 +9,8 @@
     "inspect": true
   },
   "center": [
-    7.1119,
-    50.7377
+    -73.9878,
+    40.7252
   ],
   "zoom": 11.5,
   "bearing": 0,
@@ -23,7 +23,7 @@
   "sources": {
     "osm": {
       "type": "vector",
-      "url": "https://osm.tegola.io/capabilities/osm.json"
+      "url": "https://osm-lambda.tegola.io/v1/capabilities/osm.json"
     }
   },
   "sprite": "https://go-spatial.github.io/carto-assets/spritesets/osm_tegola_spritesheet",
@@ -157,7 +157,7 @@
           "admin_level",
           4
         ]
-	  ],	
+	  ],
       "layout": {
         "visibility": "visible"
       },

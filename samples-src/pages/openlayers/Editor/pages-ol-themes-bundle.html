@@ -30,7 +30,7 @@
             // themes en échec car chemin vide !
             var themes2 = new ol.editor.Themes({
                 obj: {
-                    "themes" : [{
+                    "styles" : [{
                         "image" : "", // path ?
                         "label" : "", // name ?
                         "style" : ""  // path ?
@@ -43,17 +43,17 @@
             var themes3 = new ol.editor.Themes({
                 target: document.getElementById("themes"),
                 obj: {
-                    "themes" : [
+                    "styles" : [
                     {
-                        "label" : "style standard",
-                        "style" : "{{ resources }}/data/mapbox/themes/styles/style0.json"
-                    },
-                    {
-                        "label" : "style standard...................",
+                        "label" : "style standard.",
                         "style" : "{{ resources }}/data/mapbox/themes/styles/null"
                     },
                     {
-                        "label" : "style standard................................",
+                        "label" : "style standard..",
+                        "style" : "{{ resources }}/data/mapbox/themes/styles/null"
+                    },
+                    {
+                        "label" : "style standard...",
                         "style" : "{{ resources }}/data/mapbox/themes/styles/null"
                     },
                 ]
@@ -65,7 +65,7 @@
             var themes4 = new ol.editor.Themes({
                 target: document.getElementById("themes"),
                 obj: {
-                    "themes" : [
+                    "styles" : [
                     {
                         "image" : "{{ resources }}/data/mapbox/themes/images/layer0.png",
                         "label" : "standard0",

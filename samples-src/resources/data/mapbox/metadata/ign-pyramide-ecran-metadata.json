@@ -1,0 +1,53 @@
+{
+   "attribution":"Geoportail",
+   "bounds":[
+      -180,
+      -85.0511,
+      180,
+      85.0511
+   ],
+   "center":[
+      -76.275329586789,
+      39.153492567373,
+      8
+   ],
+   "format":"pbf",
+   "minzoom":0,
+   "maxzoom":20,
+   "name":"ign",
+   "description":null,
+   "scheme":"xyz",
+   "tilejson":"2.2.0",
+   "tiles":[
+      "http://calac-4.ign.fr:8080/geoserver/gwc/service/tms/1.0.0/INCA:pyramide_proto_pbf@EPSG%3A3857@pbf/{z}/{x}/{-y}.pbf"
+   ],
+   "grids":[
+
+   ],
+   "data":[
+
+   ],
+   "version":"1.0.0",
+   "template":null,
+   "legend":null,
+   "vector_layers":[
+      {
+         "description":"vegetation",
+         "version": 1,
+         "extent": [],
+         "id":"ocs - vegetation",
+         "source":"pyramide_proto",
+         "name":"ocs_vegetation_surf",
+         "geometry_type":"fill",
+         "minzoom":0,
+         "maxzoom":20,
+         "fields": {
+             "class": [],
+             "values": []
+         },
+         "tiles":[
+            "http://calac-4.ign.fr:8080/geoserver/gwc/service/tms/1.0.0/INCA:pyramide_proto_pbf@EPSG%3A3857@pbf/{z}/{x}/{-y}.pbf"
+         ]
+      }
+  ]
+}

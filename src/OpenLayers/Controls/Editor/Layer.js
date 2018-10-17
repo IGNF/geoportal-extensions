@@ -82,7 +82,7 @@ Layer.prototype._initialize = function () {
 
     var _objDefault = {
         "id" : "",
-        "type" : "", // TODO : icone sur le type de geometrie
+        "type" : "", // TODO : icone sur le type de geometrie (symbo)
         "source" : "",
         "source-layer" : ""
     };

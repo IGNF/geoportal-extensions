@@ -739,6 +739,26 @@ var LayerImportDOM = {
         var container = document.createElement("div");
         container.className = "GPpanelHeader";
 
+        // return picto
+        var returnDiv = document.createElement("div");
+        returnDiv.id = this._addUID("GPimportMapBoxPanelReturnPicto");
+        returnDiv.title = "Masquer le panneau";
+        returnDiv.className = "";
+        if (returnDiv.addEventListener) {
+            returnDiv.addEventListener("click", function (e) {
+                // document.getElementById(context._addUID("GPimportMapBoxPanel")).style.display = "none";
+                // document.getElementById(context._addUID("GPimportPanel")).style.display = "none";
+                context._onMapBoxReturnPictoClick(e);
+            });
+        } else if (returnDiv.attachEvent) {
+            returnDiv.attachEvent("onclick", function (e) {
+                // document.getElementById(context._addUID("GPimportMapBoxPanel")).style.display = "none";
+                // document.getElementById(context._addUID("GPimportPanel")).style.display = "none";
+                context._onMapBoxReturnPictoClick(e);
+            });
+        }
+        container.appendChild(returnDiv);
+
         // panel title
         var panelTitle = document.createElement("div");
         panelTitle.className = "GPpanelTitle";
@@ -752,13 +772,13 @@ var LayerImportDOM = {
             closeDiv.addEventListener("click", function () {
                 document.getElementById(context._addUID("GPimportMapBoxPanel")).style.display = "none";
                 document.getElementById(context._addUID("GPimportPanel")).style.display = "";
-                context._onGetCapPanelClose();
+                context._onMapBoxPanelClose();
             });
         } else if (closeDiv.attachEvent) {
             closeDiv.attachEvent("click", function () {
                 document.getElementById(context._addUID("GPimportMapBoxPanel")).style.display = "none";
                 document.getElementById(context._addUID("GPimportPanel")).style.display = "";
-                context._onGetCapPanelClose();
+                context._onMapBoxPanelClose();
             });
         }
         closeDiv.className = "GPpanelClose";
