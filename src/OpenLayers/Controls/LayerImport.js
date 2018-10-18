@@ -1041,33 +1041,32 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
                                 minZoom : _glSource.minzoom || 1,
                                 tileSize : _glSource.tileSize || 256
                             }),
-                            urls : _glTiles,
-                            _title : _title,
-                            _description : _description,
-                            _quicklookUrl : _quicklookUrl,
-                            _metadata : _metadata,
-                            _legends : _legends,
-                            _originators : _originators
+                            urls : _glTiles
                         });
+                        vectorSource._title = _title;
+                        vectorSource._description = _description;
+                        vectorSource._quicklookUrl = _quicklookUrl;
+                        vectorSource._metadata = _metadata;
+                        vectorSource._legends = _legends;
+                        vectorSource._originators = _originators;
                         vectorLayer = new ol.layer.VectorTile({
-                            id : _glSourceId,
-                            gpResultLayerId : "layerimport:" + this._currentImportType,
-                            // metadata : _glStyle.metadata, // TODO utile ?
                             source : vectorSource,
                             visible : false,
                             // zIndex: 0, // FIXME gerer l'ordre sur des multisources ?
                             declutter : true // TODO utile ?
                         });
+                        vectorLayer.id = _glSourceId;
+                        vectorLayer.gpResultLayerId = "layerimport:" + this._currentImportType;
                     } else if (_glUrl) {
                         // service avec un tilejson
                         vectorFormat = new ol.format.MVT();
                         vectorLayer = new ol.layer.VectorTile({
-                            id : _glSourceId,
-                            gpResultLayerId : "layerimport:" + this._currentImportType,
                             visible : false,
                             // zIndex : 0
                             declutter : true
                         });
+                        vectorLayer.id = _glSourceId;
+                        vectorLayer.gpResultLayerId = "layerimport:" + this._currentImportType;
                         var vectorTileJson = new ol.source.TileJSON({
                             url : _glUrl
                         });
@@ -1095,14 +1094,14 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
                                         minZoom : _tileJSONDoc.minzoom || _glSource.minzoom || 0,
                                         tileSize : _tileJSONDoc.tileSize || _glSource.tileSize || 256
                                     }),
-                                    urls : tiles,
-                                    _title : _title,
-                                    _description : _description,
-                                    _quicklookUrl : _quicklookUrl,
-                                    _metadata : _metadata,
-                                    _legends : _legends,
-                                    _originators : _originators
+                                    urls : tiles
                                 });
+                                vectorSource._title = _title;
+                                vectorSource._description = _description;
+                                vectorSource._quicklookUrl = _quicklookUrl;
+                                vectorSource._metadata = _metadata;
+                                vectorSource._legends = _legends;
+                                vectorSource._originators = _originators;
                                 vectorLayer.setSource(vectorSource);
                                 vectorLayer.set("mapbox-extension", _tileJSONDoc["vector_layers"]);
                                 ol.Observable.unByKey(_key);
@@ -1119,100 +1118,151 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
                     vectorSource = new ol.source.VectorTile({
                         attributions : _glSource.attribution,
                         format : vectorFormat,
-                        url : _glData,
-                        _title : _title,
-                        _description : _description,
-                        _quicklookUrl : _quicklookUrl,
-                        _metadata : _metadata,
-                        _legends : _legends,
-                        _originators : _originators
+                        url : _glData
                     });
+                    vectorSource._title = _title;
+                    vectorSource._description = _description;
+                    vectorSource._quicklookUrl = _quicklookUrl;
+                    vectorSource._metadata = _metadata;
+                    vectorSource._legends = _legends;
+                    vectorSource._originators = _originators;
                     vectorLayer = new ol.layer.VectorTile({
-                        id : _glSourceId,
-                        gpResultLayerId : "layerimport:" + this._currentImportType,
                         source : vectorSource,
                         visible : false,
                         // zIndex: 0, // FIXME gerer l'ordre sur des multisources ?
                         declutter : true // TODO utile ?
                     });
+                    vectorLayer.id = _glSourceId;
+                    vectorLayer.gpResultLayerId = "layerimport:" + this._currentImportType;
                 } else {
                     logger.warn("Type MapBox format unknown !");
                     return;
                 }
 
-                // TODO ajouter le style de type background !
-                // fonction de style de la couche
-                var setStyle = function () {
-                    ol.olms.applyStyle(vectorLayer, _glStyle, _glSourceId)
-                        .then(function () {
-                            var visibility = true;
-                            vectorLayer.setVisible(visibility);
-                            var opacity = 1;
-                            vectorLayer.setOpacity(opacity);
-                        })
-                        .then(function () {
-                            // gestion du centre de la cate sur la carte si center renseigné !
-                            var projCode = map.getView().getProjection().getCode();
-                            if (map.getView() && _glStyle.center && _glStyle.center.length) {
-                                map.getView().setCenter(ol.proj.transform(_glStyle.center, "EPSG:4326", projCode));
-                            }
-
-                            // gestion du zoom sur la carte si zoom renseigné !
-                            if (map.getView() && (_glStyle.zoom || _glStyle.zoom === 0)) {
-                                map.getView().setZoom(_glStyle.zoom);
-                            }
-
-                            // zoom sur l'étendue des entités récupérées (si possible)
-                            if (map.getView() && map.getSize() && vectorSource.getExtent) {
-                                var sourceExtent = vectorSource.getExtent();
-                                if (sourceExtent && sourceExtent[0] !== Infinity) {
-                                    map.getView().fit(vectorSource.getExtent(), map.getSize());
-                                }
-                            }
-                        })
-                        .catch(function (e) {
-                            logger.error(e);
-                        });
+                // parametre à transmettre à la fonction auto-invoquée
+                var params = {
+                    id : _glSourceId,
+                    styles : _glStyle,
+                    layer : vectorLayer,
+                    options : {
+                        title : layerName || _title,
+                        description : _description,
+                        quicklookUrl : _quicklookUrl,
+                        metadata : _metadata,
+                        legends : _legends,
+                        originators : _originators
+                    }
                 };
-
-                // ajout des styles dans la carte pour une utilisation
-                // eventuelle (ex. editeur)
-                // > map.set("mapbox-styles")
-                var _objStyles = map.get("mapbox-styles") || {};
-                _objStyles[_glSourceId] = _glStyle;
-                map.set("mapbox-styles", _objStyles);
-
-                // TODO ajout des differents styles de la couche
-                // pour une utilisation eventuelle (ex. editeur)
-                // > layer.set("mapbox-styles")
-
-                // ajout du layer sur la carte
-                map.addLayer(vectorLayer);
-
-                // application du style
-                if (vectorLayer.getSource()) {
-                    setStyle();
-                } else {
-                    vectorLayer.once("change:source", setStyle);
-                }
-
-                // maj du gestionnaire de couche
-                map.getControls().forEach(
-                    function (control) {
-                        if (control instanceof LayerSwitcher) {
-                            control.addLayer(
-                                vectorLayer, {
-                                    title : layerName || _title,
-                                    description : _description,
-                                    quicklookUrl : _quicklookUrl,
-                                    metadata : _metadata,
-                                    legends : _legends,
-                                    originators : _originators
+                // fonction auto-invoquée
+                (function (p) {
+                    // TODO ajouter le style de type background !
+                    // fonction de style de la couche
+                    var setStyle = function () {
+                        olms.applyStyle(p.layer, p.styles, p.id)
+                            .then(function () {
+                                var visibility = true;
+                                p.layer.setVisible(visibility);
+                                var opacity = 1;
+                                p.layer.setOpacity(opacity);
+                            })
+                            .then(function () {
+                                // gestion du centre de la cate sur la carte si center renseigné !
+                                var projCode = map.getView().getProjection().getCode();
+                                if (map.getView() && p.styles.center && p.styles.center.length) {
+                                    map.getView().setCenter(ol.proj.transform(p.styles.center, "EPSG:4326", projCode));
                                 }
-                            );
+
+                                // gestion du zoom sur la carte si zoom renseigné !
+                                if (map.getView() && (p.styles.zoom || p.styles.zoom === 0)) {
+                                    map.getView().setZoom(p.styles.zoom);
+                                }
+
+                                // zoom sur l'étendue des entités récupérées (si possible)
+                                var source = p.layer.getSource();
+                                if (map.getView() && map.getSize() && source.getExtent) {
+                                    var sourceExtent = source.getExtent();
+                                    if (sourceExtent && sourceExtent[0] !== Infinity) {
+                                        map.getView().fit(source.getExtent(), map.getSize());
+                                    }
+                                }
+                            })
+                            .then(function () {
+                                // // affichage du panneau des couches accessibles à l'edition
+                                // self._importPanel.style.display = "none";
+                                // self._mapBoxPanel.style.display = "block";
+                                //
+                                // // editeur de styles
+                                // self.editor = new Editor({
+                                //     target : self._mapBoxResultsListContainer,
+                                //     style : self._mapBoxObj,
+                                //     events : { // TODO...
+                                //         "editor:layer:visibility" : self._onChangeVisibilitySourceMapBox,
+                                //         "editor:style:minScale" : self._onChangeScaleMinSourceMapBox,
+                                //         "editor:style:maxScale" : self._onChangeScaleMaxSourceMapBox
+                                //     },
+                                //     tools : {
+                                //         themes : false,
+                                //         layers : true,
+                                //         style : self.options.vectorStyleOptions.MapBox.tools.style,
+                                //         filter : self.options.vectorStyleOptions.MapBox.tools.filter
+                                //     }
+                                // });
+                                // // abonements sur les evenements suivants :
+                                // EventBus.addEventListener("editor:layer:visibility", self._onChangeVisibilitySourceMapBox, self);
+                                // EventBus.addEventListener("editor:style:minScale", self._onChangeScaleMinSourceMapBox, self);
+                                // EventBus.addEventListener("editor:style:maxScale", self._onChangeScaleMaxSourceMapBox, self);
+                            })
+                            .catch(function (e) {
+                                logger.error(e);
+                            });
+                    };
+
+                    // etat des layers en cours
+                    logger.warn(p.layer);
+
+                    // ajout des styles dans la carte pour une utilisation
+                    // eventuelle (ex. editeur)
+                    // > map.set("mapbox-styles")
+                    var _allStyles = map.get("mapbox-styles") || {};
+                    _allStyles[p.id] = p.styles;
+                    map.set("mapbox-styles", _allStyles);
+
+                    // ajout des differents styles de la couche
+                    // pour une utilisation eventuelle (ex. editeur)
+                    // > layer.set("mapbox-styles")
+                    var _styles = [];
+                    var _glLayers = p.styles.layers;
+                    for (var ii = 0; ii < _glLayers.length; ii++) {
+                        var _glLayer = _glLayers[ii];
+                        if (_glLayer.source === p.id) {
+                            _styles.push(_glLayer);
+                            continue;
                         }
                     }
-                );
+                    p.layer.set("mapbox-styles", _styles);
+
+                    // ajout du layer sur la carte
+                    map.addLayer(p.layer);
+
+                    // application du style
+                    if (p.layer.getSource()) {
+                        setStyle();
+                    } else {
+                        p.layer.once("change:source", setStyle);
+                    }
+
+                    // maj du gestionnaire de couche
+                    map.getControls().forEach(
+                        function (control) {
+                            if (control instanceof LayerSwitcher) {
+                                control.addLayer(
+                                    p.layer,
+                                    p.options
+                                );
+                            }
+                        }
+                    );
+                })(params);
             }
         }
 
@@ -1221,28 +1271,25 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
         this._mapBoxPanel.style.display = "block";
 
         // editeur de styles
-        var that = this;
-        setTimeout(function () {
-            this.editor = new Editor({
-                target : that._mapBoxResultsListContainer,
-                style : that._mapBoxObj,
-                events : { // TODO...
-                    "editor:layer:visibility" : that._onChangeVisibilitySourceMapBox,
-                    "editor:style:minScale" : that._onChangeScaleMinSourceMapBox,
-                    "editor:style:maxScale" : that._onChangeScaleMaxSourceMapBox
-                },
-                tools : {
-                    themes : false,
-                    layers : true,
-                    style : that.options.vectorStyleOptions.MapBox.tools.style,
-                    filter : that.options.vectorStyleOptions.MapBox.tools.filter
-                }
-            });
-            // abonements sur les evenements suivants :
-            EventBus.addEventListener("editor:layer:visibility", that._onChangeVisibilitySourceMapBox, that);
-            EventBus.addEventListener("editor:style:minScale", that._onChangeScaleMinSourceMapBox, that);
-            EventBus.addEventListener("editor:style:maxScale", that._onChangeScaleMaxSourceMapBox, that);
-        }, 300);
+        this.editor = new Editor({
+            target : this._mapBoxResultsListContainer,
+            style : this._mapBoxObj,
+            events : { // TODO...
+                "editor:layer:visibility" : this._onChangeVisibilitySourceMapBox,
+                "editor:style:minScale" : this._onChangeScaleMinSourceMapBox,
+                "editor:style:maxScale" : this._onChangeScaleMaxSourceMapBox
+            },
+            tools : {
+                themes : false,
+                layers : true,
+                style : this.options.vectorStyleOptions.MapBox.tools.style,
+                filter : this.options.vectorStyleOptions.MapBox.tools.filter
+            }
+        });
+        // abonements sur les evenements suivants :
+        EventBus.addEventListener("editor:layer:visibility", this._onChangeVisibilitySourceMapBox, this);
+        EventBus.addEventListener("editor:style:minScale", this._onChangeScaleMinSourceMapBox, this);
+        EventBus.addEventListener("editor:style:maxScale", this._onChangeScaleMaxSourceMapBox, this);
 
         // TODO style par defaut au cas où l'application du style échoue !
         // FIXME bug avec le geojson, très bizarre !?
@@ -1459,13 +1506,7 @@ LayerImport.prototype._onChangeVisibilitySourceMapBox = function (e) {
                 }
             }
             olms.applyStyle(layer, this._mapBoxObj, target.data.source)
-                .then(function () {
-                    // comment on force un update mais exception !?
-                    // https://openlayers.org/en/v4.6.5/doc/errors/#58
-                    // var copyLayer = layer;
-                    // map.removeLayer(layer);
-                    // map.addLayer(copyLayer);
-                })
+                .then(function () {})
                 .catch(function (error) {
                     logger.error(error);
                 });
@@ -1498,13 +1539,7 @@ LayerImport.prototype._onChangeScaleMinSourceMapBox = function (e) {
                 }
             }
             olms.applyStyle(layer, this._mapBoxObj, target.data.source)
-                .then(function () {
-                    // comment on force un update mais exception !?
-                    // https://openlayers.org/en/v4.6.5/doc/errors/#58
-                    // var copyLayer = layer;
-                    // map.removeLayer(layer);
-                    // map.addLayer(copyLayer);
-                })
+                .then(function () {})
                 .catch(function (error) {
                     logger.error(error);
                 });
@@ -1537,13 +1572,7 @@ LayerImport.prototype._onChangeScaleMaxSourceMapBox = function (e) {
                 }
             }
             olms.applyStyle(layer, this._mapBoxObj, target.data.source)
-                .then(function () {
-                    // comment on force un update mais exception !?
-                    // https://openlayers.org/en/v4.6.5/doc/errors/#58
-                    // var copyLayer = layer;
-                    // map.removeLayer(layer);
-                    // map.addLayer(copyLayer);
-                })
+                .then(function () {})
                 .catch(function (error) {
                     logger.error(error);
                 });
