@@ -1,32 +1,32 @@
 {
     "type": "color",
-    "url"       : "https://wxs.ign.fr/va5orxd0pgzvq3jxutqfuy0b/geoportail/v/wms",
-    "protocol"  : "wms",
-    "version"   : "1.3.0",
     "id"        : "Region",
-    "name"      : "REGION.2016",
-    "style"      : "",
-    "projection" : "EPSG:4326",
-    "transparent" : true,
-    "featureInfoMimeType" : "",
-    "dateTime"  : "",
-    "heightMapWidth" : 256,
-    "waterMask"      : false,
-    "updateStrategy": {
-        "type": 0,
-        "options": {}
-    },
-    "networkOptions" : {
-        "crossOrigin" : "omit"
-    },
-    "extent": {
-        "west": "-61.80983300000002",
-        "east": "55.83665389999998",
-        "south": "-21.38963079935857",
-        "north": "51.0890011990783"
-    },
-    "options": {
-        "mimetype"  : "image/png",
+    "source": {
+        "url"       : "https://wxs.ign.fr/va5orxd0pgzvq3jxutqfuy0b/geoportail/v/wms",
+        "protocol"  : "wms",
+        "version"   : "1.3.0",
+        "format"  : "image/png",
+        "name"      : "REGION.2016",
+        "style"      : "",
+        "projection" : "EPSG:3857",
+        "transparent" : true,
+        "featureInfoMimeType" : "",
+        "dateTime"  : "",
+        "heightMapWidth" : 256,
+        "waterMask"      : false,
+        "updateStrategy": {
+            "type": 0,
+            "options": {}
+        },
+        "networkOptions" : {
+            "crossOrigin" : "omit"
+        },
+        "extent": {
+            "west": "-6880639.13557728",
+            "east": "6215707.87974825",
+            "south": "-2438399.00148845",
+            "north": "7637050.03850605"
+        },
         "originators" :  [{
             "name" : "IGNRegion",
             "attribution" : "IGN Grandes Echelles",

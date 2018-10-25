@@ -2,6 +2,7 @@
 import Utils from "../../Common/Utils";
 import Config from "../../Common/Utils/Config";
 import Logger from "../../Common/Utils/LoggerByDefault";
+import * as Itowns from "itowns";
 
 var logger = Logger.getLogger("wmtsLayer");
 
@@ -49,36 +50,41 @@ function LayerWMTS (options) {
     if (layerId && Config.configuration.getLayerConf(layerId)) {
         var wmtsParams = Config.getLayerParams(options.layer, "WMTS", options.apiKey);
 
+        if (wmtsParams.projection === "EPSG:3857" && wmtsParams.extent) {
+            wmtsParams.extent = new Itowns.Extent("EPSG:4326", wmtsParams.extent.left, wmtsParams.extent.right, wmtsParams.extent.bottom, wmtsParams.extent.top).as("EPSG:3857");
+        } else {
+            wmtsParams.extent = new Itowns.Extent("EPSG:4326", wmtsParams.extent.left, wmtsParams.extent.right, wmtsParams.extent.bottom, wmtsParams.extent.top);
+        }
+
         // gestion de mixContent dans l'url du service...
         var ctx = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : null;
         var protocol = (ctx)
             ? (ctx.location && ctx.location.protocol && ctx.location.protocol.indexOf("https:") === 0 ? "https://" : "http://")
             : (options.ssl ? "https://" : "http://");
-
         this.type = "color";
-        this.protocol = "wmts";
         this.id = layerId;
-        this.url = wmtsParams.url.replace(/(http|https):\/\//, protocol);
-        this.updateStrategy = {
-            type : 0,
-            options : {}
-        };
-        this.networkOptions = {
-            crossOrigin : "omit"
-        };
-        this.projection = wmtsParams.projection;
-        this.options = {
+        this.source = {
+            protocol : "wmts",
+            url : wmtsParams.url.replace(/(http|https):\/\//, protocol),
+            networkOptions : {
+                crossOrigin : "omit"
+            },
+            updateStrategy : {
+                type : 0,
+                options : {}
+            },
+            projection : wmtsParams.projection,
             originators : wmtsParams.originators,
             name : options.layer,
-            mimetype : wmtsParams.format,
+            format : wmtsParams.format,
             tileMatrixSet : wmtsParams.TMSLink,
+            tileMatrixSetLimits : wmtsParams.tileMatrixSetLimits,
             extent : {
-                west : wmtsParams.extent.left,
-                east : wmtsParams.extent.right,
-                south : wmtsParams.extent.bottom,
-                north : wmtsParams.extent.top
-            },
-            tileMatrixSetLimits : wmtsParams.tileMatrices
+                west : wmtsParams.extent.west(),
+                east : wmtsParams.extent.east(),
+                south : wmtsParams.extent.south(),
+                north : wmtsParams.extent.north()
+            }
         };
 
         // récupération des autres paramètres passés par l'utilisateur

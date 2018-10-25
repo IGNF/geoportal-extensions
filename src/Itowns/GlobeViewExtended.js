@@ -281,7 +281,7 @@ GlobeViewExtended.prototype.forget = function (type, callback) {
  */
 GlobeViewExtended.prototype.addLayer = function (layer) {
     // FIXME : to delete when itowns commit 2e9ed61eb4aa2a4bbe0e17c8e2650953844b099e
-    // is integrated into an iTowns release 
+    // is integrated into an iTowns release
     try {
         var promise = this.getGlobeView().addLayer(layer);
         this.getGlobeView().notifyChange(true);
@@ -762,7 +762,7 @@ GlobeViewExtended.prototype.getRange = function () {
  * @return {THREE.Vector3} position
  */
 GlobeViewExtended.prototype.moveTarget = function () {
-    return this.getGlobeView().controls.moveTarget();
+    return this.getGlobeView().controls.getCameraTargetPosition();
 };
 
 /**

@@ -162,19 +162,19 @@ MiniGlobe.prototype._initContainer = function () {
 
 MiniGlobe.prototype._baseLayer = {
     type : "color",
-    protocol : "wmts",
     id : "Maps",
-    url : "https://wxs.ign.fr/an7nvfzojv5wa96dsga5nk8w/geoportail/wmts",
     updateStrategy : {
         type : "0",
         options : {}
     },
-    networkOptions : {
-        crossOrigin : "omit"
-    },
-    options : {
+    source : {
+        protocol : "wmts",
+        url : "https://wxs.ign.fr/an7nvfzojv5wa96dsga5nk8w/geoportail/wmts",
         name : "GEOGRAPHICALGRIDSYSTEMS.MAPS",
-        mimetype : "image/jpeg",
+        networkOptions : {
+            crossOrigin : "omit"
+        },
+        format : "image/jpeg",
         tileMatrixSet : "PM",
         tileMatrixSetLimits : {
             0 : {

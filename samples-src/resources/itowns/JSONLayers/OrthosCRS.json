@@ -1,17 +1,17 @@
 {
     "type": "color",
-    "protocol":   "wmts",
-    "id":         "OrthoCRS",
-    "url":        "http://wxs.ign.fr/va5orxd0pgzvq3jxutqfuy0b/geoportail/wmts",
-    "fx" :        1.0,
-    "updateStrategy": {
-        "type": 0,
-        "options": {}
-    },
-    "networkOptions" : {
-        "crossOrigin" : "omit"
-    },
-    "options": {
+    "id": "OrthoCRS",
+    "source": {
+        "protocol": "wmts",
+        "url": "http://wxs.ign.fr/va5orxd0pgzvq3jxutqfuy0b/geoportail/wmts",
+        "fx" :  1.0,
+        "updateStrategy": {
+            "type": 0,
+            "options": {}
+        },
+        "networkOptions" : {
+            "crossOrigin" : "omit"
+        },
         "name": "ORTHOIMAGERY.ORTHOPHOTOS.CRS84",
         "originators" :  [{
             "name" : "IGNCRS",
@@ -22,7 +22,8 @@
             "name":"IGN",
             "url":"http://www.ign.fr/"
         },
-        "mimetype": "image/jpeg",
+        "format": "image/jpeg",
+        "projection" : "EPSG:4326",
         "tileMatrixSet": "WGS84G",
         "extent": {
             "west": "-178.187",
@@ -31,7 +32,6 @@
             "north": "51.0945"
         },
         "tileMatrixSetLimits": {
-
             "6" : {
                 "minTileRow" : 13,
                 "maxTileRow" : 39,

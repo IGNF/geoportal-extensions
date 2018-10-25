@@ -1,16 +1,16 @@
 {
     "type": "color",
-    "protocol":   "wmts",
     "id":         "Ortho",
-    "url":        "http://wxs.ign.fr/va5orxd0pgzvq3jxutqfuy0b/geoportail/wmts",
-    "updateStrategy": {
-        "type": "0",
-        "options": {}
-    },
-    "networkOptions" : {
-        "crossOrigin" : "omit"
-    },
-    "options": {
+    "source": {
+        "protocol":   "wmts",
+        "url":        "http://wxs.ign.fr/va5orxd0pgzvq3jxutqfuy0b/geoportail/wmts",
+        "updateStrategy": {
+            "type": "0",
+            "options": {}
+        },
+        "networkOptions" : {
+            "crossOrigin" : "omit"
+        },
 		"originators" :  [{
             "name" : "IGN GE",
             "attribution" : "IGN Grandes Echelles",
@@ -71,7 +71,7 @@
             "url":"http://www.ign.fr/"
         },
         "name": "ORTHOIMAGERY.ORTHOPHOTOS",
-        "mimetype": "image/jpeg",
+        "format": "image/jpeg",
         "tileMatrixSet": "PM",
         "tileMatrixSetLimits": {
             "2": {

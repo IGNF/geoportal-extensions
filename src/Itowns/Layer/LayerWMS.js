@@ -2,6 +2,7 @@
 import Utils from "../../Common/Utils";
 import Config from "../../Common/Utils/Config";
 import Logger from "../../Common/Utils/LoggerByDefault";
+import * as Itowns from "itowns";
 
 var logger = Logger.getLogger("wmsLayer");
 
@@ -49,6 +50,12 @@ function LayerWMS (options) {
     if (layerId && Config.configuration.getLayerConf(layerId)) {
         var wmsParams = Config.getLayerParams(options.layer, "WMS", options.apiKey);
 
+        if (wmsParams.projection === "EPSG:3857" && wmsParams.extent) {
+            wmsParams.extent = new Itowns.Extent("EPSG:4326", wmsParams.extent.left, wmsParams.extent.right, wmsParams.extent.bottom, wmsParams.extent.top).as("EPSG:3857");
+        } else {
+            wmsParams.extent = new Itowns.Extent("EPSG:4326", wmsParams.extent.left, wmsParams.extent.right, wmsParams.extent.bottom, wmsParams.extent.top);
+        }
+
         // gestion de mixContent dans l'url du service...
         var ctx = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : null;
         var protocol = (ctx)
@@ -56,29 +63,30 @@ function LayerWMS (options) {
             : (options.ssl ? "https://" : "http://");
 
         this.type = "color";
-        this.protocol = "wms";
-        this.version = wmsParams.version;
         this.id = layerId;
-        this.name = options.layer;
-        this.url = wmsParams.url.replace(/(http|https):\/\//, protocol);
-        this.updateStrategy = {
-            type : 0,
-            options : {}
-        };
-        this.heightMapWidth = 256;
-        this.waterMask = false;
-        this.networkOptions = {
-            crossOrigin : "omit"
-        };
-        this.projection = wmsParams.projection;
-        this.options = {
+        this.source = {
+            protocol : "wms",
+            version : wmsParams.version,
             originators : wmsParams.originators,
-            mimetype : wmsParams.format,
+            url : wmsParams.url.replace(/(http|https):\/\//, protocol),
+            name : options.layer,
+            projection : wmsParams.projection,
+            style : "",
+            heightMapWidth : 256,
+            waterMask : false,
+            networkOptions : {
+                crossOrigin : "omit"
+            },
+            updateStrategy : {
+                type : 0,
+                options : {}
+            },
+            format : wmsParams.format,
             extent : {
-                west : wmsParams.extent.left,
-                east : wmsParams.extent.right,
-                south : wmsParams.extent.bottom,
-                north : wmsParams.extent.top
+                west : wmsParams.extent.west(),
+                east : wmsParams.extent.east(),
+                south : wmsParams.extent.south(),
+                north : wmsParams.extent.north()
             }
         };
 
