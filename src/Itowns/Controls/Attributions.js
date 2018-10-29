@@ -211,11 +211,6 @@ Attributions.prototype._inRangeUpdate = function (layersDisplayed, extent) {
     for (var h = 0; h < layersDisplayed.length; h++) {
         var layer = globe.getLayerById(layersDisplayed[h]);
 
-        // FIXME itowns bug : itowns should only returns visible layers
-        if (!layer.visible) {
-            continue;
-        }
-
         var ori = layer.options.originators;
 
         if (ori) {

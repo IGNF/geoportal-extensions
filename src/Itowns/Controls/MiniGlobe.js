@@ -31,11 +31,9 @@ function MiniGlobe (options) {
     this._initialize();
 
     var container = this._initContainer();
-    var vDiv = document.getElementById("viewerDiv");
     this._options = options;
 
-    // by default, adds the control on the viewerDiv
-    var targetDiv = document.getElementById(options.target) || vDiv;
+    var targetDiv = document.getElementById(options.target) || null;
 
     Widget.call(
         this, {
@@ -96,8 +94,8 @@ MiniGlobe.prototype.setGlobe = function (globe) {
             var range = globe.getRange();
             var distance = Math.min(Math.max(range * 1.5, minDistance), maxDistance);
             // Update target miniview's camera
-            miniView.setCameraPosition(globe.moveTarget(), distance);
-            miniView.lookAt(globe.moveTarget());
+            miniView.setCameraPosition(globe.getCameraTargetPosition(), distance);
+            miniView.lookAt(globe.getCameraTargetPosition());
             miniView.notifyChange();
         };
         globe.listen(GlobeViewExtended.EVENTS.AFTER_RENDER, updateMiniGlobeHandler);
@@ -162,19 +160,19 @@ MiniGlobe.prototype._initContainer = function () {
 
 MiniGlobe.prototype._baseLayer = {
     type : "color",
+    protocol : "wmts",
     id : "Maps",
+    url : "https://wxs.ign.fr/an7nvfzojv5wa96dsga5nk8w/geoportail/wmts",
+    format : "image/jpeg",
     updateStrategy : {
         type : "0",
         options : {}
     },
-    source : {
-        protocol : "wmts",
-        url : "https://wxs.ign.fr/an7nvfzojv5wa96dsga5nk8w/geoportail/wmts",
+    networkOptions : {
+        crossOrigin : "omit"
+    },
+    options : {
         name : "GEOGRAPHICALGRIDSYSTEMS.MAPS",
-        networkOptions : {
-            crossOrigin : "omit"
-        },
-        format : "image/jpeg",
         tileMatrixSet : "PM",
         tileMatrixSetLimits : {
             0 : {
