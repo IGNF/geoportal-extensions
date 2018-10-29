@@ -68,7 +68,7 @@ function LayerElevation (options) {
         this.updateStrategy = {
             type : 1,
             options : {
-                groups : [3, 7, 11, 14]
+                groups : [11, 14]
             }
         };
         this.source = {
