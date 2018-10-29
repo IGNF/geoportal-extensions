@@ -1,47 +1,63 @@
 {
     "type": "color",
-    "url"       : "https://wxs.ign.fr/va5orxd0pgzvq3jxutqfuy0b/geoportail/v/wms",
-    "protocol"  : "wms",
-    "version"   : "1.3.0",
-    "id"        : "Region",
-    "name"      : "REGION.2016",
-    "style"      : "",
-    "projection" : "EPSG:4326",
-    "transparent" : true,
-    "featureInfoMimeType" : "",
-    "dateTime"  : "",
-    "heightMapWidth" : 256,
-    "waterMask"      : false,
-    "updateStrategy": {
+    "id": "REGION.2016$GEOPORTAIL:OGC:WMS",
+    "source": {
+      "protocol": "wms",
+      "version": "1.3.0",
+      "originators": [
+        {
+          "name": "IGN",
+          "attribution": "Institut national de l'information géographique et forestière",
+          "logo": "http://wxs.ign.fr/static/logos/IGN/IGN.gif",
+          "url": "http://www.ign.fr",
+          "constraints": [
+            {
+              "crs": "EPSG:4326",
+              "bbox": {
+                "left": -61.809834,
+                "right": 55.836655,
+                "top": 51.08899,
+                "bottom": -21.389631
+              },
+              "minScaleDenominator": 0,
+              "maxScaleDenominator": 559082265,
+              "temporalExtent": [
+                "2016-08-19",
+                "2016-08-19"
+              ]
+            }
+          ]
+        }
+      ],
+      "url": "http://wxs.ign.fr/ptlp78g6fvz9daz5mg2fztvr/geoportail/v/wms",
+      "name": "REGION.2016",
+      "projection": "EPSG:3857",
+      "style": "",
+      "heightMapWidth": 256,
+      "waterMask": false,
+      "networkOptions": {
+        "crossOrigin": "omit"
+      },
+      "updateStrategy": {
         "type": 0,
         "options": {}
+      },
+      "format": "image/png",
+      "extent": {
+        "west": -6880639.246896768,
+        "east": 6215708.002199693,
+        "south": -2438399.025475969,
+        "north": 6637050.1450065365
+      }
     },
-    "networkOptions" : {
-        "crossOrigin" : "omit"
-    },
-    "extent": {
-        "west": "-61.80983300000002",
-        "east": "55.83665389999998",
-        "south": "-21.38963079935857",
-        "north": "51.0890011990783"
-    },
-    "options": {
-        "mimetype"  : "image/png",
-        "originators" :  [{
-            "name" : "IGNRegion",
-            "attribution" : "IGN Grandes Echelles",
-            "url" : "http://www.ign.fr",
-            "constraints" : [{
-                "crs":"EPSG:4326"
-            }]
-        }],
-        "attribution" : {
-            "name":"IGN",
-            "url":"http://www.ign.fr/"
-        },
-        "zoom" : {
-            "min": 5,
-            "max": 21
-        }
-    }
-}
+    "opacity": 0.5,
+    "metadata": [
+      {
+        "format": "xml",
+        "url": "http://wxs.ign.fr/geoportail/csw?service=CSW&version=2.0.2&request=GetRecordById&Id=IGNF_BDTOPOr_2-0.xml"
+      }
+    ],
+    "description": "Les régions sont des collectivités territoriales décentralisées et des divisions administratives du territoire français. Données issues de la BD TOPO (édition avril 2016)",
+    "title": "Régions 2016",
+    "quicklookUrl": "http://wxs.ign.fr/static/pictures/NOPIC.JPG"
+  }
