@@ -4,7 +4,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/itowns_backstop_MousePosition__default_0_dividGPmousePosition-_0_phone.png",
-        "test": "../bitmaps_test/20180606-143818/itowns_backstop_MousePosition__default_0_dividGPmousePosition-_0_phone.png",
+        "test": "../bitmaps_test/20181026-104211/itowns_backstop_MousePosition__default_0_dividGPmousePosition-_0_phone.png",
         "selector": "div[id^=GPmousePosition-]",
         "fileName": "itowns_backstop_MousePosition__default_0_dividGPmousePosition-_0_phone.png",
         "label": "MousePosition : default",
@@ -16,7 +16,8 @@ report({
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.00"
+          "misMatchPercentage": "0.00",
+          "analysisTime": 19
         }
       },
       "status": "pass"
@@ -24,7 +25,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/itowns_backstop_MousePosition__default_0_dividGPmousePosition-_1_tablet.png",
-        "test": "../bitmaps_test/20180606-143818/itowns_backstop_MousePosition__default_0_dividGPmousePosition-_1_tablet.png",
+        "test": "../bitmaps_test/20181026-104211/itowns_backstop_MousePosition__default_0_dividGPmousePosition-_1_tablet.png",
         "selector": "div[id^=GPmousePosition-]",
         "fileName": "itowns_backstop_MousePosition__default_0_dividGPmousePosition-_1_tablet.png",
         "label": "MousePosition : default",
@@ -36,7 +37,8 @@ report({
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.00"
+          "misMatchPercentage": "0.00",
+          "analysisTime": 26
         }
       },
       "status": "pass"
@@ -44,7 +46,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/itowns_backstop_MousePosition__show_settings_0_document_0_phone.png",
-        "test": "../bitmaps_test/20180606-143818/itowns_backstop_MousePosition__show_settings_0_document_0_phone.png",
+        "test": "../bitmaps_test/20181026-104211/itowns_backstop_MousePosition__show_settings_0_document_0_phone.png",
         "selector": "document",
         "fileName": "itowns_backstop_MousePosition__show_settings_0_document_0_phone.png",
         "label": "MousePosition : show settings",
@@ -56,7 +58,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "analysisTime": 49
+          "analysisTime": 35
         }
       },
       "status": "pass"
@@ -64,7 +66,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/itowns_backstop_MousePosition__show_settings_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20180606-143818/itowns_backstop_MousePosition__show_settings_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20181026-104211/itowns_backstop_MousePosition__show_settings_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "itowns_backstop_MousePosition__show_settings_0_document_1_tablet.png",
         "label": "MousePosition : show settings",
@@ -84,7 +86,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/itowns_backstop_LayerSwitcher__default_0_dividGPlayerSwitcher-_0_phone.png",
-        "test": "../bitmaps_test/20180606-143818/itowns_backstop_LayerSwitcher__default_0_dividGPlayerSwitcher-_0_phone.png",
+        "test": "../bitmaps_test/20181026-104211/itowns_backstop_LayerSwitcher__default_0_dividGPlayerSwitcher-_0_phone.png",
         "selector": "div[id^=GPlayerSwitcher-]",
         "fileName": "itowns_backstop_LayerSwitcher__default_0_dividGPlayerSwitcher-_0_phone.png",
         "label": "LayerSwitcher : default",
@@ -95,7 +97,8 @@ report({
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.00"
+          "misMatchPercentage": "0.33",
+          "analysisTime": 20
         }
       },
       "status": "pass"
@@ -103,7 +106,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/itowns_backstop_LayerSwitcher__default_0_dividGPlayerSwitcher-_1_tablet.png",
-        "test": "../bitmaps_test/20180606-143818/itowns_backstop_LayerSwitcher__default_0_dividGPlayerSwitcher-_1_tablet.png",
+        "test": "../bitmaps_test/20181026-104211/itowns_backstop_LayerSwitcher__default_0_dividGPlayerSwitcher-_1_tablet.png",
         "selector": "div[id^=GPlayerSwitcher-]",
         "fileName": "itowns_backstop_LayerSwitcher__default_0_dividGPlayerSwitcher-_1_tablet.png",
         "label": "LayerSwitcher : default",
@@ -114,8 +117,8 @@ report({
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.00",
-          "analysisTime": 16
+          "misMatchPercentage": "0.41",
+          "analysisTime": 18
         }
       },
       "status": "pass"
@@ -123,7 +126,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/itowns_backstop_LayerSwitcher_interaction__add_a_layer_0_document_0_phone.png",
-        "test": "../bitmaps_test/20180606-143818/itowns_backstop_LayerSwitcher_interaction__add_a_layer_0_document_0_phone.png",
+        "test": "../bitmaps_test/20181026-104211/itowns_backstop_LayerSwitcher_interaction__add_a_layer_0_document_0_phone.png",
         "selector": "document",
         "fileName": "itowns_backstop_LayerSwitcher_interaction__add_a_layer_0_document_0_phone.png",
         "label": "LayerSwitcher (interaction) : add a layer",
@@ -134,47 +137,29 @@ report({
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "40.52",
-          "analysisTime": 40
+          "misMatchPercentage": "81.63",
+          "analysisTime": 26
         },
-        "diffImage": "../bitmaps_test/20180606-143818/failed_diff_itowns_backstop_LayerSwitcher_interaction__add_a_layer_0_document_0_phone.png"
+        "diffImage": "../bitmaps_test/20181026-104211/failed_diff_itowns_backstop_LayerSwitcher_interaction__add_a_layer_0_document_0_phone.png"
       },
       "status": "fail"
     },
     {
       "pair": {
-        "reference": "../../..",
-        "test": "../../..",
-        "selector": "",
-        "fileName": "",
-        "label": "",
-        "scenario": {
-          "label": "LayerSwitcher (interaction) : add a layer",
-          "url": "http://localhost:8087/test_rendering/itowns/interactions/layerswitcher.html",
-          "clickSelector": "#addLayer",
-          "misMatchThreshold": 30,
-          "delay": 10000,
-          "postInteractionWait": 10000,
-          "sIndex": 3,
-          "selectors": [
-            "document"
-          ]
-        },
-        "viewport": {
-          "label": "tablet",
-          "width": 1024,
-          "height": 768,
-          "vIndex": 1
-        },
-        "msg": "Chromy error",
-        "error": "Chromy error: Error. See scenario – LayerSwitcher (interaction) : add a layer (tablet)"
+        "reference": "../bitmaps_reference/itowns_backstop_LayerSwitcher_interaction__add_a_layer_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20181026-104211/itowns_backstop_LayerSwitcher_interaction__add_a_layer_0_document_1_tablet.png",
+        "selector": "document",
+        "fileName": "itowns_backstop_LayerSwitcher_interaction__add_a_layer_0_document_1_tablet.png",
+        "label": "LayerSwitcher (interaction) : add a layer",
+        "misMatchThreshold": 30,
+        "error": "Reference file not found /var/www/api-v3-plugins-git/geoportal-extensions/test_rendering/backstop_data/itowns/bitmaps_reference/itowns_backstop_LayerSwitcher_interaction__add_a_layer_0_document_1_tablet.png"
       },
       "status": "fail"
     },
     {
       "pair": {
         "reference": "../bitmaps_reference/itowns_backstop_LayerSwitcher_interaction__remove_a_layer_0_document_0_phone.png",
-        "test": "../bitmaps_test/20180606-143818/itowns_backstop_LayerSwitcher_interaction__remove_a_layer_0_document_0_phone.png",
+        "test": "../bitmaps_test/20181026-104211/itowns_backstop_LayerSwitcher_interaction__remove_a_layer_0_document_0_phone.png",
         "selector": "document",
         "fileName": "itowns_backstop_LayerSwitcher_interaction__remove_a_layer_0_document_0_phone.png",
         "label": "LayerSwitcher (interaction) : remove a layer",
@@ -185,8 +170,8 @@ report({
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.00",
-          "analysisTime": 34
+          "misMatchPercentage": "0.01",
+          "analysisTime": 44
         }
       },
       "status": "pass"
@@ -194,7 +179,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/itowns_backstop_LayerSwitcher_interaction__remove_a_layer_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20180606-143818/itowns_backstop_LayerSwitcher_interaction__remove_a_layer_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20181026-104211/itowns_backstop_LayerSwitcher_interaction__remove_a_layer_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "itowns_backstop_LayerSwitcher_interaction__remove_a_layer_0_document_1_tablet.png",
         "label": "LayerSwitcher (interaction) : remove a layer",
@@ -205,8 +190,8 @@ report({
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.04",
-          "analysisTime": 38
+          "misMatchPercentage": "0.16",
+          "analysisTime": 31
         }
       },
       "status": "pass"
@@ -214,7 +199,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/itowns_backstop_MNT_0_document_0_phone.png",
-        "test": "../bitmaps_test/20180606-143818/itowns_backstop_MNT_0_document_0_phone.png",
+        "test": "../bitmaps_test/20181026-104211/itowns_backstop_MNT_0_document_0_phone.png",
         "selector": "document",
         "fileName": "itowns_backstop_MNT_0_document_0_phone.png",
         "label": "MNT",
@@ -225,16 +210,17 @@ report({
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.01",
+          "misMatchPercentage": "80.82",
           "analysisTime": 32
-        }
+        },
+        "diffImage": "../bitmaps_test/20181026-104211/failed_diff_itowns_backstop_MNT_0_document_0_phone.png"
       },
-      "status": "pass"
+      "status": "fail"
     },
     {
       "pair": {
         "reference": "../bitmaps_reference/itowns_backstop_MNT_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20180606-143818/itowns_backstop_MNT_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20181026-104211/itowns_backstop_MNT_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "itowns_backstop_MNT_0_document_1_tablet.png",
         "label": "MNT",
@@ -245,11 +231,12 @@ report({
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.01",
-          "analysisTime": 31
-        }
+          "misMatchPercentage": "65.18",
+          "analysisTime": 36
+        },
+        "diffImage": "../bitmaps_test/20181026-104211/failed_diff_itowns_backstop_MNT_0_document_1_tablet.png"
       },
-      "status": "pass"
+      "status": "fail"
     }
   ]
 });
