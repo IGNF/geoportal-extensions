@@ -13,15 +13,11 @@
             "crossOrigin" : "omit"
         },
         "name": "ORTHOIMAGERY.ORTHOPHOTOS.CRS84",
-        "originators" :  [{
+        "attribution" :  [{
             "name" : "IGNCRS",
             "attribution" : "IGN Grandes Echelles",
             "url" : "http://www.ign.fr"
         }],
-        "attribution" : {
-            "name":"IGN",
-            "url":"http://www.ign.fr/"
-        },
         "format": "image/jpeg",
         "projection" : "EPSG:4326",
         "tileMatrixSet": "WGS84G",

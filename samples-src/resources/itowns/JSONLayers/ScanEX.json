@@ -12,7 +12,7 @@
         "networkOptions" : {
             "crossOrigin" : "omit"
         },
-        "originators" :  [{
+        "attribution" :  [{
           "name" : "IGNEX",
           "attribution" : "IGN Grandes Echelles",
           "url" : "http://www.ign.fr",

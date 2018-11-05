@@ -15,7 +15,7 @@
 			"crossOrigin" : "omit"
 		},
 		"name": "ELEVATION.ELEVATIONGRIDCOVERAGE",
-        "originators" :  [{
+        "attribution" :  [{
             "name" : "IGN",
             "attribution" : "IGN Grandes Echelles",
             "url" : "http://www.ign.fr",

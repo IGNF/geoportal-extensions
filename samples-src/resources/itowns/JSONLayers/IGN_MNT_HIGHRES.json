@@ -6,7 +6,7 @@
 		"protocol":   "wmts",
 		"url":        "http://wxs.ign.fr/va5orxd0pgzvq3jxutqfuy0b/geoportail/wmts",
 		"name": "ELEVATION.ELEVATIONGRIDCOVERAGE.HIGHRES",
-        "originators" :  [{
+        "attribution" :  [{
             "name" : "IGN",
             "attribution" : "IGN Grandes Echelles",
             "url" : "http://www.ign.fr",

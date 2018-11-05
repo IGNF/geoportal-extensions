@@ -27,7 +27,7 @@
             "south": "-2438399.00148845",
             "north": "7637050.03850605"
         },
-        "originators" :  [{
+        "attribution" :  [{
             "name" : "IGNRegion",
             "attribution" : "IGN Grandes Echelles",
             "url" : "http://www.ign.fr",
@@ -35,10 +35,6 @@
                 "crs":"EPSG:4326"
             }]
         }],
-        "attribution" : {
-            "name":"IGN",
-            "url":"http://www.ign.fr/"
-        },
         "zoom" : {
             "min": 5,
             "max": 21
