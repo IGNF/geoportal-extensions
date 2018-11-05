@@ -4,7 +4,7 @@
     "source": {
       "protocol": "wms",
       "version": "1.3.0",
-      "originators": [
+      "attribution": [
         {
           "name": "IGN",
           "attribution": "Institut national de l'information géographique et forestière",

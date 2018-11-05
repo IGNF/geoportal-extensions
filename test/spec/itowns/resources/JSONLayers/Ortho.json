@@ -12,7 +12,7 @@
         "options": {}
       },
       "projection": "EPSG:3857",
-      "originators": [
+      "attribution": [
         {
           "name": "SAINT-MARTIN",
           "attribution": "Saint-Martin",

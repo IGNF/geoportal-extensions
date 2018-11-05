@@ -19,7 +19,7 @@
 	  "networkOptions": {
 		"crossOrigin": "omit"
 	  },
-	  "originators": [
+	  "attribution": [
 		{
 		  "name": "IGN",
 		  "attribution": "Institut national de l'information géographique et forestière",
