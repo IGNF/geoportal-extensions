@@ -77,7 +77,7 @@ function LayerElevation (options) {
             networkOptions : {
                 crossOrigin : "omit"
             },
-            originators : wmtsParams.originators,
+            attribution : wmtsParams.originators,
             projection : wmtsParams.projection,
             name : options.layer,
             format : "image/x-bil;bits=32",

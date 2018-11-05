@@ -61,8 +61,8 @@ function GlobeViewExtended (viewerDiv, coordCarto, options) {
 
                 // FIXME itowns bug : itowns should only returns visible layers
                 if (event.colorLayersId) {
-                    for ( var i = event.colorLayersId.length-1 ; i >= 0 ; i-- ) {
-                        if (!self.getLayerById(event.colorLayersId[i]).visible) event.colorLayersId.splice(i,1);
+                    for (var i = event.colorLayersId.length - 1; i >= 0; i--) {
+                        if (!self.getLayerById(event.colorLayersId[i]).visible) event.colorLayersId.splice(i, 1);
                     }
                 }
 
@@ -89,6 +89,7 @@ GlobeViewExtended.prototype._initEventMap = function () {
             LAYER_REMOVED : this._itowns.GLOBE_VIEW_EVENTS.LAYER_REMOVED,
             LAYERS_ORDER_CHANGED : this._itowns.GLOBE_VIEW_EVENTS.COLOR_LAYERS_ORDER_CHANGED,
             GLOBE_INITIALIZED : this._itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED,
+            LAYERS_INITIALIZED : this._itowns.VIEW_EVENTS.LAYERS_INITIALIZED,
             VIEW_INITIALIZED : "viewinitialized",
             PRE_RENDER : "prerender",
             MOUSE_MOVE : "mousemove",
@@ -220,6 +221,7 @@ GlobeViewExtended.prototype._getEventTarget = function (type) {
         case GlobeViewExtended.EVENTS.LAYER_ADDED:
         case GlobeViewExtended.EVENTS.LAYER_REMOVED:
         case GlobeViewExtended.EVENTS.LAYERS_ORDER_CHANGED:
+        case GlobeViewExtended.EVENTS.LAYERS_INITIALIZED:
         case GlobeViewExtended.EVENTS.GLOBE_INITIALIZED:
         case GlobeViewExtended.EVENTS.PRE_RENDER:
         case GlobeViewExtended.EVENTS.AFTER_RENDER:
@@ -527,7 +529,7 @@ GlobeViewExtended.prototype._getCurrentSceneInfos = function (node, options) {
                 let layerLevel = node.material.getElevationLayerLevel();
                 if (layerLevel >= 0) {
                     this.getElevationLayers().forEach((layer) => {
-                        if (layerLevel<layer.options.zoom.min || layerLevel>layer.options.zoom.max) return;
+                        if (layerLevel < layer.source.zoom.min || layerLevel > layer.source.zoom.max) return;
                         if (options.elevationLayersId.indexOf(layer.id) < 0) {
                             options.elevationLayersId.push(layer.id);
                         }

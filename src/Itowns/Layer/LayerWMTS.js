@@ -74,7 +74,7 @@ function LayerWMTS (options) {
                 options : {}
             },
             projection : wmtsParams.projection,
-            originators : wmtsParams.originators,
+            attribution : wmtsParams.originators,
             name : options.layer,
             format : wmtsParams.format,
             tileMatrixSet : wmtsParams.TMSLink,

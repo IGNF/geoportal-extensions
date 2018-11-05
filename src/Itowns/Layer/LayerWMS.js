@@ -67,7 +67,7 @@ function LayerWMS (options) {
         this.source = {
             protocol : "wms",
             version : wmsParams.version,
-            originators : wmsParams.originators,
+            attribution : wmsParams.originators,
             url : wmsParams.url.replace(/(http|https):\/\//, protocol),
             name : options.layer,
             projection : wmsParams.projection,

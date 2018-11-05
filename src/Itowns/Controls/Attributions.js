@@ -211,7 +211,7 @@ Attributions.prototype._inRangeUpdate = function (layersDisplayed, extent) {
     for (var h = 0; h < layersDisplayed.length; h++) {
         var layer = globe.getLayerById(layersDisplayed[h]);
 
-        var ori = layer.options.originators;
+        var ori = layer.source.attribution;
 
         if (ori) {
             for (var j = 0; j < ori.length; j++) {
