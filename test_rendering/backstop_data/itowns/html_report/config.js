@@ -4,7 +4,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/itowns_backstop_MousePosition__default_0_dividGPmousePosition-_0_phone.png",
-        "test": "../bitmaps_test/20181105-153844/itowns_backstop_MousePosition__default_0_dividGPmousePosition-_0_phone.png",
+        "test": "../bitmaps_test/20181108-182136/itowns_backstop_MousePosition__default_0_dividGPmousePosition-_0_phone.png",
         "selector": "div[id^=GPmousePosition-]",
         "fileName": "itowns_backstop_MousePosition__default_0_dividGPmousePosition-_0_phone.png",
         "label": "MousePosition : default",
@@ -24,7 +24,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/itowns_backstop_MousePosition__default_0_dividGPmousePosition-_1_tablet.png",
-        "test": "../bitmaps_test/20181105-153844/itowns_backstop_MousePosition__default_0_dividGPmousePosition-_1_tablet.png",
+        "test": "../bitmaps_test/20181108-182136/itowns_backstop_MousePosition__default_0_dividGPmousePosition-_1_tablet.png",
         "selector": "div[id^=GPmousePosition-]",
         "fileName": "itowns_backstop_MousePosition__default_0_dividGPmousePosition-_1_tablet.png",
         "label": "MousePosition : default",
@@ -44,7 +44,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/itowns_backstop_MousePosition__show_settings_0_document_0_phone.png",
-        "test": "../bitmaps_test/20181105-153844/itowns_backstop_MousePosition__show_settings_0_document_0_phone.png",
+        "test": "../bitmaps_test/20181108-182136/itowns_backstop_MousePosition__show_settings_0_document_0_phone.png",
         "selector": "document",
         "fileName": "itowns_backstop_MousePosition__show_settings_0_document_0_phone.png",
         "label": "MousePosition : show settings",
@@ -55,8 +55,7 @@ report({
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.00",
-          "analysisTime": 50
+          "misMatchPercentage": "0.00"
         }
       },
       "status": "pass"
@@ -64,7 +63,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/itowns_backstop_MousePosition__show_settings_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20181105-153844/itowns_backstop_MousePosition__show_settings_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20181108-182136/itowns_backstop_MousePosition__show_settings_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "itowns_backstop_MousePosition__show_settings_0_document_1_tablet.png",
         "label": "MousePosition : show settings",
@@ -145,7 +144,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/itowns_backstop_LayerSwitcher_interaction__add_a_layer_0_document_0_phone.png",
-        "test": "../bitmaps_test/20181105-153844/itowns_backstop_LayerSwitcher_interaction__add_a_layer_0_document_0_phone.png",
+        "test": "../bitmaps_test/20181108-182136/itowns_backstop_LayerSwitcher_interaction__add_a_layer_0_document_0_phone.png",
         "selector": "document",
         "fileName": "itowns_backstop_LayerSwitcher_interaction__add_a_layer_0_document_0_phone.png",
         "label": "LayerSwitcher (interaction) : add a layer",
@@ -157,7 +156,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.00",
-          "analysisTime": 44
+          "analysisTime": 28
         }
       },
       "status": "pass"
@@ -165,7 +164,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/itowns_backstop_LayerSwitcher_interaction__add_a_layer_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20181105-153844/itowns_backstop_LayerSwitcher_interaction__add_a_layer_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20181108-182136/itowns_backstop_LayerSwitcher_interaction__add_a_layer_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "itowns_backstop_LayerSwitcher_interaction__add_a_layer_0_document_1_tablet.png",
         "label": "LayerSwitcher (interaction) : add a layer",
@@ -176,8 +175,8 @@ report({
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.02",
-          "analysisTime": 32
+          "misMatchPercentage": "14.19",
+          "analysisTime": 38
         }
       },
       "status": "pass"
@@ -185,7 +184,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/itowns_backstop_LayerSwitcher_interaction__remove_a_layer_0_document_0_phone.png",
-        "test": "../bitmaps_test/20181105-153844/itowns_backstop_LayerSwitcher_interaction__remove_a_layer_0_document_0_phone.png",
+        "test": "../bitmaps_test/20181108-182136/itowns_backstop_LayerSwitcher_interaction__remove_a_layer_0_document_0_phone.png",
         "selector": "document",
         "fileName": "itowns_backstop_LayerSwitcher_interaction__remove_a_layer_0_document_0_phone.png",
         "label": "LayerSwitcher (interaction) : remove a layer",
@@ -196,46 +195,28 @@ report({
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.00",
-          "analysisTime": 24
+          "misMatchPercentage": "0.01",
+          "analysisTime": 45
         }
       },
       "status": "pass"
     },
     {
       "pair": {
-        "reference": "../../..",
-        "test": "../../..",
-        "selector": "",
-        "fileName": "",
-        "label": "",
-        "scenario": {
-          "label": "LayerSwitcher (interaction) : remove a layer",
-          "url": "http://localhost:8087/test_rendering/itowns/interactions/layerswitcher.html",
-          "clickSelector": "#removeLayer",
-          "misMatchThreshold": 30,
-          "delay": 10000,
-          "postInteractionWait": 10000,
-          "sIndex": 4,
-          "selectors": [
-            "document"
-          ]
-        },
-        "viewport": {
-          "label": "tablet",
-          "width": 1024,
-          "height": 768,
-          "vIndex": 1
-        },
-        "msg": "Chromy error",
-        "error": "Chromy error: Error. See scenario – LayerSwitcher (interaction) : remove a layer (tablet)"
+        "reference": "../bitmaps_reference/itowns_backstop_LayerSwitcher_interaction__remove_a_layer_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20181108-182136/itowns_backstop_LayerSwitcher_interaction__remove_a_layer_0_document_1_tablet.png",
+        "selector": "document",
+        "fileName": "itowns_backstop_LayerSwitcher_interaction__remove_a_layer_0_document_1_tablet.png",
+        "label": "LayerSwitcher (interaction) : remove a layer",
+        "misMatchThreshold": 30,
+        "error": "Reference file not found /var/www/api-v3-plugins-git/geoportal-extensions/test_rendering/backstop_data/itowns/bitmaps_reference/itowns_backstop_LayerSwitcher_interaction__remove_a_layer_0_document_1_tablet.png"
       },
       "status": "fail"
     },
     {
       "pair": {
         "reference": "../bitmaps_reference/itowns_backstop_MNT_0_document_0_phone.png",
-        "test": "../bitmaps_test/20181105-153844/itowns_backstop_MNT_0_document_0_phone.png",
+        "test": "../bitmaps_test/20181108-182136/itowns_backstop_MNT_0_document_0_phone.png",
         "selector": "document",
         "fileName": "itowns_backstop_MNT_0_document_0_phone.png",
         "label": "MNT",
@@ -246,8 +227,8 @@ report({
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.03",
-          "analysisTime": 34
+          "misMatchPercentage": "0.02",
+          "analysisTime": 35
         }
       },
       "status": "pass"
@@ -255,7 +236,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/itowns_backstop_MNT_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20181105-153844/itowns_backstop_MNT_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20181108-182136/itowns_backstop_MNT_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "itowns_backstop_MNT_0_document_1_tablet.png",
         "label": "MNT",
@@ -267,7 +248,7 @@ report({
             "height": 0
           },
           "misMatchPercentage": "0.01",
-          "analysisTime": 32
+          "analysisTime": 33
         }
       },
       "status": "pass"
