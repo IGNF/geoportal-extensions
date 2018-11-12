@@ -1,6 +1,7 @@
 import EventBus from "eventbus";
 import EventEditor from "./Event";
 import Style from "./Style";
+import Legend from "./Legend";
 import Filter from "./Filter";
 import Utils from "../../../Common/Utils";
 import Logger from "../../../Common/Utils/LoggerByDefault";
@@ -20,16 +21,21 @@ var logger = Logger.getLogger("editor-layer");
  *      position : 1,
  *      tools : {
  *          visibility : true,
- *          remove : false,
- *          clone : false
+ *          remove : false, // TODO
+ *          clone : false // TODO
  *      },
  *      obj : {
- *          id: "ocs - vegetation",
- *          type: "fill",
- *          source: "pyramide_proto",
- *          source-layer: "ocs_vegetation_surf"
+ *          id: "ocs - vegetation", // MANDATORY
+ *          type: "fill", // OPTIONAL
+ *          source: "pyramide_proto", // OPTIONAL
+ *          source-layer: "ocs_vegetation_surf" // OPTIONAL
  *      }
  *   });
+ *  layers.addLegend(oLegend);
+ *  layers.slotLegend();
+ *  layers.addStyle(oStyle);
+ *  layers.addFilter(oFilter);
+ *  layers.add();
  */
 function Layer (options) {
     logger.trace("[constructor] Layer", options);
@@ -82,7 +88,7 @@ Layer.prototype._initialize = function () {
 
     var _objDefault = {
         "id" : "",
-        "type" : "", // TODO : icone sur le type de geometrie (symbo)
+        "type" : "", // icone sur le type de geometrie
         "source" : "",
         "source-layer" : ""
     };
@@ -93,9 +99,13 @@ Layer.prototype._initialize = function () {
 
     Utils.mergeParams(this.options.obj, _objDefault, false);
 
+    // legende intégrée
+    this.bSlotLegend = false;
+
     // obj
     this.oFilter = null;
     this.oStyle = null;
+    this.oLegend = null;
 
     // dom
     this.container = null;
@@ -106,8 +116,10 @@ Layer.prototype._initialize = function () {
     this.name = {
         target : "GPEditorMapBoxLayerTarget",
         container : "GPEditorMapBoxLayerContainer",
+        containerlegend : "GPEditorMapBoxLayerLegendContainer",
         containertitle : "GPEditorMapBoxLayerTitleContainer",
         imagelabel : "GPEditorMapBoxLayerImageLabel",
+        typeimg : "GPEditorMapBoxLayerTypeImage",
         titleinput : "GPEditorMapBoxLayerTitleInput",
         titlelabel : "GPEditorMapBoxLayerTitleLabel",
         containertools : "GPEditorMapBoxToolsContainer",
@@ -158,6 +170,49 @@ Layer.prototype._initContainer = function () {
     labelImage.className = this.name.imagelabel;
     divTitle.appendChild(labelImage);
 
+    // type
+    var imgType = document.createElement("img");
+    imgType.className = this.name.typeimg;
+    // TODO il faudrait faire la difference entre :
+    // - icone uniquement : SYMBOL-ICON
+    // - texte uniquement : SYMBOL-TEXT
+    // - les 2 : SYMBOL
+    // Mais il nous faut les styles complets (paint & layout)
+    // pour determiner les 3 types !
+    switch (obj.type.toUpperCase()) {
+        case "SYMBOL-ICON": // not used !
+            imgType.style["background-position"] = "0px 0";
+            break;
+        case "SYMBOL-TEXT": // not used !
+            imgType.style["background-position"] = "-194px 0";
+            break;
+        case "SYMBOL":
+            imgType.style["background-position"] = "-84px 0";
+            break;
+        case "LINE":
+            imgType.style["background-position"] = "-28px 0";
+            break;
+        case "FILL":
+            imgType.style["background-position"] = "-56px 0";
+            break;
+        case "BACKGROUND":
+            imgType.style["background-position"] = "-140px 0";
+            break;
+        case "CIRCLE":
+            imgType.style["background-position"] = "-168px 0";
+            break;
+        default:
+            // type inconnu ou non pris en charge ou par defaut
+            imgType.style["background-position"] = "-112px 0";
+    }
+    divTitle.appendChild(imgType);
+
+    // container legend (empty)
+    var divLegend = document.createElement("div");
+    divLegend.id = this.name.containerlegend + "-" + this.options.position;
+    divLegend.className = this.name.containerlegend;
+    divTitle.appendChild(divLegend);
+
     // input
     var inputTitle = document.createElement("input");
     inputTitle.id = this.name.titleinput + "-" + this.options.position;
@@ -170,7 +225,7 @@ Layer.prototype._initContainer = function () {
     labelTitle.className = this.name.titlelabel;
     labelTitle.htmlFor = inputTitle.id;
     labelTitle.innerHTML = obj["id"] || obj["source-layer"] || obj["source"];
-    labelTitle.title = obj["source-layer"] || obj["source"];
+    labelTitle.title = obj["source-layer"] || obj["source"] || obj["id"];
     labelTitle.data = obj;
     if (labelTitle.addEventListener) {
         labelTitle.addEventListener("click", function (e) {
@@ -268,7 +323,7 @@ Layer.prototype.add = function () {
 };
 
 /**
- * Set style
+ * Add style in the submenu
  *
  * @param {Object} style - style object
  */
@@ -281,7 +336,7 @@ Layer.prototype.addStyle = function (style) {
 };
 
 /**
- * Set filter
+ * Add filter in the submenu
  *
  * @param {Object} filter - filter object
  */
@@ -290,6 +345,47 @@ Layer.prototype.addFilter = function (filter) {
     if (filter && typeof filter === "object" && filter instanceof Filter) {
         this.oFilter = filter;
         this.oFilter.display(false); // par defaut !
+    }
+};
+
+/**
+ * Add Legend in the submenu
+ *
+ * @param {Object} legend - legend object
+ */
+Layer.prototype.addLegend = function (legend) {
+    logger.trace("addLegend()", legend);
+    if (legend && typeof legend === "object" && legend instanceof Legend) {
+        this.oLegend = legend;
+        this.oLegend.display(false); // par defaut !
+    }
+};
+
+/**
+ * Integrate Legend to the layer container
+ */
+Layer.prototype.slotLegend = function () {
+    // cas particulier :
+    // on souhaite intégrer une partie de la legende dans le container du layer.
+    var legend = this.oLegend;
+    if (legend) {
+        // FIXME c'est pourri...
+        var node = null;
+        var nodesLvl1 = this.container.childNodes;
+        if (nodesLvl1.length) {
+            var nodesLvl2 = nodesLvl1[0].childNodes;
+            if (nodesLvl2.length) {
+                node = nodesLvl2[2];
+            }
+        }
+        if (node) {
+            var render = legend.getRender();
+            if (render) {
+                node.appendChild(render);
+                // legende intégrée
+                this.bSlotLegend = true;
+            }
+        }
     }
 };
 
@@ -326,8 +422,19 @@ Layer.prototype.display = function (display) {
     if (this.oFilter) {
         this.oFilter.display(display && checked);
     }
+    if (this.oLegend) {
+        this.oLegend.display(display && checked);
+    }
 };
 
+/**
+ * Get container (DOM)
+ *
+ * @returns {DOMElement} DOM element
+ */
+Layer.prototype.getContainer = function () {
+    return this.container;
+};
 // ################################################################### //
 // ####################### handlers events to dom #################### //
 // ################################################################### //
@@ -347,6 +454,11 @@ Layer.prototype.onClickLayerMapBox = function (e) {
     }
     if (this.oFilter) {
         this.oFilter.display(!checked);
+    }
+    // attention,
+    // la legende ne se trouve pas forcement dans le sous menu !
+    if (this.oLegend && !this.bSlotLegend) {
+        this.oLegend.display(!checked);
     }
 };
 

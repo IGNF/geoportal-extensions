@@ -243,11 +243,11 @@ Style.prototype._createElementToolsScale = function (scale) {
     inputMin.data = obj;
     if (inputMin.addEventListener) {
         inputMin.addEventListener("change", function (e) {
-            self.onChangeScaleMinMapBox(e);
+            self.onChangeStyleScaleMinMapBox(e);
         });
     } else if (inputMin.appendChild) {
         inputMin.appendChild("onchange", function (e) {
-            self.onChangeScaleMinMapBox(e);
+            self.onChangeStyleScaleMinMapBox(e);
         });
     }
     divMin.appendChild(inputMin);
@@ -273,11 +273,11 @@ Style.prototype._createElementToolsScale = function (scale) {
     inputMax.data = obj;
     if (inputMax.addEventListener) {
         inputMax.addEventListener("change", function (e) {
-            self.onChangeScaleMaxMapBox(e);
+            self.onChangeStyleScaleMaxMapBox(e);
         });
     } else if (inputMax.appendChild) {
         inputMax.appendChild("onchange", function (e) {
-            self.onChangeScaleMaxMapBox(e);
+            self.onChangeStyleScaleMaxMapBox(e);
         });
     }
     divMax.appendChild(inputMax);
@@ -368,6 +368,14 @@ Style.prototype.display = function (display) {
     this.container.style.display = (display) ? "flex" : "none";
 };
 
+/**
+ * Get container (DOM)
+ *
+ * @returns {DOMElement} DOM element
+ */
+Style.prototype.getContainer = function () {
+    return this.container;
+};
 // ################################################################### //
 // ####################### handlers events to dom #################### //
 // ################################################################### //
@@ -391,8 +399,8 @@ Style.prototype.onEditStyleMapBox = function (e) {
  * @private
  * @fires Style#editor:style:minScale
  */
-Style.prototype.onChangeScaleMinMapBox = function (e) {
-    logger.trace("onChangeScaleMinMapBox", e);
+Style.prototype.onChangeStyleScaleMinMapBox = function (e) {
+    logger.trace("onChangeStyleScaleMinMapBox", e);
     e.target.title = e.target.value;
     EventBus.dispatch(EventEditor.style.scale.min, e);
 };
@@ -404,8 +412,8 @@ Style.prototype.onChangeScaleMinMapBox = function (e) {
  * @private
  * @fires Style#editor:style:maxScale
  */
-Style.prototype.onChangeScaleMaxMapBox = function (e) {
-    logger.trace("onChangeScaleMaxMapBox", e);
+Style.prototype.onChangeStyleScaleMaxMapBox = function (e) {
+    logger.trace("onChangeStyleScaleMaxMapBox", e);
     e.target.title = e.target.value;
     EventBus.dispatch(EventEditor.style.scale.max, e);
 };

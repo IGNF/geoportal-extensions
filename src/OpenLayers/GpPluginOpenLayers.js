@@ -28,6 +28,8 @@ import Style from "./Controls/Editor/Style";
 import Filter from "./Controls/Editor/Filter";
 import Layer from "./Controls/Editor/Layer";
 import Themes from "./Controls/Editor/Themes";
+import Legend from "./Controls/Editor/Legend";
+import Group from "./Controls/Editor/Group";
 import Editor from "./Controls/Editor";
 
 import "./CSS";
@@ -54,6 +56,8 @@ Ol.editor = {};
 Ol.editor.Style = Style;
 Ol.editor.Filter = Filter;
 Ol.editor.Layer = Layer;
+Ol.editor.Legend = Legend;
+Ol.editor.Group = Group;
 Ol.editor.Themes = Themes;
 Ol.editor.View = Editor;
 

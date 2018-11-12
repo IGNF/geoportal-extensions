@@ -6,9 +6,6 @@
 
 {{#content "style"}}
         <style>
-            body {
-                margin: unset;
-            }
         </style>
 {{/content}}
 
@@ -23,33 +20,88 @@
 {{#content "js"}}
             <script type="text/javascript">
 
-            // liste de themes reussi avec imagette !
-            var editor = new ol.editor.View({
+            var editor0 = new ol.editor.View({
                 target: document.getElementById("editor"),
-                style: "{{ resources }}/data/mapbox/styles/ign-direct.json",
-                events : { // TODO...
-                    "editor:layer:visibility" : function (e) {console.log(e);},
-                    "editor:layer:remove" : function (e) {console.log(e);},
-                    "editor:layer:clone" : function (e) {console.log(e);},
-                    "editor:style:minScale" : function (e) {console.log(e);},
-                    "editor:style:maxScale" : function (e) {console.log(e);},
-                    "editor:style:edit" : function (e) {console.log(e);},
-                    "editor:filter:edit" : function (e) {console.log(e);},
-                    "editor:themes:image" : function (e) {console.log(e);},
-                    "editor:themes:title" : function (e) {console.log(e);}
+                style: "{{ resources }}/data/mapbox/styles/ign-theo.json",
+                events : {
+                    "editor:themes:title" : function (e) {
+                        console.log(this.getID(), e);
+                    }
+                },
+                themes : {
+                    description : "...",
+                    styles : [
+                        {
+                            "label" : "standard0",
+                            "style" : "{{ resources }}/data/mapbox/themes/styles/style0.json"
+                        }
+                    ]
                 },
                 tools : {
                     themes : true,
                     layers : true,
                     filter : true,
-                    style :true
+                    style :true,
+                    legend : true
+                }
+            });
+
+            // liste de themes reussi avec imagette !
+            var editor1 = new ol.editor.View({
+                target: document.getElementById("editor"),
+                style: "{{ resources }}/data/mapbox/styles/osm.json",
+                events : { // TODO...
+                    "editor:layer:visibility" : function (e) {console.log(e);},
+                    "editor:layer:remove" : function (e) {console.log(e);},
+                    "editor:layer:clone" : function (e) {console.log(e);},
+                    "editor:legend:visibility" : function (e) {console.log(e);},
+                    "editor:style:minScale" : function (e) {console.log(e);},
+                    "editor:style:maxScale" : function (e) {console.log(e);},
+                    "editor:style:edit" : function (e) {console.log(e);},
+                    "editor:filter:edit" : function (e) {console.log(e);},
+                    "editor:themes:image" : function (e) {console.log(e);},
+                    "editor:themes:title" : function (e) {
+                        console.log(this.getID(), e);
+                    }
+                },
+                themes : {
+                    description : "...",
+                    styles : [
+                        {
+                            "image" : "{{ resources }}/data/mapbox/themes/images/layer0.png",
+                            "label" : "standard0",
+                            "style" : "{{ resources }}/data/mapbox/themes/styles/style0.json"
+                        },
+                        {
+                            "image" : "{{ resources }}/data/mapbox/themes/images/layer1.png",
+                            "label" : "standard1",
+                            "style" : "{{ resources }}/data/mapbox/themes/styles/style1.json"
+                        },
+                        {
+                            "image" : "{{ resources }}/data/mapbox/themes/images/layer2.png",
+                            "label" : "standard2",
+                            "style" : "{{ resources }}/data/mapbox/themes/styles/style2.json"
+                        },
+                        {
+                            "image" : "{{ resources }}/data/mapbox/themes/images/layer3.png",
+                            "label" : "standard3",
+                            "style" : "{{ resources }}/data/mapbox/themes/styles/style3.json"
+                        }
+                    ]
+                },
+                tools : {
+                    themes : true,
+                    layers : true,
+                    filter : true,
+                    style :true,
+                    legend : true
                 }
             });
             document.getElementById("displayTrue").addEventListener("click", function () {
-                editor.display(true);
+                editor1.display(true);
             });
             document.getElementById("displayFalse").addEventListener("click", function () {
-                editor.display(false);
+                editor1.display(false);
             });
             </script>
 {{/content}}

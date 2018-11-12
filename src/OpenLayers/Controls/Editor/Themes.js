@@ -59,11 +59,16 @@ Themes.prototype.constructor = Themes;
  * @private
  */
 Themes.prototype._initialize = function () {
+    // unique editor id (optional!)
+    this.id = this.options.id || null;
+
     if (!this.options.target) {
         // cf. add()
     }
 
-    if (!this.options.obj) {
+    if (typeof this.options.obj === "undefined" ||
+        this.options.obj === null ||
+        !this.options.obj) {
         // FIXME vide ?
         this.options.obj = {
             description : "", // TODO une description au survol de l'image ou titre...
@@ -116,6 +121,7 @@ Themes.prototype._initContainer = function () {
         var divTheme = document.createElement("div");
         divTheme.id = this.name.containertheme + "-" + i;
         divTheme.className = this.name.containertheme;
+        divTheme.tabIndex = i;
 
         var _url = _theme.style;
         if (_url && _url !== "") {
@@ -127,11 +133,11 @@ Themes.prototype._initContainer = function () {
                 _img.data = _url;
                 if (_img.addEventListener) {
                     _img.addEventListener("click", function (e) {
-                        self.onClickImageMapBox(e);
+                        self.onClickThemeImageMapBox(e);
                     });
                 } else if (_img.attachEvent) {
                     _img.attachEvent("onclick", function (e) {
-                        self.onClickImageMapBox(e);
+                        self.onClickThemeImageMapBox(e);
                     });
                 }
                 divTheme.appendChild(_img);
@@ -144,11 +150,11 @@ Themes.prototype._initContainer = function () {
                 _label.data = _url;
                 if (_label.addEventListener) {
                     _label.addEventListener("click", function (e) {
-                        self.onClickTitleMapBox(e);
+                        self.onClickThemeTitleMapBox(e);
                     });
                 } else if (_label.attachEvent) {
                     _label.attachEvent("onclick", function (e) {
-                        self.onClickTitleMapBox(e);
+                        self.onClickThemeTitleMapBox(e);
                     });
                 }
                 divTheme.appendChild(_label);
@@ -199,6 +205,14 @@ Themes.prototype.display = function (display) {
     this.container.style.display = (display) ? "flex" : "none";
 };
 
+/**
+ * Get container (DOM)
+ *
+ * @returns {DOMElement} DOM element
+ */
+Themes.prototype.getContainer = function () {
+    return this.container;
+};
 // ################################################################### //
 // ####################### handlers events to dom #################### //
 // ################################################################### //
@@ -210,8 +224,9 @@ Themes.prototype.display = function (display) {
  * @private
  * @fires Themes#editor:themes:image
  */
-Themes.prototype.onClickImageMapBox = function (e) {
-    logger.warn("onClickImageMapBox, it's not yet implemented !", e);
+Themes.prototype.onClickThemeImageMapBox = function (e) {
+    logger.trace("onClickThemeImageMapBox", e);
+    e.editorID = this.id;
     EventBus.dispatch(EventEditor.themes.image, e);
 };
 
@@ -222,8 +237,9 @@ Themes.prototype.onClickImageMapBox = function (e) {
  * @private
  * @fires Themes#editor:themes:title
  */
-Themes.prototype.onClickTitleMapBox = function (e) {
-    logger.warn("onClickTitleMapBox, it's not yet implemented !", e);
+Themes.prototype.onClickThemeTitleMapBox = function (e) {
+    logger.trace("onClickThemeTitleMapBox", e);
+    e.editorID = this.id;
     EventBus.dispatch(EventEditor.themes.title, e);
 };
 

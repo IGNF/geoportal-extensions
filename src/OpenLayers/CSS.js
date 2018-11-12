@@ -1,5 +1,7 @@
 import "../../res/Common/GPgeneralWidget.css";
 
+import "../../res/Common/GPwaiting.css";
+
 import "../../res/Common/GProute.css";
 import "../../res/Common/GPisochron.css";
 import "../../res/Common/GPmeasureLength.css";

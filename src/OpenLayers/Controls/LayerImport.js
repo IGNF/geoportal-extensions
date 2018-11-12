@@ -1,7 +1,6 @@
 import ol from "ol";
 import olms from "olms";
 import Gp from "gp";
-import EventBus from "eventbus";
 import Logger from "../../Common/Utils/LoggerByDefault";
 import Utils from "../../Common/Utils";
 import Markers from "./Utils/Markers";
@@ -167,6 +166,23 @@ LayerImport.prototype.constructor = LayerImport;
 // ################################################################### //
 // ############## public methods (getters, setters) ################## //
 // ################################################################### //
+
+/**
+ * Overwrite OpenLayers setMap method
+ *
+ * @param {ol.Map} map - Map.
+ */
+LayerImport.prototype.setMap = function (map) {
+    // ajout de la patience pour le chargement des tuiles
+    if (map) {
+        // FIXME au centre de la carte ?
+        // var center = this._loadingContainer = this._createLoadingElement();
+        // map.getViewport().appendChild(center);
+    }
+
+    // on appelle la méthode setMap originale d'OpenLayers
+    ol.control.Control.prototype.setMap.call(this, map);
+};
 
 /**
  * Returns true if widget is collapsed (minimized), false otherwise
@@ -362,6 +378,7 @@ LayerImport.prototype._initialize = function (options) {
     this._mapBoxPanel = null;
     this._mapBoxResultsListContainer = null;
     this._waitingContainer = null;
+    this._loadingContainer = null;
 
     // ################################################################## //
     // ################ Interrogation du GetCapabilities ################ //
@@ -509,6 +526,9 @@ LayerImport.prototype._initImportTypes = function () {
 LayerImport.prototype._initContainer = function () {
     // create main container
     var container = this._createMainContainerElement();
+
+    var loading = this._loadingContainer = this._createLoadingElement();
+    container.appendChild(loading);
 
     // create show Import element
     var inputShow = this._showImportInput = this._createShowImportElement();
@@ -925,8 +945,14 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
     this.contentStatic = fileContent;
 
     if (this._currentImportType === "MapBox") {
-        // nettoyage
-        this.cleanMapBoxResultsList();
+        // FIXME
+        // on ne nettoie pas délibérément la liste de résultats de type MapBox
+        // car on souhaite pouvoir interagir sur les couches (editeur).
+        // du coup, à chaque import, on empile les éditeurs.
+        // this.cleanMapBoxResultsList();
+
+        // contexte
+        var self = this;
 
         var _glStyle = this._mapBoxObj = JSON.parse(fileContent);
 
@@ -1008,8 +1034,9 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
                     // sprites
                     var _glSprite = _glStyle.sprite;
 
-                    // FIXME et si on a un import par fichier local (this._file) ?
-                    // remplacement d'un flux mapbox en service tuilé
+                    // FIXME et si on a un import par fichier local (this._file),
+                    // comment passe t on la clef ou le token ?
+                    // remplacement d'un flux mapbox sur une url de service tuilé
                     if (_glUrl && _glUrl.indexOf("mapbox://") === 0) {
                         var _urlService = this._url;
                         if (_urlService) {
@@ -1049,6 +1076,13 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
                         vectorSource._metadata = _metadata;
                         vectorSource._legends = _legends;
                         vectorSource._originators = _originators;
+                        // waiting
+                        vectorSource.on("tileloadstart", function (e) {
+                            self._loadingContainer.className = "GPmapLoadingVisible";
+                        });
+                        vectorSource.on("tileloadend", function (e) {
+                            self._loadingContainer.className = "";
+                        });
                         vectorLayer = new ol.layer.VectorTile({
                             source : vectorSource,
                             visible : false,
@@ -1102,6 +1136,13 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
                                 vectorSource._metadata = _metadata;
                                 vectorSource._legends = _legends;
                                 vectorSource._originators = _originators;
+                                // waiting
+                                vectorSource.on("tileloadstart", function (e) {
+                                    self._loadingContainer.className = "GPmapLoadingVisible";
+                                });
+                                vectorSource.on("tileloadend", function (e) {
+                                    self._loadingContainer.className = "";
+                                });
                                 vectorLayer.setSource(vectorSource);
                                 vectorLayer.set("mapbox-extension", _tileJSONDoc["vector_layers"]);
                                 ol.Observable.unByKey(_key);
@@ -1186,32 +1227,7 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
                                     }
                                 }
                             })
-                            .then(function () {
-                                // // affichage du panneau des couches accessibles à l'edition
-                                // self._importPanel.style.display = "none";
-                                // self._mapBoxPanel.style.display = "block";
-                                //
-                                // // editeur de styles
-                                // self.editor = new Editor({
-                                //     target : self._mapBoxResultsListContainer,
-                                //     style : self._mapBoxObj,
-                                //     events : { // TODO...
-                                //         "editor:layer:visibility" : self._onChangeVisibilitySourceMapBox,
-                                //         "editor:style:minScale" : self._onChangeScaleMinSourceMapBox,
-                                //         "editor:style:maxScale" : self._onChangeScaleMaxSourceMapBox
-                                //     },
-                                //     tools : {
-                                //         themes : false,
-                                //         layers : true,
-                                //         style : self.options.vectorStyleOptions.MapBox.tools.style,
-                                //         filter : self.options.vectorStyleOptions.MapBox.tools.filter
-                                //     }
-                                // });
-                                // // abonements sur les evenements suivants :
-                                // EventBus.addEventListener("editor:layer:visibility", self._onChangeVisibilitySourceMapBox, self);
-                                // EventBus.addEventListener("editor:style:minScale", self._onChangeScaleMinSourceMapBox, self);
-                                // EventBus.addEventListener("editor:style:maxScale", self._onChangeScaleMaxSourceMapBox, self);
-                            })
+                            .then(function () {})
                             .catch(function (e) {
                                 logger.error(e);
                             });
@@ -1274,7 +1290,8 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
         this.editor = new Editor({
             target : this._mapBoxResultsListContainer,
             style : this._mapBoxObj,
-            events : { // TODO...
+            scope : this,
+            events : {
                 "editor:layer:visibility" : this._onChangeVisibilitySourceMapBox,
                 "editor:style:minScale" : this._onChangeScaleMinSourceMapBox,
                 "editor:style:maxScale" : this._onChangeScaleMaxSourceMapBox
@@ -1283,13 +1300,11 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
                 themes : false,
                 layers : true,
                 style : this.options.vectorStyleOptions.MapBox.tools.style,
-                filter : this.options.vectorStyleOptions.MapBox.tools.filter
+                filter : this.options.vectorStyleOptions.MapBox.tools.filter,
+                legend : true,
+                group : false
             }
         });
-        // abonements sur les evenements suivants :
-        EventBus.addEventListener("editor:layer:visibility", this._onChangeVisibilitySourceMapBox, this);
-        EventBus.addEventListener("editor:style:minScale", this._onChangeScaleMinSourceMapBox, this);
-        EventBus.addEventListener("editor:style:maxScale", this._onChangeScaleMaxSourceMapBox, this);
 
         // TODO style par defaut au cas où l'application du style échoue !
         // FIXME bug avec le geojson, très bizarre !?

@@ -106,13 +106,39 @@
                 },
             });
             style4.add();
-
+            // style paint complexe
+            var style5 = new ol.editor.Style({
+                obj : {
+                    "paint": {
+                        "fill-color": [
+                            "match",
+                            ["get","symbo"],
+                            "ZONE_BOISEE","#A7DA81",
+                            "ZONE_FORET_OUVERTE","#A7DA81",
+                            "ZONE_PEUPLERAIE","#A7DA81",
+                            "ZONE_FORET_FERMEE_FEUIL","#80A664",
+                            "ZONE_FORET_FERMEE_CONI","#80A664",
+                            "ZONE_FORET_FERMEE_MIXTE","#80A664",
+                            "ZONE_LANDE_LIGNEUSE","#D5D897",
+                            "ZONE_VIGNE","#DED2EE",
+                            "ZONE_VERGER","#BBD8CB",
+                            "ZONE_CANNE_BANANE","#EEE3A2",
+                            "ZONE_MARAIS","#7E8AB5",
+                            "ZONE_MARAIS_SALANT","#7E8AB5",
+                            "ZONE_MANGROVE","#7E8AB5",
+                            "#A7DA81"
+                        ]
+                    }
+                }
+            });
+            style5.add();
             document.getElementById("displayTrue").addEventListener("click", function () {
                 style0.display(true);
                 style1.display(true);
                 style2.display(true);
                 style3.display(true);
                 style4.display(true);
+                style5.display(true);
             });
 
             document.getElementById("displayFalse").addEventListener("click", function () {
@@ -121,6 +147,7 @@
                 style2.display(false);
                 style3.display(false);
                 style4.display(false);
+                style5.display(false);
             });
             </script>
 {{/content}}

@@ -2,8 +2,6 @@
 
 {{#content "head"}}
         <title>Sample openlayers LayerImport</title>
-        <script src="https://unpkg.com/ol-popup@3.0.0"></script>
-        <link rel="stylesheet" href="https://unpkg.com/ol-popup@3.0.0/src/ol-popup.css" />
 {{/content}}
 
 {{#content "style"}}
@@ -12,11 +10,16 @@
                 width: 100%;
                 height: 500px;
             }
+            #zoom-container,
+            #zoom-level {}
         </style>
 {{/content}}
 
 {{#content "body"}}
-            <h2>Ajout du widget d'import de couches, avec les options par défaut</h2>
+            <h2>
+                <b>TODO</b>
+                Ajout du widget d'import de couches sur un service MapBox IGN avec une clef d'acces</h2>
+            <div id="zoom-container">Niveau de zoom : <span id="zoom-level">?</span></div>
             <!-- map -->
             <div id="map">
             </div>
@@ -44,9 +47,19 @@
                 });
 
                 var layerImport = new ol.control.LayerImport({
+                    collapsed : false,
+                    layerTypes : ["MapBox"],
                     webServicesOptions : {
                         proxyUrl : "{{ resources }}/proxy/proxy.php?url=",
                         noProxyDomains : ["localhost", "https://api.mapbox.com/"]
+                    },
+                    vectorStyleOptions : {
+                        MapBox : {
+                            tools : {
+                                style : true,
+                                filter : true
+                            }
+                        }
                     }
                 });
                 map.addControl(layerImport);
@@ -54,36 +67,16 @@
                 var layerSwitcher = new ol.control.LayerSwitcher({});
                 map.addControl(layerSwitcher);
 
-                var popup = new ol.Overlay.Popup();
-                map.addOverlay(popup);
+                var div = document.querySelector("input[id^=GPimportChoiceAltUrl-");
+                div.click();
+                var input = document.querySelector("input[id^=GPimportUrl-]");
+                input.value = "{{ resources }}/data/mapbox/styles/ign-key.json?apiKey={{ apikey }}";
 
-                // cf. http://astuntechnology.github.io/osgis-openlayers-leaflet/openlayers/03-GEOJSON-INFO.html
-                map.on("click", function(evt) {
-
-                  popup.hide();
-                  popup.setOffset([0, 0]);
-
-                  // Attempt to find a feature in one of the visible vector layers
-                  var feature = map.forEachFeatureAtPixel(evt.pixel, function(feature, layer) {
-                      return feature;
-                  });
-
-                  if (feature) {
-
-                      var coord = evt.coordinate;
-                      var props = feature.getProperties();
-                      var contents = "";
-                      for (var key in props) {
-                          if (props.hasOwnProperty(key)) {
-                              contents += key + " / " + props[key];
-                              contents += "<br>";
-                          }
-                      }
-                      // Offset the popup so it points at the middle of the marker not the tip
-                      popup.setOffset([0, -22]);
-                      popup.show(coord, contents);
-
-                  }
+                var zoomContainer = document.getElementById('zoom-level');
+                map.on('moveend', function (event) {
+                    var map = event.map;
+                    var zoom = map.getView().getZoom();
+                    zoomContainer.innerHTML = zoom;
                 });
               };
 

@@ -51,17 +51,35 @@
                 },
             });
             filter2.add();
+            // filter
+            var filter3 = new ol.editor.Filter({
+                obj: {
+                    "filter": [
+                            "in","symbo",
+                                "CLOTURE",
+                                "TRANCHEE",
+                                "LAYON",
+                                "LIM_ZONE_REGLEMENTEE",
+                                "LIM_ENCEINTE_MILITAIRE",
+                                "LIM_CHAMP_TIR"
+
+                    ]
+                },
+            });
+            filter3.add();
 
             document.getElementById("displayTrue").addEventListener("click", function () {
                 filter0.display(true);
                 filter1.display(true);
                 filter2.display(true);
+                filter3.display(true);
             });
 
             document.getElementById("displayFalse").addEventListener("click", function () {
                 filter0.display(false);
                 filter1.display(false);
                 filter2.display(false);
+                filter3.display(false);
             });
 
             </script>

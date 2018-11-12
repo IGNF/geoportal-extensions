@@ -1,0 +1,149 @@
+{{#extend "ol-sample-bundle-layout"}}
+
+{{#content "head"}}
+        <title>Sample openlayers Legend Mapbox</title>
+{{/content}}
+
+{{#content "style"}}
+        <style>
+            body {
+                margin: unset;
+            }
+        </style>
+{{/content}}
+
+{{#content "body"}}
+            <h2>Ajout du widget d'édition des legendes MapBox</h2>
+            <button id="displayFalse">Hidden</button>
+            <button id="displayTrue">Show</button>
+            <div id="legend"></div>
+{{/content}}
+
+{{#content "js"}}
+            <script type="text/javascript">
+
+            // legend vide
+            var legend0 = new ol.editor.Legend({
+                target: document.getElementById("legend")
+            });
+            legend0.add();
+
+            // legend vide et target par defaut
+            var legend1 = new ol.editor.Legend();
+            legend1.add();
+
+            // legend simple
+            var legend21 = new ol.editor.Legend({
+                obj: {
+                    "title" : "test fill...",
+                    "paint": {
+                         "fill-color" : "#2BB3E1"
+                    }
+                },
+            });
+            legend21.add();
+
+            var legend22 = new ol.editor.Legend({
+                obj: {
+                    "title" : "test line...",
+                    "paint": {
+                         "line-color" : "#2BB3E1"
+                    }
+                },
+            });
+            legend22.add();
+
+            var legend23 = new ol.editor.Legend({
+                obj: {
+                    "title" : "test circle...",
+                    "paint": {
+                         "circle-color" : "#2BB3E1"
+                    }
+                },
+            });
+            legend23.add();
+
+            var legend24 = new ol.editor.Legend({
+                obj: {
+                    "title" : "test background, not yet implemented...",
+                    "paint": {
+                         "background-color" : "#2BB3E1"
+                    }
+                },
+            });
+            legend24.add();
+
+            var legend25 = new ol.editor.Legend({
+                obj: {
+                    "title" : "test text, not yet implemented...",
+                    "paint": {
+                         "text-color" : "#2BB3E1"
+                    }
+                },
+            });
+            legend25.add();
+
+            var legend26 = new ol.editor.Legend({
+                obj: {
+                    "title" : "test icon, not yet implemented...",
+                    "paint": {
+                        "icon-color": "#A7DA81"
+                    }
+                },
+            });
+            legend26.add();
+
+            var legend27 = new ol.editor.Legend({
+                obj: {
+                    "title" : "test 'inconnu'...",
+                    "paint": {
+                        "text-size" : "3px"
+                    }
+                },
+            });
+            legend27.add();
+
+            // legend complexe
+            var legend3 = new ol.editor.Legend({
+                target: document.getElementById("legend"),
+                obj: {
+                    "title" : "test not yet implemented...",
+                    paint : {
+                        "fill-color": [
+                            "match",
+                            ["get","symbo"],
+                            "ZONE_BOISEE","#A7DA81",
+                            "ZONE_MANGROVE","#7E8AB5",
+                            "#A7DA81"
+                        ]
+                    }
+                },
+            });
+            legend3.add();
+
+            var legend4 = new ol.editor.Legend({
+                target: document.getElementById("legend"),
+                obj: {
+                    "title" : "test not yet implemented...",
+                    "paint": {
+                        "fill-color": {
+                            color : "#A7DA81"
+                        }
+                    }
+                },
+            });
+            legend4.add();
+
+            document.getElementById("displayTrue").addEventListener("click", function () {
+                legend3.display(true);
+                legend4.display(true);
+            });
+
+            document.getElementById("displayFalse").addEventListener("click", function () {
+                legend3.display(false);
+                legend4.display(false);
+            });
+
+            </script>
+{{/content}}
+{{/extend}}

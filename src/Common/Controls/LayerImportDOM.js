@@ -13,6 +13,18 @@ var LayerImportDOM = {
     },
 
     /**
+     * Map loading
+     *
+     * @returns {DOMElement} container
+     */
+    _createLoadingElement : function () {
+        var div = document.createElement("div");
+        div.id = "GPmapLoading";
+        div.className = "";
+        return div;
+    },
+
+    /**
      * Main container (DOM)
      *
      * @returns {DOMElement} DOM element

@@ -195,6 +195,14 @@ Filter.prototype.display = function (display) {
     this.container.style.display = (display) ? "flex" : "none";
 };
 
+/**
+ * Get container (DOM)
+ *
+ * @returns {DOMElement} DOM element
+ */
+Filter.prototype.getContainer = function () {
+    return this.container;
+};
 // ################################################################### //
 // ####################### handlers events to dom #################### //
 // ################################################################### //
