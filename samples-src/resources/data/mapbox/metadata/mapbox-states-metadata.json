@@ -1,0 +1,92 @@
+{
+   "attribution":"Data Open Source",
+   "bounds":[
+      -180,
+      -85.05112877980659,
+      180,
+      85.0511287798066
+   ],
+   "center":[
+      -122,
+      51,
+      3
+   ],
+   "format":"geojson",
+   "minzoom":0,
+   "maxzoom":20,
+   "name":"states",
+   "description":null,
+   "scheme":"",
+   "tilejson":"2.2.0",
+   "tiles":[],
+   "grids":[],
+   "data":[
+       "https://rawgit.com/lowzonenose/editor/master/data/states.geojson"
+   ],
+   "version":"1.0.0",
+   "template":null,
+   "legend":null,
+   "vector_layers":[
+      {
+         "id":"states",
+         "description":"",
+         "version": 1,
+         "source":"states",
+         "name":"",
+         "geometry":"MULTIPOLYGON",
+         "minzoom":0,
+         "maxzoom":20,
+         "filedsCount":"7",
+         "fields":{
+             "STATE_ABBR": {
+                 "attribute":"STATE_ABBR",
+                 "count":"",
+                 "type":"character varying",
+                 "values":[]
+             },
+             "STATE_NAME": {
+                 "attribute":"STATE_NAME",
+                 "count":"",
+                 "type":"character varying",
+                 "values":[]
+             },
+             "AREA_LAND": {
+                 "attribute":"AREA_LAND",
+                 "count":"",
+                 "type":"integer",
+                 "min":"0",
+                 "max":"1000000000000"
+             },
+             "AREA_WATER": {
+                 "attribute":"AREA_WATER",
+                 "count":"",
+                 "type":"integer",
+                 "min":"0",
+                 "max":"10000000000"
+             },
+             "PERSONS": {
+                 "attribute":"PERSONS",
+                 "count":"",
+                 "type":"integer",
+                 "min":"0",
+                 "max":"100000000"
+             },
+             "MALE": {
+                 "attribute":"MALE",
+                 "count":"",
+                 "type":"integer",
+                 "min":"0",
+                 "max":"10000000"
+             },
+             "FEMALE": {
+                 "attribute":"FEMALE",
+                 "count":"",
+                 "type":"integer",
+                 "min":"0",
+                 "max":"10000000"
+             }
+
+         }
+      }
+  ]
+}

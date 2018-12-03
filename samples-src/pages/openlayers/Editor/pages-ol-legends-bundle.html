@@ -37,7 +37,8 @@
                 obj: {
                     "title" : "test fill...",
                     "paint": {
-                         "fill-color" : "#2BB3E1"
+                         "fill-color" : "#2BB3E1",
+                         "fill-opacity" : 0.5
                     }
                 },
             });
@@ -47,7 +48,9 @@
                 obj: {
                     "title" : "test line...",
                     "paint": {
-                         "line-color" : "#2BB3E1"
+                         "line-color" : "#2BB3E1",
+                         "line-width" : 10,
+                         "line-opacity" : 0.5
                     }
                 },
             });
@@ -57,7 +60,11 @@
                 obj: {
                     "title" : "test circle...",
                     "paint": {
-                         "circle-color" : "#2BB3E1"
+                         "circle-radius": 5,
+                         "circle-opacity": 0.5,
+                         "circle-color": "#2BB3E1",
+                         "circle-stroke-width": 2,
+                         "circle-stroke-color": "rgba(255, 0, 0, 1)"
                     }
                 },
             });
@@ -65,7 +72,7 @@
 
             var legend24 = new ol.editor.Legend({
                 obj: {
-                    "title" : "test background, not yet implemented...",
+                    "title" : "test background...",
                     "paint": {
                          "background-color" : "#2BB3E1"
                     }
@@ -75,7 +82,7 @@
 
             var legend25 = new ol.editor.Legend({
                 obj: {
-                    "title" : "test text, not yet implemented...",
+                    "title" : "test text, not correctly implemented...",
                     "paint": {
                          "text-color" : "#2BB3E1"
                     }
@@ -95,7 +102,7 @@
 
             var legend27 = new ol.editor.Legend({
                 obj: {
-                    "title" : "test 'inconnu'...",
+                    "title" : "test text (by default), not correctly implemented...",
                     "paint": {
                         "text-size" : "3px"
                     }
@@ -107,7 +114,7 @@
             var legend3 = new ol.editor.Legend({
                 target: document.getElementById("legend"),
                 obj: {
-                    "title" : "test not yet implemented...",
+                    "title" : "test fill (array), not yet implemented...",
                     paint : {
                         "fill-color": [
                             "match",
@@ -124,7 +131,7 @@
             var legend4 = new ol.editor.Legend({
                 target: document.getElementById("legend"),
                 obj: {
-                    "title" : "test not yet implemented...",
+                    "title" : "test fill (object), not yet implemented...",
                     "paint": {
                         "fill-color": {
                             color : "#A7DA81"

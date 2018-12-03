@@ -30,6 +30,12 @@
     font-weight: bold;
 }
 
+/* desactive un composant */
+.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
 /*******************************************************************************
 LAYERS
 *******************************************************************************/
@@ -306,9 +312,7 @@ LEGEND
     margin-left: 28px;
 }
 
-.GPEditorMapBoxLegendStringContainer,
-.GPEditorMapBoxLegendArrayContainer,
-.GPEditorMapBoxLegendObjectContainer {
+.GPEditorMapBoxLegendRenderContainer {
     display: inline-flex;
     align-items: center;
     width: 175px;
@@ -348,7 +352,7 @@ LEGEND
 .legend-text {}
 
 .legend-unknow,
- .legend-not-implemented {
+.legend-not-implemented {
     background-color: #FFFFFF;
 }
 

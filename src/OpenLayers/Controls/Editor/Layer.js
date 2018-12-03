@@ -20,9 +20,10 @@ var logger = Logger.getLogger("editor-layer");
  *      target : ...,
  *      position : 1,
  *      tools : {
- *          visibility : true,
- *          remove : false, // TODO
- *          clone : false // TODO
+ *          visibility : true, // afficher l'icone de visibilité
+ *          type : true,       // afficher l'icone du type de geometrie
+ *          remove : false,    // TODO afficher l'icone de suppression
+ *          clone : false      // TODO afficher l'icone de duplication
  *      },
  *      obj : {
  *          id: "ocs - vegetation", // MANDATORY
@@ -36,6 +37,10 @@ var logger = Logger.getLogger("editor-layer");
  *  layers.addStyle(oStyle);
  *  layers.addFilter(oFilter);
  *  layers.add();
+ *  layers.active(false);
+ *  layers.visibility(false);
+ *  layers.display(false);
+ *  layers.toggle();
  */
 function Layer (options) {
     logger.trace("[constructor] Layer", options);
@@ -66,6 +71,9 @@ Layer.prototype.constructor = Layer;
  * @private
  */
 Layer.prototype._initialize = function () {
+    // unique editor id (optional!)
+    this.id = this.options.id || null;
+
     if (!this.options.target) {
         // cf. add()
     }
@@ -76,8 +84,9 @@ Layer.prototype._initialize = function () {
 
     var _toolsDefault = {
         visibility : true,
-        remove : false,
-        clone : false
+        type : true,
+        remove : false, // TODO
+        clone : false // TODO
     };
 
     if (!this.options.tools) {
@@ -171,41 +180,43 @@ Layer.prototype._initContainer = function () {
     divTitle.appendChild(labelImage);
 
     // type
-    var imgType = document.createElement("img");
-    imgType.className = this.name.typeimg;
-    // TODO il faudrait faire la difference entre :
-    // - icone uniquement : SYMBOL-ICON
-    // - texte uniquement : SYMBOL-TEXT
-    // - les 2 : SYMBOL
-    // Mais il nous faut les styles complets (paint & layout)
-    // pour determiner les 3 types !
-    switch (obj.type.toUpperCase()) {
-        case "SYMBOL-ICON": // not used !
-            imgType.style["background-position"] = "0px 0";
-            break;
-        case "SYMBOL-TEXT": // not used !
-            imgType.style["background-position"] = "-194px 0";
-            break;
-        case "SYMBOL":
-            imgType.style["background-position"] = "-84px 0";
-            break;
-        case "LINE":
-            imgType.style["background-position"] = "-28px 0";
-            break;
-        case "FILL":
-            imgType.style["background-position"] = "-56px 0";
-            break;
-        case "BACKGROUND":
-            imgType.style["background-position"] = "-140px 0";
-            break;
-        case "CIRCLE":
-            imgType.style["background-position"] = "-168px 0";
-            break;
-        default:
-            // type inconnu ou non pris en charge ou par defaut
-            imgType.style["background-position"] = "-112px 0";
+    if (this.options.tools.type && obj.type) { // Optionnel !
+        var imgType = document.createElement("img");
+        imgType.className = this.name.typeimg;
+        // TODO il faudrait faire la difference entre :
+        // - icone uniquement : SYMBOL-ICON
+        // - texte uniquement : SYMBOL-TEXT
+        // - les 2 : SYMBOL
+        // Mais il nous faut les styles complets (paint & layout)
+        // pour determiner les 3 types !
+        switch (obj.type.toUpperCase()) {
+            case "SYMBOL-ICON": // not used !
+                imgType.style["background-position"] = "0px 0";
+                break;
+            case "SYMBOL-TEXT": // not used !
+                imgType.style["background-position"] = "-194px 0";
+                break;
+            case "SYMBOL":
+                imgType.style["background-position"] = "-84px 0";
+                break;
+            case "LINE":
+                imgType.style["background-position"] = "-28px 0";
+                break;
+            case "FILL":
+                imgType.style["background-position"] = "-56px 0";
+                break;
+            case "BACKGROUND":
+                imgType.style["background-position"] = "-140px 0";
+                break;
+            case "CIRCLE":
+                imgType.style["background-position"] = "-168px 0";
+                break;
+            default:
+                // type inconnu ou non pris en charge ou par defaut
+                imgType.style["background-position"] = "-112px 0";
+        }
+        divTitle.appendChild(imgType);
     }
-    divTitle.appendChild(imgType);
 
     // container legend (empty)
     var divLegend = document.createElement("div");
@@ -226,7 +237,7 @@ Layer.prototype._initContainer = function () {
     labelTitle.htmlFor = inputTitle.id;
     labelTitle.innerHTML = obj["id"] || obj["source-layer"] || obj["source"];
     labelTitle.title = obj["source-layer"] || obj["source"] || obj["id"];
-    labelTitle.data = obj;
+    labelTitle.data = obj; // on lie le DOM et la couche, utile lors d'evenement !
     if (labelTitle.addEventListener) {
         labelTitle.addEventListener("click", function (e) {
             self.onClickLayerMapBox(e);
@@ -255,7 +266,7 @@ Layer.prototype._initContainer = function () {
         inputTools.className = this.name.visibilityinput;
         inputTools.type = "checkbox";
         inputTools.checked = "checked"; // par défaut, à modifier via visibility(true|false) !
-        inputTools.data = obj;
+        inputTools.data = obj; // on lie le DOM et la couche, utile lors d'evenement !
         // event for visibility change
         if (inputTools.addEventListener) {
             inputTools.addEventListener("click", function (e) {
@@ -374,8 +385,12 @@ Layer.prototype.slotLegend = function () {
         var nodesLvl1 = this.container.childNodes;
         if (nodesLvl1.length) {
             var nodesLvl2 = nodesLvl1[0].childNodes;
-            if (nodesLvl2.length) {
-                node = nodesLvl2[2];
+            // on recherche le container de la legende
+            for (var i = 0; i < nodesLvl2.length; i++) {
+                var curnode = nodesLvl2[i];
+                if (curnode.id.indexOf(this.name.containerlegend) !== -1) {
+                    node = curnode;
+                }
             }
         }
         if (node) {
@@ -390,17 +405,24 @@ Layer.prototype.slotLegend = function () {
 };
 
 /**
- * Set visibility
+ * Set or get visibility
  *
- * @param {Boolean} display - set visibility
+ * @param {Boolean} display - set visibility or undefined to get status
+ * @returns {Boolean} - true/false
  */
 Layer.prototype.visibility = function (display) {
     logger.trace("visibility()", display);
-    this.DomVisibility.checked = (display) ? "checked" : "";
+    if (!this.options.tools.visibility) {
+        return;
+    }
+    if (typeof display !== "undefined") {
+        this.DomVisibility.checked = (display) ? "checked" : "";
+    }
+    return this.DomVisibility.checked;
 };
 
 /**
-* Set toggle a panel
+* Toggle a layer panel
 */
 Layer.prototype.toggle = function () {
     logger.trace("toggle()");
@@ -408,23 +430,50 @@ Layer.prototype.toggle = function () {
 };
 
 /**
- * Set display container (DOM)
+* Click on visibility icon
+*/
+Layer.prototype.visible = function () {
+    logger.trace("visible()");
+    if (!this.options.tools.visibility) {
+        return;
+    }
+    this.DomVisibility.click();
+};
+
+/**
+ * Set display or get
  *
- * @param {Boolean} display - show/hidden container
+ * @param {Boolean} display - show/hidden container or get status
+ * @returns {Boolean} - true/false
  */
 Layer.prototype.display = function (display) {
     logger.trace("display()", display);
-    this.container.style.display = (display) ? "flex" : "none";
     var checked = document.getElementById(this.DomToggle.htmlFor).checked;
-    if (this.oStyle) {
-        this.oStyle.display(display && checked);
+    if (typeof display !== "undefined") {
+        this.container.style.display = (display) ? "flex" : "none";
+        if (this.oStyle) {
+            this.oStyle.display(display && checked);
+        }
+        if (this.oFilter) {
+            this.oFilter.display(display && checked);
+        }
+        if (this.oLegend) {
+            this.oLegend.display(display && checked);
+        }
     }
-    if (this.oFilter) {
-        this.oFilter.display(display && checked);
-    }
-    if (this.oLegend) {
-        this.oLegend.display(display && checked);
-    }
+    return checked;
+};
+
+/**
+ * Set disabled/enabled status
+ *
+ * @param {Boolean} active - disable/enable layer interaction
+ */
+Layer.prototype.active = function (active) {
+    logger.trace("active()", active);
+    this.container.className = (active)
+        ? this.name.container
+        : this.name.container + " disabled";
 };
 
 /**
@@ -471,6 +520,7 @@ Layer.prototype.onClickLayerMapBox = function (e) {
  */
 Layer.prototype.onVisibilityLayerMapBox = function (e) {
     logger.trace("onVisibilityLayerMapBox", e);
+    e.editorID = this.id;
     EventBus.dispatch(EventEditor.layer.visibility, e);
 };
 
@@ -483,6 +533,7 @@ Layer.prototype.onVisibilityLayerMapBox = function (e) {
  */
 Layer.prototype.onCloneLayerMapBox = function (e) {
     logger.trace("onCloneLayerMapBox", e);
+    e.editorID = this.id;
     EventBus.dispatch(EventEditor.layer.clone, e);
 };
 
@@ -495,6 +546,7 @@ Layer.prototype.onCloneLayerMapBox = function (e) {
  */
 Layer.prototype.onRemoveLayerMapBox = function (e) {
     logger.trace("onRemoveLayerMapBox", e);
+    e.editorID = this.id;
     EventBus.dispatch(EventEditor.layer.remove, e);
 };
 

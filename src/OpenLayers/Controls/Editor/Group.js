@@ -47,6 +47,9 @@ Group.prototype.constructor = Group;
  * @private
  */
 Group.prototype._initialize = function () {
+    // unique editor id (optional!)
+    this.id = this.options.id || null;
+
     if (!this.options.target) {
         // cf. add()
     }
@@ -147,6 +150,7 @@ Group.prototype.getContainer = function () {
  */
 Group.prototype.onVisibilityGroupMapBox = function (e) {
     logger.trace("onVisibilityGroupMapBox", e);
+    e.editorID = this.id;
     EventBus.dispatch(EventEditor.group.visibility, e);
 };
 

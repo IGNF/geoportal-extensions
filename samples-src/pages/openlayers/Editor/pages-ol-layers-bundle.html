@@ -26,11 +26,11 @@
 {{#content "js"}}
             <script type="text/javascript">
 
-            // layers vide
+            // layers vide et target par defaut
             var layers0 = new ol.editor.Layer();
             layers0.add();
 
-            // layers vide et target par defaut
+            // layers vide
             var layers1 = new ol.editor.Layer({
                 target: document.getElementById("layers"),
                 position : 1
@@ -39,6 +39,7 @@
 
             // layers
             var layers2 = new ol.editor.Layer({
+                target: document.getElementById("layers"),
                 tools : {
                     visibility : true,
                     remove : false,
@@ -52,11 +53,13 @@
                 },
             });
             layers2.add();
+            console.log("visibility 2 : ", layers2.visibility());
 
             var layers3 = new ol.editor.Layer({
                 target: document.getElementById("layers"),
                 tools : {
                     visibility : true,
+                    type : false,
                     remove : true,
                     clone : true
                 },
@@ -69,6 +72,7 @@
             });
             layers3.add();
             layers3.visibility(false);
+            console.log("visibility 3 : ", layers3.visibility());
             layers3.toggle();
 
             var layers4 = new ol.editor.Layer({
@@ -112,6 +116,33 @@
             });
             style.add();
             layers4.addStyle(style);
+            var legend = new ol.editor.Legend({
+                target: document.getElementById("layers"),
+                obj : {
+                    "title" : "Legende...",
+                    "paint" : {
+                      "fill-color": "#0F78B4",
+                      "fill-opacity": 0.7
+                    }
+                }
+            });
+            legend.add();
+            legend.display(false);
+            layers4.addLegend(legend);
+            layers4.slotLegend(); // integration de la legende dans le container du layers !
+
+            var layers5 = new ol.editor.Layer({
+                target: document.getElementById("layers"),
+                position : 5,
+                obj: {
+                    id : "Titre5",
+                    "source-layer" : "Description5",
+                    type: "circle"
+                },
+            });
+            layers5.add();
+            layers5.active(false);
+            layers5.visible();
 
             document.getElementById("displayTrue").addEventListener("click", function () {
                 layers0.display(true);
@@ -119,6 +150,7 @@
                 layers2.display(true);
                 layers3.display(true);
                 layers4.display(true);
+                layers5.display(true);
             });
 
             document.getElementById("displayFalse").addEventListener("click", function () {
@@ -127,6 +159,7 @@
                 layers2.display(false);
                 layers3.display(false);
                 layers4.display(false);
+                layers5.display(false);
             });
 
             </script>

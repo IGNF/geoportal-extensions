@@ -45,12 +45,14 @@ var logger = Logger.getLogger("editor");
  *          "editor:themes:title" : function(e) {...}
  *      },
  *      tools : {
- *          themes : true,
- *          layers : true,
- *          style : true,
- *          filter : true,
- *          legend : true,
- *          group : true
+ *          themes : true, // afficher les themes (themes)
+ *          layers : true, // afficher les couches (layers)
+ *          style : true,  // afficher les styles (sous menu layers)
+ *          filter : true, // afficher les filtres (sous menu layers)
+ *          legend : true, // afficher les legendes (layers)
+ *          group : true,  // grouper les couches (layers)      // TODO
+ *          title : true   // afficher les titres des rubriques,
+ *          type : true,   // affichage du type de geometrie (layers)
  *      }
  *   });
  */
@@ -116,7 +118,9 @@ Editor.prototype._initialize = function () {
         style : false,
         filter : false,
         legend : false,
-        group : false
+        group : false,
+        title : true,
+        type : true
     };
 
     if (!this.options.tools) {
@@ -125,6 +129,8 @@ Editor.prototype._initialize = function () {
     }
 
     Utils.mergeParams(this.options.tools, _toolsDefault, false);
+
+    this.layers = [];
 
     this.container = null;
 
@@ -229,8 +235,15 @@ Editor.prototype._initContainer = function () {
     // existance d'un autre container (editeur) ?
     var _idx = 0;
     var elements = document.querySelectorAll("div[id^=" + this.name.containerID + "]");
-    if (elements) {
-        _idx = elements.length;
+    for (var j = 0; j < elements.length; j++) {
+        var element = elements[j];
+        var num = parseInt(element.id.substring(element.id.lastIndexOf("_") + 1), 10);
+        if (num > _idx) {
+            _idx = num;
+        }
+    }
+    if (elements.length) {
+        _idx += 1;
     }
 
     var div = document.createElement("div");
@@ -240,11 +253,13 @@ Editor.prototype._initContainer = function () {
     // Themes
     if (this.options.tools.themes && this.options.themes) {
         // title
-        var titleThemes = document.createElement("div");
-        titleThemes.id = this.name.titleThemes;
-        titleThemes.className = this.name.titleThemes;
-        titleThemes.innerHTML = "Liste des 'thèmes'";
-        div.appendChild(titleThemes);
+        if (this.options.tools.title) {
+            var titleThemes = document.createElement("div");
+            titleThemes.id = this.name.titleThemes;
+            titleThemes.className = this.name.titleThemes;
+            titleThemes.innerHTML = "Liste des 'thèmes'";
+            div.appendChild(titleThemes);
+        }
 
         // styles
         var themes = new Themes({
@@ -266,15 +281,18 @@ Editor.prototype._initContainer = function () {
                     div.appendChild(hr);
                 }
                 // title
-                var titleLayers = document.createElement("div");
-                titleLayers.id = this.name.titleLayers;
-                titleLayers.className = this.name.titleLayers;
-                titleLayers.innerHTML = (multisources) ? "Liste des 'couches' (" + source + ")" : "Liste des 'couches'";
-                div.appendChild(titleLayers);
+                if (this.options.tools.title) {
+                    var titleLayers = document.createElement("div");
+                    titleLayers.id = this.name.titleLayers;
+                    titleLayers.className = this.name.titleLayers;
+                    titleLayers.innerHTML = (multisources) ? "Liste des 'couches' (" + source + ")" : "Liste des 'couches'";
+                    div.appendChild(titleLayers);
+                }
             }
 
             // tri des layers pour la gestion des groupes
-            this.mapbox.layers.sort(function (a, b) {
+            var _layers = this.mapbox.layers.slice();
+            _layers.sort(function (a, b) {
                 if (a.id < b.id) {
                     return -1;
                 }
@@ -300,8 +318,8 @@ Editor.prototype._initContainer = function () {
             //  "paint": {
             //    "fill-color": "#2BB3E1"
             //  }
-            for (var i = 0; i < this.mapbox.layers.length; i++) {
-                var data = this.mapbox.layers[i];
+            for (var ii = 0; ii < _layers.length; ii++) {
+                var data = _layers[ii];
 
                 // traitement dans l'ordre des sources
                 if (data.source === source) {
@@ -310,7 +328,11 @@ Editor.prototype._initContainer = function () {
                         var oLayer = new Layer({
                             id : this.id,
                             target : div,
-                            position : _idx + "_" + i, // unique !
+                            position : _idx + "_" + ii, // unique !
+                            tools : {
+                                visibility : true,
+                                type : this.options.tools.type
+                            },
                             obj : {
                                 "id" : data.id,
                                 "type" : data.type,
@@ -323,8 +345,11 @@ Editor.prototype._initContainer = function () {
                         if (data.layout && data.layout.visibility && data.layout.visibility === "none") {
                             oLayer.visibility(false);
                         }
+                        // sauvegarde des layers
+                        this.layers.push(oLayer);
                     }
                     // Legende
+                    // TODO options sur l'intégration de la legende dans le menu de la couche
                     if (this.options.tools.legend) {
                         var oLegend = new Legend({
                             id : this.id,
@@ -346,7 +371,7 @@ Editor.prototype._initContainer = function () {
                         var oStyle = new Style({
                             id : this.id,
                             target : div,
-                            position : _idx + "_" + i, // unique !,
+                            position : _idx + "_" + ii, // unique !,
                             obj : {
                                 "layout" : data.layout,
                                 "paint" : data.paint
@@ -367,7 +392,7 @@ Editor.prototype._initContainer = function () {
                         var oFilter = new Filter({
                             id : this.id,
                             target : div,
-                            position : _idx + "_" + i, // unique !,
+                            position : _idx + "_" + ii, // unique !,
                             obj : {
                                 "filter" : data.Filter
                             }
@@ -430,6 +455,23 @@ Editor.prototype.getID = function () {
  */
 Editor.prototype.getContainer = function () {
     return this.container;
+};
+
+/**
+ * Get Style
+ * @returns {Object} Style MapBox
+ */
+Editor.prototype.getStyle = function () {
+    return this.mapbox;
+};
+
+/**
+ * Get Layers
+ * @returns {Array} Array of Object Layer
+ * @see Editor/Layer
+ */
+Editor.prototype.getLayers = function () {
+    return this.layers;
 };
 // ################################################################### //
 // ####################### handlers events to dom #################### //

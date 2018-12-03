@@ -57,6 +57,9 @@ Filter.prototype.constructor = Filter;
  * @private
  */
 Filter.prototype._initialize = function () {
+    // unique editor id (optional!)
+    this.id = this.options.id || null;
+
     if (!this.options.target) {
         // cf. add()
     }
@@ -216,6 +219,7 @@ Filter.prototype.getContainer = function () {
  */
 Filter.prototype.onEditFilterMapBox = function (e) {
     logger.trace("onEditFilterMapBox", e);
+    e.editorID = this.id;
     EventBus.dispatch(EventEditor.filter.edit, e);
 };
 

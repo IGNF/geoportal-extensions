@@ -1,6 +1,7 @@
 import ol from "ol";
 import Logger from "../../Common/Utils/LoggerByDefault";
 import SelectorID from "../../Common/Utils/SelectorID";
+import Color from "../../Common/Utils/ColorUtils";
 import Interactions from "./Utils/Interactions";
 import DrawingDOM from "../../Common/Controls/DrawingDOM";
 import KMLExtended from "../Formats/KML";
@@ -728,7 +729,7 @@ Drawing.prototype._drawEndFeature = function (feature, geomType) {
         case "Polygon":
             style = new ol.style.Style({
                 fill : new ol.style.Fill({
-                    color : this.hexToRgba(
+                    color : Color.hexToRgba(
                         this.options.defaultStyles.polyFillColor,
                         this.options.defaultStyles.polyFillOpacity
                     )
@@ -845,7 +846,7 @@ Drawing.prototype._createStylingInteraction = function () {
                     valuesColor = seEv.selected[0].getStyle().getText().getStroke().getColor();
                     if (Array.isArray(valuesColor)) {
                         valuesColor = "rgba(" + valuesColor.join() + ")";
-                        hexColor = this.rgbaToHex(valuesColor);
+                        hexColor = Color.rgbaToHex(valuesColor);
                         initValues.strokeColor = hexColor.hex;
                         initValues.strokeOpacity = hexColor.opacity;
                     } else {
@@ -857,7 +858,7 @@ Drawing.prototype._createStylingInteraction = function () {
                     valuesColor = seEv.selected[0].getStyle().getText().getFill().getColor();
                     if (Array.isArray(valuesColor)) {
                         valuesColor = "rgba(" + valuesColor.join() + ")";
-                        hexColor = this.rgbaToHex(valuesColor);
+                        hexColor = Color.rgbaToHex(valuesColor);
                         initValues.fillColor = hexColor.hex;
                         initValues.fillOpacity = hexColor.opacity;
                     } else {
@@ -886,7 +887,7 @@ Drawing.prototype._createStylingInteraction = function () {
                     valuesColor = seEv.selected[0].getStyle().getStroke().getColor();
                     if (Array.isArray(valuesColor)) {
                         valuesColor = "rgba(" + valuesColor.join() + ")";
-                        hexColor = this.rgbaToHex(valuesColor);
+                        hexColor = Color.rgbaToHex(valuesColor);
                         initValues.strokeColor = hexColor.hex;
                         initValues.fillOpacity = hexColor.opacity;
                     } else {
@@ -907,7 +908,7 @@ Drawing.prototype._createStylingInteraction = function () {
                     valuesColor = seEv.selected[0].getStyle().getStroke().getColor();
                     if (Array.isArray(valuesColor)) {
                         valuesColor = "rgba(" + valuesColor.join() + ")";
-                        hexColor = this.rgbaToHex(valuesColor);
+                        hexColor = Color.rgbaToHex(valuesColor);
                         initValues.strokeColor = hexColor.hex;
                         initValues.strokeOpacity = hexColor.opacity;
                     } else {
@@ -922,7 +923,7 @@ Drawing.prototype._createStylingInteraction = function () {
                     if (Array.isArray(valuesColor)) {
                         valuesColor = "rgba(" + valuesColor.join() + ")";
                     }
-                    hexColor = this.rgbaToHex(valuesColor);
+                    hexColor = Color.rgbaToHex(valuesColor);
                     initValues.fillColor = hexColor.hex;
                     initValues.fillOpacity = hexColor.opacity;
                 }
@@ -1027,7 +1028,7 @@ Drawing.prototype._createStylingInteraction = function () {
                             }),
                             fill : new ol.style.Fill({
                                 // color : fillColorElem.value
-                                color : dtObj.hexToRgba(fillColorElem.value, opacity)
+                                color : Color.hexToRgba(fillColorElem.value, opacity)
                             })
                         }));
                     }
@@ -1339,7 +1340,7 @@ Drawing.prototype._handleToolClick = function (clickEvent, toolId, context) {
                             width : this.options.defaultStyles.polyStrokeWidth
                         }),
                         fill : new ol.style.Fill({
-                            color : this.hexToRgba(
+                            color : Color.hexToRgba(
                                 this.options.defaultStyles.polyFillColor,
                                 this.options.defaultStyles.polyFillOpacity
                             )

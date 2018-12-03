@@ -1,5 +1,6 @@
 import EventBus from "eventbus";
 import EventEditor from "./Event";
+import Utils from "../../../Common/Utils";
 import Logger from "../../../Common/Utils/LoggerByDefault";
 
 var logger = Logger.getLogger("editor-legend");
@@ -14,6 +15,9 @@ var logger = Logger.getLogger("editor-legend");
  * @example
  *   var Legends = new Legend ({
  *      target : ...,
+ *      tools : {
+ *          edition : false
+ *      },
  *      obj : {
  *          title : "",
  *          paint : {}
@@ -27,6 +31,7 @@ function Legend (options) {
     this.options = options || {
         // default...
         target : null,
+        tools : null,
         obj : null
     };
 
@@ -53,9 +58,22 @@ Legend.prototype.constructor = Legend;
  * @private
  */
 Legend.prototype._initialize = function () {
+    // unique editor id (optional!)
+    this.id = this.options.id || null;
+
     if (!this.options.target) {
         // cf. add()
     }
+
+    var _toolsDefault = {
+        edition : false
+    };
+
+    if (!this.options.tools) {
+        this.options.tools = _toolsDefault;
+    }
+
+    Utils.mergeParams(this.options.tools, _toolsDefault, false);
 
     if (!this.options.obj) {
         // choix d'avoir un objet vide pour une edition futur...
@@ -74,9 +92,7 @@ Legend.prototype._initialize = function () {
     this.name = {
         target : "GPEditorMapBoxLegendTarget",
         container : "GPEditorMapBoxLegendContainer",
-        containerstringlegend : "GPEditorMapBoxLegendStringContainer",
-        containerarraylegend : "GPEditorMapBoxLegendArrayContainer",
-        containerobjectlegend : "GPEditorMapBoxLegendObjectContainer",
+        containerlegend : "GPEditorMapBoxLegendRenderContainer",
         legendrender : "GPEditorMapBoxLegendRender",
         legendtitle : "GPEditorMapBoxLegendTitle"
     };
@@ -103,70 +119,96 @@ Legend.prototype._initContainer = function () {
         }
 
         // FIXME
-        // gestion du type complexe : texte avec icone ou icone !
-        var _bNotFound = true;
+        // - gestion de type plus complexe : texte avec/sans icone ou icone !
+        var bFound = false;
         for (var i = 0; i < keys.length; i++) {
             var key = keys[i];
-            if (key === "fill-color" ||
-                key === "line-color" ||
-                key === "circle-color" ||
-                key === "background-color" ||
-                key === "text-color" || // FIXME attention, cette propriété est optionnelle !
-                key === "icon-color" // FIXME attention, cette propriété n'exsite pas !
+            if (/fill-/.test(key) ||
+                /line-/.test(key) ||
+                /circle-/.test(key) ||
+                /background-/.test(key) ||
+                /text-/.test(key) ||
+                /icon-/.test(key)
             ) {
-                _bNotFound = false;
-                var params = {
+                // style geré & trouvé
+                bFound = true;
+
+                div.appendChild(this._createElementLegend({
                     title : _obj.title || "",
-                    type : key,
-                    value : _obj.paint[key]
-                };
-                if (typeof _obj.paint[key] === "string") {
-                    div.appendChild(this._createElementLegendString(params));
-                } else if (Array.isArray(_obj.paint[key])) {
-                    div.appendChild(this._createElementLegendArray(params));
-                } else if (typeof _obj.paint[key] === "object") {
-                    div.appendChild(this._createElementLegendObject(params));
-                } else {
-                    // TODO ...
-                }
+                    type : key.split("-")[0],
+                    value : _obj.paint
+                }));
+
+                // on stoppe la recherche
+                break;
             }
         }
     }
-    // legende avec un style inconnu !?
-    if (_bNotFound) {
-        div.appendChild(this._createElementLegendString({
+
+    // legende avec un style indeterminé !?
+    if (!bFound) {
+        div.appendChild(this._createElementLegend({
             title : _obj.title || "",
             type : "",
             value : ""
         }));
     }
+
     // main container
     this.container = div;
 };
 
 /**
- * Graphical legend Simple
- * // type simple :
- * // "paint": {
- * //     "fill-color": "#2BB3E1"
- * // }
- *
- * @param {Object} params - param
- * @param {String} params.title - title
- * @param {String} params.type - fill, line, ...
- * @param {String} params.value - #000000 hexa color...
- * @returns {DOMElement} DOM element
- *
- * @private
- * @example
- *   <div class ="GPEditorMapBoxLegendStringContainer"></div>
- */
-Legend.prototype._createElementLegendString = function (params) {
+* Graphical legend Simple
+* // type simple :
+* // "paint": {
+* //     "fill-color": "#2BB3E1"
+* // }
+*
+* // TODO type complexe :
+* // "paint": {
+* //     "fill-color": [
+* //          "match",
+* //          ["get","symbo"],
+* //          "ZONE_BOISEE","#A7DA81",
+* //          "ZONE_MANGROVE","#7E8AB5",
+* //          "#A7DA81"
+* //      ]
+* // }
+*
+* // TODO type complexe :
+* // "paint": {
+* //     "fill-color": {
+* //        "base": 1,
+* //        "stops": [
+* //        [
+* //          15.5,
+* //         "#f2eae2"
+* //        ],
+* //        [
+* //          16,
+* //          "#dfdbd7"
+* //        ]
+* //        ]
+* //     }
+* // }
+*
+* @param {Object} params - param
+* @param {String} params.title - title
+* @param {String} params.type - fill, line, ...
+* @param {String} params.value - {"fill-color": "#2BB3E1"}
+* @returns {DOMElement} DOM element
+*
+* @private
+* @example
+*   <div class ="GPEditorMapBoxLegendRenderContainer"></div>
+*/
+Legend.prototype._createElementLegend = function (params) {
     // contexte
     var self = this;
 
     var container = document.createElement("div");
-    container.className = this.name.containerstringlegend;
+    container.className = this.name.containerlegend;
 
     var div = document.createElement("div");
     div.className = this.name.legendrender;
@@ -180,35 +222,78 @@ Legend.prototype._createElementLegendString = function (params) {
         });
     }
 
-    // à finir ...
-    switch (params.type.split("-")[0]) {
+    var pColor = null;
+    var color = "";
+    var stroke = "";
+    var opacity = 0;
+    // var width = 1;
+    switch (params.type) {
         case "line":
-            // TODO jouer aussi sur la param width !
-            div.style["background"] = "linear-gradient(to top right, #FFFFFF calc(40% - 0px), " + params.value + ", #FFFFFF calc(60% + 0px) )";
+            pColor = params.value["line-color"];
+            if (typeof pColor === "object" || Array.isArray(pColor)) {
+                div.className += " legend-not-implemented";
+                break;
+            }
+            color = params.value["line-color"] || "#000000";
+            // TODO params.value["line-opacity"]
+            // TODO params.value["line-width"]
+            div.style["background"] = "linear-gradient(to top right, #FFFFFF calc(40% - 0px), " + color + ", #FFFFFF calc(60% + 0px) )";
             div.className += " legend-line";
             break;
         case "text":
-            // FIXME param optionnel !
-            div.style["background-color"] = params.value;
+            pColor = params.value["text-color"];
+            if (typeof pColor === "object" || Array.isArray(pColor)) {
+                div.className += " legend-not-implemented";
+                break;
+            }
+            // FIXME ?
+            color = params.value["text-color"] || "#000000";
+            div.style["background-color"] = color;
             div.className += " legend-text";
             break;
         case "icon":
-            // FIXME comment retrouver l'icone ?
-            div.style["background-color"] = params.value;
+            pColor = params.value["icon-color"];
+            if (typeof pColor === "object" || Array.isArray(pColor)) {
+                div.className += " legend-not-implemented";
+                break;
+            }
+            // FIXME ?
+            color = params.value["icon-color"] || "#000000";
+            div.style["background-color"] = color;
             div.className += " legend-icon";
             break;
         case "circle":
-            div.style["border-color"] = params.value;
-            // div.style["background-color"] = params.value;
+            pColor = params.value["circle-color"];
+            if (typeof pColor === "object" || Array.isArray(pColor)) {
+                div.className += " legend-not-implemented";
+                break;
+            }
+            color = params.value["circle-color"] || "#000000";
+            stroke = params.value["circle-stroke-color"] || "#FFFFFF";
+            opacity = params.value["circle-opacity"] || 1;
+            // TODO params.value["circle-stroke-width"]
+            div.style["border-color"] = stroke;
+            div.style["background-color"] = color;
+            div.style["opacity"] = opacity;
             div.className += " legend-circle";
             break;
         case "background":
-            // TODO creer un icone !
-            div.style["background-color"] = params.value;
+            // TODO creer un icone pour le type !
+            color = params.value["background-color"];
+            div.style["background-color"] = color;
             div.className += " legend-background";
             break;
         case "fill":
-            div.style["background-color"] = params.value;
+            pColor = params.value["fill-color"];
+            if (typeof pColor === "object" || Array.isArray(pColor)) {
+                div.className += " legend-not-implemented";
+                break;
+            }
+            color = params.value["fill-color"] || "#000000";
+            opacity = params.value["fill-opacity"] || 1;
+            // TODO params.value["fill-outline-color"]
+            div.style["background-color"] = color;
+            div.style["opacity"] = opacity;
             div.className += " legend-fill";
             break;
         default:
@@ -219,91 +304,6 @@ Legend.prototype._createElementLegendString = function (params) {
     var span = document.createElement("span");
     span.className = this.name.legendtitle;
     span.innerHTML = params.title || "";
-    container.appendChild(span);
-
-    // on peut ausi surcharger l'icone de type du layers avec un masque :
-    // element.style {
-    //      background: none;
-    //      -webkit-mask: {file} no-repeat center;
-    //      mask: : {file};
-    //      background-color: #0000000
-    // }
-    return container;
-};
-
-/**
- * Graphical legend Complex with an expression array
- * // type complexe :
- * // "paint": {
- * //     "fill-color": [
- * //          "match",
- * //          ["get","symbo"],
- * //          "ZONE_BOISEE","#A7DA81",
- * //          "ZONE_MANGROVE","#7E8AB5",
- * //          "#A7DA81"
- * //      ]
- * // }
- * @returns {DOMElement} DOM element
- *
- * @private
- * @example
- *   <div class ="GPEditorMapBoxLegendArrayContainer"></div>
- */
-Legend.prototype._createElementLegendArray = function () {
-    // TODO ...
-    var container = document.createElement("div");
-    container.className = this.name.containerarraylegend;
-
-    var div = document.createElement("div");
-    div.className = this.name.legendrender;
-    div.className += " legend-not-implemented";
-    container.appendChild(div);
-
-    var span = document.createElement("span");
-    span.className = this.name.legendtitle;
-    span.innerHTML = "(not yet implemented!)";
-    container.appendChild(span);
-
-    return container;
-};
-
-/**
- * Graphical legend Complex with an expression object
- * // type complexe :
- * // "paint": {
- * //     "fill-color": {
- * //        "base": 1,
- * //        "stops": [
- * //        [
- * //          15.5,
- * //         "#f2eae2"
- * //        ],
- * //        [
- * //          16,
- * //          "#dfdbd7"
- * //        ]
- * //        ]
- * //     }
- * // }
- * @returns {DOMElement} DOM element
- *
- * @private
- * @example
- *   <div class ="GPEditorMapBoxLegendObjectContainer"></div>
- */
-Legend.prototype._createElementLegendObject = function () {
-    // TODO ...
-    var container = document.createElement("div");
-    container.className = this.name.containerobjectlegend;
-
-    var div = document.createElement("div");
-    div.className = this.name.legendrender;
-    div.className += " legend-not-implemented";
-    container.appendChild(div);
-
-    var span = document.createElement("span");
-    span.className = this.name.legendtitle;
-    span.innerHTML = "(not yet implemented!)";
     container.appendChild(span);
 
     return container;
@@ -346,6 +346,9 @@ Legend.prototype.display = function (display) {
  * Get container Legend Render (DOM)
  *
  * @returns {DOMElement} DOM element
+ * @see Layer.prototype.slotLegend()
+ * @example
+ *  // <div class="GPEditorMapBoxLegendRender legend-(line|fill|background|text|icon|circle|unknow)" style="..."></div>
  */
 Legend.prototype.getRender = function () {
     // FIXME c'est pourri...
@@ -380,6 +383,7 @@ Legend.prototype.getContainer = function () {
  */
 Legend.prototype.onVisibilityLegendMapBox = function (e) {
     logger.trace("onVisibilityLegendMapBox", e);
+    e.editorID = this.id;
     EventBus.dispatch(EventEditor.legend.visibility, e);
 };
 

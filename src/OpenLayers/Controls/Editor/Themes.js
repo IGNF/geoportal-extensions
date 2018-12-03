@@ -130,7 +130,7 @@ Themes.prototype._initContainer = function () {
                 _img.className = this.name.image;
                 _img.src = _theme.image;
                 _img.alt = _theme.image;
-                _img.data = _url;
+                _img.data = _url; // on lie le DOM et la couche, utile lors d'evenement !
                 if (_img.addEventListener) {
                     _img.addEventListener("click", function (e) {
                         self.onClickThemeImageMapBox(e);
@@ -147,7 +147,7 @@ Themes.prototype._initContainer = function () {
                 var _label = document.createElement("label");
                 _label.className = this.name.label;
                 _label.innerHTML = _theme.label;
-                _label.data = _url;
+                _label.data = _url; // on lie le DOM et la couche, utile lors d'evenement !
                 if (_label.addEventListener) {
                     _label.addEventListener("click", function (e) {
                         self.onClickThemeTitleMapBox(e);

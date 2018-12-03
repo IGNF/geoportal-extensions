@@ -228,7 +228,7 @@ module.exports = env => {
                     new UglifyJsWebPackPlugin({
                         output : {
                             comments : false,
-                            beautify : false
+                            beautify : true
                         },
                         uglifyOptions : {
                             mangle : true,

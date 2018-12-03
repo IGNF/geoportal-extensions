@@ -59,6 +59,9 @@ Style.prototype.constructor = Style;
  * @private
  */
 Style.prototype._initialize = function () {
+    // unique editor id (optional!)
+    this.id = this.options.id || null;
+
     if (!this.options.target) {
         // cf. add()
     }
@@ -240,7 +243,7 @@ Style.prototype._createElementToolsScale = function (scale) {
     inputMin.disabled = false;
     inputMin.min = 0;
     inputMin.max = 21;
-    inputMin.data = obj;
+    inputMin.data = obj; // on lie le DOM et la couche, utile lors d'evenement !
     if (inputMin.addEventListener) {
         inputMin.addEventListener("change", function (e) {
             self.onChangeStyleScaleMinMapBox(e);
@@ -270,7 +273,7 @@ Style.prototype._createElementToolsScale = function (scale) {
     inputMax.disabled = false;
     inputMax.min = 0;
     inputMax.max = 21;
-    inputMax.data = obj;
+    inputMax.data = obj; // on lie le DOM et la couche, utile lors d'evenement !
     if (inputMax.addEventListener) {
         inputMax.addEventListener("change", function (e) {
             self.onChangeStyleScaleMaxMapBox(e);
@@ -389,6 +392,7 @@ Style.prototype.getContainer = function () {
  */
 Style.prototype.onEditStyleMapBox = function (e) {
     logger.trace("onEditStyleMapBox", e);
+    e.editorID = this.id;
     EventBus.dispatch(EventEditor.style.edit, e);
 };
 
@@ -401,6 +405,7 @@ Style.prototype.onEditStyleMapBox = function (e) {
  */
 Style.prototype.onChangeStyleScaleMinMapBox = function (e) {
     logger.trace("onChangeStyleScaleMinMapBox", e);
+    e.editorID = this.id;
     e.target.title = e.target.value;
     EventBus.dispatch(EventEditor.style.scale.min, e);
 };
@@ -414,6 +419,7 @@ Style.prototype.onChangeStyleScaleMinMapBox = function (e) {
  */
 Style.prototype.onChangeStyleScaleMaxMapBox = function (e) {
     logger.trace("onChangeStyleScaleMaxMapBox", e);
+    e.editorID = this.id;
     e.target.title = e.target.value;
     EventBus.dispatch(EventEditor.style.scale.max, e);
 };

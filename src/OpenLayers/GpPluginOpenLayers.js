@@ -47,6 +47,8 @@ export const olExtDate = new Date().toISOString().split("T")[0];
 export {default as olUtils} from "../Common/Utils";
 export {default as LayerUtils} from "../Common/Utils/LayerUtils";
 export {default as ProxyUtils} from "../Common/Utils/ProxyUtils";
+export {default as ColorUtils} from "../Common/Utils/ColorUtils";
+export {default as MathUtils} from "../Common/Utils/MathUtils";
 
 Ol.gp = {};
 Ol.gp.GfiUtils = GfiUtils;

@@ -178,6 +178,25 @@ LayerImport.prototype.setMap = function (map) {
         // FIXME au centre de la carte ?
         // var center = this._loadingContainer = this._createLoadingElement();
         // map.getViewport().appendChild(center);
+
+        map.getLayers().on(
+            "remove",
+            function (e) {
+                // import de type layerimport:MapBox ?
+                if (e.element.gpResultLayerId === "layerimport:MapBox") {
+                    // layer ayant le bon ID ?
+                    if (this._mapBoxLayerId && this._mapBoxLayerId === e.element.id) {
+                        // le panneau des résultats existe t il ?
+                        if (this._mapBoxPanel && this._mapBoxPanel.style.display) {
+                            this.cleanMapBoxResultsList();
+                            this._mapBoxPanel.style.display = "none";
+                            this._importPanel.style.display = "";
+                        }
+                    }
+                }
+            },
+            this
+        );
     }
 
     // on appelle la méthode setMap originale d'OpenLayers
@@ -377,6 +396,7 @@ LayerImport.prototype._initialize = function (options) {
     this._getCapResultsListContainer = null;
     this._mapBoxPanel = null;
     this._mapBoxResultsListContainer = null;
+
     this._waitingContainer = null;
     this._loadingContainer = null;
 
@@ -393,6 +413,7 @@ LayerImport.prototype._initialize = function (options) {
     // ########################### MapBox ############################### //
     this.editor = null;
     this._mapBoxObj = null;
+    this._mapBoxLayerId = null;
 
     // ################################################################## //
     // ########################### file or url ########################## //
@@ -729,6 +750,7 @@ LayerImport.prototype._onGetCapPanelClose = function () {
  */
 LayerImport.prototype._onMapBoxPanelClose = function () {
     this.cleanMapBoxResultsList();
+    this._loadingContainer.className = "";
 };
 
 /**
@@ -743,6 +765,7 @@ LayerImport.prototype._onMapBoxReturnPictoClick = function (e) {
     // on bascule sur l'icone d'ouverture du composant
     this._mapBoxPanel.style.display = "none";
     this._showImportInput.checked = false;
+    this._loadingContainer.className = "";
 };
 
 // ################################################################### //
@@ -1083,13 +1106,16 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
                         vectorSource.on("tileloadend", function (e) {
                             self._loadingContainer.className = "";
                         });
+                        vectorSource.on("tileloaderror", function (e) {
+                            self._loadingContainer.className = "";
+                        });
                         vectorLayer = new ol.layer.VectorTile({
                             source : vectorSource,
                             visible : false,
                             // zIndex: 0, // FIXME gerer l'ordre sur des multisources ?
                             declutter : true // TODO utile ?
                         });
-                        vectorLayer.id = _glSourceId;
+                        this._mapBoxLayerId = vectorLayer.id = _glSourceId;
                         vectorLayer.gpResultLayerId = "layerimport:" + this._currentImportType;
                     } else if (_glUrl) {
                         // service avec un tilejson
@@ -1099,7 +1125,7 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
                             // zIndex : 0
                             declutter : true
                         });
-                        vectorLayer.id = _glSourceId;
+                        this._mapBoxLayerId = vectorLayer.id = _glSourceId;
                         vectorLayer.gpResultLayerId = "layerimport:" + this._currentImportType;
                         var vectorTileJson = new ol.source.TileJSON({
                             url : _glUrl
@@ -1173,7 +1199,7 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
                         // zIndex: 0, // FIXME gerer l'ordre sur des multisources ?
                         declutter : true // TODO utile ?
                     });
-                    vectorLayer.id = _glSourceId;
+                    this._mapBoxLayerId = vectorLayer.id = _glSourceId;
                     vectorLayer.gpResultLayerId = "layerimport:" + this._currentImportType;
                 } else {
                     logger.warn("Type MapBox format unknown !");
