@@ -77,7 +77,7 @@
     "leaflet-draw": "1.0.2",
     "loglevel": "~1.6.1",
     "mapbox-gl-styles": "^2.0.2",
-    "ol-mapbox-style": "3.0.1",
+    "ol-mapbox-style": "3.5.0",
     "openlayers": "4.6.5",
     "proj4": "2.4.4",
     "proj4leaflet": "~1.0.2",

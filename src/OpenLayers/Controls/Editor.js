@@ -246,6 +246,7 @@ Editor.prototype._initContainer = function () {
         _idx += 1;
     }
 
+    // container principal
     var div = document.createElement("div");
     div.id = this.name.containerID + _idx;
     div.className = this.name.container;
@@ -290,7 +291,7 @@ Editor.prototype._initContainer = function () {
                 }
             }
 
-            // tri des layers pour la gestion des groupes
+            // tri des layers
             var _layers = this.mapbox.layers.slice();
             _layers.sort(function (a, b) {
                 if (a.id < b.id) {
@@ -302,11 +303,45 @@ Editor.prototype._initContainer = function () {
                 return 0;
             });
 
-            // Ex. Layers, Styles et Filtres
+            logger.trace("Layers : ", _layers);
+
+            // gestion des groupes avec la metadata de groupe
+            var _groups = {}; // liste et comptage des layers dans les groupes
+            _layers.forEach(function (layer) {
+                var _title = layer.id;
+                // separateur
+                var _regex = /_|-|:|=/; // TODO à definir via une option !
+                // index
+                // y'a t il un separateur ?
+                var _idx = _title.search(_regex);
+                var _groupName = (_idx !== -1) ? _title.substring(0, _idx).trim() : _title;
+                // on compte le nombre d'entrée dans un groupe
+                _groups[_groupName] = (_groups[_groupName])
+                    ? _groups[_groupName] + 1 : 1;
+                // ajout de la metadata de groupe
+                var _metadata = layer["metadata"];
+                if (_metadata) {
+                    _metadata["geoportail:group"] = _groupName;
+                } else {
+                    layer["metadata"] = {
+                        "geoportail:group" : _groupName
+                    };
+                }
+            });
+
+            logger.trace("Groups : ", _groups);
+
+            // container courant (cf. groupe) pour l'ajout des elements
+            var target = div;
+
+            // Ex. Layers, Styles, Groups et Filtres
             //  "id": "ocs - vegetation",
             //  "type": "fill",
             //  "source": "pyramide_proto",
-            //  "source-layer": "ocs_vegetation_surf"
+            //  "source-layer": "ocs_vegetation_surf",
+            //  "metadata" : {
+            //      "geoportail:group": "ocs"
+            //  },
             //  "layout": {
             //    "visibility": "visible"
             //  },
@@ -318,16 +353,54 @@ Editor.prototype._initContainer = function () {
             //  "paint": {
             //    "fill-color": "#2BB3E1"
             //  }
+
             for (var ii = 0; ii < _layers.length; ii++) {
                 var data = _layers[ii];
 
                 // traitement dans l'ordre des sources
                 if (data.source === source) {
+                    // Groups
+                    if (this.options.tools.group) {
+                        var mtd = data.metadata;
+                        // creation du container de groupe
+                        // si le tag metadata existe
+                        if (mtd) {
+                            var grp = data.metadata["geoportail:group"];
+                            if (grp) {
+                                // le groupe doit contenir plus d'un element
+                                if (_groups[grp] > 1) {
+                                    // le groupe est déjà créé, on en veut plus par la suite...
+                                    _groups[grp] = -1;
+                                    // creation du groupe
+                                    var oGroup = new Group({
+                                        id : this.id,
+                                        target : div,
+                                        title : grp,
+                                        open : false
+                                    });
+                                    oGroup.add();
+                                    // le nouveau container pour les elements suivants
+                                    target = oGroup.getContainer();
+                                } else if (_groups[grp] === 1) {
+                                    // l'element est seul, donc pas d'ajout dans le
+                                    // groupe en cours
+                                    target = div;
+                                } else {
+                                    // on ajoute l'element dans le groupe courrant...
+                                }
+                            } else {
+                                target = div;
+                            }
+                        } else {
+                            target = div;
+                        }
+                    }
+
                     // Layers
                     if (this.options.tools.layers) {
                         var oLayer = new Layer({
                             id : this.id,
-                            target : div,
+                            target : target,
                             position : _idx + "_" + ii, // unique !
                             tools : {
                                 visibility : true,
@@ -353,7 +426,7 @@ Editor.prototype._initContainer = function () {
                     if (this.options.tools.legend) {
                         var oLegend = new Legend({
                             id : this.id,
-                            target : div,
+                            target : target,
                             obj : {
                                 "title" : data.id,
                                 "paint" : data.paint
@@ -370,7 +443,7 @@ Editor.prototype._initContainer = function () {
                     if (this.options.tools.style) {
                         var oStyle = new Style({
                             id : this.id,
-                            target : div,
+                            target : target,
                             position : _idx + "_" + ii, // unique !,
                             obj : {
                                 "layout" : data.layout,
@@ -391,7 +464,7 @@ Editor.prototype._initContainer = function () {
                     if (this.options.tools.filter) {
                         var oFilter = new Filter({
                             id : this.id,
-                            target : div,
+                            target : target,
                             position : _idx + "_" + ii, // unique !,
                             obj : {
                                 "filter" : data.Filter

@@ -37,6 +37,21 @@
 }
 
 /*******************************************************************************
+GROUPS
+*******************************************************************************/
+.GPEditorMapBoxGroupContainer {}
+
+/* FIXME : modifier la couleur de la puce ? */
+.GPEditorMapBoxGroupDetails {
+    border-style: dotted;
+    border-width: 1px;
+    border-radius: 5px;
+    border-color: lightskyblue
+}
+
+.GPEditorMapBoxGroupSummary {}
+
+/*******************************************************************************
 LAYERS
 *******************************************************************************/
 
@@ -59,6 +74,9 @@ LAYERS
     align-items: center;
     /* background-color: grey; */
 }
+.GPEditorMapBoxLayerImageInput {
+    display: none;
+}
 .GPEditorMapBoxLayerImageLabel {
     min-width: 24px;
     min-height: 28px;
@@ -67,6 +85,9 @@ LAYERS
     background-image: url("img/GPEditorLayerTools.png");
     background-position: -56px 0;
     /* background-color: green; */
+}
+input[type="checkbox"]:checked + .GPEditorMapBoxLayerImageLabel {
+    transform: rotate(90deg);
 }
 .GPEditorMapBoxLayerTypeImage {
     min-width: 30px;

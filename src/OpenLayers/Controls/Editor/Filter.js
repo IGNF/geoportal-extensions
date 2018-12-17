@@ -18,6 +18,7 @@ var logger = Logger.getLogger("editor-filter");
  *      tools : {
  *          edition : false
  *      },
+ *      title : "Filtres (JSON)",
  *      obj : {
  *          filter : []
  *      }
@@ -31,6 +32,7 @@ function Filter (options) {
         // default...
         target : null,
         tools : null,
+        title : null,
         obj : null
     };
 
@@ -81,6 +83,9 @@ Filter.prototype._initialize = function () {
         };
     }
 
+    if (!this.options.title) {
+        this.options.title = "JSON Filtres :";
+    }
     this.container = null;
 
     // DOM : className or id
@@ -137,7 +142,7 @@ Filter.prototype._initContainer = function () {
 
     var labelJson = document.createElement("label");
     labelJson.className = this.name.jsonlabel;
-    labelJson.innerHTML = "JSON Filtres :";
+    labelJson.innerHTML = this.options.title;
     divJson.appendChild(labelJson);
 
     var preJson = document.createElement("pre");

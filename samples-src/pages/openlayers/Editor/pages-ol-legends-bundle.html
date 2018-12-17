@@ -110,6 +110,26 @@
             });
             legend27.add();
 
+            var legend28 = new ol.editor.Legend({
+                obj: {
+                    "title" : "test text (on layout), not correctly implemented...",
+                    "layout": {
+                        "text-size" : "3px"
+                    }
+                },
+            });
+            legend28.add();
+
+            var legend29 = new ol.editor.Legend({
+                obj: {
+                    "title" : "test icon (on sprite), not correctly implemented...",
+                    "paint": {
+                        "icon-image" : "onSpriteIcons.png"
+                    }
+                },
+            });
+            legend29.add();
+
             // legend complexe
             var legend3 = new ol.editor.Legend({
                 target: document.getElementById("legend"),

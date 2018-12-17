@@ -1081,7 +1081,7 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
 
                     if (_glTiles) {
                         // service tuilé et/ou mapbox
-                        vectorFormat = new ol.format.MVT();
+                        vectorFormat = new ol.format.MVT({ featureClass : ol.RenderFeature });
                         vectorSource = new ol.source.VectorTile({
                             attributions : _glSource.attribution,
                             format : vectorFormat,
@@ -1119,7 +1119,7 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
                         vectorLayer.gpResultLayerId = "layerimport:" + this._currentImportType;
                     } else if (_glUrl) {
                         // service avec un tilejson
-                        vectorFormat = new ol.format.MVT();
+                        vectorFormat = new ol.format.MVT({ featureClass : ol.RenderFeature });
                         vectorLayer = new ol.layer.VectorTile({
                             visible : false,
                             // zIndex : 0

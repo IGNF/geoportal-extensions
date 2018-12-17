@@ -93,10 +93,30 @@
                     themes : true,
                     layers : true,
                     filter : true,
-                    style :true,
-                    legend : true
+                    style : true,
+                    legend : true,
+                    group : true
                 }
             });
+
+            var editor2 = new ol.editor.View({
+                target: document.getElementById("editor"),
+                style: "{{ resources }}/data/mapbox/styles/mapbox.json",
+                events : {
+                    "editor:themes:title" : function (e) {
+                        console.log(this.getID(), e);
+                    }
+                },
+                tools : {
+                    themes : false,
+                    layers : true,
+                    filter : false,
+                    style : false,
+                    legend : true,
+                    group : true
+                }
+            });
+
             document.getElementById("displayTrue").addEventListener("click", function () {
                 editor1.display(true);
             });

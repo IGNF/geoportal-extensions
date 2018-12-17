@@ -14,7 +14,12 @@ var logger = Logger.getLogger("editor-group");
  * @param {Object} options - options for function call.
  * @example
  *   var group = new Group ({
+ *      title : "MyGroup",
+ *      open : true, // plier/deplier
+ *      target : ...
  *   });
+ *   group.addLayer(Layer);
+ *   group.add();
  */
 function Group (options) {
     logger.trace("[constructor] Group", options);
@@ -54,21 +59,14 @@ Group.prototype._initialize = function () {
         // cf. add()
     }
 
-    var _toolsDefault = {
-        edition : false
-    };
-
-    if (!this.options.tools) {
-        this.options.tools = _toolsDefault;
+    if (!this.options.title) {
+        // cf. summary
+        this.options.title = "Détails du groupe...";
     }
 
-    Utils.mergeParams(this.options.tools, _toolsDefault, false);
-
-    if (!this.options.obj) {
-        // choix d'avoir un objet vide pour une edition futur...
-        this.options.obj = {
-            group : []
-        };
+    // plier par defaut
+    if (typeof this.options.open === "undefined") {
+        this.options.open = false;
     }
 
     this.container = null;
@@ -76,7 +74,9 @@ Group.prototype._initialize = function () {
     // DOM : className or id
     this.name = {
         target : "GPEditorMapBoxGroupTarget",
-        container : "GPEditorMapBoxGroupContainer"
+        container : "GPEditorMapBoxGroupContainer",
+        details : "GPEditorMapBoxGroupDetails",
+        summary : "GPEditorMapBoxGroupSummary"
     };
 };
 
@@ -91,6 +91,19 @@ Group.prototype._initialize = function () {
 Group.prototype._initContainer = function () {
     var div = document.createElement("div");
     div.className = this.name.container;
+
+    // FIXME pas compatible IE !
+    // https://caniuse.com/#search=details
+    // cf. https://css-tricks.com/quick-reminder-that-details-summary-is-the-easiest-way-ever-to-make-an-accordion/
+    var details = document.createElement("details");
+    details.className = this.name.details;
+    details.open = this.options.open;
+    div.appendChild(details);
+
+    var summary = document.createElement("summary");
+    summary.className = this.name.summary;
+    summary.innerHTML = this.options.title;
+    details.appendChild(summary);
 
     // main container
     this.container = div;
@@ -135,6 +148,12 @@ Group.prototype.display = function (display) {
  * @returns {DOMElement} DOM element
  */
 Group.prototype.getContainer = function () {
+    var nodes = this.container.childNodes;
+    if (nodes.length) {
+        // retourne le noeud "details" !
+        return nodes[0];
+    }
+    // sinon le container principal
     return this.container;
 };
 // ################################################################### //

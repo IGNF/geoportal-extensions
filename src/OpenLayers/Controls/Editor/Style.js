@@ -19,6 +19,7 @@ var logger = Logger.getLogger("editor-style");
  *          edition : false,
  *          scale : true
  *      },
+ *      title : "Styles (JSON)",
  *      obj : {
  *          paint : {},
  *          layout : {}
@@ -33,6 +34,7 @@ function Style (options) {
         // default...
         target : null,
         tools : null,
+        title : null,
         obj : null
     };
 
@@ -85,6 +87,10 @@ Style.prototype._initialize = function () {
         };
     }
 
+    if (!this.options.title) {
+        this.options.title = "JSON Styles :";
+    }
+
     this.container = null;
 
     // DOM : className or id
@@ -115,7 +121,7 @@ Style.prototype._initialize = function () {
  * @example
  * <div class="GPEditorMapBoxStyleContainer">
  *   <div class ="GPEditorMapBoxStyleJsonContainer">
- *      <label class="GPEditorMapBoxStyleJsonTitle">JSON Filtres :</label>
+ *      <label class="GPEditorMapBoxStyleJsonTitle">JSON Styles :</label>
  *      <pre class="GPEditorMapBoxStyleJsonDisplay">...</pre>
  *   </div>
  *   <div class ="GPEditorMapBoxStyleToolsScaleContainer"></div>
@@ -166,7 +172,7 @@ Style.prototype._initContainer = function () {
 
     var label = document.createElement("label");
     label.className = this.name.jsonlabel;
-    label.innerHTML = "JSON Style :";
+    label.innerHTML = this.options.title;
     divJson.appendChild(label);
 
     var pre = document.createElement("pre");

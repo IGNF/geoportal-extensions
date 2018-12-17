@@ -127,6 +127,7 @@ Layer.prototype._initialize = function () {
         container : "GPEditorMapBoxLayerContainer",
         containerlegend : "GPEditorMapBoxLayerLegendContainer",
         containertitle : "GPEditorMapBoxLayerTitleContainer",
+        imagelabelinput : "GPEditorMapBoxLayerImageInput",
         imagelabel : "GPEditorMapBoxLayerImageLabel",
         typeimg : "GPEditorMapBoxLayerTypeImage",
         titleinput : "GPEditorMapBoxLayerTitleInput",
@@ -150,7 +151,8 @@ Layer.prototype._initialize = function () {
  * // DOM :
  *      <div class="GPEditorMapBoxLayerContainer">
  *          <div id="GPEditorMapBoxLayerTitleContainer-45" class="GPEditorMapBoxLayerTitleContainer">
- *              <label class="GPEditorMapBoxLayerimageLabel"></label>
+ *              <input id="GPEditorMapBoxLayerImageInput-45" class="GPEditorMapBoxLayerImageInput" type="checkbox">
+ *              <label class="GPEditorMapBoxLayerImageLabel" for="GPEditorMapBoxLayerImageInput-45"></label>
  *              <input id="GPEditorMapBoxLayerTitleInput-45" class="GPEditorMapBoxLayerTitleInput" type="checkbox">
  *              <label class="GPEditorMapBoxLayerTitleLabel" for="GPEditorMapBoxLayerTitleInput-45" title="...">...</label>
  *          </div>
@@ -174,9 +176,26 @@ Layer.prototype._initContainer = function () {
     divTitle.id = this.name.containertitle + "-" + this.options.position;
     divTitle.className = this.name.containertitle;
 
+    // input
+    var inputImage = document.createElement("input");
+    inputImage.id = this.name.imagelabelinput + "-" + this.options.position;
+    inputImage.className = this.name.imagelabelinput;
+    inputImage.type = "checkbox";
+    divTitle.appendChild(inputImage);
+
     // puce
     var labelImage = document.createElement("label");
     labelImage.className = this.name.imagelabel;
+    labelImage.htmlFor = inputImage.id;
+    if (labelImage.addEventListener) {
+        labelImage.addEventListener("click", function (e) {
+            self.onClickLayerMapBox(e);
+        });
+    } else if (labelImage.attachEvent) {
+        labelImage.attachEvent("onclick", function (e) {
+            self.onClickLayerMapBox(e);
+        });
+    }
     divTitle.appendChild(labelImage);
 
     // type
@@ -496,8 +515,19 @@ Layer.prototype.getContainer = function () {
  */
 Layer.prototype.onClickLayerMapBox = function (e) {
     logger.trace("onClickLayerMapBox", e);
-    // ouverture du panneau des styles / filtres
+
+    var id = e.target.htmlFor.substring(e.target.htmlFor.indexOf("-"));
     var checked = document.getElementById(e.target.htmlFor).checked;
+
+    // gestion des inputs
+    if (e.target.htmlFor === this.name.imagelabelinput + id) {
+        document.getElementById(this.name.titleinput + id).checked = !checked;
+    }
+    if (e.target.htmlFor === this.name.titleinput + id) {
+        document.getElementById(this.name.imagelabelinput + id).checked = !checked;
+    }
+
+    // ouverture du panneau des styles / filtres
     if (this.oStyle) {
         this.oStyle.display(!checked);
     }
