@@ -1,4 +1,14 @@
-import ol from "ol";
+// import openlayers
+import { inherits as olInherits } from "ol/util";
+import olKML from "ol/format/KML";
+import {
+    Fill,
+    Icon,
+    Stroke,
+    Style,
+    Text
+} from "ol/style";
+// import local
 import Logger from "../../Common/Utils/LoggerByDefault";
 import Utils from "../../Common/Utils";
 // import $__xmldom from "xmldom";
@@ -35,7 +45,7 @@ function KML (options) {
     }
 
     // call constructor
-    ol.format.KML.call(this,
+    olKML.call(this,
         options
     );
 
@@ -43,12 +53,12 @@ function KML (options) {
 }
 
 // Inherits
-ol.inherits(KML, ol.format.KML);
+olInherits(KML, olKML);
 
 /*
  * @lends module:KML
  */
-KML.prototype = Object.create(ol.format.KML.prototype, {});
+KML.prototype = Object.create(olKML.prototype, {});
 
 /**
  * Constructor (alias)
@@ -387,7 +397,7 @@ KML.prototype.writeFeatures = function (features, options) {
  * @private
  */
 KML.prototype._writeExtendStylesFeatures = function (features, options) {
-    var kmlString = ol.format.KML.prototype.writeFeatures.call(this, features, options);
+    var kmlString = olKML.prototype.writeFeatures.call(this, features, options);
 
     // On met en place un Parser sur le KML
     // (Dommage que le parser XML des services ne soit pas disponible !)
@@ -440,7 +450,7 @@ KML.prototype._writeExtendStylesFeatures = function (features, options) {
         }
 
         // Si pas de style defini, c'est donc que l'on va utiliser celui par defaut...
-        if (feature.getStyle() instanceof ol.style.Style) {
+        if (feature.getStyle() instanceof Style) {
             var fTextStyle = feature.getStyle().getText().getStroke();
 
             if (!fTextStyle) {
@@ -487,7 +497,7 @@ KML.prototype._writeExtendStylesFeatures = function (features, options) {
         }
 
         // Si pas de style defini, c'est donc que l'on va utiliser celui par defaut...
-        if (feature.getStyle() instanceof ol.style.Style) {
+        if (feature.getStyle() instanceof Style) {
             var fImageStyle = feature.getStyle().getImage();
 
             if (!fImageStyle) {
@@ -616,7 +626,7 @@ KML.prototype.readFeatures = function (source, options) {
  * @private
  */
 KML.prototype._readExtendStylesFeatures = function (source, options) {
-    var features = ol.format.KML.prototype.readFeatures.call(this, source, options);
+    var features = olKML.prototype.readFeatures.call(this, source, options);
 
     var kmlDoc = null;
     var kmlString = "";
@@ -747,8 +757,8 @@ KML.prototype._readExtendStylesFeatures = function (source, options) {
         }
 
         // On reconstruit le style !
-        feature.setStyle(new ol.style.Style({
-            image : new ol.style.Icon({
+        feature.setStyle(new Style({
+            image : new Icon({
                 src : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNiYAAAAAkAAxkR2eQAAAAASUVORK5CYII=",
                 size : [51, 38],
                 anchor : [25.5, 38],
@@ -756,15 +766,15 @@ KML.prototype._readExtendStylesFeatures = function (source, options) {
                 anchorXUnits : "pixels",
                 anchorYUnits : "pixels"
             }),
-            text : new ol.style.Text({
+            text : new Text({
                 font : _fontSize + " " + _font,
                 textAlign : "left",
                 text : _text,
                 // offsetX : 5, // FIXME valeur arbitraire MAIS esthétique !
-                fill : new ol.style.Fill({
+                fill : new Fill({
                     color : _color
                 }),
-                stroke : new ol.style.Stroke({
+                stroke : new Stroke({
                     color : _colorHalo,
                     width : _radiusHalo
                 })
@@ -885,12 +895,12 @@ KML.prototype._readExtendStylesFeatures = function (source, options) {
         // existe il déjà le style du label ?
         var featureStyleFunction = feature.getStyleFunction();
         if (featureStyleFunction) {
-            var _styles = featureStyleFunction.call(feature, 0);
+            var _styles = featureStyleFunction(feature, 0);
             if (_styles && _styles.length !== 0) {
                 var _style = (_styles.length === 1) ? _styles[0] : _styles[_styles.length - 1];
                 // on écrase l'icone magic du label !
-                feature.setStyle(new ol.style.Style({
-                    image : new ol.style.Icon(_options),
+                feature.setStyle(new Style({
+                    image : new Icon(_options),
                     text : _style.getText()
                 }));
             }
@@ -999,3 +1009,8 @@ KML.prototype._readExtendStylesFeatures = function (source, options) {
 };
 
 export default KML;
+
+// Expose KML as ol.source.KMLExtended. (for a build bundle)
+if (window.ol && window.ol.format) {
+    window.ol.format.KMLExtended = KML;
+}

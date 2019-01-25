@@ -1,6 +1,14 @@
-import ol from "ol";
+// import openlayers
+import { inherits as olInherits } from "ol/util";
+import {
+    get as olGetProj,
+    transformExtent as olTransformExtentProj
+} from "ol/proj";
+import TileLayer from "ol/layer/Tile";
+// import local
 import Utils from "../../Common/Utils";
 import Config from "../../Common/Utils/Config";
+// import local with ol dependencies
 import SourceWMS from "./SourceWMS";
 
 /**
@@ -80,15 +88,15 @@ function LayerWMS (options) {
                 globalConstraints.extent.right,
                 globalConstraints.extent.top
             ];
-            layerTileOptions.extent = ol.proj.transformExtent(geobbox, "EPSG:4326", olSourceParams.projection);
+            layerTileOptions.extent = olTransformExtentProj(geobbox, "EPSG:4326", olSourceParams.projection);
 
             // récupération des résolutions min et max
             var p;
             // on récupère tout d'abord la projection
             if (typeof olSourceParams.projection === "string") {
-                p = ol.proj.get(olSourceParams.projection);
+                p = olGetProj(olSourceParams.projection);
             } else if (typeof olSourceParams.projection === "object" && olSourceParams.projection.getCode()) {
-                p = ol.proj.get(olSourceParams.projection.getCode());
+                p = olGetProj(olSourceParams.projection.getCode());
             }
             // puis, selon l'unité de la projection, on calcule la résolution correspondante
             if (p && p.getUnits()) {
@@ -114,16 +122,16 @@ function LayerWMS (options) {
     Utils.mergeParams(layerTileOptions, options.olParams);
 
     // création d'une ol.layer.Tile avec les options récupérées ci-dessus.
-    ol.layer.Tile.call(this, layerTileOptions);
+    TileLayer.call(this, layerTileOptions);
 }
 
 // Inherits from ol.layer.Tile
-ol.inherits(LayerWMS, ol.layer.Tile);
+olInherits(LayerWMS, TileLayer);
 
 /*
  * @lends module:LayerWMS
  */
-LayerWMS.prototype = Object.create(ol.layer.Tile.prototype, {});
+LayerWMS.prototype = Object.create(TileLayer.prototype, {});
 
 /*
  * Constructor (alias)
@@ -131,3 +139,8 @@ LayerWMS.prototype = Object.create(ol.layer.Tile.prototype, {});
 LayerWMS.prototype.constructor = LayerWMS;
 
 export default LayerWMS;
+
+// Expose LayerWMS as ol.layerGeoportalWMS. (for a build bundle)
+if (window.ol && window.ol.layer) {
+    window.ol.layer.GeoportalWMS = LayerWMS;
+}

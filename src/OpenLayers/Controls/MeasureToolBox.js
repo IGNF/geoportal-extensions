@@ -1,10 +1,20 @@
+// import CSS
+import "../../../res/OpenLayers/Controls/ToolBoxMeasure/GPtoolBoxMeasureOpenLayers.css";
+// import local
 import Logger from "../../Common/Utils/LoggerByDefault";
 import Utils from "../../Common/Utils";
 import ID from "../../Common/Utils/SelectorID";
+// DOM
 import MeasureToolBoxDOM from "../../Common/Controls/MeasureToolBoxDOM";
 
 var logger = Logger.getLogger("toolbox");
 
+/*
+* MeasureToolBox - Boite à outils (ToolBox) pour les outils de mesures.
+* - distance
+* - aire
+* - azimut
+*/
 var MeasureToolBox = {
 
     /**
@@ -27,6 +37,16 @@ var MeasureToolBox = {
         if (!map) {
             logger.trace("map doesn't exist !?");
             return;
+        }
+
+        // contexte d'execution
+        var context = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : null;
+        if (context) {
+            // Pour info
+            // l'objet ToolBox devrait être partagé avec les outils de mesures...,
+            // mais, ce n'est pas le cas pour le mode modules cad un module par extension.
+            // c'est pourquoi, on l'enregistre dans le contexte, qui lui est partagé (ex. window)
+            this._toolbox = context.gpShareMeasureToolBox || {};
         }
 
         var mapContainer = map.getTargetElement();
@@ -54,6 +74,11 @@ var MeasureToolBox = {
         // ajout du widget dans la toolbox
         var widgetContainer = mapDocument.getElementById(this.getWidgetID(uid));
         ctrl.setTarget(widgetContainer);
+        if (context) {
+            // Pour info
+            // on partage (enregistre) l'objet ToolBox dans le contexte d'execution !
+            context.gpShareMeasureToolBox = this._toolbox;
+        }
         logger.trace("add control to toolbox !");
     }
 };

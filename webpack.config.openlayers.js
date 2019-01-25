@@ -11,7 +11,8 @@ var glob = require("glob");
 var DefineWebpackPlugin = webpack.DefinePlugin;
 var ExtractTextWebPackPlugin = require("extract-text-webpack-plugin");
 var BannerWebPackPlugin = webpack.BannerPlugin;
-var UglifyJsWebPackPlugin = webpack.optimize.UglifyJsPlugin;
+var UglifyJsWebPackPlugin = require("uglifyjs-webpack-plugin");
+// var UglifyJsWebPackPlugin = webpack.optimize.UglifyJsPlugin;
 var JsDocWebPackPlugin = require("jsdoc-webpack-plugin");
 var HandlebarsPlugin = require("./scripts/webpackPlugins/handlebars-plugin");
 var HandlebarsLayoutPlugin = require("handlebars-layouts");
@@ -33,18 +34,20 @@ module.exports = env => {
     var _mode = (production) ? "" : (development) ? "-map" : "-src";
 
     return smp.wrap({
-        entry : path.join(__dirname, "src", "OpenLayers", "GpPluginOpenLayers"),
+        entry : {
+            "GpPluginOpenLayers" : path.join(__dirname, "src", "OpenLayers", "GpPluginOpenLayers.js")
+        },
         output : {
             path : path.join(__dirname, "dist", "openlayers"),
-            filename : "GpPluginOpenLayers" + _mode + ".js",
+            filename : "[name]" + _mode + ".js",
             library : "Gp",
             libraryTarget : "umd",
             umdNamedDefine : true
         },
         resolve : {
             alias : {
-                ol : path.resolve(__dirname, "node_modules", "openlayers", "dist", (production) ? "ol.js" : "ol-debug.js"), // FIXME build (custom) or dist (auto)
-                olms : path.resolve(__dirname, "node_modules", "ol-mapbox-style", "dist", "olms.js"), // FIXME debug mode ?
+                // ol : path.resolve(__dirname, "node_modules", "ol", "index.js"),
+                olms : path.resolve(__dirname, "node_modules", "ol-mapbox-style", "olms.js"),
                 gp : path.resolve(__dirname, "node_modules", "geoportal-access-lib", "dist", (production) ? "GpServices.js" : "GpServices-src.js"),
                 proj4 : path.resolve(__dirname, "node_modules", "proj4", "dist", (production) ? "proj4.js" : "proj4-src.js"),
                 sortable : path.resolve(__dirname, "node_modules", "sortablejs", (production) ? "Sortable.min.js" : "Sortable.js"),
@@ -53,8 +56,8 @@ module.exports = env => {
         },
         externals : {
             ol : {
-                commonjs : "openlayers",
-                commonjs2 : "openlayers",
+                commonjs : "ol",
+                commonjs2 : "ol",
                 amd : "ol",
                 root : "ol"
             },
@@ -157,13 +160,13 @@ module.exports = env => {
                 conf : path.join(__dirname, "doc/jsdoc-openlayers.json")
             }),
             /** CSS / IMAGES */
-            new ExtractTextWebPackPlugin("GpPluginOpenLayers" + _mode + ".css"),
+            new ExtractTextWebPackPlugin("[name]" + _mode + ".css"),
             /** HANDLEBARS TEMPLATES */
             new HandlebarsPlugin(
                 {
                     entry : {
                         path : path.join(__dirname, "samples-src", "pages", "openlayers"),
-                        pattern : "**/*.html"
+                        pattern : "**/*-bundle-*.html"
                     },
                     output : {
                         path : path.join(__dirname, "samples", "openlayers"),
@@ -198,7 +201,7 @@ module.exports = env => {
                     context : {
                         samples : () => {
                             var root = path.join(__dirname, "samples-src", "pages", "openlayers");
-                            var list = glob.sync(path.join(root, "**", "*.html"));
+                            var list = glob.sync(path.join(root, "**", "*-bundle-*.html"));
                             list = list.map(function (filePath) {
                                 var relativePath = path.relative(root, filePath);
                                 var label = relativePath.replace("/", " -- ");
@@ -226,11 +229,11 @@ module.exports = env => {
             .concat(
                 (production) ? [
                     new UglifyJsWebPackPlugin({
-                        output : {
-                            comments : false,
-                            beautify : false
-                        },
                         uglifyOptions : {
+                            output : {
+                                comments : false,
+                                beautify : false
+                            },
                             mangle : true,
                             warnings : false,
                             compress : false

@@ -1,12 +1,36 @@
-import ol from "ol";
+// import CSS
+import "../../../res/Common/GPgeneralWidget.css";
+import "../../../res/Common/GPwaiting.css";
+import "../../../res/Common/GProute.css";
+import "../../../res/OpenLayers/GPgeneralWidgetOpenLayers.css";
+import "../../../res/OpenLayers/Controls/Route/GProuteOpenLayers.css";
+// import OpenLayers
+import {inherits as olInherits} from "ol/util";
+import Control from "ol/control/Control";
+import { unByKey as olObservableUnByKey } from "ol/Observable";
+import Overlay from "ol/Overlay";
+import VectorLayer from "ol/layer/Vector";
+import VectorSource from "ol/source/Vector";
+import GeoJSON from "ol/format/GeoJSON";
+import {pointerMove as eventPointerMove} from "ol/events/condition";
+import { Select as SelectInteraction } from "ol/interaction";
+import {
+    Stroke,
+    Style
+} from "ol/style";
+import { transformExtent as olTransformExtentProj } from "ol/proj";
+// import geoportal library access
 import Gp from "gp";
+// import local
 import Logger from "../../Common/Utils/LoggerByDefault";
 import Utils from "../../Common/Utils";
 import RightManagement from "../../Common/Utils/CheckRightManagement";
 import SelectorID from "../../Common/Utils/SelectorID";
+import Markers from "./Utils/Markers";
+// import local with ol dependencies
 import LocationSelector from "./LocationSelector";
 import LayerSwitcher from "./LayerSwitcher";
-import Markers from "./Utils/Markers";
+// DOM
 import RouteDOM from "../../Common/Controls/RouteDOM";
 
 var logger = Logger.getLogger("route");
@@ -81,7 +105,7 @@ function Route (options) {
     }
 
     // call ol.control.Control constructor
-    ol.control.Control.call(this, {
+    Control.call(this, {
         element : this._containerElement || this._container,
         target : options.target,
         render : options.render
@@ -89,12 +113,12 @@ function Route (options) {
 }
 
 // Inherits from ol.control.Control
-ol.inherits(Route, ol.control.Control);
+olInherits(Route, Control);
 
 /**
  * @lends module:Route
  */
-Route.prototype = Object.create(ol.control.Control.prototype, {});
+Route.prototype = Object.create(Control.prototype, {});
 
 // on récupère les méthodes de la classe commune RouteDOM
 Utils.assign(Route.prototype, RouteDOM);
@@ -160,7 +184,7 @@ Route.prototype.setMap = function (map) {
     }
 
     // on appelle la méthode setMap originale d'OpenLayers
-    ol.control.Control.prototype.setMap.call(this, map);
+    Control.prototype.setMap.call(this, map);
 };
 
 // ################################################################### //
@@ -262,14 +286,14 @@ Route.prototype.initialize = function (options) {
     this._resultsHoverInteraction = null;
 
     // styles pour les sélections des features
-    this._defaultFeatureStyle = new ol.style.Style({
-        stroke : new ol.style.Stroke({
+    this._defaultFeatureStyle = new Style({
+        stroke : new Stroke({
             color : "rgba(0,183,152,0.9)",
             width : 12
         })
     });
-    this._selectedFeatureStyle = new ol.style.Style({
-        stroke : new ol.style.Stroke({
+    this._selectedFeatureStyle = new Style({
+        stroke : new Stroke({
             color : "rgba(255,102,0,0.9)",
             width : 12
         })
@@ -296,6 +320,9 @@ Route.prototype.initialize = function (options) {
 
     // gestion des droits sur les ressources/services
     this._checkRightsManagement();
+
+    // listener key for event on pointermove or moveend map
+    this.listenerKey = null;
 };
 
 /**
@@ -477,12 +504,9 @@ Route.prototype._initContainer = function (map) {
     routePanel.appendChild(waiting);
 
     container.appendChild(routePanel);
-    var context = this;
     // hide autocomplete suggested locations on container click
     if (container.addEventListener) {
-        container.addEventListener("click", function (e) {
-            context._hideRouteSuggestedLocations(e);
-        });
+        container.addEventListener("click", (e) => this._hideRouteSuggestedLocations(e));
     }
 
     return container;
@@ -693,26 +717,22 @@ Route.prototype._addFormPointsEventListeners = function (formPoint) {
     if (!formPoint) {
         return;
     }
-    var context = this;
+
     if (formPoint._inputLabelContainer.addEventListener) {
         // display form on origin label click
         formPoint._inputLabelContainer.addEventListener(
             "click",
-            function (e) {
-                context.onRouteOriginLabelClick.call(this, context);
-            }
+            (e) => this.onRouteOriginLabelClick(e)
         );
         // minimize form on input show pointer, and set map event listeners (see this.onRouteOriginPointerClick)
         formPoint._inputShowPointer.addEventListener(
             "click",
-            function (e) {
-                context.onRouteOriginPointerClick.call(this, context, formPoint);
-            }
+            (e) => this.onRouteOriginPointerClick(e, formPoint)
         );
         if (formPoint._removePointElement) {
             formPoint._removePointElement.addEventListener(
                 "click",
-                function (e) {
+                (e) => {
                     logger.trace("click on _removePointElement", e);
                     // Moving up exclusions picto
                     // var exclusionsPictoTop = context._showRouteExclusionsElement.style.top;
@@ -723,7 +743,7 @@ Route.prototype._addFormPointsEventListeners = function (formPoint) {
         if (formPoint._addPointElement) {
             formPoint._addPointElement.addEventListener(
                 "click",
-                function (e) {
+                (e) => {
                     logger.trace("click on _addPointElement", e);
                     // Moving down exclusions picto
                     // var exclusionsPictoTop = context._showRouteExclusionsElement.style.top;
@@ -735,20 +755,16 @@ Route.prototype._addFormPointsEventListeners = function (formPoint) {
         // attachEvent: Internet explorer event listeners management
         formPoint._inputLabelContainer.attachEvent(
             "onclick",
-            function (e) {
-                context.onRouteOriginLabelClick.call(this, context);
-            }
+            (e) => this.onRouteOriginLabelClick(e)
         );
         formPoint._inputShowPointer.attachEvent(
             "onclick",
-            function (e) {
-                context.onRouteOriginPointerClick.call(this, context, formPoint);
-            }
+            (e) => this.onRouteOriginPointerClick(e, formPoint)
         );
         if (formPoint._removePointElement) {
             formPoint._removePointElement.attachEvent(
                 "onclick",
-                function (e) {
+                (e) => {
                     // Moving up exclusions picto
                     // var exclusionsPictoTop = context._showRouteExclusionsElement.style.top;
                     // context._showRouteExclusionsElement.style.top = (parseInt(exclusionsPictoTop, 10) - 33).toString() + "px";
@@ -758,7 +774,7 @@ Route.prototype._addFormPointsEventListeners = function (formPoint) {
         if (formPoint._addPointElement) {
             formPoint._addPointElement.attachEvent(
                 "onclick",
-                function (e) {
+                (e) => {
                     // Moving down exclusions picto
                     // var exclusionsPictoTop = context._showRouteExclusionsElement.style.top;
                     // context._showRouteExclusionsElement.style.top = (parseInt(exclusionsPictoTop, 10) + 33).toString() + "px";
@@ -889,57 +905,58 @@ Route.prototype.onRouteComputationSubmit = function (options) {
  * @param {Object} routeControl - context : route Control (this)
  * @private
  */
-Route.prototype.onRouteOriginLabelClick = function (routeControl) {
-    var map = routeControl.getMap();
-    routeControl._formRouteContainer.className = "";
+Route.prototype.onRouteOriginLabelClick = function () {
+    this._formRouteContainer.className = "";
     // on désactive l'écouteur d'événements sur la carte (pour ne pas placer un marker au clic)
-    map.un(
-        "click",
-        function () {
-            // on ne rétablit pas le mode "normal" si on est dans le panel des résultats (où className = "GProuteComponentHidden")
-            if (routeControl._formRouteContainer.className === "GProuteFormMini") {
-                routeControl._formRouteContainer.className = "";
-            }
-        }
-    );
+    // map.un(
+    //     "click",
+    //     () => {
+    //         // on ne rétablit pas le mode "normal" si on est dans le panel des résultats (où className = "GProuteComponentHidden")
+    //         if (this._formRouteContainer.className === "GProuteFormMini") {
+    //             this._formRouteContainer.className = "";
+    //         }
+    //     }
+    // );
+    olObservableUnByKey(this.listenerKey);
 };
 
 /**
  * this method is called by event 'click' on 'GPlocationOriginPointerImg' label
  * and display or minimize 'GProuteForm', using CSS class ("GProuteFormMini" or "")
  *
- * @param {Object} routeControl - context : route Control (equivalent to this)
+ * @param {Object} e - context : route Control (equivalent to this)
  * @param {Object} locationSelector - context : locationSelector input (one of this._currentPoints)
  * @private
  */
-Route.prototype.onRouteOriginPointerClick = function (routeControl, locationSelector) {
-    var map = routeControl.getMap();
+Route.prototype.onRouteOriginPointerClick = function (e, locationSelector) {
+    var map = this.getMap();
     if (locationSelector._inputShowPointerContainer.checked) {
         // au click sur l'input pour pointer sur la carte: on minimise le formulaire
-        routeControl._formRouteContainer.className = "GProuteFormMini";
+        this._formRouteContainer.className = "GProuteFormMini";
         // et au clic sur la carte, on réaffichera le formulaire "normal"
-        map.on(
+        this.listenerKey = map.on(
             "click",
-            function () {
+            () => {
                 // on ne rétablit pas le mode "normal" si on est dans le panel des résultats (où className = "GProuteComponentHidden")
-                if (routeControl._formRouteContainer.className === "GProuteFormMini") {
-                    routeControl._formRouteContainer.className = "";
+                if (this._formRouteContainer.className === "GProuteFormMini") {
+                    this._formRouteContainer.className = "";
                 }
             }
         );
     } else {
         // si on déselectionne le pointer, on rétablit le formulaire en mode normal
-        routeControl._formRouteContainer.className = "";
+        this._formRouteContainer.className = "";
         // et on enlève l'écouteur d'évènement sur la carte
-        map.un(
-            "click",
-            function () {
-                // on ne rétablit pas le mode "normal" si on est dans le panel des résultats (où className = "GProuteComponentHidden")
-                if (routeControl._formRouteContainer.className === "GProuteFormMini") {
-                    routeControl._formRouteContainer.className = "";
-                }
-            }
-        );
+        // map.un(
+        //     "click",
+        //     () => {
+        //         // on ne rétablit pas le mode "normal" si on est dans le panel des résultats (où className = "GProuteComponentHidden")
+        //         if (this._formRouteContainer.className === "GProuteFormMini") {
+        //             this._formRouteContainer.className = "";
+        //         }
+        //     }
+        // );
+        olObservableUnByKey(this.listenerKey);
     }
 };
 
@@ -1273,7 +1290,7 @@ Route.prototype._fillRouteResultsDetails = function (results) {
         // reprojection dans la projection de la carte (bbox initialement en EPSG:4326)
         var mapProj = map.getView().getProjection().getCode();
         if (mapProj !== "EPSG:4326") {
-            bounds = ol.proj.transformExtent(bounds, "EPSG:4326", mapProj);
+            bounds = olTransformExtentProj(bounds, "EPSG:4326", mapProj);
         }
         map.getView().fit(bounds, map.getSize());
     }
@@ -1334,7 +1351,7 @@ Route.prototype._fillRouteResultsDetailsGeometry = function (geometry, style) {
         },
         geometry : geometry
     };
-    var geojsonformat = new ol.format.GeoJSON({
+    var geojsonformat = new GeoJSON({
         defaultDataProjection : "EPSG:4326"
     });
     var features = geojsonformat.readFeatures(
@@ -1345,8 +1362,8 @@ Route.prototype._fillRouteResultsDetailsGeometry = function (geometry, style) {
     );
 
     // ajout de la géométrie comme nouvelle couche vecteur à la carte
-    this._geojsonRoute = new ol.layer.Vector({
-        source : new ol.source.Vector({
+    this._geojsonRoute = new VectorLayer({
+        source : new VectorSource({
             features : features
         }),
         style : style
@@ -1407,7 +1424,7 @@ Route.prototype._fillRouteResultsDetailsFeatureGeometry = function (instructions
     logger.log(geojsonObject);
 
     // Création du format GeoJSON, avec reprojection des géométries
-    var geojsonformat = new ol.format.GeoJSON({
+    var geojsonformat = new GeoJSON({
         defaultDataProjection : "EPSG:4326"
     });
     var mapProj = this.getMap().getView().getProjection().getCode();
@@ -1419,8 +1436,8 @@ Route.prototype._fillRouteResultsDetailsFeatureGeometry = function (instructions
     );
 
     // 3. Ajout du tracé de l'itinéraire (geoJSON) comme nouvelle couche vecteur à la carte
-    this._geojsonSections = new ol.layer.Vector({
-        source : new ol.source.Vector({
+    this._geojsonSections = new VectorLayer({
+        source : new VectorSource({
             features : features
         }),
         style : style,
@@ -1440,7 +1457,7 @@ Route.prototype._fillRouteResultsDetailsFeatureGeometry = function (instructions
 
     // 4. Si un layer switcher est présent dans la carte, on lui affecte des informations pour cette couche
     map.getControls().forEach(
-        function (control) {
+        (control) => {
             if (control instanceof LayerSwitcher) {
                 // un layer switcher est présent dans la carte
                 var layerId = this._geojsonSections.gpLayerId;
@@ -1460,27 +1477,25 @@ Route.prototype._fillRouteResultsDetailsFeatureGeometry = function (instructions
 
     // 5. Ajout de popups aux troncons
     // Création de l'interaction : survol des features (=troncons de l'itinéraire)
-    this._resultsHoverInteraction = new ol.interaction.Select({
-        condition : ol.events.condition.pointerMove,
+    this._resultsHoverInteraction = new SelectInteraction({
+        condition : eventPointerMove,
         layers : [this._geojsonSections],
         style : this._selectedFeatureStyle
     });
     this._resultsHoverInteraction.on(
         "select",
-        this._onResultsFeatureMouseOver,
-        this
+        (e) => this._onResultsFeatureMouseOver(e)
     );
     map.addInteraction(this._resultsHoverInteraction);
 
     // Création de l'interaction : selection des features (=troncons de l'itinéraire)
-    this._resultsSelectInteraction = new ol.interaction.Select({
+    this._resultsSelectInteraction = new SelectInteraction({
         layers : [this._geojsonSections],
         style : this._selectedFeatureStyle
     });
     this._resultsSelectInteraction.on(
         "select",
-        this._onResultsFeatureSelect,
-        this
+        (e) => this._onResultsFeatureSelect(e)
     );
     map.addInteraction(this._resultsSelectInteraction);
 };
@@ -1530,7 +1545,7 @@ Route.prototype._onResultsFeatureSelect = function (e) {
 
         if (!this._popupOverlay) {
             // ajout de la popup a la carte comme un overlay
-            this._popupOverlay = new ol.Overlay({
+            this._popupOverlay = new Overlay({
                 element : this._popupDiv,
                 positioning : "bottom-center",
                 position : e.mapBrowserEvent.coordinate
@@ -1924,3 +1939,8 @@ Route.prototype._convertDistance = function (distance) {
 };
 
 export default Route;
+
+// Expose Route as ol.control.Route (for a build bundle)
+if (window.ol && window.ol.control) {
+    window.ol.control.Route = Route;
+}

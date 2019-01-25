@@ -1,11 +1,45 @@
-import ol from "ol";
+// import CSS
+import "../../../res/Common/GPgeneralWidget.css";
+import "../../../res/Common/GPwaiting.css";
+import "../../../res/Common/GPreverseGeocoding.css";
+import "../../../res/OpenLayers/GPgeneralWidgetOpenLayers.css";
+import "../../../res/OpenLayers/Controls/ReverseGeocoding/GPreverseGeocodingOpenLayers.css";
+// import OpenLayers
+import {inherits as olInherits} from "ol/util";
+import Control from "ol/control/Control";
+import Overlay from "ol/Overlay";
+import Collection from "ol/Collection";
+import Feature from "ol/Feature";
+import {
+    Fill,
+    Icon,
+    Stroke,
+    Style,
+    Circle
+} from "ol/style";
+import {
+    Point,
+    Polygon
+} from "ol/geom";
+import {
+    Select as SelectInteraction,
+    Draw as DrawInteraction
+} from "ol/interaction";
+import { pointerMove as eventPointerMove } from "ol/events/condition";
+import { transform as olTransformProj } from "ol/proj";
+import VectorLayer from "ol/layer/Vector";
+import VectorSource from "ol/source/Vector";
+// import geoportal library access
 import Gp from "gp";
-import Logger from "../../Common/Utils/LoggerByDefault";
+// import local
 import Utils from "../../Common/Utils";
-import Markers from "./Utils/Markers";
-import LayerSwitcher from "./LayerSwitcher";
-import RightManagement from "../../Common/Utils/CheckRightManagement";
+import Logger from "../../Common/Utils/LoggerByDefault";
 import SelectorID from "../../Common/Utils/SelectorID";
+import RightManagement from "../../Common/Utils/CheckRightManagement";
+import Markers from "./Utils/Markers";
+// import local with ol dependencies
+import LayerSwitcher from "./LayerSwitcher";
+// DOM
 import ReverseGeocodingDOM from "../../Common/Controls/ReverseGeocodingDOM";
 
 var logger = Logger.getLogger("reversegeocoding");
@@ -57,7 +91,7 @@ function ReverseGeocode (options) {
     }
 
     // call ol.control.Control constructor
-    ol.control.Control.call(this, {
+    Control.call(this, {
         element : this._containerElement || this._container,
         target : options.target,
         render : options.render
@@ -65,12 +99,12 @@ function ReverseGeocode (options) {
 };
 
 // Inherits from ol.control.Control
-ol.inherits(ReverseGeocode, ol.control.Control);
+olInherits(ReverseGeocode, Control);
 
 /**
  * @lends module:ReverseGeocode
  */
-ReverseGeocode.prototype = Object.create(ol.control.Control.prototype, {});
+ReverseGeocode.prototype = Object.create(Control.prototype, {});
 
 // on récupère les méthodes de la classe commune ReverseGeocodingDOM
 Utils.assign(ReverseGeocode.prototype, ReverseGeocodingDOM);
@@ -145,7 +179,7 @@ ReverseGeocode.prototype.setMap = function (map) {
     }
 
     // on appelle la méthode setMap originale d'OpenLayers
-    ol.control.Control.prototype.setMap.call(this, map);
+    Control.prototype.setMap.call(this, map);
 };
 
 // ################################################################### //
@@ -258,14 +292,14 @@ ReverseGeocode.prototype.initialize = function (options) {
 
     this._reverseGeocodingLocations = [];
     this._reverseGeocodingLocationsMarkers = [];
-    this._resultsDefaultStyle = new ol.style.Style({
-        image : new ol.style.Icon({
+    this._resultsDefaultStyle = new Style({
+        image : new Icon({
             src : Markers["lightOrange"],
             anchor : [0.5, 1]
         })
     });
-    this._resultsSelectedStyle = new ol.style.Style({
-        image : new ol.style.Icon({
+    this._resultsSelectedStyle = new Style({
+        image : new Icon({
             src : Markers["red"],
             anchor : [0.5, 1]
         })
@@ -357,6 +391,12 @@ ReverseGeocode.prototype._initGeocodingType = function () {
         this.options.resources = ["StreetAddress", "PositionOfInterest", "CadastralParcel"];
     }
 
+    // pas de droit ou pas d'autoconf chargée,
+    // ce n'est pas la peine de tester les droits !
+    if (this._noRightManagement) {
+        return;
+    }
+
     // options utilisateur
     if (Array.isArray(resources) && resources.length) {
         // vérification des droits
@@ -374,7 +414,6 @@ ReverseGeocode.prototype._initGeocodingType = function () {
                 resources.splice(noRightsIndexes[j], 1);
             }
         }
-
         // récupération du type par défaut
         if (resources[0] === "StreetAddress" || resources[0] === "PositionOfInterest" || resources[0] === "CadastralParcel" || resources[0] === "Administratif") {
             this._currentGeocodingType = resources[0];
@@ -581,23 +620,23 @@ ReverseGeocode.prototype._activateMapInteraction = function (map) {
             // on crée une collection, qui accueillera les points saisis sur la carte par les interactions,
             // sous formes de features (dans une couche vectorielle).
             // on les stocke de sorte à pouvoir les supprimer facilement
-            this._inputFeatures = new ol.Collection();
+            this._inputFeatures = new Collection();
 
             // on crée la couche qui va accueillir les features
-            this._inputFeaturesSource = new ol.source.Vector({
+            this._inputFeaturesSource = new VectorSource({
                 features : this._inputFeatures
             });
-            this._inputFeaturesLayer = new ol.layer.Vector({
+            this._inputFeaturesLayer = new VectorLayer({
                 source : this._inputFeaturesSource,
-                style : new ol.style.Style({
-                    fill : new ol.style.Fill({
+                style : new Style({
+                    fill : new Fill({
                         color : "rgba(0, 183, 152, 0.3)"
                     }),
-                    stroke : new ol.style.Stroke({
+                    stroke : new Stroke({
                         color : "rgba(0, 183, 152, 0.8)",
                         width : 3
                     }),
-                    image : new ol.style.Icon({
+                    image : new Icon({
                         src : Markers["turquoiseBlue"],
                         anchor : [0.5, 1]
                     })
@@ -627,7 +666,7 @@ ReverseGeocode.prototype._activateMapInteraction = function (map) {
 
         // 3. Si un layer switcher est présent dans la carte, on lui affecte des informations pour cette couche
         map.getControls().forEach(
-            function (control) {
+            (control) => {
                 if (control instanceof LayerSwitcher) {
                     // un layer switcher est présent dans la carte
                     var layerId = this._inputFeaturesLayer.gpLayerId;
@@ -642,8 +681,7 @@ ReverseGeocode.prototype._activateMapInteraction = function (map) {
                         control.setRemovable(this._inputFeaturesLayer, false);
                     }
                 }
-            },
-            this
+            }
         );
     }
 };
@@ -657,11 +695,11 @@ ReverseGeocode.prototype._activateMapInteraction = function (map) {
  */
 ReverseGeocode.prototype._activatePointInteraction = function (map) {
     // interaction permettant de dessiner un point
-    this._mapInteraction = new ol.interaction.Draw({
-        style : new ol.style.Style({
-            image : new ol.style.Circle({
+    this._mapInteraction = new DrawInteraction({
+        style : new Style({
+            image : new Circle({
                 radius : 0,
-                fill : new ol.style.Fill({
+                fill : new Fill({
                     color : "rgba(0, 183, 152, 0.8)"
                 })
             })
@@ -672,7 +710,7 @@ ReverseGeocode.prototype._activatePointInteraction = function (map) {
 
     this._mapInteraction.on(
         "drawstart",
-        function (e) {
+        (e) => {
             logger.log("on drawstart ", e);
 
             // on efface les points qui ont pu être saisis précédemment (on vide la collection des features de la couche)
@@ -680,8 +718,7 @@ ReverseGeocode.prototype._activatePointInteraction = function (map) {
 
             // on récupère les coordonnées du point qui vient d'être saisi
             this._onDrawStart(e, "point");
-        },
-        this
+        }
     );
 
     map.addInteraction(this._mapInteraction);
@@ -697,18 +734,18 @@ ReverseGeocode.prototype._activatePointInteraction = function (map) {
  */
 ReverseGeocode.prototype._activateCircleInteraction = function (map) {
     // interaction permettant de dessiner un cercle
-    this._mapInteraction = new ol.interaction.Draw({
-        style : new ol.style.Style({
-            fill : new ol.style.Fill({
+    this._mapInteraction = new DrawInteraction({
+        style : new Style({
+            fill : new Fill({
                 color : "rgba(0, 183, 152, 0.3)"
             }),
-            stroke : new ol.style.Stroke({
+            stroke : new Stroke({
                 color : "rgba(0, 183, 152, 0.8)",
                 width : 3
             }),
-            image : new ol.style.Circle({
+            image : new Circle({
                 radius : 4,
-                fill : new ol.style.Fill({
+                fill : new Fill({
                     color : "rgba(0, 183, 152, 0.8)"
                 })
             })
@@ -719,19 +756,18 @@ ReverseGeocode.prototype._activateCircleInteraction = function (map) {
 
     this._mapInteraction.on(
         "drawstart",
-        function (e) {
+        (e) => {
             logger.log("on drawstart ", e);
             // on efface les points qui ont pu être saisis précédemment (on vide la collection des features de la couche)
             this._inputFeatures.clear();
             // on récupère les coordonnées du centre du cercle = premier point du tracé
             this._onDrawStart(e, "circle");
-        },
-        this
+        }
     );
 
     this._mapInteraction.on(
         "drawend",
-        function (e) {
+        (e) => {
             logger.log("on drawend", e);
 
             // on récupère le rayon du cercle qui vient d'être tracé
@@ -746,8 +782,7 @@ ReverseGeocode.prototype._activateCircleInteraction = function (map) {
                 }
                 logger.log("circle radius : ", radius);
             }
-        },
-        this
+        }
     );
 
     map.addInteraction(this._mapInteraction);
@@ -769,7 +804,7 @@ ReverseGeocode.prototype._activateBoxInteraction = function (map) {
     // function to draw rectangle with only 2 points
     var geometryFunction = function (coordinates, geometry) {
         if (!geometry) {
-            geometry = new ol.geom.Polygon(null);
+            geometry = new Polygon([]);
         }
         var start = coordinates[0];
         var end = coordinates[1];
@@ -781,18 +816,18 @@ ReverseGeocode.prototype._activateBoxInteraction = function (map) {
     };
 
     // interaction permettant de dessiner un rectangle (= LineString de 5 points, à partir de 2 points saisis)
-    this._mapInteraction = new ol.interaction.Draw({
-        style : new ol.style.Style({
-            fill : new ol.style.Fill({
+    this._mapInteraction = new DrawInteraction({
+        style : new Style({
+            fill : new Fill({
                 color : "rgba(0, 183, 152, 0.3)"
             }),
-            stroke : new ol.style.Stroke({
+            stroke : new Stroke({
                 color : "rgba(0, 183, 152, 0.8)",
                 width : 3
             }),
-            image : new ol.style.Circle({
+            image : new Circle({
                 radius : 4,
-                fill : new ol.style.Fill({
+                fill : new Fill({
                     color : "rgba(0, 183, 152, 0.8)"
                 })
             })
@@ -805,22 +840,20 @@ ReverseGeocode.prototype._activateBoxInteraction = function (map) {
 
     this._mapInteraction.on(
         "drawstart",
-        function (e) {
+        (e) => {
             logger.log("on drawstart", e);
             // on efface les points qui ont pu être saisis précédemment (on vide la collection des features de la couche)
             this._inputFeatures.clear();
-        },
-        this
+        }
     );
 
     this._mapInteraction.on(
         "drawend",
-        function (e) {
+        (e) => {
             logger.log("on drawend", e);
             // on va récupérer les coordonnées du rectangle qui vient d'être tracé
             this._onBoxDrawEnd(e);
-        },
-        this
+        }
     );
 
     map.addInteraction(this._mapInteraction);
@@ -875,7 +908,7 @@ ReverseGeocode.prototype._onDrawStart = function (e, type) {
         crs = map.getView().getProjection();
     }
 
-    var geoCoordinate = ol.proj.transform(coordinate, crs, "EPSG:4326");
+    var geoCoordinate = olTransformProj(coordinate, crs, "EPSG:4326");
     this._requestPosition = {
         x : geoCoordinate[0],
         y : geoCoordinate[1]
@@ -912,8 +945,8 @@ ReverseGeocode.prototype._onBoxDrawEnd = function (e) {
         }
 
         // on reprojette les coordonnées des deux extrémités du rectangle (start et end)
-        var startGeoCoordinate = ol.proj.transform(start, crs, "EPSG:4326");
-        var endGeoCoordinate = ol.proj.transform(end, crs, "EPSG:4326");
+        var startGeoCoordinate = olTransformProj(start, crs, "EPSG:4326");
+        var endGeoCoordinate = olTransformProj(end, crs, "EPSG:4326");
 
         this._requestPosition = {};
         this._requestBboxFilter = {};
@@ -1210,25 +1243,23 @@ ReverseGeocode.prototype._displayGeocodedLocationsOnMap = function (locations) {
 
         // 3. ajout des interactions (survol, click)
         // au survol : modification des styles (marker et list)
-        this._resultsHoverInteraction = new ol.interaction.Select({
-            condition : ol.events.condition.pointerMove,
+        this._resultsHoverInteraction = new SelectInteraction({
+            condition : eventPointerMove,
             layers : [this._resultsFeaturesLayer]
         });
         this._resultsHoverInteraction.on(
             "select",
-            this._onResultsFeatureMouseOver,
-            this
+            (e) => this._onResultsFeatureMouseOver(e)
         );
         map.addInteraction(this._resultsHoverInteraction);
 
         // au click : affichage popup
-        this._resultsSelectInteraction = new ol.interaction.Select({
+        this._resultsSelectInteraction = new SelectInteraction({
             layers : [this._resultsFeaturesLayer]
         });
         this._resultsSelectInteraction.on(
             "select",
-            this._onResultsFeatureSelect,
-            this
+            (e) => this._onResultsFeatureSelect(e)
         );
         map.addInteraction(this._resultsSelectInteraction);
 
@@ -1251,7 +1282,7 @@ ReverseGeocode.prototype._displayGeocodedLocationsOnMap = function (locations) {
                 break;
         }
         map.getControls().forEach(
-            function (control) {
+            (control) => {
                 if (control instanceof LayerSwitcher) {
                     // un layer switcher est présent dans la carte
                     var layerId = this._resultsFeaturesLayer.gpLayerId;
@@ -1266,8 +1297,7 @@ ReverseGeocode.prototype._displayGeocodedLocationsOnMap = function (locations) {
                         control.setRemovable(this._resultsFeaturesLayer, false);
                     }
                 }
-            },
-            this
+            }
         );
     }
 };
@@ -1281,13 +1311,13 @@ ReverseGeocode.prototype._displayGeocodedLocationsOnMap = function (locations) {
 ReverseGeocode.prototype._createResultsLayer = function () {
     var map = this.getMap();
 
-    this._resultsFeatures = new ol.Collection();
+    this._resultsFeatures = new Collection();
 
     // on crée la couche qui va accueillir les features
-    this._resultsFeaturesSource = new ol.source.Vector({
+    this._resultsFeaturesSource = new VectorSource({
         features : this._resultsFeatures
     });
-    this._resultsFeaturesLayer = new ol.layer.Vector({
+    this._resultsFeaturesLayer = new VectorLayer({
         source : this._resultsFeaturesSource
     });
     // on rajoute le champ gpResultLayerId permettant d'identifier une couche crée par le composant. (pour layerSwitcher par ex)
@@ -1316,12 +1346,12 @@ ReverseGeocode.prototype._addResultFeature = function (location, i) {
     var mapProj = view.getProjection().getCode();
     if (mapProj !== "EPSG:4326") {
         // on retransforme les coordonnées de la position dans la projection de la carte
-        position = ol.proj.transform(position, "EPSG:4326", mapProj);
+        position = olTransformProj(position, "EPSG:4326", mapProj);
     }
 
     // on ajoute le résultat à la collection de points existantes (composant la couche vectorielle this._inputFeaturesLayer)
-    var feature = new ol.Feature({
-        geometry : new ol.geom.Point(position)
+    var feature = new Feature({
+        geometry : new Point(position)
     });
     feature.setStyle(this._resultsDefaultStyle);
     feature.setId(i);
@@ -1416,7 +1446,7 @@ ReverseGeocode.prototype._onResultsFeatureSelect = function (e) {
 
         if (!this._popupOverlay) {
             // ajout de la popup a la carte comme un overlay
-            this._popupOverlay = new ol.Overlay({
+            this._popupOverlay = new Overlay({
                 element : this._popupDiv,
                 positioning : "bottom-center",
                 position : e.mapBrowserEvent.coordinate
@@ -1732,3 +1762,8 @@ ReverseGeocode.prototype._hideWaitingContainer = function () {
 };
 
 export default ReverseGeocode;
+
+// Expose ReverseGeocode as ol.control.ReverseGeocode (for a build bundle)
+if (window.ol && window.ol.control) {
+    window.ol.control.ReverseGeocode = ReverseGeocode;
+}

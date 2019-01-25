@@ -1,11 +1,25 @@
-import ol from "ol";
+// import CSS
+import "../../../res/Common/GPgeneralWidget.css";
+import "../../../res/Common/GPwaiting.css";
+import "../../../res/Common/GPlocation.css";
+import "../../../res/OpenLayers/GPgeneralWidgetOpenLayers.css";
+import "../../../res/OpenLayers/Controls/LocationSelector/GPlocationOpenLayers.css";
+// import OpenLayers
+import {inherits as olInherits} from "ol/util";
+import Control from "ol/control/Control";
+import Overlay from "ol/Overlay";
+import { transform as olTransformProj } from "ol/proj";
+import { unByKey as olObservableUnByKey } from "ol/Observable";
+// import geoportal library access
 import Gp from "gp";
+// import local
 import Logger from "../../Common/Utils/LoggerByDefault";
 import Utils from "../../Common/Utils";
 import RightManagement from "../../Common/Utils/CheckRightManagement";
 import SelectorID from "../../Common/Utils/SelectorID";
-import LocationSelectorDOM from "../../Common/Controls/LocationSelectorDOM";
 import Markers from "./Utils/Markers";
+// DOM
+import LocationSelectorDOM from "../../Common/Controls/LocationSelectorDOM";
 
 var logger = Logger.getLogger("locationselector");
 
@@ -64,19 +78,19 @@ function LocationSelector (options) {
     }
 
     // call ol.control.Control constructor
-    ol.control.Control.call(this, {
+    Control.call(this, {
         element : this._container,
         target : options.target,
         render : options.render
     });
 };
 // Inherits from ol.control.Control
-ol.inherits(LocationSelector, ol.control.Control);
+olInherits(LocationSelector, Control);
 
 /**
  * @lends module:LocationSelector
  */
-LocationSelector.prototype = Object.create(ol.control.Control.prototype, {});
+LocationSelector.prototype = Object.create(Control.prototype, {});
 
 Utils.assign(LocationSelector.prototype, LocationSelectorDOM);
 
@@ -162,6 +176,9 @@ LocationSelector.prototype.initialize = function (options) {
 
     // gestion des droits sur les ressources/services
     this._checkRightsManagement();
+
+    // listener key for event click on map
+    this.listenerKey = null;
 };
 
 /**
@@ -240,8 +257,10 @@ LocationSelector.prototype._checkRightsManagement = function () {
         services : ["AutoCompletion"]
     });
 
+    // pas de droit !
     if (!rightManagement) {
         this._noRightManagement = true;
+        return;
     }
 
     // on recupère les informations utiles
@@ -272,15 +291,10 @@ LocationSelector.prototype._initContainer = function () {
     var _inputLabel = this._inputLabelContainer = this._createLocationPointLabelElement(id, this.options.tag.label);
     inputs.appendChild(_inputLabel);
     var _inputAutoComplete = this._inputAutoCompleteContainer = this._createLocationAutoCompleteteInputElement(id);
-    var context = this;
     if (_inputAutoComplete.addEventListener) {
-        _inputAutoComplete.addEventListener("click", function () {
-            context.onAutoCompleteInputClick();
-        });
+        _inputAutoComplete.addEventListener("click", () => this.onAutoCompleteInputClick());
     } else if (_inputAutoComplete.attachEvent) {
-        _inputAutoComplete.attachEvent("onclick", function () {
-            context.onAutoCompleteInputClick();
-        });
+        _inputAutoComplete.attachEvent("onclick", () => this.onAutoCompleteInputClick());
     }
     inputs.appendChild(_inputAutoComplete);
     var _inputCoordinate = this._inputCoordinateContainer = this._createLocationCoordinateInputElement(id);
@@ -383,13 +397,11 @@ LocationSelector.prototype.onAutoCompleteSearchText = function (e) {
     var map = this.getMap();
     map.on(
         "click",
-        this._hideSuggestedLocation,
-        this
+        () => this._hideSuggestedLocation()
     );
     map.on(
         "pointerdrag",
-        this._hideSuggestedLocation,
-        this
+        () => this._hideSuggestedLocation()
     );
 };
 
@@ -434,7 +446,7 @@ LocationSelector.prototype.onAutoCompletedResultsItemClick = function (e) {
     var mapProj = view.getProjection().getCode();
     if (mapProj !== "EPSG:4326") {
         // on retransforme les coordonnées de la position dans la projection de la carte
-        position = ol.proj.transform(position, "EPSG:4326", mapProj);
+        position = olTransformProj(position, "EPSG:4326", mapProj);
     }
     // on centre la vue et positionne le marker, à la position reprojetée dans la projection de la carte
     this._setPosition(position);
@@ -453,18 +465,14 @@ LocationSelector.prototype.onActivateMapPointClick = function () {
     if (this._inputShowPointerContainer.checked) {
         // on efface l'ancien resultat
         this._clearResults();
-        map.on(
+        this.listenerKey = map.on(
             "click",
-            this.onMouseMapClick,
-            this
+            (e) => this.onMouseMapClick(e)
         );
         this._setCursor("crosshair");
     } else {
-        map.un(
-            "click",
-            this.onMouseMapClick,
-            this
-        );
+        // map.un("click", (e) => this.onMouseMapClick(e));
+        olObservableUnByKey(this.listenerKey);
         this._setCursor();
     }
 };
@@ -582,7 +590,7 @@ LocationSelector.prototype._setCoordinate = function (olCoordinate, crs) {
     //      ]
 
     // on transforme olCoodinate (dont la projection est celle de la carte) en EPSG:4326
-    this._coordinate = ol.proj.transform(olCoordinate, crs, "EPSG:4326");
+    this._coordinate = olTransformProj(olCoordinate, crs, "EPSG:4326");
 
     // INFO : si on veut des DMS
     // var coords = ol.coordinate.toStringHDMS(this._coordinate, 2).split("N ");
@@ -631,7 +639,7 @@ LocationSelector.prototype._setMarker = function (position, information, display
     if (position) {
         var markerDiv = document.createElement("img");
         markerDiv.src = this._markerUrl;
-        this._marker = new ol.Overlay({
+        this._marker = new Overlay({
             position : position,
             offset : this._markerOffset,
             element : markerDiv,
@@ -676,17 +684,13 @@ LocationSelector.prototype._setMarker = function (position, information, display
  * @private
  */
 LocationSelector.prototype._clearResults = function () {
-    var map = this.getMap();
     this._currentLocation = null;
     this._coordinate = null;
     this._hideSuggestedLocation();
     this._clearSuggestedLocation();
     this._setMarker();
-    map.un(
-        "click",
-        this.onMouseMapClick,
-        this
-    );
+    // map.un("click", (e) => this.onMouseMapClick(e));
+    olObservableUnByKey(this.listenerKey);
 };
 
 /**
@@ -811,3 +815,8 @@ LocationSelector.prototype._fillAutoCompletedLocationListContainer = function (l
 };
 
 export default LocationSelector;
+
+// Expose LocationSelector as ol.control.LocationSelector (for a build bundle)
+if (window.ol && window.ol.control) {
+    window.ol.control.LocationSelector = LocationSelector;
+}

@@ -1,4 +1,4 @@
-{{#extend "ol-sample-amd-layout"}}
+{{#extend "ol-sample-modules-layout"}}
 
 {{#content "head"}}
         <title>Sample openlayers</title>
@@ -14,7 +14,7 @@
 {{/content}}
 
 {{#content "body"}}
-            <h2>Ajout d'une couche WMS, en mode AMD</h2>
+            <h2>Ajout d'une couche WMTS</h2>
             <!-- map -->
             <div id="map">
             </div>
@@ -22,39 +22,27 @@
 
 {{#content "js"}}
             <script type="text/javascript">
-            requirejs(
-              [
-                "ol",
-                "Gp"
-              ],
-              function (
-                ol,
-                Gp
-              ) {
-
                 var map;
-
-                /** createMap */
-                var createMap = function () {
+                var createMap = function() {
                     // on cache l'image de chargement du Géoportail.
-                    document.getElementById("map").style.backgroundImage = "none";
+                    document.getElementById('map').style.backgroundImage = 'none';
 
-                    // Création de la map
-                    var map = new ol.Map({
-                        layers : [
-                            new ol.layer.GeoportalWMS({
-                                layer : "ORTHOIMAGERY.ORTHOPHOTOS"
-                            })
-                        ],
-                        target : "map",
-                        view : new ol.View({
-                            center : [288074.8449901076, 6247982.515792289],
-                            zoom : 5
+                    var gpLayer = new ol.layer.Tile({
+                        source : new ol.source.GeoportalWMTS({
+                            layer : "ORTHOIMAGERY.ORTHOPHOTOS.BDORTHO.L93"
                         })
                     });
 
+                    map = new ol.Map({
+                        layers : [gpLayer],
+                        target : 'map',
+                        view : new ol.View({
+                            projection : "EPSG:2154",
+                            center : [600000, 6750000],
+                            zoom : 6
+                        })
+                    });
                 };
-
                 Gp.Services.getConfig({
                     serverUrl : "{{ resources }}/AutoConf.js",
                     callbackSuffix : "",
@@ -62,8 +50,6 @@
                     timeOut : 20000,
                     onSuccess : createMap
                 });
-
-            });
            </script>
 {{/content}}
 

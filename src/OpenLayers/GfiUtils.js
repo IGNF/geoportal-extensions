@@ -1,5 +1,18 @@
-import ol from "ol";
+// import OpenLayers
+import Overlay from "ol/Overlay";
+import VectorTileSource from "ol/source/VectorTile";
+import VectorSource from "ol/source/Vector";
+import TileWMSSource from "ol/source/TileWMS";
+import WMTSSource from "ol/source/WMTS";
+import ImageWMSSource from "ol/source/ImageWMS";
+import {
+    Select as SelectInteraction,
+    Modify as ModifyInteraction,
+    Draw as DrawInteraction
+} from "ol/interaction";
+// import geoportal library access
 import Gp from "gp";
+// import local
 import Logger from "../Common/Utils/LoggerByDefault";
 import ProxyUtils from "../Common/Utils/ProxyUtils";
 // import $__xmldom from "xmldom";
@@ -18,13 +31,13 @@ var GfiUtils = {
      */
     getLayerFormat : function (l) {
         var source = l.getSource();
-        if (source instanceof ol.source.TileWMS || source instanceof ol.source.ImageWMS) {
+        if (source instanceof TileWMSSource || source instanceof ImageWMSSource) {
             return "wms";
         }
-        if (source instanceof ol.source.WMTS) {
+        if (source instanceof WMTSSource) {
             return "wmts";
         }
-        if (source instanceof ol.source.Vector || source instanceof ol.source.VectorTile) {
+        if (source instanceof VectorSource || source instanceof VectorTileSource) {
             return "vector";
         }
         return "unknown";
@@ -137,7 +150,7 @@ var GfiUtils = {
             map.removeOverlay(map.featuresOverlay);
             map.featuresOverlay = null;
         }
-        map.featuresOverlay = new ol.Overlay({
+        map.featuresOverlay = new Overlay({
             // id : id,
             element : element,
             autoPan : autoPanOptions.autoPan,
@@ -503,9 +516,9 @@ var GfiUtils = {
             var interactions = map.getInteractions().getArray();
             for (var i = 0; i < interactions.length; i++) {
                 if (interactions[i].getActive() &&
-                    (interactions[i] instanceof ol.interaction.Select ||
-                        interactions[i] instanceof ol.interaction.Modify ||
-                        interactions[i] instanceof ol.interaction.Draw)
+                    (interactions[i] instanceof SelectInteraction ||
+                        interactions[i] instanceof ModifyInteraction ||
+                        interactions[i] instanceof DrawInteraction)
                 ) {
                     // si on a une interaction de dessin ou de sélection en cours, on ne fait rien.
                     return;
@@ -550,3 +563,14 @@ var GfiUtils = {
 };
 
 export default GfiUtils;
+
+// Expose GfiUtils as ol.gp.GfiUtils (for a build bundle)
+if (window.ol) {
+    if (window.ol.gp) {
+        window.ol.gp.GfiUtils = GfiUtils;
+    } else {
+        window.ol.gp = {
+            GfiUtils : GfiUtils
+        };
+    }
+}

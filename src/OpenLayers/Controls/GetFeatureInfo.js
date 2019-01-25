@@ -1,9 +1,20 @@
-import ol from "ol";
+// import CSS
+import "../../../res/Common/GPgeneralWidget.css";
+import "../../../res/Common/GPwaiting.css";
+import "../../../res/Common/GPgetFeatureInfo.css";
+import "../../../res/OpenLayers/GPgeneralWidgetOpenLayers.css";
+import "../../../res/OpenLayers/Controls/GetFeatureInfo/GPgetFeatureInfoOpenLayers.css";
+// import OpenLayers
+import {inherits as olInherits} from "ol/util";
+import Control from "ol/control/Control";
+// import local
 import Utils from "../../Common/Utils";
-import GfiUtils from "../GfiUtils";
 import SelectorID from "../../Common/Utils/SelectorID";
-import GetFeatureInfoDOM from "../../Common/Controls/GetFeatureInfoDOM";
 import Logger from "../../Common/Utils/LoggerByDefault";
+// import local with ol dependencies
+import GfiUtils from "../GfiUtils";
+// DOM
+import GetFeatureInfoDOM from "../../Common/Controls/GetFeatureInfoDOM";
 
 var logger = Logger.getLogger("getfeatureinfo");
 
@@ -57,7 +68,7 @@ function GetFeatureInfo (gfiOptions) {
     var container = this._initContainer(options);
 
     // call ol.control.Control constructor
-    ol.control.Control.call(this, {
+    Control.call(this, {
         element : container,
         target : options.target,
         render : options.render
@@ -65,12 +76,12 @@ function GetFeatureInfo (gfiOptions) {
 };
 
 // Inherits from ol.control.Control
-ol.inherits(GetFeatureInfo, ol.control.Control);
+olInherits(GetFeatureInfo, Control);
 
 /**
  * @lends module:GetFeatureInfo
  */
-GetFeatureInfo.prototype = Object.create(ol.control.Control.prototype, {});
+GetFeatureInfo.prototype = Object.create(Control.prototype, {});
 
 // on récupère les méthodes de la classe commune GetFeatureInfoDOM
 Utils.assign(GetFeatureInfo.prototype, GetFeatureInfoDOM);
@@ -217,7 +228,7 @@ GetFeatureInfo.prototype.setMap = function (map) {
 
         map.getLayers().on(
             "remove",
-            function (evt) {
+            (evt) => {
                 for (var i = 0; i < this._layers.length; ++i) {
                     if (this._layers[i].obj === evt.element) {
                         this._layers.splice(i, 1);
@@ -225,14 +236,13 @@ GetFeatureInfo.prototype.setMap = function (map) {
                     }
                 }
                 this._updateEvents(map);
-            },
-            this
+            }
         );
 
         if (this._auto) {
             // ajout des couches vecteur deja dans la carte
             var updated = false;
-            map.getLayers().forEach(function (olLayer) {
+            map.getLayers().forEach((olLayer) => {
                 var layerFormat = GfiUtils.getLayerFormat(olLayer);
                 if (!this._hasLayer(olLayer) && layerFormat === "vector") {
                     this._layers.push({
@@ -240,9 +250,7 @@ GetFeatureInfo.prototype.setMap = function (map) {
                     });
                     updated = true;
                 }
-            },
-            this
-            );
+            });
 
             if (updated) {
                 this._updateEvents(map);
@@ -250,7 +258,7 @@ GetFeatureInfo.prototype.setMap = function (map) {
 
             map.getLayers().on(
                 "add",
-                function (evt) {
+                (evt) => {
                     var layerFormat = GfiUtils.getLayerFormat(evt.element);
                     if (layerFormat === "vector") {
                         this._layers.push({
@@ -258,8 +266,7 @@ GetFeatureInfo.prototype.setMap = function (map) {
                         });
                     }
                     this._updateEvents(map);
-                },
-                this
+                }
             );
         }
     } else {
@@ -268,7 +275,7 @@ GetFeatureInfo.prototype.setMap = function (map) {
     }
 
     // call original setMap method
-    ol.control.Control.prototype.setMap.call(this, map);
+    Control.prototype.setMap.call(this, map);
 };
 
 // ################################################################### //
@@ -552,7 +559,7 @@ GetFeatureInfo.prototype._activateCursor = function (activate, map) {
         var gfiObj = this;
 
         var displayCursor = function (evt) {
-            var hit = map.forEachFeatureAtPixel(evt.pixel, function (feature, layer) {
+            var hit = map.forEachFeatureAtPixel(evt.pixel, (feature, layer) => {
                 // on ne prend en compte que les couches vecteurs connues du controle
                 var gfiLayers = gfiObj.getLayers();
                 for (var m = 0; m < gfiLayers.length; ++m) {
@@ -662,3 +669,8 @@ GetFeatureInfo.prototype._initContainer = function (options) {
 };
 
 export default GetFeatureInfo;
+
+// Expose GetFeatureInfo as ol.control.GetFeatureInfo (for a build bundle)
+if (window.ol && window.ol.control) {
+    window.ol.control.GetFeatureInfo = GetFeatureInfo;
+}

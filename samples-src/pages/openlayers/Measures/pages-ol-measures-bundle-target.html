@@ -1,0 +1,62 @@
+{{#extend "ol-sample-bundle-layout"}}
+
+{{#content "head"}}
+        <title>Sample openlayers MeasureArea, MeasureLength and MeasureAzimuth</title>
+{{/content}}
+
+{{#content "style"}}
+        <style>
+            div#map {
+                width: 100%;
+                height: 500px;
+            }
+        </style>
+{{/content}}
+
+{{#content "body"}}
+            <h2>Ajout du widget de mesures (sans toolbox), avec les options par défaut</h2>
+            <!-- map -->
+            <div id="map">
+            </div>
+{{/content}}
+
+{{#content "js"}}
+            <script type="text/javascript">
+
+              window.onload = function () {
+                // on cache l'image de chargement du Géoportail.
+                document.getElementById("map").style.backgroundImage = "none";
+
+                // Création de la map
+                var map = new ol.Map({
+                  target : "map",
+                  layers : [
+                    new ol.layer.GeoportalWMTS({
+                      layer : "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+                    })
+                  ],
+                  view : new ol.View({
+                    center : [288074.8449901076, 6247982.515792289],
+                    zoom : 8
+                  })
+                });
+
+                var measureLength = new ol.control.MeasureLength({
+                    target : map.getTargetElement()
+                });
+                map.addControl(measureLength);
+                var measureArea = new ol.control.MeasureArea({
+                    target : map.getTargetElement()
+                });
+                map.addControl(measureArea);
+                var measureAzimuth = new ol.control.MeasureAzimuth({
+                    target : map.getTargetElement()
+                });
+                map.addControl(measureAzimuth);
+
+                var layerSwitcher = new ol.control.LayerSwitcher({});
+                map.addControl(layerSwitcher);
+             };
+            </script>
+{{/content}}
+{{/extend}}

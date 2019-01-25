@@ -1,0 +1,128 @@
+{{#extend "ol-sample-modules-layout"}}
+
+{{#content "head"}}
+        <title>Sample openlayers Themes Mapbox</title>
+{{/content}}
+
+{{#content "style"}}
+        <style>
+        </style>
+{{/content}}
+
+{{#content "body"}}
+            <h2>Ajout du widget d'édition des themes MapBox</h2>
+            <button id="displayFalse">Hidden</button>
+            <button id="displayTrue">Show</button>
+            <div id="editor">
+            </div>
+{{/content}}
+
+{{#content "js"}}
+            <script type="text/javascript">
+
+            var editor0 = new ol.editor.View({
+                target: document.getElementById("editor"),
+                style: "{{ resources }}/data/mapbox/styles/ign-theo.json",
+                events : {
+                    "editor:themes:title" : function (e) {
+                        console.log(this.getID(), e);
+                    }
+                },
+                themes : {
+                    description : "...",
+                    styles : [
+                        {
+                            "label" : "standard0",
+                            "style" : "{{ resources }}/data/mapbox/themes/styles/style0.json"
+                        }
+                    ]
+                },
+                tools : {
+                    themes : true,
+                    layers : true,
+                    filter : true,
+                    style :true,
+                    legend : true
+                }
+            });
+
+            // liste de themes reussi avec imagette !
+            var editor1 = new ol.editor.View({
+                target: document.getElementById("editor"),
+                style: "{{ resources }}/data/mapbox/styles/osm.json",
+                events : { // TODO...
+                    "editor:layer:visibility" : function (e) {console.log(e);},
+                    "editor:layer:remove" : function (e) {console.log(e);},
+                    "editor:layer:clone" : function (e) {console.log(e);},
+                    "editor:legend:visibility" : function (e) {console.log(e);},
+                    "editor:style:minScale" : function (e) {console.log(e);},
+                    "editor:style:maxScale" : function (e) {console.log(e);},
+                    "editor:style:edit" : function (e) {console.log(e);},
+                    "editor:filter:edit" : function (e) {console.log(e);},
+                    "editor:themes:image" : function (e) {console.log(e);},
+                    "editor:themes:title" : function (e) {
+                        console.log(this.getID(), e);
+                    }
+                },
+                themes : {
+                    description : "...",
+                    styles : [
+                        {
+                            "image" : "{{ resources }}/data/mapbox/themes/images/layer0.png",
+                            "label" : "standard0",
+                            "style" : "{{ resources }}/data/mapbox/themes/styles/style0.json"
+                        },
+                        {
+                            "image" : "{{ resources }}/data/mapbox/themes/images/layer1.png",
+                            "label" : "standard1",
+                            "style" : "{{ resources }}/data/mapbox/themes/styles/style1.json"
+                        },
+                        {
+                            "image" : "{{ resources }}/data/mapbox/themes/images/layer2.png",
+                            "label" : "standard2",
+                            "style" : "{{ resources }}/data/mapbox/themes/styles/style2.json"
+                        },
+                        {
+                            "image" : "{{ resources }}/data/mapbox/themes/images/layer3.png",
+                            "label" : "standard3",
+                            "style" : "{{ resources }}/data/mapbox/themes/styles/style3.json"
+                        }
+                    ]
+                },
+                tools : {
+                    themes : true,
+                    layers : true,
+                    filter : true,
+                    style : true,
+                    legend : true,
+                    group : true
+                }
+            });
+
+            var editor2 = new ol.editor.View({
+                target: document.getElementById("editor"),
+                style: "{{ resources }}/data/mapbox/styles/mapbox.json",
+                events : {
+                    "editor:themes:title" : function (e) {
+                        console.log(this.getID(), e);
+                    }
+                },
+                tools : {
+                    themes : false,
+                    layers : true,
+                    filter : false,
+                    style : false,
+                    legend : true,
+                    group : true
+                }
+            });
+
+            document.getElementById("displayTrue").addEventListener("click", function () {
+                editor1.display(true);
+            });
+            document.getElementById("displayFalse").addEventListener("click", function () {
+                editor1.display(false);
+            });
+            </script>
+{{/content}}
+{{/extend}}

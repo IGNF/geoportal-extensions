@@ -1,5 +1,13 @@
-
-import ol from "ol";
+// import CSS
+import "../../../res/Common/GPgeneralWidget.css";
+import "../../../res/Common/GPwaiting.css";
+import "../../../res/OpenLayers/GPgeneralWidgetOpenLayers.css";
+import "../../../res/OpenLayers/Controls/Attribution/GPattributionOpenLayers.css";
+// import OpenLayers
+import {inherits as olInherits} from "ol/util";
+import Attribution from "ol/control/Attribution";
+import { transformExtent as olTransformExtentProj } from "ol/proj";
+// import local
 import LayerUtils from "../../Common/Utils/LayerUtils";
 import Logger from "../../Common/Utils/LoggerByDefault";
 
@@ -20,23 +28,28 @@ var logger = Logger.getLogger("geoportalattribution");
  * );
  */
 function GeoportalAttribution (options) {
+    options = options || {};
+
     if (!(this instanceof GeoportalAttribution)) {
         throw new TypeError("ERROR CLASS_CONSTRUCTOR");
     }
 
+    // Attributions are not collapsible for ol/source/OSM except if ...
+    options.collapsible = true;
+
     // call ol.control.Attribution constructor
-    ol.control.Attribution.call(this,
+    Attribution.call(this,
         options
     );
 }
 
 // Inherits from ol.control.Attribution
-ol.inherits(GeoportalAttribution, ol.control.Attribution);
+olInherits(GeoportalAttribution, Attribution);
 
 /*
  * @lends module:GeoportalAttribution
  */
-GeoportalAttribution.prototype = Object.create(ol.control.Attribution.prototype, {});
+GeoportalAttribution.prototype = Object.create(Attribution.prototype, {});
 
 /**
  * Constructor (alias)
@@ -53,12 +66,11 @@ GeoportalAttribution.prototype.setMap = function (map) {
         // Remove default ol.control.Attribution
         var ctrls = map.getControls();
         ctrls.forEach(
-            function (element) {
-                if (element instanceof ol.control.Attribution && !(element instanceof GeoportalAttribution)) {
-                    this.remove(element);
+            (element) => {
+                if (element instanceof Attribution && !(element instanceof GeoportalAttribution)) {
+                    ctrls.remove(element);
                 }
-            },
-            ctrls
+            }
         );
 
         // on récupère les attributions des couches déjà ajoutées à la carte.
@@ -66,31 +78,27 @@ GeoportalAttribution.prototype.setMap = function (map) {
 
         // At every map movement, layers attributions have to be updated,
         // according to map and originators zoom and extent.
-        var context = this;
         map.on(
             "moveend",
-            function () {
-                context._updateAttributions(map);
-            },
-            this
+            () => {
+                this._updateAttributions(map);
+            }
         );
         map.getLayers().on(
             "add",
-            function () {
-                context._updateAttributions(map);
-            },
-            this
+            () => {
+                this._updateAttributions(map);
+            }
         );
         map.getLayers().on(
             "remove",
-            function () {
-                context._updateAttributions(map);
-            },
-            this
+            () => {
+                this._updateAttributions(map);
+            }
         );
     }
 
-    ol.control.Attribution.prototype.setMap.call(this, map);
+    Attribution.prototype.setMap.call(this, map);
 };
 
 /**
@@ -107,7 +115,7 @@ GeoportalAttribution.prototype._updateAttributions = function (map) {
     // extent, then convert to geographical coordinates
     var extent = view.calculateExtent(map.getSize());
     var mapProjection = view.getProjection().getCode();
-    var geoExtent = ol.proj.transformExtent(extent, mapProjection, "EPSG:4326");
+    var geoExtent = olTransformExtentProj(extent, mapProjection, "EPSG:4326");
     // transform extent from [minx, miny, maxx, maxy] to [maxy, minx, miny, maxx]
     var standardExtent = [geoExtent[3], geoExtent[0], geoExtent[1], geoExtent[2]];
     // zoom
@@ -128,11 +136,10 @@ GeoportalAttribution.prototype._updateAttributions = function (map) {
         } else if (layers[i].getLayers) {
             // ol.layer.Group
             var lyrs = layers[i].getLayers();
-            var context = this;
             lyrs.forEach(
-                function (lyr) {
+                (lyr) => {
                     if (lyr.getSource) {
-                        context._updateLayerAttributions(lyr, mapAttributions, standardExtent, mapProjection, zoom);
+                        this._updateLayerAttributions(lyr, mapAttributions, standardExtent, mapProjection, zoom);
                     } else {
                         logger.log("cannot find layer source in layergroup ", layers[i]);
                     }
@@ -189,9 +196,7 @@ GeoportalAttribution.prototype._updateLayerAttributions = function (layer, mapAt
             // check that this attribution hasn't been added yet for another layer
             if (!mapAttributions || !mapAttributions[attributionj]) {
                 // add attribution html
-                attributions.push(new ol.Attribution({
-                    html : attributionj
-                }));
+                attributions.push(attributionj);
 
                 // add attribution to mapAttributions, to manage all layers attributions
                 mapAttributions[attributionj] = true;
@@ -206,3 +211,8 @@ GeoportalAttribution.prototype._updateLayerAttributions = function (layer, mapAt
 };
 
 export default GeoportalAttribution;
+
+// Expose GeoportalAttribution as ol.control.GeoportalAttribution (for a build bundle)
+if (window.ol && window.ol.control) {
+    window.ol.control.GeoportalAttribution = GeoportalAttribution;
+}

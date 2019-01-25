@@ -1,4 +1,4 @@
-{{#extend "ol-sample-amd-layout"}}
+{{#extend "ol-sample-modules-layout"}}
 
 {{#content "head"}}
         <title>Sample OpenLayers ElevationPath</title>
@@ -7,35 +7,22 @@
 {{#content "style"}}
         <style>
             div#map {
-                width: 80%;
+                width: 100%;
                 height: 500px;
-                float: left;
             }
         </style>
 {{/content}}
 
 {{#content "body"}}
-            <h2>profil altimetrique, en mode AMD</h2>
+            <h2>profil altimetrique</h2>
             <!-- map -->
-            <div id="map"></div>
-            <!-- profil -->
-            <div id="profil" style="display: inline-block;"></div>
+            <div id="map">
+            </div>
 {{/content}}
 
 {{#content "js"}}
             <script type="text/javascript">
-            requirejs(
-              [
-                "ol",
-                "Gp"
-              ],
-              function (
-                ol,
-                Gp
-              ) {
-
                 var map;
-
                 var createMap = function () {
                   // on cache l'image de chargement du Géoportail.
                   document.getElementById("map").style.backgroundImage = "none";
@@ -55,9 +42,10 @@
                   });
 
                   var elevation = new ol.control.ElevationPath({
+                    target : map.getTargetElement(),
                     displayProfileOptions : {
                       apply : ol.control.ElevationPath.DISPLAY_PROFILE_RAW,
-                      target : document.getElementById("profil")
+                      target : null, // par defaut
                     }
                   });
                   map.addControl(elevation);
@@ -70,8 +58,6 @@
                   timeOut : 20000,
                   onSuccess : createMap
                 });
-
-              });
            </script>
 {{/content}}
 

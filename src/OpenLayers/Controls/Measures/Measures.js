@@ -1,6 +1,18 @@
-import ol from "ol";
+// import OpenLayers
+import Overlay from "ol/Overlay";
+import { Draw as DrawInteraction } from "ol/interaction";
+import {
+    Fill,
+    Stroke,
+    Style,
+    Circle
+} from "ol/style";
+import VectorLayer from "ol/layer/Vector";
+import VectorSource from "ol/source/Vector";
+// import local
 import Logger from "../../../Common/Utils/LoggerByDefault";
 import Interactions from "../Utils/Interactions";
+// import local with ol dependencies
 import LayerSwitcher from "../LayerSwitcher";
 
 // Derived from OpenLayers measure example
@@ -23,13 +35,13 @@ var Measures = {
     /*
      * Pointer
      */
-    DEFAULT_POINTER_STYLE : new ol.style.Circle({
+    DEFAULT_POINTER_STYLE : new Circle({
         radius : 5,
-        stroke : new ol.style.Stroke({
+        stroke : new Stroke({
             color : "#002A50",
             width : 2
         }),
-        fill : new ol.style.Fill({
+        fill : new Fill({
             color : "rgba(255, 155, 0, 0.7)"
         })
     }),
@@ -37,11 +49,11 @@ var Measures = {
     /*
      * Measures style line
      */
-    DEFAULT_DRAW_START_STYLE : new ol.style.Style({
-        fill : new ol.style.Fill({
+    DEFAULT_DRAW_START_STYLE : new Style({
+        fill : new Fill({
             color : "rgba(0, 183, 152, 0.2)"
         }),
-        stroke : new ol.style.Stroke({
+        stroke : new Stroke({
             color : "#002A50",
             lineDash : [10, 10],
             width : 2
@@ -51,11 +63,11 @@ var Measures = {
     /*
      * Measures final style line
      */
-    DEFAULT_DRAW_FINISH_STYLE : new ol.style.Style({
-        fill : new ol.style.Fill({
+    DEFAULT_DRAW_FINISH_STYLE : new Style({
+        fill : new Fill({
             color : "rgba(0, 183, 152, 0.3)"
         }),
-        stroke : new ol.style.Stroke({
+        stroke : new Stroke({
             color : "#002A50",
             width : 3
         })
@@ -195,14 +207,25 @@ var Measures = {
         var map = this.getMap();
         var currentMapId = map.getTargetElement().id;
 
+        // contexte d'execution
+        var context = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : null;
+        if (context) {
+            // Pour info
+            // les objets de mesures ont du code partagé
+            // (afin de gerer les interactions entre eux).
+            // Dans un mode "modules", on partage cet objet (this.tools) via le contexte
+            // d'execution (ex. avec window)
+            this.tools = context.gpShareMeasures || {};
+        }
+
         // desactivation des controles de mesures sur la carte courrante
-        var self = this.CLASSNAME; // this.constructor.name : pas possible en mode minifié/manglifié !
+        var mySelf = this.CLASSNAME; // this.constructor.name : pas possible en mode minifié/manglifié !
         for (var className in this.tools) {
             if (this.tools.hasOwnProperty(className)) {
                 var measures = this.tools[className];
                 for (var i = 0; i < measures.length; i++) {
                     var o = measures[i];
-                    if (o && o.active && className !== self && o.map === currentMapId) {
+                    if (o && o.active && className !== mySelf && o.map === currentMapId) {
                         o.active = false;
                         if (o.instance !== null) { // au cas où le controle a été supprimé !
                             o.instance.clean();
@@ -221,18 +244,18 @@ var Measures = {
             this.addMeasureEvents();
             this.initMeasureInteraction();
             this.addMeasureInteraction(type);
-            for (var j = 0; j < this.tools[self].length; j++) {
-                if (this.tools[self][j].map === currentMapId) {
-                    this.tools[self][j].active = true;
+            for (var j = 0; j < this.tools[mySelf].length; j++) {
+                if (this.tools[mySelf][j].map === currentMapId) {
+                    this.tools[mySelf][j].active = true;
                 }
             }
         } else {
             this.clearMeasure();
             this.clearMeasureToolTip();
             this.removeMeasureEvents();
-            for (var k = 0; k < this.tools[self].length; k++) {
-                if (this.tools[self][k].map === currentMapId) {
-                    this.tools[self][k].active = false;
+            for (var k = 0; k < this.tools[mySelf].length; k++) {
+                if (this.tools[mySelf][k].map === currentMapId) {
+                    this.tools[mySelf][k].active = false;
                 }
             }
         }
@@ -312,7 +335,7 @@ var Measures = {
         this.measureTooltipElement = document.createElement("div");
         this.measureTooltipElement.className = "GPmeasureTooltip GPmeasureTooltip-measure";
 
-        this.measureTooltip = new ol.Overlay({
+        this.measureTooltip = new Overlay({
             element : this.measureTooltipElement,
             offset : [0, -15],
             positioning : "bottom-center"
@@ -335,7 +358,7 @@ var Measures = {
         this.helpTooltipElement = document.createElement("div");
         this.helpTooltipElement.className = "tooltip hidden";
 
-        this.helpTooltip = new ol.Overlay({
+        this.helpTooltip = new Overlay({
             element : this.helpTooltipElement,
             offset : [15, 0],
             positioning : "center-left"
@@ -362,10 +385,10 @@ var Measures = {
             stroke : Measures.DEFAULT_DRAW_START_STYLE.getStroke()
         };
         // ecrasement à partir des propriétés renseignées
-        if (this.options.styles.hasOwnProperty("pointer") && this.options.styles.pointer instanceof ol.style.Image) {
+        if (this.options.styles.hasOwnProperty("pointer") && this.options.styles.pointer instanceof Image) {
             startStyleOpts.image = this.options.styles.pointer;
         }
-        if (this.options.styles.hasOwnProperty("start") && this.options.styles.start instanceof ol.style.Style) {
+        if (this.options.styles.hasOwnProperty("start") && this.options.styles.start instanceof Style) {
             if (this.options.styles.start.getFill() != null) {
                 startStyleOpts.fill = this.options.styles.start.getFill();
             }
@@ -374,7 +397,7 @@ var Measures = {
             }
         }
 
-        this.options.styles.start = new ol.style.Style(startStyleOpts);
+        this.options.styles.start = new Style(startStyleOpts);
 
         // style de fin
         logger.trace("style finish", this.options.styles.finish);
@@ -384,7 +407,7 @@ var Measures = {
             stroke : Measures.DEFAULT_DRAW_FINISH_STYLE.getStroke()
         };
         // ecrasement à partir des propriétés renseignées
-        if (this.options.styles.hasOwnProperty("finish") && this.options.styles.finish instanceof ol.style.Style) {
+        if (this.options.styles.hasOwnProperty("finish") && this.options.styles.finish instanceof Style) {
             if (this.options.styles.finish.getFill() != null) {
                 finishStyleOpts.fill = this.options.styles.finish.getFill();
             }
@@ -393,7 +416,7 @@ var Measures = {
             }
         }
 
-        this.options.styles.finish = new ol.style.Style(finishStyleOpts);
+        this.options.styles.finish = new Style(finishStyleOpts);
     },
 
     /**
@@ -406,7 +429,7 @@ var Measures = {
 
         // Creates and adds the interaction
         var self = this;
-        this.measureDraw = new ol.interaction.Draw({
+        this.measureDraw = new DrawInteraction({
             source : this.measureSource,
             // condition : permet de gerer la suppression des derniers points saisis
             condition : function (event) {
@@ -431,13 +454,13 @@ var Measures = {
         this.createMeasureTooltip(map);
 
         // Event start measuring
-        this.measureDraw.on("drawstart", function (evt) {
+        this.measureDraw.on("drawstart", (evt) => {
             // set sketch
             self.sketch = evt.feature;
-        }, this);
+        });
 
         // Event end measuring
-        this.measureDraw.on("drawend", function () {
+        this.measureDraw.on("drawend", () => {
             // FIXME MaJ de la tooltip en mode mobile !
             if (self.sketch) {
                 var output;
@@ -463,7 +486,7 @@ var Measures = {
             // unset tooltip so that a new one can be created
             self.measureTooltipElement = null;
             self.createMeasureTooltip(map);
-        }, this);
+        });
     },
 
     /**
@@ -472,9 +495,9 @@ var Measures = {
     initMeasureInteraction : function () {
         var map = this.getMap();
 
-        this.measureSource = new ol.source.Vector();
+        this.measureSource = new VectorSource();
 
-        this.measureVector = new ol.layer.Vector({
+        this.measureVector = new VectorLayer({
             source : this.measureSource,
             style : this.options.styles.finish || Measures.DEFAULT_DRAW_FINISH_STYLE
         });
@@ -486,7 +509,7 @@ var Measures = {
 
         // Si un layer switcher est présent dans la carte, on lui affecte des informations pour cette couche
         map.getControls().forEach(
-            function (control) {
+            (control) => {
                 if (control instanceof LayerSwitcher) {
                     // un layer switcher est présent dans la carte
                     var layerId = this.measureVector.gpLayerId;
@@ -500,8 +523,7 @@ var Measures = {
                         );
                     }
                 }
-            },
-            this
+            }
         );
     }
 };

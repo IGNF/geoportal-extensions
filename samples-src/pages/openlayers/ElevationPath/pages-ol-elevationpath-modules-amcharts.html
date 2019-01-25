@@ -1,7 +1,7 @@
-{{#extend "ol-sample-amd-layout"}}
+{{#extend "ol-sample-modules-layout"}}
 
 {{#content "vendor"}}
-        <script src="{{ resources }}/vendor/d3.v3.min.js"></script>
+        <script src="{{ resources }}/vendor/amCharts-min.js"></script>
 {{/content}}
 
 {{#content "head"}}
@@ -18,7 +18,7 @@
 {{/content}}
 
 {{#content "body"}}
-            <h2>profil altimetrique, en mode AMD</h2>
+            <h2>profil altimetrique avec AmCharts</h2>
             <!-- map -->
             <div id="map">
             </div>
@@ -26,16 +26,6 @@
 
 {{#content "js"}}
             <script type="text/javascript">
-            requirejs(
-              [
-                "ol",
-                "Gp"
-              ],
-              function (
-                ol,
-                Gp
-              ) {
-
                 var map;
 
                 var createMap = function () {
@@ -57,15 +47,11 @@
                   });
 
                   var elevation = new ol.control.ElevationPath({
-                    displayProfileOptions : {
-                      apply : ol.control.ElevationPath.DISPLAY_PROFILE_LIB_D3,
-                      target : null, // par defaut
-                      meanSlope : true,
-                      greaterSlope : true,
-                      ascendingElevation : true,
-                      descendingElevation : true,
-                      currentSlope : true // par defaut
-                    }
+                      target : map.getTargetElement(),
+                      displayProfileOptions : {
+                        apply : ol.control.ElevationPath.DISPLAY_PROFILE_LIB_AMCHARTS,
+                        target : null, // par defaut
+                      }
                   });
                   map.addControl(elevation);
                 };
@@ -77,8 +63,6 @@
                   timeOut : 20000,
                   onSuccess : createMap
                 });
-
-              });
            </script>
 {{/content}}
 

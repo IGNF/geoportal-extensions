@@ -1,7 +1,11 @@
 /* globals self */
-import ol from "ol";
 import Gp from "gp";
+// import OpenLayers
+import {inherits as olInherits} from "ol/util";
+import WMTSTileGrid from "ol/tilegrid/WMTS";
+// import local with ol dependencies
 import WMTSExtended from "../Sources/WMTS";
+// import local
 import Utils from "../../Common/Utils";
 import Config from "../../Common/Utils/Config";
 import LayerUtils from "../../Common/Utils/LayerUtils";
@@ -80,7 +84,7 @@ function SourceWMTS (options) {
             maxZoom : LayerUtils.getZoomLevelFromScaleDenominator(wmtsParams.minScale),
             layer : options.layer,
             matrixSet : wmtsParams.TMSLink,
-            tileGrid : new ol.tilegrid.WMTS({
+            tileGrid : new WMTSTileGrid({
                 resolutions : wmtsParams.nativeResolutions,
                 matrixIds : wmtsParams.matrixIds,
                 origin : [wmtsParams.matrixOrigin.x, wmtsParams.matrixOrigin.y]
@@ -116,7 +120,7 @@ function SourceWMTS (options) {
 }
 
 // Inherits from ol.source.WMTS
-ol.inherits(SourceWMTS, WMTSExtended);
+olInherits(SourceWMTS, WMTSExtended);
 
 /*
  * @lends module:SourceWMTS
@@ -129,3 +133,8 @@ SourceWMTS.prototype = Object.create(WMTSExtended.prototype, {});
 SourceWMTS.prototype.constructor = SourceWMTS;
 
 export default SourceWMTS;
+
+// Expose SourceWMTS as ol.source.GeoportalWMTS. (for a build bundle)
+if (window.ol && window.ol.source) {
+    window.ol.source.GeoportalWMTS = SourceWMTS;
+}

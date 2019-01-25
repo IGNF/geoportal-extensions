@@ -1,6 +1,9 @@
 /* globals self */
-import ol from "ol";
 import Gp from "gp";
+// import OpenLayers
+import {inherits as olInherits} from "ol/util";
+import TileWMSSource from "ol/source/TileWMS";
+// import local
 import Utils from "../../Common/Utils";
 import Config from "../../Common/Utils/Config";
 import Logger from "../../Common/Utils/LoggerByDefault";
@@ -83,7 +86,7 @@ function SourceWMS (options) {
         Utils.mergeParams(wmsSourceOptions, options.olParams);
 
         // returns a WMS object, that inherits from ol.source.TileWMS.
-        ol.source.TileWMS.call(this, wmsSourceOptions);
+        TileWMSSource.call(this, wmsSourceOptions);
 
         // save originators (to be updated by Originators control)
         this._originators = wmsParams.originators;
@@ -97,17 +100,17 @@ function SourceWMS (options) {
     } else {
         // If layer is not in Gp.Config
         logger.log("[source WMS] ERROR : " + options.layer + " cannot be found in Geoportal Configuration. Make sure that this resource is included in your contract key.");
-        return new ol.source.TileWMS({});
+        return new TileWMSSource({});
     }
 }
 
 // Inherits from ol.source.TileWMS
-ol.inherits(SourceWMS, ol.source.TileWMS);
+olInherits(SourceWMS, TileWMSSource);
 
 /*
  * @lends module:SourceWMS
  */
-SourceWMS.prototype = Object.create(ol.source.TileWMS.prototype, {});
+SourceWMS.prototype = Object.create(TileWMSSource.prototype, {});
 
 /*
  * Constructor (alias)
@@ -115,3 +118,8 @@ SourceWMS.prototype = Object.create(ol.source.TileWMS.prototype, {});
 SourceWMS.prototype.constructor = SourceWMS;
 
 export default SourceWMS;
+
+// Expose SourceWMS as ol.source.GeoportalWMTS. (for a build bundle)
+if (window.ol && window.ol.source) {
+    window.ol.source.GeoportalWMS = SourceWMS;
+}

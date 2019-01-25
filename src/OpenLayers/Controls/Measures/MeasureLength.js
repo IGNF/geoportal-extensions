@@ -1,10 +1,24 @@
-import ol from "ol";
+// import CSS
+import "../../../../res/Common/GPgeneralWidget.css";
+import "../../../../res/Common/GPwaiting.css";
+import "../../../../res/Common/GPmeasureLength.css";
+import "../../../../res/Common/GPmeasureToolTip.css";
+import "../../../../res/OpenLayers/GPgeneralWidgetOpenLayers.css";
+import "../../../../res/OpenLayers/Controls/Measures/GPmeasureLengthOpenLayers.css";
+// import OpenLayers
+import {inherits as olInherits} from "ol/util";
+import Control from "ol/control/Control";
+import { getDistance as olGetDistanceSphere } from "ol/sphere";
+import { transform as olTransformProj } from "ol/proj";
+// import local
 import Logger from "../../../Common/Utils/LoggerByDefault";
 import Utils from "../../../Common/Utils";
+import ID from "../../../Common/Utils/SelectorID";
+// DOM
+import MeasureLengthDOM from "../../../Common/Controls/MeasureLengthDOM";
+// import local with ol dependencies
 import MeasureToolBox from "../MeasureToolBox";
 import Measures from "./Measures";
-import MeasureLengthDOM from "../../../Common/Controls/MeasureLengthDOM";
-import ID from "../../../Common/Utils/SelectorID";
 
 // Derived from OpenLayers measure example
 // http://openlayers.org/en/latest/examples/measure.html
@@ -59,7 +73,7 @@ function MeasureLength (options) {
     var container = (options.element) ? options.element : this._initializeContainer();
 
     // heritage
-    ol.control.Control.call(this, {
+    Control.call(this, {
         element : container,
         target : options.target,
         render : options.render
@@ -67,12 +81,12 @@ function MeasureLength (options) {
 }
 
 // heritage avec ol.control.Control
-ol.inherits(MeasureLength, ol.control.Control);
+olInherits(MeasureLength, Control);
 
 /**
  * @lends module:MeasureLength
  */
-MeasureLength.prototype = Object.create(ol.control.Control.prototype, {});
+MeasureLength.prototype = Object.create(Control.prototype, {});
 
 // on récupère les mixins de la classe "MeasureLengthDOM" ainsi que celles
 // de "Measures".
@@ -132,8 +146,22 @@ MeasureLength.prototype.setMap = function (map) {
         map : (map) ? map.getTargetElement().id : null
     });
 
+    // contexte d'execution
+    var context = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : null;
+    if (context) {
+        // Pour info
+        // les objets de mesures ont du code partagé
+        // (afin de gerer les interactions entre eux).
+        // Dans un mode "modules", on partage cet objet (this.tools) via le contexte
+        // d'execution (ex. avec window)
+        if (!context.gpShareMeasures) {
+            context.gpShareMeasures = {};
+        }
+        context.gpShareMeasures[className] = this.tools[className];
+    }
+
     // on appelle la méthode setMap originale d'OpenLayers
-    ol.control.Control.prototype.setMap.call(this, map);
+    Control.prototype.setMap.call(this, map);
 };
 
 // ################################################################### //
@@ -202,8 +230,8 @@ MeasureLength.prototype.addMeasureEvents = function () {
 
     var map = this.getMap();
 
-    map.on("singleclick", this.onPointerMoveHandler, this);
-    map.on("pointermove", this.onPointerMoveHandler, this);
+    map.on("singleclick", (e) => this.onPointerMoveHandler(e));
+    map.on("pointermove", (e) => this.onPointerMoveHandler(e));
 };
 
 /**
@@ -216,8 +244,8 @@ MeasureLength.prototype.removeMeasureEvents = function () {
 
     var map = this.getMap();
 
-    map.un("singleclick", this.onPointerMoveHandler, this);
-    map.un("pointermove", this.onPointerMoveHandler, this);
+    map.un("singleclick", (e) => this.onPointerMoveHandle(e));
+    map.un("pointermove", (e) => this.onPointerMoveHandler(e));
 };
 
 /**
@@ -234,14 +262,13 @@ MeasureLength.prototype.format = function (line) {
 
     var measure;
     if (this.options.geodesic) {
-        var wgs84Sphere = new ol.Sphere(6378137);
         var coordinates = line.getCoordinates();
         measure = 0;
         var sourceProj = map.getView().getProjection();
         for (var i = 0, ii = coordinates.length - 1; i < ii; ++i) {
-            var c1 = ol.proj.transform(coordinates[i], sourceProj, "EPSG:4326");
-            var c2 = ol.proj.transform(coordinates[i + 1], sourceProj, "EPSG:4326");
-            measure += wgs84Sphere.haversineDistance(c1, c2);
+            var c1 = olTransformProj(coordinates[i], sourceProj, "EPSG:4326");
+            var c2 = olTransformProj(coordinates[i + 1], sourceProj, "EPSG:4326");
+            measure += olGetDistanceSphere(c1, c2);
         }
     } else {
         measure = Math.round(line.getLength() * 100) / 100;
@@ -275,3 +302,8 @@ MeasureLength.prototype.onShowMeasureLengthClick = function (e) {
 };
 
 export default MeasureLength;
+
+// Expose MeasureLength as ol.control.MeasureLength (for a build bundle)
+if (window.ol && window.ol.control) {
+    window.ol.control.MeasureLength = MeasureLength;
+}

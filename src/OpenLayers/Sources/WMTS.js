@@ -1,5 +1,14 @@
-import ol from "ol";
+// import OpenLayers
+import { inherits as olInherits } from "ol/util";
+import WMTSSource from "ol/source/WMTS";
+import {
+    createEmpty as olCreateEmpty,
+    getWidth as olGetWidth,
+    intersects as olIntersects
+} from "ol/extent";
+// import geoportal library access
 import Gp from "gp";
+// import local
 import Utils from "../../Common/Utils";
 
 /**
@@ -17,18 +26,18 @@ function WMTS (options) {
     }
 
     // call constructor
-    ol.source.WMTS.call(this,
+    WMTSSource.call(this,
         options
     );
 }
 
 // Inherits
-ol.inherits(WMTS, ol.source.WMTS);
+olInherits(WMTS, WMTSSource);
 
 /*
  * @lends module:KML
  */
-WMTS.prototype = Object.create(ol.source.WMTS.prototype, {});
+WMTS.prototype = Object.create(WMTSSource.prototype, {});
 
 /**
  * Constructor (alias)
@@ -55,7 +64,7 @@ WMTS.prototype.getGetFeatureInfoUrl = function (coordinate, resolution, projecti
     // this code is duplicated from createFromWMTSTemplate function
     var getTransformedTileCoord = function (tileCoord, tileGrid, projection) {
         var tmpTileCoord = [0, 0, 0]; /* Note : [z(zoomLevel),x,y] */
-        var tmpExtent = ol.extent.createEmpty();
+        var tmpExtent = olCreateEmpty();
         var x = tileCoord[1];
         var y = -tileCoord[2] - 1;
         var tileExtent = tileGrid.getTileCoordExtent(tileCoord);
@@ -63,14 +72,14 @@ WMTS.prototype.getGetFeatureInfoUrl = function (coordinate, resolution, projecti
         var extent = projectionExtent;
 
         if (extent != null && projection.isGlobal() && extent[0] === projectionExtent[0] && extent[2] === projectionExtent[2]) {
-            var numCols = Math.ceil(ol.extent.getWidth(extent) / ol.extent.getWidth(tileExtent));
+            var numCols = Math.ceil(olGetWidth(extent) / olGetWidth(tileExtent));
             x = x % numCols;
             tmpTileCoord[0] = tileCoord[0];
             tmpTileCoord[1] = x;
             tmpTileCoord[2] = tileCoord[2];
             tileExtent = tileGrid.getTileCoordExtent(tmpTileCoord, tmpExtent);
         }
-        if (!ol.extent.intersects(tileExtent, extent) /* || ol.extent.touches(tileExtent, extent) */) {
+        if (!olIntersects(tileExtent, extent) /* || ol.extent.touches(tileExtent, extent) */) {
             return null;
         }
         return [tileCoord[0], x, y];
@@ -119,3 +128,8 @@ WMTS.prototype.getGetFeatureInfoUrl = function (coordinate, resolution, projecti
 };
 
 export default WMTS;
+
+// Expose WMTS as ol.source.WMTSExtended. (for a build bundle)
+if (window.ol && window.ol.source) {
+    window.ol.source.WMTSExtended = WMTS;
+}

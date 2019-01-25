@@ -1,0 +1,150 @@
+{{#extend "ol-sample-modules-layout"}}
+
+{{#content "head"}}
+        <title>Sample openlayers LayerSwitcher</title>
+{{/content}}
+
+{{#content "style"}}
+        <style>
+            div#map {
+                width: 100%;
+                height: 500px;
+            }
+        </style>
+{{/content}}
+
+{{#content "body"}}
+            <h2>Ajout du gestionnaire de couches avec un formulaire de suppression de couches</h2>
+            <!-- map -->
+            <div id="map">
+            </div>
+            <button type="button" id="removeMapsLayer">Supprimer la couche carte</button>
+            <br>
+            <button type="button" id="removeOSMLayer">Supprimer la couche OSM</button>
+            <button type="button" id="modifyVisibilityOSMLayer">Visibilité sur la couche OSM</button>
+            <button type="button" id="modifyOpacityOSMLayer">Opacité sur la couche OSM</button>
+            <button type="button" id="modifyIndexOSMLayerMin">"Down" (-) de la couche OSM</button>
+            <button type="button" id="modifyIndexOSMLayerMax">"Up" (+) de la couche OSM</button>
+            <br>
+            <button type="button" id="removeLastLayer">Supprimer la dernière couche</button>
+
+{{/content}}
+
+{{#content "js"}}
+            <script type="text/javascript">
+                var map;
+                var layerSwitcher;
+                var removeMapsLayer, removeOSMLayer;
+                var osm, maps;
+
+                var createMap = function() {
+                    // on cache l'image de chargement du Géoportail.
+                    document.getElementById('map').style.backgroundImage = 'none';
+
+                    maps = new ol.layer.Tile({
+                        source : new ol.source.GeoportalWMTS({
+                            layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+                        })
+                    });
+
+                    osm = new ol.layer.Tile({
+                        source: new ol.source.OSM(),
+                        // zIndex : 4,
+                        opacity: 0.5
+                    });
+
+					// Création de la map
+                    map = new ol.Map({
+                        target : "map",
+                        view : new ol.View({
+                            center : [288074.8449901076, 6247982.515792289],
+                            zoom : 6
+                        }),
+                        layers : [
+                            new ol.layer.Tile({
+                                source : new ol.source.GeoportalWMTS({
+                                    layer: "ORTHOIMAGERY.ORTHOPHOTOS"
+                                }),
+                                opacity : 0.8
+                            }),
+                            osm,
+                            maps
+                        ]
+                    });
+
+					// Appel du LayerSwitcher
+                    layerSwitcher = new ol.control.LayerSwitcher({
+                        layers : [
+                            {
+                                layer : osm,
+                                config : {
+                                    title : "OSM",
+                                    description : "description..."
+                                }
+                            },
+                            {
+                                layer : maps,
+                                config : {
+                                    title : "Carte",
+                                    description : "description..."
+                                }
+                            }
+                    ]
+                    });
+
+					// Ajout du LayerSwitcher à la carte
+                    map.addControl(layerSwitcher);
+                };
+
+                Gp.Services.getConfig({
+                    serverUrl : "{{ resources }}/AutoConf.js",
+                    callbackSuffix : "",
+                    // apiKey: "jhyvi0fgmnuxvfv0zjzorvdn",
+                    timeOut : 20000,
+                    onSuccess : createMap
+                });
+                
+                removeLastLayer = function(e) {
+                    var layers = map.getLayers();
+                    var nblayers = layers.getLength();
+                    if (nblayers) {
+                        console.log("retrait de la couche ", layers.item(nblayers - 1));
+                        map.getLayers().removeAt(nblayers - 1);
+                    }
+                };
+                removeMapsLayer = function () {
+                    map.removeLayer(maps);
+                };
+                removeOSMLayer = function () {
+                    map.removeLayer(osm);
+                };
+                modifyVisibilityOSMLayer = function () {
+                    var visibility = osm.getVisible();
+                    osm.setVisible(!visibility);
+                };
+                modifyOpacityOSMLayer = function () {
+                    var opacity = (osm.getOpacity() === 1.0) ? 0.5 : 1.0;
+                    osm.setOpacity(opacity);
+                };
+                modifyIndexOSMLayerMin = function () {
+                    var index = osm.getZIndex();
+                    if (index === 0) {
+                        return;
+                    }
+                    osm.setZIndex(--index);
+                };
+                modifyIndexOSMLayerMax = function () {
+                    var index = osm.getZIndex();
+                    osm.setZIndex(++index);
+                };
+                document.getElementById("removeMapsLayer").onclick = removeMapsLayer;
+                document.getElementById("removeOSMLayer").onclick = removeOSMLayer;
+                document.getElementById("removeLastLayer").onclick = removeLastLayer;
+                document.getElementById("modifyVisibilityOSMLayer").onclick = modifyVisibilityOSMLayer;
+                document.getElementById("modifyOpacityOSMLayer").onclick = modifyOpacityOSMLayer;
+                document.getElementById("modifyIndexOSMLayerMin").onclick = modifyIndexOSMLayerMin;
+                document.getElementById("modifyIndexOSMLayerMax").onclick = modifyIndexOSMLayerMax;
+           </script>
+{{/content}}
+
+{{/extend}}

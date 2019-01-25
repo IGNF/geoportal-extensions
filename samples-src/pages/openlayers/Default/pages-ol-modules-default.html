@@ -1,4 +1,4 @@
-{{#extend "ol-sample-bundle-layout"}}
+{{#extend "ol-sample-modules-layout"}}
 
 {{#content "head"}}
         <title>Sample openlayers</title>
@@ -23,7 +23,7 @@
 {{#content "js"}}
             <script type="text/javascript">
 
-              window.onload = function () {
+              var createMap = function () {
                 // on cache l'image de chargement du Géoportail.
                 document.getElementById("map").style.backgroundImage = "none";
 
@@ -49,8 +49,8 @@
                 map.addControl(layerImport);
                 var layerSwitcher = new ol.control.LayerSwitcher();
                 map.addControl(layerSwitcher);
-                var mp = new ol.control.GeoportalMousePosition();
-                map.addControl(mp);
+                // var mp = new ol.control.GeoportalMousePosition();
+                // map.addControl(mp);
                 var route = new ol.control.Route();
                 map.addControl(route);
                 var reverse = new ol.control.ReverseGeocode({});
@@ -72,6 +72,14 @@
                 var attributions = new ol.control.GeoportalAttribution();
                 map.addControl(attributions);
               };
+
+              Gp.Services.getConfig({
+                  serverUrl : "{{ resources }}/AutoConf.js",
+                  callbackSuffix : "",
+                  // apiKey: "jhyvi0fgmnuxvfv0zjzorvdn",
+                  timeOut : 20000,
+                  onSuccess : createMap
+              });
 
             </script>
 {{/content}}

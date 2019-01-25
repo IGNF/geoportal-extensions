@@ -1,12 +1,32 @@
-import ol from "ol";
+// import CSS
+import "../../../res/Common/GPgeneralWidget.css";
+import "../../../res/Common/GPwaiting.css";
+import "../../../res/Common/GPisochron.css";
+import "../../../res/OpenLayers/GPgeneralWidgetOpenLayers.css";
+import "../../../res/OpenLayers/Controls/Isochrone/GPisochronOpenLayers.css";
+// import OpenLayers
+import {inherits as olInherits} from "ol/util";
+import Control from "ol/control/Control";
+import { unByKey as olObservableUnByKey } from "ol/Observable";
+import VectorLayer from "ol/layer/Vector";
+import VectorSource from "ol/source/Vector";
+import GeoJSON from "ol/format/GeoJSON";
+import {
+    Fill,
+    Style
+} from "ol/style";
+// import geoportal library access
 import Gp from "gp";
-import Logger from "../../Common/Utils/LoggerByDefault";
+// import local
 import Utils from "../../Common/Utils";
+import Logger from "../../Common/Utils/LoggerByDefault";
 import RightManagement from "../../Common/Utils/CheckRightManagement";
 import SelectorID from "../../Common/Utils/SelectorID";
-import LocationSelector from "./LocationSelector";
-import LayerSwitcher from "./LayerSwitcher";
 import Markers from "./Utils/Markers";
+// import local with ol dependencies
+import LayerSwitcher from "./LayerSwitcher";
+import LocationSelector from "./LocationSelector";
+// DOM
 import IsoDOM from "../../Common/Controls/IsoDOM";
 
 var logger = Logger.getLogger("isocurve");
@@ -76,7 +96,7 @@ function Isocurve (options) {
     }
 
     // call ol.control.Control constructor
-    ol.control.Control.call(this, {
+    Control.call(this, {
         element : this._containerElement || this._container,
         target : options.target,
         render : options.render
@@ -84,12 +104,12 @@ function Isocurve (options) {
 };
 
 // Inherits from ol.control.Control
-ol.inherits(Isocurve, ol.control.Control);
+olInherits(Isocurve, Control);
 
 /**
  * @lends module:Isocurve
  */
-Isocurve.prototype = Object.create(ol.control.Control.prototype, {});
+Isocurve.prototype = Object.create(Control.prototype, {});
 
 // on récupère les méthodes de la classe commune IsoDOM
 Utils.assign(Isocurve.prototype, IsoDOM);
@@ -156,7 +176,7 @@ Isocurve.prototype.setMap = function (map) {
     }
 
     // on appelle la méthode setMap originale d'OpenLayers
-    ol.control.Control.prototype.setMap.call(this, map);
+    Control.prototype.setMap.call(this, map);
 };
 
 // ################################################################### //
@@ -238,8 +258,8 @@ Isocurve.prototype.initialize = function (options) {
     this._timer = null;
 
     // styles pour les sélections des features
-    this._defaultFeatureStyle = new ol.style.Style({
-        fill : new ol.style.Fill({
+    this._defaultFeatureStyle = new Style({
+        fill : new Fill({
             color : "rgba(0, 183, 152, 0.7)"
         })
     });
@@ -258,6 +278,9 @@ Isocurve.prototype.initialize = function (options) {
 
     // gestion des droits sur les ressources/services
     this._checkRightsManagement();
+
+    // listener key for event click on map
+    this.listenerKey = null;
 };
 
 /**
@@ -639,12 +662,10 @@ Isocurve.prototype._initContainer = function (map) {
     panel.appendChild(waiting);
 
     container.appendChild(panel);
-    var context = this;
+
     // hide autocomplete suggested locations on container click
     if (container.addEventListener) {
-        container.addEventListener("click", function (e) {
-            context._hideIsoSuggestedLocations(e);
-        });
+        container.addEventListener("click", (e) => this._hideIsoSuggestedLocations(e));
     }
 
     return container;
@@ -681,9 +702,9 @@ Isocurve.prototype._createIsoPanelFormPointElement = function (map) {
             // au click sur l'input pour pointer sur la carte: on minimise le formulaire
             self._formContainer.className = "GPisochronFormMini";
             // et au clic sur la carte, on réaffichera le formulaire "normal"
-            map.on(
+            this.listenerKey = map.on(
                 "click",
-                function () {
+                () => {
                     self._formContainer.className = "";
                 }
             );
@@ -691,12 +712,8 @@ Isocurve.prototype._createIsoPanelFormPointElement = function (map) {
             // si on déselectionne le pointer, on rétablit le formulaire en mode normal
             self._formContainer.className = "";
             // et on enlève l'écouteur d'évènement sur la carte
-            map.un(
-                "click",
-                function () {
-                    self._formContainer.className = "";
-                }
-            );
+            // map.un("click", () => { self._formContainer.className = ""; });
+            olObservableUnByKey(this.listenerKey);
         }
     };
     /** click sur le label */
@@ -706,7 +723,7 @@ Isocurve.prototype._createIsoPanelFormPointElement = function (map) {
         // on désactive l'écouteur d'événements sur la carte (pour ne pas placer un marker au clic)
         map.un(
             "click",
-            function () {
+            () => {
                 self._formContainer.className = "";
             }
         );
@@ -1043,7 +1060,7 @@ Isocurve.prototype._drawIsoResults = function (results) {
         },
         geometry : results.geometry
     };
-    var geojsonformat = new ol.format.GeoJSON({
+    var geojsonformat = new GeoJSON({
         defaultDataProjection : "EPSG:4326"
     });
     var mapProj = map.getView().getProjection().getCode();
@@ -1055,8 +1072,8 @@ Isocurve.prototype._drawIsoResults = function (results) {
     );
 
     // 2. ajout de la géométrie comme nouvelle couche vecteur à la carte
-    this._geojsonLayer = new ol.layer.Vector({
-        source : new ol.source.Vector({
+    this._geojsonLayer = new VectorLayer({
+        source : new VectorSource({
             features : features
         }),
         style : this._defaultFeatureStyle,
@@ -1083,7 +1100,7 @@ Isocurve.prototype._drawIsoResults = function (results) {
     // 5. Si un layer switcher est présent dans la carte, on lui affecte des informations pour cette couche
     var method = (this._currentComputation === "time") ? "Isochrone" : "Isodistance";
     map.getControls().forEach(
-        function (control) {
+        (control) => {
             if (control instanceof LayerSwitcher) {
                 // un layer switcher est présent dans la carte
                 var layerId = this._geojsonLayer.gpLayerId;
@@ -1097,8 +1114,7 @@ Isocurve.prototype._drawIsoResults = function (results) {
                     );
                 }
             }
-        },
-        this
+        }
     );
 };
 
@@ -1316,3 +1332,8 @@ Isocurve.prototype._hideWaitingContainer = function () {
 };
 
 export default Isocurve;
+
+// Expose Isocurve as ol.control.Isocurve (for a build bundle)
+if (window.ol && window.ol.control) {
+    window.ol.control.Isocurve = Isocurve;
+}

@@ -1,6 +1,11 @@
-import ol from "ol";
+// import openlayers
+import { inherits as olInherits } from "ol/util";
+import { get as olGetProj } from "ol/proj";
+import TileLayer from "ol/layer/Tile";
+// import local
 import Utils from "../../Common/Utils";
 import Config from "../../Common/Utils/Config";
+// import local with ol dependencies
 import SourceWMTS from "./SourceWMTS";
 
 /**
@@ -83,7 +88,7 @@ function LayerWMTS (options) {
             var p;
             // on récupère tout d'abord la projection
             if (typeof globalConstraints.projection === "string") {
-                p = ol.proj.get(globalConstraints.projection);
+                p = olGetProj(globalConstraints.projection);
             }
             // puis, selon l'unité de la projection, on calcule la résolution correspondante
             if (p && p.getUnits()) {
@@ -110,16 +115,16 @@ function LayerWMTS (options) {
     Utils.mergeParams(layerTileOptions, options.olParams);
 
     // création d'une ol.layer.Tile avec les options récupérées ci-dessus.
-    ol.layer.Tile.call(this, layerTileOptions);
+    TileLayer.call(this, layerTileOptions);
 }
 
 // Inherits from ol.layer.Tile
-ol.inherits(LayerWMTS, ol.layer.Tile);
+olInherits(LayerWMTS, TileLayer);
 
 /*
  * @lends module:LayerWMTS
  */
-LayerWMTS.prototype = Object.create(ol.layer.Tile.prototype, {});
+LayerWMTS.prototype = Object.create(TileLayer.prototype, {});
 
 /*
  * Constructor (alias)
@@ -127,3 +132,8 @@ LayerWMTS.prototype = Object.create(ol.layer.Tile.prototype, {});
 LayerWMTS.prototype.constructor = LayerWMTS;
 
 export default LayerWMTS;
+
+// Expose LayerWMTS as ol.layerGeoportalWMTS. (for a build bundle)
+if (window.ol && window.ol.layer) {
+    window.ol.layer.GeoportalWMTS = LayerWMTS;
+}

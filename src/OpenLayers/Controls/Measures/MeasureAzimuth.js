@@ -1,10 +1,24 @@
-import ol from "ol";
+// import CSS
+import "../../../../res/Common/GPgeneralWidget.css";
+import "../../../../res/Common/GPwaiting.css";
+import "../../../../res/Common/GPmeasureAzimuth.css";
+import "../../../../res/Common/GPmeasureToolTip.css";
+import "../../../../res/OpenLayers/GPgeneralWidgetOpenLayers.css";
+import "../../../../res/OpenLayers/Controls/Measures/GPmeasureAzimuthOpenLayers.css";
+// import OpenLayers
+import {inherits as olInherits} from "ol/util";
+import Control from "ol/control/Control";
+import { getDistance as olGetDistanceSphere } from "ol/sphere";
+import { transform as olTransformProj } from "ol/proj";
+// import local
 import Logger from "../../../Common/Utils/LoggerByDefault";
 import Utils from "../../../Common/Utils";
+import ID from "../../../Common/Utils/SelectorID";
+// DOM
+import MeasureAzimuthDOM from "../../../Common/Controls/MeasureAzimuthDOM";
+// import local with ol dependencies
 import MeasureToolBox from "../MeasureToolBox";
 import Measures from "./Measures";
-import MeasureAzimuthDOM from "../../../Common/Controls/MeasureAzimuthDOM";
-import ID from "../../../Common/Utils/SelectorID";
 
 // Derived from OpenLayers measure example
 // http://openlayers.org/en/latest/examples/measure.html
@@ -65,7 +79,7 @@ function MeasureAzimuth (options) {
     var container = (options.element) ? options.element : this._initializeContainer();
 
     // heritage
-    ol.control.Control.call(this, {
+    Control.call(this, {
         element : container,
         target : options.target,
         render : options.render
@@ -73,12 +87,12 @@ function MeasureAzimuth (options) {
 }
 
 // heritage avec ol.control.Control
-ol.inherits(MeasureAzimuth, ol.control.Control);
+olInherits(MeasureAzimuth, Control);
 
 /**
  * @lends module:MeasureAzimuth
  */
-MeasureAzimuth.prototype = Object.create(ol.control.Control.prototype, {});
+MeasureAzimuth.prototype = Object.create(Control.prototype, {});
 
 // on récupère les mixins de la classe "MeasureAzimuthDOM" ainsi que celles
 // de "Measures".
@@ -138,8 +152,22 @@ MeasureAzimuth.prototype.setMap = function (map) {
         map : (map) ? map.getTargetElement().id : null
     });
 
+    // contexte d'execution
+    var context = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : null;
+    if (context) {
+        // Pour info
+        // les objets de mesures ont du code partagé
+        // (afin de gerer les interactions entre eux).
+        // Dans un mode "modules", on partage cet objet (this.tools) via le contexte
+        // d'execution (ex. avec window)
+        if (!context.gpShareMeasures) {
+            context.gpShareMeasures = {};
+        }
+        context.gpShareMeasures[className] = this.tools[className];
+    }
+
     // on appelle la méthode setMap originale d'OpenLayers
-    ol.control.Control.prototype.setMap.call(this, map);
+    Control.prototype.setMap.call(this, map);
 };
 
 /**
@@ -226,8 +254,8 @@ MeasureAzimuth.prototype.addMeasureEvents = function () {
 
     var map = this.getMap();
 
-    map.on("singleclick", this.onPointerMoveAzimutHandler, this);
-    map.on("pointermove", this.onPointerMoveAzimutHandler, this);
+    map.on("singleclick", (e) => this.onPointerMoveAzimutHandler(e));
+    map.on("pointermove", (e) => this.onPointerMoveAzimutHandler(e));
 };
 
 /**
@@ -240,8 +268,8 @@ MeasureAzimuth.prototype.removeMeasureEvents = function () {
 
     var map = this.getMap();
 
-    map.un("singleclick", this.onPointerMoveAzimutHandler, this);
-    map.un("pointermove", this.onPointerMoveAzimutHandler, this);
+    map.un("singleclick", (e) => this.onPointerMoveAzimutHandler(e));
+    map.un("pointermove", (e) => this.onPointerMoveAzimutHandler(e));
 };
 
 /**
@@ -258,18 +286,17 @@ MeasureAzimuth.prototype.format = function (line) {
 
     var sourceProj = map.getView().getProjection();
 
-    var c1 = ol.proj.transform(line.getFirstCoordinate(), sourceProj, "EPSG:4326");
-    var c2 = ol.proj.transform(line.getLastCoordinate(), sourceProj, "EPSG:4326");
+    var c1 = olTransformProj(line.getFirstCoordinate(), sourceProj, "EPSG:4326");
+    var c2 = olTransformProj(line.getLastCoordinate(), sourceProj, "EPSG:4326");
 
     if (!this.options.geodesic) {
         // TODO calcul sur une petite distance (>500m) afin de simuler un cap !
-        var wgs84Sphere = new ol.Sphere(6378137);
-        var lengthGeodesic = wgs84Sphere.haversineDistance(c1, c2);
+        var lengthGeodesic = olGetDistanceSphere(c1, c2);
         logger.trace("measure between 2 points with geodesic method", lengthGeodesic);
         if (lengthGeodesic > 500) {
             var fraction = 500.0 / lengthGeodesic;
             logger.trace("%", fraction);
-            c2 = ol.proj.transform(line.getCoordinateAt(fraction), sourceProj, "EPSG:4326");
+            c2 = olTransformProj(line.getCoordinateAt(fraction), sourceProj, "EPSG:4326");
         }
     }
 
@@ -333,3 +360,8 @@ MeasureAzimuth.prototype.onPointerMoveAzimutHandler = function (e) {
 };
 
 export default MeasureAzimuth;
+
+// Expose MeasureAzimuth as ol.control.MeasureAzimuth (for a build bundle)
+if (window.ol && window.ol.control) {
+    window.ol.control.MeasureAzimuth = MeasureAzimuth;
+}

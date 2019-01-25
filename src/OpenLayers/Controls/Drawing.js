@@ -1,9 +1,49 @@
-import ol from "ol";
+// import CSS
+import "../../../res/Common/GPgeneralWidget.css";
+import "../../../res/Common/GPwaiting.css";
+import "../../../res/Common/GPdrawing.css";
+import "../../../res/OpenLayers/GPgeneralWidgetOpenLayers.css";
+import "../../../res/OpenLayers/Controls/Drawing/GPdrawingOpenLayers.css";
+// import OpenLayers
+import { inherits as olInherits } from "ol/util";
+import Control from "ol/control/Control";
+import { unByKey as olObservableUnByKey } from "ol/Observable";
+import Collection from "ol/Collection";
+import Overlay from "ol/Overlay";
+import { transform as olTransformProj } from "ol/proj";
+import VectorSource from "ol/source/Vector";
+import VectorLayer from "ol/layer/Vector";
+import {
+    Fill,
+    Icon,
+    Stroke,
+    Style,
+    Text,
+    Circle
+} from "ol/style";
+import {
+    LineString,
+    Point,
+    Polygon
+} from "ol/geom";
+import {
+    Select as SelectInteraction,
+    Modify as ModifyInteraction,
+    Draw as DrawInteraction
+} from "ol/interaction";
+import {singleClick as eventSingleClick} from "ol/events/condition";
+import {
+    getArea as olGetAreaSphere,
+    getDistance as olGetDistanceSphere
+} from "ol/sphere";
+// import local
 import Logger from "../../Common/Utils/LoggerByDefault";
+import Interactions from "./Utils/Interactions";
 import SelectorID from "../../Common/Utils/SelectorID";
 import Color from "../../Common/Utils/ColorUtils";
-import Interactions from "./Utils/Interactions";
+// DOM
 import DrawingDOM from "../../Common/Controls/DrawingDOM";
+// import local with ol dependencies
 import KMLExtended from "../Formats/KML";
 import LayerSwitcher from "./LayerSwitcher";
 
@@ -82,7 +122,7 @@ function Drawing (options) {
     var container = this._initContainer();
 
     // call ol.control.Control constructor
-    ol.control.Control.call(this, {
+    Control.call(this, {
         element : container,
         target : options.target,
         render : options.render
@@ -90,7 +130,7 @@ function Drawing (options) {
 };
 
 // Inherits from ol.control.Control
-ol.inherits(Drawing, ol.control.Control);
+olInherits(Drawing, Control);
 
 /**
  * Default tools to display for widget
@@ -174,7 +214,7 @@ Drawing.DefaultCursorStyle = {
 /**
  * @lends module:Drawing
  */
-Drawing.prototype = Object.create(ol.control.Control.prototype, {});
+Drawing.prototype = Object.create(Control.prototype, {});
 
 /**
  * Copies all source object members to Drawing prototype
@@ -206,10 +246,10 @@ Drawing.prototype.constructor = Drawing;
  */
 Drawing.prototype.setMap = function (map) {
     // call original setMap method
-    ol.control.Control.prototype.setMap.call(this, map);
+    Control.prototype.setMap.call(this, map);
 
     if (this.getMap() && this.eventKey) {
-        ol.Observable.unByKey(this.eventKey);
+        olObservableUnByKey(this.eventKey);
     }
 
     // nothing else to do if map == null
@@ -229,7 +269,7 @@ Drawing.prototype.setMap = function (map) {
     }
 
     // gestion des suppressions "externes" de la couche de dessin.
-    this.eventKey = this.getMap().getLayers().on("remove", function (evtRm) {
+    this.eventKey = this.getMap().getLayers().on("remove", (evtRm) => {
         if (evtRm.element == this.layer) { // FIXME object comparison
             // found layer removed.
             this.layer = null;
@@ -239,7 +279,7 @@ Drawing.prototype.setMap = function (map) {
                 this.interactionCurrent = null;
             }
         }
-    }, this);
+    });
 };
 
 /**
@@ -249,7 +289,7 @@ Drawing.prototype.setMap = function (map) {
  */
 Drawing.prototype.exportFeatures = function () {
     var result = null;
-    if (ol.control.Control.prototype.getMap.call(this) == null) {
+    if (Control.prototype.getMap.call(this) == null) {
         logger.log("Impossible to export : control isn't attached to any map.");
         return result;
     }
@@ -349,7 +389,7 @@ Drawing.prototype._getsMarkersOptionsFromSrc = function (src) {
  */
 Drawing.prototype._getIconStyleOptions = function (markerElement) {
     var iconOptions = {};
-    Object.keys(markerElement).forEach(function (key) {
+    Object.keys(markerElement).forEach((key) => {
         switch (key) {
             case "src":
             case "size":
@@ -360,7 +400,7 @@ Drawing.prototype._getIconStyleOptions = function (markerElement) {
                 iconOptions[key] = markerElement[key];
                 break;
         }
-    }, this);
+    });
 
     return iconOptions;
 };
@@ -394,20 +434,20 @@ Drawing.prototype._initialize = function (options) {
     if (!this.options.tools) {
         this.options.tools = {};
     }
-    Object.keys(Drawing.DefaultTools).forEach(function (key) {
+    Object.keys(Drawing.DefaultTools).forEach((key) => {
         if (!this.options.tools.hasOwnProperty(key)) {
             this.options.tools[key] = Drawing.DefaultTools[key];
         }
-    }, this);
+    });
     // styles par defaut lors du dessin
     if (!this.options.cursorStyle) {
         this.options.cursorStyle = {};
     }
-    Object.keys(Drawing.DefaultCursorStyle).forEach(function (key) {
+    Object.keys(Drawing.DefaultCursorStyle).forEach((key) => {
         if (!this.options.cursorStyle.hasOwnProperty(key)) {
             this.options.cursorStyle[key] = Drawing.DefaultCursorStyle[key];
         }
-    }, this);
+    });
 
     this.options.collapsed = (options.collapsed !== undefined) ? options.collapsed : true;
     /** {Boolean} specify if Drawing control is collapsed (true) or not (false) */
@@ -497,17 +537,17 @@ Drawing.prototype._initialize = function (options) {
     if (!this.options.labels) {
         this.options.labels = {};
     }
-    Object.keys(Drawing.DefaultLabels).forEach(function (key) {
+    Object.keys(Drawing.DefaultLabels).forEach((key) => {
         if (!this.options.labels.hasOwnProperty(key)) {
             this.options.labels[key] = Drawing.DefaultLabels[key];
         }
-    }, this);
+    });
 
     // applying default styles
     if (!this.options.defaultStyles) {
         this.options.defaultStyles = {};
     }
-    Object.keys(Drawing.DefaultStyles).forEach(function (key) {
+    Object.keys(Drawing.DefaultStyles).forEach((key) => {
         if (!options.defaultStyles.hasOwnProperty(key)) {
             this.options.defaultStyles[key] = Drawing.DefaultStyles[key];
             return;
@@ -528,7 +568,7 @@ Drawing.prototype._initialize = function (options) {
             }
             this.options.defaultStyles[key] = intValue;
         }
-    }, this);
+    });
 
     this.interactionCurrent = null;
     this.interactionSelectEdit = null;
@@ -536,7 +576,7 @@ Drawing.prototype._initialize = function (options) {
     this.stylingOvl = null;
 
     this.layer = null;
-    if (this.options.layer && this.options.layer instanceof ol.layer.Vector) {
+    if (this.options.layer && this.options.layer instanceof VectorLayer) {
         this.layer = this.options.layer;
     }
 
@@ -551,9 +591,9 @@ Drawing.prototype._initialize = function (options) {
  * @private
  */
 Drawing.prototype._createEmptyLayer = function () {
-    var features = new ol.Collection();
-    var layer = new ol.layer.Vector({
-        source : new ol.source.Vector({
+    var features = new Collection();
+    var layer = new VectorLayer({
+        source : new VectorSource({
             features : features
         })
     });
@@ -574,7 +614,7 @@ Drawing.prototype.setLayer = function (vlayer) {
         return;
     }
 
-    if (!(vlayer instanceof ol.layer.Vector)) {
+    if (!(vlayer instanceof VectorLayer)) {
         logger.log("no valid layer given for hosting drawn features.");
         return;
     }
@@ -583,20 +623,19 @@ Drawing.prototype.setLayer = function (vlayer) {
     var layers = this.getMap().getLayers();
     if (layers) {
         var found = false;
-        layers.forEach(function (mapLayer) {
+        layers.forEach((mapLayer) => {
             if (mapLayer == vlayer) { // FIXME object comparison
                 logger.trace("layer already in map. Not adding.");
                 found = true;
             }
-        },
-        this);
+        });
         // si le layer n'est pas sur la carte, on l'ajoute.
         if (!found) {
             this.getMap().addLayer(vlayer);
         }
         // TODO style par defaut du geoportail !
         // application des styles ainsi que ceux par defaut de ol sur le layer
-        vlayer.getSource().getFeatures().forEach(function (feature) {
+        vlayer.getSource().getFeatures().forEach((feature) => {
             var featureStyleFunction = feature.getStyleFunction();
             if (featureStyleFunction) {
                 var styles = featureStyleFunction.call(feature, 0);
@@ -609,7 +648,7 @@ Drawing.prototype.setLayer = function (vlayer) {
 
         // Si un layer switcher est présent dans la carte, on lui affecte des informations pour cette couche
         this.getMap().getControls().forEach(
-            function (control) {
+            (control) => {
                 if (control instanceof LayerSwitcher) {
                     // un layer switcher est présent dans la carte
                     var layerId = this.layer.gpLayerId;
@@ -623,8 +662,7 @@ Drawing.prototype.setLayer = function (vlayer) {
                         );
                     }
                 }
-            },
-            this
+            }
         );
     }
 };
@@ -714,27 +752,27 @@ Drawing.prototype._drawEndFeature = function (feature, geomType) {
 
     switch (geomType) {
         case "Point":
-            style = new ol.style.Style({
-                image : new ol.style.Icon(this._getIconStyleOptions(this.options.markersList[0]))
+            style = new Style({
+                image : new Icon(this._getIconStyleOptions(this.options.markersList[0]))
             });
             break;
         case "LineString":
-            style = new ol.style.Style({
-                stroke : new ol.style.Stroke({
+            style = new Style({
+                stroke : new Stroke({
                     color : this.options.defaultStyles.strokeColor,
                     width : this.options.defaultStyles.strokeWidth
                 })
             });
             break;
         case "Polygon":
-            style = new ol.style.Style({
-                fill : new ol.style.Fill({
+            style = new Style({
+                fill : new Fill({
                     color : Color.hexToRgba(
                         this.options.defaultStyles.polyFillColor,
                         this.options.defaultStyles.polyFillOpacity
                     )
                 }),
-                stroke : new ol.style.Stroke({
+                stroke : new Stroke({
                     color : this.options.defaultStyles.polyStrokeColor,
                     width : this.options.defaultStyles.polyStrokeWidth
                 })
@@ -772,7 +810,7 @@ Drawing.prototype._drawEndFeature = function (feature, geomType) {
         measure : (this.options.tools.measure) ? feature.getProperties().measure : null,
         geomType : geomType
     });
-    popupOvl = new ol.Overlay({
+    popupOvl = new Overlay({
         element : popup,
         // FIXME : autres valeurs.
         positioning : "top-center"
@@ -790,15 +828,15 @@ Drawing.prototype._drawEndFeature = function (feature, geomType) {
 /**
  * Creates Interaction for features removal.
  *
- * @returns {ol.interaction.Select} created interaction.
+ * @returns {SelectInteraction} created interaction.
  * @private
  */
 Drawing.prototype._createRemoveInteraction = function () {
-    var interaction = new ol.interaction.Select({
+    var interaction = new SelectInteraction({
         // features : this.layer.getSource().getFeaturesCollection(),
         layers : [this.layer]
     });
-    interaction.on("select", function (seEv) {
+    interaction.on("select", (seEv) => {
         if (!seEv || !seEv.selected || seEv.selected.length === 0) {
             return;
         }
@@ -807,8 +845,7 @@ Drawing.prototype._createRemoveInteraction = function () {
         this.getMap().removeInteraction(this.interactionCurrent);
         this.interactionCurrent = this._createRemoveInteraction();
         this.getMap().addInteraction(this.interactionCurrent);
-    },
-    this);
+    });
     return interaction;
 };
 
@@ -819,10 +856,10 @@ Drawing.prototype._createRemoveInteraction = function () {
  * @private
  */
 Drawing.prototype._createStylingInteraction = function () {
-    var interaction = new ol.interaction.Select({
+    var interaction = new SelectInteraction({
         layers : [this.layer]
     });
-    interaction.on("select", function (seEv) {
+    interaction.on("select", (seEv) => {
         // suppression de toute popup existante
         if (this.stylingOvl) {
             this.getMap().removeOverlay(this.stylingOvl);
@@ -836,7 +873,7 @@ Drawing.prototype._createStylingInteraction = function () {
         var popupOvl = null;
         var geomType = null;
         var initValues = {};
-        if (seEv.selected[0].getGeometry() instanceof ol.geom.Point) {
+        if (seEv.selected[0].getGeometry() instanceof Point) {
             // on determine si c'est un marker ou un label.
             var _label = seEv.selected[0].getProperties().name;
             if (seEv.selected[0].getStyle().getText() && _label) {
@@ -876,7 +913,7 @@ Drawing.prototype._createStylingInteraction = function () {
                     initValues.markerSrc = this.options.markersList[0].src;
                 }
             }
-        } else if (seEv.selected[0].getGeometry() instanceof ol.geom.LineString) {
+        } else if (seEv.selected[0].getGeometry() instanceof LineString) {
             geomType = "Line";
             if (seEv.selected[0].getStyle() &&
                     seEv.selected[0].getStyle().getStroke()) {
@@ -897,7 +934,7 @@ Drawing.prototype._createStylingInteraction = function () {
             }
             initValues.strokeWidth = initValues.hasOwnProperty("strokeWidth") ? initValues.strokeWidth : this.options.defaultStyles.strokeWidth;
             initValues.strokeColor = initValues.hasOwnProperty("strokeColor") ? initValues.strokeColor : this.options.defaultStyles.strokeColor;
-        } else if (seEv.selected[0].getGeometry() instanceof ol.geom.Polygon) {
+        } else if (seEv.selected[0].getGeometry() instanceof Polygon) {
             geomType = "Polygon";
             if (seEv.selected[0].getStyle() &&
                     seEv.selected[0].getStyle().getStroke()) {
@@ -960,15 +997,15 @@ Drawing.prototype._createStylingInteraction = function () {
                         dtObj.options.defaultStyles.textStrokeColor = strokeColorElem.value;
                         dtObj.options.defaultStyles.textFillColor = fillColorElem.value;
                     } else {
-                        seEv.selected[0].setStyle(new ol.style.Style({
-                            text : new ol.style.Text({
+                        seEv.selected[0].setStyle(new Style({
+                            text : new Text({
                                 font : "16px sans",
                                 textAlign : "left",
                                 text : seEv.selected[0].getStyle().getText().getText(),
-                                fill : new ol.style.Fill({
+                                fill : new Fill({
                                     color : fillColorElem.value
                                 }),
-                                stroke : new ol.style.Stroke({
+                                stroke : new Stroke({
                                     color : strokeColorElem.value,
                                     width : 3
                                 })
@@ -995,8 +1032,8 @@ Drawing.prototype._createStylingInteraction = function () {
                             }
                         }
                     } else {
-                        seEv.selected[0].setStyle(new ol.style.Style({
-                            image : new ol.style.Icon(dtObj._getIconStyleOptions(markerSelected))
+                        seEv.selected[0].setStyle(new Style({
+                            image : new Icon(dtObj._getIconStyleOptions(markerSelected))
                         }));
                     }
                     break;
@@ -1005,8 +1042,8 @@ Drawing.prototype._createStylingInteraction = function () {
                         dtObj.options.defaultStyles.strokeColor = strokeColorElem.value;
                         dtObj.options.defaultStyles.strokeWidth = parseInt(strokeWidthElem.value, 10);
                     } else {
-                        seEv.selected[0].setStyle(new ol.style.Style({
-                            stroke : new ol.style.Stroke({
+                        seEv.selected[0].setStyle(new Style({
+                            stroke : new Stroke({
                                 width : parseInt(strokeWidthElem.value, 10),
                                 color : strokeColorElem.value
                             })
@@ -1021,12 +1058,12 @@ Drawing.prototype._createStylingInteraction = function () {
                         dtObj.options.defaultStyles.polyFillOpacity = opacity;
                         dtObj.options.defaultStyles.polyStrokeWidth = parseInt(strokeWidthElem.value, 10);
                     } else {
-                        seEv.selected[0].setStyle(new ol.style.Style({
-                            stroke : new ol.style.Stroke({
+                        seEv.selected[0].setStyle(new Style({
+                            stroke : new Stroke({
                                 width : parseInt(strokeWidthElem.value, 10),
                                 color : strokeColorElem.value
                             }),
-                            fill : new ol.style.Fill({
+                            fill : new Fill({
                                 // color : fillColorElem.value
                                 color : Color.hexToRgba(fillColorElem.value, opacity)
                             })
@@ -1046,7 +1083,7 @@ Drawing.prototype._createStylingInteraction = function () {
             initValues : initValues,
             applyFunc : applyStyle
         });
-        popupOvl = new ol.Overlay({
+        popupOvl = new Overlay({
             element : popupDiv,
             // FIXME : autres valeurs.
             positioning : "top-center"
@@ -1059,22 +1096,21 @@ Drawing.prototype._createStylingInteraction = function () {
         this.getMap().removeInteraction(this.interactionCurrent);
         this.interactionCurrent = this._createStylingInteraction();
         this.getMap().addInteraction(this.interactionCurrent);
-    },
-    this);
+    });
     return interaction;
 };
 
 /**
  * Creates Interaction for text definition.
  *
- * @returns {ol.interaction.Select} created interaction.
+ * @returns {SelectInteraction} created interaction.
  * @private
  */
 Drawing.prototype._createLabelInteraction = function () {
-    var interaction = new ol.interaction.Select({
+    var interaction = new SelectInteraction({
         layers : [this.layer]
     });
-    interaction.on("select", function (seEv) {
+    interaction.on("select", (seEv) => {
         // suppression de toute popup existante
         if (this.labelOvl) {
             this.getMap().removeOverlay(this.labelOvl);
@@ -1086,7 +1122,7 @@ Drawing.prototype._createLabelInteraction = function () {
         var geomType = null;
         var _textValue = null;
         var _measure = null;
-        if (seEv.selected[0].getGeometry() instanceof ol.geom.Point) {
+        if (seEv.selected[0].getGeometry() instanceof Point) {
             // on determine si c'est un marker ou un label.
             var _label = seEv.selected[0].getProperties().name;
             if (seEv.selected[0].getStyle() &&
@@ -1096,9 +1132,9 @@ Drawing.prototype._createLabelInteraction = function () {
                     seEv.selected[0].getStyle().getImage()) {
                 geomType = "Point";
             }
-        } else if (seEv.selected[0].getGeometry() instanceof ol.geom.LineString) {
+        } else if (seEv.selected[0].getGeometry() instanceof LineString) {
             geomType = "Line";
-        } else if (seEv.selected[0].getGeometry() instanceof ol.geom.Polygon) {
+        } else if (seEv.selected[0].getGeometry() instanceof Polygon) {
             geomType = "Polygon";
         }
         if (!geomType) {
@@ -1153,7 +1189,7 @@ Drawing.prototype._createLabelInteraction = function () {
             measure : (this.options.tools.measure) ? _measure : null,
             geomType : geomType
         });
-        popupOvl = new ol.Overlay({
+        popupOvl = new Overlay({
             element : popupDiv,
             // FIXME : autres valeurs.
             positioning : "top-center"
@@ -1167,8 +1203,7 @@ Drawing.prototype._createLabelInteraction = function () {
         this.getMap().removeInteraction(this.interactionCurrent);
         this.interactionCurrent = this._createLabelInteraction();
         this.getMap().addInteraction(this.interactionCurrent);
-    },
-    this);
+    });
     return interaction;
 };
 
@@ -1185,7 +1220,6 @@ Drawing.prototype._updateMeasure = function (feature, geomType) {
 
     var measure = null;
 
-    var wgs84Sphere = new ol.Sphere(6378137);
     var projection = this.getMap().getView().getProjection();
 
     // arrondi
@@ -1199,7 +1233,7 @@ Drawing.prototype._updateMeasure = function (feature, geomType) {
     switch (type) {
         case "Point":
             var coordinatesPoint = (feature.getGeometry()).getCoordinates();
-            var c = ol.proj.transform(coordinatesPoint, projection, "EPSG:4326");
+            var c = olTransformProj(coordinatesPoint, projection, "EPSG:4326");
             measure = "lon : ";
             measure += __roundDecimal(c[0], 4) + "°";
             measure += " / ";
@@ -1211,9 +1245,9 @@ Drawing.prototype._updateMeasure = function (feature, geomType) {
             var measureLength = 0;
             var coordinatesLine = (feature.getGeometry()).getCoordinates();
             for (var i = 0, ii = coordinatesLine.length - 1; i < ii; ++i) {
-                var c1 = ol.proj.transform(coordinatesLine[i], projection, "EPSG:4326");
-                var c2 = ol.proj.transform(coordinatesLine[i + 1], projection, "EPSG:4326");
-                measureLength += wgs84Sphere.haversineDistance(c1, c2);
+                var c1 = olTransformProj(coordinatesLine[i], projection, "EPSG:4326");
+                var c2 = olTransformProj(coordinatesLine[i + 1], projection, "EPSG:4326");
+                measureLength += olGetDistanceSphere(c1, c2);
             }
             measure = (measureLength > 1000)
                 ? __roundDecimal(measureLength / 1000, 3) + " km"
@@ -1223,7 +1257,7 @@ Drawing.prototype._updateMeasure = function (feature, geomType) {
         case "Polygon":
             var measureArea = 0;
             var coordinatesAera = ((feature.getGeometry()).clone().transform(projection, "EPSG:4326")).getLinearRing(0).getCoordinates();
-            measureArea = Math.abs(wgs84Sphere.geodesicArea(coordinatesAera));
+            measureArea = Math.abs(olGetAreaSphere(new Polygon([coordinatesAera])));
 
             measure = (measureArea > 1000000)
                 ? __roundDecimal(measureArea / 1000000, 3) + " km^2"
@@ -1277,10 +1311,10 @@ Drawing.prototype._handleToolClick = function (clickEvent, toolId, context) {
     switch (toolId) {
         case this._addUID("drawing-tool-point"):
             if (context.dtOptions["points"].active) {
-                context.interactionCurrent = new ol.interaction.Draw({
+                context.interactionCurrent = new DrawInteraction({
                     features : context.layer.getSource().getFeaturesCollection(),
-                    style : new ol.style.Style({
-                        image : new ol.style.Icon(this._getIconStyleOptions(this.options.markersList[0]))
+                    style : new Style({
+                        image : new Icon(this._getIconStyleOptions(this.options.markersList[0]))
                     }),
                     type : ("Point")
                 });
@@ -1293,20 +1327,20 @@ Drawing.prototype._handleToolClick = function (clickEvent, toolId, context) {
             break;
         case this._addUID("drawing-tool-line"):
             if (context.dtOptions["lines"].active) {
-                context.interactionCurrent = new ol.interaction.Draw({
+                context.interactionCurrent = new DrawInteraction({
                     features : context.layer.getSource().getFeaturesCollection(),
-                    style : new ol.style.Style({
-                        image : new ol.style.Circle({
+                    style : new Style({
+                        image : new Circle({
                             radius : this.options.cursorStyle.radius,
-                            stroke : new ol.style.Stroke({
+                            stroke : new Stroke({
                                 color : this.options.cursorStyle.strokeColor,
                                 width : this.options.cursorStyle.strokeWidth
                             }),
-                            fill : new ol.style.Fill({
+                            fill : new Fill({
                                 color : this.options.cursorStyle.fillColor
                             })
                         }),
-                        stroke : new ol.style.Stroke({
+                        stroke : new Stroke({
                             color : this.options.defaultStyles.strokeColor,
                             width : this.options.defaultStyles.strokeWidth
                         })
@@ -1322,24 +1356,24 @@ Drawing.prototype._handleToolClick = function (clickEvent, toolId, context) {
             break;
         case this._addUID("drawing-tool-polygon"):
             if (context.dtOptions["polygons"].active) {
-                context.interactionCurrent = new ol.interaction.Draw({
+                context.interactionCurrent = new DrawInteraction({
                     features : context.layer.getSource().getFeaturesCollection(),
-                    style : new ol.style.Style({
-                        image : new ol.style.Circle({
+                    style : new Style({
+                        image : new Circle({
                             radius : this.options.cursorStyle.radius,
-                            stroke : new ol.style.Stroke({
+                            stroke : new Stroke({
                                 color : this.options.cursorStyle.strokeColor,
                                 width : this.options.cursorStyle.strokeWidth
                             }),
-                            fill : new ol.style.Fill({
+                            fill : new Fill({
                                 color : this.options.cursorStyle.fillColor
                             })
                         }),
-                        stroke : new ol.style.Stroke({
+                        stroke : new Stroke({
                             color : this.options.defaultStyles.polyStrokeColor,
                             width : this.options.defaultStyles.polyStrokeWidth
                         }),
-                        fill : new ol.style.Fill({
+                        fill : new Fill({
                             color : Color.hexToRgba(
                                 this.options.defaultStyles.polyFillColor,
                                 this.options.defaultStyles.polyFillOpacity
@@ -1358,23 +1392,23 @@ Drawing.prototype._handleToolClick = function (clickEvent, toolId, context) {
         case this._addUID("drawing-tool-text"):
             // text : creation de points invisibles avec un label.
             if (context.dtOptions["text"].active) {
-                context.interactionCurrent = new ol.interaction.Draw({
+                context.interactionCurrent = new DrawInteraction({
                     features : context.layer.getSource().getFeaturesCollection(),
-                    style : new ol.style.Style({
-                        image : new ol.style.Circle({
+                    style : new Style({
+                        image : new Circle({
                             radius : this.options.cursorStyle.radius,
-                            stroke : new ol.style.Stroke({
+                            stroke : new Stroke({
                                 color : this.options.cursorStyle.strokeColor,
                                 width : this.options.cursorStyle.strokeWidth
                             }),
-                            fill : new ol.style.Fill({
+                            fill : new Fill({
                                 color : this.options.cursorStyle.fillColor
                             })
                         })
                     }),
                     type : ("Point")
                 });
-                context.interactionCurrent.on("drawend", function (deEv) {
+                context.interactionCurrent.on("drawend", (deEv) => {
                     // creation overlay pour saisie du label
                     var popupOvl = null;
                     /**
@@ -1395,16 +1429,16 @@ Drawing.prototype._handleToolClick = function (clickEvent, toolId, context) {
                             name : value
                         });
 
-                        deEv.feature.setStyle(new ol.style.Style({
-                            image : new ol.style.Icon(context._getIconStyleOptions(context.options.defaultStyles.textIcon1x1)),
-                            text : new ol.style.Text({
+                        deEv.feature.setStyle(new Style({
+                            image : new Icon(context._getIconStyleOptions(context.options.defaultStyles.textIcon1x1)),
+                            text : new Text({
                                 textAlign : "left",
                                 font : "16px sans",
                                 text : value,
-                                fill : new ol.style.Fill({
+                                fill : new Fill({
                                     color : context.options.defaultStyles.textFillColor
                                 }),
-                                stroke : new ol.style.Stroke({
+                                stroke : new Stroke({
                                     color : context.options.defaultStyles.textStrokeColor,
                                     width : 3
                                 })
@@ -1417,7 +1451,7 @@ Drawing.prototype._handleToolClick = function (clickEvent, toolId, context) {
                         geomType : "Text",
                         placeholder : "Saisir un label..."
                     });
-                    popupOvl = new ol.Overlay({
+                    popupOvl = new Overlay({
                         element : popup,
                         // FIXME : autres valeurs.
                         positioning : "top-center" // par defaut, top-left...
@@ -1426,14 +1460,13 @@ Drawing.prototype._handleToolClick = function (clickEvent, toolId, context) {
                     context.getMap().addOverlay(popupOvl);
                     popupOvl.setPosition(deEv.feature.getGeometry().getCoordinates());
                     document.getElementById(this._addUID("label-input")).focus();
-                },
-                context);
+                });
             }
             break;
         case this._addUID("drawing-tool-edit"):
             if (context.dtOptions["edit"].active) {
-                context.interactionSelectEdit = new ol.interaction.Select({
-                    condition : ol.events.condition.singleClick,
+                context.interactionSelectEdit = new SelectInteraction({
+                    condition : eventSingleClick,
                     layers : [this.layer]
                 });
 
@@ -1443,17 +1476,17 @@ Drawing.prototype._handleToolClick = function (clickEvent, toolId, context) {
                 });
                 map.addInteraction(context.interactionSelectEdit);
 
-                context.interactionCurrent = new ol.interaction.Modify({
+                context.interactionCurrent = new ModifyInteraction({
                     // features : context.layer.getSource().getFeaturesCollection(),
                     features : this.interactionSelectEdit.getFeatures(),
-                    style : new ol.style.Style({
-                        image : new ol.style.Circle({
+                    style : new Style({
+                        image : new Circle({
                             radius : this.options.cursorStyle.radius,
-                            stroke : new ol.style.Stroke({
+                            stroke : new Stroke({
                                 color : this.options.cursorStyle.strokeColor,
                                 width : this.options.cursorStyle.strokeWidth
                             }),
-                            fill : new ol.style.Fill({
+                            fill : new Fill({
                                 color : this.options.cursorStyle.fillColor
                             })
                         })
@@ -1463,10 +1496,10 @@ Drawing.prototype._handleToolClick = function (clickEvent, toolId, context) {
                         return false;
                     }
                 });
-                context.interactionCurrent.on("modifyend", function (deEv) {
+                context.interactionCurrent.on("modifyend", (deEv) => {
                     var feature = deEv.features.item(0);
                     context._updateMeasure(feature);
-                }, context);
+                });
             }
             break;
         case this._addUID("drawing-tool-display"):
@@ -1561,3 +1594,8 @@ Drawing.prototype.onExportFeatureClick = function () {
 };
 
 export default Drawing;
+
+// Expose Drawing as ol.control.Drawing (for a build bundle)
+if (window.ol && window.ol.control) {
+    window.ol.control.Drawing = Drawing;
+}

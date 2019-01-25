@@ -1,11 +1,24 @@
-import ol from "ol";
+// import CSS
+import "../../../res/Common/GPgeneralWidget.css";
+import "../../../res/Common/GPwaiting.css";
+import "../../../res/Common/GPsearchEngine.css";
+import "../../../res/OpenLayers/GPgeneralWidgetOpenLayers.css";
+import "../../../res/OpenLayers/Controls/SearchEngine/GPsearchEngineOpenLayers.css";
+// import OpenLayers
+import {inherits as olInherits} from "ol/util";
+import Control from "ol/control/Control";
+import Overlay from "ol/Overlay";
+import {transform as olProjTransform} from "ol/proj";
+// import geoportal library access
 import Gp from "gp";
+// import local
 import Logger from "../../Common/Utils/LoggerByDefault";
 import Utils from "../../Common/Utils";
 import Markers from "./Utils/Markers";
 import RightManagement from "../../Common/Utils/CheckRightManagement";
 import SelectorID from "../../Common/Utils/SelectorID";
 import SearchEngineUtils from "../../Common/Utils/SearchEngineUtils";
+// DOM
 import SearchEngineDOM from "../../Common/Controls/SearchEngineDOM";
 
 var logger = Logger.getLogger("searchengine");
@@ -79,7 +92,7 @@ function SearchEngine (options) {
     }
 
     // call ol.control.Control constructor
-    ol.control.Control.call(this, {
+    Control.call(this, {
         element : this._containerElement || this._container,
         target : options.target,
         render : options.render
@@ -87,12 +100,12 @@ function SearchEngine (options) {
 };
 
 // Inherits from ol.control.Control
-ol.inherits(SearchEngine, ol.control.Control);
+olInherits(SearchEngine, Control);
 
 /*
  * @lends module:SearchEngine
  */
-SearchEngine.prototype = Object.create(ol.control.Control.prototype, {});
+SearchEngine.prototype = Object.create(Control.prototype, {});
 
 // on récupère les méthodes de la classe commune IsoDOM
 Utils.assign(SearchEngine.prototype, SearchEngineDOM);
@@ -119,7 +132,7 @@ SearchEngine.prototype.setMap = function (map) {
     }
 
     // on appelle la méthode setMap originale d'OpenLayers
-    ol.control.Control.prototype.setMap.call(this, map);
+    Control.prototype.setMap.call(this, map);
 };
 
 /**
@@ -925,7 +938,7 @@ SearchEngine.prototype._setMarker = function (position, info) {
         }
 
         // création du marker (overlay)
-        this._marker = new ol.Overlay({
+        this._marker = new Overlay({
             position : position,
             offset : [-25.5, -38],
             element : markerDiv,
@@ -1049,7 +1062,7 @@ SearchEngine.prototype._onResultMarkerSelect = function (information) {
     this._popupContent.innerHTML = popupContent;
     if (!this._popupOverlay) {
         // ajout de la popup a la carte comme un overlay
-        this._popupOverlay = new ol.Overlay({
+        this._popupOverlay = new Overlay({
             element : this._popupDiv,
             positioning : "bottom-center",
             position : this._marker.getPosition(),
@@ -1330,7 +1343,7 @@ SearchEngine.prototype.onAutoCompletedResultsItemClick = function (e) {
     var mapProj = view.getProjection().getCode();
     if (mapProj !== "EPSG:4326") {
         // on retransforme les coordonnées de la position dans la projection de la carte
-        position = ol.proj.transform(position, "EPSG:4326", mapProj);
+        position = olProjTransform(position, "EPSG:4326", mapProj);
     }
     // on centre la vue et positionne le marker, à la position reprojetée dans la projection de la carte
     var zoom = this._getZoom(info);
@@ -1441,7 +1454,7 @@ SearchEngine.prototype.onGeocodedResultsItemClick = function (e) {
     var mapProj = view.getProjection().getCode();
     if (mapProj !== "EPSG:4326") {
         // on retransforme les coordonnées de la position dans la projection de la carte
-        position = ol.proj.transform(position, "EPSG:4326", mapProj);
+        position = olProjTransform(position, "EPSG:4326", mapProj);
     }
     // on centre la vue et positionne le marker, à la position reprojetée dans la projection de la carte
     var zoom = this._getZoom(info);
@@ -1751,3 +1764,8 @@ SearchEngine.prototype._clearGeocodedLocation = function () {
 };
 
 export default SearchEngine;
+
+// Expose SearchEngine as ol.control.SearchEngine (for a build bundle)
+if (window.ol && window.ol.control) {
+    window.ol.control.SearchEngine = SearchEngine;
+}

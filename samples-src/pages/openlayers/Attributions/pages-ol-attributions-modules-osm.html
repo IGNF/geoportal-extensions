@@ -1,0 +1,106 @@
+{{#extend "ol-sample-modules-layout"}}
+
+{{#content "vendor"}}
+
+{{/content}}
+
+{{#content "head"}}
+        <title>Sample openlayers GeoportalAttribution</title>
+{{/content}}
+
+{{#content "style"}}
+        <style>
+            div#map {
+                width: 100%;
+                height: 500px;
+            }
+        </style>
+{{/content}}
+
+{{#content "body"}}
+            <h2>Ajout des attributions sur des couches avec les options par défaut</h2>
+            <!-- map -->
+            <div id="map">
+            </div>
+{{/content}}
+
+{{#content "js"}}
+            <script type="text/javascript">
+                var map;
+                window.onload = function() {
+                    document.getElementById('map').style.backgroundImage = 'none';
+
+                    var osm = new ol.layer.Tile({
+                        source: new ol.source.OSM({
+                            attributions : [
+                                "Nouvelle attribution ajouté à OSM"
+                            ]
+                        })
+                    });
+
+                    // osm.getSource()._originators = [
+                    //     {
+                    //         attribution : "OpenStreetMap",
+                    //         name : "OpenStreetMap",
+                    //         url : "http://openstreetmap.fr/"
+                    //     }
+                    // ];
+
+                    var gpOrtho = new ol.layer.Tile({
+                        source : new ol.source.GeoportalWMTS({
+                            layer: "ORTHOIMAGERY.ORTHOPHOTOS"
+                        })
+                    });
+
+                    var gpCartes = new ol.layer.Tile({
+                        source : new ol.source.GeoportalWMTS({
+                            layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+                        })
+                    });
+
+                    var gpCommunes = new ol.layer.Tile({
+                        source : new ol.source.GeoportalWMTS({
+                            layer: "CADASTRALPARCELS.PARCELS"
+                        }),
+                        minResolution : 1,
+                        maxResolution : 2446,
+                        opacity : 0.2
+                    });
+
+                    map = new ol.Map({
+                        target : "map",
+                        view : new ol.View({
+                            center : [288074.8449901076, 6247982.515792289],
+                            zoom : 6
+                        }),
+                        layers : [
+                            osm,
+                            gpOrtho,
+                            gpCartes,
+                            gpCommunes
+                        ]
+                    });
+
+                    var layerSwitcher = new ol.control.LayerSwitcher({
+                        options : {
+                            collapsed: false
+                        },
+                        layers : [
+                            {
+                                layer : osm,
+                                config : {
+                                    title : "OSM layer",
+                                    description : "OSM layer"
+                                }
+                            }
+                        ]
+                    });
+                    map.addControl(layerSwitcher);
+
+                    var attribution = new ol.control.GeoportalAttribution({});
+                    map.addControl(attribution);
+                };
+           </script>
+{{/content}}
+
+{{/extend}}

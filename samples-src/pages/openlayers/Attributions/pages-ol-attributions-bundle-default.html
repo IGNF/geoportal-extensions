@@ -26,30 +26,6 @@
                 window.onload = function() {
                     document.getElementById('map').style.backgroundImage = 'none';
 
-                    var osm = new ol.layer.Tile({
-                        source: new ol.source.OSM({
-                            attributions : [
-                                new ol.Attribution({
-                                    html : "Nouvelle attribution sans lien !"
-                                }),
-                                new ol.Attribution({
-                                    html : "Deuxième attribution sans lien !"
-                                }),
-                                new ol.Attribution({
-                                    html : ol.source.OSM.ATTRIBUTION
-                                })
-                            ]
-                        })
-                    });
-
-                    // osm.getSource()._originators = [
-                    //     {
-                    //         attribution : "OpenStreetMap",
-                    //         name : "OpenStreetMap",
-                    //         url : "http://openstreetmap.fr/"
-                    //     }
-                    // ];
-
                     var gpOrtho = new ol.layer.Tile({
                         source : new ol.source.GeoportalWMTS({
                             layer: "ORTHOIMAGERY.ORTHOPHOTOS"
@@ -78,7 +54,6 @@
                             zoom : 6
                         }),
                         layers : [
-                            osm,
                             gpOrtho,
                             gpCartes,
                             gpCommunes
@@ -88,16 +63,7 @@
                     var layerSwitcher = new ol.control.LayerSwitcher({
                         options : {
                             collapsed: false
-                        },
-                        layers : [
-                            {
-                                layer : osm,
-                                config : {
-                                    title : "OSM layer",
-                                    description : "OSM layer"
-                                }
-                            }
-                        ]
+                        }
                     });
                     map.addControl(layerSwitcher);
 

@@ -1,4 +1,8 @@
+// import CSS
+import "../../../res/OpenLayers/Controls/Editor/GPeditorOpenLayers.css";
+// import library
 import EventBus from "eventbus";
+// import local
 import Utils from "../../Common/Utils";
 import ID from "../../Common/Utils/SelectorID";
 import Logger from "../../Common/Utils/LoggerByDefault";
@@ -8,6 +12,7 @@ import Filter from "./Editor/Filter";
 import Legend from "./Editor/Legend";
 import Layer from "./Editor/Layer";
 import Group from "./Editor/Group";
+// DOM
 import EditorDOM from "../../Common/Controls/Editor/EditorDOM";
 
 var logger = Logger.getLogger("editor");
@@ -487,12 +492,12 @@ Editor.prototype._initContainer = function () {
     // container principal
     if (!this.options.target) {
         if (!document.getElementById(this.name.target)) {
-            var target = document.createElement("div");
-            target.id = this.name.target;
+            var _target = document.createElement("div");
+            _target.id = this.name.target;
             var node = document.getElementsByTagName("body")[0] ||
                 document.getElementsByTagName("head")[0] ||
                 document.documentElement;
-            node.appendChild(target);
+            node.appendChild(_target);
         }
         this.options.target = document.getElementById(this.name.target);
     }
@@ -551,3 +556,9 @@ Editor.prototype.getLayers = function () {
 // ################################################################### //
 
 export default Editor;
+
+// Expose Editor as ol.editor.View (for a build bundle)
+if (window.ol) {
+    window.ol.editor = {};
+    window.ol.editor.View = Editor;
+}

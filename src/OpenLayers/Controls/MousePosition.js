@@ -1,13 +1,36 @@
-import ol from "ol";
+// import CSS
+import "../../../res/Common/GPgeneralWidget.css";
+import "../../../res/Common/GPwaiting.css";
+import "../../../res/Common/GPmousePosition.css";
+import "../../../res/OpenLayers/GPgeneralWidgetOpenLayers.css";
+import "../../../res/OpenLayers/Controls/MousePosition/GPmousePositionOpenLayers.css";
+// import OpenLayers
+import {inherits as olInherits} from "ol/util";
+import Control from "ol/control/Control";
+import Overlay from "ol/Overlay";
+import { unByKey as olObservableUnByKey } from "ol/Observable";
+import {
+    transform as olTransformProj,
+    get as olGetProj,
+    transformExtent as olTransformExtentProj
+} from "ol/proj";
+import { register } from "ol/proj/proj4";
+// import geoportal library access
 import Gp from "gp";
+// other import
+import proj4 from "proj4";
+// import local
 import Logger from "../../Common/Utils/LoggerByDefault";
 import Utils from "../../Common/Utils";
 import Markers from "./Utils/Markers";
 import RightManagement from "../../Common/Utils/CheckRightManagement";
 import SelectorID from "../../Common/Utils/SelectorID";
 import MathUtils from "../../Common/Utils/MathUtils";
+import Register from "../../Common/Utils/Register";
+// import local with ol dependencies
+// import "../CRS/CRS";
+// DOM
 import MousePositionDOM from "../../Common/Controls/MousePositionDOM";
-import "../CRS/CRS";
 
 var logger = Logger.getLogger("GeoportalMousePosition");
 
@@ -86,13 +109,17 @@ function MousePosition (options) {
         throw new TypeError("ERROR CLASS_CONSTRUCTOR");
     }
 
+    // init Proj4 defs
+    Register.load();
+    register(proj4);
+
     this._initialize(options);
 
     // init control DOM container
     var container = this._initContainer(options);
 
     // call ol.control.Control constructor
-    ol.control.Control.call(this, {
+    Control.call(this, {
         element : container,
         target : options.target,
         render : options.render
@@ -100,12 +127,12 @@ function MousePosition (options) {
 };
 
 // Inherits from ol.control.Control
-ol.inherits(MousePosition, ol.control.Control);
+olInherits(MousePosition, Control);
 
 /**
  * @lends module:GeoportalMousePosition
  */
-MousePosition.prototype = Object.create(ol.control.Control.prototype, {});
+MousePosition.prototype = Object.create(Control.prototype, {});
 
 // on récupère les méthodes de la classe commune MousePositionDOM
 Utils.assign(MousePosition.prototype, MousePositionDOM);
@@ -138,16 +165,14 @@ MousePosition.prototype.setMap = function (map) {
         if (!this.collapsed) {
             // evenement valable pour le mode desktop !
             if (this._isDesktop) {
-                map.on(
+                this.listenerKey = map.on(
                     "pointermove",
-                    this.onMouseMove,
-                    this
+                    (e) => { this.onMouseMove(e); }
                 );
             } else {
-                map.on(
+                this.listenerKey = map.on(
                     "moveend",
-                    this.onMapMove,
-                    this
+                    (e) => this.onMapMove(e)
                 );
             }
         }
@@ -163,7 +188,7 @@ MousePosition.prototype.setMap = function (map) {
                 context._markerOverlay.setPosition(undefined);
             });
 
-            this._markerOverlay = new ol.Overlay({
+            this._markerOverlay = new Overlay({
                 offset : this._markerOffset,
                 element : markerDiv,
                 stopEvent : false
@@ -173,7 +198,7 @@ MousePosition.prototype.setMap = function (map) {
     }
 
     // call original setMap method
-    ol.control.Control.prototype.setMap.call(this, map);
+    Control.prototype.setMap.call(this, map);
 
     // nothing else to do if map == null
     if (map == null) {
@@ -521,6 +546,9 @@ MousePosition.prototype._initialize = function (options) {
     if (this.options.displayAltitude) {
         this._checkRightsManagement();
     }
+
+    // listener key for event on pointermove or moveend map
+    this.listenerKey = null;
 };
 
 /**
@@ -581,15 +609,15 @@ MousePosition.prototype._initProjectionSystems = function () {
     // systemes de projection disponible par defaut
     var projectionSystemsByDefault = [{
         label : "G\u00e9ographique",
-        crs : ol.proj.get("EPSG:4326").getCode(),
+        crs : olGetProj("EPSG:4326").getCode(),
         type : "Geographical"
     }, {
         label : "Web Mercator",
-        crs : ol.proj.get("EPSG:3857").getCode(),
+        crs : olGetProj("EPSG:3857").getCode(),
         type : "Metric"
     }, {
         label : "Lambert 93",
-        crs : ol.proj.get("EPSG:2154").getCode(),
+        crs : olGetProj("EPSG:2154").getCode(),
         type : "Metric",
         geoBBox : {
             left : -9.86,
@@ -599,7 +627,7 @@ MousePosition.prototype._initProjectionSystems = function () {
         }
     }, {
         label : "Lambert II \u00e9tendu",
-        crs : ol.proj.get("EPSG:27572"),
+        crs : olGetProj("EPSG:27572"),
         type : "Metric",
         geoBBox : {
             left : -4.87,
@@ -737,7 +765,11 @@ MousePosition.prototype._checkRightsManagement = function () {
         services : ["Elevation"]
     });
 
-    this._noRightManagement = !rightManagement;
+    // pas de droit !
+    if (!rightManagement) {
+        this._noRightManagement = true;
+        return;
+    }
 
     // on recupère les informations utiles
     // sur ce controle, on ne s'occupe pas de la ressource car elle est unique...
@@ -1034,7 +1066,7 @@ MousePosition.prototype._setCoordinate = function (olCoordinate, crs) {
         return;
     }
     // on reprojette les coordonnées depuis leur CRS d'origine (CRS) vers le CRS demandé (oSrs)
-    olCoordinate = ol.proj.transform(olCoordinate, crs, oSrs);
+    olCoordinate = olTransformProj(olCoordinate, crs, oSrs);
 
     // type de systeme : Geographical ou Metric
     var type = this._currentProjectionSystems.type;
@@ -1089,7 +1121,7 @@ MousePosition.prototype._setElevation = function (olCoordinate) {
  */
 MousePosition.prototype.onMoveStopped = function (olCoordinate, crs) {
     // reprojection en CRS:84 (EPSG:4326) pour le calcul alti
-    var oLatLng = ol.proj.transform(olCoordinate, crs, "EPSG:4326");
+    var oLatLng = olTransformProj(olCoordinate, crs, "EPSG:4326");
     this._setElevation(oLatLng);
 };
 
@@ -1268,15 +1300,17 @@ MousePosition.prototype.onShowMousePositionClick = function () {
     // et en fonction du mode : desktop ou tactile !
     if (this._showMousePositionContainer.checked) {
         if (this._isDesktop) {
-            map.un("pointermove", this.onMouseMove, this);
+            // map.un("pointermove", (e) => { this.onMouseMove(e); });
+            olObservableUnByKey(this.listenerKey);
         } else {
-            map.un("moveend", this.onMapMove, this);
+            // map.un("moveend", (e) => this.onMapMove(e));
+            olObservableUnByKey(this.listenerKey);
         }
     } else if (!this.editing) {
         if (this._isDesktop) {
-            map.on("pointermove", this.onMouseMove, this);
+            this.listenerKey = map.on("pointermove", (e) => { this.onMouseMove(e); });
         } else {
-            map.on("moveend", this.onMapMove, this);
+            this.listenerKey = map.on("moveend", (e) => this.onMapMove(e));
             // on simule un deplacement en mode tactile
             this.onMapMove();
         }
@@ -1314,17 +1348,19 @@ MousePosition.prototype.onMousePositionEditModeClick = function (editing) {
     var map = this.getMap();
     if (this._isDesktop) {
         if (this.editing) { // Unlisten for 'pointermove' events
-            map.un("pointermove", this.onMouseMove, this);
+            // map.un("pointermove", (e) => { this.onMouseMove(e); });
+            olObservableUnByKey(this.listenerKey);
         } else { // Listen for 'pointermove' events
-            map.on("pointermove", this.onMouseMove, this);
+            this.listenerKey = map.on("pointermove", (e) => { this.onMouseMove(e); });
             // on simule un deplacement
             this.onMapMove();
         }
     } else {
         if (this.editing) { // Unlisten for 'moveend' events
-            map.un("moveend", this.onMapMove, this);
+            // map.un("moveend", (e) => this.onMapMove(e));
+            olObservableUnByKey(this.listenerKey);
         } else { // Listen for moveend' events
-            map.on("moveend", this.onMapMove, this);
+            this.listenerKey = map.on("moveend", (e) => this.onMapMove(e));
             // on simule un deplacement
             this.onMapMove();
         }
@@ -1416,7 +1452,7 @@ MousePosition.prototype.locateDMSCoordinates = function () {
 
     var view = this.getMap().getView();
 
-    var coordinate = ol.proj.transform(lonlat, oSrs, view.getProjection());
+    var coordinate = olTransformProj(lonlat, oSrs, view.getProjection());
     view.setCenter(coordinate);
 
     if (this._markerOverlay && !this._hideMarker) {
@@ -1458,7 +1494,7 @@ MousePosition.prototype.locateCoordinates = function () {
     } else {
         xy = [this.convert(lat), this.convert(lon)];
     }
-    var xyWGS84 = ol.proj.transform(xy, this._currentProjectionSystems.crs, "EPSG:4326");
+    var xyWGS84 = olTransformProj(xy, this._currentProjectionSystems.crs, "EPSG:4326");
 
     var geoBBox = this._currentProjectionSystems.geoBBox;
     if (geoBBox) { // check if coordinates are in the extent
@@ -1473,7 +1509,7 @@ MousePosition.prototype.locateCoordinates = function () {
 
     var view = this.getMap().getView();
 
-    var coordinate = ol.proj.transform(xy, oSrs, view.getProjection());
+    var coordinate = olTransformProj(xy, oSrs, view.getProjection());
     view.setCenter(coordinate);
 
     if (this._markerOverlay && !this._hideMarker) {
@@ -1577,7 +1613,7 @@ MousePosition.prototype.onMousePositionProjectionSystemMouseOver = function (e) 
     var mapExtent = view.calculateExtent(map.getSize());
 
     // get extent in WGS84 coordinates
-    mapExtent = ol.proj.transformExtent(mapExtent, crs, "EPSG:4326");
+    mapExtent = olTransformExtentProj(mapExtent, crs, "EPSG:4326");
 
     /* clear select */
     var systemList = document.getElementById(this._addUID("GPmousePositionProjectionSystem"));
@@ -1704,7 +1740,7 @@ MousePosition.prototype.validateExtentCoordinate = function (coordType, value) {
 
     // convert to current projection system
     var extent = [geoBBox.left, geoBBox.bottom, geoBBox.right, geoBBox.top];
-    extent = ol.proj.transformExtent(extent, "EPSG:4326", this._currentProjectionSystems.crs);
+    extent = olTransformExtentProj(extent, "EPSG:4326", this._currentProjectionSystems.crs);
 
     // checking if value is in the right interval
     if (coordType === "Lat" && (coord < extent[0] || coord > extent[2])) {
@@ -1718,3 +1754,8 @@ MousePosition.prototype.validateExtentCoordinate = function (coordType, value) {
 };
 
 export default MousePosition;
+
+// Expose MousePosition as ol.control.MousePosition (for a build bundle)
+if (window.ol && window.ol.control) {
+    window.ol.control.GeoportalMousePosition = MousePosition;
+}

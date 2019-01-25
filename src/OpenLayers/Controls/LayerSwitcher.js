@@ -1,8 +1,20 @@
-import ol from "ol";
+// import CSS
+import "../../../res/Common/GPgeneralWidget.css";
+import "../../../res/Common/GPwaiting.css";
+import "../../../res/Common/GPlayerSwitcher.css";
+import "../../../res/OpenLayers/GPgeneralWidgetOpenLayers.css";
+import "../../../res/OpenLayers/Controls/LayerSwitcher/GPlayerSwitcherOpenLayers.css";
+// import OpenLayers
+import { inherits as olInherits } from "ol/util";
+import Control from "ol/control/Control";
+import { unByKey as olObservableUnByKey } from "ol/Observable";
+import { intersects as olIntersects } from "ol/extent";
+// import local
 import Utils from "../../Common/Utils";
 import SelectorID from "../../Common/Utils/SelectorID";
-import LayerSwitcherDOM from "../../Common/Controls/LayerSwitcherDOM";
 import Logger from "../../Common/Utils/LoggerByDefault";
+// DOM
+import LayerSwitcherDOM from "../../Common/Controls/LayerSwitcherDOM";
 
 var logger = Logger.getLogger("layerswitcher");
 
@@ -64,20 +76,20 @@ function LayerSwitcher (lsOptions) {
     var container = this._initContainer(options);
 
     // call ol.control.Control constructor
-    ol.control.Control.call(this, {
+    Control.call(this, {
         element : container,
         target : options.target,
         render : options.render
     });
 }
 
-// Inherits from ol.control.Control
-ol.inherits(LayerSwitcher, ol.control.Control);
+// Inherits from Control
+olInherits(LayerSwitcher, Control);
 
 /*
  * @lends module:LayerSwitcher
  */
-LayerSwitcher.prototype = Object.create(ol.control.Control.prototype, {});
+LayerSwitcher.prototype = Object.create(Control.prototype, {});
 
 // on récupère les méthodes de la classe commune LayerSwitcherDOM
 Utils.assign(LayerSwitcher.prototype, LayerSwitcherDOM);
@@ -109,16 +121,13 @@ LayerSwitcher.prototype.setMap = function (map) {
         // according to layers on map, and their range.
         this._listeners.onMoveListener = map.on(
             "moveend",
-            function () {
-                this._onMapMoveEnd(map);
-            },
-            this
+            () => this._onMapMoveEnd(map)
         );
 
         // add event listeners when a new layer is added to map, to add it in LayerSwitcher control (and DOM)
         this._listeners.onAddListener = map.getLayers().on(
             "add",
-            function (evt) {
+            (evt) => {
                 var layer = evt.element;
                 var id;
                 // on attribue un nouvel identifiant à cette couche,
@@ -133,28 +142,26 @@ LayerSwitcher.prototype.setMap = function (map) {
                 if (!this._layers[id]) {
                     this.addLayer(layer);
                 }
-            },
-            this
+            }
         );
 
         // add event listeners when a layer is removed from map, to remove it from LayerSwitcher control (and DOM)
         this._listeners.onRemoveListener = map.getLayers().on(
             "remove",
-            function (evt) {
+            (evt) => {
                 var layer = evt.element;
                 var id = layer.gpLayerId;
                 if (this._layers[id]) {
                     this.removeLayer(layer);
                 }
-            },
-            this
+            }
         );
     } else {
         // we are in a setMap(null) case
         // we forget the listeners linked to the layerSwitcher
-        ol.Observable.unByKey(this._listeners.onMoveListener);
-        ol.Observable.unByKey(this._listeners.onAddListener);
-        ol.Observable.unByKey(this._listeners.onRemoveListener);
+        olObservableUnByKey(this._listeners.onMoveListener);
+        olObservableUnByKey(this._listeners.onAddListener);
+        olObservableUnByKey(this._listeners.onRemoveListener);
 
         // we put all the layers at Zindex = 0, without changing the visual order
         // in order that the next added layers are not hidden by layers with Zindex > 0
@@ -164,7 +171,7 @@ LayerSwitcher.prototype.setMap = function (map) {
     }
 
     // on appelle la méthode setMap originale d'OpenLayers
-    ol.control.Control.prototype.setMap.call(this, map);
+    Control.prototype.setMap.call(this, map);
 };
 
 /**
@@ -205,12 +212,11 @@ LayerSwitcher.prototype.addLayer = function (layer, config) {
     // make sure layer is in map layers
     var isLayerInMap = false;
     map.getLayers().forEach(
-        function (lyr) {
+        (lyr) => {
             if (lyr.gpLayerId === id) {
                 isLayerInMap = true;
             }
-        },
-        this
+        }
     );
     if (!isLayerInMap) {
         logger.log("[ERROR] LayerSwitcher:addLayer - configuration cannot be set for ", layer, " layer (layer is not in map.getLayers() )");
@@ -245,9 +251,12 @@ LayerSwitcher.prototype.addLayer = function (layer, config) {
         this._layers[id].div = layerDiv;
 
         // 3. réorganisation des couches si un zIndex est spécifié
-        if ((layer.getZIndex && layer.getZIndex() !== 0) || layer._forceNullzIndex) {
+        // FIXME :
+        //  _forceNullzIndex !?
+        //  getZIndex() retourne undefined au lieu de 0 !?
+        if ((layer.getZIndex && layer.getZIndex() !== 0 && typeof layer.getZIndex() !== "undefined") || layer._forceNullzIndex) {
             // réorganisation des couches si un zIndex est spécifié
-            this._updateLayersOrder(map);
+            this._updateLayersOrder();
         } else {
             // sinon on ajoute la couche au dessus des autres
             this._layersOrder.unshift(layerOptions);
@@ -257,26 +266,19 @@ LayerSwitcher.prototype.addLayer = function (layer, config) {
         }
 
         // 3. Add listeners for opacity and visibility changes
-        layer.on(
+        this._listeners.updateLayerOpacity = layer.on(
             "change:opacity",
-            this._updateLayerOpacity,
-            this
+            (e) => this._updateLayerOpacity(e)
         );
-        layer.on(
+        this._listeners.updateLayerVisibility = layer.on(
             "change:visible",
-            this._updateLayerVisibility,
-            this
+            (e) => this._updateLayerVisibility(e)
         );
-        // listener for zIndex change
-        var context = this;
-        // fonction de callback appelée au changement de zindex d'une couche
-        var updateLayersOrder = function (e) {
-            context._updateLayersOrder(e);
-        };
+
         if (this._layers[id].onZIndexChangeEvent == null) {
             this._layers[id].onZIndexChangeEvent = layer.on(
                 "change:zIndex",
-                updateLayersOrder
+                () => this._updateLayersOrder()
             );
         }
 
@@ -327,22 +329,9 @@ LayerSwitcher.prototype.removeLayer = function (layer) {
         return;
     }
 
-    layer.un(
-        "change:opacity",
-        this._updateLayerOpacity,
-        this
-    );
-    layer.un(
-        "change:visible",
-        this._updateLayerVisibility,
-        this
-    );
-    // FIXME !?
-    layer.un(
-        "change:zIndex",
-        this._updateLayersOrder,
-        this
-    );
+    olObservableUnByKey(this._listeners.updateLayerOpacity);
+    olObservableUnByKey(this._listeners.updateLayerVisibility);
+    // olObservableUnByKey(this._listeners.updateLayersOrder);
 
     logger.trace(layer);
 
@@ -568,79 +557,68 @@ LayerSwitcher.prototype._initContainer = function () {
  */
 LayerSwitcher.prototype._addMapLayers = function (map) {
     this._layersIndex = {};
-    var context = this;
 
     // on parcourt toutes les couches de la carte, pour les ajouter à la liste du controle si ce n'est pas déjà le cas.
     // idée : le layerSwitcher doit représenter l'ensemble des couches de la carte.
-    map.getLayers().forEach(
-        function (layer) {
-            // ajout des couches de la carte à la liste
-            var id;
-            // si elles ont déjà un identifiant (gpLayerId), on le récupère, sinon on en crée un nouveau, en incrémentant this_layerId.
-            if (!layer.hasOwnProperty("gpLayerId")) {
-                id = this._layerId;
-                layer.gpLayerId = id;
-                this._layerId++;
-            } else {
-                id = layer.gpLayerId;
-            }
+    map.getLayers().forEach((layer) => {
+        // ajout des couches de la carte à la liste
+        var id;
+        // si elles ont déjà un identifiant (gpLayerId), on le récupère, sinon on en crée un nouveau, en incrémentant this_layerId.
+        if (!layer.hasOwnProperty("gpLayerId")) {
+            id = this._layerId;
+            layer.gpLayerId = id;
+            this._layerId++;
+        } else {
+            id = layer.gpLayerId;
+        }
 
-            var layerInfos = this.getLayerInfo(layer) || {};
-            if (!this._layers[id]) {
-                // si la couche n'est pas encore dans la liste des layers (this._layers), on l'ajoute
-                var opacity = layer.getOpacity();
-                var visibility = layer.getVisible();
-                var isInRange = this.isInRange(layer, map);
-                var layerOptions = {
-                    layer : layer,
-                    id : id,
-                    opacity : opacity != null ? opacity : 1,
-                    visibility : visibility != null ? visibility : true,
-                    inRange : isInRange != null ? isInRange : true,
-                    title : layerInfos._title || id,
-                    description : layerInfos._description || null,
-                    legends : layerInfos._legends || [],
-                    metadata : layerInfos._metadata || [],
-                    quicklookUrl : layerInfos._quicklookUrl || null
-                };
-                this._layers[id] = layerOptions;
-            } else {
-                // si elle existe déjà, on met à jour ses informations (visibility, opacity, inRange)
-                this._layers[id].opacity = layer.getOpacity();
-                this._layers[id].visibility = layer.getVisible();
-                this._layers[id].inRange = this.isInRange(layer, map);
-            }
-
-            // Ajout de listeners sur les changements d'opacité, visibilité
-            layer.on(
-                "change:opacity",
-                this._updateLayerOpacity,
-                this
-            );
-            layer.on(
-                "change:visible",
-                this._updateLayerVisibility,
-                this
-            );
-
-            // récupération des zindex des couches s'ils existent, pour les ordonner.
-            var layerIndex = null;
-            if (layer.getZIndex !== undefined) {
-                layerIndex = layer.getZIndex();
-                if (!this._layersIndex[layerIndex] || !Array.isArray(this._layersIndex[layerIndex])) {
-                    this._layersIndex[layerIndex] = [];
-                }
-                this._layersIndex[layerIndex].push(this._layers[id]);
+        var layerInfos = this.getLayerInfo(layer) || {};
+        if (!this._layers[id]) {
+            // si la couche n'est pas encore dans la liste des layers (this._layers), on l'ajoute
+            var opacity = layer.getOpacity();
+            var visibility = layer.getVisible();
+            var isInRange = this.isInRange(layer, map);
+            var layerOptions = {
+                layer : layer,
+                id : id,
+                opacity : opacity != null ? opacity : 1,
+                visibility : visibility != null ? visibility : true,
+                inRange : isInRange != null ? isInRange : true,
+                title : layerInfos._title || id,
+                description : layerInfos._description || null,
+                legends : layerInfos._legends || [],
+                metadata : layerInfos._metadata || [],
+                quicklookUrl : layerInfos._quicklookUrl || null
             };
-        },
-        this
-    );
+            this._layers[id] = layerOptions;
+        } else {
+            // si elle existe déjà, on met à jour ses informations (visibility, opacity, inRange)
+            this._layers[id].opacity = layer.getOpacity();
+            this._layers[id].visibility = layer.getVisible();
+            this._layers[id].inRange = this.isInRange(layer, map);
+        }
+
+        // Ajout de listeners sur les changements d'opacité, visibilité
+        this._listeners.updateLayerOpacity = layer.on(
+            "change:opacity",
+            (e) => this._updateLayerOpacity(e)
+        );
+        this._listeners._updateLayerVisibility = layer.on(
+            "change:visible",
+            (e) => this._updateLayerVisibility(e)
+        );
+
+        // récupération des zindex des couches s'ils existent, pour les ordonner.
+        if (layer.getZIndex !== undefined) {
+            var layerIndex = layer.getZIndex() || 0; // FIXME le zIndex peut être undefined !? donc par defaut à 0 !
+            if (!this._layersIndex[layerIndex] || !Array.isArray(this._layersIndex[layerIndex])) {
+                this._layersIndex[layerIndex] = [];
+            }
+            this._layersIndex[layerIndex].push(this._layers[id]);
+        };
+    });
 
     // on récupère l'ordre d'affichage des couches entre elles dans la carte, à partir de zindex.
-    // fonction de callback appelée au changement de zindex d'une couche
-    var updateLayersOrder = function (e) {
-        context._updateLayersOrder(e);
-    };
     for (var zindex in this._layersIndex) {
         if (this._layersIndex.hasOwnProperty(zindex)) {
             var layers = this._layersIndex[zindex];
@@ -653,7 +631,7 @@ LayerSwitcher.prototype._addMapLayers = function (map) {
                 if (this._layers[layers[l].layer.gpLayerId].onZIndexChangeEvent == null) {
                     this._layers[layers[l].layer.gpLayerId].onZIndexChangeEvent = layers[l].layer.on(
                         "change:zIndex",
-                        updateLayersOrder
+                        () => this._updateLayersOrder()
                     );
                 }
             }
@@ -798,11 +776,11 @@ LayerSwitcher.prototype._updateLayersOrder = function () {
     // on parcourt toutes les couches pour récupérer leur ordre :
     // on stocke les couches dans un tableau associatif ou les clés sont les zindex, et les valeurs sont des tableaux des couches à ce zindex.
     map.getLayers().forEach(
-        function (layer) {
+        (layer) => {
             id = layer.gpLayerId;
 
             // on commence par désactiver temporairement l'écouteur d'événements sur le changement de zindex.
-            ol.Observable.unByKey(this._layers[id].onZIndexChangeEvent);
+            olObservableUnByKey(this._layers[id].onZIndexChangeEvent);
             this._layers[id].onZIndexChangeEvent = null;
 
             // on ajoute la couche dans le tableau (de l'objet this._layersIndex) correspondant à son zindex
@@ -814,16 +792,11 @@ LayerSwitcher.prototype._updateLayersOrder = function () {
                 }
                 this._layersIndex[layerIndex].push(this._layers[id]);
             };
-        }, this
+        }
     );
 
     // on réordonne les couches entre elles dans la carte, à partir des zindex stockés ci-dessus.
     this._lastZIndex = 0;
-    var context = this;
-    // fonction de callback appelée au changement de zindex d'une couche
-    var updateLayersOrder = function (e) {
-        context._updateLayersOrder(e);
-    };
     this._layersOrder = [];
     for (var zindex in this._layersIndex) {
         if (this._layersIndex.hasOwnProperty(zindex)) {
@@ -838,7 +811,7 @@ LayerSwitcher.prototype._updateLayersOrder = function () {
                 if (this._layers[layers[l].layer.gpLayerId].onZIndexChangeEvent == null) {
                     this._layers[layers[l].layer.gpLayerId].onZIndexChangeEvent = layers[l].layer.on(
                         "change:zIndex",
-                        updateLayersOrder
+                        () => this._updateLayersOrder()
                     );
                 }
             }
@@ -960,11 +933,6 @@ LayerSwitcher.prototype._onDropLayerClick = function (e) {
 LayerSwitcher.prototype._onDragAndDropLayerClick = function () {
     // INFO : e.oldIndex et e.newIndex marchent en mode AMD mais pas Bundle.
     var map = this.getMap();
-    var context = this;
-    // fonction de callback appelée au changement de zindex d'une couche
-    var updateLayersOrder = function (e) {
-        context._updateLayersOrder(e);
-    };
 
     // on récupère l'ordre des div dans le contrôle pour réordonner les couches (avec zindex)
     var matchesLayers = document.querySelectorAll("div.GPlayerSwitcher_layer");
@@ -977,7 +945,7 @@ LayerSwitcher.prototype._onDragAndDropLayerClick = function () {
         var layer = this._layers[id].layer;
 
         // on commence par désactiver temporairement l'écouteur d'événements sur le changement de zindex.
-        ol.Observable.unByKey(this._layers[id].onZIndexChangeEvent);
+        olObservableUnByKey(this._layers[id].onZIndexChangeEvent);
         this._layers[id].onZIndexChangeEvent = null;
 
         if (layer.setZIndex) {
@@ -991,7 +959,7 @@ LayerSwitcher.prototype._onDragAndDropLayerClick = function () {
         if (this._layers[id].onZIndexChangeEvent == null) {
             this._layers[id].onZIndexChangeEvent = layer.on(
                 "change:zIndex",
-                updateLayersOrder
+                () => this._updateLayersOrder()
             );
         }
     }
@@ -1009,7 +977,7 @@ LayerSwitcher.prototype._onDragAndDropLayerClick = function () {
 LayerSwitcher.prototype._onMapMoveEnd = function (map) {
     // pour chaque couche de la map, on vérifie qu'elle soit toujours dans la visu (inRange)
     map.getLayers().forEach(
-        function (layer) {
+        (layer) => {
             var id = layer.gpLayerId;
             if (this._layers[id]) {
                 var layerOptions = this._layers[id];
@@ -1026,8 +994,7 @@ LayerSwitcher.prototype._onMapMoveEnd = function (map) {
                     layerDiv.classList.add("outOfRange");
                 }
             }
-        },
-        this
+        }
     );
 };
 
@@ -1044,12 +1011,11 @@ LayerSwitcher.prototype._onMapMoveEnd = function (map) {
 LayerSwitcher.prototype.getLayerDOMId = function (olLayer) {
     var foundId = null;
 
-    this.getMap().getLayers().forEach(function (layer) {
+    this.getMap().getLayers().forEach((layer) => {
         if (layer == olLayer) { // FIXME object comparison
             foundId = layer.hasOwnProperty("gpLayerId") ? layer.gpLayerId : null;
         }
-    },
-    this);
+    });
 
     // TODO : recuperer "GPlayerSwitcher_ID" depuis une constante
     return foundId !== null ? this._addUID("GPlayerSwitcher_ID_" + foundId) : null;
@@ -1076,7 +1042,7 @@ LayerSwitcher.prototype.isInRange = function (layer, map) {
     // check if map extent intersects layer extent (if defined)
     var mapExtent = map.getView().calculateExtent(map.getSize());
     var layerExtent = layer.getExtent();
-    if (layerExtent && !ol.extent.intersects(mapExtent, layerExtent)) {
+    if (layerExtent && !olIntersects(mapExtent, layerExtent)) {
         return false;
     }
 
@@ -1106,3 +1072,8 @@ LayerSwitcher.prototype.getLayerInfo = function (layer) {
 };
 
 export default LayerSwitcher;
+
+// Expose LayerSwitcher as ol.control.LayerSwitcher (for a build bundle)
+if (window.ol && window.ol.control) {
+    window.ol.control.LayerSwitcher = LayerSwitcher;
+}

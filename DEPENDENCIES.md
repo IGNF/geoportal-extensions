@@ -3,13 +3,13 @@
 * openlayers
 
 last
-└── openlayers@4.6.5
+└── openlayers@5.3.0
 
 * proj4
 
-└─┬ proj4@2.4.4
-  ├── mgrs@1.0.0
-  └── wkt-parser@1.2.0
+last
+└── proj4@2.5.0
+
 
 * proj4leaflet
 
@@ -54,4 +54,4 @@ last
 
 * "olms"
 
-└── "ol-mapbox-style@3.0.1"
+└── "ol-mapbox-style@3.6.2"
