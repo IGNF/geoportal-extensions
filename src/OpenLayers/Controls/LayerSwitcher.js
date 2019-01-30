@@ -1,9 +1,5 @@
 // import CSS
-import "../../../res/Common/GPgeneralWidget.css";
-import "../../../res/Common/GPwaiting.css";
-import "../../../res/Common/GPlayerSwitcher.css";
-import "../../../res/OpenLayers/GPgeneralWidgetOpenLayers.css";
-import "../../../res/OpenLayers/Controls/LayerSwitcher/GPlayerSwitcherOpenLayers.css";
+import "../CSS/Controls/LayerSwitcher/GPlayerSwitcherOpenLayers.css";
 // import OpenLayers
 import { inherits as olInherits } from "ol/util";
 import Control from "ol/control/Control";

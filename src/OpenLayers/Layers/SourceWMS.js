@@ -1,5 +1,5 @@
 /* globals self */
-import Gp from "gp";
+import Gp from "geoportal-access-lib";
 // import OpenLayers
 import {inherits as olInherits} from "ol/util";
 import TileWMSSource from "ol/source/TileWMS";

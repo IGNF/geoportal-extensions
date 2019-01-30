@@ -1,8 +1,5 @@
 // import CSS
-import "../../../res/Common/GPgeneralWidget.css";
-import "../../../res/Common/GPwaiting.css";
-import "../../../res/OpenLayers/GPgeneralWidgetOpenLayers.css";
-import "../../../res/OpenLayers/Controls/LayerImport/GPimportOpenLayers.css";
+import "../CSS/Controls/LayerImport/GPimportOpenLayers.css";
 // import OpenLayers
 import { inherits as olInherits } from "ol/util";
 import Control from "ol/control/Control";
@@ -39,7 +36,7 @@ import {
 // import olms
 import olms from "olms";
 // import geoportal library access
-import Gp from "gp";
+import Gp from "geoportal-access-lib";
 // import local
 import Editor from "./Editor";
 import Markers from "./Utils/Markers";

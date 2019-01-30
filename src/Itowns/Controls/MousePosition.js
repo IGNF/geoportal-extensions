@@ -1,6 +1,6 @@
 import proj4 from "proj4";
 import Logger from "../../Common/Utils/LoggerByDefault";
-import Gp from "gp";
+import Gp from "geoportal-access-lib";
 import GlobeViewExtended from "../GlobeViewExtended";
 import Utils from "../../Common/Utils";
 import RightManagement from "../../Common/Utils/CheckRightManagement";

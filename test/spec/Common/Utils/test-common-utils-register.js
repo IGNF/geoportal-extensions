@@ -29,7 +29,7 @@ describe("-- Test Register --", function () {
             expect(Register.get("TOTO:1091957")).to.be.undefined;
         });
 
-        it("with good param, return an IGNF definition", function () {
+        xit("with good param, return an IGNF definition", function () {
             expect(Register.get("IGNF:AMST63")).not.to.be.undefined;
         });
 
@@ -50,7 +50,7 @@ describe("-- Test Register --", function () {
         it("CRS:84, return a CRS definition", function () {
             expect(Register.CRS[84]).not.to.be.undefined;
         });
-        it("IGNF:AMST63, return a IGNF definition", function () {
+        xit("IGNF:AMST63, return a IGNF definition", function () {
             expect(Register.IGNF.AMST63).not.to.be.undefined;
         });
     });
@@ -69,7 +69,7 @@ describe("-- Test Register --", function () {
             expect(proj4.defs('EPSG:310642813')).not.to.be.undefined;
         });
 
-        it("IGNF:AMST63 is defined", function () {
+        xit("IGNF:AMST63 is defined", function () {
             expect(proj4.defs('IGNF:AMST63')).not.to.be.undefined;
         });
 

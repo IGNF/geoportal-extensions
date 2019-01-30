@@ -1,4 +1,4 @@
-import Gp from "gp";
+import Gp from "geoportal-access-lib";
 import L from "leaflet";
 import "leaflet-draw";
 import Logger from "../../Common/Utils/LoggerByDefault";

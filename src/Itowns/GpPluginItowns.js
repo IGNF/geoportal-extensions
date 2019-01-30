@@ -8,11 +8,15 @@ import GeoportalWMTS from "./Layer/LayerWMTS";
 import GeoportalWMS from "./Layer/LayerWMS";
 import GeoportalElevation from "./Layer/LayerElevation";
 import GlobeViewExtended from "./GlobeViewExtended";
-import "./CSS";
+
+// CSS communes aux extensions !
+import "../Common/Styles";
+import "./Styles";
+
 import "../Common/Utils/AutoLoadConfig";
 import Pkg from "../../package";
 
-export * from "gp";
+export * from "geoportal-access-lib";
 
 // Adds the extensions properties in the Gp namespace
 export {default as LayerUtils} from "../Common/Utils/LayerUtils";

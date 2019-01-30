@@ -1,6 +1,8 @@
 {{#extend "ol-sample-modules-layout"}}
 
 {{#content "vendor"}}
+        <link rel="stylesheet" href="{{ baseurl }}/dist/openlayers/modules/ElevationPath{{ mode }}.css" />
+        <script src="{{ baseurl }}/dist/openlayers/modules/ElevationPath{{ mode }}.js"></script>
         <script src="{{ resources }}/vendor/amCharts-min.js"></script>
 {{/content}}
 
@@ -13,6 +15,9 @@
             div#map {
                 width: 100%;
                 height: 500px;
+                background-image:url("{{ resources }}/geoportail-waiting.gif");
+                background-position:center center;
+                background-repeat:no-repeat;
             }
         </style>
 {{/content}}

@@ -36,15 +36,16 @@ import Legend from "./Controls/Editor/Legend";
 import Group from "./Controls/Editor/Group";
 import Editor from "./Controls/Editor";
 
-// TODO CSS communes aux extensions !
-// import "./CSS";
+// CSS communes aux extensions !
+import "../Common/Styles";
+import "./Styles";
 
 // Les autoload...
 import "../Common/Utils/AutoLoadConfig";
 import "../Common/Utils/AutoLoadCRS";
 
 // Export des services
-export * from "gp";
+export * from "geoportal-access-lib";
 
 // Rajout des propriétés de l'extension dans le namespace Gp
 export const olExtVersion = Pkg.olExtVersion;

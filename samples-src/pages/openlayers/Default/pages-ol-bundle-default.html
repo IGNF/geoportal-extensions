@@ -49,8 +49,8 @@
                 map.addControl(layerImport);
                 var layerSwitcher = new ol.control.LayerSwitcher();
                 map.addControl(layerSwitcher);
-                // var mp = new ol.control.GeoportalMousePosition();
-                // map.addControl(mp);
+                var mp = new ol.control.GeoportalMousePosition();
+                map.addControl(mp);
                 var route = new ol.control.Route();
                 map.addControl(route);
                 var reverse = new ol.control.ReverseGeocode({});

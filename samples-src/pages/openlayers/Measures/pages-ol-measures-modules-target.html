@@ -1,5 +1,16 @@
 {{#extend "ol-sample-modules-layout"}}
 
+{{#content "vendor"}}
+        <link rel="stylesheet" href="{{ baseurl }}/dist/openlayers/modules/LayerSwitcher{{ mode }}.css" />
+        <script src="{{ baseurl }}/dist/openlayers/modules/LayerSwitcher{{ mode }}.js"></script>
+        <link rel="stylesheet" href="{{ baseurl }}/dist/openlayers/modules/MeasureArea{{ mode }}.css" />
+        <script src="{{ baseurl }}/dist/openlayers/modules/MeasureArea{{ mode }}.js"></script>
+        <link rel="stylesheet" href="{{ baseurl }}/dist/openlayers/modules/MeasureLength{{ mode }}.css" />
+        <script src="{{ baseurl }}/dist/openlayers/modules/MeasureLength{{ mode }}.js"></script>
+        <link rel="stylesheet" href="{{ baseurl }}/dist/openlayers/modules/MeasureAzimuth{{ mode }}.css" />
+        <script src="{{ baseurl }}/dist/openlayers/modules/MeasureAzimuth{{ mode }}.js"></script>
+{{/content}}
+
 {{#content "head"}}
         <title>Sample openlayers MeasureArea, MeasureLength and MeasureAzimuth</title>
 {{/content}}

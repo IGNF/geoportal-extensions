@@ -1,9 +1,5 @@
 // import CSS
-import "../../../res/Common/GPgeneralWidget.css";
-import "../../../res/Common/GPwaiting.css";
-import "../../../res/Common/GProute.css";
-import "../../../res/OpenLayers/GPgeneralWidgetOpenLayers.css";
-import "../../../res/OpenLayers/Controls/Route/GProuteOpenLayers.css";
+import "../CSS/Controls/Route/GProuteOpenLayers.css";
 // import OpenLayers
 import {inherits as olInherits} from "ol/util";
 import Control from "ol/control/Control";
@@ -20,7 +16,7 @@ import {
 } from "ol/style";
 import { transformExtent as olTransformExtentProj } from "ol/proj";
 // import geoportal library access
-import Gp from "gp";
+import Gp from "geoportal-access-lib";
 // import local
 import Logger from "../../Common/Utils/LoggerByDefault";
 import Utils from "../../Common/Utils";

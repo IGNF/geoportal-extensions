@@ -1,0 +1,98 @@
+div[id^=GPelevationPath-] {
+  bottom: 48px;
+  left: 10px;
+}
+
+/* Showing/hiding elevationPath panel */
+
+label[id^=GPshowElevationPathPicto] {
+  display: inline-block;
+}
+
+input[id^=GPshowElevationPath-] + label {
+  display: block;
+  /*visibility: visible;*/
+}
+
+input[id^=GPshowElevationPath-]:checked + label {
+  background-color: rgba(0,60,136,0.5);
+  /* on garde le picto toujours visible... */
+  /* display: none; */
+}
+
+input[id^=GPshowElevationPath-] + label + div {
+  display: none;
+  /* visibility: hidden; */
+}
+
+input[id^=GPshowElevationPath-]:checked + label + div {
+  display: block;
+  /* visibility: visible; */
+}
+
+span[id^=GPshowElevationPathOpen] {
+  background-image: url("img/GPshowElevationPath.png");
+}
+
+/* Panel */
+
+[id^=GPelevationPathPanelClose] {
+  background-image: url("img/GPshowElevationPath.png");
+}
+
+div[id^=GPelevationPathPanelReduce] {
+  background-image: url("img/GPshowElevationPath.png");
+}
+
+div[id^=GPelevationPathPanelInfo] {
+  background-image: url("img/GPshowElevationPath.png");
+}
+
+[id^=GPelevationPathPanel-] {
+  position : relative;
+  top : 6px;
+  left: 32px;
+  width: 280px;
+}
+
+/* ELEVATION PATH DISPLAY */
+
+[id^=GPelevationPathProfil] {
+  height: 150px;
+  width: inherit;
+}
+
+.GPpanelHeader {
+  padding: unset;
+}
+
+/*
+@media (min-width:720px) and (min-height:720px) {
+
+[id^=GPelevationPathPanel] {
+top: 15px;
+left: 15px;
+}
+
+}
+
+@media (min-width:720px) and (min-height:520px) {
+
+[id^=GPelevationPathPanel] {
+width: 460px;
+}
+
+[id^=GPelevationPathProfil] {
+height: 220px;
+}
+
+}
+
+@media (max-width:560px), (max-height:340px) {
+
+[id^=GPelevationPathPanel] {
+display: none !important;
+}
+
+}
+*/

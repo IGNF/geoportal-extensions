@@ -1,5 +1,10 @@
 {{#extend "ol-sample-modules-layout"}}
 
+{{#content "vendor"}}
+        <link rel="stylesheet" href="{{ baseurl }}/dist/openlayers/modules/GeoportalMousePosition{{ mode }}.css" />
+        <script src="{{ baseurl }}/dist/openlayers/modules/GeoportalMousePosition{{ mode }}.js"></script>
+{{/content}}
+
 {{#content "head"}}
         <title>Sample openlayers MousePosition</title>
 {{/content}}

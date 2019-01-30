@@ -1,10 +1,6 @@
 /* globals AmCharts, d3 */
 // import CSS
-import "../../../res/Common/GPgeneralWidget.css";
-import "../../../res/Common/GPwaiting.css";
-import "../../../res/Common/GPelevationPath.css";
-import "../../../res/OpenLayers/GPgeneralWidgetOpenLayers.css";
-import "../../../res/OpenLayers/Controls/ElevationPath/GPelevationPathOpenLayers.css";
+import "../CSS/Controls/ElevationPath/GPelevationPathOpenLayers.css";
 // import OpenLayers
 import {inherits as olInherits} from "ol/util";
 import Control from "ol/control/Control";
@@ -24,7 +20,7 @@ import Feature from "ol/Feature";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
 // import geoportal library access
-import Gp from "gp";
+import Gp from "geoportal-access-lib";
 // import local
 import Utils from "../../Common/Utils";
 import Logger from "../../Common/Utils/LoggerByDefault";

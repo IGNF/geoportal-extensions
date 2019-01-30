@@ -1,7 +1,7 @@
 /* global describe, it */
 import Logger from "../../../../src/Common/Utils/LoggerByDefault";
 import MousePosition from "../../../../src/Leaflet/Controls/MousePosition";
-import Gp from "gp";
+import Gp from "geoportal-access-lib";
 
 import { assert, expect, should } from "chai";
 should();

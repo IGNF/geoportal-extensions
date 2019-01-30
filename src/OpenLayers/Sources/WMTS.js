@@ -7,7 +7,7 @@ import {
     intersects as olIntersects
 } from "ol/extent";
 // import geoportal library access
-import Gp from "gp";
+import Gp from "geoportal-access-lib";
 // import local
 import Utils from "../../Common/Utils";
 

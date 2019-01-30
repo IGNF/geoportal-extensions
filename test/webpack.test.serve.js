@@ -19,7 +19,7 @@ module.exports = {
     resolve : {
         alias : {
             proj4 : path.resolve("..", "node_modules", "proj4", "dist", "proj4.js"),
-            gp : path.resolve("..", "node_modules", "geoportal-access-lib", "dist", "GpServices-src.js"),
+            "geoportal-access-lib" : path.resolve("..", "node_modules", "geoportal-access-lib", "src", "Gp.js"),
             sortable : path.resolve("..", "node_modules", "sortablejs", "Sortable.js")
         }
     },

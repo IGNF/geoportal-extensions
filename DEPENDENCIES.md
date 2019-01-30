@@ -1,15 +1,19 @@
-# DEPENDENCIES (02/07/2018)
+# DEPENDENCIES (01/02/2019)
 
 * openlayers
 
 last
 └── openlayers@5.3.0
 
+* "olms"
+
+last
+└── "ol-mapbox-style@3.6.2"
+
 * proj4
 
 last
 └── proj4@2.5.0
-
 
 * proj4leaflet
 
@@ -26,7 +30,8 @@ last
 
 * geoportal-access-lib
 
-└── geoportal-access-lib@2.0.0
+last
+└── geoportal-access-lib@2.1.1
 
 * leaflet
 
@@ -38,20 +43,20 @@ last
 
 * "itowns"
 
+last
 └── "itowns@2.3.0"
 
 * "loglevel"
 
+last
 └── "loglevel@1.6.1"
 
 * "request"
 
+last
 └── "request@2.83.0"
 
 * "xmldom"
 
+last
 └── "xmldom@0.1.27"
-
-* "olms"
-
-└── "ol-mapbox-style@3.6.2"

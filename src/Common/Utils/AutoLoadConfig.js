@@ -1,4 +1,4 @@
-import Gp from "gp";
+import Gp from "geoportal-access-lib";
 
 (function () {
     var scripts = document.getElementsByTagName("script");

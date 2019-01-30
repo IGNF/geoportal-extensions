@@ -1,9 +1,5 @@
 // import CSS
-import "../../../res/Common/GPgeneralWidget.css";
-import "../../../res/Common/GPwaiting.css";
-import "../../../res/Common/GPisochron.css";
-import "../../../res/OpenLayers/GPgeneralWidgetOpenLayers.css";
-import "../../../res/OpenLayers/Controls/Isochrone/GPisochronOpenLayers.css";
+import "../CSS/Controls/Isochrone/GPisochronOpenLayers.css";
 // import OpenLayers
 import {inherits as olInherits} from "ol/util";
 import Control from "ol/control/Control";
@@ -16,7 +12,7 @@ import {
     Style
 } from "ol/style";
 // import geoportal library access
-import Gp from "gp";
+import Gp from "geoportal-access-lib";
 // import local
 import Utils from "../../Common/Utils";
 import Logger from "../../Common/Utils/LoggerByDefault";

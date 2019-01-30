@@ -1,7 +1,34 @@
-
 # Compilation du projet
+
 [![WEBPACK build](https://img.shields.io/badge/build%20with-WEBPACK-brightgreen.svg)](https://img.shields.io/badge/build%20with-WEBPACK-brightgreen.svg)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com)
+
+<!-- toc -->
+
+- [Prérequis (outils)](#prerequis-outils)
+  * [Réglage des outils](#reglage-des-outils)
+    + [Gestion des fins de lignes (Git)](#gestion-des-fins-de-lignes-git)
+    + [Configuration du proxy d'entreprise](#configuration-du-proxy-dentreprise)
+  * [Utilisation du terminal (Console Git ou NodeJS)](#utilisation-du-terminal-console-git-ou-nodejs)
+- [Commandes via NPM](#commandes-via-npm)
+  * [Installation des dépendances](#installation-des-dependances)
+  * [Installation d'une version spécifique d'une dépendance](#installation-dune-version-specifique-dune-dependance)
+- [Compilation](#compilation)
+- [JSDOC](#jsdoc)
+  * [Construction de la JSDOC](#construction-de-la-jsdoc)
+  * [Ouvrir la JSDOC sur un navigateur](#ouvrir-la-jsdoc-sur-un-navigateur)
+- [Les exemples](#les-exemples)
+  * [Construction des exemples](#construction-des-exemples)
+  * [Ouvrir les exemples sur un navigateur](#ouvrir-les-exemples-sur-un-navigateur)
+- [Les tests](#les-tests)
+  * [Unitaires](#unitaires)
+  * [Fonctionnels](#fonctionnels)
+  * [Couverture du code](#couverture-du-code)
+  * [Tests de rendu](#tests-de-rendu)
+- [Carte des sources et des dépendances](#carte-des-sources-et-des-dependances)
+  * [Analyse (The Official Analyse Tool)](#analyse-the-official-analyse-tool)
+
+<!-- tocstop -->
 
 ## Prérequis (outils)
 
@@ -108,7 +135,7 @@ Upgrade de version :
     npm install openlayers@4.4.4 --no-save
 
 
-### Compilation
+## Compilation
 
 **ouvrir une console (ex. avec openlayers) :**
 
@@ -139,9 +166,9 @@ Il est possible de lancer la génération des bundles pour l'ensemble des extens
     // génération des bundles en mode sources
     npm run build
 
-#### JSDOC
+## JSDOC
 
-#### Construction de la JSDOC
+### Construction de la JSDOC
 
 La jsdoc est générée lors du build dans le répertoire *jsdoc*.
 
@@ -152,7 +179,7 @@ Sous *Windows*, il est possible que la *JSDoc* ne soit pas compilée correctemen
 
     node_modules\.bin\jsdoc -c jsdoc.json
 
-#### Ouvrir la JSDOC sur un navigateur
+### Ouvrir la JSDOC sur un navigateur
 
 **ouvrir une console :**
 
@@ -162,9 +189,9 @@ Sous *Windows*, il est possible que la *JSDoc* ne soit pas compilée correctemen
 Le navigateur s'ouvre sur la page de la JSDOC sur l'URL suivante :
 http://localhost:9001/
 
-### Les exemples
+## Les exemples
 
-#### Construction des exemples
+### Construction des exemples
 
 Les exemples sont générées lors du build dans le répertoire *samples*.
 Mais il est aussi possible de les executer autrement :
@@ -175,7 +202,7 @@ Mais il est aussi possible de les executer autrement :
     ou npm run sample -- --env.production --env.clean
     ou npm run sample -- --env.itowns
 
-#### Ouvrir les exemples sur un navigateur
+### Ouvrir les exemples sur un navigateur
 
 **ouvrir une console :**
 
@@ -185,15 +212,15 @@ Mais il est aussi possible de les executer autrement :
 Le navigateur s'ouvre sur la page des exemples sur l'URL suivante :
 http://localhost:9001/
 
-### Les tests
+## Les tests
 
-#### Unitaires
+### Unitaires
 
 **ouvrir une console :**
 
     npm run test
 
-#### Fonctionnels
+### Fonctionnels
 
 **ouvrir une console :**
 
@@ -205,7 +232,7 @@ http://localhost:9001/
 **Note**
 > les tests unitaires sont disponibles aussi sur la page de Tests
 
-#### Couverture du code
+### Couverture du code
 
 **ouvrir une console :**
 
@@ -241,7 +268,7 @@ Explications :
     http://istqbexamcertification.com/what-is-decision-coverage-its-advantages-and-disadvantages/
     (...)
 
-#### Tests de rendu
+### Tests de rendu
 
 **ouvrir une console :**
 
@@ -257,12 +284,12 @@ cf. https://github.com/webpack-contrib/webpack-bundle-analyzer
 **ouvrir une console :**
 
     sudo npm install -g webpack-bundle-analyzer
-    webpack-bundle-analyzer map-ol.json
+    webpack-bundle-analyzer build/map/map-ol.json
 
 Le navigateur s'ouvre  sur l'URL suivante :
 http://localhost:8888/
 
-## Analyse (The Official Analyse Tool)
+### Analyse (The Official Analyse Tool)
 
 Aller sur l'URL suivante :
 http://webpack.github.io/analyse/

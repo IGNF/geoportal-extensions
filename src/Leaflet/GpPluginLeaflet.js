@@ -3,11 +3,14 @@ import Controls from "./Controls/Controls";
 import ElevationPath from "./Controls/ElevationPath";
 import Layers from "./Layers/Layers";
 import CRS from "./CRS/CRS";
-import "./CSS";
 import "../Common/Utils/AutoLoadConfig";
 import Pkg from "../../package";
 
-export * from "gp";
+// CSS communes aux extensions !
+import "../Common/Styles";
+import "./Styles";
+
+export * from "geoportal-access-lib";
 
 // Rajout des propriétés de l'extension dans le namespace Gp
 export const leafletExtVersion = Pkg.leafletExtVersion;

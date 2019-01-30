@@ -1,5 +1,36 @@
 {{#extend "ol-sample-modules-layout"}}
 
+{{#content "vendor"}}
+        <link rel="stylesheet" href="{{ baseurl }}/dist/openlayers/modules/LayerSwitcher{{ mode }}.css" />
+        <script src="{{ baseurl }}/dist/openlayers/modules/LayerSwitcher{{ mode }}.js"></script>
+        <link rel="stylesheet" href="{{ baseurl }}/dist/openlayers/modules/Drawing{{ mode }}.css" />
+        <script src="{{ baseurl }}/dist/openlayers/modules/Drawing{{ mode }}.js"></script>
+        <link rel="stylesheet" href="{{ baseurl }}/dist/openlayers/modules/Isocurve{{ mode }}.css" />
+        <script src="{{ baseurl }}/dist/openlayers/modules/Isocurve{{ mode }}.js"></script>
+        <link rel="stylesheet" href="{{ baseurl }}/dist/openlayers/modules/LayerImport{{ mode }}.css" />
+        <script src="{{ baseurl }}/dist/openlayers/modules/LayerImport{{ mode }}.js"></script>
+        <link rel="stylesheet" href="{{ baseurl }}/dist/openlayers/modules/GeoportalMousePosition{{ mode }}.css" />
+        <script src="{{ baseurl }}/dist/openlayers/modules/GeoportalMousePosition{{ mode }}.js"></script>
+        <link rel="stylesheet" href="{{ baseurl }}/dist/openlayers/modules/Route{{ mode }}.css" />
+        <script src="{{ baseurl }}/dist/openlayers/modules/Route{{ mode }}.js"></script>
+        <link rel="stylesheet" href="{{ baseurl }}/dist/openlayers/modules/ReverseGeocode{{ mode }}.css" />
+        <script src="{{ baseurl }}/dist/openlayers/modules/ReverseGeocode{{ mode }}.js"></script>
+        <link rel="stylesheet" href="{{ baseurl }}/dist/openlayers/modules/SearchEngine{{ mode }}.css" />
+        <script src="{{ baseurl }}/dist/openlayers/modules/SearchEngine{{ mode }}.js"></script>
+        <link rel="stylesheet" href="{{ baseurl }}/dist/openlayers/modules/GetFeatureInfo{{ mode }}.css" />
+        <script src="{{ baseurl }}/dist/openlayers/modules/GetFeatureInfo{{ mode }}.js"></script>
+        <link rel="stylesheet" href="{{ baseurl }}/dist/openlayers/modules/MeasureLength{{ mode }}.css" />
+        <script src="{{ baseurl }}/dist/openlayers/modules/MeasureLength{{ mode }}.js"></script>
+        <link rel="stylesheet" href="{{ baseurl }}/dist/openlayers/modules/MeasureArea{{ mode }}.css" />
+        <script src="{{ baseurl }}/dist/openlayers/modules/MeasureArea{{ mode }}.js"></script>
+        <link rel="stylesheet" href="{{ baseurl }}/dist/openlayers/modules/MeasureAzimuth{{ mode }}.css" />
+        <script src="{{ baseurl }}/dist/openlayers/modules/MeasureAzimuth{{ mode }}.js"></script>
+        <link rel="stylesheet" href="{{ baseurl }}/dist/openlayers/modules/ElevationPath{{ mode }}.css" />
+        <script src="{{ baseurl }}/dist/openlayers/modules/ElevationPath{{ mode }}.js"></script>
+        <link rel="stylesheet" href="{{ baseurl }}/dist/openlayers/modules/GeoportalAttribution{{ mode }}.css" />
+        <script src="{{ baseurl }}/dist/openlayers/modules/GeoportalAttribution{{ mode }}.js"></script>
+{{/content}}
+
 {{#content "head"}}
         <title>Sample openlayers</title>
 {{/content}}
@@ -49,8 +80,8 @@
                 map.addControl(layerImport);
                 var layerSwitcher = new ol.control.LayerSwitcher();
                 map.addControl(layerSwitcher);
-                // var mp = new ol.control.GeoportalMousePosition();
-                // map.addControl(mp);
+                var mp = new ol.control.GeoportalMousePosition();
+                map.addControl(mp);
                 var route = new ol.control.Route();
                 map.addControl(route);
                 var reverse = new ol.control.ReverseGeocode({});

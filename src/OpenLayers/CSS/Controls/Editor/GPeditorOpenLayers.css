@@ -1,0 +1,397 @@
+.GPimportMapBoxpRoot {
+    padding: 5px;
+}
+
+.GPEditorMapBoxContainer {
+    width: 100%;
+    height: auto;
+    position: relative;
+    padding: 5px;
+    box-sizing: border-box;
+    box-shadow: 0 0 5px #000000;
+    border-style: solid;
+    border-width: 1px;
+    border-color: lightskyblue;
+    border-radius: 5px;
+}
+
+.GPEditorMapBoxSep {
+    display: block;
+    width: 50%;
+    border-style: double;
+    border-width: 4px;
+    border-color: lightskyblue;
+}
+
+.GPEditorMapBoxLayersTitle,
+.GPEditorMapBoxThemesTitle {
+    padding: 5px;
+    font-style: italic;
+    font-weight: bold;
+}
+
+/* desactive un composant */
+.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+/*******************************************************************************
+GROUPS
+*******************************************************************************/
+.GPEditorMapBoxGroupContainer {}
+
+/* FIXME : modifier la couleur de la puce ? */
+.GPEditorMapBoxGroupDetails {
+    border-style: dotted;
+    border-width: 1px;
+    border-radius: 5px;
+    border-color: lightskyblue
+}
+
+.GPEditorMapBoxGroupSummary {}
+
+/*******************************************************************************
+LAYERS
+*******************************************************************************/
+
+/* - container principal */
+.GPEditorMapBoxLayerContainer {
+    width: 100%;
+    min-height: 28px;
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    /* background-color: red; */
+}
+/* - container titre */
+.GPEditorMapBoxLayerTitleContainer {
+    width: inherit;
+    min-height: 28px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    /* background-color: grey; */
+}
+.GPEditorMapBoxLayerImageInput {
+    display: none;
+}
+.GPEditorMapBoxLayerImageLabel {
+    min-width: 24px;
+    min-height: 28px;
+    cursor: pointer;
+    /* position: absolute; */
+    background-image: url("img/GPEditorLayerTools.png");
+    background-position: -56px 0;
+    /* background-color: green; */
+}
+input[type="checkbox"]:checked + .GPEditorMapBoxLayerImageLabel {
+    transform: rotate(90deg);
+}
+.GPEditorMapBoxLayerTypeImage {
+    min-width: 30px;
+    min-height: 30px;
+    margin-right: 5px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    /* position: absolute; */
+    /* background-image: url("img/GPEditorLayerTypeIcon.svg"); */
+    background-image: url("img/GPEditorLayerTypeIcon.png");
+    background-position: 0px 0;
+    box-sizing: border-box;
+    box-shadow: 2px 2px 1px lightgrey;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    border-color: gray;
+    /* background-color: blue; */
+}
+.GPEditorMapBoxLayerTitleInput {
+    display: none;
+}
+.GPEditorMapBoxLayerTitleLabel {
+    width: inherit;
+    /* margin-inline-start: 28px; */
+    cursor: pointer;
+    /* background-color: yellow; */
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    border-color: gray;
+    box-shadow: 2px 2px 1px lightgrey;
+    padding: 5px;
+    margin-left: 5px;
+    word-break: break-word;
+}
+input[type="checkbox"]:checked + .GPEditorMapBoxLayerTitleLabel {
+    background-color: lightgrey;
+}
+
+/* - container legend */
+.GPEditorMapBoxLayerLegendContainer {
+
+}
+
+/* - container outils */
+.GPEditorMapBoxToolsContainer {
+    min-width: 28px;
+    height: 28px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    /* background-color: pink; */
+}
+.GPEditorMapBoxToolsVisibilityInput {
+    display: none;
+}
+.GPEditorMapBoxToolsVisibilityLabel {
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    /* position: absolute; */
+    background-image: url("img/GPEditorLayerTools.png");
+    background-position: -28px 0;
+    /* background-color: white; */
+}
+input[type="checkbox"]:checked + .GPEditorMapBoxToolsVisibilityLabel {
+  background-position: 0 0;
+}
+
+/*******************************************************************************
+ FILTERS
+*******************************************************************************/
+
+/* - container principal */
+.GPEditorMapBoxFilterContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    /* background-color: red; */
+    margin-left: 28px;
+}
+/* - container titre + editeur json */
+.GPEditorMapBoxFilterJsonContainer {
+    border-style: solid;
+    border-radius: 5px;
+    border-width: 1px;
+    padding: 5px;
+}
+.GPEditorMapBoxFilterTitleJson {
+
+}
+.GPEditorMapBoxFilterDisplayJson {
+    width: 175px;
+    height: 125px;
+    cursor: pointer;
+    overflow: scroll;
+    resize: vertical;
+}
+
+/* - container outils editions */
+.GPEditorMapBoxFilterToolsEditionContainer {
+    /* border-style: solid;
+    border-radius: 5px;
+    padding: 5px; */
+}
+    /* - container outils boutons enregister/annuler */
+.GPEditorMapBoxFilterToolsButtonsContainer {
+    /* border-style: solid;
+    border-radius: 5px;
+    padding: 5px; */
+}
+
+/*******************************************************************************
+ THEMES
+*******************************************************************************/
+
+/* - container principal */
+.GPEditorMapBoxThemesContainer {
+    width: 175px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    /* background-color: red; */
+}
+
+/* - container d'un theme */
+.GPEditorMapBoxThemeContainer {
+    width: inherit;
+    border-style: solid;
+    border-radius: 5px;
+    border-width: 1px;
+    padding: 5px;
+    margin: 5px;
+    text-align: center;
+}
+
+.GPEditorMapBoxThemeContainer:focus {
+    background-color: lightgrey;
+}
+
+.GPEditorMapBoxThemeImage {
+    width: 120px;
+    height: 60px;
+    cursor:pointer;
+}
+.GPEditorMapBoxThemeTitle {
+    padding: 5px;
+    cursor:pointer;
+}
+
+.GPEditorMapBoxThemeMessage {
+    font-style: italic;
+    color: red;
+}
+/*******************************************************************************
+ STYLES
+*******************************************************************************/
+
+/* - container principal */
+.GPEditorMapBoxStyleContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    /* background-color: red; */
+    margin-left: 28px;
+}
+/* - container titre + editeur json */
+.GPEditorMapBoxStyleJsonContainer {
+    border-style: solid;
+    border-radius: 5px;
+    border-width: 1px;
+    padding: 5px;
+}
+.GPEditorMapBoxStyleTitleJson {
+
+}
+.GPEditorMapBoxStyleJsonDisplay {
+    width: 175px;
+    height: 125px;
+    cursor: pointer;
+    overflow: scroll;
+    resize: vertical;
+}
+/* - container outils Scale */
+.GPEditorMapBoxStyleToolsScaleContainer {
+    width: min-content; /* FIXME */
+    border-style: solid;
+    border-radius: 5px;
+    border-width: 1px;
+    padding: 5px;
+}
+.GPEditorMapBoxStyleScaleTitle {}
+.GPEditorMapBoxStyleToolsScaleMaxContainer,
+.GPEditorMapBoxStyleToolsScaleMinContainer {
+    width: 175px;
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+.GPEditorMapBoxStyleScaleLabelMin {}
+.GPEditorMapBoxStyleScaleInputMin {}
+.GPEditorMapBoxStyleScaleLabelMax {}
+.GPEditorMapBoxStyleScaleInputMax {}
+
+/* - container outils editions */
+.GPEditorMapBoxStyleToolsEditionContainer {
+    /* border-style: solid;
+    border-radius: 5px;
+    padding: 5px; */
+}
+    /* - container outils boutons enregister/annuler */
+.GPEditorMapBoxStyleToolsButtonsContainer {
+    /* border-style: solid;
+    border-radius: 5px;
+    padding: 5px; */
+}
+
+/*******************************************************************************
+JSON display Editor
+*******************************************************************************/
+.gp-json-string { color: green; }
+.gp-json-number { color: darkorange; }
+.gp-json-boolean { color: blue; }
+.gp-json-null { color: magenta; }
+.gp-json-key { color: red; }
+
+
+/*******************************************************************************
+LEGEND
+*******************************************************************************/
+.GPEditorMapBoxLegendContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    margin-left: 28px;
+}
+
+.GPEditorMapBoxLegendRenderContainer {
+    display: inline-flex;
+    align-items: center;
+    width: 175px;
+    padding: 5px;
+    border-style: solid;
+    border-radius: 5px;
+    border-width: 1px;
+    overflow-y: auto;
+}
+
+.GPEditorMapBoxLegendInput {
+
+}
+.GPEditorMapBoxLegendRender {
+    min-width: 28px;
+    min-height: 28px;
+    border-color: gray;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 1px lightgrey;
+    cursor: pointer;
+}
+
+.GPEditorMapBoxLegendTitle {
+    margin-left: 10px;
+}
+
+.legend-background {}
+
+.legend-fill {}
+
+.legend-line {}
+
+.legend-icon {}
+
+.legend-text {}
+
+.legend-unknow,
+.legend-not-implemented {
+    background-color: #FFFFFF;
+}
+
+.legend-unknow:before {
+    content: '\2753';
+    color: red;
+    font-size: 15px;
+}
+.legend-not-implemented:before {
+    content: '\2718';
+    color: red;
+    font-size: 15px;
+}
+
+.legend-circle {
+    border-width: 3px;
+    border-style: solid;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}

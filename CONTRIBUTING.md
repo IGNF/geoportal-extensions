@@ -2,6 +2,16 @@
 
 Si vous souhaitez contribuer au code des extensions Géoportail, voici quelques conseils pratiques et règles à suivre.
 
+<!-- toc -->
+
+- [Ouverture d'un ticket (issue)](#ouverture-dun-ticket-issue)
+- [Ouvrir une pull request (PR)](#ouvrir-une-pull-request-pr)
+  * [On «fork» le projet](#on-%C2%ABfork%C2%BB-le-projet)
+  * [On code...](#on-code)
+  * [On soumet une PR...](#on-soumet-une-pr)
+- [Liens utiles](#liens-utiles)
+
+<!-- tocstop -->
 
 ## Ouverture d'un ticket (issue)
 
@@ -45,7 +55,7 @@ cf. [COMPILE.md](COMPILE.md) pour plus d'infos.
 
 Les commandes :
 
-``` bash
+```
 npm run build[:dev|:prod|:ol[:prod]|:leaflet[:prod]|:itowns[:prod]|:mix[:prod]]
 ```
 
@@ -53,7 +63,7 @@ Vous permettent de générer les binaires de l'extension cible et de les placer 
 
 La commande :
 
-``` bash
+```
 npm run test[:serve]
 ```
 
@@ -62,7 +72,7 @@ Lance un navigateur avec les pages d'exemples servies sur l'adresse http://local
 
 - Suivez les règles de codage du projet. Elles sont définies dans le fichier : .eslintrc (style et convention de codage + syntaxe javascript). Vous pouvez vérifier le bon respect de ces règles en lançant la tache :
 
-``` bash
+```
 npm run build:[ol|leaflet|itowns]
 ```
 
@@ -75,7 +85,7 @@ npm run build:[ol|leaflet|itowns]
 
 La commande
 
-``` bash
+```
 npm run doc:serve
 ```
 

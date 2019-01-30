@@ -22,14 +22,14 @@ Ces extensions proposent des classes et widgets utilisables en complément de la
 
 ## LEAFLET
 
-Voir le détail des [fonctionnalités proposées par l'extension Géoportail pour Leaflet](README-leaflet.md)
+Voir le détail des [fonctionnalités proposées par l'extension Géoportail pour Leaflet](doc/README-leaflet.md)
 
 
 ## OPENLAYERS
 
-Voir le détail des [fonctionnalités proposées par l'extension Géoportail pour OpenLayers](README-openlayers.md)
+Voir le détail des [fonctionnalités proposées par l'extension Géoportail pour OpenLayers](doc/README-openlayers.md)
 
 
 ## ITOWNS
 
-Voir le détail des [fonctionnalités proposées par l'extension Géoportail pour iTowns](README-itowns.md)
+Voir le détail des [fonctionnalités proposées par l'extension Géoportail pour iTowns](doc/README-itowns.md)

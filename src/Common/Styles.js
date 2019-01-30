@@ -1,0 +1,17 @@
+import "./CSS/GPgeneralWidget.css";
+import "./CSS/GPwaiting.css";
+// widget
+import "./CSS/GProute.css";
+import "./CSS/GPisochron.css";
+import "./CSS/GPmeasureLength.css";
+import "./CSS/GPmeasureAzimuth.css";
+import "./CSS/GPmeasureArea.css";
+import "./CSS/GPmeasureToolTip.css";
+import "./CSS/GPelevationPath.css";
+import "./CSS/GPreverseGeocoding.css";
+import "./CSS/GPlayerSwitcher.css";
+import "./CSS/GPdrawing.css";
+import "./CSS/GPsearchEngine.css";
+import "./CSS/GPlocation.css";
+import "./CSS/GPgetFeatureInfo.css";
+import "./CSS/GPmousePosition.css";

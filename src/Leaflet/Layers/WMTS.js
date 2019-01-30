@@ -3,7 +3,7 @@
 * W106 - Identifier '_geoportal_id' is not in camel case
 */
 
-import Gp from "gp";
+import Gp from "geoportal-access-lib";
 import L from "leaflet";
 import Logger from "../../Common/Utils/LoggerByDefault";
 import LayerEvent from "./LayerEvent";

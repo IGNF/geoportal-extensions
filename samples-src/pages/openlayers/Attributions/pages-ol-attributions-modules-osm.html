@@ -1,7 +1,10 @@
 {{#extend "ol-sample-modules-layout"}}
 
 {{#content "vendor"}}
-
+        <link rel="stylesheet" href="{{ baseurl }}/dist/openlayers/modules/LayerSwitcher{{ mode }}.css" />
+        <script src="{{ baseurl }}/dist/openlayers/modules/LayerSwitcher{{ mode }}.js"></script>
+        <link rel="stylesheet" href="{{ baseurl }}/dist/openlayers/modules/GeoportalAttribution{{ mode }}.css" />
+        <script src="{{ baseurl }}/dist/openlayers/modules/GeoportalAttribution{{ mode }}.js"></script>
 {{/content}}
 
 {{#content "head"}}
@@ -27,7 +30,7 @@
 {{#content "js"}}
             <script type="text/javascript">
                 var map;
-                window.onload = function() {
+                var createMap = function() {
                     document.getElementById('map').style.backgroundImage = 'none';
 
                     var osm = new ol.layer.Tile({
@@ -100,6 +103,13 @@
                     var attribution = new ol.control.GeoportalAttribution({});
                     map.addControl(attribution);
                 };
+                Gp.Services.getConfig({
+                    serverUrl : "{{ resources }}/AutoConf.js",
+                    callbackSuffix : "",
+                    // apiKey: "jhyvi0fgmnuxvfv0zjzorvdn",
+                    timeOut : 20000,
+                    onSuccess : createMap
+                });
            </script>
 {{/content}}
 

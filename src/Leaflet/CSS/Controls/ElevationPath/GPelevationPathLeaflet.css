@@ -1,0 +1,91 @@
+div[id^=GPelevationPath-] {
+  top: 0; /*overwritten*/
+}
+
+/* Showing/hiding elevationPath panel */
+
+label[id^=GPshowElevationPathPicto] {
+  display: inline-block;
+}
+
+input[id^=GPshowElevationPath-] + label {
+  display: block;
+}
+
+input[id^=GPshowElevationPath-]:checked + label {
+  /* display: none; */
+}
+
+input[id^=GPshowElevationPath-] + label + div {
+  display: none;
+}
+
+input[id^=GPshowElevationPath-]:checked + label + div {
+  display: block;
+}
+
+span[id^=GPshowElevationPathOpen] {
+  background-image: url("img/GPshowElevationPath.png");
+}
+
+
+/* Panel */
+
+[id^=GPelevationPathPanelClose] {
+  background-image: url("img/GPshowElevationPath.png");
+}
+
+div[id^=GPelevationPathPanelReduce] {
+  background-image: url("img/GPshowElevationPath.png");
+}
+
+div[id^=GPelevationPathPanelInfo] {
+  background-image: url("img/GPshowElevationPath.png");
+}
+
+[id^=GPelevationPathPanel-] {
+  width: 280px;
+}
+
+/* ELEVATION PATH DISPLAY */
+
+[id^=GPelevationPathProfil] {
+  height: 150px;
+  width: inherit;
+  line-height: normal; /* surcharge leaflet container */
+}
+
+/*.GPpanelHeader {
+  padding: unset;
+}*/
+
+/*
+@media (min-width:720px) and (min-height:720px) {
+
+[id^=GPelevationPathPanel] {
+top: 15px;
+left: 15px;
+}
+
+}
+
+@media (min-width:720px) and (min-height:520px) {
+
+[id^=GPelevationPathPanel] {
+width: 460px;
+}
+
+[id^=GPelevationPathProfil] {
+height: 220px;
+}
+
+}
+
+@media (max-width:560px), (max-height:340px) {
+
+[id^=GPelevationPathPanel] {
+display: none !important;
+}
+
+}
+*/

@@ -11,7 +11,7 @@ import {
     Draw as DrawInteraction
 } from "ol/interaction";
 // import geoportal library access
-import Gp from "gp";
+import Gp from "geoportal-access-lib";
 // import local
 import Logger from "../Common/Utils/LoggerByDefault";
 import ProxyUtils from "../Common/Utils/ProxyUtils";

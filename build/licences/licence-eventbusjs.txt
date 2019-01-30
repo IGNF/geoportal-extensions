@@ -1,0 +1,7 @@
+/*!
+ * @overview  EventBus - Simple JavaScript class for managing events in JavaScript
+ * @copyright Copyright (c) 2014 Krasimir Tsonev
+ * @license   Licensed under MIT license
+ *            See https://raw.githubusercontent.com/krasimir/EventBus/master/LICENSE
+ * @version   v0.2.0
+ */

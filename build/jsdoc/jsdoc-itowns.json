@@ -1,0 +1,43 @@
+{
+    "tags": {
+        "allowUnknownTags": true
+    },
+    "plugins": ["plugins/markdown"],
+    "source": {
+        "include": [
+            "./src/Itowns",
+            "./src/Common",
+            "./build/jsdoc/README-itowns.md"
+        ]
+    },
+    "templates": {
+        "cleverLinks"           : false,
+        "applicationName"       : "Geoportal Extension for Itowns",
+        "monospaceLinks"        : false,
+        "dateFormat"            : "ddd MMM Do YYYY",
+        "outputSourceFiles"     : true,
+        "outputSourcePath"      : true,
+        "systemName"            : "Geoportal Extension for Itowns",
+        "footer"                : "API Extension version 1.0.0",
+        "copyright"             : "Geoportail - Copyright (c) IGN, released under the CECILL-B license",
+        "navType"               : "inline",
+        "theme"                 : "darkly",
+        "linenums"              : true,
+        "collapseSymbols"       : true,
+        "inverseNav"            : true,
+        "highlightTutorialCode" : false,
+        "syntaxTheme"           : "default"
+    },
+    "markdown": {
+        "parser": "gfm",
+        "hardwrap": true
+    },
+    "opts": {
+        "template" : "./build/jsdoc/jaguarjs-jsdoc",
+        "encoding" : "utf8",
+        "destination": "./jsdoc/itowns",
+        "recurse": true,
+        "lenient": true,
+        "verbose": true
+    }
+}

@@ -27,152 +27,204 @@ les fichiers sont suffixés avec le tag *modules*.
 
 ## Avancements
 
-- Migrer vers ol v5.3.0 : **OK**
-- Tests à jouer / à creer
-- Tests de rendu à jouer
-- Exemples sur les modules
+- [x] Migrer vers ol v5.3.0   : **OK**
 
-- Format **TODO**
+- [ ] Migrer vers webpack 4   : **TODO**
 
-    * ol.format.KMLExtended  :
-    * ol.source.WMTSExtended :
+- [ ] Tests à jouer / à creer : **TODO**
+    > test avec la variable ol sur les projections !
+    > couvrir et finir les tests sur le DOM !
 
-- Layer
+- [ ] Tests de rendu à jouer  : **TODO**
+
+- [x] Exemples sur les modules: **OK**
+    > **TODO** couvrir les fonctionnalités sur qq controles !
+
+- [ ] Format **TODO**
+
+    * [ ] ol.format.KMLExtended  :
+    * [ ] ol.source.WMTSExtended :
+
+- [x] Layer
 
     **OK pour les projections**
     > cf. CRS (mais en cours de la refonte du module)
 
-    * ol.source.GeoportalWMTS : **OK**
-    * ol.source.GeoportalWMS  : **OK**
-    * ol.layer.GeoportalWMTS  : **OK**
-    * ol.layer.GeoportalWMS   : **OK**
+    * [x] ol.source.GeoportalWMTS : **OK**
+    * [x] ol.source.GeoportalWMS  : **OK**
+    * [x] ol.layer.GeoportalWMTS  : **OK**
+    * [x] ol.layer.GeoportalWMS   : **OK**
 
     > **INFO**
     > si on n'a pas d'autoconf, une exception est lancée :
     "contract key configuration has to be loaded to load Geoportal layers"
 
-    > Hors un defaut d'autoconf ne devrait pas stopper l'affichage, mais on se doit
+    >  **EVOL** Hors un defaut d'autoconf ne devrait pas stopper l'affichage, mais on se doit
     d'affiche à minima une carte vide !
 
-- Controls
+- [x] Controls
 
-> **TODO** gestion des CSS communes aux extensions !?
+    > **OK** gestion des CSS communes aux extensions !?
 
-> **EVOL** Sans autoconf ou droit, il faudrait rendre les boutons de calculs non
-cliquable (ex. Route ou Iso)...
+    > **EVOL** Sans autoconf ou droit, il faudrait rendre les boutons de calculs non
+    cliquable (ex. Route ou Iso)...
 
-    * ol.control.LayerSwitcher : **OK**
+    * [x] ol.control.LayerSwitcher : **OK**
 
-    * ol.control.GeoportalAttribution : **OK**
+    * [x] ol.control.GeoportalAttribution : **OK**
         - si attribution OSM, affichage directement sur la carte !!!
         cf. https://github.com/openlayers/openlayers/blob/master/changelog/upgrade-notes.md#v530
         - probleme de CSS mais natif (hauteur du bouton lors d'un clic) !
 
-    * ol.control.GetFeatureInfo : **TODO**
+    * [x] ol.control.GetFeatureInfo : **OK**
 
-    * ol.control.SearchEngine : **TODO**
+    * [x] ol.control.SearchEngine : **OK**
 
-    * ol.control.LocationSelector : **OK**
+    * [x] ol.control.LocationSelector : **OK**
         - mise en place d'un hack pour resoudre le conflit de CSS...
-        Mais le pb vient de l'ordre d'appel des CSS :
-            > Common/GPgeneralWidget.css
-            > Common/GPxxxx.css
-            > OpenLayers/GPgeneralWidgetOpenLayers.css
-            > OpenLayers/GPxxxxOpenLayers.css
 
-        Et, les CSS communes sont dupliquées dans chaque modules...
-
-        > **EVOL** refonte de la gestion des CSS...
-
-    * ol.control.Route : **OK**
+    * [x] ol.control.Route : **OK**
         - il existe encore des FIXME dans la console !?
 
-    * ol.control.Isocurve : **OK**
+    * [x] ol.control.Isocurve : **OK**
 
-    * ol.control.GeoportalMousePosition : **OK**
+    * [x] ol.control.GeoportalMousePosition : **OK**
         - cf. CRS
         - gestion du setExtent() pour EPSG:2154
         cf. https://openlayers.org/en/latest/examples/reprojection-by-code.html?q=proj4
 
-    * ol.control.Drawing : **OK**
+    * [x] ol.control.Drawing : **OK**
 
-    * ol.control.ReverseGeocode : **OK**
-        - probleme de CSS (ecart entre chaque element)
+    * [x] ol.control.ReverseGeocode : **OK**
 
-    * ol.control.LayerImport : **OK**
+    * [x] ol.control.LayerImport : **OK**
 
-    * ol.control.MeasureLength : **OK**
-    * ol.control.MeasureArea : **OK**
-    * ol.control.MeasureAzimuth : **OK**
-        - les dessins apparaissent sous la carte (cf. LayerSwitcher)...
+    * [x] ol.control.MeasureLength : **OK**
+    * [x] ol.control.MeasureArea : **OK**
+    * [x] ol.control.MeasureAzimuth : **OK**
         - en mode modules, la toolbox et les interactions entre outils sont partagées dans le contexte d'execution via les variables :
         > *gpShareMeasures* et *gpShareMeasureToolBox*
 
         Ceci fonctionne dans un contexte Web, mais à tester dans un Front End (ex. Ember)
 
-    * ol.control.ElevationPath : **OK**
+    * [x] ol.control.ElevationPath : **OK**
 
-- Other
+- [ ] Other
 
     > **OK** upgrade proj4 > 2.5.0 !
 
-    * CRS : **NOK**
+    * [ ] CRS : **PROGRESS**
         cf. https://github.com/openlayers/openlayers/blob/master/changelog/upgrade-notes.md#changes-in-proj4-integration
         - bug pour ajouter des projection geocent sur le registre IGNF !?
-        - comment surcharger transformExtent ou un setExtent() sur l'EPSG:2154 ne suffirait il pas ?
+        - comment surcharger transformExtent ?
+        ou un setExtent() sur l'EPSG:2154 ne suffirait il pas ?
+        Est ce utile  car
+        à quoi sert la fonction MousePosition::validateExtentCoordinate ?
+        les systemes de projection de MousePosition ont déjà une validity extent en option ?
 
-    * Editor : **OK**
-        - renomer ol.editor.View en ol.style.Editor !
-        - probleme de CSS (ecart entre chaque element)
+    * [x] Editor : **OK**
+        - **TODO** renomer ol.editor.View en ol.style.Editor !
 
-    * Register : **OK**
+    * [x] Register : **OK**
 
-    * interactions : **OK**
+    * [x] interactions : **OK**
 
 ## TODOLIST sur la gestion du projet
 
-* exemples AMD à supprimer.
+* [x] **FAIT** exemples AMD à supprimer.
 
     > realisation d'un exemple dans le projet 3rd Party...
 
-* integration des extensions ES6 dans le projet 3rd Party...
+* [ ] **TODO** integration des extensions ES6 dans le projet 3rd Party...
 
-* geoportal access lib
+* [x] **FAIT** geoportal access lib
 
     > utilisation des sources ES6 modules dans le code.
 
     > programmer la publication des sources !
 
-* deplacement des CSS avec les JS
+* [x] **FAIT** deplacement des CSS avec les JS
 
     > eviter des chemins complexes dans les sources.
 
-* creation d'une CSS commune à tous les controles (via webpack)
+* [ ] **PROGRESS** creation d'une CSS commune à tous les controles (via webpack)
 
-* **FAIT** creation des exemples des modules (via webpack)
+    > **FIXME** creation d'un JS avec la CSS commune !?
+    cf. https://github.com/webpack-contrib/extract-text-webpack-plugin/issues/518
 
-* modifier le template des exemples des modules
+* [ ] **PROGRESS** creation des exemples des modules (via webpack)
+
+    cf. webpack (build only samples) !
+
+    > **FIXME** npm run :serve ne genere pas le bundle dans dist !?
+
+* [x] **FAIT** modifier le template des exemples des modules
 
     > ajouter les bundles et les CSS  directement dans le template de l'exemple (tag:vendor)
 
-* deplacement des webpack dans un répertoire
+* [x] **FAIT** deplacement des webpack dans un répertoire
 
     > un webpack principal à la racine avec des targets d'executions vers les webpack :
     itowns, openlayers et leaflet.
     ex. build/
 
-* deplacement des README dans un répertoire
+    cf. webpack (build only des bundles) !
 
-    > il existe déjà un README principal qui pointe vers les autres README. ex. doc/
+* [x] **FAIT** deplacement des README dans un répertoire
 
-* deplacement des JSON dans un répertoire
+    > il existe déjà un README principal qui pointe vers les autres README.
+    ex. doc/
+
+    > **TODO** lors de la publication, on doit utiliser ces README !
+
+* [x] **FAIT** deplacement des JSON dans un répertoire
     > ex. build/
 
-* deplacement des JSDOC dans un autre répertoire
+* [x] **FAIT** deplacement des JSDOC dans un autre répertoire
     > ex. build/
 
-* deplacement des licences **templates** dans un répertoire
+    cf. webpack (build only jsdoc) !
+
+* [x] **FAIT** deplacement des licences **templates** dans un répertoire
     > ex. build/
+
+* [ ] **TODO** maj du script de publication
+
+* [x] **FAIT** changelog
+    > https://api.github.com/repos/IGNF/geoportal-extensions/releases
+
+## Webpack
+
+> cf. https://survivejs.com/webpack/preface/
+
+- [ ] reorganiser les webpack
+    - [ ] webpack root
+
+        gestion des differentes options :
+        - ol, leaflet et itowns
+        - source, development ou production
+        - target : build, jsdoc, samples, test, render, cover
+
+    - [ ] structure des webpacks du répertoire *build* en *parts* (ensemble de fonctions)
+        - [ ] configuration *common* :
+            === *build* : entry, output, loader:babel, loader:eslint, loader:css, loader:url, plugin:licences
+        - [ ] configuration *production* (plugin:uglify)
+        - [ ] configuration *development* (sourcemap:true)
+        - [ ] configuration *source* (sourcemap:true)
+        - [ ] configuration *samples* (plugin:templates, plugin:index et plugin:resources)
+        - [ ] configuration *test* (webpack **devserver** : watch)
+        - [ ] configuration *render* (script)
+        - [ ] configuration *cover* (script)
+        - [ ] configuration *jsdoc* (plugin:jsdoc)
+        - [ ] configuration *map* (script)
+
+    - [ ] modifier les appels dans le *package.json* :
+        ex. `cross-env ENV=production LIBRARY=leaflet TARGET=build webpack`
+
+    - [ ] ouvrir la jsdoc et les exemples dans un navigateur
+
+- [ ] **EVOL** autoprefixing
+    cf. https://survivejs.com/webpack/styling/autoprefixing/
 
 ## Actions
 

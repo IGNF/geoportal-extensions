@@ -1,16 +1,12 @@
 // import CSS
-import "../../../res/Common/GPgeneralWidget.css";
-import "../../../res/Common/GPwaiting.css";
-import "../../../res/Common/GPsearchEngine.css";
-import "../../../res/OpenLayers/GPgeneralWidgetOpenLayers.css";
-import "../../../res/OpenLayers/Controls/SearchEngine/GPsearchEngineOpenLayers.css";
+import "../CSS/Controls/SearchEngine/GPsearchEngineOpenLayers.css";
 // import OpenLayers
 import {inherits as olInherits} from "ol/util";
 import Control from "ol/control/Control";
 import Overlay from "ol/Overlay";
 import {transform as olProjTransform} from "ol/proj";
 // import geoportal library access
-import Gp from "gp";
+import Gp from "geoportal-access-lib";
 // import local
 import Logger from "../../Common/Utils/LoggerByDefault";
 import Utils from "../../Common/Utils";

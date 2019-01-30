@@ -1,5 +1,12 @@
 {{#extend "ol-sample-modules-layout"}}
 
+{{#content "vendor"}}
+        <link rel="stylesheet" href="{{ baseurl }}/dist/openlayers/modules/LayerSwitcher{{ mode }}.css" />
+        <script src="{{ baseurl }}/dist/openlayers/modules/LayerSwitcher{{ mode }}.js"></script>
+        <link rel="stylesheet" href="{{ baseurl }}/dist/openlayers/modules/LayerImport{{ mode }}.css" />
+        <script src="{{ baseurl }}/dist/openlayers/modules/LayerImport{{ mode }}.js"></script>
+{{/content}}
+
 {{#content "head"}}
         <title>Sample openlayers LayerImport</title>
         <script src="https://unpkg.com/ol-popup@3.0.0"></script>

@@ -1,8 +1,14 @@
-        <!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
-        <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
         <!-- Library OpenLayers -->
         <link rel="stylesheet" href="https://openlayers.org/en/latest/css/ol.css" />
-        <!-- Controls Modules OpenLayers IGN -->
+        <!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
+        <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+        <script src="https://openlayers.org/en/latest/build/ol.js"></script>
+        <!-- Library Access Geoportal Service -->
+        <script src="{{ baseurl }}/node_modules/geoportal-access-lib/dist/GpServices{{ mode }}.js"></script>
+        <!-- Common CSS OpenLayers IGN -->
+        <link rel="stylesheet" href="{{ baseurl }}/dist/openlayers/modules/Common{{ mode }}.css" />
+        <!-- Controls CSS & Modules OpenLayers IGN -->
+        <!--
         <link rel="stylesheet" href="{{ baseurl }}/dist/openlayers/modules/SearchEngine{{ mode }}.css" />
         <link rel="stylesheet" href="{{ baseurl }}/dist/openlayers/modules/LayerImport{{ mode }}.css" />
         <link rel="stylesheet" href="{{ baseurl }}/dist/openlayers/modules/Drawing{{ mode }}.css" />
@@ -19,11 +25,6 @@
         <link rel="stylesheet" href="{{ baseurl }}/dist/openlayers/modules/MeasureArea{{ mode }}.css" />
         <link rel="stylesheet" href="{{ baseurl }}/dist/openlayers/modules/MeasureAzimuth{{ mode }}.css" />
         <link rel="stylesheet" href="{{ baseurl }}/dist/openlayers/modules/MeasureLength{{ mode }}.css" />
-        <!-- Library OpenLayers -->
-        <script src="https://openlayers.org/en/latest/build/ol.js"></script>
-        <!-- Library Access Geoportal Service -->
-        <script src="{{ baseurl }}/node_modules/geoportal-access-lib/dist/GpServices{{ mode }}.js"></script>
-        <!-- Controls Modules OpenLayers IGN -->
         <script src="{{ baseurl }}/dist/openlayers/modules/SearchEngine{{ mode }}.js"></script>
         <script src="{{ baseurl }}/dist/openlayers/modules/LayerImport{{ mode }}.js"></script>
         <script src="{{ baseurl }}/dist/openlayers/modules/Drawing{{ mode }}.js"></script>
@@ -40,11 +41,15 @@
         <script src="{{ baseurl }}/dist/openlayers/modules/MeasureArea{{ mode }}.js"></script>
         <script src="{{ baseurl }}/dist/openlayers/modules/MeasureAzimuth{{ mode }}.js"></script>
         <script src="{{ baseurl }}/dist/openlayers/modules/MeasureLength{{ mode }}.js"></script>
-        <!-- Other Modules OpenLayers IGN -->
+        -->
+        <!-- Layers Modules OpenLayers IGN -->
         <script src="{{ baseurl }}/dist/openlayers/modules/GeoportalLayerWMS{{ mode }}.js"></script>
         <script src="{{ baseurl }}/dist/openlayers/modules/GeoportalLayerWMTS{{ mode }}.js"></script>
         <script src="{{ baseurl }}/dist/openlayers/modules/GeoportalSourceWMS{{ mode }}.js"></script>
         <script src="{{ baseurl }}/dist/openlayers/modules/GeoportalSourceWMTS{{ mode }}.js"></script>
-        <script src="{{ baseurl }}/dist/openlayers/modules/KMLExtended{{ mode }}.js"></script>
+        <!-- Extended Modules OpenLayers IGN -->
         <script src="{{ baseurl }}/dist/openlayers/modules/WMTSExtended{{ mode }}.js"></script>
+        <script src="{{ baseurl }}/dist/openlayers/modules/KMLExtended{{ mode }}.js"></script>
+        <!-- CRS Modules OpenLayers IGN -->
         <script src="{{ baseurl }}/dist/openlayers/modules/CRS{{ mode }}.js"></script>
+        <!-- Controls CSS & Modules OpenLayers IGN -->

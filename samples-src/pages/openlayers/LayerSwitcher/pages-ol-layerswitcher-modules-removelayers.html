@@ -1,5 +1,10 @@
 {{#extend "ol-sample-modules-layout"}}
 
+{{#content "vendor"}}
+        <link rel="stylesheet" href="{{ baseurl }}/dist/openlayers/modules/LayerSwitcher{{ mode }}.css" />
+        <script src="{{ baseurl }}/dist/openlayers/modules/LayerSwitcher{{ mode }}.js"></script>
+{{/content}}
+
 {{#content "head"}}
         <title>Sample openlayers LayerSwitcher</title>
 {{/content}}
@@ -103,7 +108,7 @@
                     timeOut : 20000,
                     onSuccess : createMap
                 });
-                
+
                 removeLastLayer = function(e) {
                     var layers = map.getLayers();
                     var nblayers = layers.getLength();

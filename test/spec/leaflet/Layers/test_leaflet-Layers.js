@@ -1,7 +1,7 @@
 /* global describe, it */
 import Logger from "../../../../src/Common/Utils/LoggerByDefault";
 import Layers from "../../../../src/Leaflet/Layers/Layers";
-import Gp from "gp";
+import Gp from "geoportal-access-lib";
 
 import { assert, expect, should } from "chai";
 should();

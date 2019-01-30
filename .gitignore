@@ -35,27 +35,22 @@ nb-configuration.xml
 
 # Directories #
 ###############
-/nbproject/
-/build/
-/target/
 /bower_components/
 /bower_dependencies/
-/node_modules/
+/coverage/
 /dist/
-/samples/
-/samples/itowns/
-/samples/leaflet/
-/samples/openlayers/
-/samples/resources/
-/samples/*.html
 /jsdoc/
+/nbproject/
+/node_modules/
+/samples/
+/res/
+/target/
 /tests/
 /test_rendering/node_modules/
 
 # add other directories to ignore
 /samples-old/
 /tests-old/
-/coverage/
 /.nyc_output/
 
 # Files #

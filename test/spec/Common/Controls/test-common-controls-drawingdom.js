@@ -70,48 +70,6 @@ describe("-- Test Drawing DOM --", function () {
         var buttonLabel = "Exporter en KML", buttonTitle = "Exporter";
         expect(DrawingDOM._createSavingSection(buttonLabel, buttonTitle).outerHTML).to.be.equal('<div class="drawing-tool-section drawing-tools-flex-display"><button title="Exporter" class="tool-form-submit drawing-button" id="drawing-export" type="button">Exporter en KML</button></div>');
     });
-    it('rgbaToHex', function () {
-        var rgba = "rgba(0,0,0,1)";
-        expect(JSON.stringify(DrawingDOM.rgbaToHex(rgba))).to.be.equal(JSON.stringify({ hex: '#000000', opacity: 1 }));
-    });
-    it('rgbaToHex : parameter undefined', function () {
-        var rgba = undefined;
-        try {
-            DrawingDOM.rgbaToHex(rgba);
-        } catch (e) {
-            expect(e.message).to.have.string("Invalid format");
-        }
-    });
-    it('rgbaToHex : invalid value', function () {
-        var rgba = "rgba(0)";
-        try {
-            DrawingDOM.rgbaToHex(rgba);
-        } catch (e) {
-            expect(e.message).to.have.string("Invalid format");
-        }
-    });
-    it('hexToRgba', function () {
-        var hex = "#000000", opacity = 1;
-        expect(DrawingDOM.hexToRgba(hex, opacity)).to.be.equal('rgba(0, 0, 0, 1)');
-    });
-    it('hexToRgba : parameter undefined', function () {
-        var hex = undefined, opacity = 1;
-        try {
-            DrawingDOM.hexToRgba(hex, opacity);
-        } catch (e) {
-            expect(e.message).to.have.string("Invalid format");
-        }
-
-    });
-    it('hexToRgba : invalid value', function () {
-        var hex = "00", opacity = 1;
-        try {
-            DrawingDOM.hexToRgba(hex, opacity);
-        } catch (e) {
-            expect(e.message).to.have.string("Invalid format");
-        }
-
-    });
     xit('[TODO] _createMarkersChooser', function () {
         var options = {
             defaultValue:null,

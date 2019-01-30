@@ -1,6 +1,6 @@
 import L from "leaflet";
 import Logger from "../../Common/Utils/LoggerByDefault";
-import Gp from "gp";
+import Gp from "geoportal-access-lib";
 import RightManagement from "../../Common/Utils/CheckRightManagement";
 import ID from "../../Common/Utils/SelectorID";
 import LocationSelector from "./LocationSelector";

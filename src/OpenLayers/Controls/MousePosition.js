@@ -1,9 +1,5 @@
 // import CSS
-import "../../../res/Common/GPgeneralWidget.css";
-import "../../../res/Common/GPwaiting.css";
-import "../../../res/Common/GPmousePosition.css";
-import "../../../res/OpenLayers/GPgeneralWidgetOpenLayers.css";
-import "../../../res/OpenLayers/Controls/MousePosition/GPmousePositionOpenLayers.css";
+import "../CSS/Controls/MousePosition/GPmousePositionOpenLayers.css";
 // import OpenLayers
 import {inherits as olInherits} from "ol/util";
 import Control from "ol/control/Control";
@@ -16,7 +12,7 @@ import {
 } from "ol/proj";
 import { register } from "ol/proj/proj4";
 // import geoportal library access
-import Gp from "gp";
+import Gp from "geoportal-access-lib";
 // other import
 import proj4 from "proj4";
 // import local

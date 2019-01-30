@@ -1,10 +1,10 @@
 // import CSS
-import "../../../../res/Common/GPgeneralWidget.css";
-import "../../../../res/Common/GPwaiting.css";
-import "../../../../res/Common/GPmeasureAzimuth.css";
-import "../../../../res/Common/GPmeasureToolTip.css";
-import "../../../../res/OpenLayers/GPgeneralWidgetOpenLayers.css";
-import "../../../../res/OpenLayers/Controls/Measures/GPmeasureAzimuthOpenLayers.css";
+import "../../../Common/CSS/GPgeneralWidget.css";
+import "../../../Common/CSS/GPwaiting.css";
+import "../../../Common/CSS/GPmeasureAzimuth.css";
+import "../../../Common/CSS/GPmeasureToolTip.css";
+import "../../CSS/GPgeneralWidgetOpenLayers.css";
+import "../../CSS/Controls/Measures/GPmeasureAzimuthOpenLayers.css";
 // import OpenLayers
 import {inherits as olInherits} from "ol/util";
 import Control from "ol/control/Control";
