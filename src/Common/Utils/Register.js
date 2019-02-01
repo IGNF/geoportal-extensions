@@ -1,5 +1,3 @@
-import Proj4 from "proj4";
-
 /**
  * Register definition for IGNF, and EPSG CRS.
  * @example
@@ -50,7 +48,7 @@ var Register = {
     /**
      * load all defs to proj4
      */
-    load : function () {
+    load : function (proj4) {
         if (!this.isLoaded) {
             var registers = ["IGNF", "EPSG", "CRS"];
             for (var i = 0; i < registers.length; i++) {
@@ -59,7 +57,7 @@ var Register = {
                 for (var code in codes) {
                     if (codes.hasOwnProperty(code)) {
                         var name = register + ":" + code;
-                        Proj4.defs(name, this.get(name));
+                        proj4.defs(name, this.get(name));
                     }
                 }
             }
