@@ -54,8 +54,9 @@ var Layers = {
      */
     _initContext : function () {
         var _context = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : null;
+        // en mode browser, on requête en https
         var _protocol = (_context)
-            ? (_context.location && _context.location.protocol && _context.location.protocol.indexOf("https:") === 0 ? "https://" : "http://")
+            ? "https://"
             : (this.options.ssl ? "https://" : "http://");
         this.protocol = _protocol;
     },
@@ -143,7 +144,7 @@ var Layers = {
         var serviceUrl = null;
         if (this.params.key || this.options.apiKey) {
             // url de l'autoconf ou le service par defaut
-            serviceUrl = this.params.url || L.Util.template("http://wxs.ign.fr/{key}/geoportail/r/wms", {
+            serviceUrl = this.params.url || L.Util.template("https://wxs.ign.fr/{key}/geoportail/r/wms", {
                 key : this.params.key || this.options.apiKey
             });
         } else {
@@ -241,7 +242,7 @@ var Layers = {
         // url du service (par defaut)
         var serviceUrl = null;
         if (this.params.key || this.options.apiKey) {
-            serviceUrl = this.params.url || L.Util.template("http://wxs.ign.fr/{key}/geoportail/wmts", {
+            serviceUrl = this.params.url || L.Util.template("https://wxs.ign.fr/{key}/geoportail/wmts", {
                 key : this.params.key || this.options.apiKey
             });
         } else {

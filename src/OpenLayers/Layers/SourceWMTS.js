@@ -55,9 +55,10 @@ function SourceWMTS (options) {
         var wmtsParams = Config.getLayerParams(options.layer, "WMTS", options.apiKey);
 
         // gestion de mixContent dans l'url du service...
+        // en mode browser, on requête en https
         var ctx = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : null;
         var protocol = (ctx)
-            ? (ctx.location && ctx.location.protocol && ctx.location.protocol.indexOf("https:") === 0 ? "https://" : "http://")
+            ? "https://"
             : (options.ssl ? "https://" : "http://");
 
         // save originators (to be updated by Originators control)
