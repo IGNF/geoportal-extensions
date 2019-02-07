@@ -164,6 +164,10 @@ Il est possible de lancer la génération des bundles pour l'ensemble des extens
     // génération des bundles en mode production
     npm run build:prod
     // génération des bundles en mode sources
+    npm run build:src
+
+Ou on lance tout...
+
     npm run build
 
 ## JSDOC
@@ -183,34 +187,29 @@ Sous *Windows*, il est possible que la *JSDoc* ne soit pas compilée correctemen
 
 **ouvrir une console :**
 
-    npm run doc:serve
-    ou npm run doc:serve -- --env.openlayers
+    npm run doc:serve (par defaut, ol)
+    ou npm run doc:ol:serve
+    ou npm run doc:leaflet:serve
+    ou npm run doc:itowns:serve
 
 Le navigateur s'ouvre sur la page de la JSDOC sur l'URL suivante :
 http://localhost:9001/
 
 ## Les exemples
 
-### Construction des exemples
-
 Les exemples sont générées lors du build dans le répertoire *samples*.
+
 Mais il est aussi possible de les executer autrement :
 
 **ouvrir une console :**
 
-    npm run sample
-    ou npm run sample -- --env.production --env.clean
-    ou npm run sample -- --env.itowns
-
-### Ouvrir les exemples sur un navigateur
-
-**ouvrir une console :**
-
-    npm run sample:serve
-    ou npm run sample:serve -- --env.itowns
+    npm run sample (par defaut, ol)
+    ou npm run sample:ol:serve
+    ou npm run sample:leaflet:serve
+    ou npm run sample:itowns:serve
 
 Le navigateur s'ouvre sur la page des exemples sur l'URL suivante :
-http://localhost:9001/
+https://localhost:9001/
 
 ## Les tests
 

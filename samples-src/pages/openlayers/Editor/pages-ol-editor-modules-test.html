@@ -25,7 +25,7 @@
 {{#content "js"}}
             <script type="text/javascript">
 
-            var editor0 = new ol.editor.View({
+            var editor0 = new ol.style.Editor({
                 target: document.getElementById("editor"),
                 style: "{{ resources }}/data/mapbox/styles/ign-theo.json",
                 events : {
@@ -52,7 +52,7 @@
             });
 
             // liste de themes reussi avec imagette !
-            var editor1 = new ol.editor.View({
+            var editor1 = new ol.style.Editor({
                 target: document.getElementById("editor"),
                 style: "{{ resources }}/data/mapbox/styles/osm.json",
                 events : { // TODO...

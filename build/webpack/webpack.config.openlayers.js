@@ -13,6 +13,7 @@ var ExtractTextWebPackPlugin = require("extract-text-webpack-plugin");
 var BannerWebPackPlugin = webpack.BannerPlugin;
 var UglifyJsWebPackPlugin = require("uglifyjs-webpack-plugin");
 // var UglifyJsWebPackPlugin = webpack.optimize.UglifyJsPlugin;
+var ReplaceWebpackPlugin = require("replace-bundle-webpack-plugin");
 var JsDocWebPackPlugin = require("jsdoc-webpack-plugin");
 var HandlebarsPlugin = require("../scripts/webpackPlugins/handlebars-plugin");
 var HandlebarsLayoutPlugin = require("handlebars-layouts");
@@ -152,6 +153,32 @@ module.exports = env => {
             ]
         },
         plugins : [
+            /** REPLACEMENT DE VALEURS */
+            new ReplaceWebpackPlugin(
+                [
+                    {
+                        partten : /__GPOLEXTVERSION__/g,
+                        /** replacement de la clef __GPVERSION__ par la version du package */
+                        replacement : function () {
+                            return pkg.olExtVersion;
+                        }
+                    },
+                    {
+                        partten : /__GPDATE__/g,
+                        /** replacement de la clef __GPDATE__ par la date du build */
+                        replacement : function () {
+                            return date;
+                        }
+                    },
+                    {
+                        partten : /__GPVERSION__/g,
+                        /** replacement de la clef __GPVERSION__ par la version du package */
+                        replacement : function () {
+                            return pkg.dependencies["geoportal-access-lib"];
+                        }
+                    }
+                ]
+            ),
             /** GESTION DU LOGGER */
             new DefineWebpackPlugin({
                 __PRODUCTION__ : JSON.stringify(production)
@@ -257,6 +284,10 @@ module.exports = env => {
                 }),
                 new BannerWebPackPlugin({
                     banner : fs.readFileSync(path.join(ROOT, "build/licences", "licence-sortable.txt"), "utf8"),
+                    raw : true
+                }),
+                new BannerWebPackPlugin({
+                    banner : fs.readFileSync(path.join(ROOT, "build/licences", "licence-olms.txt"),"utf8"),
                     raw : true
                 }),
                 new BannerWebPackPlugin({

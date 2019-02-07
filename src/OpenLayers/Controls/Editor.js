@@ -20,7 +20,7 @@ var logger = Logger.getLogger("editor");
 /**
  * @classdesc
  *
- * Editor MapBox
+ * Editor Styles MapBox...
  *
  * @constructor
  * @param {Object} options - options for function call.
@@ -558,7 +558,6 @@ Editor.prototype.getLayers = function () {
 export default Editor;
 
 // Expose Editor as ol.editor.View (for a build bundle)
-if (window.ol) {
-    window.ol.editor = {};
-    window.ol.editor.View = Editor;
+if (window.ol && window.ol.style) {
+    window.ol.style.Editor = Editor;
 }

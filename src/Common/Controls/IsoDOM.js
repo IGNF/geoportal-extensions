@@ -654,7 +654,7 @@ var IsoDOM = {
     _createShowIsoExclusionsPictoElement : function () {
         var label = document.createElement("label");
         label.id = this._addUID("GPshowIsoExclusionsPicto");
-        label.className = "GPshowMoreOptions GPshowIsoExclusionsPicto";
+        label.className = "GPshowMoreOptionsImage GPshowMoreOptions GPshowIsoExclusionsPicto";
         label.htmlFor = this._addUID("GPshowIsoExclusions");
         label.title = "Exclusions";
         label.style.top = "240px";

@@ -1,9 +1,4 @@
 // import CSS
-import "../../../Common/CSS/GPgeneralWidget.css";
-import "../../../Common/CSS/GPwaiting.css";
-import "../../../Common/CSS/GPmeasureLength.css";
-import "../../../Common/CSS/GPmeasureToolTip.css";
-import "../../CSS/GPgeneralWidgetOpenLayers.css";
 import "../../CSS/Controls/Measures/GPmeasureLengthOpenLayers.css";
 // import OpenLayers
 import {inherits as olInherits} from "ol/util";

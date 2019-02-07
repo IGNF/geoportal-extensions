@@ -1,4 +1,4 @@
-{{#extend "ol-sample-bundle-layout"}}
+ol.style.editorol.style.editorol.style.editor{{#extend "ol-sample-bundle-layout"}}
 
 {{#content "head"}}
         <title>Sample openlayers Filters Mapbox</title>
@@ -23,17 +23,17 @@
             <script type="text/javascript">
 
             // filter vide
-            var filter0 = new ol.editor.Filter({
+            var filter0 = new ol.style.editor.Filter({
                 target: document.getElementById("filter")
             });
             filter0.add();
 
             // filter vide et target par defaut
-            var filter1 = new ol.editor.Filter();
+            var filter1 = new ol.style.editor.Filter();
             filter1.add();
 
             // filter
-            var filter2 = new ol.editor.Filter({
+            var filter2 = new ol.style.editor.Filter({
                 obj: {
                     "filter": [
                       "all",
@@ -52,7 +52,7 @@
             });
             filter2.add();
             // filter
-            var filter3 = new ol.editor.Filter({
+            var filter3 = new ol.style.editor.Filter({
                 obj: {
                     "filter": [
                             "in","symbo",

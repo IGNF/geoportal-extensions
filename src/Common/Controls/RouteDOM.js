@@ -1009,7 +1009,7 @@ var RouteDOM = {
 
         var label = document.createElement("label");
         label.id = this._addUID("GPshowRouteExclusionsPicto");
-        label.className = "GPshowMoreOptions GPshowRouteExclusionsPicto";
+        label.className = "GPshowMoreOptionsImage GPshowMoreOptions GPshowRouteExclusionsPicto";
         label.htmlFor = this._addUID("GPshowRouteExclusions");
         label.title = "Exclusions";
         // label.style.top = "185px";

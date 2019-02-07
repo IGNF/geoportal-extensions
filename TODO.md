@@ -25,7 +25,7 @@ les fichiers sont suffixés avec le tag *modules*.
 > on utilise donc une version anterieur du package *uglifyjs-webpack-plugin* > 1.3.0 !
 > Lors du passage en Webpack 4, on pourra utiliser la version de minification incluse dans webpack.
 
-## Avancements
+## Avancements des sources
 
 - [x] Migrer vers ol v5.3.0   : **OK**
 
@@ -84,7 +84,8 @@ les fichiers sont suffixés avec le tag *modules*.
         - mise en place d'un hack pour resoudre le conflit de CSS...
 
     * [x] ol.control.Route : **OK**
-        - il existe encore des FIXME dans la console !?
+
+        - **TODO** il existe encore des FIXME dans la console !?
 
     * [x] ol.control.Isocurve : **OK**
 
@@ -123,7 +124,6 @@ les fichiers sont suffixés avec le tag *modules*.
         les systemes de projection de MousePosition ont déjà une validity extent en option ?
 
     * [x] Editor : **OK**
-        - **TODO** renomer ol.editor.View en ol.style.Editor !
 
     * [x] Register : **OK**
 
@@ -147,16 +147,14 @@ les fichiers sont suffixés avec le tag *modules*.
 
     > eviter des chemins complexes dans les sources.
 
-* [ ] **PROGRESS** creation d'une CSS commune à tous les controles (via webpack)
+* [x] **FAIT** creation d'une CSS commune à tous les controles (via webpack)
 
     > **FIXME** creation d'un JS avec la CSS commune !?
     cf. https://github.com/webpack-contrib/extract-text-webpack-plugin/issues/518
 
-* [ ] **PROGRESS** creation des exemples des modules (via webpack)
+* [x] **FAIT** creation des exemples des modules (via webpack)
 
     cf. webpack (build only samples) !
-
-    > **FIXME** npm run :serve ne genere pas le bundle dans dist !?
 
 * [x] **FAIT** modifier le template des exemples des modules
 
@@ -193,12 +191,12 @@ les fichiers sont suffixés avec le tag *modules*.
 * [x] **FAIT** changelog
     > https://api.github.com/repos/IGNF/geoportal-extensions/releases
 
-## Webpack
+## **PROGRESS** Webpack
 
 > cf. https://survivejs.com/webpack/preface/
 
 - [ ] reorganiser les webpack
-    - [ ] webpack root
+    - [x] webpack root
 
         gestion des differentes options :
         - ol, leaflet et itowns
@@ -221,7 +219,7 @@ les fichiers sont suffixés avec le tag *modules*.
     - [ ] modifier les appels dans le *package.json* :
         ex. `cross-env ENV=production LIBRARY=leaflet TARGET=build webpack`
 
-    - [ ] ouvrir la jsdoc et les exemples dans un navigateur
+    - [ ] ouvrir la jsdoc et les exemples dans un navigateur avec webpack-devserver
 
 - [ ] **EVOL** autoprefixing
     cf. https://survivejs.com/webpack/styling/autoprefixing/

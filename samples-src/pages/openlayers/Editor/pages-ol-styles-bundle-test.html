@@ -23,17 +23,17 @@
             <script type="text/javascript">
 
             // style vide
-            var style0 = new ol.editor.Style({
+            var style0 = new ol.style.editor.Style({
                 target: document.getElementById("style")
             });
             style0.add();
 
             // style vide et target par defaut
-            var style1 = new ol.editor.Style();
+            var style1 = new ol.style.editor.Style();
             style1.add();
 
             // style paint
-            var style2 = new ol.editor.Style({
+            var style2 = new ol.style.editor.Style({
                 obj: {
                     "paint": {
                       "fill-color": "#0F78B4",
@@ -44,7 +44,7 @@
             style2.add();
 
             // style layout
-            var style3 = new ol.editor.Style({
+            var style3 = new ol.style.editor.Style({
                 obj: {
                     "layout": {
                       "visibility": "none",
@@ -74,7 +74,7 @@
             style3.add();
 
             // style layout + paint
-            var style4 = new ol.editor.Style({
+            var style4 = new ol.style.editor.Style({
                 obj: {
                     "paint": {
                       "fill-color": "#0F78B4",
@@ -107,7 +107,7 @@
             });
             style4.add();
             // style paint complexe
-            var style5 = new ol.editor.Style({
+            var style5 = new ol.style.editor.Style({
                 obj : {
                     "paint": {
                         "fill-color": [

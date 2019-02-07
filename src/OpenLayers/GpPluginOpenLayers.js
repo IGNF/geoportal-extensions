@@ -36,7 +36,7 @@ import Legend from "./Controls/Editor/Legend";
 import Group from "./Controls/Editor/Group";
 import Editor from "./Controls/Editor";
 
-// CSS communes aux extensions !
+// ordre des CSS communes puis extensions ou l'inverse ?
 import "../Common/Styles";
 import "./Styles";
 
@@ -62,14 +62,15 @@ Ol.gp = {};
 Ol.gp.GfiUtils = GfiUtils;
 
 // Editeur MapBox
-Ol.editor = {};
-Ol.editor.Style = Style;
-Ol.editor.Filter = Filter;
-Ol.editor.Layer = Layer;
-Ol.editor.Legend = Legend;
-Ol.editor.Group = Group;
-Ol.editor.Themes = Themes;
-Ol.editor.View = Editor;
+Ol.style = {};
+Ol.style.Editor = Editor;
+Ol.style.editor = {};
+Ol.style.editor.Style = Style;
+Ol.style.editor.Filter = Filter;
+Ol.style.editor.Layer = Layer;
+Ol.style.editor.Legend = Legend;
+Ol.style.editor.Group = Group;
+Ol.style.editor.Themes = Themes;
 
 // Format Extended
 Ol.format.KMLExtended = KML;

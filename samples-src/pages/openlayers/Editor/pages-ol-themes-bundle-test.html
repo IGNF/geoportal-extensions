@@ -24,11 +24,11 @@
             <script type="text/javascript">
 
             // themes vide et target par defaut
-            var themes1 = new ol.editor.Themes();
+            var themes1 = new ol.style.editor.Themes();
             themes1.add();
 
             // themes en échec car chemin vide !
-            var themes2 = new ol.editor.Themes({
+            var themes2 = new ol.style.editor.Themes({
                 obj: {
                     "styles" : [{
                         "image" : "", // path ?
@@ -40,7 +40,7 @@
             themes2.add();
 
             // themes reussi sans imagette !
-            var themes3 = new ol.editor.Themes({
+            var themes3 = new ol.style.editor.Themes({
                 target: document.getElementById("themes"),
                 obj: {
                     "styles" : [
@@ -62,7 +62,7 @@
             themes3.add();
 
             // liste de themes reussi avec imagette !
-            var themes4 = new ol.editor.Themes({
+            var themes4 = new ol.style.editor.Themes({
                 target: document.getElementById("themes"),
                 obj: {
                     "styles" : [

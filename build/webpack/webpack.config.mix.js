@@ -10,7 +10,9 @@ var header = require("string-template");
 var DefineWebpackPlugin = webpack.DefinePlugin;
 var ExtractTextWebPackPlugin = require("extract-text-webpack-plugin");
 var BannerWebPackPlugin = webpack.BannerPlugin;
-var UglifyJsWebPackPlugin = webpack.optimize.UglifyJsPlugin;
+var UglifyJsWebPackPlugin = require("uglifyjs-webpack-plugin");
+var ReplaceWebpackPlugin = require("replace-bundle-webpack-plugin");
+// var UglifyJsWebPackPlugin = webpack.optimize.UglifyJsPlugin;
 
 // -- performances
 var SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
@@ -141,6 +143,39 @@ module.exports = env => {
             ]
         },
         plugins : [
+            /** REPLACEMENT DE VALEURS */
+            new ReplaceWebpackPlugin(
+                [
+                    {
+                        partten : /__GPITOWNSEXTVERSION__/g,
+                        /** replacement de la clef __GPVERSION__ par la version du package */
+                        replacement : function () {
+                            return pkg.itownsExtVersion;
+                        }
+                    },
+                    {
+                        partten : /__GPOLEXTVERSION__/g,
+                        /** replacement de la clef __GPVERSION__ par la version du package */
+                        replacement : function () {
+                            return pkg.olExtVersion;
+                        }
+                    },
+                    {
+                        partten : /__GPDATE__/g,
+                        /** replacement de la clef __GPDATE__ par la date du build */
+                        replacement : function () {
+                            return date;
+                        }
+                    },
+                    {
+                        partten : /__GPVERSION__/g,
+                        /** replacement de la clef __GPVERSION__ par la version du package */
+                        replacement : function () {
+                            return pkg.dependencies["geoportal-access-lib"];
+                        }
+                    }
+                ]
+            ),
             /** GESTION DU LOGGER */
             new DefineWebpackPlugin({
                 __PRODUCTION__ : JSON.stringify(production)
@@ -152,11 +187,11 @@ module.exports = env => {
         .concat(
             (production) ? [
                 new UglifyJsWebPackPlugin({
-                    output : {
-                        comments : false,
-                        beautify : false
-                    },
                     uglifyOptions : {
+                        output : {
+                            comments : false,
+                            beautify : false
+                        },
                         mangle : true,
                         warnings : false,
                         compress : false

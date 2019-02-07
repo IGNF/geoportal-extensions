@@ -509,7 +509,7 @@ var MousePositionDOM = {
         label.id = this._addUID("GPshowMousePositionSettingsPicto");
         label.htmlFor = this._addUID("GPshowMousePositionSettings");
         label.title = "Réglages";
-        label.className = "GPshowMoreOptions GPshowMousePositionSettingsPicto"; // FIXME classname and id ?
+        label.className = "GPshowMoreOptionsImage GPshowMoreOptions GPshowMousePositionSettingsPicto"; // FIXME classname and id ?
         label.style.display = display ? "block" : "none";
 
         list.push(input);
