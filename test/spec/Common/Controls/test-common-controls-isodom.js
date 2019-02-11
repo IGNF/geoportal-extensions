@@ -159,7 +159,7 @@ describe("-- Test Iso DOM --", function () {
         expect(IsoDOM._createShowIsoExclusionsElement().outerHTML).to.be.equal('<input id="GPshowIsoExclusions" type="checkbox">');
     });
     it('_createShowIsoExclusionsPictoElement', function () {
-        expect(IsoDOM._createShowIsoExclusionsPictoElement().outerHTML).to.be.equal('<label id="GPshowIsoExclusionsPicto" class="GPshowMoreOptions GPshowIsoExclusionsPicto" for="GPshowIsoExclusions" title="Exclusions" style="top: 240px;"></label>');
+        expect(IsoDOM._createShowIsoExclusionsPictoElement().outerHTML).to.be.equal('<label id="GPshowIsoExclusionsPicto" class="GPshowMoreOptionsImage GPshowMoreOptions GPshowIsoExclusionsPicto" for="GPshowIsoExclusions" title="Exclusions" style="top: 240px;"></label>');
     });
     it('_createIsoPanelFormExclusionsElement', function () {
         expect(IsoDOM._createIsoPanelFormExclusionsElement().outerHTML).to.be.equal('<div id="GPisoExclusions"><span class="GPisoExclusionsLabel">Passages autorisés</span></div>');

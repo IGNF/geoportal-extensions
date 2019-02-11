@@ -21,7 +21,7 @@ var CRS = {
     load : function () {
         logger.trace("Load custom definitions projection");
         // load all defs into proj4
-        Register.load();
+        Register.load(Proj4);
         // register all defs into openlayers
         register(Proj4);
     },

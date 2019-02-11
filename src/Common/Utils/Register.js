@@ -1,5 +1,3 @@
-import Proj4 from "proj4";
-
 // FIXME exception lors du register IGNF des projections geocent ?
 // Ex. Transforming EPSG:4978 geocent projection fails?
 // cf. https://github.com/proj4js/proj4js/issues/195
@@ -54,7 +52,7 @@ var Register = {
     /**
      * load all defs to proj4
      */
-    load : function () {
+    load : function (Proj4) {
         if (!this.isLoaded) {
             var registers = [
                 "IGNF", // exception lors du register IGNF ?
@@ -131,7 +129,7 @@ var Register = {
         4750 : "+title=ST87 Ouvea +proj=longlat +ellps=WGS84 +towgs84=-56.263,16.136,-22.856,0,0,0,0 +no_defs ",
         4807 : "+title=NTF (Paris) +proj=longlat +a=6378249.2 +b=6356515 +towgs84=-168,-60,320,0,0,0,0 +pm=paris +no_defs ",
         2056 : "+title=CH1903+ / LV95 +proj=somerc +lat_0=46.95240555555556 +lon_0=7.439583333333333 +x_0=2600000 +y_0=1200000 +ellps=bessel +towgs84=674.374,15.056,405.346,0,0,0,0 +units=m +no_defs ",
-        2154 : "+title=RGF93 / Lambert 93 +proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
+        2154 : "+title=RGF93 / Lambert-93 +proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs ",
         2213 : "+title=ETRS89 / TM 30 NE +proj=tmerc +lat_0=0 +lon_0=30 +k=0.9996 +x_0=500000 +y_0=0 +ellps=GRS80 +units=m +no_defs ",
         2969 : "+title=Fort Marigot / UTM zone 20N +proj=utm +zone=20 +ellps=intl +towgs84=137,248,-430,0,0,0,0 +units=m +no_defs ",
         2970 : "+title=Guadeloupe 1948 / UTM zone 20N +proj=utm +zone=20 +ellps=intl +units=m +no_defs ",

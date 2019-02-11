@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <!-- Library openlayers -->
-  <script src="../../node_modules/openlayers/dist/ol-debug.js"></script>
+  <script src="https://openlayers.org/en/latest/build/ol.js"></script>
+  <!-- <link rel="stylesheet" href="https://openlayers.org/en/latest/css/ol.css" /> -->
 
   <!-- Plugin openlayers IGN -->
   <link rel="stylesheet" href="../../dist/openlayers/GpPluginOpenLayers.css" />
@@ -13,7 +14,7 @@
 <body>
         <!-- map -->
         <div id="map" style="height: 400px;"></div>
-        
+
         <!-- code -->
         <script>
         var map;
@@ -21,7 +22,7 @@
         window.onload = function () {
             // on cache l'image de chargement du Géoportail.
             document.getElementById("map").style.backgroundImage = "none";
-        
+
             // Création de la map
             map = new ol.Map({
                 target : "map",
@@ -30,11 +31,11 @@
                     zoom : 8
                 })
             });
-        
+
             route = new ol.control.Route({
             });
             map.addControl(route);
-        
+
         };
         </script>
 

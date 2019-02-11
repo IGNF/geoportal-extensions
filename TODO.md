@@ -31,11 +31,11 @@ les fichiers sont suffixés avec le tag *modules*.
 
 - [ ] Migrer vers webpack 4   : **TODO**
 
-- [ ] Tests à jouer / à creer : **TODO**
-    > test avec la variable ol sur les projections !
-    > couvrir et finir les tests sur le DOM !
+- [x] Tests à jouer / à creer : **OK**
+    > **TODO** test avec la variable ol sur les projections !
+    > **TODO** couvrir et finir les tests sur le DOM !
 
-- [ ] Tests de rendu à jouer  : **TODO**
+- [ ] Tests de rendu à jouer  : **NOK : PROGRESS**
 
 - [x] Exemples sur les modules: **OK**
     > **TODO** couvrir les fonctionnalités sur qq controles !
@@ -48,7 +48,7 @@ les fichiers sont suffixés avec le tag *modules*.
 - [x] Layer
 
     **OK pour les projections**
-    > cf. CRS (mais en cours de la refonte du module)
+    > cf. CRS
 
     * [x] ol.source.GeoportalWMTS : **OK**
     * [x] ol.source.GeoportalWMS  : **OK**
@@ -116,12 +116,13 @@ les fichiers sont suffixés avec le tag *modules*.
 
     * [ ] CRS : **PROGRESS**
         cf. https://github.com/openlayers/openlayers/blob/master/changelog/upgrade-notes.md#changes-in-proj4-integration
-        - bug pour ajouter des projection geocent sur le registre IGNF !?
-        - comment surcharger transformExtent ?
-        ou un setExtent() sur l'EPSG:2154 ne suffirait il pas ?
-        Est ce utile  car
-        à quoi sert la fonction MousePosition::validateExtentCoordinate ?
-        les systemes de projection de MousePosition ont déjà une validity extent en option ?
+        - [ ] bug pour ajouter des projection geocent sur le registre IGNF !?
+        - [ ] comment surcharger transformExtent ?
+            ou un setExtent() sur l'EPSG:2154 ne suffirait il pas ?
+            Est ce utile  car
+            à quoi sert la fonction MousePosition::validateExtentCoordinate ?
+            les systemes de projection de MousePosition ont déjà une validity extent en option ?
+        - [x] merge à faire : https://github.com/IGNF/geoportal-extensions/pull/227
 
     * [x] Editor : **OK**
 

@@ -1,6 +1,6 @@
 /* global describe, it */
 import Register from "../../../../src/Common/Utils/Register";
-import proj4 from "proj4";
+import Proj4 from "proj4";
 
 import { assert, expect, should } from "chai";
 should();
@@ -58,7 +58,7 @@ describe("-- Test Register --", function () {
     describe("#load", function () {
 
         it("instance is already loaded", function () {
-            Register.load();
+            Register.load(Proj4);
             expect(Register.isLoaded).to.be.true;
         });
     });
@@ -66,15 +66,15 @@ describe("-- Test Register --", function () {
     describe("#proj4", function () {
 
         it("EPSG:310642813 is defined", function () {
-            expect(proj4.defs('EPSG:310642813')).not.to.be.undefined;
+            expect(Proj4.defs('EPSG:310642813')).not.to.be.undefined;
         });
 
         xit("IGNF:AMST63 is defined", function () {
-            expect(proj4.defs('IGNF:AMST63')).not.to.be.undefined;
+            expect(Proj4.defs('IGNF:AMST63')).not.to.be.undefined;
         });
 
         it("CRS:84 is defined", function () {
-            expect(proj4.defs('CRS:84')).not.to.be.undefined;
+            expect(Proj4.defs('CRS:84')).not.to.be.undefined;
         });
     });
 

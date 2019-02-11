@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <!-- Library openlayers -->
-  <script src="../../../node_modules/openlayers/dist/ol-debug.js"></script>
+  <script src="https://openlayers.org/en/latest/build/ol.js"></script>
+  <!-- <link rel="stylesheet" href="https://openlayers.org/en/latest/css/ol.css" /> -->
 
   <!-- Plugin openlayers IGN -->
   <link rel="stylesheet" href="../../../dist/openlayers/GpPluginOpenLayers.css" />
@@ -15,7 +16,7 @@
         <div id="map" style="height: 400px;"></div>
         <button id="searchLocation"> Centrage lieu</button>
         <button id="autoCompleteLocation"> Autocomplete lieu</button>
-        
+
         <!-- code -->
         <script>
             // var map;
@@ -45,12 +46,12 @@
                 function waitForElement(selector) {
                     return new Promise(function(resolve, reject) {
                       var element = document.querySelector("div[id^="+selector+"]");
-                
+
                         if (element) {
                             resolve(element);
                             return;
                         }
-                
+
                         var observer = new MutationObserver(function(mutations) {
                             mutations.forEach(function(mutation) {
                                 var nodes = Array.from(mutation.addedNodes);
@@ -80,7 +81,7 @@
                     waitForElement("AutoCompletedLocation_0-").then(function(element) {
                         element.click();
                     });
-                    
+
                 };
 
                 // autocomplete Paris results

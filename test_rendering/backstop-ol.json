@@ -52,21 +52,23 @@
       },
       {
         "label": "LayerSwitcher : add a layer",
-        "url": "http://localhost:8087/test_rendering/ol/interactions/layerswitcher.html",
+        "url": "https://localhost:8087/test_rendering/ol/interactions/layerswitcher.html",
         "clickSelector": "#addLayer",
         "selectors": [
           "div[id=map]"
         ],
+        "delay": 1000,
         "postInteractionWait": 1000
       },
       {
         "label": "LayerSwitcher : remove a layer",
-        "url": "http://localhost:8087/test_rendering/ol/interactions/layerswitcher.html",
+        "url": "https://localhost:8087/test_rendering/ol/interactions/layerswitcher.html",
         "clickSelector": "#removeLayer",
         "selectors": [
           "div[id=map]"
         ],
-        "postInteractionWait": 1000
+        "postInteractionWait": 1000,
+        "delay": 1000
       },
       {
         "label": "Drawing : point",
@@ -163,14 +165,14 @@
       },
       {
         "label": "Isochrone (interaction) : Voiture",
-        "url": "http://localhost:8087/test_rendering/ol/interactions/iso.html",
+        "url": "https://localhost:8087/test_rendering/ol/interactions/iso.html",
         "clickSelector": "button[id=computeIsochrone]",
         "delay": 2000,
         "postInteractionWait": 5000
       },
       {
         "label": "Isodistance (interaction) : Pieton",
-        "url": "http://localhost:8087/test_rendering/ol/interactions/iso.html",
+        "url": "https://localhost:8087/test_rendering/ol/interactions/iso.html",
         "clickSelector": "button[id=computeIsodistance]",
         "delay": 2000,
         "postInteractionWait": 5000
@@ -182,14 +184,14 @@
       },
       {
         "label": "Route (interaction) : Voiture - plus rapide",
-        "url": "http://localhost:8087/test_rendering/ol/interactions/route.html",
+        "url": "https://localhost:8087/test_rendering/ol/interactions/route.html",
         "clickSelector": "button[id=computeFastest]",
         "delay": 2000,
         "postInteractionWait": 5000
       },
       {
         "label": "Route (interaction) : Pieton - plus court",
-        "url": "http://localhost:8087/test_rendering/ol/interactions/route.html",
+        "url": "https://localhost:8087/test_rendering/ol/interactions/route.html",
         "clickSelector": "button[id=computeShortest]",
         "delay": 2000,
         "postInteractionWait": 5000
@@ -206,29 +208,31 @@
       },
       {
         "label": "SearchEngine (interaction) : interaction search autocomplete",
-        "url": "http://localhost:8087/test_rendering/ol/interactions/searchengine.html",
+        "url": "https://localhost:8087/test_rendering/ol/interactions/searchengine.html",
         "clickSelector": "button[id=autoCompleteLocation]",
         "delay": 2000,
         "postInteractionWait": 5000
       },
       {
         "label": "SearchEngine (interaction) : interaction search center",
-        "url": "http://localhost:8087/test_rendering/ol/interactions/searchengine.html",
+        "url": "https://localhost:8087/test_rendering/ol/interactions/searchengine.html",
         "clickSelector": "button[id=searchLocation]",
         "delay": 2000,
         "postInteractionWait": 5000
       },
       {
         "label": "Attributions (interaction) : update originators",
-        "url": "http://localhost:8087/test_rendering/ol/interactions/attributions.html",
+        "url": "https://localhost:8087/test_rendering/ol/interactions/attributions.html",
         "clickSelector": "button[id=zoomIn]",
-        "postInteractionWait": 1000
+        "postInteractionWait": 1000,
+        "delay": 1000
       },
       {
         "label": "ElevationPath (interaction) : interaction alti profil",
-        "url": "http://localhost:8087/test_rendering/ol/interactions/elevationpath.html",
+        "url": "https://localhost:8087/test_rendering/ol/interactions/elevationpath.html",
         "clickSelector": "button[id=computeProfil]",
-        "postInteractionWait": 1000
+        "postInteractionWait": 1000,
+        "delay": 1000
       },
       {
         "label": "LayerImport (DOM) : default",

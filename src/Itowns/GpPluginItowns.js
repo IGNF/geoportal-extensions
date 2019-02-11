@@ -8,6 +8,7 @@ import GeoportalWMTS from "./Layer/LayerWMTS";
 import GeoportalWMS from "./Layer/LayerWMS";
 import GeoportalElevation from "./Layer/LayerElevation";
 import GlobeViewExtended from "./GlobeViewExtended";
+import CRS from "./CRS/CRS";
 
 // CSS communes aux extensions !
 import "../Common/Styles";
@@ -36,6 +37,7 @@ Itowns.layer = {};
 Itowns.layer.GeoportalWMTS = GeoportalWMTS;
 Itowns.layer.GeoportalWMS = GeoportalWMS;
 Itowns.layer.GeoportalElevation = GeoportalElevation;
+Itowns.CRS = CRS;
 Itowns.GlobeViewExtended = GlobeViewExtended;
 
 export {Itowns as itownsExtended};

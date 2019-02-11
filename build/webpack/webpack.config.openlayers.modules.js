@@ -70,7 +70,7 @@ module.exports = env => {
             "GeoportalSourceWMS" : path.join(ROOT, "src", "OpenLayers", "Layers", "SourceWMS.js"),
             "GeoportalSourceWMTS" : path.join(ROOT, "src", "OpenLayers", "Layers", "SourceWMTS.js"),
             // Projections
-            "CRS" : path.join(ROOT, "src", "Common", "Utils", "AutoLoadCRS.js"),
+            "CRS" : path.join(ROOT, "src", "OpenLayers", "CRS", "AutoLoadCRS.js"),
         },
         output : {
             path : path.join(ROOT, "dist", "openlayers", "modules"),

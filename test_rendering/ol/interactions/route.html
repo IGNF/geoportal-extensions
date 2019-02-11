@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <!-- Library openlayers -->
-  <script src="../../../node_modules/openlayers/dist/ol-debug.js"></script>
+  <script src="https://openlayers.org/en/latest/build/ol.js"></script>
+  <!-- <link rel="stylesheet" href="https://openlayers.org/en/latest/css/ol.css" /> -->
 
   <!-- Plugin openlayers IGN -->
   <link rel="stylesheet" href="../../../dist/openlayers/GpPluginOpenLayers.css" />
@@ -15,7 +16,7 @@
         <div id="map" style="height: 600px;"></div>
         <button id="computeFastest"> Calcul itineraire plus rapide</button>
         <button id="computeShortest"> Calcul itineraire plus court</button>
-        
+
     <!-- code -->
     <script>
                 var map;
@@ -36,7 +37,7 @@
                     route = new ol.control.Route({
                     });
                     map.addControl(route);
-                    
+
                     var computeFastestRoute = function() {
                         route._requestRouting({
                             startPoint : {

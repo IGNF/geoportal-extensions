@@ -19,6 +19,9 @@
   "dependencies": {
     "backstopjs": "^3.0.25",
     "connect": "^3.6.5",
+    "finalhandler": "^1.1.1",
+    "fs": "0.0.1-security",
+    "https": "^1.0.0",
     "serve-static": "^1.13.1"
   }
 }

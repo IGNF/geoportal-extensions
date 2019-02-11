@@ -1,4 +1,4 @@
-import "proj4";
+import Proj4 from "proj4";
 import "proj4leaflet";
 import Register from "../../Common/Utils/Register";
 import Epsg2154 from "./EPSG2154";
@@ -8,7 +8,7 @@ import Epsg4326 from "./EPSG4326";
 /** autoload function */
 (function () {
     // load all defs into proj4
-    Register.load();
+    Register.load(Proj4);
 })();
 
 /**

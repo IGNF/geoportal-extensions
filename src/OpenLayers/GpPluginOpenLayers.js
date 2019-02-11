@@ -42,7 +42,7 @@ import "./Styles";
 
 // Les autoload...
 import "../Common/Utils/AutoLoadConfig";
-import "../Common/Utils/AutoLoadCRS";
+import "./CRS/AutoLoadCRS";
 
 // Export des services
 export * from "geoportal-access-lib";

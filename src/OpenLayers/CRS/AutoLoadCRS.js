@@ -1,4 +1,4 @@
-import CRS from "../../OpenLayers/CRS/CRS";
+import CRS from "./CRS";
 
 /**
  * Autoload function that loads all defs into proj4

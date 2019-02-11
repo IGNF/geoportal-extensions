@@ -14,7 +14,7 @@ import { register } from "ol/proj/proj4";
 // import geoportal library access
 import Gp from "geoportal-access-lib";
 // other import
-import proj4 from "proj4";
+import Proj4 from "proj4";
 // import local
 import Logger from "../../Common/Utils/LoggerByDefault";
 import Utils from "../../Common/Utils";
@@ -106,8 +106,8 @@ function MousePosition (options) {
     }
 
     // init Proj4 defs
-    Register.load();
-    register(proj4);
+    Register.load(Proj4);
+    register(Proj4);
 
     this._initialize(options);
 

@@ -61,7 +61,7 @@ var logger = Logger.getLogger("layerimport");
  * @extends {ol.control.Control}
  * @param {Object} options - options for function call.
  * @param {Boolean} [options.collapsed = false] - Specify if LayerImport control should be collapsed at startup. Default is true.
- * @param {Array} [options.layerTypes = ["KML", "GPX", "GeoJSON", "WMS", "WMTS", "MapBox"]] - data types that could be imported : "KML", "GPX", "GeoJSON", "WMS", "WMTS" and "Mapbox". Values will be displayed in the same order in widget list.
+ * @param {Array} [options.layerTypes = ["KML", "GPX", "GeoJSON", "WMS", "WMTS", "Vecteur tuilé"]] - data types that could be imported : "KML", "GPX", "GeoJSON", "WMS", "WMTS" and "Vecteur tuilé". Values will be displayed in the same order in widget list.
  * @param {Object} [options.webServicesOptions = {}] - Options to import WMS or WMTS layers
  * @param {String} [options.webServicesOptions.proxyUrl] - Proxy URL to avoid cross-domain problems. Mandatory to import WMS and WMTS layer.
  * @param {Array.<String>} [options.webServicesOptions.noProxyDomains] - Proxy will not be used for this list of domain names. Only use if you know what you're doing.
@@ -309,7 +309,7 @@ LayerImport.prototype._initialize = function (options) {
     // set default options
     this.options = {
         collapsed : true,
-        layerTypes : ["KML", "GPX", "GeoJSON", "WMS", "WMTS", "MapBox"],
+        layerTypes : ["KML", "GPX", "GeoJSON", "WMS", "WMTS", "Vecteur tuilé"],
         webServicesOptions : {},
         vectorStyleOptions : {
             KML : {
@@ -326,8 +326,8 @@ LayerImport.prototype._initialize = function (options) {
             MapBox : {
                 defaultStyle : {}, // TODO
                 tools : {
-                    filter : false,
-                    style : false
+                    filter : false, // TODO edition des filtres de styles
+                    style : false // TODO edition des styles
                 }
             }
         }
@@ -338,7 +338,7 @@ LayerImport.prototype._initialize = function (options) {
     // set extractStyles parameter
     if (options.vectorStyleOptions && options.vectorStyleOptions.KML && options.vectorStyleOptions.KML.extractStyles) {
         this.options.vectorStyleOptions.KML.extractStyles = options.vectorStyleOptions.KML.extractStyles;
-    }
+    } // TODO
     // set showPointNames parameter
     if (options.vectorStyleOptions && options.vectorStyleOptions.KML && options.vectorStyleOptions.KML.showPointNames) {
         this.options.vectorStyleOptions.KML.showPointNames = options.vectorStyleOptions.KML.showPointNames;
@@ -480,7 +480,7 @@ LayerImport.prototype._checkInputOptions = function (options) {
                 "GeoJSON",
                 "WMS",
                 "WMTS",
-                "MapBox"
+                "Vecteur tuilé"
             ];
         } else {
             var typesList = [
@@ -511,7 +511,7 @@ LayerImport.prototype._checkInputOptions = function (options) {
                         layerTypes[i] = "GeoJSON";
                     }
                     if (layerTypes[i] === "MAPBOX") {
-                        layerTypes[i] = "MapBox";
+                        layerTypes[i] = "Vecteur tuilé";
                     }
                 }
             }
@@ -568,7 +568,7 @@ LayerImport.prototype._initDefaultStyles = function () {
  */
 LayerImport.prototype._initImportTypes = function () {
     this._currentImportType = this.options.layerTypes[0] || "KML";
-    if (this._currentImportType === "KML" || this._currentImportType === "GPX" || this._currentImportType === "GeoJSON" || this._currentImportType === "MapBox") {
+    if (this._currentImportType === "KML" || this._currentImportType === "GPX" || this._currentImportType === "GeoJSON" || this._currentImportType === "Vecteur tuilé") {
         this._isCurrentImportTypeStatic = true;
     } else if (this._currentImportType === "WMS" || this._currentImportType === "WMTS" || this._currentImportType === "WFS") {
         this._isCurrentImportTypeStatic = false;
@@ -744,7 +744,7 @@ LayerImport.prototype._onShowImportClick = function () {
  */
 LayerImport.prototype._onImportTypeChange = function (e) {
     this._currentImportType = e.target.value;
-    if (this._currentImportType === "KML" || this._currentImportType === "GPX" || this._currentImportType === "GeoJSON" || this._currentImportType === "MapBox") {
+    if (this._currentImportType === "KML" || this._currentImportType === "GPX" || this._currentImportType === "GeoJSON" || this._currentImportType === "Vecteur tuilé") {
         this._isCurrentImportTypeStatic = true;
     } else if (this._currentImportType === "WMS" || this._currentImportType === "WMTS" || this._currentImportType === "WFS") {
         this._isCurrentImportTypeStatic = false;
@@ -1005,7 +1005,7 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
     // sauvegarde du content KML/GPX/GeoJSON/MapBox
     this.contentStatic = fileContent;
 
-    if (this._currentImportType === "MapBox") {
+    if (this._currentImportType === "Vecteur tuilé") {
         // FIXME
         // on ne nettoie pas délibérément la liste de résultats de type MapBox
         // car on souhaite pouvoir interagir sur les couches (editeur).
@@ -1473,7 +1473,7 @@ LayerImport.prototype._addFeaturesFromImportStaticLayerUrl = function (url, laye
     var vectorSource;
     var vectorLayer;
     var vectorFormat;
-    if (this._currentImportType === "MapBox") {
+    if (this._currentImportType === "Vecteur tuilé") {
         // TODO
         logger.trace("Not yet implemented !");
     } else {
