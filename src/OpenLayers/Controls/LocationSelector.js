@@ -773,6 +773,10 @@ LocationSelector.prototype._requestAutoComplete = function (settings) {
     // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
     options.apiKey = options.apiKey || this.options.apiKey;
 
+    // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
+    // true par défaut (https) 
+    options.ssl = this.options.ssl;
+
     logger.log(options);
 
     Gp.Services.autoComplete(options);

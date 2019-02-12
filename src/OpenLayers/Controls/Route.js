@@ -21,6 +21,7 @@ var logger = Logger.getLogger("route");
  * @extends {ol.control.Control}
  * @param {Object} options - route control options
  * @param {String}   [options.apiKey] - API key for services call (route and autocomplete services), mandatory if autoconf service has not been charged in advance
+ * @param {Boolean}   [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)  
  * @param {Boolean} [options.collapsed = true] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
  * @param {Object}  [options.exclusions = {toll : false, tunnel : false, bridge : false}] - list of exclusions with status (true = checked). By default : no exclusions checked.
  * @param {Array}   [options.graphs = ["Voiture", "Pieton"]] - list of resources, by default : ["Voiture", "Pieton"]. The first element is selected.
@@ -1220,6 +1221,10 @@ Route.prototype._requestRouting = function (options) {
     // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
     options.apiKey = this.options.routeOptions.apiKey || this.options.apiKey || key;
 
+    // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
+    // true par défaut (https) 
+    options.ssl = this.options.ssl;
+    
     logger.log(options);
 
     // mise en place de la patience

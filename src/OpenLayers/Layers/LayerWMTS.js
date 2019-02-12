@@ -37,7 +37,7 @@ function LayerWMTS (options) {
 
     // par defaut
     if (typeof options.ssl === "undefined") {
-        options.ssl = false;
+        options.ssl = true;
     }
 
     // Check if configuration is loaded

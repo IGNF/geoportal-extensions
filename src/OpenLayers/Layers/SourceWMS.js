@@ -39,7 +39,7 @@ function SourceWMS (options) {
 
     // par defaut
     if (typeof options.ssl === "undefined") {
-        options.ssl = false;
+        options.ssl = true;
     }
 
     // Check if configuration is loaded
@@ -52,12 +52,9 @@ function SourceWMS (options) {
     if (layerId && Config.configuration.getLayerConf(layerId)) {
         var wmsParams = Config.getLayerParams(options.layer, "WMS", options.apiKey);
 
-        // gestion de mixContent dans l'url du service...
-        // en mode browser, on requête en https
-        var ctx = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : null;
-        var protocol = (ctx)
-            ? "https://"
-            : (options.ssl ? "https://" : "http://");
+        // si ssl = false on fait du http
+        // par défaut, ssl = true, on fait du https
+        var protocol = options.ssl === false ? "http://" : "https://";
 
         var wmsSourceOptions = {
             // tracker extension openlayers
