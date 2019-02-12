@@ -1,7 +1,36 @@
+/**
+* Global variable Gp.
+*
+* @module Gp
+* @alias Gp
+* @desc
+*
+* This is the global variable that is exposed in the browser environment.
+* Content is composed of constructor, functions and properties...
+*
+* > ColorUtils: (...)
+* > Config:  (...)
+* > LayerUtils: (...)
+* > MathUtils: (...)
+* > ProxyUtils: (...)
+* > olExtended: (...)
+* > olUtils: (...)
+* > olExtDate: "YYYY-MM-DD"
+* > olExtVersion: "X.X.X"
+*
+* > Error: (...)
+* > Helper: (...)
+* > Protocols: (...)
+* > Services: (...)
+* > servicesDate: "YYYY-MM-DD"
+* > servicesVersion: "X.X.X"
+*/
+
 import Pkg from "../../package";
 
-import Ol from "ol";
+import * as Ol from "ol";
 import Olms from "olms";
+
 import GfiUtils from "./GfiUtils";
 import KML from "./Formats/KML";
 import WMTS from "./Sources/WMTS";
@@ -44,10 +73,20 @@ import "./Styles";
 import "../Common/Utils/AutoLoadConfig";
 import "./CRS/AutoLoadCRS";
 
-// Export des services
-export * from "geoportal-access-lib";
+// export des services
+import Gp from "geoportal-access-lib";
 
-// Rajout des propriétés de l'extension dans le namespace Gp
+// reconstruction des ns
+var Services = Gp.Services;
+var Error = Gp.Error;
+var Helper = Gp.Helper;
+var Protocols = Gp.Protocols;
+var servicesDate = Gp.servicesDate;
+var servicesVersion = Gp.servicesVersion;
+
+export { Services, Error, Helper, Protocols, servicesDate, servicesVersion };
+
+// Rajout des propriétés de l'extension dans le namespace
 export const olExtVersion = Pkg.olExtVersion;
 export const olExtDate = new Date().toISOString().split("T")[0];
 
@@ -58,6 +97,7 @@ export {default as ProxyUtils} from "../Common/Utils/ProxyUtils";
 export {default as ColorUtils} from "../Common/Utils/ColorUtils";
 export {default as MathUtils} from "../Common/Utils/MathUtils";
 
+// utilitaires dans un ns "gp" ?
 Ol.gp = {};
 Ol.gp.GfiUtils = GfiUtils;
 
@@ -72,10 +112,6 @@ Ol.style.editor.Legend = Legend;
 Ol.style.editor.Group = Group;
 Ol.style.editor.Themes = Themes;
 
-// Format Extended
-Ol.format.KMLExtended = KML;
-Ol.source.WMTSExtended = WMTS;
-
 // Rajout de l'extension olms (ol mapbox style)
 Ol.olms = Olms;
 
@@ -88,10 +124,16 @@ if (window.ol && window.ol.proj && window.ol.proj.proj4) {
 }
 
 // Rajout des propriétés dans le namespace Ol
+Ol.format = {};
+Ol.format.KMLExtended = KML;
+Ol.source = {};
+Ol.source.WMTSExtended = WMTS;
 Ol.source.GeoportalWMTS = SourceWMTS;
 Ol.source.GeoportalWMS = SourceWMS;
+Ol.layer = {};
 Ol.layer.GeoportalWMTS = LayerWMTS;
 Ol.layer.GeoportalWMS = LayerWMS;
+Ol.control = {};
 Ol.control.LayerSwitcher = LayerSwitcher;
 Ol.control.GeoportalAttribution = GeoportalAttribution;
 Ol.control.GetFeatureInfo = GetFeatureInfo;

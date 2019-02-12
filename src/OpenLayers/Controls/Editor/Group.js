@@ -11,6 +11,7 @@ var logger = Logger.getLogger("editor-group");
  * MapBox group management
  *
  * @constructor
+ * @alias ol.style.editor.Group
  * @param {Object} options - options for function call.
  * @example
  *   var group = new Group ({

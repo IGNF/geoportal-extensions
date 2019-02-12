@@ -11,6 +11,7 @@ var logger = Logger.getLogger("editor-style");
  * MapBox styles management
  *
  * @constructor
+ * @alias ol.style.editor.Style
  * @param {Object} options - options for function call.
  * @example
  *   var style = new Style ({

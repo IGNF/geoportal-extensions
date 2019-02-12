@@ -11,6 +11,7 @@ var logger = Logger.getLogger("editor-legend");
  * MapBox Legend management
  *
  * @constructor
+ * @alias ol.style.editor.Legend
  * @param {Object} options - options for function call.
  * @example
  *   var Legends = new Legend ({

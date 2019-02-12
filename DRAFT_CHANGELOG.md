@@ -18,10 +18,15 @@
 * [Added]
 
     - [#222](https://github.com/IGNF/geoportal-extensions/pull/222) - Ajout de l'import de couche au format *vecteur tuilé* (MapBox)
+    - Description de la variable globale **Gp** dans la jsdoc
 
 * [Deprecated]
 
+    - Executer les exemples sur un serveur en HTTPS
+    
 * [Removed]
+
+    - Suppression du mode dit *"mixte"* (cad bundle complet avec Itowns et OpenLayers)
 
 * [Fixed]
 
@@ -29,3 +34,5 @@
     - [#217](https://github.com/IGNF/geoportal-extensions/issues/217) - Mise à jour d'OpenLayers
 
 * [Security]
+
+    - **TODO** Mise à jour des dependances de dev (faille de sécurité)

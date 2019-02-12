@@ -97,7 +97,7 @@ Liste des targets disponibles :
 
     npm run <target> <option>
         target : (clean), setup,
-                 build[:dev|:prod|:ol[:dev|:prod]|:leaflet[:dev|:prod]|:itowns[:dev|:prod]|:mix[:dev|:prod]],
+                 build[:dev|:prod|:ol[:dev|:prod]|:leaflet[:dev|:prod]|:itowns[:dev|:prod]],
                  sample, (doc)
                  sample:serve, doc:serve
         option : --env.production,
@@ -293,4 +293,4 @@ http://localhost:8888/
 Aller sur l'URL suivante :
 http://webpack.github.io/analyse/
 
-puis, utiliser le fichier *map-[ol|it|mix|ll].json*
+puis, utiliser le fichier *map-[ol|it|ll].json*

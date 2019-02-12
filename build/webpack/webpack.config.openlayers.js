@@ -119,6 +119,7 @@ module.exports = env => {
                     }]
                 },
                 {
+                    /** FIXME est ce utile ? */
                     test : path.resolve(ROOT, "node_modules", "ol-mapbox-style", "dist", "olms.js"),
                     use : "exports-loader?olms"
                 },

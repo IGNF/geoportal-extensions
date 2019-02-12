@@ -14,6 +14,7 @@ var logger = Logger.getLogger("editor-layer");
  * MapBox filter management
  *
  * @constructor
+ * @alias ol.style.editor.Layer
  * @param {Object} options - options for function call.
  * @example
  *   var layers = new Layer ({

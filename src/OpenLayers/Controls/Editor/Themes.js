@@ -10,6 +10,7 @@ var logger = Logger.getLogger("editor-themes");
  * Mapbox Themes management
  *
  * @constructor
+ * @alias ol.style.editor.Theme
  * @param {Object} options - options for function call.
  * @example
  *   var theme = new Themes ({

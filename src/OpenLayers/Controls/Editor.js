@@ -23,6 +23,7 @@ var logger = Logger.getLogger("editor");
  * Editor Styles MapBox...
  *
  * @constructor
+ * @alias ol.style.Editor
  * @param {Object} options - options for function call.
  * @example
  *   var editor = new Editor ({

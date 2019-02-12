@@ -17,6 +17,7 @@ import Utils from "../../Common/Utils";
  * Extended ol.source.WMTS.
  *
  * @constructor
+ * @alias ol.source.WMTSExtended
  * @extends {ol.source.WMTS}
  * @param {Object} options - Options
  */

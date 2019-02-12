@@ -36,6 +36,7 @@ var logger = Logger.getLogger("extended KML format");
  * cf. https://github.com/openlayers/openlayers/issues/3371
  *
  * @constructor
+ * @alias ol.format.KMLExtended
  * @extends {ol.format.KML}
  * @param {Object} options - Options
  */
