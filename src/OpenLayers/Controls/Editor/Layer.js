@@ -1,4 +1,4 @@
-import EventBus from "eventbus";
+import EventBus from "eventbusjs";
 import EventEditor from "./Event";
 import Style from "./Style";
 import Legend from "./Legend";

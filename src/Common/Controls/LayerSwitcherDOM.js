@@ -1,4 +1,4 @@
-import Sortable from "sortable";
+import Sortable from "sortablejs";
 
 var LayerSwitcherDOM = {
 

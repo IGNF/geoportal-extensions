@@ -2,7 +2,7 @@
   "name": "geoportal-extensions-openlayers",
   "version": "3.0.0",
   "description": "French Geoportal Extensions for OpenLayers",
-  "main": "dist/GpPluginOpenLayers.js",
+  "main": "src/OpenLayers/GpPluginOpenLayers.js",
   "files": [
       "dist/",
       "src/",

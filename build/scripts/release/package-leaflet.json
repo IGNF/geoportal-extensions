@@ -1,9 +1,9 @@
 {
     "name":"geoportal-extensions-leaflet",
-    "version":"2.0.0",
+    "version":"2.2.0",
     "license":"CECILL-B",
     "author":"IGNF",
-    "main":"dist/GpPluginLeaflet.js",
+    "main":"src/Leaflet/GpPluginLeaflet.js",
     "homepage":"https://geoservices.ign.fr/documentation/utilisation_web/extension-leaflet.html",
     "description":"French Geoportal Extension for Leaflet",
     "bugs":{},

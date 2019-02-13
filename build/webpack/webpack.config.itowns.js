@@ -47,7 +47,7 @@ module.exports = env => {
             alias : {
                 "geoportal-access-lib" : path.resolve(ROOT, "node_modules", "geoportal-access-lib", "dist", (production) ? "GpServices.js" : "GpServices-src.js"),
                 proj4 : path.resolve(ROOT, "node_modules", "proj4", "dist", (production) ? "proj4.js" : "proj4-src.js"),
-                sortable : path.resolve(ROOT, "node_modules", "sortablejs", (production) ? "Sortable.min.js" : "Sortable.js")
+                sortablejs : path.resolve(ROOT, "node_modules", "sortablejs", (production) ? "Sortable.min.js" : "Sortable.js")
             }
         },
         externals : {

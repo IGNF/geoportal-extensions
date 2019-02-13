@@ -1,7 +1,7 @@
 // import CSS
 import "../CSS/Controls/Editor/GPeditorOpenLayers.css";
 // import library
-import EventBus from "eventbus";
+import EventBus from "eventbusjs";
 // import local
 import Utils from "../../Common/Utils";
 import ID from "../../Common/Utils/SelectorID";

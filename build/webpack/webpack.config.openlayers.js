@@ -52,8 +52,8 @@ module.exports = env => {
                 olms : path.resolve(ROOT, "node_modules", "ol-mapbox-style", "olms.js"),
                 "geoportal-access-lib" : path.resolve(ROOT, "node_modules", "geoportal-access-lib", "src", "Gp.js"),
                 proj4 : path.resolve(ROOT, "node_modules", "proj4", "dist", (production) ? "proj4.js" : "proj4-src.js"),
-                sortable : path.resolve(ROOT, "node_modules", "sortablejs", (production) ? "Sortable.min.js" : "Sortable.js"),
-                eventbus : path.resolve(ROOT, "node_modules", "eventbusjs", (production) ? "lib" : "src", (production) ? "eventbus.min.js" : "EventBus.js")
+                sortablejs : path.resolve(ROOT, "node_modules", "sortablejs", (production) ? "Sortable.min.js" : "Sortable.js"),
+                eventbusjs : path.resolve(ROOT, "node_modules", "eventbusjs", (production) ? "lib" : "src", (production) ? "eventbus.min.js" : "EventBus.js")
             }
         },
         externals : {

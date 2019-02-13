@@ -7,6 +7,12 @@
 
 * Migration d'OpenLayers en version 5.3.0
 * Nouvelle fonctionnalité avec l'import de couche au format *vecteur tuilé* (MapBox)
+* Correctifs suite au passage ES6
+
+[semver] :
+    - OpenLayers : increment semver MAJOR version (proj4/ol5/es6)
+    - Leaflet : increment semver MINOR version (proj4/es6)
+    - Itowns : increment semver MINOR version (proj4/es6)
 
 ## Changelog
 
@@ -22,11 +28,12 @@
 
 * [Deprecated]
 
-    - Executer les exemples sur un serveur en HTTPS
-    
+    - protocole HTTPS : ne plus executer les exemples sur un serveur en HTTP !
+
 * [Removed]
 
-    - Suppression du mode dit *"mixte"* (cad bundle complet avec Itowns et OpenLayers)
+    - mode *Mixte* - Suppression du mode de construction des bundles dit *"mixte"*
+    (La construction est portée par le projet *geoportal-sdk*)
 
 * [Fixed]
 

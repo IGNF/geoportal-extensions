@@ -20,7 +20,7 @@ module.exports = {
         alias : {
             proj4 : path.resolve("..", "node_modules", "proj4", "dist", "proj4.js"),
             "geoportal-access-lib" : path.resolve("..", "node_modules", "geoportal-access-lib", "src", "Gp.js"),
-            sortable : path.resolve("..", "node_modules", "sortablejs", "Sortable.js")
+            sortablejs : path.resolve("..", "node_modules", "sortablejs", "Sortable.js")
         }
     },
     devtool : "eval-source-map",

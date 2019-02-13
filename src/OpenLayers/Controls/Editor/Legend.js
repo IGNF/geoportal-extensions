@@ -1,4 +1,4 @@
-import EventBus from "eventbus";
+import EventBus from "eventbusjs";
 import EventEditor from "./Event";
 import Utils from "../../../Common/Utils";
 import Logger from "../../../Common/Utils/LoggerByDefault";
