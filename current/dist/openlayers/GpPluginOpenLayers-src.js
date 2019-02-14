@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 2.1.0
- * @date 2018-09-03
+ * @date 2019-02-14
  *
  */
 
@@ -93,7 +93,7 @@
 		exports["Gp"] = factory(require("openlayers"), require("xmldom"), require("request"));
 	else
 		root["Gp"] = factory(root["ol"], root[undefined], root[undefined]);
-})(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_11__, __WEBPACK_EXTERNAL_MODULE_25__) {
+})(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_11__, __WEBPACK_EXTERNAL_MODULE_24__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -156,7 +156,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 24);
+/******/ 	return __webpack_require__(__webpack_require__.s = 23);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -170,7 +170,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _loglevel = __webpack_require__(26);
+var _loglevel = __webpack_require__(25);
 
 var Log = _interopRequireWildcard(_loglevel);
 
@@ -401,7 +401,7 @@ exports.default = SelectorID;
 
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(true)
-		module.exports = factory(__webpack_require__(11), __webpack_require__(25));
+		module.exports = factory(__webpack_require__(11), __webpack_require__(24));
 	else if(typeof define === 'function' && define.amd)
 		define("Gp", ["require", "require"], factory);
 	else if(typeof exports === 'object')
@@ -20295,7 +20295,7 @@ var Config = {
 };
 
 exports.default = Config;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(19)))
 
 /***/ }),
 /* 9 */
@@ -23152,7 +23152,7 @@ var _ol = __webpack_require__(1);
 
 var _ol2 = _interopRequireDefault(_ol);
 
-var _proj = __webpack_require__(19);
+var _proj = __webpack_require__(26);
 
 var _proj2 = _interopRequireDefault(_proj);
 
@@ -23174,7 +23174,7 @@ var logger = _LoggerByDefault2.default.getLogger("CRS");
  */
 (function () {
     // load all defs into proj4
-    _Register2.default.load();
+    _Register2.default.load(_proj2.default);
     // overload proj4 into ol
     if (!_ol2.default.proj.proj4_ && _ol2.default.proj.setProj4) {
         _ol2.default.proj.setProj4(_proj2.default);
@@ -23238,13 +23238,6 @@ exports.default = CRS;
 
 /***/ }),
 /* 19 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["proj4"] = __webpack_require__(27);
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)))
-
-/***/ }),
-/* 20 */
 /***/ (function(module, exports) {
 
 var g;
@@ -23271,7 +23264,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 21 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23434,7 +23427,7 @@ SourceWMTS.prototype.constructor = SourceWMTS;
 exports.default = SourceWMTS;
 
 /***/ }),
-/* 22 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23576,7 +23569,7 @@ SourceWMS.prototype.constructor = SourceWMS;
 exports.default = SourceWMS;
 
 /***/ }),
-/* 23 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24397,7 +24390,7 @@ LocationSelector.prototype._fillAutoCompletedLocationListContainer = function (l
 exports.default = LocationSelector;
 
 /***/ }),
-/* 24 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24469,11 +24462,11 @@ var _CRS = __webpack_require__(18);
 
 var _CRS2 = _interopRequireDefault(_CRS);
 
-var _SourceWMTS = __webpack_require__(21);
+var _SourceWMTS = __webpack_require__(20);
 
 var _SourceWMTS2 = _interopRequireDefault(_SourceWMTS);
 
-var _SourceWMS = __webpack_require__(22);
+var _SourceWMS = __webpack_require__(21);
 
 var _SourceWMS2 = _interopRequireDefault(_SourceWMS);
 
@@ -24595,13 +24588,13 @@ _ol2.default.control.ElevationPath = _ElevationPath2.default;
 exports.olExtended = _ol2.default;
 
 /***/ }),
-/* 25 */
+/* 24 */
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE_25__;
+module.exports = __WEBPACK_EXTERNAL_MODULE_24__;
 
 /***/ }),
-/* 26 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -24859,6 +24852,13 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
     return defaultLogger;
 }));
 
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["proj4"] = __webpack_require__(27);
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(19)))
 
 /***/ }),
 /* 27 */
@@ -31203,13 +31203,6 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-
-var _proj = __webpack_require__(19);
-
-var _proj2 = _interopRequireDefault(_proj);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 /**
  * Register definition for IGNF, and EPSG CRS.
  * @example
@@ -31260,7 +31253,7 @@ var Register = {
     /**
      * load all defs to proj4
      */
-    load: function load() {
+    load: function load(proj4) {
         if (!this.isLoaded) {
             var registers = ["IGNF", "EPSG", "CRS"];
             for (var i = 0; i < registers.length; i++) {
@@ -31269,7 +31262,7 @@ var Register = {
                 for (var code in codes) {
                     if (codes.hasOwnProperty(code)) {
                         var name = register + ":" + code;
-                        _proj2.default.defs(name, this.get(name));
+                        proj4.defs(name, this.get(name));
                     }
                 }
             }
@@ -31740,7 +31733,7 @@ var _Config = __webpack_require__(8);
 
 var _Config2 = _interopRequireDefault(_Config);
 
-var _SourceWMTS = __webpack_require__(21);
+var _SourceWMTS = __webpack_require__(20);
 
 var _SourceWMTS2 = _interopRequireDefault(_SourceWMTS);
 
@@ -31896,7 +31889,7 @@ var _Config = __webpack_require__(8);
 
 var _Config2 = _interopRequireDefault(_Config);
 
-var _SourceWMS = __webpack_require__(22);
+var _SourceWMS = __webpack_require__(21);
 
 var _SourceWMS2 = _interopRequireDefault(_SourceWMS);
 
@@ -42519,7 +42512,7 @@ var _SelectorID = __webpack_require__(3);
 
 var _SelectorID2 = _interopRequireDefault(_SelectorID);
 
-var _LocationSelector = __webpack_require__(23);
+var _LocationSelector = __webpack_require__(22);
 
 var _LocationSelector2 = _interopRequireDefault(_LocationSelector);
 
@@ -46149,7 +46142,7 @@ var _SelectorID = __webpack_require__(3);
 
 var _SelectorID2 = _interopRequireDefault(_SelectorID);
 
-var _LocationSelector = __webpack_require__(23);
+var _LocationSelector = __webpack_require__(22);
 
 var _LocationSelector2 = _interopRequireDefault(_LocationSelector);
 

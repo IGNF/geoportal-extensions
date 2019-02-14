@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 2.0.2
- * @date 2018-09-03
+ * @date 2019-02-14
  *
  */
 
@@ -224,7 +224,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _loglevel = __webpack_require__(23);
+var _loglevel = __webpack_require__(22);
 
 var Log = _interopRequireWildcard(_loglevel);
 
@@ -18901,13 +18901,6 @@ exports.default = {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-
-var _proj = __webpack_require__(8);
-
-var _proj2 = _interopRequireDefault(_proj);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 /**
  * Register definition for IGNF, and EPSG CRS.
  * @example
@@ -18958,7 +18951,7 @@ var Register = {
     /**
      * load all defs to proj4
      */
-    load: function load() {
+    load: function load(proj4) {
         if (!this.isLoaded) {
             var registers = ["IGNF", "EPSG", "CRS"];
             for (var i = 0; i < registers.length; i++) {
@@ -18967,7 +18960,7 @@ var Register = {
                 for (var code in codes) {
                     if (codes.hasOwnProperty(code)) {
                         var name = register + ":" + code;
-                        _proj2.default.defs(name, this.get(name));
+                        proj4.defs(name, this.get(name));
                     }
                 }
             }
@@ -19695,7 +19688,7 @@ var Config = {
 };
 
 exports.default = Config;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
 
 /***/ }),
 /* 7 */
@@ -19783,13 +19776,6 @@ exports.default = IconDefault;
 
 /***/ }),
 /* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["proj4"] = __webpack_require__(20);
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
-
-/***/ }),
-/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19940,7 +19926,7 @@ var PositionFormater = {
 exports.default = PositionFormater;
 
 /***/ }),
-/* 10 */
+/* 9 */
 /***/ (function(module, exports) {
 
 var g;
@@ -19967,7 +19953,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 11 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19997,11 +19983,11 @@ var _SelectorID = __webpack_require__(3);
 
 var _SelectorID2 = _interopRequireDefault(_SelectorID);
 
-var _LocationSelectorDOM = __webpack_require__(27);
+var _LocationSelectorDOM = __webpack_require__(26);
 
 var _LocationSelectorDOM2 = _interopRequireDefault(_LocationSelectorDOM);
 
-var _PositionFormater = __webpack_require__(9);
+var _PositionFormater = __webpack_require__(8);
 
 var _PositionFormater2 = _interopRequireDefault(_PositionFormater);
 
@@ -21125,7 +21111,7 @@ var LocationSelector = _leaflet2.default.Control.extend( /** @lends LocationSele
 exports.default = LocationSelector;
 
 /***/ }),
-/* 12 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21135,7 +21121,9 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-__webpack_require__(8);
+var _proj = __webpack_require__(12);
+
+var _proj2 = _interopRequireDefault(_proj);
 
 __webpack_require__(32);
 
@@ -21160,7 +21148,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /** autoload function */
 (function () {
     // load all defs into proj4
-    _Register2.default.load();
+    _Register2.default.load(_proj2.default);
 })();
 
 /**
@@ -21228,6 +21216,13 @@ var CRS = {
 };
 
 exports.default = CRS;
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["proj4"] = __webpack_require__(31);
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
 
 /***/ }),
 /* 13 */
@@ -26060,7 +26055,7 @@ var _SelectorID = __webpack_require__(3);
 
 var _SelectorID2 = _interopRequireDefault(_SelectorID);
 
-var _PositionFormater = __webpack_require__(9);
+var _PositionFormater = __webpack_require__(8);
 
 var _PositionFormater2 = _interopRequireDefault(_PositionFormater);
 
@@ -27741,7 +27736,7 @@ var _leaflet = __webpack_require__(0);
 
 var _leaflet2 = _interopRequireDefault(_leaflet);
 
-var _Controls = __webpack_require__(21);
+var _Controls = __webpack_require__(20);
 
 var _Controls2 = _interopRequireDefault(_Controls);
 
@@ -27753,7 +27748,7 @@ var _Layers = __webpack_require__(46);
 
 var _Layers2 = _interopRequireDefault(_Layers);
 
-var _CRS = __webpack_require__(12);
+var _CRS = __webpack_require__(11);
 
 var _CRS2 = _interopRequireDefault(_CRS);
 
@@ -27804,6 +27799,8552 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_19__;
 
 /***/ }),
 /* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _LayerSwitcher2 = __webpack_require__(21);
+
+var _LayerSwitcher3 = _interopRequireDefault(_LayerSwitcher2);
+
+var _Isocurve2 = __webpack_require__(25);
+
+var _Isocurve3 = _interopRequireDefault(_Isocurve2);
+
+var _MousePosition2 = __webpack_require__(28);
+
+var _MousePosition3 = _interopRequireDefault(_MousePosition2);
+
+var _ReverseGeocoding = __webpack_require__(36);
+
+var _ReverseGeocoding2 = _interopRequireDefault(_ReverseGeocoding);
+
+var _Route2 = __webpack_require__(38);
+
+var _Route3 = _interopRequireDefault(_Route2);
+
+var _SearchEngine2 = __webpack_require__(40);
+
+var _SearchEngine3 = _interopRequireDefault(_SearchEngine2);
+
+var _ElevationPath2 = __webpack_require__(14);
+
+var _ElevationPath3 = _interopRequireDefault(_ElevationPath2);
+
+var _Logo2 = __webpack_require__(45);
+
+var _Logo3 = _interopRequireDefault(_Logo2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Geoportal Controls Factory to be used together with Leaflet Maps.
+ *
+ * @module Controls
+ * @alias L.geoportalControl
+ * @example
+ * var layerSwitcher = L.geoportalControl.LayerSwitcher(options);
+ */
+var Controls = {
+
+  /**
+   * Factory function for LayerSwitcher Control creation.
+   *
+   * @method LayerSwitcher
+   * @static
+   * @alias L.geoportalControl.LayerSwitcher
+   * @param {Object} options - options for function call.
+   * @param {String}  [options.position] - position of component into the map, 'topleft' by default. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
+   * @param {Boolean} [options.collapsed] - collapse mode, false by default
+   * @param {Array}   [options.layers] - list of layers to be configured. Each array element is an object, with following properties :
+   * @param {Object}  [options.layers.layer] - layer object
+   * @param {Boolean} [options.layers.display] - display layer in widget layer list
+   * @param {Object}  [options.layers.config] - layer display config
+   * @param {String}  [options.layers.config.visibility] - layer visibility on map
+   * @param {String}  [options.layers.config.title] - layer alias, to be displayed in widget layer list. E.g. : "Cartes IGN"
+   * @param {String}  [options.layers.config.description] - layer description, to be displayed on title hover, or in layer information panel.
+   * @param {String}  [options.layers.config.quicklookUrl] - link to a quick look image for this layer.
+   * @param {Array}   [options.layers.config.legends] - array of layer legends. Each array element is an object, with following properties :
+   *      - url (String, mandatory) : link to a legend
+   *      - minScaleDenominator (Number, optional) : min scale denominator for legend validity.
+   * @param {Array} [options.layers.config.metadata] - array of layer metadata. Each array element is an object, with property url (String, mandatory) : link to a metadata
+   * @returns {L.geoportalControl.LayerSwitcher} - LayerSwitcher Object
+   * @example
+   *  layers = [
+   *      {
+   *          layer : wms1,
+   *          display : false,
+   *          config : {
+   *              title : "test layer name 1",
+   *              description : "test layer desc 1",
+   *          }
+   *      }
+   *  ];
+   *
+   *  options = {
+   *      position : "topright",
+   *      collapsed : true,
+   *      layers : layers
+   *  };
+   *
+   *  var layerSwitcher = L.geoportalControl.LayerSwitcher(options);
+   */
+  LayerSwitcher: function LayerSwitcher(options) {
+    return new _LayerSwitcher3.default(options);
+  },
+
+  /**
+   * Factory function for Isocurve Control creation.
+   *
+   * @method Isocurve
+   * @static
+   * @alias L.geoportalControl.Isocurve
+   * @param {Object} options - Isocurve control options
+   * @param {Sting}   [options.apiKey] - API key for services call (isocurve and autocomplete services), mandatory if autoconf service has not been charged in advance
+   * @param {String}  [options.position] - position of component into the map, 'topleft' by default. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
+   * @param {Boolean} [options.collapsed] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
+   * @param {Object}  [options.exclusions] - list of exclusions with status (true = checked), by default : ["toll":false, "tunnel":false, "bridge":false].
+   * @param {Array}   [options.graphs] - list of graph resources to be used for isocurve calculation, by default : ["Voiture", "Pieton"]. The first element is selected.
+   * @param {Array}   [options.methods] - list of methods, by default : ["time", "distance"]. The first element is selected by default.
+   * @param {Array}   [options.directions] - list of directions to be displayed, by default : ["departure", "arrival"]. The first element is selected by default.
+   *      Directions enable to specify if input location point will be used as a departure point ("departure") or as an arrival point ("arrival")
+   * @param {Boolean} [options.disableReverse = false] - whether to enable/disable the reverse geocoding
+   * @param {Object} [options.isocurveOptions] - isocurve service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~isoCurve Gp.Services.isoCurve}
+   * @param {Object} [options.autocompleteOptions] - autocomplete service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~autoComplete Gp.Services.autoComplete}
+   * @returns {L.geoportalControl.Isocurve} - Isocurve Object
+   * @example
+   *  var iso = L.geoportalControl.Isocurve({
+   *      collapsed : false
+   *      methods : ["time", "distance"],
+   *      exclusions : {
+   *         toll : true,
+   *         bridge : false,
+   *         tunnel : true
+   *      },
+   *      graphs : ["Pieton", "Voiture"],
+   *      isocurveOptions : {},
+   *      autocompleteOptions : {}
+   *  });
+   */
+  Isocurve: function Isocurve(options) {
+    return new _Isocurve3.default(options);
+  },
+
+  /**
+   * Factory function for Geoportal MousePosition Control creation.
+   *
+   * @method MousePosition
+   * @static
+   * @alias L.geoportalControl.MousePosition
+   * @param {Object} options - options for function call.
+   * @param {Sting}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
+   * @param {String}  [options.position] - position of component into the map, 'bottomleft' by default. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
+   * @param {Boolean} [options.collapsed] - collapse mode, false by default
+   * @param {Array}   [options.systems] - list of projection systems, GEOGRAPHIC, MERCATOR, LAMB93 and LAMB2E by default
+   *      Each array element (=system) is an object with following properties :
+   * @param {String}  options.systems.crs - Proj4 crs alias (from proj4 defs). e.g. : "EPSG:4326". Required
+   * @param {String}  [options.systems.label] - CRS label to be displayed in control. Default is crs code (e.g. "EPSG:4326")
+   * @param {String}  [options.systems.type] - CRS units type for coordinates conversion : "Geographical" or "Metric". Default: "Metric"
+   * @param {Object}  [options.systems.geoBBox] - Aera covered by the system (WGS84 coordinates).
+   * @param {Number}  options.systems.geoBBox.right - Right bound.
+   * @param {Number}  options.systems.geoBBox.left - Left bound.
+   * @param {Number}  options.systems.geoBBox.top - Top bound.
+   * @param {Number}  options.systems.geoBBox.bottom - Bottom bound.
+   * @param {Array}   [options.units] - list of units by system, Geographical and Metric by default
+   *      Values may be "DEC" (decimal degrees), "DMS" (sexagecimal), "RAD" (radians) and "GON" (grades) for geographical coordinates,
+   *      and "M" or "KM" for metric coordinates
+   * @param {Boolean} [options.displayAltitude] - active/desactivate the altitude panel, if desactivate, have just the coordinate panel, true by default
+   * @param {Boolean} [options.displayCoordinates] - active/desactivate the coordinate panel, if desactivate, have just the altitude panel, true by default
+   * @param {Boolean} [options.editCoordinates = false] - If true, coordinates from the MousePosition control can be edited by users to re-center the view. False by default.
+   * @param {Object}  [options.altitude] - elevation configuration
+   * @param {Object}  [options.altitude.serviceOptions] - options of elevation service. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~getAltitude Gp.Services.getAltitude}
+   * @param {Number}  [options.altitude.responseDelay] - latency for altitude request, 500 ms by default
+   * @param {Number}  [options.altitude.triggerDelay] - immobilisation time of movement on the map to trigger the elevation calculation, 200 ms by default
+   * @param {Number}  [options.altitude.noDataValue] - value used for altitude service no data (default is -99999). In this case, "---m" will be displayed instead of "-99999m"
+   * @param {Number}  [options.altitude.noDataValueTolerance] - tolerance for no data value :
+   *                  values in [noDataValue - noDataValueTolerance ; noDataValue + noDataValueTolerance] interval will not be displayed, but "---m" will be displayed instead.
+   *                  Default is 90000
+   * @returns {L.geoportalControl.MousePosition} - MousePosition Object
+   * @example
+   *  var MousePosition = L.geoportalControl.MousePosition({
+   *      position : 'bottomleft',
+   *      collapsed : false,
+   *      displayAltitude : true,
+   *      editCoordinates : false,
+   *      altitude : {
+   *           triggerDelay : 100,
+   *           responseDelay : 500,
+   *           noDataValue : -99999,
+   *           noDataValueTolerance : 90000,
+   *           serviceOptions : {}
+   *      },
+   *      systems : [
+   *       {
+   *          crs : L.CRS.EPSG4326,
+   *          label : "Lon,Lat",
+   *          type : "Geographical"
+   *        },
+   *       {
+   *          crs : L.geoportalCRS.EPSG2154,
+   *          label : "Lambert 93",
+   *          type : "Metric"
+   *        }
+   *      ],
+   *      units : ["DEC", "DMS"]
+   *  });
+   */
+  MousePosition: function MousePosition(options) {
+    return new _MousePosition3.default(options);
+  },
+
+  /**
+   * Factory function for Geoportal ReverseGeocode Control creation.
+   *
+   * @method ReverseGeocode
+   * @static
+   * @alias L.geoportalControl.ReverseGeocode
+   * @extends {L.Control}
+   * @param {Object} options - ReverseGeocoding control options
+   * @param {String}  [options.apiKey] - API key for services call (reverse geocode service), mandatory if autoconf service has not been charged in advance
+   * @param {String}  [options.position] - position of component into the map, 'topleft' by default. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
+   * @param {Boolean} [options.collapsed] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
+   * @param {Array}  [options.resources] - resources for geocoding, by default : ["StreetAddress", "PositionOfInterest"]
+   * @param {Array}  [options.delimitations] - delimitations for reverse geocoding, by default : ["Point", "Circle", "Extent"]
+   * @param {Object}  [options.ReverseGeocodeOptions] - reverse geocode service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~reverseGeocode Gp.Services.reverseGeocode} to know all reverse geocode options.
+   * @returns {L.geoportalControl.ReverseGeocode} - ReverseGeocode Object
+   * @example
+   *  var iso = L.geoportalControl.ReverseGeocode({
+   *      collapsed : false,
+   *      position : "topright",
+   *      resources : ["StreetAddress", "PositionOfInterest"],
+   *      delimitations : ["Point", "Circle"],
+   *      reverseGeocodeOptions : {}
+   *  });
+   */
+  ReverseGeocode: function ReverseGeocode(options) {
+    return new _ReverseGeocoding2.default(options);
+  },
+
+  /**
+   * Factory function for Geoportal Route Control creation.
+   *
+   * @method Route
+   * @static
+   * @alias L.geoportalControl.Route
+   * @extends {L.Control}
+   * @param {Object} options - options for function call.
+   * @param {Sting}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
+   * @param {String}  [options.position = "topleft"] - position of component into the map, 'topleft' by default. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
+   * @param {Boolean} [options.collapsed = false] - collapse mode, false by default
+   * @param {Boolean} [options.disableReverse = false] - whether to enable/disable the reverse geocoding when entering points.
+   *   Active by default. But, you can disable it when entering with the "ctrl" key on the keyboard
+   * @param {Object}  [options.exclusions] - list of exclusions with status
+   * @param {Array}   [options.graphs] - list of resources, by default : ["Voiture", "Pieton"], and the first element is selected.
+   * @param {Object}  [options.autocompleteOptions] - options of autocomplete service. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~autoComplete Gp.Services.autoComplete}
+   * @param {Object}  [options.routeOptions] - options of route service. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~route Gp.Services.route}
+   * @returns {L.geoportalControl.Route} - Route Object
+   * @example
+   *  var route = L.geoportalControl.Route({
+   *      position : "topright",
+   *      collapsed : true,
+   *      exclusions : {
+   *         "toll" : true,
+   *         "bridge" : false,
+   *         "tunnel" : true
+   *      },
+   *      graphs : ['Pieton', 'Voiture'],
+   *      autocompleteOptions : {},
+   *      routeOptions : {}
+   *  });
+   */
+  Route: function Route(options) {
+    return new _Route3.default(options);
+  },
+
+  /**
+   * Factory function for Geoportal SearchEngine Control creation.
+   *
+   * @method SearchEngine
+   * @static
+   * @alias L.geoportalControl.SearchEngine
+   * @extends {L.Control}
+   * @param {Object}  options - control options
+   * @param {String}  [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
+   * @param {Boolean} [options.collapsed = false] - collapse mode
+   * @param {String}  [options.position = "topleft"] - position of component into the map. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
+   * @param {String}  [options.placeholder = "Rechercher un lieu, une adresse"] - set placeholder in search bar
+   * @param {Boolean} [options.displayMarker = true] - set a marker on search result
+   * @param {String|Object}  [options.markerStyle = "blue"] - set a marker style. Currently possible values are "blue" (default value), "orange", "red" and "green". But you can use an L.Icon object (see {@link http://leafletjs.com/reference-1.2.0.html#icon L.Icon })
+   * @param {Boolean} [options.displayInfo = true] - get informations on popup marker
+   * @param {Sting|Numeric|Function} [options.zoomTo] - zoom to results, by default, current zoom.
+   *       possible values : "auto", any fixed zoom level or a function retruning a zoom :
+   *
+   *       ```
+   *       zoomTo : function (info) {
+   *           // do some stuff...
+   *           return zoom; // required : return the zoom level !
+   *       }
+   *
+   *       With parameter 'info' : {
+   *           type : "PositionOfInterest" | "StreetAddress" | ...
+   *           service : "SuggestedLocation" | "DirectGeocodedLocation"
+   *           fields : { // fields of service response }
+   *       }
+   *       ```
+   * @param {Sting}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
+   * @param {Object}  [options.resources] - resources to be used by geocode and autocompletion services, by default : ["StreetAddress", "PositionOfInterest"]
+   * @param {Boolean} [options.displayAdvancedSearch] - False to disable advanced search tools (it will not be displayed). Default is true (displayed)
+   * @param {Object}  [options.advancedSearch] - advanced search for geocoding (filters)
+   * @param {Object}  [options.geocodeOptions] - options of geocode service. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~geocode Gp.Services.geocode}
+   * @param {Object}  [options.autocompleteOptions] - options of autocomplete service. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~autoComplete Gp.Services.autoComplete}
+   * @param {Object}  [options.autocompleteOptions.serviceOptions] - options of autocomplete service
+   * @param {Boolean} [options.autocompleteOptions.triggerGeocode = false] - trigger a geocoding request if the autocompletion does not return any suggestions, false by default
+   * @param {Number}  [options.autocompleteOptions.triggerDelay = 1000] - waiting time before sending the geocoding request, 1000ms by default
+   * @returns {L.geoportalControl.SearchEngine} - SearchEngine Object
+   * @example
+   *  var SearchEngine = L.geoportalControl.SearchEngine({
+   *      position : "topright",
+   *      collapsed : true,
+   *      zoomTo : "auto",
+   *      displayInfo : true,
+   *      displayAdvancedSearch : true,
+   *      resources : ["PositionOfInterest", "StreetAddress"],
+   *      advancedSearch : {
+   *          PositionOfInterest : [{name : "municipality", title : "Ville"}],
+   *          StreetAddress : [{...}],
+   *          CadastralParcel : null,
+   *      },
+   *      apiKey : "zfgzrgffg57rfg8ar7gr4g5r4",
+   *      geocodeOptions : {},
+   *      autocompleteOptions : {}
+   *  });
+   */
+  SearchEngine: function SearchEngine(options) {
+    return new _SearchEngine3.default(options);
+  },
+
+  /**
+   * Factory function for ElevationPath Control creation.
+   *
+   * @method ElevationPath
+   * @static
+   * @alias L.geoportalControl.ElevationPath
+   * @param {Object} options - options for function call.
+   * @param {Sting}   [options.apiKey] - API key for elevation service call, mandatory if configuration service has not been loaded in advance. See {@link https://github.com/IGNF/geoportal-extensions/blob/master/README-leaflet.md#user-content-config "Configuration de l'accès à la plateforme Géoportail" documentation chapter} for more information.
+   * @param {String}  [options.position] - position of component into the map, 'topleft' by default. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
+   * @param {Boolean} [options.active = false] - specify if control should be actived at startup. Default is false.
+   * @param {Object} [options.stylesOptions = DEFAULT_STYLES] - Styles to use when drawing. see [leaflet options](http://leafletjs.com/reference.html#path-options) for available properties.
+   * @param {Object} [options.elevationPathOptions = {}] - elevation path service options. See {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~getAltitude options} for available options
+   * @param {Object} [options.displayProfileOptions = {}] - profile options.
+   * @param {Function} [options.displayProfileOptions.apply] - function to display profile if you want to cutomise it. By default, [DISPLAY_PROFILE_BY_DEFAULT()](./L.geoportalControl.ElevationPath.html#.DISPLAY_PROFILE_BY_DEFAULT) is used. Helper functions to use with D3 [DISPLAY_PROFILE_LIB_D3()](./L.geoportalControl.ElevationPath.html#.DISPLAY_PROFILE_LIB_D3) or AmCharts [DISPLAY_PROFILE_LIB_AMCHARTS()](./L.geoportalControl.ElevationPath.html#.DISPLAY_PROFILE_LIB_AMCHARTS) frameworks are also provided. You may also provide your own function.
+   * @param {Object} [options.displayProfileOptions.target] - DOM container to use to display the profile.
+   * @param {Boolean} [options.displayProfileOptions.greaterSlope = true] - display the greater slope into the graph
+   * @param {Boolean} [options.displayProfileOptions.meanSlope = true] -  display the mean slope into the graph
+   * @param {Boolean} [options.displayProfileOptions.ascendingElevation = true] -  display the ascending elevation into the graph
+   * @param {Boolean} [options.displayProfileOptions.descendingElevation = true] -  display the descending elevation into the graph
+   * @param {Boolean} [options.displayProfileOptions.currentSlope = true] -  display current slope value on profile mouseover
+   *
+   * @returns {L.geoportalControl.ElevationPath} - ElevationPath Object
+   * @example
+   *  var e = L.geoportalControl.ElevationPath({
+   *      active : false
+   *      position : "topleft"
+   *      stylesOptions : {},
+   *      elevationPathOptions : {},
+   *      displayProfileOptions  : {
+   *          apply : L.geoportalControl.DISPLAY_PROFILE_LIB_AMCHARTS
+   *          target : null, // by default
+   *          meanSlope : true, // by default
+   *          greaterSlope : true, // by default
+   *          ascendingElevation : false,
+   *          descendingElevation : false,
+   *          currentSlope : false
+   *      }
+   *  });
+   */
+  ElevationPath: function ElevationPath(options) {
+    return new _ElevationPath3.default(options);
+  },
+
+  /**
+   * Control Logo
+   *
+   * @private
+   * @method Logo
+   * @extends {L.Control}
+   * @alias L.geoportalControl.Logo
+   * @param {Object} options - options for function call.
+   * @param {String} options.position - 'topright' by default. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
+   * @param {String} options.url - URL
+   * @param {String} options.text - text
+   * @param {String} options.picto - picto
+   * @param {String|Object} options.size - picto size
+   * @returns {Logo} - Logo Object
+   * @example
+   * var map  = L.map('map').setView([48, 2], 4);
+   * var logo = L.geoportalControl.Logo({
+   *   position : "topright",
+   *   picto : "http://www.ign.fr/logo-ign.jpg",
+   *   url : "http://www.ign.fr",
+   *   text : "© IGN"
+   *   size : {width : '50px', height : '30px'}
+   * });
+   * logo.addTo(map);
+   */
+  Logo: function Logo(options) {
+    return new _Logo3.default(options);
+  }
+};
+
+exports.default = Controls;
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _leaflet = __webpack_require__(0);
+
+var _leaflet2 = _interopRequireDefault(_leaflet);
+
+var _LoggerByDefault = __webpack_require__(1);
+
+var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
+
+var _SelectorID = __webpack_require__(3);
+
+var _SelectorID2 = _interopRequireDefault(_SelectorID);
+
+var _LayerSwitcherDOM = __webpack_require__(23);
+
+var _LayerSwitcherDOM2 = _interopRequireDefault(_LayerSwitcherDOM);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var logger = _LoggerByDefault2.default.getLogger("layerswitcher");
+
+/**
+ * @classdesc
+ *
+ * Leaflet Control Class to manage map layers : their order, visibility and opacity, and display their informations (title, description, legends, metadata...)
+ *
+ * Use {@link module:Controls.LayerSwitcher L.geoportalControl.LayerSwitcher()} factory to create instances of that class.
+ *
+ * **Extends** Leaflet <a href="http://leafletjs.com/reference.html#control-layers" target="_blank">L.Control.Layers</a> native class.
+ *
+ * @namespace
+ * @alias L.geoportalControl.LayerSwitcher
+ */
+var LayerSwitcher = _leaflet2.default.Control.Layers.extend( /** @lends L.geoportalControl.LayerSwitcher.prototype */{
+
+    includes: _LayerSwitcherDOM2.default,
+
+    /**
+     * options by default
+     * (extend to L.Control.Layers)
+     *
+     * @private
+     */
+    options: {
+        collapsed: true,
+        position: "topright",
+        autoZIndex: true,
+        layers: []
+    },
+
+    // ################################################################### //
+    // ##################### Methodes surchargées ######################## //
+    // ################################################################### //
+
+    /**
+     * @constructor LayerSwitcher
+     *
+     * @private
+     * @alias LayerSwitcher
+     * @extends {L.Control}
+     * @param {Object} options - options of component
+     * @param {String}  [options.position] - position of component into the map, 'topleft' by default
+     * @param {Boolean} [options.collapsed] - collapse mode, false by default
+     * @param {Array} [options.layers] - list of layers to be configured. Each array element is an object, with following properties :
+     * @param {Object} [options.layers.layer] - layer object
+     * @param {Boolean} [options.layers.display] - display layer in widget layer list
+     * @param {String} [options.layers.config.visibility] - layer visibility on map
+     * @param {String} [options.layers.config.title] - layer alias, to be displayed in widget layer list. E.g. : "Cartes IGN"
+     * @param {String} [options.layers.config.description] - layer description, to be displayed on title hover, or in layer information panel.
+     * @param {String} [options.layers.config.quicklookUrl] - link to a quick look image for this layer.
+     * @param {Array} [options.layers.config.legends] - array of layer legends. Each array element is an object, with following properties :
+     *      - url (String, mandatory) : link to a legend
+     *      - minScaleDenominator (Number, optional) : min scale denominator for legend validity.
+     * @param {Array} [options.layers.config.metadata] - array of layer metadata. Each array element is an object, with property url (String, mandatory) : link to a metadata
+     *
+     * @example
+     *  layers = [
+     *      {
+     *          layer : wms1,
+     *          display : false,
+     *          config : {
+     *              title : "test layer name 1",
+     *              description : "test layer desc 1",
+     *          }
+     *      }
+     *  ]
+     *  options = {
+     *      position : "topright",
+     *      collapsed : true,
+     *      layers : layers
+     *  }
+     *
+     *  var layerSwitcher = L.geoportalControl.LayerSwitcher(options);
+     */
+    initialize: function initialize(options) {
+        _leaflet2.default.Util.setOptions(this, options);
+
+        // uuid
+        this._uid = _SelectorID2.default.generate();
+
+        // il faut recuperer tous les layers de la carte (cf. onAdd).
+        // si une configuration de layers est renseignée, on exploite cette
+        // information pour les layers renseignés.
+        // Par contre, pour ceux qui n'ont pas de configuration, on exploite
+        // les informations issues de l'autoconf pour les layers IGN,
+        // et, pour les layers non IGN, on gére avec l'ID pours les valeurs
+        // de titre ou description  ...
+
+        // a ton une configuration des layers ?
+        this._hasLayersConfig = !(!this.options.layers || Object.keys(this.options.layers).length === 0);
+
+        // configuration des layers
+        this._layersConfig = this._hasLayersConfig ? this.options.layers : [];
+
+        // liste des layers (c'est l'interface avec le dom !)
+        this._layers = {};
+
+        // indice : ordre des layers sur la carte
+        // plus c'est haut, plus c'est au dessus de la pile
+        this._lastZIndex = 0;
+
+        // si on a une configuration de layers, on l'exploite tout de suite...
+        if (this._hasLayersConfig) {
+            for (var i = 0; i < this._layersConfig.length; i++) {
+                var obj = this._layersConfig[i];
+                // signature de la fonction pour une compatibilité avec leaflet...
+                this._addLayer(obj.layer, null, true);
+            }
+        }
+    },
+
+    /**
+     * Method 'onAdd'
+     * (extend to L.Control.Layers)
+     * Method to add the control on the map.
+     *
+     * @param {Object} map - L.Map
+     * @returns {HTMLElement} container
+     *
+     * @private
+     */
+    onAdd: function onAdd(map) {
+        // on charge tous les layers dans le controle avec une
+        // configuration automatique des layers pour ceux qui ne sont pas
+        // renseignés.
+        var layersMap = map._layers;
+
+        // on est dans le cas où nous avons des layers ajoutés à la carte
+        if (Object.keys(layersMap).length !== 0) {
+            // pour gerer l'ordre d'affichage des layers sur la map
+            // ainsi que dans le controle, on veut le fonctionnement suivant :
+            // layers ID   : [21  , 23  , 25  , 27]
+            // layers Map  : [21:1, 23:2, 25:3, 27:4]
+            // mais l'ordre dans le controle doit être inversé
+            // layers Ctrl : [27, 25, 23, 21], et ceci sera realisé lors de
+            // la creation du DOM pour chaque layer (cf. _update())
+
+            var layersKeys = Object.keys(layersMap); // trie
+            this._lastZIndex = 0;
+            for (var i = 0; i < layersKeys.length; i++) {
+                var layerId = layersKeys[i];
+
+                // gestion des ordres d'affichage des layers
+                if (this.options.autoZIndex && layersMap[layerId].setZIndex) {
+                    this._lastZIndex++;
+                    layersMap[layerId].setZIndex(this._lastZIndex);
+                }
+
+                // y'a t il une configuration des layers ?
+                // si oui, le layer renseigné a déjà été pris en compte dans
+                // le constructeur..., on passe à la suite...
+                if (this._hasLayersConfig) {
+                    if (this._layers[layerId]) {
+                        continue;
+                    }
+                }
+
+                // sans configuration, on gére en mode auto le layer.
+                // on utilise cette methode
+                // this.addOverlay() -> this._addLayer()...
+                this.addOverlay(layersMap[layerId]);
+            }
+        }
+
+        // FIXME au cas où les layers n'ont pas été renseignés sur la carte
+        // (via addTo ou options.layers), on decide de prendre ceux qui
+        // sont renseignés dans la configuration ?
+        if (Object.keys(layersMap).length === 0) {
+            var config = this._layersConfig;
+            this._lastZIndex = 0;
+            for (var j = 0; j < config.length; j++) {
+                var layer = config[j].layer;
+
+                if (!map.hasLayer(layer)) {
+                    // on ajoute le layer à la carte
+                    map.addLayer(layer);
+
+                    // on met en place la structure
+                    this.addOverlay(layer, null);
+
+                    // on gère l'ordres d'affichage des layers
+                    if (this.options.autoZIndex && layer.setZIndex) {
+                        this._lastZIndex++;
+                        layer.setZIndex(this._lastZIndex);
+                    }
+                }
+            }
+        }
+
+        // mise à jour des visibilités (au niveau du DOM, oeil coché ou non...)
+        for (var k in this._layers) {
+            if (this._layers.hasOwnProperty(k)) {
+                var obj = this._layers[k];
+                var _layer = obj.layer;
+                var _visibility = obj.visibility;
+                // par defaut, la visibilité de la couche est active, donc avec un oeil non coché !
+                if (!_visibility) {
+                    // on met à jour la liste des layers à afficher !
+                    this._updateVisibilityLayer(_layer);
+                }
+            }
+        }
+
+        // le constructeur retourne this._container !
+        // on appelle la methode hérité car elle va realisée le boulot :
+        // - _initLayout
+        // - _update
+        // - evenements sur la carte : layeradd + layerremove
+        // this._container = L.Control.Layers.prototype.onAdd.call(this, map);
+
+        this._initLayout();
+        this._update();
+        map.on("layeradd", this._onLayerChange, this);
+        map.on("layerremove", this._onLayerChange, this);
+
+        // expiremental !
+        map.eachLayer(function (layer) {
+            // ecouteur sur la visibilité des attributions d'un layer IGN
+            layer.on("visibilitychange", function () {
+                logger.trace("visibilitychange", layer);
+            }, this);
+            // ecouteur sur la liste des attributions d'un layer IGN
+            layer.on("attributionchange", function () {
+                logger.trace("attributionchange", layer);
+            }, this);
+        });
+
+        return this._container;
+    },
+
+    /**
+     * Method '_addLayer'
+     * (overwritten : L.Control.Layers)
+     * Methode creation of a useful structure for the interface with the DOM
+     * Method private call by this.initialize() or this.addOverlay()
+     *
+     * @example
+     * {
+     *    layer : objectlayer,
+     *    id : id,
+     *    title : title,
+     *    description : description
+     *    (...)
+     * };
+     * @param {Object} layer - object type 'L.TileLayer'
+     * @param {String} name - layer name or title
+     * @param {Boolean} overlay - overlay or not
+     *
+     * @private
+     */
+    _addLayer: function _addLayer(layer, name, overlay) {
+        // id du layer (IGN ou non)
+        var id = layer._geoportal_id ? layer._geoportal_id : layer._leaflet_id;
+
+        // pas d'ID !?
+        // le layer n'est pas chargé dans la carte...
+        if (typeof id === "undefined") {
+            return;
+        }
+
+        // recherche de la config pour un layer donné
+        var layerConfig = {};
+        for (var i in this._layersConfig) {
+            if (this._layersConfig.hasOwnProperty(i)) {
+                if (id === _leaflet2.default.stamp(this._layersConfig[i].layer)) {
+                    layerConfig = this._layersConfig[i].config;
+                    // display
+                    // ce layer n'est pas pris en compte dans le controle
+                    // mais il peut être affiché dans la map
+                    // si au préalable, le client l'a ajouté...
+                    var display = typeof this._layersConfig[i].display !== "undefined" ? this._layersConfig[i].display : true;
+                    if (!display) {
+                        return;
+                    }
+                    break;
+                }
+            }
+        }
+
+        // construit un objet simplifié pour le dom,
+        // par defaut, on prend en compte les layers de type IGN
+        // (info de l'autoconf).
+        this._layers[id] = {
+            layer: layer,
+            id: id,
+            overlay: overlay, // not use !
+            title: layer._geoportal_id && layer._title ? layer._title : name || id,
+            description: layer._geoportal_id && layer._description ? layer._description : name || id,
+            visibility: true, // par defaut, sauf si surcharge via la config...
+            legends: layer._geoportal_id ? layer._legends : null,
+            metadata: layer._geoportal_id ? layer._metadata : null,
+            quicklookUrl: layer._geoportal_id ? layer._quicklookUrl : null
+        };
+
+        // surcharge la config ci dessus avec les options de configuration saisies
+        if (layerConfig && Object.keys(layerConfig)) {
+            _leaflet2.default.Util.extend(this._layers[id], layerConfig);
+        }
+
+        // mise à jour de la visibilité
+        var _visibility = this._layers[id].visibility;
+        if (layer._geoportal_id) {
+            // mise à jour de la visibilité des attributions pour un layer IGN
+            layer.setVisible(_visibility);
+        }
+        if (!_visibility) {
+            // on met à jour la liste des layers à afficher !
+            this._updateVisibilityLayer(layer);
+        }
+    },
+
+    /**
+     * Method 'addTo'
+     * (overwritten : L.Control.Layers because of exception with _expandIfNotCollapsed())
+     *
+     * @param {Object} map - the map
+     *
+     * @returns {Object} this
+     */
+    addTo: function addTo(map) {
+        _leaflet2.default.Control.prototype.addTo.call(this, map);
+        return this;
+    },
+
+    /**
+     * Creation of layers of container
+     * (extend to L.Control.Layers)
+     *
+     * Method private call by this.onAdd()
+     *
+     * @private
+     */
+    _initLayout: function _initLayout() {
+        // fonctionnement lors de l'initialisation :
+        // onAdd -> this._update     -> this._addItem (on boucle sur layers)
+        // onAdd -> this._initLayout
+
+        // creation du container principal
+        var container = this._container = this._createMainContainerElement();
+
+        // ajout dans le container principal d'affichage des layers
+        var input = this._createMainLayersShowElement();
+        container.appendChild(input);
+
+        // gestion du mode "collapsed"
+        if (!this.options.collapsed) {
+            input.checked = true;
+        }
+
+        // ajout dans le container principal de la liste des layers
+        var divL = this._overlaysList = this._createMainLayersElement();
+        container.appendChild(divL);
+
+        // ajout dans le container principal du picto du controle
+        var picto = this._createMainPictoElement();
+        container.appendChild(picto);
+
+        // ajout dans le container principal du panneau d'information
+        var divI = this._createMainInfoElement();
+        container.appendChild(divI);
+
+        // creation du mode draggable
+        this._createDraggableElement(this._overlaysList, this);
+
+        // desactivation des evenements qui peuvent interférer avec la carte
+        _leaflet2.default.DomEvent.disableClickPropagation(container).disableScrollPropagation(container);
+
+        // gestion des evenements en interaction avec la carte
+        this._map.on("moveend", this._onOutOfRangeLayerZoom, this);
+
+        // gestion des CSS en fonction du placement du controle
+        switch (this.getPosition()) {
+            case "topright":
+                container.style.position = "relative";
+                container.style.top = "0";
+                container.style.right = "0";
+                break;
+            case "topleft":
+                container.style.position = "relative";
+                container.style.top = "0";
+                container.style.right = "initial";
+                picto.style.float = "left";
+                divL.style.borderBottomRightRadius = "5px";
+                divL.style.borderBottomLeftRadius = "0";
+                divI.style.right = "initial";
+                divI.style.left = "190px";
+                break;
+            case "bottomleft":
+                container.style.position = "relative";
+                container.style.top = "0";
+                container.style.right = "initial";
+                picto.style.float = "left";
+                divL.style.borderBottomRightRadius = "5px";
+                divL.style.borderBottomLeftRadius = "0";
+                divI.style.right = "initial";
+                divI.style.left = "190px";
+                // divI.style.top = "initial";
+                // divI.style.bottom = "190px";
+                break;
+            case "bottomright":
+                container.style.position = "relative";
+                container.style.top = "0";
+                container.style.right = "0";
+                // divI.style.top = "initial";
+                // divI.style.bottom = "190px";
+                break;
+            default:
+                container.style.position = "relative";
+                container.style.top = "0";
+                container.style.right = "0";
+        }
+    },
+
+    /**
+     * Update the construction of DOM for each layer
+     * (extend to L.Control.Layers)
+     *
+     * Method private call by this.onAdd()
+     *
+     * @private
+     */
+    _update: function _update() {
+        if (!this._container) {
+            return;
+        }
+
+        this._overlaysList.innerHTML = "";
+
+        var layersId = [];
+
+        for (var i in this._layers) {
+            if (this._layers.hasOwnProperty(i)) {
+                layersId.push(i);
+            }
+        }
+
+        // inversion du sens des layers dans le controle
+        // car on veut le même ordre que sur la map, et comme je suis un peu
+        // parano, je re-trie la liste...
+        var layers = layersId.sort(function (a, b) {
+            var ia = parseInt(a, 10);
+            var ib = parseInt(b, 10);
+            return ia - ib;
+        }).reverse();
+
+        for (var j = 0; j < layers.length; j++) {
+            var id = layers[j];
+            var obj = this._layers[id];
+            this._addItem(obj);
+        }
+    },
+
+    /**
+     * Construction of the DOM for each layer
+     * (extend to L.Control.Layers)
+     *
+     * Method private call by this._update()
+     *
+     * @private
+     * @param {Object} obj - layer
+     * @returns {HTMLElement} container
+     */
+    _addItem: function _addItem(obj) {
+        logger.log("_addItem", obj);
+
+        obj.opacity = obj.layer.options.opacity; // ajout de cette option !
+        var container = this._createContainerLayerElement(obj);
+
+        // gestion outOfRange
+        obj.layer.options.minZoom > this._map.getZoom() || obj.layer.options.maxZoom < this._map.getZoom() ? _leaflet2.default.DomUtil.addClass(container, "outOfRange") : _leaflet2.default.DomUtil.removeClass(container, "outOfRange");
+
+        // ajout du container dans la liste des layers (de type overlay uniquement !)
+        this._overlaysList.appendChild(container);
+
+        return container;
+    },
+
+    /**
+     * Event onLayer change
+     * (extend to L.Control.Layers because of version 1.0.0)
+     *
+     * @private
+     * @param {Event} e - event
+     */
+    _onLayerChange: function _onLayerChange(e) {
+        var obj = this._layers[_leaflet2.default.stamp(e.layer)];
+
+        if (!obj) {
+            return;
+        }
+
+        if (!this._handlingClick) {
+            this._update();
+        }
+
+        var type = e.type === "layeradd" ? "overlayadd" : "overlayremove";
+
+        if (type) {
+            this._map.fire(type, obj);
+        }
+    },
+
+    /**
+     * Event onLayer remove
+     * (extend to L.Control.Layers because of version 1.0.0)
+     *
+     * @private
+     * @param {Object} layer - event
+     * @returns {Object} layer
+     */
+    removeLayer: function removeLayer(layer) {
+        // clean DOM !
+        var id = _leaflet2.default.stamp(layer);
+        delete this._layers[id];
+        this._update();
+
+        // clean Layers
+        var map = this._map;
+        if (map) {
+            if (map.hasLayer(layer)) {
+                map.removeLayer(layer);
+            }
+        }
+
+        return this;
+    },
+
+    // ################################################################### //
+    // ################ Methodes de l'instance (privées) ################# //
+    // ################################################################### //
+
+    /**
+     * Set visibility of attribution layer
+     * (call by this._onVisibilityLayerClick())
+     *
+     * @private
+     * @param {Object} layer - layer
+     */
+    _updateVisibilityLayer: function _updateVisibilityLayer(layer) {
+        if (!this._map) {
+            return;
+        }
+
+        this._handlingClick = true;
+
+        var visibility = this._layers[_leaflet2.default.stamp(layer)].visibility;
+
+        if (visibility && !this._map.hasLayer(layer)) {
+            // input non checked dans le DOM, on ouvre l'oeil
+            // et on ajoute la couche !
+            this._map.addLayer(layer);
+        } else if (!visibility && this._map.hasLayer(layer)) {
+            // input checked dans le DOM, on ferme l'oeil
+            // et on supprime la couche !
+            this._map.removeLayer(layer);
+        } else {
+            logger.log("Status unknown layer !?");
+        }
+
+        this._handlingClick = false;
+        this._refocusOnMap();
+    },
+
+    /**
+     * Set visibility of layer (DOM)
+     * (call by this.setVisibility())
+     *
+     * @private
+     * @param {Object} layer - layer
+     */
+    _updateVisibilityDOMLayer: function _updateVisibilityDOMLayer(layer) {
+        var layerIdx = _leaflet2.default.stamp(layer);
+        var visibilityElement = _leaflet2.default.DomUtil.get(this._addUID("GPvisibility_ID_" + layerIdx)); // FIXME ID !
+        var visibilityValue = this._layers[layerIdx].visibility;
+        visibilityElement.checked = visibilityValue;
+    },
+
+    /**
+     * Set opacity of layer (DOM)
+     * (call by this.setOpacity())
+     *
+     * @private
+     * @param {Object} layer - layer
+     */
+    _updateOpacityDOMLayer: function _updateOpacityDOMLayer(layer) {
+        var layerIdx = _leaflet2.default.stamp(layer);
+        var opacityValue = layer.options.opacity;
+        var opacityElement = _leaflet2.default.DomUtil.get(this._addUID("GPopacityValue_ID_" + layerIdx)); // FIXME ID !
+        opacityElement.innerHTML = parseInt(opacityValue * 100, 10) + "%";
+    },
+
+    // ################################################################### //
+    // ################## GESTIONNAIRES d'evenements ##################### //
+    // ################################################################### //
+
+    /**
+     * Event 'zoom' on layers visibility
+     *
+     * FIXME contrainte sur l'emprise du layer ?
+     *
+     * @private
+     */
+    _onOutOfRangeLayerZoom: function _onOutOfRangeLayerZoom() {
+        var map = this._map;
+        var layers = this._layers;
+        for (var i in layers) {
+            if (layers.hasOwnProperty(i)) {
+                var layer = layers[i].layer;
+                var id = layers[i].id;
+                var div = _leaflet2.default.DomUtil.get(this._addUID("GPlayerSwitcher_ID_" + id)); // FIXME ID !
+                if (layer.options.minZoom > map.getZoom() || layer.options.maxZoom < map.getZoom()) {
+                    _leaflet2.default.DomUtil.addClass(div, "outOfRange");
+                } else {
+                    _leaflet2.default.DomUtil.removeClass(div, "outOfRange");
+                }
+            }
+        }
+    },
+
+    /**
+     * Event 'click' on layer visibility
+     *
+     * @private
+     * @param {Event} e - MouseEvent
+     */
+    _onVisibilityLayerClick: function _onVisibilityLayerClick(e) {
+        var visibilityElement = e.target.id; // ex GPvisibilityPicto_ID_26
+        var visibilityOrder = _SelectorID2.default.index(visibilityElement); // ex. 26
+
+        // on met à jour cette interface...
+        this._layers[visibilityOrder].visibility = _leaflet2.default.DomUtil.get(visibilityElement).checked;
+        var layer = this._layers[visibilityOrder].layer;
+
+        this._updateVisibilityLayer(layer);
+    },
+
+    /**
+     * Event 'click' on layer deleted
+     *
+     * @private
+     * @param {Event} e - MouseEvent
+     */
+    _onDropLayerClick: function _onDropLayerClick(e) {
+        var layerElement = e.target.id; // ex GPvisibilityPicto_ID_26
+        var layerOrder = _SelectorID2.default.index(layerElement); // ex. 26
+        var layer = this._layers[layerOrder].layer;
+
+        this.removeLayer(layer);
+    },
+
+    /**
+     * Event 'onchange' on layer opacity
+     *
+     * FIXME appel en dur d'un identifiant CSS !
+     *
+     * @private
+     * @param {Event} e - ChangeEvent
+     */
+    _onChangeLayerOpacity: function _onChangeLayerOpacity(e) {
+        var layerElement = e.target.id; // ex GPvisibilityPicto_ID_26
+        var layerOrder = _SelectorID2.default.index(layerElement); // ex. 26
+        var layer = this._layers[layerOrder].layer;
+
+        var opacityValue = e.target.value;
+        var opacityId = _leaflet2.default.DomUtil.get(this._addUID("GPopacityValue_ID_" + layerOrder)); // FIXME ID !
+        opacityId.innerHTML = opacityValue + "%";
+
+        if (this._map.hasLayer(layer)) {
+            layer.setOpacity(opacityValue / 100);
+        }
+    },
+
+    /**
+     * Event 'click' on opening the information window
+     *
+     * FIXME appel en dur d'un identifiant CSS !
+     *
+     * @private
+     * @param {Event} e - MouseEvent
+     */
+    _onOpenLayerInfoClick: function _onOpenLayerInfoClick(e) {
+        var layerElement = e.target.id; // ex GPvisibilityPicto_ID_26
+        var layerOrder = _SelectorID2.default.index(layerElement); // ex. 26
+        var layer = this._layers[layerOrder];
+
+        // Close layer info panel
+        var divId = _leaflet2.default.DomUtil.get(e.target.id);
+        var panel = null;
+        var info = null;
+        if (divId.className === "GPlayerInfoOpened") {
+            _leaflet2.default.DomUtil.removeClass(divId, "GPlayerInfoOpened");
+            _leaflet2.default.DomUtil.addClass(divId, "GPlayerInfo");
+
+            panel = _leaflet2.default.DomUtil.get(this._addUID("GPlayerInfoPanel"));
+            _leaflet2.default.DomUtil.removeClass(panel, "GPpanel");
+            _leaflet2.default.DomUtil.removeClass(panel, "GPlayerInfoPanelOpened");
+            _leaflet2.default.DomUtil.addClass(panel, "GPlayerInfoPanelClosed");
+
+            info = _leaflet2.default.DomUtil.get(this._addUID("GPlayerInfoContent"));
+            panel.removeChild(info);
+            return;
+        }
+
+        var layers = document.getElementsByClassName("GPlayerInfoOpened");
+        for (var i = 0; i < layers.length; i++) {
+            layers[i].className = "GPlayerInfo";
+        }
+
+        // Open layer info panel
+        _leaflet2.default.DomUtil.removeClass(divId, "GPlayerInfo");
+        _leaflet2.default.DomUtil.addClass(divId, "GPlayerInfoOpened");
+
+        panel = _leaflet2.default.DomUtil.get(this._addUID("GPlayerInfoPanel"));
+        _leaflet2.default.DomUtil.addClass(panel, "GPpanel");
+        _leaflet2.default.DomUtil.removeClass(panel, "GPlayerInfoPanelClosed");
+        _leaflet2.default.DomUtil.addClass(panel, "GPlayerInfoPanelOpened");
+
+        info = _leaflet2.default.DomUtil.get(this._addUID("GPlayerInfoContent"));
+        if (info) {
+            panel.removeChild(info);
+        }
+
+        // on récupére les infos associées au layer pour mettre à jour
+        // dynamiquement le contenu du panel d"infos
+        var infoLayer = this._createContainerLayerInfoElement(layer);
+        panel.appendChild(infoLayer);
+    },
+
+    /**
+     * Event "drag & drop" on move layer
+     *
+     * FIXME appel en dur d'un identifiant CSS !
+     *
+     * @private
+     * @param {Event} e - MouseEvent
+     */
+    _onDragAndDropLayerClick: function _onDragAndDropLayerClick(e) {
+        var layerElement = e.target.id; // ex GPvisibilityPicto_ID_26
+        var layerOrder = _SelectorID2.default.index(layerElement); // ex. 26
+        var layer = this._layers[layerOrder];
+
+        logger.log(layer);
+
+        var matchesLayers = document.querySelectorAll("div.GPlayerSwitcher_layer");
+        this._lastZIndex = matchesLayers.length;
+        for (var i = 0; i < matchesLayers.length; i++) {
+            var tag = matchesLayers[i].id;
+            var order = _SelectorID2.default.index(tag);
+
+            var _layer = this._layers[order].layer;
+            if (this.options.autoZIndex && _layer.setZIndex) {
+                this._lastZIndex--;
+                _layer.setZIndex(this._lastZIndex);
+            }
+        }
+    },
+
+    // ################################################################### //
+    // ###### METHODES PUBLIQUES (INTERFACE AVEC LE CONTROLE) ############ //
+    // ################################################################### //
+
+    /**
+     * Adding layer configuration to be displayed by the control
+     *
+     * @param {Object} layer - layer to add to layer switcher
+     * @param {Object} config - See {@link module:Controls.LayerSwitcher L.geoportalControl.LayerSwitcher()} for layer display config object definition.
+     */
+    addLayer: function addLayer(layer, config) {
+        var map = this._map;
+        var cfg = this._layersConfig;
+
+        if (!layer) {
+            logger.log("[ERROR] LayerSwitcher:addLayer - missing layer parameter !");
+            return;
+        }
+
+        if (!map.hasLayer(layer)) {
+            logger.log("[WARN] LayerSwitcher:addLayer - layer has not been added on map !");
+            map.addLayer(layer);
+        }
+
+        var id = _leaflet2.default.stamp(layer);
+        for (var i in cfg) {
+            if (cfg.hasOwnProperty(i)) {
+                // layer already added !
+                if (id === _leaflet2.default.stamp(cfg[i].layer)) {
+                    delete cfg[i];
+                    break;
+                }
+            }
+        }
+
+        var _config = config || {};
+        _leaflet2.default.Util.extend(_config, {
+            layer: layer
+        });
+
+        cfg.push(_config);
+
+        // layer déjà configuré, il reprend sa place !
+        if (!this._layers[id]) {
+            layer.setZIndex(this._lastZIndex++);
+        }
+
+        this.addOverlay(layer);
+
+        this._update();
+    },
+
+    /**
+     * Set the opacity of a layer, and opacity must be a number from 0 to 1.
+     *
+     * @param {Object} layer - layer into layerswitcher
+     * @param {Number} opacity - 0-1.
+     */
+    setOpacity: function setOpacity(layer, opacity) {
+        logger.trace(layer, opacity);
+        if (opacity > 1 || opacity < 0) {
+            return;
+        }
+
+        if (this._map.hasLayer(layer)) {
+            layer.setOpacity(opacity);
+            this._updateOpacityDOMLayer(layer);
+        }
+    },
+
+    /**
+     * Set the visibility of a layer.
+     *
+     * @param {Object} layer - layer into layerswitcher
+     * @param {Object} visibility - true/false.
+     */
+    setVisibility: function setVisibility(layer, visibility) {
+        logger.trace(layer, visibility);
+        this._layers[_leaflet2.default.stamp(layer)].visibility = visibility;
+        this._updateVisibilityDOMLayer(layer);
+        this._updateVisibilityLayer(layer);
+    }
+});
+
+exports.default = LayerSwitcher;
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
+* loglevel - https://github.com/pimterry/loglevel
+*
+* Copyright (c) 2013 Tim Perry
+* Licensed under the MIT license.
+*/
+(function (root, definition) {
+    "use strict";
+    if (true) {
+        !(__WEBPACK_AMD_DEFINE_FACTORY__ = (definition),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) :
+				__WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+    } else if (typeof module === 'object' && module.exports) {
+        module.exports = definition();
+    } else {
+        root.log = definition();
+    }
+}(this, function () {
+    "use strict";
+
+    // Slightly dubious tricks to cut down minimized file size
+    var noop = function() {};
+    var undefinedType = "undefined";
+
+    var logMethods = [
+        "trace",
+        "debug",
+        "info",
+        "warn",
+        "error"
+    ];
+
+    // Cross-browser bind equivalent that works at least back to IE6
+    function bindMethod(obj, methodName) {
+        var method = obj[methodName];
+        if (typeof method.bind === 'function') {
+            return method.bind(obj);
+        } else {
+            try {
+                return Function.prototype.bind.call(method, obj);
+            } catch (e) {
+                // Missing bind shim or IE8 + Modernizr, fallback to wrapping
+                return function() {
+                    return Function.prototype.apply.apply(method, [obj, arguments]);
+                };
+            }
+        }
+    }
+
+    // Build the best logging method possible for this env
+    // Wherever possible we want to bind, not wrap, to preserve stack traces
+    function realMethod(methodName) {
+        if (methodName === 'debug') {
+            methodName = 'log';
+        }
+
+        if (typeof console === undefinedType) {
+            return false; // No method possible, for now - fixed later by enableLoggingWhenConsoleArrives
+        } else if (console[methodName] !== undefined) {
+            return bindMethod(console, methodName);
+        } else if (console.log !== undefined) {
+            return bindMethod(console, 'log');
+        } else {
+            return noop;
+        }
+    }
+
+    // These private functions always need `this` to be set properly
+
+    function replaceLoggingMethods(level, loggerName) {
+        /*jshint validthis:true */
+        for (var i = 0; i < logMethods.length; i++) {
+            var methodName = logMethods[i];
+            this[methodName] = (i < level) ?
+                noop :
+                this.methodFactory(methodName, level, loggerName);
+        }
+
+        // Define log.log as an alias for log.debug
+        this.log = this.debug;
+    }
+
+    // In old IE versions, the console isn't present until you first open it.
+    // We build realMethod() replacements here that regenerate logging methods
+    function enableLoggingWhenConsoleArrives(methodName, level, loggerName) {
+        return function () {
+            if (typeof console !== undefinedType) {
+                replaceLoggingMethods.call(this, level, loggerName);
+                this[methodName].apply(this, arguments);
+            }
+        };
+    }
+
+    // By default, we use closely bound real methods wherever possible, and
+    // otherwise we wait for a console to appear, and then try again.
+    function defaultMethodFactory(methodName, level, loggerName) {
+        /*jshint validthis:true */
+        return realMethod(methodName) ||
+               enableLoggingWhenConsoleArrives.apply(this, arguments);
+    }
+
+    function Logger(name, defaultLevel, factory) {
+      var self = this;
+      var currentLevel;
+      var storageKey = "loglevel";
+      if (name) {
+        storageKey += ":" + name;
+      }
+
+      function persistLevelIfPossible(levelNum) {
+          var levelName = (logMethods[levelNum] || 'silent').toUpperCase();
+
+          if (typeof window === undefinedType) return;
+
+          // Use localStorage if available
+          try {
+              window.localStorage[storageKey] = levelName;
+              return;
+          } catch (ignore) {}
+
+          // Use session cookie as fallback
+          try {
+              window.document.cookie =
+                encodeURIComponent(storageKey) + "=" + levelName + ";";
+          } catch (ignore) {}
+      }
+
+      function getPersistedLevel() {
+          var storedLevel;
+
+          if (typeof window === undefinedType) return;
+
+          try {
+              storedLevel = window.localStorage[storageKey];
+          } catch (ignore) {}
+
+          // Fallback to cookies if local storage gives us nothing
+          if (typeof storedLevel === undefinedType) {
+              try {
+                  var cookie = window.document.cookie;
+                  var location = cookie.indexOf(
+                      encodeURIComponent(storageKey) + "=");
+                  if (location !== -1) {
+                      storedLevel = /^([^;]+)/.exec(cookie.slice(location))[1];
+                  }
+              } catch (ignore) {}
+          }
+
+          // If the stored level is not valid, treat it as if nothing was stored.
+          if (self.levels[storedLevel] === undefined) {
+              storedLevel = undefined;
+          }
+
+          return storedLevel;
+      }
+
+      /*
+       *
+       * Public logger API - see https://github.com/pimterry/loglevel for details
+       *
+       */
+
+      self.name = name;
+
+      self.levels = { "TRACE": 0, "DEBUG": 1, "INFO": 2, "WARN": 3,
+          "ERROR": 4, "SILENT": 5};
+
+      self.methodFactory = factory || defaultMethodFactory;
+
+      self.getLevel = function () {
+          return currentLevel;
+      };
+
+      self.setLevel = function (level, persist) {
+          if (typeof level === "string" && self.levels[level.toUpperCase()] !== undefined) {
+              level = self.levels[level.toUpperCase()];
+          }
+          if (typeof level === "number" && level >= 0 && level <= self.levels.SILENT) {
+              currentLevel = level;
+              if (persist !== false) {  // defaults to true
+                  persistLevelIfPossible(level);
+              }
+              replaceLoggingMethods.call(self, level, name);
+              if (typeof console === undefinedType && level < self.levels.SILENT) {
+                  return "No console available for logging";
+              }
+          } else {
+              throw "log.setLevel() called with invalid level: " + level;
+          }
+      };
+
+      self.setDefaultLevel = function (level) {
+          if (!getPersistedLevel()) {
+              self.setLevel(level, false);
+          }
+      };
+
+      self.enableAll = function(persist) {
+          self.setLevel(self.levels.TRACE, persist);
+      };
+
+      self.disableAll = function(persist) {
+          self.setLevel(self.levels.SILENT, persist);
+      };
+
+      // Initialize with the right level
+      var initialLevel = getPersistedLevel();
+      if (initialLevel == null) {
+          initialLevel = defaultLevel == null ? "WARN" : defaultLevel;
+      }
+      self.setLevel(initialLevel, false);
+    }
+
+    /*
+     *
+     * Top-level API
+     *
+     */
+
+    var defaultLogger = new Logger();
+
+    var _loggersByName = {};
+    defaultLogger.getLogger = function getLogger(name) {
+        if (typeof name !== "string" || name === "") {
+          throw new TypeError("You must supply a name when creating a logger.");
+        }
+
+        var logger = _loggersByName[name];
+        if (!logger) {
+          logger = _loggersByName[name] = new Logger(
+            name, defaultLogger.getLevel(), defaultLogger.methodFactory);
+        }
+        return logger;
+    };
+
+    // Grab the current global log variable in case of overwrite
+    var _log = (typeof window !== undefinedType) ? window.log : undefined;
+    defaultLogger.noConflict = function() {
+        if (typeof window !== undefinedType &&
+               window.log === defaultLogger) {
+            window.log = _log;
+        }
+
+        return defaultLogger;
+    };
+
+    defaultLogger.getLoggers = function getLoggers() {
+        return _loggersByName;
+    };
+
+    return defaultLogger;
+}));
+
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _sortable = __webpack_require__(24);
+
+var _sortable2 = _interopRequireDefault(_sortable);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var LayerSwitcherDOM = {
+
+    /**
+     * Creation du drag and drop
+     *
+     * @param {Object} elementDraggable - Element HTML (DOM) Container
+     * @param {Object} context - this
+     */
+    _createDraggableElement: function _createDraggableElement(elementDraggable, context) {
+        _sortable2.default.create(elementDraggable, {
+            handle: ".GPlayerName",
+            draggable: ".draggable-layer",
+            ghostClass: "GPghostLayer",
+            animation: 200,
+            // Call event function on drag and drop
+            onEnd: function onEnd(e) {
+                // FIXME pas terrrible, mais il faut bien passer ce contexte...
+                context._onDragAndDropLayerClick(e);
+            }
+        });
+    },
+
+    // ################################################################### //
+    // ######################### Main container ########################## //
+    // ################################################################### //
+
+    /**
+    * Add uuid to the tag ID
+    * @param {String} id - id selector
+    * @returns {String} uid - id selector with an unique id
+    */
+    _addUID: function _addUID(id) {
+        var uid = this._uid ? id + "-" + this._uid : id;
+        return uid;
+    },
+
+    /**
+     * Creation du container principal (DOM)
+     *
+     * @returns {DOMElement} container - layer switcher DOM element
+     */
+    _createMainContainerElement: function _createMainContainerElement() {
+        var container = document.createElement("div");
+        container.id = this._addUID("GPlayerSwitcher");
+        container.className = "GPwidget";
+        return container;
+    },
+
+    /**
+     * Creation du container principal d"affichage des layers (DOM)
+     *
+     * @returns {DOMElement} input - element for minimizing/maximizing the layer switcher
+     */
+    _createMainLayersShowElement: function _createMainLayersShowElement() {
+        // <!-- Hidden checkbox for minimizing/maximizing -->
+        var input = document.createElement("input");
+        input.id = this._addUID("GPshowLayersList");
+        input.type = "checkbox";
+        return input;
+    },
+
+    /**
+     * Creation du container principal des layers (DOM)
+     *
+     * @returns {DOMElement} container - layers list container
+     */
+    _createMainLayersElement: function _createMainLayersElement() {
+        // ajout de la liste des layers dans le container principal
+        // <div id="GPlayersList" class="GPpanel">
+        //   (...)
+        // </div>
+        var div = document.createElement("div");
+        div.id = this._addUID("GPlayersList");
+        div.className = "GPpanel";
+        return div;
+    },
+
+    /**
+     * Creation du container du picto du controle (DOM)
+     *
+     * @returns {DOMElement} label
+     */
+    _createMainPictoElement: function _createMainPictoElement() {
+        var self = this;
+
+        // exemple :
+        // <!-- Label for minimizing/maximizing -->
+        // <label id="GPshowLayersListPicto" class="GPshowAdvancedToolPicto" for="GPshowLayersList" title="Afficher/masquer le gestionnaire de couches">
+        //    <span id="GPshowLayersListOpen" class="GPshowAdvancedToolOpen"></span><span id="GPshowLayersListClose"></span>
+        // </label>
+
+        var label = document.createElement("label");
+        label.id = this._addUID("GPshowLayersListPicto");
+        label.className = "GPshowAdvancedToolPicto";
+        label.htmlFor = this._addUID("GPshowLayersList");
+        label.title = "Afficher/masquer le gestionnaire de couches";
+
+        var spanOpen = document.createElement("span");
+        spanOpen.id = this._addUID("GPshowLayersListOpen");
+        spanOpen.className = "GPshowAdvancedToolOpen";
+        spanOpen.addEventListener("click", function () {
+            if (document.getElementById(self._addUID("GPshowLayersList")).checked) {
+                var layers = document.getElementsByClassName("GPlayerInfoOpened");
+                for (var i = 0; i < layers.length; i++) {
+                    layers[i].className = "GPlayerInfo";
+                }
+                document.getElementById(self._addUID("GPlayerInfoPanel")).className = "GPlayerInfoPanelClosed";
+            }
+        });
+
+        label.appendChild(spanOpen);
+
+        var spanClose = document.createElement("span");
+        spanClose.addEventListener("click", function () {
+            if (document.getElementById(self._addUID("GPshowLayersList")).checked) {
+                var layers = document.getElementsByClassName("GPlayerInfoOpened");
+                for (var i = 0; i < layers.length; i++) {
+                    layers[i].className = "GPlayerInfo";
+                }
+                document.getElementById(self._addUID("GPlayerInfoPanel")).className = "GPlayerInfoPanelClosed";
+            }
+        });
+        spanClose.id = self._addUID("GPshowLayersListClose");
+
+        label.appendChild(spanClose);
+
+        return label;
+    },
+
+    /**
+     * Creation du container du panneau d"information (DOM)
+     *
+     * @returns {DOMElement} container
+     */
+    _createMainInfoElement: function _createMainInfoElement() {
+        // gestion du panneau d"information dans le container principal
+        // <div id="GPlayerInfoPanel" class="GPlayerInfoPanelClosed">...</div>
+        var div = document.createElement("div");
+        div.id = this._addUID("GPlayerInfoPanel");
+        div.className = "GPpanel GPlayerInfoPanelClosed";
+        return div;
+    },
+
+    // ################################################################### //
+    // ######################### Layer container ######################### //
+    // ################################################################### //
+
+    /**
+     * Creation du container du layer (DOM)
+     *
+     * @param {Object} obj - options de la couche à ajouter dans le layer switcher
+     * @param {Object} obj.layer - couche (ol ou leaflet)
+     * @param {String} obj.id - identifiant de la couche (pour ol ou leaflet)
+     * @param {String} obj.title - nom de la couche à afficher dans le controle
+     * @param {String} obj.description - description de la couche à afficher
+     * @param {Boolean} obj.visibility - visibilité de la couche dans la carte (true or false)
+     * @param {Float} obj.opacity - opacité de la couche
+     *
+     * @returns {DOMElement} container
+     */
+    _createContainerLayerElement: function _createContainerLayerElement(obj) {
+        // exemple :
+        // <div id="GPlayerSwitcher_ID_Layer1" class="GPlayerSwitcher_layer outOfRange">
+        //     <!-- Basic toolbar : visibility / layer name
+        //     _createBasicToolElement
+        //           _createBasicToolVisibilityElement
+        //           _createBasicToolNameElement
+        //     -->
+        //     <!-- Hidden checkbox + label for showing advanced toolbar
+        //     _createAdvancedToolShowElement
+        //     -->
+        //     <!-- Advanced toolbar : layer info / opacity slider / opacity value / removal
+        //     _createAdvancedToolElement
+        //           _createAdvancedToolDeleteElement
+        //           _createAdvancedToolInformationElement
+        //           _createAdvancedToolOpacityElement
+        //     -->
+        // </div>
+
+        // <!-- Layer entry in layer list -->
+        // <!-- Every item is marked with layerID, which is defined at layer import -->
+        var container = document.createElement("div");
+        container.id = this._addUID("GPlayerSwitcher_ID_" + obj.id);
+        container.className = "GPlayerSwitcher_layer draggable-layer";
+
+        // ajout des outils basiques (visibility / layer name)
+        container.appendChild(this._createBasicToolElement(obj));
+
+        // liste des outils avancés (layer info / opacity slider / opacity value / removal)
+        var array = this._createAdvancedToolShowElement(obj);
+        for (var i = 0; i < array.length; i++) {
+            container.appendChild(array[i]);
+        }
+
+        // ajout des outils avancés
+        container.appendChild(this._createAdvancedToolElement(obj));
+
+        return container;
+    },
+
+    // ################################################################### //
+    // ############################ Layer tool ########################### //
+    // ################################################################### //
+
+    /**
+     * Creation du container des outils basiques du layer (DOM)
+     *
+     * @param {Object} obj - options de la couche à ajouter dans le layer switcher
+     *
+     * @returns {DOMElement} container
+     */
+    _createBasicToolElement: function _createBasicToolElement(obj) {
+        // exemple :
+        // <div id="GPbasicTools_ID_1" class="GPlayerBasicTools">
+        //      <!-- _createBasicToolVisibilityElement -->
+        //      <!-- _createBasicToolNameElement -->
+        // </div>
+
+        var div = document.createElement("div");
+        div.id = this._addUID("GPbasicTools_ID_" + obj.id);
+        div.className = "GPlayerBasicTools";
+
+        div.appendChild(this._createBasicToolNameElement(obj));
+
+        var array = this._createBasicToolVisibilityElement(obj);
+        for (var i = 0; i < array.length; i++) {
+            div.appendChild(array[i]);
+        }
+
+        return div;
+    },
+
+    /**
+     * Creation du nom du layer (DOM)
+     *
+     * @param {Object} obj - options de la couche à ajouter dans le layer switcher
+     *
+     * @returns {DOMElement} container
+     */
+    _createBasicToolNameElement: function _createBasicToolNameElement(obj) {
+        // exemple :
+        // <span id="GPname_ID_Layer1" class="GPlayerName" title="Quartiers prioritaires de la ville">Quartiers prioritaires de la ville</span>
+        var span = document.createElement("span");
+        span.id = this._addUID("GPname_ID_" + obj.id);
+        span.className = "GPlayerName";
+        span.title = obj.description || obj.title;
+        span.innerHTML = obj.title;
+
+        return span;
+    },
+
+    /**
+     * Creation de l'icone de visibilité du layer (DOM)
+     *
+     * @param {Object} obj - options de la couche à ajouter dans le layer switcher
+      * @returns {DOMElement[]} array containing input and label elements
+     */
+    _createBasicToolVisibilityElement: function _createBasicToolVisibilityElement(obj) {
+        // exemple :
+        // <input type="checkbox" id="GPvisibility_ID_Layer1" checked="">
+        // <label for="GPvisibility_ID_Layer1" id="GPvisibilityPicto_ID_Layer1" class="GPlayerVisibility" title="Afficher/masquer la couche"></label>
+
+        var list = [];
+
+        var checked = typeof obj.visibility !== "undefined" ? obj.visibility : true;
+        var id = this._addUID("GPvisibility_ID_" + obj.id);
+
+        var input = document.createElement("input");
+        input.id = id;
+        input.type = "checkbox";
+        input.checked = checked;
+
+        var label = document.createElement("label");
+        label.htmlFor = id;
+        label.id = this._addUID("GPvisibilityPicto_ID_" + obj.id);
+        label.className = "GPlayerVisibility";
+        label.title = "Afficher/masquer la couche";
+
+        // add event for visibility change
+        var context = this;
+        if (input.addEventListener) {
+            input.addEventListener("click", function (e) {
+                context._onVisibilityLayerClick(e);
+            });
+        } else if (input.attachEvent) {
+            // internet explorer
+            input.attachEvent("onclick", function (e) {
+                context._onVisibilityLayerClick(e);
+            });
+        }
+
+        list.push(input);
+        list.push(label);
+
+        return list;
+    },
+
+    /**
+     * Creation de l'affichage du menu des outils avancés du layer (DOM)
+     *
+     * @param {Object} obj - options de la couche à ajouter dans le layer switcher
+     *
+     * @returns {DOMElement[]} array containing input and label elements
+     */
+    _createAdvancedToolShowElement: function _createAdvancedToolShowElement(obj) {
+        // <input type="checkbox" id="GPshowAdvancedTools_ID_Layer1">
+        // <label for="GPshowAdvancedTools_ID_Layer1" id="GPshowAdvancedToolsPicto_ID_Layer1" class="GPshowMoreOptions GPshowLayerAdvancedTools" title="Plus d'outils"></label>
+
+        var list = [];
+
+        var label = document.createElement("label");
+        label.id = this._addUID("GPshowAdvancedToolsPicto_ID_" + obj.id);
+        label.htmlFor = this._addUID("GPshowAdvancedTools_ID_" + obj.id);
+        label.title = "Plus d'outils";
+        label.className = "GPshowMoreOptions GPshowLayerAdvancedTools";
+
+        var input = document.createElement("input");
+        input.type = "checkbox";
+        input.id = this._addUID("GPshowAdvancedTools_ID_" + obj.id);
+
+        list.push(input);
+        list.push(label);
+
+        return list;
+    },
+
+    /**
+     * Creation du container des outils avancés du layer (DOM)
+     *
+     * @param {Object} obj - options de la couche à ajouter dans le layer switcher
+     *
+     * @returns {DOMElement} container
+     */
+    _createAdvancedToolElement: function _createAdvancedToolElement(obj) {
+        // exemple :
+        // <div id="GPadvancedTools_ID_Layer1" class="GPlayerAdvancedTools">
+        //     <!-- _createAdvancedToolDeleteElement -->
+        //     <!-- _createAdvancedToolInformationElement -->
+        //     <!-- _createAdvancedToolOpacityElement -->
+        // </div>
+
+        var container = document.createElement("div");
+        container.id = this._addUID("GPadvancedTools_ID_" + obj.id);
+        container.className = "GPlayerAdvancedTools";
+
+        container.appendChild(this._createAdvancedToolDeleteElement(obj));
+
+        // si on n'a de l'informations à afficher, on met en place ce composant
+        if (obj.title && obj.description) {
+            container.appendChild(this._createAdvancedToolInformationElement(obj));
+        }
+        if (obj.type !== "feature") {
+            var array = this._createAdvancedToolOpacityElement(obj);
+            for (var i = 0; i < array.length; i++) {
+                container.appendChild(array[i]);
+            }
+        }
+
+        return container;
+    },
+
+    /**
+     * Creation de l'icone de suppression du layer (DOM)
+     *
+     * @param {Object} obj - options de la couche à ajouter dans le layer switcher
+     *
+     * @returns {DOMElement} container
+     */
+    _createAdvancedToolDeleteElement: function _createAdvancedToolDeleteElement(obj) {
+        // exemple :
+        // <div id="GPremove_ID_Layer1" class="GPlayerRemove" title="Supprimer la couche" onclick="GPdropLayer(this);"></div>
+
+        var div = document.createElement("div");
+        div.id = this._addUID("GPremove_ID_" + obj.id);
+        div.className = "GPlayerRemove";
+        div.title = "Supprimer la couche";
+        div.layerId = obj.id;
+
+        var context = this;
+        if (div.addEventListener) {
+            div.addEventListener("click", function (e) {
+                context._onDropLayerClick(e);
+            });
+        } else if (div.attachEvent) {
+            // internet explorer
+            div.attachEvent("onclick", function (e) {
+                context._onDropLayerClick(e);
+            });
+        }
+
+        return div;
+    },
+
+    /**
+     * Creation de l'icone d'information du layer (DOM)
+     *
+     * @param {Object} obj - options de la couche à ajouter dans le layer switcher
+     *
+     * @returns {DOMElement} container
+     */
+    _createAdvancedToolInformationElement: function _createAdvancedToolInformationElement(obj) {
+        // exemple :
+        // <div id="GPinfo_ID_Layer1" class="GPlayerInfo" title="Informations/légende" onclick="GPopenLayerInfo(this);"></div>
+
+        var div = document.createElement("div");
+        div.id = this._addUID("GPinfo_ID_" + obj.id);
+        div.className = "GPlayerInfo";
+        div.title = "Informations/légende";
+        div.layerId = obj.id;
+        // add event on click
+        var context = this;
+        if (div.addEventListener) {
+            div.addEventListener("click", function (e) {
+                context._onOpenLayerInfoClick(e);
+            });
+        } else if (div.attachEvent) {
+            // internet explorer
+            div.attachEvent("onclick", function (e) {
+                context._onOpenLayerInfoClick(e);
+            });
+        }
+
+        return div;
+    },
+
+    /**
+     * Creation de l'icone de gestion de l'opacité du layer (DOM)
+     *
+     * @param {Object} obj - options de la couche à ajouter dans le layer switcher
+     *
+     * @returns {DOMElement[]} array of two containers
+     */
+    _createAdvancedToolOpacityElement: function _createAdvancedToolOpacityElement(obj) {
+        // exemple :
+        // <div id="GPopacity_ID_Layer1" class="GPlayerOpacity" title="Opacité">
+        //   <input id="GPopacityRange_ID_Layer1" type="range" value="100" oninput="GPchangeLayerOpacity(this);" onchange="GPchangeLayerOpacity(this);">
+        // </div>
+        // <div class="GPlayerOpacityValue" id="GPopacityValueDiv_ID_Layer1">
+        //   <span id="GPopacityValue_ID_Layer1">100</span>
+        //   %
+        // </div>
+
+        var list = [];
+
+        // curseur pour changer l'opacité
+        var divO = document.createElement("div");
+        divO.id = this._addUID("GPopacity_ID_" + obj.id);
+        divO.className = "GPlayerOpacity";
+        divO.title = "Opacité";
+
+        var opacity = typeof obj.opacity !== "undefined" ? obj.opacity : 1;
+        opacity = Math.round(opacity * 100);
+
+        var input = document.createElement("input");
+        input.id = this._addUID("GPopacityValueDiv_ID_" + obj.id);
+        input.type = "range";
+        input.value = opacity;
+
+        // add event for opacity change
+        var context = this;
+        if (input.addEventListener) {
+            input.addEventListener("change", function (e) {
+                context._onChangeLayerOpacity(e);
+            });
+        } else if (input.attachEvent) {
+            // internet explorer
+            input.attachEvent("onchange", function (e) {
+                context._onChangeLayerOpacity(e);
+            });
+        }
+
+        if (input.addEventListener) {
+            input.addEventListener("input", function (e) {
+                context._onChangeLayerOpacity(e);
+            });
+        } else if (input.attachEvent) {
+            // internet explorer
+            input.attachEvent("oninput", function (e) {
+                context._onChangeLayerOpacity(e);
+            });
+        }
+
+        divO.appendChild(input);
+
+        // Valeur d'opacité
+        var divC = document.createElement("div");
+        divC.id = this._addUID("GPopacityValueDiv_ID_" + obj.id);
+        divC.className = "GPlayerOpacityValue";
+
+        var span = document.createElement("span");
+        span.id = this._addUID("GPopacityValue_ID_" + obj.id);
+        span.innerHTML = opacity + "%";
+
+        divC.appendChild(span);
+
+        list.push(divO);
+        list.push(divC);
+
+        return list;
+    },
+
+    // ################################################################### //
+    // ############################ Layer info ########################### //
+    // ################################################################### //
+
+    /**
+     * Creation du container du layer info (DOM)
+     *
+     * TODO GPlayerInfoPopup : ???
+     * TODO GPlayerInfoLink  : mettre en forme les échelles !
+     *
+     * @param {Object} obj - options de la couche à ajouter dans le layer switcher
+     *
+     * @returns {DOMElement} container
+     */
+    _createContainerLayerInfoElement: function _createContainerLayerInfoElement(obj) {
+        var container = document.createElement("div");
+        container.id = this._addUID("GPlayerInfoContent");
+
+        var title = document.createElement("div");
+        title.id = this._addUID("GPlayerInfoTitle");
+        title.innerHTML = obj.title;
+        container.appendChild(title);
+
+        if (obj.quicklookUrl) {
+            var quick = document.createElement("div");
+            quick.id = this._addUID("GPlayerInfoQuicklook");
+            quick.title = "Afficher un aperçu de la couche";
+            var refquick = document.createElement("a");
+            refquick.href = obj.quicklookUrl;
+            refquick.appendChild(quick);
+            container.appendChild(refquick);
+        }
+
+        var close = document.createElement("div");
+        close.id = this._addUID("GPlayerInfoClose");
+        close.title = "Fermer la fenêtre";
+
+        var self = this;
+        /** Call event function on close click */
+        var onCloseClick = function onCloseClick() {
+            document.getElementById(self._addUID("GPlayerInfoPanel")).className = "GPlayerInfoPanelClosed";
+            var layers = document.getElementsByClassName("GPlayerInfoOpened");
+            for (var i = 0; i < layers.length; i++) {
+                layers[i].className = "GPlayerInfo";
+            }
+        };
+        if (close.addEventListener) {
+            close.addEventListener("click", onCloseClick);
+        } else if (close.attachEvent) {
+            // internet explorer
+            close.attachEvent("onclick", onCloseClick);
+        }
+        container.appendChild(close);
+
+        var desc = document.createElement("div");
+        desc.id = this._addUID("GPlayerInfoDescription");
+        desc.innerHTML = obj.description;
+        container.appendChild(desc);
+
+        if (obj.metadata) {
+            var mtd = document.createElement("div");
+            mtd.id = this._addUID("GPlayerInfoMetadata");
+
+            var mtdtitle = document.createElement("div");
+            mtdtitle.className = "GPlayerInfoSubtitle";
+            mtdtitle.innerHTML = "Métadonnées";
+            mtd.appendChild(mtdtitle);
+
+            for (var i = 0; i < obj.metadata.length; i++) {
+                var urlmtd = obj.metadata[i].url;
+
+                var mtdlink = document.createElement("div");
+                mtdlink.className = "GPlayerInfoLink";
+
+                var refmtd = document.createElement("a");
+                refmtd.href = urlmtd;
+                refmtd.innerHTML = urlmtd;
+                mtdlink.appendChild(refmtd);
+                mtd.appendChild(mtdlink);
+            }
+
+            if (obj.metadata.length !== 0) {
+                container.appendChild(mtd);
+            }
+        }
+
+        if (obj.legends) {
+            var lgd = document.createElement("div");
+            lgd.id = this._addUID("GPlayerInfoLegend");
+
+            var lgdtitle = document.createElement("div");
+            lgdtitle.className = "GPlayerInfoSubtitle";
+            lgdtitle.innerHTML = "Légende";
+            lgd.appendChild(lgdtitle);
+
+            var legends = {};
+            var maxScale = obj.maxScaleDenominator || 560000000;
+
+            // on crée un tableau temporaire pour ordonner les légendes selon le dénominateur d'échelle
+            for (var k = 0; k < obj.legends.length; k++) {
+                var minScale = obj.legends[k].minScaleDenominator;
+                if (minScale) {
+                    var s = minScale.toString();
+                    minScale = Math.round(parseInt(s.substring(0, 3), 10) / 10) * Math.pow(10, s.length - 2);
+                } else {
+                    minScale = 270;
+                }
+                legends[minScale] = obj.legends[k];
+            }
+
+            for (var scale in legends) {
+                if (legends.hasOwnProperty(scale)) {
+                    var urllgd = legends[scale].url;
+                    // on n'affiche pas les légendes pointant vers "nolegend.jpg"
+                    if (typeof urllgd === "string" && urllgd.toLowerCase().indexOf("nolegend.jpg") === -1) {
+                        // TODO GPlayerInfoPopup
+                        var lgdlink = document.createElement("div");
+                        lgdlink.className = "GPlayerInfoLink";
+
+                        maxScale = legends[scale].maxScaleDenominator || maxScale;
+
+                        var reflgd = document.createElement("a");
+                        reflgd.href = urllgd;
+                        reflgd.innerHTML = "Du 1/" + scale + " au 1/" + maxScale;
+                        lgdlink.appendChild(reflgd);
+                        lgd.appendChild(lgdlink);
+                    } else {
+                        delete legends[scale];
+                    }
+                }
+            }
+
+            if (Object.keys(legends).length !== 0) {
+                container.appendChild(lgd);
+            }
+        }
+
+        return container;
+    }
+};
+
+exports.default = LayerSwitcherDOM;
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
+ * Sortable
+ * @author	RubaXa   <trash@rubaxa.org>
+ * @license MIT
+ */
+
+
+(function (factory) {
+	"use strict";
+
+	if (true) {
+		!(__WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) :
+				__WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	}
+	else if (typeof module != "undefined" && typeof module.exports != "undefined") {
+		module.exports = factory();
+	}
+	else if (typeof Package !== "undefined") {
+		Sortable = factory();  // export for Meteor.js
+	}
+	else {
+		/* jshint sub:true */
+		window["Sortable"] = factory();
+	}
+})(function () {
+	"use strict";
+
+	var dragEl,
+		parentEl,
+		ghostEl,
+		cloneEl,
+		rootEl,
+		nextEl,
+
+		scrollEl,
+		scrollParentEl,
+
+		lastEl,
+		lastCSS,
+		lastParentCSS,
+
+		oldIndex,
+		newIndex,
+
+		activeGroup,
+		autoScroll = {},
+
+		tapEvt,
+		touchEvt,
+
+		moved,
+
+		/** @const */
+		RSPACE = /\s+/g,
+
+		expando = 'Sortable' + (new Date).getTime(),
+
+		win = window,
+		document = win.document,
+		parseInt = win.parseInt,
+
+		supportDraggable = !!('draggable' in document.createElement('div')),
+		supportCssPointerEvents = (function (el) {
+			el = document.createElement('x');
+			el.style.cssText = 'pointer-events:auto';
+			return el.style.pointerEvents === 'auto';
+		})(),
+
+		_silent = false,
+
+		abs = Math.abs,
+		slice = [].slice,
+
+		touchDragOverListeners = [],
+
+		_autoScroll = _throttle(function (/**Event*/evt, /**Object*/options, /**HTMLElement*/rootEl) {
+			// Bug: https://bugzilla.mozilla.org/show_bug.cgi?id=505521
+			if (rootEl && options.scroll) {
+				var el,
+					rect,
+					sens = options.scrollSensitivity,
+					speed = options.scrollSpeed,
+
+					x = evt.clientX,
+					y = evt.clientY,
+
+					winWidth = window.innerWidth,
+					winHeight = window.innerHeight,
+
+					vx,
+					vy
+				;
+
+				// Delect scrollEl
+				if (scrollParentEl !== rootEl) {
+					scrollEl = options.scroll;
+					scrollParentEl = rootEl;
+
+					if (scrollEl === true) {
+						scrollEl = rootEl;
+
+						do {
+							if ((scrollEl.offsetWidth < scrollEl.scrollWidth) ||
+								(scrollEl.offsetHeight < scrollEl.scrollHeight)
+							) {
+								break;
+							}
+							/* jshint boss:true */
+						} while (scrollEl = scrollEl.parentNode);
+					}
+				}
+
+				if (scrollEl) {
+					el = scrollEl;
+					rect = scrollEl.getBoundingClientRect();
+					vx = (abs(rect.right - x) <= sens) - (abs(rect.left - x) <= sens);
+					vy = (abs(rect.bottom - y) <= sens) - (abs(rect.top - y) <= sens);
+				}
+
+
+				if (!(vx || vy)) {
+					vx = (winWidth - x <= sens) - (x <= sens);
+					vy = (winHeight - y <= sens) - (y <= sens);
+
+					/* jshint expr:true */
+					(vx || vy) && (el = win);
+				}
+
+
+				if (autoScroll.vx !== vx || autoScroll.vy !== vy || autoScroll.el !== el) {
+					autoScroll.el = el;
+					autoScroll.vx = vx;
+					autoScroll.vy = vy;
+
+					clearInterval(autoScroll.pid);
+
+					if (el) {
+						autoScroll.pid = setInterval(function () {
+							if (el === win) {
+								win.scrollTo(win.pageXOffset + vx * speed, win.pageYOffset + vy * speed);
+							} else {
+								vy && (el.scrollTop += vy * speed);
+								vx && (el.scrollLeft += vx * speed);
+							}
+						}, 24);
+					}
+				}
+			}
+		}, 30),
+
+		_prepareGroup = function (options) {
+			var group = options.group;
+
+			if (!group || typeof group != 'object') {
+				group = options.group = {name: group};
+			}
+
+			['pull', 'put'].forEach(function (key) {
+				if (!(key in group)) {
+					group[key] = true;
+				}
+			});
+
+			options.groups = ' ' + group.name + (group.put.join ? ' ' + group.put.join(' ') : '') + ' ';
+		}
+	;
+
+
+
+	/**
+	 * @class  Sortable
+	 * @param  {HTMLElement}  el
+	 * @param  {Object}       [options]
+	 */
+	function Sortable(el, options) {
+		if (!(el && el.nodeType && el.nodeType === 1)) {
+			throw 'Sortable: `el` must be HTMLElement, and not ' + {}.toString.call(el);
+		}
+
+		this.el = el; // root element
+		this.options = options = _extend({}, options);
+
+
+		// Export instance
+		el[expando] = this;
+
+
+		// Default options
+		var defaults = {
+			group: Math.random(),
+			sort: true,
+			disabled: false,
+			store: null,
+			handle: null,
+			scroll: true,
+			scrollSensitivity: 30,
+			scrollSpeed: 10,
+			draggable: /[uo]l/i.test(el.nodeName) ? 'li' : '>*',
+			ghostClass: 'sortable-ghost',
+			chosenClass: 'sortable-chosen',
+			ignore: 'a, img',
+			filter: null,
+			animation: 0,
+			setData: function (dataTransfer, dragEl) {
+				dataTransfer.setData('Text', dragEl.textContent);
+			},
+			dropBubble: false,
+			dragoverBubble: false,
+			dataIdAttr: 'data-id',
+			delay: 0,
+			forceFallback: false,
+			fallbackClass: 'sortable-fallback',
+			fallbackOnBody: false
+		};
+
+
+		// Set default options
+		for (var name in defaults) {
+			!(name in options) && (options[name] = defaults[name]);
+		}
+
+		_prepareGroup(options);
+
+		// Bind all private methods
+		for (var fn in this) {
+			if (fn.charAt(0) === '_') {
+				this[fn] = this[fn].bind(this);
+			}
+		}
+
+		// Setup drag mode
+		this.nativeDraggable = options.forceFallback ? false : supportDraggable;
+
+		// Bind events
+		_on(el, 'mousedown', this._onTapStart);
+		_on(el, 'touchstart', this._onTapStart);
+
+		if (this.nativeDraggable) {
+			_on(el, 'dragover', this);
+			_on(el, 'dragenter', this);
+		}
+
+		touchDragOverListeners.push(this._onDragOver);
+
+		// Restore sorting
+		options.store && this.sort(options.store.get(this));
+	}
+
+
+	Sortable.prototype = /** @lends Sortable.prototype */ {
+		constructor: Sortable,
+
+		_onTapStart: function (/** Event|TouchEvent */evt) {
+			var _this = this,
+				el = this.el,
+				options = this.options,
+				type = evt.type,
+				touch = evt.touches && evt.touches[0],
+				target = (touch || evt).target,
+				originalTarget = target,
+				filter = options.filter;
+
+
+			if (type === 'mousedown' && evt.button !== 0 || options.disabled) {
+				return; // only left button or enabled
+			}
+
+			target = _closest(target, options.draggable, el);
+
+			if (!target) {
+				return;
+			}
+
+			// get the index of the dragged element within its parent
+			oldIndex = _index(target);
+
+			// Check filter
+			if (typeof filter === 'function') {
+				if (filter.call(this, evt, target, this)) {
+					_dispatchEvent(_this, originalTarget, 'filter', target, el, oldIndex);
+					evt.preventDefault();
+					return; // cancel dnd
+				}
+			}
+			else if (filter) {
+				filter = filter.split(',').some(function (criteria) {
+					criteria = _closest(originalTarget, criteria.trim(), el);
+
+					if (criteria) {
+						_dispatchEvent(_this, criteria, 'filter', target, el, oldIndex);
+						return true;
+					}
+				});
+
+				if (filter) {
+					evt.preventDefault();
+					return; // cancel dnd
+				}
+			}
+
+
+			if (options.handle && !_closest(originalTarget, options.handle, el)) {
+				return;
+			}
+
+
+			// Prepare `dragstart`
+			this._prepareDragStart(evt, touch, target);
+		},
+
+		_prepareDragStart: function (/** Event */evt, /** Touch */touch, /** HTMLElement */target) {
+			var _this = this,
+				el = _this.el,
+				options = _this.options,
+				ownerDocument = el.ownerDocument,
+				dragStartFn;
+
+			if (target && !dragEl && (target.parentNode === el)) {
+				tapEvt = evt;
+
+				rootEl = el;
+				dragEl = target;
+				parentEl = dragEl.parentNode;
+				nextEl = dragEl.nextSibling;
+				activeGroup = options.group;
+
+				dragStartFn = function () {
+					// Delayed drag has been triggered
+					// we can re-enable the events: touchmove/mousemove
+					_this._disableDelayedDrag();
+
+					// Make the element draggable
+					dragEl.draggable = true;
+
+					// Chosen item
+					_toggleClass(dragEl, _this.options.chosenClass, true);
+
+					// Bind the events: dragstart/dragend
+					_this._triggerDragStart(touch);
+				};
+
+				// Disable "draggable"
+				options.ignore.split(',').forEach(function (criteria) {
+					_find(dragEl, criteria.trim(), _disableDraggable);
+				});
+
+				_on(ownerDocument, 'mouseup', _this._onDrop);
+				_on(ownerDocument, 'touchend', _this._onDrop);
+				_on(ownerDocument, 'touchcancel', _this._onDrop);
+
+				if (options.delay) {
+					// If the user moves the pointer or let go the click or touch
+					// before the delay has been reached:
+					// disable the delayed drag
+					_on(ownerDocument, 'mouseup', _this._disableDelayedDrag);
+					_on(ownerDocument, 'touchend', _this._disableDelayedDrag);
+					_on(ownerDocument, 'touchcancel', _this._disableDelayedDrag);
+					_on(ownerDocument, 'mousemove', _this._disableDelayedDrag);
+					_on(ownerDocument, 'touchmove', _this._disableDelayedDrag);
+
+					_this._dragStartTimer = setTimeout(dragStartFn, options.delay);
+				} else {
+					dragStartFn();
+				}
+			}
+		},
+
+		_disableDelayedDrag: function () {
+			var ownerDocument = this.el.ownerDocument;
+
+			clearTimeout(this._dragStartTimer);
+			_off(ownerDocument, 'mouseup', this._disableDelayedDrag);
+			_off(ownerDocument, 'touchend', this._disableDelayedDrag);
+			_off(ownerDocument, 'touchcancel', this._disableDelayedDrag);
+			_off(ownerDocument, 'mousemove', this._disableDelayedDrag);
+			_off(ownerDocument, 'touchmove', this._disableDelayedDrag);
+		},
+
+		_triggerDragStart: function (/** Touch */touch) {
+			if (touch) {
+				// Touch device support
+				tapEvt = {
+					target: dragEl,
+					clientX: touch.clientX,
+					clientY: touch.clientY
+				};
+
+				this._onDragStart(tapEvt, 'touch');
+			}
+			else if (!this.nativeDraggable) {
+				this._onDragStart(tapEvt, true);
+			}
+			else {
+				_on(dragEl, 'dragend', this);
+				_on(rootEl, 'dragstart', this._onDragStart);
+			}
+
+			try {
+				if (document.selection) {
+					document.selection.empty();
+				} else {
+					window.getSelection().removeAllRanges();
+				}
+			} catch (err) {
+			}
+		},
+
+		_dragStarted: function () {
+			if (rootEl && dragEl) {
+				// Apply effect
+				_toggleClass(dragEl, this.options.ghostClass, true);
+
+				Sortable.active = this;
+
+				// Drag start event
+				_dispatchEvent(this, rootEl, 'start', dragEl, rootEl, oldIndex);
+			}
+		},
+
+		_emulateDragOver: function () {
+			if (touchEvt) {
+				if (this._lastX === touchEvt.clientX && this._lastY === touchEvt.clientY) {
+					return;
+				}
+
+				this._lastX = touchEvt.clientX;
+				this._lastY = touchEvt.clientY;
+
+				if (!supportCssPointerEvents) {
+					_css(ghostEl, 'display', 'none');
+				}
+
+				var target = document.elementFromPoint(touchEvt.clientX, touchEvt.clientY),
+					parent = target,
+					groupName = ' ' + this.options.group.name + '',
+					i = touchDragOverListeners.length;
+
+				if (parent) {
+					do {
+						if (parent[expando] && parent[expando].options.groups.indexOf(groupName) > -1) {
+							while (i--) {
+								touchDragOverListeners[i]({
+									clientX: touchEvt.clientX,
+									clientY: touchEvt.clientY,
+									target: target,
+									rootEl: parent
+								});
+							}
+
+							break;
+						}
+
+						target = parent; // store last element
+					}
+					/* jshint boss:true */
+					while (parent = parent.parentNode);
+				}
+
+				if (!supportCssPointerEvents) {
+					_css(ghostEl, 'display', '');
+				}
+			}
+		},
+
+
+		_onTouchMove: function (/**TouchEvent*/evt) {
+			if (tapEvt) {
+				// only set the status to dragging, when we are actually dragging
+				if (!Sortable.active) {
+					this._dragStarted();
+				}
+
+				// as well as creating the ghost element on the document body
+				this._appendGhost();
+
+				var touch = evt.touches ? evt.touches[0] : evt,
+					dx = touch.clientX - tapEvt.clientX,
+					dy = touch.clientY - tapEvt.clientY,
+					translate3d = evt.touches ? 'translate3d(' + dx + 'px,' + dy + 'px,0)' : 'translate(' + dx + 'px,' + dy + 'px)';
+
+				moved = true;
+				touchEvt = touch;
+
+				_css(ghostEl, 'webkitTransform', translate3d);
+				_css(ghostEl, 'mozTransform', translate3d);
+				_css(ghostEl, 'msTransform', translate3d);
+				_css(ghostEl, 'transform', translate3d);
+
+				evt.preventDefault();
+			}
+		},
+
+		_appendGhost: function () {
+			if (!ghostEl) {
+				var rect = dragEl.getBoundingClientRect(),
+					css = _css(dragEl),
+					options = this.options,
+					ghostRect;
+
+				ghostEl = dragEl.cloneNode(true);
+
+				_toggleClass(ghostEl, options.ghostClass, false);
+				_toggleClass(ghostEl, options.fallbackClass, true);
+
+				_css(ghostEl, 'top', rect.top - parseInt(css.marginTop, 10));
+				_css(ghostEl, 'left', rect.left - parseInt(css.marginLeft, 10));
+				_css(ghostEl, 'width', rect.width);
+				_css(ghostEl, 'height', rect.height);
+				_css(ghostEl, 'opacity', '0.8');
+				_css(ghostEl, 'position', 'fixed');
+				_css(ghostEl, 'zIndex', '100000');
+				_css(ghostEl, 'pointerEvents', 'none');
+
+				options.fallbackOnBody && document.body.appendChild(ghostEl) || rootEl.appendChild(ghostEl);
+
+				// Fixing dimensions.
+				ghostRect = ghostEl.getBoundingClientRect();
+				_css(ghostEl, 'width', rect.width * 2 - ghostRect.width);
+				_css(ghostEl, 'height', rect.height * 2 - ghostRect.height);
+			}
+		},
+
+		_onDragStart: function (/**Event*/evt, /**boolean*/useFallback) {
+			var dataTransfer = evt.dataTransfer,
+				options = this.options;
+
+			this._offUpEvents();
+
+			if (activeGroup.pull == 'clone') {
+				cloneEl = dragEl.cloneNode(true);
+				_css(cloneEl, 'display', 'none');
+				rootEl.insertBefore(cloneEl, dragEl);
+			}
+
+			if (useFallback) {
+
+				if (useFallback === 'touch') {
+					// Bind touch events
+					_on(document, 'touchmove', this._onTouchMove);
+					_on(document, 'touchend', this._onDrop);
+					_on(document, 'touchcancel', this._onDrop);
+				} else {
+					// Old brwoser
+					_on(document, 'mousemove', this._onTouchMove);
+					_on(document, 'mouseup', this._onDrop);
+				}
+
+				this._loopId = setInterval(this._emulateDragOver, 50);
+			}
+			else {
+				if (dataTransfer) {
+					dataTransfer.effectAllowed = 'move';
+					options.setData && options.setData.call(this, dataTransfer, dragEl);
+				}
+
+				_on(document, 'drop', this);
+				setTimeout(this._dragStarted, 0);
+			}
+		},
+
+		_onDragOver: function (/**Event*/evt) {
+			var el = this.el,
+				target,
+				dragRect,
+				revert,
+				options = this.options,
+				group = options.group,
+				groupPut = group.put,
+				isOwner = (activeGroup === group),
+				canSort = options.sort;
+
+			if (evt.preventDefault !== void 0) {
+				evt.preventDefault();
+				!options.dragoverBubble && evt.stopPropagation();
+			}
+
+			moved = true;
+
+			if (activeGroup && !options.disabled &&
+				(isOwner
+					? canSort || (revert = !rootEl.contains(dragEl)) // Reverting item into the original list
+					: activeGroup.pull && groupPut && (
+						(activeGroup.name === group.name) || // by Name
+						(groupPut.indexOf && ~groupPut.indexOf(activeGroup.name)) // by Array
+					)
+				) &&
+				(evt.rootEl === void 0 || evt.rootEl === this.el) // touch fallback
+			) {
+				// Smart auto-scrolling
+				_autoScroll(evt, options, this.el);
+
+				if (_silent) {
+					return;
+				}
+
+				target = _closest(evt.target, options.draggable, el);
+				dragRect = dragEl.getBoundingClientRect();
+
+				if (revert) {
+					_cloneHide(true);
+
+					if (cloneEl || nextEl) {
+						rootEl.insertBefore(dragEl, cloneEl || nextEl);
+					}
+					else if (!canSort) {
+						rootEl.appendChild(dragEl);
+					}
+
+					return;
+				}
+
+
+				if ((el.children.length === 0) || (el.children[0] === ghostEl) ||
+					(el === evt.target) && (target = _ghostIsLast(el, evt))
+				) {
+
+					if (target) {
+						if (target.animated) {
+							return;
+						}
+
+						targetRect = target.getBoundingClientRect();
+					}
+
+					_cloneHide(isOwner);
+
+					if (_onMove(rootEl, el, dragEl, dragRect, target, targetRect) !== false) {
+						if (!dragEl.contains(el)) {
+							el.appendChild(dragEl);
+							parentEl = el; // actualization
+						}
+
+						this._animate(dragRect, dragEl);
+						target && this._animate(targetRect, target);
+					}
+				}
+				else if (target && !target.animated && target !== dragEl && (target.parentNode[expando] !== void 0)) {
+					if (lastEl !== target) {
+						lastEl = target;
+						lastCSS = _css(target);
+						lastParentCSS = _css(target.parentNode);
+					}
+
+
+					var targetRect = target.getBoundingClientRect(),
+						width = targetRect.right - targetRect.left,
+						height = targetRect.bottom - targetRect.top,
+						floating = /left|right|inline/.test(lastCSS.cssFloat + lastCSS.display)
+							|| (lastParentCSS.display == 'flex' && lastParentCSS['flex-direction'].indexOf('row') === 0),
+						isWide = (target.offsetWidth > dragEl.offsetWidth),
+						isLong = (target.offsetHeight > dragEl.offsetHeight),
+						halfway = (floating ? (evt.clientX - targetRect.left) / width : (evt.clientY - targetRect.top) / height) > 0.5,
+						nextSibling = target.nextElementSibling,
+						moveVector = _onMove(rootEl, el, dragEl, dragRect, target, targetRect),
+						after
+					;
+
+					if (moveVector !== false) {
+						_silent = true;
+						setTimeout(_unsilent, 30);
+
+						_cloneHide(isOwner);
+
+						if (moveVector === 1 || moveVector === -1) {
+							after = (moveVector === 1);
+						}
+						else if (floating) {
+							var elTop = dragEl.offsetTop,
+								tgTop = target.offsetTop;
+
+							if (elTop === tgTop) {
+								after = (target.previousElementSibling === dragEl) && !isWide || halfway && isWide;
+							} else {
+								after = tgTop > elTop;
+							}
+						} else {
+							after = (nextSibling !== dragEl) && !isLong || halfway && isLong;
+						}
+
+						if (!dragEl.contains(el)) {
+							if (after && !nextSibling) {
+								el.appendChild(dragEl);
+							} else {
+								target.parentNode.insertBefore(dragEl, after ? nextSibling : target);
+							}
+						}
+
+						parentEl = dragEl.parentNode; // actualization
+
+						this._animate(dragRect, dragEl);
+						this._animate(targetRect, target);
+					}
+				}
+			}
+		},
+
+		_animate: function (prevRect, target) {
+			var ms = this.options.animation;
+
+			if (ms) {
+				var currentRect = target.getBoundingClientRect();
+
+				_css(target, 'transition', 'none');
+				_css(target, 'transform', 'translate3d('
+					+ (prevRect.left - currentRect.left) + 'px,'
+					+ (prevRect.top - currentRect.top) + 'px,0)'
+				);
+
+				target.offsetWidth; // repaint
+
+				_css(target, 'transition', 'all ' + ms + 'ms');
+				_css(target, 'transform', 'translate3d(0,0,0)');
+
+				clearTimeout(target.animated);
+				target.animated = setTimeout(function () {
+					_css(target, 'transition', '');
+					_css(target, 'transform', '');
+					target.animated = false;
+				}, ms);
+			}
+		},
+
+		_offUpEvents: function () {
+			var ownerDocument = this.el.ownerDocument;
+
+			_off(document, 'touchmove', this._onTouchMove);
+			_off(ownerDocument, 'mouseup', this._onDrop);
+			_off(ownerDocument, 'touchend', this._onDrop);
+			_off(ownerDocument, 'touchcancel', this._onDrop);
+		},
+
+		_onDrop: function (/**Event*/evt) {
+			var el = this.el,
+				options = this.options;
+
+			clearInterval(this._loopId);
+			clearInterval(autoScroll.pid);
+			clearTimeout(this._dragStartTimer);
+
+			// Unbind events
+			_off(document, 'mousemove', this._onTouchMove);
+
+			if (this.nativeDraggable) {
+				_off(document, 'drop', this);
+				_off(el, 'dragstart', this._onDragStart);
+			}
+
+			this._offUpEvents();
+
+			if (evt) {
+				if (moved) {
+					evt.preventDefault();
+					!options.dropBubble && evt.stopPropagation();
+				}
+
+				ghostEl && ghostEl.parentNode.removeChild(ghostEl);
+
+				if (dragEl) {
+					if (this.nativeDraggable) {
+						_off(dragEl, 'dragend', this);
+					}
+
+					_disableDraggable(dragEl);
+
+					// Remove class's
+					_toggleClass(dragEl, this.options.ghostClass, false);
+					_toggleClass(dragEl, this.options.chosenClass, false);
+
+					if (rootEl !== parentEl) {
+						newIndex = _index(dragEl);
+
+						if (newIndex >= 0) {
+							// drag from one list and drop into another
+							_dispatchEvent(null, parentEl, 'sort', dragEl, rootEl, oldIndex, newIndex);
+							_dispatchEvent(this, rootEl, 'sort', dragEl, rootEl, oldIndex, newIndex);
+
+							// Add event
+							_dispatchEvent(null, parentEl, 'add', dragEl, rootEl, oldIndex, newIndex);
+
+							// Remove event
+							_dispatchEvent(this, rootEl, 'remove', dragEl, rootEl, oldIndex, newIndex);
+						}
+					}
+					else {
+						// Remove clone
+						cloneEl && cloneEl.parentNode.removeChild(cloneEl);
+
+						if (dragEl.nextSibling !== nextEl) {
+							// Get the index of the dragged element within its parent
+							newIndex = _index(dragEl);
+
+							if (newIndex >= 0) {
+								// drag & drop within the same list
+								_dispatchEvent(this, rootEl, 'update', dragEl, rootEl, oldIndex, newIndex);
+								_dispatchEvent(this, rootEl, 'sort', dragEl, rootEl, oldIndex, newIndex);
+							}
+						}
+					}
+
+					if (Sortable.active) {
+						if (newIndex === null || newIndex === -1) {
+							newIndex = oldIndex;
+						}
+
+						_dispatchEvent(this, rootEl, 'end', dragEl, rootEl, oldIndex, newIndex);
+
+						// Save sorting
+						this.save();
+					}
+				}
+
+				// Nulling
+				rootEl =
+				dragEl =
+				parentEl =
+				ghostEl =
+				nextEl =
+				cloneEl =
+
+				scrollEl =
+				scrollParentEl =
+
+				tapEvt =
+				touchEvt =
+
+				moved =
+				newIndex =
+
+				lastEl =
+				lastCSS =
+
+				activeGroup =
+				Sortable.active = null;
+			}
+		},
+
+
+		handleEvent: function (/**Event*/evt) {
+			var type = evt.type;
+
+			if (type === 'dragover' || type === 'dragenter') {
+				if (dragEl) {
+					this._onDragOver(evt);
+					_globalDragOver(evt);
+				}
+			}
+			else if (type === 'drop' || type === 'dragend') {
+				this._onDrop(evt);
+			}
+		},
+
+
+		/**
+		 * Serializes the item into an array of string.
+		 * @returns {String[]}
+		 */
+		toArray: function () {
+			var order = [],
+				el,
+				children = this.el.children,
+				i = 0,
+				n = children.length,
+				options = this.options;
+
+			for (; i < n; i++) {
+				el = children[i];
+				if (_closest(el, options.draggable, this.el)) {
+					order.push(el.getAttribute(options.dataIdAttr) || _generateId(el));
+				}
+			}
+
+			return order;
+		},
+
+
+		/**
+		 * Sorts the elements according to the array.
+		 * @param  {String[]}  order  order of the items
+		 */
+		sort: function (order) {
+			var items = {}, rootEl = this.el;
+
+			this.toArray().forEach(function (id, i) {
+				var el = rootEl.children[i];
+
+				if (_closest(el, this.options.draggable, rootEl)) {
+					items[id] = el;
+				}
+			}, this);
+
+			order.forEach(function (id) {
+				if (items[id]) {
+					rootEl.removeChild(items[id]);
+					rootEl.appendChild(items[id]);
+				}
+			});
+		},
+
+
+		/**
+		 * Save the current sorting
+		 */
+		save: function () {
+			var store = this.options.store;
+			store && store.set(this);
+		},
+
+
+		/**
+		 * For each element in the set, get the first element that matches the selector by testing the element itself and traversing up through its ancestors in the DOM tree.
+		 * @param   {HTMLElement}  el
+		 * @param   {String}       [selector]  default: `options.draggable`
+		 * @returns {HTMLElement|null}
+		 */
+		closest: function (el, selector) {
+			return _closest(el, selector || this.options.draggable, this.el);
+		},
+
+
+		/**
+		 * Set/get option
+		 * @param   {string} name
+		 * @param   {*}      [value]
+		 * @returns {*}
+		 */
+		option: function (name, value) {
+			var options = this.options;
+
+			if (value === void 0) {
+				return options[name];
+			} else {
+				options[name] = value;
+
+				if (name === 'group') {
+					_prepareGroup(options);
+				}
+			}
+		},
+
+
+		/**
+		 * Destroy
+		 */
+		destroy: function () {
+			var el = this.el;
+
+			el[expando] = null;
+
+			_off(el, 'mousedown', this._onTapStart);
+			_off(el, 'touchstart', this._onTapStart);
+
+			if (this.nativeDraggable) {
+				_off(el, 'dragover', this);
+				_off(el, 'dragenter', this);
+			}
+
+			// Remove draggable attributes
+			Array.prototype.forEach.call(el.querySelectorAll('[draggable]'), function (el) {
+				el.removeAttribute('draggable');
+			});
+
+			touchDragOverListeners.splice(touchDragOverListeners.indexOf(this._onDragOver), 1);
+
+			this._onDrop();
+
+			this.el = el = null;
+		}
+	};
+
+
+	function _cloneHide(state) {
+		if (cloneEl && (cloneEl.state !== state)) {
+			_css(cloneEl, 'display', state ? 'none' : '');
+			!state && cloneEl.state && rootEl.insertBefore(cloneEl, dragEl);
+			cloneEl.state = state;
+		}
+	}
+
+
+	function _closest(/**HTMLElement*/el, /**String*/selector, /**HTMLElement*/ctx) {
+		if (el) {
+			ctx = ctx || document;
+			selector = selector.split('.');
+
+			var tag = selector.shift().toUpperCase(),
+				re = new RegExp('\\s(' + selector.join('|') + ')(?=\\s)', 'g');
+
+			do {
+				if (
+					(tag === '>*' && el.parentNode === ctx) || (
+						(tag === '' || el.nodeName.toUpperCase() == tag) &&
+						(!selector.length || ((' ' + el.className + ' ').match(re) || []).length == selector.length)
+					)
+				) {
+					return el;
+				}
+			}
+			while (el !== ctx && (el = el.parentNode));
+		}
+
+		return null;
+	}
+
+
+	function _globalDragOver(/**Event*/evt) {
+		if (evt.dataTransfer) {
+			evt.dataTransfer.dropEffect = 'move';
+		}
+		evt.preventDefault();
+	}
+
+
+	function _on(el, event, fn) {
+		el.addEventListener(event, fn, false);
+	}
+
+
+	function _off(el, event, fn) {
+		el.removeEventListener(event, fn, false);
+	}
+
+
+	function _toggleClass(el, name, state) {
+		if (el) {
+			if (el.classList) {
+				el.classList[state ? 'add' : 'remove'](name);
+			}
+			else {
+				var className = (' ' + el.className + ' ').replace(RSPACE, ' ').replace(' ' + name + ' ', ' ');
+				el.className = (className + (state ? ' ' + name : '')).replace(RSPACE, ' ');
+			}
+		}
+	}
+
+
+	function _css(el, prop, val) {
+		var style = el && el.style;
+
+		if (style) {
+			if (val === void 0) {
+				if (document.defaultView && document.defaultView.getComputedStyle) {
+					val = document.defaultView.getComputedStyle(el, '');
+				}
+				else if (el.currentStyle) {
+					val = el.currentStyle;
+				}
+
+				return prop === void 0 ? val : val[prop];
+			}
+			else {
+				if (!(prop in style)) {
+					prop = '-webkit-' + prop;
+				}
+
+				style[prop] = val + (typeof val === 'string' ? '' : 'px');
+			}
+		}
+	}
+
+
+	function _find(ctx, tagName, iterator) {
+		if (ctx) {
+			var list = ctx.getElementsByTagName(tagName), i = 0, n = list.length;
+
+			if (iterator) {
+				for (; i < n; i++) {
+					iterator(list[i], i);
+				}
+			}
+
+			return list;
+		}
+
+		return [];
+	}
+
+
+
+	function _dispatchEvent(sortable, rootEl, name, targetEl, fromEl, startIndex, newIndex) {
+		var evt = document.createEvent('Event'),
+			options = (sortable || rootEl[expando]).options,
+			onName = 'on' + name.charAt(0).toUpperCase() + name.substr(1);
+
+		evt.initEvent(name, true, true);
+
+		evt.to = rootEl;
+		evt.from = fromEl || rootEl;
+		evt.item = targetEl || rootEl;
+		evt.clone = cloneEl;
+
+		evt.oldIndex = startIndex;
+		evt.newIndex = newIndex;
+
+		rootEl.dispatchEvent(evt);
+
+		if (options[onName]) {
+			options[onName].call(sortable, evt);
+		}
+	}
+
+
+	function _onMove(fromEl, toEl, dragEl, dragRect, targetEl, targetRect) {
+		var evt,
+			sortable = fromEl[expando],
+			onMoveFn = sortable.options.onMove,
+			retVal;
+
+		evt = document.createEvent('Event');
+		evt.initEvent('move', true, true);
+
+		evt.to = toEl;
+		evt.from = fromEl;
+		evt.dragged = dragEl;
+		evt.draggedRect = dragRect;
+		evt.related = targetEl || toEl;
+		evt.relatedRect = targetRect || toEl.getBoundingClientRect();
+
+		fromEl.dispatchEvent(evt);
+
+		if (onMoveFn) {
+			retVal = onMoveFn.call(sortable, evt);
+		}
+
+		return retVal;
+	}
+
+
+	function _disableDraggable(el) {
+		el.draggable = false;
+	}
+
+
+	function _unsilent() {
+		_silent = false;
+	}
+
+
+	/** @returns {HTMLElement|false} */
+	function _ghostIsLast(el, evt) {
+		var lastEl = el.lastElementChild,
+				rect = lastEl.getBoundingClientRect();
+
+		return ((evt.clientY - (rect.top + rect.height) > 5) || (evt.clientX - (rect.right + rect.width) > 5)) && lastEl; // min delta
+	}
+
+
+	/**
+	 * Generate id
+	 * @param   {HTMLElement} el
+	 * @returns {String}
+	 * @private
+	 */
+	function _generateId(el) {
+		var str = el.tagName + el.className + el.src + el.href + el.textContent,
+			i = str.length,
+			sum = 0;
+
+		while (i--) {
+			sum += str.charCodeAt(i);
+		}
+
+		return sum.toString(36);
+	}
+
+	/**
+	 * Returns the index of an element within its parent
+	 * @param  {HTMLElement} el
+	 * @return {number}
+	 */
+	function _index(el) {
+		var index = 0;
+
+		if (!el || !el.parentNode) {
+			return -1;
+		}
+
+		while (el && (el = el.previousElementSibling)) {
+			if (el.nodeName.toUpperCase() !== 'TEMPLATE') {
+				index++;
+			}
+		}
+
+		return index;
+	}
+
+	function _throttle(callback, ms) {
+		var args, _this;
+
+		return function () {
+			if (args === void 0) {
+				args = arguments;
+				_this = this;
+
+				setTimeout(function () {
+					if (args.length === 1) {
+						callback.call(_this, args[0]);
+					} else {
+						callback.apply(_this, args);
+					}
+
+					args = void 0;
+				}, ms);
+			}
+		};
+	}
+
+	function _extend(dst, src) {
+		if (dst && src) {
+			for (var key in src) {
+				if (src.hasOwnProperty(key)) {
+					dst[key] = src[key];
+				}
+			}
+		}
+
+		return dst;
+	}
+
+
+	// Export utils
+	Sortable.utils = {
+		on: _on,
+		off: _off,
+		css: _css,
+		find: _find,
+		is: function (el, selector) {
+			return !!_closest(el, selector, el);
+		},
+		extend: _extend,
+		throttle: _throttle,
+		closest: _closest,
+		toggleClass: _toggleClass,
+		index: _index
+	};
+
+
+	/**
+	 * Create sortable instance
+	 * @param {HTMLElement}  el
+	 * @param {Object}      [options]
+	 */
+	Sortable.create = function (el, options) {
+		return new Sortable(el, options);
+	};
+
+
+	// Export
+	Sortable.version = '1.3.0';
+	return Sortable;
+});
+
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _leaflet = __webpack_require__(0);
+
+var _leaflet2 = _interopRequireDefault(_leaflet);
+
+var _LoggerByDefault = __webpack_require__(1);
+
+var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
+
+var _gp = __webpack_require__(2);
+
+var _gp2 = _interopRequireDefault(_gp);
+
+var _CheckRightManagement = __webpack_require__(4);
+
+var _CheckRightManagement2 = _interopRequireDefault(_CheckRightManagement);
+
+var _SelectorID = __webpack_require__(3);
+
+var _SelectorID2 = _interopRequireDefault(_SelectorID);
+
+var _LocationSelector = __webpack_require__(10);
+
+var _LocationSelector2 = _interopRequireDefault(_LocationSelector);
+
+var _IsoDOM = __webpack_require__(27);
+
+var _IsoDOM2 = _interopRequireDefault(_IsoDOM);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var logger = _LoggerByDefault2.default.getLogger("Isocurve");
+
+/**
+ * @classdesc
+ *
+ * Leaflet Control Class to compute and display Isochrone or isodistances curves.
+ *
+ * Use {@link module:Controls.Isocurve L.geoportalControl.Isocurve()} factory to create instances of that class.
+ *
+ * **Extends** Leaflet <a href="http://leafletjs.com/reference.html#control" target="_blank">L.Control</a> native class.
+ *
+ * @namespace
+ * @alias L.geoportalControl.Isocurve
+ */
+var Isocurve = _leaflet2.default.Control.extend( /** @lends L.geoportalControl.Isocurve.prototype */{
+
+    includes: _IsoDOM2.default,
+
+    /**
+     * Options du service
+     *
+     * @private
+     */
+    options: {
+        position: "topleft",
+        collapsed: true, // plier !
+        methods: ["time", "distance"],
+        graphs: ["Voiture", "Pieton"],
+        exclusions: {
+            toll: false,
+            tunnel: false,
+            bridge: false
+        },
+        directions: ["departure", "arrival"],
+        disableReverse: false,
+        isocurveOptions: {},
+        autocompleteOptions: {}
+    },
+
+    /**
+     * constructor
+     *
+     * @private
+     * @param {Object} options - Isocurve control options
+     * @param {Sting}   [options.apiKey] - API key for services call (isocurve and autocomplete services), mandatory if autoconf service has not been charged in advance
+     * @param {Boolean} [options.collapsed] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
+     * @param {Object}  [options.exclusions] - list of exclusions with status (true = checked), by default : ["toll":false, "tunnel":false, "bridge":false].
+     * @param {Array}   [options.graphs] - list of graph resources to be used for isocurve calculation, by default : ["Voiture", "Pieton"]. The first element is selected.
+     * @param {Array}   [options.methods] - list of methods, by default : ["time", "distance"]. The first element is selected by default.
+     * @param {Array}   [options.directions] - list of directions to be displayed, by default : ["departure", "arrival"]. The first element is selected by default.
+     *      Directions enable to specify if input location point will be used as a departure point ("departure") or as an arrival point ("arrival")
+     * @param {Boolean} [options.disableReverse = false] - whether to enable/disable the reverse geocoding
+     * @param {Object} [options.isocurveOptions] - isocurve service options.
+     * @param {Object} [options.autocompleteOptions] - autocomplete service options.
+     * @example
+     *  var iso = L.geoportalControl.Isocurve({
+     *      collapsed : false
+     *      methods : ["time", "distance"],
+     *      exclusions : {
+     *         toll : true,
+     *         bridge : false,
+     *         tunnel : true
+     *      },
+     *      graphs : ["Pieton", "Voiture"],
+     *      isocurveOptions : {},
+     *      autocompleteOptions : {}
+     *  });
+     */
+    initialize: function initialize(options) {
+        // on transmet les options au controle
+        _leaflet2.default.Util.setOptions(this, options);
+
+        /** uuid */
+        this._uid = _SelectorID2.default.generate();
+
+        /** detection du support : desktop ou tactile */
+        this._isDesktop = this._detectSupport();
+
+        /** detection si le panneau est reduit */
+        // on desactive l'impl. reduction de la fenetre
+        // this._reducePanel = false;
+
+        /** container principaux */
+        this._waitingContainer = null;
+        this._showContainer = null;
+        this._pictoContainer = null;
+        this._formContainer = null;
+        this._submitContainer = null;
+
+        /** Mode de transport selectionné : 'Voiture' ou 'Pieton' */
+        this._currentTransport = null;
+
+        /** Sens du parcours selectionné : 'Départ' ou 'Arrivée' */
+        this._currentDirection = null;
+
+        /** Type d'isochrone et valeur selectionné : 'isochrone' ou 'distance' */
+        this._currentComputation = null;
+        this._currentTimeHour = 0;
+        this._currentTimeMinute = 0;
+        this._currentDistance = 0;
+
+        /** Exclusions selectionnées : Tunnel, Toll et Bridge */
+        this._currentExclusions = [];
+
+        // initialisation
+        this._initTransport();
+        this._initComputation();
+        this._initDirection();
+        this._initExclusions();
+
+        /** le point */
+        this._currentPoint = null;
+
+        /** la geometrie de l'isochrone */
+        this._geojsonIso = null;
+
+        /** si un calcul est en cours ou non */
+        this._waiting = false;
+        /** timer pour cacher la patience après un certain temps */
+        this._timer = null;
+
+        /**
+         * reponse du service
+         * Ex. {
+         *   totalTime, totalDistance, bbox, routeGeometry,
+         *   routeInstructions : [{duration, distance, code, instruction, bbox, geometry}]
+         * }
+         */
+        this._currentIsoResults = null;
+
+        /**
+         * liste des ressources avec droits par service
+         * Ex. {
+         *   "IsoChrone" : {
+         *       key : "ger4g456re45er456t4er5ge5",
+         *       resources : ["Pieton", "Voiture"]
+         *   }
+         * }
+         */
+        this._resources = {};
+
+        /** aucun droits sur les ressources */
+        this._noRightManagement = false;
+
+        // gestion des droits sur les ressources/services
+        this._checkRightsManagement();
+    },
+
+    /**
+     * this method is called by this.addTo(map) when the control is added on the map
+     * and fills variable 'this._container = this.onAdd(map)',
+     * and create or disable events on map.
+     * @param {L.Map} map - object map
+     * @returns {DOMElement} container
+     * @private
+     */
+    onAdd: function onAdd(map) {
+        // initialisation du DOM du composant
+        var container = this._container = this._initLayout(map);
+
+        // deactivate of events that may interfere with the map
+        _leaflet2.default.DomEvent.disableClickPropagation(container).disableScrollPropagation(container);
+
+        return container;
+    },
+
+    /**
+     * TODO this method is called when the control is removed from the map
+     * and removes events on map.
+     *
+     * @private
+     */
+    onRemove: function onRemove() /* map */{},
+
+    // ################################################################### //
+    // ####################### init application ########################## //
+    // ################################################################### //
+
+    /**
+     * this method is called by the constructor and initialize the ...
+     *
+     * @private
+     */
+    _initTransport: function _initTransport() {
+        // Mode de transport selectionné
+        this._currentTransport = "Voiture"; // par defaut
+
+        // par defaut
+        var transport = this.options.graphs;
+        if (!transport || transport.length === 0) {
+            this.options.graphs = ["Voiture", "Pieton"];
+        }
+
+        // option
+        if (_leaflet2.default.Util.isArray(transport) && transport.length) {
+            // FIXME pb si le 1er graphe n'est pas une ressource connue !
+            if (transport[0] === "Voiture" || transport[0] === "Pieton") {
+                this._currentTransport = transport[0];
+            }
+        }
+
+        // option sur le service
+        var serviceOptions = this.options.isocurveOptions;
+        if (serviceOptions.graph) {
+            this._currentTransport = serviceOptions.graph;
+        }
+    },
+
+    /**
+     * this method is called by the constructor and initialize the ...
+     *
+     * @private
+     */
+    _initDirection: function _initDirection() {
+        this._currentDirection = "departure"; // par defaut
+
+        // par defaut
+        var directions = this.options.directions;
+        if (!directions || directions.length === 0) {
+            this.options.directions = ["departure", "arrival"];
+        }
+
+        // option
+        if (_leaflet2.default.Util.isArray(directions) && directions.length) {
+            // FIXME pb si le 1er graphe n'est pas une ressource connue !
+            if (directions[0] === "departure" || directions[0] === "arrival") {
+                this._currentDirection = directions[0];
+            }
+        }
+
+        // si l'utilisateur a spécifié une méthode dans le service, on surcharge les options du widget
+        var serviceOptions = this.options.isocurveOptions;
+        if (!serviceOptions.reverse) {
+            this._currentDirection = "departure";
+        }
+        if (serviceOptions.reverse === true) {
+            this._currentDirection = "arrival";
+            this.options.directions = ["arrival", "departure"];
+        }
+    },
+
+    /**
+     * this method is called by the constructor and initialize the ...
+     *
+     * @private
+     */
+    _initComputation: function _initComputation() {
+        // Mode de calcul selectionné
+        this._currentComputation = "time"; // par defaut
+
+        // par defaut
+        var methods = this.options.methods;
+        if (!methods || methods.length === 0) {
+            this.options.methods = ["time", "distance"];
+        }
+
+        // option
+        if (_leaflet2.default.Util.isArray(methods) && methods.length) {
+            // FIXME pb si le 1er graphe n'est pas une ressource connue !
+            if (methods[0] === "time" || methods[0] === "distance") {
+                this._currentComputation = methods[0];
+            }
+        }
+
+        // si l'utilisateur a spécifié une méthode dans le service, on surcharge les options du widget
+        var serviceOptions = this.options.isocurveOptions;
+        if (serviceOptions.method) {
+            this._currentComputation = serviceOptions.method;
+        }
+        if (serviceOptions.time) {
+            this._currentComputation = "time";
+        }
+        if (serviceOptions.distance) {
+            this._currentComputation = "distance";
+        }
+    },
+
+    /**
+     * this method is called by the constructor and initialize the ...
+     *
+     * @private
+     */
+    _initExclusions: function _initExclusions() {
+        // Exclusions selectionnées : Tunnel, Toll et Bridge
+        this._currentExclusions = []; // par defaut
+
+        // par defaut
+        var exclusion = this.options.exclusions;
+        if (!exclusion || (typeof exclusion === "undefined" ? "undefined" : _typeof(exclusion)) === "object" && Object.keys(exclusion).length === 0) {
+            this.options.exclusions = {
+                toll: false,
+                tunnel: false,
+                bridge: false
+            };
+        }
+
+        // option
+        if (exclusion && (typeof exclusion === "undefined" ? "undefined" : _typeof(exclusion)) === "object" && Object.keys(exclusion).length) {
+            for (var k in exclusion) {
+                if (exclusion.hasOwnProperty(k)) {
+                    if (exclusion.k) {
+                        this._currentExclusions.push(k);
+                    }
+                }
+            }
+        }
+
+        // si l'utilisateur a spécifié des exclusions dans le service, on surcharge les options du widget
+        var serviceOptions = this.options.isocurveOptions;
+        if (Array.isArray(serviceOptions.exclusions)) {
+            this._currentExclusions = serviceOptions.exclusions;
+        }
+    },
+
+    // ################################################################### //
+    // ############################## other init ######################### //
+    // ################################################################### //
+
+    /**
+     * this method is called by constructor
+     * and check the rights to resources
+     *
+     * @private
+     */
+    _checkRightsManagement: function _checkRightsManagement() {
+        var _opts = null;
+        var _res = [];
+        var _key = null;
+
+        // les ressources du service du calcul d'isochrone
+        _key = this.options.isocurveOptions.apiKey;
+        _opts = this.options.isocurveOptions.filterOptions;
+        _res = _opts ? _opts.type : [];
+        if (!_res || _res.length === 0) {
+            _res = ["Voiture", "Pieton"];
+        }
+
+        var rightManagementIsochrone = _CheckRightManagement2.default.check({
+            key: _key || this.options.apiKey,
+            resources: _res,
+            services: ["Isochrone"]
+        });
+        logger.log("rightManagementIsochrone", rightManagementIsochrone);
+
+        // les ressources du service d'autocompletion
+        _key = this.options.autocompleteOptions.apiKey;
+        _opts = this.options.autocompleteOptions.filterOptions;
+        _res = _opts ? _opts.type : [];
+        if (!_res || _res.length === 0) {
+            _res = ["PositionOfInterest", "StreetAddress"];
+        }
+
+        var rightManagementAutoComplete = _CheckRightManagement2.default.check({
+            key: _key || this.options.apiKey,
+            resources: _res,
+            services: ["AutoCompletion"]
+        });
+        logger.log("rightManagementAutoComplete", rightManagementAutoComplete);
+
+        // au cas où pas de droit !
+        if (!rightManagementIsochrone && !rightManagementAutoComplete) {
+            this._noRightManagement = true;
+        }
+
+        // FIXME je reconstruis differement la structure pour la gestion des clefs differentes
+        // pour chaque service...
+        if (rightManagementAutoComplete) {
+            this._resources["AutoCompletion"] = {};
+            this._resources["AutoCompletion"]["resources"] = rightManagementAutoComplete["AutoCompletion"];
+            this._resources["AutoCompletion"]["key"] = rightManagementAutoComplete["key"];
+        }
+
+        if (rightManagementIsochrone) {
+            this._resources["Isochrone"] = {};
+            this._resources["Isochrone"]["resources"] = rightManagementIsochrone["Isochrone"];
+            this._resources["Isochrone"]["key"] = rightManagementIsochrone["key"];
+        }
+    },
+
+    /**
+     * this method is called by the constructor.
+     * this information is useful to switch to touch mode.
+     * Detection : test for desktop or tactile
+     * @returns {Boolean} desktop or tactile
+     * @private
+     */
+    _detectSupport: function _detectSupport() {
+        // TODO
+        // Choix de gérer la détection dans le code du composant au lieu du DOM car :
+        // Utilisation de l'implémentation Leaflet
+        // http://leafletjs.com/reference.html#browser
+
+        var isDesktop = true;
+        var userAgent = window.navigator.userAgent.toLowerCase();
+
+        if (userAgent.indexOf("iphone") !== -1 || userAgent.indexOf("ipod") !== -1 || userAgent.indexOf("ipad") !== -1 || userAgent.indexOf("android") !== -1 || userAgent.indexOf("mobile") !== -1 || userAgent.indexOf("blackberry") !== -1 || userAgent.indexOf("tablet") !== -1 || userAgent.indexOf("phone") !== -1 || userAgent.indexOf("touch") !== -1) {
+            isDesktop = false;
+        }
+
+        if (userAgent.indexOf("msie") !== -1 || userAgent.indexOf("trident") !== -1) {
+            isDesktop = true;
+        }
+
+        return isDesktop;
+    },
+
+    // ################################################################### //
+    // ########################### init dom ############################## //
+    // ################################################################### //
+
+    /**
+     * this method is called by this.onAdd(map)
+     * and initialize the container HTMLElement
+     * @param {L.Map} map - object map
+     * @returns {DOMElement} container
+     * @private
+     */
+    _initLayout: function _initLayout(map) {
+        // create main container
+        var container = this._createMainContainerElement();
+
+        var inputShow = this._showContainer = this._createShowIsoElement();
+        container.appendChild(inputShow);
+
+        // mode "collapsed"
+        if (!this.options.collapsed) {
+            inputShow.checked = true;
+        }
+
+        var picto = this._pictoContainer = this._createShowIsoPictoElement();
+        container.appendChild(picto);
+
+        // panneau
+        var panel = this._createIsoPanelElement();
+
+        // header
+        var header = this._createIsoPanelHeaderElement();
+        panel.appendChild(header);
+
+        // form
+        var form = this._formContainer = this._createIsoPanelFormElement();
+
+        // form: menu des points
+        var point = this._createIsoPanelFormPointElement(map);
+        form.appendChild(point);
+
+        // form: menu du choix de la méthode de calcul (time ou distance)
+        var isoChronChecked = false;
+        var isoDistChecked = false;
+        var typeChoice = this._createIsoPanelFormTypeChoiceElement();
+        for (var i = 0; i < this.options.methods.length; i++) {
+            if (this.options.methods[i] === "time") {
+                isoChronChecked = i === 0;
+                typeChoice.appendChild(this._createIsoPanelFormTypeChoiceChronElement(isoChronChecked));
+            }
+            if (this.options.methods[i] === "distance") {
+                isoDistChecked = i === 0;
+                typeChoice.appendChild(this._createIsoPanelFormTypeChoiceDistElement(isoDistChecked));
+            }
+        }
+        form.appendChild(typeChoice);
+
+        // form: menu du choix des valeurs
+        form.appendChild(this._createIsoPanelFormValueIsochronElement(isoChronChecked));
+        form.appendChild(this._createIsoPanelFormValueIsodistanceElement(isoDistChecked));
+
+        // form: menu du choix du transport et du sens du parcours
+        var modeChoice = this._createIsoPanelFormModeChoiceElement();
+        modeChoice.appendChild(this._createIsoPanelFormModeChoiceTransportElement(this.options.graphs));
+        modeChoice.appendChild(this._createIsoPanelFormModeChoiceDirectionElement(this.options.directions));
+        form.appendChild(modeChoice);
+
+        // form: menu des exclusions
+        if (this.options.exclusions && _typeof(this.options.exclusions) === "object" && Object.keys(this.options.exclusions).length !== 0) {
+            form.appendChild(this._createShowIsoExclusionsElement());
+            form.appendChild(this._createShowIsoExclusionsPictoElement());
+            var exclusion = this._createIsoPanelFormExclusionsElement();
+            exclusion.appendChild(this._createIsoPanelFormExclusionOptionsElement(this.options.exclusions));
+            form.appendChild(exclusion);
+        }
+
+        var divReset = this._createIsoFormResetElement();
+        form.appendChild(divReset);
+
+        // form: bouton du calcul
+        var submit = this._submitContainer = this._createIsoSubmitFormElement();
+        form.appendChild(submit);
+
+        panel.appendChild(form);
+
+        // waiting
+        var waiting = this._waitingContainer = this._createIsoWaitingElement();
+        panel.appendChild(waiting);
+
+        container.appendChild(panel);
+
+        return container;
+    },
+
+    // ################################################################### //
+    // ############################## DOM ################################ //
+    // ################################################################### //
+
+    /**
+     * Create a Point
+     * OVERWRITTEN
+     * @param {L.Map} map - object map
+     * @returns {Object} DOM element
+     * @private
+     */
+    _createIsoPanelFormPointElement: function _createIsoPanelFormPointElement(map) {
+        // point de depart
+        this._currentPoint = new _LocationSelector2.default({
+            apiKey: this.options.apiKey || null,
+            tag: {
+                id: 0,
+                unique: this._uid,
+                label: "Départ",
+                color: "red",
+                display: true
+            },
+            displayInfo: true,
+            disableReverse: this.options.disableReverse,
+            autocompleteOptions: this.options.autocompleteOptions || null
+        });
+        this._currentPoint.setMap(map);
+
+        return this._currentPoint.getContainer();
+    },
+
+    // ################################################################### //
+    // ####################### handlers events to dom #################### //
+    // ################################################################### //
+
+    /**
+     * this method is called by event 'click' on 'GPshowIsochronPicto' picto
+     * (cf. this._createShowIsoPictoElement),
+     * and clear inputs and previous isochrone drawings
+     *
+     * @param {Object} e - HTMLElement
+     *
+     * @private
+     */
+    onShowIsoPanelClick: function onShowIsoPanelClick(e) {
+        logger.log("onShowIsoPanelClick", e);
+        // on desactive l'impl. reduction de la fenetre
+        // if (this._geojsonIso && !this._reducePanel) {
+        //     this._clear();
+        // }
+        // this._reducePanel = false;
+    },
+
+    /**
+     * this method is called by event 'click' on '' arrow button
+     * (cf. this.),
+     * and clear inputs and previous isochrone drawings
+     *
+     * @param {Object} e - HTMLElement
+     *
+     * @private
+     */
+    onIsoResetClick: function onIsoResetClick(e) {
+        logger.log("onIsoResetClick", e);
+
+        this._clear();
+    },
+
+    // // on desactive l'impl. reduction de la fenetre
+    // /**
+    // * this method is called by event 'click' on 'GPisochronPanelReduce' picto
+    // * (cf. this.),
+    // * and reduce the panel
+    // *
+    // * @private
+    // */
+    // onReduceIsoPanelClick : function () {
+    //     logger.log("onReduceIsoPanelClick");
+    //     this._reducePanel = true;
+    // },
+
+    /**
+     * this method is called by event 'change' on 'GPisochronChoiceAltDist' or 'GPisochronChoiceAltChron'
+     * input (cf. this._createIsoPanelFormTypeChoiceElement),
+     * and updates current computation mode
+     *
+     * @param {Object} e - HTMLElement
+     *
+     * @private
+     */
+    onIsoTypeChoiceChange: function onIsoTypeChoiceChange(e) {
+        var value = e.target.value;
+
+        if (!value) {
+            return;
+        }
+
+        if (value === "isodistance") {
+            this._currentComputation = "distance";
+        }
+        if (value === "isochron") {
+            this._currentComputation = "time";
+        }
+    },
+
+    /**
+     * this method is called by event 'click' on 'GPisochronTransportPedestrian' or 'GPisochronTransportCar'
+     * input (cf. this._createIsoPanelFormModeChoiceTransportElement),
+     * and updates current transport mode
+     *
+     * @param {Object} e - HTMLElement
+     *
+     * @private
+     */
+    onIsoModeTransportChange: function onIsoModeTransportChange(e) {
+        var value = e.target.value;
+
+        if (!value) {
+            return;
+        }
+        this._currentTransport = value;
+    },
+
+    /**
+     * this method is called by event 'change' on 'GPisochronDirectionSelect' select
+     * (cf. this._createIsoPanelFormModeChoiceDirectionElement),
+     * and updates current direction mode
+     *
+     * @param {Object} e - HTMLElement
+     *
+     * @private
+     */
+    onIsoModeDirectionChange: function onIsoModeDirectionChange(e) {
+        var value = e.target.value;
+
+        if (!value) {
+            return;
+        }
+
+        this._currentDirection = value;
+    },
+
+    /**
+     * this method is called by event 'change' on ''
+     * input (cf. this.),
+     * and updates current time value
+     *
+     * @param {Object} e - HTMLElement
+     *
+     * @private
+     */
+    onIsoValueChronTimeHourChange: function onIsoValueChronTimeHourChange(e) {
+        var value = e.target.value;
+
+        // pointer to...
+        this._timeHourContainer = e.target;
+
+        if (!value) {
+            return;
+        }
+
+        this._currentTimeHour = value;
+    },
+
+    /**
+     * this method is called by event 'change' on ''
+     * input (cf. this.),
+     * and updates current time value
+     *
+     * @param {Object} e - HTMLElement
+     *
+     * @private
+     */
+    onIsoValueChronTimeMinuteChange: function onIsoValueChronTimeMinuteChange(e) {
+        var value = e.target.value;
+
+        // pointer to...
+        this._timeMinuteContainer = e.target;
+
+        if (!value) {
+            return;
+        }
+
+        this._currentTimeMinute = value;
+    },
+
+    /**
+     * this method is called by event 'change' on ''
+     * input (cf. this.),
+     * and updates current distance value
+     *
+     * @param {Object} e - HTMLElement
+     *
+     * @private
+     */
+    onIsoValueDistChange: function onIsoValueDistChange(e) {
+        var value = e.target.value;
+
+        // pointer to...
+        this._distanceContainer = e.target;
+
+        if (!value) {
+            return;
+        }
+
+        this._currentDistance = value;
+    },
+
+    /**
+     * this method is called by event 'change' on 'GPIsoExclusionsToll'
+     * or 'GPIsoeExclusionsTunnel' or 'GPIsoExclusionsBridge' tag input
+     * (cf. this._createIsoPanelFormExclusionOptionsElement).
+     * this value is saved as a parameter for the service isocurve.
+     *
+     * @param {Object} e - HTMLElement
+     *
+     * @private
+     */
+    onIsoExclusionsChange: function onIsoExclusionsChange(e) {
+        var value = e.target.value;
+        var checked = e.target.checked;
+
+        if (!value) {
+            return;
+        }
+
+        var bFound = false;
+        var iFound = null;
+        for (var i = 0; i < this._currentExclusions.length; i++) {
+            if (this._currentExclusions[i] === value) {
+                iFound = i;
+                bFound = true;
+            }
+        }
+        // on l'ajoute si la valeur n'existe pas et est selectionnée
+        if (!bFound && !checked) {
+            this._currentExclusions.push(value);
+        }
+        // on la retire si la valeur existe et est deselectionnée
+        if (bFound && checked) {
+            this._currentExclusions.splice(iFound, 1);
+        }
+    },
+
+    /**
+     * this method is called by event 'submit' on 'GPisochronForm' tag form
+     * (cf. this._createIsoPanelFormElement),
+     * and call isocurve service to display results
+     *
+     * @private
+     */
+    onIsoComputationSubmit: function onIsoComputationSubmit() {
+        if (!this._currentPoint || !this._currentPoint.getCoordinate || !this._currentPoint.getCoordinate()) {
+            return;
+        }
+
+        // récupération du temps
+        var time;
+        if (this._currentComputation.toLowerCase() === "time") {
+            // durée exprimée en secondes
+            time = this._currentTimeHour * 3600 + this._currentTimeMinute * 60;
+            logger.log("time : ", time);
+        }
+
+        // récupération de la distance
+        var distance;
+        if (this._currentComputation.toLowerCase() === "distance") {
+            // distance exprimée en mètres
+            distance = this._currentDistance * 1000;
+            logger.log("distance : ", distance);
+        }
+
+        // si on n'a pas de valeur de calcul renseignée, on ne lance pas la requête.
+        if (!time && !distance) {
+            logger.log("Missing time or distance parameter");
+            return;
+        }
+
+        // oups, aucun droits !
+        // on evite donc une requête inutile ...
+        if (this._noRightManagement) {
+            return;
+        }
+
+        // mise en place de la patience
+        this._displayWaitingContainer();
+
+        var self = this;
+
+        this._requestIsoCurve({
+            position: self._currentPoint.getCoordinate(),
+            graph: self._currentTransport,
+            exclusions: self._currentExclusions,
+            method: self._currentComputation,
+            reverse: self._currentDirection.toLowerCase() === "arrival",
+            time: time,
+            distance: distance,
+            smoothing: true,
+            timeout: 7000,
+            protocol: "XHR",
+
+            // callback onSuccess
+            onSuccess: function onSuccess(results) {
+                logger.log(results);
+                if (results) {
+                    self._drawIsoResults(results);
+                }
+            },
+
+            // callback onFailure
+            onFailure: function onFailure(error) {
+                // FIXME mise à jour du controle mais le service ne repond pas en 200 !?
+                self._hideWaitingContainer();
+
+                self._clearIsoResultsGeometry();
+                logger.log(error.message);
+            }
+        });
+    },
+
+    // ################################################################### //
+    // ######################## isocurve calculation ##################### //
+    // ################################################################### //
+
+    /**
+     * this method is called by this.onIsoComputationSubmit
+     * and executes a request to the service.
+     *
+     * @param {Object} settings - service settings
+     *
+     * @private
+     */
+    _requestIsoCurve: function _requestIsoCurve(settings) {
+        // on ne fait pas de requête si on n'a pas renseigné de parametres !
+        if (!settings || (typeof settings === "undefined" ? "undefined" : _typeof(settings)) === "object" && Object.keys(settings).length === 0) {
+            return;
+        }
+
+        // on ne fait pas de requête si on n'a pas de point d'origine
+        if (!settings.position) {
+            return;
+        }
+
+        // ni si on n'a aucun droit
+        if (this._noRightManagement) {
+            return;
+        }
+
+        // gestion des droits !
+        var services = this._resources["Isochrone"];
+        if (!services) {
+            return;
+        }
+        var resources = services.resources;
+        if (!resources || (typeof resources === "undefined" ? "undefined" : _typeof(resources)) === "object" && Object.keys(resources).length === 0) {
+            return;
+        }
+
+        var options = {};
+        // on recupere les parametres de saisie et les callbacks
+        _leaflet2.default.Util.extend(options, settings);
+        // ainsi que les options du service
+        _leaflet2.default.Util.extend(options, this.options.isocurveOptions);
+
+        // la ressource donne elle des droits ?
+        var bFound = false;
+        for (var i = 0; i < resources.length; i++) {
+            if (resources[i] === options.graph) {
+                bFound = true;
+            }
+        }
+        // on fait quoi ?
+        if (!bFound) {
+            logger.log("no rights for this service !?");
+            return;
+        }
+
+        // cas où la clef API n'est pas renseignée dans les options du service,
+        // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
+        var key = this._resources["Isochrone"]["key"];
+        options.apiKey = this.options.isocurveOptions.apiKey || this.options.apiKey || key;
+
+        logger.log(options);
+
+        _gp2.default.Services.isoCurve(options);
+    },
+
+    /**
+     * this method is called by this.onIsoComputationSubmit (in case of success)
+     * and draw isocurve results geometry on map
+     *
+     * @param {Object} results - isocurve response results
+     *
+     * @private
+     */
+    _drawIsoResults: function _drawIsoResults(results) {
+        this._clearIsoResultsGeometry();
+
+        // sauvegarde de l'etat des resultats
+        this._currentIsoResults = results;
+
+        if (!results.geometry) {
+            // cache la patience
+            this._hideWaitingContainer();
+            return;
+        }
+
+        var map = this._map;
+
+        var _geometry = results.geometry;
+
+        var _style = {
+            color: "#ff7800",
+            weight: 5,
+            opacity: 0.65
+        };
+
+        this._geojsonIso = _leaflet2.default.geoJson(_geometry, {
+            style: _style
+        }).addTo(map);
+
+        // cache la patience
+        this._hideWaitingContainer();
+        this._formContainer.className = "GPisochroComponentHidden";
+    },
+
+    // ################################################################### //
+    // ############################# Clean ############################### //
+    // ################################################################### //
+
+    /**
+     * this method is called by this.onShowIsoPanelClick()
+     * and it clears all elements (reinit).
+     *
+     * @private
+     */
+    _clear: function _clear() {
+        this._initTransport();
+        this._initExclusions();
+        this._initComputation();
+        this._initDirection();
+
+        // resultats du service
+        this._currentIsoResults = null;
+
+        // la geometrie
+        this._clearIsoResultsGeometry();
+
+        // les points
+        this._currentPoint.clear();
+
+        // nettoyer les valeurs dans le DOM !
+        if (this._timeHourContainer) {
+            this._timeHourContainer.value = 0;
+        }
+        if (this._timeMinuteContainer) {
+            this._timeMinuteContainer.value = 0;
+        }
+        if (this._distanceContainer) {
+            this._distanceContainer.value = 0;
+        }
+    },
+
+    /**
+     * this method is called by this.onIsoComputationSubmit()
+     * and it clears all route geometries.
+     *
+     * @private
+     */
+    _clearIsoResultsGeometry: function _clearIsoResultsGeometry() {
+        var map = this._map;
+
+        if (this._geojsonIso != null) {
+            map.removeLayer(this._geojsonIso);
+            this._geojsonIso = null;
+        }
+    },
+
+    // ################################################################### //
+    // ############################ Patience ############################# //
+    // ################################################################### //
+
+    /**
+     * this method displays waiting container and sets a timeout
+     *
+     * @private
+     */
+    _displayWaitingContainer: function _displayWaitingContainer() {
+        this._waitingContainer.className = "GPisochronCalcWaitingContainerVisible";
+        this._waiting = true;
+
+        // mise en place d'un timeout pour réinitialiser le panel (cacher la patience)
+        // si on est toujours en attente (si la requête est bloquée par exemple)
+        if (this._timer) {
+            clearTimeout(this._timer);
+            this._timer = null;
+        }
+        var context = this;
+        this._timer = setTimeout(function () {
+            if (context._waiting === true) {
+                context._hideWaitingContainer();
+            } else {
+                if (context._timer) {
+                    clearTimeout(context._timer);
+                }
+            }
+        }, 16000);
+    },
+
+    /**
+     * this method hides waiting container and clears timeout
+     *
+     * @private
+     */
+    _hideWaitingContainer: function _hideWaitingContainer() {
+        if (this._waiting) {
+            this._waitingContainer.className = "GPisochronCalcWaitingContainerHidden";
+            this._waiting = false;
+            clearTimeout(this._timer);
+            this._timer = null;
+        }
+    },
+
+    // ################################################################### //
+    // ###### METHODES PUBLIQUES (INTERFACE AVEC LE CONTROLE) ############ //
+    // ################################################################### //
+
+    /**
+     * This method is public.
+     * It allows to control the execution of a traitment.
+     *
+     * @param {Object} position - position = {lon: , lat: }
+     * @param {Object} value - distance en km ou heures-minutes
+     * @param {Object} options - options = {...}
+     */
+    compute: function compute(position, value, options) {
+        if (!this._showContainer.checked) {
+            this._pictoContainer.click();
+        }
+
+        var map = this._map;
+        if (!map) {
+            return;
+        }
+
+        // Les options par defauts
+        var settings = {
+            direction: "departure",
+            method: "time",
+            transport: "Voiture",
+            exclusions: []
+        };
+
+        // On recupere les options
+        _leaflet2.default.Util.extend(settings, options);
+
+        this._currentPoint.setCoordinate(position);
+        var input = _leaflet2.default.DomUtil.get("GPlocationOrigin_" + 0 + "-" + this._uid);
+        input.value = position.lng + " , " + position.lat;
+
+        this._currentTransport = settings.transport;
+        if (settings.transport === "Voiture") {
+            _leaflet2.default.DomUtil.get("GPisochronTransportCar-" + this._uid).checked = true;
+        } else {
+            _leaflet2.default.DomUtil.get("GPisochronTransportPedestrian-" + this._uid).checked = true;
+        }
+
+        this._currentExclusions = settings.exclusions;
+
+        this._currentComputation = settings.method;
+        if (settings.method === "time") {
+            var time = value.split(".");
+            this._currentTimeHour = time[0] || 0;
+            _leaflet2.default.DomUtil.get("GPisochronValueChronInput1-" + this._uid).value = this._currentTimeHour;
+            this._currentTimeMinute = time[1] || 0;
+            _leaflet2.default.DomUtil.get("GPisochronValueChronInput2-" + this._uid).value = this._currentTimeMinute;
+            _leaflet2.default.DomUtil.get("GPisochronChoiceAltChron-" + this._uid).click();
+        } else {
+            this._currentDistance = value;
+            _leaflet2.default.DomUtil.get("GPisochronValueDistInput-" + this._uid).value = this._currentDistance;
+            _leaflet2.default.DomUtil.get("GPisochronChoiceAltDist-" + this._uid).click();
+        }
+
+        this._currentDirection = settings.direction;
+        settings.direction === "departure" ? _leaflet2.default.DomUtil.get("GPisochronDirectionSelect-" + this._uid).selectedIndex = 0 : _leaflet2.default.DomUtil.get("GPisochronDirectionSelect-" + this._uid).selectedIndex = 1;
+
+        this.onIsoComputationSubmit();
+
+        map.flyTo(position);
+    }
+
+});
+
+exports.default = Isocurve;
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _SelectorID = __webpack_require__(3);
+
+var _SelectorID2 = _interopRequireDefault(_SelectorID);
+
+var _LoggerByDefault = __webpack_require__(1);
+
+var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var logger = _LoggerByDefault2.default.getLogger("LocationSelectorDOM");
+
+var LocationSelectorDOM = {
+
+    /**
+    * Add uuid to the tag ID
+    * @param {String} id - id selector
+    * @returns {String} uid - id selector with an unique id
+    */
+    _addUID: function _addUID(id) {
+        var uid = this._uid ? id + "-" + this._uid : id;
+        return uid;
+    },
+
+    /**
+     * Main container (DOM)
+     *
+     * @returns {DOMElement} DOM element
+     */
+    _createMainContainerElement: function _createMainContainerElement() {
+        var container = document.createElement("div");
+        container.className = this._addUID("GPlocationPoint"); // ceci permet de gerer les groupes de points !
+        container.className += " GPwidget";
+        return container;
+    },
+
+    /**
+     * Create Container Point
+     * see event !
+     *
+     * @param {Number} id - tag ID
+     * @param {Number} display  - display
+     * @returns {DOMElement} DOM element
+     */
+    _createLocationPointElement: function _createLocationPointElement(id, display) {
+        var div = document.createElement("div");
+        div.id = this._addUID("GPlocationPoint_" + id);
+        div.className = display ? "GPflexInput GPlocationStageFlexInput" : "GPflexInput GPlocationStageFlexInputHidden";
+        div.style.cssText = "";
+
+        return div;
+    },
+
+    /**
+     * Create Container Point
+     * see event !
+     *
+     * @param {Number} id - tag ID
+     * @param {String} text - label
+     * @returns {DOMElement} DOM element
+     */
+    _createLocationPointLabelElement: function _createLocationPointLabelElement(id, text) {
+        // contexte d'execution
+        var self = this;
+
+        var labelOrigin = document.createElement("label");
+        labelOrigin.id = this._addUID("GPlocationOriginLabel_" + id);
+        labelOrigin.htmlFor = "GPlocationOrigin_" + id;
+        labelOrigin.innerHTML = text;
+        labelOrigin.addEventListener("click", function (e) {
+            var i = _SelectorID2.default.index(this.id);
+            var points = document.getElementsByClassName(self._addUID("GPlocationPoint"));
+            for (var j = 0; j < points.length; j++) {
+                var tag = points[j].childNodes[0].id;
+                var id = _SelectorID2.default.index(tag);
+                document.getElementById(self._addUID("GPlocationPoint_" + id)).style.cssText = "";
+            }
+            document.getElementById(self._addUID("GPlocationOriginCoords_" + i)).value = "";
+            document.getElementById(self._addUID("GPlocationOrigin_" + i)).value = "";
+            document.getElementById(self._addUID("GPlocationPoint_" + i)).style.cssText = "";
+            document.getElementById(self._addUID("GPlocationOriginPointer_" + i)).checked = false;
+            document.getElementById(self._addUID("GPlocationOrigin_" + i)).className = "GPlocationOriginVisible";
+            document.getElementById(self._addUID("GPlocationOriginCoords_" + i)).className = "GPlocationOriginHidden";
+            if (document.getElementById(self._addUID("GPlocationStageRemove_" + i))) {
+                document.getElementById(self._addUID("GPlocationStageRemove_" + i)).className = "GPlocationStageRemove";
+            }
+            if (document.getElementById(self._addUID("GPlocationStageAdd"))) {
+                document.getElementById(self._addUID("GPlocationStageAdd")).className = "";
+            }
+            // document.getElementById(self._addUID("GPlocationOriginCoords_" + i)).disabled = true;
+            self.onLocationClearPointClick(e);
+        });
+
+        return labelOrigin;
+    },
+
+    /**
+     * Create Input AutoComplete Point tag
+     *
+     * @param {Number} id - tag ID
+     * @returns {DOMElement} DOM element
+     */
+    _createLocationAutoCompleteteInputElement: function _createLocationAutoCompleteteInputElement(id) {
+        // contexte d'execution
+        var self = this;
+
+        var inputOrigin = document.createElement("input");
+        inputOrigin.id = this._addUID("GPlocationOrigin_" + id);
+        inputOrigin.className = "GPlocationOriginVisible";
+        inputOrigin.type = "text";
+        inputOrigin.placeholder = "Saisir une adresse";
+        inputOrigin.autocomplete = "off";
+        inputOrigin.addEventListener("keyup", function (e) {
+            var charCode = e.which || e.keyCode;
+            if (charCode === 13 || charCode === 10 || charCode === 38 || charCode === 40) {
+                return;
+            }
+
+            var i = _SelectorID2.default.index(this.id);
+            if (document.getElementById(self._addUID("GPlocationOrigin_" + i)).value.length > 2) {
+                document.getElementById(self._addUID("GPlocationAutoCompleteList_" + i)).style.display = "block";
+            } else {
+                document.getElementById(self._addUID("GPlocationAutoCompleteList_" + i)).style.display = "none";
+            }
+            // gestionnaire d'evenement :
+            // on récupère la valeur de saisie pour une requête sur le service d'autocompletion.
+            // le resultat de la requête nous permet de recuperer les coordonnées du point...
+            self.onAutoCompleteSearchText(e);
+        });
+
+        inputOrigin.addEventListener("keydown", function (e) {
+            var charCode = e.which || e.keyCode;
+
+            var container = document.getElementById(self._addUID("GPlocationAutoCompleteList_" + id));
+
+            // si aucun container !?
+            if (!container) {
+                return;
+            }
+
+            var curr = container.getElementsByClassName("GPautoCompleteProposal current");
+            var list = container.getElementsByClassName("GPautoCompleteProposal");
+
+            // si aucune suggestion, on ne va pas plus loin !
+            var length = list.length;
+            if (!length) {
+                return;
+            }
+
+            var current = null;
+
+            // si aucun item courant, on prend le 1er !
+            if (!curr.length) {
+                current = list[0];
+                current.className = "GPautoCompleteProposal current";
+                current.style.color = "#000000";
+                current.style["background-color"] = "#CEDBEF";
+                return;
+            } else {
+                current = curr[0];
+            }
+
+            var index = parseInt(_SelectorID2.default.index(current.id), 10);
+            var next = index === length - 1 ? list[0] : list[index + 1];
+            var prev = index === 0 ? list[length - 1] : list[index - 1];
+
+            current.style["background-color"] = "";
+            current.style.color = "";
+            prev.style["background-color"] = "";
+            prev.style.color = "";
+            next.style["background-color"] = "";
+            next.style.color = "";
+
+            switch (charCode) {
+                case 38:
+                    // arrow up
+                    logger.log("arrow up");
+                    current.className = "GPautoCompleteProposal";
+                    prev.className = "GPautoCompleteProposal current";
+                    prev.style.color = "#000000";
+                    prev.style["background-color"] = "#CEDBEF";
+                    break;
+                case 40:
+                    // arrow down
+                    logger.log("arrow down");
+                    current.className = "GPautoCompleteProposal";
+                    next.className = "GPautoCompleteProposal current";
+                    next.style.color = "#000000";
+                    next.style["background-color"] = "#CEDBEF";
+                    break;
+                case 13:
+                    // enter
+                    logger.log("enter");
+                    current.click(e);
+                    break;
+            }
+
+            current.focus();
+        });
+
+        return inputOrigin;
+    },
+
+    /**
+     * Create Input Coordinate Point tag
+     *
+     * @param {Number} id - tag ID
+     * @returns {DOMElement} DOM element
+     */
+    _createLocationCoordinateInputElement: function _createLocationCoordinateInputElement(id) {
+        // contexte d'execution
+        var self = this;
+
+        var inputOriginCoord = document.createElement("input");
+        inputOriginCoord.id = this._addUID("GPlocationOriginCoords_" + id);
+        inputOriginCoord.className = "GPlocationOriginHidden";
+        inputOriginCoord.type = "text";
+        inputOriginCoord.disabled = false;
+        inputOriginCoord.addEventListener("click", function () {
+            var i = _SelectorID2.default.index(this.id);
+            document.getElementById(self._addUID("GPlocationOriginLabel_" + i)).click();
+        });
+        return inputOriginCoord;
+    },
+
+    /**
+     * Create Show Pointer tag
+     *
+     * @param {Number} id - tag ID
+     * @returns {DOMElement} DOM element
+     */
+    _createLocationPointerShowInputElement: function _createLocationPointerShowInputElement(id) {
+        var inputOriginPointer = document.createElement("input");
+        inputOriginPointer.id = this._addUID("GPlocationOriginPointer_" + id);
+        inputOriginPointer.type = "checkbox";
+        return inputOriginPointer;
+    },
+
+    /**
+     * Create Input Pointer tag
+     *
+     * @param {Number} id - tag ID
+     * @returns {DOMElement} DOM element
+     */
+    _createLocationPointerInputElement: function _createLocationPointerInputElement(id) {
+        // contexte d'execution
+        var self = this;
+
+        var labelOriginPointer = document.createElement("label");
+        labelOriginPointer.id = this._addUID("GPlocationOriginPointerImg_" + id);
+        labelOriginPointer.htmlFor = "GPlocationOriginPointer_" + id;
+        labelOriginPointer.className = "GPlocationOriginPointerImg";
+        labelOriginPointer.title = "Pointer un lieu sur la carte";
+        labelOriginPointer.addEventListener("click", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var i = _SelectorID2.default.index(this.id);
+            var points = document.getElementsByClassName(self._addUID("GPlocationPoint"));
+            var j;
+            var tag;
+            var id;
+            for (j = 0; j < points.length; j++) {
+                tag = points[j].childNodes[0].id;
+                id = _SelectorID2.default.index(tag);
+                if (i !== id) {
+                    document.getElementById(self._addUID("GPlocationOriginPointer_" + id)).checked = false;
+                    if (document.getElementById(self._addUID("GPlocationOriginCoords_" + id)).value === "Pointer un lieu sur la carte") {
+                        document.getElementById(self._addUID("GPlocationOriginCoords_" + id)).value = "";
+                        document.getElementById(self._addUID("GPlocationOrigin_" + id)).className = "GPlocationOriginVisible";
+                        document.getElementById(self._addUID("GPlocationOriginCoords_" + id)).className = "GPlocationOriginHidden";
+                    }
+                }
+            }
+            if (document.getElementById(self._addUID("GPlocationOriginPointer_" + i)).checked) {
+                document.getElementById(self._addUID("GPlocationOriginCoords_" + i)).value = "";
+                for (j = 0; j < points.length; j++) {
+                    tag = points[j].childNodes[0].id;
+                    id = _SelectorID2.default.index(tag);
+                    document.getElementById(self._addUID("GPlocationPoint_" + id)).style.cssText = "";
+                }
+                if (document.getElementById(self._addUID("GPlocationStageRemove_" + i))) {
+                    document.getElementById(self._addUID("GPlocationStageRemove_" + i)).className = "GPlocationStageRemove";
+                }
+                if (document.getElementById(self._addUID("GPlocationStageAdd"))) {
+                    document.getElementById(self._addUID("GPlocationStageAdd")).className = "";
+                }
+                document.getElementById(self._addUID("GPlocationOriginPointer_" + i)).checked = false;
+                document.getElementById(self._addUID("GPlocationOrigin_" + i)).className = "GPlocationOriginVisible";
+                document.getElementById(self._addUID("GPlocationOriginCoords_" + i)).className = "GPlocationOriginHidden";
+            } else {
+                document.getElementById(self._addUID("GPlocationOriginCoords_" + i)).value = "Pointer un lieu sur la carte";
+                for (j = 0; j < points.length; j++) {
+                    tag = points[j].childNodes[0].id;
+                    id = _SelectorID2.default.index(tag);
+                    if (i === id) {
+                        document.getElementById(self._addUID("GPlocationPoint_" + id)).style.cssText = "";
+                    } else {
+                        document.getElementById(self._addUID("GPlocationPoint_" + id)).style.display = "none";
+                    }
+                }
+                if (document.getElementById(self._addUID("GPlocationStageRemove_" + i))) {
+                    document.getElementById(self._addUID("GPlocationStageRemove_" + i)).className = "GPlocationOriginHidden";
+                }
+                if (document.getElementById(self._addUID("GPlocationStageAdd"))) {
+                    document.getElementById(self._addUID("GPlocationStageAdd")).className = "GPlocationOriginHidden";
+                }
+                document.getElementById(self._addUID("GPlocationOriginPointer_" + i)).checked = true;
+                document.getElementById(self._addUID("GPlocationOrigin_" + i)).className = "GPlocationOriginHidden";
+                document.getElementById(self._addUID("GPlocationOriginCoords_" + i)).className = "GPlocationOriginVisible";
+                document.getElementById(self._addUID("GPlocationOriginCoords_" + i)).disabled = true;
+            }
+            // gestionnaire d'evenement :
+            // on stocke la valeur du point, utilisée pour la requête sur le service de calcul d'itiniraire
+            self.onActivateMapPointClick(e);
+        });
+
+        return labelOriginPointer;
+    },
+
+    /**
+     * Create Remove Point tag
+     * see event !
+     *
+     * @param {Number} id - tag ID
+     * @returns {DOMElement} DOM element
+     */
+    _createLocationRemovePointElement: function _createLocationRemovePointElement(id) {
+        // contexte d'execution
+        var self = this;
+
+        var divRm = document.createElement("div");
+        divRm.id = this._addUID("GPlocationStageRemove_" + id);
+        divRm.className = "GPlocationStageRemove";
+        divRm.title = "Supprimer l'étape";
+        divRm.addEventListener("click", function (e) {
+            var points = document.getElementsByClassName(self._addUID("GPlocationPoint"));
+            var last = points.length - 1;
+            var start = points[0].childNodes[0].id;
+            var end = points[last].childNodes[0].id;
+
+            var startID = _SelectorID2.default.index(start);
+            var endID = _SelectorID2.default.index(end);
+
+            if (id !== startID && id !== endID) {
+                var i = _SelectorID2.default.index(this.id);
+                document.getElementById(self._addUID("GPlocationPoint_" + i)).className = "GPflexInput GPlocationStageFlexInputHidden";
+                document.getElementById(self._addUID("GPlocationOrigin_" + i)).value = "";
+                document.getElementById(self._addUID("GPlocationOrigin_" + i)).className = "GPlocationOriginVisible";
+                document.getElementById(self._addUID("GPlocationOriginCoords_" + i)).value = "";
+                document.getElementById(self._addUID("GPlocationOriginCoords_" + i)).className = "GPlocationOriginHidden";
+                document.getElementById(self._addUID("GPlocationStageAdd")).style.display = "";
+                // Moving up exclusions picto
+                // var exclusionsPictoTop = document.getElementById(self._addUID("GPshowLocationExclusionsPicto")).style.top;
+                // document.getElementById(self._addUID("GPshowLocationExclusionsPicto")).style.top = (parseInt(exclusionsPictoTop) - 33).toString() + "px";
+
+                // gestionnaire d'evenement :
+                // on supprime le point, utilisé pour la requête sur le service d'itiniraire
+                self.onLocationRemovePointClick(e);
+            }
+        });
+
+        return divRm;
+    },
+
+    /**
+     * Create Add Point tag
+     * see event !
+     *
+     * @returns {DOMElement} DOM element
+     */
+    _createLocationAddPointElement: function _createLocationAddPointElement() {
+        // contexte d'execution
+        var self = this;
+
+        var divAdd = document.createElement("div");
+        divAdd.id = this._addUID("GPlocationStageAdd");
+        divAdd.title = "Ajouter une étape";
+        divAdd.addEventListener("click", function (e) {
+            var lastStage = 1;
+            var nbStages = 0;
+            var points = document.getElementsByClassName(self._addUID("GPlocationPoint"));
+            for (var i = 1; i < points.length - 1; i++) {
+                var tag = points[i].childNodes[0].id;
+                var id = _SelectorID2.default.index(tag);
+                if (document.getElementById(self._addUID("GPlocationPoint_" + id))) {
+                    if (document.getElementById(self._addUID("GPlocationPoint_" + id)).className === "GPflexInput GPlocationStageFlexInputHidden") {
+                        if (lastStage === 1) {
+                            lastStage = id;
+                        }
+                    } else {
+                        nbStages++;
+                    }
+                }
+            }
+            // FIXME algo à revoir : lastStage = id hors si id = 300 sur 3 points !?
+            if (lastStage < points.length) {
+                document.getElementById(self._addUID("GPlocationPoint_" + lastStage)).className = "GPflexInput GPlocationStageFlexInput";
+                // Moving down exclusions picto
+                // var exclusionsPictoTop = document.getElementById(self._addUID("GPshowLocationExclusionsPicto")).style.top;
+                // document.getElementById(self._addUID("GPshowLocationExclusionsPicto")).style.top = (parseInt(exclusionsPictoTop) + 33).toString() + "px";
+            }
+            if (nbStages === 4) {
+                document.getElementById(self._addUID("GPlocationStageAdd")).style.display = "none";
+            }
+            // gestionnaire d'evenement :
+            // on ajoute le point, utilisé pour la requête sur le service d'itiniraire
+            self.onLocationAddPointClick(e);
+        });
+
+        return divAdd;
+    },
+
+    /**
+     * Create Results autocompletion to the point
+     * see event!
+     *
+     * @param {Number} id - tag ID
+     * @returns {DOMElement} DOM element
+     */
+    _createLocationAutoCompleteResultElement: function _createLocationAutoCompleteResultElement(id) {
+        // contexte d'execution
+        var self = this;
+
+        var div = document.createElement("div");
+        div.id = this._addUID("GPlocationAutoCompleteList_" + id);
+        div.className = "GPadvancedAutoCompleteList";
+
+        if (div.addEventListener) {
+            div.addEventListener("click", function (e) {
+                self.onAutoCompletedResultsItemClick(e);
+                document.getElementById(self._addUID("GPlocationAutoCompleteList_" + id)).style.display = "none";
+            }, false);
+        } else if (div.attachEvent) {
+            div.attachEvent("onclick", function (e) {
+                self.onAutoCompletedResultsItemClick(e);
+                document.getElementById(self._addUID("GPlocationAutoCompleteList_" + id)).style.display = "none";
+            });
+        }
+
+        return div;
+    },
+
+    /**
+     * Autocompletion result to a point.
+     * Proposals are dynamically filled in Javascript by autocomplete service
+     *
+     * TODO formaliser le contenu des reponse
+     *
+     * @param {Number} id - tag ID
+     * @param {Object} location - suggested location result
+     * @param {Number} n  - number of the point
+     */
+    _createLocationAutoCompletedLocationElement: function _createLocationAutoCompletedLocationElement(id, location, n) {
+        var container = document.getElementById(this._addUID("GPlocationAutoCompleteList_" + id));
+
+        var div = document.createElement("div");
+        div.id = this._addUID("AutoCompletedLocation_" + n);
+        div.className = "GPautoCompleteProposal";
+        div.innerHTML = location.fullText;
+
+        container.appendChild(div);
+    },
+
+    /**
+    * Display Coordinate
+    * @param {String} value - a Coordinate
+    */
+    GPdisplayCoordinate: function GPdisplayCoordinate(value) {
+        var points = document.getElementsByClassName(this._addUID("GPlocationPoint"));
+        for (var i = 0; i < points.length; i++) {
+            var tag = points[i].childNodes[0].id;
+            var id1 = _SelectorID2.default.index(tag);
+            if (document.getElementById(this._addUID("GPlocationOriginPointer_" + id1)).checked) {
+                document.getElementById(this._addUID("GPlocationOriginCoords_" + id1)).value = value;
+                document.getElementById(this._addUID("GPlocationOriginCoords_" + id1)).disabled = false;
+                for (var j = 0; j < points.length; j++) {
+                    tag = points[j].childNodes[0].id;
+                    var id2 = _SelectorID2.default.index(tag);
+                    document.getElementById(this._addUID("GPlocationPoint_" + id2)).style.cssText = "";
+                    if (document.getElementById(this._addUID("GPlocationStageRemove_" + id2))) {
+                        document.getElementById(this._addUID("GPlocationStageRemove_" + id2)).className = "GPlocationStageRemove";
+                    }
+                }
+                document.getElementById(this._addUID("GPlocationOriginPointer_" + id1)).checked = false;
+                if (document.getElementById(this._addUID("GPlocationStageAdd"))) {
+                    document.getElementById(this._addUID("GPlocationStageAdd")).className = "";
+                }
+                return;
+            }
+        }
+    }
+};
+
+exports.default = LocationSelectorDOM;
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var IsoDOM = {
+
+    /**
+    * Add uuid to the tag ID
+    * @param {String} id - id selector
+    * @returns {String} uid - id selector with an unique id
+    */
+    _addUID: function _addUID(id) {
+        var uid = this._uid ? id + "-" + this._uid : id;
+        return uid;
+    },
+
+    /**
+     * Main container (DOM)
+     *
+     * @returns {DOMElement} DOM element
+     */
+    _createMainContainerElement: function _createMainContainerElement() {
+        var container = document.createElement("div");
+        container.id = this._addUID("GPisochron");
+        container.className = "GPwidget";
+        return container;
+    },
+
+    // ################################################################### //
+    // ################# Methods to display Main Panel ################### //
+    // ################################################################### //
+
+    /**
+     * Hidden checkbox for minimizing/maximizing panel
+     *
+     * @returns {DOMElement} DOM element
+     */
+    _createShowIsoElement: function _createShowIsoElement() {
+        var input = document.createElement("input");
+        input.id = this._addUID("GPshowIsochron");
+        input.type = "checkbox";
+        return input;
+    },
+
+    /**
+     * Show iso control
+     * see event !
+     *
+     * @returns {DOMElement} DOM element
+     */
+    _createShowIsoPictoElement: function _createShowIsoPictoElement() {
+        // contexte d'execution
+        var context = this;
+
+        var label = document.createElement("label");
+        label.id = this._addUID("GPshowIsochronPicto");
+        label.className = "GPshowAdvancedToolPicto";
+        label.htmlFor = this._addUID("GPshowIsochron");
+        label.title = "Calculer une isochrone";
+
+        // gestionnaire d'evenement :
+        // on ouvre le menu de saisie du calcul d'isochrone
+        // L'ouverture/Fermeture permet de faire le menage
+        // (reinitialisation)
+        if (label.addEventListener) {
+            label.addEventListener("click", function (e) {
+                context.onShowIsoPanelClick(e);
+            });
+        } else if (label.attachEvent) {
+            label.attachEvent("onclick", function (e) {
+                context.onShowIsoPanelClick(e);
+            });
+        }
+
+        var spanOpen = document.createElement("span");
+        spanOpen.id = this._addUID("GPshowIsochronOpen");
+        spanOpen.className = "GPshowAdvancedToolOpen";
+        label.appendChild(spanOpen);
+
+        return label;
+    },
+
+    // ################################################################### //
+    // ################## Methods to display Inputs Panel ################ //
+    // ################################################################### //
+
+    /**
+     * Create Container Panel
+     *
+     * FIXME
+     * don't call this._createIsoPanelHeaderElement
+     * don't call this._createIsoPanelFormElement
+     *
+     * @returns {DOMElement} DOM element
+     */
+    _createIsoPanelElement: function _createIsoPanelElement() {
+        var div = document.createElement("div");
+        div.id = this._addUID("GPisochronPanel");
+        div.className = "GPpanel";
+
+        // div.appendChild(this._createIsoPanelHeaderElement());
+        // div.appendChild(this._createIsoPanelFormElement());
+
+        return div;
+    },
+
+    /**
+     * Create Header Panel
+     *
+     * @returns {DOMElement} DOM element
+     */
+    _createIsoPanelHeaderElement: function _createIsoPanelHeaderElement() {
+        var self = this;
+
+        var container = document.createElement("div");
+        container.className = "GPpanelHeader";
+
+        var div = document.createElement("div");
+        div.className = "GPpanelTitle";
+        div.innerHTML = "Calcul d'isochrone";
+        container.appendChild(div);
+
+        // on desactive l'impl. reduction de la fenetre
+        // var divReduce  = document.createElement("div");
+        // divReduce.id = this._addUID("GPisochronPanelReduce");
+        // divReduce.className = "GPpanelReduce";
+        // divReduce.title = "Masquer le panneau";
+        //
+        // if (divReduce.addEventListener) {
+        //     divReduce.addEventListener("click", function () {
+        //         if ( typeof self.onReduceIsoPanelClick === "function") {
+        //             document.getElementById(self._addUID("GPshowIsochron")).checked = false;
+        //             self.onReduceIsoPanelClick();
+        //         }
+        //     }, false);
+        // } else if (divReduce.attachEvent) {
+        //     divReduce.attachEvent("onclick", function () {
+        //         if ( typeof self.onReduceIsoPanelClick === "function") {
+        //             document.getElementById(self._addUID("GPshowIsochron")).checked = false;
+        //             self.onReduceIsoPanelClick();
+        //         }
+        //     });
+        // }
+        // container.appendChild(divReduce);
+
+        var divClose = document.createElement("div");
+        divClose.id = this._addUID("GPisochronPanelClose");
+        divClose.className = "GPpanelClose";
+        divClose.title = "Fermer le panneau";
+
+        // Link panel close / visibility checkbox
+        if (divClose.addEventListener) {
+            divClose.addEventListener("click", function () {
+                document.getElementById(self._addUID("GPshowIsochronPicto")).click();
+            }, false);
+        } else if (divClose.attachEvent) {
+            divClose.attachEvent("onclick", function () {
+                document.getElementById(self._addUID("GPshowIsochronPicto")).click();
+            });
+        }
+        container.appendChild(divClose);
+
+        return container;
+    },
+
+    /**
+     * Create Form
+     * see evenement !
+     *
+     * @returns {DOMElement} DOM element
+     */
+    _createIsoPanelFormElement: function _createIsoPanelFormElement() {
+        // contexte d'execution
+        var self = this;
+
+        var form = document.createElement("form");
+        form.id = this._addUID("GPisochronForm");
+
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+            self.onIsoComputationSubmit(e);
+            return false;
+        });
+
+        return form;
+    },
+
+    /**
+     * Create Waiting Panel
+     *
+     * @returns {DOMElement} DOM element
+     */
+    _createIsoWaitingElement: function _createIsoWaitingElement() {
+        var div = document.createElement("div");
+        div.id = this._addUID("GPisochronCalcWaitingContainer");
+        div.className = "GPisochronCalcWaitingContainerHidden";
+
+        var p = document.createElement("p");
+        p.className = "GPisochronCalcWaiting";
+        p.innerHTML = "Calcul en cours...";
+
+        div.appendChild(p);
+
+        return div;
+    },
+
+    // ################################################################### //
+    // ############# Methods to the type choice into form ################ //
+    // ################################################################### //
+
+    /**
+     * Create Container to type choice
+     *
+     * FIXME
+     * don't call this._createIsoPanelFormTypeChoiceChronElement
+     * don't call this._createIsoPanelFormTypeChoiceDistElement
+     *
+     * @returns {DOMElement} DOM element
+     */
+    _createIsoPanelFormTypeChoiceElement: function _createIsoPanelFormTypeChoiceElement() {
+        var div = document.createElement("div");
+        div.id = this._addUID("GPisochronChoice");
+
+        // div.appendChild(this._createIsoPanelFormTypeChoiceChronElement());
+        // div.appendChild(this._createIsoPanelFormTypeChoiceDistElement());
+
+        return div;
+    },
+
+    /**
+     * Create Type choice Chron
+     * see event !
+     * FIXME event not useful
+     * @param {Boolean} checked - checked
+     * @returns {DOMElement} DOM element
+     */
+    _createIsoPanelFormTypeChoiceChronElement: function _createIsoPanelFormTypeChoiceChronElement(checked) {
+        var self = this;
+
+        var div = document.createElement("div");
+        div.className = "GPisochronChoiceAlt";
+
+        var input = document.createElement("input");
+        input.id = this._addUID("GPisochronChoiceAltChron");
+        input.name = "GPisochronChoiceMode";
+        input.type = "radio";
+        input.checked = !!checked;
+        if (input.addEventListener) {
+            input.addEventListener("change", function (e) {
+                document.getElementById(self._addUID("GPisochronValueChron")).className = "GPflexInput";
+                document.getElementById(self._addUID("GPisochronValueDist")).className = "GPisochronValueHidden";
+                self.onIsoTypeChoiceChange(e);
+            }, false);
+        } else if (input.attachEvent) {
+            input.attachEvent("onchange", function () {
+                document.getElementById(self._addUID("GPisochronValueChron")).className = "GPflexInput";
+                document.getElementById(self._addUID("GPisochronValueDist")).className = "GPisochronValueHidden";
+                self.onIsoTypeChoiceChange();
+            });
+        }
+        // info: Internet explorer support
+        input.value = "isochron";
+        div.appendChild(input);
+
+        var label = document.createElement("label");
+        label.className = "GPisochronChoiceAltImg";
+        label.htmlFor = this._addUID("GPisochronChoiceAltChron");
+        div.appendChild(label);
+
+        var span = document.createElement("span");
+        span.id = this._addUID("GPisochronChoiceAltChronTxt");
+        span.innerHTML = "isochrone";
+        if (span.addEventListener) {
+            span.addEventListener("click", function () {
+                document.getElementById(self._addUID("GPisochronChoiceAltChron")).click();
+            }, false);
+        } else if (span.attachEvent) {
+            span.attachEvent("onclick", function () {
+                document.getElementById(self._addUID("GPisochronChoiceAltChron")).click();
+            });
+        }
+        div.appendChild(span);
+
+        return div;
+    },
+
+    /**
+     * Create Type choice Dist
+     * see event !
+     * FIXME event not useful
+     * @param {Boolean} checked - checked
+     * @returns {DOMElement} DOM element
+     */
+    _createIsoPanelFormTypeChoiceDistElement: function _createIsoPanelFormTypeChoiceDistElement(checked) {
+        var self = this;
+
+        var div = document.createElement("div");
+        div.className = "GPisochronChoiceAlt";
+
+        var input = document.createElement("input");
+        input.id = this._addUID("GPisochronChoiceAltDist");
+        input.name = "GPisochronChoiceMode";
+        input.type = "radio";
+        input.checked = !!checked;
+        if (input.addEventListener) {
+            input.addEventListener("change", function (e) {
+                document.getElementById(self._addUID("GPisochronValueDist")).className = "GPflexInput";
+                document.getElementById(self._addUID("GPisochronValueChron")).className = "GPisochronValueHidden";
+                self.onIsoTypeChoiceChange(e);
+            }, false);
+        } else if (input.attachEvent) {
+            input.attachEvent("onchange", function () {
+                document.getElementById(self._addUID("GPisochronValueDist")).className = "GPflexInput";
+                document.getElementById(self._addUID("GPisochronValueChron")).className = "GPisochronValueHidden";
+                self.onIsoTypeChoiceChange();
+            });
+        }
+        // info: Internet explorer support
+        input.value = "isodistance";
+        div.appendChild(input);
+
+        var label = document.createElement("label");
+        label.className = "GPisochronChoiceAltImg";
+        label.htmlFor = this._addUID("GPisochronChoiceAltDist");
+        div.appendChild(label);
+
+        var span = document.createElement("span");
+        span.id = this._addUID("GPisochronChoiceAltDistTxt");
+        span.innerHTML = "isodistance";
+        if (span.addEventListener) {
+            span.addEventListener("click", function () {
+                document.getElementById(self._addUID("GPisochronChoiceAltDist")).click();
+            }, false);
+        } else if (span.attachEvent) {
+            span.attachEvent("onclick", function () {
+                document.getElementById(self._addUID("GPisochronChoiceAltDist")).click();
+            });
+        }
+        div.appendChild(span);
+
+        return div;
+    },
+
+    // ################################################################### //
+    // ############### Methods to the value iso into form ################ //
+    // ################################################################### //
+
+    /**
+     * Create isochron inputs values
+     * see event !
+     * @param {Boolean} checked - checked
+     * @returns {DOMElement} DOM element
+     */
+    _createIsoPanelFormValueIsochronElement: function _createIsoPanelFormValueIsochronElement(checked) {
+        // contexte
+        var context = this;
+
+        var div = document.createElement("div");
+        div.id = this._addUID("GPisochronValueChron");
+        div.className = checked ? "GPflexInput" : "GPisochronValueHidden";
+
+        var label = document.createElement("label");
+        label.id = this._addUID("GPisochronValueChronLabel");
+        label.htmlFor = this._addUID("GPisochronValueChronInput");
+        label.innerHTML = "Temps";
+        div.appendChild(label);
+
+        var input1 = document.createElement("input");
+        input1.id = this._addUID("GPisochronValueChronInput1");
+        input1.min = "0";
+        input1.step = "1";
+        input1.value = "0";
+        input1.type = "number";
+        if (input1.addEventListener) {
+            input1.addEventListener("change", function (e) {
+                if (typeof context.onIsoValueChronTimeMinuteChange === "function") {
+                    context.onIsoValueChronTimeHourChange(e);
+                }
+            });
+        } else if (input1.attachEvent) {
+            input1.attachEvent("onchange", function (e) {
+                if (typeof context.onIsoValueChronTimeMinuteChange === "function") {
+                    context.onIsoValueChronTimeHourChange(e);
+                }
+            });
+        }
+        div.appendChild(input1);
+
+        var label1 = document.createElement("label");
+        label1.innerHTML = "h";
+        div.appendChild(label1);
+
+        var input2 = document.createElement("input");
+        input2.id = this._addUID("GPisochronValueChronInput2");
+        input2.min = "0";
+        input2.max = "59";
+        input2.step = "1";
+        input2.value = "0";
+        input2.type = "number";
+        if (input2.addEventListener) {
+            input2.addEventListener("change", function (e) {
+                if (typeof context.onIsoValueChronTimeMinuteChange === "function") {
+                    context.onIsoValueChronTimeMinuteChange(e);
+                }
+            });
+        } else if (input2.attachEvent) {
+            input2.attachEvent("onchange", function (e) {
+                if (typeof context.onIsoValueChronTimeMinuteChange === "function") {
+                    context.onIsoValueChronTimeMinuteChange(e);
+                }
+            });
+        }
+        div.appendChild(input2);
+
+        var label2 = document.createElement("label");
+        label2.innerHTML = "min";
+        div.appendChild(label2);
+
+        return div;
+    },
+
+    /**
+     * Create isodistance inputs values
+     * see event !
+     * @param {Boolean} checked - checked
+     * @returns {DOMElement} DOM element
+     */
+    _createIsoPanelFormValueIsodistanceElement: function _createIsoPanelFormValueIsodistanceElement(checked) {
+        // contexte
+        var context = this;
+
+        var div = document.createElement("div");
+        div.id = this._addUID("GPisochronValueDist");
+        div.className = checked ? "GPflexInput" : "GPisochronValueHidden";
+
+        var label = document.createElement("label");
+        label.id = this._addUID("GPisochronValueDistLabel");
+        label.htmlFor = this._addUID("GPisochronValueDistInput");
+        label.innerHTML = "Distance";
+        div.appendChild(label);
+
+        var input1 = document.createElement("input");
+        input1.id = this._addUID("GPisochronValueDistInput");
+        input1.min = "0";
+        input1.step = "any";
+        input1.value = "0";
+        input1.type = "number";
+        if (input1.addEventListener) {
+            input1.addEventListener("change", function (e) {
+                if (typeof context.onIsoValueDistChange === "function") {
+                    context.onIsoValueDistChange(e);
+                }
+            });
+        } else if (input1.attachEvent) {
+            input1.attachEvent("onchange", function (e) {
+                if (typeof context.onIsoValueDistChange === "function") {
+                    context.onIsoValueDistChange(e);
+                }
+            });
+        }
+        div.appendChild(input1);
+
+        var label1 = document.createElement("label");
+        label1.innerHTML = "km";
+        div.appendChild(label1);
+
+        return div;
+    },
+
+    // ################################################################### //
+    // ############ Methods to the mode choice into form ################# //
+    // ################################################################### //
+
+    /**
+     * Create Container to Mode choice
+     *
+     * FIXME
+     * don't call this._createIsoPanelFormModeChoiceTransportElement
+     * don't call this._createIsoPanelFormModeChoiceDirectionElement
+     *
+     * @returns {DOMElement} DOM element
+     */
+    _createIsoPanelFormModeChoiceElement: function _createIsoPanelFormModeChoiceElement() {
+        var div = document.createElement("div");
+        div.id = this._addUID("GPisochronModeChoice");
+
+        // div.appendChild(this._createIsoPanelFormModeChoiceTransportElement());
+        // div.appendChild(this._createIsoPanelFormModeChoiceDirectionElement());
+
+        return div;
+    },
+
+    /**
+     * Create Mode choice transport
+     * see event !
+     * FIXME event not useful
+     * @param {Array} transports - transports in a list
+     * @returns {DOMElement} DOM element
+     */
+    _createIsoPanelFormModeChoiceTransportElement: function _createIsoPanelFormModeChoiceTransportElement(transports) {
+        // contexte d'execution
+        var context = this;
+
+        var div = document.createElement("div");
+        div.id = this._addUID("GPisochronTransportChoice");
+
+        var span = document.createElement("span");
+        span.className = "GPisochronModeLabel";
+        span.innerHTML = "Mode de transport";
+        div.appendChild(span);
+
+        /* jshint -W083 */
+        for (var i = 0; i < transports.length; i++) {
+            var transport = transports[i];
+
+            if (transport === "Voiture") {
+                var inputCar = document.createElement("input");
+                inputCar.id = this._addUID("GPisochronTransportCar");
+                inputCar.type = "radio";
+                inputCar.name = "GPisochronTransport";
+                if (i === 0) {
+                    inputCar.checked = true;
+                }
+                // gestionnaire d'evenement :
+                // on stocke le mode de transport,
+                // utilisation pour la requête sur le service de calcul d'itiniraire
+                if (inputCar.addEventListener) {
+                    inputCar.addEventListener("change", function (e) {
+                        context.onIsoModeTransportChange(e);
+                    });
+                } else if (inputCar.attachEvent) {
+                    inputCar.attachEvent("onchange", function (e) {
+                        context.onIsoModeTransportChange(e);
+                    });
+                }
+                // info : internet explorer support
+                inputCar.value = "Voiture";
+                div.appendChild(inputCar);
+
+                var labelCar = document.createElement("label");
+                labelCar.className = "GPisochronTransportImg";
+                labelCar.htmlFor = this._addUID("GPisochronTransportCar");
+                labelCar.title = "Voiture";
+                div.appendChild(labelCar);
+            }
+
+            if (transport === "Pieton") {
+                var inputPedestrian = document.createElement("input");
+                inputPedestrian.id = this._addUID("GPisochronTransportPedestrian");
+                inputPedestrian.type = "radio";
+                inputPedestrian.name = "GPisochronTransport";
+                if (i === 0) {
+                    inputPedestrian.checked = true;
+                }
+                // gestionnaire d'evenement :
+                // on stocke le mode de transport,
+                // utilisation pour la requête sur le service de calcul d'itiniraire
+                if (inputPedestrian.addEventListener) {
+                    inputPedestrian.addEventListener("change", function (e) {
+                        context.onIsoModeTransportChange(e);
+                    });
+                } else if (inputPedestrian.attachEvent) {
+                    inputPedestrian.attachEvent("onchange", function (e) {
+                        context.onIsoModeTransportChange(e);
+                    });
+                }
+                // info : internet explorer support
+                inputPedestrian.value = "Pieton";
+                div.appendChild(inputPedestrian);
+
+                var labelPedestrian = document.createElement("label");
+                labelPedestrian.className = "GPisochronTransportImg";
+                labelPedestrian.htmlFor = this._addUID("GPisochronTransportPedestrian");
+                labelPedestrian.title = "Piéton";
+                div.appendChild(labelPedestrian);
+            }
+        }
+
+        return div;
+    },
+
+    /**
+     * Create Mode choice direction
+     * see event!
+     *
+     * @param {Array} directions - directions to display in list ("Departure", "Arrival"). First element will be selected by default
+     * @returns {DOMElement} DOM element
+     */
+    _createIsoPanelFormModeChoiceDirectionElement: function _createIsoPanelFormModeChoiceDirectionElement(directions) {
+        // contexte d'execution
+        var self = this;
+
+        var div = document.createElement("div");
+        div.id = this._addUID("GPisochronDirectionChoice");
+
+        var span = document.createElement("span");
+        span.className = "GPisochronModeLabel";
+        span.innerHTML = "Sens de parcours";
+        div.appendChild(span);
+
+        var select = document.createElement("select");
+        select.id = this._addUID("GPisochronDirectionSelect");
+        select.className = "GPinputSelect";
+        // gestionnaire d'evenement :
+        // on stocke la valeur du mode de calcul,
+        // utilisation pour la requête sur le service de calcul d'iso
+        select.addEventListener("change", function (e) {
+            self.onIsoModeDirectionChange(e);
+        });
+
+        for (var i = 0; i < directions.length; i++) {
+            var direction = directions[i];
+            if (direction.toLowerCase() === "departure") {
+                var departureOption = document.createElement("option");
+                if (i === 0) {
+                    departureOption.selected = "selected";
+                }
+                departureOption.value = "departure";
+                departureOption.text = "Départ";
+                select.appendChild(departureOption);
+            }
+            if (direction.toLowerCase() === "arrival") {
+                var arrivalOption = document.createElement("option");
+                if (i === 0) {
+                    arrivalOption.selected = "selected";
+                }
+                arrivalOption.value = "arrival";
+                arrivalOption.text = "Arrivée";
+                select.appendChild(arrivalOption);
+            }
+        }
+        div.appendChild(select);
+
+        return div;
+    },
+
+    // ################################################################### //
+    // ################# Methods to the choice exclusions ################ //
+    // ################################################################### //
+
+    /**
+     * Hidden checkbox for minimizing/maximizing Exclusions Options
+     *
+     * @returns {DOMElement} DOM element
+     */
+    _createShowIsoExclusionsElement: function _createShowIsoExclusionsElement() {
+        var input = document.createElement("input");
+        input.id = this._addUID("GPshowIsoExclusions");
+        input.type = "checkbox";
+        return input;
+    },
+
+    /**
+     * Label to Exclusions Options
+     *
+     * @returns {DOMElement} DOM element
+     */
+    _createShowIsoExclusionsPictoElement: function _createShowIsoExclusionsPictoElement() {
+        var label = document.createElement("label");
+        label.id = this._addUID("GPshowIsoExclusionsPicto");
+        label.className = "GPshowMoreOptions GPshowIsoExclusionsPicto";
+        label.htmlFor = this._addUID("GPshowIsoExclusions");
+        label.title = "Exclusions";
+        label.style.top = "240px";
+
+        return label;
+    },
+
+    /**
+     * Create Container to Exclusions
+     *
+     * @returns {DOMElement} DOM element
+     */
+    _createIsoPanelFormExclusionsElement: function _createIsoPanelFormExclusionsElement() {
+        var div = document.createElement("div");
+        div.id = this._addUID("GPisoExclusions");
+
+        var span = document.createElement("span");
+        span.className = "GPisoExclusionsLabel";
+        span.innerHTML = "Passages autorisés";
+        div.appendChild(span);
+
+        // div.appendChild(this._createIsoPanelFormExclusionOptionsElement());
+
+        return div;
+    },
+
+    /**
+     * Create Exclusions Options
+     * see event !
+     * FIXME event not useful
+     * @param {Array} exclusions - exclusions to display in list
+     * @returns {DOMElement} DOM element
+     */
+    _createIsoPanelFormExclusionOptionsElement: function _createIsoPanelFormExclusionOptionsElement(exclusions) {
+        // contexte d'execution
+        var context = this;
+
+        var div = document.createElement("div");
+        div.className = "GPisoExclusionsOptions";
+
+        /* jshint -W083 */
+        for (var value in exclusions) {
+            if (exclusions.hasOwnProperty(value)) {
+                var status = exclusions[value];
+                switch (value) {
+                    case "toll":
+                        var inputToll = document.createElement("input");
+                        inputToll.id = this._addUID("GPisoExclusionsToll");
+                        inputToll.type = "checkbox";
+                        inputToll.checked = !status;
+                        // gestionnaire d'evenement :
+                        // on stocke l'exclusion,
+                        // utilisation pour la requête sur le service de calcul d'itiniraire
+                        if (inputToll.addEventListener) {
+                            inputToll.addEventListener("change", function (e) {
+                                context.onIsoExclusionsChange(e);
+                            });
+                        } else if (inputToll.attachEvent) {
+                            inputToll.attachEvent("onchange", function (e) {
+                                context.onIsoExclusionsChange(e);
+                            });
+                        }
+                        // info : internet explorer support
+                        inputToll.value = "Toll";
+                        div.appendChild(inputToll);
+
+                        var labelToll = document.createElement("label");
+                        labelToll.className = "GPisoExclusionsOption";
+                        labelToll.htmlFor = this._addUID("GPisoExclusionsToll");
+                        labelToll.innerHTML = "Péages";
+                        div.appendChild(labelToll);
+                        break;
+
+                    case "tunnel":
+                        var inputTunnel = document.createElement("input");
+                        inputTunnel.id = this._addUID("GPisoExclusionsTunnel");
+                        inputTunnel.type = "checkbox";
+                        inputTunnel.checked = !status;
+                        // gestionnaire d'evenement :
+                        // on stocke l'exclusion,
+                        // utilisation pour la requête sur le service de calcul d'itiniraire
+                        if (inputTunnel.addEventListener) {
+                            inputTunnel.addEventListener("change", function (e) {
+                                context.onIsoExclusionsChange(e);
+                            });
+                        } else if (inputTunnel.attachEvent) {
+                            inputTunnel.attachEvent("onchange", function (e) {
+                                context.onIsoExclusionsChange(e);
+                            });
+                        }
+                        // info : internet explorer support
+                        inputTunnel.value = "Tunnel";
+                        div.appendChild(inputTunnel);
+
+                        var labelTunnel = document.createElement("label");
+                        labelTunnel.className = "GPisoExclusionsOption";
+                        labelTunnel.htmlFor = this._addUID("GPisoExclusionsTunnel");
+                        labelTunnel.innerHTML = "Tunnels";
+                        div.appendChild(labelTunnel);
+                        break;
+
+                    case "bridge":
+                        var inputBridge = document.createElement("input");
+                        inputBridge.id = this._addUID("GPisoExclusionsBridge");
+                        inputBridge.type = "checkbox";
+                        inputBridge.checked = !status;
+                        // gestionnaire d'evenement :
+                        // on stocke l'exclusion,
+                        // utilisation pour la requête sur le service de calcul d'itiniraire
+                        if (inputBridge.addEventListener) {
+                            inputBridge.addEventListener("change", function (e) {
+                                context.onIsoExclusionsChange(e);
+                            });
+                        } else if (inputBridge.attachEvent) {
+                            inputBridge.attachEvent("onchange", function (e) {
+                                context.onIsoExclusionsChange(e);
+                            });
+                        }
+                        // info : internet explorer support
+                        inputBridge.value = "Bridge";
+                        div.appendChild(inputBridge);
+
+                        var labelBridge = document.createElement("label");
+                        labelBridge.className = "GPisoExclusionsOption";
+                        labelBridge.htmlFor = this._addUID("GPisoExclusionsBridge");
+                        labelBridge.innerHTML = "Ponts";
+                        div.appendChild(labelBridge);
+                        break;
+                }
+            }
+        }
+
+        return div;
+    },
+
+    // ################################################################### //
+    // ############################### Submit Form ####################### //
+    // ################################################################### //
+
+    /**
+     * Create Submit Form Element
+     *
+     * @returns {DOMElement} DOM element
+     */
+    _createIsoSubmitFormElement: function _createIsoSubmitFormElement() {
+        var input = document.createElement("input");
+        input.id = this._addUID("GPisochronSubmit");
+        input.className = "GPinputSubmit";
+        input.type = "submit";
+        input.value = "Calculer";
+
+        return input;
+    },
+
+    // ################################################################### //
+    // ############################### Reset picto ####################### //
+    // ################################################################### //
+
+    /**
+     * Create Reset Picto Element
+     *
+     * @returns {DOMElement} DOM element
+     */
+    _createIsoFormResetElement: function _createIsoFormResetElement() {
+        var self = this;
+
+        var divReset = document.createElement("div");
+        divReset.id = this._addUID("GPisochronReset");
+        divReset.title = "Réinitialiser les paramètres";
+        divReset.addEventListener("click", function (e) {
+            self.onIsoResetClick(e);
+        });
+
+        return divReset;
+    }
+};
+
+exports.default = IsoDOM;
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _gp = __webpack_require__(2);
+
+var _gp2 = _interopRequireDefault(_gp);
+
+var _leaflet = __webpack_require__(0);
+
+var _leaflet2 = _interopRequireDefault(_leaflet);
+
+var _LoggerByDefault = __webpack_require__(1);
+
+var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
+
+var _CheckRightManagement = __webpack_require__(4);
+
+var _CheckRightManagement2 = _interopRequireDefault(_CheckRightManagement);
+
+var _SelectorID = __webpack_require__(3);
+
+var _SelectorID2 = _interopRequireDefault(_SelectorID);
+
+var _MathUtils = __webpack_require__(29);
+
+var _MathUtils2 = _interopRequireDefault(_MathUtils);
+
+var _MousePositionDOM = __webpack_require__(30);
+
+var _MousePositionDOM2 = _interopRequireDefault(_MousePositionDOM);
+
+var _PositionFormater = __webpack_require__(8);
+
+var _PositionFormater2 = _interopRequireDefault(_PositionFormater);
+
+var _CRS = __webpack_require__(11);
+
+var _CRS2 = _interopRequireDefault(_CRS);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var logger = _LoggerByDefault2.default.getLogger("mouseposition");
+
+/**
+ * @classdesc
+ *
+ * Leaflet Control Class to display Mouse position in various CRS and altitude using the <a href="https://geoservices.ign.fr/documentation/geoservices/alti.html" target="_blank">altimetric web service of the Geoportal Platform</a>.
+ *
+ * Use {@link module:Controls.MousePosition L.geoportalControl.MousePosition()} factory to create instances of that class.
+ *
+ * **Extends** Leaflet <a href="http://leafletjs.com/reference.html#control" target="_blank">L.Control</a> native class.
+ *
+ * @namespace
+ * @alias L.geoportalControl.MousePosition
+ */
+var MousePosition = _leaflet2.default.Control.extend( /** @lends L.geoportalControl.MousePosition.prototype */{
+
+    includes: _MousePositionDOM2.default,
+
+    /**
+     * options by default
+     *
+     * @private
+     */
+    options: {
+        position: "bottomleft",
+        collapsed: true,
+        units: [],
+        systems: [],
+        displayAltitude: true,
+        displayCoordinates: true,
+        editCoordinates: false,
+        altitude: {
+            triggerDelay: 200,
+            responseDelay: 500,
+            noDataValue: -99999,
+            noDataValueTolerance: 90000,
+            serviceOptions: {}
+        }
+    },
+
+    /**
+     * @constructor MousePosition
+     *
+     * @private
+     * @alias MousePosition
+     * @extends {L.Control}
+     * @param {Object} options - options for function call.
+     * @param {Sting}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
+     * @param {String}  [options.position] - position of component into the map, 'bottomleft' by default
+     * @param {Boolean} [options.collapsed] - collapse mode, false by default
+     * @param {Array}   [options.systems] - list of projection systems, GEOGRAPHIC, MERCATOR, LAMB93 and LAMB2E by default
+     *      Each array element (=system) is an object with following properties :
+     * @param {String}  options.systems.crs - Proj4 crs alias (from proj4 defs). e.g. : "EPSG:4326". Required
+     * @param {String}  [options.systems.label] - CRS label to be displayed in control. Default is crs code (e.g. "EPSG:4326")
+     * @param {String}  [options.systems.type] - CRS units type for coordinates conversion : "Geographical" or "Metric". Default: "Metric"
+     * @param {Object}  [options.systems.geoBBox] - Aera covered by the system (WGS84 coordinates).
+     * @param {Number}  options.systems.geoBBox.right - Right bound.
+     * @param {Number}  options.systems.geoBBox.left - Left bound.
+     * @param {Number}  options.systems.geoBBox.top - Top bound.
+     * @param {Number}  options.systems.geoBBox.bottom - Bottom bound.
+     * @param {Array}   [options.units] - list of units by system, Geographical and Metric by default
+     *      Values may be "DEC" (decimal degrees), "DMS" (sexagecimal), "RAD" (radians) and "GON" (grades) for geographical coordinates,
+     *      and "M" or "KM" for metric coordinates
+     * @param {Boolean} [options.displayAltitude] - active/desactivate the altitude panel, if desactivate, have just the coordinate panel, true by default
+     * @param {Boolean} [options.displayCoordinates] - active/desactivate the coordinate panel, if desactivate, have just the altitude panel, true by default
+     * @param {Boolean} [options.editCoordinates = false] - add edit coordinates options. False by default.
+     * @param {Object}  [options.altitude] - elevation configuration
+     * @param {Object}  [options.altitude.serviceOptions] - options of elevation service
+     * @param {Number}  [options.altitude.responseDelay] - latency for altitude request, 500 ms by default
+     * @param {Number}  [options.altitude.triggerDelay] - immobilisation time of movement on the map to trigger the elevation calculation, 200 ms by default
+     * @param {Number}  [options.altitude.noDataValue] - value used for altitude service no data (default is -99999). In this case, "---m" will be displayed instead of "-99999m"
+     * @param {Number}  [options.altitude.noDataValueTolerance] - tolerance for no data value :
+     *                  values in [noDataValue - noDataValueTolerance ; noDataValue + noDataValueTolerance] interval will not be displayed, but "---m" will be displayed instead.
+     *                  Default is 90000
+     * @example
+     *  var MousePosition = L.geoportalControl.MousePosition({
+     *      position : 'bottomleft',
+     *      collapsed : false,
+     *      displayAltitude : true,
+     *      displayCoordinates : true,
+     *      editCoordinates : false,
+     *      altitude : {
+     *           triggerDelay : 100,
+     *           responseDelay : 500,
+     *           noDataValue : -99999,
+     *           noDataValueTolerance : 90000,
+     *           serviceOptions : {}
+     *      },
+     *      systems : [
+     *       {
+     *          crs : L.CRS.EPSG4326,
+     *          label : "Lon,Lat",
+     *          type : "Geographical"
+     *        },
+     *       {
+     *          crs : L.geoportalCRS.EPSG2154,
+     *          label : "Lambert 93",
+     *          type : "Metric"
+     *        }
+     *      ],
+     *      units : ["DEC", "DMS"]
+     *  });
+     */
+    initialize: function initialize(options) {
+        // on merge les options avec celles par defaut
+        _leaflet2.default.Util.extend(this.options, options);
+
+        // uuid
+        this._uid = _SelectorID2.default.generate();
+
+        // initialisation des systemes de projections
+        this._projectionSystems = [];
+        this._initProjectionSystems();
+
+        // initialisation des systemes des unités
+        this._projectionUnits = {};
+        this._initProjectionUnits();
+
+        // detection du support : desktop ou tactile
+        this._isDesktop = this._detectSupport();
+
+        // on met en place un seuil sur le timer
+        if (this.options.altitude.triggerDelay < 100) {
+            this.options.altitude.triggerDelay = 100;
+        }
+
+        // timer sur le delai d'immobilisation du mouvement
+        this._timer = this.options.altitude.triggerDelay;
+
+        // Systeme de projection selectionné (cf. _initProjectionSystems)
+        this._currentProjectionSystems = this._projectionSystems[0];
+
+        // Container des systemes
+        this._projectionSystemsContainer = null;
+
+        /** Type d'unité de projection selectionnés : Geographical ou Metric (cf._initProjectionSystems ) */
+        this._currentProjectionType = this._projectionSystems[0].type;
+
+        // Unité de projection selectionnés (cf. _initProjectionUnits)
+        this._currentProjectionUnits = this._projectionUnits[this._currentProjectionType][0].code;
+
+        // Container des unités
+        this._projectionUnitsContainer = null;
+
+        /** Container de visualisation du panneau du composant */
+        this._showContainer = null;
+        this._pictoContainer = null;
+
+        // gestion de l'affichage du panneau de l'altitude / coordonnées
+        if (!this.options.displayAltitude && !this.options.displayCoordinates) {
+            // on reactive cette option !
+            this.options.displayCoordinates = true;
+        }
+
+        if (!this.options.displayCoordinates) {
+            // si les coordonnées ne sont pas affichées : pas besoin de les éditer...
+            this.options.editCoordinates = false;
+        }
+
+        /** Edition des coordonnées en cours ou non */
+        this._isEditing = false;
+
+        /**
+         * Droit sur le ressource alti.
+         * Par defaut, on n'en s'occupe pas
+         * sauf si l'autoconfiguration est chargée !
+         */
+        this._noRightManagement = false;
+
+        // gestion des droits sur les ressources/services
+        // si l'on souhaite un calcul d'altitude, on verifie
+        // les droits sur les ressources d'alti...
+        if (this.options.displayAltitude) {
+            this._checkRightsManagement();
+        }
+
+        // on transmet les options au controle
+        _leaflet2.default.Util.setOptions(this, this.options);
+    },
+
+    /**
+     * this method is called by this.addTo(map) when the control is added on the map
+     * and fills variable 'this._container = this.onAdd(map)',
+     * and create events on map.
+     * @param {Object} map - the map
+     *
+     * @returns {DOMElement} DOM element
+     * @private
+     */
+    onAdd: function onAdd(map) {
+        // initialisation du DOM du composant
+        var container = this._container = this._initLayout();
+
+        // on met en place l'evenement sur la carte pour recuperer les coordonnées,
+        // on l'active à l'ouverture du panneau uniquement !
+        if (!this.options.collapsed) {
+            // this.onShowMousePositionClick();
+            // evenement valable pour le mode desktop !
+            if (this._isDesktop) {
+                map.on("mousemove", this.onMouseMove, this);
+            } else {
+                map.on("move", this.onMapMove, this);
+            }
+        }
+
+        // deactivate of events that may interfere with the map
+        _leaflet2.default.DomEvent.disableClickPropagation(container).disableScrollPropagation(container);
+
+        // on stoppe la propagation de l'événement mousemove sur le container
+        _leaflet2.default.DomEvent.addListener(container, "mousemove", _leaflet2.default.DomEvent.stopPropagation).addListener(container, "mousemove", _leaflet2.default.DomEvent.preventDefault);
+
+        return container;
+    },
+
+    /**
+     * this method is called when the control is removed from the map
+     * and removes events on map.
+     * @param {Object} map - the map
+     *
+     * @private
+     */
+    onRemove: function onRemove(map) {
+        map.off("mousemove", this.onMouseMove);
+    },
+
+    /**
+     * this method is called by the constructor and initialize the projection
+     * systems.
+     * getting coordinates in the requested projection :
+     * see this.onMousePositionProjectionSystemChange()
+     *
+     * @private
+     */
+    _initProjectionSystems: function _initProjectionSystems() {
+        // on donne la possibilité à l'utilisateur de modifier
+        // la liste des systèmes à afficher
+        // Ex. this.options.systems
+
+        // systemes de projection disponible par defaut
+        var projectionSystemsByDefault = [{
+            label: "G\xE9ographique",
+            crs: _leaflet2.default.CRS.Simple, // L.Projection.LonLat !
+            type: "Geographical"
+        }, {
+            label: "Web Mercator",
+            crs: _leaflet2.default.CRS.EPSG3395, // L.Projection.SphericalMercator !
+            type: "Metric"
+        }, {
+            label: "Lambert 93",
+            crs: _CRS2.default.EPSG2154,
+            type: "Metric",
+            geoBBox: {
+                left: -9.86,
+                bottom: 41.15,
+                right: 10.38,
+                top: 51.56
+            }
+        }, {
+            label: "Lambert II \xE9tendu",
+            crs: _CRS2.default.EPSG27572,
+            type: "Metric",
+            geoBBox: {
+                left: -4.87,
+                bottom: 42.33,
+                right: 8.23,
+                top: 51.14
+            }
+        }];
+
+        var systems = this.options.systems;
+        for (var i = 0; i < systems.length; i++) {
+            // definition d'un systeme de reference
+            var sys = systems[i];
+
+            if (!sys.label) {
+                logger.error("not defined !");
+                continue;
+            }
+
+            if (!sys.crs) {
+                logger.error("crs not defined !");
+                continue;
+            }
+
+            if (!sys.type) {
+                logger.warn("type srs not defined, use 'Metric' by default !");
+                sys.type = "Metric";
+            }
+
+            this._projectionSystems.push(systems[i]);
+
+            // it's a just a test ...
+            var found = false;
+            for (var j = 0; j < projectionSystemsByDefault.length; j++) {
+                var obj = projectionSystemsByDefault[j];
+                if (sys.crs === obj.crs) {
+                    found = true;
+                    logger.info("crs '{}' already configured by default", obj.code);
+                }
+            }
+            if (!found) {
+                logger.info("crs '{}' not found, it's a new projection", sys.code || sys.label);
+            }
+        }
+
+        // au cas où...
+        if (this._projectionSystems.length === 0) {
+            this._projectionSystems = projectionSystemsByDefault;
+        }
+
+        // re-initilisation des codes pour gerer le lien entre _projectionSystems et select du mouse position (lien code/value)
+        for (var k = 0; k < this._projectionSystems.length; ++k) {
+            this._projectionSystems[k].code = k;
+        }
+    },
+
+    /**
+     * this method is called by the constructor and initialize the units.
+     * getting coordinates in the requested units :
+     * see this.onMousePositionProjectionUnitsChange()
+     *
+     * @private
+     */
+    _initProjectionUnits: function _initProjectionUnits() {
+        // on donne la possibilité à l'utilisateur de modifier
+        // la liste des unités à afficher
+        // Ex.
+        // this.options.units : ["DEC", "DMS"]
+
+        // unités disponible par defaut
+        var projectionUnitsByDefault = {
+            Geographical: [{
+                code: "DEC",
+                label: "degrés décimaux",
+                format: this._displayDEC
+            }, {
+                code: "DMS",
+                label: "degrés sexagésimaux",
+                format: this._displayDMS
+            }, {
+                code: "RAD",
+                label: "radians",
+                format: this._displayRAD
+            }, {
+                code: "GON",
+                label: "grades",
+                format: this._displayGON
+            }],
+            Metric: [{
+                code: "M",
+                label: "mètres",
+                format: this._displayMeter
+            }, {
+                code: "KM",
+                label: "kilomètres",
+                format: this._displayKMeter
+            }]
+        };
+
+        var units = this.options.units;
+
+        for (var type in projectionUnitsByDefault) {
+            if (projectionUnitsByDefault.hasOwnProperty(type)) {
+                var found = false;
+                for (var j = 0; j < projectionUnitsByDefault[type].length; j++) {
+                    var obj = projectionUnitsByDefault[type][j];
+                    for (var i = 0; i < units.length; i++) {
+                        var unit = units[i];
+                        if (obj.code === unit) {
+                            found = true;
+                            if (!this._projectionUnits[type]) {
+                                this._projectionUnits[type] = [];
+                            }
+                            this._projectionUnits[type].push(obj);
+                        }
+                    }
+                }
+                if (!found) {
+                    this._projectionUnits[type] = projectionUnitsByDefault[type];
+                }
+            }
+        }
+
+        // au cas où...
+        if (Object.keys(this._projectionUnits).length === 0) {
+            this._projectionUnits = projectionUnitsByDefault;
+        }
+    },
+
+    /**
+     * this method is called by constructor
+     * and check the rights to resources
+     *
+     * @private
+     */
+    _checkRightsManagement: function _checkRightsManagement() {
+        var rightManagement = _CheckRightManagement2.default.check({
+            key: this.options.apiKey,
+            resources: ["SERVICE_CALCUL_ALTIMETRIQUE_RSC"],
+            services: ["Elevation"]
+        });
+
+        this._noRightManagement = !rightManagement;
+
+        // on recupère les informations utiles
+        // sur ce controle, on ne s'occupe pas de la ressource car elle est unique...
+        // Ex. la clef API issue de l'autoconfiguration si elle n'a pas
+        // été renseignée.
+        if (!this.options.apiKey) {
+            this.options.apiKey = rightManagement ? rightManagement.key : null;
+        }
+    },
+
+    /**
+     * this method is called by the constructor.
+     * this information is useful to switch to touch mode.
+     * Detection : test for desktop or tactile
+     *
+     * @returns {Boolean} is desktop
+     * @private
+     */
+    _detectSupport: function _detectSupport() {
+        // TODO
+        // Choix de gérer la détection dans le code du composant au lieu du DOM car :
+        // Utilisation de l'implémentation Leaflet
+        // http://leafletjs.com/reference.html#browser
+
+        var isDesktop = true;
+        var userAgent = window.navigator.userAgent.toLowerCase();
+
+        if (userAgent.indexOf("iphone") !== -1 || userAgent.indexOf("ipod") !== -1 || userAgent.indexOf("ipad") !== -1 || userAgent.indexOf("android") !== -1 || userAgent.indexOf("mobile") !== -1 || userAgent.indexOf("blackberry") !== -1 || userAgent.indexOf("tablet") !== -1 || userAgent.indexOf("phone") !== -1 || userAgent.indexOf("touch") !== -1) {
+            isDesktop = false;
+        }
+
+        if (userAgent.indexOf("msie") !== -1 || userAgent.indexOf("trident") !== -1) {
+            isDesktop = true;
+        }
+
+        return isDesktop;
+    },
+
+    // ################################################################### //
+    // ######################## methods handle dom ####################### //
+    // ################################################################### //
+
+    /**
+     * this method is called by this.onAdd(map)
+     * and initialize the container HTMLElement
+     *
+     * @returns {DOMElement} DOM element
+     * @private
+     */
+    _initLayout: function _initLayout() {
+        // create main container
+        var container = this._createMainContainerElement();
+
+        var inputShow = this._showContainer = this._createShowMousePositionElement();
+        container.appendChild(inputShow);
+
+        // mode "collapsed"
+        if (!this.options.collapsed) {
+            inputShow.checked = true;
+        }
+
+        var picto = this._pictoContainer = this._createShowMousePositionPictoElement(this._isDesktop);
+        container.appendChild(picto);
+
+        var panel = this._createMousePositionPanelElement(this.options.displayAltitude, this.options.displayCoordinates, this.options.editCoordinates);
+        var settings = this._createMousePositionSettingsElement();
+        var systems = this._projectionSystemsContainer = this._createMousePositionSettingsSystemsElement(this._projectionSystems);
+        var units = this._projectionUnitsContainer = this._createMousePositionSettingsUnitsElement(this._projectionUnits[this._currentProjectionType]);
+        settings.appendChild(systems);
+        settings.appendChild(units);
+        panel.appendChild(settings);
+        container.appendChild(panel);
+
+        // ce tag n'est pas à placer dans le container du controle,
+        // mais dans celui de la map !
+        var center = this._createMapCenter();
+        var map = this._map;
+        map.getContainer().appendChild(center);
+
+        return container;
+    },
+
+    /**
+     * this method is called by this.()
+     * and it changes the elevation view panel into the dom.
+     * FIXME call by ID !
+     *
+     * @param {Boolean} active - true:active, false:disable
+     *
+     * @private
+     */
+    _setElevationPanel: function _setElevationPanel(active) {
+        var div = null;
+
+        if (!active) {
+            div = _leaflet2.default.DomUtil.get(this._addUID("GPmousePositionAltitude"));
+            div.style.display = "none";
+        }
+
+        if (active && this._noRightManagement) {
+            div = _leaflet2.default.DomUtil.get(this._addUID("GPmousePositionAlt"));
+            div.innerHTML = "no right !";
+        }
+    },
+
+    /**
+     * this method is called by this.()
+     * and it changes the coordinate view panel into the dom.
+     * FIXME call by ID !
+     *
+     * @param {Boolean} active - true:active, false:disable
+     *
+     * @private
+     */
+    _setCoordinatePanel: function _setCoordinatePanel(active) {
+        if (!active) {
+            var div = _leaflet2.default.DomUtil.get(this._addUID("GPmousePositionCoordinate"));
+            div.style.display = "none";
+        }
+    },
+
+    /**
+     * this method is called by this.()
+     * and it changes the settings view panel into the dom.
+     * FIXME call by ID !
+     *
+     * @param {Boolean} active - true:active, false:disable
+     *
+     * @private
+     */
+    _setSettingsPanel: function _setSettingsPanel(active) {
+        if (!active) {
+            var divPicto = _leaflet2.default.DomUtil.get("GPshowMousePositionSettingsPicto");
+            var divPanel = _leaflet2.default.DomUtil.get(this._addUID("GPmousePositionSettings"));
+            divPicto.style.display = "none";
+            divPanel.style.display = "none";
+        }
+    },
+
+    /**
+     * this method is called by this.onMousePositionProjectionSystemChange()
+     * when changes to a metric or a geographical units.
+     *
+     * @param {String} type - Geographical or Metric
+     *
+     * @private
+     */
+    _setTypeUnitsPanel: function _setTypeUnitsPanel(type) {
+        var container = this._projectionUnitsContainer;
+
+        // on supprime les enfants...
+        while (container.firstChild) {
+            container.removeChild(container.firstChild);
+        }
+
+        var units = this._projectionUnits[type];
+        for (var j = 0; j < units.length; j++) {
+            var obj = units[j];
+            var option = document.createElement("option");
+            option.value = obj.code ? obj.code : j;
+            option.text = obj.label || j;
+            // option.label = obj.label;
+            container.appendChild(option);
+        }
+
+        var projectionUnits = this._projectionUnits[type][0].code;
+
+        if (this._currentProjectionUnits === "DMS" || projectionUnits === "DMS") {
+            this._resetCoordinateElements(this.options.editCoordinates, type, projectionUnits);
+            this._setEditMode(this._isEditing);
+        }
+
+        // le nouveau type de system ...
+        this._currentProjectionType = type;
+
+        // Mise a jour des elements labels et unites
+        this._resetLabelElements(type);
+        this._resetUnitElements(projectionUnits);
+
+        // et comme on a changé de type de systeme,
+        // il faut changer aussi d'unité !
+        this._currentProjectionUnits = this._projectionUnits[type][0].code;
+    },
+
+    // ################################################################### //
+    // ######################## method units format ###################### //
+    // ################################################################### //
+
+    /**
+     * degreedecimal
+     * @param {Object} oLatLng - coordinates
+     *
+     * @returns {Object} coordinates in decimal
+     * @private
+     */
+    _displayDEC: function _displayDEC(oLatLng) {
+        var coordinate = {};
+        coordinate.lat = _PositionFormater2.default.roundToDecimal(oLatLng.lat, 6);
+        coordinate.lng = _PositionFormater2.default.roundToDecimal(oLatLng.lng, 6);
+        coordinate.unit = "°";
+        return coordinate;
+    },
+
+    /**
+     * degreedecimal2sexagecimal
+     * @param {Object} oLatLng - coordinates
+     *
+     * @returns {Object} coordinates in DMS
+     * @private
+     */
+    _displayDMS: function _displayDMS(oLatLng) {
+        var coordinate = {};
+        coordinate.lat = _PositionFormater2.default.decimalLatToDMS(oLatLng.lat, true);
+        coordinate.lng = _PositionFormater2.default.decimalLonToDMS(oLatLng.lng, true);
+        return coordinate;
+    },
+
+    /**
+     * degreedecimal2radian
+     * @param {Object} oLatLng - coordinates
+     *
+     * @returns {Object} coordinates in radian
+     * @private
+     */
+    _displayRAD: function _displayRAD(oLatLng) {
+        var coordinate = {};
+        coordinate.lat = _PositionFormater2.default.decimalToRadian(oLatLng.lat);
+        coordinate.lng = _PositionFormater2.default.decimalToRadian(oLatLng.lng);
+        coordinate.unit = "rad";
+        return coordinate;
+    },
+
+    /**
+     * degreedecimal2grade
+     * @param {Object} oLatLng - coordinates
+     *
+     * @returns {Object} coordinates in gon
+     * @private
+     */
+    _displayGON: function _displayGON(oLatLng) {
+        var coordinate = {};
+        coordinate.lat = _PositionFormater2.default.decimalToGrade(oLatLng.lat);
+        coordinate.lng = _PositionFormater2.default.decimalToGrade(oLatLng.lng);
+        coordinate.unit = "gon";
+        return coordinate;
+    },
+
+    /**
+     * meter
+     * @param {Object} oXY - coordinates
+     *
+     * @returns {Object} coordinates in meters
+     * @private
+     */
+    _displayMeter: function _displayMeter(oXY) {
+        // on recoit toujours des coordonnées metriques
+        var coordinate = {};
+        coordinate.x = _leaflet2.default.Util.formatNum(oXY.x, 2);
+        coordinate.y = _leaflet2.default.Util.formatNum(oXY.y, 2);
+        coordinate.unit = "m";
+        return coordinate;
+    },
+
+    /**
+     * kilometer
+     * @param {Object} oXY - coordinates
+     *
+     * @returns {Object} coordinates in km
+     * @private
+     */
+    _displayKMeter: function _displayKMeter(oXY) {
+        var coordinate = {};
+        coordinate.x = _leaflet2.default.Util.formatNum(oXY.x / 1000, 2);
+        coordinate.y = _leaflet2.default.Util.formatNum(oXY.y / 1000, 2);
+        coordinate.unit = "km";
+        return coordinate;
+    },
+
+    // ################################################################### //
+    // ####################### method system project ##################### //
+    // ################################################################### //
+
+    /**
+     * this method projects a coordinate to a specific projection.
+     * FIXME
+     *
+     * @param {Object} oLatLng - geographic coordinate (L.LatLng)
+     * @param {Object} crs - projection system (ex. GEOGRAPHIC, LAMB93, LAMB2E, MERCATOR, ...)
+     * @returns {Object} oXY - coordinate
+     * @private
+     */
+    _project: function _project(oLatLng, crs) {
+        // cf. http://leafletjs.com/reference.html#iprojection
+        // notre carte est dans la projection par defaut :
+        // Spherical Mercator projection (EPSG:3857)
+        // - GEOGRAPHIC : conversion native, L.CRS.Simple ou L.Projection.LngLat.project(latlng)
+        // - LAMB93 : L.GeoportalCRS.EPSG2154 ou projection.project(latlng)
+        // - LAMB2E : L.GeoportalCRS.EPSG27572 ou projection.project(latlng)
+        // - MERCATOR ou EPSG:3395 : L.CRS.EPSG3395 ou L.Projection.Mercator.project(latlng)
+
+        if (typeof crs === "function") {
+            // "crs is an function !"... en mode AMD !
+            crs = crs();
+        }
+
+        if ((typeof crs === "undefined" ? "undefined" : _typeof(crs)) !== "object") {
+            logger.log("crs is not an object !");
+            return;
+        }
+
+        // pas de reprojection pour le systeme de projection natif !
+        if (crs === _leaflet2.default.CRS.Simple) {
+            return oLatLng;
+        }
+
+        if (!crs.projection || _typeof(crs.projection) !== "object") {
+            logger.error("projection is not an object !");
+            return;
+        }
+
+        var oPoint = crs.projection.project(oLatLng);
+
+        // FIXME reprojeter du geographique en geographique cause qq problemes
+        // Ex. LatLng en EPSG4326 !
+        // FIXME probleme d'inversion d'axe sur les projections geographiques
+        // Ex. EPSG:4326 -> lat/lon
+        //     IGNF:RGF93G -> lon/lat
+        if (this._currentProjectionType === "Geographical") {
+            oPoint.lat = oPoint.y;
+            oPoint.lng = oPoint.x;
+        }
+
+        if (!oPoint || Object.keys(oPoint).length === 0) {
+            logger.error("Failed to project with crs code : " + crs.code);
+        }
+
+        return oPoint;
+    },
+
+    /**
+     * this method unprojects a coordinate to a geographic projection.
+     *
+     * @param {Object} oXY - coordinate
+     * @returns {Object} oLatLng - geographic coordinate (L.LatLng)
+     * @private
+     */
+    _unproject: function _unproject(oXY) {
+        // cf. http://leafletjs.com/reference.html#iprojection
+        // notre carte est dans la projection par defaut :
+        // Spherical Mercator projection (EPSG:3857)
+        // - GEOGRAPHIC : conversion native, L.CRS.Simple ou L.Projection.LngLat.project(latlng)
+        // - LAMB93 : L.GeoportalCRS.EPSG2154 ou projection.project(latlng)
+        // - LAMB2E : L.GeoportalCRS.EPSG27572 ou projection.project(latlng)
+        // - MERCATOR ou EPSG:3395 : L.CRS.EPSG3395 ou L.Projection.Mercator.project(latlng)
+
+        var oSrs = this._currentProjectionSystems.crs;
+        if (!oSrs) {
+            logger.log("system crs not found");
+            return;
+        }
+
+        if (typeof oSrs === "function") {
+            // "crs is an function !"... en mode AMD !
+            oSrs = oSrs();
+        }
+
+        if ((typeof oSrs === "undefined" ? "undefined" : _typeof(oSrs)) !== "object") {
+            logger.log("crs is not an object !");
+            return;
+        }
+
+        // pas de reprojection pour le systeme de projection natif !
+        if (oSrs === _leaflet2.default.CRS.Simple) {
+            return {
+                lat: oXY.y,
+                lng: oXY.x
+            };
+        }
+
+        if (this._currentProjectionType === "Geographical") {
+            return {
+                lat: oXY.y,
+                lng: oXY.x
+            };
+        }
+
+        if (!oSrs.projection || _typeof(oSrs.projection) !== "object") {
+            logger.error("projection is not an object !");
+            return;
+        }
+
+        var oLatLng = oSrs.projection.unproject(oXY);
+
+        if (!oLatLng || Object.keys(oLatLng).length === 0) {
+            logger.error("Failed to unproject coordinate");
+        }
+
+        return oLatLng;
+    },
+
+    // ################################################################### //
+    // ##################### handlers events to control ################## //
+    // ################################################################### //
+
+    /**
+     * this sends the coordinates to the panel.
+     * (cf. this.GPdisplayCoords() into the DOM functions)
+     *
+     * @param {Object} oLatLng - geographic coordinate (L.LatLng)
+     *
+     * @private
+     */
+    _setCoordinate: function _setCoordinate(oLatLng) {
+        // structure
+        // L.LatLng
+        //     lat: 4.07249425916745
+        //     lng: 2.4609375
+
+        // type de systeme : Geographical ou Metric
+        var type = this._currentProjectionSystems.type;
+
+        // on recherche la fonction de formatage dans l'unitée demandée
+        var format = null;
+        var units = this._projectionUnits[type];
+        for (var i = 0; i < units.length; i++) {
+            if (units[i].code === this._currentProjectionUnits) {
+                format = units[i].format;
+                break;
+            }
+        }
+
+        // structure pour les coordonnées en fonctin du type demandé :
+        // {x:, y:, unit:} ou {lng:, lat:} ou {lon:, lat:} ou {e:, n:, unit:}...
+        var coordinate = {};
+        // on projete le point dans le systeme demandé
+        var oSrs = this._currentProjectionSystems.crs;
+        if (!oSrs) {
+            logger.error("crs not found !");
+            return;
+        }
+        coordinate = format(this._project(oLatLng, oSrs));
+
+        if (!coordinate || Object.keys(coordinate).lenght === 0) {
+            return;
+        }
+
+        this.GPdisplayCoords(coordinate);
+    },
+
+    /**
+     * this sends the coordinates to the panel.
+     * (cf. this.GPdisplayElevation() into the DOM functions)
+     *
+     * @param {Object} oLatLng - geographic coordinate (L.LatLng)
+     *
+     * @private
+     */
+    _setElevation: function _setElevation(oLatLng) {
+        // gestion du timer de la requete du service d'altitude
+        var delay = this.options.altitude.responseDelay;
+        var noDataValue = this.options.altitude.noDataValue;
+        var noDataValueTolerance = this.options.altitude.noDataValueTolerance;
+        this.GPdisplayElevation(oLatLng, delay, noDataValue, noDataValueTolerance);
+    },
+
+    /**
+     * this method is triggered when the mouse or the map is stopped.
+     * (cf. onMouseMove and onMapMove)
+     *
+     * @param {Object} oLatLng - geographic coordinate (L.LatLng)
+     *
+     * @private
+     */
+    onMoveStopped: function onMoveStopped(oLatLng) {
+        // si pas de droit, on ne met pas à jour l'affichage !
+        if (this._noRightManagement) {
+            return;
+        }
+        this._setElevation(oLatLng);
+    },
+
+    /**
+     * this method is an handler event to control. The event is 'mousemove' on
+     * the map. The handler sends the coordinates to the panel.
+     * (cf. this.GPdisplayCoords() into the DOM functions)
+     *
+     * @param {Object} e - HTMLElement
+     *
+     * @private
+     */
+    onMouseMove: function onMouseMove(e) {
+        var self = this;
+
+        var oLatLng = e.latlng;
+
+        this._setCoordinate(oLatLng);
+
+        clearTimeout(this._timer);
+        this._timer = setTimeout(function () {
+            self.onMoveStopped(oLatLng);
+        }, this.options.altitude.triggerDelay);
+    },
+
+    /**
+     * this method is an handler event to control. The event is 'moveend' on
+     * the map. The handler sends the coordinates to the panel.
+     * (cf. this.GPdisplayCoords() into the DOM functions)
+     *
+     * @private
+     */
+    onMapMove: function onMapMove() {
+        var self = this;
+        var map = this._map;
+
+        var oLatLng = map.getCenter();
+
+        this._setCoordinate(oLatLng);
+
+        clearTimeout(this._timer);
+        this._timer = setTimeout(function () {
+            self.onMoveStopped(oLatLng);
+        }, this.options.altitude.triggerDelay);
+    },
+
+    // ################################################################### //
+    // ####################### handlers events to dom #################### //
+    // ################################################################### //
+
+    /**
+     * this method is called by this.GPdisplayCoords() in the dom, and
+     * it executes a request to the elevation service.
+     *
+     * @param {Object} coordinate - {lat:..., lng:...}
+     * @param {Function} callback - callback
+     *
+     * @private
+     */
+    onRequestAltitude: function onRequestAltitude(coordinate, callback) {
+        logger.log("onRequestAltitude");
+
+        // INFORMATION
+        // on effectue la requête au service d'altitude...
+        // on met en place des callbacks afin de recuperer les resultats ou
+        // les messages d'erreurs du service.
+        // le resultat est affiché dans une balise du dom.
+        // les messages d'erreurs sont affichés sur la console (?)
+
+        if (!coordinate || Object.keys(coordinate).length === 0) {
+            return;
+        }
+
+        // si on ne veut pas de calcul d'altitude, on ne continue pas !
+        if (!this.options.displayAltitude) {
+            return;
+        }
+
+        // si on n'a pas les droits sur la ressource, pas la peine de
+        // continuer !
+        if (this._noRightManagement) {
+            return;
+        }
+
+        logger.log(coordinate);
+
+        var options = {};
+        // on recupere les options du service
+        _leaflet2.default.Util.extend(options, this.options.altitude.serviceOptions);
+
+        // ainsi que les coordonnées
+        _leaflet2.default.Util.extend(options, {
+            zonly: true,
+            positions: [{
+                lon: coordinate.lon || coordinate.lng,
+                lat: coordinate.lat
+            }]
+        });
+
+        // et les callbacks
+        _leaflet2.default.Util.extend(options, {
+            scope: this,
+            // callback onSuccess
+            onSuccess: function onSuccess(results) {
+                logger.log(results);
+                if (results && Object.keys(results)) {
+                    // var context = this.options.scope;
+                    // context._setAltidude(results.elevations[0].z);
+                    callback.call(this, results.elevations[0].z);
+                }
+            },
+            // callback onFailure
+            onFailure: function onFailure(error) {
+                logger.error(error.message);
+            }
+        });
+
+        // cas où la clef API n'est pas renseignée dans les options du service,
+        // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
+        _leaflet2.default.Util.extend(options, {
+            apiKey: options.apiKey || this.options.apiKey
+        });
+
+        logger.log(options);
+
+        _gp2.default.Services.getAltitude(options);
+    },
+
+    /**
+     * this method is called by event 'click' on 'GPshowMousePositionPicto' tag label
+     * (cf. this._createShowMousePositionPictoElement),
+     * and toggles event 'mousemove' on map.
+     * FIXME
+     *
+     * @param {Object} e - HTMLElement
+     *
+     * @private
+     */
+    onShowMousePositionClick: function onShowMousePositionClick(e) {
+        logger.log(e);
+
+        // checked : true - panel close
+        // checked : false - panel open
+        var map = this._map;
+
+        // evenement declenché à l'ouverture/fermeture du panneau,
+        // et en fonction du mode : desktop ou tactile !
+        if (this._showContainer.checked) {
+            this._isDesktop ? map.off("mousemove", this.onMouseMove, this) : map.off("move", this.onMapMove, this);
+        } else {
+            this._isDesktop ? map.on("mousemove", this.onMouseMove, this) : map.on("move", this.onMapMove, this);
+        }
+
+        // on gère l'affichage des panneaux ici...,
+        // même si ce n'est pas l'endroit adequate...
+        this._setElevationPanel(this.options.displayAltitude);
+        this._setCoordinatePanel(this.options.displayCoordinates);
+        if (!this.options.displayCoordinates) {
+            this._setSettingsPanel(false);
+        }
+    },
+
+    /**
+     * this method is called by event 'click' on input coordinate
+     *
+     * @param {Boolean} editing - editing mode
+     * @private
+     */
+    onMousePositionEditModeClick: function onMousePositionEditModeClick(editing) {
+        if (!this.options.editCoordinates) {
+            return;
+        }
+
+        if (this._isEditing === editing) {
+            return;
+        }
+
+        this._isEditing = editing;
+
+        // Affichage des outils, input en ecriture
+        this._setEditMode(this._isEditing);
+
+        var map = this._map;
+
+        if (this._isDesktop) {
+            this._isEditing ? map.off("mousemove", this.onMouseMove, this) : map.on("mousemove", this.onMouseMove, this);
+        } else {
+            this._isEditing ? map.off("move", this.onMapMove, this) : map.on("move", this.onMapMove, this);
+        }
+    },
+
+    /**
+     * Convert Coordinate value : km to meters, radians, grades to decimal degrees
+     * @param {Number} value - value to convert
+     * @param {String} unit - unit
+     *
+     * @returns {Number} converted value
+     * @private
+     */
+    _convertCoordinate: function _convertCoordinate(value, unit) {
+        var result;
+        if (unit === "DEC" || unit === "DMS") {
+            // DMS est converti en DEC !
+            result = value;
+        } else if (unit === "M") {
+            result = value;
+        } else if (unit === "KM") {
+            result = value * 1000;
+        } else if (unit === "RAD") {
+            var rd = (180 / Math.PI).toFixed(20);
+            result = (value * rd).toFixed(20);
+        } else if (unit === "GON") {
+            var d = (9 / 10).toFixed(20);
+            result = (value * d).toFixed(20);
+        }
+
+        return result;
+    },
+
+    /**
+     * Validate Extend coordinate
+     *
+     * @param {String} coordType - Lat or Lon
+     * @param {String} value - coordinate
+     * @param {Event} e - event
+     * @returns {Boolean} value is within extent
+     */
+    validateExtentCoordinate: function validateExtentCoordinate(coordType, value, e) {
+        // FIXME pas de validation...
+        if (e !== undefined) {
+            return true;
+        }
+
+        if (["Lon", "Lat"].indexOf(coordType) === -1) {
+            return false;
+        }
+
+        var geoBBox = this._currentProjectionSystems.geoBBox;
+
+        if (geoBBox === undefined) {
+            return true;
+        }
+
+        if (geoBBox) {
+            // check if coordinates are in the extent
+
+            var extent = [geoBBox.left, geoBBox.bottom, geoBBox.right, geoBBox.top];
+            var unit = this._currentProjectionUnits;
+
+            // on convertit un point..., mais on n'a pas de fonction
+            // de conversion comme pour openlayers...
+            var oLatLon = this._unproject({
+                x: coordType === "Lon" ? this._convertCoordinate(value, unit) : 0,
+                y: coordType === "Lat" ? this._convertCoordinate(value, unit) : 0
+
+            });
+
+            if (coordType === "Lon" && (oLatLon.lng < extent[0] || oLatLon.lng > extent[2])) {
+                logger.warn("coordinates (lon) out of extent !?");
+                return false;
+            }
+            if (coordType === "Lat" && (oLatLon.lat < extent[1] || oLatLon.lat > extent[3])) {
+                logger.warn("coordinates (lat) out of extent !?");
+                return false;
+            }
+        }
+
+        return true;
+    },
+
+    /**
+     * Get coordinate from inputs and select in decimal degrees
+     *
+     * @param {String} coordType - "Lon" or "Lat"
+     * @returns {String} coordinate
+     * @private
+     */
+    _getCoordinate: function _getCoordinate(coordType) {
+        var inputDegrees = _leaflet2.default.DomUtil.get(this._addUID("GPmousePosition" + coordType + "Degrees"));
+        var degrees = inputDegrees.value;
+        if (!degrees) {
+            return null;
+        }
+
+        degrees = degrees.replace(",", ".");
+        if (!_MathUtils2.default.isInteger(degrees)) {
+            return null;
+        }
+
+        var result = _MathUtils2.default.toInteger(degrees);
+        if (result < Number(inputDegrees.dataset.min) || result > Number(inputDegrees.dataset.max)) {
+            return null;
+        }
+
+        var direction = _leaflet2.default.DomUtil.get(this._addUID("GPmousePosition" + coordType + "Direction")).value;
+
+        var inputMinutes = _leaflet2.default.DomUtil.get(this._addUID("GPmousePosition" + coordType + "Minutes"));
+        var minutes = inputMinutes.value;
+        if (minutes) {
+            minutes = minutes.replace(",", ".");
+            if (_MathUtils2.default.isInteger(minutes)) {
+                var mins = _MathUtils2.default.toInteger(minutes);
+                if (mins >= Number(inputMinutes.dataset.min) && mins <= Number(inputMinutes.dataset.max)) {
+                    result += mins / 60;
+                }
+            }
+        }
+
+        var inputSeconds = _leaflet2.default.DomUtil.get(this._addUID("GPmousePosition" + coordType + "Seconds"));
+        var seconds = inputSeconds.value;
+        if (seconds) {
+            seconds = seconds.replace(",", ".");
+            var secs = _MathUtils2.default.toFloat(seconds);
+            if (secs && secs >= Number(inputSeconds.dataset.min) && secs <= Number(inputSeconds.dataset.max)) {
+                result += secs / 3600;
+            }
+        }
+
+        if (direction === "O" || direction === "S") {
+            result = -result;
+        }
+
+        return result;
+    },
+
+    /**
+     * locate DMS coordinates on map
+     *
+     * @private
+     */
+    _locateDMSCoordinates: function _locateDMSCoordinates() {
+        // on est toujours en coordonnées geographiques...
+        var oLatLon = {
+            lat: this._getCoordinate("Lat"),
+            lng: this._getCoordinate("Lon")
+        };
+
+        if (!this.validateExtentCoordinate("Lon", oLatLon.lng)) {
+            return;
+        }
+
+        if (!this.validateExtentCoordinate("Lat", oLatLon.lat)) {
+            return;
+        }
+
+        // FIXME https://github.com/Leaflet/Leaflet/issues/922
+        var map = this._map;
+        map.panTo(oLatLon);
+    },
+
+    /**
+     * locate coordinates on map (not DMS)
+     *
+     * @private
+     */
+    _locateCoordinates: function _locateCoordinates() {
+        // soit longitude ou soit y
+        var lonYDom = _leaflet2.default.DomUtil.get(this._addUID("GPmousePositionLon")).value;
+        lonYDom = lonYDom.replace(",", ".");
+        lonYDom = parseFloat(lonYDom);
+        if (isNaN(lonYDom)) {
+            return;
+        }
+
+        // soit lattitude ou soit x
+        var latXDom = _leaflet2.default.DomUtil.get(this._addUID("GPmousePositionLat")).value;
+        latXDom = latXDom.replace(",", ".");
+        latXDom = parseFloat(latXDom);
+        if (isNaN(latXDom)) {
+            return;
+        }
+
+        var lon = null;
+        var lat = null;
+        var x = null;
+        var y = null;
+
+        if (this._currentProjectionType === "Geographical") {
+            lon = lonYDom;
+            lat = latXDom;
+        } else {
+            x = latXDom;
+            y = lonYDom;
+        }
+
+        if (!this.validateExtentCoordinate("Lon", lon || x)) {
+            return;
+        }
+
+        if (!this.validateExtentCoordinate("Lat", lat || y)) {
+            return;
+        }
+
+        var unit = this._currentProjectionUnits;
+        var oLatLon = this._unproject({
+            x: this._convertCoordinate(lon !== null ? lon : x, unit),
+            y: this._convertCoordinate(lat !== null ? lat : y, unit)
+        });
+
+        // FIXME https://github.com/Leaflet/Leaflet/issues/922
+        var map = this._map;
+        map.panTo(oLatLon);
+    },
+
+    /**
+     * locate coordinates on map
+     *
+     * @method locate
+     * @private
+     */
+    onMousePositionEditModeLocateClick: function onMousePositionEditModeLocateClick() {
+        if (!this.options.editCoordinates) {
+            return;
+        }
+
+        if (!this._isEditing) {
+            this.onMousePositionEditModeClick(true);
+            return;
+        }
+
+        this._currentProjectionUnits === "DMS" ? this._locateDMSCoordinates() : this._locateCoordinates();
+    },
+
+    /**
+     * this method is called by event 'change' on 'GPmousePositionProjectionSystem'
+     * tag select (cf. this._createMousePositionSettingsElement),
+     * and selects the system projection.
+     *
+     * @param {Object} e - HTMLElement
+     *
+     * @private
+     */
+    onMousePositionProjectionSystemChange: function onMousePositionProjectionSystemChange(e) {
+        logger.log("onMousePositionProjectionSystemChange", e);
+
+        var idx = e.target.selectedIndex; // index
+        var value = e.target.options[idx].value; // crs, ex. MERCATOR (optionnel)
+        var label = e.target.options[idx].label; // etiquette, ex Géographiques
+
+        logger.log(idx, value, label);
+
+        this._setCurrentSystem(value);
+    },
+
+    /**
+     * this method selects the current system projection.
+     *
+     * @param {Object} systemCode - inner code (rank in array _projectionSystems)
+     *
+     * @private
+     */
+    _setCurrentSystem: function _setCurrentSystem(systemCode) {
+        // si on change de type de systeme, on doit aussi changer le type d'unités !
+        var type = null;
+        for (var i = 0; i < this._projectionSystems.length; ++i) {
+            if (this._projectionSystems[i].code === Number(systemCode)) {
+                type = this._projectionSystems[i].type;
+                break;
+            }
+        }
+
+        if (!type) {
+            logger.log("system not found in projection systems container");
+            return;
+        }
+
+        if (type !== this._currentProjectionType) {
+            this._setTypeUnitsPanel(type);
+        }
+
+        // on enregistre le systeme courrant
+        this._currentProjectionSystems = this._projectionSystems[Number(systemCode)];
+
+        // on simule un deplacement en mode tactile pour mettre à jour les
+        // resultats
+        if (!this._isDesktop) {
+            this.onMapMove();
+        }
+    },
+
+    /**
+     * this method is called by event 'mouseover' on 'GPmousePositionProjectionSystem'
+     * tag select (cf. this._createMousePositionSettingsElement),
+     * and selects the system projection.
+     *
+     * @param {Object} e - HTMLElement
+     *
+     * @private
+     */
+    onMousePositionProjectionSystemMouseOver: function onMousePositionProjectionSystemMouseOver(e) {
+        logger.log("onMousePositionProjectionSystemMouseOver", e);
+
+        var map = this._map;
+        if (!map) {
+            return;
+        }
+
+        // clear select
+        var systemList = _leaflet2.default.DomUtil.get(this._addUID("GPmousePositionProjectionSystem"));
+
+        systemList.innerHTML = "";
+
+        // add systems whose extent intersects the map extent
+        for (var j = 0; j < this._projectionSystems.length; j++) {
+            var proj = this._projectionSystems[j];
+            var option = null;
+
+            if (proj.geoBBox) {
+                // bboxes intersection test
+                if (map.getBounds()._southWest.lng > proj.geoBBox.right || map.getBounds()._southWest.lat > proj.geoBBox.top || map.getBounds()._northEast.lng < proj.geoBBox.left || map.getBounds()._northEast.lat < proj.geoBBox.bottom) {
+                    if (proj === this._currentProjectionSystems) {
+                        option = document.createElement("option");
+                        option.value = proj.code;
+                        option.text = proj.label || j;
+                        option.setAttribute("selected", "selected");
+                        option.setAttribute("disabled", "disabled");
+
+                        systemList.appendChild(option);
+                    }
+                    continue; // do not intersect
+                }
+            }
+            option = document.createElement("option");
+            option.value = proj.code;
+            option.text = proj.label || j;
+            if (proj === this._currentProjectionSystems) {
+                option.setAttribute("selected", "selected");
+            }
+
+            systemList.appendChild(option);
+        }
+    },
+
+    /**
+     * this method is called by event 'change' on 'GPmousePositionProjectionUnits'
+     * tag select (cf. this._createMousePositionSettingsElement),
+     * and selects the units projection.
+     *
+     * @param {Object} e - HTMLElement
+     *
+     * @private
+     */
+    onMousePositionProjectionUnitsChange: function onMousePositionProjectionUnitsChange(e) {
+        logger.log("onMousePositionProjectionUnitsChange", e);
+
+        var idx = e.target.selectedIndex;
+        var value = e.target.options[idx].value;
+        var label = e.target.options[idx].label;
+
+        logger.log(idx, value, label);
+
+        var oldProjectionUnits = this._currentProjectionUnits;
+        var newProjectionUnits = this._currentProjectionUnits = value;
+        var newProjectionType = this._currentProjectionType;
+
+        // Mise a jour des elements lebels et unites
+        this._resetLabelElements(newProjectionType);
+        this._resetUnitElements(newProjectionUnits);
+
+        // mise a jour des inputs pour les coordonnees
+        if (oldProjectionUnits === "DMS" || newProjectionUnits === "DMS") {
+            this._resetCoordinateElements(this.options.editCoordinates, newProjectionType, newProjectionUnits);
+            this._setEditMode(this._isEditing);
+        }
+
+        // on simule un deplacement en mode tactile pour mettre à jour les
+        // resultats
+        if (!this._isDesktop) {
+            this.onMapMove();
+        }
+    },
+
+    // ################################################################### //
+    // ###### METHODES PUBLIQUES (INTERFACE AVEC LE CONTROLE) ############ //
+    // ################################################################### //
+
+    /**
+     * This method is public.
+     * It allows to control the execution of a movement.
+     *
+     * @param {Object} position - position = {lon: , lat: }
+     * @param {Number} zoom - zoom
+     * @param {Object} options - Zoom/pan options
+     */
+    moveTo: function moveTo(position, zoom, options) {
+        if (!this._showContainer.checked) {
+            this._pictoContainer.click();
+        }
+
+        var map = this._map;
+        if (!map) {
+            return;
+        }
+
+        this.onMouseMove({
+            latlng: position
+        });
+
+        map.flyTo(position, zoom || 10, options || {});
+    }
+});
+
+exports.default = MousePosition;
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var MathUtils = {
+    /**
+     * Reste de la division euclidienne
+     * @param {Number} a - divisor
+     * @param {Number} b - quotient
+     * @returns {Number} Modulo
+     */
+    modulo: function modulo(a, b) {
+        var r = a % b;
+        return r * b < 0 ? r + b : r;
+    },
+
+    /**
+     * Transform degrees, minutes, seconds form decimal degrees -
+     * Largely inspired by the private function degreesToStringHDMS from ol/coordinate.js
+     *
+     * @param {Number} degrees - decimal degrees
+     * @param {Array} hemispheres - "NS" ou "EO"
+     * @param {Number} numDigits - number of digits for seconds
+     * @returns {Object} DMS coordinate
+     */
+    decimalToDMS: function decimalToDMS(degrees, hemispheres, numDigits) {
+        var normalizedDegrees = this.modulo(degrees + 180, 360) - 180;
+        var x = Math.abs(3600 * normalizedDegrees);
+        var dflPrecision = numDigits || 0;
+        var precision = Math.pow(10, dflPrecision);
+
+        var deg = Math.floor(x / 3600);
+        var min = Math.floor((x - deg * 3600) / 60);
+        var sec = x - deg * 3600 - min * 60;
+        sec = Math.ceil(sec * precision) / precision;
+
+        if (sec >= 60) {
+            sec = 0;
+            min += 1;
+        }
+
+        if (min >= 60) {
+            min = 0;
+            deg += 1;
+        }
+
+        var direction = hemispheres.charAt(normalizedDegrees < 0 ? 1 : 0);
+        return {
+            d: deg,
+            m: min,
+            s: sec,
+            direction: direction
+        };
+    },
+
+    /**
+     * Converts string to Integer
+     *
+     * @param {String} s - string number
+     * @param {Numeric} base - between 2 and 36
+     * @returns {null|Numeric} result
+     */
+    toInteger: function toInteger(s, base) {
+        var _base = base || 10;
+        var n = parseInt(s, _base);
+        if (!isNaN(n) && isFinite(n)) {
+            return n;
+        }
+        return null;
+    },
+
+    /**
+     * check if s represents an integer
+     *
+     * @param {String} s - string number
+     * @returns {Boolean} is integer
+     */
+    isInteger: function isInteger(s) {
+        if (isNaN(s)) {
+            return false;
+        }
+
+        var v = parseFloat(s);
+        return (v | 0) === v;
+    },
+
+    /**
+     * Converts s to float
+     *
+     * @param {String} s - string number
+     * @returns {null|Numeric} result
+     */
+    toFloat: function toFloat(s) {
+        var n = parseFloat(s);
+        if (!isNaN(n) && isFinite(n)) {
+            return n;
+        }
+        return null;
+    }
+};
+
+exports.default = MathUtils;
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var MousePositionDOM = {
+
+    /**
+    * Add uuid to the tag ID
+    * @param {String} id - id selector
+    * @returns {String} uid - id selector with an unique id
+    */
+    _addUID: function _addUID(id) {
+        var uid = this._uid ? id + "-" + this._uid : id;
+        return uid;
+    },
+
+    /**
+     * Main container (DOM)
+     *
+     * @returns {DOMElement} DOM element
+     */
+    _createMainContainerElement: function _createMainContainerElement() {
+        var container = document.createElement("div");
+        container.id = this._addUID("GPmousePosition");
+        container.className = "GPwidget";
+        return container;
+    },
+
+    // ################################################################### //
+    // ################### Methods of main container ##################### //
+    // ################################################################### //
+
+    /**
+     * Hidden checkbox for minimizing/maximizing
+     *
+     * @returns {DOMElement} DOM element
+     */
+    _createShowMousePositionElement: function _createShowMousePositionElement() {
+        var input = document.createElement("input");
+        input.id = this._addUID("GPshowMousePosition");
+        input.type = "checkbox";
+        return input;
+    },
+
+    /**
+     * Show mouse position control
+     * @param {Boolean} isDesktop - specifies if the support is desktop or tactile
+     *
+     * @returns {DOMElement} DOM element
+     */
+    _createShowMousePositionPictoElement: function _createShowMousePositionPictoElement(isDesktop) {
+        // contexte d'execution
+        var self = this;
+
+        var label = document.createElement("label");
+        label.id = this._addUID("GPshowMousePositionPicto");
+        label.className = "GPshowAdvancedToolPicto";
+        label.htmlFor = this._addUID("GPshowMousePosition");
+        label.title = "Afficher les coordonnées du curseur";
+
+        // FIXME detection disponible dans le JS !
+        // Detection : test for desktop or tactile
+        // var isDesktop = true;
+        // var userAgent = window.navigator.userAgent.toLowerCase();
+        // if (userAgent.indexOf("iphone") !== -1 ||
+        // userAgent.indexOf("ipod") !== -1 ||
+        // userAgent.indexOf("ipad") !== -1 ||
+        // userAgent.indexOf("android") !== -1 ||
+        // userAgent.indexOf("mobile") !== -1 ||
+        // userAgent.indexOf("blackberry") !== -1 ||
+        // userAgent.indexOf("tablet") !== -1 ||
+        // userAgent.indexOf("phone") !== -1 ||
+        // userAgent.indexOf("touch") !== -1 ) {
+        //     isDesktop = false;
+        // }
+        // if (userAgent.indexOf("msie") !== -1 ||
+        // userAgent.indexOf("trident") !== -1) {
+        //     isDesktop = true;
+        // }
+
+        // Show map center localisation if panel opened and tactile support
+        label.addEventListener("click", function (e) {
+            var mapCenterClass = "";
+            if (!document.getElementById(self._addUID("GPshowMousePosition")).checked && !isDesktop) {
+                mapCenterClass = "GPmapCenterVisible";
+            }
+            document.getElementById("GPmapCenter").className = mapCenterClass;
+            self.onShowMousePositionClick(e);
+        });
+
+        var spanOpen = document.createElement("span");
+        spanOpen.id = this._addUID("GPshowMousePositionOpen");
+        spanOpen.className = "GPshowAdvancedToolOpen";
+        label.appendChild(spanOpen);
+
+        return label;
+    },
+
+    /**
+     * mouse position panel
+     * @param {Boolean} [displayAltitude=true] - specifies if the altitude panel must be displayed
+     * @param {Boolean} [displayCoordinates=true] - specifies if the coordinates panel must be displayed
+     * @param {Boolean} [editCoordinates=false] - specifies if the coordinates edition is allowed
+     * @param {Boolean} [currentProjectionUnits] - specifies if the current projection units
+     *
+     * FIXME
+     * don't call this._createMousePositionSettingsElement
+     *
+     * @returns {DOMElement} DOM element
+     */
+    _createMousePositionPanelElement: function _createMousePositionPanelElement(displayAltitude, displayCoordinates, editCoordinates, currentProjectionUnits) {
+        // default Values
+        displayAltitude = typeof displayAltitude === "undefined" ? true : displayAltitude;
+        displayCoordinates = typeof displayCoordinates === "undefined" ? true : displayCoordinates;
+        editCoordinates = typeof editCoordinates === "undefined" ? false : editCoordinates;
+
+        var div = document.createElement("div");
+        div.id = this._addUID("GPmousePositionPanel");
+        div.className = "GPpanel";
+
+        div.appendChild(this._createMousePositionPanelHeaderElement());
+        div.appendChild(this._createMousePositionPanelBasicElement(displayAltitude, displayCoordinates, editCoordinates, currentProjectionUnits));
+
+        var arraySettings = this._createShowMousePositionSettingsElement(displayCoordinates);
+        for (var j = 0; j < arraySettings.length; j++) {
+            div.appendChild(arraySettings[j]);
+        }
+
+        // FIXME on decompose la fonction pour les besoins du controle,
+        // on ajoutera ces childs à la main...
+        // div.appendChild(this._createMousePositionSettingsElement());
+
+        return div;
+    },
+
+    /**
+     * Map center localisation (tactile use)
+     *
+     * @returns {DOMElement} container
+     */
+    _createMapCenter: function _createMapCenter() {
+        var div = document.createElement("div");
+        div.id = "GPmapCenter";
+        div.className = "";
+        return div;
+    },
+
+    // ################################################################### //
+    // ####################### Panel container ########################### //
+    // ################################################################### //
+
+    /**
+     * @returns {DOMElement} container
+     */
+    _createMousePositionPanelHeaderElement: function _createMousePositionPanelHeaderElement() {
+        var container = document.createElement("div");
+        container.className = "GPpanelHeader";
+
+        var divTitle = document.createElement("div");
+        divTitle.className = "GPpanelTitle";
+        divTitle.innerHTML = "Coordonnées";
+        container.appendChild(divTitle);
+
+        var divClose = document.createElement("div");
+        divClose.id = "GPmousePositionPanelClose";
+        divClose.className = "GPpanelClose";
+        divClose.title = "Fermer le panneau";
+
+        // Link panel close / visibility checkbox
+        var self = this;
+        if (divClose.addEventListener) {
+            divClose.addEventListener("click", function () {
+                document.getElementById(self._addUID("GPshowMousePositionPicto")).click();
+            }, false);
+        } else if (divClose.attachEvent) {
+            divClose.attachEvent("onclick", function () {
+                document.getElementById(self._addUID("GPshowMousePositionPicto")).click();
+            });
+        }
+
+        container.appendChild(divClose);
+
+        return container;
+    },
+
+    /**
+     * coordinate panel
+     * @param {Boolean} [displayAltitude] - specifies if the altitude panel must be displayed
+     * @param {Boolean} [displayCoordinates] - specifies if the coordinates panel must be displayed
+     * @param {Boolean} [editCoordinates] - specifies if the coordinates edition is allowed
+     * @param {Boolean} [currentProjectionUnits] - specifies if the current projection units
+     *
+     * FIXME
+     * call this._createMousePositionPanelBasicCoordinateElement
+     * call this._createMousePositionPanelBasicAltitudeElement
+     *
+     * @returns {DOMElement} DOM element
+     */
+    _createMousePositionPanelBasicElement: function _createMousePositionPanelBasicElement(displayAltitude, displayCoordinates, editCoordinates, currentProjectionUnits) {
+        var container = document.createElement("div");
+        container.id = this._addUID("GPmousePositionBasicPanel");
+
+        // FIXME on devrait decomposer la fonction pour les besoins du controle,
+        // on ajoutera ces childs à la main...
+        container.appendChild(this._createMousePositionPanelBasicCoordinateElement(displayCoordinates, editCoordinates, currentProjectionUnits));
+        container.appendChild(this._createMousePositionPanelEditToolsElement(editCoordinates));
+        container.appendChild(this._createMousePositionPanelBasicAltitudeElement(displayAltitude));
+
+        return container;
+    },
+
+    /**
+     * create coordinate elements
+     *
+     * @param {String} coordType - ("Lon" ou "Lat")
+     * @param {Boolean} [editCoordinates=false] - specifies if the coordinates edition is allowed
+     *
+     * @returns {Array} list of DOM elements
+     */
+    _createCoordinateElement: function _createCoordinateElement(coordType, editCoordinates) {
+        var context = this;
+
+        if (["Lon", "Lat"].indexOf(coordType) === -1) {
+            return [];
+        }
+
+        var list = [];
+        var input = document.createElement("input");
+        input.id = this._addUID("GPmousePosition" + coordType);
+        input.title = editCoordinates === true ? "Cliquer pour saisir des coordonnées" : "";
+        input.readOnly = true;
+
+        if (editCoordinates) {
+            input.addEventListener("click", function () {
+                context.onMousePositionEditModeClick(true);
+            });
+            input.addEventListener("change", function (e) {
+                this.classList.remove("error");
+                var valid = context.validateExtentCoordinate(coordType, this.value, e);
+                valid ? this.classList.remove("error") : this.classList.add("error");
+            });
+        }
+        list.push(input);
+
+        var span = document.createElement("span");
+        span.className = "GPmousePositionUnits";
+        list.push(span);
+
+        return list;
+    },
+
+    /**
+     *
+     * @param {String} coordType - ("Lon" ou "Lat")
+     * @param {Boolean} [editCoordinates=false] - specifies if the coordinates edition is allowed
+     *
+     * @returns {Array} list of DOM elements
+     */
+    _createDMSCoordinateElement: function _createDMSCoordinateElement(coordType, editCoordinates) {
+        if (["Lon", "Lat"].indexOf(coordType) === -1) {
+            return [];
+        }
+
+        var context = this;
+
+        var list = [];
+
+        var input = document.createElement("input");
+        input.id = this._addUID("GPmousePosition" + coordType + "Degrees");
+        input.className = "GPSexagesimal";
+        input.setAttribute("name", "degrees");
+        input.title = editCoordinates === true ? "Cliquer pour saisir des coordonnées" : "";
+        input.readOnly = true;
+        input.dataset.min = 0;
+        input.dataset.max = coordType === "Lon" ? 180 : 90;
+        if (editCoordinates) {
+            input.addEventListener("click", function () {
+                context.onMousePositionEditModeClick(true);
+            });
+            input.addEventListener("change", function () {
+                this.classList.remove("error");
+                var valid = context._checkDMSDegrees(coordType, this);
+                valid ? this.classList.remove("error") : this.classList.add("error");
+            });
+        }
+        list.push(input);
+
+        var span = document.createElement("span");
+        span.className = "GPmousePositionSexagesimalLabel";
+        span.innerHTML = "°";
+        list.push(span);
+
+        var input1 = document.createElement("input");
+        input1.id = this._addUID("GPmousePosition" + coordType + "Minutes");
+        input1.className = "GPSexagesimal";
+        input1.setAttribute("name", "minutes");
+        input1.title = editCoordinates === true ? "Cliquer pour saisir des coordonnées" : "";
+        input1.readOnly = true;
+        input1.dataset.min = 0;
+        input1.dataset.max = 59;
+        if (editCoordinates) {
+            input1.addEventListener("click", function () {
+                context.onMousePositionEditModeClick(true);
+            });
+            input1.addEventListener("change", function () {
+                this.classList.remove("error");
+                var valid = context._checkDMSElement(this);
+                valid ? this.classList.remove("error") : this.classList.add("error");
+            });
+        }
+        list.push(input1);
+
+        var span1 = document.createElement("span");
+        span1.className = "GPmousePositionSexagesimalLabel";
+        span1.innerHTML = "'";
+        list.push(span1);
+
+        var input2 = document.createElement("input");
+        input2.id = this._addUID("GPmousePosition" + coordType + "Seconds");
+        input2.className = "GPSexagesimalsec";
+        input2.setAttribute("name", "seconds");
+        input2.title = editCoordinates === true ? "Cliquer pour saisir des coordonnées" : "";
+        input2.readOnly = true;
+        input2.dataset.min = 0;
+        input2.dataset.max = 59;
+        if (editCoordinates) {
+            input2.addEventListener("click", function () {
+                context.onMousePositionEditModeClick(true);
+            });
+            input2.addEventListener("change", function () {
+                this.classList.remove("error");
+                var valid = context._checkDMSElement(this, true);
+                valid ? this.classList.remove("error") : this.classList.add("error");
+            });
+        }
+        list.push(input2);
+
+        var span2 = document.createElement("span");
+        span2.className = "GPmousePositionSexagesimalLabel";
+        span2.innerHTML = "''";
+        list.push(span2);
+
+        var select = document.createElement("select");
+        select.id = this._addUID("GPmousePosition" + coordType + "Direction");
+        select.className = "GPmousePositionDirection";
+        select.setAttribute("name", "direction");
+        select.disabled = true;
+
+        var option = document.createElement("option");
+        option.value = coordType === "Lon" ? "E" : "N";
+        option.innerHTML = coordType === "Lon" ? "E" : "N";
+        select.appendChild(option);
+
+        var option1 = document.createElement("option");
+        option1.value = coordType === "Lon" ? "O" : "S";
+        option1.innerHTML = coordType === "Lon" ? "O" : "S";
+        select.appendChild(option1);
+        list.push(select);
+
+        return list;
+    },
+
+    /**
+     * @param {Boolean} [display=false] - specifies if the coordinates panel must be displayed
+     * @param {Boolean} [editCoordinates] - specifies if the coordinates edition is allowed
+     * @param {Boolean} [currentProjectionUnits] - specifies if the current projection units
+     *
+     * @returns {DOMElement} container
+     */
+    _createMousePositionPanelBasicCoordinateElement: function _createMousePositionPanelBasicCoordinateElement(display, editCoordinates, currentProjectionUnits) {
+        var div = document.createElement("div");
+        div.id = this._addUID("GPmousePositionCoordinate");
+        div.style.display = display ? "block" : "none";
+
+        // latitude
+        var divLat = document.createElement("div");
+
+        var spanLat = document.createElement("span");
+        spanLat.className = "GPmousePositionLabel";
+        spanLat.id = this._addUID("GPmousePositionLatLabel");
+        spanLat.innerHTML = "Latitude : ";
+        divLat.appendChild(spanLat);
+
+        var span = document.createElement("span");
+        span.id = this._addUID("GPmousePositionLatCoordinate");
+
+        var arrayCoords;
+        if (currentProjectionUnits === "DMS") {
+            arrayCoords = this._createDMSCoordinateElement("Lat", editCoordinates);
+        } else {
+            arrayCoords = this._createCoordinateElement("Lat", editCoordinates);
+        }
+        for (var i = 0; i < arrayCoords.length; i++) {
+            span.appendChild(arrayCoords[i]);
+        }
+        divLat.appendChild(span);
+        div.appendChild(divLat);
+
+        // longitude
+        var divLon = document.createElement("div");
+
+        var spanLon = document.createElement("span");
+        spanLon.className = "GPmousePositionLabel";
+        spanLon.id = this._addUID("GPmousePositionLonLabel");
+        spanLon.innerHTML = "Longitude : ";
+        divLon.appendChild(spanLon);
+
+        var span1 = document.createElement("span");
+        span1.id = this._addUID("GPmousePositionLonCoordinate");
+
+        var arrayCoords1;
+        if (currentProjectionUnits === "DMS") {
+            arrayCoords1 = this._createDMSCoordinateElement("Lon", editCoordinates);
+        } else {
+            arrayCoords1 = this._createCoordinateElement("Lon", editCoordinates);
+        }
+        for (var j = 0; j < arrayCoords1.length; j++) {
+            span1.appendChild(arrayCoords1[j]);
+        }
+        divLon.appendChild(span1);
+        div.appendChild(divLon);
+
+        return div;
+    },
+
+    /**
+     * @param {Boolean} [display=false] - specifies if the altitude panel must be displayed
+     *
+     * @returns {DOMElement} container
+     */
+    _createMousePositionPanelBasicAltitudeElement: function _createMousePositionPanelBasicAltitudeElement(display) {
+        var div = document.createElement("div");
+        div.id = this._addUID("GPmousePositionAltitude");
+        div.style.display = display ? "block" : "none";
+
+        var spanLabel = document.createElement("span");
+        spanLabel.className = "GPmousePositionLabel";
+        spanLabel.innerHTML = "Altitude : ";
+        div.appendChild(spanLabel);
+
+        var spanAlt = document.createElement("span");
+        spanAlt.className = "GPmousePositionCoords";
+        spanAlt.id = this._addUID("GPmousePositionAlt");
+        spanAlt.innerHTML = "...";
+        div.appendChild(spanAlt);
+
+        var spanUnits = document.createElement("span");
+        spanUnits.className = "GPmousePositionAltitudeUnits";
+        spanUnits.innerHTML = "m";
+        div.appendChild(spanUnits);
+
+        return div;
+    },
+
+    /**
+     * @param {Boolean} [editCoordinates=false] - specifies if the coordinates edition is allowed
+     *
+     * @returns {DOMElement} container
+     */
+    _createMousePositionPanelEditToolsElement: function _createMousePositionPanelEditToolsElement(editCoordinates) {
+        var context = this;
+
+        var div = document.createElement("div");
+        div.className = "GPmousePositionPanelEditTools";
+        div.id = this._addUID("GPmousePositionPanelEditTools");
+        if (!editCoordinates) {
+            div.style.display = "none";
+        }
+
+        var span1 = document.createElement("span");
+        span1.className = "GPmousePositionEditTool";
+        span1.id = this._addUID("GPmousePositionLocate");
+        span1.title = editCoordinates === true ? "Cliquer pour saisir des coordonnées" : "";
+        if (editCoordinates) {
+            span1.addEventListener("click", function () {
+                context.onMousePositionEditModeLocateClick();
+            });
+        }
+        div.appendChild(span1);
+
+        var span2 = document.createElement("span");
+        span2.className = "GPmousePositionEditTool";
+        span2.id = this._addUID("GPmousePositionCloseEdit");
+        span2.title = "Quitter la saisie des coordonnées";
+        span2.style.display = "none";
+        if (editCoordinates) {
+            span2.addEventListener("click", function () {
+                context.onMousePositionEditModeClick(false);
+            });
+        }
+        div.appendChild(span2);
+
+        return div;
+    },
+
+    // ################################################################### //
+    // #################### Settings container ########################### //
+    // ################################################################### //
+
+    /**
+     * @param {Boolean} [display=false] - specifies if the settings panel must be displayed
+     *
+     * @returns {DOMElement[]} array containing input and label elements
+     */
+    _createShowMousePositionSettingsElement: function _createShowMousePositionSettingsElement(display) {
+        var list = [];
+
+        var input = document.createElement("input");
+        input.type = "checkbox";
+        input.id = this._addUID("GPshowMousePositionSettings");
+
+        var label = document.createElement("label");
+        label.id = this._addUID("GPshowMousePositionSettingsPicto");
+        label.htmlFor = this._addUID("GPshowMousePositionSettings");
+        label.title = "Réglages";
+        label.className = "GPshowMoreOptions GPshowMousePositionSettingsPicto"; // FIXME classname and id ?
+        label.style.display = display ? "block" : "none";
+
+        list.push(input);
+        list.push(label);
+
+        return list;
+    },
+
+    /**
+     * settings panel
+     * @param {Boolean} [display=true] - specifies if the settings panel must be displayed
+     *
+     * FIXME
+     * don't call this._createMousePositionSettingsSystemsElement
+     * don't call this._createMousePositionSettingsUnitsElement
+     *
+     * @returns {DOMElement} DOM element
+     */
+    _createMousePositionSettingsElement: function _createMousePositionSettingsElement(display) {
+        var container = document.createElement("div");
+        container.id = this._addUID("GPmousePositionSettings");
+        container.style.display = display === undefined || display ? "block" : "none";
+
+        var span = document.createElement("span");
+        span.className = "GPmousePositionSettingsLabel";
+        span.innerHTML = "Système de référence";
+        container.appendChild(span);
+
+        // FIXME on decompose la fonction pour les besoins du controle,
+        // on ajoutera ces childs à la main...
+        // FIXME tableau statique !
+        // var systems = [
+        //     {
+        //         code : "GEOGRAPHIC",
+        //         label : "Géographique"
+        //     },
+        //     {
+        //         code : "MERCATOR",
+        //         label : "Mercator"
+        //     },
+        //     {
+        //         code : "LAMB93",
+        //         label : "Lambert 93"
+        //     },
+        //     {
+        //         code : "LAMB2E",
+        //         label : "Lambert II étendu"
+        //     }
+        // ];
+        //
+        // var selectSystem = this._createMousePositionSettingsSystemsElement(systems);
+        //
+        // container.appendChild(selectSystem);
+
+        // FIXME on decompose la fonction pour les besoins du controle,
+        // on ajoutera ces childs à la main...
+        // FIXME tableau statique !
+        // var units = [
+        //     {
+        //         code : "DEC",
+        //         label : "degrés décimaux",
+        //     },
+        //     {
+        //         code : "DMS",
+        //         label : "degrés sexagésimaux",
+        //     },
+        //     {
+        //         code : "RAD",
+        //         label : "radians",
+        //     },
+        //     {
+        //         code : "GON",
+        //         label : "grades"
+        //     }
+        // ];
+        //
+        // var selectUnits = this._createMousePositionSettingsUnitsElement(units);
+        //
+        // container.appendChild(selectUnits);
+
+        return container;
+    },
+
+    /**
+     * @param {Object[]} systems - list of systems
+     *
+     * @returns {DOMElement} DOM element select
+     */
+    _createMousePositionSettingsSystemsElement: function _createMousePositionSettingsSystemsElement(systems) {
+        // contexte d'execution
+        var context = this;
+
+        var selectSystem = document.createElement("select");
+        selectSystem.id = this._addUID("GPmousePositionProjectionSystem");
+        selectSystem.className = "GPinputSelect GPmousePositionSettingsSelect";
+        selectSystem.addEventListener("change", function (e) {
+            context.onMousePositionProjectionSystemChange(e);
+        });
+        selectSystem.addEventListener("mouseover", function (e) {
+            // FIXME mettre une condition si target === option
+            if (e.target.nodeName !== "OPTION") {
+                context.onMousePositionProjectionSystemMouseOver(e);
+            }
+        });
+
+        for (var i = 0; i < systems.length; i++) {
+            var obj = systems[i];
+            var option = document.createElement("option");
+            option.value = obj.code;
+            option.text = obj.label || i;
+            // option.label = obj.label;
+            selectSystem.appendChild(option);
+        }
+
+        return selectSystem;
+    },
+
+    /**
+     * @param {Object[]} units - list of units
+     *
+     * @returns {DOMElement} DOM element select
+     */
+    _createMousePositionSettingsUnitsElement: function _createMousePositionSettingsUnitsElement(units) {
+        // contexte d'execution
+        var context = this;
+
+        var selectUnits = document.createElement("select");
+        selectUnits.id = this._addUID("GPmousePositionProjectionUnits");
+        selectUnits.className = "GPinputSelect GPmousePositionSettingsSelect";
+        selectUnits.addEventListener("change", function (e) {
+            context.onMousePositionProjectionUnitsChange(e);
+        });
+
+        for (var j = 0; j < units.length; j++) {
+            var obj = units[j];
+            var option = document.createElement("option");
+            option.value = obj.code ? obj.code : j;
+            option.text = obj.label || j;
+            // option.label = obj.label;
+            selectUnits.appendChild(option);
+        }
+
+        return selectUnits;
+    },
+
+    /**
+     * @param {String} [currentProjectionType="Metric"] - "Geographical" or "Metric"
+     */
+    _resetLabelElements: function _resetLabelElements(currentProjectionType) {
+        // Changement des labels dans le formulaire de saisie
+        var spanLat = document.getElementById(this._addUID("GPmousePositionLatLabel"));
+        spanLat.innerHTML = currentProjectionType === "Geographical" ? "Latitude :" : "X :";
+
+        var spanLon = document.getElementById(this._addUID("GPmousePositionLonLabel"));
+        spanLon.innerHTML = currentProjectionType === "Geographical" ? "Longitude :" : "Y :";
+    },
+
+    /**
+     * @param {String} currentProjectionUnits - projection units
+     */
+    _resetUnitElements: function _resetUnitElements(currentProjectionUnits) {
+        var value = "";
+        if (currentProjectionUnits === "M" || currentProjectionUnits === "KM") {
+            value = currentProjectionUnits.toLowerCase();
+        }
+
+        var elts = document.getElementsByClassName("GPmousePositionUnits");
+        for (var e = 0; e < elts.length; e++) {
+            elts[e].innerHTML = value;
+        }
+    },
+
+    /**
+     * @method _resetCoordinateElements
+     * @param {Boolean} editCoordinates - edit coordinates option
+     * @param {String} currentProjectionType - current projection type
+     * @param {String} currentProjectionUnits - current projection unit
+     */
+    _resetCoordinateElements: function _resetCoordinateElements(editCoordinates, currentProjectionType, currentProjectionUnits) {
+        // Suppression de tous les enfants de GPmousePositionLatCoordinate
+        var latElt = document.getElementById(this._addUID("GPmousePositionLatCoordinate"));
+        while (latElt.firstChild) {
+            latElt.removeChild(latElt.firstChild);
+        }
+
+        var arrayCoords;
+        if (currentProjectionUnits === "DMS") {
+            arrayCoords = this._createDMSCoordinateElement("Lat", editCoordinates);
+        } else {
+            arrayCoords = this._createCoordinateElement("Lat", editCoordinates);
+        }
+        for (var i = 0; i < arrayCoords.length; i++) {
+            latElt.appendChild(arrayCoords[i]);
+        }
+
+        // Suppression de tous les enfants de GPmousePositionLonCoordinate
+        var lonElt = document.getElementById(this._addUID("GPmousePositionLonCoordinate"));
+        while (lonElt.firstChild) {
+            lonElt.removeChild(lonElt.firstChild);
+        }
+
+        var arrayCoords1;
+        if (currentProjectionUnits === "DMS") {
+            arrayCoords1 = this._createDMSCoordinateElement("Lon", editCoordinates);
+        } else {
+            arrayCoords1 = this._createCoordinateElement("Lon", editCoordinates);
+        }
+        for (var j = 0; j < arrayCoords1.length; j++) {
+            lonElt.appendChild(arrayCoords1[j]);
+        }
+
+        // FIXME on simule un deplacement ?
+        // this.onMapMove();
+    },
+
+    /**
+     * Set/unset editing mode
+     *
+     * @method _setEditMode
+     * @param {Boolean} editing - active edit coordinates mode
+     */
+    _setEditMode: function _setEditMode(editing) {
+        var locateElt = document.getElementById(this._addUID("GPmousePositionLocate"));
+        locateElt.title = editing ? "Aller à la position ..." : "Cliquer pour saisir des coordonnées";
+
+        var closeEditElt = document.getElementById(this._addUID("GPmousePositionCloseEdit"));
+        closeEditElt.style.display = editing ? "inline-block" : "none";
+
+        var selector = "div[id^=" + this._addUID("GPmousePositionCoordinate") + "]";
+        var inputs = document.querySelectorAll(selector + " input");
+        for (var i = 0; i < inputs.length; i++) {
+            inputs[i].readOnly = !editing;
+            if (editing) {
+                inputs[i].value = "";
+                inputs[i].classList.remove("error");
+            }
+        }
+        var selects = document.querySelectorAll(selector + " select");
+        for (var j = 0; j < selects.length; j++) {
+            selects[j].disabled = !editing;
+        }
+    },
+
+    /**
+     *
+     * @param {DOMElement} input - input element
+     * @param {Boolean} isFloat - check for float value
+     *
+     * @returns {Boolean} true if input value is within bounds
+     */
+    _checkDMSElement: function _checkDMSElement(input, isFloat) {
+        var b = isFloat !== undefined;
+
+        var value = input.value;
+        if (b) {
+            value = value.replace(",", ".");
+        }
+        if (isNaN(value)) {
+            return false;
+        }
+
+        var v = parseFloat(value);
+        if (!b && (v | 0) !== v) {
+            // is it an integer
+            return false;
+        }
+
+        var min = Number(input.dataset.min);
+        var max = Number(input.dataset.max);
+        return v >= min && v <= max;
+    },
+
+    /**
+     * @param {String} coordType - "Lon" or "Lat"
+     * @param {DOMElement} input - input element
+     *
+     * @returns {Boolean} true if input value is within bounds
+     */
+    _checkDMSDegrees: function _checkDMSDegrees(coordType, input) {
+        if (isNaN(input.value)) {
+            return false;
+        }
+
+        var v = parseFloat(input.value);
+        if ((v | 0) !== v) {
+            // is it an integer
+            return false;
+        }
+
+        var min = Number(input.dataset.min);
+        var max = Number(input.dataset.max);
+        if (v < min || v > max) {
+            return false;
+        }
+
+        var inputMinutes = document.getElementById(this._addUID("GPmousePosition" + coordType + "Minutes"));
+        var inputSeconds = document.getElementById(this._addUID("GPmousePosition" + coordType + "Seconds"));
+
+        if (v >= max) {
+            inputMinutes.dataset.max = 0;
+            inputSeconds.dataset.max = 0;
+        } else {
+            inputMinutes.dataset.max = 59;
+            inputSeconds.dataset.max = 59.9999;
+        }
+
+        return true;
+    },
+
+    // ################################################################### //
+    // ####################### handlers Event ############################ //
+    // ################################################################### //
+
+    /**
+     * Function displaying coordinates from cursor position (desktop)
+     * or map center (tactile)
+     * @param {Object} coordinate - coordinates
+     */
+    GPdisplayCoords: function GPdisplayCoords(coordinate) {
+        // Compute coords in case of cursor position (desktop)
+        if (coordinate && coordinate != null) {
+            var labelLon = document.getElementById(this._addUID("GPmousePositionLonLabel"));
+            var labelLat = document.getElementById(this._addUID("GPmousePositionLatLabel"));
+
+            if (coordinate.x || coordinate.y) {
+                labelLat.innerHTML = "X : ";
+                labelLon.innerHTML = "Y : ";
+            } else if (coordinate.e || coordinate.n) {
+                labelLat.innerHTML = "E : ";
+                labelLon.innerHTML = "N : ";
+            } else {
+                labelLat.innerHTML = "Latitude : ";
+                labelLon.innerHTML = "Longitude : ";
+            }
+
+            if (_typeof(coordinate.lat) === "object" && _typeof(coordinate.lng) === "object") {
+                var parts = {
+                    lng: "Lon",
+                    lat: "Lat"
+                };
+                var units = ["Degrees", "Minutes", "Seconds"];
+                for (var p in parts) {
+                    for (var u = 0; u < units.length; ++u) {
+                        var selector = "GPmousePosition" + parts[p] + units[u];
+                        var elt = document.getElementById(this._addUID(selector));
+                        var key = units[u].charAt(0).toLowerCase();
+                        elt.value = coordinate[p][key];
+                    }
+                }
+                // directions
+                document.getElementById(this._addUID("GPmousePositionLonDirection")).value = coordinate.lng.direction;
+                document.getElementById(this._addUID("GPmousePositionLatDirection")).value = coordinate.lat.direction;
+            } else {
+                var elLat = document.getElementById(this._addUID("GPmousePositionLat"));
+                var elLon = document.getElementById(this._addUID("GPmousePositionLon"));
+
+                elLat.value = coordinate.x || coordinate.lat || coordinate.e || "0";
+                elLon.value = coordinate.y || coordinate.lng || coordinate.lon || coordinate.n || "0";
+
+                // les unites
+                var unit = coordinate.unit === undefined ? "" : coordinate.unit;
+                var elements = document.getElementsByClassName("GPmousePositionUnits");
+                for (var n = 0; n < elements.length; ++n) {
+                    elements[n].innerHTML = unit;
+                }
+            }
+        }
+    },
+
+    /**
+     * Function displaying altitude from cursor position (desktop)
+     * or map center (tactile)
+     * @param {Object} coordinate - coordinates
+     * @param {Number} altitudeTimeoutDelay - when the mouse stop moving, delay before the altitude request is launched
+     * @param {Number} noDataValue - the no data value
+     * @param {Number} noDataValueTolerance - the no data value tolerance
+     */
+    GPdisplayElevation: function GPdisplayElevation(coordinate, altitudeTimeoutDelay, noDataValue, noDataValueTolerance) {
+        // contexte d'execution
+        var self = this;
+
+        // Latency for altitude request
+        var altitudeTimeout;
+        if (!altitudeTimeoutDelay) {
+            altitudeTimeoutDelay = 500;
+        }
+
+        clearTimeout(altitudeTimeout);
+        document.getElementById(this._addUID("GPmousePositionAlt")).innerHTML = "...";
+
+        if (noDataValue == null) {
+            noDataValue = -99999;
+        }
+        if (noDataValueTolerance == null) {
+            noDataValueTolerance = 99980;
+        }
+        var maxThreshold = noDataValue + noDataValueTolerance;
+        var minThreshold = noDataValue - noDataValueTolerance;
+
+        // Compute coords in case of cursor position (desktop)
+        if (coordinate && coordinate != null) {
+            // If no altitude panel, don't call altitude request
+            if (document.getElementById(this._addUID("GPmousePositionAltitude"))) {
+                altitudeTimeout = setTimeout(function () {
+                    self.onRequestAltitude(coordinate, function (z) {
+                        if (minThreshold < z && z < maxThreshold) {
+                            self.GPresetElevation();
+                        } else {
+                            document.getElementById(self._addUID("GPmousePositionAlt")).innerHTML = z;
+                        }
+                    });
+                }, altitudeTimeoutDelay);
+            }
+        }
+    },
+
+    /**
+     * Function reseting altitude value
+     */
+    GPresetElevation: function GPresetElevation() {
+        if (document.getElementById(this._addUID("GPmousePositionAltitude"))) {
+            document.getElementById(this._addUID("GPmousePositionAlt")).innerHTML = "---";
+        }
+    }
+};
+
+exports.default = MousePositionDOM;
+
+/***/ }),
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function (global, factory) {
@@ -34136,8552 +42677,6 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_19__;
 
 
 /***/ }),
-/* 21 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _LayerSwitcher2 = __webpack_require__(22);
-
-var _LayerSwitcher3 = _interopRequireDefault(_LayerSwitcher2);
-
-var _Isocurve2 = __webpack_require__(26);
-
-var _Isocurve3 = _interopRequireDefault(_Isocurve2);
-
-var _MousePosition2 = __webpack_require__(29);
-
-var _MousePosition3 = _interopRequireDefault(_MousePosition2);
-
-var _ReverseGeocoding = __webpack_require__(36);
-
-var _ReverseGeocoding2 = _interopRequireDefault(_ReverseGeocoding);
-
-var _Route2 = __webpack_require__(38);
-
-var _Route3 = _interopRequireDefault(_Route2);
-
-var _SearchEngine2 = __webpack_require__(40);
-
-var _SearchEngine3 = _interopRequireDefault(_SearchEngine2);
-
-var _ElevationPath2 = __webpack_require__(14);
-
-var _ElevationPath3 = _interopRequireDefault(_ElevationPath2);
-
-var _Logo2 = __webpack_require__(45);
-
-var _Logo3 = _interopRequireDefault(_Logo2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Geoportal Controls Factory to be used together with Leaflet Maps.
- *
- * @module Controls
- * @alias L.geoportalControl
- * @example
- * var layerSwitcher = L.geoportalControl.LayerSwitcher(options);
- */
-var Controls = {
-
-  /**
-   * Factory function for LayerSwitcher Control creation.
-   *
-   * @method LayerSwitcher
-   * @static
-   * @alias L.geoportalControl.LayerSwitcher
-   * @param {Object} options - options for function call.
-   * @param {String}  [options.position] - position of component into the map, 'topleft' by default. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
-   * @param {Boolean} [options.collapsed] - collapse mode, false by default
-   * @param {Array}   [options.layers] - list of layers to be configured. Each array element is an object, with following properties :
-   * @param {Object}  [options.layers.layer] - layer object
-   * @param {Boolean} [options.layers.display] - display layer in widget layer list
-   * @param {Object}  [options.layers.config] - layer display config
-   * @param {String}  [options.layers.config.visibility] - layer visibility on map
-   * @param {String}  [options.layers.config.title] - layer alias, to be displayed in widget layer list. E.g. : "Cartes IGN"
-   * @param {String}  [options.layers.config.description] - layer description, to be displayed on title hover, or in layer information panel.
-   * @param {String}  [options.layers.config.quicklookUrl] - link to a quick look image for this layer.
-   * @param {Array}   [options.layers.config.legends] - array of layer legends. Each array element is an object, with following properties :
-   *      - url (String, mandatory) : link to a legend
-   *      - minScaleDenominator (Number, optional) : min scale denominator for legend validity.
-   * @param {Array} [options.layers.config.metadata] - array of layer metadata. Each array element is an object, with property url (String, mandatory) : link to a metadata
-   * @returns {L.geoportalControl.LayerSwitcher} - LayerSwitcher Object
-   * @example
-   *  layers = [
-   *      {
-   *          layer : wms1,
-   *          display : false,
-   *          config : {
-   *              title : "test layer name 1",
-   *              description : "test layer desc 1",
-   *          }
-   *      }
-   *  ];
-   *
-   *  options = {
-   *      position : "topright",
-   *      collapsed : true,
-   *      layers : layers
-   *  };
-   *
-   *  var layerSwitcher = L.geoportalControl.LayerSwitcher(options);
-   */
-  LayerSwitcher: function LayerSwitcher(options) {
-    return new _LayerSwitcher3.default(options);
-  },
-
-  /**
-   * Factory function for Isocurve Control creation.
-   *
-   * @method Isocurve
-   * @static
-   * @alias L.geoportalControl.Isocurve
-   * @param {Object} options - Isocurve control options
-   * @param {Sting}   [options.apiKey] - API key for services call (isocurve and autocomplete services), mandatory if autoconf service has not been charged in advance
-   * @param {String}  [options.position] - position of component into the map, 'topleft' by default. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
-   * @param {Boolean} [options.collapsed] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
-   * @param {Object}  [options.exclusions] - list of exclusions with status (true = checked), by default : ["toll":false, "tunnel":false, "bridge":false].
-   * @param {Array}   [options.graphs] - list of graph resources to be used for isocurve calculation, by default : ["Voiture", "Pieton"]. The first element is selected.
-   * @param {Array}   [options.methods] - list of methods, by default : ["time", "distance"]. The first element is selected by default.
-   * @param {Array}   [options.directions] - list of directions to be displayed, by default : ["departure", "arrival"]. The first element is selected by default.
-   *      Directions enable to specify if input location point will be used as a departure point ("departure") or as an arrival point ("arrival")
-   * @param {Boolean} [options.disableReverse = false] - whether to enable/disable the reverse geocoding
-   * @param {Object} [options.isocurveOptions] - isocurve service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~isoCurve Gp.Services.isoCurve}
-   * @param {Object} [options.autocompleteOptions] - autocomplete service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~autoComplete Gp.Services.autoComplete}
-   * @returns {L.geoportalControl.Isocurve} - Isocurve Object
-   * @example
-   *  var iso = L.geoportalControl.Isocurve({
-   *      collapsed : false
-   *      methods : ["time", "distance"],
-   *      exclusions : {
-   *         toll : true,
-   *         bridge : false,
-   *         tunnel : true
-   *      },
-   *      graphs : ["Pieton", "Voiture"],
-   *      isocurveOptions : {},
-   *      autocompleteOptions : {}
-   *  });
-   */
-  Isocurve: function Isocurve(options) {
-    return new _Isocurve3.default(options);
-  },
-
-  /**
-   * Factory function for Geoportal MousePosition Control creation.
-   *
-   * @method MousePosition
-   * @static
-   * @alias L.geoportalControl.MousePosition
-   * @param {Object} options - options for function call.
-   * @param {Sting}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
-   * @param {String}  [options.position] - position of component into the map, 'bottomleft' by default. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
-   * @param {Boolean} [options.collapsed] - collapse mode, false by default
-   * @param {Array}   [options.systems] - list of projection systems, GEOGRAPHIC, MERCATOR, LAMB93 and LAMB2E by default
-   *      Each array element (=system) is an object with following properties :
-   * @param {String}  options.systems.crs - Proj4 crs alias (from proj4 defs). e.g. : "EPSG:4326". Required
-   * @param {String}  [options.systems.label] - CRS label to be displayed in control. Default is crs code (e.g. "EPSG:4326")
-   * @param {String}  [options.systems.type] - CRS units type for coordinates conversion : "Geographical" or "Metric". Default: "Metric"
-   * @param {Object}  [options.systems.geoBBox] - Aera covered by the system (WGS84 coordinates).
-   * @param {Number}  options.systems.geoBBox.right - Right bound.
-   * @param {Number}  options.systems.geoBBox.left - Left bound.
-   * @param {Number}  options.systems.geoBBox.top - Top bound.
-   * @param {Number}  options.systems.geoBBox.bottom - Bottom bound.
-   * @param {Array}   [options.units] - list of units by system, Geographical and Metric by default
-   *      Values may be "DEC" (decimal degrees), "DMS" (sexagecimal), "RAD" (radians) and "GON" (grades) for geographical coordinates,
-   *      and "M" or "KM" for metric coordinates
-   * @param {Boolean} [options.displayAltitude] - active/desactivate the altitude panel, if desactivate, have just the coordinate panel, true by default
-   * @param {Boolean} [options.displayCoordinates] - active/desactivate the coordinate panel, if desactivate, have just the altitude panel, true by default
-   * @param {Boolean} [options.editCoordinates = false] - If true, coordinates from the MousePosition control can be edited by users to re-center the view. False by default.
-   * @param {Object}  [options.altitude] - elevation configuration
-   * @param {Object}  [options.altitude.serviceOptions] - options of elevation service. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~getAltitude Gp.Services.getAltitude}
-   * @param {Number}  [options.altitude.responseDelay] - latency for altitude request, 500 ms by default
-   * @param {Number}  [options.altitude.triggerDelay] - immobilisation time of movement on the map to trigger the elevation calculation, 200 ms by default
-   * @param {Number}  [options.altitude.noDataValue] - value used for altitude service no data (default is -99999). In this case, "---m" will be displayed instead of "-99999m"
-   * @param {Number}  [options.altitude.noDataValueTolerance] - tolerance for no data value :
-   *                  values in [noDataValue - noDataValueTolerance ; noDataValue + noDataValueTolerance] interval will not be displayed, but "---m" will be displayed instead.
-   *                  Default is 90000
-   * @returns {L.geoportalControl.MousePosition} - MousePosition Object
-   * @example
-   *  var MousePosition = L.geoportalControl.MousePosition({
-   *      position : 'bottomleft',
-   *      collapsed : false,
-   *      displayAltitude : true,
-   *      editCoordinates : false,
-   *      altitude : {
-   *           triggerDelay : 100,
-   *           responseDelay : 500,
-   *           noDataValue : -99999,
-   *           noDataValueTolerance : 90000,
-   *           serviceOptions : {}
-   *      },
-   *      systems : [
-   *       {
-   *          crs : L.CRS.EPSG4326,
-   *          label : "Lon,Lat",
-   *          type : "Geographical"
-   *        },
-   *       {
-   *          crs : L.geoportalCRS.EPSG2154,
-   *          label : "Lambert 93",
-   *          type : "Metric"
-   *        }
-   *      ],
-   *      units : ["DEC", "DMS"]
-   *  });
-   */
-  MousePosition: function MousePosition(options) {
-    return new _MousePosition3.default(options);
-  },
-
-  /**
-   * Factory function for Geoportal ReverseGeocode Control creation.
-   *
-   * @method ReverseGeocode
-   * @static
-   * @alias L.geoportalControl.ReverseGeocode
-   * @extends {L.Control}
-   * @param {Object} options - ReverseGeocoding control options
-   * @param {String}  [options.apiKey] - API key for services call (reverse geocode service), mandatory if autoconf service has not been charged in advance
-   * @param {String}  [options.position] - position of component into the map, 'topleft' by default. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
-   * @param {Boolean} [options.collapsed] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
-   * @param {Array}  [options.resources] - resources for geocoding, by default : ["StreetAddress", "PositionOfInterest"]
-   * @param {Array}  [options.delimitations] - delimitations for reverse geocoding, by default : ["Point", "Circle", "Extent"]
-   * @param {Object}  [options.ReverseGeocodeOptions] - reverse geocode service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~reverseGeocode Gp.Services.reverseGeocode} to know all reverse geocode options.
-   * @returns {L.geoportalControl.ReverseGeocode} - ReverseGeocode Object
-   * @example
-   *  var iso = L.geoportalControl.ReverseGeocode({
-   *      collapsed : false,
-   *      position : "topright",
-   *      resources : ["StreetAddress", "PositionOfInterest"],
-   *      delimitations : ["Point", "Circle"],
-   *      reverseGeocodeOptions : {}
-   *  });
-   */
-  ReverseGeocode: function ReverseGeocode(options) {
-    return new _ReverseGeocoding2.default(options);
-  },
-
-  /**
-   * Factory function for Geoportal Route Control creation.
-   *
-   * @method Route
-   * @static
-   * @alias L.geoportalControl.Route
-   * @extends {L.Control}
-   * @param {Object} options - options for function call.
-   * @param {Sting}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
-   * @param {String}  [options.position = "topleft"] - position of component into the map, 'topleft' by default. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
-   * @param {Boolean} [options.collapsed = false] - collapse mode, false by default
-   * @param {Boolean} [options.disableReverse = false] - whether to enable/disable the reverse geocoding when entering points.
-   *   Active by default. But, you can disable it when entering with the "ctrl" key on the keyboard
-   * @param {Object}  [options.exclusions] - list of exclusions with status
-   * @param {Array}   [options.graphs] - list of resources, by default : ["Voiture", "Pieton"], and the first element is selected.
-   * @param {Object}  [options.autocompleteOptions] - options of autocomplete service. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~autoComplete Gp.Services.autoComplete}
-   * @param {Object}  [options.routeOptions] - options of route service. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~route Gp.Services.route}
-   * @returns {L.geoportalControl.Route} - Route Object
-   * @example
-   *  var route = L.geoportalControl.Route({
-   *      position : "topright",
-   *      collapsed : true,
-   *      exclusions : {
-   *         "toll" : true,
-   *         "bridge" : false,
-   *         "tunnel" : true
-   *      },
-   *      graphs : ['Pieton', 'Voiture'],
-   *      autocompleteOptions : {},
-   *      routeOptions : {}
-   *  });
-   */
-  Route: function Route(options) {
-    return new _Route3.default(options);
-  },
-
-  /**
-   * Factory function for Geoportal SearchEngine Control creation.
-   *
-   * @method SearchEngine
-   * @static
-   * @alias L.geoportalControl.SearchEngine
-   * @extends {L.Control}
-   * @param {Object}  options - control options
-   * @param {String}  [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
-   * @param {Boolean} [options.collapsed = false] - collapse mode
-   * @param {String}  [options.position = "topleft"] - position of component into the map. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
-   * @param {String}  [options.placeholder = "Rechercher un lieu, une adresse"] - set placeholder in search bar
-   * @param {Boolean} [options.displayMarker = true] - set a marker on search result
-   * @param {String|Object}  [options.markerStyle = "blue"] - set a marker style. Currently possible values are "blue" (default value), "orange", "red" and "green". But you can use an L.Icon object (see {@link http://leafletjs.com/reference-1.2.0.html#icon L.Icon })
-   * @param {Boolean} [options.displayInfo = true] - get informations on popup marker
-   * @param {Sting|Numeric|Function} [options.zoomTo] - zoom to results, by default, current zoom.
-   *       possible values : "auto", any fixed zoom level or a function retruning a zoom :
-   *
-   *       ```
-   *       zoomTo : function (info) {
-   *           // do some stuff...
-   *           return zoom; // required : return the zoom level !
-   *       }
-   *
-   *       With parameter 'info' : {
-   *           type : "PositionOfInterest" | "StreetAddress" | ...
-   *           service : "SuggestedLocation" | "DirectGeocodedLocation"
-   *           fields : { // fields of service response }
-   *       }
-   *       ```
-   * @param {Sting}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
-   * @param {Object}  [options.resources] - resources to be used by geocode and autocompletion services, by default : ["StreetAddress", "PositionOfInterest"]
-   * @param {Boolean} [options.displayAdvancedSearch] - False to disable advanced search tools (it will not be displayed). Default is true (displayed)
-   * @param {Object}  [options.advancedSearch] - advanced search for geocoding (filters)
-   * @param {Object}  [options.geocodeOptions] - options of geocode service. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~geocode Gp.Services.geocode}
-   * @param {Object}  [options.autocompleteOptions] - options of autocomplete service. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~autoComplete Gp.Services.autoComplete}
-   * @param {Object}  [options.autocompleteOptions.serviceOptions] - options of autocomplete service
-   * @param {Boolean} [options.autocompleteOptions.triggerGeocode = false] - trigger a geocoding request if the autocompletion does not return any suggestions, false by default
-   * @param {Number}  [options.autocompleteOptions.triggerDelay = 1000] - waiting time before sending the geocoding request, 1000ms by default
-   * @returns {L.geoportalControl.SearchEngine} - SearchEngine Object
-   * @example
-   *  var SearchEngine = L.geoportalControl.SearchEngine({
-   *      position : "topright",
-   *      collapsed : true,
-   *      zoomTo : "auto",
-   *      displayInfo : true,
-   *      displayAdvancedSearch : true,
-   *      resources : ["PositionOfInterest", "StreetAddress"],
-   *      advancedSearch : {
-   *          PositionOfInterest : [{name : "municipality", title : "Ville"}],
-   *          StreetAddress : [{...}],
-   *          CadastralParcel : null,
-   *      },
-   *      apiKey : "zfgzrgffg57rfg8ar7gr4g5r4",
-   *      geocodeOptions : {},
-   *      autocompleteOptions : {}
-   *  });
-   */
-  SearchEngine: function SearchEngine(options) {
-    return new _SearchEngine3.default(options);
-  },
-
-  /**
-   * Factory function for ElevationPath Control creation.
-   *
-   * @method ElevationPath
-   * @static
-   * @alias L.geoportalControl.ElevationPath
-   * @param {Object} options - options for function call.
-   * @param {Sting}   [options.apiKey] - API key for elevation service call, mandatory if configuration service has not been loaded in advance. See {@link https://github.com/IGNF/geoportal-extensions/blob/master/README-leaflet.md#user-content-config "Configuration de l'accès à la plateforme Géoportail" documentation chapter} for more information.
-   * @param {String}  [options.position] - position of component into the map, 'topleft' by default. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
-   * @param {Boolean} [options.active = false] - specify if control should be actived at startup. Default is false.
-   * @param {Object} [options.stylesOptions = DEFAULT_STYLES] - Styles to use when drawing. see [leaflet options](http://leafletjs.com/reference.html#path-options) for available properties.
-   * @param {Object} [options.elevationPathOptions = {}] - elevation path service options. See {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~getAltitude options} for available options
-   * @param {Object} [options.displayProfileOptions = {}] - profile options.
-   * @param {Function} [options.displayProfileOptions.apply] - function to display profile if you want to cutomise it. By default, [DISPLAY_PROFILE_BY_DEFAULT()](./L.geoportalControl.ElevationPath.html#.DISPLAY_PROFILE_BY_DEFAULT) is used. Helper functions to use with D3 [DISPLAY_PROFILE_LIB_D3()](./L.geoportalControl.ElevationPath.html#.DISPLAY_PROFILE_LIB_D3) or AmCharts [DISPLAY_PROFILE_LIB_AMCHARTS()](./L.geoportalControl.ElevationPath.html#.DISPLAY_PROFILE_LIB_AMCHARTS) frameworks are also provided. You may also provide your own function.
-   * @param {Object} [options.displayProfileOptions.target] - DOM container to use to display the profile.
-   * @param {Boolean} [options.displayProfileOptions.greaterSlope = true] - display the greater slope into the graph
-   * @param {Boolean} [options.displayProfileOptions.meanSlope = true] -  display the mean slope into the graph
-   * @param {Boolean} [options.displayProfileOptions.ascendingElevation = true] -  display the ascending elevation into the graph
-   * @param {Boolean} [options.displayProfileOptions.descendingElevation = true] -  display the descending elevation into the graph
-   * @param {Boolean} [options.displayProfileOptions.currentSlope = true] -  display current slope value on profile mouseover
-   *
-   * @returns {L.geoportalControl.ElevationPath} - ElevationPath Object
-   * @example
-   *  var e = L.geoportalControl.ElevationPath({
-   *      active : false
-   *      position : "topleft"
-   *      stylesOptions : {},
-   *      elevationPathOptions : {},
-   *      displayProfileOptions  : {
-   *          apply : L.geoportalControl.DISPLAY_PROFILE_LIB_AMCHARTS
-   *          target : null, // by default
-   *          meanSlope : true, // by default
-   *          greaterSlope : true, // by default
-   *          ascendingElevation : false,
-   *          descendingElevation : false,
-   *          currentSlope : false
-   *      }
-   *  });
-   */
-  ElevationPath: function ElevationPath(options) {
-    return new _ElevationPath3.default(options);
-  },
-
-  /**
-   * Control Logo
-   *
-   * @private
-   * @method Logo
-   * @extends {L.Control}
-   * @alias L.geoportalControl.Logo
-   * @param {Object} options - options for function call.
-   * @param {String} options.position - 'topright' by default. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
-   * @param {String} options.url - URL
-   * @param {String} options.text - text
-   * @param {String} options.picto - picto
-   * @param {String|Object} options.size - picto size
-   * @returns {Logo} - Logo Object
-   * @example
-   * var map  = L.map('map').setView([48, 2], 4);
-   * var logo = L.geoportalControl.Logo({
-   *   position : "topright",
-   *   picto : "http://www.ign.fr/logo-ign.jpg",
-   *   url : "http://www.ign.fr",
-   *   text : "© IGN"
-   *   size : {width : '50px', height : '30px'}
-   * });
-   * logo.addTo(map);
-   */
-  Logo: function Logo(options) {
-    return new _Logo3.default(options);
-  }
-};
-
-exports.default = Controls;
-
-/***/ }),
-/* 22 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _leaflet = __webpack_require__(0);
-
-var _leaflet2 = _interopRequireDefault(_leaflet);
-
-var _LoggerByDefault = __webpack_require__(1);
-
-var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
-
-var _SelectorID = __webpack_require__(3);
-
-var _SelectorID2 = _interopRequireDefault(_SelectorID);
-
-var _LayerSwitcherDOM = __webpack_require__(24);
-
-var _LayerSwitcherDOM2 = _interopRequireDefault(_LayerSwitcherDOM);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var logger = _LoggerByDefault2.default.getLogger("layerswitcher");
-
-/**
- * @classdesc
- *
- * Leaflet Control Class to manage map layers : their order, visibility and opacity, and display their informations (title, description, legends, metadata...)
- *
- * Use {@link module:Controls.LayerSwitcher L.geoportalControl.LayerSwitcher()} factory to create instances of that class.
- *
- * **Extends** Leaflet <a href="http://leafletjs.com/reference.html#control-layers" target="_blank">L.Control.Layers</a> native class.
- *
- * @namespace
- * @alias L.geoportalControl.LayerSwitcher
- */
-var LayerSwitcher = _leaflet2.default.Control.Layers.extend( /** @lends L.geoportalControl.LayerSwitcher.prototype */{
-
-    includes: _LayerSwitcherDOM2.default,
-
-    /**
-     * options by default
-     * (extend to L.Control.Layers)
-     *
-     * @private
-     */
-    options: {
-        collapsed: true,
-        position: "topright",
-        autoZIndex: true,
-        layers: []
-    },
-
-    // ################################################################### //
-    // ##################### Methodes surchargées ######################## //
-    // ################################################################### //
-
-    /**
-     * @constructor LayerSwitcher
-     *
-     * @private
-     * @alias LayerSwitcher
-     * @extends {L.Control}
-     * @param {Object} options - options of component
-     * @param {String}  [options.position] - position of component into the map, 'topleft' by default
-     * @param {Boolean} [options.collapsed] - collapse mode, false by default
-     * @param {Array} [options.layers] - list of layers to be configured. Each array element is an object, with following properties :
-     * @param {Object} [options.layers.layer] - layer object
-     * @param {Boolean} [options.layers.display] - display layer in widget layer list
-     * @param {String} [options.layers.config.visibility] - layer visibility on map
-     * @param {String} [options.layers.config.title] - layer alias, to be displayed in widget layer list. E.g. : "Cartes IGN"
-     * @param {String} [options.layers.config.description] - layer description, to be displayed on title hover, or in layer information panel.
-     * @param {String} [options.layers.config.quicklookUrl] - link to a quick look image for this layer.
-     * @param {Array} [options.layers.config.legends] - array of layer legends. Each array element is an object, with following properties :
-     *      - url (String, mandatory) : link to a legend
-     *      - minScaleDenominator (Number, optional) : min scale denominator for legend validity.
-     * @param {Array} [options.layers.config.metadata] - array of layer metadata. Each array element is an object, with property url (String, mandatory) : link to a metadata
-     *
-     * @example
-     *  layers = [
-     *      {
-     *          layer : wms1,
-     *          display : false,
-     *          config : {
-     *              title : "test layer name 1",
-     *              description : "test layer desc 1",
-     *          }
-     *      }
-     *  ]
-     *  options = {
-     *      position : "topright",
-     *      collapsed : true,
-     *      layers : layers
-     *  }
-     *
-     *  var layerSwitcher = L.geoportalControl.LayerSwitcher(options);
-     */
-    initialize: function initialize(options) {
-        _leaflet2.default.Util.setOptions(this, options);
-
-        // uuid
-        this._uid = _SelectorID2.default.generate();
-
-        // il faut recuperer tous les layers de la carte (cf. onAdd).
-        // si une configuration de layers est renseignée, on exploite cette
-        // information pour les layers renseignés.
-        // Par contre, pour ceux qui n'ont pas de configuration, on exploite
-        // les informations issues de l'autoconf pour les layers IGN,
-        // et, pour les layers non IGN, on gére avec l'ID pours les valeurs
-        // de titre ou description  ...
-
-        // a ton une configuration des layers ?
-        this._hasLayersConfig = !(!this.options.layers || Object.keys(this.options.layers).length === 0);
-
-        // configuration des layers
-        this._layersConfig = this._hasLayersConfig ? this.options.layers : [];
-
-        // liste des layers (c'est l'interface avec le dom !)
-        this._layers = {};
-
-        // indice : ordre des layers sur la carte
-        // plus c'est haut, plus c'est au dessus de la pile
-        this._lastZIndex = 0;
-
-        // si on a une configuration de layers, on l'exploite tout de suite...
-        if (this._hasLayersConfig) {
-            for (var i = 0; i < this._layersConfig.length; i++) {
-                var obj = this._layersConfig[i];
-                // signature de la fonction pour une compatibilité avec leaflet...
-                this._addLayer(obj.layer, null, true);
-            }
-        }
-    },
-
-    /**
-     * Method 'onAdd'
-     * (extend to L.Control.Layers)
-     * Method to add the control on the map.
-     *
-     * @param {Object} map - L.Map
-     * @returns {HTMLElement} container
-     *
-     * @private
-     */
-    onAdd: function onAdd(map) {
-        // on charge tous les layers dans le controle avec une
-        // configuration automatique des layers pour ceux qui ne sont pas
-        // renseignés.
-        var layersMap = map._layers;
-
-        // on est dans le cas où nous avons des layers ajoutés à la carte
-        if (Object.keys(layersMap).length !== 0) {
-            // pour gerer l'ordre d'affichage des layers sur la map
-            // ainsi que dans le controle, on veut le fonctionnement suivant :
-            // layers ID   : [21  , 23  , 25  , 27]
-            // layers Map  : [21:1, 23:2, 25:3, 27:4]
-            // mais l'ordre dans le controle doit être inversé
-            // layers Ctrl : [27, 25, 23, 21], et ceci sera realisé lors de
-            // la creation du DOM pour chaque layer (cf. _update())
-
-            var layersKeys = Object.keys(layersMap); // trie
-            this._lastZIndex = 0;
-            for (var i = 0; i < layersKeys.length; i++) {
-                var layerId = layersKeys[i];
-
-                // gestion des ordres d'affichage des layers
-                if (this.options.autoZIndex && layersMap[layerId].setZIndex) {
-                    this._lastZIndex++;
-                    layersMap[layerId].setZIndex(this._lastZIndex);
-                }
-
-                // y'a t il une configuration des layers ?
-                // si oui, le layer renseigné a déjà été pris en compte dans
-                // le constructeur..., on passe à la suite...
-                if (this._hasLayersConfig) {
-                    if (this._layers[layerId]) {
-                        continue;
-                    }
-                }
-
-                // sans configuration, on gére en mode auto le layer.
-                // on utilise cette methode
-                // this.addOverlay() -> this._addLayer()...
-                this.addOverlay(layersMap[layerId]);
-            }
-        }
-
-        // FIXME au cas où les layers n'ont pas été renseignés sur la carte
-        // (via addTo ou options.layers), on decide de prendre ceux qui
-        // sont renseignés dans la configuration ?
-        if (Object.keys(layersMap).length === 0) {
-            var config = this._layersConfig;
-            this._lastZIndex = 0;
-            for (var j = 0; j < config.length; j++) {
-                var layer = config[j].layer;
-
-                if (!map.hasLayer(layer)) {
-                    // on ajoute le layer à la carte
-                    map.addLayer(layer);
-
-                    // on met en place la structure
-                    this.addOverlay(layer, null);
-
-                    // on gère l'ordres d'affichage des layers
-                    if (this.options.autoZIndex && layer.setZIndex) {
-                        this._lastZIndex++;
-                        layer.setZIndex(this._lastZIndex);
-                    }
-                }
-            }
-        }
-
-        // mise à jour des visibilités (au niveau du DOM, oeil coché ou non...)
-        for (var k in this._layers) {
-            if (this._layers.hasOwnProperty(k)) {
-                var obj = this._layers[k];
-                var _layer = obj.layer;
-                var _visibility = obj.visibility;
-                // par defaut, la visibilité de la couche est active, donc avec un oeil non coché !
-                if (!_visibility) {
-                    // on met à jour la liste des layers à afficher !
-                    this._updateVisibilityLayer(_layer);
-                }
-            }
-        }
-
-        // le constructeur retourne this._container !
-        // on appelle la methode hérité car elle va realisée le boulot :
-        // - _initLayout
-        // - _update
-        // - evenements sur la carte : layeradd + layerremove
-        // this._container = L.Control.Layers.prototype.onAdd.call(this, map);
-
-        this._initLayout();
-        this._update();
-        map.on("layeradd", this._onLayerChange, this);
-        map.on("layerremove", this._onLayerChange, this);
-
-        // expiremental !
-        map.eachLayer(function (layer) {
-            // ecouteur sur la visibilité des attributions d'un layer IGN
-            layer.on("visibilitychange", function () {
-                logger.trace("visibilitychange", layer);
-            }, this);
-            // ecouteur sur la liste des attributions d'un layer IGN
-            layer.on("attributionchange", function () {
-                logger.trace("attributionchange", layer);
-            }, this);
-        });
-
-        return this._container;
-    },
-
-    /**
-     * Method '_addLayer'
-     * (overwritten : L.Control.Layers)
-     * Methode creation of a useful structure for the interface with the DOM
-     * Method private call by this.initialize() or this.addOverlay()
-     *
-     * @example
-     * {
-     *    layer : objectlayer,
-     *    id : id,
-     *    title : title,
-     *    description : description
-     *    (...)
-     * };
-     * @param {Object} layer - object type 'L.TileLayer'
-     * @param {String} name - layer name or title
-     * @param {Boolean} overlay - overlay or not
-     *
-     * @private
-     */
-    _addLayer: function _addLayer(layer, name, overlay) {
-        // id du layer (IGN ou non)
-        var id = layer._geoportal_id ? layer._geoportal_id : layer._leaflet_id;
-
-        // pas d'ID !?
-        // le layer n'est pas chargé dans la carte...
-        if (typeof id === "undefined") {
-            return;
-        }
-
-        // recherche de la config pour un layer donné
-        var layerConfig = {};
-        for (var i in this._layersConfig) {
-            if (this._layersConfig.hasOwnProperty(i)) {
-                if (id === _leaflet2.default.stamp(this._layersConfig[i].layer)) {
-                    layerConfig = this._layersConfig[i].config;
-                    // display
-                    // ce layer n'est pas pris en compte dans le controle
-                    // mais il peut être affiché dans la map
-                    // si au préalable, le client l'a ajouté...
-                    var display = typeof this._layersConfig[i].display !== "undefined" ? this._layersConfig[i].display : true;
-                    if (!display) {
-                        return;
-                    }
-                    break;
-                }
-            }
-        }
-
-        // construit un objet simplifié pour le dom,
-        // par defaut, on prend en compte les layers de type IGN
-        // (info de l'autoconf).
-        this._layers[id] = {
-            layer: layer,
-            id: id,
-            overlay: overlay, // not use !
-            title: layer._geoportal_id && layer._title ? layer._title : name || id,
-            description: layer._geoportal_id && layer._description ? layer._description : name || id,
-            visibility: true, // par defaut, sauf si surcharge via la config...
-            legends: layer._geoportal_id ? layer._legends : null,
-            metadata: layer._geoportal_id ? layer._metadata : null,
-            quicklookUrl: layer._geoportal_id ? layer._quicklookUrl : null
-        };
-
-        // surcharge la config ci dessus avec les options de configuration saisies
-        if (layerConfig && Object.keys(layerConfig)) {
-            _leaflet2.default.Util.extend(this._layers[id], layerConfig);
-        }
-
-        // mise à jour de la visibilité
-        var _visibility = this._layers[id].visibility;
-        if (layer._geoportal_id) {
-            // mise à jour de la visibilité des attributions pour un layer IGN
-            layer.setVisible(_visibility);
-        }
-        if (!_visibility) {
-            // on met à jour la liste des layers à afficher !
-            this._updateVisibilityLayer(layer);
-        }
-    },
-
-    /**
-     * Method 'addTo'
-     * (overwritten : L.Control.Layers because of exception with _expandIfNotCollapsed())
-     *
-     * @param {Object} map - the map
-     *
-     * @returns {Object} this
-     */
-    addTo: function addTo(map) {
-        _leaflet2.default.Control.prototype.addTo.call(this, map);
-        return this;
-    },
-
-    /**
-     * Creation of layers of container
-     * (extend to L.Control.Layers)
-     *
-     * Method private call by this.onAdd()
-     *
-     * @private
-     */
-    _initLayout: function _initLayout() {
-        // fonctionnement lors de l'initialisation :
-        // onAdd -> this._update     -> this._addItem (on boucle sur layers)
-        // onAdd -> this._initLayout
-
-        // creation du container principal
-        var container = this._container = this._createMainContainerElement();
-
-        // ajout dans le container principal d'affichage des layers
-        var input = this._createMainLayersShowElement();
-        container.appendChild(input);
-
-        // gestion du mode "collapsed"
-        if (!this.options.collapsed) {
-            input.checked = true;
-        }
-
-        // ajout dans le container principal de la liste des layers
-        var divL = this._overlaysList = this._createMainLayersElement();
-        container.appendChild(divL);
-
-        // ajout dans le container principal du picto du controle
-        var picto = this._createMainPictoElement();
-        container.appendChild(picto);
-
-        // ajout dans le container principal du panneau d'information
-        var divI = this._createMainInfoElement();
-        container.appendChild(divI);
-
-        // creation du mode draggable
-        this._createDraggableElement(this._overlaysList, this);
-
-        // desactivation des evenements qui peuvent interférer avec la carte
-        _leaflet2.default.DomEvent.disableClickPropagation(container).disableScrollPropagation(container);
-
-        // gestion des evenements en interaction avec la carte
-        this._map.on("moveend", this._onOutOfRangeLayerZoom, this);
-
-        // gestion des CSS en fonction du placement du controle
-        switch (this.getPosition()) {
-            case "topright":
-                container.style.position = "relative";
-                container.style.top = "0";
-                container.style.right = "0";
-                break;
-            case "topleft":
-                container.style.position = "relative";
-                container.style.top = "0";
-                container.style.right = "initial";
-                picto.style.float = "left";
-                divL.style.borderBottomRightRadius = "5px";
-                divL.style.borderBottomLeftRadius = "0";
-                divI.style.right = "initial";
-                divI.style.left = "190px";
-                break;
-            case "bottomleft":
-                container.style.position = "relative";
-                container.style.top = "0";
-                container.style.right = "initial";
-                picto.style.float = "left";
-                divL.style.borderBottomRightRadius = "5px";
-                divL.style.borderBottomLeftRadius = "0";
-                divI.style.right = "initial";
-                divI.style.left = "190px";
-                // divI.style.top = "initial";
-                // divI.style.bottom = "190px";
-                break;
-            case "bottomright":
-                container.style.position = "relative";
-                container.style.top = "0";
-                container.style.right = "0";
-                // divI.style.top = "initial";
-                // divI.style.bottom = "190px";
-                break;
-            default:
-                container.style.position = "relative";
-                container.style.top = "0";
-                container.style.right = "0";
-        }
-    },
-
-    /**
-     * Update the construction of DOM for each layer
-     * (extend to L.Control.Layers)
-     *
-     * Method private call by this.onAdd()
-     *
-     * @private
-     */
-    _update: function _update() {
-        if (!this._container) {
-            return;
-        }
-
-        this._overlaysList.innerHTML = "";
-
-        var layersId = [];
-
-        for (var i in this._layers) {
-            if (this._layers.hasOwnProperty(i)) {
-                layersId.push(i);
-            }
-        }
-
-        // inversion du sens des layers dans le controle
-        // car on veut le même ordre que sur la map, et comme je suis un peu
-        // parano, je re-trie la liste...
-        var layers = layersId.sort(function (a, b) {
-            var ia = parseInt(a, 10);
-            var ib = parseInt(b, 10);
-            return ia - ib;
-        }).reverse();
-
-        for (var j = 0; j < layers.length; j++) {
-            var id = layers[j];
-            var obj = this._layers[id];
-            this._addItem(obj);
-        }
-    },
-
-    /**
-     * Construction of the DOM for each layer
-     * (extend to L.Control.Layers)
-     *
-     * Method private call by this._update()
-     *
-     * @private
-     * @param {Object} obj - layer
-     * @returns {HTMLElement} container
-     */
-    _addItem: function _addItem(obj) {
-        logger.log("_addItem", obj);
-
-        obj.opacity = obj.layer.options.opacity; // ajout de cette option !
-        var container = this._createContainerLayerElement(obj);
-
-        // gestion outOfRange
-        obj.layer.options.minZoom > this._map.getZoom() || obj.layer.options.maxZoom < this._map.getZoom() ? _leaflet2.default.DomUtil.addClass(container, "outOfRange") : _leaflet2.default.DomUtil.removeClass(container, "outOfRange");
-
-        // ajout du container dans la liste des layers (de type overlay uniquement !)
-        this._overlaysList.appendChild(container);
-
-        return container;
-    },
-
-    /**
-     * Event onLayer change
-     * (extend to L.Control.Layers because of version 1.0.0)
-     *
-     * @private
-     * @param {Event} e - event
-     */
-    _onLayerChange: function _onLayerChange(e) {
-        var obj = this._layers[_leaflet2.default.stamp(e.layer)];
-
-        if (!obj) {
-            return;
-        }
-
-        if (!this._handlingClick) {
-            this._update();
-        }
-
-        var type = e.type === "layeradd" ? "overlayadd" : "overlayremove";
-
-        if (type) {
-            this._map.fire(type, obj);
-        }
-    },
-
-    /**
-     * Event onLayer remove
-     * (extend to L.Control.Layers because of version 1.0.0)
-     *
-     * @private
-     * @param {Object} layer - event
-     * @returns {Object} layer
-     */
-    removeLayer: function removeLayer(layer) {
-        // clean DOM !
-        var id = _leaflet2.default.stamp(layer);
-        delete this._layers[id];
-        this._update();
-
-        // clean Layers
-        var map = this._map;
-        if (map) {
-            if (map.hasLayer(layer)) {
-                map.removeLayer(layer);
-            }
-        }
-
-        return this;
-    },
-
-    // ################################################################### //
-    // ################ Methodes de l'instance (privées) ################# //
-    // ################################################################### //
-
-    /**
-     * Set visibility of attribution layer
-     * (call by this._onVisibilityLayerClick())
-     *
-     * @private
-     * @param {Object} layer - layer
-     */
-    _updateVisibilityLayer: function _updateVisibilityLayer(layer) {
-        if (!this._map) {
-            return;
-        }
-
-        this._handlingClick = true;
-
-        var visibility = this._layers[_leaflet2.default.stamp(layer)].visibility;
-
-        if (visibility && !this._map.hasLayer(layer)) {
-            // input non checked dans le DOM, on ouvre l'oeil
-            // et on ajoute la couche !
-            this._map.addLayer(layer);
-        } else if (!visibility && this._map.hasLayer(layer)) {
-            // input checked dans le DOM, on ferme l'oeil
-            // et on supprime la couche !
-            this._map.removeLayer(layer);
-        } else {
-            logger.log("Status unknown layer !?");
-        }
-
-        this._handlingClick = false;
-        this._refocusOnMap();
-    },
-
-    /**
-     * Set visibility of layer (DOM)
-     * (call by this.setVisibility())
-     *
-     * @private
-     * @param {Object} layer - layer
-     */
-    _updateVisibilityDOMLayer: function _updateVisibilityDOMLayer(layer) {
-        var layerIdx = _leaflet2.default.stamp(layer);
-        var visibilityElement = _leaflet2.default.DomUtil.get(this._addUID("GPvisibility_ID_" + layerIdx)); // FIXME ID !
-        var visibilityValue = this._layers[layerIdx].visibility;
-        visibilityElement.checked = visibilityValue;
-    },
-
-    /**
-     * Set opacity of layer (DOM)
-     * (call by this.setOpacity())
-     *
-     * @private
-     * @param {Object} layer - layer
-     */
-    _updateOpacityDOMLayer: function _updateOpacityDOMLayer(layer) {
-        var layerIdx = _leaflet2.default.stamp(layer);
-        var opacityValue = layer.options.opacity;
-        var opacityElement = _leaflet2.default.DomUtil.get(this._addUID("GPopacityValue_ID_" + layerIdx)); // FIXME ID !
-        opacityElement.innerHTML = parseInt(opacityValue * 100, 10) + "%";
-    },
-
-    // ################################################################### //
-    // ################## GESTIONNAIRES d'evenements ##################### //
-    // ################################################################### //
-
-    /**
-     * Event 'zoom' on layers visibility
-     *
-     * FIXME contrainte sur l'emprise du layer ?
-     *
-     * @private
-     */
-    _onOutOfRangeLayerZoom: function _onOutOfRangeLayerZoom() {
-        var map = this._map;
-        var layers = this._layers;
-        for (var i in layers) {
-            if (layers.hasOwnProperty(i)) {
-                var layer = layers[i].layer;
-                var id = layers[i].id;
-                var div = _leaflet2.default.DomUtil.get(this._addUID("GPlayerSwitcher_ID_" + id)); // FIXME ID !
-                if (layer.options.minZoom > map.getZoom() || layer.options.maxZoom < map.getZoom()) {
-                    _leaflet2.default.DomUtil.addClass(div, "outOfRange");
-                } else {
-                    _leaflet2.default.DomUtil.removeClass(div, "outOfRange");
-                }
-            }
-        }
-    },
-
-    /**
-     * Event 'click' on layer visibility
-     *
-     * @private
-     * @param {Event} e - MouseEvent
-     */
-    _onVisibilityLayerClick: function _onVisibilityLayerClick(e) {
-        var visibilityElement = e.target.id; // ex GPvisibilityPicto_ID_26
-        var visibilityOrder = _SelectorID2.default.index(visibilityElement); // ex. 26
-
-        // on met à jour cette interface...
-        this._layers[visibilityOrder].visibility = _leaflet2.default.DomUtil.get(visibilityElement).checked;
-        var layer = this._layers[visibilityOrder].layer;
-
-        this._updateVisibilityLayer(layer);
-    },
-
-    /**
-     * Event 'click' on layer deleted
-     *
-     * @private
-     * @param {Event} e - MouseEvent
-     */
-    _onDropLayerClick: function _onDropLayerClick(e) {
-        var layerElement = e.target.id; // ex GPvisibilityPicto_ID_26
-        var layerOrder = _SelectorID2.default.index(layerElement); // ex. 26
-        var layer = this._layers[layerOrder].layer;
-
-        this.removeLayer(layer);
-    },
-
-    /**
-     * Event 'onchange' on layer opacity
-     *
-     * FIXME appel en dur d'un identifiant CSS !
-     *
-     * @private
-     * @param {Event} e - ChangeEvent
-     */
-    _onChangeLayerOpacity: function _onChangeLayerOpacity(e) {
-        var layerElement = e.target.id; // ex GPvisibilityPicto_ID_26
-        var layerOrder = _SelectorID2.default.index(layerElement); // ex. 26
-        var layer = this._layers[layerOrder].layer;
-
-        var opacityValue = e.target.value;
-        var opacityId = _leaflet2.default.DomUtil.get(this._addUID("GPopacityValue_ID_" + layerOrder)); // FIXME ID !
-        opacityId.innerHTML = opacityValue + "%";
-
-        if (this._map.hasLayer(layer)) {
-            layer.setOpacity(opacityValue / 100);
-        }
-    },
-
-    /**
-     * Event 'click' on opening the information window
-     *
-     * FIXME appel en dur d'un identifiant CSS !
-     *
-     * @private
-     * @param {Event} e - MouseEvent
-     */
-    _onOpenLayerInfoClick: function _onOpenLayerInfoClick(e) {
-        var layerElement = e.target.id; // ex GPvisibilityPicto_ID_26
-        var layerOrder = _SelectorID2.default.index(layerElement); // ex. 26
-        var layer = this._layers[layerOrder];
-
-        // Close layer info panel
-        var divId = _leaflet2.default.DomUtil.get(e.target.id);
-        var panel = null;
-        var info = null;
-        if (divId.className === "GPlayerInfoOpened") {
-            _leaflet2.default.DomUtil.removeClass(divId, "GPlayerInfoOpened");
-            _leaflet2.default.DomUtil.addClass(divId, "GPlayerInfo");
-
-            panel = _leaflet2.default.DomUtil.get(this._addUID("GPlayerInfoPanel"));
-            _leaflet2.default.DomUtil.removeClass(panel, "GPpanel");
-            _leaflet2.default.DomUtil.removeClass(panel, "GPlayerInfoPanelOpened");
-            _leaflet2.default.DomUtil.addClass(panel, "GPlayerInfoPanelClosed");
-
-            info = _leaflet2.default.DomUtil.get(this._addUID("GPlayerInfoContent"));
-            panel.removeChild(info);
-            return;
-        }
-
-        var layers = document.getElementsByClassName("GPlayerInfoOpened");
-        for (var i = 0; i < layers.length; i++) {
-            layers[i].className = "GPlayerInfo";
-        }
-
-        // Open layer info panel
-        _leaflet2.default.DomUtil.removeClass(divId, "GPlayerInfo");
-        _leaflet2.default.DomUtil.addClass(divId, "GPlayerInfoOpened");
-
-        panel = _leaflet2.default.DomUtil.get(this._addUID("GPlayerInfoPanel"));
-        _leaflet2.default.DomUtil.addClass(panel, "GPpanel");
-        _leaflet2.default.DomUtil.removeClass(panel, "GPlayerInfoPanelClosed");
-        _leaflet2.default.DomUtil.addClass(panel, "GPlayerInfoPanelOpened");
-
-        info = _leaflet2.default.DomUtil.get(this._addUID("GPlayerInfoContent"));
-        if (info) {
-            panel.removeChild(info);
-        }
-
-        // on récupére les infos associées au layer pour mettre à jour
-        // dynamiquement le contenu du panel d"infos
-        var infoLayer = this._createContainerLayerInfoElement(layer);
-        panel.appendChild(infoLayer);
-    },
-
-    /**
-     * Event "drag & drop" on move layer
-     *
-     * FIXME appel en dur d'un identifiant CSS !
-     *
-     * @private
-     * @param {Event} e - MouseEvent
-     */
-    _onDragAndDropLayerClick: function _onDragAndDropLayerClick(e) {
-        var layerElement = e.target.id; // ex GPvisibilityPicto_ID_26
-        var layerOrder = _SelectorID2.default.index(layerElement); // ex. 26
-        var layer = this._layers[layerOrder];
-
-        logger.log(layer);
-
-        var matchesLayers = document.querySelectorAll("div.GPlayerSwitcher_layer");
-        this._lastZIndex = matchesLayers.length;
-        for (var i = 0; i < matchesLayers.length; i++) {
-            var tag = matchesLayers[i].id;
-            var order = _SelectorID2.default.index(tag);
-
-            var _layer = this._layers[order].layer;
-            if (this.options.autoZIndex && _layer.setZIndex) {
-                this._lastZIndex--;
-                _layer.setZIndex(this._lastZIndex);
-            }
-        }
-    },
-
-    // ################################################################### //
-    // ###### METHODES PUBLIQUES (INTERFACE AVEC LE CONTROLE) ############ //
-    // ################################################################### //
-
-    /**
-     * Adding layer configuration to be displayed by the control
-     *
-     * @param {Object} layer - layer to add to layer switcher
-     * @param {Object} config - See {@link module:Controls.LayerSwitcher L.geoportalControl.LayerSwitcher()} for layer display config object definition.
-     */
-    addLayer: function addLayer(layer, config) {
-        var map = this._map;
-        var cfg = this._layersConfig;
-
-        if (!layer) {
-            logger.log("[ERROR] LayerSwitcher:addLayer - missing layer parameter !");
-            return;
-        }
-
-        if (!map.hasLayer(layer)) {
-            logger.log("[WARN] LayerSwitcher:addLayer - layer has not been added on map !");
-            map.addLayer(layer);
-        }
-
-        var id = _leaflet2.default.stamp(layer);
-        for (var i in cfg) {
-            if (cfg.hasOwnProperty(i)) {
-                // layer already added !
-                if (id === _leaflet2.default.stamp(cfg[i].layer)) {
-                    delete cfg[i];
-                    break;
-                }
-            }
-        }
-
-        var _config = config || {};
-        _leaflet2.default.Util.extend(_config, {
-            layer: layer
-        });
-
-        cfg.push(_config);
-
-        // layer déjà configuré, il reprend sa place !
-        if (!this._layers[id]) {
-            layer.setZIndex(this._lastZIndex++);
-        }
-
-        this.addOverlay(layer);
-
-        this._update();
-    },
-
-    /**
-     * Set the opacity of a layer, and opacity must be a number from 0 to 1.
-     *
-     * @param {Object} layer - layer into layerswitcher
-     * @param {Number} opacity - 0-1.
-     */
-    setOpacity: function setOpacity(layer, opacity) {
-        logger.trace(layer, opacity);
-        if (opacity > 1 || opacity < 0) {
-            return;
-        }
-
-        if (this._map.hasLayer(layer)) {
-            layer.setOpacity(opacity);
-            this._updateOpacityDOMLayer(layer);
-        }
-    },
-
-    /**
-     * Set the visibility of a layer.
-     *
-     * @param {Object} layer - layer into layerswitcher
-     * @param {Object} visibility - true/false.
-     */
-    setVisibility: function setVisibility(layer, visibility) {
-        logger.trace(layer, visibility);
-        this._layers[_leaflet2.default.stamp(layer)].visibility = visibility;
-        this._updateVisibilityDOMLayer(layer);
-        this._updateVisibilityLayer(layer);
-    }
-});
-
-exports.default = LayerSwitcher;
-
-/***/ }),
-/* 23 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
-* loglevel - https://github.com/pimterry/loglevel
-*
-* Copyright (c) 2013 Tim Perry
-* Licensed under the MIT license.
-*/
-(function (root, definition) {
-    "use strict";
-    if (true) {
-        !(__WEBPACK_AMD_DEFINE_FACTORY__ = (definition),
-				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
-				(__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) :
-				__WEBPACK_AMD_DEFINE_FACTORY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-    } else if (typeof module === 'object' && module.exports) {
-        module.exports = definition();
-    } else {
-        root.log = definition();
-    }
-}(this, function () {
-    "use strict";
-
-    // Slightly dubious tricks to cut down minimized file size
-    var noop = function() {};
-    var undefinedType = "undefined";
-
-    var logMethods = [
-        "trace",
-        "debug",
-        "info",
-        "warn",
-        "error"
-    ];
-
-    // Cross-browser bind equivalent that works at least back to IE6
-    function bindMethod(obj, methodName) {
-        var method = obj[methodName];
-        if (typeof method.bind === 'function') {
-            return method.bind(obj);
-        } else {
-            try {
-                return Function.prototype.bind.call(method, obj);
-            } catch (e) {
-                // Missing bind shim or IE8 + Modernizr, fallback to wrapping
-                return function() {
-                    return Function.prototype.apply.apply(method, [obj, arguments]);
-                };
-            }
-        }
-    }
-
-    // Build the best logging method possible for this env
-    // Wherever possible we want to bind, not wrap, to preserve stack traces
-    function realMethod(methodName) {
-        if (methodName === 'debug') {
-            methodName = 'log';
-        }
-
-        if (typeof console === undefinedType) {
-            return false; // No method possible, for now - fixed later by enableLoggingWhenConsoleArrives
-        } else if (console[methodName] !== undefined) {
-            return bindMethod(console, methodName);
-        } else if (console.log !== undefined) {
-            return bindMethod(console, 'log');
-        } else {
-            return noop;
-        }
-    }
-
-    // These private functions always need `this` to be set properly
-
-    function replaceLoggingMethods(level, loggerName) {
-        /*jshint validthis:true */
-        for (var i = 0; i < logMethods.length; i++) {
-            var methodName = logMethods[i];
-            this[methodName] = (i < level) ?
-                noop :
-                this.methodFactory(methodName, level, loggerName);
-        }
-
-        // Define log.log as an alias for log.debug
-        this.log = this.debug;
-    }
-
-    // In old IE versions, the console isn't present until you first open it.
-    // We build realMethod() replacements here that regenerate logging methods
-    function enableLoggingWhenConsoleArrives(methodName, level, loggerName) {
-        return function () {
-            if (typeof console !== undefinedType) {
-                replaceLoggingMethods.call(this, level, loggerName);
-                this[methodName].apply(this, arguments);
-            }
-        };
-    }
-
-    // By default, we use closely bound real methods wherever possible, and
-    // otherwise we wait for a console to appear, and then try again.
-    function defaultMethodFactory(methodName, level, loggerName) {
-        /*jshint validthis:true */
-        return realMethod(methodName) ||
-               enableLoggingWhenConsoleArrives.apply(this, arguments);
-    }
-
-    function Logger(name, defaultLevel, factory) {
-      var self = this;
-      var currentLevel;
-      var storageKey = "loglevel";
-      if (name) {
-        storageKey += ":" + name;
-      }
-
-      function persistLevelIfPossible(levelNum) {
-          var levelName = (logMethods[levelNum] || 'silent').toUpperCase();
-
-          if (typeof window === undefinedType) return;
-
-          // Use localStorage if available
-          try {
-              window.localStorage[storageKey] = levelName;
-              return;
-          } catch (ignore) {}
-
-          // Use session cookie as fallback
-          try {
-              window.document.cookie =
-                encodeURIComponent(storageKey) + "=" + levelName + ";";
-          } catch (ignore) {}
-      }
-
-      function getPersistedLevel() {
-          var storedLevel;
-
-          if (typeof window === undefinedType) return;
-
-          try {
-              storedLevel = window.localStorage[storageKey];
-          } catch (ignore) {}
-
-          // Fallback to cookies if local storage gives us nothing
-          if (typeof storedLevel === undefinedType) {
-              try {
-                  var cookie = window.document.cookie;
-                  var location = cookie.indexOf(
-                      encodeURIComponent(storageKey) + "=");
-                  if (location !== -1) {
-                      storedLevel = /^([^;]+)/.exec(cookie.slice(location))[1];
-                  }
-              } catch (ignore) {}
-          }
-
-          // If the stored level is not valid, treat it as if nothing was stored.
-          if (self.levels[storedLevel] === undefined) {
-              storedLevel = undefined;
-          }
-
-          return storedLevel;
-      }
-
-      /*
-       *
-       * Public logger API - see https://github.com/pimterry/loglevel for details
-       *
-       */
-
-      self.name = name;
-
-      self.levels = { "TRACE": 0, "DEBUG": 1, "INFO": 2, "WARN": 3,
-          "ERROR": 4, "SILENT": 5};
-
-      self.methodFactory = factory || defaultMethodFactory;
-
-      self.getLevel = function () {
-          return currentLevel;
-      };
-
-      self.setLevel = function (level, persist) {
-          if (typeof level === "string" && self.levels[level.toUpperCase()] !== undefined) {
-              level = self.levels[level.toUpperCase()];
-          }
-          if (typeof level === "number" && level >= 0 && level <= self.levels.SILENT) {
-              currentLevel = level;
-              if (persist !== false) {  // defaults to true
-                  persistLevelIfPossible(level);
-              }
-              replaceLoggingMethods.call(self, level, name);
-              if (typeof console === undefinedType && level < self.levels.SILENT) {
-                  return "No console available for logging";
-              }
-          } else {
-              throw "log.setLevel() called with invalid level: " + level;
-          }
-      };
-
-      self.setDefaultLevel = function (level) {
-          if (!getPersistedLevel()) {
-              self.setLevel(level, false);
-          }
-      };
-
-      self.enableAll = function(persist) {
-          self.setLevel(self.levels.TRACE, persist);
-      };
-
-      self.disableAll = function(persist) {
-          self.setLevel(self.levels.SILENT, persist);
-      };
-
-      // Initialize with the right level
-      var initialLevel = getPersistedLevel();
-      if (initialLevel == null) {
-          initialLevel = defaultLevel == null ? "WARN" : defaultLevel;
-      }
-      self.setLevel(initialLevel, false);
-    }
-
-    /*
-     *
-     * Top-level API
-     *
-     */
-
-    var defaultLogger = new Logger();
-
-    var _loggersByName = {};
-    defaultLogger.getLogger = function getLogger(name) {
-        if (typeof name !== "string" || name === "") {
-          throw new TypeError("You must supply a name when creating a logger.");
-        }
-
-        var logger = _loggersByName[name];
-        if (!logger) {
-          logger = _loggersByName[name] = new Logger(
-            name, defaultLogger.getLevel(), defaultLogger.methodFactory);
-        }
-        return logger;
-    };
-
-    // Grab the current global log variable in case of overwrite
-    var _log = (typeof window !== undefinedType) ? window.log : undefined;
-    defaultLogger.noConflict = function() {
-        if (typeof window !== undefinedType &&
-               window.log === defaultLogger) {
-            window.log = _log;
-        }
-
-        return defaultLogger;
-    };
-
-    defaultLogger.getLoggers = function getLoggers() {
-        return _loggersByName;
-    };
-
-    return defaultLogger;
-}));
-
-
-/***/ }),
-/* 24 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _sortable = __webpack_require__(25);
-
-var _sortable2 = _interopRequireDefault(_sortable);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var LayerSwitcherDOM = {
-
-    /**
-     * Creation du drag and drop
-     *
-     * @param {Object} elementDraggable - Element HTML (DOM) Container
-     * @param {Object} context - this
-     */
-    _createDraggableElement: function _createDraggableElement(elementDraggable, context) {
-        _sortable2.default.create(elementDraggable, {
-            handle: ".GPlayerName",
-            draggable: ".draggable-layer",
-            ghostClass: "GPghostLayer",
-            animation: 200,
-            // Call event function on drag and drop
-            onEnd: function onEnd(e) {
-                // FIXME pas terrrible, mais il faut bien passer ce contexte...
-                context._onDragAndDropLayerClick(e);
-            }
-        });
-    },
-
-    // ################################################################### //
-    // ######################### Main container ########################## //
-    // ################################################################### //
-
-    /**
-    * Add uuid to the tag ID
-    * @param {String} id - id selector
-    * @returns {String} uid - id selector with an unique id
-    */
-    _addUID: function _addUID(id) {
-        var uid = this._uid ? id + "-" + this._uid : id;
-        return uid;
-    },
-
-    /**
-     * Creation du container principal (DOM)
-     *
-     * @returns {DOMElement} container - layer switcher DOM element
-     */
-    _createMainContainerElement: function _createMainContainerElement() {
-        var container = document.createElement("div");
-        container.id = this._addUID("GPlayerSwitcher");
-        container.className = "GPwidget";
-        return container;
-    },
-
-    /**
-     * Creation du container principal d"affichage des layers (DOM)
-     *
-     * @returns {DOMElement} input - element for minimizing/maximizing the layer switcher
-     */
-    _createMainLayersShowElement: function _createMainLayersShowElement() {
-        // <!-- Hidden checkbox for minimizing/maximizing -->
-        var input = document.createElement("input");
-        input.id = this._addUID("GPshowLayersList");
-        input.type = "checkbox";
-        return input;
-    },
-
-    /**
-     * Creation du container principal des layers (DOM)
-     *
-     * @returns {DOMElement} container - layers list container
-     */
-    _createMainLayersElement: function _createMainLayersElement() {
-        // ajout de la liste des layers dans le container principal
-        // <div id="GPlayersList" class="GPpanel">
-        //   (...)
-        // </div>
-        var div = document.createElement("div");
-        div.id = this._addUID("GPlayersList");
-        div.className = "GPpanel";
-        return div;
-    },
-
-    /**
-     * Creation du container du picto du controle (DOM)
-     *
-     * @returns {DOMElement} label
-     */
-    _createMainPictoElement: function _createMainPictoElement() {
-        var self = this;
-
-        // exemple :
-        // <!-- Label for minimizing/maximizing -->
-        // <label id="GPshowLayersListPicto" class="GPshowAdvancedToolPicto" for="GPshowLayersList" title="Afficher/masquer le gestionnaire de couches">
-        //    <span id="GPshowLayersListOpen" class="GPshowAdvancedToolOpen"></span><span id="GPshowLayersListClose"></span>
-        // </label>
-
-        var label = document.createElement("label");
-        label.id = this._addUID("GPshowLayersListPicto");
-        label.className = "GPshowAdvancedToolPicto";
-        label.htmlFor = this._addUID("GPshowLayersList");
-        label.title = "Afficher/masquer le gestionnaire de couches";
-
-        var spanOpen = document.createElement("span");
-        spanOpen.id = this._addUID("GPshowLayersListOpen");
-        spanOpen.className = "GPshowAdvancedToolOpen";
-        spanOpen.addEventListener("click", function () {
-            if (document.getElementById(self._addUID("GPshowLayersList")).checked) {
-                var layers = document.getElementsByClassName("GPlayerInfoOpened");
-                for (var i = 0; i < layers.length; i++) {
-                    layers[i].className = "GPlayerInfo";
-                }
-                document.getElementById(self._addUID("GPlayerInfoPanel")).className = "GPlayerInfoPanelClosed";
-            }
-        });
-
-        label.appendChild(spanOpen);
-
-        var spanClose = document.createElement("span");
-        spanClose.addEventListener("click", function () {
-            if (document.getElementById(self._addUID("GPshowLayersList")).checked) {
-                var layers = document.getElementsByClassName("GPlayerInfoOpened");
-                for (var i = 0; i < layers.length; i++) {
-                    layers[i].className = "GPlayerInfo";
-                }
-                document.getElementById(self._addUID("GPlayerInfoPanel")).className = "GPlayerInfoPanelClosed";
-            }
-        });
-        spanClose.id = self._addUID("GPshowLayersListClose");
-
-        label.appendChild(spanClose);
-
-        return label;
-    },
-
-    /**
-     * Creation du container du panneau d"information (DOM)
-     *
-     * @returns {DOMElement} container
-     */
-    _createMainInfoElement: function _createMainInfoElement() {
-        // gestion du panneau d"information dans le container principal
-        // <div id="GPlayerInfoPanel" class="GPlayerInfoPanelClosed">...</div>
-        var div = document.createElement("div");
-        div.id = this._addUID("GPlayerInfoPanel");
-        div.className = "GPpanel GPlayerInfoPanelClosed";
-        return div;
-    },
-
-    // ################################################################### //
-    // ######################### Layer container ######################### //
-    // ################################################################### //
-
-    /**
-     * Creation du container du layer (DOM)
-     *
-     * @param {Object} obj - options de la couche à ajouter dans le layer switcher
-     * @param {Object} obj.layer - couche (ol ou leaflet)
-     * @param {String} obj.id - identifiant de la couche (pour ol ou leaflet)
-     * @param {String} obj.title - nom de la couche à afficher dans le controle
-     * @param {String} obj.description - description de la couche à afficher
-     * @param {Boolean} obj.visibility - visibilité de la couche dans la carte (true or false)
-     * @param {Float} obj.opacity - opacité de la couche
-     *
-     * @returns {DOMElement} container
-     */
-    _createContainerLayerElement: function _createContainerLayerElement(obj) {
-        // exemple :
-        // <div id="GPlayerSwitcher_ID_Layer1" class="GPlayerSwitcher_layer outOfRange">
-        //     <!-- Basic toolbar : visibility / layer name
-        //     _createBasicToolElement
-        //           _createBasicToolVisibilityElement
-        //           _createBasicToolNameElement
-        //     -->
-        //     <!-- Hidden checkbox + label for showing advanced toolbar
-        //     _createAdvancedToolShowElement
-        //     -->
-        //     <!-- Advanced toolbar : layer info / opacity slider / opacity value / removal
-        //     _createAdvancedToolElement
-        //           _createAdvancedToolDeleteElement
-        //           _createAdvancedToolInformationElement
-        //           _createAdvancedToolOpacityElement
-        //     -->
-        // </div>
-
-        // <!-- Layer entry in layer list -->
-        // <!-- Every item is marked with layerID, which is defined at layer import -->
-        var container = document.createElement("div");
-        container.id = this._addUID("GPlayerSwitcher_ID_" + obj.id);
-        container.className = "GPlayerSwitcher_layer draggable-layer";
-
-        // ajout des outils basiques (visibility / layer name)
-        container.appendChild(this._createBasicToolElement(obj));
-
-        // liste des outils avancés (layer info / opacity slider / opacity value / removal)
-        var array = this._createAdvancedToolShowElement(obj);
-        for (var i = 0; i < array.length; i++) {
-            container.appendChild(array[i]);
-        }
-
-        // ajout des outils avancés
-        container.appendChild(this._createAdvancedToolElement(obj));
-
-        return container;
-    },
-
-    // ################################################################### //
-    // ############################ Layer tool ########################### //
-    // ################################################################### //
-
-    /**
-     * Creation du container des outils basiques du layer (DOM)
-     *
-     * @param {Object} obj - options de la couche à ajouter dans le layer switcher
-     *
-     * @returns {DOMElement} container
-     */
-    _createBasicToolElement: function _createBasicToolElement(obj) {
-        // exemple :
-        // <div id="GPbasicTools_ID_1" class="GPlayerBasicTools">
-        //      <!-- _createBasicToolVisibilityElement -->
-        //      <!-- _createBasicToolNameElement -->
-        // </div>
-
-        var div = document.createElement("div");
-        div.id = this._addUID("GPbasicTools_ID_" + obj.id);
-        div.className = "GPlayerBasicTools";
-
-        div.appendChild(this._createBasicToolNameElement(obj));
-
-        var array = this._createBasicToolVisibilityElement(obj);
-        for (var i = 0; i < array.length; i++) {
-            div.appendChild(array[i]);
-        }
-
-        return div;
-    },
-
-    /**
-     * Creation du nom du layer (DOM)
-     *
-     * @param {Object} obj - options de la couche à ajouter dans le layer switcher
-     *
-     * @returns {DOMElement} container
-     */
-    _createBasicToolNameElement: function _createBasicToolNameElement(obj) {
-        // exemple :
-        // <span id="GPname_ID_Layer1" class="GPlayerName" title="Quartiers prioritaires de la ville">Quartiers prioritaires de la ville</span>
-        var span = document.createElement("span");
-        span.id = this._addUID("GPname_ID_" + obj.id);
-        span.className = "GPlayerName";
-        span.title = obj.description || obj.title;
-        span.innerHTML = obj.title;
-
-        return span;
-    },
-
-    /**
-     * Creation de l'icone de visibilité du layer (DOM)
-     *
-     * @param {Object} obj - options de la couche à ajouter dans le layer switcher
-      * @returns {DOMElement[]} array containing input and label elements
-     */
-    _createBasicToolVisibilityElement: function _createBasicToolVisibilityElement(obj) {
-        // exemple :
-        // <input type="checkbox" id="GPvisibility_ID_Layer1" checked="">
-        // <label for="GPvisibility_ID_Layer1" id="GPvisibilityPicto_ID_Layer1" class="GPlayerVisibility" title="Afficher/masquer la couche"></label>
-
-        var list = [];
-
-        var checked = typeof obj.visibility !== "undefined" ? obj.visibility : true;
-        var id = this._addUID("GPvisibility_ID_" + obj.id);
-
-        var input = document.createElement("input");
-        input.id = id;
-        input.type = "checkbox";
-        input.checked = checked;
-
-        var label = document.createElement("label");
-        label.htmlFor = id;
-        label.id = this._addUID("GPvisibilityPicto_ID_" + obj.id);
-        label.className = "GPlayerVisibility";
-        label.title = "Afficher/masquer la couche";
-
-        // add event for visibility change
-        var context = this;
-        if (input.addEventListener) {
-            input.addEventListener("click", function (e) {
-                context._onVisibilityLayerClick(e);
-            });
-        } else if (input.attachEvent) {
-            // internet explorer
-            input.attachEvent("onclick", function (e) {
-                context._onVisibilityLayerClick(e);
-            });
-        }
-
-        list.push(input);
-        list.push(label);
-
-        return list;
-    },
-
-    /**
-     * Creation de l'affichage du menu des outils avancés du layer (DOM)
-     *
-     * @param {Object} obj - options de la couche à ajouter dans le layer switcher
-     *
-     * @returns {DOMElement[]} array containing input and label elements
-     */
-    _createAdvancedToolShowElement: function _createAdvancedToolShowElement(obj) {
-        // <input type="checkbox" id="GPshowAdvancedTools_ID_Layer1">
-        // <label for="GPshowAdvancedTools_ID_Layer1" id="GPshowAdvancedToolsPicto_ID_Layer1" class="GPshowMoreOptions GPshowLayerAdvancedTools" title="Plus d'outils"></label>
-
-        var list = [];
-
-        var label = document.createElement("label");
-        label.id = this._addUID("GPshowAdvancedToolsPicto_ID_" + obj.id);
-        label.htmlFor = this._addUID("GPshowAdvancedTools_ID_" + obj.id);
-        label.title = "Plus d'outils";
-        label.className = "GPshowMoreOptions GPshowLayerAdvancedTools";
-
-        var input = document.createElement("input");
-        input.type = "checkbox";
-        input.id = this._addUID("GPshowAdvancedTools_ID_" + obj.id);
-
-        list.push(input);
-        list.push(label);
-
-        return list;
-    },
-
-    /**
-     * Creation du container des outils avancés du layer (DOM)
-     *
-     * @param {Object} obj - options de la couche à ajouter dans le layer switcher
-     *
-     * @returns {DOMElement} container
-     */
-    _createAdvancedToolElement: function _createAdvancedToolElement(obj) {
-        // exemple :
-        // <div id="GPadvancedTools_ID_Layer1" class="GPlayerAdvancedTools">
-        //     <!-- _createAdvancedToolDeleteElement -->
-        //     <!-- _createAdvancedToolInformationElement -->
-        //     <!-- _createAdvancedToolOpacityElement -->
-        // </div>
-
-        var container = document.createElement("div");
-        container.id = this._addUID("GPadvancedTools_ID_" + obj.id);
-        container.className = "GPlayerAdvancedTools";
-
-        container.appendChild(this._createAdvancedToolDeleteElement(obj));
-
-        // si on n'a de l'informations à afficher, on met en place ce composant
-        if (obj.title && obj.description) {
-            container.appendChild(this._createAdvancedToolInformationElement(obj));
-        }
-        if (obj.type !== "feature") {
-            var array = this._createAdvancedToolOpacityElement(obj);
-            for (var i = 0; i < array.length; i++) {
-                container.appendChild(array[i]);
-            }
-        }
-
-        return container;
-    },
-
-    /**
-     * Creation de l'icone de suppression du layer (DOM)
-     *
-     * @param {Object} obj - options de la couche à ajouter dans le layer switcher
-     *
-     * @returns {DOMElement} container
-     */
-    _createAdvancedToolDeleteElement: function _createAdvancedToolDeleteElement(obj) {
-        // exemple :
-        // <div id="GPremove_ID_Layer1" class="GPlayerRemove" title="Supprimer la couche" onclick="GPdropLayer(this);"></div>
-
-        var div = document.createElement("div");
-        div.id = this._addUID("GPremove_ID_" + obj.id);
-        div.className = "GPlayerRemove";
-        div.title = "Supprimer la couche";
-        div.layerId = obj.id;
-
-        var context = this;
-        if (div.addEventListener) {
-            div.addEventListener("click", function (e) {
-                context._onDropLayerClick(e);
-            });
-        } else if (div.attachEvent) {
-            // internet explorer
-            div.attachEvent("onclick", function (e) {
-                context._onDropLayerClick(e);
-            });
-        }
-
-        return div;
-    },
-
-    /**
-     * Creation de l'icone d'information du layer (DOM)
-     *
-     * @param {Object} obj - options de la couche à ajouter dans le layer switcher
-     *
-     * @returns {DOMElement} container
-     */
-    _createAdvancedToolInformationElement: function _createAdvancedToolInformationElement(obj) {
-        // exemple :
-        // <div id="GPinfo_ID_Layer1" class="GPlayerInfo" title="Informations/légende" onclick="GPopenLayerInfo(this);"></div>
-
-        var div = document.createElement("div");
-        div.id = this._addUID("GPinfo_ID_" + obj.id);
-        div.className = "GPlayerInfo";
-        div.title = "Informations/légende";
-        div.layerId = obj.id;
-        // add event on click
-        var context = this;
-        if (div.addEventListener) {
-            div.addEventListener("click", function (e) {
-                context._onOpenLayerInfoClick(e);
-            });
-        } else if (div.attachEvent) {
-            // internet explorer
-            div.attachEvent("onclick", function (e) {
-                context._onOpenLayerInfoClick(e);
-            });
-        }
-
-        return div;
-    },
-
-    /**
-     * Creation de l'icone de gestion de l'opacité du layer (DOM)
-     *
-     * @param {Object} obj - options de la couche à ajouter dans le layer switcher
-     *
-     * @returns {DOMElement[]} array of two containers
-     */
-    _createAdvancedToolOpacityElement: function _createAdvancedToolOpacityElement(obj) {
-        // exemple :
-        // <div id="GPopacity_ID_Layer1" class="GPlayerOpacity" title="Opacité">
-        //   <input id="GPopacityRange_ID_Layer1" type="range" value="100" oninput="GPchangeLayerOpacity(this);" onchange="GPchangeLayerOpacity(this);">
-        // </div>
-        // <div class="GPlayerOpacityValue" id="GPopacityValueDiv_ID_Layer1">
-        //   <span id="GPopacityValue_ID_Layer1">100</span>
-        //   %
-        // </div>
-
-        var list = [];
-
-        // curseur pour changer l'opacité
-        var divO = document.createElement("div");
-        divO.id = this._addUID("GPopacity_ID_" + obj.id);
-        divO.className = "GPlayerOpacity";
-        divO.title = "Opacité";
-
-        var opacity = typeof obj.opacity !== "undefined" ? obj.opacity : 1;
-        opacity = Math.round(opacity * 100);
-
-        var input = document.createElement("input");
-        input.id = this._addUID("GPopacityValueDiv_ID_" + obj.id);
-        input.type = "range";
-        input.value = opacity;
-
-        // add event for opacity change
-        var context = this;
-        if (input.addEventListener) {
-            input.addEventListener("change", function (e) {
-                context._onChangeLayerOpacity(e);
-            });
-        } else if (input.attachEvent) {
-            // internet explorer
-            input.attachEvent("onchange", function (e) {
-                context._onChangeLayerOpacity(e);
-            });
-        }
-
-        if (input.addEventListener) {
-            input.addEventListener("input", function (e) {
-                context._onChangeLayerOpacity(e);
-            });
-        } else if (input.attachEvent) {
-            // internet explorer
-            input.attachEvent("oninput", function (e) {
-                context._onChangeLayerOpacity(e);
-            });
-        }
-
-        divO.appendChild(input);
-
-        // Valeur d'opacité
-        var divC = document.createElement("div");
-        divC.id = this._addUID("GPopacityValueDiv_ID_" + obj.id);
-        divC.className = "GPlayerOpacityValue";
-
-        var span = document.createElement("span");
-        span.id = this._addUID("GPopacityValue_ID_" + obj.id);
-        span.innerHTML = opacity + "%";
-
-        divC.appendChild(span);
-
-        list.push(divO);
-        list.push(divC);
-
-        return list;
-    },
-
-    // ################################################################### //
-    // ############################ Layer info ########################### //
-    // ################################################################### //
-
-    /**
-     * Creation du container du layer info (DOM)
-     *
-     * TODO GPlayerInfoPopup : ???
-     * TODO GPlayerInfoLink  : mettre en forme les échelles !
-     *
-     * @param {Object} obj - options de la couche à ajouter dans le layer switcher
-     *
-     * @returns {DOMElement} container
-     */
-    _createContainerLayerInfoElement: function _createContainerLayerInfoElement(obj) {
-        var container = document.createElement("div");
-        container.id = this._addUID("GPlayerInfoContent");
-
-        var title = document.createElement("div");
-        title.id = this._addUID("GPlayerInfoTitle");
-        title.innerHTML = obj.title;
-        container.appendChild(title);
-
-        if (obj.quicklookUrl) {
-            var quick = document.createElement("div");
-            quick.id = this._addUID("GPlayerInfoQuicklook");
-            quick.title = "Afficher un aperçu de la couche";
-            var refquick = document.createElement("a");
-            refquick.href = obj.quicklookUrl;
-            refquick.appendChild(quick);
-            container.appendChild(refquick);
-        }
-
-        var close = document.createElement("div");
-        close.id = this._addUID("GPlayerInfoClose");
-        close.title = "Fermer la fenêtre";
-
-        var self = this;
-        /** Call event function on close click */
-        var onCloseClick = function onCloseClick() {
-            document.getElementById(self._addUID("GPlayerInfoPanel")).className = "GPlayerInfoPanelClosed";
-            var layers = document.getElementsByClassName("GPlayerInfoOpened");
-            for (var i = 0; i < layers.length; i++) {
-                layers[i].className = "GPlayerInfo";
-            }
-        };
-        if (close.addEventListener) {
-            close.addEventListener("click", onCloseClick);
-        } else if (close.attachEvent) {
-            // internet explorer
-            close.attachEvent("onclick", onCloseClick);
-        }
-        container.appendChild(close);
-
-        var desc = document.createElement("div");
-        desc.id = this._addUID("GPlayerInfoDescription");
-        desc.innerHTML = obj.description;
-        container.appendChild(desc);
-
-        if (obj.metadata) {
-            var mtd = document.createElement("div");
-            mtd.id = this._addUID("GPlayerInfoMetadata");
-
-            var mtdtitle = document.createElement("div");
-            mtdtitle.className = "GPlayerInfoSubtitle";
-            mtdtitle.innerHTML = "Métadonnées";
-            mtd.appendChild(mtdtitle);
-
-            for (var i = 0; i < obj.metadata.length; i++) {
-                var urlmtd = obj.metadata[i].url;
-
-                var mtdlink = document.createElement("div");
-                mtdlink.className = "GPlayerInfoLink";
-
-                var refmtd = document.createElement("a");
-                refmtd.href = urlmtd;
-                refmtd.innerHTML = urlmtd;
-                mtdlink.appendChild(refmtd);
-                mtd.appendChild(mtdlink);
-            }
-
-            if (obj.metadata.length !== 0) {
-                container.appendChild(mtd);
-            }
-        }
-
-        if (obj.legends) {
-            var lgd = document.createElement("div");
-            lgd.id = this._addUID("GPlayerInfoLegend");
-
-            var lgdtitle = document.createElement("div");
-            lgdtitle.className = "GPlayerInfoSubtitle";
-            lgdtitle.innerHTML = "Légende";
-            lgd.appendChild(lgdtitle);
-
-            var legends = {};
-            var maxScale = obj.maxScaleDenominator || 560000000;
-
-            // on crée un tableau temporaire pour ordonner les légendes selon le dénominateur d'échelle
-            for (var k = 0; k < obj.legends.length; k++) {
-                var minScale = obj.legends[k].minScaleDenominator;
-                if (minScale) {
-                    var s = minScale.toString();
-                    minScale = Math.round(parseInt(s.substring(0, 3), 10) / 10) * Math.pow(10, s.length - 2);
-                } else {
-                    minScale = 270;
-                }
-                legends[minScale] = obj.legends[k];
-            }
-
-            for (var scale in legends) {
-                if (legends.hasOwnProperty(scale)) {
-                    var urllgd = legends[scale].url;
-                    // on n'affiche pas les légendes pointant vers "nolegend.jpg"
-                    if (typeof urllgd === "string" && urllgd.toLowerCase().indexOf("nolegend.jpg") === -1) {
-                        // TODO GPlayerInfoPopup
-                        var lgdlink = document.createElement("div");
-                        lgdlink.className = "GPlayerInfoLink";
-
-                        maxScale = legends[scale].maxScaleDenominator || maxScale;
-
-                        var reflgd = document.createElement("a");
-                        reflgd.href = urllgd;
-                        reflgd.innerHTML = "Du 1/" + scale + " au 1/" + maxScale;
-                        lgdlink.appendChild(reflgd);
-                        lgd.appendChild(lgdlink);
-                    } else {
-                        delete legends[scale];
-                    }
-                }
-            }
-
-            if (Object.keys(legends).length !== 0) {
-                container.appendChild(lgd);
-            }
-        }
-
-        return container;
-    }
-};
-
-exports.default = LayerSwitcherDOM;
-
-/***/ }),
-/* 25 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
- * Sortable
- * @author	RubaXa   <trash@rubaxa.org>
- * @license MIT
- */
-
-
-(function (factory) {
-	"use strict";
-
-	if (true) {
-		!(__WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
-				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
-				(__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) :
-				__WEBPACK_AMD_DEFINE_FACTORY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-	}
-	else if (typeof module != "undefined" && typeof module.exports != "undefined") {
-		module.exports = factory();
-	}
-	else if (typeof Package !== "undefined") {
-		Sortable = factory();  // export for Meteor.js
-	}
-	else {
-		/* jshint sub:true */
-		window["Sortable"] = factory();
-	}
-})(function () {
-	"use strict";
-
-	var dragEl,
-		parentEl,
-		ghostEl,
-		cloneEl,
-		rootEl,
-		nextEl,
-
-		scrollEl,
-		scrollParentEl,
-
-		lastEl,
-		lastCSS,
-		lastParentCSS,
-
-		oldIndex,
-		newIndex,
-
-		activeGroup,
-		autoScroll = {},
-
-		tapEvt,
-		touchEvt,
-
-		moved,
-
-		/** @const */
-		RSPACE = /\s+/g,
-
-		expando = 'Sortable' + (new Date).getTime(),
-
-		win = window,
-		document = win.document,
-		parseInt = win.parseInt,
-
-		supportDraggable = !!('draggable' in document.createElement('div')),
-		supportCssPointerEvents = (function (el) {
-			el = document.createElement('x');
-			el.style.cssText = 'pointer-events:auto';
-			return el.style.pointerEvents === 'auto';
-		})(),
-
-		_silent = false,
-
-		abs = Math.abs,
-		slice = [].slice,
-
-		touchDragOverListeners = [],
-
-		_autoScroll = _throttle(function (/**Event*/evt, /**Object*/options, /**HTMLElement*/rootEl) {
-			// Bug: https://bugzilla.mozilla.org/show_bug.cgi?id=505521
-			if (rootEl && options.scroll) {
-				var el,
-					rect,
-					sens = options.scrollSensitivity,
-					speed = options.scrollSpeed,
-
-					x = evt.clientX,
-					y = evt.clientY,
-
-					winWidth = window.innerWidth,
-					winHeight = window.innerHeight,
-
-					vx,
-					vy
-				;
-
-				// Delect scrollEl
-				if (scrollParentEl !== rootEl) {
-					scrollEl = options.scroll;
-					scrollParentEl = rootEl;
-
-					if (scrollEl === true) {
-						scrollEl = rootEl;
-
-						do {
-							if ((scrollEl.offsetWidth < scrollEl.scrollWidth) ||
-								(scrollEl.offsetHeight < scrollEl.scrollHeight)
-							) {
-								break;
-							}
-							/* jshint boss:true */
-						} while (scrollEl = scrollEl.parentNode);
-					}
-				}
-
-				if (scrollEl) {
-					el = scrollEl;
-					rect = scrollEl.getBoundingClientRect();
-					vx = (abs(rect.right - x) <= sens) - (abs(rect.left - x) <= sens);
-					vy = (abs(rect.bottom - y) <= sens) - (abs(rect.top - y) <= sens);
-				}
-
-
-				if (!(vx || vy)) {
-					vx = (winWidth - x <= sens) - (x <= sens);
-					vy = (winHeight - y <= sens) - (y <= sens);
-
-					/* jshint expr:true */
-					(vx || vy) && (el = win);
-				}
-
-
-				if (autoScroll.vx !== vx || autoScroll.vy !== vy || autoScroll.el !== el) {
-					autoScroll.el = el;
-					autoScroll.vx = vx;
-					autoScroll.vy = vy;
-
-					clearInterval(autoScroll.pid);
-
-					if (el) {
-						autoScroll.pid = setInterval(function () {
-							if (el === win) {
-								win.scrollTo(win.pageXOffset + vx * speed, win.pageYOffset + vy * speed);
-							} else {
-								vy && (el.scrollTop += vy * speed);
-								vx && (el.scrollLeft += vx * speed);
-							}
-						}, 24);
-					}
-				}
-			}
-		}, 30),
-
-		_prepareGroup = function (options) {
-			var group = options.group;
-
-			if (!group || typeof group != 'object') {
-				group = options.group = {name: group};
-			}
-
-			['pull', 'put'].forEach(function (key) {
-				if (!(key in group)) {
-					group[key] = true;
-				}
-			});
-
-			options.groups = ' ' + group.name + (group.put.join ? ' ' + group.put.join(' ') : '') + ' ';
-		}
-	;
-
-
-
-	/**
-	 * @class  Sortable
-	 * @param  {HTMLElement}  el
-	 * @param  {Object}       [options]
-	 */
-	function Sortable(el, options) {
-		if (!(el && el.nodeType && el.nodeType === 1)) {
-			throw 'Sortable: `el` must be HTMLElement, and not ' + {}.toString.call(el);
-		}
-
-		this.el = el; // root element
-		this.options = options = _extend({}, options);
-
-
-		// Export instance
-		el[expando] = this;
-
-
-		// Default options
-		var defaults = {
-			group: Math.random(),
-			sort: true,
-			disabled: false,
-			store: null,
-			handle: null,
-			scroll: true,
-			scrollSensitivity: 30,
-			scrollSpeed: 10,
-			draggable: /[uo]l/i.test(el.nodeName) ? 'li' : '>*',
-			ghostClass: 'sortable-ghost',
-			chosenClass: 'sortable-chosen',
-			ignore: 'a, img',
-			filter: null,
-			animation: 0,
-			setData: function (dataTransfer, dragEl) {
-				dataTransfer.setData('Text', dragEl.textContent);
-			},
-			dropBubble: false,
-			dragoverBubble: false,
-			dataIdAttr: 'data-id',
-			delay: 0,
-			forceFallback: false,
-			fallbackClass: 'sortable-fallback',
-			fallbackOnBody: false
-		};
-
-
-		// Set default options
-		for (var name in defaults) {
-			!(name in options) && (options[name] = defaults[name]);
-		}
-
-		_prepareGroup(options);
-
-		// Bind all private methods
-		for (var fn in this) {
-			if (fn.charAt(0) === '_') {
-				this[fn] = this[fn].bind(this);
-			}
-		}
-
-		// Setup drag mode
-		this.nativeDraggable = options.forceFallback ? false : supportDraggable;
-
-		// Bind events
-		_on(el, 'mousedown', this._onTapStart);
-		_on(el, 'touchstart', this._onTapStart);
-
-		if (this.nativeDraggable) {
-			_on(el, 'dragover', this);
-			_on(el, 'dragenter', this);
-		}
-
-		touchDragOverListeners.push(this._onDragOver);
-
-		// Restore sorting
-		options.store && this.sort(options.store.get(this));
-	}
-
-
-	Sortable.prototype = /** @lends Sortable.prototype */ {
-		constructor: Sortable,
-
-		_onTapStart: function (/** Event|TouchEvent */evt) {
-			var _this = this,
-				el = this.el,
-				options = this.options,
-				type = evt.type,
-				touch = evt.touches && evt.touches[0],
-				target = (touch || evt).target,
-				originalTarget = target,
-				filter = options.filter;
-
-
-			if (type === 'mousedown' && evt.button !== 0 || options.disabled) {
-				return; // only left button or enabled
-			}
-
-			target = _closest(target, options.draggable, el);
-
-			if (!target) {
-				return;
-			}
-
-			// get the index of the dragged element within its parent
-			oldIndex = _index(target);
-
-			// Check filter
-			if (typeof filter === 'function') {
-				if (filter.call(this, evt, target, this)) {
-					_dispatchEvent(_this, originalTarget, 'filter', target, el, oldIndex);
-					evt.preventDefault();
-					return; // cancel dnd
-				}
-			}
-			else if (filter) {
-				filter = filter.split(',').some(function (criteria) {
-					criteria = _closest(originalTarget, criteria.trim(), el);
-
-					if (criteria) {
-						_dispatchEvent(_this, criteria, 'filter', target, el, oldIndex);
-						return true;
-					}
-				});
-
-				if (filter) {
-					evt.preventDefault();
-					return; // cancel dnd
-				}
-			}
-
-
-			if (options.handle && !_closest(originalTarget, options.handle, el)) {
-				return;
-			}
-
-
-			// Prepare `dragstart`
-			this._prepareDragStart(evt, touch, target);
-		},
-
-		_prepareDragStart: function (/** Event */evt, /** Touch */touch, /** HTMLElement */target) {
-			var _this = this,
-				el = _this.el,
-				options = _this.options,
-				ownerDocument = el.ownerDocument,
-				dragStartFn;
-
-			if (target && !dragEl && (target.parentNode === el)) {
-				tapEvt = evt;
-
-				rootEl = el;
-				dragEl = target;
-				parentEl = dragEl.parentNode;
-				nextEl = dragEl.nextSibling;
-				activeGroup = options.group;
-
-				dragStartFn = function () {
-					// Delayed drag has been triggered
-					// we can re-enable the events: touchmove/mousemove
-					_this._disableDelayedDrag();
-
-					// Make the element draggable
-					dragEl.draggable = true;
-
-					// Chosen item
-					_toggleClass(dragEl, _this.options.chosenClass, true);
-
-					// Bind the events: dragstart/dragend
-					_this._triggerDragStart(touch);
-				};
-
-				// Disable "draggable"
-				options.ignore.split(',').forEach(function (criteria) {
-					_find(dragEl, criteria.trim(), _disableDraggable);
-				});
-
-				_on(ownerDocument, 'mouseup', _this._onDrop);
-				_on(ownerDocument, 'touchend', _this._onDrop);
-				_on(ownerDocument, 'touchcancel', _this._onDrop);
-
-				if (options.delay) {
-					// If the user moves the pointer or let go the click or touch
-					// before the delay has been reached:
-					// disable the delayed drag
-					_on(ownerDocument, 'mouseup', _this._disableDelayedDrag);
-					_on(ownerDocument, 'touchend', _this._disableDelayedDrag);
-					_on(ownerDocument, 'touchcancel', _this._disableDelayedDrag);
-					_on(ownerDocument, 'mousemove', _this._disableDelayedDrag);
-					_on(ownerDocument, 'touchmove', _this._disableDelayedDrag);
-
-					_this._dragStartTimer = setTimeout(dragStartFn, options.delay);
-				} else {
-					dragStartFn();
-				}
-			}
-		},
-
-		_disableDelayedDrag: function () {
-			var ownerDocument = this.el.ownerDocument;
-
-			clearTimeout(this._dragStartTimer);
-			_off(ownerDocument, 'mouseup', this._disableDelayedDrag);
-			_off(ownerDocument, 'touchend', this._disableDelayedDrag);
-			_off(ownerDocument, 'touchcancel', this._disableDelayedDrag);
-			_off(ownerDocument, 'mousemove', this._disableDelayedDrag);
-			_off(ownerDocument, 'touchmove', this._disableDelayedDrag);
-		},
-
-		_triggerDragStart: function (/** Touch */touch) {
-			if (touch) {
-				// Touch device support
-				tapEvt = {
-					target: dragEl,
-					clientX: touch.clientX,
-					clientY: touch.clientY
-				};
-
-				this._onDragStart(tapEvt, 'touch');
-			}
-			else if (!this.nativeDraggable) {
-				this._onDragStart(tapEvt, true);
-			}
-			else {
-				_on(dragEl, 'dragend', this);
-				_on(rootEl, 'dragstart', this._onDragStart);
-			}
-
-			try {
-				if (document.selection) {
-					document.selection.empty();
-				} else {
-					window.getSelection().removeAllRanges();
-				}
-			} catch (err) {
-			}
-		},
-
-		_dragStarted: function () {
-			if (rootEl && dragEl) {
-				// Apply effect
-				_toggleClass(dragEl, this.options.ghostClass, true);
-
-				Sortable.active = this;
-
-				// Drag start event
-				_dispatchEvent(this, rootEl, 'start', dragEl, rootEl, oldIndex);
-			}
-		},
-
-		_emulateDragOver: function () {
-			if (touchEvt) {
-				if (this._lastX === touchEvt.clientX && this._lastY === touchEvt.clientY) {
-					return;
-				}
-
-				this._lastX = touchEvt.clientX;
-				this._lastY = touchEvt.clientY;
-
-				if (!supportCssPointerEvents) {
-					_css(ghostEl, 'display', 'none');
-				}
-
-				var target = document.elementFromPoint(touchEvt.clientX, touchEvt.clientY),
-					parent = target,
-					groupName = ' ' + this.options.group.name + '',
-					i = touchDragOverListeners.length;
-
-				if (parent) {
-					do {
-						if (parent[expando] && parent[expando].options.groups.indexOf(groupName) > -1) {
-							while (i--) {
-								touchDragOverListeners[i]({
-									clientX: touchEvt.clientX,
-									clientY: touchEvt.clientY,
-									target: target,
-									rootEl: parent
-								});
-							}
-
-							break;
-						}
-
-						target = parent; // store last element
-					}
-					/* jshint boss:true */
-					while (parent = parent.parentNode);
-				}
-
-				if (!supportCssPointerEvents) {
-					_css(ghostEl, 'display', '');
-				}
-			}
-		},
-
-
-		_onTouchMove: function (/**TouchEvent*/evt) {
-			if (tapEvt) {
-				// only set the status to dragging, when we are actually dragging
-				if (!Sortable.active) {
-					this._dragStarted();
-				}
-
-				// as well as creating the ghost element on the document body
-				this._appendGhost();
-
-				var touch = evt.touches ? evt.touches[0] : evt,
-					dx = touch.clientX - tapEvt.clientX,
-					dy = touch.clientY - tapEvt.clientY,
-					translate3d = evt.touches ? 'translate3d(' + dx + 'px,' + dy + 'px,0)' : 'translate(' + dx + 'px,' + dy + 'px)';
-
-				moved = true;
-				touchEvt = touch;
-
-				_css(ghostEl, 'webkitTransform', translate3d);
-				_css(ghostEl, 'mozTransform', translate3d);
-				_css(ghostEl, 'msTransform', translate3d);
-				_css(ghostEl, 'transform', translate3d);
-
-				evt.preventDefault();
-			}
-		},
-
-		_appendGhost: function () {
-			if (!ghostEl) {
-				var rect = dragEl.getBoundingClientRect(),
-					css = _css(dragEl),
-					options = this.options,
-					ghostRect;
-
-				ghostEl = dragEl.cloneNode(true);
-
-				_toggleClass(ghostEl, options.ghostClass, false);
-				_toggleClass(ghostEl, options.fallbackClass, true);
-
-				_css(ghostEl, 'top', rect.top - parseInt(css.marginTop, 10));
-				_css(ghostEl, 'left', rect.left - parseInt(css.marginLeft, 10));
-				_css(ghostEl, 'width', rect.width);
-				_css(ghostEl, 'height', rect.height);
-				_css(ghostEl, 'opacity', '0.8');
-				_css(ghostEl, 'position', 'fixed');
-				_css(ghostEl, 'zIndex', '100000');
-				_css(ghostEl, 'pointerEvents', 'none');
-
-				options.fallbackOnBody && document.body.appendChild(ghostEl) || rootEl.appendChild(ghostEl);
-
-				// Fixing dimensions.
-				ghostRect = ghostEl.getBoundingClientRect();
-				_css(ghostEl, 'width', rect.width * 2 - ghostRect.width);
-				_css(ghostEl, 'height', rect.height * 2 - ghostRect.height);
-			}
-		},
-
-		_onDragStart: function (/**Event*/evt, /**boolean*/useFallback) {
-			var dataTransfer = evt.dataTransfer,
-				options = this.options;
-
-			this._offUpEvents();
-
-			if (activeGroup.pull == 'clone') {
-				cloneEl = dragEl.cloneNode(true);
-				_css(cloneEl, 'display', 'none');
-				rootEl.insertBefore(cloneEl, dragEl);
-			}
-
-			if (useFallback) {
-
-				if (useFallback === 'touch') {
-					// Bind touch events
-					_on(document, 'touchmove', this._onTouchMove);
-					_on(document, 'touchend', this._onDrop);
-					_on(document, 'touchcancel', this._onDrop);
-				} else {
-					// Old brwoser
-					_on(document, 'mousemove', this._onTouchMove);
-					_on(document, 'mouseup', this._onDrop);
-				}
-
-				this._loopId = setInterval(this._emulateDragOver, 50);
-			}
-			else {
-				if (dataTransfer) {
-					dataTransfer.effectAllowed = 'move';
-					options.setData && options.setData.call(this, dataTransfer, dragEl);
-				}
-
-				_on(document, 'drop', this);
-				setTimeout(this._dragStarted, 0);
-			}
-		},
-
-		_onDragOver: function (/**Event*/evt) {
-			var el = this.el,
-				target,
-				dragRect,
-				revert,
-				options = this.options,
-				group = options.group,
-				groupPut = group.put,
-				isOwner = (activeGroup === group),
-				canSort = options.sort;
-
-			if (evt.preventDefault !== void 0) {
-				evt.preventDefault();
-				!options.dragoverBubble && evt.stopPropagation();
-			}
-
-			moved = true;
-
-			if (activeGroup && !options.disabled &&
-				(isOwner
-					? canSort || (revert = !rootEl.contains(dragEl)) // Reverting item into the original list
-					: activeGroup.pull && groupPut && (
-						(activeGroup.name === group.name) || // by Name
-						(groupPut.indexOf && ~groupPut.indexOf(activeGroup.name)) // by Array
-					)
-				) &&
-				(evt.rootEl === void 0 || evt.rootEl === this.el) // touch fallback
-			) {
-				// Smart auto-scrolling
-				_autoScroll(evt, options, this.el);
-
-				if (_silent) {
-					return;
-				}
-
-				target = _closest(evt.target, options.draggable, el);
-				dragRect = dragEl.getBoundingClientRect();
-
-				if (revert) {
-					_cloneHide(true);
-
-					if (cloneEl || nextEl) {
-						rootEl.insertBefore(dragEl, cloneEl || nextEl);
-					}
-					else if (!canSort) {
-						rootEl.appendChild(dragEl);
-					}
-
-					return;
-				}
-
-
-				if ((el.children.length === 0) || (el.children[0] === ghostEl) ||
-					(el === evt.target) && (target = _ghostIsLast(el, evt))
-				) {
-
-					if (target) {
-						if (target.animated) {
-							return;
-						}
-
-						targetRect = target.getBoundingClientRect();
-					}
-
-					_cloneHide(isOwner);
-
-					if (_onMove(rootEl, el, dragEl, dragRect, target, targetRect) !== false) {
-						if (!dragEl.contains(el)) {
-							el.appendChild(dragEl);
-							parentEl = el; // actualization
-						}
-
-						this._animate(dragRect, dragEl);
-						target && this._animate(targetRect, target);
-					}
-				}
-				else if (target && !target.animated && target !== dragEl && (target.parentNode[expando] !== void 0)) {
-					if (lastEl !== target) {
-						lastEl = target;
-						lastCSS = _css(target);
-						lastParentCSS = _css(target.parentNode);
-					}
-
-
-					var targetRect = target.getBoundingClientRect(),
-						width = targetRect.right - targetRect.left,
-						height = targetRect.bottom - targetRect.top,
-						floating = /left|right|inline/.test(lastCSS.cssFloat + lastCSS.display)
-							|| (lastParentCSS.display == 'flex' && lastParentCSS['flex-direction'].indexOf('row') === 0),
-						isWide = (target.offsetWidth > dragEl.offsetWidth),
-						isLong = (target.offsetHeight > dragEl.offsetHeight),
-						halfway = (floating ? (evt.clientX - targetRect.left) / width : (evt.clientY - targetRect.top) / height) > 0.5,
-						nextSibling = target.nextElementSibling,
-						moveVector = _onMove(rootEl, el, dragEl, dragRect, target, targetRect),
-						after
-					;
-
-					if (moveVector !== false) {
-						_silent = true;
-						setTimeout(_unsilent, 30);
-
-						_cloneHide(isOwner);
-
-						if (moveVector === 1 || moveVector === -1) {
-							after = (moveVector === 1);
-						}
-						else if (floating) {
-							var elTop = dragEl.offsetTop,
-								tgTop = target.offsetTop;
-
-							if (elTop === tgTop) {
-								after = (target.previousElementSibling === dragEl) && !isWide || halfway && isWide;
-							} else {
-								after = tgTop > elTop;
-							}
-						} else {
-							after = (nextSibling !== dragEl) && !isLong || halfway && isLong;
-						}
-
-						if (!dragEl.contains(el)) {
-							if (after && !nextSibling) {
-								el.appendChild(dragEl);
-							} else {
-								target.parentNode.insertBefore(dragEl, after ? nextSibling : target);
-							}
-						}
-
-						parentEl = dragEl.parentNode; // actualization
-
-						this._animate(dragRect, dragEl);
-						this._animate(targetRect, target);
-					}
-				}
-			}
-		},
-
-		_animate: function (prevRect, target) {
-			var ms = this.options.animation;
-
-			if (ms) {
-				var currentRect = target.getBoundingClientRect();
-
-				_css(target, 'transition', 'none');
-				_css(target, 'transform', 'translate3d('
-					+ (prevRect.left - currentRect.left) + 'px,'
-					+ (prevRect.top - currentRect.top) + 'px,0)'
-				);
-
-				target.offsetWidth; // repaint
-
-				_css(target, 'transition', 'all ' + ms + 'ms');
-				_css(target, 'transform', 'translate3d(0,0,0)');
-
-				clearTimeout(target.animated);
-				target.animated = setTimeout(function () {
-					_css(target, 'transition', '');
-					_css(target, 'transform', '');
-					target.animated = false;
-				}, ms);
-			}
-		},
-
-		_offUpEvents: function () {
-			var ownerDocument = this.el.ownerDocument;
-
-			_off(document, 'touchmove', this._onTouchMove);
-			_off(ownerDocument, 'mouseup', this._onDrop);
-			_off(ownerDocument, 'touchend', this._onDrop);
-			_off(ownerDocument, 'touchcancel', this._onDrop);
-		},
-
-		_onDrop: function (/**Event*/evt) {
-			var el = this.el,
-				options = this.options;
-
-			clearInterval(this._loopId);
-			clearInterval(autoScroll.pid);
-			clearTimeout(this._dragStartTimer);
-
-			// Unbind events
-			_off(document, 'mousemove', this._onTouchMove);
-
-			if (this.nativeDraggable) {
-				_off(document, 'drop', this);
-				_off(el, 'dragstart', this._onDragStart);
-			}
-
-			this._offUpEvents();
-
-			if (evt) {
-				if (moved) {
-					evt.preventDefault();
-					!options.dropBubble && evt.stopPropagation();
-				}
-
-				ghostEl && ghostEl.parentNode.removeChild(ghostEl);
-
-				if (dragEl) {
-					if (this.nativeDraggable) {
-						_off(dragEl, 'dragend', this);
-					}
-
-					_disableDraggable(dragEl);
-
-					// Remove class's
-					_toggleClass(dragEl, this.options.ghostClass, false);
-					_toggleClass(dragEl, this.options.chosenClass, false);
-
-					if (rootEl !== parentEl) {
-						newIndex = _index(dragEl);
-
-						if (newIndex >= 0) {
-							// drag from one list and drop into another
-							_dispatchEvent(null, parentEl, 'sort', dragEl, rootEl, oldIndex, newIndex);
-							_dispatchEvent(this, rootEl, 'sort', dragEl, rootEl, oldIndex, newIndex);
-
-							// Add event
-							_dispatchEvent(null, parentEl, 'add', dragEl, rootEl, oldIndex, newIndex);
-
-							// Remove event
-							_dispatchEvent(this, rootEl, 'remove', dragEl, rootEl, oldIndex, newIndex);
-						}
-					}
-					else {
-						// Remove clone
-						cloneEl && cloneEl.parentNode.removeChild(cloneEl);
-
-						if (dragEl.nextSibling !== nextEl) {
-							// Get the index of the dragged element within its parent
-							newIndex = _index(dragEl);
-
-							if (newIndex >= 0) {
-								// drag & drop within the same list
-								_dispatchEvent(this, rootEl, 'update', dragEl, rootEl, oldIndex, newIndex);
-								_dispatchEvent(this, rootEl, 'sort', dragEl, rootEl, oldIndex, newIndex);
-							}
-						}
-					}
-
-					if (Sortable.active) {
-						if (newIndex === null || newIndex === -1) {
-							newIndex = oldIndex;
-						}
-
-						_dispatchEvent(this, rootEl, 'end', dragEl, rootEl, oldIndex, newIndex);
-
-						// Save sorting
-						this.save();
-					}
-				}
-
-				// Nulling
-				rootEl =
-				dragEl =
-				parentEl =
-				ghostEl =
-				nextEl =
-				cloneEl =
-
-				scrollEl =
-				scrollParentEl =
-
-				tapEvt =
-				touchEvt =
-
-				moved =
-				newIndex =
-
-				lastEl =
-				lastCSS =
-
-				activeGroup =
-				Sortable.active = null;
-			}
-		},
-
-
-		handleEvent: function (/**Event*/evt) {
-			var type = evt.type;
-
-			if (type === 'dragover' || type === 'dragenter') {
-				if (dragEl) {
-					this._onDragOver(evt);
-					_globalDragOver(evt);
-				}
-			}
-			else if (type === 'drop' || type === 'dragend') {
-				this._onDrop(evt);
-			}
-		},
-
-
-		/**
-		 * Serializes the item into an array of string.
-		 * @returns {String[]}
-		 */
-		toArray: function () {
-			var order = [],
-				el,
-				children = this.el.children,
-				i = 0,
-				n = children.length,
-				options = this.options;
-
-			for (; i < n; i++) {
-				el = children[i];
-				if (_closest(el, options.draggable, this.el)) {
-					order.push(el.getAttribute(options.dataIdAttr) || _generateId(el));
-				}
-			}
-
-			return order;
-		},
-
-
-		/**
-		 * Sorts the elements according to the array.
-		 * @param  {String[]}  order  order of the items
-		 */
-		sort: function (order) {
-			var items = {}, rootEl = this.el;
-
-			this.toArray().forEach(function (id, i) {
-				var el = rootEl.children[i];
-
-				if (_closest(el, this.options.draggable, rootEl)) {
-					items[id] = el;
-				}
-			}, this);
-
-			order.forEach(function (id) {
-				if (items[id]) {
-					rootEl.removeChild(items[id]);
-					rootEl.appendChild(items[id]);
-				}
-			});
-		},
-
-
-		/**
-		 * Save the current sorting
-		 */
-		save: function () {
-			var store = this.options.store;
-			store && store.set(this);
-		},
-
-
-		/**
-		 * For each element in the set, get the first element that matches the selector by testing the element itself and traversing up through its ancestors in the DOM tree.
-		 * @param   {HTMLElement}  el
-		 * @param   {String}       [selector]  default: `options.draggable`
-		 * @returns {HTMLElement|null}
-		 */
-		closest: function (el, selector) {
-			return _closest(el, selector || this.options.draggable, this.el);
-		},
-
-
-		/**
-		 * Set/get option
-		 * @param   {string} name
-		 * @param   {*}      [value]
-		 * @returns {*}
-		 */
-		option: function (name, value) {
-			var options = this.options;
-
-			if (value === void 0) {
-				return options[name];
-			} else {
-				options[name] = value;
-
-				if (name === 'group') {
-					_prepareGroup(options);
-				}
-			}
-		},
-
-
-		/**
-		 * Destroy
-		 */
-		destroy: function () {
-			var el = this.el;
-
-			el[expando] = null;
-
-			_off(el, 'mousedown', this._onTapStart);
-			_off(el, 'touchstart', this._onTapStart);
-
-			if (this.nativeDraggable) {
-				_off(el, 'dragover', this);
-				_off(el, 'dragenter', this);
-			}
-
-			// Remove draggable attributes
-			Array.prototype.forEach.call(el.querySelectorAll('[draggable]'), function (el) {
-				el.removeAttribute('draggable');
-			});
-
-			touchDragOverListeners.splice(touchDragOverListeners.indexOf(this._onDragOver), 1);
-
-			this._onDrop();
-
-			this.el = el = null;
-		}
-	};
-
-
-	function _cloneHide(state) {
-		if (cloneEl && (cloneEl.state !== state)) {
-			_css(cloneEl, 'display', state ? 'none' : '');
-			!state && cloneEl.state && rootEl.insertBefore(cloneEl, dragEl);
-			cloneEl.state = state;
-		}
-	}
-
-
-	function _closest(/**HTMLElement*/el, /**String*/selector, /**HTMLElement*/ctx) {
-		if (el) {
-			ctx = ctx || document;
-			selector = selector.split('.');
-
-			var tag = selector.shift().toUpperCase(),
-				re = new RegExp('\\s(' + selector.join('|') + ')(?=\\s)', 'g');
-
-			do {
-				if (
-					(tag === '>*' && el.parentNode === ctx) || (
-						(tag === '' || el.nodeName.toUpperCase() == tag) &&
-						(!selector.length || ((' ' + el.className + ' ').match(re) || []).length == selector.length)
-					)
-				) {
-					return el;
-				}
-			}
-			while (el !== ctx && (el = el.parentNode));
-		}
-
-		return null;
-	}
-
-
-	function _globalDragOver(/**Event*/evt) {
-		if (evt.dataTransfer) {
-			evt.dataTransfer.dropEffect = 'move';
-		}
-		evt.preventDefault();
-	}
-
-
-	function _on(el, event, fn) {
-		el.addEventListener(event, fn, false);
-	}
-
-
-	function _off(el, event, fn) {
-		el.removeEventListener(event, fn, false);
-	}
-
-
-	function _toggleClass(el, name, state) {
-		if (el) {
-			if (el.classList) {
-				el.classList[state ? 'add' : 'remove'](name);
-			}
-			else {
-				var className = (' ' + el.className + ' ').replace(RSPACE, ' ').replace(' ' + name + ' ', ' ');
-				el.className = (className + (state ? ' ' + name : '')).replace(RSPACE, ' ');
-			}
-		}
-	}
-
-
-	function _css(el, prop, val) {
-		var style = el && el.style;
-
-		if (style) {
-			if (val === void 0) {
-				if (document.defaultView && document.defaultView.getComputedStyle) {
-					val = document.defaultView.getComputedStyle(el, '');
-				}
-				else if (el.currentStyle) {
-					val = el.currentStyle;
-				}
-
-				return prop === void 0 ? val : val[prop];
-			}
-			else {
-				if (!(prop in style)) {
-					prop = '-webkit-' + prop;
-				}
-
-				style[prop] = val + (typeof val === 'string' ? '' : 'px');
-			}
-		}
-	}
-
-
-	function _find(ctx, tagName, iterator) {
-		if (ctx) {
-			var list = ctx.getElementsByTagName(tagName), i = 0, n = list.length;
-
-			if (iterator) {
-				for (; i < n; i++) {
-					iterator(list[i], i);
-				}
-			}
-
-			return list;
-		}
-
-		return [];
-	}
-
-
-
-	function _dispatchEvent(sortable, rootEl, name, targetEl, fromEl, startIndex, newIndex) {
-		var evt = document.createEvent('Event'),
-			options = (sortable || rootEl[expando]).options,
-			onName = 'on' + name.charAt(0).toUpperCase() + name.substr(1);
-
-		evt.initEvent(name, true, true);
-
-		evt.to = rootEl;
-		evt.from = fromEl || rootEl;
-		evt.item = targetEl || rootEl;
-		evt.clone = cloneEl;
-
-		evt.oldIndex = startIndex;
-		evt.newIndex = newIndex;
-
-		rootEl.dispatchEvent(evt);
-
-		if (options[onName]) {
-			options[onName].call(sortable, evt);
-		}
-	}
-
-
-	function _onMove(fromEl, toEl, dragEl, dragRect, targetEl, targetRect) {
-		var evt,
-			sortable = fromEl[expando],
-			onMoveFn = sortable.options.onMove,
-			retVal;
-
-		evt = document.createEvent('Event');
-		evt.initEvent('move', true, true);
-
-		evt.to = toEl;
-		evt.from = fromEl;
-		evt.dragged = dragEl;
-		evt.draggedRect = dragRect;
-		evt.related = targetEl || toEl;
-		evt.relatedRect = targetRect || toEl.getBoundingClientRect();
-
-		fromEl.dispatchEvent(evt);
-
-		if (onMoveFn) {
-			retVal = onMoveFn.call(sortable, evt);
-		}
-
-		return retVal;
-	}
-
-
-	function _disableDraggable(el) {
-		el.draggable = false;
-	}
-
-
-	function _unsilent() {
-		_silent = false;
-	}
-
-
-	/** @returns {HTMLElement|false} */
-	function _ghostIsLast(el, evt) {
-		var lastEl = el.lastElementChild,
-				rect = lastEl.getBoundingClientRect();
-
-		return ((evt.clientY - (rect.top + rect.height) > 5) || (evt.clientX - (rect.right + rect.width) > 5)) && lastEl; // min delta
-	}
-
-
-	/**
-	 * Generate id
-	 * @param   {HTMLElement} el
-	 * @returns {String}
-	 * @private
-	 */
-	function _generateId(el) {
-		var str = el.tagName + el.className + el.src + el.href + el.textContent,
-			i = str.length,
-			sum = 0;
-
-		while (i--) {
-			sum += str.charCodeAt(i);
-		}
-
-		return sum.toString(36);
-	}
-
-	/**
-	 * Returns the index of an element within its parent
-	 * @param  {HTMLElement} el
-	 * @return {number}
-	 */
-	function _index(el) {
-		var index = 0;
-
-		if (!el || !el.parentNode) {
-			return -1;
-		}
-
-		while (el && (el = el.previousElementSibling)) {
-			if (el.nodeName.toUpperCase() !== 'TEMPLATE') {
-				index++;
-			}
-		}
-
-		return index;
-	}
-
-	function _throttle(callback, ms) {
-		var args, _this;
-
-		return function () {
-			if (args === void 0) {
-				args = arguments;
-				_this = this;
-
-				setTimeout(function () {
-					if (args.length === 1) {
-						callback.call(_this, args[0]);
-					} else {
-						callback.apply(_this, args);
-					}
-
-					args = void 0;
-				}, ms);
-			}
-		};
-	}
-
-	function _extend(dst, src) {
-		if (dst && src) {
-			for (var key in src) {
-				if (src.hasOwnProperty(key)) {
-					dst[key] = src[key];
-				}
-			}
-		}
-
-		return dst;
-	}
-
-
-	// Export utils
-	Sortable.utils = {
-		on: _on,
-		off: _off,
-		css: _css,
-		find: _find,
-		is: function (el, selector) {
-			return !!_closest(el, selector, el);
-		},
-		extend: _extend,
-		throttle: _throttle,
-		closest: _closest,
-		toggleClass: _toggleClass,
-		index: _index
-	};
-
-
-	/**
-	 * Create sortable instance
-	 * @param {HTMLElement}  el
-	 * @param {Object}      [options]
-	 */
-	Sortable.create = function (el, options) {
-		return new Sortable(el, options);
-	};
-
-
-	// Export
-	Sortable.version = '1.3.0';
-	return Sortable;
-});
-
-
-/***/ }),
-/* 26 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var _leaflet = __webpack_require__(0);
-
-var _leaflet2 = _interopRequireDefault(_leaflet);
-
-var _LoggerByDefault = __webpack_require__(1);
-
-var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
-
-var _gp = __webpack_require__(2);
-
-var _gp2 = _interopRequireDefault(_gp);
-
-var _CheckRightManagement = __webpack_require__(4);
-
-var _CheckRightManagement2 = _interopRequireDefault(_CheckRightManagement);
-
-var _SelectorID = __webpack_require__(3);
-
-var _SelectorID2 = _interopRequireDefault(_SelectorID);
-
-var _LocationSelector = __webpack_require__(11);
-
-var _LocationSelector2 = _interopRequireDefault(_LocationSelector);
-
-var _IsoDOM = __webpack_require__(28);
-
-var _IsoDOM2 = _interopRequireDefault(_IsoDOM);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var logger = _LoggerByDefault2.default.getLogger("Isocurve");
-
-/**
- * @classdesc
- *
- * Leaflet Control Class to compute and display Isochrone or isodistances curves.
- *
- * Use {@link module:Controls.Isocurve L.geoportalControl.Isocurve()} factory to create instances of that class.
- *
- * **Extends** Leaflet <a href="http://leafletjs.com/reference.html#control" target="_blank">L.Control</a> native class.
- *
- * @namespace
- * @alias L.geoportalControl.Isocurve
- */
-var Isocurve = _leaflet2.default.Control.extend( /** @lends L.geoportalControl.Isocurve.prototype */{
-
-    includes: _IsoDOM2.default,
-
-    /**
-     * Options du service
-     *
-     * @private
-     */
-    options: {
-        position: "topleft",
-        collapsed: true, // plier !
-        methods: ["time", "distance"],
-        graphs: ["Voiture", "Pieton"],
-        exclusions: {
-            toll: false,
-            tunnel: false,
-            bridge: false
-        },
-        directions: ["departure", "arrival"],
-        disableReverse: false,
-        isocurveOptions: {},
-        autocompleteOptions: {}
-    },
-
-    /**
-     * constructor
-     *
-     * @private
-     * @param {Object} options - Isocurve control options
-     * @param {Sting}   [options.apiKey] - API key for services call (isocurve and autocomplete services), mandatory if autoconf service has not been charged in advance
-     * @param {Boolean} [options.collapsed] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
-     * @param {Object}  [options.exclusions] - list of exclusions with status (true = checked), by default : ["toll":false, "tunnel":false, "bridge":false].
-     * @param {Array}   [options.graphs] - list of graph resources to be used for isocurve calculation, by default : ["Voiture", "Pieton"]. The first element is selected.
-     * @param {Array}   [options.methods] - list of methods, by default : ["time", "distance"]. The first element is selected by default.
-     * @param {Array}   [options.directions] - list of directions to be displayed, by default : ["departure", "arrival"]. The first element is selected by default.
-     *      Directions enable to specify if input location point will be used as a departure point ("departure") or as an arrival point ("arrival")
-     * @param {Boolean} [options.disableReverse = false] - whether to enable/disable the reverse geocoding
-     * @param {Object} [options.isocurveOptions] - isocurve service options.
-     * @param {Object} [options.autocompleteOptions] - autocomplete service options.
-     * @example
-     *  var iso = L.geoportalControl.Isocurve({
-     *      collapsed : false
-     *      methods : ["time", "distance"],
-     *      exclusions : {
-     *         toll : true,
-     *         bridge : false,
-     *         tunnel : true
-     *      },
-     *      graphs : ["Pieton", "Voiture"],
-     *      isocurveOptions : {},
-     *      autocompleteOptions : {}
-     *  });
-     */
-    initialize: function initialize(options) {
-        // on transmet les options au controle
-        _leaflet2.default.Util.setOptions(this, options);
-
-        /** uuid */
-        this._uid = _SelectorID2.default.generate();
-
-        /** detection du support : desktop ou tactile */
-        this._isDesktop = this._detectSupport();
-
-        /** detection si le panneau est reduit */
-        // on desactive l'impl. reduction de la fenetre
-        // this._reducePanel = false;
-
-        /** container principaux */
-        this._waitingContainer = null;
-        this._showContainer = null;
-        this._pictoContainer = null;
-        this._formContainer = null;
-        this._submitContainer = null;
-
-        /** Mode de transport selectionné : 'Voiture' ou 'Pieton' */
-        this._currentTransport = null;
-
-        /** Sens du parcours selectionné : 'Départ' ou 'Arrivée' */
-        this._currentDirection = null;
-
-        /** Type d'isochrone et valeur selectionné : 'isochrone' ou 'distance' */
-        this._currentComputation = null;
-        this._currentTimeHour = 0;
-        this._currentTimeMinute = 0;
-        this._currentDistance = 0;
-
-        /** Exclusions selectionnées : Tunnel, Toll et Bridge */
-        this._currentExclusions = [];
-
-        // initialisation
-        this._initTransport();
-        this._initComputation();
-        this._initDirection();
-        this._initExclusions();
-
-        /** le point */
-        this._currentPoint = null;
-
-        /** la geometrie de l'isochrone */
-        this._geojsonIso = null;
-
-        /** si un calcul est en cours ou non */
-        this._waiting = false;
-        /** timer pour cacher la patience après un certain temps */
-        this._timer = null;
-
-        /**
-         * reponse du service
-         * Ex. {
-         *   totalTime, totalDistance, bbox, routeGeometry,
-         *   routeInstructions : [{duration, distance, code, instruction, bbox, geometry}]
-         * }
-         */
-        this._currentIsoResults = null;
-
-        /**
-         * liste des ressources avec droits par service
-         * Ex. {
-         *   "IsoChrone" : {
-         *       key : "ger4g456re45er456t4er5ge5",
-         *       resources : ["Pieton", "Voiture"]
-         *   }
-         * }
-         */
-        this._resources = {};
-
-        /** aucun droits sur les ressources */
-        this._noRightManagement = false;
-
-        // gestion des droits sur les ressources/services
-        this._checkRightsManagement();
-    },
-
-    /**
-     * this method is called by this.addTo(map) when the control is added on the map
-     * and fills variable 'this._container = this.onAdd(map)',
-     * and create or disable events on map.
-     * @param {L.Map} map - object map
-     * @returns {DOMElement} container
-     * @private
-     */
-    onAdd: function onAdd(map) {
-        // initialisation du DOM du composant
-        var container = this._container = this._initLayout(map);
-
-        // deactivate of events that may interfere with the map
-        _leaflet2.default.DomEvent.disableClickPropagation(container).disableScrollPropagation(container);
-
-        return container;
-    },
-
-    /**
-     * TODO this method is called when the control is removed from the map
-     * and removes events on map.
-     *
-     * @private
-     */
-    onRemove: function onRemove() /* map */{},
-
-    // ################################################################### //
-    // ####################### init application ########################## //
-    // ################################################################### //
-
-    /**
-     * this method is called by the constructor and initialize the ...
-     *
-     * @private
-     */
-    _initTransport: function _initTransport() {
-        // Mode de transport selectionné
-        this._currentTransport = "Voiture"; // par defaut
-
-        // par defaut
-        var transport = this.options.graphs;
-        if (!transport || transport.length === 0) {
-            this.options.graphs = ["Voiture", "Pieton"];
-        }
-
-        // option
-        if (_leaflet2.default.Util.isArray(transport) && transport.length) {
-            // FIXME pb si le 1er graphe n'est pas une ressource connue !
-            if (transport[0] === "Voiture" || transport[0] === "Pieton") {
-                this._currentTransport = transport[0];
-            }
-        }
-
-        // option sur le service
-        var serviceOptions = this.options.isocurveOptions;
-        if (serviceOptions.graph) {
-            this._currentTransport = serviceOptions.graph;
-        }
-    },
-
-    /**
-     * this method is called by the constructor and initialize the ...
-     *
-     * @private
-     */
-    _initDirection: function _initDirection() {
-        this._currentDirection = "departure"; // par defaut
-
-        // par defaut
-        var directions = this.options.directions;
-        if (!directions || directions.length === 0) {
-            this.options.directions = ["departure", "arrival"];
-        }
-
-        // option
-        if (_leaflet2.default.Util.isArray(directions) && directions.length) {
-            // FIXME pb si le 1er graphe n'est pas une ressource connue !
-            if (directions[0] === "departure" || directions[0] === "arrival") {
-                this._currentDirection = directions[0];
-            }
-        }
-
-        // si l'utilisateur a spécifié une méthode dans le service, on surcharge les options du widget
-        var serviceOptions = this.options.isocurveOptions;
-        if (!serviceOptions.reverse) {
-            this._currentDirection = "departure";
-        }
-        if (serviceOptions.reverse === true) {
-            this._currentDirection = "arrival";
-            this.options.directions = ["arrival", "departure"];
-        }
-    },
-
-    /**
-     * this method is called by the constructor and initialize the ...
-     *
-     * @private
-     */
-    _initComputation: function _initComputation() {
-        // Mode de calcul selectionné
-        this._currentComputation = "time"; // par defaut
-
-        // par defaut
-        var methods = this.options.methods;
-        if (!methods || methods.length === 0) {
-            this.options.methods = ["time", "distance"];
-        }
-
-        // option
-        if (_leaflet2.default.Util.isArray(methods) && methods.length) {
-            // FIXME pb si le 1er graphe n'est pas une ressource connue !
-            if (methods[0] === "time" || methods[0] === "distance") {
-                this._currentComputation = methods[0];
-            }
-        }
-
-        // si l'utilisateur a spécifié une méthode dans le service, on surcharge les options du widget
-        var serviceOptions = this.options.isocurveOptions;
-        if (serviceOptions.method) {
-            this._currentComputation = serviceOptions.method;
-        }
-        if (serviceOptions.time) {
-            this._currentComputation = "time";
-        }
-        if (serviceOptions.distance) {
-            this._currentComputation = "distance";
-        }
-    },
-
-    /**
-     * this method is called by the constructor and initialize the ...
-     *
-     * @private
-     */
-    _initExclusions: function _initExclusions() {
-        // Exclusions selectionnées : Tunnel, Toll et Bridge
-        this._currentExclusions = []; // par defaut
-
-        // par defaut
-        var exclusion = this.options.exclusions;
-        if (!exclusion || (typeof exclusion === "undefined" ? "undefined" : _typeof(exclusion)) === "object" && Object.keys(exclusion).length === 0) {
-            this.options.exclusions = {
-                toll: false,
-                tunnel: false,
-                bridge: false
-            };
-        }
-
-        // option
-        if (exclusion && (typeof exclusion === "undefined" ? "undefined" : _typeof(exclusion)) === "object" && Object.keys(exclusion).length) {
-            for (var k in exclusion) {
-                if (exclusion.hasOwnProperty(k)) {
-                    if (exclusion.k) {
-                        this._currentExclusions.push(k);
-                    }
-                }
-            }
-        }
-
-        // si l'utilisateur a spécifié des exclusions dans le service, on surcharge les options du widget
-        var serviceOptions = this.options.isocurveOptions;
-        if (Array.isArray(serviceOptions.exclusions)) {
-            this._currentExclusions = serviceOptions.exclusions;
-        }
-    },
-
-    // ################################################################### //
-    // ############################## other init ######################### //
-    // ################################################################### //
-
-    /**
-     * this method is called by constructor
-     * and check the rights to resources
-     *
-     * @private
-     */
-    _checkRightsManagement: function _checkRightsManagement() {
-        var _opts = null;
-        var _res = [];
-        var _key = null;
-
-        // les ressources du service du calcul d'isochrone
-        _key = this.options.isocurveOptions.apiKey;
-        _opts = this.options.isocurveOptions.filterOptions;
-        _res = _opts ? _opts.type : [];
-        if (!_res || _res.length === 0) {
-            _res = ["Voiture", "Pieton"];
-        }
-
-        var rightManagementIsochrone = _CheckRightManagement2.default.check({
-            key: _key || this.options.apiKey,
-            resources: _res,
-            services: ["Isochrone"]
-        });
-        logger.log("rightManagementIsochrone", rightManagementIsochrone);
-
-        // les ressources du service d'autocompletion
-        _key = this.options.autocompleteOptions.apiKey;
-        _opts = this.options.autocompleteOptions.filterOptions;
-        _res = _opts ? _opts.type : [];
-        if (!_res || _res.length === 0) {
-            _res = ["PositionOfInterest", "StreetAddress"];
-        }
-
-        var rightManagementAutoComplete = _CheckRightManagement2.default.check({
-            key: _key || this.options.apiKey,
-            resources: _res,
-            services: ["AutoCompletion"]
-        });
-        logger.log("rightManagementAutoComplete", rightManagementAutoComplete);
-
-        // au cas où pas de droit !
-        if (!rightManagementIsochrone && !rightManagementAutoComplete) {
-            this._noRightManagement = true;
-        }
-
-        // FIXME je reconstruis differement la structure pour la gestion des clefs differentes
-        // pour chaque service...
-        if (rightManagementAutoComplete) {
-            this._resources["AutoCompletion"] = {};
-            this._resources["AutoCompletion"]["resources"] = rightManagementAutoComplete["AutoCompletion"];
-            this._resources["AutoCompletion"]["key"] = rightManagementAutoComplete["key"];
-        }
-
-        if (rightManagementIsochrone) {
-            this._resources["Isochrone"] = {};
-            this._resources["Isochrone"]["resources"] = rightManagementIsochrone["Isochrone"];
-            this._resources["Isochrone"]["key"] = rightManagementIsochrone["key"];
-        }
-    },
-
-    /**
-     * this method is called by the constructor.
-     * this information is useful to switch to touch mode.
-     * Detection : test for desktop or tactile
-     * @returns {Boolean} desktop or tactile
-     * @private
-     */
-    _detectSupport: function _detectSupport() {
-        // TODO
-        // Choix de gérer la détection dans le code du composant au lieu du DOM car :
-        // Utilisation de l'implémentation Leaflet
-        // http://leafletjs.com/reference.html#browser
-
-        var isDesktop = true;
-        var userAgent = window.navigator.userAgent.toLowerCase();
-
-        if (userAgent.indexOf("iphone") !== -1 || userAgent.indexOf("ipod") !== -1 || userAgent.indexOf("ipad") !== -1 || userAgent.indexOf("android") !== -1 || userAgent.indexOf("mobile") !== -1 || userAgent.indexOf("blackberry") !== -1 || userAgent.indexOf("tablet") !== -1 || userAgent.indexOf("phone") !== -1 || userAgent.indexOf("touch") !== -1) {
-            isDesktop = false;
-        }
-
-        if (userAgent.indexOf("msie") !== -1 || userAgent.indexOf("trident") !== -1) {
-            isDesktop = true;
-        }
-
-        return isDesktop;
-    },
-
-    // ################################################################### //
-    // ########################### init dom ############################## //
-    // ################################################################### //
-
-    /**
-     * this method is called by this.onAdd(map)
-     * and initialize the container HTMLElement
-     * @param {L.Map} map - object map
-     * @returns {DOMElement} container
-     * @private
-     */
-    _initLayout: function _initLayout(map) {
-        // create main container
-        var container = this._createMainContainerElement();
-
-        var inputShow = this._showContainer = this._createShowIsoElement();
-        container.appendChild(inputShow);
-
-        // mode "collapsed"
-        if (!this.options.collapsed) {
-            inputShow.checked = true;
-        }
-
-        var picto = this._pictoContainer = this._createShowIsoPictoElement();
-        container.appendChild(picto);
-
-        // panneau
-        var panel = this._createIsoPanelElement();
-
-        // header
-        var header = this._createIsoPanelHeaderElement();
-        panel.appendChild(header);
-
-        // form
-        var form = this._formContainer = this._createIsoPanelFormElement();
-
-        // form: menu des points
-        var point = this._createIsoPanelFormPointElement(map);
-        form.appendChild(point);
-
-        // form: menu du choix de la méthode de calcul (time ou distance)
-        var isoChronChecked = false;
-        var isoDistChecked = false;
-        var typeChoice = this._createIsoPanelFormTypeChoiceElement();
-        for (var i = 0; i < this.options.methods.length; i++) {
-            if (this.options.methods[i] === "time") {
-                isoChronChecked = i === 0;
-                typeChoice.appendChild(this._createIsoPanelFormTypeChoiceChronElement(isoChronChecked));
-            }
-            if (this.options.methods[i] === "distance") {
-                isoDistChecked = i === 0;
-                typeChoice.appendChild(this._createIsoPanelFormTypeChoiceDistElement(isoDistChecked));
-            }
-        }
-        form.appendChild(typeChoice);
-
-        // form: menu du choix des valeurs
-        form.appendChild(this._createIsoPanelFormValueIsochronElement(isoChronChecked));
-        form.appendChild(this._createIsoPanelFormValueIsodistanceElement(isoDistChecked));
-
-        // form: menu du choix du transport et du sens du parcours
-        var modeChoice = this._createIsoPanelFormModeChoiceElement();
-        modeChoice.appendChild(this._createIsoPanelFormModeChoiceTransportElement(this.options.graphs));
-        modeChoice.appendChild(this._createIsoPanelFormModeChoiceDirectionElement(this.options.directions));
-        form.appendChild(modeChoice);
-
-        // form: menu des exclusions
-        if (this.options.exclusions && _typeof(this.options.exclusions) === "object" && Object.keys(this.options.exclusions).length !== 0) {
-            form.appendChild(this._createShowIsoExclusionsElement());
-            form.appendChild(this._createShowIsoExclusionsPictoElement());
-            var exclusion = this._createIsoPanelFormExclusionsElement();
-            exclusion.appendChild(this._createIsoPanelFormExclusionOptionsElement(this.options.exclusions));
-            form.appendChild(exclusion);
-        }
-
-        var divReset = this._createIsoFormResetElement();
-        form.appendChild(divReset);
-
-        // form: bouton du calcul
-        var submit = this._submitContainer = this._createIsoSubmitFormElement();
-        form.appendChild(submit);
-
-        panel.appendChild(form);
-
-        // waiting
-        var waiting = this._waitingContainer = this._createIsoWaitingElement();
-        panel.appendChild(waiting);
-
-        container.appendChild(panel);
-
-        return container;
-    },
-
-    // ################################################################### //
-    // ############################## DOM ################################ //
-    // ################################################################### //
-
-    /**
-     * Create a Point
-     * OVERWRITTEN
-     * @param {L.Map} map - object map
-     * @returns {Object} DOM element
-     * @private
-     */
-    _createIsoPanelFormPointElement: function _createIsoPanelFormPointElement(map) {
-        // point de depart
-        this._currentPoint = new _LocationSelector2.default({
-            apiKey: this.options.apiKey || null,
-            tag: {
-                id: 0,
-                unique: this._uid,
-                label: "Départ",
-                color: "red",
-                display: true
-            },
-            displayInfo: true,
-            disableReverse: this.options.disableReverse,
-            autocompleteOptions: this.options.autocompleteOptions || null
-        });
-        this._currentPoint.setMap(map);
-
-        return this._currentPoint.getContainer();
-    },
-
-    // ################################################################### //
-    // ####################### handlers events to dom #################### //
-    // ################################################################### //
-
-    /**
-     * this method is called by event 'click' on 'GPshowIsochronPicto' picto
-     * (cf. this._createShowIsoPictoElement),
-     * and clear inputs and previous isochrone drawings
-     *
-     * @param {Object} e - HTMLElement
-     *
-     * @private
-     */
-    onShowIsoPanelClick: function onShowIsoPanelClick(e) {
-        logger.log("onShowIsoPanelClick", e);
-        // on desactive l'impl. reduction de la fenetre
-        // if (this._geojsonIso && !this._reducePanel) {
-        //     this._clear();
-        // }
-        // this._reducePanel = false;
-    },
-
-    /**
-     * this method is called by event 'click' on '' arrow button
-     * (cf. this.),
-     * and clear inputs and previous isochrone drawings
-     *
-     * @param {Object} e - HTMLElement
-     *
-     * @private
-     */
-    onIsoResetClick: function onIsoResetClick(e) {
-        logger.log("onIsoResetClick", e);
-
-        this._clear();
-    },
-
-    // // on desactive l'impl. reduction de la fenetre
-    // /**
-    // * this method is called by event 'click' on 'GPisochronPanelReduce' picto
-    // * (cf. this.),
-    // * and reduce the panel
-    // *
-    // * @private
-    // */
-    // onReduceIsoPanelClick : function () {
-    //     logger.log("onReduceIsoPanelClick");
-    //     this._reducePanel = true;
-    // },
-
-    /**
-     * this method is called by event 'change' on 'GPisochronChoiceAltDist' or 'GPisochronChoiceAltChron'
-     * input (cf. this._createIsoPanelFormTypeChoiceElement),
-     * and updates current computation mode
-     *
-     * @param {Object} e - HTMLElement
-     *
-     * @private
-     */
-    onIsoTypeChoiceChange: function onIsoTypeChoiceChange(e) {
-        var value = e.target.value;
-
-        if (!value) {
-            return;
-        }
-
-        if (value === "isodistance") {
-            this._currentComputation = "distance";
-        }
-        if (value === "isochron") {
-            this._currentComputation = "time";
-        }
-    },
-
-    /**
-     * this method is called by event 'click' on 'GPisochronTransportPedestrian' or 'GPisochronTransportCar'
-     * input (cf. this._createIsoPanelFormModeChoiceTransportElement),
-     * and updates current transport mode
-     *
-     * @param {Object} e - HTMLElement
-     *
-     * @private
-     */
-    onIsoModeTransportChange: function onIsoModeTransportChange(e) {
-        var value = e.target.value;
-
-        if (!value) {
-            return;
-        }
-        this._currentTransport = value;
-    },
-
-    /**
-     * this method is called by event 'change' on 'GPisochronDirectionSelect' select
-     * (cf. this._createIsoPanelFormModeChoiceDirectionElement),
-     * and updates current direction mode
-     *
-     * @param {Object} e - HTMLElement
-     *
-     * @private
-     */
-    onIsoModeDirectionChange: function onIsoModeDirectionChange(e) {
-        var value = e.target.value;
-
-        if (!value) {
-            return;
-        }
-
-        this._currentDirection = value;
-    },
-
-    /**
-     * this method is called by event 'change' on ''
-     * input (cf. this.),
-     * and updates current time value
-     *
-     * @param {Object} e - HTMLElement
-     *
-     * @private
-     */
-    onIsoValueChronTimeHourChange: function onIsoValueChronTimeHourChange(e) {
-        var value = e.target.value;
-
-        // pointer to...
-        this._timeHourContainer = e.target;
-
-        if (!value) {
-            return;
-        }
-
-        this._currentTimeHour = value;
-    },
-
-    /**
-     * this method is called by event 'change' on ''
-     * input (cf. this.),
-     * and updates current time value
-     *
-     * @param {Object} e - HTMLElement
-     *
-     * @private
-     */
-    onIsoValueChronTimeMinuteChange: function onIsoValueChronTimeMinuteChange(e) {
-        var value = e.target.value;
-
-        // pointer to...
-        this._timeMinuteContainer = e.target;
-
-        if (!value) {
-            return;
-        }
-
-        this._currentTimeMinute = value;
-    },
-
-    /**
-     * this method is called by event 'change' on ''
-     * input (cf. this.),
-     * and updates current distance value
-     *
-     * @param {Object} e - HTMLElement
-     *
-     * @private
-     */
-    onIsoValueDistChange: function onIsoValueDistChange(e) {
-        var value = e.target.value;
-
-        // pointer to...
-        this._distanceContainer = e.target;
-
-        if (!value) {
-            return;
-        }
-
-        this._currentDistance = value;
-    },
-
-    /**
-     * this method is called by event 'change' on 'GPIsoExclusionsToll'
-     * or 'GPIsoeExclusionsTunnel' or 'GPIsoExclusionsBridge' tag input
-     * (cf. this._createIsoPanelFormExclusionOptionsElement).
-     * this value is saved as a parameter for the service isocurve.
-     *
-     * @param {Object} e - HTMLElement
-     *
-     * @private
-     */
-    onIsoExclusionsChange: function onIsoExclusionsChange(e) {
-        var value = e.target.value;
-        var checked = e.target.checked;
-
-        if (!value) {
-            return;
-        }
-
-        var bFound = false;
-        var iFound = null;
-        for (var i = 0; i < this._currentExclusions.length; i++) {
-            if (this._currentExclusions[i] === value) {
-                iFound = i;
-                bFound = true;
-            }
-        }
-        // on l'ajoute si la valeur n'existe pas et est selectionnée
-        if (!bFound && !checked) {
-            this._currentExclusions.push(value);
-        }
-        // on la retire si la valeur existe et est deselectionnée
-        if (bFound && checked) {
-            this._currentExclusions.splice(iFound, 1);
-        }
-    },
-
-    /**
-     * this method is called by event 'submit' on 'GPisochronForm' tag form
-     * (cf. this._createIsoPanelFormElement),
-     * and call isocurve service to display results
-     *
-     * @private
-     */
-    onIsoComputationSubmit: function onIsoComputationSubmit() {
-        if (!this._currentPoint || !this._currentPoint.getCoordinate || !this._currentPoint.getCoordinate()) {
-            return;
-        }
-
-        // récupération du temps
-        var time;
-        if (this._currentComputation.toLowerCase() === "time") {
-            // durée exprimée en secondes
-            time = this._currentTimeHour * 3600 + this._currentTimeMinute * 60;
-            logger.log("time : ", time);
-        }
-
-        // récupération de la distance
-        var distance;
-        if (this._currentComputation.toLowerCase() === "distance") {
-            // distance exprimée en mètres
-            distance = this._currentDistance * 1000;
-            logger.log("distance : ", distance);
-        }
-
-        // si on n'a pas de valeur de calcul renseignée, on ne lance pas la requête.
-        if (!time && !distance) {
-            logger.log("Missing time or distance parameter");
-            return;
-        }
-
-        // oups, aucun droits !
-        // on evite donc une requête inutile ...
-        if (this._noRightManagement) {
-            return;
-        }
-
-        // mise en place de la patience
-        this._displayWaitingContainer();
-
-        var self = this;
-
-        this._requestIsoCurve({
-            position: self._currentPoint.getCoordinate(),
-            graph: self._currentTransport,
-            exclusions: self._currentExclusions,
-            method: self._currentComputation,
-            reverse: self._currentDirection.toLowerCase() === "arrival",
-            time: time,
-            distance: distance,
-            smoothing: true,
-            timeout: 7000,
-            protocol: "XHR",
-
-            // callback onSuccess
-            onSuccess: function onSuccess(results) {
-                logger.log(results);
-                if (results) {
-                    self._drawIsoResults(results);
-                }
-            },
-
-            // callback onFailure
-            onFailure: function onFailure(error) {
-                // FIXME mise à jour du controle mais le service ne repond pas en 200 !?
-                self._hideWaitingContainer();
-
-                self._clearIsoResultsGeometry();
-                logger.log(error.message);
-            }
-        });
-    },
-
-    // ################################################################### //
-    // ######################## isocurve calculation ##################### //
-    // ################################################################### //
-
-    /**
-     * this method is called by this.onIsoComputationSubmit
-     * and executes a request to the service.
-     *
-     * @param {Object} settings - service settings
-     *
-     * @private
-     */
-    _requestIsoCurve: function _requestIsoCurve(settings) {
-        // on ne fait pas de requête si on n'a pas renseigné de parametres !
-        if (!settings || (typeof settings === "undefined" ? "undefined" : _typeof(settings)) === "object" && Object.keys(settings).length === 0) {
-            return;
-        }
-
-        // on ne fait pas de requête si on n'a pas de point d'origine
-        if (!settings.position) {
-            return;
-        }
-
-        // ni si on n'a aucun droit
-        if (this._noRightManagement) {
-            return;
-        }
-
-        // gestion des droits !
-        var services = this._resources["Isochrone"];
-        if (!services) {
-            return;
-        }
-        var resources = services.resources;
-        if (!resources || (typeof resources === "undefined" ? "undefined" : _typeof(resources)) === "object" && Object.keys(resources).length === 0) {
-            return;
-        }
-
-        var options = {};
-        // on recupere les parametres de saisie et les callbacks
-        _leaflet2.default.Util.extend(options, settings);
-        // ainsi que les options du service
-        _leaflet2.default.Util.extend(options, this.options.isocurveOptions);
-
-        // la ressource donne elle des droits ?
-        var bFound = false;
-        for (var i = 0; i < resources.length; i++) {
-            if (resources[i] === options.graph) {
-                bFound = true;
-            }
-        }
-        // on fait quoi ?
-        if (!bFound) {
-            logger.log("no rights for this service !?");
-            return;
-        }
-
-        // cas où la clef API n'est pas renseignée dans les options du service,
-        // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
-        var key = this._resources["Isochrone"]["key"];
-        options.apiKey = this.options.isocurveOptions.apiKey || this.options.apiKey || key;
-
-        logger.log(options);
-
-        _gp2.default.Services.isoCurve(options);
-    },
-
-    /**
-     * this method is called by this.onIsoComputationSubmit (in case of success)
-     * and draw isocurve results geometry on map
-     *
-     * @param {Object} results - isocurve response results
-     *
-     * @private
-     */
-    _drawIsoResults: function _drawIsoResults(results) {
-        this._clearIsoResultsGeometry();
-
-        // sauvegarde de l'etat des resultats
-        this._currentIsoResults = results;
-
-        if (!results.geometry) {
-            // cache la patience
-            this._hideWaitingContainer();
-            return;
-        }
-
-        var map = this._map;
-
-        var _geometry = results.geometry;
-
-        var _style = {
-            color: "#ff7800",
-            weight: 5,
-            opacity: 0.65
-        };
-
-        this._geojsonIso = _leaflet2.default.geoJson(_geometry, {
-            style: _style
-        }).addTo(map);
-
-        // cache la patience
-        this._hideWaitingContainer();
-        this._formContainer.className = "GPisochroComponentHidden";
-    },
-
-    // ################################################################### //
-    // ############################# Clean ############################### //
-    // ################################################################### //
-
-    /**
-     * this method is called by this.onShowIsoPanelClick()
-     * and it clears all elements (reinit).
-     *
-     * @private
-     */
-    _clear: function _clear() {
-        this._initTransport();
-        this._initExclusions();
-        this._initComputation();
-        this._initDirection();
-
-        // resultats du service
-        this._currentIsoResults = null;
-
-        // la geometrie
-        this._clearIsoResultsGeometry();
-
-        // les points
-        this._currentPoint.clear();
-
-        // nettoyer les valeurs dans le DOM !
-        if (this._timeHourContainer) {
-            this._timeHourContainer.value = 0;
-        }
-        if (this._timeMinuteContainer) {
-            this._timeMinuteContainer.value = 0;
-        }
-        if (this._distanceContainer) {
-            this._distanceContainer.value = 0;
-        }
-    },
-
-    /**
-     * this method is called by this.onIsoComputationSubmit()
-     * and it clears all route geometries.
-     *
-     * @private
-     */
-    _clearIsoResultsGeometry: function _clearIsoResultsGeometry() {
-        var map = this._map;
-
-        if (this._geojsonIso != null) {
-            map.removeLayer(this._geojsonIso);
-            this._geojsonIso = null;
-        }
-    },
-
-    // ################################################################### //
-    // ############################ Patience ############################# //
-    // ################################################################### //
-
-    /**
-     * this method displays waiting container and sets a timeout
-     *
-     * @private
-     */
-    _displayWaitingContainer: function _displayWaitingContainer() {
-        this._waitingContainer.className = "GPisochronCalcWaitingContainerVisible";
-        this._waiting = true;
-
-        // mise en place d'un timeout pour réinitialiser le panel (cacher la patience)
-        // si on est toujours en attente (si la requête est bloquée par exemple)
-        if (this._timer) {
-            clearTimeout(this._timer);
-            this._timer = null;
-        }
-        var context = this;
-        this._timer = setTimeout(function () {
-            if (context._waiting === true) {
-                context._hideWaitingContainer();
-            } else {
-                if (context._timer) {
-                    clearTimeout(context._timer);
-                }
-            }
-        }, 16000);
-    },
-
-    /**
-     * this method hides waiting container and clears timeout
-     *
-     * @private
-     */
-    _hideWaitingContainer: function _hideWaitingContainer() {
-        if (this._waiting) {
-            this._waitingContainer.className = "GPisochronCalcWaitingContainerHidden";
-            this._waiting = false;
-            clearTimeout(this._timer);
-            this._timer = null;
-        }
-    },
-
-    // ################################################################### //
-    // ###### METHODES PUBLIQUES (INTERFACE AVEC LE CONTROLE) ############ //
-    // ################################################################### //
-
-    /**
-     * This method is public.
-     * It allows to control the execution of a traitment.
-     *
-     * @param {Object} position - position = {lon: , lat: }
-     * @param {Object} value - distance en km ou heures-minutes
-     * @param {Object} options - options = {...}
-     */
-    compute: function compute(position, value, options) {
-        if (!this._showContainer.checked) {
-            this._pictoContainer.click();
-        }
-
-        var map = this._map;
-        if (!map) {
-            return;
-        }
-
-        // Les options par defauts
-        var settings = {
-            direction: "departure",
-            method: "time",
-            transport: "Voiture",
-            exclusions: []
-        };
-
-        // On recupere les options
-        _leaflet2.default.Util.extend(settings, options);
-
-        this._currentPoint.setCoordinate(position);
-        var input = _leaflet2.default.DomUtil.get("GPlocationOrigin_" + 0 + "-" + this._uid);
-        input.value = position.lng + " , " + position.lat;
-
-        this._currentTransport = settings.transport;
-        if (settings.transport === "Voiture") {
-            _leaflet2.default.DomUtil.get("GPisochronTransportCar-" + this._uid).checked = true;
-        } else {
-            _leaflet2.default.DomUtil.get("GPisochronTransportPedestrian-" + this._uid).checked = true;
-        }
-
-        this._currentExclusions = settings.exclusions;
-
-        this._currentComputation = settings.method;
-        if (settings.method === "time") {
-            var time = value.split(".");
-            this._currentTimeHour = time[0] || 0;
-            _leaflet2.default.DomUtil.get("GPisochronValueChronInput1-" + this._uid).value = this._currentTimeHour;
-            this._currentTimeMinute = time[1] || 0;
-            _leaflet2.default.DomUtil.get("GPisochronValueChronInput2-" + this._uid).value = this._currentTimeMinute;
-            _leaflet2.default.DomUtil.get("GPisochronChoiceAltChron-" + this._uid).click();
-        } else {
-            this._currentDistance = value;
-            _leaflet2.default.DomUtil.get("GPisochronValueDistInput-" + this._uid).value = this._currentDistance;
-            _leaflet2.default.DomUtil.get("GPisochronChoiceAltDist-" + this._uid).click();
-        }
-
-        this._currentDirection = settings.direction;
-        settings.direction === "departure" ? _leaflet2.default.DomUtil.get("GPisochronDirectionSelect-" + this._uid).selectedIndex = 0 : _leaflet2.default.DomUtil.get("GPisochronDirectionSelect-" + this._uid).selectedIndex = 1;
-
-        this.onIsoComputationSubmit();
-
-        map.flyTo(position);
-    }
-
-});
-
-exports.default = Isocurve;
-
-/***/ }),
-/* 27 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _SelectorID = __webpack_require__(3);
-
-var _SelectorID2 = _interopRequireDefault(_SelectorID);
-
-var _LoggerByDefault = __webpack_require__(1);
-
-var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var logger = _LoggerByDefault2.default.getLogger("LocationSelectorDOM");
-
-var LocationSelectorDOM = {
-
-    /**
-    * Add uuid to the tag ID
-    * @param {String} id - id selector
-    * @returns {String} uid - id selector with an unique id
-    */
-    _addUID: function _addUID(id) {
-        var uid = this._uid ? id + "-" + this._uid : id;
-        return uid;
-    },
-
-    /**
-     * Main container (DOM)
-     *
-     * @returns {DOMElement} DOM element
-     */
-    _createMainContainerElement: function _createMainContainerElement() {
-        var container = document.createElement("div");
-        container.className = this._addUID("GPlocationPoint"); // ceci permet de gerer les groupes de points !
-        container.className += " GPwidget";
-        return container;
-    },
-
-    /**
-     * Create Container Point
-     * see event !
-     *
-     * @param {Number} id - tag ID
-     * @param {Number} display  - display
-     * @returns {DOMElement} DOM element
-     */
-    _createLocationPointElement: function _createLocationPointElement(id, display) {
-        var div = document.createElement("div");
-        div.id = this._addUID("GPlocationPoint_" + id);
-        div.className = display ? "GPflexInput GPlocationStageFlexInput" : "GPflexInput GPlocationStageFlexInputHidden";
-        div.style.cssText = "";
-
-        return div;
-    },
-
-    /**
-     * Create Container Point
-     * see event !
-     *
-     * @param {Number} id - tag ID
-     * @param {String} text - label
-     * @returns {DOMElement} DOM element
-     */
-    _createLocationPointLabelElement: function _createLocationPointLabelElement(id, text) {
-        // contexte d'execution
-        var self = this;
-
-        var labelOrigin = document.createElement("label");
-        labelOrigin.id = this._addUID("GPlocationOriginLabel_" + id);
-        labelOrigin.htmlFor = "GPlocationOrigin_" + id;
-        labelOrigin.innerHTML = text;
-        labelOrigin.addEventListener("click", function (e) {
-            var i = _SelectorID2.default.index(this.id);
-            var points = document.getElementsByClassName(self._addUID("GPlocationPoint"));
-            for (var j = 0; j < points.length; j++) {
-                var tag = points[j].childNodes[0].id;
-                var id = _SelectorID2.default.index(tag);
-                document.getElementById(self._addUID("GPlocationPoint_" + id)).style.cssText = "";
-            }
-            document.getElementById(self._addUID("GPlocationOriginCoords_" + i)).value = "";
-            document.getElementById(self._addUID("GPlocationOrigin_" + i)).value = "";
-            document.getElementById(self._addUID("GPlocationPoint_" + i)).style.cssText = "";
-            document.getElementById(self._addUID("GPlocationOriginPointer_" + i)).checked = false;
-            document.getElementById(self._addUID("GPlocationOrigin_" + i)).className = "GPlocationOriginVisible";
-            document.getElementById(self._addUID("GPlocationOriginCoords_" + i)).className = "GPlocationOriginHidden";
-            if (document.getElementById(self._addUID("GPlocationStageRemove_" + i))) {
-                document.getElementById(self._addUID("GPlocationStageRemove_" + i)).className = "GPlocationStageRemove";
-            }
-            if (document.getElementById(self._addUID("GPlocationStageAdd"))) {
-                document.getElementById(self._addUID("GPlocationStageAdd")).className = "";
-            }
-            // document.getElementById(self._addUID("GPlocationOriginCoords_" + i)).disabled = true;
-            self.onLocationClearPointClick(e);
-        });
-
-        return labelOrigin;
-    },
-
-    /**
-     * Create Input AutoComplete Point tag
-     *
-     * @param {Number} id - tag ID
-     * @returns {DOMElement} DOM element
-     */
-    _createLocationAutoCompleteteInputElement: function _createLocationAutoCompleteteInputElement(id) {
-        // contexte d'execution
-        var self = this;
-
-        var inputOrigin = document.createElement("input");
-        inputOrigin.id = this._addUID("GPlocationOrigin_" + id);
-        inputOrigin.className = "GPlocationOriginVisible";
-        inputOrigin.type = "text";
-        inputOrigin.placeholder = "Saisir une adresse";
-        inputOrigin.autocomplete = "off";
-        inputOrigin.addEventListener("keyup", function (e) {
-            var charCode = e.which || e.keyCode;
-            if (charCode === 13 || charCode === 10 || charCode === 38 || charCode === 40) {
-                return;
-            }
-
-            var i = _SelectorID2.default.index(this.id);
-            if (document.getElementById(self._addUID("GPlocationOrigin_" + i)).value.length > 2) {
-                document.getElementById(self._addUID("GPlocationAutoCompleteList_" + i)).style.display = "block";
-            } else {
-                document.getElementById(self._addUID("GPlocationAutoCompleteList_" + i)).style.display = "none";
-            }
-            // gestionnaire d'evenement :
-            // on récupère la valeur de saisie pour une requête sur le service d'autocompletion.
-            // le resultat de la requête nous permet de recuperer les coordonnées du point...
-            self.onAutoCompleteSearchText(e);
-        });
-
-        inputOrigin.addEventListener("keydown", function (e) {
-            var charCode = e.which || e.keyCode;
-
-            var container = document.getElementById(self._addUID("GPlocationAutoCompleteList_" + id));
-
-            // si aucun container !?
-            if (!container) {
-                return;
-            }
-
-            var curr = container.getElementsByClassName("GPautoCompleteProposal current");
-            var list = container.getElementsByClassName("GPautoCompleteProposal");
-
-            // si aucune suggestion, on ne va pas plus loin !
-            var length = list.length;
-            if (!length) {
-                return;
-            }
-
-            var current = null;
-
-            // si aucun item courant, on prend le 1er !
-            if (!curr.length) {
-                current = list[0];
-                current.className = "GPautoCompleteProposal current";
-                current.style.color = "#000000";
-                current.style["background-color"] = "#CEDBEF";
-                return;
-            } else {
-                current = curr[0];
-            }
-
-            var index = parseInt(_SelectorID2.default.index(current.id), 10);
-            var next = index === length - 1 ? list[0] : list[index + 1];
-            var prev = index === 0 ? list[length - 1] : list[index - 1];
-
-            current.style["background-color"] = "";
-            current.style.color = "";
-            prev.style["background-color"] = "";
-            prev.style.color = "";
-            next.style["background-color"] = "";
-            next.style.color = "";
-
-            switch (charCode) {
-                case 38:
-                    // arrow up
-                    logger.log("arrow up");
-                    current.className = "GPautoCompleteProposal";
-                    prev.className = "GPautoCompleteProposal current";
-                    prev.style.color = "#000000";
-                    prev.style["background-color"] = "#CEDBEF";
-                    break;
-                case 40:
-                    // arrow down
-                    logger.log("arrow down");
-                    current.className = "GPautoCompleteProposal";
-                    next.className = "GPautoCompleteProposal current";
-                    next.style.color = "#000000";
-                    next.style["background-color"] = "#CEDBEF";
-                    break;
-                case 13:
-                    // enter
-                    logger.log("enter");
-                    current.click(e);
-                    break;
-            }
-
-            current.focus();
-        });
-
-        return inputOrigin;
-    },
-
-    /**
-     * Create Input Coordinate Point tag
-     *
-     * @param {Number} id - tag ID
-     * @returns {DOMElement} DOM element
-     */
-    _createLocationCoordinateInputElement: function _createLocationCoordinateInputElement(id) {
-        // contexte d'execution
-        var self = this;
-
-        var inputOriginCoord = document.createElement("input");
-        inputOriginCoord.id = this._addUID("GPlocationOriginCoords_" + id);
-        inputOriginCoord.className = "GPlocationOriginHidden";
-        inputOriginCoord.type = "text";
-        inputOriginCoord.disabled = false;
-        inputOriginCoord.addEventListener("click", function () {
-            var i = _SelectorID2.default.index(this.id);
-            document.getElementById(self._addUID("GPlocationOriginLabel_" + i)).click();
-        });
-        return inputOriginCoord;
-    },
-
-    /**
-     * Create Show Pointer tag
-     *
-     * @param {Number} id - tag ID
-     * @returns {DOMElement} DOM element
-     */
-    _createLocationPointerShowInputElement: function _createLocationPointerShowInputElement(id) {
-        var inputOriginPointer = document.createElement("input");
-        inputOriginPointer.id = this._addUID("GPlocationOriginPointer_" + id);
-        inputOriginPointer.type = "checkbox";
-        return inputOriginPointer;
-    },
-
-    /**
-     * Create Input Pointer tag
-     *
-     * @param {Number} id - tag ID
-     * @returns {DOMElement} DOM element
-     */
-    _createLocationPointerInputElement: function _createLocationPointerInputElement(id) {
-        // contexte d'execution
-        var self = this;
-
-        var labelOriginPointer = document.createElement("label");
-        labelOriginPointer.id = this._addUID("GPlocationOriginPointerImg_" + id);
-        labelOriginPointer.htmlFor = "GPlocationOriginPointer_" + id;
-        labelOriginPointer.className = "GPlocationOriginPointerImg";
-        labelOriginPointer.title = "Pointer un lieu sur la carte";
-        labelOriginPointer.addEventListener("click", function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            var i = _SelectorID2.default.index(this.id);
-            var points = document.getElementsByClassName(self._addUID("GPlocationPoint"));
-            var j;
-            var tag;
-            var id;
-            for (j = 0; j < points.length; j++) {
-                tag = points[j].childNodes[0].id;
-                id = _SelectorID2.default.index(tag);
-                if (i !== id) {
-                    document.getElementById(self._addUID("GPlocationOriginPointer_" + id)).checked = false;
-                    if (document.getElementById(self._addUID("GPlocationOriginCoords_" + id)).value === "Pointer un lieu sur la carte") {
-                        document.getElementById(self._addUID("GPlocationOriginCoords_" + id)).value = "";
-                        document.getElementById(self._addUID("GPlocationOrigin_" + id)).className = "GPlocationOriginVisible";
-                        document.getElementById(self._addUID("GPlocationOriginCoords_" + id)).className = "GPlocationOriginHidden";
-                    }
-                }
-            }
-            if (document.getElementById(self._addUID("GPlocationOriginPointer_" + i)).checked) {
-                document.getElementById(self._addUID("GPlocationOriginCoords_" + i)).value = "";
-                for (j = 0; j < points.length; j++) {
-                    tag = points[j].childNodes[0].id;
-                    id = _SelectorID2.default.index(tag);
-                    document.getElementById(self._addUID("GPlocationPoint_" + id)).style.cssText = "";
-                }
-                if (document.getElementById(self._addUID("GPlocationStageRemove_" + i))) {
-                    document.getElementById(self._addUID("GPlocationStageRemove_" + i)).className = "GPlocationStageRemove";
-                }
-                if (document.getElementById(self._addUID("GPlocationStageAdd"))) {
-                    document.getElementById(self._addUID("GPlocationStageAdd")).className = "";
-                }
-                document.getElementById(self._addUID("GPlocationOriginPointer_" + i)).checked = false;
-                document.getElementById(self._addUID("GPlocationOrigin_" + i)).className = "GPlocationOriginVisible";
-                document.getElementById(self._addUID("GPlocationOriginCoords_" + i)).className = "GPlocationOriginHidden";
-            } else {
-                document.getElementById(self._addUID("GPlocationOriginCoords_" + i)).value = "Pointer un lieu sur la carte";
-                for (j = 0; j < points.length; j++) {
-                    tag = points[j].childNodes[0].id;
-                    id = _SelectorID2.default.index(tag);
-                    if (i === id) {
-                        document.getElementById(self._addUID("GPlocationPoint_" + id)).style.cssText = "";
-                    } else {
-                        document.getElementById(self._addUID("GPlocationPoint_" + id)).style.display = "none";
-                    }
-                }
-                if (document.getElementById(self._addUID("GPlocationStageRemove_" + i))) {
-                    document.getElementById(self._addUID("GPlocationStageRemove_" + i)).className = "GPlocationOriginHidden";
-                }
-                if (document.getElementById(self._addUID("GPlocationStageAdd"))) {
-                    document.getElementById(self._addUID("GPlocationStageAdd")).className = "GPlocationOriginHidden";
-                }
-                document.getElementById(self._addUID("GPlocationOriginPointer_" + i)).checked = true;
-                document.getElementById(self._addUID("GPlocationOrigin_" + i)).className = "GPlocationOriginHidden";
-                document.getElementById(self._addUID("GPlocationOriginCoords_" + i)).className = "GPlocationOriginVisible";
-                document.getElementById(self._addUID("GPlocationOriginCoords_" + i)).disabled = true;
-            }
-            // gestionnaire d'evenement :
-            // on stocke la valeur du point, utilisée pour la requête sur le service de calcul d'itiniraire
-            self.onActivateMapPointClick(e);
-        });
-
-        return labelOriginPointer;
-    },
-
-    /**
-     * Create Remove Point tag
-     * see event !
-     *
-     * @param {Number} id - tag ID
-     * @returns {DOMElement} DOM element
-     */
-    _createLocationRemovePointElement: function _createLocationRemovePointElement(id) {
-        // contexte d'execution
-        var self = this;
-
-        var divRm = document.createElement("div");
-        divRm.id = this._addUID("GPlocationStageRemove_" + id);
-        divRm.className = "GPlocationStageRemove";
-        divRm.title = "Supprimer l'étape";
-        divRm.addEventListener("click", function (e) {
-            var points = document.getElementsByClassName(self._addUID("GPlocationPoint"));
-            var last = points.length - 1;
-            var start = points[0].childNodes[0].id;
-            var end = points[last].childNodes[0].id;
-
-            var startID = _SelectorID2.default.index(start);
-            var endID = _SelectorID2.default.index(end);
-
-            if (id !== startID && id !== endID) {
-                var i = _SelectorID2.default.index(this.id);
-                document.getElementById(self._addUID("GPlocationPoint_" + i)).className = "GPflexInput GPlocationStageFlexInputHidden";
-                document.getElementById(self._addUID("GPlocationOrigin_" + i)).value = "";
-                document.getElementById(self._addUID("GPlocationOrigin_" + i)).className = "GPlocationOriginVisible";
-                document.getElementById(self._addUID("GPlocationOriginCoords_" + i)).value = "";
-                document.getElementById(self._addUID("GPlocationOriginCoords_" + i)).className = "GPlocationOriginHidden";
-                document.getElementById(self._addUID("GPlocationStageAdd")).style.display = "";
-                // Moving up exclusions picto
-                // var exclusionsPictoTop = document.getElementById(self._addUID("GPshowLocationExclusionsPicto")).style.top;
-                // document.getElementById(self._addUID("GPshowLocationExclusionsPicto")).style.top = (parseInt(exclusionsPictoTop) - 33).toString() + "px";
-
-                // gestionnaire d'evenement :
-                // on supprime le point, utilisé pour la requête sur le service d'itiniraire
-                self.onLocationRemovePointClick(e);
-            }
-        });
-
-        return divRm;
-    },
-
-    /**
-     * Create Add Point tag
-     * see event !
-     *
-     * @returns {DOMElement} DOM element
-     */
-    _createLocationAddPointElement: function _createLocationAddPointElement() {
-        // contexte d'execution
-        var self = this;
-
-        var divAdd = document.createElement("div");
-        divAdd.id = this._addUID("GPlocationStageAdd");
-        divAdd.title = "Ajouter une étape";
-        divAdd.addEventListener("click", function (e) {
-            var lastStage = 1;
-            var nbStages = 0;
-            var points = document.getElementsByClassName(self._addUID("GPlocationPoint"));
-            for (var i = 1; i < points.length - 1; i++) {
-                var tag = points[i].childNodes[0].id;
-                var id = _SelectorID2.default.index(tag);
-                if (document.getElementById(self._addUID("GPlocationPoint_" + id))) {
-                    if (document.getElementById(self._addUID("GPlocationPoint_" + id)).className === "GPflexInput GPlocationStageFlexInputHidden") {
-                        if (lastStage === 1) {
-                            lastStage = id;
-                        }
-                    } else {
-                        nbStages++;
-                    }
-                }
-            }
-            // FIXME algo à revoir : lastStage = id hors si id = 300 sur 3 points !?
-            if (lastStage < points.length) {
-                document.getElementById(self._addUID("GPlocationPoint_" + lastStage)).className = "GPflexInput GPlocationStageFlexInput";
-                // Moving down exclusions picto
-                // var exclusionsPictoTop = document.getElementById(self._addUID("GPshowLocationExclusionsPicto")).style.top;
-                // document.getElementById(self._addUID("GPshowLocationExclusionsPicto")).style.top = (parseInt(exclusionsPictoTop) + 33).toString() + "px";
-            }
-            if (nbStages === 4) {
-                document.getElementById(self._addUID("GPlocationStageAdd")).style.display = "none";
-            }
-            // gestionnaire d'evenement :
-            // on ajoute le point, utilisé pour la requête sur le service d'itiniraire
-            self.onLocationAddPointClick(e);
-        });
-
-        return divAdd;
-    },
-
-    /**
-     * Create Results autocompletion to the point
-     * see event!
-     *
-     * @param {Number} id - tag ID
-     * @returns {DOMElement} DOM element
-     */
-    _createLocationAutoCompleteResultElement: function _createLocationAutoCompleteResultElement(id) {
-        // contexte d'execution
-        var self = this;
-
-        var div = document.createElement("div");
-        div.id = this._addUID("GPlocationAutoCompleteList_" + id);
-        div.className = "GPadvancedAutoCompleteList";
-
-        if (div.addEventListener) {
-            div.addEventListener("click", function (e) {
-                self.onAutoCompletedResultsItemClick(e);
-                document.getElementById(self._addUID("GPlocationAutoCompleteList_" + id)).style.display = "none";
-            }, false);
-        } else if (div.attachEvent) {
-            div.attachEvent("onclick", function (e) {
-                self.onAutoCompletedResultsItemClick(e);
-                document.getElementById(self._addUID("GPlocationAutoCompleteList_" + id)).style.display = "none";
-            });
-        }
-
-        return div;
-    },
-
-    /**
-     * Autocompletion result to a point.
-     * Proposals are dynamically filled in Javascript by autocomplete service
-     *
-     * TODO formaliser le contenu des reponse
-     *
-     * @param {Number} id - tag ID
-     * @param {Object} location - suggested location result
-     * @param {Number} n  - number of the point
-     */
-    _createLocationAutoCompletedLocationElement: function _createLocationAutoCompletedLocationElement(id, location, n) {
-        var container = document.getElementById(this._addUID("GPlocationAutoCompleteList_" + id));
-
-        var div = document.createElement("div");
-        div.id = this._addUID("AutoCompletedLocation_" + n);
-        div.className = "GPautoCompleteProposal";
-        div.innerHTML = location.fullText;
-
-        container.appendChild(div);
-    },
-
-    /**
-    * Display Coordinate
-    * @param {String} value - a Coordinate
-    */
-    GPdisplayCoordinate: function GPdisplayCoordinate(value) {
-        var points = document.getElementsByClassName(this._addUID("GPlocationPoint"));
-        for (var i = 0; i < points.length; i++) {
-            var tag = points[i].childNodes[0].id;
-            var id1 = _SelectorID2.default.index(tag);
-            if (document.getElementById(this._addUID("GPlocationOriginPointer_" + id1)).checked) {
-                document.getElementById(this._addUID("GPlocationOriginCoords_" + id1)).value = value;
-                document.getElementById(this._addUID("GPlocationOriginCoords_" + id1)).disabled = false;
-                for (var j = 0; j < points.length; j++) {
-                    tag = points[j].childNodes[0].id;
-                    var id2 = _SelectorID2.default.index(tag);
-                    document.getElementById(this._addUID("GPlocationPoint_" + id2)).style.cssText = "";
-                    if (document.getElementById(this._addUID("GPlocationStageRemove_" + id2))) {
-                        document.getElementById(this._addUID("GPlocationStageRemove_" + id2)).className = "GPlocationStageRemove";
-                    }
-                }
-                document.getElementById(this._addUID("GPlocationOriginPointer_" + id1)).checked = false;
-                if (document.getElementById(this._addUID("GPlocationStageAdd"))) {
-                    document.getElementById(this._addUID("GPlocationStageAdd")).className = "";
-                }
-                return;
-            }
-        }
-    }
-};
-
-exports.default = LocationSelectorDOM;
-
-/***/ }),
-/* 28 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-var IsoDOM = {
-
-    /**
-    * Add uuid to the tag ID
-    * @param {String} id - id selector
-    * @returns {String} uid - id selector with an unique id
-    */
-    _addUID: function _addUID(id) {
-        var uid = this._uid ? id + "-" + this._uid : id;
-        return uid;
-    },
-
-    /**
-     * Main container (DOM)
-     *
-     * @returns {DOMElement} DOM element
-     */
-    _createMainContainerElement: function _createMainContainerElement() {
-        var container = document.createElement("div");
-        container.id = this._addUID("GPisochron");
-        container.className = "GPwidget";
-        return container;
-    },
-
-    // ################################################################### //
-    // ################# Methods to display Main Panel ################### //
-    // ################################################################### //
-
-    /**
-     * Hidden checkbox for minimizing/maximizing panel
-     *
-     * @returns {DOMElement} DOM element
-     */
-    _createShowIsoElement: function _createShowIsoElement() {
-        var input = document.createElement("input");
-        input.id = this._addUID("GPshowIsochron");
-        input.type = "checkbox";
-        return input;
-    },
-
-    /**
-     * Show iso control
-     * see event !
-     *
-     * @returns {DOMElement} DOM element
-     */
-    _createShowIsoPictoElement: function _createShowIsoPictoElement() {
-        // contexte d'execution
-        var context = this;
-
-        var label = document.createElement("label");
-        label.id = this._addUID("GPshowIsochronPicto");
-        label.className = "GPshowAdvancedToolPicto";
-        label.htmlFor = this._addUID("GPshowIsochron");
-        label.title = "Calculer une isochrone";
-
-        // gestionnaire d'evenement :
-        // on ouvre le menu de saisie du calcul d'isochrone
-        // L'ouverture/Fermeture permet de faire le menage
-        // (reinitialisation)
-        if (label.addEventListener) {
-            label.addEventListener("click", function (e) {
-                context.onShowIsoPanelClick(e);
-            });
-        } else if (label.attachEvent) {
-            label.attachEvent("onclick", function (e) {
-                context.onShowIsoPanelClick(e);
-            });
-        }
-
-        var spanOpen = document.createElement("span");
-        spanOpen.id = this._addUID("GPshowIsochronOpen");
-        spanOpen.className = "GPshowAdvancedToolOpen";
-        label.appendChild(spanOpen);
-
-        return label;
-    },
-
-    // ################################################################### //
-    // ################## Methods to display Inputs Panel ################ //
-    // ################################################################### //
-
-    /**
-     * Create Container Panel
-     *
-     * FIXME
-     * don't call this._createIsoPanelHeaderElement
-     * don't call this._createIsoPanelFormElement
-     *
-     * @returns {DOMElement} DOM element
-     */
-    _createIsoPanelElement: function _createIsoPanelElement() {
-        var div = document.createElement("div");
-        div.id = this._addUID("GPisochronPanel");
-        div.className = "GPpanel";
-
-        // div.appendChild(this._createIsoPanelHeaderElement());
-        // div.appendChild(this._createIsoPanelFormElement());
-
-        return div;
-    },
-
-    /**
-     * Create Header Panel
-     *
-     * @returns {DOMElement} DOM element
-     */
-    _createIsoPanelHeaderElement: function _createIsoPanelHeaderElement() {
-        var self = this;
-
-        var container = document.createElement("div");
-        container.className = "GPpanelHeader";
-
-        var div = document.createElement("div");
-        div.className = "GPpanelTitle";
-        div.innerHTML = "Calcul d'isochrone";
-        container.appendChild(div);
-
-        // on desactive l'impl. reduction de la fenetre
-        // var divReduce  = document.createElement("div");
-        // divReduce.id = this._addUID("GPisochronPanelReduce");
-        // divReduce.className = "GPpanelReduce";
-        // divReduce.title = "Masquer le panneau";
-        //
-        // if (divReduce.addEventListener) {
-        //     divReduce.addEventListener("click", function () {
-        //         if ( typeof self.onReduceIsoPanelClick === "function") {
-        //             document.getElementById(self._addUID("GPshowIsochron")).checked = false;
-        //             self.onReduceIsoPanelClick();
-        //         }
-        //     }, false);
-        // } else if (divReduce.attachEvent) {
-        //     divReduce.attachEvent("onclick", function () {
-        //         if ( typeof self.onReduceIsoPanelClick === "function") {
-        //             document.getElementById(self._addUID("GPshowIsochron")).checked = false;
-        //             self.onReduceIsoPanelClick();
-        //         }
-        //     });
-        // }
-        // container.appendChild(divReduce);
-
-        var divClose = document.createElement("div");
-        divClose.id = this._addUID("GPisochronPanelClose");
-        divClose.className = "GPpanelClose";
-        divClose.title = "Fermer le panneau";
-
-        // Link panel close / visibility checkbox
-        if (divClose.addEventListener) {
-            divClose.addEventListener("click", function () {
-                document.getElementById(self._addUID("GPshowIsochronPicto")).click();
-            }, false);
-        } else if (divClose.attachEvent) {
-            divClose.attachEvent("onclick", function () {
-                document.getElementById(self._addUID("GPshowIsochronPicto")).click();
-            });
-        }
-        container.appendChild(divClose);
-
-        return container;
-    },
-
-    /**
-     * Create Form
-     * see evenement !
-     *
-     * @returns {DOMElement} DOM element
-     */
-    _createIsoPanelFormElement: function _createIsoPanelFormElement() {
-        // contexte d'execution
-        var self = this;
-
-        var form = document.createElement("form");
-        form.id = this._addUID("GPisochronForm");
-
-        form.addEventListener("submit", function (e) {
-            e.preventDefault();
-            self.onIsoComputationSubmit(e);
-            return false;
-        });
-
-        return form;
-    },
-
-    /**
-     * Create Waiting Panel
-     *
-     * @returns {DOMElement} DOM element
-     */
-    _createIsoWaitingElement: function _createIsoWaitingElement() {
-        var div = document.createElement("div");
-        div.id = this._addUID("GPisochronCalcWaitingContainer");
-        div.className = "GPisochronCalcWaitingContainerHidden";
-
-        var p = document.createElement("p");
-        p.className = "GPisochronCalcWaiting";
-        p.innerHTML = "Calcul en cours...";
-
-        div.appendChild(p);
-
-        return div;
-    },
-
-    // ################################################################### //
-    // ############# Methods to the type choice into form ################ //
-    // ################################################################### //
-
-    /**
-     * Create Container to type choice
-     *
-     * FIXME
-     * don't call this._createIsoPanelFormTypeChoiceChronElement
-     * don't call this._createIsoPanelFormTypeChoiceDistElement
-     *
-     * @returns {DOMElement} DOM element
-     */
-    _createIsoPanelFormTypeChoiceElement: function _createIsoPanelFormTypeChoiceElement() {
-        var div = document.createElement("div");
-        div.id = this._addUID("GPisochronChoice");
-
-        // div.appendChild(this._createIsoPanelFormTypeChoiceChronElement());
-        // div.appendChild(this._createIsoPanelFormTypeChoiceDistElement());
-
-        return div;
-    },
-
-    /**
-     * Create Type choice Chron
-     * see event !
-     * FIXME event not useful
-     * @param {Boolean} checked - checked
-     * @returns {DOMElement} DOM element
-     */
-    _createIsoPanelFormTypeChoiceChronElement: function _createIsoPanelFormTypeChoiceChronElement(checked) {
-        var self = this;
-
-        var div = document.createElement("div");
-        div.className = "GPisochronChoiceAlt";
-
-        var input = document.createElement("input");
-        input.id = this._addUID("GPisochronChoiceAltChron");
-        input.name = "GPisochronChoiceMode";
-        input.type = "radio";
-        input.checked = !!checked;
-        if (input.addEventListener) {
-            input.addEventListener("change", function (e) {
-                document.getElementById(self._addUID("GPisochronValueChron")).className = "GPflexInput";
-                document.getElementById(self._addUID("GPisochronValueDist")).className = "GPisochronValueHidden";
-                self.onIsoTypeChoiceChange(e);
-            }, false);
-        } else if (input.attachEvent) {
-            input.attachEvent("onchange", function () {
-                document.getElementById(self._addUID("GPisochronValueChron")).className = "GPflexInput";
-                document.getElementById(self._addUID("GPisochronValueDist")).className = "GPisochronValueHidden";
-                self.onIsoTypeChoiceChange();
-            });
-        }
-        // info: Internet explorer support
-        input.value = "isochron";
-        div.appendChild(input);
-
-        var label = document.createElement("label");
-        label.className = "GPisochronChoiceAltImg";
-        label.htmlFor = this._addUID("GPisochronChoiceAltChron");
-        div.appendChild(label);
-
-        var span = document.createElement("span");
-        span.id = this._addUID("GPisochronChoiceAltChronTxt");
-        span.innerHTML = "isochrone";
-        if (span.addEventListener) {
-            span.addEventListener("click", function () {
-                document.getElementById(self._addUID("GPisochronChoiceAltChron")).click();
-            }, false);
-        } else if (span.attachEvent) {
-            span.attachEvent("onclick", function () {
-                document.getElementById(self._addUID("GPisochronChoiceAltChron")).click();
-            });
-        }
-        div.appendChild(span);
-
-        return div;
-    },
-
-    /**
-     * Create Type choice Dist
-     * see event !
-     * FIXME event not useful
-     * @param {Boolean} checked - checked
-     * @returns {DOMElement} DOM element
-     */
-    _createIsoPanelFormTypeChoiceDistElement: function _createIsoPanelFormTypeChoiceDistElement(checked) {
-        var self = this;
-
-        var div = document.createElement("div");
-        div.className = "GPisochronChoiceAlt";
-
-        var input = document.createElement("input");
-        input.id = this._addUID("GPisochronChoiceAltDist");
-        input.name = "GPisochronChoiceMode";
-        input.type = "radio";
-        input.checked = !!checked;
-        if (input.addEventListener) {
-            input.addEventListener("change", function (e) {
-                document.getElementById(self._addUID("GPisochronValueDist")).className = "GPflexInput";
-                document.getElementById(self._addUID("GPisochronValueChron")).className = "GPisochronValueHidden";
-                self.onIsoTypeChoiceChange(e);
-            }, false);
-        } else if (input.attachEvent) {
-            input.attachEvent("onchange", function () {
-                document.getElementById(self._addUID("GPisochronValueDist")).className = "GPflexInput";
-                document.getElementById(self._addUID("GPisochronValueChron")).className = "GPisochronValueHidden";
-                self.onIsoTypeChoiceChange();
-            });
-        }
-        // info: Internet explorer support
-        input.value = "isodistance";
-        div.appendChild(input);
-
-        var label = document.createElement("label");
-        label.className = "GPisochronChoiceAltImg";
-        label.htmlFor = this._addUID("GPisochronChoiceAltDist");
-        div.appendChild(label);
-
-        var span = document.createElement("span");
-        span.id = this._addUID("GPisochronChoiceAltDistTxt");
-        span.innerHTML = "isodistance";
-        if (span.addEventListener) {
-            span.addEventListener("click", function () {
-                document.getElementById(self._addUID("GPisochronChoiceAltDist")).click();
-            }, false);
-        } else if (span.attachEvent) {
-            span.attachEvent("onclick", function () {
-                document.getElementById(self._addUID("GPisochronChoiceAltDist")).click();
-            });
-        }
-        div.appendChild(span);
-
-        return div;
-    },
-
-    // ################################################################### //
-    // ############### Methods to the value iso into form ################ //
-    // ################################################################### //
-
-    /**
-     * Create isochron inputs values
-     * see event !
-     * @param {Boolean} checked - checked
-     * @returns {DOMElement} DOM element
-     */
-    _createIsoPanelFormValueIsochronElement: function _createIsoPanelFormValueIsochronElement(checked) {
-        // contexte
-        var context = this;
-
-        var div = document.createElement("div");
-        div.id = this._addUID("GPisochronValueChron");
-        div.className = checked ? "GPflexInput" : "GPisochronValueHidden";
-
-        var label = document.createElement("label");
-        label.id = this._addUID("GPisochronValueChronLabel");
-        label.htmlFor = this._addUID("GPisochronValueChronInput");
-        label.innerHTML = "Temps";
-        div.appendChild(label);
-
-        var input1 = document.createElement("input");
-        input1.id = this._addUID("GPisochronValueChronInput1");
-        input1.min = "0";
-        input1.step = "1";
-        input1.value = "0";
-        input1.type = "number";
-        if (input1.addEventListener) {
-            input1.addEventListener("change", function (e) {
-                if (typeof context.onIsoValueChronTimeMinuteChange === "function") {
-                    context.onIsoValueChronTimeHourChange(e);
-                }
-            });
-        } else if (input1.attachEvent) {
-            input1.attachEvent("onchange", function (e) {
-                if (typeof context.onIsoValueChronTimeMinuteChange === "function") {
-                    context.onIsoValueChronTimeHourChange(e);
-                }
-            });
-        }
-        div.appendChild(input1);
-
-        var label1 = document.createElement("label");
-        label1.innerHTML = "h";
-        div.appendChild(label1);
-
-        var input2 = document.createElement("input");
-        input2.id = this._addUID("GPisochronValueChronInput2");
-        input2.min = "0";
-        input2.max = "59";
-        input2.step = "1";
-        input2.value = "0";
-        input2.type = "number";
-        if (input2.addEventListener) {
-            input2.addEventListener("change", function (e) {
-                if (typeof context.onIsoValueChronTimeMinuteChange === "function") {
-                    context.onIsoValueChronTimeMinuteChange(e);
-                }
-            });
-        } else if (input2.attachEvent) {
-            input2.attachEvent("onchange", function (e) {
-                if (typeof context.onIsoValueChronTimeMinuteChange === "function") {
-                    context.onIsoValueChronTimeMinuteChange(e);
-                }
-            });
-        }
-        div.appendChild(input2);
-
-        var label2 = document.createElement("label");
-        label2.innerHTML = "min";
-        div.appendChild(label2);
-
-        return div;
-    },
-
-    /**
-     * Create isodistance inputs values
-     * see event !
-     * @param {Boolean} checked - checked
-     * @returns {DOMElement} DOM element
-     */
-    _createIsoPanelFormValueIsodistanceElement: function _createIsoPanelFormValueIsodistanceElement(checked) {
-        // contexte
-        var context = this;
-
-        var div = document.createElement("div");
-        div.id = this._addUID("GPisochronValueDist");
-        div.className = checked ? "GPflexInput" : "GPisochronValueHidden";
-
-        var label = document.createElement("label");
-        label.id = this._addUID("GPisochronValueDistLabel");
-        label.htmlFor = this._addUID("GPisochronValueDistInput");
-        label.innerHTML = "Distance";
-        div.appendChild(label);
-
-        var input1 = document.createElement("input");
-        input1.id = this._addUID("GPisochronValueDistInput");
-        input1.min = "0";
-        input1.step = "any";
-        input1.value = "0";
-        input1.type = "number";
-        if (input1.addEventListener) {
-            input1.addEventListener("change", function (e) {
-                if (typeof context.onIsoValueDistChange === "function") {
-                    context.onIsoValueDistChange(e);
-                }
-            });
-        } else if (input1.attachEvent) {
-            input1.attachEvent("onchange", function (e) {
-                if (typeof context.onIsoValueDistChange === "function") {
-                    context.onIsoValueDistChange(e);
-                }
-            });
-        }
-        div.appendChild(input1);
-
-        var label1 = document.createElement("label");
-        label1.innerHTML = "km";
-        div.appendChild(label1);
-
-        return div;
-    },
-
-    // ################################################################### //
-    // ############ Methods to the mode choice into form ################# //
-    // ################################################################### //
-
-    /**
-     * Create Container to Mode choice
-     *
-     * FIXME
-     * don't call this._createIsoPanelFormModeChoiceTransportElement
-     * don't call this._createIsoPanelFormModeChoiceDirectionElement
-     *
-     * @returns {DOMElement} DOM element
-     */
-    _createIsoPanelFormModeChoiceElement: function _createIsoPanelFormModeChoiceElement() {
-        var div = document.createElement("div");
-        div.id = this._addUID("GPisochronModeChoice");
-
-        // div.appendChild(this._createIsoPanelFormModeChoiceTransportElement());
-        // div.appendChild(this._createIsoPanelFormModeChoiceDirectionElement());
-
-        return div;
-    },
-
-    /**
-     * Create Mode choice transport
-     * see event !
-     * FIXME event not useful
-     * @param {Array} transports - transports in a list
-     * @returns {DOMElement} DOM element
-     */
-    _createIsoPanelFormModeChoiceTransportElement: function _createIsoPanelFormModeChoiceTransportElement(transports) {
-        // contexte d'execution
-        var context = this;
-
-        var div = document.createElement("div");
-        div.id = this._addUID("GPisochronTransportChoice");
-
-        var span = document.createElement("span");
-        span.className = "GPisochronModeLabel";
-        span.innerHTML = "Mode de transport";
-        div.appendChild(span);
-
-        /* jshint -W083 */
-        for (var i = 0; i < transports.length; i++) {
-            var transport = transports[i];
-
-            if (transport === "Voiture") {
-                var inputCar = document.createElement("input");
-                inputCar.id = this._addUID("GPisochronTransportCar");
-                inputCar.type = "radio";
-                inputCar.name = "GPisochronTransport";
-                if (i === 0) {
-                    inputCar.checked = true;
-                }
-                // gestionnaire d'evenement :
-                // on stocke le mode de transport,
-                // utilisation pour la requête sur le service de calcul d'itiniraire
-                if (inputCar.addEventListener) {
-                    inputCar.addEventListener("change", function (e) {
-                        context.onIsoModeTransportChange(e);
-                    });
-                } else if (inputCar.attachEvent) {
-                    inputCar.attachEvent("onchange", function (e) {
-                        context.onIsoModeTransportChange(e);
-                    });
-                }
-                // info : internet explorer support
-                inputCar.value = "Voiture";
-                div.appendChild(inputCar);
-
-                var labelCar = document.createElement("label");
-                labelCar.className = "GPisochronTransportImg";
-                labelCar.htmlFor = this._addUID("GPisochronTransportCar");
-                labelCar.title = "Voiture";
-                div.appendChild(labelCar);
-            }
-
-            if (transport === "Pieton") {
-                var inputPedestrian = document.createElement("input");
-                inputPedestrian.id = this._addUID("GPisochronTransportPedestrian");
-                inputPedestrian.type = "radio";
-                inputPedestrian.name = "GPisochronTransport";
-                if (i === 0) {
-                    inputPedestrian.checked = true;
-                }
-                // gestionnaire d'evenement :
-                // on stocke le mode de transport,
-                // utilisation pour la requête sur le service de calcul d'itiniraire
-                if (inputPedestrian.addEventListener) {
-                    inputPedestrian.addEventListener("change", function (e) {
-                        context.onIsoModeTransportChange(e);
-                    });
-                } else if (inputPedestrian.attachEvent) {
-                    inputPedestrian.attachEvent("onchange", function (e) {
-                        context.onIsoModeTransportChange(e);
-                    });
-                }
-                // info : internet explorer support
-                inputPedestrian.value = "Pieton";
-                div.appendChild(inputPedestrian);
-
-                var labelPedestrian = document.createElement("label");
-                labelPedestrian.className = "GPisochronTransportImg";
-                labelPedestrian.htmlFor = this._addUID("GPisochronTransportPedestrian");
-                labelPedestrian.title = "Piéton";
-                div.appendChild(labelPedestrian);
-            }
-        }
-
-        return div;
-    },
-
-    /**
-     * Create Mode choice direction
-     * see event!
-     *
-     * @param {Array} directions - directions to display in list ("Departure", "Arrival"). First element will be selected by default
-     * @returns {DOMElement} DOM element
-     */
-    _createIsoPanelFormModeChoiceDirectionElement: function _createIsoPanelFormModeChoiceDirectionElement(directions) {
-        // contexte d'execution
-        var self = this;
-
-        var div = document.createElement("div");
-        div.id = this._addUID("GPisochronDirectionChoice");
-
-        var span = document.createElement("span");
-        span.className = "GPisochronModeLabel";
-        span.innerHTML = "Sens de parcours";
-        div.appendChild(span);
-
-        var select = document.createElement("select");
-        select.id = this._addUID("GPisochronDirectionSelect");
-        select.className = "GPinputSelect";
-        // gestionnaire d'evenement :
-        // on stocke la valeur du mode de calcul,
-        // utilisation pour la requête sur le service de calcul d'iso
-        select.addEventListener("change", function (e) {
-            self.onIsoModeDirectionChange(e);
-        });
-
-        for (var i = 0; i < directions.length; i++) {
-            var direction = directions[i];
-            if (direction.toLowerCase() === "departure") {
-                var departureOption = document.createElement("option");
-                if (i === 0) {
-                    departureOption.selected = "selected";
-                }
-                departureOption.value = "departure";
-                departureOption.text = "Départ";
-                select.appendChild(departureOption);
-            }
-            if (direction.toLowerCase() === "arrival") {
-                var arrivalOption = document.createElement("option");
-                if (i === 0) {
-                    arrivalOption.selected = "selected";
-                }
-                arrivalOption.value = "arrival";
-                arrivalOption.text = "Arrivée";
-                select.appendChild(arrivalOption);
-            }
-        }
-        div.appendChild(select);
-
-        return div;
-    },
-
-    // ################################################################### //
-    // ################# Methods to the choice exclusions ################ //
-    // ################################################################### //
-
-    /**
-     * Hidden checkbox for minimizing/maximizing Exclusions Options
-     *
-     * @returns {DOMElement} DOM element
-     */
-    _createShowIsoExclusionsElement: function _createShowIsoExclusionsElement() {
-        var input = document.createElement("input");
-        input.id = this._addUID("GPshowIsoExclusions");
-        input.type = "checkbox";
-        return input;
-    },
-
-    /**
-     * Label to Exclusions Options
-     *
-     * @returns {DOMElement} DOM element
-     */
-    _createShowIsoExclusionsPictoElement: function _createShowIsoExclusionsPictoElement() {
-        var label = document.createElement("label");
-        label.id = this._addUID("GPshowIsoExclusionsPicto");
-        label.className = "GPshowMoreOptions GPshowIsoExclusionsPicto";
-        label.htmlFor = this._addUID("GPshowIsoExclusions");
-        label.title = "Exclusions";
-        label.style.top = "240px";
-
-        return label;
-    },
-
-    /**
-     * Create Container to Exclusions
-     *
-     * @returns {DOMElement} DOM element
-     */
-    _createIsoPanelFormExclusionsElement: function _createIsoPanelFormExclusionsElement() {
-        var div = document.createElement("div");
-        div.id = this._addUID("GPisoExclusions");
-
-        var span = document.createElement("span");
-        span.className = "GPisoExclusionsLabel";
-        span.innerHTML = "Passages autorisés";
-        div.appendChild(span);
-
-        // div.appendChild(this._createIsoPanelFormExclusionOptionsElement());
-
-        return div;
-    },
-
-    /**
-     * Create Exclusions Options
-     * see event !
-     * FIXME event not useful
-     * @param {Array} exclusions - exclusions to display in list
-     * @returns {DOMElement} DOM element
-     */
-    _createIsoPanelFormExclusionOptionsElement: function _createIsoPanelFormExclusionOptionsElement(exclusions) {
-        // contexte d'execution
-        var context = this;
-
-        var div = document.createElement("div");
-        div.className = "GPisoExclusionsOptions";
-
-        /* jshint -W083 */
-        for (var value in exclusions) {
-            if (exclusions.hasOwnProperty(value)) {
-                var status = exclusions[value];
-                switch (value) {
-                    case "toll":
-                        var inputToll = document.createElement("input");
-                        inputToll.id = this._addUID("GPisoExclusionsToll");
-                        inputToll.type = "checkbox";
-                        inputToll.checked = !status;
-                        // gestionnaire d'evenement :
-                        // on stocke l'exclusion,
-                        // utilisation pour la requête sur le service de calcul d'itiniraire
-                        if (inputToll.addEventListener) {
-                            inputToll.addEventListener("change", function (e) {
-                                context.onIsoExclusionsChange(e);
-                            });
-                        } else if (inputToll.attachEvent) {
-                            inputToll.attachEvent("onchange", function (e) {
-                                context.onIsoExclusionsChange(e);
-                            });
-                        }
-                        // info : internet explorer support
-                        inputToll.value = "Toll";
-                        div.appendChild(inputToll);
-
-                        var labelToll = document.createElement("label");
-                        labelToll.className = "GPisoExclusionsOption";
-                        labelToll.htmlFor = this._addUID("GPisoExclusionsToll");
-                        labelToll.innerHTML = "Péages";
-                        div.appendChild(labelToll);
-                        break;
-
-                    case "tunnel":
-                        var inputTunnel = document.createElement("input");
-                        inputTunnel.id = this._addUID("GPisoExclusionsTunnel");
-                        inputTunnel.type = "checkbox";
-                        inputTunnel.checked = !status;
-                        // gestionnaire d'evenement :
-                        // on stocke l'exclusion,
-                        // utilisation pour la requête sur le service de calcul d'itiniraire
-                        if (inputTunnel.addEventListener) {
-                            inputTunnel.addEventListener("change", function (e) {
-                                context.onIsoExclusionsChange(e);
-                            });
-                        } else if (inputTunnel.attachEvent) {
-                            inputTunnel.attachEvent("onchange", function (e) {
-                                context.onIsoExclusionsChange(e);
-                            });
-                        }
-                        // info : internet explorer support
-                        inputTunnel.value = "Tunnel";
-                        div.appendChild(inputTunnel);
-
-                        var labelTunnel = document.createElement("label");
-                        labelTunnel.className = "GPisoExclusionsOption";
-                        labelTunnel.htmlFor = this._addUID("GPisoExclusionsTunnel");
-                        labelTunnel.innerHTML = "Tunnels";
-                        div.appendChild(labelTunnel);
-                        break;
-
-                    case "bridge":
-                        var inputBridge = document.createElement("input");
-                        inputBridge.id = this._addUID("GPisoExclusionsBridge");
-                        inputBridge.type = "checkbox";
-                        inputBridge.checked = !status;
-                        // gestionnaire d'evenement :
-                        // on stocke l'exclusion,
-                        // utilisation pour la requête sur le service de calcul d'itiniraire
-                        if (inputBridge.addEventListener) {
-                            inputBridge.addEventListener("change", function (e) {
-                                context.onIsoExclusionsChange(e);
-                            });
-                        } else if (inputBridge.attachEvent) {
-                            inputBridge.attachEvent("onchange", function (e) {
-                                context.onIsoExclusionsChange(e);
-                            });
-                        }
-                        // info : internet explorer support
-                        inputBridge.value = "Bridge";
-                        div.appendChild(inputBridge);
-
-                        var labelBridge = document.createElement("label");
-                        labelBridge.className = "GPisoExclusionsOption";
-                        labelBridge.htmlFor = this._addUID("GPisoExclusionsBridge");
-                        labelBridge.innerHTML = "Ponts";
-                        div.appendChild(labelBridge);
-                        break;
-                }
-            }
-        }
-
-        return div;
-    },
-
-    // ################################################################### //
-    // ############################### Submit Form ####################### //
-    // ################################################################### //
-
-    /**
-     * Create Submit Form Element
-     *
-     * @returns {DOMElement} DOM element
-     */
-    _createIsoSubmitFormElement: function _createIsoSubmitFormElement() {
-        var input = document.createElement("input");
-        input.id = this._addUID("GPisochronSubmit");
-        input.className = "GPinputSubmit";
-        input.type = "submit";
-        input.value = "Calculer";
-
-        return input;
-    },
-
-    // ################################################################### //
-    // ############################### Reset picto ####################### //
-    // ################################################################### //
-
-    /**
-     * Create Reset Picto Element
-     *
-     * @returns {DOMElement} DOM element
-     */
-    _createIsoFormResetElement: function _createIsoFormResetElement() {
-        var self = this;
-
-        var divReset = document.createElement("div");
-        divReset.id = this._addUID("GPisochronReset");
-        divReset.title = "Réinitialiser les paramètres";
-        divReset.addEventListener("click", function (e) {
-            self.onIsoResetClick(e);
-        });
-
-        return divReset;
-    }
-};
-
-exports.default = IsoDOM;
-
-/***/ }),
-/* 29 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var _gp = __webpack_require__(2);
-
-var _gp2 = _interopRequireDefault(_gp);
-
-var _leaflet = __webpack_require__(0);
-
-var _leaflet2 = _interopRequireDefault(_leaflet);
-
-var _LoggerByDefault = __webpack_require__(1);
-
-var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
-
-var _CheckRightManagement = __webpack_require__(4);
-
-var _CheckRightManagement2 = _interopRequireDefault(_CheckRightManagement);
-
-var _SelectorID = __webpack_require__(3);
-
-var _SelectorID2 = _interopRequireDefault(_SelectorID);
-
-var _MathUtils = __webpack_require__(30);
-
-var _MathUtils2 = _interopRequireDefault(_MathUtils);
-
-var _MousePositionDOM = __webpack_require__(31);
-
-var _MousePositionDOM2 = _interopRequireDefault(_MousePositionDOM);
-
-var _PositionFormater = __webpack_require__(9);
-
-var _PositionFormater2 = _interopRequireDefault(_PositionFormater);
-
-var _CRS = __webpack_require__(12);
-
-var _CRS2 = _interopRequireDefault(_CRS);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var logger = _LoggerByDefault2.default.getLogger("mouseposition");
-
-/**
- * @classdesc
- *
- * Leaflet Control Class to display Mouse position in various CRS and altitude using the <a href="https://geoservices.ign.fr/documentation/geoservices/alti.html" target="_blank">altimetric web service of the Geoportal Platform</a>.
- *
- * Use {@link module:Controls.MousePosition L.geoportalControl.MousePosition()} factory to create instances of that class.
- *
- * **Extends** Leaflet <a href="http://leafletjs.com/reference.html#control" target="_blank">L.Control</a> native class.
- *
- * @namespace
- * @alias L.geoportalControl.MousePosition
- */
-var MousePosition = _leaflet2.default.Control.extend( /** @lends L.geoportalControl.MousePosition.prototype */{
-
-    includes: _MousePositionDOM2.default,
-
-    /**
-     * options by default
-     *
-     * @private
-     */
-    options: {
-        position: "bottomleft",
-        collapsed: true,
-        units: [],
-        systems: [],
-        displayAltitude: true,
-        displayCoordinates: true,
-        editCoordinates: false,
-        altitude: {
-            triggerDelay: 200,
-            responseDelay: 500,
-            noDataValue: -99999,
-            noDataValueTolerance: 90000,
-            serviceOptions: {}
-        }
-    },
-
-    /**
-     * @constructor MousePosition
-     *
-     * @private
-     * @alias MousePosition
-     * @extends {L.Control}
-     * @param {Object} options - options for function call.
-     * @param {Sting}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
-     * @param {String}  [options.position] - position of component into the map, 'bottomleft' by default
-     * @param {Boolean} [options.collapsed] - collapse mode, false by default
-     * @param {Array}   [options.systems] - list of projection systems, GEOGRAPHIC, MERCATOR, LAMB93 and LAMB2E by default
-     *      Each array element (=system) is an object with following properties :
-     * @param {String}  options.systems.crs - Proj4 crs alias (from proj4 defs). e.g. : "EPSG:4326". Required
-     * @param {String}  [options.systems.label] - CRS label to be displayed in control. Default is crs code (e.g. "EPSG:4326")
-     * @param {String}  [options.systems.type] - CRS units type for coordinates conversion : "Geographical" or "Metric". Default: "Metric"
-     * @param {Object}  [options.systems.geoBBox] - Aera covered by the system (WGS84 coordinates).
-     * @param {Number}  options.systems.geoBBox.right - Right bound.
-     * @param {Number}  options.systems.geoBBox.left - Left bound.
-     * @param {Number}  options.systems.geoBBox.top - Top bound.
-     * @param {Number}  options.systems.geoBBox.bottom - Bottom bound.
-     * @param {Array}   [options.units] - list of units by system, Geographical and Metric by default
-     *      Values may be "DEC" (decimal degrees), "DMS" (sexagecimal), "RAD" (radians) and "GON" (grades) for geographical coordinates,
-     *      and "M" or "KM" for metric coordinates
-     * @param {Boolean} [options.displayAltitude] - active/desactivate the altitude panel, if desactivate, have just the coordinate panel, true by default
-     * @param {Boolean} [options.displayCoordinates] - active/desactivate the coordinate panel, if desactivate, have just the altitude panel, true by default
-     * @param {Boolean} [options.editCoordinates = false] - add edit coordinates options. False by default.
-     * @param {Object}  [options.altitude] - elevation configuration
-     * @param {Object}  [options.altitude.serviceOptions] - options of elevation service
-     * @param {Number}  [options.altitude.responseDelay] - latency for altitude request, 500 ms by default
-     * @param {Number}  [options.altitude.triggerDelay] - immobilisation time of movement on the map to trigger the elevation calculation, 200 ms by default
-     * @param {Number}  [options.altitude.noDataValue] - value used for altitude service no data (default is -99999). In this case, "---m" will be displayed instead of "-99999m"
-     * @param {Number}  [options.altitude.noDataValueTolerance] - tolerance for no data value :
-     *                  values in [noDataValue - noDataValueTolerance ; noDataValue + noDataValueTolerance] interval will not be displayed, but "---m" will be displayed instead.
-     *                  Default is 90000
-     * @example
-     *  var MousePosition = L.geoportalControl.MousePosition({
-     *      position : 'bottomleft',
-     *      collapsed : false,
-     *      displayAltitude : true,
-     *      displayCoordinates : true,
-     *      editCoordinates : false,
-     *      altitude : {
-     *           triggerDelay : 100,
-     *           responseDelay : 500,
-     *           noDataValue : -99999,
-     *           noDataValueTolerance : 90000,
-     *           serviceOptions : {}
-     *      },
-     *      systems : [
-     *       {
-     *          crs : L.CRS.EPSG4326,
-     *          label : "Lon,Lat",
-     *          type : "Geographical"
-     *        },
-     *       {
-     *          crs : L.geoportalCRS.EPSG2154,
-     *          label : "Lambert 93",
-     *          type : "Metric"
-     *        }
-     *      ],
-     *      units : ["DEC", "DMS"]
-     *  });
-     */
-    initialize: function initialize(options) {
-        // on merge les options avec celles par defaut
-        _leaflet2.default.Util.extend(this.options, options);
-
-        // uuid
-        this._uid = _SelectorID2.default.generate();
-
-        // initialisation des systemes de projections
-        this._projectionSystems = [];
-        this._initProjectionSystems();
-
-        // initialisation des systemes des unités
-        this._projectionUnits = {};
-        this._initProjectionUnits();
-
-        // detection du support : desktop ou tactile
-        this._isDesktop = this._detectSupport();
-
-        // on met en place un seuil sur le timer
-        if (this.options.altitude.triggerDelay < 100) {
-            this.options.altitude.triggerDelay = 100;
-        }
-
-        // timer sur le delai d'immobilisation du mouvement
-        this._timer = this.options.altitude.triggerDelay;
-
-        // Systeme de projection selectionné (cf. _initProjectionSystems)
-        this._currentProjectionSystems = this._projectionSystems[0];
-
-        // Container des systemes
-        this._projectionSystemsContainer = null;
-
-        /** Type d'unité de projection selectionnés : Geographical ou Metric (cf._initProjectionSystems ) */
-        this._currentProjectionType = this._projectionSystems[0].type;
-
-        // Unité de projection selectionnés (cf. _initProjectionUnits)
-        this._currentProjectionUnits = this._projectionUnits[this._currentProjectionType][0].code;
-
-        // Container des unités
-        this._projectionUnitsContainer = null;
-
-        /** Container de visualisation du panneau du composant */
-        this._showContainer = null;
-        this._pictoContainer = null;
-
-        // gestion de l'affichage du panneau de l'altitude / coordonnées
-        if (!this.options.displayAltitude && !this.options.displayCoordinates) {
-            // on reactive cette option !
-            this.options.displayCoordinates = true;
-        }
-
-        if (!this.options.displayCoordinates) {
-            // si les coordonnées ne sont pas affichées : pas besoin de les éditer...
-            this.options.editCoordinates = false;
-        }
-
-        /** Edition des coordonnées en cours ou non */
-        this._isEditing = false;
-
-        /**
-         * Droit sur le ressource alti.
-         * Par defaut, on n'en s'occupe pas
-         * sauf si l'autoconfiguration est chargée !
-         */
-        this._noRightManagement = false;
-
-        // gestion des droits sur les ressources/services
-        // si l'on souhaite un calcul d'altitude, on verifie
-        // les droits sur les ressources d'alti...
-        if (this.options.displayAltitude) {
-            this._checkRightsManagement();
-        }
-
-        // on transmet les options au controle
-        _leaflet2.default.Util.setOptions(this, this.options);
-    },
-
-    /**
-     * this method is called by this.addTo(map) when the control is added on the map
-     * and fills variable 'this._container = this.onAdd(map)',
-     * and create events on map.
-     * @param {Object} map - the map
-     *
-     * @returns {DOMElement} DOM element
-     * @private
-     */
-    onAdd: function onAdd(map) {
-        // initialisation du DOM du composant
-        var container = this._container = this._initLayout();
-
-        // on met en place l'evenement sur la carte pour recuperer les coordonnées,
-        // on l'active à l'ouverture du panneau uniquement !
-        if (!this.options.collapsed) {
-            // this.onShowMousePositionClick();
-            // evenement valable pour le mode desktop !
-            if (this._isDesktop) {
-                map.on("mousemove", this.onMouseMove, this);
-            } else {
-                map.on("move", this.onMapMove, this);
-            }
-        }
-
-        // deactivate of events that may interfere with the map
-        _leaflet2.default.DomEvent.disableClickPropagation(container).disableScrollPropagation(container);
-
-        // on stoppe la propagation de l'événement mousemove sur le container
-        _leaflet2.default.DomEvent.addListener(container, "mousemove", _leaflet2.default.DomEvent.stopPropagation).addListener(container, "mousemove", _leaflet2.default.DomEvent.preventDefault);
-
-        return container;
-    },
-
-    /**
-     * this method is called when the control is removed from the map
-     * and removes events on map.
-     * @param {Object} map - the map
-     *
-     * @private
-     */
-    onRemove: function onRemove(map) {
-        map.off("mousemove", this.onMouseMove);
-    },
-
-    /**
-     * this method is called by the constructor and initialize the projection
-     * systems.
-     * getting coordinates in the requested projection :
-     * see this.onMousePositionProjectionSystemChange()
-     *
-     * @private
-     */
-    _initProjectionSystems: function _initProjectionSystems() {
-        // on donne la possibilité à l'utilisateur de modifier
-        // la liste des systèmes à afficher
-        // Ex. this.options.systems
-
-        // systemes de projection disponible par defaut
-        var projectionSystemsByDefault = [{
-            label: "G\xE9ographique",
-            crs: _leaflet2.default.CRS.Simple, // L.Projection.LonLat !
-            type: "Geographical"
-        }, {
-            label: "Web Mercator",
-            crs: _leaflet2.default.CRS.EPSG3395, // L.Projection.SphericalMercator !
-            type: "Metric"
-        }, {
-            label: "Lambert 93",
-            crs: _CRS2.default.EPSG2154,
-            type: "Metric",
-            geoBBox: {
-                left: -9.86,
-                bottom: 41.15,
-                right: 10.38,
-                top: 51.56
-            }
-        }, {
-            label: "Lambert II \xE9tendu",
-            crs: _CRS2.default.EPSG27572,
-            type: "Metric",
-            geoBBox: {
-                left: -4.87,
-                bottom: 42.33,
-                right: 8.23,
-                top: 51.14
-            }
-        }];
-
-        var systems = this.options.systems;
-        for (var i = 0; i < systems.length; i++) {
-            // definition d'un systeme de reference
-            var sys = systems[i];
-
-            if (!sys.label) {
-                logger.error("not defined !");
-                continue;
-            }
-
-            if (!sys.crs) {
-                logger.error("crs not defined !");
-                continue;
-            }
-
-            if (!sys.type) {
-                logger.warn("type srs not defined, use 'Metric' by default !");
-                sys.type = "Metric";
-            }
-
-            this._projectionSystems.push(systems[i]);
-
-            // it's a just a test ...
-            var found = false;
-            for (var j = 0; j < projectionSystemsByDefault.length; j++) {
-                var obj = projectionSystemsByDefault[j];
-                if (sys.crs === obj.crs) {
-                    found = true;
-                    logger.info("crs '{}' already configured by default", obj.code);
-                }
-            }
-            if (!found) {
-                logger.info("crs '{}' not found, it's a new projection", sys.code || sys.label);
-            }
-        }
-
-        // au cas où...
-        if (this._projectionSystems.length === 0) {
-            this._projectionSystems = projectionSystemsByDefault;
-        }
-
-        // re-initilisation des codes pour gerer le lien entre _projectionSystems et select du mouse position (lien code/value)
-        for (var k = 0; k < this._projectionSystems.length; ++k) {
-            this._projectionSystems[k].code = k;
-        }
-    },
-
-    /**
-     * this method is called by the constructor and initialize the units.
-     * getting coordinates in the requested units :
-     * see this.onMousePositionProjectionUnitsChange()
-     *
-     * @private
-     */
-    _initProjectionUnits: function _initProjectionUnits() {
-        // on donne la possibilité à l'utilisateur de modifier
-        // la liste des unités à afficher
-        // Ex.
-        // this.options.units : ["DEC", "DMS"]
-
-        // unités disponible par defaut
-        var projectionUnitsByDefault = {
-            Geographical: [{
-                code: "DEC",
-                label: "degrés décimaux",
-                format: this._displayDEC
-            }, {
-                code: "DMS",
-                label: "degrés sexagésimaux",
-                format: this._displayDMS
-            }, {
-                code: "RAD",
-                label: "radians",
-                format: this._displayRAD
-            }, {
-                code: "GON",
-                label: "grades",
-                format: this._displayGON
-            }],
-            Metric: [{
-                code: "M",
-                label: "mètres",
-                format: this._displayMeter
-            }, {
-                code: "KM",
-                label: "kilomètres",
-                format: this._displayKMeter
-            }]
-        };
-
-        var units = this.options.units;
-
-        for (var type in projectionUnitsByDefault) {
-            if (projectionUnitsByDefault.hasOwnProperty(type)) {
-                var found = false;
-                for (var j = 0; j < projectionUnitsByDefault[type].length; j++) {
-                    var obj = projectionUnitsByDefault[type][j];
-                    for (var i = 0; i < units.length; i++) {
-                        var unit = units[i];
-                        if (obj.code === unit) {
-                            found = true;
-                            if (!this._projectionUnits[type]) {
-                                this._projectionUnits[type] = [];
-                            }
-                            this._projectionUnits[type].push(obj);
-                        }
-                    }
-                }
-                if (!found) {
-                    this._projectionUnits[type] = projectionUnitsByDefault[type];
-                }
-            }
-        }
-
-        // au cas où...
-        if (Object.keys(this._projectionUnits).length === 0) {
-            this._projectionUnits = projectionUnitsByDefault;
-        }
-    },
-
-    /**
-     * this method is called by constructor
-     * and check the rights to resources
-     *
-     * @private
-     */
-    _checkRightsManagement: function _checkRightsManagement() {
-        var rightManagement = _CheckRightManagement2.default.check({
-            key: this.options.apiKey,
-            resources: ["SERVICE_CALCUL_ALTIMETRIQUE_RSC"],
-            services: ["Elevation"]
-        });
-
-        this._noRightManagement = !rightManagement;
-
-        // on recupère les informations utiles
-        // sur ce controle, on ne s'occupe pas de la ressource car elle est unique...
-        // Ex. la clef API issue de l'autoconfiguration si elle n'a pas
-        // été renseignée.
-        if (!this.options.apiKey) {
-            this.options.apiKey = rightManagement ? rightManagement.key : null;
-        }
-    },
-
-    /**
-     * this method is called by the constructor.
-     * this information is useful to switch to touch mode.
-     * Detection : test for desktop or tactile
-     *
-     * @returns {Boolean} is desktop
-     * @private
-     */
-    _detectSupport: function _detectSupport() {
-        // TODO
-        // Choix de gérer la détection dans le code du composant au lieu du DOM car :
-        // Utilisation de l'implémentation Leaflet
-        // http://leafletjs.com/reference.html#browser
-
-        var isDesktop = true;
-        var userAgent = window.navigator.userAgent.toLowerCase();
-
-        if (userAgent.indexOf("iphone") !== -1 || userAgent.indexOf("ipod") !== -1 || userAgent.indexOf("ipad") !== -1 || userAgent.indexOf("android") !== -1 || userAgent.indexOf("mobile") !== -1 || userAgent.indexOf("blackberry") !== -1 || userAgent.indexOf("tablet") !== -1 || userAgent.indexOf("phone") !== -1 || userAgent.indexOf("touch") !== -1) {
-            isDesktop = false;
-        }
-
-        if (userAgent.indexOf("msie") !== -1 || userAgent.indexOf("trident") !== -1) {
-            isDesktop = true;
-        }
-
-        return isDesktop;
-    },
-
-    // ################################################################### //
-    // ######################## methods handle dom ####################### //
-    // ################################################################### //
-
-    /**
-     * this method is called by this.onAdd(map)
-     * and initialize the container HTMLElement
-     *
-     * @returns {DOMElement} DOM element
-     * @private
-     */
-    _initLayout: function _initLayout() {
-        // create main container
-        var container = this._createMainContainerElement();
-
-        var inputShow = this._showContainer = this._createShowMousePositionElement();
-        container.appendChild(inputShow);
-
-        // mode "collapsed"
-        if (!this.options.collapsed) {
-            inputShow.checked = true;
-        }
-
-        var picto = this._pictoContainer = this._createShowMousePositionPictoElement(this._isDesktop);
-        container.appendChild(picto);
-
-        var panel = this._createMousePositionPanelElement(this.options.displayAltitude, this.options.displayCoordinates, this.options.editCoordinates);
-        var settings = this._createMousePositionSettingsElement();
-        var systems = this._projectionSystemsContainer = this._createMousePositionSettingsSystemsElement(this._projectionSystems);
-        var units = this._projectionUnitsContainer = this._createMousePositionSettingsUnitsElement(this._projectionUnits[this._currentProjectionType]);
-        settings.appendChild(systems);
-        settings.appendChild(units);
-        panel.appendChild(settings);
-        container.appendChild(panel);
-
-        // ce tag n'est pas à placer dans le container du controle,
-        // mais dans celui de la map !
-        var center = this._createMapCenter();
-        var map = this._map;
-        map.getContainer().appendChild(center);
-
-        return container;
-    },
-
-    /**
-     * this method is called by this.()
-     * and it changes the elevation view panel into the dom.
-     * FIXME call by ID !
-     *
-     * @param {Boolean} active - true:active, false:disable
-     *
-     * @private
-     */
-    _setElevationPanel: function _setElevationPanel(active) {
-        var div = null;
-
-        if (!active) {
-            div = _leaflet2.default.DomUtil.get(this._addUID("GPmousePositionAltitude"));
-            div.style.display = "none";
-        }
-
-        if (active && this._noRightManagement) {
-            div = _leaflet2.default.DomUtil.get(this._addUID("GPmousePositionAlt"));
-            div.innerHTML = "no right !";
-        }
-    },
-
-    /**
-     * this method is called by this.()
-     * and it changes the coordinate view panel into the dom.
-     * FIXME call by ID !
-     *
-     * @param {Boolean} active - true:active, false:disable
-     *
-     * @private
-     */
-    _setCoordinatePanel: function _setCoordinatePanel(active) {
-        if (!active) {
-            var div = _leaflet2.default.DomUtil.get(this._addUID("GPmousePositionCoordinate"));
-            div.style.display = "none";
-        }
-    },
-
-    /**
-     * this method is called by this.()
-     * and it changes the settings view panel into the dom.
-     * FIXME call by ID !
-     *
-     * @param {Boolean} active - true:active, false:disable
-     *
-     * @private
-     */
-    _setSettingsPanel: function _setSettingsPanel(active) {
-        if (!active) {
-            var divPicto = _leaflet2.default.DomUtil.get("GPshowMousePositionSettingsPicto");
-            var divPanel = _leaflet2.default.DomUtil.get(this._addUID("GPmousePositionSettings"));
-            divPicto.style.display = "none";
-            divPanel.style.display = "none";
-        }
-    },
-
-    /**
-     * this method is called by this.onMousePositionProjectionSystemChange()
-     * when changes to a metric or a geographical units.
-     *
-     * @param {String} type - Geographical or Metric
-     *
-     * @private
-     */
-    _setTypeUnitsPanel: function _setTypeUnitsPanel(type) {
-        var container = this._projectionUnitsContainer;
-
-        // on supprime les enfants...
-        while (container.firstChild) {
-            container.removeChild(container.firstChild);
-        }
-
-        var units = this._projectionUnits[type];
-        for (var j = 0; j < units.length; j++) {
-            var obj = units[j];
-            var option = document.createElement("option");
-            option.value = obj.code ? obj.code : j;
-            option.text = obj.label || j;
-            // option.label = obj.label;
-            container.appendChild(option);
-        }
-
-        var projectionUnits = this._projectionUnits[type][0].code;
-
-        if (this._currentProjectionUnits === "DMS" || projectionUnits === "DMS") {
-            this._resetCoordinateElements(this.options.editCoordinates, type, projectionUnits);
-            this._setEditMode(this._isEditing);
-        }
-
-        // le nouveau type de system ...
-        this._currentProjectionType = type;
-
-        // Mise a jour des elements labels et unites
-        this._resetLabelElements(type);
-        this._resetUnitElements(projectionUnits);
-
-        // et comme on a changé de type de systeme,
-        // il faut changer aussi d'unité !
-        this._currentProjectionUnits = this._projectionUnits[type][0].code;
-    },
-
-    // ################################################################### //
-    // ######################## method units format ###################### //
-    // ################################################################### //
-
-    /**
-     * degreedecimal
-     * @param {Object} oLatLng - coordinates
-     *
-     * @returns {Object} coordinates in decimal
-     * @private
-     */
-    _displayDEC: function _displayDEC(oLatLng) {
-        var coordinate = {};
-        coordinate.lat = _PositionFormater2.default.roundToDecimal(oLatLng.lat, 6);
-        coordinate.lng = _PositionFormater2.default.roundToDecimal(oLatLng.lng, 6);
-        coordinate.unit = "°";
-        return coordinate;
-    },
-
-    /**
-     * degreedecimal2sexagecimal
-     * @param {Object} oLatLng - coordinates
-     *
-     * @returns {Object} coordinates in DMS
-     * @private
-     */
-    _displayDMS: function _displayDMS(oLatLng) {
-        var coordinate = {};
-        coordinate.lat = _PositionFormater2.default.decimalLatToDMS(oLatLng.lat, true);
-        coordinate.lng = _PositionFormater2.default.decimalLonToDMS(oLatLng.lng, true);
-        return coordinate;
-    },
-
-    /**
-     * degreedecimal2radian
-     * @param {Object} oLatLng - coordinates
-     *
-     * @returns {Object} coordinates in radian
-     * @private
-     */
-    _displayRAD: function _displayRAD(oLatLng) {
-        var coordinate = {};
-        coordinate.lat = _PositionFormater2.default.decimalToRadian(oLatLng.lat);
-        coordinate.lng = _PositionFormater2.default.decimalToRadian(oLatLng.lng);
-        coordinate.unit = "rad";
-        return coordinate;
-    },
-
-    /**
-     * degreedecimal2grade
-     * @param {Object} oLatLng - coordinates
-     *
-     * @returns {Object} coordinates in gon
-     * @private
-     */
-    _displayGON: function _displayGON(oLatLng) {
-        var coordinate = {};
-        coordinate.lat = _PositionFormater2.default.decimalToGrade(oLatLng.lat);
-        coordinate.lng = _PositionFormater2.default.decimalToGrade(oLatLng.lng);
-        coordinate.unit = "gon";
-        return coordinate;
-    },
-
-    /**
-     * meter
-     * @param {Object} oXY - coordinates
-     *
-     * @returns {Object} coordinates in meters
-     * @private
-     */
-    _displayMeter: function _displayMeter(oXY) {
-        // on recoit toujours des coordonnées metriques
-        var coordinate = {};
-        coordinate.x = _leaflet2.default.Util.formatNum(oXY.x, 2);
-        coordinate.y = _leaflet2.default.Util.formatNum(oXY.y, 2);
-        coordinate.unit = "m";
-        return coordinate;
-    },
-
-    /**
-     * kilometer
-     * @param {Object} oXY - coordinates
-     *
-     * @returns {Object} coordinates in km
-     * @private
-     */
-    _displayKMeter: function _displayKMeter(oXY) {
-        var coordinate = {};
-        coordinate.x = _leaflet2.default.Util.formatNum(oXY.x / 1000, 2);
-        coordinate.y = _leaflet2.default.Util.formatNum(oXY.y / 1000, 2);
-        coordinate.unit = "km";
-        return coordinate;
-    },
-
-    // ################################################################### //
-    // ####################### method system project ##################### //
-    // ################################################################### //
-
-    /**
-     * this method projects a coordinate to a specific projection.
-     * FIXME
-     *
-     * @param {Object} oLatLng - geographic coordinate (L.LatLng)
-     * @param {Object} crs - projection system (ex. GEOGRAPHIC, LAMB93, LAMB2E, MERCATOR, ...)
-     * @returns {Object} oXY - coordinate
-     * @private
-     */
-    _project: function _project(oLatLng, crs) {
-        // cf. http://leafletjs.com/reference.html#iprojection
-        // notre carte est dans la projection par defaut :
-        // Spherical Mercator projection (EPSG:3857)
-        // - GEOGRAPHIC : conversion native, L.CRS.Simple ou L.Projection.LngLat.project(latlng)
-        // - LAMB93 : L.GeoportalCRS.EPSG2154 ou projection.project(latlng)
-        // - LAMB2E : L.GeoportalCRS.EPSG27572 ou projection.project(latlng)
-        // - MERCATOR ou EPSG:3395 : L.CRS.EPSG3395 ou L.Projection.Mercator.project(latlng)
-
-        if (typeof crs === "function") {
-            // "crs is an function !"... en mode AMD !
-            crs = crs();
-        }
-
-        if ((typeof crs === "undefined" ? "undefined" : _typeof(crs)) !== "object") {
-            logger.log("crs is not an object !");
-            return;
-        }
-
-        // pas de reprojection pour le systeme de projection natif !
-        if (crs === _leaflet2.default.CRS.Simple) {
-            return oLatLng;
-        }
-
-        if (!crs.projection || _typeof(crs.projection) !== "object") {
-            logger.error("projection is not an object !");
-            return;
-        }
-
-        var oPoint = crs.projection.project(oLatLng);
-
-        // FIXME reprojeter du geographique en geographique cause qq problemes
-        // Ex. LatLng en EPSG4326 !
-        // FIXME probleme d'inversion d'axe sur les projections geographiques
-        // Ex. EPSG:4326 -> lat/lon
-        //     IGNF:RGF93G -> lon/lat
-        if (this._currentProjectionType === "Geographical") {
-            oPoint.lat = oPoint.y;
-            oPoint.lng = oPoint.x;
-        }
-
-        if (!oPoint || Object.keys(oPoint).length === 0) {
-            logger.error("Failed to project with crs code : " + crs.code);
-        }
-
-        return oPoint;
-    },
-
-    /**
-     * this method unprojects a coordinate to a geographic projection.
-     *
-     * @param {Object} oXY - coordinate
-     * @returns {Object} oLatLng - geographic coordinate (L.LatLng)
-     * @private
-     */
-    _unproject: function _unproject(oXY) {
-        // cf. http://leafletjs.com/reference.html#iprojection
-        // notre carte est dans la projection par defaut :
-        // Spherical Mercator projection (EPSG:3857)
-        // - GEOGRAPHIC : conversion native, L.CRS.Simple ou L.Projection.LngLat.project(latlng)
-        // - LAMB93 : L.GeoportalCRS.EPSG2154 ou projection.project(latlng)
-        // - LAMB2E : L.GeoportalCRS.EPSG27572 ou projection.project(latlng)
-        // - MERCATOR ou EPSG:3395 : L.CRS.EPSG3395 ou L.Projection.Mercator.project(latlng)
-
-        var oSrs = this._currentProjectionSystems.crs;
-        if (!oSrs) {
-            logger.log("system crs not found");
-            return;
-        }
-
-        if (typeof oSrs === "function") {
-            // "crs is an function !"... en mode AMD !
-            oSrs = oSrs();
-        }
-
-        if ((typeof oSrs === "undefined" ? "undefined" : _typeof(oSrs)) !== "object") {
-            logger.log("crs is not an object !");
-            return;
-        }
-
-        // pas de reprojection pour le systeme de projection natif !
-        if (oSrs === _leaflet2.default.CRS.Simple) {
-            return {
-                lat: oXY.y,
-                lng: oXY.x
-            };
-        }
-
-        if (this._currentProjectionType === "Geographical") {
-            return {
-                lat: oXY.y,
-                lng: oXY.x
-            };
-        }
-
-        if (!oSrs.projection || _typeof(oSrs.projection) !== "object") {
-            logger.error("projection is not an object !");
-            return;
-        }
-
-        var oLatLng = oSrs.projection.unproject(oXY);
-
-        if (!oLatLng || Object.keys(oLatLng).length === 0) {
-            logger.error("Failed to unproject coordinate");
-        }
-
-        return oLatLng;
-    },
-
-    // ################################################################### //
-    // ##################### handlers events to control ################## //
-    // ################################################################### //
-
-    /**
-     * this sends the coordinates to the panel.
-     * (cf. this.GPdisplayCoords() into the DOM functions)
-     *
-     * @param {Object} oLatLng - geographic coordinate (L.LatLng)
-     *
-     * @private
-     */
-    _setCoordinate: function _setCoordinate(oLatLng) {
-        // structure
-        // L.LatLng
-        //     lat: 4.07249425916745
-        //     lng: 2.4609375
-
-        // type de systeme : Geographical ou Metric
-        var type = this._currentProjectionSystems.type;
-
-        // on recherche la fonction de formatage dans l'unitée demandée
-        var format = null;
-        var units = this._projectionUnits[type];
-        for (var i = 0; i < units.length; i++) {
-            if (units[i].code === this._currentProjectionUnits) {
-                format = units[i].format;
-                break;
-            }
-        }
-
-        // structure pour les coordonnées en fonctin du type demandé :
-        // {x:, y:, unit:} ou {lng:, lat:} ou {lon:, lat:} ou {e:, n:, unit:}...
-        var coordinate = {};
-        // on projete le point dans le systeme demandé
-        var oSrs = this._currentProjectionSystems.crs;
-        if (!oSrs) {
-            logger.error("crs not found !");
-            return;
-        }
-        coordinate = format(this._project(oLatLng, oSrs));
-
-        if (!coordinate || Object.keys(coordinate).lenght === 0) {
-            return;
-        }
-
-        this.GPdisplayCoords(coordinate);
-    },
-
-    /**
-     * this sends the coordinates to the panel.
-     * (cf. this.GPdisplayElevation() into the DOM functions)
-     *
-     * @param {Object} oLatLng - geographic coordinate (L.LatLng)
-     *
-     * @private
-     */
-    _setElevation: function _setElevation(oLatLng) {
-        // gestion du timer de la requete du service d'altitude
-        var delay = this.options.altitude.responseDelay;
-        var noDataValue = this.options.altitude.noDataValue;
-        var noDataValueTolerance = this.options.altitude.noDataValueTolerance;
-        this.GPdisplayElevation(oLatLng, delay, noDataValue, noDataValueTolerance);
-    },
-
-    /**
-     * this method is triggered when the mouse or the map is stopped.
-     * (cf. onMouseMove and onMapMove)
-     *
-     * @param {Object} oLatLng - geographic coordinate (L.LatLng)
-     *
-     * @private
-     */
-    onMoveStopped: function onMoveStopped(oLatLng) {
-        // si pas de droit, on ne met pas à jour l'affichage !
-        if (this._noRightManagement) {
-            return;
-        }
-        this._setElevation(oLatLng);
-    },
-
-    /**
-     * this method is an handler event to control. The event is 'mousemove' on
-     * the map. The handler sends the coordinates to the panel.
-     * (cf. this.GPdisplayCoords() into the DOM functions)
-     *
-     * @param {Object} e - HTMLElement
-     *
-     * @private
-     */
-    onMouseMove: function onMouseMove(e) {
-        var self = this;
-
-        var oLatLng = e.latlng;
-
-        this._setCoordinate(oLatLng);
-
-        clearTimeout(this._timer);
-        this._timer = setTimeout(function () {
-            self.onMoveStopped(oLatLng);
-        }, this.options.altitude.triggerDelay);
-    },
-
-    /**
-     * this method is an handler event to control. The event is 'moveend' on
-     * the map. The handler sends the coordinates to the panel.
-     * (cf. this.GPdisplayCoords() into the DOM functions)
-     *
-     * @private
-     */
-    onMapMove: function onMapMove() {
-        var self = this;
-        var map = this._map;
-
-        var oLatLng = map.getCenter();
-
-        this._setCoordinate(oLatLng);
-
-        clearTimeout(this._timer);
-        this._timer = setTimeout(function () {
-            self.onMoveStopped(oLatLng);
-        }, this.options.altitude.triggerDelay);
-    },
-
-    // ################################################################### //
-    // ####################### handlers events to dom #################### //
-    // ################################################################### //
-
-    /**
-     * this method is called by this.GPdisplayCoords() in the dom, and
-     * it executes a request to the elevation service.
-     *
-     * @param {Object} coordinate - {lat:..., lng:...}
-     * @param {Function} callback - callback
-     *
-     * @private
-     */
-    onRequestAltitude: function onRequestAltitude(coordinate, callback) {
-        logger.log("onRequestAltitude");
-
-        // INFORMATION
-        // on effectue la requête au service d'altitude...
-        // on met en place des callbacks afin de recuperer les resultats ou
-        // les messages d'erreurs du service.
-        // le resultat est affiché dans une balise du dom.
-        // les messages d'erreurs sont affichés sur la console (?)
-
-        if (!coordinate || Object.keys(coordinate).length === 0) {
-            return;
-        }
-
-        // si on ne veut pas de calcul d'altitude, on ne continue pas !
-        if (!this.options.displayAltitude) {
-            return;
-        }
-
-        // si on n'a pas les droits sur la ressource, pas la peine de
-        // continuer !
-        if (this._noRightManagement) {
-            return;
-        }
-
-        logger.log(coordinate);
-
-        var options = {};
-        // on recupere les options du service
-        _leaflet2.default.Util.extend(options, this.options.altitude.serviceOptions);
-
-        // ainsi que les coordonnées
-        _leaflet2.default.Util.extend(options, {
-            zonly: true,
-            positions: [{
-                lon: coordinate.lon || coordinate.lng,
-                lat: coordinate.lat
-            }]
-        });
-
-        // et les callbacks
-        _leaflet2.default.Util.extend(options, {
-            scope: this,
-            // callback onSuccess
-            onSuccess: function onSuccess(results) {
-                logger.log(results);
-                if (results && Object.keys(results)) {
-                    // var context = this.options.scope;
-                    // context._setAltidude(results.elevations[0].z);
-                    callback.call(this, results.elevations[0].z);
-                }
-            },
-            // callback onFailure
-            onFailure: function onFailure(error) {
-                logger.error(error.message);
-            }
-        });
-
-        // cas où la clef API n'est pas renseignée dans les options du service,
-        // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
-        _leaflet2.default.Util.extend(options, {
-            apiKey: options.apiKey || this.options.apiKey
-        });
-
-        logger.log(options);
-
-        _gp2.default.Services.getAltitude(options);
-    },
-
-    /**
-     * this method is called by event 'click' on 'GPshowMousePositionPicto' tag label
-     * (cf. this._createShowMousePositionPictoElement),
-     * and toggles event 'mousemove' on map.
-     * FIXME
-     *
-     * @param {Object} e - HTMLElement
-     *
-     * @private
-     */
-    onShowMousePositionClick: function onShowMousePositionClick(e) {
-        logger.log(e);
-
-        // checked : true - panel close
-        // checked : false - panel open
-        var map = this._map;
-
-        // evenement declenché à l'ouverture/fermeture du panneau,
-        // et en fonction du mode : desktop ou tactile !
-        if (this._showContainer.checked) {
-            this._isDesktop ? map.off("mousemove", this.onMouseMove, this) : map.off("move", this.onMapMove, this);
-        } else {
-            this._isDesktop ? map.on("mousemove", this.onMouseMove, this) : map.on("move", this.onMapMove, this);
-        }
-
-        // on gère l'affichage des panneaux ici...,
-        // même si ce n'est pas l'endroit adequate...
-        this._setElevationPanel(this.options.displayAltitude);
-        this._setCoordinatePanel(this.options.displayCoordinates);
-        if (!this.options.displayCoordinates) {
-            this._setSettingsPanel(false);
-        }
-    },
-
-    /**
-     * this method is called by event 'click' on input coordinate
-     *
-     * @param {Boolean} editing - editing mode
-     * @private
-     */
-    onMousePositionEditModeClick: function onMousePositionEditModeClick(editing) {
-        if (!this.options.editCoordinates) {
-            return;
-        }
-
-        if (this._isEditing === editing) {
-            return;
-        }
-
-        this._isEditing = editing;
-
-        // Affichage des outils, input en ecriture
-        this._setEditMode(this._isEditing);
-
-        var map = this._map;
-
-        if (this._isDesktop) {
-            this._isEditing ? map.off("mousemove", this.onMouseMove, this) : map.on("mousemove", this.onMouseMove, this);
-        } else {
-            this._isEditing ? map.off("move", this.onMapMove, this) : map.on("move", this.onMapMove, this);
-        }
-    },
-
-    /**
-     * Convert Coordinate value : km to meters, radians, grades to decimal degrees
-     * @param {Number} value - value to convert
-     * @param {String} unit - unit
-     *
-     * @returns {Number} converted value
-     * @private
-     */
-    _convertCoordinate: function _convertCoordinate(value, unit) {
-        var result;
-        if (unit === "DEC" || unit === "DMS") {
-            // DMS est converti en DEC !
-            result = value;
-        } else if (unit === "M") {
-            result = value;
-        } else if (unit === "KM") {
-            result = value * 1000;
-        } else if (unit === "RAD") {
-            var rd = (180 / Math.PI).toFixed(20);
-            result = (value * rd).toFixed(20);
-        } else if (unit === "GON") {
-            var d = (9 / 10).toFixed(20);
-            result = (value * d).toFixed(20);
-        }
-
-        return result;
-    },
-
-    /**
-     * Validate Extend coordinate
-     *
-     * @param {String} coordType - Lat or Lon
-     * @param {String} value - coordinate
-     * @param {Event} e - event
-     * @returns {Boolean} value is within extent
-     */
-    validateExtentCoordinate: function validateExtentCoordinate(coordType, value, e) {
-        // FIXME pas de validation...
-        if (e !== undefined) {
-            return true;
-        }
-
-        if (["Lon", "Lat"].indexOf(coordType) === -1) {
-            return false;
-        }
-
-        var geoBBox = this._currentProjectionSystems.geoBBox;
-
-        if (geoBBox === undefined) {
-            return true;
-        }
-
-        if (geoBBox) {
-            // check if coordinates are in the extent
-
-            var extent = [geoBBox.left, geoBBox.bottom, geoBBox.right, geoBBox.top];
-            var unit = this._currentProjectionUnits;
-
-            // on convertit un point..., mais on n'a pas de fonction
-            // de conversion comme pour openlayers...
-            var oLatLon = this._unproject({
-                x: coordType === "Lon" ? this._convertCoordinate(value, unit) : 0,
-                y: coordType === "Lat" ? this._convertCoordinate(value, unit) : 0
-
-            });
-
-            if (coordType === "Lon" && (oLatLon.lng < extent[0] || oLatLon.lng > extent[2])) {
-                logger.warn("coordinates (lon) out of extent !?");
-                return false;
-            }
-            if (coordType === "Lat" && (oLatLon.lat < extent[1] || oLatLon.lat > extent[3])) {
-                logger.warn("coordinates (lat) out of extent !?");
-                return false;
-            }
-        }
-
-        return true;
-    },
-
-    /**
-     * Get coordinate from inputs and select in decimal degrees
-     *
-     * @param {String} coordType - "Lon" or "Lat"
-     * @returns {String} coordinate
-     * @private
-     */
-    _getCoordinate: function _getCoordinate(coordType) {
-        var inputDegrees = _leaflet2.default.DomUtil.get(this._addUID("GPmousePosition" + coordType + "Degrees"));
-        var degrees = inputDegrees.value;
-        if (!degrees) {
-            return null;
-        }
-
-        degrees = degrees.replace(",", ".");
-        if (!_MathUtils2.default.isInteger(degrees)) {
-            return null;
-        }
-
-        var result = _MathUtils2.default.toInteger(degrees);
-        if (result < Number(inputDegrees.dataset.min) || result > Number(inputDegrees.dataset.max)) {
-            return null;
-        }
-
-        var direction = _leaflet2.default.DomUtil.get(this._addUID("GPmousePosition" + coordType + "Direction")).value;
-
-        var inputMinutes = _leaflet2.default.DomUtil.get(this._addUID("GPmousePosition" + coordType + "Minutes"));
-        var minutes = inputMinutes.value;
-        if (minutes) {
-            minutes = minutes.replace(",", ".");
-            if (_MathUtils2.default.isInteger(minutes)) {
-                var mins = _MathUtils2.default.toInteger(minutes);
-                if (mins >= Number(inputMinutes.dataset.min) && mins <= Number(inputMinutes.dataset.max)) {
-                    result += mins / 60;
-                }
-            }
-        }
-
-        var inputSeconds = _leaflet2.default.DomUtil.get(this._addUID("GPmousePosition" + coordType + "Seconds"));
-        var seconds = inputSeconds.value;
-        if (seconds) {
-            seconds = seconds.replace(",", ".");
-            var secs = _MathUtils2.default.toFloat(seconds);
-            if (secs && secs >= Number(inputSeconds.dataset.min) && secs <= Number(inputSeconds.dataset.max)) {
-                result += secs / 3600;
-            }
-        }
-
-        if (direction === "O" || direction === "S") {
-            result = -result;
-        }
-
-        return result;
-    },
-
-    /**
-     * locate DMS coordinates on map
-     *
-     * @private
-     */
-    _locateDMSCoordinates: function _locateDMSCoordinates() {
-        // on est toujours en coordonnées geographiques...
-        var oLatLon = {
-            lat: this._getCoordinate("Lat"),
-            lng: this._getCoordinate("Lon")
-        };
-
-        if (!this.validateExtentCoordinate("Lon", oLatLon.lng)) {
-            return;
-        }
-
-        if (!this.validateExtentCoordinate("Lat", oLatLon.lat)) {
-            return;
-        }
-
-        // FIXME https://github.com/Leaflet/Leaflet/issues/922
-        var map = this._map;
-        map.panTo(oLatLon);
-    },
-
-    /**
-     * locate coordinates on map (not DMS)
-     *
-     * @private
-     */
-    _locateCoordinates: function _locateCoordinates() {
-        // soit longitude ou soit y
-        var lonYDom = _leaflet2.default.DomUtil.get(this._addUID("GPmousePositionLon")).value;
-        lonYDom = lonYDom.replace(",", ".");
-        lonYDom = parseFloat(lonYDom);
-        if (isNaN(lonYDom)) {
-            return;
-        }
-
-        // soit lattitude ou soit x
-        var latXDom = _leaflet2.default.DomUtil.get(this._addUID("GPmousePositionLat")).value;
-        latXDom = latXDom.replace(",", ".");
-        latXDom = parseFloat(latXDom);
-        if (isNaN(latXDom)) {
-            return;
-        }
-
-        var lon = null;
-        var lat = null;
-        var x = null;
-        var y = null;
-
-        if (this._currentProjectionType === "Geographical") {
-            lon = lonYDom;
-            lat = latXDom;
-        } else {
-            x = latXDom;
-            y = lonYDom;
-        }
-
-        if (!this.validateExtentCoordinate("Lon", lon || x)) {
-            return;
-        }
-
-        if (!this.validateExtentCoordinate("Lat", lat || y)) {
-            return;
-        }
-
-        var unit = this._currentProjectionUnits;
-        var oLatLon = this._unproject({
-            x: this._convertCoordinate(lon !== null ? lon : x, unit),
-            y: this._convertCoordinate(lat !== null ? lat : y, unit)
-        });
-
-        // FIXME https://github.com/Leaflet/Leaflet/issues/922
-        var map = this._map;
-        map.panTo(oLatLon);
-    },
-
-    /**
-     * locate coordinates on map
-     *
-     * @method locate
-     * @private
-     */
-    onMousePositionEditModeLocateClick: function onMousePositionEditModeLocateClick() {
-        if (!this.options.editCoordinates) {
-            return;
-        }
-
-        if (!this._isEditing) {
-            this.onMousePositionEditModeClick(true);
-            return;
-        }
-
-        this._currentProjectionUnits === "DMS" ? this._locateDMSCoordinates() : this._locateCoordinates();
-    },
-
-    /**
-     * this method is called by event 'change' on 'GPmousePositionProjectionSystem'
-     * tag select (cf. this._createMousePositionSettingsElement),
-     * and selects the system projection.
-     *
-     * @param {Object} e - HTMLElement
-     *
-     * @private
-     */
-    onMousePositionProjectionSystemChange: function onMousePositionProjectionSystemChange(e) {
-        logger.log("onMousePositionProjectionSystemChange", e);
-
-        var idx = e.target.selectedIndex; // index
-        var value = e.target.options[idx].value; // crs, ex. MERCATOR (optionnel)
-        var label = e.target.options[idx].label; // etiquette, ex Géographiques
-
-        logger.log(idx, value, label);
-
-        this._setCurrentSystem(value);
-    },
-
-    /**
-     * this method selects the current system projection.
-     *
-     * @param {Object} systemCode - inner code (rank in array _projectionSystems)
-     *
-     * @private
-     */
-    _setCurrentSystem: function _setCurrentSystem(systemCode) {
-        // si on change de type de systeme, on doit aussi changer le type d'unités !
-        var type = null;
-        for (var i = 0; i < this._projectionSystems.length; ++i) {
-            if (this._projectionSystems[i].code === Number(systemCode)) {
-                type = this._projectionSystems[i].type;
-                break;
-            }
-        }
-
-        if (!type) {
-            logger.log("system not found in projection systems container");
-            return;
-        }
-
-        if (type !== this._currentProjectionType) {
-            this._setTypeUnitsPanel(type);
-        }
-
-        // on enregistre le systeme courrant
-        this._currentProjectionSystems = this._projectionSystems[Number(systemCode)];
-
-        // on simule un deplacement en mode tactile pour mettre à jour les
-        // resultats
-        if (!this._isDesktop) {
-            this.onMapMove();
-        }
-    },
-
-    /**
-     * this method is called by event 'mouseover' on 'GPmousePositionProjectionSystem'
-     * tag select (cf. this._createMousePositionSettingsElement),
-     * and selects the system projection.
-     *
-     * @param {Object} e - HTMLElement
-     *
-     * @private
-     */
-    onMousePositionProjectionSystemMouseOver: function onMousePositionProjectionSystemMouseOver(e) {
-        logger.log("onMousePositionProjectionSystemMouseOver", e);
-
-        var map = this._map;
-        if (!map) {
-            return;
-        }
-
-        // clear select
-        var systemList = _leaflet2.default.DomUtil.get(this._addUID("GPmousePositionProjectionSystem"));
-
-        systemList.innerHTML = "";
-
-        // add systems whose extent intersects the map extent
-        for (var j = 0; j < this._projectionSystems.length; j++) {
-            var proj = this._projectionSystems[j];
-            var option = null;
-
-            if (proj.geoBBox) {
-                // bboxes intersection test
-                if (map.getBounds()._southWest.lng > proj.geoBBox.right || map.getBounds()._southWest.lat > proj.geoBBox.top || map.getBounds()._northEast.lng < proj.geoBBox.left || map.getBounds()._northEast.lat < proj.geoBBox.bottom) {
-                    if (proj === this._currentProjectionSystems) {
-                        option = document.createElement("option");
-                        option.value = proj.code;
-                        option.text = proj.label || j;
-                        option.setAttribute("selected", "selected");
-                        option.setAttribute("disabled", "disabled");
-
-                        systemList.appendChild(option);
-                    }
-                    continue; // do not intersect
-                }
-            }
-            option = document.createElement("option");
-            option.value = proj.code;
-            option.text = proj.label || j;
-            if (proj === this._currentProjectionSystems) {
-                option.setAttribute("selected", "selected");
-            }
-
-            systemList.appendChild(option);
-        }
-    },
-
-    /**
-     * this method is called by event 'change' on 'GPmousePositionProjectionUnits'
-     * tag select (cf. this._createMousePositionSettingsElement),
-     * and selects the units projection.
-     *
-     * @param {Object} e - HTMLElement
-     *
-     * @private
-     */
-    onMousePositionProjectionUnitsChange: function onMousePositionProjectionUnitsChange(e) {
-        logger.log("onMousePositionProjectionUnitsChange", e);
-
-        var idx = e.target.selectedIndex;
-        var value = e.target.options[idx].value;
-        var label = e.target.options[idx].label;
-
-        logger.log(idx, value, label);
-
-        var oldProjectionUnits = this._currentProjectionUnits;
-        var newProjectionUnits = this._currentProjectionUnits = value;
-        var newProjectionType = this._currentProjectionType;
-
-        // Mise a jour des elements lebels et unites
-        this._resetLabelElements(newProjectionType);
-        this._resetUnitElements(newProjectionUnits);
-
-        // mise a jour des inputs pour les coordonnees
-        if (oldProjectionUnits === "DMS" || newProjectionUnits === "DMS") {
-            this._resetCoordinateElements(this.options.editCoordinates, newProjectionType, newProjectionUnits);
-            this._setEditMode(this._isEditing);
-        }
-
-        // on simule un deplacement en mode tactile pour mettre à jour les
-        // resultats
-        if (!this._isDesktop) {
-            this.onMapMove();
-        }
-    },
-
-    // ################################################################### //
-    // ###### METHODES PUBLIQUES (INTERFACE AVEC LE CONTROLE) ############ //
-    // ################################################################### //
-
-    /**
-     * This method is public.
-     * It allows to control the execution of a movement.
-     *
-     * @param {Object} position - position = {lon: , lat: }
-     * @param {Number} zoom - zoom
-     * @param {Object} options - Zoom/pan options
-     */
-    moveTo: function moveTo(position, zoom, options) {
-        if (!this._showContainer.checked) {
-            this._pictoContainer.click();
-        }
-
-        var map = this._map;
-        if (!map) {
-            return;
-        }
-
-        this.onMouseMove({
-            latlng: position
-        });
-
-        map.flyTo(position, zoom || 10, options || {});
-    }
-});
-
-exports.default = MousePosition;
-
-/***/ }),
-/* 30 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-var MathUtils = {
-    /**
-     * Reste de la division euclidienne
-     * @param {Number} a - divisor
-     * @param {Number} b - quotient
-     * @returns {Number} Modulo
-     */
-    modulo: function modulo(a, b) {
-        var r = a % b;
-        return r * b < 0 ? r + b : r;
-    },
-
-    /**
-     * Transform degrees, minutes, seconds form decimal degrees -
-     * Largely inspired by the private function degreesToStringHDMS from ol/coordinate.js
-     *
-     * @param {Number} degrees - decimal degrees
-     * @param {Array} hemispheres - "NS" ou "EO"
-     * @param {Number} numDigits - number of digits for seconds
-     * @returns {Object} DMS coordinate
-     */
-    decimalToDMS: function decimalToDMS(degrees, hemispheres, numDigits) {
-        var normalizedDegrees = this.modulo(degrees + 180, 360) - 180;
-        var x = Math.abs(3600 * normalizedDegrees);
-        var dflPrecision = numDigits || 0;
-        var precision = Math.pow(10, dflPrecision);
-
-        var deg = Math.floor(x / 3600);
-        var min = Math.floor((x - deg * 3600) / 60);
-        var sec = x - deg * 3600 - min * 60;
-        sec = Math.ceil(sec * precision) / precision;
-
-        if (sec >= 60) {
-            sec = 0;
-            min += 1;
-        }
-
-        if (min >= 60) {
-            min = 0;
-            deg += 1;
-        }
-
-        var direction = hemispheres.charAt(normalizedDegrees < 0 ? 1 : 0);
-        return {
-            d: deg,
-            m: min,
-            s: sec,
-            direction: direction
-        };
-    },
-
-    /**
-     * Converts string to Integer
-     *
-     * @param {String} s - string number
-     * @param {Numeric} base - between 2 and 36
-     * @returns {null|Numeric} result
-     */
-    toInteger: function toInteger(s, base) {
-        var _base = base || 10;
-        var n = parseInt(s, _base);
-        if (!isNaN(n) && isFinite(n)) {
-            return n;
-        }
-        return null;
-    },
-
-    /**
-     * check if s represents an integer
-     *
-     * @param {String} s - string number
-     * @returns {Boolean} is integer
-     */
-    isInteger: function isInteger(s) {
-        if (isNaN(s)) {
-            return false;
-        }
-
-        var v = parseFloat(s);
-        return (v | 0) === v;
-    },
-
-    /**
-     * Converts s to float
-     *
-     * @param {String} s - string number
-     * @returns {null|Numeric} result
-     */
-    toFloat: function toFloat(s) {
-        var n = parseFloat(s);
-        if (!isNaN(n) && isFinite(n)) {
-            return n;
-        }
-        return null;
-    }
-};
-
-exports.default = MathUtils;
-
-/***/ }),
-/* 31 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var MousePositionDOM = {
-
-    /**
-    * Add uuid to the tag ID
-    * @param {String} id - id selector
-    * @returns {String} uid - id selector with an unique id
-    */
-    _addUID: function _addUID(id) {
-        var uid = this._uid ? id + "-" + this._uid : id;
-        return uid;
-    },
-
-    /**
-     * Main container (DOM)
-     *
-     * @returns {DOMElement} DOM element
-     */
-    _createMainContainerElement: function _createMainContainerElement() {
-        var container = document.createElement("div");
-        container.id = this._addUID("GPmousePosition");
-        container.className = "GPwidget";
-        return container;
-    },
-
-    // ################################################################### //
-    // ################### Methods of main container ##################### //
-    // ################################################################### //
-
-    /**
-     * Hidden checkbox for minimizing/maximizing
-     *
-     * @returns {DOMElement} DOM element
-     */
-    _createShowMousePositionElement: function _createShowMousePositionElement() {
-        var input = document.createElement("input");
-        input.id = this._addUID("GPshowMousePosition");
-        input.type = "checkbox";
-        return input;
-    },
-
-    /**
-     * Show mouse position control
-     * @param {Boolean} isDesktop - specifies if the support is desktop or tactile
-     *
-     * @returns {DOMElement} DOM element
-     */
-    _createShowMousePositionPictoElement: function _createShowMousePositionPictoElement(isDesktop) {
-        // contexte d'execution
-        var self = this;
-
-        var label = document.createElement("label");
-        label.id = this._addUID("GPshowMousePositionPicto");
-        label.className = "GPshowAdvancedToolPicto";
-        label.htmlFor = this._addUID("GPshowMousePosition");
-        label.title = "Afficher les coordonnées du curseur";
-
-        // FIXME detection disponible dans le JS !
-        // Detection : test for desktop or tactile
-        // var isDesktop = true;
-        // var userAgent = window.navigator.userAgent.toLowerCase();
-        // if (userAgent.indexOf("iphone") !== -1 ||
-        // userAgent.indexOf("ipod") !== -1 ||
-        // userAgent.indexOf("ipad") !== -1 ||
-        // userAgent.indexOf("android") !== -1 ||
-        // userAgent.indexOf("mobile") !== -1 ||
-        // userAgent.indexOf("blackberry") !== -1 ||
-        // userAgent.indexOf("tablet") !== -1 ||
-        // userAgent.indexOf("phone") !== -1 ||
-        // userAgent.indexOf("touch") !== -1 ) {
-        //     isDesktop = false;
-        // }
-        // if (userAgent.indexOf("msie") !== -1 ||
-        // userAgent.indexOf("trident") !== -1) {
-        //     isDesktop = true;
-        // }
-
-        // Show map center localisation if panel opened and tactile support
-        label.addEventListener("click", function (e) {
-            var mapCenterClass = "";
-            if (!document.getElementById(self._addUID("GPshowMousePosition")).checked && !isDesktop) {
-                mapCenterClass = "GPmapCenterVisible";
-            }
-            document.getElementById("GPmapCenter").className = mapCenterClass;
-            self.onShowMousePositionClick(e);
-        });
-
-        var spanOpen = document.createElement("span");
-        spanOpen.id = this._addUID("GPshowMousePositionOpen");
-        spanOpen.className = "GPshowAdvancedToolOpen";
-        label.appendChild(spanOpen);
-
-        return label;
-    },
-
-    /**
-     * mouse position panel
-     * @param {Boolean} [displayAltitude=true] - specifies if the altitude panel must be displayed
-     * @param {Boolean} [displayCoordinates=true] - specifies if the coordinates panel must be displayed
-     * @param {Boolean} [editCoordinates=false] - specifies if the coordinates edition is allowed
-     * @param {Boolean} [currentProjectionUnits] - specifies if the current projection units
-     *
-     * FIXME
-     * don't call this._createMousePositionSettingsElement
-     *
-     * @returns {DOMElement} DOM element
-     */
-    _createMousePositionPanelElement: function _createMousePositionPanelElement(displayAltitude, displayCoordinates, editCoordinates, currentProjectionUnits) {
-        // default Values
-        displayAltitude = typeof displayAltitude === "undefined" ? true : displayAltitude;
-        displayCoordinates = typeof displayCoordinates === "undefined" ? true : displayCoordinates;
-        editCoordinates = typeof editCoordinates === "undefined" ? false : editCoordinates;
-
-        var div = document.createElement("div");
-        div.id = this._addUID("GPmousePositionPanel");
-        div.className = "GPpanel";
-
-        div.appendChild(this._createMousePositionPanelHeaderElement());
-        div.appendChild(this._createMousePositionPanelBasicElement(displayAltitude, displayCoordinates, editCoordinates, currentProjectionUnits));
-
-        var arraySettings = this._createShowMousePositionSettingsElement(displayCoordinates);
-        for (var j = 0; j < arraySettings.length; j++) {
-            div.appendChild(arraySettings[j]);
-        }
-
-        // FIXME on decompose la fonction pour les besoins du controle,
-        // on ajoutera ces childs à la main...
-        // div.appendChild(this._createMousePositionSettingsElement());
-
-        return div;
-    },
-
-    /**
-     * Map center localisation (tactile use)
-     *
-     * @returns {DOMElement} container
-     */
-    _createMapCenter: function _createMapCenter() {
-        var div = document.createElement("div");
-        div.id = "GPmapCenter";
-        div.className = "";
-        return div;
-    },
-
-    // ################################################################### //
-    // ####################### Panel container ########################### //
-    // ################################################################### //
-
-    /**
-     * @returns {DOMElement} container
-     */
-    _createMousePositionPanelHeaderElement: function _createMousePositionPanelHeaderElement() {
-        var container = document.createElement("div");
-        container.className = "GPpanelHeader";
-
-        var divTitle = document.createElement("div");
-        divTitle.className = "GPpanelTitle";
-        divTitle.innerHTML = "Coordonnées";
-        container.appendChild(divTitle);
-
-        var divClose = document.createElement("div");
-        divClose.id = "GPmousePositionPanelClose";
-        divClose.className = "GPpanelClose";
-        divClose.title = "Fermer le panneau";
-
-        // Link panel close / visibility checkbox
-        var self = this;
-        if (divClose.addEventListener) {
-            divClose.addEventListener("click", function () {
-                document.getElementById(self._addUID("GPshowMousePositionPicto")).click();
-            }, false);
-        } else if (divClose.attachEvent) {
-            divClose.attachEvent("onclick", function () {
-                document.getElementById(self._addUID("GPshowMousePositionPicto")).click();
-            });
-        }
-
-        container.appendChild(divClose);
-
-        return container;
-    },
-
-    /**
-     * coordinate panel
-     * @param {Boolean} [displayAltitude] - specifies if the altitude panel must be displayed
-     * @param {Boolean} [displayCoordinates] - specifies if the coordinates panel must be displayed
-     * @param {Boolean} [editCoordinates] - specifies if the coordinates edition is allowed
-     * @param {Boolean} [currentProjectionUnits] - specifies if the current projection units
-     *
-     * FIXME
-     * call this._createMousePositionPanelBasicCoordinateElement
-     * call this._createMousePositionPanelBasicAltitudeElement
-     *
-     * @returns {DOMElement} DOM element
-     */
-    _createMousePositionPanelBasicElement: function _createMousePositionPanelBasicElement(displayAltitude, displayCoordinates, editCoordinates, currentProjectionUnits) {
-        var container = document.createElement("div");
-        container.id = this._addUID("GPmousePositionBasicPanel");
-
-        // FIXME on devrait decomposer la fonction pour les besoins du controle,
-        // on ajoutera ces childs à la main...
-        container.appendChild(this._createMousePositionPanelBasicCoordinateElement(displayCoordinates, editCoordinates, currentProjectionUnits));
-        container.appendChild(this._createMousePositionPanelEditToolsElement(editCoordinates));
-        container.appendChild(this._createMousePositionPanelBasicAltitudeElement(displayAltitude));
-
-        return container;
-    },
-
-    /**
-     * create coordinate elements
-     *
-     * @param {String} coordType - ("Lon" ou "Lat")
-     * @param {Boolean} [editCoordinates=false] - specifies if the coordinates edition is allowed
-     *
-     * @returns {Array} list of DOM elements
-     */
-    _createCoordinateElement: function _createCoordinateElement(coordType, editCoordinates) {
-        var context = this;
-
-        if (["Lon", "Lat"].indexOf(coordType) === -1) {
-            return [];
-        }
-
-        var list = [];
-        var input = document.createElement("input");
-        input.id = this._addUID("GPmousePosition" + coordType);
-        input.title = editCoordinates === true ? "Cliquer pour saisir des coordonnées" : "";
-        input.readOnly = true;
-
-        if (editCoordinates) {
-            input.addEventListener("click", function () {
-                context.onMousePositionEditModeClick(true);
-            });
-            input.addEventListener("change", function (e) {
-                this.classList.remove("error");
-                var valid = context.validateExtentCoordinate(coordType, this.value, e);
-                valid ? this.classList.remove("error") : this.classList.add("error");
-            });
-        }
-        list.push(input);
-
-        var span = document.createElement("span");
-        span.className = "GPmousePositionUnits";
-        list.push(span);
-
-        return list;
-    },
-
-    /**
-     *
-     * @param {String} coordType - ("Lon" ou "Lat")
-     * @param {Boolean} [editCoordinates=false] - specifies if the coordinates edition is allowed
-     *
-     * @returns {Array} list of DOM elements
-     */
-    _createDMSCoordinateElement: function _createDMSCoordinateElement(coordType, editCoordinates) {
-        if (["Lon", "Lat"].indexOf(coordType) === -1) {
-            return [];
-        }
-
-        var context = this;
-
-        var list = [];
-
-        var input = document.createElement("input");
-        input.id = this._addUID("GPmousePosition" + coordType + "Degrees");
-        input.className = "GPSexagesimal";
-        input.setAttribute("name", "degrees");
-        input.title = editCoordinates === true ? "Cliquer pour saisir des coordonnées" : "";
-        input.readOnly = true;
-        input.dataset.min = 0;
-        input.dataset.max = coordType === "Lon" ? 180 : 90;
-        if (editCoordinates) {
-            input.addEventListener("click", function () {
-                context.onMousePositionEditModeClick(true);
-            });
-            input.addEventListener("change", function () {
-                this.classList.remove("error");
-                var valid = context._checkDMSDegrees(coordType, this);
-                valid ? this.classList.remove("error") : this.classList.add("error");
-            });
-        }
-        list.push(input);
-
-        var span = document.createElement("span");
-        span.className = "GPmousePositionSexagesimalLabel";
-        span.innerHTML = "°";
-        list.push(span);
-
-        var input1 = document.createElement("input");
-        input1.id = this._addUID("GPmousePosition" + coordType + "Minutes");
-        input1.className = "GPSexagesimal";
-        input1.setAttribute("name", "minutes");
-        input1.title = editCoordinates === true ? "Cliquer pour saisir des coordonnées" : "";
-        input1.readOnly = true;
-        input1.dataset.min = 0;
-        input1.dataset.max = 59;
-        if (editCoordinates) {
-            input1.addEventListener("click", function () {
-                context.onMousePositionEditModeClick(true);
-            });
-            input1.addEventListener("change", function () {
-                this.classList.remove("error");
-                var valid = context._checkDMSElement(this);
-                valid ? this.classList.remove("error") : this.classList.add("error");
-            });
-        }
-        list.push(input1);
-
-        var span1 = document.createElement("span");
-        span1.className = "GPmousePositionSexagesimalLabel";
-        span1.innerHTML = "'";
-        list.push(span1);
-
-        var input2 = document.createElement("input");
-        input2.id = this._addUID("GPmousePosition" + coordType + "Seconds");
-        input2.className = "GPSexagesimalsec";
-        input2.setAttribute("name", "seconds");
-        input2.title = editCoordinates === true ? "Cliquer pour saisir des coordonnées" : "";
-        input2.readOnly = true;
-        input2.dataset.min = 0;
-        input2.dataset.max = 59;
-        if (editCoordinates) {
-            input2.addEventListener("click", function () {
-                context.onMousePositionEditModeClick(true);
-            });
-            input2.addEventListener("change", function () {
-                this.classList.remove("error");
-                var valid = context._checkDMSElement(this, true);
-                valid ? this.classList.remove("error") : this.classList.add("error");
-            });
-        }
-        list.push(input2);
-
-        var span2 = document.createElement("span");
-        span2.className = "GPmousePositionSexagesimalLabel";
-        span2.innerHTML = "''";
-        list.push(span2);
-
-        var select = document.createElement("select");
-        select.id = this._addUID("GPmousePosition" + coordType + "Direction");
-        select.className = "GPmousePositionDirection";
-        select.setAttribute("name", "direction");
-        select.disabled = true;
-
-        var option = document.createElement("option");
-        option.value = coordType === "Lon" ? "E" : "N";
-        option.innerHTML = coordType === "Lon" ? "E" : "N";
-        select.appendChild(option);
-
-        var option1 = document.createElement("option");
-        option1.value = coordType === "Lon" ? "O" : "S";
-        option1.innerHTML = coordType === "Lon" ? "O" : "S";
-        select.appendChild(option1);
-        list.push(select);
-
-        return list;
-    },
-
-    /**
-     * @param {Boolean} [display=false] - specifies if the coordinates panel must be displayed
-     * @param {Boolean} [editCoordinates] - specifies if the coordinates edition is allowed
-     * @param {Boolean} [currentProjectionUnits] - specifies if the current projection units
-     *
-     * @returns {DOMElement} container
-     */
-    _createMousePositionPanelBasicCoordinateElement: function _createMousePositionPanelBasicCoordinateElement(display, editCoordinates, currentProjectionUnits) {
-        var div = document.createElement("div");
-        div.id = this._addUID("GPmousePositionCoordinate");
-        div.style.display = display ? "block" : "none";
-
-        // latitude
-        var divLat = document.createElement("div");
-
-        var spanLat = document.createElement("span");
-        spanLat.className = "GPmousePositionLabel";
-        spanLat.id = this._addUID("GPmousePositionLatLabel");
-        spanLat.innerHTML = "Latitude : ";
-        divLat.appendChild(spanLat);
-
-        var span = document.createElement("span");
-        span.id = this._addUID("GPmousePositionLatCoordinate");
-
-        var arrayCoords;
-        if (currentProjectionUnits === "DMS") {
-            arrayCoords = this._createDMSCoordinateElement("Lat", editCoordinates);
-        } else {
-            arrayCoords = this._createCoordinateElement("Lat", editCoordinates);
-        }
-        for (var i = 0; i < arrayCoords.length; i++) {
-            span.appendChild(arrayCoords[i]);
-        }
-        divLat.appendChild(span);
-        div.appendChild(divLat);
-
-        // longitude
-        var divLon = document.createElement("div");
-
-        var spanLon = document.createElement("span");
-        spanLon.className = "GPmousePositionLabel";
-        spanLon.id = this._addUID("GPmousePositionLonLabel");
-        spanLon.innerHTML = "Longitude : ";
-        divLon.appendChild(spanLon);
-
-        var span1 = document.createElement("span");
-        span1.id = this._addUID("GPmousePositionLonCoordinate");
-
-        var arrayCoords1;
-        if (currentProjectionUnits === "DMS") {
-            arrayCoords1 = this._createDMSCoordinateElement("Lon", editCoordinates);
-        } else {
-            arrayCoords1 = this._createCoordinateElement("Lon", editCoordinates);
-        }
-        for (var j = 0; j < arrayCoords1.length; j++) {
-            span1.appendChild(arrayCoords1[j]);
-        }
-        divLon.appendChild(span1);
-        div.appendChild(divLon);
-
-        return div;
-    },
-
-    /**
-     * @param {Boolean} [display=false] - specifies if the altitude panel must be displayed
-     *
-     * @returns {DOMElement} container
-     */
-    _createMousePositionPanelBasicAltitudeElement: function _createMousePositionPanelBasicAltitudeElement(display) {
-        var div = document.createElement("div");
-        div.id = this._addUID("GPmousePositionAltitude");
-        div.style.display = display ? "block" : "none";
-
-        var spanLabel = document.createElement("span");
-        spanLabel.className = "GPmousePositionLabel";
-        spanLabel.innerHTML = "Altitude : ";
-        div.appendChild(spanLabel);
-
-        var spanAlt = document.createElement("span");
-        spanAlt.className = "GPmousePositionCoords";
-        spanAlt.id = this._addUID("GPmousePositionAlt");
-        spanAlt.innerHTML = "...";
-        div.appendChild(spanAlt);
-
-        var spanUnits = document.createElement("span");
-        spanUnits.className = "GPmousePositionAltitudeUnits";
-        spanUnits.innerHTML = "m";
-        div.appendChild(spanUnits);
-
-        return div;
-    },
-
-    /**
-     * @param {Boolean} [editCoordinates=false] - specifies if the coordinates edition is allowed
-     *
-     * @returns {DOMElement} container
-     */
-    _createMousePositionPanelEditToolsElement: function _createMousePositionPanelEditToolsElement(editCoordinates) {
-        var context = this;
-
-        var div = document.createElement("div");
-        div.className = "GPmousePositionPanelEditTools";
-        div.id = this._addUID("GPmousePositionPanelEditTools");
-        if (!editCoordinates) {
-            div.style.display = "none";
-        }
-
-        var span1 = document.createElement("span");
-        span1.className = "GPmousePositionEditTool";
-        span1.id = this._addUID("GPmousePositionLocate");
-        span1.title = editCoordinates === true ? "Cliquer pour saisir des coordonnées" : "";
-        if (editCoordinates) {
-            span1.addEventListener("click", function () {
-                context.onMousePositionEditModeLocateClick();
-            });
-        }
-        div.appendChild(span1);
-
-        var span2 = document.createElement("span");
-        span2.className = "GPmousePositionEditTool";
-        span2.id = this._addUID("GPmousePositionCloseEdit");
-        span2.title = "Quitter la saisie des coordonnées";
-        span2.style.display = "none";
-        if (editCoordinates) {
-            span2.addEventListener("click", function () {
-                context.onMousePositionEditModeClick(false);
-            });
-        }
-        div.appendChild(span2);
-
-        return div;
-    },
-
-    // ################################################################### //
-    // #################### Settings container ########################### //
-    // ################################################################### //
-
-    /**
-     * @param {Boolean} [display=false] - specifies if the settings panel must be displayed
-     *
-     * @returns {DOMElement[]} array containing input and label elements
-     */
-    _createShowMousePositionSettingsElement: function _createShowMousePositionSettingsElement(display) {
-        var list = [];
-
-        var input = document.createElement("input");
-        input.type = "checkbox";
-        input.id = this._addUID("GPshowMousePositionSettings");
-
-        var label = document.createElement("label");
-        label.id = this._addUID("GPshowMousePositionSettingsPicto");
-        label.htmlFor = this._addUID("GPshowMousePositionSettings");
-        label.title = "Réglages";
-        label.className = "GPshowMoreOptions GPshowMousePositionSettingsPicto"; // FIXME classname and id ?
-        label.style.display = display ? "block" : "none";
-
-        list.push(input);
-        list.push(label);
-
-        return list;
-    },
-
-    /**
-     * settings panel
-     * @param {Boolean} [display=true] - specifies if the settings panel must be displayed
-     *
-     * FIXME
-     * don't call this._createMousePositionSettingsSystemsElement
-     * don't call this._createMousePositionSettingsUnitsElement
-     *
-     * @returns {DOMElement} DOM element
-     */
-    _createMousePositionSettingsElement: function _createMousePositionSettingsElement(display) {
-        var container = document.createElement("div");
-        container.id = this._addUID("GPmousePositionSettings");
-        container.style.display = display === undefined || display ? "block" : "none";
-
-        var span = document.createElement("span");
-        span.className = "GPmousePositionSettingsLabel";
-        span.innerHTML = "Système de référence";
-        container.appendChild(span);
-
-        // FIXME on decompose la fonction pour les besoins du controle,
-        // on ajoutera ces childs à la main...
-        // FIXME tableau statique !
-        // var systems = [
-        //     {
-        //         code : "GEOGRAPHIC",
-        //         label : "Géographique"
-        //     },
-        //     {
-        //         code : "MERCATOR",
-        //         label : "Mercator"
-        //     },
-        //     {
-        //         code : "LAMB93",
-        //         label : "Lambert 93"
-        //     },
-        //     {
-        //         code : "LAMB2E",
-        //         label : "Lambert II étendu"
-        //     }
-        // ];
-        //
-        // var selectSystem = this._createMousePositionSettingsSystemsElement(systems);
-        //
-        // container.appendChild(selectSystem);
-
-        // FIXME on decompose la fonction pour les besoins du controle,
-        // on ajoutera ces childs à la main...
-        // FIXME tableau statique !
-        // var units = [
-        //     {
-        //         code : "DEC",
-        //         label : "degrés décimaux",
-        //     },
-        //     {
-        //         code : "DMS",
-        //         label : "degrés sexagésimaux",
-        //     },
-        //     {
-        //         code : "RAD",
-        //         label : "radians",
-        //     },
-        //     {
-        //         code : "GON",
-        //         label : "grades"
-        //     }
-        // ];
-        //
-        // var selectUnits = this._createMousePositionSettingsUnitsElement(units);
-        //
-        // container.appendChild(selectUnits);
-
-        return container;
-    },
-
-    /**
-     * @param {Object[]} systems - list of systems
-     *
-     * @returns {DOMElement} DOM element select
-     */
-    _createMousePositionSettingsSystemsElement: function _createMousePositionSettingsSystemsElement(systems) {
-        // contexte d'execution
-        var context = this;
-
-        var selectSystem = document.createElement("select");
-        selectSystem.id = this._addUID("GPmousePositionProjectionSystem");
-        selectSystem.className = "GPinputSelect GPmousePositionSettingsSelect";
-        selectSystem.addEventListener("change", function (e) {
-            context.onMousePositionProjectionSystemChange(e);
-        });
-        selectSystem.addEventListener("mouseover", function (e) {
-            // FIXME mettre une condition si target === option
-            if (e.target.nodeName !== "OPTION") {
-                context.onMousePositionProjectionSystemMouseOver(e);
-            }
-        });
-
-        for (var i = 0; i < systems.length; i++) {
-            var obj = systems[i];
-            var option = document.createElement("option");
-            option.value = obj.code;
-            option.text = obj.label || i;
-            // option.label = obj.label;
-            selectSystem.appendChild(option);
-        }
-
-        return selectSystem;
-    },
-
-    /**
-     * @param {Object[]} units - list of units
-     *
-     * @returns {DOMElement} DOM element select
-     */
-    _createMousePositionSettingsUnitsElement: function _createMousePositionSettingsUnitsElement(units) {
-        // contexte d'execution
-        var context = this;
-
-        var selectUnits = document.createElement("select");
-        selectUnits.id = this._addUID("GPmousePositionProjectionUnits");
-        selectUnits.className = "GPinputSelect GPmousePositionSettingsSelect";
-        selectUnits.addEventListener("change", function (e) {
-            context.onMousePositionProjectionUnitsChange(e);
-        });
-
-        for (var j = 0; j < units.length; j++) {
-            var obj = units[j];
-            var option = document.createElement("option");
-            option.value = obj.code ? obj.code : j;
-            option.text = obj.label || j;
-            // option.label = obj.label;
-            selectUnits.appendChild(option);
-        }
-
-        return selectUnits;
-    },
-
-    /**
-     * @param {String} [currentProjectionType="Metric"] - "Geographical" or "Metric"
-     */
-    _resetLabelElements: function _resetLabelElements(currentProjectionType) {
-        // Changement des labels dans le formulaire de saisie
-        var spanLat = document.getElementById(this._addUID("GPmousePositionLatLabel"));
-        spanLat.innerHTML = currentProjectionType === "Geographical" ? "Latitude :" : "X :";
-
-        var spanLon = document.getElementById(this._addUID("GPmousePositionLonLabel"));
-        spanLon.innerHTML = currentProjectionType === "Geographical" ? "Longitude :" : "Y :";
-    },
-
-    /**
-     * @param {String} currentProjectionUnits - projection units
-     */
-    _resetUnitElements: function _resetUnitElements(currentProjectionUnits) {
-        var value = "";
-        if (currentProjectionUnits === "M" || currentProjectionUnits === "KM") {
-            value = currentProjectionUnits.toLowerCase();
-        }
-
-        var elts = document.getElementsByClassName("GPmousePositionUnits");
-        for (var e = 0; e < elts.length; e++) {
-            elts[e].innerHTML = value;
-        }
-    },
-
-    /**
-     * @method _resetCoordinateElements
-     * @param {Boolean} editCoordinates - edit coordinates option
-     * @param {String} currentProjectionType - current projection type
-     * @param {String} currentProjectionUnits - current projection unit
-     */
-    _resetCoordinateElements: function _resetCoordinateElements(editCoordinates, currentProjectionType, currentProjectionUnits) {
-        // Suppression de tous les enfants de GPmousePositionLatCoordinate
-        var latElt = document.getElementById(this._addUID("GPmousePositionLatCoordinate"));
-        while (latElt.firstChild) {
-            latElt.removeChild(latElt.firstChild);
-        }
-
-        var arrayCoords;
-        if (currentProjectionUnits === "DMS") {
-            arrayCoords = this._createDMSCoordinateElement("Lat", editCoordinates);
-        } else {
-            arrayCoords = this._createCoordinateElement("Lat", editCoordinates);
-        }
-        for (var i = 0; i < arrayCoords.length; i++) {
-            latElt.appendChild(arrayCoords[i]);
-        }
-
-        // Suppression de tous les enfants de GPmousePositionLonCoordinate
-        var lonElt = document.getElementById(this._addUID("GPmousePositionLonCoordinate"));
-        while (lonElt.firstChild) {
-            lonElt.removeChild(lonElt.firstChild);
-        }
-
-        var arrayCoords1;
-        if (currentProjectionUnits === "DMS") {
-            arrayCoords1 = this._createDMSCoordinateElement("Lon", editCoordinates);
-        } else {
-            arrayCoords1 = this._createCoordinateElement("Lon", editCoordinates);
-        }
-        for (var j = 0; j < arrayCoords1.length; j++) {
-            lonElt.appendChild(arrayCoords1[j]);
-        }
-
-        // FIXME on simule un deplacement ?
-        // this.onMapMove();
-    },
-
-    /**
-     * Set/unset editing mode
-     *
-     * @method _setEditMode
-     * @param {Boolean} editing - active edit coordinates mode
-     */
-    _setEditMode: function _setEditMode(editing) {
-        var locateElt = document.getElementById(this._addUID("GPmousePositionLocate"));
-        locateElt.title = editing ? "Aller à la position ..." : "Cliquer pour saisir des coordonnées";
-
-        var closeEditElt = document.getElementById(this._addUID("GPmousePositionCloseEdit"));
-        closeEditElt.style.display = editing ? "inline-block" : "none";
-
-        var selector = "div[id^=" + this._addUID("GPmousePositionCoordinate") + "]";
-        var inputs = document.querySelectorAll(selector + " input");
-        for (var i = 0; i < inputs.length; i++) {
-            inputs[i].readOnly = !editing;
-            if (editing) {
-                inputs[i].value = "";
-                inputs[i].classList.remove("error");
-            }
-        }
-        var selects = document.querySelectorAll(selector + " select");
-        for (var j = 0; j < selects.length; j++) {
-            selects[j].disabled = !editing;
-        }
-    },
-
-    /**
-     *
-     * @param {DOMElement} input - input element
-     * @param {Boolean} isFloat - check for float value
-     *
-     * @returns {Boolean} true if input value is within bounds
-     */
-    _checkDMSElement: function _checkDMSElement(input, isFloat) {
-        var b = isFloat !== undefined;
-
-        var value = input.value;
-        if (b) {
-            value = value.replace(",", ".");
-        }
-        if (isNaN(value)) {
-            return false;
-        }
-
-        var v = parseFloat(value);
-        if (!b && (v | 0) !== v) {
-            // is it an integer
-            return false;
-        }
-
-        var min = Number(input.dataset.min);
-        var max = Number(input.dataset.max);
-        return v >= min && v <= max;
-    },
-
-    /**
-     * @param {String} coordType - "Lon" or "Lat"
-     * @param {DOMElement} input - input element
-     *
-     * @returns {Boolean} true if input value is within bounds
-     */
-    _checkDMSDegrees: function _checkDMSDegrees(coordType, input) {
-        if (isNaN(input.value)) {
-            return false;
-        }
-
-        var v = parseFloat(input.value);
-        if ((v | 0) !== v) {
-            // is it an integer
-            return false;
-        }
-
-        var min = Number(input.dataset.min);
-        var max = Number(input.dataset.max);
-        if (v < min || v > max) {
-            return false;
-        }
-
-        var inputMinutes = document.getElementById(this._addUID("GPmousePosition" + coordType + "Minutes"));
-        var inputSeconds = document.getElementById(this._addUID("GPmousePosition" + coordType + "Seconds"));
-
-        if (v >= max) {
-            inputMinutes.dataset.max = 0;
-            inputSeconds.dataset.max = 0;
-        } else {
-            inputMinutes.dataset.max = 59;
-            inputSeconds.dataset.max = 59.9999;
-        }
-
-        return true;
-    },
-
-    // ################################################################### //
-    // ####################### handlers Event ############################ //
-    // ################################################################### //
-
-    /**
-     * Function displaying coordinates from cursor position (desktop)
-     * or map center (tactile)
-     * @param {Object} coordinate - coordinates
-     */
-    GPdisplayCoords: function GPdisplayCoords(coordinate) {
-        // Compute coords in case of cursor position (desktop)
-        if (coordinate && coordinate != null) {
-            var labelLon = document.getElementById(this._addUID("GPmousePositionLonLabel"));
-            var labelLat = document.getElementById(this._addUID("GPmousePositionLatLabel"));
-
-            if (coordinate.x || coordinate.y) {
-                labelLat.innerHTML = "X : ";
-                labelLon.innerHTML = "Y : ";
-            } else if (coordinate.e || coordinate.n) {
-                labelLat.innerHTML = "E : ";
-                labelLon.innerHTML = "N : ";
-            } else {
-                labelLat.innerHTML = "Latitude : ";
-                labelLon.innerHTML = "Longitude : ";
-            }
-
-            if (_typeof(coordinate.lat) === "object" && _typeof(coordinate.lng) === "object") {
-                var parts = {
-                    lng: "Lon",
-                    lat: "Lat"
-                };
-                var units = ["Degrees", "Minutes", "Seconds"];
-                for (var p in parts) {
-                    for (var u = 0; u < units.length; ++u) {
-                        var selector = "GPmousePosition" + parts[p] + units[u];
-                        var elt = document.getElementById(this._addUID(selector));
-                        var key = units[u].charAt(0).toLowerCase();
-                        elt.value = coordinate[p][key];
-                    }
-                }
-                // directions
-                document.getElementById(this._addUID("GPmousePositionLonDirection")).value = coordinate.lng.direction;
-                document.getElementById(this._addUID("GPmousePositionLatDirection")).value = coordinate.lat.direction;
-            } else {
-                var elLat = document.getElementById(this._addUID("GPmousePositionLat"));
-                var elLon = document.getElementById(this._addUID("GPmousePositionLon"));
-
-                elLat.value = coordinate.x || coordinate.lat || coordinate.e || "0";
-                elLon.value = coordinate.y || coordinate.lng || coordinate.lon || coordinate.n || "0";
-
-                // les unites
-                var unit = coordinate.unit === undefined ? "" : coordinate.unit;
-                var elements = document.getElementsByClassName("GPmousePositionUnits");
-                for (var n = 0; n < elements.length; ++n) {
-                    elements[n].innerHTML = unit;
-                }
-            }
-        }
-    },
-
-    /**
-     * Function displaying altitude from cursor position (desktop)
-     * or map center (tactile)
-     * @param {Object} coordinate - coordinates
-     * @param {Number} altitudeTimeoutDelay - when the mouse stop moving, delay before the altitude request is launched
-     * @param {Number} noDataValue - the no data value
-     * @param {Number} noDataValueTolerance - the no data value tolerance
-     */
-    GPdisplayElevation: function GPdisplayElevation(coordinate, altitudeTimeoutDelay, noDataValue, noDataValueTolerance) {
-        // contexte d'execution
-        var self = this;
-
-        // Latency for altitude request
-        var altitudeTimeout;
-        if (!altitudeTimeoutDelay) {
-            altitudeTimeoutDelay = 500;
-        }
-
-        clearTimeout(altitudeTimeout);
-        document.getElementById(this._addUID("GPmousePositionAlt")).innerHTML = "...";
-
-        if (noDataValue == null) {
-            noDataValue = -99999;
-        }
-        if (noDataValueTolerance == null) {
-            noDataValueTolerance = 99980;
-        }
-        var maxThreshold = noDataValue + noDataValueTolerance;
-        var minThreshold = noDataValue - noDataValueTolerance;
-
-        // Compute coords in case of cursor position (desktop)
-        if (coordinate && coordinate != null) {
-            // If no altitude panel, don't call altitude request
-            if (document.getElementById(this._addUID("GPmousePositionAltitude"))) {
-                altitudeTimeout = setTimeout(function () {
-                    self.onRequestAltitude(coordinate, function (z) {
-                        if (minThreshold < z && z < maxThreshold) {
-                            self.GPresetElevation();
-                        } else {
-                            document.getElementById(self._addUID("GPmousePositionAlt")).innerHTML = z;
-                        }
-                    });
-                }, altitudeTimeoutDelay);
-            }
-        }
-    },
-
-    /**
-     * Function reseting altitude value
-     */
-    GPresetElevation: function GPresetElevation() {
-        if (document.getElementById(this._addUID("GPmousePositionAltitude"))) {
-            document.getElementById(this._addUID("GPmousePositionAlt")).innerHTML = "---";
-        }
-    }
-};
-
-exports.default = MousePositionDOM;
-
-/***/ }),
 /* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -42689,7 +42684,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 	var L, proj4;
 	if (true) {
 		// AMD
-		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(0), __webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(0), __webpack_require__(12)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -45128,7 +45123,7 @@ var _SelectorID = __webpack_require__(3);
 
 var _SelectorID2 = _interopRequireDefault(_SelectorID);
 
-var _LocationSelector = __webpack_require__(11);
+var _LocationSelector = __webpack_require__(10);
 
 var _LocationSelector2 = _interopRequireDefault(_LocationSelector);
 
