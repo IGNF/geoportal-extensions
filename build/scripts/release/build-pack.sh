@@ -33,52 +33,57 @@ build () {
     name=$1
 
     [ ${name} == "openlayers" ] && {
-        directory="OpenLayers"
+        main_directory="geoportal-extensions-openlayers"
+        src_directory="OpenLayers"
     }
     [ ${name} == "leaflet" ] && {
-        directory="Leaflet"
+        main_directory="geoportal-extensions-leaflet"
+        src_directory="Leaflet"
     }
     [ ${name} == "itowns" ] && {
-        directory="Itowns"
+        main_directory="geoportal-extensions-itowns"
+        src_directory="Itowns"
     }
 
-    [ -z ${directory} ] && {
+    [ -z ${src_directory} ] && {
         printTo "Oups..."
         exit -1
     }
 
     # binaires
     printTo "> dist/..."
-    doCmd "mkdir -p ./${name}/dist/"
-    doCmd "cp ../../../dist/${name}/*.js ./${name}/dist/"
-    doCmd "cp ../../../dist/${name}/*.css ./${name}/dist/"
+    doCmd "mkdir -p ./${main_directory}/dist/"
+    doCmd "cp ../../../dist/${name}/*.js ./${main_directory}/dist/"
+    doCmd "cp ../../../dist/${name}/*.css ./${main_directory}/dist/"
 
     # sources
     printTo "> src/..."
-    doCmd "mkdir -p ./${name}/src/"
-    doCmd "cp -r ../../../src/Common/ ./${name}/src/."
-    doCmd "cp -r ../../../src/${directory}/ ./${name}/src/."
+    doCmd "mkdir -p ./${main_directory}/src/"
+    doCmd "cp -r ../../../src/Common/ ./${main_directory}/src/."
+    doCmd "cp -r ../../../src/${src_directory}/ ./${main_directory}/src/."
 
     # README & LICENCE & package.json
     printTo "> resources..."
-    doCmd "cp ../../../doc/README-${name}.md ./${name}/README.md"
-    doCmd "cp ../../../LICENCE.md ./${name}/LICENCE.md"
-    doCmd "cp package-${name}.json ./${name}/package.json"
+    doCmd "cp ../../../doc/README-${name}.md ./${main_directory}/README.md"
+    doCmd "cp ../../../LICENCE.md ./${main_directory}/LICENCE.md"
+    doCmd "cp package-${name}.json ./${main_directory}/package.json"
 
     # npm pack
     printTo "> npm pack..."
-    doCmd "cd ./${name}"
+    doCmd "cd ./${main_directory}"
     doCmd "npm pack"
     doCmd "cd .."
-    doCmd "mv ./${name}/*.tgz ."
+    doCmd "mv ./${main_directory}/*.tgz ."
 
     # clean
     if [ ${clean} == true ]
     then
         printTo "> clean..."
-        doCmd "rm -rf ./${name}/dist/ ./${name}/src/"
-        doCmd "rm ./${name}/README.md ./${name}/LICENCE.md ./${name}/package.json"
-        doCmd "rmdir ./${name}/"
+        doCmd "rm -rf ./${main_directory}/dist/ ./${main_directory}/src/"
+        doCmd "rm ./${main_directory}/README.md"
+        doCmd "rm ./${main_directory}/LICENCE.md"
+        doCmd "rm ./${main_directory}/package.json"
+        doCmd "rmdir ./${main_directory}/"
     fi
 }
 

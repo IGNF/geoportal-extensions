@@ -1,3 +1,5 @@
+**WARNING : depreciate**
+
 # Comment spécifier des modules locaux en tant que dépendances de paquets npm ?
 
 **Cas d'utilisation :**
@@ -14,23 +16,40 @@ souhaite tester nos developpements dans ce projet..
 
 https://docs.npmjs.com/cli/link.html
 https://docs.npmjs.com/cli/pack.html
+https://webpack.js.org/configuration/module/#rule
 
-## Procédure
+## Méthode n°1 ("npm link")
 
 Ex. on souhaite mettre le package local *geoportal-extensions-openlayers* en dependance
-du projet principal *geoportal-sdk*.
+du projet principal *geoportal-sdk* en utilisant **npm link**.
 
-### initialiser les liaisons
+**WARNING :**
+> https://webpack.js.org/configuration/module/#rule
 
-Les étapes suivantes permettent d'initialiser la liaison entre le package local
-et le projet principal :
+> Ceci cause des problemes avec les loaders webpack :
+```
+The resource is the resolved path of the file, which means
+symlinked resources are the real path not the symlink location.
+This is good to remember when using tools that symlink packages
+(like npm link), common conditions like /node_modules/ may
+inadvertently miss symlinked file
+```
 
-- construction des binaires *geoportal-extensions-openlayers*
+### construction des binaires
+
+Ex. construction des binaires *geoportal-extensions-openlayers*
     ```
     user@pc:> cd ~/geoportal-extensions-openlayers/
     user@pc:> npm run build:ol
     user@pc:> ll dist/openlayers/
-    ```    
+    ```
+
+**Info**
+idem pour le projet *geoportal-access-lib*
+
+### initialiser les liaisons
+
+Les étapes suivantes permettent d'initialiser la liaison entre le package local et le projet principal :  
 
 - construction du package *geoportal-extensions-openlayers*
     ```
@@ -38,7 +57,7 @@ et le projet principal :
     user@pc:> ./build-pack.sh --openlayers
     user@pc:> ll
     geoportal-extensions-openlayers-3.0.0.tgz
-    openlayers/
+    geoportal-extensions-openlayers/
     ```
     **Info**
     Pour construire le package pour le projet *geoportal-access-lib* :
@@ -52,7 +71,7 @@ et le projet principal :
 
 - creation du lien sur l'espace globale de NPM (*/usr/lib/node_modules/*)
     ```
-    user@pc:> cd ~/geoportal-extensions-openlayers/build/scripts/release/openlayers/
+    user@pc:> cd ~/geoportal-extensions-openlayers/build/scripts/release/geoportal-extensions-openlayers/
     user@pc:> sudo npm link
     user@pc:> ll
     user@pc:> openlayers/ -> /usr/lib/node_modules/geoportal-extensions-openlayers
@@ -84,4 +103,30 @@ Si on souhaite supprimer les liens locaux, on procède ainsi :
     user@pc:> cd ~/geoportal-sdk/
     user@pc:> npm unlink geoportal-extensions-openlayers
     user@pc:> sudo npm rm --global geoportal-extensions-openlayers
+    ```
+
+## Méthode n°2 (package.json & file:)
+
+**WARNING :**
+> même souci que la méthode n°1 !
+Car ceci construit aussi des liens symboliques...
+
+Utilisation du tag *file* dans le fichier *package.json* :
+    ```
+    {
+      "name": geoportal-sdk"",
+      "dependencies": {
+        "geoportal-extensions-openlayers": "file:~/geoportal-extensions-openlayers/build/scripts/release/openlayers/",
+        "geoportal-access-lib": "file:~/geoportal-access-lib/package"
+      }
+    }    
+    ```
+
+## Méthode n°3 (copie du package)
+
+On deploie manuellement le package...
+    ```
+    user@pc:> cp -r ~/geoportal-extensions-openlayers/build/scripts/release/geoportal-extensions-openlayers/ ~/geoportal-sdk/node_modules/
+    user@pc:> cd ~/geoportal-sdk/node_modules/geoportal-extensions-openlayers/
+    user@pc:> npm install (--production)
     ```

@@ -25,6 +25,10 @@ les fichiers sont suffixés avec le tag *modules*.
 > on utilise donc une version anterieur du package *uglifyjs-webpack-plugin* > 1.3.0 !
 > Lors du passage en Webpack 4, on pourra utiliser la version de minification incluse dans webpack.
 
+> **INFO**
+> if you set NODE_ENV=production or use the --production flag it will not install devDependencies
+> when you run *npm install*
+
 ## Avancements des sources
 
 - [x] Migrer vers ol v5.3.0   : **OK**

@@ -3,6 +3,7 @@
   "version": "3.0.0",
   "description": "French Geoportal Extensions for OpenLayers",
   "main": "src/OpenLayers/GpPluginOpenLayers.js",
+  "browser": "dist/GpPluginOpenLayers.js",
   "files": [
       "dist/",
       "src/",
@@ -28,7 +29,7 @@
   "homepage": "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
   "dependencies": {
       "eventbusjs": "^0.2.0",
-      "geoportal-access-lib": "2.1.1",
+      "geoportal-access-lib": "2.1.2",
       "loglevel": "~1.6.1",
       "ol": "^5.3.0",
       "ol-mapbox-style": "^3.6.2",

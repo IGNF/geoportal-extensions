@@ -1,8 +1,9 @@
 {
   "name": "geoportal-extensions-itowns",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "French Geoportal Extensions for iTowns",
   "main": "src/Itowns/GpPluginItowns.js",
+  "browser": "dist/GpPluginItowns.js",
   "directories": {},
   "files": [
       "dist/",
@@ -27,7 +28,7 @@
   "bugs": {},
   "homepage": "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
   "dependencies": {
-      "geoportal-access-lib": "2.1.1",
+      "geoportal-access-lib": "2.1.2",
       "itowns": "2.3.0",
       "loglevel": "~1.6.1",
       "proj4": "2.5.0",

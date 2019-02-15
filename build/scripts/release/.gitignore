@@ -1,5 +1,3 @@
-/openlayers
-/itowns
-/leaflet
+/geoportal-*
 
 *.tgz

@@ -18,7 +18,7 @@
 
 * [Changed]
 
-    - Mise à jour du package *geoportal-access-lib* en version 2.1.1
+    - Mise à jour du package *geoportal-access-lib* en version 2.1.2
     - Mise à jour du package *proj4* en version 2.5.0
 
 * [Added]
