@@ -11,7 +11,7 @@ var logger = Logger.getLogger("CRS");
  */
 (function () {
     // load all defs into proj4
-    Register.load();
+    Register.load(Proj4);
     // overload proj4 into ol
     if (!ol.proj.proj4_ && ol.proj.setProj4) {
         ol.proj.setProj4(Proj4);
