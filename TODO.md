@@ -146,11 +146,11 @@ les fichiers sont suffixés avec le tag *modules*.
 
     > utilisation des sources ES6 modules dans le code.
 
-    > programmer la publication des sources !
 
 * [x] **FAIT** deplacement des CSS avec les JS
 
-    > eviter des chemins complexes dans les sources.
+    > **FIXME** c'est peut être une mauvaise idée d'integrer les CSS dans les sources
+    car souci dans le SDK à transtiper les modules (pb de loader sur les CSS)
 
 * [x] **FAIT** creation d'une CSS commune à tous les controles (via webpack)
 
@@ -191,7 +191,7 @@ les fichiers sont suffixés avec le tag *modules*.
 * [x] **FAIT** deplacement des licences **templates** dans un répertoire
     > ex. build/
 
-* [ ] **TODO** maj du script de publication
+* [x] **FAIT** maj du script de publication
 
 * [x] **FAIT** changelog
     > https://api.github.com/repos/IGNF/geoportal-extensions/releases
