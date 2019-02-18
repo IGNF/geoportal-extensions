@@ -1001,6 +1001,10 @@ Isocurve.prototype._requestIsoCurve = function (options) {
     var key = this._resources["Isocurve"]["key"];
     options.apiKey = this.options.isocurveOptions.apiKey || this.options.apiKey || key;
 
+    // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
+    // true par défaut (https) 
+    options.ssl = this.options.ssl;
+
     logger.log(options);
 
     // on efface une éventuelle précédente couche
