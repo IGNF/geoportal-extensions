@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 2.1.1
- * @date 2019-02-14
+ * @date 2019-02-18
  *
  */
 
@@ -20737,6 +20737,7 @@ var logger = _LoggerByDefault2.default.getLogger("MousePosition");
  * @alias itowns.control.MousePosition
  * @extends {itowns.control.Control}
  * @param {Object} options - options for function call.
+ * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)   
  * @param {Boolean} [options.collapsed = true] - Specify if MousePosition control should be collapsed at startup. Default is true.
  * @param {Array}   [options.systems] - list of projection systems, default are Geographical ("EPSG:4326"), Web Mercator ("EPSG:3857"), Lambert 93 ("EPSG:2154") and extended Lambert 2 ("EPSG:27572").
  *      Each array element (=system) is an object with following properties :
@@ -21795,6 +21796,10 @@ MousePosition.prototype.onRequestAltitude = function (coordinate, callback) {
     // in the case of the API key is not given as option of the service,
     // we use the key of the autoconf, or the key given in the control options
     options.apiKey = options.apiKey || this.options.apiKey;
+
+    // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
+    // true par défaut (https) 
+    options.ssl = this.options.ssl;
 
     _gp2.default.Services.getAltitude(options);
 };
@@ -33779,7 +33784,7 @@ function LayerWMTS(options) {
 
     // par defaut
     if (typeof options.ssl === "undefined") {
-        options.ssl = false;
+        options.ssl = true;
     }
 
     // Check if configuration is loaded
@@ -33792,9 +33797,9 @@ function LayerWMTS(options) {
     if (layerId && _Config2.default.configuration.getLayerConf(layerId)) {
         var wmtsParams = _Config2.default.getLayerParams(options.layer, "WMTS", options.apiKey);
 
-        // gestion de mixContent dans l'url du service...
-        var ctx = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : null;
-        var protocol = ctx ? ctx.location && ctx.location.protocol && ctx.location.protocol.indexOf("https:") === 0 ? "https://" : "http://" : options.ssl ? "https://" : "http://";
+        // si ssl = false on fait du http
+        // par défaut, ssl = true, on fait du https
+        var protocol = options.ssl === false ? "http://" : "https://";
 
         this.type = "color";
         this.protocol = "wmts";
@@ -33903,7 +33908,7 @@ function LayerWMS(options) {
 
     // par defaut
     if (typeof options.ssl === "undefined") {
-        options.ssl = false;
+        options.ssl = true;
     }
 
     // Check if configuration is loaded
@@ -33916,9 +33921,9 @@ function LayerWMS(options) {
     if (layerId && _Config2.default.configuration.getLayerConf(layerId)) {
         var wmsParams = _Config2.default.getLayerParams(options.layer, "WMS", options.apiKey);
 
-        // gestion de mixContent dans l'url du service...
-        var ctx = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : null;
-        var protocol = ctx ? ctx.location && ctx.location.protocol && ctx.location.protocol.indexOf("https:") === 0 ? "https://" : "http://" : options.ssl ? "https://" : "http://";
+        // si ssl = false on fait du http
+        // par défaut, ssl = true, on fait du https
+        var protocol = options.ssl === false ? "http://" : "https://";
 
         this.type = "color";
         this.protocol = "wms";

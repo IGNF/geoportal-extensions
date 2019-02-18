@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 2.0.2
- * @date 2019-02-14
+ * @date 2019-02-18
  *
  */
 
@@ -26119,6 +26119,7 @@ var ElevationPath = _leaflet2.default.Control.extend( /** @lends L.geoportalCont
      * @private
      * @param {Object} options - ElevationPath control options
      * @param {Sting}   [options.apiKey] - API key for services call (isocurve and autocomplete services), mandatory if autoconf service has not been charged in advance
+    * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)  
      * @param {Boolean} [options.active] - Specify if widget has to be actived to drawing (true) or not (false) on map loading. Default is false.
      * @param {Object} [options.elevationPathOptions = {}] - elevation service options. See {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~getAltitude Gp.Services.getAltitude()} to know all elevation options
      * @param {Object} [options.displayProfileOptions = {}] - profile options.
@@ -26713,6 +26714,12 @@ var ElevationPath = _leaflet2.default.Control.extend( /** @lends L.geoportalCont
         // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
         _leaflet2.default.Util.extend(options, {
             apiKey: options.apiKey || this.options.apiKey
+        });
+
+        // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
+        // true par défaut (https) 
+        _leaflet2.default.Util.extend(options, {
+            ssl: this.options.ssl
         });
 
         // le sampling est soit defini par l'utilisateur (opts),
@@ -31344,6 +31351,7 @@ var Isocurve = _leaflet2.default.Control.extend( /** @lends L.geoportalControl.I
      * @private
      * @param {Object} options - Isocurve control options
      * @param {Sting}   [options.apiKey] - API key for services call (isocurve and autocomplete services), mandatory if autoconf service has not been charged in advance
+     * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)  
      * @param {Boolean} [options.collapsed] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
      * @param {Object}  [options.exclusions] - list of exclusions with status (true = checked), by default : ["toll":false, "tunnel":false, "bridge":false].
      * @param {Array}   [options.graphs] - list of graph resources to be used for isocurve calculation, by default : ["Voiture", "Pieton"]. The first element is selected.
@@ -32179,6 +32187,10 @@ var Isocurve = _leaflet2.default.Control.extend( /** @lends L.geoportalControl.I
         // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
         var key = this._resources["Isochrone"]["key"];
         options.apiKey = this.options.isocurveOptions.apiKey || this.options.apiKey || key;
+
+        // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
+        // true par défaut (https)
+        options.ssl = this.options.ssl;
 
         logger.log(options);
 
@@ -33844,6 +33856,7 @@ var MousePosition = _leaflet2.default.Control.extend( /** @lends L.geoportalCont
      * @extends {L.Control}
      * @param {Object} options - options for function call.
      * @param {Sting}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
+     * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)   
      * @param {String}  [options.position] - position of component into the map, 'bottomleft' by default
      * @param {Boolean} [options.collapsed] - collapse mode, false by default
      * @param {Array}   [options.systems] - list of projection systems, GEOGRAPHIC, MERCATOR, LAMB93 and LAMB2E by default
@@ -34798,6 +34811,12 @@ var MousePosition = _leaflet2.default.Control.extend( /** @lends L.geoportalCont
         // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
         _leaflet2.default.Util.extend(options, {
             apiKey: options.apiKey || this.options.apiKey
+        });
+
+        // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
+        // true par défaut (https) 
+        _leaflet2.default.Util.extend(options, {
+            ssl: this.options.ssl
         });
 
         logger.log(options);
@@ -43382,6 +43401,7 @@ var ReverseGeocoding = _leaflet2.default.Control.extend( /** @lends L.geoportalC
      * @constructor ReverseGeocode
      * @param {Object} options - ReverseGeocoding control options
      * @param {String}  [options.apiKey] - API key for services call (reverse geocode service), mandatory if autoconf service has not been charged in advance
+     * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)   
      * @param {String}  [options.position] - position of component into the map, 'topleft' by default
      * @param {Boolean} [options.collapsed] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
      * @param {Array}  [options.resources] - resources for geocoding, by default : ["StreetAddress", "PositionOfInterest"]
@@ -44047,6 +44067,7 @@ var ReverseGeocoding = _leaflet2.default.Control.extend( /** @lends L.geoportalC
         // options par defaut
         _leaflet2.default.Util.extend(options, {
             apiKey: this.options.apiKey,
+            ssl: this.options.ssl,
             srs: "EPSG:4326",
             returnFreeForm: false,
             // maximumResponses : 25, // on peut la surcharger !
@@ -45175,6 +45196,7 @@ var Route = _leaflet2.default.Control.extend( /** @lends L.geoportalControl.Rout
      * @private
      * @param {Object} options - options for function call.
      * @param {Sting}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
+     * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)  
      * @param {String}  [options.position] - position of component into the map, 'topleft' by default
      * @param {Boolean} [options.collapsed] - collapse mode, false by default
      * @param {Object}  [options.exclusions] - list of exclusions with status
@@ -46102,6 +46124,12 @@ var Route = _leaflet2.default.Control.extend( /** @lends L.geoportalControl.Rout
         // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
         _leaflet2.default.Util.extend(options, {
             apiKey: this.options.routeOptions.apiKey || this.options.apiKey || key
+        });
+
+        // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
+        // true par défaut (https) 
+        _leaflet2.default.Util.extend(options, {
+            ssl: this.options.ssl
         });
 
         logger.log(options);
@@ -47907,6 +47935,7 @@ var SearchEngine = _leaflet2.default.Control.extend( /** @lends L.geoportalContr
      * @extends {L.Control}
      * @param {Object} options - control options
      * @param {String} [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
+     * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)  
      * @param {Boolean} [options.collapsed] - collapse mode, false by default
      * @param {String} [options.position] - position of component into the map, 'topleft' by default
      * @param {Boolean} [options.displayInfo] - get informations on popup marker
@@ -48617,6 +48646,12 @@ var SearchEngine = _leaflet2.default.Control.extend( /** @lends L.geoportalContr
             apiKey: options.apiKey || this.options.apiKey || key
         });
 
+        // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
+        // true par défaut (https) 
+        _leaflet2.default.Util.extend(options, {
+            ssl: this.options.ssl
+        });
+
         logger.log(options);
 
         _gp2.default.Services.autoComplete(options);
@@ -48719,6 +48754,12 @@ var SearchEngine = _leaflet2.default.Control.extend( /** @lends L.geoportalContr
         // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
         _leaflet2.default.Util.extend(options, {
             apiKey: options.apiKey || this.options.apiKey || key
+        });
+
+        // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
+        // true par défaut (https) 
+        _leaflet2.default.Util.extend(options, {
+            ssl: this.options.ssl
         });
 
         logger.log(options);
@@ -51321,7 +51362,7 @@ var Layers = {
 
         // par defaut
         if (typeof this.options.ssl === "undefined") {
-            this.options.ssl = false;
+            this.options.ssl = true;
         }
     },
 
@@ -51329,9 +51370,9 @@ var Layers = {
      * get runtime context
      */
     _initContext: function _initContext() {
-        var _context = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : null;
-        var _protocol = _context ? _context.location && _context.location.protocol && _context.location.protocol.indexOf("https:") === 0 ? "https://" : "http://" : this.options.ssl ? "https://" : "http://";
-        this.protocol = _protocol;
+        // si ssl = false on fait du http
+        // par défaut, ssl = true, on fait du https
+        this.protocol = this.options.ssl === false ? "http://" : "https://";
     },
 
     /**
@@ -51417,7 +51458,7 @@ var Layers = {
         var serviceUrl = null;
         if (this.params.key || this.options.apiKey) {
             // url de l'autoconf ou le service par defaut
-            serviceUrl = this.params.url || _leaflet2.default.Util.template("http://wxs.ign.fr/{key}/geoportail/r/wms", {
+            serviceUrl = this.params.url || _leaflet2.default.Util.template("https://wxs.ign.fr/{key}/geoportail/r/wms", {
                 key: this.params.key || this.options.apiKey
             });
         } else {
@@ -51513,7 +51554,7 @@ var Layers = {
         // url du service (par defaut)
         var serviceUrl = null;
         if (this.params.key || this.options.apiKey) {
-            serviceUrl = this.params.url || _leaflet2.default.Util.template("http://wxs.ign.fr/{key}/geoportail/wmts", {
+            serviceUrl = this.params.url || _leaflet2.default.Util.template("https://wxs.ign.fr/{key}/geoportail/wmts", {
                 key: this.params.key || this.options.apiKey
             });
         } else {

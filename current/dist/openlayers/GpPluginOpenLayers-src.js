@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 2.1.0
- * @date 2019-02-14
+ * @date 2019-02-18
  *
  */
 
@@ -23339,7 +23339,7 @@ function SourceWMTS(options) {
 
     // par defaut
     if (typeof options.ssl === "undefined") {
-        options.ssl = false;
+        options.ssl = true;
     }
 
     // Check if configuration is loaded
@@ -23352,9 +23352,9 @@ function SourceWMTS(options) {
     if (layerId && _Config2.default.configuration.getLayerConf(layerId)) {
         var wmtsParams = _Config2.default.getLayerParams(options.layer, "WMTS", options.apiKey);
 
-        // gestion de mixContent dans l'url du service...
-        var ctx = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : null;
-        var protocol = ctx ? ctx.location && ctx.location.protocol && ctx.location.protocol.indexOf("https:") === 0 ? "https://" : "http://" : options.ssl ? "https://" : "http://";
+        // si ssl = false on fait du http
+        // par défaut, ssl = true, on fait du https
+        var protocol = options.ssl === false ? "http://" : "https://";
 
         // save originators (to be updated by Originators control)
         this._originators = wmtsParams.originators;
@@ -23494,7 +23494,7 @@ function SourceWMS(options) {
 
     // par defaut
     if (typeof options.ssl === "undefined") {
-        options.ssl = false;
+        options.ssl = true;
     }
 
     // Check if configuration is loaded
@@ -23507,9 +23507,9 @@ function SourceWMS(options) {
     if (layerId && _Config2.default.configuration.getLayerConf(layerId)) {
         var wmsParams = _Config2.default.getLayerParams(options.layer, "WMS", options.apiKey);
 
-        // gestion de mixContent dans l'url du service...
-        var ctx = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : null;
-        var protocol = ctx ? ctx.location && ctx.location.protocol && ctx.location.protocol.indexOf("https:") === 0 ? "https://" : "http://" : options.ssl ? "https://" : "http://";
+        // si ssl = false on fait du http
+        // par défaut, ssl = true, on fait du https
+        var protocol = options.ssl === false ? "http://" : "https://";
 
         var wmsSourceOptions = {
             // tracker extension openlayers
@@ -24349,6 +24349,10 @@ LocationSelector.prototype._requestAutoComplete = function (settings) {
     // cas où la clef API n'est pas renseignée dans les options du service,
     // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
     options.apiKey = options.apiKey || this.options.apiKey;
+
+    // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
+    // true par défaut (https) 
+    options.ssl = this.options.ssl;
 
     logger.log(options);
 
@@ -31773,7 +31777,7 @@ function LayerWMTS(options) {
 
     // par defaut
     if (typeof options.ssl === "undefined") {
-        options.ssl = false;
+        options.ssl = true;
     }
 
     // Check if configuration is loaded
@@ -31928,7 +31932,7 @@ function LayerWMS(options) {
 
     // par defaut
     if (typeof options.ssl === "undefined") {
-        options.ssl = false;
+        options.ssl = true;
     }
 
     // Check if configuration is loaded
@@ -34764,6 +34768,7 @@ var logger = _LoggerByDefault2.default.getLogger("searchengine");
  * @alias ol.control.SearchEngine
  * @param {Object}  options - control options
  * @param {String}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
+ * @param {String}   [options.ssl = true] - use of ssl or not (default true, service requested using https protocol) 
  * @param {Boolean} [options.collapsed = true] - collapse mode, true by default
  * @param {Object}   [options.resources] - resources to be used by geocode and autocompletion services :
  * @param {Array}   [options.resources.geocode] - resources geocoding, by default : ["PositionOfInterest", "StreetAddress"]
@@ -35474,6 +35479,10 @@ SearchEngine.prototype._requestAutoComplete = function (settings) {
     // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
     options.apiKey = options.apiKey || this.options.apiKey;
 
+    // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
+    // true par défaut (https) 
+    options.ssl = this.options.ssl;
+
     logger.log(options);
 
     _gp2.default.Services.autoComplete(options);
@@ -35553,6 +35562,10 @@ SearchEngine.prototype._requestGeocoding = function (settings) {
     // cas où la clef API n'est pas renseignée dans les options du service,
     // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
     options.apiKey = options.apiKey || this.options.apiKey;
+
+    // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
+    // true par défaut (https) 
+    options.ssl = this.options.ssl;
 
     logger.log(options);
 
@@ -35975,6 +35988,7 @@ SearchEngine.prototype._getGeocodeCoordinatesFromFullText = function (suggestedL
     var context = this;
     _gp2.default.Services.geocode({
         apiKey: this.options.apiKey,
+        ssl: this.options.ssl,
         location: suggestedLocation.fullText,
         filterOptions: {
             type: suggestedLocation.type
@@ -37454,6 +37468,7 @@ var logger = _LoggerByDefault2.default.getLogger("GeoportalMousePosition");
  * @extends {ol.control.Control}
  * @param {Object} options - options for function call.
  * @param {Sting}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
+ * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)  
  * @param {Boolean} [options.collapsed = true] - Specify if MousePosition control should be collapsed at startup. Default is true.
  * @param {Array}   [options.systems] - list of projection systems, default are Geographical ("EPSG:4326"), Web Mercator ("EPSG:3857"), Lambert 93 ("EPSG:2154") and extended Lambert 2 ("EPSG:27572").
  *      Each array element (=system) is an object with following properties :
@@ -38654,9 +38669,14 @@ MousePosition.prototype.onRequestAltitude = function (coordinate, callback) {
     // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
     var _apiKey = options.apiKey || this.options.apiKey;
 
+    // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
+    // true par défaut (https) 
+    var _ssl = this.options.ssl;
+
     _gp2.default.Services.getAltitude({
         apiKey: _apiKey,
         protocol: _protocol,
+        ssl: _ssl,
         timeOut: _timeout,
         scope: _scope,
         rawResponse: _rawResponse,
@@ -42542,6 +42562,7 @@ var logger = _LoggerByDefault2.default.getLogger("route");
  * @extends {ol.control.Control}
  * @param {Object} options - route control options
  * @param {String}   [options.apiKey] - API key for services call (route and autocomplete services), mandatory if autoconf service has not been charged in advance
+ * @param {Boolean}   [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)  
  * @param {Boolean} [options.collapsed = true] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
  * @param {Object}  [options.exclusions = {toll : false, tunnel : false, bridge : false}] - list of exclusions with status (true = checked). By default : no exclusions checked.
  * @param {Array}   [options.graphs = ["Voiture", "Pieton"]] - list of resources, by default : ["Voiture", "Pieton"]. The first element is selected.
@@ -43704,6 +43725,10 @@ Route.prototype._requestRouting = function (options) {
     // cas où la clef API n'est pas renseignée dans les options du service,
     // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
     options.apiKey = this.options.routeOptions.apiKey || this.options.apiKey || key;
+
+    // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
+    // true par défaut (https) 
+    options.ssl = this.options.ssl;
 
     logger.log(options);
 
@@ -47140,6 +47165,10 @@ Isocurve.prototype._requestIsoCurve = function (options) {
     var key = this._resources["Isocurve"]["key"];
     options.apiKey = this.options.isocurveOptions.apiKey || this.options.apiKey || key;
 
+    // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
+    // true par défaut (https) 
+    options.ssl = this.options.ssl;
+
     logger.log(options);
 
     // on efface une éventuelle précédente couche
@@ -48354,6 +48383,7 @@ var logger = _LoggerByDefault2.default.getLogger("reversegeocoding");
  * @extends {ol.control.Control}
  * @param {Object} options - ReverseGeocode control options
  * @param {String}   [options.apiKey] - API key for services call (reverse geocode service), mandatory if autoconf service has not been charged in advance
+ * @param {String}   [options.ssl = true] - use of ssl or not (default true, service requested using https protocol) 
  * @param {Boolean} [options.collapsed = true] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
  * @param {Object}   [options.resources =  ["StreetAddress", "PositionOfInterest", "CadastralParcel"]] - resources for geocoding, by default : ["StreetAddress", "PositionOfInterest", "CadastralParcel"]. Possible values are : "StreetAddress", "PositionOfInterest", "CadastralParcel", "Administratif". Resources will be displayed in the same order in widget list.
  * @param {Object}   [options.delimitations = ["Point", "Circle", "Extent"]] - delimitations for reverse geocoding, by default : ["Point", "Circle", "Extent"]. Possible values are : "Point", "Circle", "Extent". Delimitations will be displayed in the same order in widget list.
@@ -49309,6 +49339,7 @@ ReverseGeocode.prototype._getReverseGeocodingRequestOptions = function () {
     var context = this;
     var requestOptions = {
         apiKey: reverseGeocodeOptions.apiKey || this.options.apiKey,
+        ssl: this.options.ssl,
         position: this._requestPosition,
         filterOptions: {
             type: [this._currentGeocodingType]
@@ -53557,6 +53588,7 @@ var logger = _LoggerByDefault2.default.getLogger("elevationpath");
  * @extends ol.control.Control
  * @param {Object} options - options for function call.
  * @param {Boolean} [options.active = false] - specify if control should be actived at startup. Default is false.
+ * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)  
  * @param {Object} [options.layerDescription = {}] - Layer informations to be displayed in LayerSwitcher widget (only if a LayerSwitcher is also added to the map)
  * @param {String} [options.layerDescription.title = "Profil altimétrique"] - Layer title to be displayed in LayerSwitcher
  * @param {String} [options.layerDescription.description = "Mon profil altimétrique"] - Layer description to be displayed in LayerSwitcher
@@ -54607,6 +54639,12 @@ ElevationPath.prototype._requestService = function () {
     // au cas où ...
     _Utils2.default.mergeParams(options, {
         apiKey: this.options.apiKey
+    });
+
+    // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
+    // true par défaut (https) 
+    _Utils2.default.mergeParams(options, {
+        ssl: this.options.ssl
     });
 
     // les callbacks
