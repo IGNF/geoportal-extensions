@@ -62185,7 +62185,7 @@ var logger = _LoggerByDefault2.default.getLogger("wmtsLayer");
  * @alias itowns.layer.GeoportalWMTS
  * @param {Object} options            - options for function call.
  * @param {String} options.layer      - Layer name (e.g. "ORTHOIMAGERY.ORTHOPHOTOS")
- * @param {Boolean} [options.ssl]     - if set true, enforce protocol https (only for nodejs)
+ * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {String} [options.apiKey]   - Access key to Geoportal platform
  * @param {Object} [options.itownsParams] - other options for itowns.GlobeView.addLayer function (see {@link http://www.itowns-project.org/itowns/API_Doc/GlobeView.html#addLayer GlobeView.addLayer})
  * @example
@@ -62309,7 +62309,7 @@ var logger = _LoggerByDefault2.default.getLogger("wmsLayer");
  * @alias itowns.layer.GeoportalWMS
  * @param {Object} options            - options for function call.
  * @param {String} options.layer      - Layer name (e.g. "ORTHOIMAGERY.ORTHOPHOTOS")
- * @param {Boolean} [options.ssl]     - if set true, enforce protocol https (only for nodejs)
+ * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {String} [options.apiKey]   - Access key to Geoportal platform
  * @param {Object} [options.itownsParams] - other options for itowns.GlobeView.addLayer function (see {@link http://www.itowns-project.org/itowns/API_Doc/GlobeView.html#addLayer GlobeView.addLayer})
  * @example
