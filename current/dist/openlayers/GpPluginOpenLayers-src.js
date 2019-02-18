@@ -387,8 +387,8 @@ exports.default = SelectorID;
  * copyright CeCILL-B
  * copyright IGN
  * @author IGN
- * @version 2.1.0
- * @date 2018-08-01
+ * @version 2.1.2
+ * @date 2019-02-14
  *
  */
 /*!
@@ -791,7 +791,7 @@ function CommonService (options) {
     this.options = {
         // protocol : "JSONP",
         protocol : "XHR",
-        ssl : false,
+        ssl : true,
         proxyURL : "",
         // callbackName : "",
         callbackSuffix : null,
@@ -1047,7 +1047,7 @@ CommonService.prototype = {
         // rajout de l'option gpbibaccess
         // INFO : acces au numero de version de package.conf aprés compilation !
         this.options.serverUrl = __WEBPACK_IMPORTED_MODULE_1__Utils_Helper__["a" /* default */].normalyzeUrl(this.options.serverUrl, {
-            "gp-access-lib" : "2.1.0"
+            "gp-access-lib" : "2.1.2"
         }, false);
 
         // si le proxy est renseigné, on proxifie l'url du service
@@ -1334,15 +1334,16 @@ var Helper = {
 // -> http://wxs.ign.fr/efe4r54tj4uy5i78o7545eaz7e87a/alti/rest/elevationLine.xml
 // -> http://wxs.ign.fr/efe4r54tj4uy5i78o7545eaz7e87a/alti/wps
 //
-// Force ssl :
+// ssl by default.
 //
-// DefaultUrlService.ssl = true;
+// Force to not do ssl :
+// DefaultUrlService.ssl = false;
+//
 // DefaultUrlService.AutoComplete.url('efe4r54tj4uy5i78o7545eaz7e87a')
 // output {Object|String}
 // -> https://wxs.ign.fr/efe4r54tj4uy5i78o7545eaz7e87a/ols/apis/completion
 
 // constantes internes
-var ISBROWSER = typeof window !== "undefined" ? 1 : 0;
 var HOSTNAME = "wxs.ign.fr";
 
 /**
@@ -1353,8 +1354,8 @@ var HOSTNAME = "wxs.ign.fr";
  */
 var DefaultUrlService = {
 
-    /** if set true, require the use of https protocol (except browser) */
-    ssl : false,
+    /** if set true, require the use of https protocol */
+    ssl : true,
 
     /**
     * base url of services (ssl protocol management)
@@ -1363,9 +1364,16 @@ var DefaultUrlService = {
     * @returns {String} url
     */
     url : function (key, path) {
-        // en mode browser, c'est le protocole du navigateur,
-        // sinon, il est fixé par l'option 'ssl' (par défaut à false, cad en http)
-        var _protocol = (ISBROWSER) ? (location && location.protocol && location.protocol.indexOf("https:") === 0 ? "https://" : "http://") : (DefaultUrlService.ssl ? "https://" : "http://");
+        // comportement par défaut => https
+        // sinon, il est fixé par l'option 'ssl' (false => http)
+        var _protocol;
+        
+        if (DefaultUrlService.ssl === false) {
+            _protocol = "http://";
+        } else {
+            _protocol = "https://";
+        }
+
         return _protocol + HOSTNAME.concat("/", key, path);
     },
 
@@ -5799,8 +5807,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 var Gp = {
-    servicesVersion : "2.1.0",
-    servicesDate : "2018-08-01",
+    servicesVersion : "2.1.2",
+    servicesDate : "2019-02-14",
     /**
      * Methode pour rajouter une classe / objet au namespace global.
      *
@@ -5919,6 +5927,7 @@ var Services = {
      * @param {Function} [options.onFailure] - Callback function for handling unsuccessful service responses (timeOut, missing rights, ...). Takes a {@link Gp.Error} object as parameter.
      * @param {Number} [options.timeOut=0] - Number of milliseconds above which a timeOut response will be returned with onFailure callback (see above). Default value is 0 which means timeOut will not be handled.
      * @param {String} [options.serverUrl=http (s)://wxs.ign.fr/APIKEY/autoconf] - Web service URL. If used, options.apiKey parameter is ignored. Only use if you know what you're doing.
+     * @param {Boolean} [options.ssl = true] - Use of HTTPS or HTTP protocol to request the services. HTTPS by default (ssl=true).
      * @param {String} [options.protocol=JSONP] - Protocol used to handle dialog with web service. Possible values are 'JSONP' ({@link https://en.wikipedia.org/wiki/JSONP}) and 'XHR' ({@link https://en.wikipedia.org/wiki/XMLHttpRequest}). Only XHR protocol is supported in a NodeJS environment. Only use if you know what you're doing.
      * @param {String} [options.proxyURL] - Proxy URL to use when requesting an underlying web service. Ignored when options.protocol is set to 'JSONP' value. Only use if you know what you're doing.
      * @param {String} [options.callbackSuffix] - Callback function name suffix to use in case of a JSONP protocol use (see above), to set your own suffix instead of auto-increment. Ignored when options.protocol is set to 'XHR' value. Only use if you know what you're doing.
@@ -5949,6 +5958,7 @@ var Services = {
      * @param {Function} [options.onFailure] - Callback function for handling unsuccessful service responses (timeOut, missing rights, ...). Takes a {@link Gp.Error} object as parameter.
      * @param {Number} [options.timeOut=0] - Number of milliseconds above which a timeOut response will be returned with onFailure callback (see above). Default value is 0 which means timeOut will not be handled.
      * @param {String} [options.serverUrl=http (s)://wxs.ign.fr/APIKEY/alti/rest/elevation.json] - Web service URL. If used, options.apiKey parameter is ignored. Only use if you know what you're doing.
+     * @param {Boolean} [options.ssl = true] - Use of HTTPS or HTTP protocol to request the services. HTTPS by default (ssl=true).
      * @param {String} [options.protocol=XHR] - Protocol used to handle dialog with web service. Possible values are 'JSONP' ({@link https://en.wikipedia.org/wiki/JSONP}) and 'XHR' ({@link https://en.wikipedia.org/wiki/XMLHttpRequest}). Only XHR protocol is supported in a NodeJS environment. Only use if you know what you're doing.
      * @param {String} [options.proxyURL] - Proxy URL to use when requesting underlying web service. Ignored when options.protocol is set to 'JSONP' value. Only use if you know what you're doing.
      * @param {String} [options.callbackSuffix] - Callback function name suffix to use in case of a JSONP protocol use (see above), to set your own suffix instead of auto-increment. Ignored when options.protocol is set to 'XHR' value. Only use if you know what you're doing.
@@ -6009,6 +6019,7 @@ var Services = {
      * @param {Function} [options.onFailure] - Callback function for handling unsuccessful service responses (timeOut, missing rights, ...). Takes a {@link Gp.Error} object as parameter.
      * @param {Number} [options.timeOut=0] - Number of milliseconds above which a timeOut response will be returned with onFailure callback (see above). Default value is 0 which means timeOut will not be handled.
      * @param {String} [options.serverUrl=http (s)://wxs.ign.fr/APIKEY/geoportail/ols] - Web service URL. If used, options.apiKey parameter is ignored. Only use if you know what you're doing.
+     * @param {Boolean} [options.ssl = true] - Use of HTTPS or HTTP protocol to request the services. HTTPS by default (ssl=true).
      * @param {String} [options.protocol=XHR] - Protocol used to handle dialog with web service. Possible values are 'JSONP' ({@link https://en.wikipedia.org/wiki/JSONP}) and 'XHR' ({@link https://en.wikipedia.org/wiki/XMLHttpRequest}). Only XHR protocol is supported in a NodeJS environment. Only use if you know what you're doing.
      * @param {String} [options.proxyURL] - Proxy URL to use when requesting underlying web service. Ignored when options.protocol is set to 'JSONP' value. Only use if you know what you're doing.
      * @param {String} [options.callbackSuffix] - Callback function name suffix to use in case of a JSONP protocol use (see above), to set your own suffix instead of auto-increment. Ignored when options.protocol is set to 'XHR' value. Only use if you know what you're doing.
@@ -6040,6 +6051,7 @@ var Services = {
      * @param {Function} [options.onFailure] - Callback function for handling unsuccessful service responses (timeOut, missing rights, ...). Takes a {@link Gp.Error} object as parameter.
      * @param {Number} [options.timeOut=0] - Number of milliseconds above which a timeOut response will be returned with onFailure callback (see above). Default value is 0 which means timeOut will not be handled.
      * @param {String} [options.serverUrl=http (s)://wxs.ign.fr/APIKEY/geoportail/ols] - Web service URL. If used, options.apiKey parameter is ignored. Only use if you know what you're doing.
+     * @param {Boolean} [options.ssl = true] - Use of HTTPS or HTTP protocol to request the services. HTTPS by default (ssl=true).
      * @param {String} [options.protocol=XHR] - Protocol used to handle dialog with web service. Possible values are 'JSONP' ({@link https://en.wikipedia.org/wiki/JSONP}) and 'XHR' ({@link https://en.wikipedia.org/wiki/XMLHttpRequest}). Only XHR protocol is supported in a NodeJS environment. Only use if you know what you're doing.
      * @param {String} [options.proxyURL] - Proxy URL to use when requesting underlying web service. Ignored when options.protocol is set to 'JSONP' value. Only use if you know what you're doing.
      * @param {String} [options.callbackSuffix] - Callback function name suffix to use in case of a JSONP protocol use (see above), to set your own suffix instead of auto-increment. Ignored when options.protocol is set to 'XHR' value. Only use if you know what you're doing.
@@ -6066,6 +6078,7 @@ var Services = {
      * @param {Function} [options.onFailure] - Callback function for handling unsuccessful service responses (timeOut, missing rights, ...). Takes a {@link Gp.Error} object as parameter.
      * @param {Number} [options.timeOut=0] - Number of milliseconds above which a timeOut response will be returned with onFailure callback (see above). Default value is 0 which means timeOut will not be handled.
      * @param {String} [options.serverUrl=http (s)://wxs.ign.fr/APIKEY/ols/apis/completion] - Web service URL. If used, options.apiKey parameter is ignored. Only use if you know what you're doing.
+     * @param {Boolean} [options.ssl = true] - Use of HTTPS or HTTP protocol to request the services. HTTPS by default (ssl=true).
      * @param {String} [options.protocol=XHR] - Protocol used to handle dialog with web service. Possible values are 'JSONP' ({@link https://en.wikipedia.org/wiki/JSONP}) and 'XHR' ({@link https://en.wikipedia.org/wiki/XMLHttpRequest}). Only XHR protocol is supported in a NodeJS environment. Only use if you know what you're doing.
      * @param {String} [options.proxyURL] - Proxy URL to use when requesting underlying web service. Ignored when options.protocol is set to 'JSONP' value. Only use if you know what you're doing.
      * @param {String} [options.callbackSuffix] - Callback function name suffix to use in case of a JSONP protocol use (see above), to set your own suffix instead of auto-increment. Ignored when options.protocol is set to 'XHR' value. Only use if you know what you're doing.
@@ -6098,6 +6111,7 @@ var Services = {
      * @param {Number} [options.timeOut=0] - Number of milliseconds above which a timeOut response will be returned with onFailure callback (see above). Default value is 0 which means timeOut will not be handled.
      * @param {String} [options.outputFormat='json'] - Output format ("json" or "xml") to use for underlying webService. Only use if you know what you are doing.
      * @param {String} [options.serverUrl=http (s)://wxs.ign.fr/APIKEY/itineraire/rest/route.json] - Web service URL. If used, options.apiKey parameter is ignored. Only use if you know what you're doing.
+     * @param {Boolean} [options.ssl = true] - Use of HTTPS or HTTP protocol to request the services. HTTPS by default (ssl=true).
      * @param {String} [options.protocol=XHR] - Protocol used to handle dialog with web service. Possible values are 'JSONP' ({@link https://en.wikipedia.org/wiki/JSONP}) and 'XHR' ({@link https://en.wikipedia.org/wiki/XMLHttpRequest}). Only XHR protocol is supported in a NodeJS environment. Only use if you know what you're doing.
      * @param {String} [options.proxyURL] - Proxy URL to use when requesting underlying web service. Ignored when options.protocol is set to 'JSONP' value. Only use if you know what you're doing.
      * @param {String} [options.callbackSuffix] - Callback function name suffix to use in case of a JSONP protocol use (see above), to set your own suffix instead of auto-increment. Ignored when options.protocol is set to 'XHR' value. Only use if you know what you're doing.
@@ -6130,6 +6144,7 @@ var Services = {
      * @param {Number} [options.timeOut=0] - Number of milliseconds above which a timeOut response will be returned with onFailure callback (see above). Default value is 0 which means timeOut will not be handled.
      * @param {String} [options.outputFormat='json'] - Output format ("json" or "xml") to use for underlying webService. Only use if you know what you are doing.
      * @param {String} [options.serverUrl=http (s)://wxs.ign.fr/APIKEY/isochrone/isochrone.json] - Web service URL. If used, options.apiKey parameter is ignored. Only use if you know what you're doing.
+     * @param {Boolean} [options.ssl = true] - Use of HTTPS or HTTP protocol to request the services. HTTPS by default (ssl=true).
      * @param {String} [options.protocol=XHR] - Protocol used to handle dialog with web service. Possible values are 'JSONP' ({@link https://en.wikipedia.org/wiki/JSONP}) and 'XHR' ({@link https://en.wikipedia.org/wiki/XMLHttpRequest}). Only XHR protocol is supported in a NodeJS environment. Only use if you know what you're doing.
      * @param {String} [options.proxyURL] - Proxy URL to use when requesting underlying web service. Ignored when options.protocol is set to 'JSONP' value. Only use if you know what you're doing.
      * @param {String} [options.callbackSuffix] - Callback function name suffix to use in case of a JSONP protocol use (see above), to set your own suffix instead of auto-increment. Ignored when options.protocol is set to 'XHR' value. Only use if you know what you're doing.
@@ -6852,7 +6867,7 @@ var Protocol = {
  * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors (Conversion to ES6 API by Jake Archibald)
  * @license   Licensed under MIT license
  *            See https://raw.githubusercontent.com/stefanpenner/es6-promise/master/LICENSE
- * @version   v4.2.4+314e4831
+ * @version   v4.2.5+7f2b526d
  */
 
 (function (global, factory) {
@@ -7958,15 +7973,19 @@ var Promise$1 = function () {
     var promise = this;
     var constructor = promise.constructor;
 
-    return promise.then(function (value) {
-      return constructor.resolve(callback()).then(function () {
-        return value;
+    if (isFunction(callback)) {
+      return promise.then(function (value) {
+        return constructor.resolve(callback()).then(function () {
+          return value;
+        });
+      }, function (reason) {
+        return constructor.resolve(callback()).then(function () {
+          throw reason;
+        });
       });
-    }, function (reason) {
-      return constructor.resolve(callback()).then(function () {
-        throw reason;
-      });
-    });
+    }
+
+    return promise.then(callback, callback);
   };
 
   return Promise;
@@ -10284,8 +10303,8 @@ AutoConfResponseReader.NAMESPACES = {
  * Localisation (URL) du schema de définition du XML (XSD)
  */
 AutoConfResponseReader.SCHEMALOCATION = [
-    "http://www.opengis.net/context http://gpp3-wxs.ign.fr/schemas/extContext.xsd http://api.ign.fr/geoportail http://wxs.ign.fr/schemas/autoconf/autoconf.xsd",
-    "http://www.opengis.net/context http://gpp3-wxs.ign.fr/schemas/extContext.xsd http://api.ign.fr/geoportail http://gpp3-wxs.ign.fr/schemas/autoconf.xsd"
+    "http://www.opengis.net/context http://wxs.ign.fr/schemas/extContext.xsd http://api.ign.fr/geoportail http://wxs.ign.fr/schemas/autoconf/autoconf.xsd",
+    "http://www.opengis.net/context http://wxs.ign.fr/schemas/extContext.xsd http://api.ign.fr/geoportail http://wxs.ign.fr/schemas/autoconf.xsd"
 ];
 
 /**
@@ -57402,7 +57421,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /* 97 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"geoportal-extensions","leafletExtName":"French Geoportal Extension for Leaflet","olExtName":"French Geoportal Extension for OpenLayers","itownsExtName":"French Geoportal Extension for Itowns","olItownsExtName":"French Geoportal Extension for OpenLayers & Itowns","version":"2.1.0","leafletExtVersion":"2.0.2","olExtVersion":"2.1.0","itownsExtVersion":"2.1.1","olItownsExtVersion":"2.1.1","description":"French Geoportal Extensions for OpenLayers, Leaflet and iTowns libraries","main":"dist/leaflet/GpPluginLeaflet.js, dist/openlayers/GpPluginOpenLayers.js, dist/itowns/GpPluginItowns.js, dist/mix/GpPluginOlItowns.js","directories":{},"scripts":{"setup":"npm install","clean":"echo \"Warning: target not yet implemented!\" && exit 0","test":"cd test && mocha-webpack --require setup.js --webpack-config webpack.test.js --glob \"test-*.js\" spec/Common/*/*","test:serve":"cd test && webpack-dev-server --hot --config webpack.test.serve.js","cover":"nyc --reporter=lcov --reporter=text npm run test","sample":"npm run sample:serve","sample:serve":"npm run sample:ol:serve","sample:itowns:serve":"webpack-dev-server --config webpack.config.itowns --open-page samples/index-itowns-src.html --contentBase . --port 9001 --open","sample:leaflet:serve":"webpack-dev-server --config webpack.config.leaflet --open-page samples/index-leaflet-src.html --contentBase . --port 9001 --open","sample:ol:serve":"webpack-dev-server --config webpack.config.openlayers --open-page samples/index-openlayers-src.html --contentBase . --port 9001 --open","doc":"npm run doc:serve","doc:serve":"npm run doc:ol:serve","doc:itowns:serve":"webpack-dev-server --config webpack.config.itowns --contentBase jsdoc/itowns --port 9001 --open","doc:leaflet:serve":"webpack-dev-server --config webpack.config.leaflet --contentBase jsdoc/leaflet --port 9001 --open","doc:ol:serve":"webpack-dev-server --config webpack.config.openlayers --contentBase jsdoc/openlayers --port 9001 --open","build:dev":"npm run build:ol:dev; npm run build:itowns:dev; npm run build:mix:dev; npm run build:leaflet:dev","build:prod":"npm run build:ol:prod; npm run build:itowns:prod; npm run build:mix:prod; npm run build:leaflet:prod","build":"npm run build:ol; npm run build:itowns; npm run build:mix; npm run build:leaflet","build:itowns:dev":"webpack --config webpack.config.itowns --env.development","build:itowns:prod":"webpack --config webpack.config.itowns --env.production","build:itowns":"webpack --config webpack.config.itowns","build:mix:dev":"webpack --config webpack.config.mix --env.development","build:mix:prod":"webpack --config webpack.config.mix --env.production","build:mix":"webpack --config webpack.config.mix","build:ol:dev":"webpack --config webpack.config.openlayers --env.development","build:ol:prod":"webpack --config webpack.config.openlayers --env.production","build:ol":"webpack --config webpack.config.openlayers","build:leaflet:dev":"webpack --config webpack.config.leaflet --env.development","build:leaflet:prod":"webpack --config webpack.config.leaflet --env.production","build:leaflet":"webpack --config webpack.config.leaflet"},"nyc":{"include":["src/**/*.js"],"instrument":false,"sourceMap":false},"repository":{"type":"git","url":"https://github.com/IGNF/geoportal-extensions.git"},"author":"IGNF","keywords":["geoportail","javascript","OpenLayers","Leaflet","Itowns","3D"],"license":"CECILL-B","bugs":{"url":"https://github.com/IGNF/geoportal-extensions/issues"},"homepage":"https://github.com/IGNF/geoportal-extensions#readme","dependencies":{"geoportal-access-lib":"2.1.0","itowns":"2.3.0","leaflet":"1.3.1","leaflet-draw":"1.0.2","loglevel":"~1.6.1","openlayers":"4.4.2","proj4":"2.4.4","proj4leaflet":"~1.0.2","sortablejs":"1.4.0","three":"~0.93.0","three.meshline":"~1.1.0"},"devDependencies":{"babel-core":"^6.26.0","babel-loader":"^7.1.2","babel-preset-env":"^1.6.1","chai":"^4.1.2","clean-webpack-plugin":"^0.1.19","copy-webpack-plugin":"^4.5.1","css-loader":"^0.28.10","eslint":"^4.18.2","eslint-config-standard":"^11.0.0","eslint-loader":"^2.0.0","eslint-plugin-import":"^2.9.0","eslint-plugin-node":"^6.0.1","eslint-plugin-promise":"^3.7.0","eslint-plugin-standard":"^3.0.1","expose-loader":"^0.7.4","extract-text-webpack-plugin":"^3.0.2","handlebars-layouts":"^3.1.4","handlebars-webpack-plugin":"^1.4.1","html-webpack-plugin":"^3.1.0","istanbul-instrumenter-loader":"^3.0.1","jsdoc-webpack-plugin":"0.0.1","jsdom":"^9.9.1","mocha":"^5.0.5","mocha-loader":"^1.1.3","mocha-webpack":"^1.1.0","nyc":"^12.0.2","path":"^0.12.7","replace-bundle-webpack-plugin":"^1.0.0","requirejs":"^2.3.5","speed-measure-webpack-plugin":"^1.2.2","string-template":"^1.0.0","style-loader":"^0.20.2","url-loader":"^1.0.1","webpack":"^3.11.0","webpack-dev-server":"^2.11.1","webpack-merge":"^4.1.2","webpack-node-externals":"^1.6.0"}}
+module.exports = {"name":"geoportal-extensions","leafletExtName":"French Geoportal Extension for Leaflet","olExtName":"French Geoportal Extension for OpenLayers","itownsExtName":"French Geoportal Extension for Itowns","olItownsExtName":"French Geoportal Extension for OpenLayers & Itowns","version":"2.1.0","leafletExtVersion":"2.0.2","olExtVersion":"2.1.0","itownsExtVersion":"2.1.1","olItownsExtVersion":"2.1.1","description":"French Geoportal Extensions for OpenLayers, Leaflet and iTowns libraries","main":"dist/leaflet/GpPluginLeaflet.js, dist/openlayers/GpPluginOpenLayers.js, dist/itowns/GpPluginItowns.js, dist/mix/GpPluginOlItowns.js","directories":{},"scripts":{"setup":"npm install","clean":"echo \"Warning: target not yet implemented!\" && exit 0","test":"cd test && mocha-webpack --require setup.js --webpack-config webpack.test.js --glob \"test-*.js\" spec/Common/*/*","test:serve":"cd test && webpack-dev-server --hot --config webpack.test.serve.js","cover":"nyc --reporter=lcov --reporter=text npm run test","sample":"npm run sample:serve","sample:serve":"npm run sample:ol:serve","sample:itowns:serve":"webpack-dev-server --config webpack.config.itowns --open-page samples/index-itowns-src.html --contentBase . --port 9001 --open","sample:leaflet:serve":"webpack-dev-server --config webpack.config.leaflet --open-page samples/index-leaflet-src.html --contentBase . --port 9001 --open","sample:ol:serve":"webpack-dev-server --config webpack.config.openlayers --open-page samples/index-openlayers-src.html --contentBase . --port 9001 --open","doc":"npm run doc:serve","doc:serve":"npm run doc:ol:serve","doc:itowns:serve":"webpack-dev-server --config webpack.config.itowns --contentBase jsdoc/itowns --port 9001 --open","doc:leaflet:serve":"webpack-dev-server --config webpack.config.leaflet --contentBase jsdoc/leaflet --port 9001 --open","doc:ol:serve":"webpack-dev-server --config webpack.config.openlayers --contentBase jsdoc/openlayers --port 9001 --open","build:dev":"npm run build:ol:dev; npm run build:itowns:dev; npm run build:mix:dev; npm run build:leaflet:dev","build:prod":"npm run build:ol:prod; npm run build:itowns:prod; npm run build:mix:prod; npm run build:leaflet:prod","build":"npm run build:ol; npm run build:itowns; npm run build:mix; npm run build:leaflet","build:itowns:dev":"webpack --config webpack.config.itowns --env.development","build:itowns:prod":"webpack --config webpack.config.itowns --env.production","build:itowns":"webpack --config webpack.config.itowns","build:mix:dev":"webpack --config webpack.config.mix --env.development","build:mix:prod":"webpack --config webpack.config.mix --env.production","build:mix":"webpack --config webpack.config.mix","build:ol:dev":"webpack --config webpack.config.openlayers --env.development","build:ol:prod":"webpack --config webpack.config.openlayers --env.production","build:ol":"webpack --config webpack.config.openlayers","build:leaflet:dev":"webpack --config webpack.config.leaflet --env.development","build:leaflet:prod":"webpack --config webpack.config.leaflet --env.production","build:leaflet":"webpack --config webpack.config.leaflet"},"nyc":{"include":["src/**/*.js"],"instrument":false,"sourceMap":false},"repository":{"type":"git","url":"https://github.com/IGNF/geoportal-extensions.git"},"author":"IGNF","keywords":["geoportail","javascript","OpenLayers","Leaflet","Itowns","3D"],"license":"CECILL-B","bugs":{"url":"https://github.com/IGNF/geoportal-extensions/issues"},"homepage":"https://github.com/IGNF/geoportal-extensions#readme","dependencies":{"geoportal-access-lib":"2.1.2","itowns":"2.3.0","leaflet":"1.3.1","leaflet-draw":"1.0.2","loglevel":"~1.6.1","openlayers":"4.4.2","proj4":"2.4.4","proj4leaflet":"~1.0.2","sortablejs":"1.4.0","three":"~0.93.0","three.meshline":"~1.1.0"},"devDependencies":{"babel-core":"^6.26.0","babel-loader":"^7.1.2","babel-preset-env":"^1.6.1","chai":"^4.1.2","clean-webpack-plugin":"^0.1.19","copy-webpack-plugin":"^4.5.1","css-loader":"^0.28.10","eslint":"^4.18.2","eslint-config-standard":"^11.0.0","eslint-loader":"^2.0.0","eslint-plugin-import":"^2.9.0","eslint-plugin-node":"^6.0.1","eslint-plugin-promise":"^3.7.0","eslint-plugin-standard":"^3.0.1","expose-loader":"^0.7.4","extract-text-webpack-plugin":"^3.0.2","handlebars-layouts":"^3.1.4","handlebars-webpack-plugin":"^1.4.1","html-webpack-plugin":"^3.1.0","istanbul-instrumenter-loader":"^3.0.1","jsdoc-webpack-plugin":"0.0.1","jsdom":"^9.9.1","mocha":"^5.0.5","mocha-loader":"^1.1.3","mocha-webpack":"^1.1.0","nyc":"^12.0.2","path":"^0.12.7","replace-bundle-webpack-plugin":"^1.0.0","requirejs":"^2.3.5","speed-measure-webpack-plugin":"^1.2.2","string-template":"^1.0.0","style-loader":"^0.20.2","url-loader":"^1.0.1","webpack":"^3.11.0","webpack-dev-server":"^2.11.1","webpack-merge":"^4.1.2","webpack-node-externals":"^1.6.0"}}
 
 /***/ })
 /******/ ]);
