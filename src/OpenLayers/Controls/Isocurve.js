@@ -37,6 +37,7 @@ var logger = Logger.getLogger("isocurve");
  * @extends {ol.control.Control}
  * @param {Object} options - Isocurve control options
  * @param {String}   [options.apiKey] - API key for services call (isocurve and autocomplete services), mandatory if autoconf service has not been charged in advance
+ * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {Boolean} [options.collapsed = true] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
  * @param {Object}  [options.exclusions = {toll : false, tunnel : false, bridge : false}] - list of exclusions with status (true = checked). By default : no exclusions checked.
  * @param {Array}   [options.graphs = ["Voiture", "Pieton"]] - list of graph resources to be used for isocurve calculation, by default : ["Voiture", "Pieton"]. Possible values are "Voiture" and "Pieton". The first element is selected.
@@ -1013,6 +1014,10 @@ Isocurve.prototype._requestIsoCurve = function (options) {
     // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
     var key = this._resources["Isocurve"]["key"];
     options.apiKey = this.options.isocurveOptions.apiKey || this.options.apiKey || key;
+
+    // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
+    // true par défaut (https)
+    options.ssl = options.ssl || this.options.ssl || true;
 
     logger.log(options);
 

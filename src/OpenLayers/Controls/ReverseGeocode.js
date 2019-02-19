@@ -50,6 +50,7 @@ var logger = Logger.getLogger("reversegeocoding");
  * @extends {ol.control.Control}
  * @param {Object} options - ReverseGeocode control options
  * @param {String}   [options.apiKey] - API key for services call (reverse geocode service), mandatory if autoconf service has not been charged in advance
+ * @param {String}   [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {Boolean} [options.collapsed = true] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
  * @param {Object}   [options.resources =  ["StreetAddress", "PositionOfInterest", "CadastralParcel"]] - resources for geocoding, by default : ["StreetAddress", "PositionOfInterest", "CadastralParcel"]. Possible values are : "StreetAddress", "PositionOfInterest", "CadastralParcel", "Administratif". Resources will be displayed in the same order in widget list.
  * @param {Object}   [options.delimitations = ["Point", "Circle", "Extent"]] - delimitations for reverse geocoding, by default : ["Point", "Circle", "Extent"]. Possible values are : "Point", "Circle", "Extent". Delimitations will be displayed in the same order in widget list.
@@ -1034,6 +1035,7 @@ ReverseGeocode.prototype._getReverseGeocodingRequestOptions = function () {
     var context = this;
     var requestOptions = {
         apiKey : reverseGeocodeOptions.apiKey || this.options.apiKey,
+        ssl : this.options.ssl || true,
         position : this._requestPosition,
         filterOptions : {
             type : [this._currentGeocodingType]

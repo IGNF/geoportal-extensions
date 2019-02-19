@@ -28,6 +28,7 @@ var logger = Logger.getLogger("searchengine");
  * @alias ol.control.SearchEngine
  * @param {Object}  options - control options
  * @param {String}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
+ * @param {String}   [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {Boolean} [options.collapsed = true] - collapse mode, true by default
  * @param {Object}   [options.resources] - resources to be used by geocode and autocompletion services :
  * @param {Array}   [options.resources.geocode] - resources geocoding, by default : ["PositionOfInterest", "StreetAddress"]
@@ -744,6 +745,10 @@ SearchEngine.prototype._requestAutoComplete = function (settings) {
     // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
     options.apiKey = options.apiKey || this.options.apiKey;
 
+    // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
+    // true par défaut (https)
+    options.ssl = options.ssl || this.options.ssl || true;
+
     logger.log(options);
 
     Gp.Services.autoComplete(options);
@@ -823,6 +828,10 @@ SearchEngine.prototype._requestGeocoding = function (settings) {
     // cas où la clef API n'est pas renseignée dans les options du service,
     // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
     options.apiKey = options.apiKey || this.options.apiKey;
+
+    // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
+    // true par défaut (https)
+    options.ssl = options.ssl || this.options.ssl || true;
 
     logger.log(options);
 
@@ -1263,6 +1272,7 @@ SearchEngine.prototype._getGeocodeCoordinatesFromFullText = function (suggestedL
     var context = this;
     Gp.Services.geocode({
         apiKey : this.options.apiKey,
+        ssl : this.options.ssl,
         location : suggestedLocation.fullText,
         filterOptions : {
             type : suggestedLocation.type

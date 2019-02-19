@@ -29,7 +29,7 @@
 import Pkg from "../../package";
 
 import * as Ol from "ol";
-import Olms from "olms";
+import * as Olms from "ol-mapbox-style";
 
 import GfiUtils from "./GfiUtils";
 import KML from "./Formats/KML";

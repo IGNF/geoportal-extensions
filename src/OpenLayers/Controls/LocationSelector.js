@@ -25,6 +25,7 @@ var logger = Logger.getLogger("locationselector");
  * LocationSelector component. Enables to select a location, using autocompletion or picking location on the map
  * @param {Object} [options] - component options
  * @param {String} [options.apiKey] - API key for autocomplete service call, mandatory if autoconf service has not been charged in advance
+ * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {Boolean} [options.displayInfo = true] - whether to display info in a popup or not (not implemented yet) Default is true
  * @param {Object} [options.tag] - tag options
  * @param {Number} [options.tag.id = 1] - order id number in a locations group, in case several LocationSelector are used. For instance in route case : departure tag id should be 0, arrival tag id should be 1, and other ones : 2, 3, ...
@@ -772,6 +773,10 @@ LocationSelector.prototype._requestAutoComplete = function (settings) {
     // cas où la clef API n'est pas renseignée dans les options du service,
     // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
     options.apiKey = options.apiKey || this.options.apiKey;
+
+    // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
+    // true par défaut (https)
+    options.ssl = options.ssl || this.options.ssl || true;
 
     logger.log(options);
 

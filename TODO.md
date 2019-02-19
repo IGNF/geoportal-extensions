@@ -33,6 +33,9 @@ les fichiers sont suffixés avec le tag *modules*.
 
 - [x] Migrer vers ol v5.3.0   : **OK**
 
+- [ ] olms en externe ?       : **TODO**
+    > https://unpkg.com/ol-mapbox-style/dist/olms.js
+    
 - [ ] Migrer vers webpack 4   : **TODO**
 
 - [x] Tests à jouer / à creer : **OK**

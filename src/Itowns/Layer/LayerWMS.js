@@ -13,7 +13,7 @@ var logger = Logger.getLogger("wmsLayer");
  * @alias itowns.layer.GeoportalWMS
  * @param {Object} options            - options for function call.
  * @param {String} options.layer      - Layer name (e.g. "ORTHOIMAGERY.ORTHOPHOTOS")
- * @param {Boolean} [options.ssl]     - if set true, enforce protocol https (only for nodejs)
+ * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {String} [options.apiKey]   - Access key to Geoportal platform
  * @param {Object} [options.itownsParams] - other options for itowns.GlobeView.addLayer function (see {@link http://www.itowns-project.org/itowns/API_Doc/GlobeView.html#addLayer GlobeView.addLayer})
  * @example
@@ -36,7 +36,7 @@ function LayerWMS (options) {
 
     // par defaut
     if (typeof options.ssl === "undefined") {
-        options.ssl = false;
+        options.ssl = true;
     }
 
     // Check if configuration is loaded
@@ -49,11 +49,9 @@ function LayerWMS (options) {
     if (layerId && Config.configuration.getLayerConf(layerId)) {
         var wmsParams = Config.getLayerParams(options.layer, "WMS", options.apiKey);
 
-        // gestion de mixContent dans l'url du service...
-        var ctx = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : null;
-        var protocol = (ctx)
-            ? (ctx.location && ctx.location.protocol && ctx.location.protocol.indexOf("https:") === 0 ? "https://" : "http://")
-            : (options.ssl ? "https://" : "http://");
+        // si ssl = false on fait du http
+        // par défaut, ssl = true, on fait du https
+        var protocol = options.ssl === false ? "http://" : "https://";
 
         this.type = "color";
         this.protocol = "wms";

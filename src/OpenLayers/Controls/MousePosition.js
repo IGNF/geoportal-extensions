@@ -39,6 +39,7 @@ var logger = Logger.getLogger("GeoportalMousePosition");
  * @extends {ol.control.Control}
  * @param {Object} options - options for function call.
  * @param {Sting}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
+ * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {Boolean} [options.collapsed = true] - Specify if MousePosition control should be collapsed at startup. Default is true.
  * @param {Array}   [options.systems] - list of projection systems, default are Geographical ("EPSG:4326"), Web Mercator ("EPSG:3857"), Lambert 93 ("EPSG:2154") and extended Lambert 2 ("EPSG:27572").
  *      Each array element (=system) is an object with following properties :
@@ -1262,9 +1263,14 @@ MousePosition.prototype.onRequestAltitude = function (coordinate, callback) {
     // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
     var _apiKey = options.apiKey || this.options.apiKey;
 
+    // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
+    // true par défaut (https)
+    var _ssl = options.ssl || this.options.ssl || true;
+
     Gp.Services.getAltitude({
         apiKey : _apiKey,
         protocol : _protocol,
+        ssl : _ssl,
         timeOut : _timeout,
         scope : _scope,
         rawResponse : _rawResponse,

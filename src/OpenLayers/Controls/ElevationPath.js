@@ -47,6 +47,7 @@ var logger = Logger.getLogger("elevationpath");
  * @extends ol.control.Control
  * @param {Object} options - options for function call.
  * @param {Boolean} [options.active = false] - specify if control should be actived at startup. Default is false.
+ * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {Object} [options.layerDescription = {}] - Layer informations to be displayed in LayerSwitcher widget (only if a LayerSwitcher is also added to the map)
  * @param {String} [options.layerDescription.title = "Profil altimétrique"] - Layer title to be displayed in LayerSwitcher
  * @param {String} [options.layerDescription.description = "Mon profil altimétrique"] - Layer description to be displayed in LayerSwitcher
@@ -1107,7 +1108,13 @@ ElevationPath.prototype._requestService = function () {
 
     // au cas où ...
     Utils.mergeParams(options, {
-        apiKey : this.options.apiKey
+        apiKey : options.apiKey || this.options.apiKey
+    });
+
+    // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
+    // true par défaut (https)
+    Utils.mergeParams(options, {
+        ssl : options.ssl || this.options.ssl || true
     });
 
     // les callbacks

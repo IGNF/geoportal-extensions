@@ -34,7 +34,7 @@ import {
     Text
 } from "ol/style";
 // import olms
-import olms from "olms";
+import {applyStyle as applyStyleOlms} from "ol-mapbox-style";
 // import geoportal library access
 import Gp from "geoportal-access-lib";
 // import local
@@ -911,7 +911,7 @@ LayerImport.prototype._importStaticLayerFromUrl = function (layerName) {
         onFailure : function (error) {
             // en cas d'erreur, on revient au panel initial et on cache la patience
             context._hideWaitingContainer();
-            logger.error("[ol.control.LayerImport] KML/GPX/GeoJSON request failed : ", error);
+            logger.error("[ol.control.LayerImport] KML/GPX/GeoJSON/MapBox request failed : ", error);
         }
     });
 };
@@ -1263,7 +1263,7 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
                     // TODO ajouter le style de type background !
                     // fonction de style de la couche
                     var setStyle = function () {
-                        olms.applyStyle(p.layer, p.styles, p.id)
+                        applyStyleOlms(p.layer, p.styles, p.id)
                             .then(function () {
                                 var visibility = true;
                                 p.layer.setVisible(visibility);
@@ -1584,7 +1584,7 @@ LayerImport.prototype._onChangeVisibilitySourceMapBox = function (e) {
                     break;
                 }
             }
-            olms.applyStyle(layer, this._mapBoxObj, target.data.source)
+            applyStyleOlms(layer, this._mapBoxObj, target.data.source)
                 .then(function () {})
                 .catch(function (error) {
                     logger.error(error);
@@ -1616,7 +1616,7 @@ LayerImport.prototype._onChangeScaleMinSourceMapBox = function (e) {
                     break;
                 }
             }
-            olms.applyStyle(layer, this._mapBoxObj, target.data.source)
+            applyStyleOlms(layer, this._mapBoxObj, target.data.source)
                 .then(function () {})
                 .catch(function (error) {
                     logger.error(error);
@@ -1648,7 +1648,7 @@ LayerImport.prototype._onChangeScaleMaxSourceMapBox = function (e) {
                     break;
                 }
             }
-            olms.applyStyle(layer, this._mapBoxObj, target.data.source)
+            applyStyleOlms(layer, this._mapBoxObj, target.data.source)
                 .then(function () {})
                 .catch(function (error) {
                     logger.error(error);

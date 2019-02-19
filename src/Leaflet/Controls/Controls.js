@@ -73,6 +73,7 @@ var Controls = {
      * @param {Sting}   [options.apiKey] - API key for services call (isocurve and autocomplete services), mandatory if autoconf service has not been charged in advance
      * @param {String}  [options.position] - position of component into the map, 'topleft' by default. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
      * @param {Boolean} [options.collapsed] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
+     * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
      * @param {Object}  [options.exclusions] - list of exclusions with status (true = checked), by default : ["toll":false, "tunnel":false, "bridge":false].
      * @param {Array}   [options.graphs] - list of graph resources to be used for isocurve calculation, by default : ["Voiture", "Pieton"]. The first element is selected.
      * @param {Array}   [options.methods] - list of methods, by default : ["time", "distance"]. The first element is selected by default.
@@ -110,6 +111,7 @@ var Controls = {
      * @param {Sting}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
      * @param {String}  [options.position] - position of component into the map, 'bottomleft' by default. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
      * @param {Boolean} [options.collapsed] - collapse mode, false by default
+     * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
      * @param {Array}   [options.systems] - list of projection systems, GEOGRAPHIC, MERCATOR, LAMB93 and LAMB2E by default
      *      Each array element (=system) is an object with following properties :
      * @param {String}  options.systems.crs - Proj4 crs alias (from proj4 defs). e.g. : "EPSG:4326". Required
@@ -178,6 +180,7 @@ var Controls = {
      * @param {String}  [options.apiKey] - API key for services call (reverse geocode service), mandatory if autoconf service has not been charged in advance
      * @param {String}  [options.position] - position of component into the map, 'topleft' by default. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
      * @param {Boolean} [options.collapsed] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
+     * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
      * @param {Array}  [options.resources] - resources for geocoding, by default : ["StreetAddress", "PositionOfInterest"]
      * @param {Array}  [options.delimitations] - delimitations for reverse geocoding, by default : ["Point", "Circle", "Extent"]
      * @param {Object}  [options.ReverseGeocodeOptions] - reverse geocode service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~reverseGeocode Gp.Services.reverseGeocode} to know all reverse geocode options.
@@ -206,6 +209,7 @@ var Controls = {
      * @param {Sting}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
      * @param {String}  [options.position = "topleft"] - position of component into the map, 'topleft' by default. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
      * @param {Boolean} [options.collapsed = false] - collapse mode, false by default
+     * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
      * @param {Boolean} [options.disableReverse = false] - whether to enable/disable the reverse geocoding when entering points.
      *   Active by default. But, you can disable it when entering with the "ctrl" key on the keyboard
      * @param {Object}  [options.exclusions] - list of exclusions with status
@@ -241,6 +245,7 @@ var Controls = {
      * @param {Object}  options - control options
      * @param {String}  [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
      * @param {Boolean} [options.collapsed = false] - collapse mode
+     * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
      * @param {String}  [options.position = "topleft"] - position of component into the map. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
      * @param {String}  [options.placeholder = "Rechercher un lieu, une adresse"] - set placeholder in search bar
      * @param {Boolean} [options.displayMarker = true] - set a marker on search result
@@ -302,6 +307,7 @@ var Controls = {
      * @param {Object} options - options for function call.
      * @param {Sting}   [options.apiKey] - API key for elevation service call, mandatory if configuration service has not been loaded in advance. See {@link https://github.com/IGNF/geoportal-extensions/blob/master/README-leaflet.md#user-content-config "Configuration de l'accès à la plateforme Géoportail" documentation chapter} for more information.
      * @param {String}  [options.position] - position of component into the map, 'topleft' by default. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
+     * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
      * @param {Boolean} [options.active = false] - specify if control should be actived at startup. Default is false.
      * @param {Object} [options.stylesOptions = DEFAULT_STYLES] - Styles to use when drawing. see [leaflet options](http://leafletjs.com/reference.html#path-options) for available properties.
      * @param {Object} [options.elevationPathOptions = {}] - elevation path service options. See {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~getAltitude options} for available options
