@@ -16,6 +16,7 @@ var opts = {
 };
 
 var server = https.createServer(opts, function onRequest (req, res) {
+    console.log("> request : ", req.url);
     serve(req, res, finalhandler(req, res));
 });
 

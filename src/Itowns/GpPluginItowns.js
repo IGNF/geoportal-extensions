@@ -29,6 +29,10 @@ import Pkg from "../../package";
 
 import * as Itowns from "itowns";
 
+// CSS communes aux extensions !
+import "../Common/Styles";
+import "./Styles";
+
 import MousePosition from "./Controls/MousePosition";
 import LayerSwitcher from "./Controls/LayerSwitcher";
 import Attributions from "./Controls/Attributions";
@@ -40,10 +44,6 @@ import GeoportalElevation from "./Layer/LayerElevation";
 import GlobeViewExtended from "./GlobeViewExtended";
 
 import CRS from "./CRS/CRS";
-
-// CSS communes aux extensions !
-import "../Common/Styles";
-import "./Styles";
 
 // Autoload...
 import "../Common/Utils/AutoLoadConfig";

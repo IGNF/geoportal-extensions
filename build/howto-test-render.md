@@ -41,10 +41,13 @@ Se placer dans le répertoire.
 3. Executer les tests
     > npm run test:[ll|ol|it]
 
-    > **TODO** : clean des tests
+    > **TODO** : clean des tests manuel !
         Le ménage est à faire en production !
         Un répertoire d'images est généré après chaque test...
         Il faut donc prévoir une target de nettoyage en production...
+
+    > **NOTE** : proxy !
+        Il est important de configurer le proxy (https_proxy et http_proxy)...
 
 4. Recalculer les images references
     > npm run reference:[ll|ol|it]

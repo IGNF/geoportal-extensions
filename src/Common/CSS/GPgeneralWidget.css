@@ -86,8 +86,9 @@
   transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
 }
 
-/* FIXME tempory hack with :not(.GPlocationOriginHidden) ! */
-.GPflexInput > *:not(.GPlocationOriginHidden) {
+/* FIXME tempory hack with :not(.GPlocationOriginHidden) !
+.GPflexInput > *:not(.GPlocationOriginHidden) */
+.GPflexInput > * {
   display: block;
   height: 28px;
   line-height: 26px;

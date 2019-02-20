@@ -3,6 +3,7 @@
 # Ignore tests and samples files
 samples-src/*
 test/*
+test_rendering/*
 
 # Ignore webpack.config files
 webpack.*

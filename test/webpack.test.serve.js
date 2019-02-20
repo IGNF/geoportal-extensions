@@ -18,9 +18,11 @@ module.exports = {
     externals : ["request", "xmldom"],
     resolve : {
         alias : {
-            proj4 : path.resolve("..", "node_modules", "proj4", "dist", "proj4.js"),
-            "geoportal-access-lib" : path.resolve("..", "node_modules", "geoportal-access-lib", "src", "Gp.js"),
-            sortablejs : path.resolve("..", "node_modules", "sortablejs", "Sortable.js")
+            // "ol" : auto,
+            // "geoportal-access-lib" : auto,
+            proj4 : path.resolve("..", "node_modules", "proj4", "dist", "proj4-src.js"),
+            sortablejs : path.resolve("..", "node_modules", "sortablejs", "Sortable.js"),
+            eventbusjs : path.resolve("..", "node_modules", "eventbusjs", "src", "EventBus.js")
         }
     },
     devtool : "eval-source-map",

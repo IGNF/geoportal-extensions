@@ -78,6 +78,7 @@ describe("-- Test Register --", function () {
         });
     });
 
+    // INFO test à mettre en place sur openlayers
     describe("#ol", function () {
 
         xit("EPSG:310642813 is defined into ol", function () {

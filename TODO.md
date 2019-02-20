@@ -1,5 +1,8 @@
 # Migration vers OpenLayers v5
 
+https://github.com/IGNF/geoportal-extensions/tree/update-ol5
+> PR : https://github.com/IGNF/geoportal-extensions/pull/228
+
 Cette branche est clonée sur [feature-layerimport-mapbox] :
 
     commit 7408bb00f0af51fd7c2b0f2dd1dffb901220f8df
@@ -29,23 +32,49 @@ les fichiers sont suffixés avec le tag *modules*.
 > if you set NODE_ENV=production or use the --production flag it will not install devDependencies
 > when you run *npm install*
 
-## Avancements des sources
+## Avancements
 
 - [x] Migrer vers ol v5.3.0   : **OK**
 
-- [ ] olms en externe ?       : **TODO**
+- [ ] olms en externe ?       : **PROGRESS**
+    - Doit on intégrer olms dans le code des extensions ou en dep externe comme ol ?
+    - Le SDK utilise aussi olms, et cette dep sera aussi intégrée !
+    - binaire :
     > https://unpkg.com/ol-mapbox-style/dist/olms.js
-    
+
 - [ ] Migrer vers webpack 4   : **TODO**
 
 - [x] Tests à jouer / à creer : **OK**
     > **TODO** test avec la variable ol sur les projections !
-    > **TODO** couvrir et finir les tests sur le DOM !
+    > **TODO** couvrir et finir les tests sur le DOM et openlayers !
 
-- [ ] Tests de rendu à jouer  : **NOK : PROGRESS**
+- [ ] Tests de rendu à jouer  : **PROGRESS**
+
+    > **FIXME** depuis passage en https, des fenetres intempestives s'ouvrent avec un message !?
+
+    > **FIXME** css rend flou des images !?
+
+    > **FIXME** laisser le temps que les images montent !
+
+    - [x] leaflet    :
+    - [x] openlayers :
+    - [ ] itowns     : analyser les échecs !?
 
 - [x] Exemples sur les modules: **OK**
     > **TODO** couvrir les fonctionnalités sur qq controles !
+
+- [x] **OK** Test des variables globales : *ex. Gp, ol et proj4*
+
+    - *ol* : ol.js est externe donc ol est exposée => **OK**
+
+    - *proj4* : ex. proj4("EPSG:2154") => **OK**
+
+    - *ol.proj* : ex. ol.proj.get("EPSG:2154") => **OK**
+
+    - *Gp* : **OK** sauf la date de l'API des services => **NOK**
+        > **FIXME** comment récuperer la date de compilation de l'API des Services ?
+
+### Les sources
 
 - [ ] Format **TODO**
 
@@ -181,7 +210,7 @@ les fichiers sont suffixés avec le tag *modules*.
     > il existe déjà un README principal qui pointe vers les autres README.
     ex. doc/
 
-    > **TODO** lors de la publication, on doit utiliser ces README !
+    > lors de la publication, on doit utiliser ces README !
 
 * [x] **FAIT** deplacement des JSON dans un répertoire
     > ex. build/
@@ -199,42 +228,9 @@ les fichiers sont suffixés avec le tag *modules*.
 * [x] **FAIT** changelog
     > https://api.github.com/repos/IGNF/geoportal-extensions/releases
 
-## **PROGRESS** Webpack
-
-> cf. https://survivejs.com/webpack/preface/
-
-- [ ] reorganiser les webpack
-    - [x] webpack root
-
-        gestion des differentes options :
-        - ol, leaflet et itowns
-        - source, development ou production
-        - target : build, jsdoc, samples, test, render, cover
-
-    - [ ] structure des webpacks du répertoire *build* en *parts* (ensemble de fonctions)
-        - [ ] configuration *common* :
-            === *build* : entry, output, loader:babel, loader:eslint, loader:css, loader:url, plugin:licences
-        - [ ] configuration *production* (plugin:uglify)
-        - [ ] configuration *development* (sourcemap:true)
-        - [ ] configuration *source* (sourcemap:true)
-        - [ ] configuration *samples* (plugin:templates, plugin:index et plugin:resources)
-        - [ ] configuration *test* (webpack **devserver** : watch)
-        - [ ] configuration *render* (script)
-        - [ ] configuration *cover* (script)
-        - [ ] configuration *jsdoc* (plugin:jsdoc)
-        - [ ] configuration *map* (script)
-
-    - [ ] modifier les appels dans le *package.json* :
-        ex. `cross-env ENV=production LIBRARY=leaflet TARGET=build webpack`
-
-    - [ ] ouvrir la jsdoc et les exemples dans un navigateur avec webpack-devserver
-
-- [ ] **EVOL** autoprefixing
-    cf. https://survivejs.com/webpack/styling/autoprefixing/
-
 ## Actions
 
-opérations realisées pour le passage en ES6 des classes JS...
+ex. d'opérations realisées pour le passage en ES6 des classes JS...
 
 ### ajout des imports
 

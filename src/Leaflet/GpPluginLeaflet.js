@@ -29,6 +29,10 @@ import Pkg from "../../package";
 
 import L from "leaflet";
 
+// CSS communes aux extensions !
+import "../Common/Styles";
+import "./Styles";
+
 import Controls from "./Controls/Controls";
 import ElevationPath from "./Controls/ElevationPath";
 import Layers from "./Layers/Layers";
@@ -37,10 +41,6 @@ import CRS from "./CRS/CRS";
 
 // Autoload...
 import "../Common/Utils/AutoLoadConfig";
-
-// CSS communes aux extensions !
-import "../Common/Styles";
-import "./Styles";
 
 // export des services
 import Gp from "geoportal-access-lib";

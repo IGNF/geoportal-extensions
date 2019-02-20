@@ -46,7 +46,7 @@ module.exports = env => {
         },
         resolve : {
             alias : {
-                "geoportal-access-lib" : path.resolve(ROOT, "node_modules", "geoportal-access-lib", "src", "Gp.js"),
+                // "geoportal-access-lib" : auto,
                 proj4 : path.resolve(ROOT, "node_modules", "proj4", "dist", /* (production) ? "proj4.js" : */ "proj4-src.js"),
                 sortablejs : path.resolve(ROOT, "node_modules", "sortablejs", /* (production) ? "Sortable.min.js" : */ "Sortable.js"),
                 // plugin Leaflet pour le dessin
@@ -140,7 +140,11 @@ module.exports = env => {
                 },
                 {
                     test : /\.(png|jpg|gif|svg)$/,
-                    loader : "url-loader"
+                    loader : "url-loader",
+                    options: {
+                        fallback : "responsive-loader",
+                        quality : 100
+                    }
                 }
             ]
         },

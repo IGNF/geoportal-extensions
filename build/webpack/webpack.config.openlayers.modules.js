@@ -196,6 +196,10 @@ module.exports = env => {
                 {
                     test : /\.(png|jpg|gif|svg)$/,
                     loader : "url-loader",
+                    options: {
+                        fallback : "responsive-loader",
+                        quality : 100
+                    },
                     exclude : /node_modules/
                 }
             ]

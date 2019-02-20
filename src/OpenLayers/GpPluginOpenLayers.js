@@ -31,6 +31,10 @@ import Pkg from "../../package";
 import * as Ol from "ol";
 import * as Olms from "ol-mapbox-style";
 
+// ordre des CSS communes puis extensions
+import "../Common/Styles";
+import "./Styles";
+
 import GfiUtils from "./GfiUtils";
 import KML from "./Formats/KML";
 import WMTS from "./Sources/WMTS";
@@ -64,10 +68,6 @@ import Themes from "./Controls/Editor/Themes";
 import Legend from "./Controls/Editor/Legend";
 import Group from "./Controls/Editor/Group";
 import Editor from "./Controls/Editor";
-
-// ordre des CSS communes puis extensions ou l'inverse ?
-import "../Common/Styles";
-import "./Styles";
 
 // Les autoload...
 import "../Common/Utils/AutoLoadConfig";
