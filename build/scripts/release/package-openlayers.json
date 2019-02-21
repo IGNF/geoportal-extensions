@@ -32,7 +32,7 @@
       "geoportal-access-lib": "2.1.2",
       "loglevel": "~1.6.1",
       "ol": "^5.3.0",
-      "ol-mapbox-style": "^3.6.2",
+      "ol-mapbox-style": "^3.8.0",
       "proj4": "2.5.0",
       "request": "^2.83.0",
       "sortablejs": "1.4.0",
@@ -40,5 +40,5 @@
   },
   "devDependencies": {},
   "peerDependencies": {},
-  "bundleDependencies": {}
+  "bundleDependencies": []
 }

@@ -69,7 +69,7 @@ function LayerSwitcher (lsOptions) {
 
     this._initialize(options, layers);
 
-    var container = this._initContainer(options);
+    var container = this._container = this._initContainer(options);
 
     // call ol.control.Control constructor
     Control.call(this, {
@@ -1008,7 +1008,7 @@ LayerSwitcher.prototype.getLayerDOMId = function (olLayer) {
     var foundId = null;
 
     this.getMap().getLayers().forEach((layer) => {
-        if (layer == olLayer) { // FIXME object comparison
+        if (layer === olLayer) {
             foundId = layer.hasOwnProperty("gpLayerId") ? layer.gpLayerId : null;
         }
     });

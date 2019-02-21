@@ -18,14 +18,27 @@ module.exports = {
     externals : ["request", "xmldom"],
     resolve : {
         alias : {
-            // "ol" : auto,
-            // "geoportal-access-lib" : auto,
-            proj4 : path.resolve("..", "node_modules", "proj4", "dist", "proj4-src.js"),
-            sortablejs : path.resolve("..", "node_modules", "sortablejs", "Sortable.js"),
-            eventbusjs : path.resolve("..", "node_modules", "eventbusjs", "src", "EventBus.js")
         }
     },
     devtool : "eval-source-map",
+    module : {
+        rules : [
+            {
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader'],
+                exclude : /node_modules/
+            },
+            {
+                test : /\.(png|jpg|gif|svg)$/,
+                loader : "url-loader",
+                options: {
+                    fallback : "responsive-loader",
+                    quality : 100
+                },
+                exclude : /node_modules/
+            }
+        ]
+    },
     devServer : {
         stats : "errors-only",
         host : "localhost",
@@ -51,7 +64,10 @@ module.exports = {
             filename : "index.html",
             template : require.resolve(
                 "html-webpack-plugin/default_index.ejs"
-            )
+            ),
+            files : {
+                js : ["https://openlayers.org/en/latest/build/ol.js"]
+            }
         })
     ]
 };

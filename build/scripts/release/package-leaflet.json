@@ -28,8 +28,9 @@
         "url":"https://github.com/IGNF/geoportal-extensions.git",
         "type":"git"
     },
-    "devDependencies":{},
-    "peerDepencies":{},
+    "devDependencies": {},
+    "peerDependencies": {},
+    "bundleDependencies": [],
     "dependencies":{
         "geoportal-access-lib": "2.1.2",
         "leaflet": "1.3.1",

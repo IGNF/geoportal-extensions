@@ -62,7 +62,7 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
      * @extends {L.Control}
      * @param {Object} options - control options
      * @param {String} [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
-     * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)  
+     * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
      * @param {Boolean} [options.collapsed] - collapse mode, false by default
      * @param {String} [options.position] - position of component into the map, 'topleft' by default
      * @param {Boolean} [options.displayInfo] - get informations on popup marker
@@ -787,7 +787,7 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
         });
 
         // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
-        // true par défaut (https) 
+        // true par défaut (https)
         L.Util.extend(options, {
             ssl : this.options.ssl
         });
@@ -897,7 +897,7 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
         });
 
         // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
-        // true par défaut (https) 
+        // true par défaut (https)
         L.Util.extend(options, {
             ssl : this.options.ssl
         });

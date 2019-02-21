@@ -140,7 +140,7 @@ function LayerImport (options) {
     this._initialize(options);
 
     // init control DOM container
-    var container = this._initContainer(options);
+    var container = this._container = this._initContainer(options);
 
     // call ol.control.Control constructor
     Control.call(this, {

@@ -51,8 +51,9 @@ var Register = {
 
     /**
      * load all defs to proj4
+     * @param {Object} Proj4 - proj4 instance
      */
-    load : function (Proj4) {
+    load : function (Proj4, callback) {
         if (!this.isLoaded) {
             var registers = [
                 "IGNF", // exception lors du register IGNF ?
@@ -73,6 +74,8 @@ var Register = {
                         //  import proj4 from "proj4";
                         //  import { register } from "ol/proj/proj4";
                         //      Register.load();
+                        //      // Make projections defined in proj4 (with proj4.defs()) available in OpenLayers.
+                        //      // see ol/proj/proj4.register (https://openlayers.org/en/latest/apidoc/module-ol_proj_proj4.html)
                         //      register(proj4);
                         //      console.log(get("CRS:84").getCode()); // "CRS:84"
                     }

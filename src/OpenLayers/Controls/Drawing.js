@@ -115,7 +115,7 @@ function Drawing (options) {
     this._initialize(options);
 
     // init control DOM container
-    var container = this._initContainer();
+    var container = this._container = this._initContainer();
 
     // call ol.control.Control constructor
     Control.call(this, {
@@ -266,7 +266,7 @@ Drawing.prototype.setMap = function (map) {
 
     // gestion des suppressions "externes" de la couche de dessin.
     this.eventKey = this.getMap().getLayers().on("remove", (evtRm) => {
-        if (evtRm.element == this.layer) { // FIXME object comparison
+        if (evtRm.element === this.layer) { // FIXME object comparison
             // found layer removed.
             this.layer = null;
             // on supprime l'interaction en cours si besoin
@@ -620,7 +620,7 @@ Drawing.prototype.setLayer = function (vlayer) {
     if (layers) {
         var found = false;
         layers.forEach((mapLayer) => {
-            if (mapLayer == vlayer) { // FIXME object comparison
+            if (mapLayer === vlayer) { // FIXME object comparison
                 logger.trace("layer already in map. Not adding.");
                 found = true;
             }
@@ -1015,7 +1015,7 @@ Drawing.prototype._createStylingInteraction = function () {
                         if (dtObj.options.markersList.length > 1) {
                             // index du marker dans la liste des markers
                             var idxMarker = dtObj.options.markersList.findIndex(function (mrk) {
-                                if (mrk == markerSelected) { // FIXME object comparison
+                                if (mrk === markerSelected) { // FIXME object comparison
                                     return true;
                                 }
                                 return false;

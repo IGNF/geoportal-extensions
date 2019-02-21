@@ -158,11 +158,11 @@ function ElevationPath (options) {
     this._checkRightsManagement();
 
     // creation du DOM container
-    var container = (options.element) ? options.element : this._initializeContainer();
+    this._container = (options.element) ? options.element : this._initializeContainer();
 
     // heritage
     Control.call(this, {
-        element : container,
+        element : this._container,
         target : options.target,
         render : options.render
     });

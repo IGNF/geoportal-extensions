@@ -51,7 +51,7 @@ var Isocurve = L.Control.extend(/** @lends L.geoportalControl.Isocurve.prototype
      * @private
      * @param {Object} options - Isocurve control options
      * @param {Sting}   [options.apiKey] - API key for services call (isocurve and autocomplete services), mandatory if autoconf service has not been charged in advance
-     * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)  
+     * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
      * @param {Boolean} [options.collapsed] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
      * @param {Object}  [options.exclusions] - list of exclusions with status (true = checked), by default : ["toll":false, "tunnel":false, "bridge":false].
      * @param {Array}   [options.graphs] - list of graph resources to be used for isocurve calculation, by default : ["Voiture", "Pieton"]. The first element is selected.
@@ -903,7 +903,7 @@ var Isocurve = L.Control.extend(/** @lends L.geoportalControl.Isocurve.prototype
         // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
         var key = this._resources["Isochrone"]["key"];
         options.apiKey = this.options.isocurveOptions.apiKey || this.options.apiKey || key;
-        
+
         // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
         // true par défaut (https)
         options.ssl = this.options.ssl;

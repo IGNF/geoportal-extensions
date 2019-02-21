@@ -55,7 +55,7 @@ var ElevationPath = L.Control.extend(/** @lends L.geoportalControl.ElevationPath
      * @private
      * @param {Object} options - ElevationPath control options
      * @param {Sting}   [options.apiKey] - API key for services call (isocurve and autocomplete services), mandatory if autoconf service has not been charged in advance
-    * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)  
+    * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
      * @param {Boolean} [options.active] - Specify if widget has to be actived to drawing (true) or not (false) on map loading. Default is false.
      * @param {Object} [options.elevationPathOptions = {}] - elevation service options. See {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~getAltitude Gp.Services.getAltitude()} to know all elevation options
      * @param {Object} [options.displayProfileOptions = {}] - profile options.
@@ -657,7 +657,7 @@ var ElevationPath = L.Control.extend(/** @lends L.geoportalControl.ElevationPath
         });
 
         // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
-        // true par défaut (https) 
+        // true par défaut (https)
         L.Util.extend(options, {
             ssl : this.options.ssl
         });

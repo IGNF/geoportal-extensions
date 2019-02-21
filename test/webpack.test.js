@@ -10,9 +10,10 @@ module.exports = {
     externals : [nodeExternals()],
     resolve : {
         alias : {
+            // "geoportal-access-lib" : auto,
             proj4 : path.resolve("..", "node_modules", "proj4", "dist", "proj4.js"),
-            "geoportal-access-lib" : path.resolve("..", "node_modules", "geoportal-access-lib", "src", "Gp.js"),
-            sortable : path.resolve("..", "node_modules", "sortablejs", "Sortable.js")
+            sortablejs : path.resolve("..", "node_modules", "sortablejs", "Sortable.js"),
+            eventbusjs : path.resolve("..", "node_modules", "eventbusjs", "src", "EventBus.js")
         }
     },
     module : {

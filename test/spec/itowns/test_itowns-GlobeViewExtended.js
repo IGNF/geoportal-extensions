@@ -95,7 +95,7 @@ class LayerManager {
   }
 }
 
-describe("-- [Itowns] Test GlobeViewExtended API --", function () {
+describe("-- Test Plugin ITOWNS [GlobeViewExtended] --", function () {
 
     window.globeViewExtended = null;
     var layerManager = null;

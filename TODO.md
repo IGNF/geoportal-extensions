@@ -44,34 +44,46 @@ les fichiers sont suffixés avec le tag *modules*.
 
 - [ ] Migrer vers webpack 4   : **TODO**
 
-- [x] Tests à jouer / à creer : **OK**
-    > **TODO** test avec la variable ol sur les projections !
-    > **TODO** couvrir et finir les tests sur le DOM et openlayers !
+- [ ] Tests à jouer / à creer : **NOK**
 
-- [ ] Tests de rendu à jouer  : **PROGRESS**
+    > **TODO** test sur les projections !
+
+    > **TODO** couvrir et finir les tests sur le DOM
+
+    > **FIXME** les tests sur openlayers & mouseposition sont en echec : cf. CRS !
+
+- [ ] Tests de rendu à jouer  : **NOK**
 
     > **FIXME** depuis passage en https, des fenetres intempestives s'ouvrent avec un message !?
 
-    > **FIXME** css rend flou des images !?
+    > **FIXME** les css rendent floues certaines images !?
 
-    > **FIXME** laisser le temps que les images montent !
+    > **FIXME** laisser le temps que les images montent (delay) !
 
-    - [x] leaflet    :
-    - [x] openlayers :
-    - [ ] itowns     : analyser les échecs !?
+    - [x] leaflet    : qq échecs...
+    - [x] openlayers : qq échecs...
+    - [x] itowns     : qq échecs...
 
-- [x] Exemples sur les modules: **OK**
-    > **TODO** couvrir les fonctionnalités sur qq controles !
+- [x] Exemples sur les modules : **OK**
+
+- [ ] Exemples  : **NOK**
+
+    > **FIXME** le proxy.php n'est pas reconnu comme du PHP par le serveur local webpack !?
+    Ceci met donc des exemples en échecs...
 
 - [x] **OK** Test des variables globales : *ex. Gp, ol et proj4*
 
-    - *ol* : ol.js est externe donc ol est exposée => **OK**
+    - [x] **OK** *ol* :
+        ol.js est externe donc ol est exposée
 
-    - *proj4* : ex. proj4("EPSG:2154") => **OK**
+    - [x] **OK** *proj4* :
+        ex. proj4("EPSG:2154")
 
-    - *ol.proj* : ex. ol.proj.get("EPSG:2154") => **OK**
+    - [x] **OK** *ol.proj* :
+        ex. ol.proj.get("EPSG:2154")
 
-    - *Gp* : **OK** sauf la date de l'API des services => **NOK**
+    - [x] **OK** *Gp* :
+        sauf la date de l'API des services
         > **FIXME** comment récuperer la date de compilation de l'API des Services ?
 
 ### Les sources
@@ -91,16 +103,14 @@ les fichiers sont suffixés avec le tag *modules*.
     * [x] ol.layer.GeoportalWMTS  : **OK**
     * [x] ol.layer.GeoportalWMS   : **OK**
 
-    > **INFO**
+    > **FIXME**
     > si on n'a pas d'autoconf, une exception est lancée :
     "contract key configuration has to be loaded to load Geoportal layers"
 
-    >  **EVOL** Hors un defaut d'autoconf ne devrait pas stopper l'affichage, mais on se doit
+    > Hors un defaut d'autoconf ne devrait pas stopper l'affichage, mais on se doit
     d'affiche à minima une carte vide !
 
 - [x] Controls
-
-    > **OK** gestion des CSS communes aux extensions !?
 
     > **EVOL** Sans autoconf ou droit, il faudrait rendre les boutons de calculs non
     cliquable (ex. Route ou Iso)...
@@ -120,8 +130,6 @@ les fichiers sont suffixés avec le tag *modules*.
         - mise en place d'un hack pour resoudre le conflit de CSS...
 
     * [x] ol.control.Route : **OK**
-
-        - **TODO** il existe encore des FIXME dans la console !?
 
     * [x] ol.control.Isocurve : **OK**
 
@@ -151,14 +159,16 @@ les fichiers sont suffixés avec le tag *modules*.
     > **OK** upgrade proj4 > 2.5.0 !
 
     * [ ] CRS : **PROGRESS**
+
         cf. https://github.com/openlayers/openlayers/blob/master/changelog/upgrade-notes.md#changes-in-proj4-integration
-        - [ ] bug pour ajouter des projection geocent sur le registre IGNF !?
-        - [ ] comment surcharger transformExtent ?
+
+        - [x] merge à faire : https://github.com/IGNF/geoportal-extensions/pull/227
+        - [ ] **FIXME** bug pour ajouter des projection *geocent* sur le registre IGNF !?
+        - [ ] **FIXME** comment surcharger transformExtent ?
             ou un setExtent() sur l'EPSG:2154 ne suffirait il pas ?
             Est ce utile  car
             à quoi sert la fonction MousePosition::validateExtentCoordinate ?
             les systemes de projection de MousePosition ont déjà une validity extent en option ?
-        - [x] merge à faire : https://github.com/IGNF/geoportal-extensions/pull/227
 
     * [x] Editor : **OK**
 
@@ -181,8 +191,8 @@ les fichiers sont suffixés avec le tag *modules*.
 
 * [x] **FAIT** deplacement des CSS avec les JS
 
-    > **FIXME** c'est peut être une mauvaise idée d'integrer les CSS dans les sources
-    car souci dans le SDK à transtiper les modules (pb de loader sur les CSS)
+    > **INFO** c'est peut être une mauvaise idée d'integrer les CSS dans les sources
+    car souci dans le SDK à transpiler les modules (pb de loader sur les CSS !?)
 
 * [x] **FAIT** creation d'une CSS commune à tous les controles (via webpack)
 
@@ -195,22 +205,10 @@ les fichiers sont suffixés avec le tag *modules*.
 
 * [x] **FAIT** modifier le template des exemples des modules
 
-    > ajouter les bundles et les CSS  directement dans le template de l'exemple (tag:vendor)
-
 * [x] **FAIT** deplacement des webpack dans un répertoire
-
-    > un webpack principal à la racine avec des targets d'executions vers les webpack :
-    itowns, openlayers et leaflet.
-    ex. build/
-
-    cf. webpack (build only des bundles) !
+    > ex. build/
 
 * [x] **FAIT** deplacement des README dans un répertoire
-
-    > il existe déjà un README principal qui pointe vers les autres README.
-    ex. doc/
-
-    > lors de la publication, on doit utiliser ces README !
 
 * [x] **FAIT** deplacement des JSON dans un répertoire
     > ex. build/
@@ -218,143 +216,10 @@ les fichiers sont suffixés avec le tag *modules*.
 * [x] **FAIT** deplacement des JSDOC dans un autre répertoire
     > ex. build/
 
-    cf. webpack (build only jsdoc) !
-
 * [x] **FAIT** deplacement des licences **templates** dans un répertoire
     > ex. build/
 
 * [x] **FAIT** maj du script de publication
 
-* [x] **FAIT** changelog
+* [x] **FAIT** changelog & draft
     > https://api.github.com/repos/IGNF/geoportal-extensions/releases
-
-## Actions
-
-ex. d'opérations realisées pour le passage en ES6 des classes JS...
-
-### ajout des imports
-
-```
-// import CSS
-import "../../../res/Common/GPgeneralWidget.css";
-import "../../../res/Common/GPwaiting.css";
-import "../../../res/Common/GPXXXX.css";
-import "../../../res/OpenLayers/GPgeneralWidgetOpenLayers.css";
-import "../../../res/OpenLayers/Controls/XXXX/GPXXXXOpenLayers.css";
-
-// import OpenLayers
-import {inherits as olInherits} from "ol/util";
-import Control from "ol/control/Control";
-import Overlay from "ol/Overlay";
-import Collection from "ol/Collection";
-import { unByKey as olObservableUnByKey } from "ol/Observable";
-
-import {
-    pointerMove as eventPointerMove,
-    singleClick as eventSingleClick
-} from "ol/events/condition";
-
-import {
-    Select as SelectInteraction,
-    Modify as ModifyInteraction,
-    Draw as DrawInteraction
-} from "ol/interaction";
-
-import {
-    Fill,
-    Icon,
-    Stroke,
-    Style,
-    Text,
-    Image,
-    Circle
-} from "ol/style";
-
-import {
-    LineString,
-    Point,
-    Polygon
-} from "ol/geom";
-
-import { intersects as olIntersects } from "ol/extent";
-
-import {
-    getArea as olGetAreaSphere,
-    getDistance as olGetDistanceSphere
-} from "ol/sphere";
-
-import RenderFeature from "ol/render/Feature"; // FIXME !?
-import WMTSTileGrid from "ol/tilegrid/WMTS";
-import { createXYZ as olCreateXYZTileGrid } from "ol/tilegrid"; // FIXME !?
-
-import {
-    transform as olTransformProj,
-    get as olGetProj,
-    transformExtent as olTransformExtentProj
-} from "ol/proj";
-
-
-import VectorTileLayer from "ol/layer/VectorTile";
-import VectorTileSource from "ol/source/VectorTile";
-import VectorLayer from "ol/layer/Vector";
-import VectorSource from "ol/source/Vector";
-import TileWMSSource from "ol/source/TileWMS";
-import WMTSSource from "ol/source/WMTS";
-import TileJSONSource from "ol/source/TileJSON";
-
-import WMSCapabilities from "ol/format/WMSCapabilities";
-import WMTSCapabilities from "ol/format/WMTSCapabilities";
-import MVT from "ol/format/MVT";
-import GeoJSON from "ol/format/GeoJSON";
-import GPX from "ol/format/GPX";
-
-import Feature from "ol/Feature";
-```
-
-### remplacement (grep)
-
-```
-ol.control.Control Control
-ol.Overlay Overlay
-ol.Collection Collection
-ol.layer.Vector VectorLayer
-ol.source.Vector VectorSource
-ol.style.Style Style
-ol.style.Icon Icon
-ol.style.Text Text
-ol.style.Fill Fill
-ol.style.Stroke Stroke
-ol.style.Circle Circle
-ol.proj.transformExtent olTransformExtentProj
-ol.proj.transform olTransformProj
-ol.proj.get olGetProj
-ol.format.GPX GPX
-ol.format.KML KML
-ol.format.GeoJSON GeoJSON
-ol.events.condition.pointerMove eventPointerMove
-ol.events.condition.singleClick eventSingleClick
-
-suppression :
-    new ol.Sphere(6378137);
-    wgs84Sphere.haversineDistance getDistance
-    wgs84Sphere.getGeodesicArea getAera
-
-```
-
-### syntaxe ES6 : () => {}
-
-recherche des callback sur les actions suivantes :
-* forEach
-* unByKey
-* on
-* un
-* ...
-
-### exposer les modules
-
-```
-// Expose SearchEngine as ol.control.SearchEngine (for a build bundle)
-if (window.ol && window.ol.control) {
-    window.ol.control.SearchEngine = SearchEngine;
-}
-```

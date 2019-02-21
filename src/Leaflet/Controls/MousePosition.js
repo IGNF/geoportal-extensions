@@ -56,7 +56,7 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
      * @extends {L.Control}
      * @param {Object} options - options for function call.
      * @param {Sting}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
-     * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)   
+     * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
      * @param {String}  [options.position] - position of component into the map, 'bottomleft' by default
      * @param {Boolean} [options.collapsed] - collapse mode, false by default
      * @param {Array}   [options.systems] - list of projection systems, GEOGRAPHIC, MERCATOR, LAMB93 and LAMB2E by default
@@ -1030,9 +1030,8 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
             apiKey : options.apiKey || this.options.apiKey
         });
 
-
         // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
-        // true par défaut (https) 
+        // true par défaut (https)
         L.Util.extend(options, {
             ssl : this.options.ssl
         });
