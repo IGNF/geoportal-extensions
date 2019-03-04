@@ -5,9 +5,9 @@ import { inherits as olInherits } from "ol/util";
 import Control from "ol/control/Control";
 import { unByKey as olObservableUnByKey } from "ol/Observable";
 import Collection from "ol/Collection";
-import RenderFeature from "ol/render/Feature"; // FIXME !?
+import RenderFeature from "ol/render/Feature"; // FIXME RenderFeature !?
 import WMTSTileGrid from "ol/tilegrid/WMTS";
-import { createXYZ as olCreateXYZTileGrid } from "ol/tilegrid"; // FIXME !?
+import { createXYZ as olCreateXYZTileGrid } from "ol/tilegrid"; // FIXME olCreateXYZTileGrid !?
 import {
     transform as olTransformProj,
     get as olGetProj,

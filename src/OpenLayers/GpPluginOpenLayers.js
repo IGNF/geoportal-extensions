@@ -120,7 +120,9 @@ Ol.olms = Olms;
 // And, it's useful to expose it too into OpenLayers :
 //      console > ol.proj.get("EPSG:2154")
 if (window.ol && window.ol.proj && window.ol.proj.proj4) {
-    window.ol.proj.proj4.register(Proj4);
+    try {
+        window.ol.proj.proj4.register(Proj4);
+    } catch (e) {}
 }
 
 // Rajout des propriétés dans le namespace Ol

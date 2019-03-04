@@ -11,7 +11,7 @@ should();
 
 var logger = Logger.getLogger("test-controls-MousePosition");
 
-describe("-- [FIXME] Test Plugin OpenLayers MousePosition --", function () {
+describe("-- Test Plugin OpenLayers MousePosition --", function () {
 
     var div, map;
 
@@ -45,11 +45,10 @@ describe("-- [FIXME] Test Plugin OpenLayers MousePosition --", function () {
         div = null;
     });
 
-    xit('I should add a control MousePosition into map (with default parameters)', function () {
+    it('I should add a control MousePosition into map (with default parameters)', function () {
 
         var mousePosition = new MousePosition();
-        // FIXME
-        // Error: the string "EPSG:4978" was thrown, throw an Error :)
+
         map.addControl(mousePosition);
 
         // existance de la balise principale
@@ -61,11 +60,9 @@ describe("-- [FIXME] Test Plugin OpenLayers MousePosition --", function () {
         expect(map.getTargetElement().querySelector("div[id^=\"GPmousePosition\"]")).to.be.ok;
 
     });
-    xit('I should remove a control MousePosition into map (with default parameters)', function () {
+    it('I should remove a control MousePosition into map (with default parameters)', function () {
 
         var mousePosition = new MousePosition();
-        // FIXME
-        // Error: the string "EPSG:4978" was thrown, throw an Error :)
         map.addControl(mousePosition);
 
         map.removeControl(mousePosition);

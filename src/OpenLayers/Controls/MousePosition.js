@@ -10,11 +10,8 @@ import {
     get as olGetProj,
     transformExtent as olTransformExtentProj
 } from "ol/proj";
-import { register } from "ol/proj/proj4";
 // import geoportal library access
 import Gp from "geoportal-access-lib";
-// other import
-import Proj4 from "proj4";
 // import local
 import Logger from "../../Common/Utils/LoggerByDefault";
 import Utils from "../../Common/Utils";
@@ -22,9 +19,12 @@ import Markers from "./Utils/Markers";
 import RightManagement from "../../Common/Utils/CheckRightManagement";
 import SelectorID from "../../Common/Utils/SelectorID";
 import MathUtils from "../../Common/Utils/MathUtils";
-import Register from "../../Common/Utils/Register";
+// import defs proj4 manually (cf. line 110)
+//  import Proj4 from "proj4";
+//  import { register } from "ol/proj/proj4";
+//  import Register from "../../Common/Utils/Register";
 // import local with ol dependencies
-// import "../CRS/CRS";
+import "../CRS/AutoLoadCRS";
 // DOM
 import MousePositionDOM from "../../Common/Controls/MousePositionDOM";
 
@@ -106,9 +106,11 @@ function MousePosition (options) {
         throw new TypeError("ERROR CLASS_CONSTRUCTOR");
     }
 
-    // init Proj4 defs
-    Register.load(Proj4);
-    register(Proj4);
+    // init Proj4 defs manually
+    // Register.load(Proj4);
+    // try {
+    //     register(Proj4);
+    // } catch (e) {}
 
     this._initialize(options);
 

@@ -13,7 +13,7 @@ Cette branche est clonée sur [feature-layerimport-mapbox] :
 
 
 Pour la creation des modules et des exemples, on utilise la commande suivante :
-> ./node_modules/.bin/webpack --config webpack.config.openlayers.modules.js
+> ./node_modules/.bin/webpack --config build/webpack/webpack.config.openlayers.modules.js
 [--env.[development|production]]
 
 
@@ -37,20 +37,22 @@ les fichiers sont suffixés avec le tag *modules*.
 - [x] Migrer vers ol v5.3.0   : **OK**
 
 - [ ] olms en externe ?       : **PROGRESS**
-    - Doit on intégrer olms dans le code des extensions ou en dep externe comme ol ?
-    - Le SDK utilise aussi olms, et cette dep sera aussi intégrée !
+    - Doit on intégrer olms dans le code des extensions ou en dependance externe (comme ol) ?
+    - Le SDK utilise aussi olms, et cette dependance sera aussi intégrée !?
     - binaire :
     > https://unpkg.com/ol-mapbox-style/dist/olms.js
 
 - [ ] Migrer vers webpack 4   : **TODO**
 
-- [ ] Tests à jouer / à creer : **NOK**
+- [ ] Tests à jouer / à creer : **PROGRESS**
+
+    cf. https://staxmanade.com/blog/categories/mochajs/
 
     > **TODO** test sur les projections !
 
     > **TODO** couvrir et finir les tests sur le DOM
 
-    > **FIXME** les tests sur openlayers & mouseposition sont en echec : cf. CRS !
+    > **OK** les tests sur openlayers & mouseposition : *cf. CRS !*
 
 - [ ] Tests de rendu à jouer  : **NOK**
 
@@ -66,10 +68,13 @@ les fichiers sont suffixés avec le tag *modules*.
 
 - [x] Exemples sur les modules : **OK**
 
-- [ ] Exemples  : **NOK**
+- [x] Exemples  : **OK**
 
-    > **FIXME** le proxy.php n'est pas reconnu comme du PHP par le serveur local webpack !?
-    Ceci met donc des exemples en échecs...
+    > le proxy.php n'est pas reconnu comme du PHP par le serveur local webpack !?
+    On decide donc de rediriger les requêtes à proxifier vers un proxy deployer en local...
+
+    > *utilisation de l'option proxy de webpack-dev-server* :
+    https://webpack.js.org/configuration/dev-server/#devserverproxy
 
 - [x] **OK** Test des variables globales : *ex. Gp, ol et proj4*
 
@@ -96,14 +101,14 @@ les fichiers sont suffixés avec le tag *modules*.
 - [x] Layer
 
     **OK pour les projections**
-    > cf. CRS
+    > *cf. CRS !*
 
     * [x] ol.source.GeoportalWMTS : **OK**
     * [x] ol.source.GeoportalWMS  : **OK**
     * [x] ol.layer.GeoportalWMTS  : **OK**
     * [x] ol.layer.GeoportalWMS   : **OK**
 
-    > **FIXME**
+    > **EVOL**
     > si on n'a pas d'autoconf, une exception est lancée :
     "contract key configuration has to be loaded to load Geoportal layers"
 
@@ -112,7 +117,8 @@ les fichiers sont suffixés avec le tag *modules*.
 
 - [x] Controls
 
-    > **EVOL** Sans autoconf ou droit, il faudrait rendre les boutons de calculs non
+    > **EVOL**
+    > Sans autoconf ou droit, il faudrait rendre les boutons de calculs non
     cliquable (ex. Route ou Iso)...
 
     * [x] ol.control.LayerSwitcher : **OK**
@@ -134,9 +140,7 @@ les fichiers sont suffixés avec le tag *modules*.
     * [x] ol.control.Isocurve : **OK**
 
     * [x] ol.control.GeoportalMousePosition : **OK**
-        - cf. CRS
-        - gestion du setExtent() pour EPSG:2154
-        cf. https://openlayers.org/en/latest/examples/reprojection-by-code.html?q=proj4
+        - *cf. CRS !*
 
     * [x] ol.control.Drawing : **OK**
 
@@ -164,11 +168,16 @@ les fichiers sont suffixés avec le tag *modules*.
 
         - [x] merge à faire : https://github.com/IGNF/geoportal-extensions/pull/227
         - [ ] **FIXME** bug pour ajouter des projection *geocent* sur le registre IGNF !?
-        - [ ] **FIXME** comment surcharger transformExtent ?
-            ou un setExtent() sur l'EPSG:2154 ne suffirait il pas ?
-            Est ce utile  car
-            à quoi sert la fonction MousePosition::validateExtentCoordinate ?
-            les systemes de projection de MousePosition ont déjà une validity extent en option ?
+        - [ ] **FIXME**
+            - doit on surcharger la fonction transformExtent ou un setExtent() sur
+            l'EPSG:2154 ne suffirait il pas ?
+
+            - à quoi sert la fonction MousePosition::validateExtentCoordinate ?
+            les systemes de projection de MousePosition ont déjà une validity extent en option !?
+
+            - cf. https://openlayers.org/en/latest/examples/reprojection-by-code.html?q=proj4
+            > ol.proj.get("EPSG:2154").getExtent()
+            > null
 
     * [x] Editor : **OK**
 

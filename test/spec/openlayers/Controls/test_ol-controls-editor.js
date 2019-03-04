@@ -28,25 +28,39 @@ describe("-- [TODO] Test Plugin OpenLayers Editor --", function () {
         div = null;
     });
 
-    xit('I should add a control Editor', function () {});
-    xit('I should add a control Editor into custom tag (\'editor\')', function () {
+    it('I should add a control Editor', function () {
 
-        var editor = new Editor({
-            target: document.getElementById("editor"),
-            style: "spec/openlayers/fixtures/osm.json"
+        var testPromise = new Promise(function(resolve, reject) {
+            var editor = new Editor({
+                target: document.getElementById("editor"),
+                style: "spec/openlayers/fixtures/osm.json"
+            });
+            setTimeout(function() {
+                resolve(editor);
+            }, 200);
         });
 
-        // existance des enfants
-        var main = document.getElementById("editor");
-        expect(main.hasChildNodes()).to.be.true;
-        var child = main.childNodes;
-        expect(child).to.be.an('array');
-        expect(child[0].id).to.be.equal("GPEditorMapBoxContainer_ID_0");
+        return testPromise.then(function(editor){
+            // existance de l'objet
+            expect(editor).to.not.be.null;
+            expect(editor).to.have.property("container");
+            expect(editor).to.have.property("id");
+            expect(editor).to.have.property("layers");
+            expect(editor).to.have.property("mapbox");
+            expect(editor).to.have.property("name");
+            expect(editor).to.have.property("options");
 
-        // existance de la balise principale
-        var div = document.querySelector("div[id^=\"GPEditorMapBoxContainer_ID_\"]");
-        expect(div).to.be.ok;
+            // existance de la balise principale
+            var div = document.querySelector("div[id^=\"GPEditorMapBoxContainer_ID_\"]");
+            expect(div, "main div is not found ?").to.be.ok;
+            // existance des enfants
+            var main = document.getElementById("editor");
+            expect(main.hasChildNodes(), "has not child nodes ?").to.be.true;
+            var child = main.childNodes;
+            expect(child.length, "is not an array with one element ?").to.be.equal(1);
+            expect(child[0].id, "is not the good id ?").to.be.equal("GPEditorMapBoxContainer_ID_0");
 
+        });
     });
-    xit('I should add a control Editor with themes', function () {});
+    
 });

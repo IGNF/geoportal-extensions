@@ -18,11 +18,19 @@ module.exports = {
     externals : ["request", "xmldom"],
     resolve : {
         alias : {
+            proj4 : path.resolve("..", "node_modules", "proj4", "dist", "proj4-src.js")
         }
     },
     devtool : "eval-source-map",
     module : {
         rules : [
+            {
+                test : require.resolve("proj4"),
+                use : [{
+                    loader : "expose-loader",
+                    options : "proj4"
+                }]
+            },
             {
                 test: /\.css$/,
                 use: ['style-loader', 'css-loader'],
@@ -63,11 +71,9 @@ module.exports = {
             title : "Mocha Tests Units",
             filename : "index.html",
             template : require.resolve(
-                "html-webpack-plugin/default_index.ejs"
+                "./test.ejs"
             ),
-            files : {
-                js : ["https://openlayers.org/en/latest/build/ol.js"]
-            }
+            files : ["https://openlayers.org/en/latest/build/ol.js"]
         })
     ]
 };

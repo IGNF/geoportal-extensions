@@ -1,5 +1,3 @@
-import SelectorID from "../../Utils/SelectorID";
-
 var EditorDOM = {
 
     /**

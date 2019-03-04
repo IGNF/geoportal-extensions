@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <% htmlWebpackPlugin.options.files.forEach(function(file){ %>
+    <script src="<%= file %>"></script>
+    <% }); %>
+  </head>
+  <body>
+  </body>
+</html>

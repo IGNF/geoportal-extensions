@@ -122,6 +122,14 @@ module.exports = env => {
             }
         ],
         devtool : (development) ? "eval-source-map" : false,
+        devServer: {
+            proxy: {
+                "/samples/resources/proxy/" : {
+                    secure: false,
+                    target: "http://localhost/proxy/proxy.php" // proxy à deployer en local !
+                }
+            }
+        },
         module : {
             rules : [
                 {

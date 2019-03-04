@@ -23,7 +23,11 @@ var CRS = {
         // load all defs into proj4
         Register.load(Proj4);
         // register all defs into openlayers
-        register(Proj4);
+        try {
+            register(Proj4);
+        } catch (e) {
+            // console.error(e);
+        }
     },
 
     /**
@@ -74,5 +78,9 @@ export default CRS;
 
 // Expose proj4 with custom defs into OpenLayers global variable
 if (window.ol && window.ol.proj && window.ol.proj.proj4) {
-    window.ol.proj.proj4.register(Proj4);
+    try {
+        window.ol.proj.proj4.register(Proj4);
+    } catch (e) {
+        // console.error(e);
+    }
 }
