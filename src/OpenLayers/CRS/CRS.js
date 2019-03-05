@@ -2,11 +2,12 @@
 import Proj4 from "proj4";
 // import OpenLayers
 import { register } from "ol/proj/proj4";
-// import {
-//     getTransform,
-//     transformExtent
-// } from "ol/proj";
-// import { applyTransform } from "ol/extent";
+import {
+    getTransform,
+    addProjection,
+    get as getProjection
+} from "ol/proj";
+import { applyTransform } from "ol/extent";
 // import local
 import Register from "../../Common/Utils/Register";
 import Logger from "../../Common/Utils/LoggerByDefault";
@@ -14,6 +15,24 @@ import Logger from "../../Common/Utils/LoggerByDefault";
 var logger = Logger.getLogger("CRS");
 
 var CRS = {
+
+    /**
+    * List of extent projections
+    */
+    _projectionExtent : {
+        "EPSG:2154" : {
+            left : -9.62,
+            bottom : 41.18,
+            right : 10.3,
+            top : 51.54
+        },
+        "EPSG:27572" : {
+            left : -4.87,
+            bottom : 42.33,
+            right : 8.23,
+            top : 51.14
+        }
+    },
 
     /**
     * Load custom definition projection
@@ -31,46 +50,29 @@ var CRS = {
     },
 
     /**
-     * TODO : Overload OpenLayers ol.proj.transformExtent function,
+     * Overload OpenLayers ol.proj parameters,
      * to manage EPSG:2154 extent restriction
      */
     overload : function () {
-        logger.trace("Overload functions projection");
+        logger.trace("Overload projections");
 
-        /**
-         * Transforms an extent from source projection to destination projection.  This
-         * returns a new extent (and does not modify the original).
-         * Overload Geoportal Extension for Openlayers : to manage EPSG:2154 extent restriction.
-         *
-         * @param {ol.Extent} extent - The extent to transform.
-         * @param {ol.proj.ProjectionLike} source - Source projection-like.
-         * @param {ol.proj.ProjectionLike} destination - Destination projection-like.
-         * @return {ol.Extent} extent - The transformed extent.
-         */
-        // transformExtent = function (extent, source, destination) {
-        //     if (destination === "EPSG:2154") {
-        //         if (source === "EPSG:4326") {
-        //             logger.trace("CRS overload 'ol.proj.transformExtent'");
-        //             // dans le cas d'une transfo 4326->2154,
-        //             // il faut restreindre l'étendue géographique à l'étendue de validité de Lambert93.
-        //             if (extent[0] < -9.62) {
-        //                 extent[0] = -9.62;
-        //             }
-        //             if (extent[1] < 41.18) {
-        //                 extent[1] = 41.18;
-        //             }
-        //             if (extent[2] > 10.3) {
-        //                 extent[2] = 10.3;
-        //             }
-        //             if (extent[3] > 51.54) {
-        //                 extent[3] = 51.54;
-        //             }
-        //         }
-        //     }
-        //     var transformFn = getTransform(source, destination);
-        //     var transformedExtent = applyTransform(extent, transformFn);
-        //     return transformedExtent;
-        // };
+        for (var code in this._projectionExtent) {
+            if (this._projectionExtent.hasOwnProperty(code)) {
+                var extent = this._projectionExtent[code];
+                var proj = getProjection(code);
+                var fromLonLat = getTransform("EPSG:4326", proj);
+
+                // very approximate calculation of projection extent
+                var _extent = applyTransform([extent.bottom, extent.right, extent.top, extent.left], fromLonLat);
+                proj.setExtent(_extent);
+                addProjection(proj);
+
+                // Expose projection extent with custom defs into OpenLayers global variable
+                if (window.ol && window.ol.proj && window.ol.proj.addProjection) {
+                    window.ol.proj.addProjection(proj);
+                }
+            }
+        }
     }
 };
 

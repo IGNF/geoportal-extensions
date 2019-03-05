@@ -44,11 +44,11 @@ les fichiers sont suffixés avec le tag *modules*.
 
 - [ ] Migrer vers webpack 4   : **TODO**
 
-- [ ] Tests à jouer / à creer : **PROGRESS**
+- [x] Tests à jouer / à creer : **OK**
 
     cf. https://staxmanade.com/blog/categories/mochajs/
 
-    > **TODO** test sur les projections !
+    > **OK** test sur les projections !
 
     > **TODO** couvrir et finir les tests sur le DOM
 
@@ -162,22 +162,17 @@ les fichiers sont suffixés avec le tag *modules*.
 
     > **OK** upgrade proj4 > 2.5.0 !
 
-    * [ ] CRS : **PROGRESS**
+    * [x] CRS : **OK**
 
         cf. https://github.com/openlayers/openlayers/blob/master/changelog/upgrade-notes.md#changes-in-proj4-integration
 
         - [x] merge à faire : https://github.com/IGNF/geoportal-extensions/pull/227
-        - [ ] **FIXME** bug pour ajouter des projection *geocent* sur le registre IGNF !?
-        - [ ] **FIXME**
-            - doit on surcharger la fonction transformExtent ou un setExtent() sur
-            l'EPSG:2154 ne suffirait il pas ?
+        - [ ] *FIXME* bug pour ajouter des projection **geocent** sur le registre IGNF !?
+        - [x] on ne surcharge pas la fonction transformExtent mais on ajoute un setExtent() sur
+            l'EPSG:2154
 
             - à quoi sert la fonction MousePosition::validateExtentCoordinate ?
-            les systemes de projection de MousePosition ont déjà une validity extent en option !?
-
-            - cf. https://openlayers.org/en/latest/examples/reprojection-by-code.html?q=proj4
-            > ol.proj.get("EPSG:2154").getExtent()
-            > null
+            les systemes de projection de MousePosition ont déjà une validity extent en option ?
 
     * [x] Editor : **OK**
 

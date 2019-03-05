@@ -53,7 +53,7 @@ var Register = {
      * load all defs to proj4
      * @param {Object} Proj4 - proj4 instance
      */
-    load : function (Proj4, callback) {
+    load : function (Proj4) {
         if (!this.isLoaded) {
             var registers = [
                 "IGNF", // exception lors du register IGNF ?

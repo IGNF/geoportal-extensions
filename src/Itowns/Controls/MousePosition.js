@@ -21,7 +21,7 @@ var logger = Logger.getLogger("MousePosition");
  * @alias itowns.control.MousePosition
  * @extends {itowns.control.Control}
  * @param {Object} options - options for function call.
- * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)   
+ * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {Boolean} [options.collapsed = true] - Specify if MousePosition control should be collapsed at startup. Default is true.
  * @param {Array}   [options.systems] - list of projection systems, default are Geographical ("EPSG:4326"), Web Mercator ("EPSG:3857"), Lambert 93 ("EPSG:2154") and extended Lambert 2 ("EPSG:27572").
  *      Each array element (=system) is an object with following properties :
@@ -1082,7 +1082,7 @@ MousePosition.prototype.onRequestAltitude = function (coordinate, callback) {
     options.apiKey = options.apiKey || this.options.apiKey;
 
     // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
-    // true par défaut (https) 
+    // true par défaut (https)
     options.ssl = this.options.ssl;
 
     Gp.Services.getAltitude(options);

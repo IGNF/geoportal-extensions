@@ -77,20 +77,4 @@ describe("-- Test Register --", function () {
             expect(Proj4.defs('CRS:84')).not.to.be.undefined;
         });
     });
-
-    // INFO test à mettre en place sur openlayers
-    describe("#ol", function () {
-
-        xit("EPSG:310642813 is defined into ol", function () {
-            expect(ol.proj.get('EPSG:310642813').getCode()).to.be.equal('EPSG:310642813');
-        });
-
-        xit("IGNF:LAMB93 is defined into ol", function () {
-            expect(ol.proj.get('IGNF:LAMB93').getCode()).to.be.equal('IGNF:LAMB93');
-        });
-
-        xit("CRS:84 is defined into ol", function () {
-            expect(ol.proj.get('CRS:84').getCode()).to.be.equal('CRS:84');
-        });
-    });
 });
