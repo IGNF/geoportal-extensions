@@ -1,3 +1,4 @@
 /geoportal-*
 
-*.tgz
+# only for development : link to SDK !
+!*.tgz

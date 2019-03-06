@@ -81,6 +81,7 @@ var AttributionDOM = {
         spanOpen.id = this._addUID("GPshowAttributionsListOpenClose");
         spanOpen.className = "GPshowAdvancedToolOpen";
         spanOpen.innerHTML = collapsed ? "i" : "»";
+        /** Evenement de type 'click' sur le picto du controle */
         spanOpen.addEventListener("click", function () {
             spanOpen.innerHTML = (document.getElementById(self._addUID("GPshowAttributionsList")).checked) ? "i" : "»";
         });

@@ -8,7 +8,8 @@ On utilise le serveur de developpement de `webpack` : `webpack-dev-server`
     ou npm run sample:ol:serve
     ou npm run sample:leaflet:serve
     ou npm run sample:itowns:serve
-
+    ou npm run test:serve
+    
 Le navigateur s'ouvre sur la page des exemples sur l'URL suivante :
 https://localhost:9001/
 
