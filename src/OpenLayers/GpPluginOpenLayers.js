@@ -115,27 +115,17 @@ Ol.style.editor.Themes = Themes;
 // Rajout de l'extension olms (ol mapbox style)
 Ol.olms = Olms;
 
-// "proj4" is exposed into window (for a build bundle) with webpack.
-//      console > proj4("EPSG:2154")
-// And, it's useful to expose it too into OpenLayers :
-//      console > ol.proj.get("EPSG:2154")
-if (window.ol && window.ol.proj && window.ol.proj.proj4) {
-    try {
-        window.ol.proj.proj4.register(Proj4);
-    } catch (e) {}
-}
-
 // Rajout des propriétés dans le namespace Ol
-Ol.format = {};
+Ol.format = Ol.format || {};
 Ol.format.KMLExtended = KML;
-Ol.source = {};
+Ol.source = Ol.source || {};
 Ol.source.WMTSExtended = WMTS;
 Ol.source.GeoportalWMTS = SourceWMTS;
 Ol.source.GeoportalWMS = SourceWMS;
-Ol.layer = {};
+Ol.layer = Ol.layer || {};
 Ol.layer.GeoportalWMTS = LayerWMTS;
 Ol.layer.GeoportalWMS = LayerWMS;
-Ol.control = {};
+Ol.control = Ol.control || {};
 Ol.control.LayerSwitcher = LayerSwitcher;
 Ol.control.GeoportalAttribution = GeoportalAttribution;
 Ol.control.GetFeatureInfo = GetFeatureInfo;
@@ -153,4 +143,16 @@ Ol.control.DefaultMarkers = Markers;
 Ol.control.ElevationPath = ElevationPath;
 Ol.control.LocationSelector = LocationSelector;
 
-export {Ol as olExtended};
+// Expose extensions openlayers extended into ol (for a build bundle)
+// with webpack (loader-expose) and this export !
+export { Ol as olExtended };
+
+// "proj4" is exposed into window (for a build bundle) with webpack.
+//      console > proj4("EPSG:2154")
+// And, it's useful to expose it too into OpenLayers :
+//      console > ol.proj.get("EPSG:2154")
+if (window.ol && window.ol.proj && window.ol.proj.proj4) {
+    try {
+        window.ol.proj.proj4.register(Proj4);
+    } catch (e) {}
+}
