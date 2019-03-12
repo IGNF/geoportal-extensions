@@ -1,5 +1,6 @@
 {
     "baseurl" : "../../..",
     "resources" : "../../resources",
-    "apikey" : "jhyvi0fgmnuxvfv0zjzorvdn"
+    "apikey" : "jhyvi0fgmnuxvfv0zjzorvdn",
+    "proxy" : "https://localhost/proxy/proxy.php"
 }

@@ -54,7 +54,7 @@
                 var layerImport = new ol.control.LayerImport({
                     apiKey : "{{ apikay }}",
                     webServicesOptions : {
-                        proxyUrl : "{{ resources }}/proxy/proxy.php?url=",
+                        proxyUrl : "{{ proxy }}?url=",
                         noProxyDomains : ["localhost", "https://api.mapbox.com/"]
                     }
                 });
