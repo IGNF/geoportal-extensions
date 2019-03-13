@@ -76,7 +76,7 @@
     "leaflet-draw": "1.0.2",
     "loglevel": "~1.6.1",
     "ol": "^5.3.0",
-    "ol-mapbox-style": "^3.8.0",
+    "ol-mapbox-style": "^4.2.1",
     "proj4": "^2.5.0",
     "proj4leaflet": "~1.0.2",
     "sortablejs": "1.4.0",

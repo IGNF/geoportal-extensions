@@ -8,7 +8,7 @@ last
 * "olms"
 
 last
-└── "ol-mapbox-style@3.8.0"
+└── "ol-mapbox-style@4.2.1"
 
 * proj4
 
