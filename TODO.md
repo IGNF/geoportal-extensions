@@ -1,4 +1,4 @@
-# Migration vers OpenLayers v5
+# Migration vers OpenLayers v5 & MapBox
 
 https://github.com/IGNF/geoportal-extensions/tree/update-ol5
 > PR : https://github.com/IGNF/geoportal-extensions/pull/228
@@ -32,11 +32,13 @@ les fichiers sont suffixés avec le tag *modules*.
 > if you set NODE_ENV=production or use the --production flag it will not install devDependencies
 > when you run *npm install*
 
+# OpenLayers 5.3.0
+
 ## Avancements
 
 - [x] Migrer vers ol v5.3.0   : **OK**
 
-- [ ] olms en externe ?       : **PROGRESS**
+- [ ] olms en externe ?       : **TODO**
     - Doit on intégrer olms dans le code des extensions ou en dependance externe (comme ol) ?
     - Le SDK utilise aussi olms, et cette dependance sera aussi intégrée !?
     - binaire :
@@ -73,9 +75,6 @@ les fichiers sont suffixés avec le tag *modules*.
     > le proxy.php n'est pas reconnu comme du PHP par le serveur local webpack !?
     On decide donc de rediriger les requêtes à proxifier vers un proxy deployer en local...
 
-    > *utilisation de l'option proxy de webpack-dev-server* :
-    https://webpack.js.org/configuration/dev-server/#devserverproxy
-
 - [x] **OK** Test des variables globales : *ex. Gp, ol et proj4*
 
     - [x] **OK** *ol* :
@@ -93,10 +92,12 @@ les fichiers sont suffixés avec le tag *modules*.
 
 ### Les sources
 
-- [ ] Format **TODO**
+- [x] Format **Ok**
 
-    * [ ] ol.format.KMLExtended  :
-    * [ ] ol.source.WMTSExtended :
+    * [x] ol.format.KMLExtended  :
+    > **EVOL** Refonte à prévoir...
+
+    * [x] ol.source.WMTSExtended :
 
 - [x] Layer
 
@@ -162,7 +163,7 @@ les fichiers sont suffixés avec le tag *modules*.
 
     > **OK** upgrade proj4 > 2.5.0 !
 
-    * [x] CRS : **OK**
+    * [ ] CRS : **PROGRESS**
 
         cf. https://github.com/openlayers/openlayers/blob/master/changelog/upgrade-notes.md#changes-in-proj4-integration
 
@@ -227,3 +228,9 @@ les fichiers sont suffixés avec le tag *modules*.
 
 * [x] **FAIT** changelog & draft
     > https://api.github.com/repos/IGNF/geoportal-extensions/releases
+
+
+# MapBox
+
+## intégration du client MapBoxGl ?
+cf. exemple http://tsauerwein.github.io/ol3/mapbox-gl-js/examples/mapbox-gl-js.html

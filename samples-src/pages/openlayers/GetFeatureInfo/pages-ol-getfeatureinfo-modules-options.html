@@ -57,6 +57,13 @@
             });
             map.addLayer(gpMaps);
 
+            var gpDrone = new ol.layer.Tile({
+                source : new ol.source.GeoportalWMTS({
+                    layer: "TRANSPORTS.DRONES.RESTRICTIONS"
+                })
+            });
+            map.addLayer(gpDrone);
+
             var gpMyKml = new ol.layer.Vector({
                 source: new ol.source.Vector({
                     url: '{{ resources }}/data/kml/S_TOP100.kml',
@@ -94,6 +101,9 @@
                         },
                         {
                             obj : gpRoad,
+                        },
+                        {
+                            obj : gpDrone,
                         }
                     ],
                     options : {

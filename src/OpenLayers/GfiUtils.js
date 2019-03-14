@@ -1,10 +1,10 @@
 // import OpenLayers
 import Overlay from "ol/Overlay";
-import VectorTileSource from "ol/source/VectorTile";
-import VectorSource from "ol/source/Vector";
-import TileWMSSource from "ol/source/TileWMS";
-import WMTSSource from "ol/source/WMTS";
-import ImageWMSSource from "ol/source/ImageWMS";
+// import VectorTileSource from "ol/source/VectorTile";
+// import VectorSource from "ol/source/Vector";
+// import TileWMSSource from "ol/source/TileWMS";
+// import WMTSSource from "ol/source/WMTS";
+// import ImageWMSSource from "ol/source/ImageWMS";
 import {
     Select as SelectInteraction,
     Modify as ModifyInteraction,
@@ -30,15 +30,26 @@ var GfiUtils = {
      *
      */
     getLayerFormat : function (l) {
+        var type = l.getType();
         var source = l.getSource();
-        if (source instanceof TileWMSSource || source instanceof ImageWMSSource) {
-            return "wms";
-        }
-        if (source instanceof WMTSSource) {
-            return "wmts";
-        }
-        if (source instanceof VectorSource || source instanceof VectorTileSource) {
+        // if (source instanceof TileWMSSource || source instanceof ImageWMSSource) {
+        //     return "wms";
+        // }
+        // if (source instanceof WMTSSource) {
+        //     return "wmts";
+        // }
+        // if (source instanceof VectorSource || source instanceof VectorTileSource) {
+        //     return "vector";
+        // }
+        if (type === "VECTOR" || type === "VECTOR_TILE") {
             return "vector";
+        }
+        if (type === "TILE") {
+            if (source.tileGrid) {
+                return "wmts";
+            } else {
+                return "wms";
+            }
         }
         return "unknown";
     },
