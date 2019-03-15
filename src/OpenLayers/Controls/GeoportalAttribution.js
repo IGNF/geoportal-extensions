@@ -63,9 +63,18 @@ GeoportalAttribution.prototype.setMap = function (map) {
         // Remove default ol.control.Attribution
         var ctrls = map.getControls();
         ctrls.forEach(
-            (element) => {
-                if (element instanceof Attribution && !(element instanceof GeoportalAttribution)) {
-                    ctrls.remove(element);
+            (ctrl) => {
+                if (ctrl instanceof GeoportalAttribution) {
+                    return;
+                }
+                if (ctrl) {
+                    var classList = ctrl.element.classList;
+                    for (var i = 0; i < classList.length; i++) {
+                        if (classList[i] === "ol-attribution") {
+                            ctrls.remove(ctrl);
+                            break;
+                        }
+                    }
                 }
             }
         );

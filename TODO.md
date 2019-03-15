@@ -125,8 +125,6 @@ les fichiers sont suffixés avec le tag *modules*.
     * [x] ol.control.LayerSwitcher : **OK**
 
     * [x] ol.control.GeoportalAttribution : **OK**
-        - si attribution OSM, affichage directement sur la carte !!!
-        cf. https://github.com/openlayers/openlayers/blob/master/changelog/upgrade-notes.md#v530
         - probleme de CSS mais natif (hauteur du bouton lors d'un clic) !
 
     * [x] ol.control.GetFeatureInfo : **OK**
@@ -152,7 +150,8 @@ les fichiers sont suffixés avec le tag *modules*.
     * [x] ol.control.MeasureLength : **OK**
     * [x] ol.control.MeasureArea : **OK**
     * [x] ol.control.MeasureAzimuth : **OK**
-        - en mode modules, la toolbox et les interactions entre outils sont partagées dans le contexte d'execution via les variables :
+        - en mode modules, la toolbox et les interactions entre outils sont partagées
+        dans le contexte d'execution via les variables :
         > *gpShareMeasures* et *gpShareMeasureToolBox*
 
         Ceci fonctionne dans un contexte Web, mais à tester dans un Front End (ex. Ember)

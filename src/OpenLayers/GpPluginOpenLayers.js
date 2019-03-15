@@ -8,11 +8,13 @@
 * This is the global variable that is exposed in the browser environment.
 * Content is composed of constructor, functions and properties...
 *
-* > ColorUtils: (...)
 * > Config:  (...)
+*
+* > ColorUtils: (...)
 * > LayerUtils: (...)
 * > MathUtils: (...)
 * > ProxyUtils: (...)
+*
 * > olExtended: (...)
 * > olUtils: (...)
 * > olExtDate: "YYYY-MM-DD"
@@ -96,6 +98,9 @@ export {default as LayerUtils} from "../Common/Utils/LayerUtils";
 export {default as ProxyUtils} from "../Common/Utils/ProxyUtils";
 export {default as ColorUtils} from "../Common/Utils/ColorUtils";
 export {default as MathUtils} from "../Common/Utils/MathUtils";
+
+// export des crs !?
+// export {default as CRS} from "./CRS/CRS";
 
 // utilitaires dans un ns "gp" ?
 Ol.gp = {};

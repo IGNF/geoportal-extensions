@@ -72,12 +72,29 @@ module.exports = env => {
             }
         },
         devtool : (development) ? "eval-source-map" : false,
-        devServer: {
-            proxy: {
-                "/samples/resources/proxy/" : {
-                    secure: false,
-                    target: "http://localhost/proxy/proxy.php" // proxy à deployer en local !
-                }
+        devServer : {
+            // proxy: {
+            //      "/samples/resources/proxy/" : {
+            //          secure: false,
+            //          target: "http://localhost/proxy/proxy.php" // proxy à deployer en local !
+            //      }
+            // },
+            stats : "errors-only",
+            // host : "localhost",
+            // https: true,
+            // port : 9001,
+            // hot : true,
+            // contentBase : path.join(__dirname),
+            // publicPath : "/dist/leaflet/",
+            // openPage : "/samples/index-leaflet-map.html",
+            // open : "google-chrome",
+            watchOptions : {
+                watch : true,
+                poll : true
+            },
+            overlay : {
+                errors : true,
+                warnings : false
             }
         },
         module : {
