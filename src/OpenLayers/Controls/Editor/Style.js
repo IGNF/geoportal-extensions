@@ -16,6 +16,7 @@ var logger = Logger.getLogger("editor-style");
  * @example
  *   var style = new Style ({
  *      target : ...,
+ *      position : 1, // identifiant de position (unique !)
  *      tools : {
  *          edition : false,
  *          scale : true
@@ -26,6 +27,9 @@ var logger = Logger.getLogger("editor-style");
  *          layout : {}
  *      }
  *   });
+ *  style.add();
+ *  style.display(true);
+ *  style.getContainer();
  */
 function Style (options) {
     logger.trace("[constructor] Style", options);
@@ -34,6 +38,7 @@ function Style (options) {
     this.options = options || {
         // default...
         target : null,
+        position : 0,
         tools : null,
         title : null,
         obj : null
@@ -67,6 +72,10 @@ Style.prototype._initialize = function () {
 
     if (!this.options.target) {
         // cf. add()
+    }
+
+    if (!this.options.position) {
+        this.options.position = 0;
     }
 
     var _toolsDefault = {
@@ -181,11 +190,15 @@ Style.prototype._initContainer = function () {
     pre.innerHTML = json;
     if (pre.addEventListener) {
         pre.addEventListener("click", function (e) {
-            self.onEditStyleMapBox(e);
+            if (self.options.tools.edition) {
+                self.onEditJsonStyleMapBox(e);
+            }
         });
     } else if (pre.attachEvent) {
         pre.attachEvent("onclick", function (e) {
-            self.onEditStyleMapBox(e);
+            if (self.options.tools.edition) {
+                self.onEditJsonStyleMapBox(e);
+            }
         });
     }
     divJson.appendChild(pre);
@@ -351,6 +364,7 @@ Style.prototype._syntaxHighlight = function (json) {
 
 /**
  * Add element into target DOM
+ * @returns {Object} - Legend instance
  */
 Style.prototype.add = function () {
     if (!this.options.target) {
@@ -367,15 +381,21 @@ Style.prototype.add = function () {
     if (this.container) {
         this.options.target.appendChild(this.container);
     }
+    return this;
 };
 
 /**
- * Set display container (DOM)
+ * Set display container or get
  *
- * @param {Boolean} display - show/hidden container
+ * @param {Boolean} display - show/hidden container or get status
+ * @returns {Boolean} - true/false
  */
 Style.prototype.display = function (display) {
-    this.container.style.display = (display) ? "flex" : "none";
+    logger.trace("display()", display);
+    if (typeof display !== "undefined") {
+        this.container.style.display = (display) ? "flex" : "none";
+    }
+    return (this.container.style.display === "flex");
 };
 
 /**
@@ -391,44 +411,54 @@ Style.prototype.getContainer = function () {
 // ################################################################### //
 
 /**
- * this method is called by event '' on '' tag form
+ * this method is called by event '' on '' tag form...
+ *
+ * 'e' contains the option object into 'e.target.data' !
+ * 'e' contains the id editor into 'e.target.editorID' !
  *
  * @param {Object} e - HTMLElement
  * @private
- * @fires Style#editor:style:edit
+ * @fires Style#editor:style:oneditjson
  */
-Style.prototype.onEditStyleMapBox = function (e) {
-    logger.trace("onEditStyleMapBox", e);
+Style.prototype.onEditJsonStyleMapBox = function (e) {
+    logger.trace("onEditJsonStyleMapBox", e);
     e.editorID = this.id;
-    EventBus.dispatch(EventEditor.style.edit, e);
+    e.data = this.options;
+    EventBus.dispatch(EventEditor.style.oneditjson, e);
 };
 
 /**
- * this method is called by event '' on '' tag form
+ * this method is called by event '' on '' tag form...
+ *
+ * 'e' contains the option object into 'e.target.data' !
+ * 'e' contains the id editor into 'e.target.editorID' !
  *
  * @param {Object} e - HTMLElement
  * @private
- * @fires Style#editor:style:minScale
+ * @fires Style#editor:style:scale:onchangemin
  */
 Style.prototype.onChangeStyleScaleMinMapBox = function (e) {
     logger.trace("onChangeStyleScaleMinMapBox", e);
     e.editorID = this.id;
-    e.target.title = e.target.value;
-    EventBus.dispatch(EventEditor.style.scale.min, e);
+    e.data = this.options;
+    EventBus.dispatch(EventEditor.style.scale.onchangemin, e);
 };
 
 /**
- * this method is called by event '' on '' tag form
+ * this method is called by event '' on '' tag form...
+ *
+ * 'e' contains the option object into 'e.target.data' !
+ * 'e' contains the id editor into 'e.target.editorID' !
  *
  * @param {Object} e - HTMLElement
  * @private
- * @fires Style#editor:style:maxScale
+ * @fires Style#editor:style:scale:onchangemax
  */
 Style.prototype.onChangeStyleScaleMaxMapBox = function (e) {
     logger.trace("onChangeStyleScaleMaxMapBox", e);
     e.editorID = this.id;
-    e.target.title = e.target.value;
-    EventBus.dispatch(EventEditor.style.scale.max, e);
+    e.data = this.options;
+    EventBus.dispatch(EventEditor.style.scale.onchangemax, e);
 };
 
 export default Style;

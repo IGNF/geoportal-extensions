@@ -19,10 +19,11 @@ var logger = Logger.getLogger("editor-layer");
  * @example
  *   var layers = new Layer ({
  *      target : ...,
- *      position : 1,
+ *      position : 1, // identifiant de position (unique !)
  *      tools : {
  *          visibility : true, // afficher l'icone de visibilité
  *          type : true,       // afficher l'icone du type de geometrie
+ *          pin : true,        // afficher l'icone de puce
  *          remove : false,    // TODO afficher l'icone de suppression
  *          clone : false      // TODO afficher l'icone de duplication
  *      },
@@ -41,7 +42,11 @@ var logger = Logger.getLogger("editor-layer");
  *  layers.active(false);
  *  layers.visibility(false);
  *  layers.display(false);
- *  layers.toggle();
+ *  layers.collapse();
+ *  EventBus.addEventListener("editor:layer:onclickvisibility", function (e) {
+ *     // e.target.data : options !
+ *     // e.target.editorID : id or null
+ *   }, this);
  */
 function Layer (options) {
     logger.trace("[constructor] Layer", options);
@@ -65,6 +70,10 @@ function Layer (options) {
  */
 Layer.prototype.constructor = Layer;
 
+// ################################################################### //
+// ##################### private methods ############################# //
+// ################################################################### //
+
 /**
  * Initialize component
  * (called by constructor)
@@ -73,7 +82,7 @@ Layer.prototype.constructor = Layer;
  */
 Layer.prototype._initialize = function () {
     // unique editor id (optional!)
-    this.id = this.options.id || null;
+    this.id = this.options.id || null; // null si le layer n'appartient pas à un editeur !
 
     if (!this.options.target) {
         // cf. add()
@@ -86,6 +95,7 @@ Layer.prototype._initialize = function () {
     var _toolsDefault = {
         visibility : true,
         type : true,
+        pin : true,
         remove : false, // TODO
         clone : false // TODO
     };
@@ -185,19 +195,21 @@ Layer.prototype._initContainer = function () {
     divTitle.appendChild(inputImage);
 
     // puce
-    var labelImage = document.createElement("label");
-    labelImage.className = this.name.imagelabel;
-    labelImage.htmlFor = inputImage.id;
-    if (labelImage.addEventListener) {
-        labelImage.addEventListener("click", function (e) {
-            self.onClickLayerMapBox(e);
-        });
-    } else if (labelImage.attachEvent) {
-        labelImage.attachEvent("onclick", function (e) {
-            self.onClickLayerMapBox(e);
-        });
+    if (this.options.tools.pin) {
+        var labelImage = document.createElement("label");
+        labelImage.className = this.name.imagelabel;
+        labelImage.htmlFor = inputImage.id;
+        if (labelImage.addEventListener) {
+            labelImage.addEventListener("click", function (e) {
+                self.onClickLayerMapBox(e);
+            });
+        } else if (labelImage.attachEvent) {
+            labelImage.attachEvent("onclick", function (e) {
+                self.onClickLayerMapBox(e);
+            });
+        }
+        divTitle.appendChild(labelImage);
     }
-    divTitle.appendChild(labelImage);
 
     // type
     if (this.options.tools.type && obj.type) { // Optionnel !
@@ -257,7 +269,6 @@ Layer.prototype._initContainer = function () {
     labelTitle.htmlFor = inputTitle.id;
     labelTitle.innerHTML = obj["id"] || obj["source-layer"] || obj["source"];
     labelTitle.title = obj["source-layer"] || obj["source"] || obj["id"];
-    labelTitle.data = obj; // on lie le DOM et la couche, utile lors d'evenement !
     if (labelTitle.addEventListener) {
         labelTitle.addEventListener("click", function (e) {
             self.onClickLayerMapBox(e);
@@ -268,7 +279,7 @@ Layer.prototype._initContainer = function () {
         });
     }
     divTitle.appendChild(labelTitle);
-    // enregistrement utile pour la méthode : toggle()
+    // enregistrement utile pour la méthode : collapse()
     this.DomToggle = labelTitle;
 
     div.appendChild(divTitle);
@@ -286,7 +297,6 @@ Layer.prototype._initContainer = function () {
         inputTools.className = this.name.visibilityinput;
         inputTools.type = "checkbox";
         inputTools.checked = "checked"; // par défaut, à modifier via visibility(true|false) !
-        inputTools.data = obj; // on lie le DOM et la couche, utile lors d'evenement !
         // event for visibility change
         if (inputTools.addEventListener) {
             inputTools.addEventListener("click", function (e) {
@@ -334,6 +344,7 @@ Layer.prototype._initContainer = function () {
 
 /**
  * Add element into target DOM
+ * @returns {Object} - Layer instance
  */
 Layer.prototype.add = function () {
     logger.trace("add()");
@@ -351,6 +362,7 @@ Layer.prototype.add = function () {
     if (this.container) {
         this.options.target.appendChild(this.container);
     }
+    return this;
 };
 
 /**
@@ -414,7 +426,7 @@ Layer.prototype.slotLegend = function () {
             }
         }
         if (node) {
-            var render = legend.getRender();
+            var render = legend.getRenderContainer();
             if (render) {
                 node.appendChild(render);
                 // legende intégrée
@@ -424,8 +436,12 @@ Layer.prototype.slotLegend = function () {
     }
 };
 
+// ################################################################### //
+// ##################### public methods ############################## //
+// ################################################################### //
+
 /**
- * Set or get visibility
+ * Set visibility or get
  *
  * @param {Boolean} display - set visibility or undefined to get status
  * @returns {Boolean} - true/false
@@ -442,15 +458,15 @@ Layer.prototype.visibility = function (display) {
 };
 
 /**
-* Toggle a layer panel
+* Collapse a layer panel (event)
 */
-Layer.prototype.toggle = function () {
-    logger.trace("toggle()");
+Layer.prototype.collapse = function () {
+    logger.trace("collapse()");
     this.DomToggle.click();
 };
 
 /**
-* Click on visibility icon
+* Click on visibility icon (event)
 */
 Layer.prototype.visible = function () {
     logger.trace("visible()");
@@ -461,7 +477,7 @@ Layer.prototype.visible = function () {
 };
 
 /**
- * Set display or get
+ * Set collapse or get
  *
  * @param {Boolean} display - show/hidden container or get status
  * @returns {Boolean} - true/false
@@ -470,7 +486,7 @@ Layer.prototype.display = function (display) {
     logger.trace("display()", display);
     var checked = document.getElementById(this.DomToggle.htmlFor).checked;
     if (typeof display !== "undefined") {
-        this.container.style.display = (display) ? "flex" : "none";
+        this.container.style.display = (display) ? "inline-flex" : "none";
         if (this.oStyle) {
             this.oStyle.display(display && checked);
         }
@@ -485,15 +501,19 @@ Layer.prototype.display = function (display) {
 };
 
 /**
- * Set disabled/enabled status
+ * Set disabled/enabled status or get
  *
- * @param {Boolean} active - disable/enable layer interaction
+ * @param {Boolean} active - disable/enable layer interaction or get status
+ * @returns {Boolean} - true/false
  */
 Layer.prototype.active = function (active) {
     logger.trace("active()", active);
-    this.container.className = (active)
-        ? this.name.container
-        : this.name.container + " disabled";
+    if (typeof active !== "undefined") {
+        this.container.className = (active)
+            ? this.name.container
+            : this.name.container + " disabled";
+    }
+    return (this.container.className === this.name.container);
 };
 
 /**
@@ -504,6 +524,7 @@ Layer.prototype.active = function (active) {
 Layer.prototype.getContainer = function () {
     return this.container;
 };
+
 // ################################################################### //
 // ####################### handlers events to dom #################### //
 // ################################################################### //
@@ -536,49 +557,61 @@ Layer.prototype.onClickLayerMapBox = function (e) {
         this.oFilter.display(!checked);
     }
     // attention,
-    // la legende ne se trouve pas forcement dans le sous menu !
-    if (this.oLegend && !this.bSlotLegend) {
+    // si la legende est non editable, elle ne se trouve pas dans le sous menu !
+    if (this.oLegend && this.oLegend.isEditable()) {
         this.oLegend.display(!checked);
     }
 };
 
 /**
- * this method is called by event '' on '' tag form
+ * this method is called by event '' on '' tag form...
+ *
+ * 'e' contains the option object into 'e.target.data' !
+ * 'e' contains the id editor into 'e.target.editorID' !
  *
  * @param {Object} e - HTMLElement
  * @private
- * @fires Layer#editor:layer:visibility
+ * @fires Layer#editor:layer:onclickvisibility
  */
 Layer.prototype.onVisibilityLayerMapBox = function (e) {
     logger.trace("onVisibilityLayerMapBox", e);
     e.editorID = this.id;
-    EventBus.dispatch(EventEditor.layer.visibility, e);
+    e.data = this.options;
+    EventBus.dispatch(EventEditor.layer.onclickvisibility, e);
 };
 
 /**
- * this method is called by event '' on '' tag form
+ * this method is called by event '' on '' tag form...
+ *
+ * 'e' contains the option object into 'e.target.data' !
+ * 'e' contains the id editor into 'e.target.editorID' !
  *
  * @param {Object} e - HTMLElement
  * @private
- * @fires Layer#editor:layer:clone
+ * @fires Layer#editor:layer:onclickclone
  */
 Layer.prototype.onCloneLayerMapBox = function (e) {
     logger.trace("onCloneLayerMapBox", e);
     e.editorID = this.id;
-    EventBus.dispatch(EventEditor.layer.clone, e);
+    e.data = this.options;
+    EventBus.dispatch(EventEditor.layer.onclickclone, e);
 };
 
 /**
- * this method is called by event '' on '' tag form
+ * this method is called by event '' on '' tag form...
+ *
+ * 'e' contains the option object into 'e.target.data' !
+ * 'e' contains the id editor into 'e.target.editorID' !
  *
  * @param {Object} e - HTMLElement
  * @private
- * @fires Layer#editor:layer:remove
+ * @fires Layer#editor:layer:onclickremove
  */
 Layer.prototype.onRemoveLayerMapBox = function (e) {
     logger.trace("onRemoveLayerMapBox", e);
     e.editorID = this.id;
-    EventBus.dispatch(EventEditor.layer.remove, e);
+    e.data = this.options;
+    EventBus.dispatch(EventEditor.layer.onclickremove, e);
 };
 
 export default Layer;

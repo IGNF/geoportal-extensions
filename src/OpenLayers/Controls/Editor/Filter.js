@@ -16,6 +16,7 @@ var logger = Logger.getLogger("editor-filter");
  * @example
  *   var filter = new Filter ({
  *      target : ...,
+ *      position : 1, // identifiant de position (unique !)
  *      tools : {
  *          edition : false
  *      },
@@ -24,6 +25,9 @@ var logger = Logger.getLogger("editor-filter");
  *          filter : []
  *      }
  *   });
+ *  filter.add();
+ *  filter.display(true);
+ *  filter.getContainer();
  */
 function Filter (options) {
     logger.trace("[constructor] Filter", options);
@@ -32,6 +36,7 @@ function Filter (options) {
     this.options = options || {
         // default...
         target : null,
+        position : 0,
         tools : null,
         title : null,
         obj : null
@@ -65,6 +70,10 @@ Filter.prototype._initialize = function () {
 
     if (!this.options.target) {
         // cf. add()
+    }
+
+    if (!this.options.position) {
+        this.options.position = 0;
     }
 
     var _toolsDefault = {
@@ -151,11 +160,15 @@ Filter.prototype._initContainer = function () {
     preJson.innerHTML = json;
     if (preJson.addEventListener) {
         preJson.addEventListener("click", function (e) {
-            self.onEditFilterMapBox(e);
+            if (self.options.tools.edition) {
+                self.onEditJsonFilterMapBox(e);
+            }
         });
     } else if (preJson.attachEvent) {
         preJson.attachEvent("onclick", function (e) {
-            self.onEditFilterMapBox(e);
+            if (self.options.tools.edition) {
+                self.onEditJsonFilterMapBox(e);
+            }
         });
     }
     divJson.appendChild(preJson);
@@ -177,6 +190,7 @@ Filter.prototype._initContainer = function () {
 
 /**
  * Add element into target DOM
+ * @returns {Object} - Legend instance
  */
 Filter.prototype.add = function () {
     if (!this.options.target) {
@@ -193,15 +207,21 @@ Filter.prototype.add = function () {
     if (this.container) {
         this.options.target.appendChild(this.container);
     }
+    return this;
 };
 
 /**
- * Set display container (DOM)
+ * Set display container or get
  *
- * @param {Boolean} display - show/hidden container
+ * @param {Boolean} display - show/hidden container or get status
+ * @returns {Boolean} - true/false
  */
 Filter.prototype.display = function (display) {
-    this.container.style.display = (display) ? "flex" : "none";
+    logger.trace("display()", display);
+    if (typeof display !== "undefined") {
+        this.container.style.display = (display) ? "flex" : "none";
+    }
+    return (this.container.style.display === "flex");
 };
 
 /**
@@ -217,16 +237,20 @@ Filter.prototype.getContainer = function () {
 // ################################################################### //
 
 /**
- * this method is called by event '' on '' tag form
+ * this method is called by event '' on '' tag form...
+ *
+ * 'e' contains the option object into 'e.target.data' !
+ * 'e' contains the id editor into 'e.target.editorID' !
  *
  * @param {Object} e - HTMLElement
  * @private
- * @fires Filter#editor:style:edit
+ * @fires Filter#editor:style:oneditjson
  */
-Filter.prototype.onEditFilterMapBox = function (e) {
-    logger.trace("onEditFilterMapBox", e);
+Filter.prototype.onEditJsonFilterMapBox = function (e) {
+    logger.trace("onEditJsonFilterMapBox", e);
     e.editorID = this.id;
-    EventBus.dispatch(EventEditor.filter.edit, e);
+    e.data = this.options;
+    EventBus.dispatch(EventEditor.filter.oneditjson, e);
 };
 
 export default Filter;

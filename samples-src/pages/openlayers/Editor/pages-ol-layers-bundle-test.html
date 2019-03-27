@@ -42,12 +42,13 @@
                 target: document.getElementById("layers"),
                 tools : {
                     visibility : true,
+                    type : false,
                     remove : false,
                     clone : false
                 },
                 position : 2,
                 obj: {
-                    id : "Titre2",
+                    id : "Titre2 (Geometrie false)",
                     "source-layer" : "Description2",
                     type: "symbol"
                 },
@@ -65,7 +66,7 @@
                 },
                 position : 3,
                 obj: {
-                    id : "Titre3",
+                    id : "Titre3 (Geometrie false + Visibility false + Toggle to collapse false)",
                     "source-layer" : "Description3",
                     type: "line"
                 },
@@ -73,13 +74,13 @@
             layers3.add();
             layers3.visibility(false);
             console.log("visibility 3 : ", layers3.visibility());
-            layers3.toggle();
+            layers3.collapse();
 
             var layers4 = new ol.style.editor.Layer({
                 target: document.getElementById("layers"),
                 position : 4,
                 obj: {
-                    id : "Titre4",
+                    id : "Titre4 (Legend editable + Add style/filtre/legende + Collapse true)",
                     "source-layer" : "Description4",
                     type: "fill"
                 },
@@ -120,6 +121,7 @@
                 target: document.getElementById("layers"),
                 obj : {
                     "title" : "Legende...",
+                    "editable" : true,
                     "paint" : {
                       "fill-color": "#0F78B4",
                       "fill-opacity": 0.7
@@ -127,15 +129,14 @@
                 }
             });
             legend.add();
-            legend.display(false);
             layers4.addLegend(legend);
-            layers4.slotLegend(); // integration de la legende dans le container du layers !
+            // layers4.slotLegend(); // integration de la legende dans le container du layers !
 
             var layers5 = new ol.style.editor.Layer({
                 target: document.getElementById("layers"),
                 position : 5,
                 obj: {
-                    id : "Titre5",
+                    id : "Titre5 (Active + Switch to visibility false)",
                     "source-layer" : "Description5",
                     type: "circle"
                 },
@@ -144,6 +145,64 @@
             layers5.active(false);
             layers5.visible();
 
+            var layers6 = new ol.style.editor.Layer({
+                id : 666,
+                target: document.getElementById("layers"),
+                position : 6,
+                obj: {
+                    id : "Titre6 (Visibility false + Add a listener)",
+                    "source-layer" : "Description6 - Add a listener on event 'editor:layer:onclickvisibility'",
+                    type: "line"
+                },
+            });
+            layers6.add();
+            layers6.active(true);
+            layers6.visibility(false);
+            EventBus.addEventListener("editor:layer:onclickvisibility", function (e) {
+                console.log("Add a listener on event 'editor:layer:onclickvisibility' : switch active !", e);
+                if (e.target.editorID === 666) {
+                    console.log("Event on position : ", e.target.data.position);
+                    var b = layers6.active();
+                    layers6.active(!b);
+                }
+            });
+
+            var layers7 = new ol.style.editor.Layer({
+                target: document.getElementById("layers"),
+                position : 7,
+                tools : {
+                    visibility : false,
+                    type : false,
+                    pin : false
+                },
+                obj: {
+                    id : "Titre7 (Visibility/Type/Pin false + Legend integrate/editable)",
+                    "source-layer" : "Description7",
+                    type: "line"
+                },
+            });
+            layers7.add();
+            layers7.addLegend(new ol.style.editor.Legend({
+                id : 777, // id unique !
+                target: document.getElementById("layers"),
+                obj : {
+                    "title" : "Legende...",
+                    "editable" : true,
+                    "paint" : {
+                      "fill-color": "#FF0000",
+                      "fill-opacity": 0.7
+                    }
+                }
+            }).add());
+            layers7.slotLegend();
+            EventBus.addEventListener("editor:legend:onclickedition", function (e) {
+                console.log("Add a listener on event 'editor:legend:onclickedition' : switch active !", e);
+                if (e.target.editorID === 777) {
+                    var b = layers7.active();
+                    layers7.active(!b);
+                }
+            });
+
             document.getElementById("displayTrue").addEventListener("click", function () {
                 layers0.display(true);
                 layers1.display(true);
@@ -151,6 +210,7 @@
                 layers3.display(true);
                 layers4.display(true);
                 layers5.display(true);
+                layers6.display(true);
             });
 
             document.getElementById("displayFalse").addEventListener("click", function () {
@@ -160,6 +220,7 @@
                 layers3.display(false);
                 layers4.display(false);
                 layers5.display(false);
+                layers6.display(false);
             });
 
             </script>

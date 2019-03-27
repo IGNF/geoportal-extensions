@@ -324,6 +324,7 @@ JSON display Editor
 /*******************************************************************************
 LEGEND
 *******************************************************************************/
+
 .GPEditorMapBoxLegendContainer {
     width: 100%;
     display: flex;
@@ -350,33 +351,37 @@ LEGEND
 .GPEditorMapBoxLegendRender {
     min-width: 28px;
     min-height: 28px;
-    border-color: gray;
+    border-color: transparent;
     border-style: solid;
     border-width: 1px;
     border-radius: 5px;
-    box-shadow: 2px 2px 1px lightgrey;
+    box-shadow: 2px 2px 1px grey;
     cursor: pointer;
 }
-
+.GPEditorMapBoxLegendEditable {
+    border-color: black;
+}
 .GPEditorMapBoxLegendTitle {
     margin-left: 10px;
 }
 
+.GPEditorMapBoxLegendToolsContainer {
+    display: flex;
+    flex-direction: column;
+    width: 230px;
+    padding: 5px;
+}
+
 .legend-background {}
-
 .legend-fill {}
-
 .legend-line {}
-
 .legend-icon {}
-
 .legend-text {}
-
+.legend-circle {}
 .legend-unknow,
 .legend-not-implemented {
     background-color: #FFFFFF;
 }
-
 .legend-unknow:before {
     content: '\2753';
     color: red;
@@ -387,11 +392,18 @@ LEGEND
     color: red;
     font-size: 15px;
 }
+.legend-fill-not-editable {
 
-.legend-circle {
-    border-width: 3px;
-    border-style: solid;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
+}
+.legend-circle-not-editable,
+.legend-line-not-editable {
+    border-color: white;
+}
+
+.legend-styling-div {
+    display: flex;
+    justify-content: space-between;
+}
+.legend-styling {
+    width: 50px;
 }

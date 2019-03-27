@@ -51,16 +51,16 @@
                 target: document.getElementById("editor"),
                 style: "{{ resources }}/data/mapbox/styles/osm.json",
                 events : { // TODO...
-                    "editor:layer:visibility" : function (e) {console.log(e);},
-                    "editor:layer:remove" : function (e) {console.log(e);},
-                    "editor:layer:clone" : function (e) {console.log(e);},
-                    "editor:legend:visibility" : function (e) {console.log(e);},
-                    "editor:style:minScale" : function (e) {console.log(e);},
-                    "editor:style:maxScale" : function (e) {console.log(e);},
-                    "editor:style:edit" : function (e) {console.log(e);},
-                    "editor:filter:edit" : function (e) {console.log(e);},
-                    "editor:themes:image" : function (e) {console.log(e);},
-                    "editor:themes:title" : function (e) {
+                    "editor:layer:onclickvisibility" : function (e) {console.log(e);},
+                    "editor:layer:onclickremove" : function (e) {console.log(e);},
+                    "editor:layer:onclickclone" : function (e) {console.log(e);},
+                    "editor:legend:onclickedition" : function (e) {console.log(e);},
+                    "editor:style:scale:onchangemax" : function (e) {console.log(e);},
+                    "editor:style:scale:onchangemin" : function (e) {console.log(e);},
+                    "editor:style:oneditjson" : function (e) {console.log(e);},
+                    "editor:filter:oneditjson" : function (e) {console.log(e);},
+                    "editor:themes:onclickimage" : function (e) {console.log(e);},
+                    "editor:themes:onclicktitle" : function (e) {
                         console.log(this.getID(), e);
                     }
                 },

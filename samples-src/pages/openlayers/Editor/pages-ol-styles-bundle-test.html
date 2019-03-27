@@ -22,18 +22,20 @@
 {{#content "js"}}
             <script type="text/javascript">
 
-            // style vide
-            var style0 = new ol.style.editor.Style({
-                target: document.getElementById("style")
-            });
+            // style vide et target par defaut
+            var style0 = new ol.style.editor.Style();
             style0.add();
 
-            // style vide et target par defaut
-            var style1 = new ol.style.editor.Style();
+            // style vide
+            var style1 = new ol.style.editor.Style({
+                target: document.getElementById("style"),
+                position : 1,
+            });
             style1.add();
 
             // style paint
             var style2 = new ol.style.editor.Style({
+                position : 2,
                 obj: {
                     "paint": {
                       "fill-color": "#0F78B4",
@@ -45,6 +47,7 @@
 
             // style layout
             var style3 = new ol.style.editor.Style({
+                position : 3,
                 obj: {
                     "layout": {
                       "visibility": "none",
@@ -72,9 +75,16 @@
                 },
             });
             style3.add();
+            EventBus.addEventListener("editor:style:scale:onchangemin", function (e) {
+                console.log("Add a listener on event 'editor:lstyle:scale:onchangemin' : message !", e);
+                if (e.target.data.position === 3) {
+                    console.log("Event on position 3 !");
+                }
+            });
 
             // style layout + paint
             var style4 = new ol.style.editor.Style({
+                position : 4,
                 obj: {
                     "paint": {
                       "fill-color": "#0F78B4",
@@ -108,6 +118,7 @@
             style4.add();
             // style paint complexe
             var style5 = new ol.style.editor.Style({
+                position : 5,
                 obj : {
                     "paint": {
                         "fill-color": [

@@ -40,15 +40,15 @@ var logger = Logger.getLogger("editor");
  *      }],
  *      scope : this,
  *      events : {
- *          "editor:layer:visibility" : ...,
- *          "editor:layer:clone" : ...,
- *          "editor:layer:remove" : ...,
- *          "editor:style:edit" : ...,
- *          "editor:style:minScale" : ...,
- *          "editor:style:maxScale" : ...,
- *          "editor:filter:edit" : ...,
- *          "editor:themes:image" : this._onClickEventImageTheme(),
- *          "editor:themes:title" : function(e) {...}
+ *          "editor:layer:onclickvisibility" : ...,
+ *          "editor:layer:onclickclone" : ...,
+ *          "editor:layer:onclickremove" : ...,
+ *          "editor:style:oneditjson" : ...,
+ *          "editor:style:scale:onchangemin" : ...,
+ *          "editor:style:scale:onchangemax" : ...,
+ *          "editor:filter:oneditjson" : ...,
+ *          "editor:themes:onclickimage" : this._onClickEventImageTheme(),
+ *          "editor:themes:onclicktitle" : function(e) {...}
  *      },
  *      tools : {
  *          themes : true, // afficher les themes (themes)
@@ -56,7 +56,7 @@ var logger = Logger.getLogger("editor");
  *          style : true,  // afficher les styles (sous menu layers)
  *          filter : true, // afficher les filtres (sous menu layers)
  *          legend : true, // afficher les legendes (layers)
- *          group : true,  // grouper les couches (layers)      // TODO
+ *          group : true,  // grouper les couches (layers)
  *          title : true   // afficher les titres des rubriques,
  *          type : true,   // affichage du type de geometrie (layers)
  *      }
@@ -268,7 +268,7 @@ Editor.prototype._initContainer = function () {
             div.appendChild(titleThemes);
         }
 
-        // styles
+        // lien vers les styles
         var themes = new Themes({
             id : this.id,
             target : div,
@@ -382,7 +382,7 @@ Editor.prototype._initContainer = function () {
                                         id : this.id,
                                         target : div,
                                         title : grp,
-                                        open : false
+                                        collapse : true
                                     });
                                     oGroup.add();
                                     // le nouveau container pour les elements suivants
@@ -428,13 +428,15 @@ Editor.prototype._initContainer = function () {
                         this.layers.push(oLayer);
                     }
                     // Legende
-                    // TODO options sur l'intégration de la legende dans le menu de la couche
                     if (this.options.tools.legend) {
                         var oLegend = new Legend({
                             id : this.id,
                             target : target,
                             obj : {
+                                "id" : data.id,
+                                "source" : data.source,
                                 "title" : data.id,
+                                "editable" : data.editable || false,
                                 "paint" : data.paint
                             }
                         });
@@ -452,6 +454,8 @@ Editor.prototype._initContainer = function () {
                             target : target,
                             position : _idx + "_" + ii, // unique !,
                             obj : {
+                                "id" : data.id,
+                                "source" : data.source,
                                 "layout" : data.layout,
                                 "paint" : data.paint
                             }
@@ -473,6 +477,8 @@ Editor.prototype._initContainer = function () {
                             target : target,
                             position : _idx + "_" + ii, // unique !,
                             obj : {
+                                "id" : data.id,
+                                "source" : data.source,
                                 "filter" : data.Filter
                             }
                         });

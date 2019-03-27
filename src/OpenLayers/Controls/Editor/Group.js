@@ -15,10 +15,10 @@ var logger = Logger.getLogger("editor-group");
  * @example
  *   var group = new Group ({
  *      title : "MyGroup",
- *      open : true, // plier/deplier
+ *      collapse : true, // plier/deplier
  *      target : ...
  *   });
- *   group.addLayer(Layer);
+ *   group.add();
  *   group.add();
  */
 function Group (options) {
@@ -65,8 +65,8 @@ Group.prototype._initialize = function () {
     }
 
     // plier par defaut
-    if (typeof this.options.open === "undefined") {
-        this.options.open = false;
+    if (typeof this.options.collapse === "undefined") {
+        this.options.collapse = true;
     }
 
     this.container = null;
@@ -97,7 +97,7 @@ Group.prototype._initContainer = function () {
     // cf. https://css-tricks.com/quick-reminder-that-details-summary-is-the-easiest-way-ever-to-make-an-accordion/
     var details = document.createElement("details");
     details.className = this.name.details;
-    details.open = this.options.open;
+    details.open = !this.options.collapse;
     div.appendChild(details);
 
     var summary = document.createElement("summary");
@@ -163,14 +163,16 @@ Group.prototype.getContainer = function () {
 /**
  * this method is called by event '' on '' tag form
  *
+ * NOT USED !
  * @param {Object} e - HTMLElement
  * @private
- * @fires Group#editor:group:visibility
+ * @fires Group#editor:group:oncollapse
  */
-Group.prototype.onVisibilityGroupMapBox = function (e) {
-    logger.trace("onVisibilityGroupMapBox", e);
+Group.prototype.onCollapseGroupMapBox = function (e) {
+    logger.trace("onCollapseGroupMapBox", e);
     e.editorID = this.id;
-    EventBus.dispatch(EventEditor.group.visibility, e);
+    e.data = this.options;
+    EventBus.dispatch(EventEditor.group.oncollapse, e);
 };
 
 export default Group;

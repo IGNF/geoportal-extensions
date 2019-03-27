@@ -1,6 +1,11 @@
 /**
 * Global variable Gp.
 *
+* The following variables are aslo global :
+*   - proj4,
+*   - ol,
+*   - eventbus
+*
 * @module Gp
 * @alias Gp
 * @desc
@@ -75,6 +80,9 @@ import Editor from "./Controls/Editor";
 import "../Common/Utils/AutoLoadConfig";
 import "./CRS/AutoLoadCRS";
 
+// export des crs !?
+// import CRS from "./CRS/CRS";
+
 // export des services
 import Gp from "geoportal-access-lib";
 
@@ -99,17 +107,14 @@ export {default as ProxyUtils} from "../Common/Utils/ProxyUtils";
 export {default as ColorUtils} from "../Common/Utils/ColorUtils";
 export {default as MathUtils} from "../Common/Utils/MathUtils";
 
-// export des crs !?
-// export {default as CRS} from "./CRS/CRS";
-
 // utilitaires dans un ns "gp" ?
 Ol.gp = {};
 Ol.gp.GfiUtils = GfiUtils;
 
 // Editeur MapBox
-Ol.style = {};
+Ol.style = Ol.style || {};
 Ol.style.Editor = Editor;
-Ol.style.editor = {};
+Ol.style.editor = Ol.style.editor || {};
 Ol.style.editor.Style = Style;
 Ol.style.editor.Filter = Filter;
 Ol.style.editor.Layer = Layer;
@@ -119,6 +124,10 @@ Ol.style.editor.Themes = Themes;
 
 // Rajout de l'extension olms (ol mapbox style)
 Ol.olms = Olms;
+
+// projections ?
+// Ol.proj = Ol.proj || {};
+// Ol.proj.CRS = CRS;
 
 // Rajout des propriétés dans le namespace Ol
 Ol.format = Ol.format || {};

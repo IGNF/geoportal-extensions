@@ -38,10 +38,10 @@ les fichiers sont suffixés avec le tag *modules*.
 
 - [x] Migrer vers ol v5.3.0   : **OK**
 
-- [ ] olms en externe ?       : **TODO**
+- [ ] dépendance olms ?       : **TODO**
     - Doit on intégrer olms dans le code des extensions ou en dependance externe (comme ol) ?
     - Le SDK utilise aussi olms, et cette dependance sera aussi intégrée !?
-    - binaire :
+    - pour info, le binaire est :
     > https://unpkg.com/ol-mapbox-style/dist/olms.js
 
 - [ ] Migrer vers webpack 4   : **TODO**
@@ -95,7 +95,7 @@ les fichiers sont suffixés avec le tag *modules*.
 - [x] Format **Ok**
 
     * [x] ol.format.KMLExtended  :
-    > **EVOL** Refonte à prévoir...
+    > **EVOL** Refonte à prévoir en fonction des avancées openlayers...
 
     * [x] ol.source.WMTSExtended :
 
@@ -170,9 +170,8 @@ les fichiers sont suffixés avec le tag *modules*.
         - [ ] *FIXME* bug pour ajouter des projection **geocent** sur le registre IGNF !?
         - [x] on ne surcharge pas la fonction transformExtent mais on ajoute un setExtent() sur
             l'EPSG:2154
-
-            - à quoi sert la fonction MousePosition::validateExtentCoordinate ?
-            les systemes de projection de MousePosition ont déjà une validity extent en option ?
+                - à quoi sert la fonction MousePosition::validateExtentCoordinate ?
+                les systemes de projection de MousePosition ont déjà une validity extent en option ?
 
     * [x] Editor : **OK**
 

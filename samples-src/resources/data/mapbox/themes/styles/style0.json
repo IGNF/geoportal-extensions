@@ -36,6 +36,7 @@
       "id": "population_lt_2m",
       "type": "fill",
       "source": "states",
+      "editable": true,
       "filter": [
         "<=",
         "PERSONS",

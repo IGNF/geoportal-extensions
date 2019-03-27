@@ -1,7 +1,7 @@
 import EventBus from "eventbusjs";
 import EventEditor from "./Event";
-import Utils from "../../../Common/Utils";
 import Logger from "../../../Common/Utils/LoggerByDefault";
+import Color from "../../../Common/Utils/ColorUtils";
 
 var logger = Logger.getLogger("editor-legend");
 
@@ -14,16 +14,21 @@ var logger = Logger.getLogger("editor-legend");
  * @alias ol.style.editor.Legend
  * @param {Object} options - options for function call.
  * @example
- *   var Legends = new Legend ({
+ *   var legend = new Legend ({
  *      target : ...,
- *      tools : {
- *          edition : false
- *      },
+ *      position : 1, // identifiant de position (unique !)
  *      obj : {
  *          title : "",
+ *          editable : true, // tag non standard issue du style json dédié à l'edition
  *          paint : {}
  *      }
  *   });
+ *  legend.add();
+ *  legend.display(true);
+ *  legend.isEditable();
+ *  legend.getRenderContainer();
+ *  legend.getToolsContainer();
+ *  legend.getContainer();
  */
 function Legend (options) {
     logger.trace("[constructor] Legend", options);
@@ -32,7 +37,7 @@ function Legend (options) {
     this.options = options || {
         // default...
         target : null,
-        tools : null,
+        position : 0,
         obj : null
     };
 
@@ -66,36 +71,61 @@ Legend.prototype._initialize = function () {
         // cf. add()
     }
 
-    var _toolsDefault = {
-        edition : false
-    };
-
-    if (!this.options.tools) {
-        this.options.tools = _toolsDefault;
+    // permet d'avoir un identifiant de position dans la liste des layers
+    if (!this.options.position) {
+        this.options.position = 0;
     }
 
-    Utils.mergeParams(this.options.tools, _toolsDefault, false);
-
     if (!this.options.obj) {
-        // choix d'avoir un objet vide pour une edition futur...
+        // choix d'avoir un objet vide pour une edition...
         this.options.obj = {
             title : "vide...",
+            editable : true,
             paint : {
                 "fill-color" : "#FFFFFF"
             }
         };
     }
 
-    // dom
+    // la legende est elle editable ?
+    // le tag 'editable' est à placer dans le fichier de style (dans le layer)...
+    var _editable = this.options.obj.editable;
+    this.editable = (typeof _editable !== "undefined") ? _editable : false;
+
+    // liste des caractéristiques de la legende
+    this.legendRender = {
+        type : "line",
+        values : {
+            width : 1,
+            stroke : "#FFFFFF",
+            color : "#000000",
+            opacity : 1
+        }
+    };
+
+    // DOM : pointer
     this.container = null;
+    this.rendercontainer = null;
+    this.toolscontainer = null;
 
     // DOM : className or id
     this.name = {
         target : "GPEditorMapBoxLegendTarget",
         container : "GPEditorMapBoxLegendContainer",
-        containerlegend : "GPEditorMapBoxLegendRenderContainer",
+        containerlegendrender : "GPEditorMapBoxLegendRenderContainer",
         legendrender : "GPEditorMapBoxLegendRender",
-        legendtitle : "GPEditorMapBoxLegendTitle"
+        legendeditable : "GPEditorMapBoxLegendEditable",
+        legendtitle : "GPEditorMapBoxLegendTitle",
+        containerlegendtools : "GPEditorMapBoxLegendToolsContainer"
+    };
+
+    // DOM : Label menu Edition
+    this.labels = {
+        "line-color" : "Couleur du trait",
+        "line-width" : "Epaisseur du trait",
+        "line-opacity" : "Opacité du trait",
+        "fill-color" : "Couleur de remplissage",
+        "fill-opacity" : "Opacité du remplissage"
     };
 };
 
@@ -105,7 +135,13 @@ Legend.prototype._initialize = function () {
  *
  * @private
  * @example
- * <div class="GPEditorMapBoxLegendContainer">...</div>
+ * <div class="GPEditorMapBoxLegendContainer">
+ *  <div class="GPEditorMapBoxLegendRenderContainer">
+ *      <div class="GPEditorMapBoxLegendRender GPEditorMapBoxLegendEditable legend-circle" style="..."></div>
+ *      <span class="GPEditorMapBoxLegendTitle">test circle editable...</span>
+ *  </div>
+ *  <div class="GPEditorMapBoxLegendToolsContainer">...</div>
+ * </div>
  */
 Legend.prototype._initContainer = function () {
     var _obj = this.options.obj;
@@ -121,24 +157,33 @@ Legend.prototype._initContainer = function () {
 
         // FIXME
         // - gestion de type plus complexe : texte avec/sans icone ou icone !
+        // - pour les textes ou icones, les info peuvent être dans le tag 'layout' !
+        var params = {};
         var bFound = false;
         for (var i = 0; i < keys.length; i++) {
-            var key = keys[i];
-            if (/fill-/.test(key) ||
-                /line-/.test(key) ||
-                /circle-/.test(key) ||
-                /background-/.test(key) ||
-                /text-/.test(key) ||
-                /icon-/.test(key)
+            var _key = keys[i];
+            if (/fill-/.test(_key) ||
+                /line-/.test(_key) ||
+                /circle-/.test(_key) ||
+                /background-/.test(_key) ||
+                /text-/.test(_key) ||
+                /icon-/.test(_key)
             ) {
                 // style geré & trouvé
                 bFound = true;
 
-                div.appendChild(this._createElementLegend({
-                    title : _obj.title || "",
-                    type : key.split("-")[0],
-                    value : _obj.paint
-                }));
+                var _type = _key.split("-")[0];
+                var _title = _obj.title || "";
+                var _values = _obj.paint || {};
+
+                params = {
+                    edit : this.editable,
+                    title : _title,
+                    type : _type,
+                    values : this._getValues(_type, _values)
+                };
+
+                div.appendChild(this._createElementIconLegend(params));
 
                 // on stoppe la recherche
                 break;
@@ -146,27 +191,41 @@ Legend.prototype._initContainer = function () {
         }
     }
 
-    // legende avec un style indeterminé !?
+    // legende avec un style indeterminé ou non géré !?
     if (!bFound) {
-        div.appendChild(this._createElementLegend({
+        params = {
+            edit : this.editable,
             title : _obj.title || "",
-            type : "",
-            value : ""
-        }));
+            type : "line",
+            values : this._getValues("line", {})
+        };
+
+        div.appendChild(this._createElementIconLegend(params));
     }
+
+    // ajout mode edition graphique de la legende
+    this.toolscontainer = this._createElementEditionLegend(params);
+    div.appendChild(this.toolscontainer);
 
     // main container
     this.container = div;
 };
 
 /**
-* Graphical legend Simple
+* ...
+*
+* @param {Object} type - fill, line, circle, text, ...
+* @param {Object} value - cf. example
+* @returns {Object} - {"color":..., "width":..., "stroke":...., "opacity":...}
+*
+* @private
+* @example
 * // type simple :
 * // "paint": {
 * //     "fill-color": "#2BB3E1"
 * // }
 *
-* // TODO type complexe :
+* // TODO type complexe : not yet implemented !
 * // "paint": {
 * //     "fill-color": [
 * //          "match",
@@ -177,7 +236,7 @@ Legend.prototype._initContainer = function () {
 * //      ]
 * // }
 *
-* // TODO type complexe :
+* // TODO other type complexe : not yet implemented !
 * // "paint": {
 * //     "fill-color": {
 * //        "base": 1,
@@ -193,113 +252,264 @@ Legend.prototype._initContainer = function () {
 * //        ]
 * //     }
 * // }
+*/
+Legend.prototype._getValues = function (type, value) {
+    // objets
+    var pColor = null;
+    var pStroke = null;
+    var pWidth = null;
+    var pOpacity = null;
+
+    // par defaut...
+    var _color = this.legendRender.values.color; // couleur remplissage
+    var _stroke = this.legendRender.values.stroke; // couleur trait
+    var _width = this.legendRender.values.width; // epaisseur
+    var _opacity = this.legendRender.values.opacity; // opacité
+
+    switch (type) {
+        case "line":
+            pColor = value["line-color"];
+            if (typeof pColor === "object" || Array.isArray(pColor)) {
+                _color = null;
+                break;
+            }
+            _color = pColor || _color;
+            pWidth = value["line-width"];
+            _width = (typeof pWidth === "object" || Array.isArray(pWidth)) ? _width : pWidth || _width;
+            pOpacity = value["line-opacity"];
+            _opacity = (typeof pOpacity === "object" || Array.isArray(pOpacity)) ? _opacity : pOpacity || _opacity;
+            break;
+        case "text":
+            pColor = value["text-color"];
+            if (typeof pColor === "object" || Array.isArray(pColor)) {
+                _color = null;
+                break;
+            }
+            // FIXME complexe !?
+            _color = pColor || _color;
+            break;
+        case "icon":
+            pColor = value["icon-color"];
+            if (typeof pColor === "object" || Array.isArray(pColor)) {
+                _color = null;
+                break;
+            }
+            // FIXME complexe !?
+            _color = pColor || _color;
+            break;
+        case "circle":
+            pColor = value["circle-color"];
+            if (typeof pColor === "object" || Array.isArray(pColor)) {
+                _color = null;
+                break;
+            }
+            _color = pColor || _color;
+            pStroke = value["circle-stroke-color"];
+            _stroke = (typeof pStroke === "object" || Array.isArray(pStroke)) ? _stroke : pStroke || _stroke;
+            pOpacity = value["circle-opacity"];
+            _opacity = (typeof pOpacity === "object" || Array.isArray(pOpacity)) ? _opacity : pOpacity || _opacity;
+            pWidth = value["circle-stroke-width"];
+            _width = (typeof pWidth === "object" || Array.isArray(pWidth)) ? _width : pWidth || _width;
+            break;
+        case "background":
+            pColor = value["background-color"];
+            if (typeof pColor === "object" || Array.isArray(pColor)) {
+                _color = null;
+                break;
+            }
+            _color = pColor || _color;
+            break;
+        case "fill":
+            pColor = value["fill-color"];
+            if (typeof pColor === "object" || Array.isArray(pColor)) {
+                _color = null;
+                break;
+            }
+            _color = pColor || _color;
+            pOpacity = value["fill-opacity"];
+            _opacity = (typeof pOpacity === "object" || Array.isArray(pOpacity)) ? _opacity : pOpacity || _opacity;
+            break;
+        default:
+    }
+
+    // save
+    this.legendRender = {
+        type : type,
+        values : {
+            color : _color,
+            stroke : _stroke,
+            width : _width,
+            opacity : _opacity
+        }
+    };
+
+    return this.legendRender.values;
+};
+
+/**
+* ...
+*
+* @param {Object} type - fill, line, circle, text, ...
+* @param {Object} values - {"color":..., "width":..., "stroke":...., "opacity":...}
+* @returns {Boolean} true/false
+*
+* @private
+* @example
+* (...)
+*/
+Legend.prototype._setValues = function (type, values) {
+    // div de rendu de la legende
+    var div = this.rendercontainer;
+
+    if (!div) {
+        return false;
+    }
+
+    // les valeurs
+    var _color = values.color || this.legendRender.values.color; // couleur remplissage
+    var _stroke = values.stroke || this.legendRender.values.stroke; // couleur trait
+    var _width = values.width || this.legendRender.values.width; // epaisseur
+    var _opacity = values.opacity || this.legendRender.values.opacity; // opacité
+
+    // SVG
+    var svg = null;
+
+    // facteur grossissement (x10) pour le trait
+    var factor = 10;
+
+    // en fonction du type, on y ajoute le style
+    switch (type) {
+        case "text":
+            div.style["background-color"] = _color;
+            break;
+        case "icon":
+            div.style["background-color"] = _color;
+            break;
+        case "background":
+            div.style["background-color"] = _color;
+            break;
+        case "line":
+            svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><path d='M0 99 L99 0 L100 1 L1 100' stroke='%color%' stroke-width='%width%' stroke-opacity='%opacity%' /></svg>\")";
+            div.style["background"] = svg
+                .replace("%color%", (_color.indexOf("rgb") === 0) ? _color : Color.hexToRgba(_color, 1))
+                .replace("%opacity%", _opacity)
+                .replace("%width%", _width * factor);
+            break;
+        case "circle":
+            svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' stroke='%stroke%' stroke-width='%width%' fill='%color%' /></svg>\")";
+            div.style["background"] = svg
+                .replace("%color%", (_color.indexOf("rgb") === 0) ? _color : Color.hexToRgba(_color, 1))
+                .replace("%opacity%", _opacity)
+                .replace("%stroke%", (_stroke.indexOf("rgb") === 0) ? _stroke : Color.hexToRgba(_stroke, 1))
+                .replace("%width%", _width * factor);
+            break;
+        case "fill":
+            svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><rect x='0' y='0' width='100' height='100' rx='5' ry='5' fill='%color%' fill-opacity='%opacity%' /></svg>\")";
+            div.style["background"] = svg
+                .replace("%color%", (_color.indexOf("rgb") === 0) ? _color : Color.hexToRgba(_color, 1))
+                .replace("%opacity%", _opacity);
+            break;
+        default:
+            return false;
+    }
+
+    // save
+    this.legendRender = {
+        type : type,
+        values : {
+            color : _color,
+            stroke : _stroke,
+            width : _width,
+            opacity : _opacity
+        }
+    };
+
+    return true;
+};
+
+/**
+* Create a Graphical Legend Icon
 *
 * @param {Object} params - param
 * @param {String} params.title - title
-* @param {String} params.type - fill, line, ...
-* @param {String} params.value - {"fill-color": "#2BB3E1"}
+* @param {String} params.type - fill, line, circle, text, icon, ...
+* @param {String} params.values - {"color": "#2BB3E1", "width": 10, "opacity": 0.5, "stroke": "#2BB3E1"}
+* @param {Boolean} params.edit - editable with a colorPicker for only line, fill and circle legend !
 * @returns {DOMElement} DOM element
 *
 * @private
 * @example
-*   <div class ="GPEditorMapBoxLegendRenderContainer"></div>
+*   <div class="GPEditorMapBoxLegendRenderContainer">
+*       <div class="GPEditorMapBoxLegendRender GPEditorMapBoxLegendEditable legend-fill"
+*           style="background: url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><rect x='0' y='0' width='100' height='100' rx='5' ry='5' fill='rgba(255, 255, 255, 1)' fill-opacity='1' /></svg>&quot;);">
+*       </div>
+*       <span class="GPEditorMapBoxLegendTitle">vide...</span>
+</div>
 */
-Legend.prototype._createElementLegend = function (params) {
+Legend.prototype._createElementIconLegend = function (params) {
     // contexte
     var self = this;
 
     var container = document.createElement("div");
-    container.className = this.name.containerlegend;
+    container.className = this.name.containerlegendrender;
 
-    var div = document.createElement("div");
+    var div = this.rendercontainer = document.createElement("div");
     div.className = this.name.legendrender;
-    if (div.addEventListener) {
-        div.addEventListener("click", function (e) {
-            self.onVisibilityLegendMapBox(e);
-        });
-    } else if (div.attachEvent) {
-        div.attachEvent("onclick", function (e) {
-            self.onVisibilityLegendMapBox(e);
-        });
+    if (params.edit) {
+        div.className += " ";
+        div.className += this.name.legendeditable;
+        if (div.addEventListener) {
+            div.addEventListener("click", function (e) {
+                self.onEditionLegendMapBox(e);
+            });
+        } else if (div.attachEvent) {
+            div.attachEvent("onclick", function (e) {
+                self.onEditionLegendMapBox(e);
+            });
+        }
     }
 
-    var pColor = null;
-    var color = "";
-    var stroke = "";
-    var opacity = 0;
-    // var width = 1;
-    switch (params.type) {
-        case "line":
-            pColor = params.value["line-color"];
-            if (typeof pColor === "object" || Array.isArray(pColor)) {
-                div.className += " legend-not-implemented";
-                break;
-            }
-            color = params.value["line-color"] || "#000000";
-            // TODO params.value["line-opacity"]
-            // TODO params.value["line-width"]
-            div.style["background"] = "linear-gradient(to top right, #FFFFFF calc(40% - 0px), " + color + ", #FFFFFF calc(60% + 0px) )";
-            div.className += " legend-line";
-            break;
-        case "text":
-            pColor = params.value["text-color"];
-            if (typeof pColor === "object" || Array.isArray(pColor)) {
-                div.className += " legend-not-implemented";
-                break;
-            }
-            // FIXME ?
-            color = params.value["text-color"] || "#000000";
-            div.style["background-color"] = color;
-            div.className += " legend-text";
-            break;
-        case "icon":
-            pColor = params.value["icon-color"];
-            if (typeof pColor === "object" || Array.isArray(pColor)) {
-                div.className += " legend-not-implemented";
-                break;
-            }
-            // FIXME ?
-            color = params.value["icon-color"] || "#000000";
-            div.style["background-color"] = color;
-            div.className += " legend-icon";
-            break;
-        case "circle":
-            pColor = params.value["circle-color"];
-            if (typeof pColor === "object" || Array.isArray(pColor)) {
-                div.className += " legend-not-implemented";
-                break;
-            }
-            color = params.value["circle-color"] || "#000000";
-            stroke = params.value["circle-stroke-color"] || "#FFFFFF";
-            opacity = params.value["circle-opacity"] || 1;
-            // TODO params.value["circle-stroke-width"]
-            div.style["border-color"] = stroke;
-            div.style["background-color"] = color;
-            div.style["opacity"] = opacity;
-            div.className += " legend-circle";
-            break;
-        case "background":
-            // TODO creer un icone pour le type !
-            color = params.value["background-color"];
-            div.style["background-color"] = color;
-            div.className += " legend-background";
-            break;
-        case "fill":
-            pColor = params.value["fill-color"];
-            if (typeof pColor === "object" || Array.isArray(pColor)) {
-                div.className += " legend-not-implemented";
-                break;
-            }
-            color = params.value["fill-color"] || "#000000";
-            opacity = params.value["fill-opacity"] || 1;
-            // TODO params.value["fill-outline-color"]
-            div.style["background-color"] = color;
-            div.style["opacity"] = opacity;
-            div.className += " legend-fill";
-            break;
-        default:
+    // couleur remplissage
+    var _color = params.values.color;
+    // couleur trait
+    var _stroke = params.values.stroke;
+    // epaisseur
+    var _width = params.values.width;
+    // opacité
+    var _opacity = params.values.opacity;
+
+    // type de legende
+    var _type = params.type;
+
+    // si la couleur n'est pas definie, c'est que le type de syntaxe
+    // est non implementé ou non reconnu pour le moment...
+    if (!_color) {
+        // className
+        div.className += " legend-not-implemented";
+    } else {
+        // ajout du style qur la div de rendu
+        if (this._setValues(_type, {
+            color : _color,
+            stroke : _stroke,
+            width : _width,
+            opacity : _opacity
+        })) {
+            // className possibles :
+            // " legend-text"
+            // " legend-icon"
+            // " legend-background"
+            // " legend-line"
+            // " legend-line-not-editable"
+            // " legend-circle"
+            // " legend-circle-not-editable"
+            // " legend-fill"
+            // " legend-fill-not-editable"
+            div.className += (params.edit) ? " legend-" + _type : " legend-" + _type + "-not-editable";
+        } else {
             div.className += " legend-unknow";
+        }
     }
+
     container.appendChild(div);
 
     var span = document.createElement("span");
@@ -310,12 +520,242 @@ Legend.prototype._createElementLegend = function (params) {
     return container;
 };
 
+/**
+* Create a Graphical Legend Edition
+*
+* @param {Object} params - param
+* @param {String} params.type - fill, line, circle
+* @param {String} params.values - {"fill-color": "#2BB3E1"}
+* @param {Boolean} params.edit - editable with a colorPicker for only line, fill and circle legend !
+* @returns {DOMElement} DOM element
+*
+* @private
+* @example
+*   <div class="GPEditorMapBoxLegendToolsContainer">
+*       <div class="legend-styling-div">
+*           <label for="stroke-color">Couleur du trait</label>
+*           <input class="legend-styling" id="stroke-color" title="" type="color">
+*       </div>
+*       <div class="legend-styling-div">
+*           <label for="stroke-width">Epaisseur du trait</label>
+*           <input class="legend-styling" id="stroke-width" title="" type="range" min="0" max="10" step="1" value="1">
+*       </div>
+*       <div class="legend-styling-div">
+*           <label for="stroke-opacity">Opacité du trait</label>
+*           <input class="legend-styling" id="stroke-opacity" title="" type="range" min="0" max="1" step="0.1" value="1">
+*       </div>
+*       <div class="legend-styling-div">
+*           <label for="fill-color">Couleur de remplissage</label>
+*        <input class="legend-styling" id="fill-color" title="" type="color">
+*       </div>
+*       <div class="legend-styling-div">
+*           <label for="fill-opacity">Opacité du remplissage</label>
+*           <input class="legend-styling" id="fill-opacity" title="" type="range" min="0" max="1" step="0.1" value="1">
+*       </div>
+*   </div>
+*/
+Legend.prototype._createElementEditionLegend = function (params) {
+    // contexte
+    var self = this;
+
+    var container = document.createElement("div");
+    container.className = this.name.containerlegendtools;
+
+    // uniquement les elements editables !
+    if (!params.edit) {
+        return container;
+    }
+
+    // on ne traite que l'edition du mode 'traits' ou 'surfaciques'
+    // mode 'line'
+    if (params.type === "line") {
+        // couleur du trait
+        var strokecolor = document.createElement("div");
+        strokecolor.className = "legend-styling-div";
+        var lStrokeColor = document.createElement("label");
+        lStrokeColor.htmlFor = "line-color";
+        lStrokeColor.innerHTML = this.labels["line-color"];
+        var inputStrokeColor = document.createElement("input");
+        inputStrokeColor.className = "legend-styling";
+        inputStrokeColor.id = "line-color";
+        inputStrokeColor.title = "Selectionner une couleur de trait";
+        inputStrokeColor.type = "color";
+        inputStrokeColor.value = params.values.color;
+        if (inputStrokeColor.addEventListener) {
+            inputStrokeColor.addEventListener("change", function (e) {
+                self._setValues(params.type, {
+                    color : e.target.value
+                });
+                self.onChangeValueLegendMapBox(e);
+            });
+        } else if (inputStrokeColor.attachEvent) {
+            inputStrokeColor.attachEvent("onchange", function (e) {
+                self._setValues(params.type, {
+                    color : e.target.value
+                });
+                self.onChangeValueLegendMapBox(e);
+            });
+        }
+        strokecolor.appendChild(lStrokeColor);
+        strokecolor.appendChild(inputStrokeColor);
+        container.appendChild(strokecolor);
+
+        // epaisseur du trait
+        var strokewidth = document.createElement("div");
+        strokewidth.className = "legend-styling-div";
+        var lStrokeWidth = document.createElement("label");
+        lStrokeWidth.htmlFor = "line-width";
+        lStrokeWidth.innerHTML = this.labels["line-width"];
+        var inputStrokeWidth = document.createElement("input");
+        inputStrokeWidth.className = "legend-styling";
+        inputStrokeWidth.id = "line-width";
+        inputStrokeWidth.title = params.values.width;
+        inputStrokeWidth.type = "range";
+        inputStrokeWidth.min = "0";
+        inputStrokeWidth.max = "10";
+        inputStrokeWidth.step = "1";
+        inputStrokeWidth.defaultValue = params.values.width;
+        if (inputStrokeWidth.addEventListener) {
+            inputStrokeWidth.addEventListener("change", function (e) {
+                logger.trace(e);
+                e.target.title = e.target.value;
+                self._setValues(params.type, {
+                    width : e.target.value
+                });
+                self.onChangeValueLegendMapBox(e);
+            });
+        } else if (inputStrokeWidth.attachEvent) {
+            inputStrokeWidth.attachEvent("onchange", function (e) {
+                logger.trace(e);
+                e.target.title = e.target.value;
+                self._setValues(params.type, {
+                    width : e.target.value
+                });
+                self.onChangeValueLegendMapBox(e);
+            });
+        }
+        strokewidth.appendChild(lStrokeWidth);
+        strokewidth.appendChild(inputStrokeWidth);
+        container.appendChild(strokewidth);
+
+        // opacité du trait
+        var strokeopacity = document.createElement("div");
+        strokeopacity.className = "legend-styling-div";
+        var lStrokeOpacity = document.createElement("label");
+        lStrokeOpacity.htmlFor = "line-opacity";
+        lStrokeOpacity.innerHTML = this.labels["line-opacity"];
+        var inputStrokeOpacity = document.createElement("input");
+        inputStrokeOpacity.className = "legend-styling";
+        inputStrokeOpacity.id = "line-opacity";
+        inputStrokeOpacity.title = params.values.opacity;
+        inputStrokeOpacity.type = "range";
+        inputStrokeOpacity.min = "0";
+        inputStrokeOpacity.max = "1";
+        inputStrokeOpacity.step = "0.1";
+        inputStrokeOpacity.defaultValue = params.values.opacity;
+        if (inputStrokeOpacity.addEventListener) {
+            inputStrokeOpacity.addEventListener("change", function (e) {
+                logger.trace(e);
+                e.target.title = e.target.value;
+                self._setValues(params.type, {
+                    opacity : e.target.value
+                });
+                self.onChangeValueLegendMapBox(e);
+            });
+        } else if (inputStrokeOpacity.attachEvent) {
+            inputStrokeOpacity.attachEvent("onchange", function (e) {
+                logger.trace(e);
+                e.target.title = e.target.value;
+                self._setValues(params.type, {
+                    opacity : e.target.value
+                });
+                self.onChangeValueLegendMapBox(e);
+            });
+        }
+        strokeopacity.appendChild(lStrokeOpacity);
+        strokeopacity.appendChild(inputStrokeOpacity);
+        container.appendChild(strokeopacity);
+    }
+    // mode 'fill'
+    if (params.type === "fill") {
+        // couleur de remplissage
+        var fillcolor = document.createElement("div");
+        fillcolor.className = "legend-styling-div";
+        var lFillColor = document.createElement("label");
+        lFillColor.htmlFor = "fill-color";
+        lFillColor.innerHTML = this.labels["fill-color"];
+        var inputFillColor = document.createElement("input");
+        inputFillColor.className = "legend-styling";
+        inputFillColor.id = "fill-color";
+        inputFillColor.title = "Selectionner une couleur de remplissage";
+        inputFillColor.type = "color";
+        inputFillColor.value = params.values.color;
+        if (inputFillColor.addEventListener) {
+            inputFillColor.addEventListener("change", function (e) {
+                self._setValues(params.type, {
+                    color : e.target.value
+                });
+                self.onChangeValueLegendMapBox(e);
+            });
+        } else if (inputFillColor.attachEvent) {
+            inputFillColor.attachEvent("onchange", function (e) {
+                self._setValues(params.type, {
+                    color : e.target.value
+                });
+                self.onChangeValueLegendMapBox(e);
+            });
+        }
+        fillcolor.appendChild(lFillColor);
+        fillcolor.appendChild(inputFillColor);
+        container.appendChild(fillcolor);
+
+        // opacité du remplissage
+        var fillopacity = document.createElement("div");
+        fillopacity.className = "legend-styling-div";
+        var lFillOpacity = document.createElement("label");
+        lFillOpacity.htmlFor = "fill-opacity";
+        lFillOpacity.innerHTML = this.labels["fill-opacity"];
+        var inputFillOpacity = document.createElement("input");
+        inputFillOpacity.className = "legend-styling";
+        inputFillOpacity.id = "fill-opacity";
+        inputFillOpacity.title = params.values.opacity;
+        inputFillOpacity.type = "range";
+        inputFillOpacity.min = "0";
+        inputFillOpacity.max = "1";
+        inputFillOpacity.step = "0.1";
+        inputFillOpacity.defaultValue = params.values.opacity;
+        if (inputFillOpacity.addEventListener) {
+            inputFillOpacity.addEventListener("change", function (e) {
+                e.target.title = e.target.value;
+                self._setValues(params.type, {
+                    opacity : e.target.value
+                });
+                self.onChangeValueLegendMapBox(e);
+            });
+        } else if (inputFillOpacity.attachEvent) {
+            inputFillOpacity.attachEvent("onchange", function (e) {
+                e.target.title = e.target.value;
+                self._setValues(params.type, {
+                    opacity : e.target.value
+                });
+                self.onChangeValueLegendMapBox(e);
+            });
+        }
+        fillopacity.appendChild(lFillOpacity);
+        fillopacity.appendChild(inputFillOpacity);
+        container.appendChild(fillopacity);
+    }
+
+    return container;
+};
+
 // ################################################################### //
 // ##################### public methods ############################## //
 // ################################################################### //
 
 /**
  * Add element into target DOM
+ * @returns {Object} - Legend instance
  */
 Legend.prototype.add = function () {
     if (!this.options.target) {
@@ -332,15 +772,30 @@ Legend.prototype.add = function () {
     if (this.container) {
         this.options.target.appendChild(this.container);
     }
+    return this;
 };
 
 /**
- * Set display container (DOM)
+ * Set display container or get
  *
- * @param {Boolean} display - show/hidden container
+ * @param {Boolean} display - show/hidden container or get status
+ * @returns {Boolean} - true/false
  */
 Legend.prototype.display = function (display) {
-    this.container.style.display = (display) ? "flex" : "none";
+    logger.trace("display()", display);
+    if (typeof display !== "undefined") {
+        this.container.style.display = (display) ? "flex" : "none";
+    }
+    return (this.container.style.display === "flex");
+};
+
+/**
+ * Is editable
+ *
+ * @returns {Boolean} - true/false
+ */
+Legend.prototype.isEditable = function () {
+    return this.editable;
 };
 
 /**
@@ -349,17 +804,22 @@ Legend.prototype.display = function (display) {
  * @returns {DOMElement} DOM element
  * @see Layer.prototype.slotLegend()
  * @example
- *  // <div class="GPEditorMapBoxLegendRender legend-(line|fill|background|text|icon|circle|unknow)" style="..."></div>
+ *  <div class="GPEditorMapBoxLegendRender legend-(line|fill|background|text|icon|circle|unknow)" style="..."></div>
  */
-Legend.prototype.getRender = function () {
-    // FIXME c'est pourri...
-    var nodesLvl1 = this.container.childNodes;
-    if (nodesLvl1.length) {
-        var nodesLvl2 = nodesLvl1[0].childNodes;
-        if (nodesLvl2.length) {
-            return nodesLvl2[0];
-        }
-    }
+Legend.prototype.getRenderContainer = function () {
+    return this.rendercontainer;
+};
+
+/**
+ * Get container Legend Tools (DOM)
+ *
+ * @returns {DOMElement} DOM element
+ * @see Layer.prototype.slotLegend()
+ * @example
+ *  <div class="GPEditorMapBoxLegendToolsContainer">...</div>
+ */
+Legend.prototype.getToolsContainer = function () {
+    return this.toolscontainer;
 };
 
 /**
@@ -376,16 +836,36 @@ Legend.prototype.getContainer = function () {
 // ################################################################### //
 
 /**
- * this method is called by event '' on '' tag form
+ * this method is called by event '' on '' tag form...
+ *
+ * 'e' contains the option object into 'e.target.data' !
+ * 'e' contains the id editor into 'e.target.editorID' !
  *
  * @param {Object} e - HTMLElement
  * @private
- * @fires Filter#editor:legend:visibility
+ * @fires Legend#editor:legend:onclickedition
  */
-Legend.prototype.onVisibilityLegendMapBox = function (e) {
-    logger.trace("onVisibilityLegendMapBox", e);
+Legend.prototype.onEditionLegendMapBox = function (e) {
+    logger.trace("onEditionLegendMapBox", e);
     e.editorID = this.id;
-    EventBus.dispatch(EventEditor.legend.visibility, e);
+    e.data = this.options;
+    EventBus.dispatch(EventEditor.legend.onclickedition, e);
 };
 
+/**
+ * this method is called by event '' on '' tag form...
+ *
+ * 'e' contains the option object into 'e.target.data' !
+ * 'e' contains the id editor into 'e.target.editorID' !
+ *
+ * @param {Object} e - HTMLElement
+ * @private
+ * @fires Legend#editor:legend:onchangevalue
+ */
+Legend.prototype.onChangeValueLegendMapBox = function (e) {
+    logger.trace("onChangeValueLegendMapBox", e);
+    e.editorID = this.id;
+    e.data = this.options;
+    EventBus.dispatch(EventEditor.legend.onchangevalue, e);
+};
 export default Legend;

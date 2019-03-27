@@ -972,10 +972,10 @@ Drawing.prototype._createStylingInteraction = function () {
         }
         var dtObj = this;
         /**
-             * function called when apply button is pressed.
-             *
-             * @param {String} action - "apply" (to selected object), "default" (set as default), "cancel" (do nothing).
-             */
+        * function called when apply button is pressed.
+        *
+        * @param {String} action - "apply" (to selected object), "default" (set as default), "cancel" (do nothing).
+        */
         var applyStyle = function (action) {
             if (action === "cancel") {
                 dtObj.getMap().removeOverlay(popupOvl);

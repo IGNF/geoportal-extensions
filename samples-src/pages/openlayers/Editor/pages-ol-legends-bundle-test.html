@@ -49,7 +49,7 @@
                     "title" : "test line...",
                     "paint": {
                          "line-color" : "#2BB3E1",
-                         "line-width" : 10,
+                         "line-width" : 1,
                          "line-opacity" : 0.5
                     }
                 },
@@ -161,14 +161,83 @@
             });
             legend4.add();
 
+            var legend5 = new ol.style.editor.Legend({
+                position : 5,
+                obj: {
+                    "title" : "test line editable...",
+                    "editable" : true,
+                    "paint": {
+                         "line-color" : "#2BB3E1",
+                         "line-width" : 1,
+                         "line-opacity" : 0.5
+                    }
+                },
+            });
+            legend5.add();
+            EventBus.addEventListener("editor:legend:onclickvisibility", function (e) {
+                console.log("Add a listener on event 'editor:legend:onclickvisibility' : switch display !", e);
+                if (e.target.data.position === 5) {
+                    console.log("Event on position 5 !");
+                    var b = legend5.display();
+                    legend5.display(!b);
+                }
+            });
+
+            var legend6 = new ol.style.editor.Legend({
+                obj: {
+                    "title" : "test circle editable, not yet implemented...",
+                    "editable" : true,
+                    "paint": {
+                         "circle-radius": 5,
+                         "circle-opacity": 0.5,
+                         "circle-color": "#2BB3E1",
+                         "circle-stroke-width": 2,
+                         "circle-stroke-color": "rgba(255, 0, 0, 1)"
+                    }
+                },
+            });
+            legend6.add();
+
+            var legend7 = new ol.style.editor.Legend({
+                obj: {
+                    "title" : "test fill editable...",
+                    "editable" : true,
+                    "paint": {
+                         "fill-color" : "#2BB3E1",
+                         "fill-opacity" : 0.5
+                    }
+                },
+            });
+            legend7.add();
+
+            var legend8 = new ol.style.editor.Legend({
+                obj: {
+                    "title" : "test type non reconnu..., par defaut, line...",
+                    "editable" : true,
+                    "paint": {
+                         "bidon-color" : "#2BB3E1",
+                         "bidon-opacity" : 0.5
+                    }
+                },
+            });
+            legend8.add();
+
             document.getElementById("displayTrue").addEventListener("click", function () {
                 legend3.display(true);
                 legend4.display(true);
+                legend5.display(true);
+                legend6.display(true);
+                legend7.display(true);
+                legend8.display(true);
             });
 
             document.getElementById("displayFalse").addEventListener("click", function () {
                 legend3.display(false);
                 legend4.display(false);
+                legend5.display(false);
+                legend6.display(false);
+                legend7.display(false);
+                legend8.display(false);
             });
 
             </script>

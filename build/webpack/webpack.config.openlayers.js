@@ -144,7 +144,16 @@ module.exports = env => {
                     }]
                 },
                 {
-                    /** FIXME est ce utile ? */
+                    test : /EventBus\.js$/,
+                    use : [{
+                        loader : "expose-loader",
+                        options : "EventBus"
+                    }]
+                },
+                {
+                    /** FIXME est ce utile ?
+                    * cf. https://codeimpetus.wordpress.com/2018/01/23/webpack-exports-loader-imports-loader-provideplugin-expose-loader/
+                    */
                     test : path.resolve(ROOT, "node_modules", "ol-mapbox-style", "dist", "olms.js"),
                     use : "exports-loader?olms"
                 },

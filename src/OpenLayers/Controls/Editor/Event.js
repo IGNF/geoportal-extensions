@@ -4,17 +4,17 @@
 * See {@link http://krasimirtsonev.com/blog/article/javascript-managing-events-dispatch-listen}
 * See {@link https://github.com/krasimir/EventBus}
 *
-* @property {Event} "editor:layer:visibility" - event ...
-* @property {Event} "editor:layer:clone" - event ...
-* @property {Event} "editor:layer:remove" - event ...
-* @property {Event} "editor:style:edit" - event ...
-* @property {Event} "editor:style:minScale" - event ...
-* @property {Event} "editor:style:maxScale" - event ...
-* @property {Event} "editor:legend:visibility" - event ...
-* @property {Event} "editor:filter:edit" - event ...
-* @property {Event} "editor:themes:image" - event ...
-* @property {Event} "editor:themes:title" - event ...
-* @property {Event} "editor:group:visibility" - event ...
+* @property {Event} "editor:layer:onclickvisibility" - event ...
+* @property {Event} "editor:layer:onclickclone" - event ...
+* @property {Event} "editor:layer:onclickremove" - event ...
+* @property {Event} "editor:style:oneditjson" - event ...
+* @property {Event} "editor:style:scale:onchangemin" - event ...
+* @property {Event} "editor:style:scale:onchangemax" - event ...
+* @property {Event} "editor:legend:onclickedition" - event ...
+* @property {Event} "editor:filter:oneditjson" - event ...
+* @property {Event} "editor:themes:onclickimage" - event ...
+* @property {Event} "editor:themes:onclicktitle" - event ...
+* @property {Event} "editor:group:oncollapse" - event ...
 *
 * @example
 * // dispatch event
@@ -24,29 +24,46 @@
 */
 var EventEditor = {
     layer : {
-        visibility : "editor:layer:visibility",
-        clone : "editor:layer:clone",
-        remove : "editor:layer:remove"
+        /** evenement sur la visibilité : clic sur le bouton 'oeil' */
+        onclickvisibility : "editor:layer:onclickvisibility",
+        /** evenement sur la duplication : clic sur le bouton
+        (not yet implemented !) */
+        onclickclone : "editor:layer:onclickclone",
+        /** evenement sur la suppression : clic sur le bouton
+        (not yet implemented !) */
+        onclickremove : "editor:layer:onclickremove"
     },
     legend : {
-        visibility : "editor:legend:visibility"
+        /** evenement sur l'affichage du mode edition */
+        onclickedition : "editor:legend:onclickedition",
+        /** evenement sur la modification d'une valeur */
+        onchangevalue : "editor:legend:onchangevalue"
     },
     group : {
-        visibility : "editor:group:visibility"
+        /**  evenement pour deplier/plier le groupe
+        (not yet implemented !) */
+        oncollapse : "editor:group:oncollapse"
     },
     style : {
-        edit : "editor:style:edit",
+        /** evenement sur l'édition du style
+        (not yet implemented !) */
+        oneditjson : "editor:style:oneditjson",
+        /** evenement sur la modification de l'echelle d'affichage */
         scale : {
-            min : "editor:style:minScale",
-            max : "editor:style:maxScale"
+            onchangemin : "editor:style:scale:onchangemin",
+            onchangemax : "editor:style:scale:onchangemax"
         }
     },
     filter : {
-        edit : "editor:filter:edit"
+        /** evenement sur l'édition du filtre
+        (not yet implemented !) */
+        oneditjson : "editor:filter:oneditjson"
     },
     themes : {
-        image : "editor:themes:image",
-        title : "editor:themes:title"
+        /** evenement sur le clic de l'image */
+        onclickimage : "editor:themes:onclickimage",
+        /** evenement sur le clic du titre */
+        onclicktitle : "editor:themes:onclicktitle"
     }
 };
 
