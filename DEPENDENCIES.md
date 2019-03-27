@@ -21,17 +21,12 @@ last
 
 * Sortable
 
-└── sortablejs@1.7.0
-
-> **Utilisation de la version suivante**
-```
-└── sortablejs@1.4.0
-```
+└── sortablejs@1.8.4
 
 * geoportal-access-lib
 
 last
-└── geoportal-access-lib@2.1.1
+└── geoportal-access-lib@2.1.2
 
 * leaflet
 

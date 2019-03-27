@@ -79,7 +79,7 @@
     "ol-mapbox-style": "^4.2.1",
     "proj4": "^2.5.0",
     "proj4leaflet": "~1.0.2",
-    "sortablejs": "1.4.0",
+    "sortablejs": "1.8.4",
     "three": "~0.93.0",
     "three.meshline": "~1.1.0"
   },
