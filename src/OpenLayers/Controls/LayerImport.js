@@ -40,7 +40,7 @@ import Gp from "geoportal-access-lib";
 // import local
 import Editor from "./Editor";
 import Markers from "./Utils/Markers";
-import Draggable from "./Utils/Draggable";
+import Draggable from "../../Common/Utils/Draggable";
 import Utils from "../../Common/Utils";
 import Logger from "../../Common/Utils/LoggerByDefault";
 import SelectorID from "../../Common/Utils/SelectorID";
@@ -625,6 +625,7 @@ LayerImport.prototype._initContainer = function () {
     getCapPanel.appendChild(importGetCapResultsList);
 
     container.appendChild(getCapPanel);
+    Draggable.dragElement(getCapPanel, getCapPanelHeader);
 
     // mapbox panel results
     var mapBoxPanel = this._mapBoxPanel = this._createImportMapBoxPanelElement();
@@ -634,6 +635,7 @@ LayerImport.prototype._initContainer = function () {
     mapBoxPanel.appendChild(importMapBoxResultsList);
 
     container.appendChild(mapBoxPanel);
+    Draggable.dragElement(mapBoxPanel, mapBoxPanelHeader);
 
     // waiting
     var waiting = this._waitingContainer = this._createImportWaitingElement();

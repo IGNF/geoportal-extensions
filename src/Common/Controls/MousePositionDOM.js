@@ -1,3 +1,5 @@
+import Draggable from "../Utils/Draggable";
+
 var MousePositionDOM = {
 
     /**
@@ -110,23 +112,27 @@ var MousePositionDOM = {
         displayCoordinates = (typeof displayCoordinates === "undefined") ? true : displayCoordinates;
         editCoordinates = (typeof editCoordinates === "undefined") ? false : editCoordinates;
 
-        var div = document.createElement("div");
-        div.id = this._addUID("GPmousePositionPanel");
-        div.className = "GPpanel";
+        var panel = document.createElement("div");
+        panel.id = this._addUID("GPmousePositionPanel");
+        panel.className = "GPpanel";
 
-        div.appendChild(this._createMousePositionPanelHeaderElement());
-        div.appendChild(this._createMousePositionPanelBasicElement(displayAltitude, displayCoordinates, editCoordinates, currentProjectionUnits));
+        var header = this._createMousePositionPanelHeaderElement();
+        panel.appendChild(header);
+        var basic = this._createMousePositionPanelBasicElement(displayAltitude, displayCoordinates, editCoordinates, currentProjectionUnits);
+        panel.appendChild(basic);
 
         var arraySettings = this._createShowMousePositionSettingsElement(displayCoordinates);
         for (var j = 0; j < arraySettings.length; j++) {
-            div.appendChild(arraySettings[j]);
+            panel.appendChild(arraySettings[j]);
         }
 
         // FIXME on decompose la fonction pour les besoins du controle,
         // on ajoutera ces childs à la main...
         // div.appendChild(this._createMousePositionSettingsElement());
 
-        return div;
+        Draggable.dragElement(panel, header);
+
+        return panel;
     },
 
     /**

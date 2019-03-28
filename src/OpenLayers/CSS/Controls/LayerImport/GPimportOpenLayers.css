@@ -46,7 +46,8 @@ div[id^="GPimportPanel-"] {
 
 div[id^="GPimportGetCapPanel-"],
 div[id^="GPimportMapBoxPanel-"] {
-  width: 340px;
+    position: absolute;
+    width: 340px;
 }
 
 div[id^="GPimportPanelClose-"],

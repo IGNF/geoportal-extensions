@@ -33,7 +33,7 @@ import Logger from "../../Common/Utils/LoggerByDefault";
 import SelectorID from "../../Common/Utils/SelectorID";
 import RightManagement from "../../Common/Utils/CheckRightManagement";
 import Markers from "./Utils/Markers";
-import Draggable from "./Utils/Draggable";
+import Draggable from "../../Common/Utils/Draggable";
 // import local with ol dependencies
 import LayerSwitcher from "./LayerSwitcher";
 // DOM

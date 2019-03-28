@@ -16,7 +16,6 @@ import Gp from "geoportal-access-lib";
 import Logger from "../../Common/Utils/LoggerByDefault";
 import Utils from "../../Common/Utils";
 import Markers from "./Utils/Markers";
-import Draggable from "./Utils/Draggable";
 import RightManagement from "../../Common/Utils/CheckRightManagement";
 import SelectorID from "../../Common/Utils/SelectorID";
 import MathUtils from "../../Common/Utils/MathUtils";
@@ -817,8 +816,6 @@ MousePosition.prototype._initContainer = function () {
     settings.appendChild(units);
     panel.appendChild(settings);
     container.appendChild(panel);
-
-    Draggable.dragElement(panel);
 
     return container;
 };

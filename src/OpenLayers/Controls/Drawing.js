@@ -35,7 +35,7 @@ import {
 // import local
 import Logger from "../../Common/Utils/LoggerByDefault";
 import Interactions from "./Utils/Interactions";
-import Draggable from "./Utils/Draggable";
+import Draggable from "../../Common/Utils/Draggable";
 import SelectorID from "../../Common/Utils/SelectorID";
 import Color from "../../Common/Utils/ColorUtils";
 // DOM
