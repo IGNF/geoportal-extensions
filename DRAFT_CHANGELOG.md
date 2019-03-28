@@ -10,9 +10,9 @@
 * Correctifs suite au passage ES6
 
 [semver] :
-    - OpenLayers : increment semver MAJOR version (proj4/ol5/es6)
-    - Leaflet : increment semver MINOR version (proj4/es6)
-    - Itowns : increment semver MINOR version (proj4/es6)
+    - OpenLayers : increment semver MAJOR version (proj4/sortable/ol5/es6)
+    - Leaflet : increment semver MINOR version (proj4/sortable/es6)
+    - Itowns : increment semver MINOR version (proj4/sortable/es6)
 
 ## Changelog
 
@@ -20,6 +20,7 @@
 
     - Mise à jour du package *geoportal-access-lib* en version 2.1.2
     - Mise à jour du package *proj4* en version 2.5.0
+    - Mise à jour du package *sortable* en version 1.8.4
 
 * [Added]
 
