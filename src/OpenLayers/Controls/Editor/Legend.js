@@ -20,7 +20,8 @@ var logger = Logger.getLogger("editor-legend");
  *      obj : {
  *          title : "",
  *          editable : true, // tag non standard issue du style json dédié à l'edition
- *          paint : {}
+ *          paint : {},
+ *          layout : {}
  *      }
  *   });
  *  legend.add();
@@ -149,10 +150,24 @@ Legend.prototype._initContainer = function () {
     var div = document.createElement("div");
     div.className = this.name.container;
 
+    // on recherche les informations dans le tag 'paint' en priorité, mais pour
+    // les icones ou textes, les informations peuvent se trouver dans le tag 'layout'...
+    var _foundData = false;
+    var _data = null;
     if (_obj.paint) {
-        var keys = Object.keys(_obj.paint);
+        _foundData = true;
+        _data = _obj.paint;
+    } else if (_obj.layout) {
+        _foundData = true;
+        _data = _obj.layout;
+    } else {
+        _foundData = false;
+    }
+
+    if (_foundData) {
+        var keys = Object.keys(_data);
         if (keys.length === 0) {
-            logger.info("tag 'paint' is empty !");
+            logger.info("tag 'paint' or 'layout' is empty !");
         }
 
         // FIXME
@@ -396,7 +411,7 @@ Legend.prototype._setValues = function (type, values) {
                 .replace("%width%", _width * factor);
             break;
         case "circle":
-            svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' stroke='%stroke%' stroke-width='%width%' fill='%color%' /></svg>\")";
+            svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' stroke='%stroke%' stroke-width='%width%' stroke-opacity='%opacity%' fill='%color%' fill-opacity='%opacity%' /></svg>\")";
             div.style["background"] = svg
                 .replace("%color%", (_color.indexOf("rgb") === 0) ? _color : Color.hexToRgba(_color, 1))
                 .replace("%opacity%", _opacity)
@@ -524,9 +539,9 @@ Legend.prototype._createElementIconLegend = function (params) {
 * Create a Graphical Legend Edition
 *
 * @param {Object} params - param
-* @param {String} params.type - fill, line, circle
+* @param {String} params.type - fill, line, (TODO : circle, icon or text)
 * @param {String} params.values - {"fill-color": "#2BB3E1"}
-* @param {Boolean} params.edit - editable with a colorPicker for only line, fill and circle legend !
+* @param {Boolean} params.edit - editable with a colorPicker for only line and fill legend !
 * @returns {DOMElement} DOM element
 *
 * @private
@@ -570,53 +585,53 @@ Legend.prototype._createElementEditionLegend = function (params) {
     // mode 'line'
     if (params.type === "line") {
         // couleur du trait
-        var strokecolor = document.createElement("div");
-        strokecolor.className = "legend-styling-div";
-        var lStrokeColor = document.createElement("label");
-        lStrokeColor.htmlFor = "line-color";
-        lStrokeColor.innerHTML = this.labels["line-color"];
-        var inputStrokeColor = document.createElement("input");
-        inputStrokeColor.className = "legend-styling";
-        inputStrokeColor.id = "line-color";
-        inputStrokeColor.title = "Selectionner une couleur de trait";
-        inputStrokeColor.type = "color";
-        inputStrokeColor.value = params.values.color;
-        if (inputStrokeColor.addEventListener) {
-            inputStrokeColor.addEventListener("change", function (e) {
+        var linecolor = document.createElement("div");
+        linecolor.className = "legend-styling-div";
+        var lLineColor = document.createElement("label");
+        lLineColor.htmlFor = "line-color";
+        lLineColor.innerHTML = this.labels["line-color"];
+        var inputLineColor = document.createElement("input");
+        inputLineColor.className = "legend-styling";
+        inputLineColor.id = "line-color";
+        inputLineColor.title = "Selectionner une couleur de trait";
+        inputLineColor.type = "color";
+        inputLineColor.value = params.values.color;
+        if (inputLineColor.addEventListener) {
+            inputLineColor.addEventListener("change", function (e) {
                 self._setValues(params.type, {
                     color : e.target.value
                 });
                 self.onChangeValueLegendMapBox(e);
             });
-        } else if (inputStrokeColor.attachEvent) {
-            inputStrokeColor.attachEvent("onchange", function (e) {
+        } else if (inputLineColor.attachEvent) {
+            inputLineColor.attachEvent("onchange", function (e) {
                 self._setValues(params.type, {
                     color : e.target.value
                 });
                 self.onChangeValueLegendMapBox(e);
             });
         }
-        strokecolor.appendChild(lStrokeColor);
-        strokecolor.appendChild(inputStrokeColor);
-        container.appendChild(strokecolor);
+        linecolor.appendChild(lLineColor);
+        linecolor.appendChild(inputLineColor);
+        container.appendChild(linecolor);
 
         // epaisseur du trait
-        var strokewidth = document.createElement("div");
-        strokewidth.className = "legend-styling-div";
-        var lStrokeWidth = document.createElement("label");
-        lStrokeWidth.htmlFor = "line-width";
-        lStrokeWidth.innerHTML = this.labels["line-width"];
-        var inputStrokeWidth = document.createElement("input");
-        inputStrokeWidth.className = "legend-styling";
-        inputStrokeWidth.id = "line-width";
-        inputStrokeWidth.title = params.values.width;
-        inputStrokeWidth.type = "range";
-        inputStrokeWidth.min = "0";
-        inputStrokeWidth.max = "10";
-        inputStrokeWidth.step = "1";
-        inputStrokeWidth.defaultValue = params.values.width;
-        if (inputStrokeWidth.addEventListener) {
-            inputStrokeWidth.addEventListener("change", function (e) {
+        var linewidth = document.createElement("div");
+        linewidth.className = "legend-styling-div";
+        var lLineWidth = document.createElement("label");
+        lLineWidth.htmlFor = "line-width";
+        lLineWidth.innerHTML = this.labels["line-width"];
+        var inputLineWidth = document.createElement("input");
+        inputLineWidth.className = "legend-styling";
+        inputLineWidth.id = "line-width";
+        inputLineWidth.title = params.values.width;
+        inputLineWidth.type = "range";
+        inputLineWidth.min = "0";
+        inputLineWidth.max = "10";
+        inputLineWidth.step = "1";
+        inputLineWidth.defaultValue = params.values.width;
+        if (inputLineWidth.addEventListener) {
+            inputLineWidth.addEventListener("change", function (e) {
                 logger.trace(e);
                 e.target.title = e.target.value;
                 self._setValues(params.type, {
@@ -624,8 +639,8 @@ Legend.prototype._createElementEditionLegend = function (params) {
                 });
                 self.onChangeValueLegendMapBox(e);
             });
-        } else if (inputStrokeWidth.attachEvent) {
-            inputStrokeWidth.attachEvent("onchange", function (e) {
+        } else if (inputLineWidth.attachEvent) {
+            inputLineWidth.attachEvent("onchange", function (e) {
                 logger.trace(e);
                 e.target.title = e.target.value;
                 self._setValues(params.type, {
@@ -634,27 +649,27 @@ Legend.prototype._createElementEditionLegend = function (params) {
                 self.onChangeValueLegendMapBox(e);
             });
         }
-        strokewidth.appendChild(lStrokeWidth);
-        strokewidth.appendChild(inputStrokeWidth);
-        container.appendChild(strokewidth);
+        linewidth.appendChild(lLineWidth);
+        linewidth.appendChild(inputLineWidth);
+        container.appendChild(linewidth);
 
         // opacité du trait
-        var strokeopacity = document.createElement("div");
-        strokeopacity.className = "legend-styling-div";
-        var lStrokeOpacity = document.createElement("label");
-        lStrokeOpacity.htmlFor = "line-opacity";
-        lStrokeOpacity.innerHTML = this.labels["line-opacity"];
-        var inputStrokeOpacity = document.createElement("input");
-        inputStrokeOpacity.className = "legend-styling";
-        inputStrokeOpacity.id = "line-opacity";
-        inputStrokeOpacity.title = params.values.opacity;
-        inputStrokeOpacity.type = "range";
-        inputStrokeOpacity.min = "0";
-        inputStrokeOpacity.max = "1";
-        inputStrokeOpacity.step = "0.1";
-        inputStrokeOpacity.defaultValue = params.values.opacity;
-        if (inputStrokeOpacity.addEventListener) {
-            inputStrokeOpacity.addEventListener("change", function (e) {
+        var lineopacity = document.createElement("div");
+        lineopacity.className = "legend-styling-div";
+        var lLineOpacity = document.createElement("label");
+        lLineOpacity.htmlFor = "line-opacity";
+        lLineOpacity.innerHTML = this.labels["line-opacity"];
+        var inputLineOpacity = document.createElement("input");
+        inputLineOpacity.className = "legend-styling";
+        inputLineOpacity.id = "line-opacity";
+        inputLineOpacity.title = params.values.opacity;
+        inputLineOpacity.type = "range";
+        inputLineOpacity.min = "0";
+        inputLineOpacity.max = "1";
+        inputLineOpacity.step = "0.1";
+        inputLineOpacity.defaultValue = params.values.opacity;
+        if (inputLineOpacity.addEventListener) {
+            inputLineOpacity.addEventListener("change", function (e) {
                 logger.trace(e);
                 e.target.title = e.target.value;
                 self._setValues(params.type, {
@@ -662,8 +677,8 @@ Legend.prototype._createElementEditionLegend = function (params) {
                 });
                 self.onChangeValueLegendMapBox(e);
             });
-        } else if (inputStrokeOpacity.attachEvent) {
-            inputStrokeOpacity.attachEvent("onchange", function (e) {
+        } else if (inputLineOpacity.attachEvent) {
+            inputLineOpacity.attachEvent("onchange", function (e) {
                 logger.trace(e);
                 e.target.title = e.target.value;
                 self._setValues(params.type, {
@@ -672,9 +687,9 @@ Legend.prototype._createElementEditionLegend = function (params) {
                 self.onChangeValueLegendMapBox(e);
             });
         }
-        strokeopacity.appendChild(lStrokeOpacity);
-        strokeopacity.appendChild(inputStrokeOpacity);
-        container.appendChild(strokeopacity);
+        lineopacity.appendChild(lLineOpacity);
+        lineopacity.appendChild(inputLineOpacity);
+        container.appendChild(lineopacity);
     }
     // mode 'fill'
     if (params.type === "fill") {

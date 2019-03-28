@@ -13,6 +13,12 @@ span[id^=GPshowMousePositionOpen] {
 
 /* General panels */
 
+div[id^=GPmousePositionPanel-] {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+}
+
 div[id^=GPmousePositionPanelClose]  {
   background-image: url("img/GPmousePositionOpen.png");
 }

@@ -12,6 +12,11 @@ span[id^=GPshowDrawingOpen-] {
 }
 
 /* General panels */
+div[id^=GPdrawingPanel-] {
+    top: 0px;
+    right: 0px;
+    position: absolute;
+}
 
 div[id^=GPdrawingPanelClose-] {
   background-image: url("img/GPdrawingOpen.png");

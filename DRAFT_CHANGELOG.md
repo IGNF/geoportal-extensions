@@ -26,6 +26,7 @@
 
     - [#222](https://github.com/IGNF/geoportal-extensions/pull/222) - Ajout de l'import de couche au format *vecteur tuilé* (MapBox)
     - Description de la variable globale **Gp** dans la jsdoc
+    - Les fenêtres des widgets sont toutes **draggable**...
 
 * [Deprecated]
 

@@ -17,7 +17,8 @@
 }
 
 [id^="GPreverseGeocodingPanel-"] {
-  left: 8px;
+    position: absolute;
+    left: 8px;
 }
 
 [id^="GPreverseGeocodingPanelClose-"] {

@@ -23,6 +23,7 @@ import Utils from "../../Common/Utils";
 import RightManagement from "../../Common/Utils/CheckRightManagement";
 import SelectorID from "../../Common/Utils/SelectorID";
 import Markers from "./Utils/Markers";
+import Draggable from "./Utils/Draggable";
 // import local with ol dependencies
 import LocationSelector from "./LocationSelector";
 import LayerSwitcher from "./LayerSwitcher";
@@ -459,6 +460,8 @@ Route.prototype._initContainer = function (map) {
     // header form
     var routeHeader = this._createRoutePanelHeaderElement();
     routePanel.appendChild(routeHeader);
+
+    Draggable.dragElement(routePanel, routeHeader);
 
     // form
     var routeForm = this._formRouteContainer = this._createRoutePanelFormElement();

@@ -33,6 +33,7 @@ import Logger from "../../Common/Utils/LoggerByDefault";
 import SelectorID from "../../Common/Utils/SelectorID";
 import RightManagement from "../../Common/Utils/CheckRightManagement";
 import Markers from "./Utils/Markers";
+import Draggable from "./Utils/Draggable";
 // import local with ol dependencies
 import LayerSwitcher from "./LayerSwitcher";
 // DOM
@@ -558,6 +559,9 @@ ReverseGeocode.prototype._initContainer = function () {
 
     // header
     var panelHeader = this._panelHeaderContainer = this._createReverseGeocodingPanelHeaderElement();
+
+    Draggable.dragElement(reverseGeocodingPanel, panelHeader);
+
     // return picto (hidden at start)
     var returnPicto = this._returnPictoContainer = this._createReverseGeocodingPanelReturnPictoElement();
     panelHeader.appendChild(returnPicto);

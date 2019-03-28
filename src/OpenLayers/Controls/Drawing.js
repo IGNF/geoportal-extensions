@@ -35,6 +35,7 @@ import {
 // import local
 import Logger from "../../Common/Utils/LoggerByDefault";
 import Interactions from "./Utils/Interactions";
+import Draggable from "./Utils/Draggable";
 import SelectorID from "../../Common/Utils/SelectorID";
 import Color from "../../Common/Utils/ColorUtils";
 // DOM
@@ -725,6 +726,7 @@ Drawing.prototype._initContainer = function () {
     container.appendChild(picto);
 
     var panel = this._createDrawingPanelElement();
+    Draggable.dragElement(panel);
 
     container.appendChild(panel);
 

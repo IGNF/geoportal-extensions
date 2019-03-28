@@ -40,6 +40,7 @@ import Gp from "geoportal-access-lib";
 // import local
 import Editor from "./Editor";
 import Markers from "./Utils/Markers";
+import Draggable from "./Utils/Draggable";
 import Utils from "../../Common/Utils";
 import Logger from "../../Common/Utils/LoggerByDefault";
 import SelectorID from "../../Common/Utils/SelectorID";
@@ -48,7 +49,6 @@ import LayerImportDOM from "../../Common/Controls/LayerImportDOM";
 // import local with ol dependencies
 import KMLExtended from "../Formats/KML";
 import LayerSwitcher from "./LayerSwitcher";
-
 var logger = Logger.getLogger("layerimport");
 
 /**
@@ -609,6 +609,8 @@ LayerImport.prototype._initContainer = function () {
     var panelHeader = this._createImportPanelHeaderElement();
     importPanel.appendChild(panelHeader);
 
+    Draggable.dragElement(importPanel, panelHeader);
+
     // form : initialisation du formulaire d'import des couches (types d'import et saisie de l'url / du fichier)
     var importForm = this._formContainer = this._initInputFormElement();
     importPanel.appendChild(importForm);
@@ -617,7 +619,8 @@ LayerImport.prototype._initContainer = function () {
 
     // results (dans le panel)
     var getCapPanel = this._getCapPanel = this._createImportGetCapPanelElement();
-    getCapPanel.appendChild(this._createImportGetCapPanelHeaderElement());
+    var getCapPanelHeader = this._createImportGetCapPanelHeaderElement();
+    getCapPanel.appendChild(getCapPanelHeader);
     var importGetCapResultsList = this._getCapResultsListContainer = this._createImportGetCapResultsContainer();
     getCapPanel.appendChild(importGetCapResultsList);
 
@@ -625,7 +628,8 @@ LayerImport.prototype._initContainer = function () {
 
     // mapbox panel results
     var mapBoxPanel = this._mapBoxPanel = this._createImportMapBoxPanelElement();
-    mapBoxPanel.appendChild(this._createImportMapBoxPanelHeaderElement());
+    var mapBoxPanelHeader = this._createImportMapBoxPanelHeaderElement();
+    mapBoxPanel.appendChild(mapBoxPanelHeader);
     var importMapBoxResultsList = this._mapBoxResultsListContainer = this._createImportMapBoxResultsContainer();
     mapBoxPanel.appendChild(importMapBoxResultsList);
 

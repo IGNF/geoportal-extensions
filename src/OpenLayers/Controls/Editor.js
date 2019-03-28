@@ -437,7 +437,8 @@ Editor.prototype._initContainer = function () {
                                 "source" : data.source,
                                 "title" : data.id,
                                 "editable" : data.editable || false,
-                                "paint" : data.paint
+                                "paint" : data.paint,
+                                "layout" : data.layout
                             }
                         });
                         oLegend.add();

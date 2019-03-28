@@ -19,6 +19,7 @@ import Logger from "../../Common/Utils/LoggerByDefault";
 import RightManagement from "../../Common/Utils/CheckRightManagement";
 import SelectorID from "../../Common/Utils/SelectorID";
 import Markers from "./Utils/Markers";
+import Draggable from "./Utils/Draggable";
 // import local with ol dependencies
 import LayerSwitcher from "./LayerSwitcher";
 import LocationSelector from "./LocationSelector";
@@ -602,6 +603,8 @@ Isocurve.prototype._initContainer = function (map) {
     // header
     var header = this._createIsoPanelHeaderElement();
     panel.appendChild(header);
+
+    Draggable.dragElement(panel, header);
 
     // form
     var form = this._formContainer = this._createIsoPanelFormElement();
