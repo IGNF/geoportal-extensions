@@ -5,7 +5,6 @@
 #     -o(openlayers)
 #     -l(leaflet)
 #     -i(itowns)
-#     -I(ol/itowns)
 
 # FIXME incompatibilité avec un env. Windows
 
@@ -76,17 +75,6 @@ function itowns() {
   doCmd "npm run build:itowns:dev"
 }
 
-##########
-# mix itowns
-function mix() {
-  printTo "####### Mixte OL/iTowns !"
-  doCmd "npm run build:mix:src"
-  printTo "####### Mixte OL/iTowns production !"
-  doCmd "npm run build:mix:prod"
-  printTo "####### Mixte OL/iTowns development !"
-  doCmd "npm run build:mix:dev"
-}
-
 printTo "###########  NPM  ##############"
 doCmd "npm run setup"
 
@@ -111,11 +99,6 @@ do
         clean "itowns"
         itowns
         ;;
-     I)
-        printTo "###################################"
-        printTo "###### Mixte Itowns bundle ! ######"
-        mix
-        ;;
      a)
         printTo "#################################"
         printTo "########## ALL bundle ! #########"
@@ -125,10 +108,9 @@ do
         leaflet
         clean "itowns"
         itowns
-        mix
         ;;
      \?)
-        printTo "$OPTARG : option invalide : a(all), o(openlayers), l(leaflet), i(itowns), I(ol/itowns) !"
+        printTo "$OPTARG : option invalide : a(all), o(openlayers), l(leaflet), i(itowns) !"
         exit -1
         ;;
    esac

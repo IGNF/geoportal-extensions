@@ -1,29 +1,17 @@
 {
+   "devDependencies" : {},
+   "version" : "2.2.0",
+   "directories" : {},
    "dependencies" : {
-      "loglevel" : "~1.6.1",
-      "leaflet" : "1.3.1",
-      "proj4leaflet" : "~1.0.2",
       "proj4" : "2.5.0",
       "sortablejs" : "1.8.4",
+      "loglevel" : "~1.6.1",
+      "proj4leaflet" : "~1.0.2",
+      "leaflet-draw" : "1.0.2",
       "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/master/geoportal-access-lib-2.1.2.tgz",
-      "leaflet-draw" : "1.0.2"
+      "leaflet" : "1.3.1"
    },
-   "bugs" : {},
-   "repository" : {
-      "url" : "https://github.com/IGNF/geoportal-extensions.git",
-      "type" : "git"
-   },
-   "version" : "2.2.0",
-   "date" : "01/02/2019",
-   "peerDependencies" : {},
-   "license" : "CECILL-B",
-   "author" : "IGNF",
-   "main" : "src/Leaflet/GpPluginLeaflet.js",
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-leaflet.html",
-   "description" : "French Geoportal Extension for Leaflet",
-   "directories" : {},
-   "devDependencies" : {},
-   "name" : "geoportal-extensions-leaflet",
+   "browser" : "dist/GpPluginLeaflet-src.js",
    "keywords" : [
       "geoportail",
       "plugin",
@@ -31,6 +19,18 @@
       "leaflet",
       "publish"
    ],
+   "bugs" : {},
+   "name" : "geoportal-extensions-leaflet",
+   "author" : "IGNF",
+   "date" : "01/02/2019",
+   "license" : "CECILL-B",
+   "repository" : {
+      "type" : "git",
+      "url" : "https://github.com/IGNF/geoportal-extensions.git"
+   },
+   "scripts" : {},
+   "peerDependencies" : {},
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-leaflet.html",
    "files" : [
       "dist/",
       "src/",
@@ -38,7 +38,7 @@
       "README.md",
       "package.json"
    ],
-   "browser" : "dist/GpPluginLeaflet.js",
-   "bundleDependencies" : [],
-   "scripts" : {}
+   "main" : "src/Leaflet/GpPluginLeaflet.js",
+   "description" : "French Geoportal Extension for Leaflet",
+   "bundleDependencies" : []
 }
