@@ -98,7 +98,7 @@ export { Services, Error, Helper, Protocols, servicesDate, servicesVersion };
 
 // Rajout des propriétés de l'extension dans le namespace
 export const olExtVersion = Pkg.olExtVersion;
-export const olExtDate = new Date().toISOString().split("T")[0];
+export const olExtDate = Pkg.date;
 
 // Classes utilitaires
 export {default as olUtils} from "../Common/Utils";

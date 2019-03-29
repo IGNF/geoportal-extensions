@@ -1,44 +1,45 @@
 {
-  "name": "geoportal-extensions-itowns",
-  "version": "2.2.0",
-  "description": "French Geoportal Extensions for iTowns",
-  "main": "src/Itowns/GpPluginItowns.js",
-  "browser": "dist/GpPluginItowns.js",
-  "directories": {},
-  "files": [
+   "keywords" : [
+      "geoportail",
+      "plugin",
+      "javascript",
+      "Itowns"
+   ],
+   "date" : "01/02/2019",
+   "main" : "src/Itowns/GpPluginItowns.js",
+   "name" : "geoportal-extensions-itowns",
+   "version" : "2.2.0",
+   "browser" : "dist/GpPluginItowns.js",
+   "description" : "French Geoportal Extensions for iTowns",
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
+   "files" : [
       "dist/",
       "src/",
       "LICENCE.md",
       "README.md",
       "package.json"
-  ],
-  "scripts": {},
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/IGNF/geoportal-extensions.git"
-  },
-  "author": "IGNF",
-  "keywords": [
-    "geoportail",
-    "plugin",
-    "javascript",
-    "Itowns"
-  ],
-  "license": "CECILL-B",
-  "bugs": {},
-  "homepage": "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
-  "dependencies": {
-      "geoportal-access-lib": "2.1.2",
-      "itowns": "2.3.0",
-      "loglevel": "~1.6.1",
-      "proj4": "2.5.0",
-      "request": "^2.83.0",
-      "sortablejs": "1.4.0",
-      "three": "~0.93.0",
-      "three.meshline": "~1.1.0",
-      "xmldom": "^0.1.27"
-  },
-  "devDependencies": {},
-  "peerDependencies": {},
-  "bundleDependencies": []
+   ],
+   "dependencies" : {
+      "proj4" : "2.5.0",
+      "itowns" : "2.3.0",
+      "loglevel" : "~1.6.1",
+      "sortablejs" : "1.4.0",
+      "three" : "~0.93.0",
+      "geoportal-access-lib" : "2.1.2",
+      "request" : "^2.83.0",
+      "xmldom" : "^0.1.27",
+      "three.meshline" : "~1.1.0"
+   },
+   "bugs" : {},
+   "scripts" : {},
+   "peerDependencies" : {},
+   "directories" : {},
+   "repository" : {
+      "type" : "git",
+      "url" : "https://github.com/IGNF/geoportal-extensions.git"
+   },
+   "devDependencies" : {},
+   "author" : "IGNF",
+   "license" : "CECILL-B",
+   "bundleDependencies" : []
 }

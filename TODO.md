@@ -38,9 +38,18 @@ les fichiers sont suffixés avec le tag *modules*.
 
 - [x] Migrer vers ol v5.3.0   : **OK**
 
-- [ ] dépendance olms ?       : **TODO**
-    - Doit on intégrer olms dans le code des extensions ou en dependance externe (comme ol) ?
-    - Le SDK utilise aussi olms, et cette dependance sera aussi intégrée !?
+- [ ] dépendance olms : interne ou externe ? : **TODO**
+
+    - Comment doit on intégrer *olms* dans le code des extensions : interne ou externe ?
+        ```
+        La dependance *olms* est une extension pour openlayers qui permet de lire les
+        fichiers json de style MapBox. Nous en avons besoin au niveau de l'API Extensions
+        sur le widget *LayerImport*.
+        L'API SDK utilise aussi cette dependance.
+            API Extensions : ol et olms en externe (cad à la charge du client de les ajouter)
+            API SDK : ol et olms en interne (cad livrées dans le bundle final)
+        ```
+
     - pour info, le binaire est :
     > https://unpkg.com/ol-mapbox-style/dist/olms.js
 
@@ -87,9 +96,10 @@ les fichiers sont suffixés avec le tag *modules*.
         ex. ol.proj.get("EPSG:2154")
 
     - [x] **OK** *Gp* :
-        sauf la date de l'API des services
+        sauf la date de l'API des services (*__GPDATE__*)
         > **FIXME** comment récuperer la date de compilation de l'API des Services ?
-
+        > **FIXME** comment récuperer la version directement des sources de l'API des Services ?
+        
 ### Les sources
 
 - [x] Format **Ok**
@@ -109,18 +119,7 @@ les fichiers sont suffixés avec le tag *modules*.
     * [x] ol.layer.GeoportalWMTS  : **OK**
     * [x] ol.layer.GeoportalWMS   : **OK**
 
-    > **EVOL**
-    > si on n'a pas d'autoconf, une exception est lancée :
-    "contract key configuration has to be loaded to load Geoportal layers"
-
-    > Hors un defaut d'autoconf ne devrait pas stopper l'affichage, mais on se doit
-    d'affiche à minima une carte vide !
-
 - [x] Controls
-
-    > **EVOL**
-    > Sans autoconf ou droit, il faudrait rendre les boutons de calculs non
-    cliquable (ex. Route ou Iso)...
 
     * [x] ol.control.LayerSwitcher : **OK**
 
@@ -227,8 +226,26 @@ les fichiers sont suffixés avec le tag *modules*.
 * [x] **FAIT** changelog & draft
     > https://api.github.com/repos/IGNF/geoportal-extensions/releases
 
+# EVOL
 
-# MapBox
+- Autoconf
+
+    > Si on n'a pas d'autoconf (ou droit sur une ressources), une exception est lancée :
+    "contract key configuration has to be loaded to load Geoportal layers"
+
+    > Hors un defaut d'autoconf ne devrait pas stopper l'affichage, mais on se doit
+    d'affiche à minima une carte vide !
+
+    > Sans autoconf (ou droit), il faudrait rendre les boutons de calculs non
+    cliquable (ex. Route ou Iso)...
+
+- Editeur MapBox
+
+    > Mettre en place un drag&drop sur les layers MapBox (gestion ordre d'empilement/affichage)
+
+    > Prévoir l'edition du mode circle, texte et/ou icone
+
+# TEST avec MapBoxGl
 
 ## intégration du client MapBoxGl ?
 cf. exemple http://tsauerwein.github.io/ol3/mapbox-gl-js/examples/mapbox-gl-js.html

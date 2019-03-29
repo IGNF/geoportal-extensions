@@ -57,7 +57,7 @@ export { Services, Error, Helper, Protocols, servicesDate, servicesVersion };
 
 // Rajout des propriétés de l'extension dans le namespace
 export const leafletExtVersion = Pkg.leafletExtVersion;
-export const leafletExtDate = new Date().toISOString().split("T")[0];
+export const leafletExtDate = Pkg.date;
 
 // Classes utilitaires
 export {default as Register} from "../Common/Utils/Register";

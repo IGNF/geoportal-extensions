@@ -25,7 +25,6 @@ var smp = new SpeedMeasurePlugin();
 
 // -- variables
 var ROOT = path.join(__dirname, "../..");
-var date = new Date().toISOString().split("T")[0];
 var pkg = require(path.join(ROOT, "package.json"));
 
 module.exports = env => {
@@ -197,23 +196,16 @@ module.exports = env => {
                 [
                     {
                         partten : /__GPOLEXTVERSION__/g,
-                        /** replacement de la clef __GPVERSION__ par la version du package */
+                        /** replacement de la clef __VERSION__ par la version du package */
                         replacement : function () {
                             return pkg.olExtVersion;
                         }
                     },
                     {
-                        partten : /__GPDATE__/g,
-                        /** replacement de la clef __GPDATE__ par la date du build */
+                        partten : /__DATE__/g,
+                        /** replacement de la clef __DATE__ par la date du build */
                         replacement : function () {
-                            return date;
-                        }
-                    },
-                    {
-                        partten : /__GPVERSION__/g,
-                        /** replacement de la clef __GPVERSION__ par la version du package */
-                        replacement : function () {
-                            return pkg.dependencies["geoportal-access-lib"];
+                            return pkg.date;
                         }
                     }
                 ]
@@ -333,7 +325,7 @@ module.exports = env => {
                     banner : header(fs.readFileSync(path.join(ROOT, "build/licences", "licence-ign.tmpl"), "utf8"), {
                         __BRIEF__ : pkg.olExtName,
                         __VERSION__ : pkg.olExtVersion,
-                        __DATE__ : date
+                        __DATE__ : pkg.date
                     }),
                     raw : true,
                     entryOnly : true

@@ -69,7 +69,7 @@ export {default as MathUtils} from "../Common/Utils/MathUtils";
 
 // Adds extensions properties in the namespace
 export const itownsExtVersion = Pkg.itownsExtVersion;
-export const itownsExtDate = new Date().toISOString().split("T")[0];
+export const itownsExtDate = Pkg.date;
 
 // creation of the namespace for the itowns extensions
 Itowns.control = {};

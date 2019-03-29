@@ -29,13 +29,17 @@ Se placer dans le projet *geoportal-extensions*, et recuperer le projet :
     ou
     git clone https://github.com/IGNF/geoportal-extensions.git
 
-### a. Mise à jour de la version
+### a. Mise à jour de la version / date
 
 Modifier le numéro de version dans le fichier *package.json* :
 
 - Pour l'extension *Openlayers* : `"olExtVersion"`
 - Pour l'extension *Leaflet* : `"leafletExtVersion"`
 - Pour l'extension *Itowns* : `"itownsExtVersion"`
+
+Ainsi que la date de publication dans le fichier *package.json* :
+`"date"` (JJ/MM/AAAA)
+
 
 ### b. Compilation
 
@@ -199,25 +203,24 @@ Se **logguer**
     email : xxxxxxxxxx
 
 
-Mettre à jour la version dans le fichier *./scripts/release/config_npm/package-openlayers.json*.
+Executer le script de construction du package NPM en fonction du type de librairie :
 
-Créer un dossier *./geoportal-extensions-openlayers/* :
-
-    mkdir geoportal-extensions-openlayers
-
-Y copier les fichiers suivants :
-* README-openlayers.md (renommer en README.md),
-* LICENCE.md,
-* package-openlayers.json (renommer en package.json),
-* les bundles du répertoire dist/openlayers/
-* les sources
-
-
-    cp doc/README-openlayers.md geoportal-extensions-openlayers/README.md
-    cp scripts/release/config_npm/package-openlayers.json geoportal-extensions-openlayers/package.json
-    cp LICENCE.md geoportal-extensions-openlayers/LICENCE.md
-    cp -r dist/openlayers/ geoportal-extensions-openlayers/dist/
-    cp -r src/Common src/OpenLayers geoportal-extensions-openlayers/src
+    ```
+    ./build-pack.sh -h
+    [vendredi 29 mars 2019, 10:11:57 (UTC+0100)] BEGIN
+    Usage :
+        build-pack.sh - construction du package TGZ à publier dans NPM
+        -h            Affiche cette aide.
+        -o            build : Openlayers,
+        -l            build : Leaflet,
+        -i            build : Itowns,
+        -a            build : All.
+    Par defaut, le repertoire n'est pas supprimé
+    (cf. l'option 'clean=true' dans le code).
+    Le package validé, on se place dans le répertoire pour la publication :
+      > npm login
+      > npm publish
+    ```
 
 
 **IMPORTANT** : Se placer dans le dossier geoportal-extensions-openlayers
