@@ -1,10 +1,5 @@
 {
-   "author" : "IGNF",
-   "peerDependencies" : {},
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
-   "bundleDependencies" : [],
-   "license" : "CECILL-B",
-   "name" : "geoportal-extensions-itowns",
+   "scripts" : {},
    "files" : [
       "dist/",
       "src/",
@@ -12,34 +7,39 @@
       "README.md",
       "package.json"
    ],
-   "devDependencies" : {},
-   "repository" : {
-      "type" : "git",
-      "url" : "https://github.com/IGNF/geoportal-extensions.git"
-   },
-   "description" : "French Geoportal Extensions for iTowns",
-   "scripts" : {},
+   "browser" : "dist/GpPluginItowns.js",
+   "name" : "geoportal-extensions-itowns",
+   "directories" : {},
    "dependencies" : {
-      "proj4" : "2.5.0",
-      "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/master/geoportal-access-lib-2.1.2.tgz",
-      "three" : "~0.93.0",
-      "loglevel" : "~1.6.1",
       "sortablejs" : "1.8.4",
       "itowns" : "2.3.0",
-      "xmldom" : "^0.1.27",
+      "proj4" : "2.5.0",
+      "loglevel" : "~1.6.1",
       "three.meshline" : "~1.1.0",
-      "request" : "^2.83.0"
+      "three" : "~0.93.0",
+      "request" : "^2.83.0",
+      "xmldom" : "^0.1.27",
+      "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/master/geoportal-access-lib-2.1.2.tgz"
    },
+   "author" : "IGNF",
+   "devDependencies" : {},
+   "version" : "2.2.0",
+   "date" : "01/02/2019",
    "bugs" : {},
+   "bundleDependencies" : [],
+   "license" : "CECILL-B",
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
+   "main" : "src/Itowns/GpPluginItowns.js",
+   "description" : "French Geoportal Extensions for iTowns",
+   "repository" : {
+      "url" : "https://github.com/IGNF/geoportal-extensions.git",
+      "type" : "git"
+   },
+   "peerDependencies" : {},
    "keywords" : [
       "geoportail",
       "plugin",
       "javascript",
       "Itowns"
-   ],
-   "directories" : {},
-   "browser" : "dist/GpPluginItowns.js",
-   "version" : "2.2.0",
-   "date" : "01/02/2019",
-   "main" : "src/Itowns/GpPluginItowns.js"
+   ]
 }

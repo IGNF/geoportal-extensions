@@ -1,16 +1,9 @@
 {
-   "license" : "CECILL-B",
-   "date" : "01/02/2019",
-   "devDependencies" : {},
-   "directories" : {},
-   "repository" : {
-      "type" : "git",
-      "url" : "https://github.com/IGNF/geoportal-extensions.git"
-   },
-   "author" : "IGNF",
-   "name" : "geoportal-extensions-openlayers",
    "version" : "3.0.0",
-   "bundleDependencies" : [],
+   "license" : "CECILL-B",
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
+   "name" : "geoportal-extensions-openlayers",
+   "scripts" : {},
    "files" : [
       "dist/",
       "src/",
@@ -18,28 +11,35 @@
       "README.md",
       "package.json"
    ],
-   "description" : "French Geoportal Extensions for OpenLayers",
    "main" : "src/OpenLayers/GpPluginOpenLayers.js",
-   "browser" : "dist/GpPluginOpenLayers.js",
+   "peerDependencies" : {},
+   "bundleDependencies" : [],
+   "devDependencies" : {},
    "dependencies" : {
-      "sortablejs" : "1.8.4",
-      "request" : "^2.83.0",
+      "loglevel" : "~1.6.1",
+      "proj4" : "2.5.0",
+      "ol" : "^5.3.0",
       "eventbusjs" : "^0.2.0",
       "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/master/geoportal-access-lib-2.1.2.tgz",
-      "proj4" : "2.5.0",
-      "loglevel" : "~1.6.1",
-      "ol" : "^5.3.0",
+      "sortablejs" : "1.8.4",
+      "ol-mapbox-style" : "^4.2.1",
       "xmldom" : "^0.1.27",
-      "ol-mapbox-style" : "^4.2.1"
+      "request" : "^2.83.0"
    },
+   "repository" : {
+      "url" : "https://github.com/IGNF/geoportal-extensions.git",
+      "type" : "git"
+   },
+   "date" : "01/02/2019",
+   "author" : "IGNF",
    "bugs" : {},
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
-   "scripts" : {},
-   "peerDependencies" : {},
+   "description" : "French Geoportal Extensions for OpenLayers",
+   "directories" : {},
    "keywords" : [
       "geoportail",
       "plugin",
       "javascript",
       "OpenLayers"
-   ]
+   ],
+   "browser" : "dist/GpPluginOpenLayers.js"
 }
