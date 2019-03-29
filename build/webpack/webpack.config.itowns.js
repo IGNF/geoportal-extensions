@@ -178,13 +178,6 @@ module.exports = env => {
                         replacement : function () {
                             return pkg.date;
                         }
-                    },
-                    {
-                        partten : /__GPVERSION__/g,
-                        /** replacement de la clef __GPVERSION__ par la version du package */
-                        replacement : function () {
-                            return pkg.dependencies["geoportal-access-lib"];
-                        }
                     }
                 ]
             ),

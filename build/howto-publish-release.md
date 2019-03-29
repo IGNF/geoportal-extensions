@@ -6,7 +6,7 @@ ex. les extensions Géoportail pour OpenLayers, version x.y.z.
 <!-- toc -->
 
 - [1. Préparation des sources](#1-preparation-des-sources)
-  * [a. Mise à jour de la version](#a-mise-a-jour-de-la-version)
+  * [a. Mise à jour de la version / date](#a-mise-a-jour-de-la-version--date)
   * [b. Compilation](#b-compilation)
   * [c. Jouer les tests](#c-jouer-les-tests)
   * [d. Visualiser la JSDOC](#d-visualiser-la-jsdoc)
