@@ -96,11 +96,38 @@
             });
             themes4.add();
 
+            // themes reussi avec option !
+            var themes5 = new ol.style.editor.Themes({
+                target: document.getElementById("themes"),
+                tools : {
+                    thumbnails: false,
+                    radiobutton: false
+                },
+                obj: {
+                    "styles" : [
+                    {
+                        "image" : "{{ resources }}/data/mapbox/themes/images/layer1.png",
+                        "label" : "style standard 1",
+                        "style" : "{{ resources }}/data/mapbox/themes/styles/null",
+                        "desc"  : "description 1"
+                    },
+                    {
+                        "image" : "{{ resources }}/data/mapbox/themes/images/layer2.png",
+                        "label" : "style standard 2",
+                        "style" : "{{ resources }}/data/mapbox/themes/styles/null",
+                        "desc"  : "description 2"
+                    }
+                ]
+                },
+            });
+            themes5.add();
+
             document.getElementById("displayTrue").addEventListener("click", function () {
                 themes1.display(true);
                 themes2.display(true);
                 themes3.display(true);
                 themes4.display(true);
+                themes5.display(true);
             });
 
             document.getElementById("displayFalse").addEventListener("click", function () {
@@ -108,6 +135,7 @@
                 themes2.display(false);
                 themes3.display(false);
                 themes4.display(false);
+                themes5.display(true);
             });
 
             </script>

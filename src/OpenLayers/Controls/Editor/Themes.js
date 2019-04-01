@@ -1,5 +1,6 @@
 import EventBus from "eventbusjs";
 import EventEditor from "./Event";
+import Utils from "../../../Common/Utils";
 import ID from "../../../Common/Utils/SelectorID";
 import Logger from "../../../Common/Utils/LoggerByDefault";
 
@@ -16,6 +17,10 @@ var logger = Logger.getLogger("editor-themes");
  * @example
  *   var theme = new Themes ({
  *        "target": "",
+ *        "tools": {
+ *          "thumbnails": true,
+ *          "radiobutton": true
+ *        },
  *        "obj": {
  *          "description": "", // Titre du composant (non graphique !)
  *          "styles": [{
@@ -72,6 +77,17 @@ Themes.prototype._initialize = function () {
     if (!this.options.target) {
         // cf. add()
     }
+
+    var _toolsDefault = {
+        thumbnails : true,
+        radiobutton : true
+    };
+
+    if (!this.options.tools) {
+        this.options.tools = _toolsDefault;
+    }
+
+    Utils.mergeParams(this.options.tools, _toolsDefault, false);
 
     if (typeof this.options.obj === "undefined" ||
         this.options.obj === null ||
@@ -141,72 +157,81 @@ Themes.prototype._initContainer = function () {
         var _url = _theme.style;
         if (_url && _url !== "") {
             // bouton
-            var _checkbox = document.createElement("input");
-            _checkbox.type = "radio";
-            _checkbox.id = this.name.input + "-" + id + "_" + i;
-            _checkbox.className = this.name.input;
-            _checkbox.name = id;
-            _checkbox.checked = false;
-            if (_checkbox.addEventListener) {
-                _checkbox.addEventListener("click", function (e) {
-                    self.onClickThemeTitleMapBox(e);
-                });
-            } else if (_checkbox.attachEvent) {
-                _checkbox.attachEvent("onclick", function (e) {
-                    self.onClickThemeTitleMapBox(e);
-                });
-            }
-            divTheme.appendChild(_checkbox);
-            // vignette
-            if (_theme.image) {
-                var _img = document.createElement("img");
-                _img.className = this.name.image;
-                _img.src = _theme.image;
-                _img.alt = _theme.image;
-                _img.title = _theme.desc || ""; // une description au survol de l'image ou titre...
-                _img.data = _url; // on lie le DOM et la couche, utile lors d'evenement !
-                if (_img.addEventListener) {
-                    _img.addEventListener("click", function (e) {
-                        self.onClickThemeImageMapBox(e);
-                        // maj du radio button
-                        var nodes = e.target.parentElement.childNodes;
-                        if (nodes) {
-                            var node = nodes[0];
-                            if (node.tagName.toLowerCase() === "input") {
-                                node.checked = !node.checked;
-                            }
-                        }
+            if (this.options.tools.radiobutton) {
+                var _checkbox = document.createElement("input");
+                _checkbox.type = "radio";
+                _checkbox.id = this.name.input + "-" + id + "_" + i;
+                _checkbox.className = this.name.input;
+                _checkbox.name = id;
+                _checkbox.checked = false;
+                _checkbox.data = _url; // on lie le DOM et la couche, utile lors d'evenement !
+                if (_checkbox.addEventListener) {
+                    _checkbox.addEventListener("click", function (e) {
+                        self.onClickThemeTitleMapBox(e);
                     });
-                } else if (_img.attachEvent) {
-                    _img.attachEvent("onclick", function (e) {
-                        self.onClickThemeImageMapBox(e);
-                        var nodes = e.target.parentElement.childNodes;
-                        if (nodes) {
-                            var node = nodes[0];
-                            if (node.tagName.toLowerCase() === "input") {
-                                node.checked = !node.checked;
-                            }
-                        }
+                } else if (_checkbox.attachEvent) {
+                    _checkbox.attachEvent("onclick", function (e) {
+                        self.onClickThemeTitleMapBox(e);
                     });
                 }
-                divTheme.appendChild(_img);
+                divTheme.appendChild(_checkbox);
+            }
+            // vignette
+            if (this.options.tools.thumbnails) {
+                if (_theme.image) {
+                    var _img = document.createElement("img");
+                    _img.className = this.name.image;
+                    _img.src = _theme.image;
+                    _img.alt = _theme.image;
+                    _img.title = _theme.desc || ""; // une description au survol de l'image ou titre...
+                    _img.data = _url; // on lie le DOM et la couche, utile lors d'evenement !
+                    if (_img.addEventListener) {
+                        _img.addEventListener("click", function (e) {
+                            self.onClickThemeImageMapBox(e);
+                            // maj du radio button
+                            var nodes = e.target.parentElement.childNodes;
+                            if (nodes) {
+                                var node = nodes[0];
+                                if (node.tagName.toLowerCase() === "input") {
+                                    node.checked = !node.checked;
+                                }
+                            }
+                        });
+                    } else if (_img.attachEvent) {
+                        _img.attachEvent("onclick", function (e) {
+                            self.onClickThemeImageMapBox(e);
+                            var nodes = e.target.parentElement.childNodes;
+                            if (nodes) {
+                                var node = nodes[0];
+                                if (node.tagName.toLowerCase() === "input") {
+                                    node.checked = !node.checked;
+                                }
+                            }
+                        });
+                    }
+                    divTheme.appendChild(_img);
+                }
             }
             // label
             if (_theme.label) {
                 var _label = document.createElement("label");
-                _label.htmlFor = _checkbox.id;
+                if (this.options.tools.radiobutton) {
+                    _label.htmlFor = _checkbox.id;
+                }
                 _label.className = this.name.label;
                 _label.innerHTML = _theme.label;
                 _label.title = _theme.desc || ""; // une description au survol de l'image ou titre...
                 _label.data = _url; // on lie le DOM et la couche, utile lors d'evenement !
-                if (_label.addEventListener) {
-                    _label.addEventListener("click", function (e) {
-                        // self.onClickThemeTitleMapBox(e);
-                    });
-                } else if (_label.attachEvent) {
-                    _label.attachEvent("onclick", function (e) {
-                        // self.onClickThemeTitleMapBox(e);
-                    });
+                if (!this.options.tools.radiobutton) {
+                    if (_label.addEventListener) {
+                        _label.addEventListener("click", function (e) {
+                            self.onClickThemeTitleMapBox(e);
+                        });
+                    } else if (_label.attachEvent) {
+                        _label.attachEvent("onclick", function (e) {
+                            self.onClickThemeTitleMapBox(e);
+                        });
+                    }
                 }
                 divTheme.appendChild(_label);
             }

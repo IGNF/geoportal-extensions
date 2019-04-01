@@ -108,7 +108,7 @@ export {default as ProxyUtils} from "../Common/Utils/ProxyUtils";
 export {default as ColorUtils} from "../Common/Utils/ColorUtils";
 export {default as MathUtils} from "../Common/Utils/MathUtils";
 
-// FIXME utilitaires dans un ns particulier "gp" ?
+// FIXME : utilitaires dans un ns particulier "gp" ?
 Ol.gp = {};
 Ol.gp.GfiUtils = GfiUtils;
 

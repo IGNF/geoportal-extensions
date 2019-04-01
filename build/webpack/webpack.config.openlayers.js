@@ -153,16 +153,16 @@ module.exports = env => {
                         options : "eventbus"
                     }]
                 },
-                {
-                    /** ol-mapbox-style est exposé en global : olms !
-                    * (require.resolve("ol-mapbox-style"))
-                    */
-                    test : /node_modules\/ol-mapbox-style\/index\.js$/,
-                    use : [{
-                        loader : "expose-loader",
-                        options : "olms"
-                    }]
-                },
+                // {
+                //     /** ol-mapbox-style est exposé en global : olms !
+                //     * (require.resolve("ol-mapbox-style"))
+                //     */
+                //     test : /node_modules\/ol-mapbox-style\/index\.js$/,
+                //     use : [{
+                //         loader : "expose-loader",
+                //         options : "olms"
+                //     }]
+                // },
                 {
                     test : /\.css$/,
                     include : [

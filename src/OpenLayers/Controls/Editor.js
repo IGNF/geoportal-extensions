@@ -51,14 +51,14 @@ var logger = Logger.getLogger("editor");
  *          "editor:themes:onclicktitle" : function(e) {...}
  *      },
  *      tools : {
- *          themes : true, // afficher les themes (themes)
+ *          themes : true || {}, // afficher les themes (themes) ou utiliser les options
  *          layers : true, // afficher les couches (layers)
  *          style : true,  // afficher les styles (sous menu layers)
  *          filter : true, // afficher les filtres (sous menu layers)
  *          legend : true, // afficher les legendes (layers)
  *          group : true,  // grouper les couches (layers)
  *          title : true   // afficher les titres des rubriques,
- *          type : true,   // affichage du type de geometrie (layers)
+ *          type : true,   // afficher du type de geometrie (layers)
  *      }
  *   });
  */
