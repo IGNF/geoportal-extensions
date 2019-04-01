@@ -174,7 +174,7 @@
                 },
             });
             legend5.add();
-            EventBus.addEventListener("editor:legend:onclickvisibility", function (e) {
+            eventbus.addEventListener("editor:legend:onclickvisibility", function (e) {
                 console.log("Add a listener on event 'editor:legend:onclickvisibility' : switch display !", e);
                 if (e.target.data.position === 5) {
                     console.log("Event on position 5 !");

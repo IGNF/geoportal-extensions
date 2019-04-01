@@ -36,7 +36,8 @@
 import Pkg from "../../package";
 
 import * as Ol from "ol";
-import * as Olms from "ol-mapbox-style";
+// FIXME : doit on exposer les fonctions de olms ?
+// import * as Olms from "ol-mapbox-style";
 
 // ordre des CSS communes puis extensions
 import "../Common/Styles";
@@ -80,7 +81,7 @@ import Editor from "./Controls/Editor";
 import "../Common/Utils/AutoLoadConfig";
 import "./CRS/AutoLoadCRS";
 
-// export des crs !?
+// FIXME : doit on exporter les defs des crs !?
 // import CRS from "./CRS/CRS";
 
 // export des services
@@ -107,7 +108,7 @@ export {default as ProxyUtils} from "../Common/Utils/ProxyUtils";
 export {default as ColorUtils} from "../Common/Utils/ColorUtils";
 export {default as MathUtils} from "../Common/Utils/MathUtils";
 
-// utilitaires dans un ns "gp" ?
+// FIXME utilitaires dans un ns particulier "gp" ?
 Ol.gp = {};
 Ol.gp.GfiUtils = GfiUtils;
 
@@ -122,10 +123,10 @@ Ol.style.editor.Legend = Legend;
 Ol.style.editor.Group = Group;
 Ol.style.editor.Themes = Themes;
 
-// Rajout de l'extension olms (ol mapbox style)
-Ol.olms = Olms;
+// FIXME : doit on exposer les fonctions de olms ?
+// Ol.olms = Olms;
 
-// projections ?
+// FIXME : projections ?
 // Ol.proj = Ol.proj || {};
 // Ol.proj.CRS = CRS;
 

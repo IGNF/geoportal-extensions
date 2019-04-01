@@ -136,6 +136,7 @@ module.exports = env => {
                     ]
                 },
                 {
+                    /** proj4 est exposé en global : proj4 ! */
                     test : require.resolve("proj4"),
                     use : [{
                         loader : "expose-loader",
@@ -143,18 +144,24 @@ module.exports = env => {
                     }]
                 },
                 {
-                    test : /EventBus\.js$/,
+                    /** eventbusjs est exposé en global : eventbus !
+                    * (require.resolve("eventbusjs"))
+                    */
+                    test : /node_modules\/eventbusjs\/src\/EventBus\.js$/,
                     use : [{
                         loader : "expose-loader",
-                        options : "EventBus"
+                        options : "eventbus"
                     }]
                 },
                 {
-                    /** FIXME est ce utile ?
-                    * cf. https://codeimpetus.wordpress.com/2018/01/23/webpack-exports-loader-imports-loader-provideplugin-expose-loader/
+                    /** ol-mapbox-style est exposé en global : olms !
+                    * (require.resolve("ol-mapbox-style"))
                     */
-                    test : path.resolve(ROOT, "node_modules", "ol-mapbox-style", "dist", "olms.js"),
-                    use : "exports-loader?olms"
+                    test : /node_modules\/ol-mapbox-style\/index\.js$/,
+                    use : [{
+                        loader : "expose-loader",
+                        options : "olms"
+                    }]
                 },
                 {
                     test : /\.css$/,

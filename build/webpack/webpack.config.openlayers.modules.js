@@ -184,6 +184,7 @@ module.exports = env => {
                     ]
                 },
                 {
+                    /** proj4 est exposé en global : proj4 ! */
                     test : require.resolve("proj4"),
                     use : [{
                         loader : "expose-loader",
@@ -191,8 +192,24 @@ module.exports = env => {
                     }]
                 },
                 {
-                    test : path.resolve(ROOT, "node_modules", "ol-mapbox-style", "dist", "olms.js"),
-                    use : "exports-loader?olms"
+                    /** eventbusjs est exposé en global : eventbus !
+                    * (require.resolve("eventbusjs"))
+                    */
+                    test : /node_modules\/eventbusjs\/src\/EventBus\.js$/,
+                    use : [{
+                        loader : "expose-loader",
+                        options : "eventbus"
+                    }]
+                },
+                {
+                    /** ol-mapbox-style est exposé en global : olms !
+                    * (require.resolve("ol-mapbox-style"))
+                    */
+                    test : /node_modules\/ol-mapbox-style\/index\.js$/,
+                    use : [{
+                        loader : "expose-loader",
+                        options : "olms"
+                    }]
                 },
                 {
                     test : /\.css$/,

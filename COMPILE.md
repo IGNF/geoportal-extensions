@@ -170,6 +170,9 @@ Ou on lance tout...
 
     npm run build
 
+**Ex. commande du client webpack en mode verbose**
+>  ./node_modules/.bin/webpack --config build/webpack/webpack.config.openlayers --display verbose
+
 ## JSDOC
 
 ### Construction de la JSDOC

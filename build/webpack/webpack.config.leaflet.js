@@ -133,6 +133,7 @@ module.exports = env => {
                     ]
                 },
                 {
+                    /** proj4 est exposé en global : proj4 ! */
                     test : require.resolve("proj4"),
                     use : [{
                         loader : "expose-loader",

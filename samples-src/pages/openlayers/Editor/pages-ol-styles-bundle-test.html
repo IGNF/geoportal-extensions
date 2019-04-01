@@ -75,8 +75,8 @@
                 },
             });
             style3.add();
-            EventBus.addEventListener("editor:style:scale:onchangemin", function (e) {
-                console.log("Add a listener on event 'editor:lstyle:scale:onchangemin' : message !", e);
+            eventbus.addEventListener("editor:style:scale:onchangemin", function (e) {
+                console.log("Add a listener on event 'editor:style:scale:onchangemin' : message !", e);
                 if (e.target.data.position === 3) {
                     console.log("Event on position 3 !");
                 }
