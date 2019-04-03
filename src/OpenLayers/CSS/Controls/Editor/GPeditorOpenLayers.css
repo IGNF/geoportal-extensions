@@ -56,6 +56,10 @@ LAYERS
 *******************************************************************************/
 
 /* - container principal */
+.GPEditorMapBoxLayersContainer {
+
+}
+/* - container layers */
 .GPEditorMapBoxLayerContainer {
     width: 100%;
     min-height: 28px;

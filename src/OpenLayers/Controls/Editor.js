@@ -150,6 +150,7 @@ Editor.prototype._initialize = function () {
         target : "GPEditorMapBoxTarget",
         container : "GPEditorMapBoxContainer",
         containerID : "GPEditorMapBoxContainer_ID_",
+        containerLayers : "GPEditorMapBoxLayersContainer",
         titleLayers : "GPEditorMapBoxLayersTitle",
         titleThemes : "GPEditorMapBoxThemesTitle",
         sep : "GPEditorMapBoxSep"
@@ -229,6 +230,12 @@ Editor.prototype._initEvents = function () {
  *
  * @example
  *  <div class="GPEditorMapBoxContainer" id="GPEditorMapBoxContainer_ID_0">
+ *    <div id="GPEditorMapBoxThemesTitle" class="GPEditorMapBoxThemesTitle">Liste des 'thèmes'</div>
+ *    <div class="GPEditorMapBoxThemesContainer">
+ *      ...
+ *    </div>
+ *    <div id="GPEditorMapBoxLayersTitle" class="GPEditorMapBoxLayersTitle">Liste des 'couches'</div>
+ *    <div class="GPEditorMapBoxLayersContainer">
  *      <div class="GPEditorMapBoxLayerContainer">
  *          <div id="GPEditorMapBoxLayerTitleContainer-0_1" class="GPEditorMapBoxLayerTitleContainer">
  *              <label class="GPEditorMapBoxLayerImageLabel"></label>
@@ -238,6 +245,7 @@ Editor.prototype._initEvents = function () {
  *      </div>
  *      <div class="GPEditorMapBoxLayerContainer">...</div>
  *      <div class="GPEditorMapBoxLayerContainer">...</div>
+ *    </div>
  *  </div>
  * @private
  */
@@ -258,7 +266,7 @@ Editor.prototype._initContainer = function () {
         _idx += 1;
     }
 
-    // container principal
+    // container principal de l'editeur
     var div = document.createElement("div");
     div.id = this.name.containerID + _idx;
     div.className = this.name.container;
@@ -345,8 +353,13 @@ Editor.prototype._initContainer = function () {
 
             logger.trace("Groups : ", _groups);
 
+            // container principal des couches
+            var divLayers = document.createElement("div");
+            divLayers.className = this.name.containerLayers;
+            div.appendChild(divLayers);
+
             // container courant (cf. groupe) pour l'ajout des elements
-            var target = div;
+            var target = divLayers;
 
             // Ex. Layers, Styles, Groups et Filtres
             //  "id": "ocs - vegetation",
@@ -388,7 +401,7 @@ Editor.prototype._initContainer = function () {
                                     // creation du groupe
                                     var oGroup = new Group({
                                         id : this.id,
-                                        target : div,
+                                        target : divLayers,
                                         title : grp,
                                         collapse : true
                                     });
@@ -398,15 +411,15 @@ Editor.prototype._initContainer = function () {
                                 } else if (_groups[grp] === 1) {
                                     // l'element est seul, donc pas d'ajout dans le
                                     // groupe en cours
-                                    target = div;
+                                    target = divLayers;
                                 } else {
-                                    // on ajoute l'element dans le groupe courrant...
+                                    // on ajoute l'element dans le groupe courant...
                                 }
                             } else {
-                                target = div;
+                                target = divLayers;
                             }
                         } else {
-                            target = div;
+                            target = divLayers;
                         }
                     }
 

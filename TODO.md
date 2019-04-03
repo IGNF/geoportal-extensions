@@ -38,7 +38,7 @@ les fichiers sont suffixés avec le tag *modules*.
 
 - [x] Migrer vers ol v5.3.0   : **OK**
 
-- [ ] dépendance olms : interne ou externe ? : **TODO**
+- [x] dépendance olms : interne ? : **OK**
 
     - Comment doit on intégrer *olms* dans le code des extensions : interne ou externe ?
         ```
@@ -99,7 +99,7 @@ les fichiers sont suffixés avec le tag *modules*.
         sauf la date de l'API des services (*__GPDATE__*)
         > **FIXME** comment récuperer la date de compilation de l'API des Services ?
         > **FIXME** comment récuperer la version directement des sources de l'API des Services ?
-        
+
 ### Les sources
 
 - [x] Format **Ok**

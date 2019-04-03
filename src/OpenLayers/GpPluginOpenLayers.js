@@ -1,11 +1,6 @@
 /**
 * Global variable Gp.
 *
-* The following variables are aslo global :
-*   - proj4,
-*   - ol,
-*   - eventbus
-*
 * @module Gp
 * @alias Gp
 * @desc
@@ -31,6 +26,11 @@
 * > Services: (...)
 * > servicesDate: "YYYY-MM-DD"
 * > servicesVersion: "X.X.X"
+*
+* The following variables are aslo global :
+*   - proj4,
+*   - ol,
+*   - eventbus
 */
 
 import Pkg from "../../package";

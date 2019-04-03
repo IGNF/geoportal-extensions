@@ -23,6 +23,10 @@
 * > Services: (...)
 * > servicesDate: "YYYY-MM-DD"
 * > servicesVersion: "X.X.X"
+*
+* The following variables are aslo global :
+*   - proj4,
+*   - L
 */
 
 import Pkg from "../../package";
