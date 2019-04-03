@@ -51,7 +51,11 @@ var logger = Logger.getLogger("editor");
  *          "editor:themes:onclicktitle" : function(e) {...}
  *      },
  *      tools : {
- *          themes : true || {}, // afficher les themes (themes) ou utiliser les options
+ *          // afficher/cacher les themes (par defaut) ou utiliser les options
+ *          themes : true || {
+ *              "thumbnails": true,
+ *              "radiobutton": true
+ *          },
  *          layers : true, // afficher les couches (layers)
  *          style : true,  // afficher les styles (sous menu layers)
  *          filter : true, // afficher les filtres (sous menu layers)
@@ -59,6 +63,7 @@ var logger = Logger.getLogger("editor");
  *          group : true,  // grouper les couches (layers)
  *          title : true   // afficher les titres des rubriques,
  *          type : true,   // afficher du type de geometrie (layers)
+ *          pin : true     // afficher la puce pour chaque couche (layers)
  *      }
  *   });
  */
@@ -126,7 +131,8 @@ Editor.prototype._initialize = function () {
         legend : false,
         group : false,
         title : true,
-        type : true
+        type : true,
+        pin : true
     };
 
     if (!this.options.tools) {
@@ -258,7 +264,8 @@ Editor.prototype._initContainer = function () {
     div.className = this.name.container;
 
     // Themes
-    if (this.options.tools.themes && this.options.themes) {
+    var _toolsThemes = this.options.tools.themes;
+    if (_toolsThemes && this.options.themes) {
         // title
         if (this.options.tools.title) {
             var titleThemes = document.createElement("div");
@@ -272,6 +279,7 @@ Editor.prototype._initContainer = function () {
         var themes = new Themes({
             id : this.id,
             target : div,
+            tools : (typeof _toolsThemes === "object") ? _toolsThemes : {},
             obj : this.options.themes
         });
         themes.add();
@@ -410,7 +418,8 @@ Editor.prototype._initContainer = function () {
                             position : _idx + "_" + ii, // unique !
                             tools : {
                                 visibility : true,
-                                type : this.options.tools.type
+                                type : this.options.tools.type,
+                                pin : this.options.tools.pin
                             },
                             obj : {
                                 "id" : data.id,

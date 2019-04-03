@@ -24,7 +24,7 @@
                 target: document.getElementById("editor"),
                 style: "{{ resources }}/data/mapbox/styles/ign-theo.json",
                 events : {
-                    "editor:themes:title" : function (e) {
+                    "editor:themes:onclicktitle" : function (e) {
                         console.log(this.getID(), e);
                     }
                 },
@@ -46,7 +46,6 @@
                 }
             });
 
-            // liste de themes reussi avec imagette !
             var editor1 = new ol.style.Editor({
                 target: document.getElementById("editor"),
                 style: "{{ resources }}/data/mapbox/styles/osm.json",
@@ -90,11 +89,15 @@
                     ]
                 },
                 tools : {
-                    themes : true,
+                    themes : {
+                        thumbnails : true,
+                        radiobutton : false
+                    },
                     layers : true,
                     filter : true,
                     style : true,
                     legend : true,
+                    title : true,
                     group : true
                 }
             });
@@ -103,7 +106,7 @@
                 target: document.getElementById("editor"),
                 style: "{{ resources }}/data/mapbox/styles/mapbox.json",
                 events : {
-                    "editor:themes:title" : function (e) {
+                    "editor:themes:onclicktitle" : function (e) {
                         console.log(this.getID(), e);
                     }
                 },
@@ -119,9 +122,11 @@
 
             document.getElementById("displayTrue").addEventListener("click", function () {
                 editor1.display(true);
+                editor2.display(true);
             });
             document.getElementById("displayFalse").addEventListener("click", function () {
                 editor1.display(false);
+                editor2.display(false);
             });
             </script>
 {{/content}}

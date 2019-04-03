@@ -151,28 +151,31 @@ Legend.prototype._initContainer = function () {
     div.className = this.name.container;
 
     // on recherche les informations dans le tag 'paint' en priorité, mais pour
-    // les icones ou textes, les informations peuvent se trouver dans le tag 'layout'...
-    var _foundData = false;
-    var _data = null;
-    if (_obj.paint) {
-        _foundData = true;
-        _data = _obj.paint;
+    // les icones ou textes, les informations peuvent se trouver aussi dans le tag 'layout'...
+    var _bfoundStyle = false;
+    var _style = {};
+    if (_obj.paint && _obj.layout) {
+        _bfoundStyle = true;
+        Object.assign(_style, _obj.paint, _obj.layout);
+    } else if (_obj.paint) {
+        _bfoundStyle = true;
+        Object.assign(_style, _obj.paint);
     } else if (_obj.layout) {
-        _foundData = true;
-        _data = _obj.layout;
+        _bfoundStyle = true;
+        Object.assign(_style, _obj.layout);
     } else {
-        _foundData = false;
+        _bfoundStyle = false;
     }
 
-    if (_foundData) {
-        var keys = Object.keys(_data);
+    if (_bfoundStyle) {
+        var keys = Object.keys(_style);
         if (keys.length === 0) {
             logger.info("tag 'paint' or 'layout' is empty !");
         }
 
         // FIXME
-        // - gestion de type plus complexe : texte avec/sans icone ou icone !
-        // - pour les textes ou icones, les info peuvent être dans le tag 'layout' !
+        // - gestion de type plus complexe : texte avec/sans symbole ou symbole !
+        // - pour les textes ou icones, les info peuvent être aussi dans le tag 'layout' !
         var params = {};
         var bFound = false;
         for (var i = 0; i < keys.length; i++) {
@@ -181,24 +184,30 @@ Legend.prototype._initContainer = function () {
                 /line-/.test(_key) ||
                 /circle-/.test(_key) ||
                 /background-/.test(_key) ||
-                /text-/.test(_key) ||
-                /icon-/.test(_key)
+                /text-/.test(_key) || // FIXME not yet implemented...
+                /icon-/.test(_key) // FIXME not yet implemented...
             ) {
                 // style geré & trouvé
                 bFound = true;
 
-                var _type = _key.split("-")[0];
                 var _title = _obj.title || "";
-                var _values = _obj.paint || {};
 
-                params = {
-                    edit : this.editable,
-                    title : _title,
-                    type : _type,
-                    values : this._getValues(_type, _values)
-                };
+                // le type texte ou icone est difficile à trouver, on le gère en
+                // symbole...
+                var _type = _key.split("-")[0];
+                if (_type === "text" || _type === "icon") {
+                    _type = "symbol";
+                }
 
-                div.appendChild(this._createElementIconLegend(params));
+                if (this._getValues(_type, _style)) {
+                    params = {
+                        edit : this.editable,
+                        title : _title,
+                        type : this.legendRender.type,
+                        values : this.legendRender.values
+                    };
+                    div.appendChild(this._createElementIconLegend(params));
+                }
 
                 // on stoppe la recherche
                 break;
@@ -208,14 +217,16 @@ Legend.prototype._initContainer = function () {
 
     // legende avec un style indeterminé ou non géré !?
     if (!bFound) {
-        params = {
-            edit : this.editable,
-            title : _obj.title || "",
-            type : "line",
-            values : this._getValues("line", {})
-        };
+        if (this._getValues("line", _style)) {
+            params = {
+                edit : this.editable,
+                title : _obj.title || "",
+                type : this.legendRender.type,
+                values : this.legendRender.values
+            };
 
-        div.appendChild(this._createElementIconLegend(params));
+            div.appendChild(this._createElementIconLegend(params));
+        }
     }
 
     // ajout mode edition graphique de la legende
@@ -229,13 +240,13 @@ Legend.prototype._initContainer = function () {
 /**
 * ...
 *
-* @param {Object} type - fill, line, circle, text, ...
-* @param {Object} value - cf. example
-* @returns {Object} - {"color":..., "width":..., "stroke":...., "opacity":...}
+* @param {Object} type - fill, line, circle, text, icon...
+* @param {Object} value - see example
+* @returns {Boolean} - see this.legendRender
 *
 * @private
 * @example
-* // type simple :
+* // type simple for fill, line or circle type:
 * // "paint": {
 * //     "fill-color": "#2BB3E1"
 * // }
@@ -267,8 +278,34 @@ Legend.prototype._initContainer = function () {
 * //        ]
 * //     }
 * // }
+*
+* // TODO symbol with text (1) / symbol without text (2) / text (3)
+* // "layout":{
+* //      "icon-image":"{maki}-11",          <!--- IT'S A SYMBOL (1) (2)-->
+* //      "text-font":[
+* //           "Open Sans Semibold",
+* //           "Arial Unicode MS Bold"
+* //       ],
+* //       "text-field":"{name_en}",         <!--- IT'S A TEXT (1) (3)-->
+* //       "text-max-width":9,
+* //       "text-padding":2,
+* //       "text-offset":[
+* //            0,
+* //            0.6
+* //       ],
+* //       "text-anchor":"top",
+* //       "text-size":12
+* // },
+* // "paint":{
+* //     "text-color":"#666",
+* //     "text-halo-color":"#ffffff",
+* //     "text-halo-width":1,
+* //     "text-halo-blur":0.5
+* // },
+*
 */
 Legend.prototype._getValues = function (type, value) {
+    logger.trace("_getValues():", type, value);
     // objets
     var pColor = null;
     var pStroke = null;
@@ -280,6 +317,21 @@ Legend.prototype._getValues = function (type, value) {
     var _stroke = this.legendRender.values.stroke; // couleur trait
     var _width = this.legendRender.values.width; // epaisseur
     var _opacity = this.legendRender.values.opacity; // opacité
+
+    // cas particulier : determiner pour un symbole complexe
+    if (type === "symbol") {
+        // il existe 2 type de symbole :
+        // - texte
+        // - icone avec ou sans texte
+        var _text = value["text-field"];
+        var _icon = value["icon-image"];
+        type = (_text && _icon) ? "icon" : (_text) ? "text" : (_icon) ? "icon" : "unknow";
+        if (type === "unknow") {
+            logger.warn("_getValues() - Type inconnu :", type, value);
+            // on force le type texte !?
+            type = "text";
+        }
+    }
 
     switch (type) {
         case "line":
@@ -300,7 +352,7 @@ Legend.prototype._getValues = function (type, value) {
                 _color = null;
                 break;
             }
-            // FIXME complexe !?
+            // FIXME c'est plus complexe !?
             _color = pColor || _color;
             break;
         case "icon":
@@ -309,7 +361,7 @@ Legend.prototype._getValues = function (type, value) {
                 _color = null;
                 break;
             }
-            // FIXME complexe !?
+            // FIXME  c'est plus complexe !?
             _color = pColor || _color;
             break;
         case "circle":
@@ -345,6 +397,7 @@ Legend.prototype._getValues = function (type, value) {
             _opacity = (typeof pOpacity === "object" || Array.isArray(pOpacity)) ? _opacity : pOpacity || _opacity;
             break;
         default:
+            // return false;
     }
 
     // save
@@ -358,7 +411,7 @@ Legend.prototype._getValues = function (type, value) {
         }
     };
 
-    return this.legendRender.values;
+    return true;
 };
 
 /**
@@ -385,20 +438,29 @@ Legend.prototype._setValues = function (type, values) {
     var _stroke = values.stroke || this.legendRender.values.stroke; // couleur trait
     var _width = values.width || this.legendRender.values.width; // epaisseur
     var _opacity = values.opacity || this.legendRender.values.opacity; // opacité
+    var _style = "";
 
     // SVG
     var svg = null;
-
     // facteur grossissement (x10) pour le trait
     var factor = 10;
 
     // en fonction du type, on y ajoute le style
     switch (type) {
         case "text":
-            div.style["background-color"] = _color;
+            _style = "font-size: 5em;font-weight: bold;";
+            svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><text x='50' y='50' fill='%color%' fill-opacity='%opacity%'  text-anchor='middle' alignment-baseline='central' style='%style%'> T </text></svg>\")";
+            div.style["background"] = svg
+                .replace("%color%", (_color.indexOf("rgb") === 0) ? _color : Color.hexToRgba(_color, 1))
+                .replace("%opacity%", _opacity)
+                .replace("%style%", _style);
             break;
         case "icon":
-            div.style["background-color"] = _color;
+            _style = "fill: transparent;stroke-width: 10;";
+            svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><path d='M 50,20 80,82.5 20,82.5 z' stroke='%color%' style='%style%'/></svg>\")";
+            div.style["background"] = svg
+                .replace("%color%", (_color.indexOf("rgb") === 0) ? _color : Color.hexToRgba(_color, 1))
+                .replace("%style%", _style);
             break;
         case "background":
             div.style["background-color"] = _color;

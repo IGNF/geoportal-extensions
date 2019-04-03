@@ -83,7 +83,7 @@ Themes.prototype._initialize = function () {
         radiobutton : true
     };
 
-    if (!this.options.tools) {
+    if (!this.options.tools || Object.keys(this.options.tools) === 0) {
         this.options.tools = _toolsDefault;
     }
 

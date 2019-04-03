@@ -1582,7 +1582,7 @@ LayerImport.prototype._onChangeVisibilitySourceMapBox = function (e) {
             for (var i = 0; i < layers.length; i++) {
                 if (layers[i].id === data.id) {
                     var layout = layers[i].layout;
-                    if (layout && layout.visibility) {
+                    if (layout) {
                         layout.visibility = (target.checked) ? "visible" : "none";
                     } else {
                         layers[i].layout = {

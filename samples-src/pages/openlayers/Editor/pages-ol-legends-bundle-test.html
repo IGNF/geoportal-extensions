@@ -82,7 +82,10 @@
 
             var legend25 = new ol.style.editor.Legend({
                 obj: {
-                    "title" : "test text, not correctly implemented...",
+                    "title" : "test text...",
+                    "layout": {
+                        "text-field" : "..."
+                    },
                     "paint": {
                          "text-color" : "#2BB3E1"
                     }
@@ -92,7 +95,10 @@
 
             var legend26 = new ol.style.editor.Legend({
                 obj: {
-                    "title" : "test icon, not yet implemented...",
+                    "title" : "test icon...",
+                    "layout": {
+                        "icon-image" : "..."
+                    },
                     "paint": {
                         "icon-color": "#A7DA81"
                     }
@@ -102,7 +108,7 @@
 
             var legend27 = new ol.style.editor.Legend({
                 obj: {
-                    "title" : "test text (by default), not correctly implemented...",
+                    "title" : "test text (non reconnu comme texte ou icone)...",
                     "paint": {
                         "text-size" : "3px"
                     }
@@ -112,9 +118,9 @@
 
             var legend28 = new ol.style.editor.Legend({
                 obj: {
-                    "title" : "test text (on layout), not correctly implemented...",
+                    "title" : "test text (on layout)...",
                     "layout": {
-                        "text-size" : "3px"
+                        "text-field" : "..."
                     }
                 },
             });
@@ -123,7 +129,7 @@
             var legend29 = new ol.style.editor.Legend({
                 obj: {
                     "title" : "test icon (on sprite), not correctly implemented...",
-                    "paint": {
+                    "layout": {
                         "icon-image" : "onSpriteIcons.png"
                     }
                 },

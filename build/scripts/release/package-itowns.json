@@ -3,25 +3,15 @@
       "type" : "git",
       "url" : "https://github.com/IGNF/geoportal-extensions.git"
    },
-   "description" : "French Geoportal Extensions for iTowns",
-   "bugs" : {},
-   "license" : "CECILL-B",
-   "author" : "IGNF",
-   "version" : "2.2.0",
-   "directories" : {},
-   "scripts" : {},
+   "peerDependencies" : {},
    "keywords" : [
       "geoportail",
       "plugin",
       "javascript",
       "Itowns"
    ],
-   "bundleDependencies" : [],
-   "date" : "01/02/2019",
-   "peerDependencies" : {},
-   "devDependencies" : {},
-   "name" : "geoportal-extensions-itowns",
    "main" : "src/Itowns/GpPluginItowns.js",
+   "scripts" : {},
    "files" : [
       "dist/",
       "src/",
@@ -29,17 +19,27 @@
       "README.md",
       "package.json"
    ],
+   "date" : "01/02/2019",
+   "bugs" : {},
    "browser" : "dist/GpPluginItowns-src.js",
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
+   "author" : "IGNF",
+   "license" : "CECILL-B",
    "dependencies" : {
-      "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/master/geoportal-access-lib-2.1.2.tgz",
-      "request" : "^2.83.0",
-      "proj4" : "2.5.0",
-      "itowns" : "2.3.0",
-      "xmldom" : "^0.1.27",
       "three" : "~0.93.0",
       "sortablejs" : "1.8.4",
-      "three.meshline" : "~1.1.0",
-      "loglevel" : "~1.6.1"
-   }
+      "itowns" : "2.3.0",
+      "request" : "^2.83.0",
+      "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/master/geoportal-access-lib-2.1.2.tgz",
+      "proj4" : "2.5.0",
+      "loglevel" : "~1.6.1",
+      "xmldom" : "^0.1.27",
+      "three.meshline" : "~1.1.0"
+   },
+   "directories" : {},
+   "bundleDependencies" : [],
+   "name" : "geoportal-extensions-itowns",
+   "devDependencies" : {},
+   "description" : "French Geoportal Extensions for iTowns",
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
+   "version" : "2.2.0"
 }

@@ -215,7 +215,7 @@ Layer.prototype._initContainer = function () {
     if (this.options.tools.type && obj.type) { // Optionnel !
         var imgType = document.createElement("img");
         imgType.className = this.name.typeimg;
-        // TODO il faudrait faire la difference entre :
+        // FIXME il faudrait faire la difference entre :
         // - icone uniquement : SYMBOL-ICON
         // - texte uniquement : SYMBOL-TEXT
         // - les 2 : SYMBOL
