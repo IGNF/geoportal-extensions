@@ -1,0 +1,73 @@
+{{#extend "ol-sample-bundle-layout"}}
+
+{{#content "head"}}
+        <title>Sample openlayers SearchEngine</title>
+{{/content}}
+
+{{#content "style"}}
+        <style>
+            div#search{
+                width: 100%;
+            }
+            .GPwidget {
+                position: unset;
+            }
+            div#map {
+                width: 100%;
+                height: 500px;
+            }
+
+        </style>
+{{/content}}
+
+{{#content "body"}}
+            <h2>Ajout du moteur de recherche avec l' option "target"</h2>
+            <!-- search bar -->
+            <div id="search">
+            </div>
+            <!-- map -->
+            <div id="map">
+            </div>
+{{/content}}
+
+{{#content "js"}}
+            <script type="text/javascript">
+                var map;
+                window.onload = function() {
+                    // on cache l'image de chargement du Géoportail.
+                    document.getElementById('map').style.backgroundImage = 'none';
+
+					// 1. Création de la map
+                    map = new ol.Map({
+                        target : "map",
+                        view : new ol.View({
+                            center : [288074.8449901076, 6247982.515792289],
+                            zoom : 6
+                        }),
+                        layers : [
+                            new ol.layer.Tile({
+                                source : new ol.source.GeoportalWMTS({
+                                    layer: "ORTHOIMAGERY.ORTHOPHOTOS"
+                                }),
+                                opacity : 0.8
+                            }),
+                            new ol.layer.Tile({
+                                source : new ol.source.GeoportalWMTS({
+                                    layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+                                })
+                            })
+                        ]
+                    });
+
+					// 2. Appel du SearchEngine
+                    var search = new ol.control.SearchEngine({
+                        target : "search"
+                    });
+
+					// 3. Ajout du SearchEngine à la carte
+                    map.addControl(search);
+                };
+           </script>
+{{/content}}
+
+{{/extend}}

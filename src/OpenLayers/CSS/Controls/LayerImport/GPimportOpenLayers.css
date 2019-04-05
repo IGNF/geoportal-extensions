@@ -93,7 +93,6 @@ div[id^="GPimportMapBoxPanelReturnPicto-"] {
 }
 
 .GPimportWaitingContainerVisible {
-  display: -webkit-flex;
   display: -ms-flexbox;
   display: -webkit-box;
   display: flex;
@@ -129,13 +128,11 @@ div[id^="GPimportTypeLine-"] {
 }
 
 div[id^="GPimportChoice-"] {
-  display: -webkit-flex;
   display: -ms-flexbox;
   display: -webkit-box;
   display: flex;
-  -webkit-justify-content: space-around;
   -ms-flex-pack: distribute;
-      justify-content: space-around;
+  justify-content: space-around;
   margin-top: 5px;
   margin-bottom: 5px;
 }
@@ -163,7 +160,6 @@ input[id^="GPimportSubmit-"] {
 /* Line inputs */
 
 .GPimportInputLine {
-  display: -webkit-flex;
   display: -ms-flexbox;
   display: -webkit-box;
   display: flex;
@@ -193,23 +189,22 @@ input[id^="GPimportSubmit-"] {
 .GPimportInputLine > *:not(input) {
   overflow: hidden;
   white-space: nowrap;
-  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+     text-overflow: ellipsis;
 }
 
 .GPimportInputLine > input {
-  -webkit-flex: 1;
   -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
+  -ms-flex: 1;
+      flex: 1;
   padding: 0 5px;
   min-width: 0;
 }
 
 .GPimportInputLine > select {
-  -webkit-flex: 1;
   -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
+  -ms-flex: 1;
+      flex: 1;
   padding-right: 7px;
 }
 
@@ -259,7 +254,8 @@ input[id^="GPimportGetCapRubrique-"]:checked ~ ul {
   font-size: 1.0em;
   overflow: hidden;
   white-space: nowrap;
-  text-overflow:ellipsis;
+  -o-text-overflow:ellipsis;
+     text-overflow:ellipsis;
   cursor: pointer;
   list-style-type: none;
 }

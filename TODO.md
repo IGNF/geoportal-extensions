@@ -55,6 +55,8 @@ les fichiers sont suffixés avec le tag *modules*.
 
 - [ ] Migrer vers webpack 4   : **TODO**
 
+- [ ] Autoprefixer CSS avec postCSS : **TODO**
+
 - [x] Tests à jouer / à creer : **OK**
 
     cf. https://staxmanade.com/blog/categories/mochajs/

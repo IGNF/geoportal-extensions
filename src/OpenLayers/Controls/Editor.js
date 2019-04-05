@@ -51,10 +51,13 @@ var logger = Logger.getLogger("editor");
  *          "editor:themes:onclicktitle" : function(e) {...}
  *      },
  *      tools : {
- *          // afficher/cacher les themes (par defaut) ou utiliser les options
- *          themes : true || {
- *              "thumbnails": true,
- *              "radiobutton": true
+ *          // afficher/cacher les themes (par defaut) ou utiliser les options (TODO)
+ *          themes : true | false | {
+ *              target : "...",
+ *              tools : {
+ *                  "thumbnails": true,
+ *                  "radiobutton": true
+ *              },
  *          },
  *          layers : true, // afficher les couches (layers)
  *          style : true,  // afficher les styles (sous menu layers)
@@ -105,7 +108,7 @@ Editor.prototype._initialize = function () {
     var self = this;
 
     if (!this.options.target) {
-        logger.trace("La 'target' n'est pas renseignée (options.target).");
+        logger.info("La 'target' n'est pas renseignée (options.target).");
     }
 
     if (!this.options.style) {
@@ -120,7 +123,7 @@ Editor.prototype._initialize = function () {
     }
 
     if (!this.options.themes) {
-        logger.trace("Les 'themes' MapBox ne sont pas renseignés (options.themes).");
+        logger.info("Les 'themes' MapBox ne sont pas renseignés (options.themes).");
     }
 
     var _toolsDefault = {

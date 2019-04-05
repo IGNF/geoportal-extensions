@@ -7,8 +7,10 @@
     height: auto;
     position: relative;
     padding: 5px;
-    box-sizing: border-box;
-    box-shadow: 0 0 5px #000000;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    -webkit-box-shadow: 0 0 5px #000000;
+            box-shadow: 0 0 5px #000000;
     border-style: solid;
     border-width: 1px;
     border-color: lightskyblue;
@@ -63,19 +65,33 @@ LAYERS
 .GPEditorMapBoxLayerContainer {
     width: 100%;
     min-height: 28px;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
     display: inline-flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -ms-flex-wrap: nowrap;
+        flex-wrap: nowrap;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     /* background-color: red; */
 }
 /* - container titre */
 .GPEditorMapBoxLayerTitleContainer {
     width: inherit;
     min-height: 28px;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: flex-start;
-    align-items: center;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     /* background-color: grey; */
 }
 .GPEditorMapBoxLayerImageInput {
@@ -91,7 +107,9 @@ LAYERS
     /* background-color: green; */
 }
 input[type="checkbox"]:checked + .GPEditorMapBoxLayerImageLabel {
-    transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
+            transform: rotate(90deg);
 }
 .GPEditorMapBoxLayerTypeImage {
     min-width: 30px;
@@ -103,8 +121,10 @@ input[type="checkbox"]:checked + .GPEditorMapBoxLayerImageLabel {
     /* background-image: url("img/GPEditorLayerTypeIcon.svg"); */
     background-image: url("img/GPEditorLayerTypeIcon.png");
     background-position: 0px 0;
-    box-sizing: border-box;
-    box-shadow: 2px 2px 1px lightgrey;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    -webkit-box-shadow: 2px 2px 1px lightgrey;
+            box-shadow: 2px 2px 1px lightgrey;
     border-style: solid;
     border-width: 1px;
     border-radius: 5px;
@@ -123,7 +143,8 @@ input[type="checkbox"]:checked + .GPEditorMapBoxLayerImageLabel {
     border-width: 1px;
     border-radius: 5px;
     border-color: gray;
-    box-shadow: 2px 2px 1px lightgrey;
+    -webkit-box-shadow: 2px 2px 1px lightgrey;
+            box-shadow: 2px 2px 1px lightgrey;
     padding: 5px;
     margin-left: 5px;
     word-break: break-word;
@@ -141,9 +162,15 @@ input[type="checkbox"]:checked + .GPEditorMapBoxLayerTitleLabel {
 .GPEditorMapBoxToolsContainer {
     min-width: 28px;
     height: 28px;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: flex-end;
-    align-items: center;
+    -webkit-box-pack: end;
+        -ms-flex-pack: end;
+            justify-content: flex-end;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     /* background-color: pink; */
 }
 .GPEditorMapBoxToolsVisibilityInput {
@@ -169,10 +196,18 @@ input[type="checkbox"]:checked + .GPEditorMapBoxToolsVisibilityLabel {
 /* - container principal */
 .GPEditorMapBoxFilterContainer {
     width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: flex-start;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -ms-flex-wrap: nowrap;
+        flex-wrap: nowrap;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
     /* background-color: red; */
     margin-left: 28px;
 }
@@ -214,10 +249,18 @@ input[type="checkbox"]:checked + .GPEditorMapBoxToolsVisibilityLabel {
 /* - container principal */
 .GPEditorMapBoxThemesContainer {
     width: 175px;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: flex-start;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -ms-flex-wrap: nowrap;
+        flex-wrap: nowrap;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
     /* background-color: red; */
 }
 
@@ -257,10 +300,18 @@ input[type="checkbox"]:checked + .GPEditorMapBoxToolsVisibilityLabel {
 /* - container principal */
 .GPEditorMapBoxStyleContainer {
     width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: flex-start;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -ms-flex-wrap: nowrap;
+        flex-wrap: nowrap;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
     /* background-color: red; */
     margin-left: 28px;
 }
@@ -283,6 +334,8 @@ input[type="checkbox"]:checked + .GPEditorMapBoxToolsVisibilityLabel {
 }
 /* - container outils Scale */
 .GPEditorMapBoxStyleToolsScaleContainer {
+    width: -webkit-min-content;
+    width: -moz-min-content;
     width: min-content; /* FIXME */
     border-style: solid;
     border-radius: 5px;
@@ -293,9 +346,15 @@ input[type="checkbox"]:checked + .GPEditorMapBoxToolsVisibilityLabel {
 .GPEditorMapBoxStyleToolsScaleMaxContainer,
 .GPEditorMapBoxStyleToolsScaleMinContainer {
     width: 175px;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
     display: inline-flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -ms-flex-wrap: nowrap;
+        flex-wrap: nowrap;
 }
 .GPEditorMapBoxStyleScaleLabelMin {}
 .GPEditorMapBoxStyleScaleInputMin {}
@@ -331,16 +390,28 @@ LEGEND
 
 .GPEditorMapBoxLegendContainer {
     width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    flex-wrap: nowrap;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+    -ms-flex-wrap: nowrap;
+        flex-wrap: nowrap;
     margin-left: 28px;
 }
 
 .GPEditorMapBoxLegendRenderContainer {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
     display: inline-flex;
-    align-items: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     width: 175px;
     padding: 5px;
     border-style: solid;
@@ -359,7 +430,8 @@ LEGEND
     border-style: solid;
     border-width: 1px;
     border-radius: 5px;
-    box-shadow: 2px 2px 1px grey;
+    -webkit-box-shadow: 2px 2px 1px grey;
+            box-shadow: 2px 2px 1px grey;
     cursor: pointer;
 }
 .GPEditorMapBoxLegendEditable {
@@ -370,8 +442,13 @@ LEGEND
 }
 
 .GPEditorMapBoxLegendToolsContainer {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
     width: 230px;
     padding: 5px;
 }
@@ -405,8 +482,12 @@ LEGEND
 }
 
 .legend-styling-div {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: space-between;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
 }
 .legend-styling {
     width: 50px;
