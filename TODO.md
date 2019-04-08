@@ -167,6 +167,7 @@ les fichiers sont suffixés avec le tag *modules*.
 
         cf. https://github.com/openlayers/openlayers/blob/master/changelog/upgrade-notes.md#changes-in-proj4-integration
 
+        - [ ] *FIXME* performance sur l'ajout des projection dans proj4 !!!
         - [x] merge à faire : https://github.com/IGNF/geoportal-extensions/pull/227
         - [ ] *FIXME* bug pour ajouter des projection **geocent** sur le registre IGNF !?
         - [x] on ne surcharge pas la fonction transformExtent mais on ajoute un setExtent() sur

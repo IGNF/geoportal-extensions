@@ -1,16 +1,11 @@
 {
   "id": "leaflet_backstop",
   "viewports": [
-    {
-      "label": "phone",
-      "width": 320,
-      "height": 480
-    },
-    {
-      "label": "tablet",
-      "width": 1024,
-      "height": 768
-    }
+      {
+          "label": "desktop",
+          "width": 800,
+          "height": 400
+      }
   ],
   "onBeforeScript": "chromy/onBefore.js",
   "onReadyScript": "chromy/onReady.js",

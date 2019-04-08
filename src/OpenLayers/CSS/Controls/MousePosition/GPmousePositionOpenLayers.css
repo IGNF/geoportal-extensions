@@ -14,9 +14,8 @@ span[id^=GPshowMousePositionOpen] {
 /* General panels */
 
 div[id^=GPmousePositionPanel-] {
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
+    /* on desactive le mode draggable de la fenêtre : */
+    /* position: absolute;  */
 }
 
 div[id^=GPmousePositionPanelClose]  {

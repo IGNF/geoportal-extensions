@@ -3,65 +3,17 @@ report({
   "tests": [
     {
       "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_MousePosition__default_0_document_0_phone.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_MousePosition__default_0_document_0_phone.png",
-        "selector": "document",
-        "fileName": "ol_backstop_MousePosition__default_0_document_0_phone.png",
-        "label": "MousePosition : default",
+        "reference": "../bitmaps_reference/ol_backstop_MousePosition_map_default_0_dividmap_0_desktop.png",
+        "test": "../bitmaps_test/20190408-171138/ol_backstop_MousePosition_map_default_0_dividmap_0_desktop.png",
+        "selector": "div[id=map]",
+        "fileName": "ol_backstop_MousePosition_map_default_0_dividmap_0_desktop.png",
+        "label": "MousePosition (map): default",
         "requireSameDimensions": true,
         "misMatchThreshold": 0.1,
         "url": "ol/mouseposition.html",
         "referenceUrl": "",
         "expect": 0,
-        "viewportLabel": "phone",
-        "diff": {
-          "isSameDimensions": true,
-          "dimensionDifference": {
-            "width": 0,
-            "height": 0
-          },
-          "misMatchPercentage": "0.00",
-          "analysisTime": 135
-        }
-      },
-      "status": "pass"
-    },
-    {
-      "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_MousePosition__default_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_MousePosition__default_0_document_1_tablet.png",
-        "selector": "document",
-        "fileName": "ol_backstop_MousePosition__default_0_document_1_tablet.png",
-        "label": "MousePosition : default",
-        "requireSameDimensions": true,
-        "misMatchThreshold": 0.1,
-        "url": "ol/mouseposition.html",
-        "referenceUrl": "",
-        "expect": 0,
-        "viewportLabel": "tablet",
-        "diff": {
-          "isSameDimensions": true,
-          "dimensionDifference": {
-            "width": 0,
-            "height": 0
-          },
-          "misMatchPercentage": "0.00",
-          "analysisTime": 462
-        }
-      },
-      "status": "pass"
-    },
-    {
-      "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_MousePosition__show_settings_0_dividGPmousePosition_0_phone.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_MousePosition__show_settings_0_dividGPmousePosition_0_phone.png",
-        "selector": "div[id^=GPmousePosition]",
-        "fileName": "ol_backstop_MousePosition__show_settings_0_dividGPmousePosition_0_phone.png",
-        "label": "MousePosition : show settings",
-        "misMatchThreshold": 0.1,
-        "url": "ol/mouseposition.html",
-        "expect": 0,
-        "viewportLabel": "phone",
+        "viewportLabel": "desktop",
         "diff": {
           "isSameDimensions": true,
           "dimensionDifference": {
@@ -75,15 +27,15 @@ report({
     },
     {
       "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_MousePosition__show_settings_0_dividGPmousePosition_1_tablet.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_MousePosition__show_settings_0_dividGPmousePosition_1_tablet.png",
-        "selector": "div[id^=GPmousePosition]",
-        "fileName": "ol_backstop_MousePosition__show_settings_0_dividGPmousePosition_1_tablet.png",
-        "label": "MousePosition : show settings",
+        "reference": "../bitmaps_reference/ol_backstop_MousePosition_map_show_settings_0_dividmap_0_desktop.png",
+        "test": "../bitmaps_test/20190408-171138/ol_backstop_MousePosition_map_show_settings_0_dividmap_0_desktop.png",
+        "selector": "div[id=map]",
+        "fileName": "ol_backstop_MousePosition_map_show_settings_0_dividmap_0_desktop.png",
+        "label": "MousePosition (map): show settings",
         "misMatchThreshold": 0.1,
         "url": "ol/mouseposition.html",
         "expect": 0,
-        "viewportLabel": "tablet",
+        "viewportLabel": "desktop",
         "diff": {
           "isSameDimensions": true,
           "dimensionDifference": {
@@ -97,1280 +49,619 @@ report({
     },
     {
       "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_LayerSwitcher__default_0_dividGPlayerSwitcher_0_phone.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_LayerSwitcher__default_0_dividGPlayerSwitcher_0_phone.png",
+        "reference": "../bitmaps_reference/ol_backstop_LayerSwitcher_componant_default_0_dividGPlayerSwitcher_0_desktop.png",
+        "test": "../bitmaps_test/20190408-171138/ol_backstop_LayerSwitcher_componant_default_0_dividGPlayerSwitcher_0_desktop.png",
         "selector": "div[id^=GPlayerSwitcher]",
-        "fileName": "ol_backstop_LayerSwitcher__default_0_dividGPlayerSwitcher_0_phone.png",
-        "label": "LayerSwitcher : default",
+        "fileName": "ol_backstop_LayerSwitcher_componant_default_0_dividGPlayerSwitcher_0_desktop.png",
+        "label": "LayerSwitcher (componant): default",
         "misMatchThreshold": 0.1,
         "url": "ol/layerswitcher.html",
         "expect": 0,
-        "viewportLabel": "phone",
+        "viewportLabel": "desktop",
         "diff": {
           "isSameDimensions": true,
           "dimensionDifference": {
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.00",
-          "analysisTime": 57
+          "misMatchPercentage": "0.00"
         }
       },
       "status": "pass"
     },
     {
       "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_LayerSwitcher__default_0_dividGPlayerSwitcher_1_tablet.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_LayerSwitcher__default_0_dividGPlayerSwitcher_1_tablet.png",
+        "reference": "../bitmaps_reference/ol_backstop_LayerSwitcher_componant_add_a_layer_0_dividGPlayerSwitcher_0_desktop.png",
+        "test": "../bitmaps_test/20190408-171138/ol_backstop_LayerSwitcher_componant_add_a_layer_0_dividGPlayerSwitcher_0_desktop.png",
         "selector": "div[id^=GPlayerSwitcher]",
-        "fileName": "ol_backstop_LayerSwitcher__default_0_dividGPlayerSwitcher_1_tablet.png",
-        "label": "LayerSwitcher : default",
+        "fileName": "ol_backstop_LayerSwitcher_componant_add_a_layer_0_dividGPlayerSwitcher_0_desktop.png",
+        "label": "LayerSwitcher (componant): add a layer",
         "misMatchThreshold": 0.1,
-        "url": "ol/layerswitcher.html",
+        "url": "https://localhost:8087/test_rendering/ol/interactions/layerswitcher.html",
         "expect": 0,
-        "viewportLabel": "tablet",
+        "viewportLabel": "desktop",
         "diff": {
           "isSameDimensions": true,
           "dimensionDifference": {
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.00",
-          "analysisTime": 44
+          "misMatchPercentage": "0.00"
         }
       },
       "status": "pass"
     },
     {
       "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_LayerSwitcher__add_a_layer_0_dividmap_0_phone.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_LayerSwitcher__add_a_layer_0_dividmap_0_phone.png",
-        "selector": "div[id=map]",
-        "fileName": "ol_backstop_LayerSwitcher__add_a_layer_0_dividmap_0_phone.png",
-        "label": "LayerSwitcher : add a layer",
+        "reference": "../bitmaps_reference/ol_backstop_LayerSwitcher_componant_remove_a_layer_0_dividGPlayerSwitcher_0_desktop.png",
+        "test": "../bitmaps_test/20190408-171138/ol_backstop_LayerSwitcher_componant_remove_a_layer_0_dividGPlayerSwitcher_0_desktop.png",
+        "selector": "div[id^=GPlayerSwitcher]",
+        "fileName": "ol_backstop_LayerSwitcher_componant_remove_a_layer_0_dividGPlayerSwitcher_0_desktop.png",
+        "label": "LayerSwitcher (componant): remove a layer",
         "misMatchThreshold": 0.1,
         "url": "https://localhost:8087/test_rendering/ol/interactions/layerswitcher.html",
         "expect": 0,
-        "viewportLabel": "phone",
+        "viewportLabel": "desktop",
         "diff": {
           "isSameDimensions": true,
           "dimensionDifference": {
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.00",
-          "analysisTime": 251
+          "misMatchPercentage": "0.00"
         }
       },
       "status": "pass"
     },
     {
       "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_LayerSwitcher__add_a_layer_0_dividmap_1_tablet.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_LayerSwitcher__add_a_layer_0_dividmap_1_tablet.png",
+        "reference": "../bitmaps_reference/ol_backstop_Drawing_map_point_0_dividmap_0_desktop.png",
+        "test": "../bitmaps_test/20190408-171138/ol_backstop_Drawing_map_point_0_dividmap_0_desktop.png",
         "selector": "div[id=map]",
-        "fileName": "ol_backstop_LayerSwitcher__add_a_layer_0_dividmap_1_tablet.png",
-        "label": "LayerSwitcher : add a layer",
+        "fileName": "ol_backstop_Drawing_map_point_0_dividmap_0_desktop.png",
+        "label": "Drawing (map): point",
         "misMatchThreshold": 0.1,
-        "url": "https://localhost:8087/test_rendering/ol/interactions/layerswitcher.html",
+        "url": "ol/drawing.html",
         "expect": 0,
-        "viewportLabel": "tablet",
+        "viewportLabel": "desktop",
         "diff": {
           "isSameDimensions": true,
           "dimensionDifference": {
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.00",
-          "analysisTime": 343
+          "misMatchPercentage": "0.00"
         }
       },
       "status": "pass"
     },
     {
       "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_LayerSwitcher__remove_a_layer_0_dividmap_0_phone.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_LayerSwitcher__remove_a_layer_0_dividmap_0_phone.png",
+        "reference": "../bitmaps_reference/ol_backstop_Drawing_map_line_0_dividmap_0_desktop.png",
+        "test": "../bitmaps_test/20190408-171138/ol_backstop_Drawing_map_line_0_dividmap_0_desktop.png",
         "selector": "div[id=map]",
-        "fileName": "ol_backstop_LayerSwitcher__remove_a_layer_0_dividmap_0_phone.png",
-        "label": "LayerSwitcher : remove a layer",
+        "fileName": "ol_backstop_Drawing_map_line_0_dividmap_0_desktop.png",
+        "label": "Drawing (map): line",
         "misMatchThreshold": 0.1,
-        "url": "https://localhost:8087/test_rendering/ol/interactions/layerswitcher.html",
+        "url": "ol/drawing.html",
         "expect": 0,
-        "viewportLabel": "phone",
+        "viewportLabel": "desktop",
         "diff": {
           "isSameDimensions": true,
           "dimensionDifference": {
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "1.23",
-          "analysisTime": 253
-        },
-        "diffImage": "../bitmaps_test/20190221-150037/failed_diff_ol_backstop_LayerSwitcher__remove_a_layer_0_dividmap_0_phone.png"
+          "misMatchPercentage": "0.00"
+        }
       },
-      "status": "fail"
+      "status": "pass"
     },
     {
       "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_LayerSwitcher__remove_a_layer_0_dividmap_1_tablet.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_LayerSwitcher__remove_a_layer_0_dividmap_1_tablet.png",
+        "reference": "../bitmaps_reference/ol_backstop_Drawing_map_polygon_0_dividmap_0_desktop.png",
+        "test": "../bitmaps_test/20190408-171138/ol_backstop_Drawing_map_polygon_0_dividmap_0_desktop.png",
         "selector": "div[id=map]",
-        "fileName": "ol_backstop_LayerSwitcher__remove_a_layer_0_dividmap_1_tablet.png",
-        "label": "LayerSwitcher : remove a layer",
-        "misMatchThreshold": 0.1,
-        "url": "https://localhost:8087/test_rendering/ol/interactions/layerswitcher.html",
-        "expect": 0,
-        "viewportLabel": "tablet",
-        "diff": {
-          "isSameDimensions": true,
-          "dimensionDifference": {
-            "width": 0,
-            "height": 0
-          },
-          "misMatchPercentage": "0.61",
-          "analysisTime": 477
-        },
-        "diffImage": "../bitmaps_test/20190221-150037/failed_diff_ol_backstop_LayerSwitcher__remove_a_layer_0_dividmap_1_tablet.png"
-      },
-      "status": "fail"
-    },
-    {
-      "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_Drawing__point_0_dividGPdrawing_0_phone.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_Drawing__point_0_dividGPdrawing_0_phone.png",
-        "selector": "div[id^=GPdrawing]",
-        "fileName": "ol_backstop_Drawing__point_0_dividGPdrawing_0_phone.png",
-        "label": "Drawing : point",
+        "fileName": "ol_backstop_Drawing_map_polygon_0_dividmap_0_desktop.png",
+        "label": "Drawing (map): polygon",
         "misMatchThreshold": 0.1,
         "url": "ol/drawing.html",
         "expect": 0,
-        "viewportLabel": "phone",
+        "viewportLabel": "desktop",
         "diff": {
           "isSameDimensions": true,
           "dimensionDifference": {
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.30",
-          "analysisTime": 64
-        },
-        "diffImage": "../bitmaps_test/20190221-150037/failed_diff_ol_backstop_Drawing__point_0_dividGPdrawing_0_phone.png"
+          "misMatchPercentage": "0.00"
+        }
       },
-      "status": "fail"
+      "status": "pass"
     },
     {
       "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_Drawing__point_0_dividGPdrawing_1_tablet.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_Drawing__point_0_dividGPdrawing_1_tablet.png",
-        "selector": "div[id^=GPdrawing]",
-        "fileName": "ol_backstop_Drawing__point_0_dividGPdrawing_1_tablet.png",
-        "label": "Drawing : point",
-        "misMatchThreshold": 0.1,
-        "url": "ol/drawing.html",
-        "expect": 0,
-        "viewportLabel": "tablet",
-        "diff": {
-          "isSameDimensions": true,
-          "dimensionDifference": {
-            "width": 0,
-            "height": 0
-          },
-          "misMatchPercentage": "0.30",
-          "analysisTime": 176
-        },
-        "diffImage": "../bitmaps_test/20190221-150037/failed_diff_ol_backstop_Drawing__point_0_dividGPdrawing_1_tablet.png"
-      },
-      "status": "fail"
-    },
-    {
-      "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_Drawing__line_0_dividGPdrawing_0_phone.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_Drawing__line_0_dividGPdrawing_0_phone.png",
-        "selector": "div[id^=GPdrawing]",
-        "fileName": "ol_backstop_Drawing__line_0_dividGPdrawing_0_phone.png",
-        "label": "Drawing : line",
-        "misMatchThreshold": 0.1,
-        "url": "ol/drawing.html",
-        "expect": 0,
-        "viewportLabel": "phone",
-        "diff": {
-          "isSameDimensions": true,
-          "dimensionDifference": {
-            "width": 0,
-            "height": 0
-          },
-          "misMatchPercentage": "0.32",
-          "analysisTime": 118
-        },
-        "diffImage": "../bitmaps_test/20190221-150037/failed_diff_ol_backstop_Drawing__line_0_dividGPdrawing_0_phone.png"
-      },
-      "status": "fail"
-    },
-    {
-      "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_Drawing__line_0_dividGPdrawing_1_tablet.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_Drawing__line_0_dividGPdrawing_1_tablet.png",
-        "selector": "div[id^=GPdrawing]",
-        "fileName": "ol_backstop_Drawing__line_0_dividGPdrawing_1_tablet.png",
-        "label": "Drawing : line",
-        "misMatchThreshold": 0.1,
-        "url": "ol/drawing.html",
-        "expect": 0,
-        "viewportLabel": "tablet",
-        "diff": {
-          "isSameDimensions": true,
-          "dimensionDifference": {
-            "width": 0,
-            "height": 0
-          },
-          "misMatchPercentage": "0.32",
-          "analysisTime": 147
-        },
-        "diffImage": "../bitmaps_test/20190221-150037/failed_diff_ol_backstop_Drawing__line_0_dividGPdrawing_1_tablet.png"
-      },
-      "status": "fail"
-    },
-    {
-      "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_Drawing__polygon_0_dividGPdrawing_0_phone.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_Drawing__polygon_0_dividGPdrawing_0_phone.png",
-        "selector": "div[id^=GPdrawing]",
-        "fileName": "ol_backstop_Drawing__polygon_0_dividGPdrawing_0_phone.png",
-        "label": "Drawing : polygon",
-        "misMatchThreshold": 0.1,
-        "url": "ol/drawing.html",
-        "expect": 0,
-        "viewportLabel": "phone",
-        "diff": {
-          "isSameDimensions": true,
-          "dimensionDifference": {
-            "width": 0,
-            "height": 0
-          },
-          "misMatchPercentage": "0.30",
-          "analysisTime": 127
-        },
-        "diffImage": "../bitmaps_test/20190221-150037/failed_diff_ol_backstop_Drawing__polygon_0_dividGPdrawing_0_phone.png"
-      },
-      "status": "fail"
-    },
-    {
-      "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_Drawing__polygon_0_dividGPdrawing_1_tablet.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_Drawing__polygon_0_dividGPdrawing_1_tablet.png",
-        "selector": "div[id^=GPdrawing]",
-        "fileName": "ol_backstop_Drawing__polygon_0_dividGPdrawing_1_tablet.png",
-        "label": "Drawing : polygon",
-        "misMatchThreshold": 0.1,
-        "url": "ol/drawing.html",
-        "expect": 0,
-        "viewportLabel": "tablet",
-        "diff": {
-          "isSameDimensions": true,
-          "dimensionDifference": {
-            "width": 0,
-            "height": 0
-          },
-          "misMatchPercentage": "0.30",
-          "analysisTime": 98
-        },
-        "diffImage": "../bitmaps_test/20190221-150037/failed_diff_ol_backstop_Drawing__polygon_0_dividGPdrawing_1_tablet.png"
-      },
-      "status": "fail"
-    },
-    {
-      "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_Drawing__text_0_dividGPdrawing_0_phone.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_Drawing__text_0_dividGPdrawing_0_phone.png",
-        "selector": "div[id^=GPdrawing]",
-        "fileName": "ol_backstop_Drawing__text_0_dividGPdrawing_0_phone.png",
-        "label": "Drawing : text",
-        "misMatchThreshold": 0.1,
-        "url": "ol/drawing.html",
-        "expect": 0,
-        "viewportLabel": "phone",
-        "diff": {
-          "isSameDimensions": true,
-          "dimensionDifference": {
-            "width": 0,
-            "height": 0
-          },
-          "misMatchPercentage": "0.32",
-          "analysisTime": 133
-        },
-        "diffImage": "../bitmaps_test/20190221-150037/failed_diff_ol_backstop_Drawing__text_0_dividGPdrawing_0_phone.png"
-      },
-      "status": "fail"
-    },
-    {
-      "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_Drawing__text_0_dividGPdrawing_1_tablet.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_Drawing__text_0_dividGPdrawing_1_tablet.png",
-        "selector": "div[id^=GPdrawing]",
-        "fileName": "ol_backstop_Drawing__text_0_dividGPdrawing_1_tablet.png",
-        "label": "Drawing : text",
-        "misMatchThreshold": 0.1,
-        "url": "ol/drawing.html",
-        "expect": 0,
-        "viewportLabel": "tablet",
-        "diff": {
-          "isSameDimensions": true,
-          "dimensionDifference": {
-            "width": 0,
-            "height": 0
-          },
-          "misMatchPercentage": "0.32",
-          "analysisTime": 169
-        },
-        "diffImage": "../bitmaps_test/20190221-150037/failed_diff_ol_backstop_Drawing__text_0_dividGPdrawing_1_tablet.png"
-      },
-      "status": "fail"
-    },
-    {
-      "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_Drawing__edit_0_dividGPdrawing_0_phone.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_Drawing__edit_0_dividGPdrawing_0_phone.png",
-        "selector": "div[id^=GPdrawing]",
-        "fileName": "ol_backstop_Drawing__edit_0_dividGPdrawing_0_phone.png",
-        "label": "Drawing : edit",
-        "misMatchThreshold": 0.1,
-        "url": "ol/drawing.html",
-        "expect": 0,
-        "viewportLabel": "phone",
-        "diff": {
-          "isSameDimensions": true,
-          "dimensionDifference": {
-            "width": 0,
-            "height": 0
-          },
-          "misMatchPercentage": "0.30",
-          "analysisTime": 131
-        },
-        "diffImage": "../bitmaps_test/20190221-150037/failed_diff_ol_backstop_Drawing__edit_0_dividGPdrawing_0_phone.png"
-      },
-      "status": "fail"
-    },
-    {
-      "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_Drawing__edit_0_dividGPdrawing_1_tablet.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_Drawing__edit_0_dividGPdrawing_1_tablet.png",
-        "selector": "div[id^=GPdrawing]",
-        "fileName": "ol_backstop_Drawing__edit_0_dividGPdrawing_1_tablet.png",
-        "label": "Drawing : edit",
-        "misMatchThreshold": 0.1,
-        "url": "ol/drawing.html",
-        "expect": 0,
-        "viewportLabel": "tablet",
-        "diff": {
-          "isSameDimensions": true,
-          "dimensionDifference": {
-            "width": 0,
-            "height": 0
-          },
-          "misMatchPercentage": "0.30",
-          "analysisTime": 191
-        },
-        "diffImage": "../bitmaps_test/20190221-150037/failed_diff_ol_backstop_Drawing__edit_0_dividGPdrawing_1_tablet.png"
-      },
-      "status": "fail"
-    },
-    {
-      "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_Drawing__display_0_dividGPdrawing_0_phone.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_Drawing__display_0_dividGPdrawing_0_phone.png",
-        "selector": "div[id^=GPdrawing]",
-        "fileName": "ol_backstop_Drawing__display_0_dividGPdrawing_0_phone.png",
-        "label": "Drawing : display",
-        "misMatchThreshold": 0.1,
-        "url": "ol/drawing.html",
-        "expect": 0,
-        "viewportLabel": "phone",
-        "diff": {
-          "isSameDimensions": true,
-          "dimensionDifference": {
-            "width": 0,
-            "height": 0
-          },
-          "misMatchPercentage": "0.31",
-          "analysisTime": 172
-        },
-        "diffImage": "../bitmaps_test/20190221-150037/failed_diff_ol_backstop_Drawing__display_0_dividGPdrawing_0_phone.png"
-      },
-      "status": "fail"
-    },
-    {
-      "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_Drawing__display_0_dividGPdrawing_1_tablet.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_Drawing__display_0_dividGPdrawing_1_tablet.png",
-        "selector": "div[id^=GPdrawing]",
-        "fileName": "ol_backstop_Drawing__display_0_dividGPdrawing_1_tablet.png",
-        "label": "Drawing : display",
-        "misMatchThreshold": 0.1,
-        "url": "ol/drawing.html",
-        "expect": 0,
-        "viewportLabel": "tablet",
-        "diff": {
-          "isSameDimensions": true,
-          "dimensionDifference": {
-            "width": 0,
-            "height": 0
-          },
-          "misMatchPercentage": "0.31",
-          "analysisTime": 280
-        },
-        "diffImage": "../bitmaps_test/20190221-150037/failed_diff_ol_backstop_Drawing__display_0_dividGPdrawing_1_tablet.png"
-      },
-      "status": "fail"
-    },
-    {
-      "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_Drawing__tooltip_0_dividGPdrawing_0_phone.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_Drawing__tooltip_0_dividGPdrawing_0_phone.png",
-        "selector": "div[id^=GPdrawing]",
-        "fileName": "ol_backstop_Drawing__tooltip_0_dividGPdrawing_0_phone.png",
-        "label": "Drawing : tooltip",
-        "misMatchThreshold": 0.1,
-        "url": "ol/drawing.html",
-        "expect": 0,
-        "viewportLabel": "phone",
-        "diff": {
-          "isSameDimensions": true,
-          "dimensionDifference": {
-            "width": 0,
-            "height": 0
-          },
-          "misMatchPercentage": "0.32",
-          "analysisTime": 159
-        },
-        "diffImage": "../bitmaps_test/20190221-150037/failed_diff_ol_backstop_Drawing__tooltip_0_dividGPdrawing_0_phone.png"
-      },
-      "status": "fail"
-    },
-    {
-      "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_Drawing__tooltip_0_dividGPdrawing_1_tablet.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_Drawing__tooltip_0_dividGPdrawing_1_tablet.png",
-        "selector": "div[id^=GPdrawing]",
-        "fileName": "ol_backstop_Drawing__tooltip_0_dividGPdrawing_1_tablet.png",
-        "label": "Drawing : tooltip",
-        "misMatchThreshold": 0.1,
-        "url": "ol/drawing.html",
-        "expect": 0,
-        "viewportLabel": "tablet",
-        "diff": {
-          "isSameDimensions": true,
-          "dimensionDifference": {
-            "width": 0,
-            "height": 0
-          },
-          "misMatchPercentage": "0.32",
-          "analysisTime": 179
-        },
-        "diffImage": "../bitmaps_test/20190221-150037/failed_diff_ol_backstop_Drawing__tooltip_0_dividGPdrawing_1_tablet.png"
-      },
-      "status": "fail"
-    },
-    {
-      "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_Drawing__remove_0_dividGPdrawing_0_phone.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_Drawing__remove_0_dividGPdrawing_0_phone.png",
-        "selector": "div[id^=GPdrawing]",
-        "fileName": "ol_backstop_Drawing__remove_0_dividGPdrawing_0_phone.png",
-        "label": "Drawing : remove",
-        "misMatchThreshold": 0.1,
-        "url": "ol/drawing.html",
-        "expect": 0,
-        "viewportLabel": "phone",
-        "diff": {
-          "isSameDimensions": true,
-          "dimensionDifference": {
-            "width": 0,
-            "height": 0
-          },
-          "misMatchPercentage": "0.27",
-          "analysisTime": 163
-        },
-        "diffImage": "../bitmaps_test/20190221-150037/failed_diff_ol_backstop_Drawing__remove_0_dividGPdrawing_0_phone.png"
-      },
-      "status": "fail"
-    },
-    {
-      "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_Drawing__remove_0_dividGPdrawing_1_tablet.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_Drawing__remove_0_dividGPdrawing_1_tablet.png",
-        "selector": "div[id^=GPdrawing]",
-        "fileName": "ol_backstop_Drawing__remove_0_dividGPdrawing_1_tablet.png",
-        "label": "Drawing : remove",
-        "misMatchThreshold": 0.1,
-        "url": "ol/drawing.html",
-        "expect": 0,
-        "viewportLabel": "tablet",
-        "diff": {
-          "isSameDimensions": true,
-          "dimensionDifference": {
-            "width": 0,
-            "height": 0
-          },
-          "misMatchPercentage": "0.27",
-          "analysisTime": 178
-        },
-        "diffImage": "../bitmaps_test/20190221-150037/failed_diff_ol_backstop_Drawing__remove_0_dividGPdrawing_1_tablet.png"
-      },
-      "status": "fail"
-    },
-    {
-      "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_Measure_DOM_area_0_dividmap_0_phone.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_Measure_DOM_area_0_dividmap_0_phone.png",
+        "reference": "../bitmaps_reference/ol_backstop_Drawing_map_text_0_dividmap_0_desktop.png",
+        "test": "../bitmaps_test/20190408-171138/ol_backstop_Drawing_map_text_0_dividmap_0_desktop.png",
         "selector": "div[id=map]",
-        "fileName": "ol_backstop_Measure_DOM_area_0_dividmap_0_phone.png",
-        "label": "Measure (DOM): area",
+        "fileName": "ol_backstop_Drawing_map_text_0_dividmap_0_desktop.png",
+        "label": "Drawing (map): text",
+        "misMatchThreshold": 0.1,
+        "url": "ol/drawing.html",
+        "expect": 0,
+        "viewportLabel": "desktop",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "0.00"
+        }
+      },
+      "status": "pass"
+    },
+    {
+      "pair": {
+        "reference": "../bitmaps_reference/ol_backstop_Drawing_map_edit_0_dividmap_0_desktop.png",
+        "test": "../bitmaps_test/20190408-171138/ol_backstop_Drawing_map_edit_0_dividmap_0_desktop.png",
+        "selector": "div[id=map]",
+        "fileName": "ol_backstop_Drawing_map_edit_0_dividmap_0_desktop.png",
+        "label": "Drawing (map): edit",
+        "misMatchThreshold": 0.1,
+        "url": "ol/drawing.html",
+        "expect": 0,
+        "viewportLabel": "desktop",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "0.00"
+        }
+      },
+      "status": "pass"
+    },
+    {
+      "pair": {
+        "reference": "../bitmaps_reference/ol_backstop_Drawing_map_display_0_dividmap_0_desktop.png",
+        "test": "../bitmaps_test/20190408-171138/ol_backstop_Drawing_map_display_0_dividmap_0_desktop.png",
+        "selector": "div[id=map]",
+        "fileName": "ol_backstop_Drawing_map_display_0_dividmap_0_desktop.png",
+        "label": "Drawing (map): display",
+        "misMatchThreshold": 0.1,
+        "url": "ol/drawing.html",
+        "expect": 0,
+        "viewportLabel": "desktop",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "0.00"
+        }
+      },
+      "status": "pass"
+    },
+    {
+      "pair": {
+        "reference": "../bitmaps_reference/ol_backstop_Drawing_map_tooltip_0_dividmap_0_desktop.png",
+        "test": "../bitmaps_test/20190408-171138/ol_backstop_Drawing_map_tooltip_0_dividmap_0_desktop.png",
+        "selector": "div[id=map]",
+        "fileName": "ol_backstop_Drawing_map_tooltip_0_dividmap_0_desktop.png",
+        "label": "Drawing (map): tooltip",
+        "misMatchThreshold": 0.1,
+        "url": "ol/drawing.html",
+        "expect": 0,
+        "viewportLabel": "desktop",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "0.00"
+        }
+      },
+      "status": "pass"
+    },
+    {
+      "pair": {
+        "reference": "../bitmaps_reference/ol_backstop_Drawing_map_remove_0_dividmap_0_desktop.png",
+        "test": "../bitmaps_test/20190408-171138/ol_backstop_Drawing_map_remove_0_dividmap_0_desktop.png",
+        "selector": "div[id=map]",
+        "fileName": "ol_backstop_Drawing_map_remove_0_dividmap_0_desktop.png",
+        "label": "Drawing (map): remove",
+        "misMatchThreshold": 0.1,
+        "url": "ol/drawing.html",
+        "expect": 0,
+        "viewportLabel": "desktop",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "0.00"
+        }
+      },
+      "status": "pass"
+    },
+    {
+      "pair": {
+        "reference": "../bitmaps_reference/ol_backstop_Measure_map_area_0_dividmap_0_desktop.png",
+        "test": "../bitmaps_test/20190408-171138/ol_backstop_Measure_map_area_0_dividmap_0_desktop.png",
+        "selector": "div[id=map]",
+        "fileName": "ol_backstop_Measure_map_area_0_dividmap_0_desktop.png",
+        "label": "Measure (map): area",
         "misMatchThreshold": 0.1,
         "url": "ol/measurearea.html",
         "expect": 0,
-        "viewportLabel": "phone",
+        "viewportLabel": "desktop",
         "diff": {
           "isSameDimensions": true,
           "dimensionDifference": {
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.00",
-          "analysisTime": 334
+          "misMatchPercentage": "0.00"
         }
       },
       "status": "pass"
     },
     {
       "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_Measure_DOM_area_0_dividmap_1_tablet.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_Measure_DOM_area_0_dividmap_1_tablet.png",
+        "reference": "../bitmaps_reference/ol_backstop_Measure_map__length_0_dividmap_0_desktop.png",
+        "test": "../bitmaps_test/20190408-171138/ol_backstop_Measure_map__length_0_dividmap_0_desktop.png",
         "selector": "div[id=map]",
-        "fileName": "ol_backstop_Measure_DOM_area_0_dividmap_1_tablet.png",
-        "label": "Measure (DOM): area",
-        "misMatchThreshold": 0.1,
-        "url": "ol/measurearea.html",
-        "expect": 0,
-        "viewportLabel": "tablet",
-        "diff": {
-          "isSameDimensions": true,
-          "dimensionDifference": {
-            "width": 0,
-            "height": 0
-          },
-          "misMatchPercentage": "0.00",
-          "analysisTime": 271
-        }
-      },
-      "status": "pass"
-    },
-    {
-      "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_Measure_DOM__length_0_dividmap_0_phone.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_Measure_DOM__length_0_dividmap_0_phone.png",
-        "selector": "div[id=map]",
-        "fileName": "ol_backstop_Measure_DOM__length_0_dividmap_0_phone.png",
-        "label": "Measure (DOM) : length",
+        "fileName": "ol_backstop_Measure_map__length_0_dividmap_0_desktop.png",
+        "label": "Measure (map) : length",
         "misMatchThreshold": 0.1,
         "url": "ol/measurelength.html",
         "expect": 0,
-        "viewportLabel": "phone",
+        "viewportLabel": "desktop",
         "diff": {
           "isSameDimensions": true,
           "dimensionDifference": {
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.00",
-          "analysisTime": 117
+          "misMatchPercentage": "0.00"
         }
       },
       "status": "pass"
     },
     {
       "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_Measure_DOM__length_0_dividmap_1_tablet.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_Measure_DOM__length_0_dividmap_1_tablet.png",
+        "reference": "../bitmaps_reference/ol_backstop_Measure_map__azimuth_0_dividmap_0_desktop.png",
+        "test": "../bitmaps_test/20190408-171138/ol_backstop_Measure_map__azimuth_0_dividmap_0_desktop.png",
         "selector": "div[id=map]",
-        "fileName": "ol_backstop_Measure_DOM__length_0_dividmap_1_tablet.png",
-        "label": "Measure (DOM) : length",
-        "misMatchThreshold": 0.1,
-        "url": "ol/measurelength.html",
-        "expect": 0,
-        "viewportLabel": "tablet",
-        "diff": {
-          "isSameDimensions": true,
-          "dimensionDifference": {
-            "width": 0,
-            "height": 0
-          },
-          "misMatchPercentage": "0.00",
-          "analysisTime": 345
-        }
-      },
-      "status": "pass"
-    },
-    {
-      "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_Measure_DOM__azimuth_0_dividmap_0_phone.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_Measure_DOM__azimuth_0_dividmap_0_phone.png",
-        "selector": "div[id=map]",
-        "fileName": "ol_backstop_Measure_DOM__azimuth_0_dividmap_0_phone.png",
-        "label": "Measure (DOM) : azimuth",
+        "fileName": "ol_backstop_Measure_map__azimuth_0_dividmap_0_desktop.png",
+        "label": "Measure (map) : azimuth",
         "misMatchThreshold": 0.1,
         "url": "ol/measureazimuth.html",
         "expect": 0,
-        "viewportLabel": "phone",
+        "viewportLabel": "desktop",
         "diff": {
           "isSameDimensions": true,
           "dimensionDifference": {
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.00",
-          "analysisTime": 337
+          "misMatchPercentage": "0.00"
         }
       },
       "status": "pass"
     },
     {
       "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_Measure_DOM__azimuth_0_dividmap_1_tablet.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_Measure_DOM__azimuth_0_dividmap_1_tablet.png",
+        "reference": "../bitmaps_reference/ol_backstop_Measure_map__toolbox_0_dividmap_0_desktop.png",
+        "test": "../bitmaps_test/20190408-171138/ol_backstop_Measure_map__toolbox_0_dividmap_0_desktop.png",
         "selector": "div[id=map]",
-        "fileName": "ol_backstop_Measure_DOM__azimuth_0_dividmap_1_tablet.png",
-        "label": "Measure (DOM) : azimuth",
+        "fileName": "ol_backstop_Measure_map__toolbox_0_dividmap_0_desktop.png",
+        "label": "Measure (map) : toolbox",
         "misMatchThreshold": 0.1,
-        "url": "ol/measureazimuth.html",
+        "url": "ol/measures.html",
         "expect": 0,
-        "viewportLabel": "tablet",
+        "viewportLabel": "desktop",
         "diff": {
           "isSameDimensions": true,
           "dimensionDifference": {
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.00",
-          "analysisTime": 254
+          "misMatchPercentage": "0.00"
         }
       },
       "status": "pass"
     },
     {
       "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_Isochrone_distance_DOM__default_0_document_0_phone.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_Isochrone_distance_DOM__default_0_document_0_phone.png",
-        "selector": "document",
-        "fileName": "ol_backstop_Isochrone_distance_DOM__default_0_document_0_phone.png",
-        "label": "Isochrone/distance (DOM) : default",
+        "reference": "../bitmaps_reference/ol_backstop_Isochrone_distance_map__default_0_dividmap_0_desktop.png",
+        "test": "../bitmaps_test/20190408-171138/ol_backstop_Isochrone_distance_map__default_0_dividmap_0_desktop.png",
+        "selector": "div[id=map]",
+        "fileName": "ol_backstop_Isochrone_distance_map__default_0_dividmap_0_desktop.png",
+        "label": "Isochrone/distance (map) : default",
         "misMatchThreshold": 0.1,
         "url": "ol/iso.html",
         "expect": 0,
-        "viewportLabel": "phone",
+        "viewportLabel": "desktop",
         "diff": {
           "isSameDimensions": true,
           "dimensionDifference": {
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.07",
-          "analysisTime": 413
+          "misMatchPercentage": "0.00"
         }
       },
       "status": "pass"
     },
     {
       "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_Isochrone_distance_DOM__default_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_Isochrone_distance_DOM__default_0_document_1_tablet.png",
-        "selector": "document",
-        "fileName": "ol_backstop_Isochrone_distance_DOM__default_0_document_1_tablet.png",
-        "label": "Isochrone/distance (DOM) : default",
+        "reference": "../bitmaps_reference/ol_backstop_Isochrone_interactionmap__Voiture_0_dividmap_0_desktop.png",
+        "test": "../bitmaps_test/20190408-171138/ol_backstop_Isochrone_interactionmap__Voiture_0_dividmap_0_desktop.png",
+        "selector": "div[id=map]",
+        "fileName": "ol_backstop_Isochrone_interactionmap__Voiture_0_dividmap_0_desktop.png",
+        "label": "Isochrone (interaction|map) : Voiture",
         "misMatchThreshold": 0.1,
-        "url": "ol/iso.html",
+        "url": "https://localhost:8087/test_rendering/ol/interactions/iso.html",
         "expect": 0,
-        "viewportLabel": "tablet",
+        "viewportLabel": "desktop",
         "diff": {
           "isSameDimensions": true,
           "dimensionDifference": {
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.02",
-          "analysisTime": 674
+          "misMatchPercentage": "0.00"
         }
       },
       "status": "pass"
     },
     {
       "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_Isochrone_interaction__Voiture_0_document_0_phone.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_Isochrone_interaction__Voiture_0_document_0_phone.png",
-        "selector": "document",
-        "fileName": "ol_backstop_Isochrone_interaction__Voiture_0_document_0_phone.png",
-        "label": "Isochrone (interaction) : Voiture",
+        "reference": "../bitmaps_reference/ol_backstop_Isodistance_interactionmap__Pieton_0_dividmap_0_desktop.png",
+        "test": "../bitmaps_test/20190408-171138/ol_backstop_Isodistance_interactionmap__Pieton_0_dividmap_0_desktop.png",
+        "selector": "div[id=map]",
+        "fileName": "ol_backstop_Isodistance_interactionmap__Pieton_0_dividmap_0_desktop.png",
+        "label": "Isodistance (interaction|map) : Pieton",
         "misMatchThreshold": 0.1,
         "url": "https://localhost:8087/test_rendering/ol/interactions/iso.html",
         "expect": 0,
-        "viewportLabel": "phone",
+        "viewportLabel": "desktop",
         "diff": {
           "isSameDimensions": true,
           "dimensionDifference": {
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.81",
-          "analysisTime": 372
-        },
-        "diffImage": "../bitmaps_test/20190221-150037/failed_diff_ol_backstop_Isochrone_interaction__Voiture_0_document_0_phone.png"
+          "misMatchPercentage": "0.00"
+        }
       },
-      "status": "fail"
+      "status": "pass"
     },
     {
       "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_Isochrone_interaction__Voiture_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_Isochrone_interaction__Voiture_0_document_1_tablet.png",
-        "selector": "document",
-        "fileName": "ol_backstop_Isochrone_interaction__Voiture_0_document_1_tablet.png",
-        "label": "Isochrone (interaction) : Voiture",
-        "misMatchThreshold": 0.1,
-        "url": "https://localhost:8087/test_rendering/ol/interactions/iso.html",
-        "expect": 0,
-        "viewportLabel": "tablet",
-        "diff": {
-          "isSameDimensions": true,
-          "dimensionDifference": {
-            "width": 0,
-            "height": 0
-          },
-          "misMatchPercentage": "2.06",
-          "analysisTime": 207
-        },
-        "diffImage": "../bitmaps_test/20190221-150037/failed_diff_ol_backstop_Isochrone_interaction__Voiture_0_document_1_tablet.png"
-      },
-      "status": "fail"
-    },
-    {
-      "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_Isodistance_interaction__Pieton_0_document_0_phone.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_Isodistance_interaction__Pieton_0_document_0_phone.png",
-        "selector": "document",
-        "fileName": "ol_backstop_Isodistance_interaction__Pieton_0_document_0_phone.png",
-        "label": "Isodistance (interaction) : Pieton",
-        "misMatchThreshold": 0.1,
-        "url": "https://localhost:8087/test_rendering/ol/interactions/iso.html",
-        "expect": 0,
-        "viewportLabel": "phone",
-        "diff": {
-          "isSameDimensions": true,
-          "dimensionDifference": {
-            "width": 0,
-            "height": 0
-          },
-          "misMatchPercentage": "2.45",
-          "analysisTime": 432
-        },
-        "diffImage": "../bitmaps_test/20190221-150037/failed_diff_ol_backstop_Isodistance_interaction__Pieton_0_document_0_phone.png"
-      },
-      "status": "fail"
-    },
-    {
-      "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_Isodistance_interaction__Pieton_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_Isodistance_interaction__Pieton_0_document_1_tablet.png",
-        "selector": "document",
-        "fileName": "ol_backstop_Isodistance_interaction__Pieton_0_document_1_tablet.png",
-        "label": "Isodistance (interaction) : Pieton",
-        "misMatchThreshold": 0.1,
-        "url": "https://localhost:8087/test_rendering/ol/interactions/iso.html",
-        "expect": 0,
-        "viewportLabel": "tablet",
-        "diff": {
-          "isSameDimensions": true,
-          "dimensionDifference": {
-            "width": 0,
-            "height": 0
-          },
-          "misMatchPercentage": "2.58",
-          "analysisTime": 180
-        },
-        "diffImage": "../bitmaps_test/20190221-150037/failed_diff_ol_backstop_Isodistance_interaction__Pieton_0_document_1_tablet.png"
-      },
-      "status": "fail"
-    },
-    {
-      "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_Route_DOM__default_0_document_0_phone.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_Route_DOM__default_0_document_0_phone.png",
-        "selector": "document",
-        "fileName": "ol_backstop_Route_DOM__default_0_document_0_phone.png",
-        "label": "Route (DOM) : default",
+        "reference": "../bitmaps_reference/ol_backstop_Route_map__default_0_dividmap_0_desktop.png",
+        "test": "../bitmaps_test/20190408-171138/ol_backstop_Route_map__default_0_dividmap_0_desktop.png",
+        "selector": "div[id=map]",
+        "fileName": "ol_backstop_Route_map__default_0_dividmap_0_desktop.png",
+        "label": "Route (map) : default",
         "misMatchThreshold": 0.1,
         "url": "ol/route.html",
         "expect": 0,
-        "viewportLabel": "phone",
+        "viewportLabel": "desktop",
         "diff": {
           "isSameDimensions": true,
           "dimensionDifference": {
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.13",
-          "analysisTime": 219
-        },
-        "diffImage": "../bitmaps_test/20190221-150037/failed_diff_ol_backstop_Route_DOM__default_0_document_0_phone.png"
+          "misMatchPercentage": "0.00"
+        }
       },
-      "status": "fail"
+      "status": "pass"
     },
     {
       "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_Route_DOM__default_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_Route_DOM__default_0_document_1_tablet.png",
-        "selector": "document",
-        "fileName": "ol_backstop_Route_DOM__default_0_document_1_tablet.png",
-        "label": "Route (DOM) : default",
-        "misMatchThreshold": 0.1,
-        "url": "ol/route.html",
-        "expect": 0,
-        "viewportLabel": "tablet",
-        "diff": {
-          "isSameDimensions": true,
-          "dimensionDifference": {
-            "width": 0,
-            "height": 0
-          },
-          "misMatchPercentage": "0.12",
-          "analysisTime": 461
-        },
-        "diffImage": "../bitmaps_test/20190221-150037/failed_diff_ol_backstop_Route_DOM__default_0_document_1_tablet.png"
-      },
-      "status": "fail"
-    },
-    {
-      "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_Route_interaction__Voiture_-_plus_rapide_0_document_0_phone.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_Route_interaction__Voiture_-_plus_rapide_0_document_0_phone.png",
-        "selector": "document",
-        "fileName": "ol_backstop_Route_interaction__Voiture_-_plus_rapide_0_document_0_phone.png",
-        "label": "Route (interaction) : Voiture - plus rapide",
+        "reference": "../bitmaps_reference/ol_backstop_Route_interactionmap__Voiture_-_plus_rapide_0_dividmap_0_desktop.png",
+        "test": "../bitmaps_test/20190408-171138/ol_backstop_Route_interactionmap__Voiture_-_plus_rapide_0_dividmap_0_desktop.png",
+        "selector": "div[id=map]",
+        "fileName": "ol_backstop_Route_interactionmap__Voiture_-_plus_rapide_0_dividmap_0_desktop.png",
+        "label": "Route (interaction|map) : Voiture - plus rapide",
         "misMatchThreshold": 0.1,
         "url": "https://localhost:8087/test_rendering/ol/interactions/route.html",
         "expect": 0,
-        "viewportLabel": "phone",
+        "viewportLabel": "desktop",
         "diff": {
           "isSameDimensions": true,
           "dimensionDifference": {
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "1.42",
-          "analysisTime": 384
-        },
-        "diffImage": "../bitmaps_test/20190221-150037/failed_diff_ol_backstop_Route_interaction__Voiture_-_plus_rapide_0_document_0_phone.png"
+          "misMatchPercentage": "0.00"
+        }
       },
-      "status": "fail"
+      "status": "pass"
     },
     {
       "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_Route_interaction__Voiture_-_plus_rapide_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_Route_interaction__Voiture_-_plus_rapide_0_document_1_tablet.png",
-        "selector": "document",
-        "fileName": "ol_backstop_Route_interaction__Voiture_-_plus_rapide_0_document_1_tablet.png",
-        "label": "Route (interaction) : Voiture - plus rapide",
+        "reference": "../bitmaps_reference/ol_backstop_Route_interactionmap__Pieton_-_plus_court_0_dividmap_0_desktop.png",
+        "test": "../bitmaps_test/20190408-171138/ol_backstop_Route_interactionmap__Pieton_-_plus_court_0_dividmap_0_desktop.png",
+        "selector": "div[id=map]",
+        "fileName": "ol_backstop_Route_interactionmap__Pieton_-_plus_court_0_dividmap_0_desktop.png",
+        "label": "Route (interaction|map) : Pieton - plus court",
         "misMatchThreshold": 0.1,
         "url": "https://localhost:8087/test_rendering/ol/interactions/route.html",
         "expect": 0,
-        "viewportLabel": "tablet",
+        "viewportLabel": "desktop",
         "diff": {
           "isSameDimensions": true,
           "dimensionDifference": {
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "3.70",
-          "analysisTime": 213
-        },
-        "diffImage": "../bitmaps_test/20190221-150037/failed_diff_ol_backstop_Route_interaction__Voiture_-_plus_rapide_0_document_1_tablet.png"
-      },
-      "status": "fail"
-    },
-    {
-      "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_Route_interaction__Pieton_-_plus_court_0_document_0_phone.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_Route_interaction__Pieton_-_plus_court_0_document_0_phone.png",
-        "selector": "document",
-        "fileName": "ol_backstop_Route_interaction__Pieton_-_plus_court_0_document_0_phone.png",
-        "label": "Route (interaction) : Pieton - plus court",
-        "misMatchThreshold": 0.1,
-        "url": "https://localhost:8087/test_rendering/ol/interactions/route.html",
-        "expect": 0,
-        "viewportLabel": "phone",
-        "diff": {
-          "isSameDimensions": true,
-          "dimensionDifference": {
-            "width": 0,
-            "height": 0
-          },
-          "misMatchPercentage": "0.10",
-          "analysisTime": 386
+          "misMatchPercentage": "0.00"
         }
       },
       "status": "pass"
     },
     {
       "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_Route_interaction__Pieton_-_plus_court_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_Route_interaction__Pieton_-_plus_court_0_document_1_tablet.png",
-        "selector": "document",
-        "fileName": "ol_backstop_Route_interaction__Pieton_-_plus_court_0_document_1_tablet.png",
-        "label": "Route (interaction) : Pieton - plus court",
-        "misMatchThreshold": 0.1,
-        "url": "https://localhost:8087/test_rendering/ol/interactions/route.html",
-        "expect": 0,
-        "viewportLabel": "tablet",
-        "diff": {
-          "isSameDimensions": true,
-          "dimensionDifference": {
-            "width": 0,
-            "height": 0
-          },
-          "misMatchPercentage": "0.28",
-          "analysisTime": 235
-        },
-        "diffImage": "../bitmaps_test/20190221-150037/failed_diff_ol_backstop_Route_interaction__Pieton_-_plus_court_0_document_1_tablet.png"
-      },
-      "status": "fail"
-    },
-    {
-      "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_SearchEngine_DOM__default_0_document_0_phone.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_SearchEngine_DOM__default_0_document_0_phone.png",
-        "selector": "document",
-        "fileName": "ol_backstop_SearchEngine_DOM__default_0_document_0_phone.png",
-        "label": "SearchEngine (DOM) : default",
-        "misMatchThreshold": 0.1,
-        "url": "ol/searchengine_1.html",
-        "expect": 0,
-        "viewportLabel": "phone",
-        "diff": {
-          "isSameDimensions": true,
-          "dimensionDifference": {
-            "width": 0,
-            "height": 0
-          },
-          "misMatchPercentage": "0.00",
-          "analysisTime": 273
-        }
-      },
-      "status": "pass"
-    },
-    {
-      "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_SearchEngine_DOM__default_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_SearchEngine_DOM__default_0_document_1_tablet.png",
-        "selector": "document",
-        "fileName": "ol_backstop_SearchEngine_DOM__default_0_document_1_tablet.png",
-        "label": "SearchEngine (DOM) : default",
-        "misMatchThreshold": 0.1,
-        "url": "ol/searchengine_1.html",
-        "expect": 0,
-        "viewportLabel": "tablet",
-        "diff": {
-          "isSameDimensions": true,
-          "dimensionDifference": {
-            "width": 0,
-            "height": 0
-          },
-          "misMatchPercentage": "0.00",
-          "analysisTime": 212
-        }
-      },
-      "status": "pass"
-    },
-    {
-      "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_SearchEngine_DOM__advanced_search_0_document_0_phone.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_SearchEngine_DOM__advanced_search_0_document_0_phone.png",
-        "selector": "document",
-        "fileName": "ol_backstop_SearchEngine_DOM__advanced_search_0_document_0_phone.png",
-        "label": "SearchEngine (DOM) : advanced search",
-        "misMatchThreshold": 0.1,
-        "url": "ol/searchengine.html",
-        "expect": 0,
-        "viewportLabel": "phone",
-        "diff": {
-          "isSameDimensions": true,
-          "dimensionDifference": {
-            "width": 0,
-            "height": 0
-          },
-          "misMatchPercentage": "0.01",
-          "analysisTime": 253
-        }
-      },
-      "status": "pass"
-    },
-    {
-      "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_SearchEngine_DOM__advanced_search_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_SearchEngine_DOM__advanced_search_0_document_1_tablet.png",
-        "selector": "document",
-        "fileName": "ol_backstop_SearchEngine_DOM__advanced_search_0_document_1_tablet.png",
-        "label": "SearchEngine (DOM) : advanced search",
-        "misMatchThreshold": 0.1,
-        "url": "ol/searchengine.html",
-        "expect": 0,
-        "viewportLabel": "tablet",
-        "diff": {
-          "isSameDimensions": true,
-          "dimensionDifference": {
-            "width": 0,
-            "height": 0
-          },
-          "misMatchPercentage": "0.01",
-          "analysisTime": 210
-        }
-      },
-      "status": "pass"
-    },
-    {
-      "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_SearchEngine_interaction__interaction_search_autocomplete_0_document_0_phone.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_SearchEngine_interaction__interaction_search_autocomplete_0_document_0_phone.png",
-        "selector": "document",
-        "fileName": "ol_backstop_SearchEngine_interaction__interaction_search_autocomplete_0_document_0_phone.png",
-        "label": "SearchEngine (interaction) : interaction search autocomplete",
-        "misMatchThreshold": 0.1,
-        "url": "https://localhost:8087/test_rendering/ol/interactions/searchengine.html",
-        "expect": 0,
-        "viewportLabel": "phone",
-        "diff": {
-          "isSameDimensions": true,
-          "dimensionDifference": {
-            "width": 0,
-            "height": 0
-          },
-          "misMatchPercentage": "10.70",
-          "analysisTime": 263
-        },
-        "diffImage": "../bitmaps_test/20190221-150037/failed_diff_ol_backstop_SearchEngine_interaction__interaction_search_autocomplete_0_document_0_phone.png"
-      },
-      "status": "fail"
-    },
-    {
-      "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_SearchEngine_interaction__interaction_search_autocomplete_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_SearchEngine_interaction__interaction_search_autocomplete_0_document_1_tablet.png",
-        "selector": "document",
-        "fileName": "ol_backstop_SearchEngine_interaction__interaction_search_autocomplete_0_document_1_tablet.png",
-        "label": "SearchEngine (interaction) : interaction search autocomplete",
-        "misMatchThreshold": 0.1,
-        "url": "https://localhost:8087/test_rendering/ol/interactions/searchengine.html",
-        "expect": 0,
-        "viewportLabel": "tablet",
-        "diff": {
-          "isSameDimensions": true,
-          "dimensionDifference": {
-            "width": 0,
-            "height": 0
-          },
-          "misMatchPercentage": "7.94",
-          "analysisTime": 123
-        },
-        "diffImage": "../bitmaps_test/20190221-150037/failed_diff_ol_backstop_SearchEngine_interaction__interaction_search_autocomplete_0_document_1_tablet.png"
-      },
-      "status": "fail"
-    },
-    {
-      "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_SearchEngine_interaction__interaction_search_center_0_document_0_phone.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_SearchEngine_interaction__interaction_search_center_0_document_0_phone.png",
-        "selector": "document",
-        "fileName": "ol_backstop_SearchEngine_interaction__interaction_search_center_0_document_0_phone.png",
-        "label": "SearchEngine (interaction) : interaction search center",
-        "misMatchThreshold": 0.1,
-        "url": "https://localhost:8087/test_rendering/ol/interactions/searchengine.html",
-        "expect": 0,
-        "viewportLabel": "phone",
-        "diff": {
-          "isSameDimensions": true,
-          "dimensionDifference": {
-            "width": 0,
-            "height": 0
-          },
-          "misMatchPercentage": "7.20",
-          "analysisTime": 233
-        },
-        "diffImage": "../bitmaps_test/20190221-150037/failed_diff_ol_backstop_SearchEngine_interaction__interaction_search_center_0_document_0_phone.png"
-      },
-      "status": "fail"
-    },
-    {
-      "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_SearchEngine_interaction__interaction_search_center_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_SearchEngine_interaction__interaction_search_center_0_document_1_tablet.png",
-        "selector": "document",
-        "fileName": "ol_backstop_SearchEngine_interaction__interaction_search_center_0_document_1_tablet.png",
-        "label": "SearchEngine (interaction) : interaction search center",
-        "misMatchThreshold": 0.1,
-        "url": "https://localhost:8087/test_rendering/ol/interactions/searchengine.html",
-        "expect": 0,
-        "viewportLabel": "tablet",
-        "diff": {
-          "isSameDimensions": true,
-          "dimensionDifference": {
-            "width": 0,
-            "height": 0
-          },
-          "misMatchPercentage": "6.84",
-          "analysisTime": 99
-        },
-        "diffImage": "../bitmaps_test/20190221-150037/failed_diff_ol_backstop_SearchEngine_interaction__interaction_search_center_0_document_1_tablet.png"
-      },
-      "status": "fail"
-    },
-    {
-      "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_Attributions_interaction__update_originators_0_document_0_phone.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_Attributions_interaction__update_originators_0_document_0_phone.png",
-        "selector": "document",
-        "fileName": "ol_backstop_Attributions_interaction__update_originators_0_document_0_phone.png",
-        "label": "Attributions (interaction) : update originators",
+        "reference": "../bitmaps_reference/ol_backstop_Attributions_interactionmap__update_originators_0_dividmap_0_desktop.png",
+        "test": "../bitmaps_test/20190408-171138/ol_backstop_Attributions_interactionmap__update_originators_0_dividmap_0_desktop.png",
+        "selector": "div[id=map]",
+        "fileName": "ol_backstop_Attributions_interactionmap__update_originators_0_dividmap_0_desktop.png",
+        "label": "Attributions (interaction|map) : update originators",
         "misMatchThreshold": 0.1,
         "url": "https://localhost:8087/test_rendering/ol/interactions/attributions.html",
         "expect": 0,
-        "viewportLabel": "phone",
+        "viewportLabel": "desktop",
         "diff": {
           "isSameDimensions": true,
           "dimensionDifference": {
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.27",
-          "analysisTime": 282
-        },
-        "diffImage": "../bitmaps_test/20190221-150037/failed_diff_ol_backstop_Attributions_interaction__update_originators_0_document_0_phone.png"
+          "misMatchPercentage": "0.00"
+        }
       },
-      "status": "fail"
+      "status": "pass"
     },
     {
       "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_Attributions_interaction__update_originators_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_Attributions_interaction__update_originators_0_document_1_tablet.png",
-        "selector": "document",
-        "fileName": "ol_backstop_Attributions_interaction__update_originators_0_document_1_tablet.png",
-        "label": "Attributions (interaction) : update originators",
+        "reference": "../bitmaps_reference/ol_backstop_LayerImport_map__default_0_dividmap_0_desktop.png",
+        "test": "../bitmaps_test/20190408-171138/ol_backstop_LayerImport_map__default_0_dividmap_0_desktop.png",
+        "selector": "div[id=map]",
+        "fileName": "ol_backstop_LayerImport_map__default_0_dividmap_0_desktop.png",
+        "label": "LayerImport (map) : default",
         "misMatchThreshold": 0.1,
-        "url": "https://localhost:8087/test_rendering/ol/interactions/attributions.html",
+        "url": "ol/layerimport.html",
         "expect": 0,
-        "viewportLabel": "tablet",
+        "viewportLabel": "desktop",
         "diff": {
           "isSameDimensions": true,
           "dimensionDifference": {
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.28",
-          "analysisTime": 405
-        },
-        "diffImage": "../bitmaps_test/20190221-150037/failed_diff_ol_backstop_Attributions_interaction__update_originators_0_document_1_tablet.png"
+          "misMatchPercentage": "0.00"
+        }
       },
-      "status": "fail"
+      "status": "pass"
     },
     {
       "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_ElevationPath_interaction__interaction_alti_profil_0_document_0_phone.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_ElevationPath_interaction__interaction_alti_profil_0_document_0_phone.png",
-        "selector": "document",
-        "fileName": "ol_backstop_ElevationPath_interaction__interaction_alti_profil_0_document_0_phone.png",
+        "reference": "../bitmaps_reference/ol_backstop_ElevationPath_interaction__interaction_alti_profil_0_dividmap_0_desktop.png",
+        "test": "../bitmaps_test/20190408-171138/ol_backstop_ElevationPath_interaction__interaction_alti_profil_0_dividmap_0_desktop.png",
+        "selector": "div[id=map]",
+        "fileName": "ol_backstop_ElevationPath_interaction__interaction_alti_profil_0_dividmap_0_desktop.png",
         "label": "ElevationPath (interaction) : interaction alti profil",
         "misMatchThreshold": 0.1,
         "url": "https://localhost:8087/test_rendering/ol/interactions/elevationpath.html",
         "expect": 0,
-        "viewportLabel": "phone",
+        "viewportLabel": "desktop",
         "diff": {
           "isSameDimensions": true,
           "dimensionDifference": {
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.00",
-          "analysisTime": 103
+          "misMatchPercentage": "0.00"
         }
       },
       "status": "pass"
     },
     {
       "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_ElevationPath_interaction__interaction_alti_profil_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_ElevationPath_interaction__interaction_alti_profil_0_document_1_tablet.png",
-        "selector": "document",
-        "fileName": "ol_backstop_ElevationPath_interaction__interaction_alti_profil_0_document_1_tablet.png",
-        "label": "ElevationPath (interaction) : interaction alti profil",
+        "reference": "../bitmaps_reference/ol_backstop_SearchEngine_map__default_0_dividmap_0_desktop.png",
+        "test": "../bitmaps_test/20190408-171138/ol_backstop_SearchEngine_map__default_0_dividmap_0_desktop.png",
+        "selector": "div[id=map]",
+        "fileName": "ol_backstop_SearchEngine_map__default_0_dividmap_0_desktop.png",
+        "label": "SearchEngine (map) : default",
         "misMatchThreshold": 0.1,
-        "url": "https://localhost:8087/test_rendering/ol/interactions/elevationpath.html",
+        "url": "ol/searchengine.html",
         "expect": 0,
-        "viewportLabel": "tablet",
+        "viewportLabel": "desktop",
         "diff": {
           "isSameDimensions": true,
           "dimensionDifference": {
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.04",
-          "analysisTime": 124
+          "misMatchPercentage": "0.00"
         }
       },
       "status": "pass"
     },
     {
       "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_LayerImport_DOM__default_0_dividGPimport_0_phone.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_LayerImport_DOM__default_0_dividGPimport_0_phone.png",
-        "selector": "div[id^=GPimport]",
-        "fileName": "ol_backstop_LayerImport_DOM__default_0_dividGPimport_0_phone.png",
-        "label": "LayerImport (DOM) : default",
+        "reference": "../bitmaps_reference/ol_backstop_SearchEngine_map__advanced_search_0_dividmap_0_desktop.png",
+        "test": "../bitmaps_test/20190408-171138/ol_backstop_SearchEngine_map__advanced_search_0_dividmap_0_desktop.png",
+        "selector": "div[id=map]",
+        "fileName": "ol_backstop_SearchEngine_map__advanced_search_0_dividmap_0_desktop.png",
+        "label": "SearchEngine (map) : advanced search",
         "misMatchThreshold": 0.1,
-        "url": "ol/layerimport.html",
+        "url": "ol/searchengine-advanced.html",
         "expect": 0,
-        "viewportLabel": "phone",
+        "viewportLabel": "desktop",
         "diff": {
           "isSameDimensions": true,
           "dimensionDifference": {
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "1.16",
-          "analysisTime": 76
-        },
-        "diffImage": "../bitmaps_test/20190221-150037/failed_diff_ol_backstop_LayerImport_DOM__default_0_dividGPimport_0_phone.png"
+          "misMatchPercentage": "0.00"
+        }
       },
-      "status": "fail"
+      "status": "pass"
     },
     {
       "pair": {
-        "reference": "../bitmaps_reference/ol_backstop_LayerImport_DOM__default_0_dividGPimport_1_tablet.png",
-        "test": "../bitmaps_test/20190221-150037/ol_backstop_LayerImport_DOM__default_0_dividGPimport_1_tablet.png",
-        "selector": "div[id^=GPimport]",
-        "fileName": "ol_backstop_LayerImport_DOM__default_0_dividGPimport_1_tablet.png",
-        "label": "LayerImport (DOM) : default",
+        "reference": "../bitmaps_reference/ol_backstop_SearchEngine_interactionmap__interaction_search_autocomplete_0_dividmap_0_desktop.png",
+        "test": "../bitmaps_test/20190408-171138/ol_backstop_SearchEngine_interactionmap__interaction_search_autocomplete_0_dividmap_0_desktop.png",
+        "selector": "div[id=map]",
+        "fileName": "ol_backstop_SearchEngine_interactionmap__interaction_search_autocomplete_0_dividmap_0_desktop.png",
+        "label": "SearchEngine (interaction|map) : interaction search autocomplete",
         "misMatchThreshold": 0.1,
-        "url": "ol/layerimport.html",
+        "url": "https://localhost:8087/test_rendering/ol/interactions/searchengine.html",
         "expect": 0,
-        "viewportLabel": "tablet",
+        "viewportLabel": "desktop",
         "diff": {
           "isSameDimensions": true,
           "dimensionDifference": {
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "1.16",
-          "analysisTime": 132
-        },
-        "diffImage": "../bitmaps_test/20190221-150037/failed_diff_ol_backstop_LayerImport_DOM__default_0_dividGPimport_1_tablet.png"
+          "misMatchPercentage": "0.00"
+        }
       },
-      "status": "fail"
+      "status": "pass"
+    },
+    {
+      "pair": {
+        "reference": "../bitmaps_reference/ol_backstop_SearchEngine_interactionmap__interaction_search_center_0_dividmap_0_desktop.png",
+        "test": "../bitmaps_test/20190408-171138/ol_backstop_SearchEngine_interactionmap__interaction_search_center_0_dividmap_0_desktop.png",
+        "selector": "div[id=map]",
+        "fileName": "ol_backstop_SearchEngine_interactionmap__interaction_search_center_0_dividmap_0_desktop.png",
+        "label": "SearchEngine (interaction|map) : interaction search center",
+        "misMatchThreshold": 0.1,
+        "url": "https://localhost:8087/test_rendering/ol/interactions/searchengine.html",
+        "expect": 0,
+        "viewportLabel": "desktop",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "0.00"
+        }
+      },
+      "status": "pass"
     }
   ],
   "id": "ol_backstop"

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <!-- Library openlayers -->
+  <script src="https://openlayers.org/en/latest/build/ol.js"></script>
+  <!-- <link rel="stylesheet" href="https://openlayers.org/en/latest/css/ol.css" /> -->
+
+  <!-- Plugin openlayers IGN -->
+  <link rel="stylesheet" href="../../dist/openlayers/GpPluginOpenLayers.css" />
+  <script data-url="./resources/AutoConf.js" src="../../dist/openlayers/GpPluginOpenLayers-src.js"></script>
+
+</head>
+<body>
+        <!-- map -->
+        <div id="map" style="height: 400px;"></div>
+
+        <!-- code -->
+        <script>
+            // var map;
+            // var route;
+            window.onload = function () {
+                // on cache l'image de chargement du Géoportail.
+                document.getElementById("map").style.backgroundImage = "none";
+                // Création de la map
+                var map = new ol.Map({
+                    target : "map",
+                    view : new ol.View({
+                        center : [288074.8449901076, 6247982.515792289],
+                        zoom : 8
+                    })
+                });
+                var search = new ol.control.SearchEngine({
+                    collapsed : false
+                });
+                map.addControl(search);
+            };
+        </script>
+
+</body>
+</html>
