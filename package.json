@@ -70,8 +70,8 @@
   },
   "homepage": "https://github.com/IGNF/geoportal-extensions#readme",
   "dependencies": {
-    "geoportal-access-lib": "2.1.0",
-    "itowns": "2.5.0",
+    "geoportal-access-lib": "2.1.2",
+    "itowns": "2.8.0",
     "leaflet": "1.3.1",
     "leaflet-draw": "1.0.2",
     "loglevel": "~1.6.1",
