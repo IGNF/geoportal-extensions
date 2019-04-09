@@ -43,31 +43,24 @@ function GlobeViewExtended (viewerDiv, coordCarto, options) {
     this._globeView.addFrameRequester(this._itowns.MAIN_LOOP_EVENTS.BEFORE_RENDER, function () {
         clearTimeout(this._preRenderTimer);
         self._preRenderTimer = setTimeout(function () {
-            if (self._fetchVisibleColorLayers || self._fetchVisibleElevationLayers || self._fetchExtent) {
-                var event = {
-                    type : GlobeViewExtended.EVENTS.PRE_RENDER
-                };
-                if (self._fetchExtent) {
-                    event.extent = new self._itowns.Extent("EPSG:4326", 180, -180, 90, -90);
-                }
-                if (self._fetchVisibleColorLayers) {
-                    event.colorLayersId = [];
-                }
-                if (self._fetchVisibleElevationLayers) {
-                    event.elevationLayersId = [];
-                }
+            var visibleColorLayersIds = [];
+            var visibleElevationLayersIds = [];
 
-                self._getCurrentSceneInfos(self._globeView.scene, event);
-
-                // FIXME itowns bug : itowns should only returns visible layers
-                if (event.colorLayersId) {
-                    for (var i = event.colorLayersId.length - 1; i >= 0; i--) {
-                        if (!self.getLayerById(event.colorLayersId[i]).visible) event.colorLayersId.splice(i, 1);
-                    }
+            for (var i = 0; i < self.getGlobeView().tileLayer.info.displayed.layers.length; ++i) {
+                if (self.getGlobeView().tileLayer.info.displayed.layers[i].type === "color") {
+                    visibleColorLayersIds.push(self.getGlobeView().tileLayer.info.displayed.layers[i].id);
                 }
-
-                self._globeView.dispatchEvent(event);
+                if (self.getGlobeView().tileLayer.info.displayed.layers[i].type === "elevation") {
+                    visibleElevationLayersIds.push(self.getGlobeView().tileLayer.info.displayed.layers[i].id);
+                }
             }
+            var currentExtent = self.getGlobeView().tileLayer.info.displayed.extent;
+            self._globeView.dispatchEvent({
+                type : GlobeViewExtended.EVENTS.PRE_RENDER,
+                colorLayersId : visibleColorLayersIds,
+                elevationLayersId : visibleElevationLayersIds,
+                extent : currentExtent
+            });
         }, 100);
     }.bind(this));
 
@@ -496,56 +489,7 @@ GlobeViewExtended.prototype.getElevationLayers = function () {
  * @returns {Array} current view extent
  */
 GlobeViewExtended.prototype.getExtent = function () {
-    var options = {
-        extent : new this._itowns.Extent("EPSG:4326", 180, -180, 90, -90)
-    };
-
-    this._getCurrentSceneInfos(this.scene, options);
-
-    return options.extent;
-};
-
-/**
- * Recursive method to fetch information about the current view (extent, layers displayed...)
- *
- * @param {Object} node - itowns node
- * @param {Object} options - object containing objects to fill with info if specified
- * @private
- */
-GlobeViewExtended.prototype._getCurrentSceneInfos = function (node, options) {
-    if (!node || !node.visible) {
-        return;
-    }
-    if (node.level) {
-        if (node.material.visible) {
-            if (options.colorLayersId) {
-                for (var i = 0; i < node.material.colorLayersId.length; ++i) {
-                    if (options.colorLayersId.indexOf(node.material.colorLayersId[i]) < 0) {
-                        options.colorLayersId.push(node.material.colorLayersId[i]);
-                    }
-                }
-            }
-            if (options.elevationLayersId) {
-                let layerLevel = node.material.getElevationLayerLevel();
-                if (layerLevel >= 0) {
-                    this.getElevationLayers().forEach((layer) => {
-                        if (layerLevel < layer.source.zoom.min || layerLevel > layer.source.zoom.max) return;
-                        if (options.elevationLayersId.indexOf(layer.id) < 0) {
-                            options.elevationLayersId.push(layer.id);
-                        }
-                    });
-                }
-            }
-            if (options.extent) {
-                options.extent.union(node.extent);
-            }
-        }
-    }
-    if (node.children) {
-        for (var child in node.children) {
-            this._getCurrentSceneInfos(node.children[child], options);
-        }
-    }
+    return this.getGlobeView().tileLayer.info.displayed.extent;
 };
 
 /**
