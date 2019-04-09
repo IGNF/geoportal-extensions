@@ -48,6 +48,7 @@ function LayerWMS (options) {
     var layerId = Config.getLayerId(options.layer, "WMS");
 
     if (layerId && Config.configuration.getLayerConf(layerId)) {
+        var config = {};
         var wmsParams = Config.getLayerParams(options.layer, "WMS", options.apiKey);
 
         if (wmsParams.projection === "EPSG:3857" && wmsParams.extent) {
@@ -62,9 +63,8 @@ function LayerWMS (options) {
             ? (ctx.location && ctx.location.protocol && ctx.location.protocol.indexOf("https:") === 0 ? "https://" : "http://")
             : (options.ssl ? "https://" : "http://");
 
-        this.type = "color";
-        this.id = layerId;
-        this.source = {
+        config.id = layerId;
+        config.source = new Itowns.WMSSource({
             protocol : "wms",
             version : wmsParams.version,
             attribution : wmsParams.originators,
@@ -88,17 +88,19 @@ function LayerWMS (options) {
                 south : wmsParams.extent.south(),
                 north : wmsParams.extent.north()
             }
-        };
+        });
 
         // récupération des autres paramètres passés par l'utilisateur
-        Utils.mergeParams(this, options.itownsParams);
+        Utils.mergeParams(config, options.itownsParams);
 
         // add legends and metadata (to be added to LayerSwitcher control)
-        this.legends = wmsParams.legends;
-        this.metadata = wmsParams.metadata;
-        this.description = wmsParams.description;
-        this.title = wmsParams.title;
-        this.quicklookUrl = wmsParams.quicklookUrl;
+        config.legends = wmsParams.legends;
+        config.metadata = wmsParams.metadata;
+        config.description = wmsParams.description;
+        config.title = wmsParams.title;
+        config.quicklookUrl = wmsParams.quicklookUrl;
+
+        return new Itowns.ColorLayer(config.id, config);
     } else {
         // If layer is not in Gp.Config
         logger.error("ERROR layer id (layer name: " + options.layer + " / service: WMS ) was not found !?");

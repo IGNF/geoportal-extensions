@@ -48,6 +48,7 @@ function LayerWMTS (options) {
     var layerId = Config.getLayerId(options.layer, "WMTS");
 
     if (layerId && Config.configuration.getLayerConf(layerId)) {
+        var config = {};
         var wmtsParams = Config.getLayerParams(options.layer, "WMTS", options.apiKey);
 
         if (wmtsParams.projection === "EPSG:3857" && wmtsParams.extent) {
@@ -61,9 +62,9 @@ function LayerWMTS (options) {
         var protocol = (ctx)
             ? (ctx.location && ctx.location.protocol && ctx.location.protocol.indexOf("https:") === 0 ? "https://" : "http://")
             : (options.ssl ? "https://" : "http://");
-        this.type = "color";
-        this.id = layerId;
-        this.source = {
+
+        config.id = layerId;
+        config.source = new Itowns.WMTSSource({
             protocol : "wmts",
             url : wmtsParams.url.replace(/(http|https):\/\//, protocol),
             networkOptions : {
@@ -85,17 +86,19 @@ function LayerWMTS (options) {
                 south : wmtsParams.extent.south(),
                 north : wmtsParams.extent.north()
             }
-        };
+        });
 
         // récupération des autres paramètres passés par l'utilisateur
-        Utils.mergeParams(this, options.itownsParams);
+        Utils.mergeParams(config, options.itownsParams);
 
         // add legends and metadata (to be added to LayerSwitcher control)
-        this.legends = wmtsParams.legends;
-        this.metadata = wmtsParams.metadata;
-        this.description = wmtsParams.description;
-        this.title = wmtsParams.title;
-        this.quicklookUrl = wmtsParams.quicklookUrl;
+        config.legends = wmtsParams.legends;
+        config.metadata = wmtsParams.metadata;
+        config.description = wmtsParams.description;
+        config.title = wmtsParams.title;
+        config.quicklookUrl = wmtsParams.quicklookUrl;
+
+        return new Itowns.ColorLayer(config.id, config);
     } else {
         // If layer is not in Gp.Config
         logger.error("ERROR layer id (layer name: " + options.layer + " / service: WMTS ) was not found !?");
