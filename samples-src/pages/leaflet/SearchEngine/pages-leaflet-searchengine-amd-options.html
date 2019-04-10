@@ -52,7 +52,7 @@
               timeOut : 20000,
               onSuccess : function () {
 
-                var wms = L.geoportalLayer.WMS({
+                var wmts = L.geoportalLayer.WMTS({
                   layer : "ORTHOIMAGERY.ORTHOPHOTOS",
                 });
 
@@ -61,7 +61,7 @@
                   center : L.latLng(48, 2)
                 });
 
-                wms.addTo(map);
+                wmts.addTo(map);
 
                 var search = new L.geoportalControl.SearchEngine({
                   collapsed : false,
