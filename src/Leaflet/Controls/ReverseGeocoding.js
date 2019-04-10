@@ -42,6 +42,7 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
      * @constructor ReverseGeocode
      * @param {Object} options - ReverseGeocoding control options
      * @param {String}  [options.apiKey] - API key for services call (reverse geocode service), mandatory if autoconf service has not been charged in advance
+     * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)   
      * @param {String}  [options.position] - position of component into the map, 'topleft' by default
      * @param {Boolean} [options.collapsed] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
      * @param {Array}  [options.resources] - resources for geocoding, by default : ["StreetAddress", "PositionOfInterest"]
@@ -712,6 +713,7 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
         // options par defaut
         L.Util.extend(options, {
             apiKey : this.options.apiKey,
+            ssl : this.options.ssl,
             srs : "EPSG:4326",
             returnFreeForm : false,
             // maximumResponses : 25, // on peut la surcharger !

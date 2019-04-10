@@ -58,7 +58,7 @@ describe("-- Test Register --", function () {
     describe("#load", function () {
 
         it("instance is already loaded", function () {
-            Register.load();
+            Register.load(proj4);
             expect(Register.isLoaded).to.be.true;
         });
     });
