@@ -9,8 +9,8 @@
  * copyright CeCILL-B
  * copyright IGN
  * @author IGN
- * @version 2.0.3
- * @date 2019-02-18
+ * @version 2.0.4
+ * @date 2019-04-10
  *
  */
 
@@ -19735,7 +19735,20 @@ var logger = _LoggerByDefault2.default.getLogger("icondefault");
 /**  cf. http://leafletjs.com/reference.html#icon */
 var IconDefault = _leaflet2.default.Icon.Default.extend( /** @lends IconDefault.prototype */{
 
+    /**
+    * Liste des icones
+    *   TODO : image retina à convertir en x2...
+    */
     images: {
+        retina: {
+            shadow: "data:image/png;base64,...",
+            color: {
+                blue: "data:image/png;base64,...",
+                orange: "data:image/png;base64,...",
+                red: "data:image/png;base64,...",
+                green: "data:image/png;base64,..."
+            }
+        },
         shadow: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACkAAAApCAYAAACoYAD2AAAC5ElEQVRYw+2YW4/TMBCF45S0S1luXZCABy5CgLQgwf//S4BYBLTdJLax0fFqmB07nnQfEGqkIydpVH85M+NLjPe++dcPc4Q8Qh4hj5D/AaQJx6H/4TMwB0PeBNwU7EGQAmAtsNfAzoZkgIa0ZgLMa4Aj6CxIAsjhjOCoL5z7Glg1JAOkaicgvQBXuncwJAWjksLtBTWZe04CnYRktUGdilALppZBOgHGZcBzL6OClABvMSVIzyBjazOgrvACf1ydC5mguqAVg6RhdkSWQFj2uxfaq/BrIZOLEWgZdALIDvcMcZLD8ZbLC9de4yR1sYMi4G20S4Q/PWeJYxTOZn5zJXANZHIxAd4JWhPIloTJZhzMQduM89WQ3MUVAE/RnhAXpTycqys3NZALOBbB7kFrgLesQl2h45Fcj8L1tTSohUwuxhy8H/Qg6K7gIs+3kkaigQCOcyEXCHN07wyQazhrmIulvKMQAwMcmLNqyCVyMAI+BuxSMeTk3OPikLY2J1uE+VHQk6ANrhds+tNARqBeaGc72cK550FP4WhXmFmcMGhTwAR1ifOe3EvPqIegFmF+C8gVy0OfAaWQPMR7gF1OQKqGoBjq90HPMP01BUjPOqGFksC4emE48tWQAH0YmvOgF3DST6xieJgHAWxPAHMuNhrImIdvoNOKNWIOcE+UXE0pYAnkX6uhWsgVXDxHdTfCmrEEmMB2zMFimLVOtiiajxiGWrbU52EeCdyOwPEQD8LqyPH9Ti2kgYMf4OhSKB7qYILbBv3CuVTJ11Y80oaseiMWOONc/Y7kJYe0xL2f0BaiFTxknHO5HaMGMublKwxFGzYdWsBF174H/QDknhTHmHHN39iWFnkZx8lPyM8WHfYELmlLKtgWNmFNzQcC1b47gJ4hL19i7o65dhH0Negbca8vONZoP7doIeOC9zXm8RjuL0Gf4d4OYaU5ljo3GYiqzrWQHfJxA6ALhDpVKv9qYeZA8eM3EhfPSCmpuD0AAAAASUVORK5CYII=",
         color: {
             blue: "data:image/png;base64,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",
@@ -19756,24 +19769,34 @@ var IconDefault = _leaflet2.default.Icon.Default.extend( /** @lends IconDefault.
         // on merge les options avec celles par defaut
         _leaflet2.default.Util.extend(this.options, options);
 
+        var _color = null;
+        var _images = /* (L.Browser.retina) ? this.images.retina : */this.images;
         switch (color) {
             case "red":
-                this.options.iconUrl = this.images.color.red;
+                _color = _images.color.red;
                 break;
             case "green":
-                this.options.iconUrl = this.images.color.green;
+                _color = _images.color.green;
                 break;
             case "orange":
-                this.options.iconUrl = this.images.color.orange;
+                _color = _images.color.orange;
                 break;
             case "blue":
-                this.options.iconUrl = this.images.color.blue;
+                _color = _images.color.blue;
                 break;
             default:
-                this.options.iconUrl = this.images.color.blue;
+                _color = _images.color.blue;
         }
 
-        this.options.shadowUrl = this.images.shadow;
+        // icones classiques
+        this.options.iconUrl = _color;
+        this.options.shadowUrl = _images.shadow;
+
+        // icones pour écran Retina
+        if (_leaflet2.default.Browser.retina) {
+            this.options.iconRetinaUrl = _color;
+            this.options.shadowRetinaUrl = _images.shadow;
+        }
     },
 
     /**
@@ -51802,7 +51825,7 @@ var WMS = _leaflet2.default.TileLayer.WMS.extend( /** @lends WMS.prototype */{
     // tracker extension leaflet
     // FIXME : gp-ext version en mode AMD
     _gp2.default.Helper.normalyzeUrl(url, {
-      "gp-leaflet-ext": "2.0.3"
+      "gp-leaflet-ext": "2.0.4"
     }, false), settings);
 
     // sauvegarde
@@ -52090,7 +52113,7 @@ var WMTS = _leaflet2.default.TileLayer.extend( /** @lends WMTS.prototype */{
         // tracker extension leaflet
         // FIXME : gp-ext version en mode AMD
         _gp2.default.Helper.normalyzeUrl(url, {
-            "gp-leaflet-ext": "2.0.3"
+            "gp-leaflet-ext": "2.0.4"
         }, false), options.paramsNative);
 
         // sauvegarde des originators
@@ -52504,7 +52527,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /* 71 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"geoportal-extensions","leafletExtName":"French Geoportal Extension for Leaflet","olExtName":"French Geoportal Extension for OpenLayers","itownsExtName":"French Geoportal Extension for Itowns","olItownsExtName":"French Geoportal Extension for OpenLayers & Itowns","version":"2.1.1","leafletExtVersion":"2.0.3","olExtVersion":"2.1.2","itownsExtVersion":"2.1.2","olItownsExtVersion":"2.1.2","description":"French Geoportal Extensions for OpenLayers, Leaflet and iTowns libraries","main":"dist/leaflet/GpPluginLeaflet.js, dist/openlayers/GpPluginOpenLayers.js, dist/itowns/GpPluginItowns.js, dist/mix/GpPluginOlItowns.js","directories":{},"scripts":{"setup":"npm install","clean":"echo \"Warning: target not yet implemented!\" && exit 0","test":"cd test && mocha-webpack --require setup.js --webpack-config webpack.test.js --glob \"test-*.js\" spec/Common/*/*","test:serve":"cd test && webpack-dev-server --hot --config webpack.test.serve.js","cover":"nyc --reporter=lcov --reporter=text npm run test","sample":"npm run sample:serve","sample:serve":"npm run sample:ol:serve","sample:itowns:serve":"webpack-dev-server --config webpack.config.itowns --open-page samples/index-itowns-src.html --contentBase . --port 9001 --open","sample:leaflet:serve":"webpack-dev-server --config webpack.config.leaflet --open-page samples/index-leaflet-src.html --contentBase . --port 9001 --open","sample:ol:serve":"webpack-dev-server --config webpack.config.openlayers --open-page samples/index-openlayers-src.html --contentBase . --port 9001 --open","doc":"npm run doc:serve","doc:serve":"npm run doc:ol:serve","doc:itowns:serve":"webpack-dev-server --config webpack.config.itowns --contentBase jsdoc/itowns --port 9001 --open","doc:leaflet:serve":"webpack-dev-server --config webpack.config.leaflet --contentBase jsdoc/leaflet --port 9001 --open","doc:ol:serve":"webpack-dev-server --config webpack.config.openlayers --contentBase jsdoc/openlayers --port 9001 --open","build:dev":"npm run build:ol:dev; npm run build:itowns:dev; npm run build:mix:dev; npm run build:leaflet:dev","build:prod":"npm run build:ol:prod; npm run build:itowns:prod; npm run build:mix:prod; npm run build:leaflet:prod","build":"npm run build:ol; npm run build:itowns; npm run build:mix; npm run build:leaflet","build:itowns:dev":"webpack --config webpack.config.itowns --env.development","build:itowns:prod":"webpack --config webpack.config.itowns --env.production","build:itowns":"webpack --config webpack.config.itowns","build:mix:dev":"webpack --config webpack.config.mix --env.development","build:mix:prod":"webpack --config webpack.config.mix --env.production","build:mix":"webpack --config webpack.config.mix","build:ol:dev":"webpack --config webpack.config.openlayers --env.development","build:ol:prod":"webpack --config webpack.config.openlayers --env.production","build:ol":"webpack --config webpack.config.openlayers","build:leaflet:dev":"webpack --config webpack.config.leaflet --env.development","build:leaflet:prod":"webpack --config webpack.config.leaflet --env.production","build:leaflet":"webpack --config webpack.config.leaflet"},"nyc":{"include":["src/**/*.js"],"instrument":false,"sourceMap":false},"repository":{"type":"git","url":"https://github.com/IGNF/geoportal-extensions.git"},"author":"IGNF","keywords":["geoportail","javascript","OpenLayers","Leaflet","Itowns","3D"],"license":"CECILL-B","bugs":{"url":"https://github.com/IGNF/geoportal-extensions/issues"},"homepage":"https://github.com/IGNF/geoportal-extensions#readme","dependencies":{"geoportal-access-lib":"2.1.2","itowns":"2.3.0","leaflet":"1.3.1","leaflet-draw":"1.0.2","loglevel":"~1.6.1","openlayers":"4.4.2","proj4":"2.4.4","proj4leaflet":"~1.0.2","sortablejs":"1.4.0","three":"~0.93.0","three.meshline":"~1.1.0"},"devDependencies":{"babel-core":"^6.26.0","babel-loader":"^7.1.2","babel-preset-env":"^1.6.1","chai":"^4.1.2","clean-webpack-plugin":"^0.1.19","copy-webpack-plugin":"^4.5.1","css-loader":"^0.28.10","eslint":"^4.18.2","eslint-config-standard":"^11.0.0","eslint-loader":"^2.0.0","eslint-plugin-import":"^2.9.0","eslint-plugin-node":"^6.0.1","eslint-plugin-promise":"^3.7.0","eslint-plugin-standard":"^3.0.1","expose-loader":"^0.7.4","extract-text-webpack-plugin":"^3.0.2","handlebars-layouts":"^3.1.4","handlebars-webpack-plugin":"^1.4.1","html-webpack-plugin":"^3.1.0","istanbul-instrumenter-loader":"^3.0.1","jsdoc-webpack-plugin":"0.0.1","jsdom":"^9.9.1","mocha":"^5.0.5","mocha-loader":"^1.1.3","mocha-webpack":"^1.1.0","nyc":"^12.0.2","path":"^0.12.7","replace-bundle-webpack-plugin":"^1.0.0","requirejs":"^2.3.5","speed-measure-webpack-plugin":"^1.2.2","string-template":"^1.0.0","style-loader":"^0.20.2","url-loader":"^1.0.1","webpack":"^3.11.0","webpack-dev-server":"^2.11.1","webpack-merge":"^4.1.2","webpack-node-externals":"^1.6.0"}}
+module.exports = {"name":"geoportal-extensions","leafletExtName":"French Geoportal Extension for Leaflet","olExtName":"French Geoportal Extension for OpenLayers","itownsExtName":"French Geoportal Extension for Itowns","olItownsExtName":"French Geoportal Extension for OpenLayers & Itowns","version":"2.1.1","leafletExtVersion":"2.0.4","olExtVersion":"2.1.2","itownsExtVersion":"2.1.2","olItownsExtVersion":"2.1.2","description":"French Geoportal Extensions for OpenLayers, Leaflet and iTowns libraries","main":"dist/leaflet/GpPluginLeaflet.js, dist/openlayers/GpPluginOpenLayers.js, dist/itowns/GpPluginItowns.js, dist/mix/GpPluginOlItowns.js","directories":{},"scripts":{"setup":"npm install","clean":"echo \"Warning: target not yet implemented!\" && exit 0","test":"cd test && mocha-webpack --require setup.js --webpack-config webpack.test.js --glob \"test-*.js\" spec/Common/*/*","test:serve":"cd test && webpack-dev-server --hot --config webpack.test.serve.js","cover":"nyc --reporter=lcov --reporter=text npm run test","sample":"npm run sample:serve","sample:serve":"npm run sample:ol:serve","sample:itowns:serve":"webpack-dev-server --config webpack.config.itowns --open-page samples/index-itowns-src.html --contentBase . --port 9001 --open","sample:leaflet:serve":"webpack-dev-server --config webpack.config.leaflet --open-page samples/index-leaflet-src.html --contentBase . --port 9001 --open","sample:ol:serve":"webpack-dev-server --config webpack.config.openlayers --open-page samples/index-openlayers-src.html --contentBase . --port 9001 --open","doc":"npm run doc:serve","doc:serve":"npm run doc:ol:serve","doc:itowns:serve":"webpack-dev-server --config webpack.config.itowns --contentBase jsdoc/itowns --port 9001 --open","doc:leaflet:serve":"webpack-dev-server --config webpack.config.leaflet --contentBase jsdoc/leaflet --port 9001 --open","doc:ol:serve":"webpack-dev-server --config webpack.config.openlayers --contentBase jsdoc/openlayers --port 9001 --open","build:dev":"npm run build:ol:dev; npm run build:itowns:dev; npm run build:mix:dev; npm run build:leaflet:dev","build:prod":"npm run build:ol:prod; npm run build:itowns:prod; npm run build:mix:prod; npm run build:leaflet:prod","build":"npm run build:ol; npm run build:itowns; npm run build:mix; npm run build:leaflet","build:itowns:dev":"webpack --config webpack.config.itowns --env.development","build:itowns:prod":"webpack --config webpack.config.itowns --env.production","build:itowns":"webpack --config webpack.config.itowns","build:mix:dev":"webpack --config webpack.config.mix --env.development","build:mix:prod":"webpack --config webpack.config.mix --env.production","build:mix":"webpack --config webpack.config.mix","build:ol:dev":"webpack --config webpack.config.openlayers --env.development","build:ol:prod":"webpack --config webpack.config.openlayers --env.production","build:ol":"webpack --config webpack.config.openlayers","build:leaflet:dev":"webpack --config webpack.config.leaflet --env.development","build:leaflet:prod":"webpack --config webpack.config.leaflet --env.production","build:leaflet":"webpack --config webpack.config.leaflet"},"nyc":{"include":["src/**/*.js"],"instrument":false,"sourceMap":false},"repository":{"type":"git","url":"https://github.com/IGNF/geoportal-extensions.git"},"author":"IGNF","keywords":["geoportail","javascript","OpenLayers","Leaflet","Itowns","3D"],"license":"CECILL-B","bugs":{"url":"https://github.com/IGNF/geoportal-extensions/issues"},"homepage":"https://github.com/IGNF/geoportal-extensions#readme","dependencies":{"geoportal-access-lib":"2.1.2","itowns":"2.3.0","leaflet":"1.3.1","leaflet-draw":"1.0.2","loglevel":"~1.6.1","openlayers":"4.4.2","proj4":"2.4.4","proj4leaflet":"~1.0.2","sortablejs":"1.4.0","three":"~0.93.0","three.meshline":"~1.1.0"},"devDependencies":{"babel-core":"^6.26.0","babel-loader":"^7.1.2","babel-preset-env":"^1.6.1","chai":"^4.1.2","clean-webpack-plugin":"^0.1.19","copy-webpack-plugin":"^4.5.1","css-loader":"^0.28.10","eslint":"^4.18.2","eslint-config-standard":"^11.0.0","eslint-loader":"^2.0.0","eslint-plugin-import":"^2.9.0","eslint-plugin-node":"^6.0.1","eslint-plugin-promise":"^3.7.0","eslint-plugin-standard":"^3.0.1","expose-loader":"^0.7.4","extract-text-webpack-plugin":"^3.0.2","handlebars-layouts":"^3.1.4","handlebars-webpack-plugin":"^1.4.1","html-webpack-plugin":"^3.1.0","istanbul-instrumenter-loader":"^3.0.1","jsdoc-webpack-plugin":"0.0.1","jsdom":"^9.9.1","mocha":"^5.0.5","mocha-loader":"^1.1.3","mocha-webpack":"^1.1.0","nyc":"^12.0.2","path":"^0.12.7","replace-bundle-webpack-plugin":"^1.0.0","requirejs":"^2.3.5","speed-measure-webpack-plugin":"^1.2.2","string-template":"^1.0.0","style-loader":"^0.20.2","url-loader":"^1.0.1","webpack":"^3.11.0","webpack-dev-server":"^2.11.1","webpack-merge":"^4.1.2","webpack-node-externals":"^1.6.0"}}
 
 /***/ })
 /******/ ]);
