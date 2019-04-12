@@ -1,0 +1,58 @@
+{{#extend "layout-leaflet-sample-bundle"}}
+
+{{#content "head"}}
+        <title>Sample Leaflet</title>
+{{/content}}
+
+{{#content "style"}}
+        <style>
+          div#map {
+            width: 100%;
+            height: 500px;
+          }
+        </style>
+{{/content}}
+
+{{#content "body"}}
+        <h2>Ajout d'une couche WMTS</h2>
+        <pre>
+          <code>
+                var map = L.map('map', {
+                    crs : L.geoportalCRS.EPSG27572,
+                    continuousWorld: true
+                }).setView([48, 2], 6);
+          </code>
+        </pre>
+        <!-- map -->
+        <div id="map"></div>
+{{/content}}
+
+{{#content "js"}}
+        <script type="text/javascript">
+          /** onload */
+          window.onload = function () {
+
+              var map = L.map('map', {
+                crs : L.geoportalCRS.EPSG27572,
+                continuousWorld: true
+              }).setView([48, 2], 6);
+
+              var layer = L.geoportalLayer.WMTS({
+                  layer : "ORTHOIMAGERY.ORTHOPHOTOS"
+              });
+
+              layer.addTo(map);
+
+              var mouse = new L.geoportalControl.MousePosition({
+                    editCoordinates : true
+              });
+
+              map.addControl(mouse);
+              
+              L.marker([48, 2]).addTo(map)
+                  .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+                  .openPopup();
+          };
+        </script>
+{{/content}}
+{{/extend}}

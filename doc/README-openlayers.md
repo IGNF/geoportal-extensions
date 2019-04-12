@@ -310,6 +310,7 @@ Le module de l'extension expose de multiples exports nommés (dont le module ope
 L'utilisateur a le choix entre plusieurs méthodes d'import.
 
 **Méthode 1** : import des exports nommés du module
+
 ``` javascript
 import {Services, olExtended as Ol} from 'geoportal-extensions-openlayers';
 
@@ -321,6 +322,7 @@ Services.getConfig(...)
 **Méthode 2** : import d'un objet d’espace de noms pour le module
 
 ***Variante 1*** : le module openlayers étendu est récupéré depuis l'espace de noms
+
 ``` javascript
 import * as Gp from 'geoportal-extensions-openlayers';
 
@@ -329,7 +331,9 @@ const Ol = Gp.olExtended;
 var map = new Ol.Map(...)
 Gp.Services.getConfig(...)
 ```
+
 ***Variante 2*** : le module openlayers est importé indépendamment de l'extension
+
 ``` javascript
 import Ol from 'openlayers';
 import * as Gp from 'geoportal-extensions-openlayers';

@@ -5,7 +5,7 @@
 last
 └── openlayers@5.3.0
 
-* "olms"
+* olms
 
 last
 └── "ol-mapbox-style@4.2.1"
@@ -17,10 +17,12 @@ last
 
 * proj4leaflet
 
+last
 └── proj4leaflet@1.0.2
 
 * Sortable
 
+last
 └── sortablejs@1.8.4
 
 * geoportal-access-lib
@@ -32,26 +34,30 @@ last
 
 └── leaflet@1.3.1
 
+> upgrade to 1.4.0
+
 * leaflet-draw
 
+last
 └── leaflet-draw@1.0.2
 
 * "itowns"
 
-last
 └── "itowns@2.3.0"
 
-* "loglevel"
+> upgrade to 2.5.0
+
+* loglevel
 
 last
 └── "loglevel@1.6.1"
 
-* "request"
+* request
 
 last
 └── "request@2.83.0"
 
-* "xmldom"
+* xmldom
 
 last
 └── "xmldom@0.1.27"

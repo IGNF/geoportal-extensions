@@ -1,11 +1,32 @@
 /* global describe, it */
+import Logger from "../../../../src/Common/Utils/LoggerByDefault";
 import Register from "../../../../src/Common/Utils/Register";
 import Proj4 from "proj4";
 
 import { assert, expect, should } from "chai";
 should();
 
+var logger = Logger.getLogger("test-register");
 describe("-- Test Register --", function () {
+
+    describe("#exist", function () {
+
+        it("with param undef, return false", function () {
+            expect(Register.exist()).to.be.false;
+        });
+
+        it("with param empty, return false", function () {
+            expect(Register.exist("")).to.be.false;
+        });
+
+        it("with register unknow, return false", function () {
+            expect(Register.exist("TOTO:1091957")).to.be.false;
+        });
+
+        it("with good param, return true", function () {
+            expect(Register.exist("CRS:84")).to.be.true;
+        });
+    });
 
     describe("#get", function () {
 
@@ -55,12 +76,42 @@ describe("-- Test Register --", function () {
         });
     });
 
+    describe("#loadByName", function () {
+
+        it("load a custom projection defs", function () {
+            var status = Register.loadByName(Proj4, "EPSG:2154");
+            expect(status).to.be.true;
+            expect(Proj4("EPSG:2154").oProj.title).to.be.equal("RGF93 / Lambert-93");
+        });
+
+        it("load an unknow custom projection defs", function () {
+            var status = Register.loadByName(Proj4, "FOO:2154");
+            expect(status).to.be.false;
+        });
+
+        it("FIXME : add a geocent custom projection defs throw an exception !?", function () {
+            Register.IGNF = {
+                AMST63 : "+title=Amsterdam 1963 +proj=geocent +towgs84=109.753,-528.133,-362.244,0,0,0,0 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs"
+            };
+            expect(Register.exist("IGNF:AMST63")).to.be.true;
+
+            var status = Register.loadByName(Proj4, "IGNF:AMST63");
+            expect(status).to.be.true;
+            try {
+                Proj4("IGNF:AMST63");
+            } catch (e) {
+                expect(e).to.be.equal("IGNF:AMST63");
+            }
+        });
+    });
+
     describe("#load", function () {
 
-        it("instance is already loaded", function () {
+        it("load all custom projections defs", function () {
             Register.load(Proj4);
             expect(Register.isLoaded).to.be.true;
         });
+
     });
 
     describe("#proj4", function () {

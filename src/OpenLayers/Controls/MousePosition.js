@@ -24,7 +24,9 @@ import MathUtils from "../../Common/Utils/MathUtils";
 //  import { register } from "ol/proj/proj4";
 //  import Register from "../../Common/Utils/Register";
 // import local with ol dependencies
+// import CRS from "../CRS/CRS";
 import "../CRS/AutoLoadCRS";
+
 // DOM
 import MousePositionDOM from "../../Common/Controls/MousePositionDOM";
 
@@ -89,11 +91,22 @@ var logger = Logger.getLogger("GeoportalMousePosition");
  *          crs : "EPSG:3857",
  *          label : "Web Mercator",
  *          type : "Metric"
- *        },
+ *       },
  *       {
  *          crs : "EPSG:4326",
  *          label : "Géographiques",
  *          type : "Geographical"
+ *       },
+ *       {
+ *           label : "Lambert 93",
+ *           crs : "EPSG:2154",
+ *           type : "Metric",
+ *           geoBBox : {
+ *               left : -9.86,
+ *               bottom : 41.15,
+ *               right : 10.38,
+ *               top : 51.56
+ *           }
  *        }
  *      ],
  *      units : ["DEC", "DMS"]
@@ -111,6 +124,9 @@ function MousePosition (options) {
     // try {
     //     register(Proj4);
     // } catch (e) {}
+
+    // CRS.load();
+    // CRS.overload();
 
     this._initialize(options);
 
@@ -245,6 +261,11 @@ MousePosition.prototype.addSystem = function (system) {
     if (!system.type) {
         logger.warn("type srs not defined, use 'Metric' by default.");
         system.type = "Metric";
+    }
+
+    if (!olGetProj(system.crs)) {
+        logger.error("crs '{}' not available into proj4 definitions !", system.crs);
+        return;
     }
 
     // 1. add system to control systems
@@ -626,7 +647,7 @@ MousePosition.prototype._initProjectionSystems = function () {
         }
     }, {
         label : "Lambert II \u00e9tendu",
-        crs : olGetProj("EPSG:27572"),
+        crs : olGetProj("EPSG:27572").getCode(),
         type : "Metric",
         geoBBox : {
             left : -4.87,

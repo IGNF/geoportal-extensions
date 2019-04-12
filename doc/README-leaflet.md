@@ -277,6 +277,7 @@ Le module de l'extension expose de multiples exports nommés (dont le module lea
 L'utilisateur a le choix entre plusieurs méthodes d'import.
 
 **Méthode 1** : import des exports nommés du module
+
 ``` javascript
 import {Services, LExtended as L} from 'geoportal-extensions-leaflet';
 
@@ -288,6 +289,7 @@ Services.getConfig(...)
 **Méthode 2** : import d'un objet d’espace de noms pour le module
 
 ***Variante 1*** : le module leaflet étendu est récupéré depuis l'espace de noms
+
 ``` javascript
 import * as Gp from 'geoportal-extensions-leaflet';
 
@@ -296,7 +298,9 @@ const L = Gp.LExtended;
 var map  = L.map(...)
 Gp.Services.getConfig(...)
 ```
+
 ***Variante 2*** : le module leaflet est importé indépendamment de l'extension
+
 ``` javascript
 import L from 'leaflet';
 import * as Gp from 'geoportal-extensions-leaflet';
@@ -385,7 +389,6 @@ L.geoportalCRS.EPSG2154
 
 L'affichage des couches WMTS Géoportail se fait à l'aide de la fonction [L.geoportalLayer.WMTS()](http://ignf.github.io/geoportal-extensions/leaflet-latest/jsdoc/module-Layers.html#.WMTS), utilisée de la manière suivante :
 
-
 ``` javascript
 L.geoportalLayer.WMTS(options, [leafletParams]);
 ```
@@ -463,7 +466,6 @@ Cette fonction retourne un objet de type [L.TileLayer.WMS](http://leafletjs.com/
 #### Utilisation simple de la fonction
 
 Affichage des orthos-images servies par le service WMS INSPIRE de la plateforme Géoportail sur une carte Leaflet en projection EPSG:4326.
-
 
 ``` javascript
 // creation de la carte

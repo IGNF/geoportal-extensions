@@ -280,6 +280,7 @@ Le module de l'extension expose de multiples exports nommés (dont le module ito
 L'utilisateur a le choix entre plusieurs méthodes d'import.
 
 **Méthode 1** : import des exports nommés du module
+
 ``` javascript
 import {Services, itownsExtended as It} from 'geoportal-extensions-itowns';
 
@@ -291,6 +292,7 @@ Services.getConfig(...)
 **Méthode 2** : import d'un objet d’espace de noms pour le module
 
 ***Variante 1*** : le module itowns étendu est récupéré depuis l'espace de noms
+
 ``` javascript
 import * as Gp from 'geoportal-extensions-itowns';
 
@@ -299,7 +301,9 @@ const It = Gp.itownsExtended;
 const globeView = new It.GlobeViewExtended(...)
 Gp.Services.getConfig(...)
 ```
+
 ***Variante 2*** : le module itowns est importé indépendamment de l'extension
+
 ``` javascript
 import It from 'itowns';
 import * as Gp from 'geoportal-extensions-itowns';
@@ -371,6 +375,7 @@ Cette fonction retourne un objet **itowns.layer.GeoportalWMTS**, qui peut ainsi 
 Il est possible de surcharger le paramétrage par défaut de la couche en passant l'option "itownsParams" lors de la création de l'instance de la couche Géoportail WMTS.
 
 #### Exemple d'utilisation
+
 ``` javascript
 const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
 
@@ -387,6 +392,7 @@ globeView.addLayer(new itowns.layer.GeoportalWMTS({
 Il est possible d'ajouter une couche WMTS Géoportail (ou autre) en utilisant directement le paramétrage d'iTowns. Ci-après, un exemple d'utilisation.
 
 #### Exemple d'utilisation
+
 ``` javascript
 const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
 
@@ -548,6 +554,7 @@ Cette fonction retourne un objet **itowns.layer.GeoportalWMS**, qui peut ainsi �
 Il est possible de surcharger le paramétrage par défaut de la couche en passant l'option "itownsParams" lors de la création de l'instance de la couche Géoportail WMS.
 
 #### Exemple d'utilisation
+
 ``` javascript
 const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
 
@@ -564,6 +571,7 @@ globeView.addLayer(new itowns.layer.GeoportalWMS({
 Il est possible d'ajouter une couche WMS Géoportail (ou autre) en utilisant directement le paramétrage d'iTowns. Ci-après, un exemple d'utilisation.
 
 #### Exemple d'utilisation
+
 ``` javascript
 const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
 
@@ -640,6 +648,7 @@ Cette fonction retourne un objet **itowns.layer.GeoportalElevation**, qui peut a
 Il est possible de surcharger le paramétrage par défaut de la couche en passant l'option "itownsParams" lors de la création de l'instance de la couche Géoportail WMTS.
 
 #### Exemple d'utilisation
+
 ``` javascript
 const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
 
@@ -651,6 +660,7 @@ globeView.addLayer(new itowns.layer.GeoportalElevation({ layer: "ELEVATION.ELEVA
 Il est possible d'ajouter une couche WMTS Géoportail (ou autre) de type "élévation" en utilisant directement le paramétrage d'iTowns. Ci-après, un exemple d'utilisation.
 
 #### Exemple d'utilisation
+
 ``` javascript
 const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
 

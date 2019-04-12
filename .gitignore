@@ -52,6 +52,7 @@ nb-configuration.xml
 /samples-old/
 /tests-old/
 /.nyc_output/
+/performance/
 
 # Files #
 #########

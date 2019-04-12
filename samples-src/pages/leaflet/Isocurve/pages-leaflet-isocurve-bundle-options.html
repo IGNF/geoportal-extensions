@@ -1,0 +1,84 @@
+{{#extend "layout-leaflet-sample-bundle"}}
+
+{{#content "head"}}
+        <title>Sample Leaflet Isocurve</title>
+{{/content}}
+
+{{#content "style"}}
+        <style>
+          div#map {
+            width: 100%;
+            height: 500px;
+          }
+        </style>
+{{/content}}
+
+{{#content "body"}}
+        <h2>Ajout du widget de calcul isochrone</h2>
+        <pre>
+          <code>
+              var iso = L.geoportalControl.Isocurve({
+                  collapsed : false,
+                  position : "bottomleft",
+                  directions : [],
+                  exclusions : {
+                    "toll" : true,
+                    "bridge" : false,
+                    "tunnel" : true
+                  },
+                  graphs : ["Voiture"],
+                  methods : ["time"],
+                  autocompleteOptions : {
+                    maximumResponses : 5,
+                    filterOptions : {
+                      type : ["PositionOfInterest"],
+                      territory : ["METROPOLE"]
+                    }
+                  }
+              });
+          </code>
+        </pre>
+        <!-- map -->
+        <div id="map"></div>
+{{/content}}
+
+{{#content "js"}}
+        <script type="text/javascript">
+          window.onload = function () {
+
+            var layer = L.geoportalLayer.WMTS({
+              layer : "ORTHOIMAGERY.ORTHOPHOTOS"
+            });
+
+            var map  = L.map('map', {
+              zoom : 2,
+              center : L.latLng(48, 2)
+            });
+
+            layer.addTo(map);
+
+            var iso = L.geoportalControl.Isocurve({
+                collapsed : false,
+                position : "bottomleft",
+                directions : [],
+                exclusions : {
+                  "toll" : true,
+                  "bridge" : false,
+                  "tunnel" : true
+                },
+                graphs : ["Voiture"],
+                methods : ["time"],
+                autocompleteOptions : {
+                  maximumResponses : 5,
+                  filterOptions : {
+                    type : ["PositionOfInterest"],
+                    territory : ["METROPOLE"]
+                  }
+                }
+            });
+
+            map.addControl(iso);
+          }
+        </script>
+{{/content}}
+{{/extend}}

@@ -1,6 +1,9 @@
-// FIXME exception lors du register IGNF des projections geocent ?
+// FIXME
+// - exception lors du register IGNF des projections geocent ?
 // Ex. Transforming EPSG:4978 geocent projection fails?
 // cf. https://github.com/proj4js/proj4js/issues/195
+// - probleme de performance avec le chargement des projections (env. 4s),
+// et ceci bloque le rendu graphique...
 
 /**
  * Register definition for IGNF, and EPSG CRS.
@@ -14,8 +17,6 @@ var Register = {
 
     /**
      * instance already loaded into proj4
-     *
-     * @private
      */
     isLoaded : false,
 
@@ -24,6 +25,9 @@ var Register = {
      *
      * @param {String} name - ie. EPSG:2154 (Lambert)
      * @returns {Object} definition
+     * @example
+     * Register.get("EPSG:2154");
+     * // "+title=RGF93 / Lambert-93 +proj=lcc +lat_1=49 ..."
      */
     get : function (name) {
         if (name === "" || name === null || typeof name === "undefined") {
@@ -47,6 +51,38 @@ var Register = {
         }
 
         return this[_register][_code];
+    },
+
+    /**
+     *  does projection code exist ?
+     *
+     * @param {String} name - ie. EPSG:2154 (Lambert)
+     * @returns {Boolean} true/false
+     * @example
+     * Register.exist("EPSG:2154"); // true
+     */
+    exist : function (name) {
+        if (name === "" || name === null || typeof name === "undefined") {
+            return false;
+        }
+
+        var s = name.split(":");
+        if (s.length !== 2) {
+            return false;
+        }
+
+        var _register = s[0];
+        var _code = s[1];
+
+        if (!this.hasOwnProperty(_register)) {
+            return false;
+        }
+
+        if (!this[_register].hasOwnProperty(_code)) {
+            return false;
+        }
+
+        return true;
     },
 
     /**
@@ -83,6 +119,82 @@ var Register = {
             }
             this.isLoaded = true;
         }
+    },
+
+    /**
+     * load defs by default to proj4
+     *
+     * include into proj4 :
+     * - WGS84
+     * - ['EPSG:4326']
+     * - ['EPSG:3785'], ['EPSG:3857'], GOOGLE, ['EPSG:900913'], ['EPSG:102113']
+     * +
+     * - ["EPSG:2154"],
+     * - ["CRS:84"],
+     * - ["IGNF:LAMB93"],
+     * - ["IGNF:LAMBE"], ["IGNF:LAMB1"],  ["IGNF:LAMB2"],  ["IGNF:LAMB3"],  ["IGNF:LAMB4"],
+     * - ["IGNF:RGF93G"],
+     * - ["IGNF:WGS84G"]
+     *
+     * @param {Object} Proj4 - proj4 instance
+     */
+    loadByDefault : function (Proj4) {
+        // FIXME definir la liste de projections par defaut...
+        var registers = {
+            EPSG : {
+                2154 : Register["EPSG"]["2154"],
+                27571 : Register["EPSG"]["27571"],
+                27572 : Register["EPSG"]["27572"],
+                27573 : Register["EPSG"]["27573"],
+                27574 : Register["EPSG"]["27574"]
+            },
+            CRS : {
+                84 : Register["CRS"]["84"]
+            },
+            IGNF : {
+                LAMB93 : Register["IGNF"]["LAMB93"],
+                LAMBE : Register["IGNF"]["LAMBE"],
+                LAMB1 : Register["IGNF"]["LAMB1"],
+                LAMB2 : Register["IGNF"]["LAMB2"],
+                LAMB3 : Register["IGNF"]["LAMB3"],
+                LAMB4 : Register["IGNF"]["LAMB4"],
+                RGF93G : Register["IGNF"]["RGF93G"],
+                WGS84G : Register["IGNF"]["WGS84G"]
+            }
+        };
+
+        for (var register in registers) {
+            if (registers.hasOwnProperty(register)) {
+                var codes = registers[register];
+                for (var code in codes) {
+                    if (codes.hasOwnProperty(code)) {
+                        var name = register + ":" + code;
+                        Proj4.defs(name, codes[code]);
+                    }
+                }
+            }
+        }
+    },
+
+    /**
+     * load only a def to proj4
+     * @param {Object} Proj4 - proj4 instance
+     * @param {String} name - ie. EPSG:2154 (Lambert)
+     * @returns {Boolean} true/false
+     */
+    loadByName : function (Proj4, name) {
+        if (!this.exist(name)) {
+            return false;
+        }
+
+        try {
+            Proj4.defs(name, this.get(name));
+        } catch (e) {
+            // FIXME !?
+            return false;
+        }
+
+        return true;
     },
 
     // definitions

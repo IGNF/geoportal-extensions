@@ -46,9 +46,14 @@ les fichiers sont suffixés avec le tag *modules*.
         fichiers json de style MapBox. Nous en avons besoin au niveau de l'API Extensions
         sur le widget *LayerImport*.
         L'API SDK utilise aussi cette dependance.
-            API Extensions : ol et olms en externe (cad à la charge du client de les ajouter)
+            API Extensions :
+                ol et olms en externe (cad à la charge du client de les ajouter)
+                ou
+                ol en externe mais olms en interne
+
             API SDK : ol et olms en interne (cad livrées dans le bundle final)
         ```
+        > choix ol en externe mais olms en interne...
 
     - pour info, le binaire est :
     > https://unpkg.com/ol-mapbox-style/dist/olms.js
@@ -98,9 +103,7 @@ les fichiers sont suffixés avec le tag *modules*.
         ex. ol.proj.get("EPSG:2154")
 
     - [x] **OK** *Gp* :
-        sauf la date de l'API des services (*__GPDATE__*)
-        > **FIXME** comment récuperer la date de compilation de l'API des Services ?
-        > **FIXME** comment récuperer la version directement des sources de l'API des Services ?
+        la date et la version sont récupérées de l'API des services (*__GPDATE__*)
 
 ### Les sources
 
@@ -167,9 +170,21 @@ les fichiers sont suffixés avec le tag *modules*.
 
         cf. https://github.com/openlayers/openlayers/blob/master/changelog/upgrade-notes.md#changes-in-proj4-integration
 
-        - [ ] *FIXME* performance sur l'ajout des projection dans proj4 !!!
+        - [x] *FIXME* performance sur l'ajout des projection avec ol et proj4 !!!
+            cf. test de performance...
+            ```
+            Doit on charger autant de projections ?
+            Ne devrait on pas charger uniquement les projections usuelles ?
+            Et proposer les autres à la demande via un appel de fonction de chargement ?
+            ```
+            > choix d'une liste par defaut + Gp.includeProjections()
+
         - [x] merge à faire : https://github.com/IGNF/geoportal-extensions/pull/227
         - [ ] *FIXME* bug pour ajouter des projection **geocent** sur le registre IGNF !?
+            ```
+            Comment peut remplacer ce type de projections ?
+            ```
+
         - [x] on ne surcharge pas la fonction transformExtent mais on ajoute un setExtent() sur
             l'EPSG:2154
                 - à quoi sert la fonction MousePosition::validateExtentCoordinate ?
@@ -233,22 +248,19 @@ les fichiers sont suffixés avec le tag *modules*.
 
 - Autoconf
 
-    > Si on n'a pas d'autoconf (ou droit sur une ressources), une exception est lancée :
+    ```
+    Si on n'a pas d'autoconf (ou droit sur une ressources), une exception est lancée :
     "contract key configuration has to be loaded to load Geoportal layers"
 
-    > Hors un defaut d'autoconf ne devrait pas stopper l'affichage, mais on se doit
+    Hors un defaut d'autoconf ne devrait pas stopper l'affichage, mais on se doit
     d'affiche à minima une carte vide !
 
-    > Sans autoconf (ou droit), il faudrait rendre les boutons de calculs non
+    Sans autoconf (ou droit), il faudrait rendre les boutons de calculs non
     cliquable (ex. Route ou Iso)...
+    ```
 
 - Editeur MapBox
 
     > Mettre en place un drag&drop sur les layers MapBox (gestion ordre d'empilement/affichage)
 
     > Prévoir l'edition du mode circle, texte et/ou icone
-
-# TEST avec MapBoxGl
-
-## intégration du client MapBoxGl ?
-cf. exemple http://tsauerwein.github.io/ol3/mapbox-gl-js/examples/mapbox-gl-js.html

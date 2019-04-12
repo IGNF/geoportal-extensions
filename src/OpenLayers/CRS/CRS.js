@@ -19,7 +19,7 @@ var CRS = {
     /**
     * List of extent projections
     */
-    _projectionExtent : {
+    projectionsExtent : {
         "EPSG:2154" : {
             left : -9.62,
             bottom : 41.18,
@@ -35,16 +35,36 @@ var CRS = {
     },
 
     /**
-    * Load custom definition projection
+    * Load all custom definition projection
     */
     load : function () {
-        logger.trace("Load custom definitions projection");
-        // load all defs into proj4
-        Register.load(Proj4);
-        // register all defs into openlayers
+        logger.trace("Loading custom definitions projections");
+        // loading except if it's already loaded...
+        if (!Register.isLoaded) {
+            // load all defs into proj4
+            Register.load(Proj4);
+            try {
+                // register all defs into openlayers
+                register(Proj4);
+            } catch (e) {
+                // FIXME ?
+                // console.error(e);
+            }
+        }
+    },
+
+    /**
+    * Load definition projection by default
+    */
+    loadByDefault : function () {
+        logger.trace("Loading custom definitions projections by default");
+        // load defs by default into proj4
+        Register.loadByDefault(Proj4);
         try {
+            // register all defs into openlayers
             register(Proj4);
         } catch (e) {
+            // FIXME ?
             // console.error(e);
         }
     },
@@ -54,22 +74,24 @@ var CRS = {
      * to manage EPSG:2154 extent restriction
      */
     overload : function () {
-        logger.trace("Overload projections");
+        logger.trace("Loading projections aera (extent)");
+        // overloading except if it's already overloaded...
+        if (!Register.isLoaded) {
+            for (var code in this.projectionsExtent) {
+                if (this.projectionsExtent.hasOwnProperty(code)) {
+                    var extent = this.projectionsExtent[code];
+                    var proj = getProjection(code);
+                    var fromLonLat = getTransform("EPSG:4326", proj);
 
-        for (var code in this._projectionExtent) {
-            if (this._projectionExtent.hasOwnProperty(code)) {
-                var extent = this._projectionExtent[code];
-                var proj = getProjection(code);
-                var fromLonLat = getTransform("EPSG:4326", proj);
+                    // very approximate calculation of projection extent
+                    var _extent = applyTransform([extent.bottom, extent.right, extent.top, extent.left], fromLonLat);
+                    proj.setExtent(_extent);
+                    addProjection(proj);
 
-                // very approximate calculation of projection extent
-                var _extent = applyTransform([extent.bottom, extent.right, extent.top, extent.left], fromLonLat);
-                proj.setExtent(_extent);
-                addProjection(proj);
-
-                // Expose projection extent with custom defs into OpenLayers global variable
-                if (window.ol && window.ol.proj && window.ol.proj.addProjection) {
-                    window.ol.proj.addProjection(proj);
+                    // Expose projection extent with custom defs into OpenLayers global variable
+                    if (window.ol && window.ol.proj && window.ol.proj.addProjection) {
+                        window.ol.proj.addProjection(proj);
+                    }
                 }
             }
         }
@@ -79,10 +101,10 @@ var CRS = {
 export default CRS;
 
 // Expose proj4 with custom defs into OpenLayers global variable
-if (window.ol && window.ol.proj && window.ol.proj.proj4) {
-    try {
-        window.ol.proj.proj4.register(Proj4);
-    } catch (e) {
-        // console.error(e);
-    }
-}
+// if (window.ol && window.ol.proj && window.ol.proj.proj4) {
+//     try {
+//         window.ol.proj.proj4.register(Proj4);
+//     } catch (e) {
+//         // console.error(e);
+//     }
+// }

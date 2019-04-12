@@ -26,6 +26,7 @@
 * > Services: (...)
 * > servicesDate: "YYYY-MM-DD"
 * > servicesVersion: "X.X.X"
+* > includeProjections()
 *
 * The following variables are aslo global :
 *   - proj4,
@@ -36,8 +37,6 @@
 import Pkg from "../../package";
 
 import * as Ol from "ol";
-// FIXME : doit on exposer les fonctions de olms ?
-// import * as Olms from "ol-mapbox-style";
 
 // ordre des CSS communes puis extensions
 import "../Common/Styles";
@@ -81,11 +80,10 @@ import Editor from "./Controls/Editor";
 import "../Common/Utils/AutoLoadConfig";
 import "./CRS/AutoLoadCRS";
 
-// FIXME : doit on exporter les defs des crs !?
-// import CRS from "./CRS/CRS";
-
 // export des services
 import Gp from "geoportal-access-lib";
+
+// import CRS from "./CRS/CRS";
 
 // reconstruction des ns
 var Services = Gp.Services;
@@ -96,6 +94,11 @@ var servicesDate = Gp.servicesDate;
 var servicesVersion = Gp.servicesVersion;
 
 export { Services, Error, Helper, Protocols, servicesDate, servicesVersion };
+
+// TODO
+// proposer une fonction de chargement des projections !
+// var includeProjections = CRS.load;
+// export { includeProjections };
 
 // Rajout des propriétés de l'extension dans le namespace
 export const olExtVersion = Pkg.olExtVersion;
@@ -122,13 +125,6 @@ Ol.style.editor.Layer = Layer;
 Ol.style.editor.Legend = Legend;
 Ol.style.editor.Group = Group;
 Ol.style.editor.Themes = Themes;
-
-// FIXME : doit on exposer les fonctions de olms ?
-// Ol.olms = Olms;
-
-// FIXME : projections ?
-// Ol.proj = Ol.proj || {};
-// Ol.proj.CRS = CRS;
 
 // Rajout des propriétés dans le namespace Ol
 Ol.format = Ol.format || {};
