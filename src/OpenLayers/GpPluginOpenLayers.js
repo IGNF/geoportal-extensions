@@ -26,7 +26,10 @@
 * > Services: (...)
 * > servicesDate: "YYYY-MM-DD"
 * > servicesVersion: "X.X.X"
-* > includeProjections()
+*
+* function to add projections in 'proj4',
+* they are exposed in the global variable 'proj4' :
+* > Gp.olExtended.includeProjections()
 *
 * The following variables are aslo global :
 *   - proj4,
@@ -83,7 +86,7 @@ import "./CRS/AutoLoadCRS";
 // export des services
 import Gp from "geoportal-access-lib";
 
-// import CRS from "./CRS/CRS";
+import CRS from "./CRS/CRS";
 
 // reconstruction des ns
 var Services = Gp.Services;
@@ -94,11 +97,6 @@ var servicesDate = Gp.servicesDate;
 var servicesVersion = Gp.servicesVersion;
 
 export { Services, Error, Helper, Protocols, servicesDate, servicesVersion };
-
-// TODO
-// proposer une fonction de chargement des projections !
-// var includeProjections = CRS.load;
-// export { includeProjections };
 
 // Rajout des propriétés de l'extension dans le namespace
 export const olExtVersion = Pkg.olExtVersion;
@@ -114,6 +112,9 @@ export {default as MathUtils} from "../Common/Utils/MathUtils";
 // FIXME : utilitaires dans un ns particulier "gp" ?
 Ol.gp = {};
 Ol.gp.GfiUtils = GfiUtils;
+
+// proposer une fonction de chargement des projections !
+Ol.includeProjections = CRS.load;
 
 // Editeur MapBox
 Ol.style = Ol.style || {};

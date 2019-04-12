@@ -129,7 +129,7 @@ var Register = {
      * - ['EPSG:4326']
      * - ['EPSG:3785'], ['EPSG:3857'], GOOGLE, ['EPSG:900913'], ['EPSG:102113']
      * +
-     * - ["EPSG:2154"],
+     * - ["EPSG:2154"], ["EPSG:27571"],  ["EPSG:27572"],  ["EPSG:27573"],  ["EPSG:2757"],
      * - ["CRS:84"],
      * - ["IGNF:LAMB93"],
      * - ["IGNF:LAMBE"], ["IGNF:LAMB1"],  ["IGNF:LAMB2"],  ["IGNF:LAMB3"],  ["IGNF:LAMB4"],
