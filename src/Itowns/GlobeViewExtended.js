@@ -47,10 +47,10 @@ function GlobeViewExtended (viewerDiv, coordCarto, options) {
             var visibleElevationLayersIds = [];
 
             for (var i = 0; i < self.getGlobeView().tileLayer.info.displayed.layers.length; ++i) {
-                if (self.getGlobeView().tileLayer.info.displayed.layers[i].type === "color") {
+                if (self.getGlobeView().tileLayer.info.displayed.layers[i].isColorLayer) {
                     visibleColorLayersIds.push(self.getGlobeView().tileLayer.info.displayed.layers[i].id);
                 }
-                if (self.getGlobeView().tileLayer.info.displayed.layers[i].type === "elevation") {
+                if (self.getGlobeView().tileLayer.info.displayed.layers[i].isElevationLayer) {
                     visibleElevationLayersIds.push(self.getGlobeView().tileLayer.info.displayed.layers[i].id);
                 }
             }

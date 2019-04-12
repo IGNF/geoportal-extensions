@@ -244,8 +244,10 @@ Attributions.prototype._inRangeUpdate = function (layersDisplayed, extent) {
                 }
                 // checks if 'bbox" exists
                 if (ori[j].constraints[0].bbox) {
-                    // checks we are into the bbox limits
-                    if (ori[j].constraints[0].bbox.left < extent.west() && ori[j].constraints[0].bbox.right > extent.east() && ori[j].constraints[0].bbox.top > extent.north() && ori[j].constraints[0].bbox.bottom < extent.south()) {
+                    // checks if we are into the bbox limits
+                    var intersectsX = (ori[j].constraints[0].bbox.west() <= extent.east()) && (extent.west() <= ori[j].constraints[0].bbox.east());
+                    var intersectsY = (ori[j].constraints[0].bbox.south() <= extent.north()) && (extent.south() <= ori[j].constraints[0].bbox.north());
+                    if (intersectsX && intersectsY) {
                         // adds the attribution in the Map() called 'attributions'
                         attributions.set(ori[j].name, ori[j]);
                     }
