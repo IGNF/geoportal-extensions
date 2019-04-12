@@ -433,7 +433,7 @@ GlobeViewExtended.prototype.getLayerById = function (layerId) {
  */
 GlobeViewExtended.prototype.getColorLayerById = function (layerId) {
     var layer = this.getGlobeView().getLayers(function (l) {
-        if (l.id === layerId && l.type === "color") {
+        if (l.id === layerId && l.isColorLayer) {
             return l;
         }
     })[0];
@@ -451,7 +451,7 @@ GlobeViewExtended.prototype.getColorLayerById = function (layerId) {
  */
 GlobeViewExtended.prototype.getColorLayers = function () {
     return this.getGlobeView().getLayers(function (layer) {
-        if (layer.type === "color") {
+        if (layer.isColorLayer) {
             return layer;
         }
     });
@@ -477,7 +477,7 @@ GlobeViewExtended.prototype.getVectorLayers = function () {
  */
 GlobeViewExtended.prototype.getElevationLayers = function () {
     return this.getGlobeView().getLayers(function (layer) {
-        if (layer.type === "elevation") {
+        if (layer.isElevationLayer) {
             return layer;
         }
     });
