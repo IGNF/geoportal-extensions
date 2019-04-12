@@ -66,8 +66,9 @@ Lors d'une installation NPM, le package va être déployé dans `node_modules`..
 
 **WARNING**
     Pour forcer la maj de ce package, il est conseillé de supprimer les elements suivants :
-    - `node_modules/geoportal-extensions-openlayers/`
-    - `package-lock.json`
+    - `rm -rf node_modules/geoportal-extensions-openlayers/`
+    - `rm package-lock.json`
+    Puis, executer le commande :
     - `npm install --verbose --force`
 
 ### Méthode n°2 (copie direct du package local)

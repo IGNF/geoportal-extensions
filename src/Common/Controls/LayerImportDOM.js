@@ -222,7 +222,7 @@ var LayerImportDOM = {
         // gestionnaire d'evenement : on stocke la valeur du type d'import
         if (select.addEventListener) {
             select.addEventListener("change", function (e) {
-                if (this.value === "KML" || this.value === "GPX" || this.value === "GeoJSON" || this.value === "MapBox") {
+                if (this.value === "KML" || this.value === "GPX" || this.value === "GeoJSON" || this.value === "MAPBOX") {
                     // static import
                     document.getElementById(context._addUID("GPimportStaticParams")).className = "GPimportVisibleParams";
                     document.getElementById(context._addUID("GPimportServiceParams")).className = "GPimportHiddenParams";
@@ -235,7 +235,7 @@ var LayerImportDOM = {
             });
         } else if (select.attachEvent) {
             select.attachEvent("onchange", function () {
-                if (this.value === "KML" || this.value === "GPX" || this.value === "GeoJSON" || this.value === "MapBox") {
+                if (this.value === "KML" || this.value === "GPX" || this.value === "GeoJSON" || this.value === "MAPBOX") {
                     // static import
                     document.getElementById(context._addUID("GPimportStaticParams")).className = "GPimportVisibleParams";
                     document.getElementById(context._addUID("GPimportServiceParams")).className = "GPimportHiddenParams";
@@ -255,7 +255,7 @@ var LayerImportDOM = {
                 "KML",
                 "GPX",
                 "GeoJSON",
-                "MapBox",
+                "MAPBOX",
                 "WMS",
                 "WMTS",
                 "WFS"
@@ -265,7 +265,7 @@ var LayerImportDOM = {
         for (var i = 0; i < importTypes.length; i++) {
             option = document.createElement("option");
             option.value = importTypes[i];
-            option.text = importTypes[i];
+            option.text = (importTypes[i] === "MAPBOX") ? "Vecteur tuilé" : importTypes[i];
             select.appendChild(option);
         }
 
@@ -305,7 +305,7 @@ var LayerImportDOM = {
     _createImportStaticParamsContainer : function (currentType) {
         var div = document.createElement("div");
         div.id = this._addUID("GPimportStaticParams");
-        if (currentType === "KML" || currentType === "GPX" || currentType === "GeoJSON" || currentType === "MapBox") {
+        if (currentType === "KML" || currentType === "GPX" || currentType === "GeoJSON" || currentType === "MAPBOX") {
             div.className = "GPimportVisibleParams";
         } else {
             div.className = "GPimportHiddenParams";
