@@ -45,7 +45,12 @@ var CRS = {
             Register.load(Proj4);
             try {
                 // register all defs into openlayers
-                register(Proj4);
+                if (window.ol && window.ol.proj && window.ol.proj.proj4) {
+                    // Expose proj4 with custom defs into OpenLayers global variable
+                    window.ol.proj.proj4.register(Proj4);
+                } else {
+                    register(Proj4);
+                }
             } catch (e) {
                 // FIXME ?
                 // console.error(e);
@@ -62,7 +67,12 @@ var CRS = {
         Register.loadByDefault(Proj4);
         try {
             // register all defs into openlayers
-            register(Proj4);
+            if (window.ol && window.ol.proj && window.ol.proj.proj4) {
+                // Expose proj4 with custom defs into OpenLayers global variable
+                window.ol.proj.proj4.register(Proj4);
+            } else {
+                register(Proj4);
+            }
         } catch (e) {
             // FIXME ?
             // console.error(e);

@@ -28,8 +28,11 @@
 * > servicesVersion: "X.X.X"
 *
 * function to add projections in 'proj4',
-* they are exposed in the global variable 'proj4' :
+* they are exposed in the global variable 'proj4' and 'ol':
 * > Gp.olExtended.includeProjections()
+* You can test it :
+* - ol.proj.proj4("EPSG:43260")
+* - proj4("EPSG:4326")
 *
 * The following variables are aslo global :
 *   - proj4,

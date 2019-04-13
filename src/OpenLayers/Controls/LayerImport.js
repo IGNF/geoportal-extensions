@@ -1105,7 +1105,7 @@ LayerImport.prototype._addFeaturesFromImportStaticLayer = function (fileContent,
                     // comment passe t on la clef ou le token ?
                     // remplacement d'un flux mapbox sur une url de service tuilé
                     if (_glUrl && _glUrl.indexOf("mapbox://") === 0) {
-                        var _urlService = this._url;
+                        var _urlService = this._url; // FIXME si fichier local !?
                         if (_urlService) {
                             _glTiles = ["a", "b", "c", "d"].map(function (host) {
                                 var path = _glUrl.replace("mapbox://", "");
