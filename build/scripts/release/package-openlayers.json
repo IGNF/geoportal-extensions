@@ -1,45 +1,45 @@
 {
-   "main" : "src/OpenLayers/GpPluginOpenLayers.js",
-   "bugs" : {},
-   "date" : "01/02/2019",
-   "devDependencies" : {},
+   "name" : "geoportal-extensions-openlayers",
+   "author" : "IGNF",
    "description" : "French Geoportal Extensions for OpenLayers",
-   "license" : "CECILL-B",
    "bundleDependencies" : [],
+   "main" : "src/OpenLayers/GpPluginOpenLayers.js",
+   "devDependencies" : {},
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
+   "peerDependencies" : {},
+   "bugs" : {},
+   "directories" : {},
+   "version" : "3.0.0",
+   "date" : "01/02/2019",
+   "scripts" : {},
+   "repository" : {
+      "type" : "git",
+      "url" : "https://github.com/IGNF/geoportal-extensions.git"
+   },
+   "dependencies" : {
+      "sortablejs" : "1.8.4",
+      "proj4" : "2.5.0",
+      "request" : "^2.83.0",
+      "eventbusjs" : "^0.2.0",
+      "xmldom" : "^0.1.27",
+      "ol" : "^5.3.0",
+      "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/master/geoportal-access-lib-2.1.2.tgz",
+      "loglevel" : "~1.6.1",
+      "ol-mapbox-style" : "^4.2.1"
+   },
+   "license" : "CECILL-B",
    "keywords" : [
       "geoportail",
       "plugin",
       "javascript",
       "OpenLayers"
    ],
-   "dependencies" : {
-      "sortablejs" : "1.8.4",
-      "ol-mapbox-style" : "^4.2.1",
-      "xmldom" : "^0.1.27",
-      "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/master/geoportal-access-lib-2.1.2.tgz",
-      "request" : "^2.83.0",
-      "ol" : "^5.3.0",
-      "eventbusjs" : "^0.2.0",
-      "loglevel" : "~1.6.1",
-      "proj4" : "2.5.0"
-   },
-   "version" : "3.0.0",
-   "peerDependencies" : {},
    "browser" : "dist/GpPluginOpenLayers-src.js",
-   "name" : "geoportal-extensions-openlayers",
-   "author" : "IGNF",
-   "directories" : {},
    "files" : [
       "dist/",
       "src/",
       "LICENCE.md",
       "README.md",
       "package.json"
-   ],
-   "scripts" : {},
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
-   "repository" : {
-      "type" : "git",
-      "url" : "https://github.com/IGNF/geoportal-extensions.git"
-   }
+   ]
 }
