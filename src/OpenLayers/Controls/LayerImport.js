@@ -49,6 +49,7 @@ import LayerImportDOM from "../../Common/Controls/LayerImportDOM";
 // import local with ol dependencies
 import KMLExtended from "../Formats/KML";
 import LayerSwitcher from "./LayerSwitcher";
+
 var logger = Logger.getLogger("layerimport");
 
 /**
@@ -213,7 +214,7 @@ LayerImport.prototype.constructor = LayerImport;
 LayerImport.prototype.setMap = function (map) {
     // ajout de la patience pour le chargement des tuiles
     if (map) {
-        // FIXME au centre de la carte ?
+        // Animation au centre de la carte ?
         // var center = this._loadingContainer = this._createLoadingElement();
         // map.getViewport().appendChild(center);
 
@@ -586,9 +587,6 @@ LayerImport.prototype._initContainer = function () {
     // create main container
     var container = this._createMainContainerElement();
 
-    var loading = this._loadingContainer = this._createLoadingElement();
-    container.appendChild(loading);
-
     // create show Import element
     var inputShow = this._showImportInput = this._createShowImportElement();
     container.appendChild(inputShow);
@@ -633,6 +631,10 @@ LayerImport.prototype._initContainer = function () {
     mapBoxPanel.appendChild(mapBoxPanelHeader);
     var importMapBoxResultsList = this._mapBoxResultsListContainer = this._createImportMapBoxResultsContainer();
     mapBoxPanel.appendChild(importMapBoxResultsList);
+
+    // loading element mapbox
+    var loading = this._loadingContainer = this._createLoadingElement();
+    mapBoxPanel.appendChild(loading);
 
     container.appendChild(mapBoxPanel);
     Draggable.dragElement(mapBoxPanel, mapBoxPanelHeader);

@@ -45,6 +45,7 @@ module.exports = env => {
         },
         resolve : {
             alias : {
+                // "leaflet" : auto,
                 // "geoportal-access-lib" : auto,
                 proj4 : path.resolve(ROOT, "node_modules", "proj4", "dist", /* (production) ? "proj4.js" : */ "proj4-src.js"),
                 sortablejs : path.resolve(ROOT, "node_modules", "sortablejs", /* (production) ? "Sortable.min.js" : */ "Sortable.js"),

@@ -47,32 +47,51 @@ module.exports = env => {
         },
         resolve : {
             alias : {
-                // "ol" : path.resolve(ROOT, "node_modules", "ol", "index.js"),
-                // "ol-mapbox-style" : path.resolve(ROOT, "node_modules", "ol-mapbox-style", "olms.js"),
-                // "geoportal-access-lib" : path.resolve(ROOT, "node_modules", "geoportal-access-lib", "src", "Gp.js"),
-                proj4 : path.resolve(ROOT, "node_modules", "proj4", "dist", /* (production) ? "proj4.js" : */ "proj4-src.js"),
-                sortablejs : path.resolve(ROOT, "node_modules", "sortablejs", /* (production) ? "Sortable.min.js" : */ "Sortable.js"),
-                eventbusjs : path.resolve(ROOT, "node_modules", "eventbusjs", /* (production) ? "lib" : */ "src", /* (production) ? "eventbus.min.js" : */ "EventBus.js")
+                // - import ES6 :
+                // "ol" : auto,
+                // "ol-mapbox-style" : auto,
+                // "geoportal-access-lib" : auto,
+                // - import bundle :
+                proj4 : path.resolve(ROOT, "node_modules", "proj4", "dist", "proj4-src.js"),
+                sortablejs : path.resolve(ROOT, "node_modules", "sortablejs", "Sortable.js"),
+                eventbusjs : path.resolve(ROOT, "node_modules", "eventbusjs", "src", "EventBus.js")
             }
         },
-        externals : {
-            ol : {
-                commonjs : "ol",
-                commonjs2 : "ol",
-                amd : "ol",
-                root : "ol"
+        externals : [
+            {
+                // ol : {
+                //     commonjs : "ol",
+                //     commonjs2 : "ol",
+                //     amd : "ol",
+                //     root : "ol"
+                // },
+                request : {
+                    commonjs2 : "request",
+                    commonjs : "request",
+                    amd : "require"
+                },
+                xmldom : {
+                    commonjs2 : "xmldom",
+                    commonjs : "xmldom",
+                    amd : "require"
+                }
             },
-            request : {
-                commonjs2 : "request",
-                commonjs : "request",
-                amd : "require"
+            /** ol est externe, on utilise cette fonction pour corriger un appel */
+            function(context, request, callback) {
+                if (/^ol\/.+$/.test(request)) {
+                    // hack with method 'inherits' !?
+                    if (request === "ol/util") {
+                        return callback(null, "ol");
+                    }
+                    // // transform "ol/control/Control" to "ol.control.Control"
+                    // const replacedWith = request.replace(/\//g, '.');
+                    // return callback(null, replacedWith);
+                }
+                callback();
             },
-            xmldom : {
-                commonjs2 : "xmldom",
-                commonjs : "xmldom",
-                amd : "require"
-            }
-        },
+            // trop violent !
+            // /^ol\/.+$/
+        ],
         devtool : (development) ? "eval-source-map" : false,
         devServer : {
             // proxy: {
@@ -138,10 +157,16 @@ module.exports = env => {
                 {
                     /** proj4 est exposé en global : proj4 ! */
                     test : require.resolve("proj4"),
-                    use : [{
-                        loader : "expose-loader",
-                        options : "proj4"
-                    }]
+                    use : [
+                        {
+                            loader : "expose-loader",
+                            options : "proj4"
+                        },
+                        // {
+                        //     loader : "exports-loader",
+                        //     options : "proj4"
+                        // }
+                    ]
                 },
                 {
                     /** eventbusjs est exposé en global : eventbus !

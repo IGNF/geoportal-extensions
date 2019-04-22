@@ -96,18 +96,18 @@ module.exports = env => {
                         return callback(null, "ol");
                     }
                     // transform "ol/control/Control" to "ol.control.Control"
-                    const replacedWith = request.replace(/\//g, '.');
-                    return callback(null, replacedWith);
+                    // const replacedWith = request.replace(/\//g, '.');
+                    // return callback(null, replacedWith);
                 }
                 callback();
             },
             {
-            //     ol : {
-            //         commonjs : "ol",
-            //         commonjs2 : "ol",
-            //         amd : "ol",
-            //         root : "ol"
-            //     },
+                ol : {
+                    commonjs : "ol",
+                    commonjs2 : "ol",
+                    amd : "ol",
+                    root : "ol"
+                },
                 request : {
                     commonjs2 : "request",
                     commonjs : "request",

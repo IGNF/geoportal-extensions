@@ -1,5 +1,14 @@
 import Logger from "../../Common/Utils/LoggerByDefault";
 
+/**
+* @module ProxyUtils
+* @alias Gp.ProxyUtils
+* @description
+* ...
+*
+* @example
+* ...
+*/
 var ProxyUtils = {
     /**
      * Ajoute un proxy aux url des couches vecteurs si besoin.

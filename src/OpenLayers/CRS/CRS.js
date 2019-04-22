@@ -44,12 +44,11 @@ var CRS = {
             // load all defs into proj4
             Register.load(Proj4);
             try {
+                register(Proj4);
                 // register all defs into openlayers
                 if (window.ol && window.ol.proj && window.ol.proj.proj4) {
                     // Expose proj4 with custom defs into OpenLayers global variable
                     window.ol.proj.proj4.register(Proj4);
-                } else {
-                    register(Proj4);
                 }
             } catch (e) {
                 // FIXME ?
@@ -60,18 +59,29 @@ var CRS = {
 
     /**
     * Load definition projection by default
+    *
+    * include into proj4 :
+    * - WGS84
+    * - ['EPSG:4326']
+    * - ['EPSG:3785'], ['EPSG:3857'], GOOGLE, ['EPSG:900913'], ['EPSG:102113']
+    * +
+    * - ["EPSG:2154"], ["EPSG:27571"],  ["EPSG:27572"],  ["EPSG:27573"],  ["EPSG:2757"],
+    * - ["CRS:84"],
+    * - ["IGNF:LAMB93"],
+    * - ["IGNF:LAMBE"], ["IGNF:LAMB1"],  ["IGNF:LAMB2"],  ["IGNF:LAMB3"],  ["IGNF:LAMB4"],
+    * - ["IGNF:RGF93G"],
+    * - ["IGNF:WGS84G"]
     */
     loadByDefault : function () {
         logger.trace("Loading custom definitions projections by default");
         // load defs by default into proj4
         Register.loadByDefault(Proj4);
         try {
+            register(Proj4);
             // register all defs into openlayers
             if (window.ol && window.ol.proj && window.ol.proj.proj4) {
                 // Expose proj4 with custom defs into OpenLayers global variable
                 window.ol.proj.proj4.register(Proj4);
-            } else {
-                register(Proj4);
             }
         } catch (e) {
             // FIXME ?

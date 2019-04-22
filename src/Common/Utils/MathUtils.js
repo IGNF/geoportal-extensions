@@ -1,3 +1,12 @@
+/**
+* @module MathUtils
+* @alias Gp.MathUtils
+* @description
+* ...
+*
+* @example
+* ...
+*/
 var MathUtils = {
     /**
      * Reste de la division euclidienne

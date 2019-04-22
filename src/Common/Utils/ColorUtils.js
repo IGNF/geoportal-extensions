@@ -1,3 +1,13 @@
+/**
+* @module ColorUtils
+* @alias Gp.ColorUtils
+* @description
+* ...
+*
+* @example
+* rgbaToHex();
+* hexToRgba();
+*/
 var ColorUtils = {
     /**
      * Converts rgba String to #RRGGBBAA

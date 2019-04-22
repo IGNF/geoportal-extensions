@@ -1,3 +1,12 @@
+/**
+* @module LayerUtils
+* @alias Gp.LayerUtils
+* @description
+* ...
+*
+* @example
+* ...
+*/
 var LayerUtils = {
 
     /**

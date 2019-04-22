@@ -578,8 +578,8 @@ Editor.prototype.getStyle = function () {
 
 /**
  * Get Layers
- * @returns {Array} Array of Object Layer
- * @see Editor/Layer
+ * @returns {Array} - List of layer object
+ * @see {ol.style.editor.Layer}
  */
 Editor.prototype.getLayers = function () {
     return this.layers;

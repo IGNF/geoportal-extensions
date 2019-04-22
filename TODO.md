@@ -23,7 +23,7 @@ Les bundles des modules sont disponible :
 Les exemples sont disponibles dans le répertoire *samples*, et
 les fichiers sont suffixés avec le tag *modules*.
 
-> **INFO**
+> **FIXME**
 > Suite à un probleme de minification à cause de la version de Webpack 3 et ES6...
 > on utilise donc une version anterieur du package *uglifyjs-webpack-plugin* > 1.3.0 !
 > Lors du passage en Webpack 4, on pourra utiliser la version de minification incluse dans webpack.
@@ -37,6 +37,12 @@ les fichiers sont suffixés avec le tag *modules*.
 ## Avancements
 
 - [x] Migrer vers ol v5.3.0   : **OK**
+
+- [ ] Rendre openlayers externe : **TODO**
+
+- [ ] Migrer vers webpack 4 : **TODO**
+
+- [ ] Autoprefixer CSS avec postCSS : **EVOL**
 
 - [x] dépendance olms : interne ? : **OK**
 
@@ -57,10 +63,6 @@ les fichiers sont suffixés avec le tag *modules*.
 
     - pour info, le binaire est :
     > https://unpkg.com/ol-mapbox-style/dist/olms.js
-
-- [ ] Migrer vers webpack 4   : **TODO**
-
-- [ ] Autoprefixer CSS avec postCSS : **TODO**
 
 - [x] Tests à jouer / à creer : **OK**
 
