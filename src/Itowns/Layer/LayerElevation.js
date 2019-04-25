@@ -101,7 +101,7 @@ function LayerElevation (options) {
         config.title = wmtsParams.title;
         config.quicklookUrl = wmtsParams.quicklookUrl;
 
-        return new Itowns.ElevationLayer(config.id, config)
+        return new Itowns.ElevationLayer(config.id, config);
     } else {
         // If layer is not in Gp.Config
         logger.log("[source WMTS] ERROR : " + options.layer + " cannot be found in Geoportal Configuration. Make sure that this resource is included in your contract key.");

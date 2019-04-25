@@ -553,7 +553,10 @@ GlobeViewExtended.prototype.getScale = function () {
  * @return {Promise} promise
  */
 GlobeViewExtended.prototype.setTilt = function (tilt) {
-    return this.getGlobeView().controls.setTilt(tilt, false);
+    this.onCameraMoveStop(function () {
+        this.getGlobeView().controls.setTilt(tilt, false);
+        this.notifyChange();
+    }.bind(this));
 };
 
 /**
@@ -572,7 +575,10 @@ GlobeViewExtended.prototype.getTilt = function () {
  * @return {Promise} promise
  */
 GlobeViewExtended.prototype.setAzimuth = function (azimuth) {
-    return this.getGlobeView().controls.setHeading(azimuth, false);
+    this.onCameraMoveStop(function () {
+        this.getGlobeView().controls.setHeading(azimuth, false);
+        this.notifyChange();
+    }.bind(this));
 };
 
 /**
