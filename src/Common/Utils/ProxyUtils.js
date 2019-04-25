@@ -7,7 +7,7 @@ import Logger from "../../Common/Utils/LoggerByDefault";
 * ...
 *
 * @example
-* ...
+* proxifyUrl();
 */
 var ProxyUtils = {
     /**

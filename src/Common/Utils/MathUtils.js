@@ -5,7 +5,11 @@
 * ...
 *
 * @example
-* ...
+* modulo();
+* decimalToDMS();
+* toInteger();
+* isInteger();
+* toFloat();
 */
 var MathUtils = {
     /**

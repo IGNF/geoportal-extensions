@@ -1,3 +1,14 @@
+/**
+* @module Utils
+* @alias Gp.olUtils
+* @description
+* ...
+*
+* @example
+* detectSupport();
+* assign();
+* mergeParams();
+*/
 var Utils = {
 
     /**

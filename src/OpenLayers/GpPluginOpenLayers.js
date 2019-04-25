@@ -3,7 +3,7 @@
 *
 * @module Gp
 * @alias Gp
-* @desc
+* @description
 *
 * This is the global variable that is exposed in the browser environment.
 * Content is composed of constructor, functions and properties...
@@ -27,6 +27,8 @@
 * > servicesDate: "YYYY-MM-DD"
 * > servicesVersion: "X.X.X"
 *
+* **Note :**
+*
 * function to add projections in 'proj4',
 * they are exposed in the global variable 'proj4' and 'ol':
 * > Gp.olExtended.includeProjections()
@@ -36,18 +38,21 @@
 * - proj4("EPSG:4326")
 *
 * Projections include by default into proj4 and ol :
-* - WGS84
-* - ['EPSG:4326']
-* - ['EPSG:3785'], ['EPSG:3857'], GOOGLE, ['EPSG:900913'], ['EPSG:102113']
+* > WGS84
+* > ['EPSG:4326']
+* > ['EPSG:3785'], ['EPSG:3857'],
+* > ['EPSG:900913'], ['EPSG:102113']
 *
-* +
+* and
 *
-* - ["EPSG:2154"], ["EPSG:27571"],  ["EPSG:27572"],  ["EPSG:27573"],  ["EPSG:2757"],
-* - ["CRS:84"],
-* - ["IGNF:LAMB93"],
-* - ["IGNF:LAMBE"], ["IGNF:LAMB1"],  ["IGNF:LAMB2"],  ["IGNF:LAMB3"],  ["IGNF:LAMB4"],
-* - ["IGNF:RGF93G"],
-* - ["IGNF:WGS84G"]
+* > ["EPSG:2154"],
+* > ["EPSG:27571"], ["EPSG:27572"],  ["EPSG:27573"],  ["EPSG:2757"],
+* > ["CRS:84"],
+* > ["IGNF:LAMB93"],
+* > ["IGNF:LAMBE"],
+* > ["IGNF:LAMB1"],  ["IGNF:LAMB2"],  ["IGNF:LAMB3"],  ["IGNF:LAMB4"],
+* > ["IGNF:RGF93G"],
+* > ["IGNF:WGS84G"]
 *
 * The following variables are aslo global :
 *   - proj4,
@@ -106,28 +111,58 @@ import Gp from "geoportal-access-lib";
 
 import CRS from "./CRS/CRS";
 
-// reconstruction des ns
 var Services = Gp.Services;
 var Error = Gp.Error;
 var Helper = Gp.Helper;
 var Protocols = Gp.Protocols;
+
 var servicesDate = Gp.servicesDate;
 var servicesVersion = Gp.servicesVersion;
 
-export { Services, Error, Helper, Protocols, servicesDate, servicesVersion };
+export {
+    /** Services
+    * @see {@link http://ignf.github.io/geoportal-access-lib/current/jsdoc/module-Services.html|geoportal-access-lib}
+    */
+    Services,
+    /** Error
+    * @see {@link http://ignf.github.io/geoportal-access-lib/current/jsdoc/Gp.Error.html|geoportal-access-lib}
+    */
+    Error,
+    /** Helper
+    * @see {@link http://ignf.github.io/geoportal-access-lib/current/jsdoc/module-Helper.html|geoportal-access-lib}
+    */
+    Helper,
+    /** Protocols
+    * @see {@link http://ignf.github.io/geoportal-access-lib/current/jsdoc/module-XHR.html|geoportal-access-lib}
+    */
+    Protocols,
+    /** servicesDate
+    * @see {@link http://ignf.github.io/geoportal-access-lib/current/jsdoc/module-Gp.html|geoportal-access-lib}
+    */
+    servicesDate,
+    /** servicesVersion
+    * @see {@link http://ignf.github.io/geoportal-access-lib/current/jsdoc/module-Gp.html|geoportal-access-lib}
+    */
+    servicesVersion
+};
 
-// Rajout des propriétés de l'extension dans le namespace
+/** Version */
 export const olExtVersion = Pkg.olExtVersion;
+/** Publication date */
 export const olExtDate = Pkg.date;
 
-// Classes utilitaires
+/** cf. Gp.olUtils */
 export {default as olUtils} from "../Common/Utils";
+/** cf. Gp.LayerUtils */
 export {default as LayerUtils} from "../Common/Utils/LayerUtils";
+/** cf. Gp.ProxyUtils */
 export {default as ProxyUtils} from "../Common/Utils/ProxyUtils";
+/** cf. Gp.ColorUtils */
 export {default as ColorUtils} from "../Common/Utils/ColorUtils";
+/** cf. Gp.MathUtils */
 export {default as MathUtils} from "../Common/Utils/MathUtils";
 
-// FIXME : utilitaires dans un ns particulier "gp" ?
+// FIXME : est il utile d'avoir un ns particulier "gp" ?
 Ol.gp = {};
 Ol.gp.GfiUtils = GfiUtils;
 
@@ -175,7 +210,10 @@ Ol.control.LocationSelector = LocationSelector;
 
 // Expose extensions openlayers extended into ol (for a build bundle)
 // with webpack (loader-expose) and this export !
-export { Ol as olExtended };
+export {
+    /** Expose extensions openlayers extended */
+    Ol as olExtended
+};
 
 // "proj4" is exposed into window (for a build bundle) with webpack.
 //      console > proj4("EPSG:2154")

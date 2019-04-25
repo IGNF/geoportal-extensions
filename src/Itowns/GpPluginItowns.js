@@ -8,12 +8,15 @@
 * This is the global variable that is exposed in the browser environment.
 * Content is composed of constructor, functions and properties...
 *
-* > ColorUtils: (...)
 * > Config:  (...)
+*
+* > ColorUtils: (...)
 * > LayerUtils: (...)
 * > MathUtils: (...)
 * > ProxyUtils: (...)
+*
 * > itownsExtended: (...)
+*
 * > itownsExtVersion: "YYYY-MM-DD"
 * > itownsExtVersion: "X.X.X"
 *
@@ -63,7 +66,32 @@ var Protocols = Gp.Protocols;
 var servicesDate = Gp.servicesDate;
 var servicesVersion = Gp.servicesVersion;
 
-export { Services, Error, Helper, Protocols, servicesDate, servicesVersion };
+export {
+    /** Services
+    * @see {@link http://ignf.github.io/geoportal-access-lib/current/jsdoc/module-Services.html|geoportal-access-lib}
+    */
+    Services,
+    /** Error
+    * @see {@link http://ignf.github.io/geoportal-access-lib/current/jsdoc/Gp.Error.html|geoportal-access-lib}
+    */
+    Error,
+    /** Helper
+    * @see {@link http://ignf.github.io/geoportal-access-lib/current/jsdoc/module-Helper.html|geoportal-access-lib}
+    */
+    Helper,
+    /** Protocols
+    * @see {@link http://ignf.github.io/geoportal-access-lib/current/jsdoc/module-XHR.html|geoportal-access-lib}
+    */
+    Protocols,
+    /** servicesDate
+    * @see {@link http://ignf.github.io/geoportal-access-lib/current/jsdoc/module-Gp.html|geoportal-access-lib}
+    */
+    servicesDate,
+    /** servicesVersion
+    * @see {@link http://ignf.github.io/geoportal-access-lib/current/jsdoc/module-Gp.html|geoportal-access-lib}
+    */
+    servicesVersion
+};
 
 // Adds the extensions properties in the namespace
 export {default as LayerUtils} from "../Common/Utils/LayerUtils";
@@ -72,7 +100,9 @@ export {default as ColorUtils} from "../Common/Utils/ColorUtils";
 export {default as MathUtils} from "../Common/Utils/MathUtils";
 
 // Adds extensions properties in the namespace
+/** Version */
 export const itownsExtVersion = Pkg.itownsExtVersion;
+/** Publication date */
 export const itownsExtDate = Pkg.date;
 
 // creation of the namespace for the itowns extensions
@@ -89,4 +119,7 @@ Itowns.layer.GeoportalElevation = GeoportalElevation;
 Itowns.CRS = CRS;
 Itowns.GlobeViewExtended = GlobeViewExtended;
 
-export {Itowns as itownsExtended};
+export {
+    /** Expose extensions leaflet extended */
+    Itowns as itownsExtended
+};

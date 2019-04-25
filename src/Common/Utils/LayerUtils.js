@@ -5,7 +5,9 @@
 * ...
 *
 * @example
-* ...
+* getZoomLevelFromScaleDenominator();
+* getAttributions();
+* intersects();
 */
 var LayerUtils = {
 

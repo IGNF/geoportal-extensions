@@ -5,8 +5,13 @@ import CRS from "./CRS";
  * and adds proj4 defs into ol.
  */
 (function () {
-    // load all defs into proj4
-    // CRS.load();
+    // if you want to load all defs into proj4
+    // you can call :
+    //   inside code, CRS.load()
+    // or
+    //   outside code, Gp.olExtended.includeProjections()
+    // but you can call only once...
+
     // load default defs into proj4
     CRS.loadByDefault();
     // and register defs into openlayers

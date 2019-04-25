@@ -18,7 +18,7 @@
         "outputSourceFiles"     : true,
         "outputSourcePath"      : true,
         "systemName"            : "Geoportal Extension for Itowns",
-        "footer"                : "API Extension version 1.0.0",
+        "footer"                : "API Reference",
         "copyright"             : "Geoportail - Copyright (c) IGN, released under the CECILL-B license",
         "navType"               : "inline",
         "theme"                 : "darkly",

@@ -14,7 +14,7 @@ var BannerWebPackPlugin = webpack.BannerPlugin;
 var UglifyJsWebPackPlugin = require("uglifyjs-webpack-plugin");
 // var UglifyJsWebPackPlugin = webpack.optimize.UglifyJsPlugin;
 var ReplaceWebpackPlugin = require("replace-bundle-webpack-plugin");
-var JsDocWebPackPlugin = require("jsdoc-webpack-plugin");
+var JsDocWebPackPlugin = require("../scripts/webpackPlugins/jsdoc-plugin");
 var HandlebarsPlugin = require("../scripts/webpackPlugins/handlebars-plugin");
 var HandlebarsLayoutPlugin = require("handlebars-layouts");
 var CopyWebpackPlugin = require("copy-webpack-plugin");
@@ -143,7 +143,7 @@ module.exports = env => {
                     ],
                     exclude : [
                         /node_modules/,
-                        path.resolve(ROOT, "src", "OpenLayers", "CSS"),
+                        path.resolve(ROOT, "src", "OpenLayers", "CSS")
                     ],
                     use : [
                         {
@@ -169,9 +169,7 @@ module.exports = env => {
                     ]
                 },
                 {
-                    /** eventbusjs est exposé en global : eventbus !
-                    * (require.resolve("eventbusjs"))
-                    */
+                    /* eventbusjs est exposé en global : eventbus ! (require.resolve("eventbusjs")) */
                     test : /node_modules\/eventbusjs\/src\/EventBus\.js$/,
                     use : [{
                         loader : "expose-loader",

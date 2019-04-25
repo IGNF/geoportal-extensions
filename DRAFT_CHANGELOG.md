@@ -44,7 +44,7 @@ Il est possible d'étendre la liste via la fonction :
     - Mise à jour du package *proj4* en version 2.5.0
     - Mise à jour du package *sortable* en version 1.8.4
     - Mise à jour du package *backstopjs* en version 4.0.3
-    
+
     - Déplacement des CSS dans les sources
 
     - [dev-workflow] Mise en place du répertoire *build*
@@ -55,7 +55,7 @@ Il est possible d'étendre la liste via la fonction :
 
     - Nouvelle fonctionnalité sur l'import de couche : le format *vecteur tuilé* (MapBox)
     - Nouveau Widget : *Editeur* de styles pour le *vecteur tuilé*
-    - Description de la variable globale **Gp** dans la jsdoc
+    - Description plus précise de la variable globale **Gp** dans la jsdoc
     - Fenêtres des widgets *OpenLayers* en mode **draggable**
     - Chargement de *projections* par défaut (cf. Summary)
 
@@ -73,6 +73,11 @@ Il est possible d'étendre la liste via la fonction :
     (La construction est portée par le projet *geoportal-sdk*)
 
 * [Fixed]
+
+    - [#221](https://github.com/IGNF/geoportal-extensions/issues/221) - Résolution du problème
+    d’exécution du plugin *jsdoc* pour *webpack* sur l'environnement Windows
+    - [#237](https://github.com/IGNF/geoportal-extensions/pull/237) - Ajout du plugin
+    *jsdoc* pour *webpack* en local
 
     - [#222](https://github.com/IGNF/geoportal-extensions/pull/222) - Ajout du format *vecteur tuilé* (MapBox) sur l'import de couche du widget *OpenLayers*
     - [#223](https://github.com/IGNF/geoportal-extensions/issues/223) - Conflit entre les widgets Route et Iso sur le widget *OpenLayers*
