@@ -1,29 +1,20 @@
-Extension Géoportail, version 2.0.0
+Extension Géoportail, version 2.1.1
 
-**10/04/2018 : 2.0.0** Release Extension Géoportail
+**10/04/2018 : 2.1.1** Release Extension Géoportail
 
 ## SUMMARY
 
-Migration du projet sous [Webpack](http://webpack.github.io/) ainsi que les sources en [ES6 modules](http://exploringjs.com/es6/ch_modules.html).
+Gestion des icônes pour des écrans de type *Retina* sur les extensions Leaflet.
 
-### leaflet-2.0.1
+### leaflet-2.0.4
+
+[#234](https://github.com/IGNF/geoportal-extensions/issues/234) - Pas de marqueur sur résultat barre de recherche (SearchEngine) Leaflet
+
+### openlayers-2.1.2
 
 ...
 
-### openlayers-2.0.0
-
-**BREAKING CHANGES**
-
-Le nom du bundle a été modifié :
-> GpPluginOl3 vers GpPluginOpenLayers
-
-Pour l'url de la jsdoc courante, on l'a modifié aussi :
-> http://ignf.github.io/geoportal-extensions/current/jsdoc/ol3 vers http://ignf.github.io/geoportal-extensions/current/jsdoc/openlayers
-
-Idem pour l'url vers les binaires :
-> http://ignf.github.io/geoportal-extensions/current/dist/ol3/GpPluginOl3.js vers http://ignf.github.io/geoportal-extensions/current/dist/openlayers/GpPluginOpenLayers.js
-
-### itowns-2.0.0
+### itowns-2.1.2
 
 ...
 
