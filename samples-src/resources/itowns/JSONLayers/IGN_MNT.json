@@ -1,21 +1,21 @@
 {
     "type": "elevation",
-	"protocol":   "wmts",
 	"id":         "IGN_MNT",
-	"url":        "http://wxs.ign.fr/va5orxd0pgzvq3jxutqfuy0b/geoportail/wmts",
 	"noDataValue" : -99999,
-	"updateStrategy": {
-		"type": 1,
-		"options": {
-			"groups": [3, 7, 11, 14]
-		}
-	},
-    "networkOptions" : {
-        "crossOrigin" : "omit"
-    },
-	"options": {
+	"source": {
+		"protocol":   "wmts",
+		"url":        "http://wxs.ign.fr/va5orxd0pgzvq3jxutqfuy0b/geoportail/wmts",
+		"updateStrategy": {
+			"type": 1,
+			"options": {
+				"groups": [3, 7, 11, 14]
+			}
+		},
+		"networkOptions" : {
+			"crossOrigin" : "omit"
+		},
 		"name": "ELEVATION.ELEVATIONGRIDCOVERAGE",
-        "originators" :  [{
+        "attribution" :  [{
             "name" : "IGN",
             "attribution" : "IGN Grandes Echelles",
             "url" : "http://www.ign.fr",
@@ -23,7 +23,8 @@
                 "crs":"EPSG:4326"
             }]
         }],
-		"mimetype": "image/x-bil;bits=32",
+		"format": "image/x-bil;bits=32",
+		"projection" : "EPSG:4326",
 		"tileMatrixSet": "WGS84G",
 		"tileMatrixSetLimits": {
 			"3": {

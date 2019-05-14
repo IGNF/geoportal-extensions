@@ -2,6 +2,7 @@
 import Utils from "../../Common/Utils";
 import Config from "../../Common/Utils/Config";
 import Logger from "../../Common/Utils/LoggerByDefault";
+import * as Itowns from "itowns";
 
 var logger = Logger.getLogger("wmsLayer");
 
@@ -47,48 +48,57 @@ function LayerWMS (options) {
     var layerId = Config.getLayerId(options.layer, "WMS");
 
     if (layerId && Config.configuration.getLayerConf(layerId)) {
+        var config = {};
         var wmsParams = Config.getLayerParams(options.layer, "WMS", options.apiKey);
+
+        if (wmsParams.projection === "EPSG:3857" && wmsParams.extent) {
+            wmsParams.extent = new Itowns.Extent("EPSG:4326", wmsParams.extent.left, wmsParams.extent.right, wmsParams.extent.bottom, wmsParams.extent.top).as("EPSG:3857");
+        } else {
+            wmsParams.extent = new Itowns.Extent("EPSG:4326", wmsParams.extent.left, wmsParams.extent.right, wmsParams.extent.bottom, wmsParams.extent.top);
+        }
 
         // si ssl = false on fait du http
         // par défaut, ssl = true, on fait du https
         var protocol = options.ssl === false ? "http://" : "https://";
 
-        this.type = "color";
-        this.protocol = "wms";
-        this.version = wmsParams.version;
-        this.id = layerId;
-        this.name = options.layer;
-        this.url = wmsParams.url.replace(/(http|https):\/\//, protocol);
-        this.updateStrategy = {
-            type : 0,
-            options : {}
-        };
-        this.heightMapWidth = 256;
-        this.waterMask = false;
-        this.networkOptions = {
-            crossOrigin : "omit"
-        };
-        this.projection = wmsParams.projection;
-        this.options = {
-            originators : wmsParams.originators,
-            mimetype : wmsParams.format,
+        config.id = layerId;
+        config.source = new Itowns.WMSSource({
+            protocol : "wms",
+            version : wmsParams.version,
+            attribution : wmsParams.originators,
+            url : wmsParams.url.replace(/(http|https):\/\//, protocol),
+            name : options.layer,
+            projection : wmsParams.projection,
+            style : "",
+            heightMapWidth : 256,
+            waterMask : false,
+            networkOptions : {
+                crossOrigin : "omit"
+            },
+            updateStrategy : {
+                type : 0,
+                options : {}
+            },
+            format : wmsParams.format,
             extent : {
-                west : wmsParams.extent.left,
-                east : wmsParams.extent.right,
-                south : wmsParams.extent.bottom,
-                north : wmsParams.extent.top
+                west : wmsParams.extent.west(),
+                east : wmsParams.extent.east(),
+                south : wmsParams.extent.south(),
+                north : wmsParams.extent.north()
             }
-        };
+        });
 
         // récupération des autres paramètres passés par l'utilisateur
-        Utils.mergeParams(this, options.itownsParams);
+        Utils.mergeParams(config, options.itownsParams);
 
         // add legends and metadata (to be added to LayerSwitcher control)
-        this.legends = wmsParams.legends;
-        this.metadata = wmsParams.metadata;
-        this.description = wmsParams.description;
-        this.title = wmsParams.title;
-        this.quicklookUrl = wmsParams.quicklookUrl;
+        config.legends = wmsParams.legends;
+        config.metadata = wmsParams.metadata;
+        config.description = wmsParams.description;
+        config.title = wmsParams.title;
+        config.quicklookUrl = wmsParams.quicklookUrl;
+
+        return new Itowns.ColorLayer(config.id, config);
     } else {
         // If layer is not in Gp.Config
         logger.error("ERROR layer id (layer name: " + options.layer + " / service: WMS ) was not found !?");

@@ -2,6 +2,7 @@
 import Utils from "../../Common/Utils";
 import Config from "../../Common/Utils/Config";
 import Logger from "../../Common/Utils/LoggerByDefault";
+import * as Itowns from "itowns";
 
 var logger = Logger.getLogger("elevationLayer");
 
@@ -47,7 +48,14 @@ function LayerElevation (options) {
     var layerId = Config.getLayerId(options.layer, "WMTS");
 
     if (layerId && Config.configuration.getLayerConf(layerId)) {
+        var config = {};
         var wmtsParams = Config.getLayerParams(options.layer, "WMTS", options.apiKey);
+
+        if (wmtsParams.projection === "EPSG:3857" && wmtsParams.extent) {
+            wmtsParams.extent = new Itowns.Extent("EPSG:4326", wmtsParams.extent.left, wmtsParams.extent.right, wmtsParams.extent.bottom, wmtsParams.extent.top).as("EPSG:3857");
+        } else {
+            wmtsParams.extent = new Itowns.Extent("EPSG:4326", wmtsParams.extent.left, wmtsParams.extent.right, wmtsParams.extent.bottom, wmtsParams.extent.top);
+        }
 
         // gestion de mixContent dans l'url du service...
         var ctx = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : null;
@@ -55,44 +63,45 @@ function LayerElevation (options) {
             ? (ctx.location && ctx.location.protocol && ctx.location.protocol.indexOf("https:") === 0 ? "https://" : "http://")
             : (options.ssl ? "https://" : "http://");
 
-        this.type = "elevation";
-        this.protocol = "wmts";
-        this.id = layerId;
-        this.url = wmtsParams.url.replace(/(http|https):\/\//, protocol);
-        this.noDataValue = -99999;
-        this.updateStrategy = {
+        config.id = layerId;
+        config.noDataValue = -99999;
+        config.updateStrategy = {
             type : 1,
             options : {
-                groups : [3, 7, 11, 14]
+                groups : [11, 14]
             }
         };
-        this.networkOptions = {
-            crossOrigin : "omit"
-        };
-        this.projection = wmtsParams.projection;
-        this.options = {
-            originators : wmtsParams.originators,
-            name : options.layer,
-            mimetype : "image/x-bil;bits=32",
-            tileMatrixSet : wmtsParams.TMSLink,
-            extent : {
-                west : wmtsParams.extent.left,
-                east : wmtsParams.extent.right,
-                south : wmtsParams.extent.bottom,
-                north : wmtsParams.extent.top
+        config.source = new Itowns.WMTSSource({
+            protocol : "wmts",
+            url : wmtsParams.url.replace(/(http|https):\/\//, protocol),
+            networkOptions : {
+                crossOrigin : "omit"
             },
-            tileMatrixSetLimits : wmtsParams.tileMatrices
-        };
+            attribution : wmtsParams.originators,
+            projection : wmtsParams.projection,
+            name : options.layer,
+            format : "image/x-bil;bits=32",
+            tileMatrixSet : wmtsParams.TMSLink,
+            tileMatrixSetLimits : wmtsParams.tileMatrixSetLimits,
+            extent : {
+                west : wmtsParams.extent.west(),
+                east : wmtsParams.extent.east(),
+                south : wmtsParams.extent.south(),
+                north : wmtsParams.extent.north()
+            }
+        });
 
         // récupération des autres paramètres passés par l'utilisateur
-        Utils.mergeParams(this, options.itownsParams);
+        Utils.mergeParams(config, options.itownsParams);
 
         // add legends and metadata (to be added to LayerSwitcher control)
-        this.legends = wmtsParams.legends;
-        this.metadata = wmtsParams.metadata;
-        this.description = wmtsParams.description;
-        this.title = wmtsParams.title;
-        this.quicklookUrl = wmtsParams.quicklookUrl;
+        config.legends = wmtsParams.legends;
+        config.metadata = wmtsParams.metadata;
+        config.description = wmtsParams.description;
+        config.title = wmtsParams.title;
+        config.quicklookUrl = wmtsParams.quicklookUrl;
+
+        return new Itowns.ElevationLayer(config.id, config);
     } else {
         // If layer is not in Gp.Config
         logger.log("[source WMTS] ERROR : " + options.layer + " cannot be found in Geoportal Configuration. Make sure that this resource is included in your contract key.");
