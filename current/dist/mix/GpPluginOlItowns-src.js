@@ -10,7 +10,7 @@
  * copyright IGN
  * @author IGN
  * @version 2.1.2
- * @date 2019-04-10
+ * @date 2019-05-14
  *
  */
 
@@ -93,7 +93,7 @@
 		exports["Gp"] = factory(require("itowns"), require("xmldom"), require("request"), require("openlayers"));
 	else
 		root["Gp"] = factory(root["itowns"], root[undefined], root[undefined], root["ol"]);
-})(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE_44__, __WEBPACK_EXTERNAL_MODULE_14__, __WEBPACK_EXTERNAL_MODULE_48__, __WEBPACK_EXTERNAL_MODULE_2__) {
+})(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE_11__, __WEBPACK_EXTERNAL_MODULE_15__, __WEBPACK_EXTERNAL_MODULE_48__, __WEBPACK_EXTERNAL_MODULE_2__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -401,7 +401,7 @@ exports.default = SelectorID;
 
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(true)
-		module.exports = factory(__webpack_require__(14), __webpack_require__(48));
+		module.exports = factory(__webpack_require__(15), __webpack_require__(48));
 	else if(typeof define === 'function' && define.amd)
 		define("Gp", ["require", "require"], factory);
 	else if(typeof exports === 'object')
@@ -19271,7 +19271,7 @@ var _SelectorID = __webpack_require__(3);
 
 var _SelectorID2 = _interopRequireDefault(_SelectorID);
 
-var _LayerSwitcherDOM = __webpack_require__(25);
+var _LayerSwitcherDOM = __webpack_require__(26);
 
 var _LayerSwitcherDOM2 = _interopRequireDefault(_LayerSwitcherDOM);
 
@@ -20331,7 +20331,7 @@ var _LoggerByDefault = __webpack_require__(0);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
-var _itowns = __webpack_require__(44);
+var _itowns = __webpack_require__(11);
 
 var Itowns = _interopRequireWildcard(_itowns);
 
@@ -20381,24 +20381,24 @@ function GlobeViewExtended(viewerDiv, coordCarto, options) {
     this._globeView.addFrameRequester(this._itowns.MAIN_LOOP_EVENTS.BEFORE_RENDER, function () {
         clearTimeout(this._preRenderTimer);
         self._preRenderTimer = setTimeout(function () {
-            if (self._fetchVisibleColorLayers || self._fetchVisibleElevationLayers || self._fetchExtent) {
-                var event = {
-                    type: GlobeViewExtended.EVENTS.PRE_RENDER
-                };
-                if (self._fetchExtent) {
-                    event.extent = new self._itowns.Extent("EPSG:4326", 180, -180, 90, -90);
-                }
-                if (self._fetchVisibleColorLayers) {
-                    event.colorLayersId = [];
-                }
-                if (self._fetchVisibleElevationLayers) {
-                    event.elevationLayersId = [];
-                }
+            var visibleColorLayersIds = [];
+            var visibleElevationLayersIds = [];
 
-                self._getCurrentSceneInfos(self._globeView.scene, event);
-
-                self._globeView.dispatchEvent(event);
+            for (var i = 0; i < self.getGlobeView().tileLayer.info.displayed.layers.length; ++i) {
+                if (self.getGlobeView().tileLayer.info.displayed.layers[i].isColorLayer) {
+                    visibleColorLayersIds.push(self.getGlobeView().tileLayer.info.displayed.layers[i].id);
+                }
+                if (self.getGlobeView().tileLayer.info.displayed.layers[i].isElevationLayer) {
+                    visibleElevationLayersIds.push(self.getGlobeView().tileLayer.info.displayed.layers[i].id);
+                }
             }
+            var currentExtent = self.getGlobeView().tileLayer.info.displayed.extent;
+            self._globeView.dispatchEvent({
+                type: GlobeViewExtended.EVENTS.PRE_RENDER,
+                colorLayersId: visibleColorLayersIds,
+                elevationLayersId: visibleElevationLayersIds,
+                extent: currentExtent
+            });
         }, 100);
     }.bind(this));
 
@@ -20420,6 +20420,7 @@ GlobeViewExtended.prototype._initEventMap = function () {
             LAYER_REMOVED: this._itowns.GLOBE_VIEW_EVENTS.LAYER_REMOVED,
             LAYERS_ORDER_CHANGED: this._itowns.GLOBE_VIEW_EVENTS.COLOR_LAYERS_ORDER_CHANGED,
             GLOBE_INITIALIZED: this._itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED,
+            LAYERS_INITIALIZED: this._itowns.VIEW_EVENTS.LAYERS_INITIALIZED,
             VIEW_INITIALIZED: "viewinitialized",
             PRE_RENDER: "prerender",
             MOUSE_MOVE: "mousemove",
@@ -20551,6 +20552,7 @@ GlobeViewExtended.prototype._getEventTarget = function (type) {
         case GlobeViewExtended.EVENTS.LAYER_ADDED:
         case GlobeViewExtended.EVENTS.LAYER_REMOVED:
         case GlobeViewExtended.EVENTS.LAYERS_ORDER_CHANGED:
+        case GlobeViewExtended.EVENTS.LAYERS_INITIALIZED:
         case GlobeViewExtended.EVENTS.GLOBE_INITIALIZED:
         case GlobeViewExtended.EVENTS.PRE_RENDER:
         case GlobeViewExtended.EVENTS.AFTER_RENDER:
@@ -20619,10 +20621,10 @@ GlobeViewExtended.prototype.forget = function (type, callback) {
  */
 GlobeViewExtended.prototype.addLayer = function (layer) {
     // FIXME : to delete when itowns commit 2e9ed61eb4aa2a4bbe0e17c8e2650953844b099e
-    // is integrated into an iTowns release 
+    // is integrated into an iTowns release
     try {
         var promise = this.getGlobeView().addLayer(layer);
-        this.getGlobeView().notifyChange(true);
+        this.getGlobeView().notifyChange(layer);
     } catch (error) {
         return Promise.reject(error);
     }
@@ -20637,7 +20639,6 @@ GlobeViewExtended.prototype.addLayer = function (layer) {
  */
 GlobeViewExtended.prototype.removeLayer = function (layerId) {
     this.getGlobeView().removeLayer(layerId);
-    this.getGlobeView().notifyChange(true);
 };
 
 /**
@@ -20647,8 +20648,9 @@ GlobeViewExtended.prototype.removeLayer = function (layerId) {
  * @param {Number} opacityValue - opacity value in [0 1]
  */
 GlobeViewExtended.prototype.setLayerOpacity = function (layerId, opacityValue) {
-    this.getColorLayerById(layerId).opacity = opacityValue;
-    this.getGlobeView().notifyChange(true);
+    var layer = this.getColorLayerById(layerId);
+    layer.opacity = opacityValue;
+    this.getGlobeView().notifyChange(layer);
 };
 
 /**
@@ -20658,8 +20660,9 @@ GlobeViewExtended.prototype.setLayerOpacity = function (layerId, opacityValue) {
  * @param {Boolean} visible - New visibility of the layer
  */
 GlobeViewExtended.prototype.setLayerVisibility = function (layerId, visible) {
-    this.getColorLayerById(layerId).visible = visible;
-    this.getGlobeView().notifyChange(true);
+    var layer = this.getColorLayerById(layerId);
+    layer.visible = visible;
+    this.getGlobeView().notifyChange(layer);
 };
 
 /**
@@ -20670,7 +20673,6 @@ GlobeViewExtended.prototype.setLayerVisibility = function (layerId, visible) {
  */
 GlobeViewExtended.prototype.moveLayerToIndex = function (layerId, index) {
     this._itowns.ColorLayersOrdering.moveLayerToIndex(this.getGlobeView(), layerId, index);
-    this.getGlobeView().notifyChange(true);
 };
 
 /**
@@ -20769,7 +20771,7 @@ GlobeViewExtended.prototype.getLayerById = function (layerId) {
  */
 GlobeViewExtended.prototype.getColorLayerById = function (layerId) {
     var layer = this.getGlobeView().getLayers(function (l) {
-        if (l.id === layerId && l.type === "color") {
+        if (l.id === layerId && l.isColorLayer) {
             return l;
         }
     })[0];
@@ -20787,7 +20789,7 @@ GlobeViewExtended.prototype.getColorLayerById = function (layerId) {
  */
 GlobeViewExtended.prototype.getColorLayers = function () {
     return this.getGlobeView().getLayers(function (layer) {
-        if (layer.type === "color") {
+        if (layer.isColorLayer) {
             return layer;
         }
     });
@@ -20813,7 +20815,7 @@ GlobeViewExtended.prototype.getVectorLayers = function () {
  */
 GlobeViewExtended.prototype.getElevationLayers = function () {
     return this.getGlobeView().getLayers(function (layer) {
-        if (layer.type === "elevation") {
+        if (layer.isElevationLayer) {
             return layer;
         }
     });
@@ -20825,52 +20827,7 @@ GlobeViewExtended.prototype.getElevationLayers = function () {
  * @returns {Array} current view extent
  */
 GlobeViewExtended.prototype.getExtent = function () {
-    var options = {
-        extent: new this._itowns.Extent("EPSG:4326", 180, -180, 90, -90)
-    };
-
-    this._getCurrentSceneInfos(this.scene, options);
-
-    return options.extent;
-};
-
-/**
- * Recursive method to fetch information about the current view (extent, layers displayed...)
- *
- * @param {Object} node - itowns node
- * @param {Object} options - object containing objects to fill with info if specified
- * @private
- */
-GlobeViewExtended.prototype._getCurrentSceneInfos = function (node, options) {
-    if (!node || !node.visible) {
-        return;
-    }
-    if (node.level) {
-        if (node.material.visible) {
-            if (options.colorLayersId) {
-                for (var i = 0; i < node.material.colorLayersId.length; ++i) {
-                    if (options.colorLayersId.indexOf(node.material.colorLayersId[i]) < 0) {
-                        options.colorLayersId.push(node.material.colorLayersId[i]);
-                    }
-                }
-            }
-            if (options.elevationLayersId) {
-                for (var j = 0; j < node.material.elevationLayersId.length; ++j) {
-                    if (options.elevationLayersId.indexOf(node.material.elevationLayersId[j]) < 0) {
-                        options.elevationLayersId.push(node.material.elevationLayersId[j]);
-                    }
-                }
-            }
-            if (options.extent) {
-                options.extent.union(node.extent);
-            }
-        }
-    }
-    if (node.children) {
-        for (var child in node.children) {
-            this._getCurrentSceneInfos(node.children[child], options);
-        }
-    }
+    return this.getGlobeView().tileLayer.info.displayed.extent;
 };
 
 /**
@@ -20934,7 +20891,10 @@ GlobeViewExtended.prototype.getScale = function () {
  * @return {Promise} promise
  */
 GlobeViewExtended.prototype.setTilt = function (tilt) {
-    return this.getGlobeView().controls.setTilt(tilt, false);
+    this.onCameraMoveStop(function () {
+        this.getGlobeView().controls.setTilt(tilt, false);
+        this.notifyChange();
+    }.bind(this));
 };
 
 /**
@@ -20943,7 +20903,7 @@ GlobeViewExtended.prototype.setTilt = function (tilt) {
  * @return {Number} - Tilt
  */
 GlobeViewExtended.prototype.getTilt = function () {
-    return this.getGlobeView().controls.getCameraOrientation()[0];
+    return this.getGlobeView().controls.getTilt();
 };
 
 /**
@@ -20953,7 +20913,10 @@ GlobeViewExtended.prototype.getTilt = function () {
  * @return {Promise} promise
  */
 GlobeViewExtended.prototype.setAzimuth = function (azimuth) {
-    return this.getGlobeView().controls.setHeading(azimuth, false);
+    this.onCameraMoveStop(function () {
+        this.getGlobeView().controls.setHeading(azimuth, false);
+        this.notifyChange();
+    }.bind(this));
 };
 
 /**
@@ -20962,7 +20925,7 @@ GlobeViewExtended.prototype.setAzimuth = function (azimuth) {
  * @return {Number} azimuth
  */
 GlobeViewExtended.prototype.getAzimuth = function () {
-    return this.getGlobeView().controls.getCameraOrientation()[1];
+    return this.getGlobeView().controls.getHeading();
 };
 
 /**
@@ -21033,7 +20996,8 @@ GlobeViewExtended.prototype.getFeaturesAtMousePosition = function (mouseEvent) {
  * @return {Promise} A promise that resolves when the next 'globe initilazed' event fires.
  */
 GlobeViewExtended.prototype.setCameraTargetGeoPosition = function (center) {
-    return this.getGlobeView().controls.setCameraTargetGeoPositionAdvanced(center, false);
+    var itownsCoord = this._transformCoords(center);
+    return this.getGlobeView().controls.lookAtCoordinate(itownsCoord, false);
 };
 
 /**
@@ -21042,13 +21006,8 @@ GlobeViewExtended.prototype.setCameraTargetGeoPosition = function (center) {
  * @return {Object} center
  */
 GlobeViewExtended.prototype.getCenter = function () {
-    var cameraCenter = this.getGlobeView().controls.getCameraTargetGeoPosition();
-    var center = {
-        lon: cameraCenter.longitude(),
-        lat: cameraCenter.latitude(),
-        alt: cameraCenter.altitude()
-    };
-    return center;
+    var cameraCenter = this.getGlobeView().controls.getLookAtCoordinate();
+    return this._fromItownsCoords(cameraCenter);
 };
 
 /**
@@ -21099,8 +21058,8 @@ GlobeViewExtended.prototype.getRange = function () {
 /**
  * @return {THREE.Vector3} position
  */
-GlobeViewExtended.prototype.moveTarget = function () {
-    return this.getGlobeView().controls.moveTarget();
+GlobeViewExtended.prototype.getCameraTargetPosition = function () {
+    return this.getGlobeView().controls.getCameraTargetPosition();
 };
 
 /**
@@ -21149,7 +21108,7 @@ GlobeViewExtended.prototype.lookAt = function (target) {
  * Notifies the scene it needs to be updated
  */
 GlobeViewExtended.prototype.notifyChange = function () {
-    this.getGlobeView().notifyChange(true);
+    this.getGlobeView().notifyChange(this.getGlobeView().camera.camera3D);
 };
 
 /**
@@ -21160,7 +21119,43 @@ GlobeViewExtended.prototype.notifyChange = function () {
 */
 GlobeViewExtended.prototype.resize = function (width, height) {
     this.getGlobeView().mainLoop.gfxEngine.onWindowResize(width, height);
-    this.getGlobeView().notifyChange(true);
+    this.notifyChange();
+};
+
+/**
+* Transform to itowns coordinates
+*
+* @param {Object} coordCarto - longitude, latitude, altitude
+* @returns {Object} itowns coordinates
+*/
+GlobeViewExtended.prototype._transformCoords = function (coordCarto) {
+    if (coordCarto === undefined) return;
+
+    var itownsCoord = {};
+
+    if (coordCarto.zoom !== undefined) itownsCoord.zoom = coordCarto.zoom;
+    if (coordCarto.tilt !== undefined) itownsCoord.tilt = coordCarto.tilt;
+    if (coordCarto.heading !== undefined) itownsCoord.heading = coordCarto.heading;
+
+    if (coordCarto.longitude !== undefined && coordCarto.latitude !== undefined) {
+        var altitude = coordCarto.altitude || 0;
+        itownsCoord.coord = new Itowns.Coordinates("EPSG:4326", coordCarto.longitude, coordCarto.latitude, altitude);
+    }
+    return itownsCoord;
+};
+
+/**
+* Transform from itowns coordinates
+*
+* @param {Object} itownsCoord - itowns coordinates
+* @returns {Object} coordinates
+*/
+GlobeViewExtended.prototype._fromItownsCoords = function (itownsCoord) {
+    return {
+        lon: itownsCoord.longitude(),
+        lat: itownsCoord.latitude(),
+        alt: itownsCoord.altitude()
+    };
 };
 
 exports.default = GlobeViewExtended;
@@ -21479,6 +21474,12 @@ exports.default = LayerUtils;
 
 /***/ }),
 /* 11 */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_11__;
+
+/***/ }),
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21618,7 +21619,7 @@ Widget.prototype.setGlobe = function setGlobe(globe) {
 exports.default = Widget;
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21636,7 +21637,7 @@ var _LoggerByDefault = __webpack_require__(0);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
-var _Interactions = __webpack_require__(17);
+var _Interactions = __webpack_require__(18);
 
 var _Interactions2 = _interopRequireDefault(_Interactions);
 
@@ -22147,7 +22148,7 @@ var Measures = {
 exports.default = Measures;
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22235,13 +22236,13 @@ _Utils2.default.assign(MeasureToolBox, _MeasureToolBoxDOM2.default);
 exports.default = MeasureToolBox;
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE_14__;
+module.exports = __WEBPACK_EXTERNAL_MODULE_15__;
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22293,7 +22294,7 @@ var ProxyUtils = {
 exports.default = ProxyUtils;
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22472,7 +22473,7 @@ function _kmlParse(kmlString) {
 
     if (( false ? "undefined" : _typeof(exports)) === "object" && window === null) {
         // code for nodejs
-        var DOMParser = __webpack_require__(14).DOMParser;
+        var DOMParser = __webpack_require__(15).DOMParser;
         parser = new DOMParser();
         kmlDoc = parser.parseFromString(kmlString, "text/xml");
     } else if (scope.DOMParser) {
@@ -23317,7 +23318,7 @@ KML.prototype._readExtendStylesFeatures = function (source, options) {
 exports.default = KML;
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23445,13 +23446,13 @@ var Interactions = {
 exports.default = Interactions;
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"geoportal-extensions","leafletExtName":"French Geoportal Extension for Leaflet","olExtName":"French Geoportal Extension for OpenLayers","itownsExtName":"French Geoportal Extension for Itowns","olItownsExtName":"French Geoportal Extension for OpenLayers & Itowns","version":"2.1.1","leafletExtVersion":"2.0.4","olExtVersion":"2.1.2","itownsExtVersion":"2.1.2","olItownsExtVersion":"2.1.2","description":"French Geoportal Extensions for OpenLayers, Leaflet and iTowns libraries","main":"dist/leaflet/GpPluginLeaflet.js, dist/openlayers/GpPluginOpenLayers.js, dist/itowns/GpPluginItowns.js, dist/mix/GpPluginOlItowns.js","directories":{},"scripts":{"setup":"npm install","clean":"echo \"Warning: target not yet implemented!\" && exit 0","test":"cd test && mocha-webpack --require setup.js --webpack-config webpack.test.js --glob \"test-*.js\" spec/Common/*/*","test:serve":"cd test && webpack-dev-server --hot --config webpack.test.serve.js","cover":"nyc --reporter=lcov --reporter=text npm run test","sample":"npm run sample:serve","sample:serve":"npm run sample:ol:serve","sample:itowns:serve":"webpack-dev-server --config webpack.config.itowns --open-page samples/index-itowns-src.html --contentBase . --port 9001 --open","sample:leaflet:serve":"webpack-dev-server --config webpack.config.leaflet --open-page samples/index-leaflet-src.html --contentBase . --port 9001 --open","sample:ol:serve":"webpack-dev-server --config webpack.config.openlayers --open-page samples/index-openlayers-src.html --contentBase . --port 9001 --open","doc":"npm run doc:serve","doc:serve":"npm run doc:ol:serve","doc:itowns:serve":"webpack-dev-server --config webpack.config.itowns --contentBase jsdoc/itowns --port 9001 --open","doc:leaflet:serve":"webpack-dev-server --config webpack.config.leaflet --contentBase jsdoc/leaflet --port 9001 --open","doc:ol:serve":"webpack-dev-server --config webpack.config.openlayers --contentBase jsdoc/openlayers --port 9001 --open","build:dev":"npm run build:ol:dev; npm run build:itowns:dev; npm run build:mix:dev; npm run build:leaflet:dev","build:prod":"npm run build:ol:prod; npm run build:itowns:prod; npm run build:mix:prod; npm run build:leaflet:prod","build":"npm run build:ol; npm run build:itowns; npm run build:mix; npm run build:leaflet","build:itowns:dev":"webpack --config webpack.config.itowns --env.development","build:itowns:prod":"webpack --config webpack.config.itowns --env.production","build:itowns":"webpack --config webpack.config.itowns","build:mix:dev":"webpack --config webpack.config.mix --env.development","build:mix:prod":"webpack --config webpack.config.mix --env.production","build:mix":"webpack --config webpack.config.mix","build:ol:dev":"webpack --config webpack.config.openlayers --env.development","build:ol:prod":"webpack --config webpack.config.openlayers --env.production","build:ol":"webpack --config webpack.config.openlayers","build:leaflet:dev":"webpack --config webpack.config.leaflet --env.development","build:leaflet:prod":"webpack --config webpack.config.leaflet --env.production","build:leaflet":"webpack --config webpack.config.leaflet"},"nyc":{"include":["src/**/*.js"],"instrument":false,"sourceMap":false},"repository":{"type":"git","url":"https://github.com/IGNF/geoportal-extensions.git"},"author":"IGNF","keywords":["geoportail","javascript","OpenLayers","Leaflet","Itowns","3D"],"license":"CECILL-B","bugs":{"url":"https://github.com/IGNF/geoportal-extensions/issues"},"homepage":"https://github.com/IGNF/geoportal-extensions#readme","dependencies":{"geoportal-access-lib":"2.1.2","itowns":"2.3.0","leaflet":"1.3.1","leaflet-draw":"1.0.2","loglevel":"~1.6.1","openlayers":"4.4.2","proj4":"2.4.4","proj4leaflet":"~1.0.2","sortablejs":"1.4.0","three":"~0.93.0","three.meshline":"~1.1.0"},"devDependencies":{"babel-core":"^6.26.0","babel-loader":"^7.1.2","babel-preset-env":"^1.6.1","chai":"^4.1.2","clean-webpack-plugin":"^0.1.19","copy-webpack-plugin":"^4.5.1","css-loader":"^0.28.10","eslint":"^4.18.2","eslint-config-standard":"^11.0.0","eslint-loader":"^2.0.0","eslint-plugin-import":"^2.9.0","eslint-plugin-node":"^6.0.1","eslint-plugin-promise":"^3.7.0","eslint-plugin-standard":"^3.0.1","expose-loader":"^0.7.4","extract-text-webpack-plugin":"^3.0.2","handlebars-layouts":"^3.1.4","handlebars-webpack-plugin":"^1.4.1","html-webpack-plugin":"^3.1.0","istanbul-instrumenter-loader":"^3.0.1","jsdoc-webpack-plugin":"0.0.1","jsdom":"^9.9.1","mocha":"^5.0.5","mocha-loader":"^1.1.3","mocha-webpack":"^1.1.0","nyc":"^12.0.2","path":"^0.12.7","replace-bundle-webpack-plugin":"^1.0.0","requirejs":"^2.3.5","speed-measure-webpack-plugin":"^1.2.2","string-template":"^1.0.0","style-loader":"^0.20.2","url-loader":"^1.0.1","webpack":"^3.11.0","webpack-dev-server":"^2.11.1","webpack-merge":"^4.1.2","webpack-node-externals":"^1.6.0"}}
+module.exports = {"name":"geoportal-extensions","leafletExtName":"French Geoportal Extension for Leaflet","olExtName":"French Geoportal Extension for OpenLayers","itownsExtName":"French Geoportal Extension for Itowns","olItownsExtName":"French Geoportal Extension for OpenLayers & Itowns","version":"2.1.1","leafletExtVersion":"2.0.4","olExtVersion":"2.1.2","itownsExtVersion":"2.1.2","olItownsExtVersion":"2.1.2","description":"French Geoportal Extensions for OpenLayers, Leaflet and iTowns libraries","main":"dist/leaflet/GpPluginLeaflet.js, dist/openlayers/GpPluginOpenLayers.js, dist/itowns/GpPluginItowns.js, dist/mix/GpPluginOlItowns.js","directories":{},"scripts":{"setup":"npm install","clean":"echo \"Warning: target not yet implemented!\" && exit 0","test":"cd test && mocha-webpack --require setup.js --webpack-config webpack.test.js --glob \"test-*.js\" spec/Common/*/*","test:serve":"cd test && webpack-dev-server --hot --config webpack.test.serve.js","cover":"nyc --reporter=lcov --reporter=text npm run test","sample":"npm run sample:serve","sample:serve":"npm run sample:ol:serve","sample:itowns:serve":"webpack-dev-server --config webpack.config.itowns --open-page samples/index-itowns-src.html --contentBase . --port 9001 --open","sample:leaflet:serve":"webpack-dev-server --config webpack.config.leaflet --open-page samples/index-leaflet-src.html --contentBase . --port 9001 --open","sample:ol:serve":"webpack-dev-server --config webpack.config.openlayers --open-page samples/index-openlayers-src.html --contentBase . --port 9001 --open","doc":"npm run doc:serve","doc:serve":"npm run doc:ol:serve","doc:itowns:serve":"webpack-dev-server --config webpack.config.itowns --contentBase jsdoc/itowns --port 9001 --open","doc:leaflet:serve":"webpack-dev-server --config webpack.config.leaflet --contentBase jsdoc/leaflet --port 9001 --open","doc:ol:serve":"webpack-dev-server --config webpack.config.openlayers --contentBase jsdoc/openlayers --port 9001 --open","build:dev":"npm run build:ol:dev; npm run build:itowns:dev; npm run build:mix:dev; npm run build:leaflet:dev","build:prod":"npm run build:ol:prod; npm run build:itowns:prod; npm run build:mix:prod; npm run build:leaflet:prod","build":"npm run build:ol; npm run build:itowns; npm run build:mix; npm run build:leaflet","build:itowns:dev":"webpack --config webpack.config.itowns --env.development","build:itowns:prod":"webpack --config webpack.config.itowns --env.production","build:itowns":"webpack --config webpack.config.itowns","build:mix:dev":"webpack --config webpack.config.mix --env.development","build:mix:prod":"webpack --config webpack.config.mix --env.production","build:mix":"webpack --config webpack.config.mix","build:ol:dev":"webpack --config webpack.config.openlayers --env.development","build:ol:prod":"webpack --config webpack.config.openlayers --env.production","build:ol":"webpack --config webpack.config.openlayers","build:leaflet:dev":"webpack --config webpack.config.leaflet --env.development","build:leaflet:prod":"webpack --config webpack.config.leaflet --env.production","build:leaflet":"webpack --config webpack.config.leaflet"},"nyc":{"include":["src/**/*.js"],"instrument":false,"sourceMap":false},"repository":{"type":"git","url":"https://github.com/IGNF/geoportal-extensions.git"},"author":"IGNF","keywords":["geoportail","javascript","OpenLayers","Leaflet","Itowns","3D"],"license":"CECILL-B","bugs":{"url":"https://github.com/IGNF/geoportal-extensions/issues"},"homepage":"https://github.com/IGNF/geoportal-extensions#readme","dependencies":{"geoportal-access-lib":"2.1.2","itowns":"2.8.0","leaflet":"1.3.1","leaflet-draw":"1.0.2","loglevel":"~1.6.1","openlayers":"4.4.2","proj4":"2.4.4","proj4leaflet":"~1.0.2","sortablejs":"1.4.0","three":"~0.97.0","three.meshline":"~1.1.0"},"devDependencies":{"babel-core":"^6.26.0","babel-loader":"^7.1.2","babel-preset-env":"^1.6.1","chai":"^4.1.2","clean-webpack-plugin":"^0.1.19","copy-webpack-plugin":"^4.5.1","css-loader":"^0.28.10","eslint":"^4.18.2","eslint-config-standard":"^11.0.0","eslint-loader":"^2.0.0","eslint-plugin-import":"^2.9.0","eslint-plugin-node":"^6.0.1","eslint-plugin-promise":"^3.7.0","eslint-plugin-standard":"^3.0.1","expose-loader":"^0.7.4","extract-text-webpack-plugin":"^3.0.2","handlebars-layouts":"^3.1.4","handlebars-webpack-plugin":"^1.4.1","html-webpack-plugin":"^3.1.0","istanbul-instrumenter-loader":"^3.0.1","jsdoc-webpack-plugin":"0.0.1","jsdom":"^9.9.1","mocha":"^5.0.5","mocha-loader":"^1.1.3","mocha-webpack":"^1.1.0","nyc":"^12.0.2","path":"^0.12.7","replace-bundle-webpack-plugin":"^1.0.0","requirejs":"^2.3.5","speed-measure-webpack-plugin":"^1.2.2","string-template":"^1.0.0","style-loader":"^0.20.2","url-loader":"^1.0.1","webpack":"^3.11.0","webpack-dev-server":"^2.11.1","webpack-merge":"^4.1.2","webpack-node-externals":"^1.6.0"}}
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23475,7 +23476,7 @@ var _LoggerByDefault = __webpack_require__(0);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
-var _ProxyUtils = __webpack_require__(15);
+var _ProxyUtils = __webpack_require__(16);
 
 var _ProxyUtils2 = _interopRequireDefault(_ProxyUtils);
 
@@ -23544,7 +23545,7 @@ var GfiUtils = {
 
         if (( false ? "undefined" : _typeof(exports)) === "object" && window === null) {
             // code for nodejs
-            var DOMParser = __webpack_require__(14).DOMParser;
+            var DOMParser = __webpack_require__(15).DOMParser;
             _parser = new DOMParser();
             _htmlDoc = _parser.parseFromString(_content, contentType);
         } else if (scope.DOMParser) {
@@ -24011,7 +24012,7 @@ var GfiUtils = {
 exports.default = GfiUtils;
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24152,7 +24153,7 @@ WMTS.prototype.getGetFeatureInfoUrl = function (coordinate, resolution, projecti
 exports.default = WMTS;
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24166,7 +24167,7 @@ var _ol = __webpack_require__(2);
 
 var _ol2 = _interopRequireDefault(_ol);
 
-var _proj = __webpack_require__(22);
+var _proj = __webpack_require__(23);
 
 var _proj2 = _interopRequireDefault(_proj);
 
@@ -24251,7 +24252,7 @@ var CRS = {
 exports.default = CRS;
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function (global, factory) {
@@ -30584,7 +30585,7 @@ exports.default = CRS;
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30602,7 +30603,7 @@ var _gp = __webpack_require__(4);
 
 var _gp2 = _interopRequireDefault(_gp);
 
-var _WMTS = __webpack_require__(20);
+var _WMTS = __webpack_require__(21);
 
 var _WMTS2 = _interopRequireDefault(_WMTS);
 
@@ -30747,7 +30748,7 @@ SourceWMTS.prototype.constructor = SourceWMTS;
 exports.default = SourceWMTS;
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30889,7 +30890,7 @@ SourceWMS.prototype.constructor = SourceWMS;
 exports.default = SourceWMS;
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31550,7 +31551,7 @@ var LayerSwitcherDOM = {
 exports.default = LayerSwitcherDOM;
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32503,7 +32504,7 @@ var MousePositionDOM = {
 exports.default = MousePositionDOM;
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33328,12 +33329,6 @@ LocationSelector.prototype._fillAutoCompletedLocationListContainer = function (l
 exports.default = LocationSelector;
 
 /***/ }),
-/* 28 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
 /* 29 */
 /***/ (function(module, exports) {
 
@@ -33419,6 +33414,12 @@ exports.default = LocationSelector;
 
 /***/ }),
 /* 43 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33486,12 +33487,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
         _gp2.default.Services.getConfig(options);
     }
 })();
-
-/***/ }),
-/* 44 */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_44__;
 
 /***/ }),
 /* 45 */
@@ -33720,7 +33715,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Itowns_GpPluginItowns_js__ = __webpack_require__(102);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Itowns_GpPluginItowns_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Itowns_GpPluginItowns_js__);
 /* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_1__Itowns_GpPluginItowns_js__) if(["olItownsExtVersion","olItownsExtDate","default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_1__Itowns_GpPluginItowns_js__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__package_json__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__package_json__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__package_json___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__package_json__);
 
 
@@ -33777,7 +33772,7 @@ Object.defineProperty(exports, "LayerUtils", {
   }
 });
 
-var _ProxyUtils = __webpack_require__(15);
+var _ProxyUtils = __webpack_require__(16);
 
 Object.defineProperty(exports, "ProxyUtils", {
   enumerable: true,
@@ -33790,29 +33785,29 @@ var _ol = __webpack_require__(2);
 
 var _ol2 = _interopRequireDefault(_ol);
 
-var _GfiUtils = __webpack_require__(19);
+var _GfiUtils = __webpack_require__(20);
 
 var _GfiUtils2 = _interopRequireDefault(_GfiUtils);
 
 var _Utils2 = _interopRequireDefault(_Utils);
 
-var _KML = __webpack_require__(16);
+var _KML = __webpack_require__(17);
 
 var _KML2 = _interopRequireDefault(_KML);
 
-var _WMTS = __webpack_require__(20);
+var _WMTS = __webpack_require__(21);
 
 var _WMTS2 = _interopRequireDefault(_WMTS);
 
-var _CRS = __webpack_require__(21);
+var _CRS = __webpack_require__(22);
 
 var _CRS2 = _interopRequireDefault(_CRS);
 
-var _SourceWMTS = __webpack_require__(23);
+var _SourceWMTS = __webpack_require__(24);
 
 var _SourceWMTS2 = _interopRequireDefault(_SourceWMTS);
 
-var _SourceWMS = __webpack_require__(24);
+var _SourceWMS = __webpack_require__(25);
 
 var _SourceWMS2 = _interopRequireDefault(_SourceWMS);
 
@@ -33886,9 +33881,9 @@ var _MeasureAzimuth2 = _interopRequireDefault(_MeasureAzimuth);
 
 __webpack_require__(84);
 
-__webpack_require__(43);
+__webpack_require__(44);
 
-var _package = __webpack_require__(18);
+var _package = __webpack_require__(19);
 
 var _package2 = _interopRequireDefault(_package);
 
@@ -34766,7 +34761,7 @@ var _Config = __webpack_require__(5);
 
 var _Config2 = _interopRequireDefault(_Config);
 
-var _SourceWMTS = __webpack_require__(23);
+var _SourceWMTS = __webpack_require__(24);
 
 var _SourceWMTS2 = _interopRequireDefault(_SourceWMTS);
 
@@ -34922,7 +34917,7 @@ var _Config = __webpack_require__(5);
 
 var _Config2 = _interopRequireDefault(_Config);
 
-var _SourceWMS = __webpack_require__(24);
+var _SourceWMS = __webpack_require__(25);
 
 var _SourceWMS2 = _interopRequireDefault(_SourceWMS);
 
@@ -36332,7 +36327,7 @@ var _Utils = __webpack_require__(1);
 
 var _Utils2 = _interopRequireDefault(_Utils);
 
-var _GfiUtils = __webpack_require__(19);
+var _GfiUtils = __webpack_require__(20);
 
 var _GfiUtils2 = _interopRequireDefault(_GfiUtils);
 
@@ -39817,11 +39812,11 @@ var _MathUtils = __webpack_require__(61);
 
 var _MathUtils2 = _interopRequireDefault(_MathUtils);
 
-var _MousePositionDOM = __webpack_require__(26);
+var _MousePositionDOM = __webpack_require__(27);
 
 var _MousePositionDOM2 = _interopRequireDefault(_MousePositionDOM);
 
-__webpack_require__(21);
+__webpack_require__(22);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -41657,7 +41652,7 @@ var _SelectorID = __webpack_require__(3);
 
 var _SelectorID2 = _interopRequireDefault(_SelectorID);
 
-var _Interactions = __webpack_require__(17);
+var _Interactions = __webpack_require__(18);
 
 var _Interactions2 = _interopRequireDefault(_Interactions);
 
@@ -41665,7 +41660,7 @@ var _DrawingDOM = __webpack_require__(63);
 
 var _DrawingDOM2 = _interopRequireDefault(_DrawingDOM);
 
-var _KML = __webpack_require__(16);
+var _KML = __webpack_require__(17);
 
 var _KML2 = _interopRequireDefault(_KML);
 
@@ -43947,7 +43942,7 @@ var _SelectorID = __webpack_require__(3);
 
 var _SelectorID2 = _interopRequireDefault(_SelectorID);
 
-var _LocationSelector = __webpack_require__(27);
+var _LocationSelector = __webpack_require__(28);
 
 var _LocationSelector2 = _interopRequireDefault(_LocationSelector);
 
@@ -47582,7 +47577,7 @@ var _SelectorID = __webpack_require__(3);
 
 var _SelectorID2 = _interopRequireDefault(_SelectorID);
 
-var _LocationSelector = __webpack_require__(27);
+var _LocationSelector = __webpack_require__(28);
 
 var _LocationSelector2 = _interopRequireDefault(_LocationSelector);
 
@@ -51985,11 +51980,11 @@ var _SelectorID = __webpack_require__(3);
 
 var _SelectorID2 = _interopRequireDefault(_SelectorID);
 
-var _ProxyUtils = __webpack_require__(15);
+var _ProxyUtils = __webpack_require__(16);
 
 var _ProxyUtils2 = _interopRequireDefault(_ProxyUtils);
 
-var _KML = __webpack_require__(16);
+var _KML = __webpack_require__(17);
 
 var _KML2 = _interopRequireDefault(_KML);
 
@@ -54961,11 +54956,11 @@ var _CheckRightManagement = __webpack_require__(7);
 
 var _CheckRightManagement2 = _interopRequireDefault(_CheckRightManagement);
 
-var _Measures = __webpack_require__(12);
+var _Measures = __webpack_require__(13);
 
 var _Measures2 = _interopRequireDefault(_Measures);
 
-var _MeasureToolBox = __webpack_require__(13);
+var _MeasureToolBox = __webpack_require__(14);
 
 var _MeasureToolBox2 = _interopRequireDefault(_MeasureToolBox);
 
@@ -54973,7 +54968,7 @@ var _LayerSwitcher = __webpack_require__(8);
 
 var _LayerSwitcher2 = _interopRequireDefault(_LayerSwitcher);
 
-var _Interactions = __webpack_require__(17);
+var _Interactions = __webpack_require__(18);
 
 var _Interactions2 = _interopRequireDefault(_Interactions);
 
@@ -57233,11 +57228,11 @@ var _Utils = __webpack_require__(1);
 
 var _Utils2 = _interopRequireDefault(_Utils);
 
-var _MeasureToolBox = __webpack_require__(13);
+var _MeasureToolBox = __webpack_require__(14);
 
 var _MeasureToolBox2 = _interopRequireDefault(_MeasureToolBox);
 
-var _Measures = __webpack_require__(12);
+var _Measures = __webpack_require__(13);
 
 var _Measures2 = _interopRequireDefault(_Measures);
 
@@ -57635,11 +57630,11 @@ var _Utils = __webpack_require__(1);
 
 var _Utils2 = _interopRequireDefault(_Utils);
 
-var _MeasureToolBox = __webpack_require__(13);
+var _MeasureToolBox = __webpack_require__(14);
 
 var _MeasureToolBox2 = _interopRequireDefault(_MeasureToolBox);
 
-var _Measures = __webpack_require__(12);
+var _Measures = __webpack_require__(13);
 
 var _Measures2 = _interopRequireDefault(_Measures);
 
@@ -58043,11 +58038,11 @@ var _Utils = __webpack_require__(1);
 
 var _Utils2 = _interopRequireDefault(_Utils);
 
-var _MeasureToolBox = __webpack_require__(13);
+var _MeasureToolBox = __webpack_require__(14);
 
 var _MeasureToolBox2 = _interopRequireDefault(_MeasureToolBox);
 
-var _Measures = __webpack_require__(12);
+var _Measures = __webpack_require__(13);
 
 var _Measures2 = _interopRequireDefault(_Measures);
 
@@ -58487,8 +58482,6 @@ exports.default = MeasureAzimuthDOM;
 "use strict";
 
 
-__webpack_require__(28);
-
 __webpack_require__(29);
 
 __webpack_require__(30);
@@ -58516,6 +58509,8 @@ __webpack_require__(40);
 __webpack_require__(41);
 
 __webpack_require__(42);
+
+__webpack_require__(43);
 
 __webpack_require__(85);
 
@@ -58686,7 +58681,7 @@ Object.defineProperty(exports, "LayerUtils", {
   }
 });
 
-var _itowns = __webpack_require__(44);
+var _itowns = __webpack_require__(11);
 
 var Itowns = _interopRequireWildcard(_itowns);
 
@@ -58732,9 +58727,9 @@ var _CRS2 = _interopRequireDefault(_CRS);
 
 __webpack_require__(115);
 
-__webpack_require__(43);
+__webpack_require__(44);
 
-var _package = __webpack_require__(18);
+var _package = __webpack_require__(19);
 
 var _package2 = _interopRequireDefault(_package);
 
@@ -58775,7 +58770,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _proj = __webpack_require__(22);
+var _proj = __webpack_require__(23);
 
 var _proj2 = _interopRequireDefault(_proj);
 
@@ -58803,11 +58798,11 @@ var _SelectorID = __webpack_require__(3);
 
 var _SelectorID2 = _interopRequireDefault(_SelectorID);
 
-var _MousePositionDOM = __webpack_require__(26);
+var _MousePositionDOM = __webpack_require__(27);
 
 var _MousePositionDOM2 = _interopRequireDefault(_MousePositionDOM);
 
-var _Widget = __webpack_require__(11);
+var _Widget = __webpack_require__(12);
 
 var _Widget2 = _interopRequireDefault(_Widget);
 
@@ -58832,7 +58827,7 @@ var logger = _LoggerByDefault2.default.getLogger("MousePosition");
  * @alias itowns.control.MousePosition
  * @extends {itowns.control.Control}
  * @param {Object} options - options for function call.
- * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)   
+ * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {Boolean} [options.collapsed = true] - Specify if MousePosition control should be collapsed at startup. Default is true.
  * @param {Array}   [options.systems] - list of projection systems, default are Geographical ("EPSG:4326"), Web Mercator ("EPSG:3857"), Lambert 93 ("EPSG:2154") and extended Lambert 2 ("EPSG:27572").
  *      Each array element (=system) is an object with following properties :
@@ -59893,7 +59888,7 @@ MousePosition.prototype.onRequestAltitude = function (coordinate, callback) {
     options.apiKey = options.apiKey || this.options.apiKey;
 
     // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
-    // true par défaut (https) 
+    // true par défaut (https)
     options.ssl = this.options.ssl;
 
     _gp2.default.Services.getAltitude(options);
@@ -60196,11 +60191,11 @@ var _SelectorID = __webpack_require__(3);
 
 var _SelectorID2 = _interopRequireDefault(_SelectorID);
 
-var _LayerSwitcherDOM = __webpack_require__(25);
+var _LayerSwitcherDOM = __webpack_require__(26);
 
 var _LayerSwitcherDOM2 = _interopRequireDefault(_LayerSwitcherDOM);
 
-var _Widget = __webpack_require__(11);
+var _Widget = __webpack_require__(12);
 
 var _Widget2 = _interopRequireDefault(_Widget);
 
@@ -61140,7 +61135,7 @@ var _AttributionDOM = __webpack_require__(107);
 
 var _AttributionDOM2 = _interopRequireDefault(_AttributionDOM);
 
-var _Widget = __webpack_require__(11);
+var _Widget = __webpack_require__(12);
 
 var _Widget2 = _interopRequireDefault(_Widget);
 
@@ -61350,12 +61345,7 @@ Attributions.prototype._inRangeUpdate = function (layersDisplayed, extent) {
     for (var h = 0; h < layersDisplayed.length; h++) {
         var layer = globe.getLayerById(layersDisplayed[h]);
 
-        // FIXME itowns bug : itowns should only returns visible layers
-        if (!layer.visible) {
-            continue;
-        }
-
-        var ori = layer.options.originators;
+        var ori = layer.source.attribution;
 
         if (ori) {
             for (var j = 0; j < ori.length; j++) {
@@ -61388,8 +61378,10 @@ Attributions.prototype._inRangeUpdate = function (layersDisplayed, extent) {
                 }
                 // checks if 'bbox" exists
                 if (ori[j].constraints[0].bbox) {
-                    // checks we are into the bbox limits
-                    if (ori[j].constraints[0].bbox.left < extent.west() && ori[j].constraints[0].bbox.right > extent.east() && ori[j].constraints[0].bbox.top > extent.north() && ori[j].constraints[0].bbox.bottom < extent.south()) {
+                    // checks if we are into the bbox limits
+                    var intersectsX = ori[j].constraints[0].bbox.left <= extent.east() && extent.west() <= ori[j].constraints[0].bbox.right;
+                    var intersectsY = ori[j].constraints[0].bbox.bottom <= extent.north() && extent.south() <= ori[j].constraints[0].bbox.top;
+                    if (intersectsX && intersectsY) {
                         // adds the attribution in the Map() called 'attributions'
                         attributions.set(ori[j].name, ori[j]);
                     }
@@ -61593,7 +61585,7 @@ var _ScaleDOM = __webpack_require__(109);
 
 var _ScaleDOM2 = _interopRequireDefault(_ScaleDOM);
 
-var _Widget = __webpack_require__(11);
+var _Widget = __webpack_require__(12);
 
 var _Widget2 = _interopRequireDefault(_Widget);
 
@@ -61626,10 +61618,8 @@ function Scale(options) {
     this._initialize();
 
     var container = this._initContainer();
-    var vDiv = document.getElementById("viewerDiv");
 
-    // by default, add the control on the viwerDiv
-    var targetDiv = document.getElementById(options.target) || vDiv;
+    var targetDiv = document.getElementById(options.target) || null;
 
     _Widget2.default.call(this, {
         name: "GraphicScale",
@@ -61815,7 +61805,7 @@ var _MiniGlobeDOM = __webpack_require__(111);
 
 var _MiniGlobeDOM2 = _interopRequireDefault(_MiniGlobeDOM);
 
-var _Widget = __webpack_require__(11);
+var _Widget = __webpack_require__(12);
 
 var _Widget2 = _interopRequireDefault(_Widget);
 
@@ -61848,11 +61838,9 @@ function MiniGlobe(options) {
     this._initialize();
 
     var container = this._initContainer();
-    var vDiv = document.getElementById("viewerDiv");
     this._options = options;
 
-    // by default, adds the control on the viewerDiv
-    var targetDiv = document.getElementById(options.target) || vDiv;
+    var targetDiv = document.getElementById(options.target) || null;
 
     _Widget2.default.call(this, {
         name: "Overview",
@@ -61909,11 +61897,11 @@ MiniGlobe.prototype.setGlobe = function (globe) {
 
         var updateMiniGlobeHandler = function updateMiniGlobeHandler() {
             // clamp distance camera from globe
-            var range = globe.getRange();
-            var distance = Math.min(Math.max(range * 1.5, minDistance), maxDistance);
+            var distanceCamera = globe.getGlobeView().camera.camera3D.position.length();
+            var distance = Math.min(Math.max(distanceCamera * 1.5, minDistance), maxDistance);
             // Update target miniview's camera
-            miniView.setCameraPosition(globe.moveTarget(), distance);
-            miniView.lookAt(globe.moveTarget());
+            miniView.setCameraPosition(globe.getCameraTargetPosition(), distance);
+            miniView.lookAt(globe.getCameraTargetPosition());
             miniView.notifyChange();
         };
         globe.listen(_GlobeViewExtended2.default.EVENTS.AFTER_RENDER, updateMiniGlobeHandler);
@@ -61978,19 +61966,19 @@ MiniGlobe.prototype._initContainer = function () {
 
 MiniGlobe.prototype._baseLayer = {
     type: "color",
-    protocol: "wmts",
     id: "Maps",
-    url: "https://wxs.ign.fr/an7nvfzojv5wa96dsga5nk8w/geoportail/wmts",
     updateStrategy: {
         type: "0",
         options: {}
     },
-    networkOptions: {
-        crossOrigin: "omit"
-    },
-    options: {
+    source: {
+        protocol: "wmts",
+        url: "https://wxs.ign.fr/an7nvfzojv5wa96dsga5nk8w/geoportail/wmts",
         name: "GEOGRAPHICALGRIDSYSTEMS.MAPS",
-        mimetype: "image/jpeg",
+        networkOptions: {
+            crossOrigin: "omit"
+        },
+        format: "image/jpeg",
         tileMatrixSet: "PM",
         tileMatrixSetLimits: {
             0: {
@@ -62173,8 +62161,15 @@ var _LoggerByDefault = __webpack_require__(0);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
+var _itowns = __webpack_require__(11);
+
+var Itowns = _interopRequireWildcard(_itowns);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/* globals self */
 var logger = _LoggerByDefault2.default.getLogger("wmtsLayer");
 
 /**
@@ -62193,7 +62188,6 @@ var logger = _LoggerByDefault2.default.getLogger("wmtsLayer");
  *      layer  : "ORTHOIMAGERY.ORTHOPHOTOS"
  * });
  */
-/* globals self */
 function LayerWMTS(options) {
     if (!(this instanceof LayerWMTS)) {
         throw new TypeError("ERROR CLASS_CONSTRUCTOR");
@@ -62220,47 +62214,55 @@ function LayerWMTS(options) {
     var layerId = _Config2.default.getLayerId(options.layer, "WMTS");
 
     if (layerId && _Config2.default.configuration.getLayerConf(layerId)) {
+        var config = {};
         var wmtsParams = _Config2.default.getLayerParams(options.layer, "WMTS", options.apiKey);
+
+        if (wmtsParams.projection === "EPSG:3857" && wmtsParams.extent) {
+            wmtsParams.extent = new Itowns.Extent("EPSG:4326", wmtsParams.extent.left, wmtsParams.extent.right, wmtsParams.extent.bottom, wmtsParams.extent.top).as("EPSG:3857");
+        } else {
+            wmtsParams.extent = new Itowns.Extent("EPSG:4326", wmtsParams.extent.left, wmtsParams.extent.right, wmtsParams.extent.bottom, wmtsParams.extent.top);
+        }
 
         // si ssl = false on fait du http
         // par défaut, ssl = true, on fait du https
         var protocol = options.ssl === false ? "http://" : "https://";
 
-        this.type = "color";
-        this.protocol = "wmts";
-        this.id = layerId;
-        this.url = wmtsParams.url.replace(/(http|https):\/\//, protocol);
-        this.updateStrategy = {
-            type: 0,
-            options: {}
-        };
-        this.networkOptions = {
-            crossOrigin: "omit"
-        };
-        this.projection = wmtsParams.projection;
-        this.options = {
-            originators: wmtsParams.originators,
-            name: options.layer,
-            mimetype: wmtsParams.format,
-            tileMatrixSet: wmtsParams.TMSLink,
-            extent: {
-                west: wmtsParams.extent.left,
-                east: wmtsParams.extent.right,
-                south: wmtsParams.extent.bottom,
-                north: wmtsParams.extent.top
+        config.id = layerId;
+        config.source = new Itowns.WMTSSource({
+            protocol: "wmts",
+            url: wmtsParams.url.replace(/(http|https):\/\//, protocol),
+            networkOptions: {
+                crossOrigin: "omit"
             },
-            tileMatrixSetLimits: wmtsParams.tileMatrices
-        };
+            updateStrategy: {
+                type: 0,
+                options: {}
+            },
+            projection: wmtsParams.projection,
+            attribution: wmtsParams.originators,
+            name: options.layer,
+            format: wmtsParams.format,
+            tileMatrixSet: wmtsParams.TMSLink,
+            tileMatrixSetLimits: wmtsParams.tileMatrixSetLimits,
+            extent: {
+                west: wmtsParams.extent.west(),
+                east: wmtsParams.extent.east(),
+                south: wmtsParams.extent.south(),
+                north: wmtsParams.extent.north()
+            }
+        });
 
         // récupération des autres paramètres passés par l'utilisateur
-        _Utils2.default.mergeParams(this, options.itownsParams);
+        _Utils2.default.mergeParams(config, options.itownsParams);
 
         // add legends and metadata (to be added to LayerSwitcher control)
-        this.legends = wmtsParams.legends;
-        this.metadata = wmtsParams.metadata;
-        this.description = wmtsParams.description;
-        this.title = wmtsParams.title;
-        this.quicklookUrl = wmtsParams.quicklookUrl;
+        config.legends = wmtsParams.legends;
+        config.metadata = wmtsParams.metadata;
+        config.description = wmtsParams.description;
+        config.title = wmtsParams.title;
+        config.quicklookUrl = wmtsParams.quicklookUrl;
+
+        return new Itowns.ColorLayer(config.id, config);
     } else {
         // If layer is not in Gp.Config
         logger.error("ERROR layer id (layer name: " + options.layer + " / service: WMTS ) was not found !?");
@@ -62297,8 +62299,15 @@ var _LoggerByDefault = __webpack_require__(0);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
+var _itowns = __webpack_require__(11);
+
+var Itowns = _interopRequireWildcard(_itowns);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/* globals self */
 var logger = _LoggerByDefault2.default.getLogger("wmsLayer");
 
 /**
@@ -62317,7 +62326,6 @@ var logger = _LoggerByDefault2.default.getLogger("wmsLayer");
  *      layer  : "ORTHOIMAGERY.ORTHOPHOTOS"
  * });
  */
-/* globals self */
 function LayerWMS(options) {
     if (!(this instanceof LayerWMS)) {
         throw new TypeError("ERROR CLASS_CONSTRUCTOR");
@@ -62344,48 +62352,57 @@ function LayerWMS(options) {
     var layerId = _Config2.default.getLayerId(options.layer, "WMS");
 
     if (layerId && _Config2.default.configuration.getLayerConf(layerId)) {
+        var config = {};
         var wmsParams = _Config2.default.getLayerParams(options.layer, "WMS", options.apiKey);
+
+        if (wmsParams.projection === "EPSG:3857" && wmsParams.extent) {
+            wmsParams.extent = new Itowns.Extent("EPSG:4326", wmsParams.extent.left, wmsParams.extent.right, wmsParams.extent.bottom, wmsParams.extent.top).as("EPSG:3857");
+        } else {
+            wmsParams.extent = new Itowns.Extent("EPSG:4326", wmsParams.extent.left, wmsParams.extent.right, wmsParams.extent.bottom, wmsParams.extent.top);
+        }
 
         // si ssl = false on fait du http
         // par défaut, ssl = true, on fait du https
         var protocol = options.ssl === false ? "http://" : "https://";
 
-        this.type = "color";
-        this.protocol = "wms";
-        this.version = wmsParams.version;
-        this.id = layerId;
-        this.name = options.layer;
-        this.url = wmsParams.url.replace(/(http|https):\/\//, protocol);
-        this.updateStrategy = {
-            type: 0,
-            options: {}
-        };
-        this.heightMapWidth = 256;
-        this.waterMask = false;
-        this.networkOptions = {
-            crossOrigin: "omit"
-        };
-        this.projection = wmsParams.projection;
-        this.options = {
-            originators: wmsParams.originators,
-            mimetype: wmsParams.format,
+        config.id = layerId;
+        config.source = new Itowns.WMSSource({
+            protocol: "wms",
+            version: wmsParams.version,
+            attribution: wmsParams.originators,
+            url: wmsParams.url.replace(/(http|https):\/\//, protocol),
+            name: options.layer,
+            projection: wmsParams.projection,
+            style: "",
+            heightMapWidth: 256,
+            waterMask: false,
+            networkOptions: {
+                crossOrigin: "omit"
+            },
+            updateStrategy: {
+                type: 0,
+                options: {}
+            },
+            format: wmsParams.format,
             extent: {
-                west: wmsParams.extent.left,
-                east: wmsParams.extent.right,
-                south: wmsParams.extent.bottom,
-                north: wmsParams.extent.top
+                west: wmsParams.extent.west(),
+                east: wmsParams.extent.east(),
+                south: wmsParams.extent.south(),
+                north: wmsParams.extent.north()
             }
-        };
+        });
 
         // récupération des autres paramètres passés par l'utilisateur
-        _Utils2.default.mergeParams(this, options.itownsParams);
+        _Utils2.default.mergeParams(config, options.itownsParams);
 
         // add legends and metadata (to be added to LayerSwitcher control)
-        this.legends = wmsParams.legends;
-        this.metadata = wmsParams.metadata;
-        this.description = wmsParams.description;
-        this.title = wmsParams.title;
-        this.quicklookUrl = wmsParams.quicklookUrl;
+        config.legends = wmsParams.legends;
+        config.metadata = wmsParams.metadata;
+        config.description = wmsParams.description;
+        config.title = wmsParams.title;
+        config.quicklookUrl = wmsParams.quicklookUrl;
+
+        return new Itowns.ColorLayer(config.id, config);
     } else {
         // If layer is not in Gp.Config
         logger.error("ERROR layer id (layer name: " + options.layer + " / service: WMS ) was not found !?");
@@ -62422,8 +62439,15 @@ var _LoggerByDefault = __webpack_require__(0);
 
 var _LoggerByDefault2 = _interopRequireDefault(_LoggerByDefault);
 
+var _itowns = __webpack_require__(11);
+
+var Itowns = _interopRequireWildcard(_itowns);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/* globals self */
 var logger = _LoggerByDefault2.default.getLogger("elevationLayer");
 
 /**
@@ -62442,7 +62466,6 @@ var logger = _LoggerByDefault2.default.getLogger("elevationLayer");
  *      layer  : "ELEVATION.ELEVATIONGRIDCOVERAGE"
  * });
  */
-/* globals self */
 function LayerElevation(options) {
     if (!(this instanceof LayerElevation)) {
         throw new TypeError("ERROR CLASS_CONSTRUCTOR");
@@ -62469,50 +62492,58 @@ function LayerElevation(options) {
     var layerId = _Config2.default.getLayerId(options.layer, "WMTS");
 
     if (layerId && _Config2.default.configuration.getLayerConf(layerId)) {
+        var config = {};
         var wmtsParams = _Config2.default.getLayerParams(options.layer, "WMTS", options.apiKey);
+
+        if (wmtsParams.projection === "EPSG:3857" && wmtsParams.extent) {
+            wmtsParams.extent = new Itowns.Extent("EPSG:4326", wmtsParams.extent.left, wmtsParams.extent.right, wmtsParams.extent.bottom, wmtsParams.extent.top).as("EPSG:3857");
+        } else {
+            wmtsParams.extent = new Itowns.Extent("EPSG:4326", wmtsParams.extent.left, wmtsParams.extent.right, wmtsParams.extent.bottom, wmtsParams.extent.top);
+        }
 
         // gestion de mixContent dans l'url du service...
         var ctx = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : null;
         var protocol = ctx ? ctx.location && ctx.location.protocol && ctx.location.protocol.indexOf("https:") === 0 ? "https://" : "http://" : options.ssl ? "https://" : "http://";
 
-        this.type = "elevation";
-        this.protocol = "wmts";
-        this.id = layerId;
-        this.url = wmtsParams.url.replace(/(http|https):\/\//, protocol);
-        this.noDataValue = -99999;
-        this.updateStrategy = {
+        config.id = layerId;
+        config.noDataValue = -99999;
+        config.updateStrategy = {
             type: 1,
             options: {
-                groups: [3, 7, 11, 14]
+                groups: [11, 14]
             }
         };
-        this.networkOptions = {
-            crossOrigin: "omit"
-        };
-        this.projection = wmtsParams.projection;
-        this.options = {
-            originators: wmtsParams.originators,
-            name: options.layer,
-            mimetype: "image/x-bil;bits=32",
-            tileMatrixSet: wmtsParams.TMSLink,
-            extent: {
-                west: wmtsParams.extent.left,
-                east: wmtsParams.extent.right,
-                south: wmtsParams.extent.bottom,
-                north: wmtsParams.extent.top
+        config.source = new Itowns.WMTSSource({
+            protocol: "wmts",
+            url: wmtsParams.url.replace(/(http|https):\/\//, protocol),
+            networkOptions: {
+                crossOrigin: "omit"
             },
-            tileMatrixSetLimits: wmtsParams.tileMatrices
-        };
+            attribution: wmtsParams.originators,
+            projection: wmtsParams.projection,
+            name: options.layer,
+            format: "image/x-bil;bits=32",
+            tileMatrixSet: wmtsParams.TMSLink,
+            tileMatrixSetLimits: wmtsParams.tileMatrixSetLimits,
+            extent: {
+                west: wmtsParams.extent.west(),
+                east: wmtsParams.extent.east(),
+                south: wmtsParams.extent.south(),
+                north: wmtsParams.extent.north()
+            }
+        });
 
         // récupération des autres paramètres passés par l'utilisateur
-        _Utils2.default.mergeParams(this, options.itownsParams);
+        _Utils2.default.mergeParams(config, options.itownsParams);
 
         // add legends and metadata (to be added to LayerSwitcher control)
-        this.legends = wmtsParams.legends;
-        this.metadata = wmtsParams.metadata;
-        this.description = wmtsParams.description;
-        this.title = wmtsParams.title;
-        this.quicklookUrl = wmtsParams.quicklookUrl;
+        config.legends = wmtsParams.legends;
+        config.metadata = wmtsParams.metadata;
+        config.description = wmtsParams.description;
+        config.title = wmtsParams.title;
+        config.quicklookUrl = wmtsParams.quicklookUrl;
+
+        return new Itowns.ElevationLayer(config.id, config);
     } else {
         // If layer is not in Gp.Config
         logger.log("[source WMTS] ERROR : " + options.layer + " cannot be found in Geoportal Configuration. Make sure that this resource is included in your contract key.");
@@ -62533,8 +62564,6 @@ exports.default = LayerElevation;
 "use strict";
 
 
-__webpack_require__(29);
-
 __webpack_require__(30);
 
 __webpack_require__(31);
@@ -62549,9 +62578,9 @@ __webpack_require__(35);
 
 __webpack_require__(36);
 
-__webpack_require__(28);
-
 __webpack_require__(37);
+
+__webpack_require__(29);
 
 __webpack_require__(38);
 
@@ -62562,6 +62591,8 @@ __webpack_require__(40);
 __webpack_require__(41);
 
 __webpack_require__(42);
+
+__webpack_require__(43);
 
 __webpack_require__(116);
 
