@@ -46,22 +46,14 @@ function clean() {
 # leaflet
 function leaflet() {
   printTo "####### LEAFLET !"
-  doCmd "npm run build:leaflet:src"
-  printTo "####### LEAFLET production !"
-  doCmd "npm run build:leaflet:prod"
-  printTo "####### LEAFLET development !"
-  doCmd "npm run build:leaflet:dev"
+  doCmd "npm run build:leaflet"
 }
 
 ##########
 # ol
 function ol() {
   printTo "####### OL !"
-  doCmd "npm run build:ol:src"
-  printTo "####### OL production !"
-  doCmd "npm run build:ol:prod"
-  printTo "####### OL development !"
-  doCmd "npm run build:ol:dev"
+  doCmd "npm run build:ol"
 }
 
 ##########
@@ -69,10 +61,6 @@ function ol() {
 function itowns() {
   printTo "####### iTowns !"
   doCmd "npm run build:itowns"
-  printTo "####### iTowns production !"
-  doCmd "npm run build:itowns:prod"
-  printTo "####### iTowns development !"
-  doCmd "npm run build:itowns:dev"
 }
 
 printTo "###########  NPM  ##############"

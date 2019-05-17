@@ -62,8 +62,6 @@
 
 import Pkg from "../../package";
 
-import * as Ol from "ol";
-
 // ordre des CSS communes puis extensions
 import "../Common/Styles";
 import "./Styles";
@@ -152,15 +150,29 @@ export const olExtVersion = Pkg.olExtVersion;
 export const olExtDate = Pkg.date;
 
 /** cf. Gp.olUtils */
-export {default as olUtils} from "../Common/Utils";
+export { default as olUtils } from "../Common/Utils";
 /** cf. Gp.LayerUtils */
-export {default as LayerUtils} from "../Common/Utils/LayerUtils";
+export { default as LayerUtils } from "../Common/Utils/LayerUtils";
 /** cf. Gp.ProxyUtils */
-export {default as ProxyUtils} from "../Common/Utils/ProxyUtils";
+export { default as ProxyUtils } from "../Common/Utils/ProxyUtils";
 /** cf. Gp.ColorUtils */
-export {default as ColorUtils} from "../Common/Utils/ColorUtils";
+export { default as ColorUtils } from "../Common/Utils/ColorUtils";
 /** cf. Gp.MathUtils */
-export {default as MathUtils} from "../Common/Utils/MathUtils";
+export { default as MathUtils } from "../Common/Utils/MathUtils";
+
+function deepCopy (source, target, docopy) {
+    for (var prop in source) {
+        if (source.hasOwnProperty(prop)) {
+            if (!target.hasOwnProperty(prop)) {
+                target[prop] = source[prop];
+            } else if (typeof source[prop] === "object") {
+                deepCopy(source[prop], target[prop]);
+            }
+        }
+    }
+}
+
+var Ol = {};
 
 // FIXME : est il utile d'avoir un ns particulier "gp" ?
 Ol.gp = {};
@@ -208,8 +220,7 @@ Ol.control.DefaultMarkers = Markers;
 Ol.control.ElevationPath = ElevationPath;
 Ol.control.LocationSelector = LocationSelector;
 
-// Expose extensions openlayers extended into ol (for a build bundle)
-// with webpack (loader-expose) and this export !
+// Expose extensions openlayers extended
 export {
     /** Expose extensions openlayers extended */
     Ol as olExtended
@@ -223,4 +234,13 @@ if (window.ol && window.ol.proj && window.ol.proj.proj4) {
     try {
         window.ol.proj.proj4.register(Proj4);
     } catch (e) {}
+}
+
+// Expose extensions openlayers extended into ol
+if (window.ol) {
+    // on fusionne les fonctionnalités openlayers / étendues
+    // Gp.olExtended -> ol
+    deepCopy(Ol, window.ol);
+    // ol -> Gp.olExtended
+    deepCopy(window.ol, Ol);
 }

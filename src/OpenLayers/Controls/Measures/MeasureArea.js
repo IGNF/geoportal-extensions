@@ -1,7 +1,6 @@
 // import CSS
 import "../../CSS/Controls/Measures/GPmeasureAreaOpenLayers.css";
 // import OpenLayers
-import {inherits as olInherits} from "ol/util";
 import Control from "ol/control/Control";
 import { getArea as olGetAreaSphere } from "ol/sphere";
 import { Polygon } from "ol/geom";
@@ -43,264 +42,268 @@ var logger = Logger.getLogger("measurearea");
  *    geodesic : false
  * });
  */
-function MeasureArea (options) {
+var MeasureArea = (function (Control) {
+    function MeasureArea (options) {
+        /**
+         * options
+         * @private
+         */
+        options = options || {};
+
+        if (!(this instanceof MeasureArea)) {
+            throw new TypeError("ERROR CLASS_CONSTRUCTOR");
+        }
+
+        /**
+         * Nom de la classe (heritage)
+         * @private
+         */
+        this.CLASSNAME = "MeasureArea";
+
+        // uuid
+        this._uid = ID.generate();
+
+        // container d'activation du controle
+        this._showContainer = null;
+        this._pictoContainer = null;
+
+        // initialisation du composant
+        this._initialize(options);
+
+        // creation du DOM container
+        var container = (options.element) ? options.element : this._initializeContainer();
+
+        // heritage
+        Control.call(this, {
+            element : container,
+            target : options.target,
+            render : options.render
+        });
+    }
+
+    // heritage avec ol.control.Control
+    if (Control) MeasureArea.__proto__ = Control;
+
     /**
-     * options
+     * @lends module:MeasureArea
+     */
+    MeasureArea.prototype = Object.create(Control.prototype, {});
+
+    // on récupère les mixins de la classe "MeasureAreaDOM" ainsi que celles
+    // de "Measures".
+    Utils.assign(MeasureArea.prototype, Measures);
+    Utils.assign(MeasureArea.prototype, MeasureAreaDOM);
+
+    /**
+     * Constructor (alias)
      * @private
      */
-    options = options || {};
+    MeasureArea.prototype.constructor = MeasureArea;
 
-    if (!(this instanceof MeasureArea)) {
-        throw new TypeError("ERROR CLASS_CONSTRUCTOR");
-    }
+    // ################################################################### //
+    // ##################### public methods ############################## //
+    // ################################################################### //
 
     /**
-     * Nom de la classe (heritage)
-     * @private
+     * Overwrite OpenLayers setMap method
+     *
+     * @param {ol.Map} map - Map.
      */
-    this.CLASSNAME = "MeasureArea";
+    MeasureArea.prototype.setMap = function (map) {
+        logger.trace("setMap()");
 
-    // uuid
-    this._uid = ID.generate();
+        var className = this.CLASSNAME;
 
-    // container d'activation du controle
-    this._showContainer = null;
-    this._pictoContainer = null;
+        // on fait le choix de ne pas activer les events sur la map à l'init de l'outil,
+        // mais uniquement à son utilisation !
+        if (map) {
+            // var self = this;
+            // map.on("click", function (e) {
+            //     logger.trace("event on map with click!");
+            //     self.onPointerMoveHandler(e);
+            // });
+            //
+            // map.on("singleclick", function (e) {
+            //     logger.trace("event on map with singleclick!");
+            //     self.onPointerMoveHandler(e);
+            // });
+            //
+            // map.on("pointermove", function (e) {
+            //     logger.trace("event on map with pointermove!");
+            //     self.onPointerMoveHandler(e);
+            // });
 
-    // initialisation du composant
-    this._initialize(options);
-
-    // creation du DOM container
-    var container = (options.element) ? options.element : this._initializeContainer();
-
-    // heritage
-    Control.call(this, {
-        element : container,
-        target : options.target,
-        render : options.render
-    });
-}
-
-// heritage avec ol.control.Control
-olInherits(MeasureArea, Control);
-
-/**
- * @lends module:MeasureArea
- */
-MeasureArea.prototype = Object.create(Control.prototype, {});
-
-// on récupère les mixins de la classe "MeasureAreaDOM" ainsi que celles
-// de "Measures".
-Utils.assign(MeasureArea.prototype, Measures);
-Utils.assign(MeasureArea.prototype, MeasureAreaDOM);
-
-/**
- * Constructor (alias)
- * @private
- */
-MeasureArea.prototype.constructor = MeasureArea;
-
-// ################################################################### //
-// ##################### public methods ############################## //
-// ################################################################### //
-
-/**
- * Overwrite OpenLayers setMap method
- *
- * @param {ol.Map} map - Map.
- */
-MeasureArea.prototype.setMap = function (map) {
-    logger.trace("setMap()");
-
-    var className = this.CLASSNAME;
-
-    // on fait le choix de ne pas activer les events sur la map à l'init de l'outil,
-    // mais uniquement à son utilisation !
-    if (map) {
-        // var self = this;
-        // map.on("click", function (e) {
-        //     logger.trace("event on map with click!");
-        //     self.onPointerMoveHandler(e);
-        // });
-        //
-        // map.on("singleclick", function (e) {
-        //     logger.trace("event on map with singleclick!");
-        //     self.onPointerMoveHandler(e);
-        // });
-        //
-        // map.on("pointermove", function (e) {
-        //     logger.trace("event on map with pointermove!");
-        //     self.onPointerMoveHandler(e);
-        // });
-
-        if (!this.options.target) {
-            MeasureToolBox.add(map, this);
+            if (!this.options.target) {
+                MeasureToolBox.add(map, this);
+            }
+        } else {
+            this.clean();
         }
-    } else {
-        this.clean();
-    }
 
-    // sauvegarde de l'état de l'outil
-    this.tools[className].push({
-        instance : (map) ? this : null,
-        active : false,
-        map : (map) ? map.getTargetElement().id : null
-    });
+        // sauvegarde de l'état de l'outil
+        this.tools[className].push({
+            instance : (map) ? this : null,
+            active : false,
+            map : (map) ? map.getTargetElement().id : null
+        });
 
-    // contexte d'execution
-    var context = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : null;
-    if (context) {
-        // Pour info
-        // les objets de mesures ont du code partagé
-        // (afin de gerer les interactions entre eux).
-        // Dans un mode "modules", on partage cet objet (this.tools) via le contexte
-        // d'execution (ex. avec window)
-        if (!context.gpShareMeasures) {
-            context.gpShareMeasures = {};
+        // contexte d'execution
+        var context = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : null;
+        if (context) {
+            // Pour info
+            // les objets de mesures ont du code partagé
+            // (afin de gerer les interactions entre eux).
+            // Dans un mode "modules", on partage cet objet (this.tools) via le contexte
+            // d'execution (ex. avec window)
+            if (!context.gpShareMeasures) {
+                context.gpShareMeasures = {};
+            }
+            context.gpShareMeasures[className] = this.tools[className];
         }
-        context.gpShareMeasures[className] = this.tools[className];
-    }
 
-    // on appelle la méthode setMap originale d'OpenLayers
-    Control.prototype.setMap.call(this, map);
-};
-
-// ################################################################### //
-// ##################### init component ############################## //
-// ################################################################### //
-
-/**
- * Initialize measure control (called by constructor)
- *
- * @param {Object} options - options
- *
- * @private
- */
-MeasureArea.prototype._initialize = function (options) {
-    logger.trace("call MeasureArea::_initialize() : ", options);
-
-    // liste des options
-    this.options = {};
-    this.options.geodesic = (typeof options.geodesic !== "undefined") ? options.geodesic : true;
-    this.options.target = (typeof options.target !== "undefined") ? options.target : null;
-    this.options.render = (typeof options.render !== "undefined") ? options.render : null;
-    this.options.layerDescription = (typeof options.layerDescription !== "undefined") ? options.layerDescription : {
-        title : "Mesures de surface",
-        description : "Mes mesures"
+        // on appelle la méthode setMap originale d'OpenLayers
+        Control.prototype.setMap.call(this, map);
     };
 
-    // gestion des styles !
-    this.createStylingMeasureInteraction(options.styles);
-};
+    // ################################################################### //
+    // ##################### init component ############################## //
+    // ################################################################### //
 
-/**
- * initialize component container (DOM)
- *
- * @returns {DOMElement} DOM element
- *
- * @private
- */
-MeasureArea.prototype._initializeContainer = function () {
-    logger.trace("call MeasureArea::_initializeContainer() : ", this._uid);
+    /**
+     * Initialize measure control (called by constructor)
+     *
+     * @param {Object} options - options
+     *
+     * @private
+     */
+    MeasureArea.prototype._initialize = function (options) {
+        logger.trace("call MeasureArea::_initialize() : ", options);
 
-    var container = this._createMainContainerElement(); ;
+        // liste des options
+        this.options = {};
+        this.options.geodesic = (typeof options.geodesic !== "undefined") ? options.geodesic : true;
+        this.options.target = (typeof options.target !== "undefined") ? options.target : null;
+        this.options.render = (typeof options.render !== "undefined") ? options.render : null;
+        this.options.layerDescription = (typeof options.layerDescription !== "undefined") ? options.layerDescription : {
+            title : "Mesures de surface",
+            description : "Mes mesures"
+        };
 
-    var show = this._showContainer = this._createShowMeasureAreaElement();
-    container.appendChild(show);
+        // gestion des styles !
+        this.createStylingMeasureInteraction(options.styles);
+    };
 
-    // par defaut, pas d'interaction à l'initialisation...
-    this._showContainer.checked = false;
+    /**
+     * initialize component container (DOM)
+     *
+     * @returns {DOMElement} DOM element
+     *
+     * @private
+     */
+    MeasureArea.prototype._initializeContainer = function () {
+        logger.trace("call MeasureArea::_initializeContainer() : ", this._uid);
 
-    var picto = this._pictoContainer = this._createShowMeasureAreaPictoElement();
-    container.appendChild(picto);
+        var container = this._createMainContainerElement(); ;
 
-    return container;
-};
+        var show = this._showContainer = this._createShowMeasureAreaElement();
+        container.appendChild(show);
 
-// ################################################################### //
-// ##################### overridden methods ########################## //
-// ################################################################### //
+        // par defaut, pas d'interaction à l'initialisation...
+        this._showContainer.checked = false;
 
-/**
- * Add all events on map
- *
- * @private
- */
-MeasureArea.prototype.addMeasureEvents = function () {
-    logger.trace("call MeasureArea::addMeasureEvents()");
+        var picto = this._pictoContainer = this._createShowMeasureAreaPictoElement();
+        container.appendChild(picto);
 
-    var map = this.getMap();
+        return container;
+    };
 
-    map.on("singleclick", (e) => this.onPointerMoveHandler(e));
-    map.on("pointermove", (e) => this.onPointerMoveHandler(e));
-};
+    // ################################################################### //
+    // ##################### overridden methods ########################## //
+    // ################################################################### //
 
-/**
- * Remove all events on map
- *
- * @private
- */
-MeasureArea.prototype.removeMeasureEvents = function () {
-    logger.trace("call MeasureArea::removeMeasureEvents()");
+    /**
+     * Add all events on map
+     *
+     * @private
+     */
+    MeasureArea.prototype.addMeasureEvents = function () {
+        logger.trace("call MeasureArea::addMeasureEvents()");
 
-    var map = this.getMap();
+        var map = this.getMap();
 
-    map.un("singleclick", (e) => this.onPointerMoveHandler(e));
-    map.un("pointermove", (e) => this.onPointerMoveHandler(e));
-};
+        map.on("singleclick", (e) => this.onPointerMoveHandler(e));
+        map.on("pointermove", (e) => this.onPointerMoveHandler(e));
+    };
 
-/**
- * Format length output.
- *
- * @param {ol.geom.Polygon} polygon - geometry polygon.
- * @return {String} The formatted output.
- * @private
- */
-MeasureArea.prototype.format = function (polygon) {
-    logger.trace("call MeasureArea::format()");
+    /**
+     * Remove all events on map
+     *
+     * @private
+     */
+    MeasureArea.prototype.removeMeasureEvents = function () {
+        logger.trace("call MeasureArea::removeMeasureEvents()");
 
-    var map = this.getMap();
+        var map = this.getMap();
 
-    var measure;
-    if (this.options.geodesic) {
-        var sourceProj = map.getView().getProjection();
-        var geom = (polygon.clone().transform(sourceProj, "EPSG:4326"));
-        var coordinates = geom.getLinearRing(0).getCoordinates();
-        measure = Math.abs(olGetAreaSphere(new Polygon([coordinates])));
-    } else {
-        measure = polygon.getArea();
-    }
+        map.un("singleclick", (e) => this.onPointerMoveHandler(e));
+        map.un("pointermove", (e) => this.onPointerMoveHandler(e));
+    };
 
-    var output;
-    if (measure > 1000000) {
-        output = (Math.round(measure / 1000000 * 100) / 100) + " " + "km<sup>2</sup>";
-    } else if (measure > 100000) {
-        output = (Math.round(measure / 1000000 * 1000) / 1000) + " " + "km<sup>2</sup>";
-    } else if (measure > 1000) {
-        output = (Math.round(measure / 10) * 10) + " " + "m<sup>2</sup>";
-    } else {
-        output = (Math.round(measure * 100) / 100) + " " + "m<sup>2</sup>";
-    }
-    return output;
-};
+    /**
+     * Format length output.
+     *
+     * @param {ol.geom.Polygon} polygon - geometry polygon.
+     * @return {String} The formatted output.
+     * @private
+     */
+    MeasureArea.prototype.format = function (polygon) {
+        logger.trace("call MeasureArea::format()");
 
-// ################################################################### //
-// ####################### handlers events to dom #################### //
-// ################################################################### //
+        var map = this.getMap();
 
-/**
- * this method is called by event 'click' on picto
- *
- * @param {Object} e - HTMLElement
- *
- * @private
- */
-MeasureArea.prototype.onShowMeasureAreaClick = function (e) {
-    logger.trace("call MeasureArea::onShowMeasureAreaClick()", e);
+        var measure;
+        if (this.options.geodesic) {
+            var sourceProj = map.getView().getProjection();
+            var geom = (polygon.clone().transform(sourceProj, "EPSG:4326"));
+            var coordinates = geom.getLinearRing(0).getCoordinates();
+            measure = Math.abs(olGetAreaSphere(new Polygon([coordinates])));
+        } else {
+            measure = polygon.getArea();
+        }
 
-    // appel de la methode commune
-    this.onShowMeasureClick(e, "Polygon");
-};
+        var output;
+        if (measure > 1000000) {
+            output = (Math.round(measure / 1000000 * 100) / 100) + " " + "km<sup>2</sup>";
+        } else if (measure > 100000) {
+            output = (Math.round(measure / 1000000 * 1000) / 1000) + " " + "km<sup>2</sup>";
+        } else if (measure > 1000) {
+            output = (Math.round(measure / 10) * 10) + " " + "m<sup>2</sup>";
+        } else {
+            output = (Math.round(measure * 100) / 100) + " " + "m<sup>2</sup>";
+        }
+        return output;
+    };
+
+    // ################################################################### //
+    // ####################### handlers events to dom #################### //
+    // ################################################################### //
+
+    /**
+     * this method is called by event 'click' on picto
+     *
+     * @param {Object} e - HTMLElement
+     *
+     * @private
+     */
+    MeasureArea.prototype.onShowMeasureAreaClick = function (e) {
+        logger.trace("call MeasureArea::onShowMeasureAreaClick()", e);
+
+        // appel de la methode commune
+        this.onShowMeasureClick(e, "Polygon");
+    };
+
+    return MeasureArea;
+}(Control));
 
 export default MeasureArea;
 

@@ -90,6 +90,8 @@ var Register = {
      * @param {Object} Proj4 - proj4 instance
      */
     load : function (Proj4) {
+        // un flag pour savoir si le chargement est déjà realisé
+        // (car ceci peut être couteux !)
         if (!this.isLoaded) {
             var registers = [
                 "IGNF", // exception lors du register IGNF ?

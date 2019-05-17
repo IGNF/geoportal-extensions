@@ -94,10 +94,10 @@ export {
 };
 
 // Adds the extensions properties in the namespace
-export {default as LayerUtils} from "../Common/Utils/LayerUtils";
-export {default as ProxyUtils} from "../Common/Utils/ProxyUtils";
-export {default as ColorUtils} from "../Common/Utils/ColorUtils";
-export {default as MathUtils} from "../Common/Utils/MathUtils";
+export { default as LayerUtils } from "../Common/Utils/LayerUtils";
+export { default as ProxyUtils } from "../Common/Utils/ProxyUtils";
+export { default as ColorUtils } from "../Common/Utils/ColorUtils";
+export { default as MathUtils } from "../Common/Utils/MathUtils";
 
 // Adds extensions properties in the namespace
 /** Version */

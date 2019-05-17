@@ -1,7 +1,5 @@
-/* globals self */
 import Gp from "geoportal-access-lib";
 // import OpenLayers
-import {inherits as olInherits} from "ol/util";
 import WMTSTileGrid from "ol/tilegrid/WMTS";
 // import local with ol dependencies
 import WMTSExtended from "../Sources/WMTS";
@@ -30,105 +28,109 @@ var logger = Logger.getLogger("sourcewmts");
  *      layer  : "ORTHOIMAGERY.ORTHOPHOTOS"
  * });
  */
-function SourceWMTS (options) {
-    if (!(this instanceof SourceWMTS)) {
-        throw new TypeError("ERROR CLASS_CONSTRUCTOR");
+var SourceWMTS = (function (WMTSExtended) {
+    function SourceWMTS (options) {
+        if (!(this instanceof SourceWMTS)) {
+            throw new TypeError("ERROR CLASS_CONSTRUCTOR");
+        }
+
+        // check layer params
+        if (!options.layer) {
+            throw new Error("ERROR PARAM_MISSING : layer");
+        }
+        if (typeof options.layer !== "string") {
+            throw new Error("ERROR WRONG TYPE : layer");
+        }
+
+        // par defaut
+        if (typeof options.ssl === "undefined") {
+            options.ssl = true;
+        }
+
+        // Check if configuration is loaded
+        if (!Config.isConfigLoaded()) {
+            throw new Error("ERROR : contract key configuration has to be loaded to load Geoportal layers. See http://ignf.github.io/evolution-apigeoportail/ol3/ol3-autoconf.html");
+        }
+
+        var layerId = Config.getLayerId(options.layer, "WMTS");
+
+        if (layerId && Config.configuration.getLayerConf(layerId)) {
+            var wmtsParams = Config.getLayerParams(options.layer, "WMTS", options.apiKey);
+
+            // si ssl = false on fait du http
+            // par défaut, ssl = true, on fait du https
+            var protocol = options.ssl === false ? "http://" : "https://";
+
+            // save originators (to be updated by Originators control)
+            this._originators = wmtsParams.originators;
+
+            // save legends and metadata (to be added to LayerSwitcher control)
+            this._legends = wmtsParams.legends;
+            this._metadata = wmtsParams.metadata;
+
+            var wmtsSourceOptions = {
+                // tracker extension openlayers
+                // FIXME : gp-ext version en mode AMD
+                url : Gp.Helper.normalyzeUrl(wmtsParams.url.replace(/(http|https):\/\//, protocol), {
+                    "gp-ol-ext" : "__GPOLEXTVERSION__"
+                }, false),
+                version : wmtsParams.version,
+                style : wmtsParams.styles,
+                format : wmtsParams.format,
+                projection : wmtsParams.projection,
+                maxZoom : LayerUtils.getZoomLevelFromScaleDenominator(wmtsParams.minScale),
+                layer : options.layer,
+                matrixSet : wmtsParams.TMSLink,
+                tileGrid : new WMTSTileGrid({
+                    resolutions : wmtsParams.nativeResolutions,
+                    matrixIds : wmtsParams.matrixIds,
+                    origin : [wmtsParams.matrixOrigin.x, wmtsParams.matrixOrigin.y]
+                })
+                // ,
+                // attributions : [
+                //     new ol.Attribution({
+                //         html : "<a class='gp-control-attribution-link' target='_blank' href='http://www.ign.fr'><img class='gp-control-attribution-image' src='http://wxs.ign.fr/static/logos/IGN/IGN.gif' title='Institut national de l\'information géographique et forestière' style='height: 30px; width: 30px;'></a>"
+                //     })
+                // ]
+            };
+
+            // récupération des autres paramètres passés par l'utilisateur
+            Utils.mergeParams(wmtsSourceOptions, options.olParams);
+
+            // returns a WMTS object, that inherits from WMTSExtended.
+            WMTSExtended.call(this, wmtsSourceOptions);
+
+            // add originators to layer source (to be updated by Originators control)
+            this._originators = wmtsParams.originators;
+
+            // add legends and metadata (to be added to LayerSwitcher control)
+            this._legends = wmtsParams.legends;
+            this._metadata = wmtsParams.metadata;
+            this._description = wmtsParams.description;
+            this._title = wmtsParams.title;
+            this._quicklookUrl = wmtsParams.quicklookUrl;
+        } else {
+            // If layer is not in Gp.Config
+            logger.log("[source WMTS] ERROR : " + options.layer + " cannot be found in Geoportal Configuration. Make sure that this resource is included in your contract key.");
+            return new WMTSExtended({});
+        }
     }
 
-    // check layer params
-    if (!options.layer) {
-        throw new Error("ERROR PARAM_MISSING : layer");
-    }
-    if (typeof options.layer !== "string") {
-        throw new Error("ERROR WRONG TYPE : layer");
-    }
+    // Inherits from ol.source.WMTS
+    if (WMTSExtended) SourceWMTS.__proto__ = WMTSExtended;
 
-    // par defaut
-    if (typeof options.ssl === "undefined") {
-        options.ssl = true;
-    }
+    /*
+     * @lends module:SourceWMTS
+     */
+    SourceWMTS.prototype = Object.create(WMTSExtended.prototype, {});
 
-    // Check if configuration is loaded
-    if (!Config.isConfigLoaded()) {
-        throw new Error("ERROR : contract key configuration has to be loaded to load Geoportal layers. See http://ignf.github.io/evolution-apigeoportail/ol3/ol3-autoconf.html");
-    }
+    /*
+     * Constructor (alias)
+     */
+    SourceWMTS.prototype.constructor = SourceWMTS;
 
-    var layerId = Config.getLayerId(options.layer, "WMTS");
-
-    if (layerId && Config.configuration.getLayerConf(layerId)) {
-        var wmtsParams = Config.getLayerParams(options.layer, "WMTS", options.apiKey);
-
-        // si ssl = false on fait du http
-        // par défaut, ssl = true, on fait du https
-        var protocol = options.ssl === false ? "http://" : "https://";
-
-        // save originators (to be updated by Originators control)
-        this._originators = wmtsParams.originators;
-
-        // save legends and metadata (to be added to LayerSwitcher control)
-        this._legends = wmtsParams.legends;
-        this._metadata = wmtsParams.metadata;
-
-        var wmtsSourceOptions = {
-            // tracker extension openlayers
-            // FIXME : gp-ext version en mode AMD
-            url : Gp.Helper.normalyzeUrl(wmtsParams.url.replace(/(http|https):\/\//, protocol), {
-                "gp-ol-ext" : "__GPOLEXTVERSION__"
-            }, false),
-            version : wmtsParams.version,
-            style : wmtsParams.styles,
-            format : wmtsParams.format,
-            projection : wmtsParams.projection,
-            maxZoom : LayerUtils.getZoomLevelFromScaleDenominator(wmtsParams.minScale),
-            layer : options.layer,
-            matrixSet : wmtsParams.TMSLink,
-            tileGrid : new WMTSTileGrid({
-                resolutions : wmtsParams.nativeResolutions,
-                matrixIds : wmtsParams.matrixIds,
-                origin : [wmtsParams.matrixOrigin.x, wmtsParams.matrixOrigin.y]
-            })
-            // ,
-            // attributions : [
-            //     new ol.Attribution({
-            //         html : "<a class='gp-control-attribution-link' target='_blank' href='http://www.ign.fr'><img class='gp-control-attribution-image' src='http://wxs.ign.fr/static/logos/IGN/IGN.gif' title='Institut national de l\'information géographique et forestière' style='height: 30px; width: 30px;'></a>"
-            //     })
-            // ]
-        };
-
-        // récupération des autres paramètres passés par l'utilisateur
-        Utils.mergeParams(wmtsSourceOptions, options.olParams);
-
-        // returns a WMTS object, that inherits from WMTSExtended.
-        WMTSExtended.call(this, wmtsSourceOptions);
-
-        // add originators to layer source (to be updated by Originators control)
-        this._originators = wmtsParams.originators;
-
-        // add legends and metadata (to be added to LayerSwitcher control)
-        this._legends = wmtsParams.legends;
-        this._metadata = wmtsParams.metadata;
-        this._description = wmtsParams.description;
-        this._title = wmtsParams.title;
-        this._quicklookUrl = wmtsParams.quicklookUrl;
-    } else {
-        // If layer is not in Gp.Config
-        logger.log("[source WMTS] ERROR : " + options.layer + " cannot be found in Geoportal Configuration. Make sure that this resource is included in your contract key.");
-        return new WMTSExtended({});
-    }
-}
-
-// Inherits from ol.source.WMTS
-olInherits(SourceWMTS, WMTSExtended);
-
-/*
- * @lends module:SourceWMTS
- */
-SourceWMTS.prototype = Object.create(WMTSExtended.prototype, {});
-
-/*
- * Constructor (alias)
- */
-SourceWMTS.prototype.constructor = SourceWMTS;
+    return SourceWMTS;
+}(WMTSExtended));
 
 export default SourceWMTS;
 

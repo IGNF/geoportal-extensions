@@ -14,7 +14,7 @@ https://github.com/webpack-contrib/webpack-bundle-analyzer
 
     npm run build:ol:prod -- --profile --json > map-ol.json
 
-Ouvrir le fichier de statistiques, et supprimer les sorties de consoles (en rouge).
+Ouvrir le fichier de statistiques, et **supprimer les sorties de consoles (en rouge).**
 Puis déplacer le fichier dans le répertoire : `build/map/`
 
 ## Visualisation des statistiques

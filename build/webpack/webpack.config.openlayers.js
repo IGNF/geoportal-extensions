@@ -9,10 +9,10 @@ var glob = require("glob");
 
 // -- plugins
 var DefineWebpackPlugin = webpack.DefinePlugin;
-var ExtractTextWebPackPlugin = require("extract-text-webpack-plugin");
+var MiniCssExtractPlugin = require("mini-css-extract-plugin");
 var BannerWebPackPlugin = webpack.BannerPlugin;
-var UglifyJsWebPackPlugin = require("uglifyjs-webpack-plugin");
-// var UglifyJsWebPackPlugin = webpack.optimize.UglifyJsPlugin;
+var TerserJsWebPackPlugin = require("terser-webpack-plugin");
+var OptimizeCSSAssetsWebPackPlugin = require("optimize-css-assets-webpack-plugin");
 var ReplaceWebpackPlugin = require("replace-bundle-webpack-plugin");
 var JsDocWebPackPlugin = require("../scripts/webpackPlugins/jsdoc-plugin");
 var HandlebarsPlugin = require("../scripts/webpackPlugins/handlebars-plugin");
@@ -27,44 +27,105 @@ var smp = new SpeedMeasurePlugin();
 var ROOT = path.join(__dirname, "../..");
 var pkg = require(path.join(ROOT, "package.json"));
 
-module.exports = env => {
-    // environnement d'execution
-    var production = (env) ? env.production : false;
-    var development = (env) ? env.development : false;
-
-    var _mode = (production) ? "" : (development) ? "-map" : "-src";
+module.exports = (env, argv) => {
+    // par defaut
+    var devMode = false;
+    var logMode = false;
+    var suffix = "";
+    if (argv.mode === "production") {
+        suffix = "";
+        logMode = false;
+        devMode = false;
+    }
+    if (argv.mode === "development") {
+        suffix = "-map";
+        logMode = true;
+        devMode = true;
+    }
+    if (argv.mode === "none") {
+        suffix = "-src";
+        logMode = true;
+        devMode = false;
+    }
 
     return smp.wrap({
-        entry : {
-            "GpPluginOpenLayers" : path.join(ROOT, "src", "OpenLayers", "GpPluginOpenLayers.js")
-        },
+        entry : { "GpPluginOpenLayers" : path.join(ROOT, "src", "OpenLayers", "index.js") },
         output : {
             path : path.join(ROOT, "dist", "openlayers"),
-            filename : "[name]" + _mode + ".js",
+            filename : "[name]" + suffix + ".js",
             library : "Gp",
-            libraryTarget : "umd",
-            umdNamedDefine : true
+            // libraryTarget : "umd", // FIXME on abandonne le mode umd !?
+            umdNamedDefine : true // ?
         },
         resolve : {
             alias : {
-                // - import ES6 :
-                // "ol" : auto,
-                // "ol-mapbox-style" : auto,
-                // "geoportal-access-lib" : auto,
-                // - import bundle :
-                proj4 : path.resolve(ROOT, "node_modules", "proj4", "dist", "proj4-src.js"),
-                sortablejs : path.resolve(ROOT, "node_modules", "sortablejs", "Sortable.js"),
-                eventbusjs : path.resolve(ROOT, "node_modules", "eventbusjs", "src", "EventBus.js")
+                // - import auto en mode module ES6 :
+                // "ol",
+                // "geoportal-access-lib",
+                // "proj4", cf. module.rules !
+                // "ol-mapbox-style", cf. module.rules !
+                // - import auto en mode bundle :
+                // "loglevel",
+                // "es6-promise",
+                // "sortablejs",
+                // "eventbusjs" cf. module.rules !
+                // - import forcé en mode bundle :
+                "proj4" : path.join(ROOT, "node_modules", "proj4", "dist", "proj4-src.js"),
             }
         },
-        externals : [
+        externals :
+        [
+            /**
+            * ol est une dependance externe, elle doit donc être supprimé du bundle.
+            * on realise un pre traitement qui consite à modifier les appels :
+            *   "ol/control/Control" -> "ol.control.Control"
+            * ceci afin de pointer vers la variable globale externe d'openlayers : ol !
+            * une exception est faite sur les dependances ol pour olms..., car cette
+            * librairie utilise des fonctionnalités uniquement disponible en ES6...
+            */
+            function(context, request, callback) {
+                if (/^ol\/.+$/.test(request)) {
+                    // liste des modules ES6 à garder dans le code...
+                    if ([
+                        "ol/events/Event",
+                        "ol/events/EventType",
+                        "ol/events",
+                        "ol/obj",
+                        "ol/render/canvas",
+                        "ol/css",
+                        "ol/dom",
+                        "ol/transform",
+                        "ol/asserts",
+                        "ol/AssertionError",
+                        "ol/util",
+                        "ol/render/canvas/LabelCache",
+                        "ol/structs/LRUCache",
+                        "ol/events/Target",
+                        "ol/Disposable",
+                        "ol/functions"
+                    ].includes(request)) {
+                        // console.log("#### IN : ", request);
+                        return callback();
+                    }
+                    // console.log("#### OUT : ", request);
+                    const replacedWith = request.replace(/\//g, '.');
+                    return callback(null, replacedWith);
+                }
+                // console.log("#### NULL : ", request);
+                callback();
+            },
+            /**
+            * FIXME
+            * configuration uniquement valable en mode umd !?
+            * mais à tester lors de l'import dans le SDK...
+            */
             {
-                // ol : {
-                //     commonjs : "ol",
-                //     commonjs2 : "ol",
-                //     amd : "ol",
-                //     root : "ol"
-                // },
+                ol : {
+                    commonjs : "ol",
+                    commonjs2 : "ol",
+                    amd : "ol",
+                    root : "ol"
+                },
                 request : {
                     commonjs2 : "request",
                     commonjs : "request",
@@ -75,24 +136,9 @@ module.exports = env => {
                     commonjs : "xmldom",
                     amd : "require"
                 }
-            },
-            /** ol est externe, on utilise cette fonction pour corriger un appel */
-            function(context, request, callback) {
-                if (/^ol\/.+$/.test(request)) {
-                    // hack with method 'inherits' !?
-                    if (request === "ol/util") {
-                        return callback(null, "ol");
-                    }
-                    // // transform "ol/control/Control" to "ol.control.Control"
-                    // const replacedWith = request.replace(/\//g, '.');
-                    // return callback(null, replacedWith);
-                }
-                callback();
-            },
-            // trop violent !
-            // /^ol\/.+$/
+            }
         ],
-        devtool : (development) ? "eval-source-map" : false,
+        devtool : (devMode) ? "eval-source-map" : false,
         devServer : {
             // proxy: {
             //      "/samples/resources/proxy/" : {
@@ -118,9 +164,42 @@ module.exports = env => {
                 warnings : false
             }
         },
+        // stats : "none",
+        optimization : {
+            /** MINIFICATION */
+            minimizer: [
+                new TerserJsWebPackPlugin({
+                    terserOptions: {
+                        output: {
+                            // FIXME supprime tous les commentaires
+                            // mais aussi les banner !
+                            comments: false,
+                            // drop_console: true
+                        },
+                        mangle: true
+                    }
+                }),
+                new OptimizeCSSAssetsWebPackPlugin({})
+            ],
+            /** EXTRACT CSS INTO SINGLE FILE */
+            splitChunks : {
+                cacheGroups : {
+                    styles : {
+                        name : "GpPluginOpenLayers",
+                        test : /\.css$/,
+                        chunks : "all",
+                        enforce : true
+                    }
+                }
+            }
+        },
         module : {
             rules : [
                 {
+                    /**
+                    * transpilation avec babel des sources.
+                    * (on exclut les dependances...)
+                    */
                     test : /\.js$/,
                     include : [
                         path.join(ROOT, "src", "Common"),
@@ -130,11 +209,15 @@ module.exports = env => {
                     use : {
                         loader : "babel-loader",
                         options : {
-                            presets : ["env"]
+                            presets : ["@babel/preset-env"]
                         }
                     }
                 },
                 {
+                    /**
+                    * controle des JS en mode warning.
+                    * (on exclut les dependances)
+                    */
                     test : /\.js$/,
                     enforce : "pre",
                     include : [
@@ -155,61 +238,81 @@ module.exports = env => {
                     ]
                 },
                 {
-                    /** proj4 est exposé en global : proj4 ! */
+                    /**
+                    * proj4 est exposé en global : proj4 !
+                    *
+                    * > package.json::main = node_modules/proj4/dist/proj4-src.js
+                    *   test : require.resolve("proj4")
+                    *   c'est un bundle type umd, et la variable globale contient proj4 (fonction)
+                    *
+                    * > package.json::module = node_modules/proj4/lib/index.js (par defaut)
+                    *   test : /node_modules\/proj4\/lib\/index\.js$/
+                    *   c'est un module, et la variable globale est le module !
+                    *   on souhaiterait la fonction proj4 !
+                    */
                     test : require.resolve("proj4"),
                     use : [
                         {
                             loader : "expose-loader",
                             options : "proj4"
-                        },
-                        // {
-                        //     loader : "exports-loader",
-                        //     options : "proj4"
-                        // }
+                        }
                     ]
                 },
                 {
-                    /* eventbusjs est exposé en global : eventbus ! (require.resolve("eventbusjs")) */
-                    test : /node_modules\/eventbusjs\/src\/EventBus\.js$/,
+                    /**
+                    * eventbusjs est exposé en global : eventbus !
+                    *
+                    * > package.json::main = node_modules/eventbusjs/lib/eventbus.min.js (par defaut)
+                    *   test : require.resolve("eventbusjs")
+                    *   c'est un bundle minifié de type umd, et la variable globale
+                    *   contient les listeners.
+                    */
+                    test : require.resolve("eventbusjs"),
                     use : [{
                         loader : "expose-loader",
                         options : "eventbus"
                     }]
                 },
-                // {
-                //     /** ol-mapbox-style est exposé en global : olms !
-                //     * (require.resolve("ol-mapbox-style"))
-                //     */
-                //     test : /node_modules\/ol-mapbox-style\/index\.js$/,
-                //     use : [{
-                //         loader : "expose-loader",
-                //         options : "olms"
-                //     }]
-                // },
                 {
+                    /**
+                    * ol-mapbox-style est exposé en global : olms !
+                    *
+                    * > package.json::main = node_modules/ol-mapbox-style/index.js (par defaut)
+                    *   c'est un module..., donc pas besoin du loader.
+                    *   mais exception à l'utilisation :
+                    *   <TypeError: Cannot read property 'CLEAR'>
+                    *   car ol n'expose pas en mode web la fonctionnalité suivante :
+                    *       ol.events.EventType !?
+                    *   ce module ne fonctionne que si ol est en module ES6 !?
+                    *
+                    * > on pointe sur le bundle minifié, et on l'exporte comme un module
+                    *   test : /node_modules\/ol-mapbox-style\/dist\/olms\.js$/,
+                    */
+                    test : /node_modules\/ol-mapbox-style\/dist\/olms\.js$/,
+                    use : [{
+                        loader : "exports-loader",
+                        options : "olms"
+                    }]
+                },
+                {
+                    /**
+                    * controle et extraction des CSS.
+                    */
                     test : /\.css$/,
                     include : [
                         path.join(ROOT, "src", "Common", "CSS"),
                         path.join(ROOT, "src", "OpenLayers", "CSS")
                     ],
                     exclude : /node_modules/,
-                    use : ExtractTextWebPackPlugin.extract({
-                        fallback : {
-                            loader : "style-loader",
-                            options : {
-                                sourceMap : false
-                            }
-                        },
-                        use : {
-                            loader : "css-loader",
-                            options : {
-                                sourceMap : false, // FIXME ?
-                                minimize : (production) ? true : false
-                            }
-                        }
-                    })
+                    use : [
+                        MiniCssExtractPlugin.loader,
+                        "css-loader"
+                    ]
                 },
                 {
+                    /**
+                    * transformation des images en base64 dans les CSS.
+                    */
                     test : /\.(png|jpg|gif|svg)$/,
                     loader : "url-loader",
                     options: {
@@ -242,14 +345,16 @@ module.exports = env => {
             ),
             /** GESTION DU LOGGER */
             new DefineWebpackPlugin({
-                __PRODUCTION__ : JSON.stringify(production)
+                __PRODUCTION__ : JSON.stringify(!logMode)
             }),
             /** GENERATION DE LA JSDOC */
             new JsDocWebPackPlugin({
                 conf : path.join(ROOT, "build/jsdoc/jsdoc-openlayers.json")
             }),
             /** CSS / IMAGES */
-            new ExtractTextWebPackPlugin("[name]" + _mode + ".css"),
+            new MiniCssExtractPlugin({
+                filename : "[name]" + suffix + ".css"
+            }),
             /** HANDLEBARS TEMPLATES */
             new HandlebarsPlugin(
                 {
@@ -260,7 +365,7 @@ module.exports = env => {
                     output : {
                         path : path.join(ROOT, "samples", "openlayers"),
                         flatten : false,
-                        filename : "[name]" + _mode + ".html"
+                        filename : "[name]" + suffix + ".html"
                     },
                     helpers : [
                         HandlebarsLayoutPlugin
@@ -273,8 +378,7 @@ module.exports = env => {
                     context : [
                         path.join(ROOT, "samples-src", "config.json"),
                         {
-                            mode : _mode,
-                            debug : (production) ? "" : "-debug"
+                            mode : suffix
                         }
                     ]
                 }
@@ -285,7 +389,7 @@ module.exports = env => {
                     entry : path.join(ROOT, "samples-src", "pages", "index-openlayers.html"),
                     output : {
                         path : path.join(ROOT, "samples"),
-                        filename : "[name]" + _mode + ".html"
+                        filename : "[name]" + suffix + ".html"
                     },
                     context : {
                         samples : () => {
@@ -296,7 +400,7 @@ module.exports = env => {
                                 var label = relativePath.replace("/", " -- ");
                                 var pathObj = path.parse(relativePath);
                                 return {
-                                    filePath : path.join("openlayers", pathObj.dir, pathObj.name.concat(_mode).concat(pathObj.ext)),
+                                    filePath : path.join("openlayers", pathObj.dir, pathObj.name.concat(suffix).concat(pathObj.ext)),
                                     label : label
                                 };
                             });
@@ -314,21 +418,6 @@ module.exports = env => {
                 }
             ])
         ]
-            /** MINIFICATION */
-            .concat(
-                (production) ? [
-                    new UglifyJsWebPackPlugin({
-                        uglifyOptions : {
-                            output : {
-                                comments : false,
-                                beautify : false
-                            },
-                            mangle : true,
-                            warnings : false,
-                            compress : false
-                        }
-                    })] : []
-            )
             /** AJOUT DES LICENCES */
             .concat([
                 new BannerWebPackPlugin({

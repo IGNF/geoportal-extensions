@@ -23,11 +23,6 @@ Les bundles des modules sont disponible :
 Les exemples sont disponibles dans le répertoire *samples*, et
 les fichiers sont suffixés avec le tag *modules*.
 
-> **FIXME**
-> Suite à un probleme de minification à cause de la version de Webpack 3 et ES6...
-> on utilise donc une version anterieur du package *uglifyjs-webpack-plugin* > 1.3.0 !
-> Lors du passage en Webpack 4, on pourra utiliser la version de minification incluse dans webpack.
-
 > **INFO**
 > if you set NODE_ENV=production or use the --production flag it will not install devDependencies
 > when you run *npm install*
@@ -38,13 +33,9 @@ les fichiers sont suffixés avec le tag *modules*.
 
 - [x] Migrer vers ol v5.3.0   : **OK**
 
-- [ ] Rendre openlayers externe : **TODO**
+- [x] Rendre openlayers externe : **OK**
 
-- [ ] Migrer vers webpack 4 : **TODO**
-
-- [ ] Autoprefixer CSS avec postCSS : **EVOL**
-
-- [x] dépendance olms : interne ? : **OK**
+- [x] dépendance olms : externe ou interne ? : **OK**
 
     - Comment doit on intégrer *olms* dans le code des extensions : interne ou externe ?
         ```
@@ -52,17 +43,8 @@ les fichiers sont suffixés avec le tag *modules*.
         fichiers json de style MapBox. Nous en avons besoin au niveau de l'API Extensions
         sur le widget *LayerImport*.
         L'API SDK utilise aussi cette dependance.
-            API Extensions :
-                ol et olms en externe (cad à la charge du client de les ajouter)
-                ou
-                ol en externe mais olms en interne
-
-            API SDK : ol et olms en interne (cad livrées dans le bundle final)
         ```
-        > choix ol en externe mais olms en interne...
-
-    - pour info, le binaire est :
-    > https://unpkg.com/ol-mapbox-style/dist/olms.js
+        > la librairie ol est externalisée mais on decide de mettre olms en interne...
 
 - [x] Tests à jouer / à creer : **OK**
 
@@ -70,7 +52,9 @@ les fichiers sont suffixés avec le tag *modules*.
 
     > **OK** test sur les projections !
 
-    > **TODO** couvrir et finir les tests sur le DOM
+    > **TODO** couvrir et finir les tests sur le DOM / Controles
+
+        npm run cover
 
     > **OK** les tests sur openlayers & mouseposition : *cf. CRS !*
 
@@ -86,12 +70,14 @@ les fichiers sont suffixés avec le tag *modules*.
     - [x] openlayers : qq échecs...
     - [x] itowns     : qq échecs...
 
+    - **EVOL** passage sous Puppeter avec l'outil puppetry ?
+
 - [x] Exemples sur les modules : **OK**
 
 - [x] Exemples  : **OK**
 
     > le proxy.php n'est pas reconnu comme du PHP par le serveur local webpack !?
-    On decide donc de rediriger les requêtes à proxifier vers un proxy deployer en local...
+    On décide donc de rediriger les requêtes à proxifier vers un proxy déployé en local...
 
 - [x] **OK** Test des variables globales : *ex. Gp, ol et proj4*
 
@@ -107,11 +93,15 @@ les fichiers sont suffixés avec le tag *modules*.
     - [x] **OK** *Gp* :
         la date et la version sont récupérées de l'API des services (*__GPDATE__*)
 
+- [x] Mettre à jour la JSDoc
+
+
 ### Les sources
 
 - [x] Format **Ok**
 
     * [x] ol.format.KMLExtended  :
+
     > **EVOL** Refonte à prévoir en fonction des avancées openlayers...
 
     * [x] ol.source.WMTSExtended :
@@ -168,11 +158,12 @@ les fichiers sont suffixés avec le tag *modules*.
 
     > **OK** upgrade proj4 > 2.5.0 !
 
-    * [ ] CRS : **PROGRESS**
+    * [ ] CRS : **TODO**
 
         cf. https://github.com/openlayers/openlayers/blob/master/changelog/upgrade-notes.md#changes-in-proj4-integration
 
         - [x] *FIXME* performance sur l'ajout des projection avec ol et proj4 !!!
+        
             cf. test de performance...
             ```
             Doit on charger autant de projections ?
@@ -182,6 +173,7 @@ les fichiers sont suffixés avec le tag *modules*.
             > choix d'une liste par defaut + Gp.includeProjections()
 
         - [x] merge à faire : https://github.com/IGNF/geoportal-extensions/pull/227
+
         - [ ] *FIXME* bug pour ajouter des projection **geocent** sur le registre IGNF !?
             ```
             Comment peut remplacer ce type de projections ?
@@ -190,7 +182,7 @@ les fichiers sont suffixés avec le tag *modules*.
         - [x] on ne surcharge pas la fonction transformExtent mais on ajoute un setExtent() sur
             l'EPSG:2154
                 - à quoi sert la fonction MousePosition::validateExtentCoordinate ?
-                les systemes de projection de MousePosition ont déjà une validity extent en option ?
+                - les systemes de projection de MousePosition ont déjà une validity extent en option ?
 
     * [x] Editor : **OK**
 
@@ -199,6 +191,16 @@ les fichiers sont suffixés avec le tag *modules*.
     * [x] interactions : **OK**
 
 ## TODOLIST sur la gestion du projet
+
+* [x] **FAIT** Migrer vers webpack 4
+
+* [ ] **EVOL** Autoprefixer CSS avec postCSS
+
+* [ ] *FIXME* webpack supprime les commentaires ainsi que les copyright sur la minification !?
+
+* [ ] **TODO** bundlesize : cf. https://github.com/siddharthkp/bundlesize
+
+* [ ] **TODO** documentation sur l'utilisation de l'API en mode module ou bundle.
 
 * [x] **FAIT** exemples AMD à supprimer.
 
@@ -210,22 +212,24 @@ les fichiers sont suffixés avec le tag *modules*.
 
     > utilisation des sources ES6 modules dans le code.
 
+    une modification du package.json est à faire :
+    - *module* vers l'index des sources
+    - *main* pointe vers le bundle (non minifié)
+    - *browser* ?
+
 
 * [x] **FAIT** deplacement des CSS avec les JS
 
-    > **INFO** c'est peut être une mauvaise idée d'integrer les CSS dans les sources
-    car souci dans le SDK à transpiler les modules (pb de loader sur les CSS !?)
-
-* [x] **FAIT** creation d'une CSS commune à tous les controles (via webpack)
+* [x] **FAIT** [MODULES] creation d'une CSS commune à tous les controles (via webpack)
 
     > **FIXME** creation d'un JS avec la CSS commune !?
     cf. https://github.com/webpack-contrib/extract-text-webpack-plugin/issues/518
 
-* [x] **FAIT** creation des exemples des modules (via webpack)
+* [x] **FAIT** [MODULES] creation des exemples des modules (via webpack)
 
     cf. webpack (build only samples) !
 
-* [x] **FAIT** modifier le template des exemples des modules
+* [x] **FAIT** [MODULES] modifier le template des exemples des modules
 
 * [x] **FAIT** deplacement des webpack dans un répertoire
     > ex. build/

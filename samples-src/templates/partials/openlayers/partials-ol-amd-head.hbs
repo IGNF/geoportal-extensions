@@ -4,18 +4,13 @@
                 /* global requirejs */
                 requirejs.config({
                     "paths": {
-                    "ol"       : "https://openlayers.org/en/latest/build/ol.js",
-                    // "olms"     : "{{ baseurl }}/node_modules/ol-mapbox-style/dist/olms",
-                    "Gp"       : "{{ baseurl }}/dist/openlayers/GpPluginOpenLayers{{ mode }}"
+                        "ol" : "https://openlayers.org/en/latest/build/ol.js",
+                        "Gp" : "{{ baseurl }}/dist/openlayers/GpPluginOpenLayers{{ mode }}"
                     },
                     shim :{
                         "Gp" : {
                             deps:["ol"]
                         }
-                        // "olms" : {
-                        //     deps:["ol"],
-                        //     exports: "olms"
-                        // }
                     }
                 });
         </script>

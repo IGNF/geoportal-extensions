@@ -1,6 +1,6 @@
 {
    "description" : "French Geoportal Extensions for iTowns",
-   "main" : "src/Itowns/GpPluginItowns.js",
+   "module" : "src/Itowns/index.js",
    "dependencies" : {
       "xmldom" : "^0.1.27",
       "loglevel" : "~1.6.1",
@@ -25,7 +25,7 @@
    "name" : "geoportal-extensions-itowns",
    "scripts" : {},
    "version" : "2.2.0",
-   "browser" : "dist/GpPluginItowns-src.js",
+   "main" : "dist/GpPluginItowns-src.js",
    "bundleDependencies" : [],
    "devDependencies" : {},
    "repository" : {

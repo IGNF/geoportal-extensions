@@ -8,7 +8,7 @@
 * Migration d'OpenLayers en version 5.3.0
 * Nouvelle fonctionnalité avec l'import de couche au format *vecteur tuilé* (MapBox)
 * Correctifs suite au passage ES6
-* **TODO** Migration Webpack en version 4.0.0
+* Migration Webpack en version > 4.0.0
 
 [semver] :
     - OpenLayers : increment semver MAJOR version (proj4/sortable/ol5/es6)
@@ -90,4 +90,4 @@ Il est possible d'étendre la liste via la fonction :
 
 * [Security]
 
-    - [dev-workflow] **TODO** Mise à jour des dependances de dev (faille de sécurité)
+    - [dev-workflow] Mise à jour des dependances de dev (faille de sécurité)

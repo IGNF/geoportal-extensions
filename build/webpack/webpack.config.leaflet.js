@@ -35,10 +35,10 @@ module.exports = env => {
     var _mode = (production) ? "" : (development) ? "-map" : "-src";
 
     return smp.wrap({
-        entry : path.join(ROOT, "src", "Leaflet", "GpPluginLeaflet"),
+        entry : { "GpPluginLeaflet" : path.join(ROOT, "src", "Leaflet", "index.js") },
         output : {
             path : path.join(ROOT, "dist", "leaflet"),
-            filename : "GpPluginLeaflet" + _mode + ".js",
+            filename : "[name]" + _mode + ".js",
             library : "Gp",
             libraryTarget : "umd",
             umdNamedDefine : true

@@ -159,7 +159,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -196,10 +195,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -208,15 +203,16 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -240,8 +236,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -260,62 +260,62 @@
     * get toolBox ID
     * @param {Number} uid - uid
     * @returns {String} id selector unique
-    */
-    getToolBoxID :<span class="fstat-no" title="function not covered" > f</span>unction (uid) {
-<span class="cstat-no" title="statement not covered" >        return (uid) ? this._toolboxId + "-" + uid : this._toolboxId</span>;
+    */<span class="fstat-no" title="function not covered" ></span>
+<span class="cstat-no" title="statement not covered" >    getToolBoxID : function (uid) {</span>
+        return (uid) ? this._toolboxId + "-" + uid : this._toolboxId;
     },
 &nbsp;
     /**
     * get button ID
     * @param {Number} uid - uid
     * @returns {String} id selector unique
-    */
-    getButtonID :<span class="fstat-no" title="function not covered" > f</span>unction (uid) {
-<span class="cstat-no" title="statement not covered" >        return (uid) ? this._buttonId + "-" + uid : this._buttonId</span>;
+    */<span class="fstat-no" title="function not covered" ></span>
+<span class="cstat-no" title="statement not covered" >    getButtonID : function (uid) {</span>
+        return (uid) ? this._buttonId + "-" + uid : this._buttonId;
     },
 &nbsp;
     /**
     * get toolBox Container for widget
     * @param {Number} uid - uid
     * @returns {String} id selector unique
-    */
-    getWidgetID :<span class="fstat-no" title="function not covered" > f</span>unction (uid) {
-<span class="cstat-no" title="statement not covered" >        return (uid) ? this._widgetId + "-" + uid : this._widgetId</span>;
+    */<span class="fstat-no" title="function not covered" ></span>
+<span class="cstat-no" title="statement not covered" >    getWidgetID : function (uid) {</span>
+        return (uid) ? this._widgetId + "-" + uid : this._widgetId;
     },
 &nbsp;
     /**
      * Main container (DOM)
      * @param {Number} uid - uid
      * @returns {DOMElement} DOM element
-     */
-    _createToolBoxContainerElement :<span class="fstat-no" title="function not covered" > f</span>unction (uid) {
+     */<span class="fstat-no" title="function not covered" ></span>
+    _createToolBoxContainerElement : function (uid) {
         // &lt;div id="GPtoolbox-measure-main"&gt;
         //   &lt;button id="GPtoolbox-measure-button"&gt;&amp;#9776;&lt;/button&gt;
         //   &lt;div id="GPtoolbox-measure-widget"&gt;
         //     &lt;!-- HERE : widgets tools measures --&gt;
         //   &lt;/div&gt;
-        // &lt;/div&gt;
-        var container = <span class="cstat-no" title="statement not covered" >document.createElement("div");</span>
+        // &lt;/div&gt;<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >        var container = document.createElem</span>ent("div");
 <span class="cstat-no" title="statement not covered" >        container.id = this.getToolBoxID(uid);</span>
-<span class="cstat-no" title="statement not covered" >        container.className = "GPshowAdvancedToolPicto";</span>
-&nbsp;
-        var button = <span class="cstat-no" title="statement not covered" >document.createElement("button");</span>
-<span class="cstat-no" title="statement not covered" >        button.id = this.getButtonID(uid);</span>
-        var self = <span class="cstat-no" title="statement not covered" >this;</span>
-<span class="cstat-no" title="statement not covered" >        button.addEventListener("click", <span class="fstat-no" title="function not covered" >fu</span>nction () {</span>
-<span class="cstat-no" title="statement not covered" >            this.blur(); </span>// permet de perdre le focus !
-            var widget = <span class="cstat-no" title="statement not covered" >document.getElementById(self.getWidgetID(uid));</span>
+        container<span class="cstat-no" title="statement not covered" >.className = "GPshowAdvancedToolP</span>icto";
+<span class="cstat-no" title="statement not covered" ></span>
+        var but<span class="cstat-no" title="statement not covered" >ton =</span> document.createElement("button");
+<span class="cstat-no" title="statement not covered" >        button.id = this.getButtonID(<span class="fstat-no" title="function not covered" >ui</span>d);</span>
+<span class="cstat-no" title="statement not covered" >        var self = </span>this;
+        button.addEventListener("click", function () {
+            this.bl<span class="cstat-no" title="statement not covered" >ur(); // permet de perdre le focus !</span>
+            var widget = document.getElementById(self.getWidgetID(uid));
 <span class="cstat-no" title="statement not covered" >            if (widget.style.display === "block") {</span>
-<span class="cstat-no" title="statement not covered" >                widget.style.display = "none";</span>
+<span class="cstat-no" title="statement not covered" >                widget.style.display = </span>"none";
             } else {
-<span class="cstat-no" title="statement not covered" >                widget.style.display = "block";</span>
+<span class="cstat-no" title="statement not covered" >                widget.style.display = "</span>block";
             }
         });
-<span class="cstat-no" title="statement not covered" >        container.appendChild(button);</span>
-&nbsp;
-        var widget = <span class="cstat-no" title="statement not covered" >document.createElement("div");</span>
-<span class="cstat-no" title="statement not covered" >        widget.id = this.getWidgetID(uid);</span>
-<span class="cstat-no" title="statement not covered" >        widget.addEventListener("click", <span class="fstat-no" title="function not covered" >fu</span>nction () {</span>
+<span class="cstat-no" title="statement not covered" >        container.appendChild(butto</span>n);
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >        var widget = document.createEle</span>ment("div");
+<span class="cstat-no" title="statement not covered" >        widget.id = this.getWidgetID(<span class="fstat-no" title="function not covered" >ui</span>d);</span>
+        widget.addEventListener("click", function () {
 &nbsp;
             /*
                 e.preventDefault();
@@ -337,13 +337,13 @@
 &nbsp;
                     if (current === id &amp;&amp; widgets[i].checked) {
                         widgets[i].checked = false;
-                    } else if (current === id &amp;&amp; !widgets[i].checked) {
-                        widgets[i].checked = true;
+<span class="cstat-no" title="statement not covered" >                    } else if (curr</span>ent === id &amp;&amp; !widgets[i].checked) {
+<span class="cstat-no" title="statement not covered" ></span>                        widgets[i].checked = true;
                     }
                 }
-<span class="cstat-no" title="statement not covered" >            */</span>
+            */
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        }, false);</span>
+        }, false);
 &nbsp;
         container.appendChild(widget);
 &nbsp;
@@ -358,7 +358,7 @@ export default MeasureToolBoxDOM;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Mar 06 2019 14:52:48 GMT+0100 (CET)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Apr 30 2019 08:43:00 GMT+0200 (GMT+02:00)
 </div>
 </div>
 <script src="../prettify.js"></script>

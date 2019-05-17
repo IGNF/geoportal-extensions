@@ -97,12 +97,9 @@ Liste des targets disponibles :
 
     npm run <target> <option>
         target : (clean), setup,
-                 build[:dev|:prod|:ol[:dev|:prod]|:leaflet[:dev|:prod]|:itowns[:dev|:prod]],
+                 build[:src|:dev|:prod|:ol[:src|:dev|:prod]|:leaflet[:src|:dev|:prod]|:itowns[:src|:dev|:prod]],
                  sample, (doc)
                  sample:serve, doc:serve
-        option : --env.production,
-                 --env.development,
-                 (--env.clean)
 
 ### Installation des dépendances
 
@@ -142,8 +139,7 @@ Upgrade de version :
     npm run build:ol
     ou npm run build:ol:prod
     ou npm run build:ol:dev
-    ou npm run build:ol -- --env.production
-    ou npm run build:ol -- --env.development
+    ou npm run build:ol:src
 
 Les *bundles* sont disponibles dans le répertoire :
 

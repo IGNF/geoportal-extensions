@@ -52,10 +52,10 @@ var SearchEngineUtils = {
             title : "Code commune (INSEE)",
             description : "Code commune (INSEE) : 3 chiffres (ex: 067)"
         },
-            // {
-            //     name : "insee",
-            //     title : "Code INSEE"
-            // },
+        // {
+        //     name : "insee",
+        //     title : "Code INSEE"
+        // },
         {
             name : "absorbedCity",
             title : "Commune absorbée",

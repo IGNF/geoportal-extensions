@@ -1,7 +1,6 @@
 // import CSS
 import "../../CSS/Controls/Measures/GPmeasureAzimuthOpenLayers.css";
 // import OpenLayers
-import {inherits as olInherits} from "ol/util";
 import Control from "ol/control/Control";
 import { getDistance as olGetDistanceSphere } from "ol/sphere";
 import { transform as olTransformProj } from "ol/proj";
@@ -43,316 +42,320 @@ var logger = Logger.getLogger("measureazimut");
  *   geodesic : true
  * });
  */
-function MeasureAzimuth (options) {
+var MeasureAzimuth = (function (Control) {
+    function MeasureAzimuth (options) {
+        /**
+         * options
+         * @private
+         */
+        options = options || {};
+
+        if (!(this instanceof MeasureAzimuth)) {
+            throw new TypeError("ERROR CLASS_CONSTRUCTOR");
+        }
+
+        /**
+         * Nom de la classe (heritage)
+         * @private
+         */
+        this.CLASSNAME = "MeasureAzimuth";
+
+        // uuid
+        this._uid = ID.generate();
+
+        // container d'activation du controle
+        this._showContainer = null;
+        this._pictoContainer = null;
+
+        // initialisation du composant
+        this._initialize(options);
+
+        // creation du DOM container
+        var container = (options.element) ? options.element : this._initializeContainer();
+
+        // heritage
+        Control.call(this, {
+            element : container,
+            target : options.target,
+            render : options.render
+        });
+    }
+
+    // heritage avec ol.control.Control
+    if (Control) MeasureAzimuth.__proto__ = Control;
+
     /**
-     * options
+     * @lends module:MeasureAzimuth
+     */
+    MeasureAzimuth.prototype = Object.create(Control.prototype, {});
+
+    // on récupère les mixins de la classe "MeasureAzimuthDOM" ainsi que celles
+    // de "Measures".
+    Utils.assign(MeasureAzimuth.prototype, Measures);
+    Utils.assign(MeasureAzimuth.prototype, MeasureAzimuthDOM);
+
+    /**
+     * Constructor (alias)
      * @private
      */
-    options = options || {};
+    MeasureAzimuth.prototype.constructor = MeasureAzimuth;
 
-    if (!(this instanceof MeasureAzimuth)) {
-        throw new TypeError("ERROR CLASS_CONSTRUCTOR");
-    }
+    // ################################################################### //
+    // ##################### public methods ############################## //
+    // ################################################################### //
 
     /**
-     * Nom de la classe (heritage)
-     * @private
+     * Overwrite OpenLayers setMap method
+     *
+     * @param {ol.Map} map - Map.
      */
-    this.CLASSNAME = "MeasureAzimuth";
+    MeasureAzimuth.prototype.setMap = function (map) {
+        logger.trace("setMap()");
 
-    // uuid
-    this._uid = ID.generate();
+        var className = this.CLASSNAME;
 
-    // container d'activation du controle
-    this._showContainer = null;
-    this._pictoContainer = null;
+        // on fait le choix de ne pas activer les events sur la map à l'init de l'outil,
+        // mais uniquement à son utilisation !
+        if (map) {
+            // var self = this;
+            // map.on("click", function (e) {
+            //     logger.trace("event on map with click!");
+            //     self.onPointerMoveAzimutHandler(e);
+            // });
+            //
+            // map.on("singleclick", function (e) {
+            //     logger.trace("event on map with singleclick!");
+            //     self.onPointerMoveAzimutHandler(e);
+            // });
+            //
+            // map.on("pointermove", function (e) {
+            //     logger.trace("event on map with pointermove!");
+            //     self.onPointerMoveAzimutHandler(e);
+            // });
 
-    // initialisation du composant
-    this._initialize(options);
-
-    // creation du DOM container
-    var container = (options.element) ? options.element : this._initializeContainer();
-
-    // heritage
-    Control.call(this, {
-        element : container,
-        target : options.target,
-        render : options.render
-    });
-}
-
-// heritage avec ol.control.Control
-olInherits(MeasureAzimuth, Control);
-
-/**
- * @lends module:MeasureAzimuth
- */
-MeasureAzimuth.prototype = Object.create(Control.prototype, {});
-
-// on récupère les mixins de la classe "MeasureAzimuthDOM" ainsi que celles
-// de "Measures".
-Utils.assign(MeasureAzimuth.prototype, Measures);
-Utils.assign(MeasureAzimuth.prototype, MeasureAzimuthDOM);
-
-/**
- * Constructor (alias)
- * @private
- */
-MeasureAzimuth.prototype.constructor = MeasureAzimuth;
-
-// ################################################################### //
-// ##################### public methods ############################## //
-// ################################################################### //
-
-/**
- * Overwrite OpenLayers setMap method
- *
- * @param {ol.Map} map - Map.
- */
-MeasureAzimuth.prototype.setMap = function (map) {
-    logger.trace("setMap()");
-
-    var className = this.CLASSNAME;
-
-    // on fait le choix de ne pas activer les events sur la map à l'init de l'outil,
-    // mais uniquement à son utilisation !
-    if (map) {
-        // var self = this;
-        // map.on("click", function (e) {
-        //     logger.trace("event on map with click!");
-        //     self.onPointerMoveAzimutHandler(e);
-        // });
-        //
-        // map.on("singleclick", function (e) {
-        //     logger.trace("event on map with singleclick!");
-        //     self.onPointerMoveAzimutHandler(e);
-        // });
-        //
-        // map.on("pointermove", function (e) {
-        //     logger.trace("event on map with pointermove!");
-        //     self.onPointerMoveAzimutHandler(e);
-        // });
-
-        if (!this.options.target) {
-            MeasureToolBox.add(map, this);
+            if (!this.options.target) {
+                MeasureToolBox.add(map, this);
+            }
+        } else {
+            this.clean();
         }
-    } else {
-        this.clean();
-    }
 
-    // sauvegarde de l'état de l'outil
-    this.tools[className].push({
-        instance : (map) ? this : null,
-        active : false,
-        map : (map) ? map.getTargetElement().id : null
-    });
+        // sauvegarde de l'état de l'outil
+        this.tools[className].push({
+            instance : (map) ? this : null,
+            active : false,
+            map : (map) ? map.getTargetElement().id : null
+        });
 
-    // contexte d'execution
-    var context = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : null;
-    if (context) {
-        // Pour info
-        // les objets de mesures ont du code partagé
-        // (afin de gerer les interactions entre eux).
-        // Dans un mode "modules", on partage cet objet (this.tools) via le contexte
-        // d'execution (ex. avec window)
-        if (!context.gpShareMeasures) {
-            context.gpShareMeasures = {};
+        // contexte d'execution
+        var context = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : null;
+        if (context) {
+            // Pour info
+            // les objets de mesures ont du code partagé
+            // (afin de gerer les interactions entre eux).
+            // Dans un mode "modules", on partage cet objet (this.tools) via le contexte
+            // d'execution (ex. avec window)
+            if (!context.gpShareMeasures) {
+                context.gpShareMeasures = {};
+            }
+            context.gpShareMeasures[className] = this.tools[className];
         }
-        context.gpShareMeasures[className] = this.tools[className];
-    }
 
-    // on appelle la méthode setMap originale d'OpenLayers
-    Control.prototype.setMap.call(this, map);
-};
-
-/**
- * Setter for option Geodesic
- *
- * @param {Boolean} value - geodesic value
- */
-MeasureAzimuth.prototype.setGeodesic = function (value) {
-    this.options.geodesic = (typeof value !== "undefined") ? value : false;
-};
-
-/**
- * Getter for option Geodesic
- *
- * @return {Boolean} geodesic value
- */
-MeasureAzimuth.prototype.isGeodesic = function () {
-    return this.options.geodesic;
-};
-
-// ################################################################### //
-// ##################### init component ############################## //
-// ################################################################### //
-
-/**
- * Initialize measure control (called by constructor)
- *
- * @param {Object} options - options
- *
- * @private
- */
-MeasureAzimuth.prototype._initialize = function (options) {
-    logger.trace("call MeasureAzimuth::_initialize() : ", options);
-
-    // liste des options
-    this.options = {};
-    this.options.geodesic = (typeof options.geodesic !== "undefined") ? options.geodesic : false;
-    this.options.target = (typeof options.target !== "undefined") ? options.target : null;
-    this.options.render = (typeof options.render !== "undefined") ? options.render : null;
-    this.options.layerDescription = (typeof options.layerDescription !== "undefined") ? options.layerDescription : {
-        title : "Mesures d'azimuth",
-        description : "Mes mesures"
+        // on appelle la méthode setMap originale d'OpenLayers
+        Control.prototype.setMap.call(this, map);
     };
 
-    // gestion des styles !
-    this.createStylingMeasureInteraction(options.styles);
-};
+    /**
+     * Setter for option Geodesic
+     *
+     * @param {Boolean} value - geodesic value
+     */
+    MeasureAzimuth.prototype.setGeodesic = function (value) {
+        this.options.geodesic = (typeof value !== "undefined") ? value : false;
+    };
 
-/**
- * initialize component container (DOM)
- *
- * @returns {DOMElement} DOM element
- *
- * @private
- */
-MeasureAzimuth.prototype._initializeContainer = function () {
-    logger.trace("call MeasureAzimuth::_initializeContainer() : ", this._uid);
+    /**
+     * Getter for option Geodesic
+     *
+     * @return {Boolean} geodesic value
+     */
+    MeasureAzimuth.prototype.isGeodesic = function () {
+        return this.options.geodesic;
+    };
 
-    var container = this._createMainContainerElement(); ;
+    // ################################################################### //
+    // ##################### init component ############################## //
+    // ################################################################### //
 
-    var show = this._showContainer = this._createShowMeasureAzimuthElement();
-    container.appendChild(show);
+    /**
+     * Initialize measure control (called by constructor)
+     *
+     * @param {Object} options - options
+     *
+     * @private
+     */
+    MeasureAzimuth.prototype._initialize = function (options) {
+        logger.trace("call MeasureAzimuth::_initialize() : ", options);
 
-    // par defaut, pas d'interaction à l'initialisation...
-    this._showContainer.checked = false;
+        // liste des options
+        this.options = {};
+        this.options.geodesic = (typeof options.geodesic !== "undefined") ? options.geodesic : false;
+        this.options.target = (typeof options.target !== "undefined") ? options.target : null;
+        this.options.render = (typeof options.render !== "undefined") ? options.render : null;
+        this.options.layerDescription = (typeof options.layerDescription !== "undefined") ? options.layerDescription : {
+            title : "Mesures d'azimuth",
+            description : "Mes mesures"
+        };
 
-    var picto = this._pictoContainer = this._createShowMeasureAzimuthPictoElement();
-    container.appendChild(picto);
+        // gestion des styles !
+        this.createStylingMeasureInteraction(options.styles);
+    };
 
-    return container;
-};
+    /**
+     * initialize component container (DOM)
+     *
+     * @returns {DOMElement} DOM element
+     *
+     * @private
+     */
+    MeasureAzimuth.prototype._initializeContainer = function () {
+        logger.trace("call MeasureAzimuth::_initializeContainer() : ", this._uid);
 
-// ################################################################### //
-// ##################### overridden methods ########################## //
-// ################################################################### //
+        var container = this._createMainContainerElement(); ;
 
-/**
- * Add all events on map
- *
- * @private
- */
-MeasureAzimuth.prototype.addMeasureEvents = function () {
-    logger.trace("call MeasureAzimuth::addMeasureEvents()");
+        var show = this._showContainer = this._createShowMeasureAzimuthElement();
+        container.appendChild(show);
 
-    var map = this.getMap();
+        // par defaut, pas d'interaction à l'initialisation...
+        this._showContainer.checked = false;
 
-    map.on("singleclick", (e) => this.onPointerMoveAzimutHandler(e));
-    map.on("pointermove", (e) => this.onPointerMoveAzimutHandler(e));
-};
+        var picto = this._pictoContainer = this._createShowMeasureAzimuthPictoElement();
+        container.appendChild(picto);
 
-/**
- * Remove all events on map
- *
- * @private
- */
-MeasureAzimuth.prototype.removeMeasureEvents = function () {
-    logger.trace("call MeasureAzimuth::removeMeasureEvents()");
+        return container;
+    };
 
-    var map = this.getMap();
+    // ################################################################### //
+    // ##################### overridden methods ########################## //
+    // ################################################################### //
 
-    map.un("singleclick", (e) => this.onPointerMoveAzimutHandler(e));
-    map.un("pointermove", (e) => this.onPointerMoveAzimutHandler(e));
-};
+    /**
+     * Add all events on map
+     *
+     * @private
+     */
+    MeasureAzimuth.prototype.addMeasureEvents = function () {
+        logger.trace("call MeasureAzimuth::addMeasureEvents()");
 
-/**
- * Format length output.
- *
- * @param {ol.geom.LineString} line - geometry line.
- * @return {String} The formatted output.
- * @private
- */
-MeasureAzimuth.prototype.format = function (line) {
-    logger.trace("call MeasureAzimuth::format()");
+        var map = this.getMap();
 
-    var map = this.getMap();
+        map.on("singleclick", (e) => this.onPointerMoveAzimutHandler(e));
+        map.on("pointermove", (e) => this.onPointerMoveAzimutHandler(e));
+    };
 
-    var sourceProj = map.getView().getProjection();
+    /**
+     * Remove all events on map
+     *
+     * @private
+     */
+    MeasureAzimuth.prototype.removeMeasureEvents = function () {
+        logger.trace("call MeasureAzimuth::removeMeasureEvents()");
 
-    var c1 = olTransformProj(line.getFirstCoordinate(), sourceProj, "EPSG:4326");
-    var c2 = olTransformProj(line.getLastCoordinate(), sourceProj, "EPSG:4326");
+        var map = this.getMap();
 
-    if (!this.options.geodesic) {
-        // TODO calcul sur une petite distance (>500m) afin de simuler un cap !
-        var lengthGeodesic = olGetDistanceSphere(c1, c2);
-        logger.trace("measure between 2 points with geodesic method", lengthGeodesic);
-        if (lengthGeodesic > 500) {
-            var fraction = 500.0 / lengthGeodesic;
-            logger.trace("%", fraction);
-            c2 = olTransformProj(line.getCoordinateAt(fraction), sourceProj, "EPSG:4326");
+        map.un("singleclick", (e) => this.onPointerMoveAzimutHandler(e));
+        map.un("pointermove", (e) => this.onPointerMoveAzimutHandler(e));
+    };
+
+    /**
+     * Format length output.
+     *
+     * @param {ol.geom.LineString} line - geometry line.
+     * @return {String} The formatted output.
+     * @private
+     */
+    MeasureAzimuth.prototype.format = function (line) {
+        logger.trace("call MeasureAzimuth::format()");
+
+        var map = this.getMap();
+
+        var sourceProj = map.getView().getProjection();
+
+        var c1 = olTransformProj(line.getFirstCoordinate(), sourceProj, "EPSG:4326");
+        var c2 = olTransformProj(line.getLastCoordinate(), sourceProj, "EPSG:4326");
+
+        if (!this.options.geodesic) {
+            // TODO calcul sur une petite distance (>500m) afin de simuler un cap !
+            var lengthGeodesic = olGetDistanceSphere(c1, c2);
+            logger.trace("measure between 2 points with geodesic method", lengthGeodesic);
+            if (lengthGeodesic > 500) {
+                var fraction = 500.0 / lengthGeodesic;
+                logger.trace("%", fraction);
+                c2 = olTransformProj(line.getCoordinateAt(fraction), sourceProj, "EPSG:4326");
+            }
         }
-    }
 
-    var degrees2radians = Math.PI / 180;
-    var radians2degrees = 180 / Math.PI;
+        var degrees2radians = Math.PI / 180;
+        var radians2degrees = 180 / Math.PI;
 
-    var lon1 = degrees2radians * c1[0];
-    var lon2 = degrees2radians * c2[0];
+        var lon1 = degrees2radians * c1[0];
+        var lon2 = degrees2radians * c2[0];
 
-    var lat1 = degrees2radians * c1[1];
-    var lat2 = degrees2radians * c2[1];
+        var lat1 = degrees2radians * c1[1];
+        var lat2 = degrees2radians * c2[1];
 
-    var a = Math.sin(lon2 - lon1) * Math.cos(lat2);
-    var b = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1);
+        var a = Math.sin(lon2 - lon1) * Math.cos(lat2);
+        var b = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1);
 
-    var atan = Math.atan2(a, b);
+        var atan = Math.atan2(a, b);
 
-    var azimut = radians2degrees * atan;
-    logger.trace("azimut", azimut);
+        var azimut = radians2degrees * atan;
+        logger.trace("azimut", azimut);
 
-    if (azimut < 0) {
-        azimut += 360;
-    }
-    var output = Math.round(azimut * 100) / 100 + " °";
-
-    return output;
-};
-
-// ################################################################### //
-// ####################### handlers events to dom #################### //
-// ################################################################### //
-
-/**
- * this method is called by event 'click' on picto
- *
- * @param {Object} e - HTMLElement
- * @private
- */
-MeasureAzimuth.prototype.onShowMeasureAzimuthClick = function (e) {
-    logger.trace("call MeasureAzimuth::onShowMeasureAzimuthClick()", e);
-
-    // appel de la methode commune
-    this.onShowMeasureClick(e, "LineString");
-};
-
-/**
- * Handle pointer click.
- *
- * @param {ol.MapBrowserEvent} e - The event.
- * @private
- */
-MeasureAzimuth.prototype.onPointerMoveAzimutHandler = function (e) {
-    this.onPointerMoveHandler(e);
-
-    if (this.sketch) {
-        var geom = (/** @type {ol.geom.LineString} */ (this.sketch.getGeometry()));
-        if (geom.getCoordinates().length > 2) {
-            this.measureDraw.finishDrawing();
+        if (azimut < 0) {
+            azimut += 360;
         }
-    }
-};
+        var output = Math.round(azimut * 100) / 100 + " °";
+
+        return output;
+    };
+
+    // ################################################################### //
+    // ####################### handlers events to dom #################### //
+    // ################################################################### //
+
+    /**
+     * this method is called by event 'click' on picto
+     *
+     * @param {Object} e - HTMLElement
+     * @private
+     */
+    MeasureAzimuth.prototype.onShowMeasureAzimuthClick = function (e) {
+        logger.trace("call MeasureAzimuth::onShowMeasureAzimuthClick()", e);
+
+        // appel de la methode commune
+        this.onShowMeasureClick(e, "LineString");
+    };
+
+    /**
+     * Handle pointer click.
+     *
+     * @param {ol.MapBrowserEvent} e - The event.
+     * @private
+     */
+    MeasureAzimuth.prototype.onPointerMoveAzimutHandler = function (e) {
+        this.onPointerMoveHandler(e);
+
+        if (this.sketch) {
+            var geom = (/** @type {ol.geom.LineString} */ (this.sketch.getGeometry()));
+            if (geom.getCoordinates().length > 2) {
+                this.measureDraw.finishDrawing();
+            }
+        }
+    };
+
+    return MeasureAzimuth;
+}(Control));
 
 export default MeasureAzimuth;
 

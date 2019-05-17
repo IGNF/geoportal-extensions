@@ -39,6 +39,7 @@
             }
         ],
         "no-console": "warn",
+        "no-proto": 0,
         "linebreak-style": [
             "error",
             "unix"

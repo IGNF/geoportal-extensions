@@ -133,7 +133,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -159,7 +158,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -175,13 +173,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -200,8 +196,12 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -212,22 +212,22 @@
     * Add uuid to the tag ID
     * @param {String} id - id selector
     * @returns {String} uid - id selector with an unique id
-    */
-    _addUID :<span class="fstat-no" title="function not covered" > f</span>unction (id) {
-        var uid = <span class="cstat-no" title="statement not covered" >(this._uid) ? id + "-" + this._uid : i</span>d;
-<span class="cstat-no" title="statement not covered" >        return uid;</span>
+    */<span class="fstat-no" title="function not covered" ></span>
+    _addUID : <span class="cstat-no" title="statement not covered" >function (id) {</span>
+<span class="cstat-no" title="statement not covered" >        var uid </span>= (this._uid) ? id + "-" + this._uid : id;
+        return uid;
     },
 &nbsp;
     /**
      * Main container (DOM)
      *
      * @returns {DOMElement} DOM element
-     */
-    _createMainContainerElement :<span class="fstat-no" title="function not covered" > f</span>unction () {
-        var container = <span class="cstat-no" title="statement not covered" >document.createElement("div");</span>
-<span class="cstat-no" title="statement not covered" >        container.id = this._addUID("GPmeasureLength");</span>
-<span class="cstat-no" title="statement not covered" >        container.className = "GPwidget";</span>
-<span class="cstat-no" title="statement not covered" >        return container;</span>
+     */<span class="fstat-no" title="function not covered" ></span>
+    _createMainConta<span class="cstat-no" title="statement not covered" >inerElement : function () {</span>
+<span class="cstat-no" title="statement not covered" >        var container = document.createElement("div"</span>);
+<span class="cstat-no" title="statement not covered" >        container.id = this._addUID("G</span>PmeasureLength");
+<span class="cstat-no" title="statement not covered" >        container.clas</span>sName = "GPwidget";
+        return container;
     },
 &nbsp;
     // ################################################################### //
@@ -237,51 +237,51 @@
     /**
      * Hidden checkbox for minimizing/maximizing
      *
-     * @returns {DOMElement} DOM element
-     */
-    _createShowMeasureLengthElement :<span class="fstat-no" title="function not covered" > f</span>unction () {
-        var input = <span class="cstat-no" title="statement not covered" >document.createElement("input");</span>
-<span class="cstat-no" title="statement not covered" >        input.id = this._addUID("GPshowMeasureLength");</span>
-<span class="cstat-no" title="statement not covered" >        input.type = "checkbox";</span>
-<span class="cstat-no" title="statement not covered" >        return input;</span>
+     * @returns {DOMElement} DOM el<span class="fstat-no" title="function not covered" >em</span>ent
+     */<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >    _createShowMeasureLengthElement : function () {</span>
+<span class="cstat-no" title="statement not covered" >        var input = document.</span>createElement("input");
+<span class="cstat-no" title="statement not covered" >        input.id =</span> this._addUID("GPshowMeasureLength");
+        input.type = "checkbox";
+        return input;
     },
 &nbsp;
     /**
      * Show control
      * see event !
      *
-     * @returns {DOMElement} DOM element
+     * @returns {DOMElement} DOM element<span class="fstat-no" title="function not covered" ></span>
      */
-    _createShowMeasureLengthPictoElement :<span class="fstat-no" title="function not covered" > f</span>unction () {
-        // contexte d'execution
-        var context = <span class="cstat-no" title="statement not covered" >this;</span>
+    _createShowMea<span class="cstat-no" title="statement not covered" >sureL</span>engthPictoElement : function () {
+        // conte<span class="cstat-no" title="statement not covered" >xte d'execution</span>
+<span class="cstat-no" title="statement not covered" >        var context = this;</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >        var label = document.createElement("label");</span>
+<span class="cstat-no" title="statement not covered" >        label.id = this._addUID("GPshowMea</span>sureLengthPicto");
+        label.className = "GPshowAdvancedToolPicto";
+        label.htmlFor = this._addUID("GPshowMeasureLength");
+        label.title = "Mesurer une distance";
 &nbsp;
-        var label = <span class="cstat-no" title="statement not covered" >document.createElement("label");</span>
-<span class="cstat-no" title="statement not covered" >        label.id = this._addUID("GPshowMeasureLengthPicto");</span>
-<span class="cstat-no" title="statement not covered" >        label.className = "GPshowAdvancedToolPicto";</span>
-<span class="cstat-no" title="statement not covered" >        label.htmlFor = this._addUID("GPshowMeasureLength");</span>
-<span class="cstat-no" title="statement not covered" >        label.title = "Mesurer une distance";</span>
-&nbsp;
-        // gestionnaire d'evenement :
-        // on ouvre le menu de saisie...
-        // L'ouverture/Fermeture permet de faire le menage
+<span class="cstat-no" title="statement not covered" >        // gestionnaire d'evenement :</span>
+<span class="cstat-no" title="statement not covered" >        // on ouvre le menu de saisie.<span class="fstat-no" title="function not covered" >..</span></span>
+<span class="cstat-no" title="statement not covered" >        // L'ouverture/Fermeture permet de fa</span>ire le menage
         // (reinitialisation)
-<span class="cstat-no" title="statement not covered" >        if (label.addEventListener) {</span>
-<span class="cstat-no" title="statement not covered" >            label.addEventListener("click", <span class="fstat-no" title="function not covered" >fu</span>nction (e) {</span>
-<span class="cstat-no" title="statement not covered" >                context.onShowMeasureLengthClick(e);</span>
+        if <span class="cstat-no" title="statement not covered" >(label.addEventListener) {</span>
+<span class="cstat-no" title="statement not covered" >            label.addEventListener(<span class="fstat-no" title="function not covered" >"c</span>lick", function (e) {</span>
+<span class="cstat-no" title="statement not covered" >                context.onShowMeasureLengthCl</span>ick(e);
             });
-        } else <span class="cstat-no" title="statement not covered" >if (label.attachEvent) {</span>
-<span class="cstat-no" title="statement not covered" >            label.attachEvent("onclick", <span class="fstat-no" title="function not covered" >fu</span>nction (e) {</span>
-<span class="cstat-no" title="statement not covered" >                context.onShowMeasureLengthClick(e);</span>
-            });
-        }
+        } else if (label.attachEvent) {
+            label.attachEvent("onclick", function (e) {
+                con<span class="cstat-no" title="statement not covered" >text.onShowMeasureLengthClick(e</span>);
+<span class="cstat-no" title="statement not covered" >            });</span>
+<span class="cstat-no" title="statement not covered" >        }</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >        var spanOp</span>en = document.createElement("span");
+        spanOpen.id = this._addUID("GPshowMeasureLengthOpen");
+        spanOpen.className = "GPshowAdvancedToolOpen";
+        label.appendChild(spanOpen);
 &nbsp;
-        var spanOpen = <span class="cstat-no" title="statement not covered" >document.createElement("span");</span>
-<span class="cstat-no" title="statement not covered" >        spanOpen.id = this._addUID("GPshowMeasureLengthOpen");</span>
-<span class="cstat-no" title="statement not covered" >        spanOpen.className = "GPshowAdvancedToolOpen";</span>
-<span class="cstat-no" title="statement not covered" >        label.appendChild(spanOpen);</span>
-&nbsp;
-<span class="cstat-no" title="statement not covered" >        return label;</span>
+        return label;
     }
 };
 &nbsp;
@@ -292,7 +292,7 @@ export default MeasureLengthDOM;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Mar 06 2019 14:52:48 GMT+0100 (CET)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Apr 30 2019 08:43:00 GMT+0200 (GMT+02:00)
 </div>
 </div>
 <script src="../prettify.js"></script>

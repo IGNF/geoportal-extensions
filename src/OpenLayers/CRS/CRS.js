@@ -44,10 +44,10 @@ var CRS = {
             // load all defs into proj4
             Register.load(Proj4);
             try {
+                // register all defs
                 register(Proj4);
-                // register all defs into openlayers
+                // Expose proj4 with custom defs into OpenLayers global variable
                 if (window.ol && window.ol.proj && window.ol.proj.proj4) {
-                    // Expose proj4 with custom defs into OpenLayers global variable
                     window.ol.proj.proj4.register(Proj4);
                 }
             } catch (e) {
@@ -74,18 +74,21 @@ var CRS = {
     */
     loadByDefault : function () {
         logger.trace("Loading custom definitions projections by default");
-        // load defs by default into proj4
-        Register.loadByDefault(Proj4);
-        try {
-            register(Proj4);
-            // register all defs into openlayers
-            if (window.ol && window.ol.proj && window.ol.proj.proj4) {
+        // loading except if it's already loaded...
+        if (!Register.isLoaded) {
+            // load defs by default into proj4
+            Register.loadByDefault(Proj4);
+            try {
+                // register all defs
+                register(Proj4);
                 // Expose proj4 with custom defs into OpenLayers global variable
-                window.ol.proj.proj4.register(Proj4);
+                if (window.ol && window.ol.proj && window.ol.proj.proj4) {
+                    window.ol.proj.proj4.register(Proj4);
+                }
+            } catch (e) {
+                // FIXME ?
+                // console.error(e);
             }
-        } catch (e) {
-            // FIXME ?
-            // console.error(e);
         }
     },
 
@@ -95,23 +98,20 @@ var CRS = {
      */
     overload : function () {
         logger.trace("Loading projections aera (extent)");
-        // overloading except if it's already overloaded...
-        if (!Register.isLoaded) {
-            for (var code in this.projectionsExtent) {
-                if (this.projectionsExtent.hasOwnProperty(code)) {
-                    var extent = this.projectionsExtent[code];
-                    var proj = getProjection(code);
-                    var fromLonLat = getTransform("EPSG:4326", proj);
+        for (var code in this.projectionsExtent) {
+            if (this.projectionsExtent.hasOwnProperty(code)) {
+                var extent = this.projectionsExtent[code];
+                var proj = getProjection(code);
+                var fromLonLat = getTransform("EPSG:4326", proj);
 
-                    // very approximate calculation of projection extent
-                    var _extent = applyTransform([extent.bottom, extent.right, extent.top, extent.left], fromLonLat);
-                    proj.setExtent(_extent);
-                    addProjection(proj);
+                // very approximate calculation of projection extent
+                var _extent = applyTransform([extent.bottom, extent.right, extent.top, extent.left], fromLonLat);
+                proj.setExtent(_extent);
+                addProjection(proj);
 
-                    // Expose projection extent with custom defs into OpenLayers global variable
-                    if (window.ol && window.ol.proj && window.ol.proj.addProjection) {
-                        window.ol.proj.addProjection(proj);
-                    }
+                // Expose projection extent with custom defs into OpenLayers global variable
+                if (window.ol && window.ol.proj && window.ol.proj.addProjection) {
+                    window.ol.proj.addProjection(proj);
                 }
             }
         }
