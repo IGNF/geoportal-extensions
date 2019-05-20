@@ -31,10 +31,8 @@ function Scale (options) {
     this._initialize();
 
     var container = this._initContainer();
-    var vDiv = document.getElementById("viewerDiv");
 
-    // by default, add the control on the viwerDiv
-    var targetDiv = document.getElementById(options.target) || vDiv;
+    var targetDiv = document.getElementById(options.target) || null;
 
     Widget.call(
         this, {

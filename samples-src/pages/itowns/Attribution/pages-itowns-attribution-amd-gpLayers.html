@@ -44,25 +44,27 @@
                 const viewerDiv = document.getElementById("viewerDiv");
                 globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
 
-                // ajout des couches
-                // Couche MNT Geoportail (WMTS)
-                globeView.addLayer(new itowns.layer.GeoportalElevation({
-                    layer: "ELEVATION.ELEVATIONGRIDCOVERAGE"
-                }));
-
-                // Couche WMTS Geoportail
-                globeView.addLayer(new itowns.layer.GeoportalWMTS({
-                    layer: "ORTHOIMAGERY.ORTHOPHOTOS"
-                }));
-
-                // Couche WMS Geoportail 
-                globeView.addLayer(new itowns.layer.GeoportalWMS({
-                    layer: "REGION.2016",
-                    itownsParams: {
-                        opacity: 0.5
-                    }
-                }));
                 globeView.listen(itowns.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
+
+                    // ajout des couches
+                    // Couche MNT Geoportail (WMTS)
+                    globeView.addLayer(new itowns.layer.GeoportalElevation({
+                        layer: "ELEVATION.ELEVATIONGRIDCOVERAGE"
+                    }));
+                
+                    // Couche WMTS Geoportail
+                    globeView.addLayer(new itowns.layer.GeoportalWMTS({
+                        layer: "ORTHOIMAGERY.ORTHOPHOTOS"
+                    }));
+                
+                    // Couche WMS Geoportail 
+                    globeView.addLayer(new itowns.layer.GeoportalWMS({
+                        layer: "REGION.2016",
+                        itownsParams: {
+                            opacity: 0.5
+                        }
+                    }));
+
                     // eslint-disable-next-line no-console
                     console.info("Globe initialized");
                     var attribution = new itowns.control.Attributions({
@@ -72,7 +74,8 @@
                     });
                     globeView.addWidget(attribution);
                 });
-            }
+            };
+
             Gp.Services.getConfig({
                 // serverUrl : "./../resources/AutoConf.js",
                 // callbackSuffix : '',

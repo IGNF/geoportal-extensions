@@ -25,11 +25,11 @@
    "peerDependencies" : {},
    "date" : "01/02/2019",
    "dependencies" : {
-      "itowns" : "2.3.0",
+      "itowns" : "2.8.0",
       "request" : "^2.83.0",
       "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/master/geoportal-access-lib-2.1.2.tgz",
       "loglevel" : "~1.6.1",
-      "three" : "~0.93.0",
+      "three" : "~0.97.0",
       "three.meshline" : "~1.1.0",
       "xmldom" : "^0.1.27",
       "sortablejs" : "1.8.4",

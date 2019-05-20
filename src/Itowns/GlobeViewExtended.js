@@ -43,24 +43,24 @@ function GlobeViewExtended (viewerDiv, coordCarto, options) {
     this._globeView.addFrameRequester(this._itowns.MAIN_LOOP_EVENTS.BEFORE_RENDER, function () {
         clearTimeout(this._preRenderTimer);
         self._preRenderTimer = setTimeout(function () {
-            if (self._fetchVisibleColorLayers || self._fetchVisibleElevationLayers || self._fetchExtent) {
-                var event = {
-                    type : GlobeViewExtended.EVENTS.PRE_RENDER
-                };
-                if (self._fetchExtent) {
-                    event.extent = new self._itowns.Extent("EPSG:4326", 180, -180, 90, -90);
-                }
-                if (self._fetchVisibleColorLayers) {
-                    event.colorLayersId = [];
-                }
-                if (self._fetchVisibleElevationLayers) {
-                    event.elevationLayersId = [];
-                }
+            var visibleColorLayersIds = [];
+            var visibleElevationLayersIds = [];
 
-                self._getCurrentSceneInfos(self._globeView.scene, event);
-
-                self._globeView.dispatchEvent(event);
+            for (var i = 0; i < self.getGlobeView().tileLayer.info.displayed.layers.length; ++i) {
+                if (self.getGlobeView().tileLayer.info.displayed.layers[i].isColorLayer) {
+                    visibleColorLayersIds.push(self.getGlobeView().tileLayer.info.displayed.layers[i].id);
+                }
+                if (self.getGlobeView().tileLayer.info.displayed.layers[i].isElevationLayer) {
+                    visibleElevationLayersIds.push(self.getGlobeView().tileLayer.info.displayed.layers[i].id);
+                }
             }
+            var currentExtent = self.getGlobeView().tileLayer.info.displayed.extent;
+            self._globeView.dispatchEvent({
+                type : GlobeViewExtended.EVENTS.PRE_RENDER,
+                colorLayersId : visibleColorLayersIds,
+                elevationLayersId : visibleElevationLayersIds,
+                extent : currentExtent
+            });
         }, 100);
     }.bind(this));
 
@@ -82,6 +82,7 @@ GlobeViewExtended.prototype._initEventMap = function () {
             LAYER_REMOVED : this._itowns.GLOBE_VIEW_EVENTS.LAYER_REMOVED,
             LAYERS_ORDER_CHANGED : this._itowns.GLOBE_VIEW_EVENTS.COLOR_LAYERS_ORDER_CHANGED,
             GLOBE_INITIALIZED : this._itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED,
+            LAYERS_INITIALIZED : this._itowns.VIEW_EVENTS.LAYERS_INITIALIZED,
             VIEW_INITIALIZED : "viewinitialized",
             PRE_RENDER : "prerender",
             MOUSE_MOVE : "mousemove",
@@ -213,6 +214,7 @@ GlobeViewExtended.prototype._getEventTarget = function (type) {
         case GlobeViewExtended.EVENTS.LAYER_ADDED:
         case GlobeViewExtended.EVENTS.LAYER_REMOVED:
         case GlobeViewExtended.EVENTS.LAYERS_ORDER_CHANGED:
+        case GlobeViewExtended.EVENTS.LAYERS_INITIALIZED:
         case GlobeViewExtended.EVENTS.GLOBE_INITIALIZED:
         case GlobeViewExtended.EVENTS.PRE_RENDER:
         case GlobeViewExtended.EVENTS.AFTER_RENDER:
@@ -284,7 +286,7 @@ GlobeViewExtended.prototype.addLayer = function (layer) {
     // is integrated into an iTowns release
     try {
         var promise = this.getGlobeView().addLayer(layer);
-        this.getGlobeView().notifyChange(true);
+        this.getGlobeView().notifyChange(layer);
     } catch (error) {
         return Promise.reject(error);
     }
@@ -299,7 +301,6 @@ GlobeViewExtended.prototype.addLayer = function (layer) {
  */
 GlobeViewExtended.prototype.removeLayer = function (layerId) {
     this.getGlobeView().removeLayer(layerId);
-    this.getGlobeView().notifyChange(true);
 };
 
 /**
@@ -309,8 +310,9 @@ GlobeViewExtended.prototype.removeLayer = function (layerId) {
  * @param {Number} opacityValue - opacity value in [0 1]
  */
 GlobeViewExtended.prototype.setLayerOpacity = function (layerId, opacityValue) {
-    this.getColorLayerById(layerId).opacity = opacityValue;
-    this.getGlobeView().notifyChange(true);
+    var layer = this.getColorLayerById(layerId);
+    layer.opacity = opacityValue;
+    this.getGlobeView().notifyChange(layer);
 };
 
 /**
@@ -320,8 +322,9 @@ GlobeViewExtended.prototype.setLayerOpacity = function (layerId, opacityValue) {
  * @param {Boolean} visible - New visibility of the layer
  */
 GlobeViewExtended.prototype.setLayerVisibility = function (layerId, visible) {
-    this.getColorLayerById(layerId).visible = visible;
-    this.getGlobeView().notifyChange(true);
+    var layer = this.getColorLayerById(layerId);
+    layer.visible = visible;
+    this.getGlobeView().notifyChange(layer);
 };
 
 /**
@@ -332,7 +335,6 @@ GlobeViewExtended.prototype.setLayerVisibility = function (layerId, visible) {
  */
 GlobeViewExtended.prototype.moveLayerToIndex = function (layerId, index) {
     this._itowns.ColorLayersOrdering.moveLayerToIndex(this.getGlobeView(), layerId, index);
-    this.getGlobeView().notifyChange(true);
 };
 
 /**
@@ -431,7 +433,7 @@ GlobeViewExtended.prototype.getLayerById = function (layerId) {
  */
 GlobeViewExtended.prototype.getColorLayerById = function (layerId) {
     var layer = this.getGlobeView().getLayers(function (l) {
-        if (l.id === layerId && l.type === "color") {
+        if (l.id === layerId && l.isColorLayer) {
             return l;
         }
     })[0];
@@ -449,7 +451,7 @@ GlobeViewExtended.prototype.getColorLayerById = function (layerId) {
  */
 GlobeViewExtended.prototype.getColorLayers = function () {
     return this.getGlobeView().getLayers(function (layer) {
-        if (layer.type === "color") {
+        if (layer.isColorLayer) {
             return layer;
         }
     });
@@ -475,7 +477,7 @@ GlobeViewExtended.prototype.getVectorLayers = function () {
  */
 GlobeViewExtended.prototype.getElevationLayers = function () {
     return this.getGlobeView().getLayers(function (layer) {
-        if (layer.type === "elevation") {
+        if (layer.isElevationLayer) {
             return layer;
         }
     });
@@ -487,52 +489,7 @@ GlobeViewExtended.prototype.getElevationLayers = function () {
  * @returns {Array} current view extent
  */
 GlobeViewExtended.prototype.getExtent = function () {
-    var options = {
-        extent : new this._itowns.Extent("EPSG:4326", 180, -180, 90, -90)
-    };
-
-    this._getCurrentSceneInfos(this.scene, options);
-
-    return options.extent;
-};
-
-/**
- * Recursive method to fetch information about the current view (extent, layers displayed...)
- *
- * @param {Object} node - itowns node
- * @param {Object} options - object containing objects to fill with info if specified
- * @private
- */
-GlobeViewExtended.prototype._getCurrentSceneInfos = function (node, options) {
-    if (!node || !node.visible) {
-        return;
-    }
-    if (node.level) {
-        if (node.material.visible) {
-            if (options.colorLayersId) {
-                for (var i = 0; i < node.material.colorLayersId.length; ++i) {
-                    if (options.colorLayersId.indexOf(node.material.colorLayersId[i]) < 0) {
-                        options.colorLayersId.push(node.material.colorLayersId[i]);
-                    }
-                }
-            }
-            if (options.elevationLayersId) {
-                for (var j = 0; j < node.material.elevationLayersId.length; ++j) {
-                    if (options.elevationLayersId.indexOf(node.material.elevationLayersId[j]) < 0) {
-                        options.elevationLayersId.push(node.material.elevationLayersId[j]);
-                    }
-                }
-            }
-            if (options.extent) {
-                options.extent.union(node.extent);
-            }
-        }
-    }
-    if (node.children) {
-        for (var child in node.children) {
-            this._getCurrentSceneInfos(node.children[child], options);
-        }
-    }
+    return this.getGlobeView().tileLayer.info.displayed.extent;
 };
 
 /**
@@ -596,7 +553,10 @@ GlobeViewExtended.prototype.getScale = function () {
  * @return {Promise} promise
  */
 GlobeViewExtended.prototype.setTilt = function (tilt) {
-    return this.getGlobeView().controls.setTilt(tilt, false);
+    this.onCameraMoveStop(function () {
+        this.getGlobeView().controls.setTilt(tilt, false);
+        this.notifyChange();
+    }.bind(this));
 };
 
 /**
@@ -605,7 +565,7 @@ GlobeViewExtended.prototype.setTilt = function (tilt) {
  * @return {Number} - Tilt
  */
 GlobeViewExtended.prototype.getTilt = function () {
-    return this.getGlobeView().controls.getCameraOrientation()[0];
+    return this.getGlobeView().controls.getTilt();
 };
 
 /**
@@ -615,7 +575,10 @@ GlobeViewExtended.prototype.getTilt = function () {
  * @return {Promise} promise
  */
 GlobeViewExtended.prototype.setAzimuth = function (azimuth) {
-    return this.getGlobeView().controls.setHeading(azimuth, false);
+    this.onCameraMoveStop(function () {
+        this.getGlobeView().controls.setHeading(azimuth, false);
+        this.notifyChange();
+    }.bind(this));
 };
 
 /**
@@ -624,7 +587,7 @@ GlobeViewExtended.prototype.setAzimuth = function (azimuth) {
  * @return {Number} azimuth
  */
 GlobeViewExtended.prototype.getAzimuth = function () {
-    return this.getGlobeView().controls.getCameraOrientation()[1];
+    return this.getGlobeView().controls.getHeading();
 };
 
 /**
@@ -695,7 +658,8 @@ GlobeViewExtended.prototype.getFeaturesAtMousePosition = function (mouseEvent) {
  * @return {Promise} A promise that resolves when the next 'globe initilazed' event fires.
  */
 GlobeViewExtended.prototype.setCameraTargetGeoPosition = function (center) {
-    return this.getGlobeView().controls.setCameraTargetGeoPositionAdvanced(center, false);
+    let itownsCoord = this._transformCoords(center);
+    return this.getGlobeView().controls.lookAtCoordinate(itownsCoord, false);
 };
 
 /**
@@ -704,13 +668,8 @@ GlobeViewExtended.prototype.setCameraTargetGeoPosition = function (center) {
  * @return {Object} center
  */
 GlobeViewExtended.prototype.getCenter = function () {
-    var cameraCenter = this.getGlobeView().controls.getCameraTargetGeoPosition();
-    var center = {
-        lon : cameraCenter.longitude(),
-        lat : cameraCenter.latitude(),
-        alt : cameraCenter.altitude()
-    };
-    return center;
+    var cameraCenter = this.getGlobeView().controls.getLookAtCoordinate();
+    return this._fromItownsCoords(cameraCenter);
 };
 
 /**
@@ -761,8 +720,8 @@ GlobeViewExtended.prototype.getRange = function () {
 /**
  * @return {THREE.Vector3} position
  */
-GlobeViewExtended.prototype.moveTarget = function () {
-    return this.getGlobeView().controls.moveTarget();
+GlobeViewExtended.prototype.getCameraTargetPosition = function () {
+    return this.getGlobeView().controls.getCameraTargetPosition();
 };
 
 /**
@@ -811,7 +770,7 @@ GlobeViewExtended.prototype.lookAt = function (target) {
  * Notifies the scene it needs to be updated
  */
 GlobeViewExtended.prototype.notifyChange = function () {
-    this.getGlobeView().notifyChange(true);
+    this.getGlobeView().notifyChange(this.getGlobeView().camera.camera3D);
 };
 
 /**
@@ -822,7 +781,43 @@ GlobeViewExtended.prototype.notifyChange = function () {
 */
 GlobeViewExtended.prototype.resize = function (width, height) {
     this.getGlobeView().mainLoop.gfxEngine.onWindowResize(width, height);
-    this.getGlobeView().notifyChange(true);
+    this.notifyChange();
+};
+
+/**
+* Transform to itowns coordinates
+*
+* @param {Object} coordCarto - longitude, latitude, altitude
+* @returns {Object} itowns coordinates
+*/
+GlobeViewExtended.prototype._transformCoords = function (coordCarto) {
+    if (coordCarto === undefined) return;
+
+    let itownsCoord = {};
+
+    if (coordCarto.zoom !== undefined) itownsCoord.zoom = coordCarto.zoom;
+    if (coordCarto.tilt !== undefined) itownsCoord.tilt = coordCarto.tilt;
+    if (coordCarto.heading !== undefined) itownsCoord.heading = coordCarto.heading;
+
+    if (coordCarto.longitude !== undefined && coordCarto.latitude !== undefined) {
+        let altitude = coordCarto.altitude || 0;
+        itownsCoord.coord = new Itowns.Coordinates("EPSG:4326", coordCarto.longitude, coordCarto.latitude, altitude);
+    }
+    return itownsCoord;
+};
+
+/**
+* Transform from itowns coordinates
+*
+* @param {Object} itownsCoord - itowns coordinates
+* @returns {Object} coordinates
+*/
+GlobeViewExtended.prototype._fromItownsCoords = function (itownsCoord) {
+    return {
+        lon : itownsCoord.longitude(),
+        lat : itownsCoord.latitude(),
+        alt : itownsCoord.altitude()
+    };
 };
 
 export default GlobeViewExtended;

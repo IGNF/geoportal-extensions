@@ -38,10 +38,10 @@
         "label": "LayerSwitcher : default",
         "cookiePath": "backstop_data/itowns/engine_scripts/cookies.json",
         "url": "https://localhost:8087/test_rendering/itowns/layerswitcher.html",
-        "delay": 1000,
+        "delay": 10000,
         "clickSelector": "label[id^=GPshowLayersListPicto]",
-        "misMatchThreshold" : 10,
-        "postInteractionWait": 1000,
+        "misMatchThreshold" : 30,
+        "postInteractionWait": 10000,
         "selectors": ["div[id^=GPlayerSwitcher-]"]
       },
       {

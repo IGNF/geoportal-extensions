@@ -2,6 +2,7 @@
 import Utils from "../../Common/Utils";
 import Config from "../../Common/Utils/Config";
 import Logger from "../../Common/Utils/LoggerByDefault";
+import * as Itowns from "itowns";
 
 var logger = Logger.getLogger("wmtsLayer");
 
@@ -47,47 +48,55 @@ function LayerWMTS (options) {
     var layerId = Config.getLayerId(options.layer, "WMTS");
 
     if (layerId && Config.configuration.getLayerConf(layerId)) {
+        var config = {};
         var wmtsParams = Config.getLayerParams(options.layer, "WMTS", options.apiKey);
+
+        if (wmtsParams.projection === "EPSG:3857" && wmtsParams.extent) {
+            wmtsParams.extent = new Itowns.Extent("EPSG:4326", wmtsParams.extent.left, wmtsParams.extent.right, wmtsParams.extent.bottom, wmtsParams.extent.top).as("EPSG:3857");
+        } else {
+            wmtsParams.extent = new Itowns.Extent("EPSG:4326", wmtsParams.extent.left, wmtsParams.extent.right, wmtsParams.extent.bottom, wmtsParams.extent.top);
+        }
 
         // si ssl = false on fait du http
         // par défaut, ssl = true, on fait du https
         var protocol = options.ssl === false ? "http://" : "https://";
 
-        this.type = "color";
-        this.protocol = "wmts";
-        this.id = layerId;
-        this.url = wmtsParams.url.replace(/(http|https):\/\//, protocol);
-        this.updateStrategy = {
-            type : 0,
-            options : {}
-        };
-        this.networkOptions = {
-            crossOrigin : "omit"
-        };
-        this.projection = wmtsParams.projection;
-        this.options = {
-            originators : wmtsParams.originators,
-            name : options.layer,
-            mimetype : wmtsParams.format,
-            tileMatrixSet : wmtsParams.TMSLink,
-            extent : {
-                west : wmtsParams.extent.left,
-                east : wmtsParams.extent.right,
-                south : wmtsParams.extent.bottom,
-                north : wmtsParams.extent.top
+        config.id = layerId;
+        config.source = new Itowns.WMTSSource({
+            protocol : "wmts",
+            url : wmtsParams.url.replace(/(http|https):\/\//, protocol),
+            networkOptions : {
+                crossOrigin : "omit"
             },
-            tileMatrixSetLimits : wmtsParams.tileMatrices
-        };
+            updateStrategy : {
+                type : 0,
+                options : {}
+            },
+            projection : wmtsParams.projection,
+            attribution : wmtsParams.originators,
+            name : options.layer,
+            format : wmtsParams.format,
+            tileMatrixSet : wmtsParams.TMSLink,
+            tileMatrixSetLimits : wmtsParams.tileMatrixSetLimits,
+            extent : {
+                west : wmtsParams.extent.west(),
+                east : wmtsParams.extent.east(),
+                south : wmtsParams.extent.south(),
+                north : wmtsParams.extent.north()
+            }
+        });
 
         // récupération des autres paramètres passés par l'utilisateur
-        Utils.mergeParams(this, options.itownsParams);
+        Utils.mergeParams(config, options.itownsParams);
 
         // add legends and metadata (to be added to LayerSwitcher control)
-        this.legends = wmtsParams.legends;
-        this.metadata = wmtsParams.metadata;
-        this.description = wmtsParams.description;
-        this.title = wmtsParams.title;
-        this.quicklookUrl = wmtsParams.quicklookUrl;
+        config.legends = wmtsParams.legends;
+        config.metadata = wmtsParams.metadata;
+        config.description = wmtsParams.description;
+        config.title = wmtsParams.title;
+        config.quicklookUrl = wmtsParams.quicklookUrl;
+
+        return new Itowns.ColorLayer(config.id, config);
     } else {
         // If layer is not in Gp.Config
         logger.error("ERROR layer id (layer name: " + options.layer + " / service: WMTS ) was not found !?");
