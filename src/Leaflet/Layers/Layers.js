@@ -1,4 +1,3 @@
-/* globals window, self */
 import L from "leaflet";
 import Logger from "../../Common/Utils/LoggerByDefault";
 import LayerConfig from "./LayerConfig";

@@ -1,4 +1,4 @@
-/* global module, root */
+/* global module, __dirname */
 
 // -- modules
 var fs = require("fs");
@@ -55,7 +55,7 @@ module.exports = (env, argv) => {
             filename : "[name]" + suffix + ".js",
             library : "Gp",
             // libraryTarget : "umd", // FIXME on abandonne le mode umd !?
-            umdNamedDefine : true // ?
+            // umdNamedDefine : true // mode umd !
         },
         resolve : {
             alias : {

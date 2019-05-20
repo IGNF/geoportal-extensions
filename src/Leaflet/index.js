@@ -94,10 +94,10 @@ export const leafletExtVersion = Pkg.leafletExtVersion;
 export const leafletExtDate = Pkg.date;
 
 // Classes utilitaires
-export {default as LayerUtils} from "../Common/Utils/LayerUtils";
-export {default as ProxyUtils} from "../Common/Utils/ProxyUtils";
-export {default as ColorUtils} from "../Common/Utils/ColorUtils";
-export {default as MathUtils} from "../Common/Utils/MathUtils";
+export { default as LayerUtils } from "../Common/Utils/LayerUtils";
+export { default as ProxyUtils } from "../Common/Utils/ProxyUtils";
+export { default as ColorUtils } from "../Common/Utils/ColorUtils";
+export { default as MathUtils } from "../Common/Utils/MathUtils";
 
 // creation du namespace pour les extensions leaflet
 L.geoportalLayer = Layers; // WMS et WMTS
