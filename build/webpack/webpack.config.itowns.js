@@ -295,7 +295,9 @@ module.exports = (env, argv) => {
         /** AJOUT DES LICENCES */
         .concat([
             new BannerWebPackPlugin({
-                banner : fs.readFileSync(path.join(ROOT, "build/licences", "licence-proj4js.txt"), "utf8"),
+                banner : header(fs.readFileSync(path.join(ROOT, "build/licences", "licence-proj4js.tmpl"), "utf8"), {
+                    __VERSION__ : pkg.dependencies["proj4"],
+                }),
                 raw : true
             }),
             new BannerWebPackPlugin({
@@ -303,7 +305,9 @@ module.exports = (env, argv) => {
                 raw : true
             }),
             new BannerWebPackPlugin({
-                banner : fs.readFileSync(path.join(ROOT, "build/licences", "licence-sortable.txt"), "utf8"),
+                banner : header(fs.readFileSync(path.join(ROOT, "build/licences", "licence-sortablejs.tmpl"), "utf8"), {
+                    __VERSION__ : pkg.dependencies["sortablejs"],
+                }),
                 raw : true
             }),
             new BannerWebPackPlugin({

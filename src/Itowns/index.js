@@ -120,6 +120,6 @@ Itowns.CRS = CRS;
 Itowns.GlobeViewExtended = GlobeViewExtended;
 
 export {
-    /** Expose extensions leaflet extended */
+    /** Expose extensions extended */
     Itowns as itownsExtended
 };
