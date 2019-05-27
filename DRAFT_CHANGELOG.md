@@ -47,6 +47,8 @@ Il est possible d'étendre la liste via la fonction :
 
     - Déplacement des CSS dans les sources
 
+    - Mise à jour des licences
+
     - [dev-workflow] Mise en place du répertoire *build*
     - [dev-workflow] Livraison des sources (via *npm*)
     - [dev-workflow] Modification de la procédure de livraison
@@ -87,6 +89,90 @@ Il est possible d'étendre la liste via la fonction :
 
     - Test d'existence des projections sur le widget *MousePosition*
 
+
+* [Security]
+
+    - [dev-workflow] Mise à jour des dependances de dev (faille de sécurité)
+
+
+---
+
+
+# Extension Geoportail Itowns, version 2.2.0
+
+    **13/05/2019 : version 2.2.0**
+    > Release Extension Geoportail Itowns
+
+## Summary
+
+    * Migration d'Itowns en version 2.8.0
+    * Migration Webpack en version > 4.0.0
+    * Description plus précise de la variable globale **Gp** dans la jsdoc
+
+## Changelog
+
+* [Changed]
+
+    - Déplacement des CSS dans les sources
+
+    - Mise à jour des licences
+
+    - [dev-workflow] Mise en place du répertoire *build*
+    - [dev-workflow] Livraison des sources (via *npm*)
+    - [dev-workflow] Modification de la procédure de livraison
+
+* [Added]
+
+    - [dev-workflow] Mise en place d'un *CHANGELOG* (historique des modifications)
+    - [dev-workflow] Mise en place de *HOWTO* à destination des developpeurs
+
+* [Removed]
+
+    - [dev-workflow] Suppression du mode de construction des bundles dit *"mixte"*
+    (La construction est portée par le projet *geoportal-sdk*)
+
+* [Deprecated]
+
+    - [dev-workflow] Mise en place du protocole *HTTPS* par defaut sur les exemples
+
+* [Security]
+
+    - [dev-workflow] Mise à jour des dependances de dev (faille de sécurité)
+
+
+---
+
+
+# Extension Geoportail Leaflet, version 2.2.0
+
+    **13/05/2019 : version 2.2.0**
+    > Release Extension Geoportail Leaflet
+
+## Summary
+
+    * Migration Webpack en version > 4.0.0
+    * Description plus précise de la variable globale **Gp** dans la jsdoc
+
+## Changelog
+
+* [Changed]
+
+    - Déplacement des CSS dans les sources
+
+    - Mise à jour des licences
+
+    - [dev-workflow] Mise en place du répertoire *build*
+    - [dev-workflow] Livraison des sources (via *npm*)
+    - [dev-workflow] Modification de la procédure de livraison
+
+* [Added]
+
+    - [dev-workflow] Mise en place d'un *CHANGELOG* (historique des modifications)
+    - [dev-workflow] Mise en place de *HOWTO* à destination des developpeurs
+
+* [Deprecated]
+
+    - [dev-workflow] Mise en place du protocole *HTTPS* par defaut sur les exemples
 
 * [Security]
 

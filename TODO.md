@@ -12,6 +12,10 @@ Cette branche est clonée sur [feature-layerimport-mapbox] :
         Gestion des groupes dans l'editeur MapBox...
 
 
+> **INFO**
+Prise en compte des dev sur itowns 2.8.0 (branche itowns_v2.8.0)
+
+
 Pour la creation des modules et des exemples, on utilise la commande suivante :
 > ./node_modules/.bin/webpack --config build/webpack/webpack.config.openlayers.modules.js
 [--env.[development|production]]
@@ -20,12 +24,10 @@ Pour la creation des modules et des exemples, on utilise la commande suivante :
 Les bundles des modules sont disponible :
 > dist/openlayers/modules/
 
+
 Les exemples sont disponibles dans le répertoire *samples*, et
 les fichiers sont suffixés avec le tag *modules*.
 
-> **INFO**
-> if you set NODE_ENV=production or use the --production flag it will not install devDependencies
-> when you run *npm install*
 
 # OpenLayers 5.3.0
 
@@ -163,7 +165,7 @@ les fichiers sont suffixés avec le tag *modules*.
         cf. https://github.com/openlayers/openlayers/blob/master/changelog/upgrade-notes.md#changes-in-proj4-integration
 
         - [x] *FIXME* performance sur l'ajout des projection avec ol et proj4 !!!
-        
+
             cf. test de performance...
             ```
             Doit on charger autant de projections ?
@@ -197,6 +199,9 @@ les fichiers sont suffixés avec le tag *modules*.
 * [ ] **EVOL** Autoprefixer CSS avec postCSS
 
 * [ ] *FIXME* webpack supprime les commentaires ainsi que les copyright sur la minification !?
+    cf. https://github.com/webpack-contrib/terser-webpack-plugin#extractcomments
+    cf. https://github.com/webpack-contrib/uglifyjs-webpack-plugin/issues/222
+
 
 * [ ] **TODO** bundlesize : cf. https://github.com/siddharthkp/bundlesize
 
