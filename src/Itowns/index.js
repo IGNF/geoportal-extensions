@@ -34,7 +34,7 @@
 
 import Pkg from "../../package";
 
-// import * as Itowns from "itowns";
+import * as Itowns from "itowns";
 
 // CSS communes aux extensions !
 import "../Common/Styles";
@@ -57,18 +57,6 @@ import "../Common/Utils/AutoLoadConfig";
 
 // export des services
 import Gp from "geoportal-access-lib";
-
-function deepCopy (source, target, docopy) {
-    for (var prop in source) {
-        if (source.hasOwnProperty(prop)) {
-            if (!target.hasOwnProperty(prop)) {
-                target[prop] = source[prop];
-            } else if (typeof source[prop] === "object") {
-                deepCopy(source[prop], target[prop]);
-            }
-        }
-    }
-}
 
 // reconstruction des ns
 var Services = Gp.Services;
@@ -118,7 +106,6 @@ export const itownsExtVersion = Pkg.itownsExtVersion;
 export const itownsExtDate = Pkg.date;
 
 // creation of the namespace for the itowns extensions
-var Itowns = {};
 Itowns.control = {};
 Itowns.control.MousePosition = MousePosition;
 Itowns.control.LayerSwitcher = LayerSwitcher;
@@ -136,12 +123,3 @@ export {
     /** Expose extensions extended */
     Itowns as itownsExtended
 };
-
-// Expose extensions openlayers extended into ol
-if (window.itowns) {
-    // on fusionne les fonctionnalités itowns / étendues
-    // Gp.itownsExtended -> itowns
-    deepCopy(Itowns, window.itowns);
-    // itowns -> Gp.itownsExtended
-    deepCopy(window.itowns, Itowns);
-}
