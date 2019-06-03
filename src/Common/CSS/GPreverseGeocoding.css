@@ -123,7 +123,7 @@ input[id^="GPreverseGeocodingSubmit-"] {
 
 /* Calc waiting */
 
-// /* TODO: waiting  */
+/* TODO: waiting  */
 .GPreverseGeocodingCalcWaitingContainerVisible,
 .GPreverseGeocodingCalcWaitingContainerHidden {
   position: absolute;

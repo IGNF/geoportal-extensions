@@ -1,5 +1,14 @@
 import Logger from "../Common/Utils/LoggerByDefault";
-import * as Itowns from "itowns";
+import {
+    GlobeView as ItGlobeView,
+    Coordinates as ItCoordinates,
+    ColorLayersOrdering as ItColorLayersOrdering,
+    FeaturesUtils as ItFeaturesUtils,
+    MAIN_LOOP_EVENTS as IT_MAIN_LOOP_EVENTS,
+    CONTROL_EVENTS as IT_CONTROL_EVENTS,
+    GLOBE_VIEW_EVENTS as IT_GLOBE_VIEW_EVENTS,
+    VIEW_EVENTS as IT_VIEW_EVENTS
+} from "itowns";
 
 var logger = Logger.getLogger("GlobeViewExtended");
 
@@ -18,8 +27,6 @@ var logger = Logger.getLogger("GlobeViewExtended");
 function GlobeViewExtended (viewerDiv, coordCarto, options) {
     viewerDiv.style.position = (!options || !options.position) ? "relative" : options.position;
 
-    this._itowns = Itowns;
-
     // stockage de l'élément html porteur du globe
     this._viewerDiv = viewerDiv;
 
@@ -33,14 +40,14 @@ function GlobeViewExtended (viewerDiv, coordCarto, options) {
     this._isInitialized = false;
 
     // call constructor
-    this._globeView = new this._itowns.GlobeView(viewerDiv, coordCarto, options);
+    this._globeView = new ItGlobeView(viewerDiv, coordCarto, options);
 
     var self = this;
     this.listen(GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, function () {
         self._isInitialized = true;
     });
 
-    this._globeView.addFrameRequester(this._itowns.MAIN_LOOP_EVENTS.BEFORE_RENDER, function () {
+    this._globeView.addFrameRequester(IT_MAIN_LOOP_EVENTS.BEFORE_RENDER, function () {
         clearTimeout(this._preRenderTimer);
         self._preRenderTimer = setTimeout(function () {
             var visibleColorLayersIds = [];
@@ -75,18 +82,18 @@ function GlobeViewExtended (viewerDiv, coordCarto, options) {
 GlobeViewExtended.prototype._initEventMap = function () {
     if (!GlobeViewExtended.EVENTS) {
         GlobeViewExtended.EVENTS = {
-            RANGE_CHANGED : this._itowns.CONTROL_EVENTS.RANGE_CHANGED,
-            CENTER_CHANGED : this._itowns.CONTROL_EVENTS.CAMERA_TARGET_CHANGED,
-            ORIENTATION_CHANGED : this._itowns.CONTROL_EVENTS.ORIENTATION_CHANGED,
-            LAYER_ADDED : this._itowns.GLOBE_VIEW_EVENTS.LAYER_ADDED,
-            LAYER_REMOVED : this._itowns.GLOBE_VIEW_EVENTS.LAYER_REMOVED,
-            LAYERS_ORDER_CHANGED : this._itowns.GLOBE_VIEW_EVENTS.COLOR_LAYERS_ORDER_CHANGED,
-            GLOBE_INITIALIZED : this._itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED,
-            LAYERS_INITIALIZED : this._itowns.VIEW_EVENTS.LAYERS_INITIALIZED,
+            RANGE_CHANGED : IT_CONTROL_EVENTS.RANGE_CHANGED,
+            CENTER_CHANGED : IT_CONTROL_EVENTS.CAMERA_TARGET_CHANGED,
+            ORIENTATION_CHANGED : IT_CONTROL_EVENTS.ORIENTATION_CHANGED,
+            LAYER_ADDED : IT_GLOBE_VIEW_EVENTS.LAYER_ADDED,
+            LAYER_REMOVED : IT_GLOBE_VIEW_EVENTS.LAYER_REMOVED,
+            LAYERS_ORDER_CHANGED : IT_GLOBE_VIEW_EVENTS.COLOR_LAYERS_ORDER_CHANGED,
+            GLOBE_INITIALIZED : IT_GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED,
+            LAYERS_INITIALIZED : IT_VIEW_EVENTS.LAYERS_INITIALIZED,
             VIEW_INITIALIZED : "viewinitialized",
             PRE_RENDER : "prerender",
             MOUSE_MOVE : "mousemove",
-            AFTER_RENDER : this._itowns.MAIN_LOOP_EVENTS.AFTER_RENDER,
+            AFTER_RENDER : IT_MAIN_LOOP_EVENTS.AFTER_RENDER,
             OPACITY_PROPERTY_CHANGED : "opacity-property-changed",
             VISIBLE_PROPERTY_CHANGED : "visible-property-changed",
             SEQUENCE_PROPERTY_CHANGED : "sequence-property-changed"
@@ -126,10 +133,10 @@ GlobeViewExtended.prototype.isInitialized = function () {
 GlobeViewExtended.prototype.onCameraMoveStop = function (cb) {
     var self = this;
     function afterRenderHandler () {
-        self._globeView.removeFrameRequester(self._itowns.MAIN_LOOP_EVENTS.AFTER_CAMERA_UPDATE, afterRenderHandler);
+        self._globeView.removeFrameRequester(IT_MAIN_LOOP_EVENTS.AFTER_CAMERA_UPDATE, afterRenderHandler);
         cb();
     };
-    this._globeView.addFrameRequester(this._itowns.MAIN_LOOP_EVENTS.AFTER_CAMERA_UPDATE, afterRenderHandler);
+    this._globeView.addFrameRequester(IT_MAIN_LOOP_EVENTS.AFTER_CAMERA_UPDATE, afterRenderHandler);
 };
 
 /**
@@ -334,7 +341,7 @@ GlobeViewExtended.prototype.setLayerVisibility = function (layerId, visible) {
  * @param {Boolean} index - new index of the layer
  */
 GlobeViewExtended.prototype.moveLayerToIndex = function (layerId, index) {
-    this._itowns.ColorLayersOrdering.moveLayerToIndex(this.getGlobeView(), layerId, index);
+    ItColorLayersOrdering.moveLayerToIndex(this.getGlobeView(), layerId, index);
 };
 
 /**
@@ -639,7 +646,7 @@ GlobeViewExtended.prototype.getFeaturesAtMousePosition = function (mouseEvent) {
             if (!layer.visible) {
                 continue;
             }
-            var result = this._itowns.FeaturesUtils.filterFeaturesUnderCoordinate(geoCoord, layer.feature, precision);
+            var result = ItFeaturesUtils.filterFeaturesUnderCoordinate(geoCoord, layer.feature, precision);
             // we add the features to the visible features array
             for (idx = 0; idx < result.length; idx++) {
                 visibleFeatures.push(result[idx]);
@@ -801,7 +808,7 @@ GlobeViewExtended.prototype._transformCoords = function (coordCarto) {
 
     if (coordCarto.longitude !== undefined && coordCarto.latitude !== undefined) {
         let altitude = coordCarto.altitude || 0;
-        itownsCoord.coord = new Itowns.Coordinates("EPSG:4326", coordCarto.longitude, coordCarto.latitude, altitude);
+        itownsCoord.coord = new ItCoordinates("EPSG:4326", coordCarto.longitude, coordCarto.latitude, altitude);
     }
     return itownsCoord;
 };

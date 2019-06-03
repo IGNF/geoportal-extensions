@@ -1,7 +1,7 @@
 # Migration vers OpenLayers v5 & MapBox
 
-https://github.com/IGNF/geoportal-extensions/tree/update-ol5
-> PR : https://github.com/IGNF/geoportal-extensions/pull/228
+<https://github.com/IGNF/geoportal-extensions/tree/update-ol5>
+> PR : <https://github.com/IGNF/geoportal-extensions/pull/228>
 
 Cette branche est clonée sur [feature-layerimport-mapbox] :
 
@@ -11,7 +11,6 @@ Cette branche est clonée sur [feature-layerimport-mapbox] :
 
         Gestion des groupes dans l'editeur MapBox...
 
-
 > **INFO**
 Prise en compte des dev sur itowns 2.8.0 (branche itowns_v2.8.0)
 
@@ -20,18 +19,15 @@ Pour la creation des modules et des exemples, on utilise la commande suivante :
 > ./node_modules/.bin/webpack --config build/webpack/webpack.config.openlayers.modules.js
 [--env.[development|production]]
 
-
 Les bundles des modules sont disponible :
 > dist/openlayers/modules/
-
 
 Les exemples sont disponibles dans le répertoire *samples*, et
 les fichiers sont suffixés avec le tag *modules*.
 
+## OpenLayers 5.3.0
 
-# OpenLayers 5.3.0
-
-## Avancements
+### Avancements
 
 - [x] Migrer vers ol v5.3.0   : **OK**
 
@@ -39,18 +35,20 @@ les fichiers sont suffixés avec le tag *modules*.
 
 - [x] dépendance olms : externe ou interne ? : **OK**
 
-    - Comment doit on intégrer *olms* dans le code des extensions : interne ou externe ?
-        ```
-        La dependance *olms* est une extension pour openlayers qui permet de lire les
-        fichiers json de style MapBox. Nous en avons besoin au niveau de l'API Extensions
-        sur le widget *LayerImport*.
-        L'API SDK utilise aussi cette dependance.
-        ```
-        > la librairie ol est externalisée mais on decide de mettre olms en interne...
+  - Comment doit on intégrer *olms* dans le code des extensions : interne ou externe ?
+
+    ``` text
+    La dependance *olms* est une extension pour openlayers qui permet de lire les
+    fichiers json de style MapBox. Nous en avons besoin au niveau de l'API Extensions
+    sur le widget *LayerImport*.
+    L'API SDK utilise aussi cette dependance.
+    ```
+
+    > la librairie ol est externalisée mais on decide de mettre olms en interne...
 
 - [x] Tests à jouer / à creer : **OK**
 
-    cf. https://staxmanade.com/blog/categories/mochajs/
+    cf. <https://staxmanade.com/blog/categories/mochajs/>
 
     > **OK** test sur les projections !
 
@@ -78,8 +76,7 @@ les fichiers sont suffixés avec le tag *modules*.
 
 - [x] Exemples  : **OK**
 
-    > le proxy.php n'est pas reconnu comme du PHP par le serveur local webpack !?
-    On décide donc de rediriger les requêtes à proxifier vers un proxy déployé en local...
+    > le proxy.php n'est pas reconnu comme du PHP par le serveur local webpack !? On décide donc de rediriger les requêtes à proxifier vers un proxy déployé en local...
 
 - [x] **OK** Test des variables globales : *ex. Gp, ol et proj4*
 
@@ -167,17 +164,20 @@ les fichiers sont suffixés avec le tag *modules*.
         - [x] *FIXME* performance sur l'ajout des projection avec ol et proj4 !!!
 
             cf. test de performance...
-            ```
+
+            ``` text
             Doit on charger autant de projections ?
             Ne devrait on pas charger uniquement les projections usuelles ?
             Et proposer les autres à la demande via un appel de fonction de chargement ?
             ```
+
             > choix d'une liste par defaut + Gp.includeProjections()
 
         - [x] merge à faire : https://github.com/IGNF/geoportal-extensions/pull/227
 
         - [ ] *FIXME* bug pour ajouter des projection **geocent** sur le registre IGNF !?
-            ```
+
+            ``` text
             Comment peut remplacer ce type de projections ?
             ```
 
@@ -194,72 +194,70 @@ les fichiers sont suffixés avec le tag *modules*.
 
 ## TODOLIST sur la gestion du projet
 
-* [x] **FAIT** Migrer vers webpack 4
+- [x] **FAIT** Migrer vers webpack 4
 
-* [ ] **EVOL** Autoprefixer CSS avec postCSS
+- [ ] **EVOL** Autoprefixer CSS avec postCSS
 
-* [ ] *FIXME* webpack supprime les commentaires ainsi que les copyright sur la minification !?
-    cf. https://github.com/webpack-contrib/terser-webpack-plugin#extractcomments
-    cf. https://github.com/webpack-contrib/uglifyjs-webpack-plugin/issues/222
+- [ ] *FIXME* webpack supprime les commentaires ainsi que les copyright sur la minification !?
+  cf. <https://github.com/webpack-contrib/terser-webpack-plugin#extractcomments>
+  cf. <https://github.com/webpack-contrib/uglifyjs-webpack-plugin/issues/222>
 
+- [ ] **TODO** bundlesize : cf. https://github.com/siddharthkp/bundlesize
 
-* [ ] **TODO** bundlesize : cf. https://github.com/siddharthkp/bundlesize
+- [ ] **TODO** documentation sur l'utilisation de l'API en mode module ou bundle.
 
-* [ ] **TODO** documentation sur l'utilisation de l'API en mode module ou bundle.
+- [x] **FAIT** exemples AMD à supprimer.
 
-* [x] **FAIT** exemples AMD à supprimer.
+  > realisation d'un exemple dans le projet 3rd Party...
 
-    > realisation d'un exemple dans le projet 3rd Party...
+- [ ] **TODO** integration des extensions ES6 dans le projet 3rd Party...
 
-* [ ] **TODO** integration des extensions ES6 dans le projet 3rd Party...
+- [x] **FAIT** geoportal access lib
 
-* [x] **FAIT** geoportal access lib
+  > utilisation des sources ES6 modules dans le code.
 
-    > utilisation des sources ES6 modules dans le code.
+  une modification du package.json est à faire :
+  - *module* vers l'index des sources
+  - *main* pointe vers le bundle (non minifié)
+  - *browser* ?
 
-    une modification du package.json est à faire :
-    - *module* vers l'index des sources
-    - *main* pointe vers le bundle (non minifié)
-    - *browser* ?
+- [x] **FAIT** deplacement des CSS avec les JS
 
-
-* [x] **FAIT** deplacement des CSS avec les JS
-
-* [x] **FAIT** [MODULES] creation d'une CSS commune à tous les controles (via webpack)
+- [x] **FAIT** [MODULES] creation d'une CSS commune à tous les controles (via webpack)
 
     > **FIXME** creation d'un JS avec la CSS commune !?
-    cf. https://github.com/webpack-contrib/extract-text-webpack-plugin/issues/518
 
-* [x] **FAIT** [MODULES] creation des exemples des modules (via webpack)
+    cf. <https://github.com/webpack-contrib/extract-text-webpack-plugin/issues/518>
+
+- [x] **FAIT** [MODULES] creation des exemples des modules (via webpack)
 
     cf. webpack (build only samples) !
+- [x] **FAIT** [MODULES] modifier le template des exemples des modules
 
-* [x] **FAIT** [MODULES] modifier le template des exemples des modules
-
-* [x] **FAIT** deplacement des webpack dans un répertoire
+- [x] **FAIT** deplacement des webpack dans un répertoire
     > ex. build/
 
-* [x] **FAIT** deplacement des README dans un répertoire
+- [x] **FAIT** deplacement des README dans un répertoire
 
-* [x] **FAIT** deplacement des JSON dans un répertoire
+- [x] **FAIT** deplacement des JSON dans un répertoire
     > ex. build/
 
-* [x] **FAIT** deplacement des JSDOC dans un autre répertoire
+- [x] **FAIT** deplacement des JSDOC dans un autre répertoire
     > ex. build/
 
-* [x] **FAIT** deplacement des licences **templates** dans un répertoire
+- [x] **FAIT** deplacement des licences **templates** dans un répertoire
     > ex. build/
 
-* [x] **FAIT** maj du script de publication
+- [x] **FAIT** maj du script de publication
 
-* [x] **FAIT** changelog & draft
-    > https://api.github.com/repos/IGNF/geoportal-extensions/releases
+- [x] **FAIT** changelog & draft
+    > <https://api.github.com/repos/IGNF/geoportal-extensions/releases>
 
-# EVOL
+## EVOL
 
 - Autoconf
 
-    ```
+    ``` text
     Si on n'a pas d'autoconf (ou droit sur une ressources), une exception est lancée :
     "contract key configuration has to be loaded to load Geoportal layers"
 
@@ -272,6 +270,5 @@ les fichiers sont suffixés avec le tag *modules*.
 
 - Editeur MapBox
 
-    > Mettre en place un drag&drop sur les layers MapBox (gestion ordre d'empilement/affichage)
-
-    > Prévoir l'edition du mode circle, texte et/ou icone
+  - Mettre en place un drag&drop sur les layers MapBox (gestion ordre d'empilement/affichage)
+  - Prévoir l'edition du mode circle, texte et/ou icone

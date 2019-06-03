@@ -34,8 +34,6 @@
 
 import Pkg from "../../package";
 
-import * as Itowns from "itowns";
-
 // CSS communes aux extensions !
 import "../Common/Styles";
 import "./Styles";
@@ -99,6 +97,18 @@ export { default as ProxyUtils } from "../Common/Utils/ProxyUtils";
 export { default as ColorUtils } from "../Common/Utils/ColorUtils";
 export { default as MathUtils } from "../Common/Utils/MathUtils";
 
+function deepCopy (source, target, docopy) {
+    for (var prop in source) {
+        if (source.hasOwnProperty(prop)) {
+            if (!target.hasOwnProperty(prop)) {
+                target[prop] = source[prop];
+            } else if (typeof source[prop] === "object") {
+                deepCopy(source[prop], target[prop]);
+            }
+        }
+    }
+}
+
 // Adds extensions properties in the namespace
 /** Version */
 export const itownsExtVersion = Pkg.itownsExtVersion;
@@ -106,6 +116,7 @@ export const itownsExtVersion = Pkg.itownsExtVersion;
 export const itownsExtDate = Pkg.date;
 
 // creation of the namespace for the itowns extensions
+var Itowns = {};
 Itowns.control = {};
 Itowns.control.MousePosition = MousePosition;
 Itowns.control.LayerSwitcher = LayerSwitcher;
@@ -123,3 +134,10 @@ export {
     /** Expose extensions extended */
     Itowns as itownsExtended
 };
+
+// Expose extensions extended into itowns
+if (window.itowns) {
+    // on fusionne les fonctionnalités o
+    deepCopy(Itowns, window.itowns);
+    deepCopy(window.itowns, Itowns);
+}

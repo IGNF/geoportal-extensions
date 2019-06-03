@@ -8,7 +8,9 @@
                         "Gp"       : "{{ baseurl }}/dist/itowns/GpPluginItowns{{ mode }}"
                     },
                     shim : {
-                        "Gp" : ["itowns"]
+                        "Gp" : {
+                            deps:["itowns"]
+                        }
                     }
                 });
         </script>

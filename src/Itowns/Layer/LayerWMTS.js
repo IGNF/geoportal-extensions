@@ -1,8 +1,11 @@
-/* globals self */
 import Utils from "../../Common/Utils";
 import Config from "../../Common/Utils/Config";
 import Logger from "../../Common/Utils/LoggerByDefault";
-import * as Itowns from "itowns";
+import {
+    Extent as ItExtent,
+    WMTSSource as ItWMTSSource,
+    ColorLayer as ItColorLayer
+} from "itowns";
 
 var logger = Logger.getLogger("wmtsLayer");
 
@@ -52,9 +55,9 @@ function LayerWMTS (options) {
         var wmtsParams = Config.getLayerParams(options.layer, "WMTS", options.apiKey);
 
         if (wmtsParams.projection === "EPSG:3857" && wmtsParams.extent) {
-            wmtsParams.extent = new Itowns.Extent("EPSG:4326", wmtsParams.extent.left, wmtsParams.extent.right, wmtsParams.extent.bottom, wmtsParams.extent.top).as("EPSG:3857");
+            wmtsParams.extent = new ItExtent("EPSG:4326", wmtsParams.extent.left, wmtsParams.extent.right, wmtsParams.extent.bottom, wmtsParams.extent.top).as("EPSG:3857");
         } else {
-            wmtsParams.extent = new Itowns.Extent("EPSG:4326", wmtsParams.extent.left, wmtsParams.extent.right, wmtsParams.extent.bottom, wmtsParams.extent.top);
+            wmtsParams.extent = new ItExtent("EPSG:4326", wmtsParams.extent.left, wmtsParams.extent.right, wmtsParams.extent.bottom, wmtsParams.extent.top);
         }
 
         // si ssl = false on fait du http
@@ -62,7 +65,7 @@ function LayerWMTS (options) {
         var protocol = options.ssl === false ? "http://" : "https://";
 
         config.id = layerId;
-        config.source = new Itowns.WMTSSource({
+        config.source = new ItWMTSSource({
             protocol : "wmts",
             url : wmtsParams.url.replace(/(http|https):\/\//, protocol),
             networkOptions : {
@@ -96,7 +99,7 @@ function LayerWMTS (options) {
         config.title = wmtsParams.title;
         config.quicklookUrl = wmtsParams.quicklookUrl;
 
-        return new Itowns.ColorLayer(config.id, config);
+        return new ItColorLayer(config.id, config);
     } else {
         // If layer is not in Gp.Config
         logger.error("ERROR layer id (layer name: " + options.layer + " / service: WMTS ) was not found !?");

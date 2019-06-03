@@ -49,19 +49,19 @@
                         };
 
                         const viewerDiv = document.getElementById("viewerDiv");
-                        globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
+                        globeView = new Gp.itownsExtended.GlobeViewExtended(viewerDiv, positionOnGlobe);
 
                         itowns.Fetcher.json("{{ resources }}/itowns/JSONLayers/Ortho.json").then(result => globeView.addLayer(result));
 
                         itowns.Fetcher.json("{{ resources }}/itowns/JSONLayers/IGN_MNT.json").then(result => globeView.addLayer(result));
                         itowns.Fetcher.json("{{ resources }}/itowns/JSONLayers/IGN_MNT_HIGHRES.json").then(result => globeView.addLayer(result));
 
-                        globeView.listen(itowns.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
+                        globeView.listen(Gp.itownsExtended.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
                             // eslint-disable-next-line no-console
                             console.info("Globe initialized");
                         });
 
-                        var miniglobe = new itowns.control.MiniGlobe({
+                        var miniglobe = new Gp.itownsExtended.control.MiniGlobe({
                             target : viewerDiv,
                             position : "absolute"
                         });

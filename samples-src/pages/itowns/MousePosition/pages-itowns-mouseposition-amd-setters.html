@@ -118,10 +118,10 @@
 
                         // iTowns namespace defined here
                         const viewerDiv = document.getElementById('viewerDiv');
-                        const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
+                        const globeView = new Gp.itownsExtended.GlobeViewExtended(viewerDiv, positionOnGlobe);
 
-                        globeView.listen(itowns.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
-                            mousePosition = new itowns.control.MousePosition({
+                        globeView.listen(Gp.itownsExtended.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
+                            mousePosition = new Gp.itownsExtended.control.MousePosition({
                                 collapsed: false,
                                 displayCoordinates: true,
                                 displayAltitude: true

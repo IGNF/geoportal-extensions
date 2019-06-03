@@ -1,8 +1,11 @@
-/* globals self */
 import Utils from "../../Common/Utils";
 import Config from "../../Common/Utils/Config";
 import Logger from "../../Common/Utils/LoggerByDefault";
-import * as Itowns from "itowns";
+import {
+    Extent as ItExtent,
+    WMSSource as ItWMSSource,
+    ColorLayer as ItColorLayer
+} from "itowns";
 
 var logger = Logger.getLogger("wmsLayer");
 
@@ -52,9 +55,9 @@ function LayerWMS (options) {
         var wmsParams = Config.getLayerParams(options.layer, "WMS", options.apiKey);
 
         if (wmsParams.projection === "EPSG:3857" && wmsParams.extent) {
-            wmsParams.extent = new Itowns.Extent("EPSG:4326", wmsParams.extent.left, wmsParams.extent.right, wmsParams.extent.bottom, wmsParams.extent.top).as("EPSG:3857");
+            wmsParams.extent = new ItExtent("EPSG:4326", wmsParams.extent.left, wmsParams.extent.right, wmsParams.extent.bottom, wmsParams.extent.top).as("EPSG:3857");
         } else {
-            wmsParams.extent = new Itowns.Extent("EPSG:4326", wmsParams.extent.left, wmsParams.extent.right, wmsParams.extent.bottom, wmsParams.extent.top);
+            wmsParams.extent = new ItExtent("EPSG:4326", wmsParams.extent.left, wmsParams.extent.right, wmsParams.extent.bottom, wmsParams.extent.top);
         }
 
         // si ssl = false on fait du http
@@ -62,7 +65,7 @@ function LayerWMS (options) {
         var protocol = options.ssl === false ? "http://" : "https://";
 
         config.id = layerId;
-        config.source = new Itowns.WMSSource({
+        config.source = new ItWMSSource({
             protocol : "wms",
             version : wmsParams.version,
             attribution : wmsParams.originators,
@@ -98,7 +101,7 @@ function LayerWMS (options) {
         config.title = wmsParams.title;
         config.quicklookUrl = wmsParams.quicklookUrl;
 
-        return new Itowns.ColorLayer(config.id, config);
+        return new ItColorLayer(config.id, config);
     } else {
         // If layer is not in Gp.Config
         logger.error("ERROR layer id (layer name: " + options.layer + " / service: WMS ) was not found !?");

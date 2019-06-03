@@ -42,23 +42,23 @@
                 };
 
                 const viewerDiv = document.getElementById("viewerDiv");
-                globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
+                globeView = new Gp.itownsExtended.GlobeViewExtended(viewerDiv, positionOnGlobe);
 
-                globeView.listen(itowns.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
+                globeView.listen(Gp.itownsExtended.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
 
                     // ajout des couches
                     // Couche MNT Geoportail (WMTS)
-                    globeView.addLayer(new itowns.layer.GeoportalElevation({
+                    globeView.addLayer(new Gp.itownsExtended.layer.GeoportalElevation({
                         layer: "ELEVATION.ELEVATIONGRIDCOVERAGE"
                     }));
                 
                     // Couche WMTS Geoportail
-                    globeView.addLayer(new itowns.layer.GeoportalWMTS({
+                    globeView.addLayer(new Gp.itownsExtended.layer.GeoportalWMTS({
                         layer: "ORTHOIMAGERY.ORTHOPHOTOS"
                     }));
                 
                     // Couche WMS Geoportail 
-                    globeView.addLayer(new itowns.layer.GeoportalWMS({
+                    globeView.addLayer(new Gp.itownsExtended.layer.GeoportalWMS({
                         layer: "REGION.2016",
                         itownsParams: {
                             opacity: 0.5
@@ -67,7 +67,7 @@
 
                     // eslint-disable-next-line no-console
                     console.info("Globe initialized");
-                    var attribution = new itowns.control.Attributions({
+                    var attribution = new Gp.itownsExtended.control.Attributions({
                         options: {
                             // collapsed : true
                         }

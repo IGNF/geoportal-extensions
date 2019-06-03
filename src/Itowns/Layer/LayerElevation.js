@@ -2,7 +2,11 @@
 import Utils from "../../Common/Utils";
 import Config from "../../Common/Utils/Config";
 import Logger from "../../Common/Utils/LoggerByDefault";
-import * as Itowns from "itowns";
+import {
+    Extent as ItExtent,
+    WMTSSource as ItWMTSSource,
+    ElevationLayer as ItElevationLayer
+} from "itowns";
 
 var logger = Logger.getLogger("elevationLayer");
 
@@ -52,9 +56,9 @@ function LayerElevation (options) {
         var wmtsParams = Config.getLayerParams(options.layer, "WMTS", options.apiKey);
 
         if (wmtsParams.projection === "EPSG:3857" && wmtsParams.extent) {
-            wmtsParams.extent = new Itowns.Extent("EPSG:4326", wmtsParams.extent.left, wmtsParams.extent.right, wmtsParams.extent.bottom, wmtsParams.extent.top).as("EPSG:3857");
+            wmtsParams.extent = new ItExtent("EPSG:4326", wmtsParams.extent.left, wmtsParams.extent.right, wmtsParams.extent.bottom, wmtsParams.extent.top).as("EPSG:3857");
         } else {
-            wmtsParams.extent = new Itowns.Extent("EPSG:4326", wmtsParams.extent.left, wmtsParams.extent.right, wmtsParams.extent.bottom, wmtsParams.extent.top);
+            wmtsParams.extent = new ItExtent("EPSG:4326", wmtsParams.extent.left, wmtsParams.extent.right, wmtsParams.extent.bottom, wmtsParams.extent.top);
         }
 
         // gestion de mixContent dans l'url du service...
@@ -71,7 +75,7 @@ function LayerElevation (options) {
                 groups : [11, 14]
             }
         };
-        config.source = new Itowns.WMTSSource({
+        config.source = new ItWMTSSource({
             protocol : "wmts",
             url : wmtsParams.url.replace(/(http|https):\/\//, protocol),
             networkOptions : {
@@ -101,7 +105,7 @@ function LayerElevation (options) {
         config.title = wmtsParams.title;
         config.quicklookUrl = wmtsParams.quicklookUrl;
 
-        return new Itowns.ElevationLayer(config.id, config);
+        return new ItElevationLayer(config.id, config);
     } else {
         // If layer is not in Gp.Config
         logger.log("[source WMTS] ERROR : " + options.layer + " cannot be found in Geoportal Configuration. Make sure that this resource is included in your contract key.");

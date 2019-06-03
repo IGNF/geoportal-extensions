@@ -194,6 +194,15 @@ module.exports = (env, argv) => {
                         fallback : "responsive-loader",
                         quality : 100
                     },
+                },
+                {
+                    test : require.resolve("proj4"),
+                    use : [
+                        {
+                            loader : "expose-loader",
+                            options : "proj4"
+                        }
+                    ]
                 }
             ]
         },

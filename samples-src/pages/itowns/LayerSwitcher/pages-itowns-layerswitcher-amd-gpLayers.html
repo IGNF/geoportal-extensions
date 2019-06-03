@@ -39,23 +39,23 @@
 
                 // iTowns namespace defined here
                 const viewerDiv = document.getElementById('viewerDiv');
-                const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
+                const globeView = new Gp.itownsExtended.GlobeViewExtended(viewerDiv, positionOnGlobe);
 
-                globeView.listen(itowns.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
+                globeView.listen(Gp.itownsExtended.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
 
                     // ajout des couches
                     // Couche MNT Geoportail (WMTS)
-                    globeView.addLayer(new itowns.layer.GeoportalElevation({
+                    globeView.addLayer(new Gp.itownsExtended.layer.GeoportalElevation({
                         layer: "ELEVATION.ELEVATIONGRIDCOVERAGE"
                     }));
 
                     // Couche WMTS Geoportail
-                    globeView.addLayer(new itowns.layer.GeoportalWMTS({
+                    globeView.addLayer(new Gp.itownsExtended.layer.GeoportalWMTS({
                         layer: "ORTHOIMAGERY.ORTHOPHOTOS"
                     }));
 
                     // Couche WMS Geoportail 
-                    globeView.addLayer(new itowns.layer.GeoportalWMS({
+                    globeView.addLayer(new Gp.itownsExtended.layer.GeoportalWMS({
                         layer: "REGION.2016",
                         itownsParams: {
                             opacity: 0.5
@@ -63,7 +63,7 @@
                     }));
 
                     // ajout du control
-                    var layerSwitcher = new itowns.control.LayerSwitcher({
+                    var layerSwitcher = new Gp.itownsExtended.control.LayerSwitcher({
                         options: {
                             collapsed: true
                         },

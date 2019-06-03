@@ -144,10 +144,10 @@
 
                     // iTowns namespace defined here
                     const viewerDiv = document.getElementById('viewerDiv');
-                    globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
+                    globeView = new Gp.itownsExtended.GlobeViewExtended(viewerDiv, positionOnGlobe);
                     itownsGlobal = itowns;
 
-                    globeView.listen(itowns.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
+                    globeView.listen(Gp.itownsExtended.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
                         // ajout des couches
                         var promises = [];
                         promises.push( itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/IGN_MNT.json').then(result => globeView.addLayer(result)) );
@@ -158,7 +158,7 @@
 
                         Promise.all(promises).then( () => {
                             // ajout du control
-                            var layerSwitcher = new itowns.control.LayerSwitcher({
+                            var layerSwitcher = new Gp.itownsExtended.control.LayerSwitcher({
                                 layers : [
                                     {
                                         id : "Ortho",
