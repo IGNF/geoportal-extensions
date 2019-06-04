@@ -137,6 +137,12 @@ eval set -- "${opts}"
 while true; do
     case "$1" in
         -h|--help)
+            echo "Il faut au prealable construire les binaires :"
+            echo "  > npm run build"
+            echo ""
+            echo "Attention, la date et la version sont extraites du package.json principal."
+            echo "Par contre, les dependances ne sont pas gérées par le script..."
+            echo ""
             echo "Usage :"
             echo "    `basename $0` - construction du package TGZ à publier dans NPM"
             echo "    -h            Affiche cette aide."
@@ -144,8 +150,8 @@ while true; do
             echo "    -l            build : Leaflet,"
             echo "    -i            build : Itowns,"
             echo "    -a            build : All."
-            echo "Par defaut, le repertoire n'est pas supprimé"
-            echo "(cf. l'option 'clean=true' dans le code)."
+            echo ""
+            echo "Par defaut, le repertoire n'est pas supprimé."
             echo "Le package validé, on se place dans le répertoire pour la publication :"
             echo "  > npm login"
             echo "  > npm publish"

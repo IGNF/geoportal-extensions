@@ -183,8 +183,7 @@ module.exports = (env, argv) => {
                 new TerserJsWebPackPlugin({
                     terserOptions: {
                         output: {
-                            // FIXME supprime tous les commentaires
-                            // mais aussi les banner !
+                            // FIXME avec les banner !
                             comments: false,
                             // drop_console: true
                         },

@@ -21,7 +21,7 @@ Les projections chargées par défaut dans les extensions *OpenLayers* sont les 
  * ['EPSG:4326'],
  * ['EPSG:3785'], ['EPSG:3785'], ['EPSG:900913'], ['EPSG:102113'],
  * ["EPSG:2154"],
- * [ "EPSG:27571"], ["EPSG:27572"], ["EPSG:27573"],  ["EPSG:2757"],
+ * ["EPSG:27571"], ["EPSG:27572"], ["EPSG:27573"],  ["EPSG:2757"],
  * ["CRS:84"],
  * ["IGNF:LAMB93"],
  * ["IGNF:LAMBE"],

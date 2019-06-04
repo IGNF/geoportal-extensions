@@ -17,7 +17,7 @@ Prise en compte des dev sur itowns 2.8.0 (branche itowns_v2.8.0)
 
 Pour la creation des modules et des exemples, on utilise la commande suivante :
 > ./node_modules/.bin/webpack --config build/webpack/webpack.config.openlayers.modules.js
-[--env.[development|production]]
+[--mode=[development|production]]
 
 Les bundles des modules sont disponible :
 > dist/openlayers/modules/
@@ -198,11 +198,26 @@ les fichiers sont suffixés avec le tag *modules*.
 
 - [ ] **EVOL** Autoprefixer CSS avec postCSS
 
-- [ ] *FIXME* webpack supprime les commentaires ainsi que les copyright sur la minification !?
+- [x] webpack supprime les commentaires ainsi que les copyright sur la minification !?
+
   cf. <https://github.com/webpack-contrib/terser-webpack-plugin#extractcomments>
   cf. <https://github.com/webpack-contrib/uglifyjs-webpack-plugin/issues/222>
 
+  > **FAIT** utilisation de l'option "comment:'some'" mais encore qq soucis...
+
 - [ ] **TODO** bundlesize : cf. https://github.com/siddharthkp/bundlesize
+
+    | NEW   |  ol |  it |  L |
+    |-------|-----|-----|----|
+    | prod  | **1.2**  | 0.34 | 0.6  |
+    | map   | 8.8  | 3.4  | 5.3  |
+    | src   | 3.0  | 1.2  | 1.8  |
+
+    | OLD   |  ol |  it |  L |
+    |-------|-----|-----|----|
+    | prod  | 0.75 | 0.34 | 0.6  |
+    | map   | 6.3  | 3.3  | 5.3  |
+    |  src  | 2.1  | 1.2  | 1.9  |
 
 - [ ] **TODO** documentation sur l'utilisation de l'API en mode module ou bundle.
 

@@ -4,6 +4,7 @@
 samples-src/*
 test/*
 test_rendering/*
+dist/*
 
 # Ignore webpack.config files
 webpack.*
