@@ -170,26 +170,24 @@ Editor.prototype._initialize = function () {
     // url
     if (typeof this.options.style === "string") {
         fetch(this.options.style)
-            .then(
-                function (response) {
-                    response.json().then(
-                        function (style) {
-                            // sauvegarde du json
-                            self.mapbox = style;
-                        });
-                }
-            )
-            .then(
-                function () {
-                    // init du DOM
-                    self._initContainer();
-                }
-            )
-            .catch(
-                function (error) {
-                    logger.error(error);
-                }
-            );
+            .then(response => {
+                // sauvegarde du json
+                response.json()
+                    .then(style => {
+                        self.mapbox = style;
+                        return self.mapbox;
+                    })
+                    .then(function () {
+                        // init du DOM
+                        self._initContainer();
+                    })
+                    .catch(error => {
+                        logger.error("json exception :", error);
+                    });
+            })
+            .catch(error => {
+                logger.error("fetch exception :", error);
+            });
     }
 };
 
