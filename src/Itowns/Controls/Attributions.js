@@ -220,7 +220,7 @@ Attributions.prototype._inRangeUpdate = function (layersDisplayed, extent) {
                     continue;
                 };
                 // if no constraints are associated to the originator, we just add the attribution
-                if (!ori[j].constraints) {
+                if (!ori[j].constraints || !ori[j].constraints[0]) {
                     // adds the attribution in the Map() called 'attributions'
                     attributions.set(ori[j].name, ori[j]);
                     continue;
