@@ -2,7 +2,7 @@
     "type": "color",
     "id"        : "Region",
     "source": {
-        "url"       : "https://wxs.ign.fr/va5orxd0pgzvq3jxutqfuy0b/geoportail/v/wms",
+        "url"       : "https://wxs.ign.fr/ptlp78g6fvz9daz5mg2fztvr/geoportail/v/wms",
         "protocol"  : "wms",
         "version"   : "1.3.0",
         "format"  : "image/png",

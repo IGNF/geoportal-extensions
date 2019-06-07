@@ -4,7 +4,7 @@
 	"noDataValue" : -99999,
 	"source": {
 		"protocol":   "wmts",
-		"url":        "http://wxs.ign.fr/va5orxd0pgzvq3jxutqfuy0b/geoportail/wmts",
+		"url":        "http://wxs.ign.fr/ptlp78g6fvz9daz5mg2fztvr/geoportail/wmts",
 		"updateStrategy": {
 			"type": 1,
 			"options": {
