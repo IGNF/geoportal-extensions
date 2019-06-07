@@ -1210,10 +1210,10 @@ MousePosition.prototype.onMousePositionProjectionSystemMouseOver = function () {
         var proj = this._projectionSystems[j];
         if (proj.geoBBox) {
             // bboxes intersection test
-            if (globeExtent.west() > proj.geoBBox.right ||
-                globeExtent.south() > proj.geoBBox.top ||
-                globeExtent.east() < proj.geoBBox.left ||
-                globeExtent.north() < proj.geoBBox.bottom
+            if (globeExtent.west > proj.geoBBox.right ||
+                globeExtent.south > proj.geoBBox.top ||
+                globeExtent.east < proj.geoBBox.left ||
+                globeExtent.north < proj.geoBBox.bottom
             ) {
                 if (proj === this._currentProjectionSystems) {
                     option = document.createElement("option");

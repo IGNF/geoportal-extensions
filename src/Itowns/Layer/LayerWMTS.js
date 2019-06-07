@@ -82,10 +82,10 @@ function LayerWMTS (options) {
             tileMatrixSet : wmtsParams.TMSLink,
             tileMatrixSetLimits : wmtsParams.tileMatrixSetLimits,
             extent : {
-                west : wmtsParams.extent.west(),
-                east : wmtsParams.extent.east(),
-                south : wmtsParams.extent.south(),
-                north : wmtsParams.extent.north()
+                west : wmtsParams.extent.west,
+                east : wmtsParams.extent.east,
+                south : wmtsParams.extent.south,
+                north : wmtsParams.extent.north
             }
         });
 

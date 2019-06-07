@@ -84,10 +84,10 @@ function LayerWMS (options) {
             },
             format : wmsParams.format,
             extent : {
-                west : wmsParams.extent.west(),
-                east : wmsParams.extent.east(),
-                south : wmsParams.extent.south(),
-                north : wmsParams.extent.north()
+                west : wmsParams.extent.west,
+                east : wmsParams.extent.east,
+                south : wmsParams.extent.south,
+                north : wmsParams.extent.north
             }
         });
 
