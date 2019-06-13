@@ -1,15 +1,4 @@
 {
-   "peerDependencies" : {},
-   "directories" : {},
-   "version" : "3.0.0",
-   "keywords" : [
-      "geoportail",
-      "plugin",
-      "javascript",
-      "OpenLayers"
-   ],
-   "license" : "CECILL-B",
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
    "files" : [
       "dist/",
       "src/",
@@ -17,29 +6,40 @@
       "README.md",
       "package.json"
    ],
-   "description" : "French Geoportal Extensions for OpenLayers",
-   "devDependencies" : {},
-   "author" : "IGNF",
    "repository" : {
       "url" : "https://github.com/IGNF/geoportal-extensions.git",
       "type" : "git"
    },
+   "main" : "dist/GpPluginOpenLayers-src.js",
+   "directories" : {},
+   "date" : "01/02/2019",
    "scripts" : {},
+   "module" : "src/OpenLayers/index.js",
+   "bugs" : {},
+   "license" : "CECILL-B",
+   "name" : "geoportal-extensions-openlayers",
+   "version" : "3.0.0",
    "bundleDependencies" : [],
    "dependencies" : {
-      "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/master/geoportal-access-lib-2.1.2.tgz",
-      "ol" : "^5.3.0",
-      "loglevel" : "~1.6.1",
       "xmldom" : "^0.1.27",
-      "request" : "^2.83.0",
-      "eventbusjs" : "^0.2.0",
+      "ol" : "^5.3.0",
       "sortablejs" : "1.8.4",
+      "ol-mapbox-style" : "^4.2.1",
       "proj4" : "2.5.0",
-      "ol-mapbox-style" : "^4.2.1"
+      "request" : "^2.83.0",
+      "loglevel" : "~1.6.1",
+      "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/master/geoportal-access-lib-2.1.2.tgz",
+      "eventbusjs" : "^0.2.0"
    },
-   "bugs" : {},
-   "module" : "src/OpenLayers/index.js",
-   "main" : "dist/GpPluginOpenLayers-src.js",
-   "date" : "01/02/2019",
-   "name" : "geoportal-extensions-openlayers"
+   "keywords" : [
+      "geoportail",
+      "plugin",
+      "javascript",
+      "OpenLayers"
+   ],
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
+   "author" : "IGNF",
+   "description" : "French Geoportal Extensions for OpenLayers",
+   "peerDependencies" : {},
+   "devDependencies" : {}
 }
