@@ -1105,9 +1105,9 @@ var LayerImport = (function (Control) {
                         // sprites
                         var _glSprite = _glStyle.sprite;
 
-                        // FIXME et si on a un import par fichier local (this._file),
-                        // comment passe t on la clef ou le token ?
-                        // remplacement d'un flux mapbox sur une url de service tuilé
+                        // FIXME si on a un import par fichier local (this._file),
+                        // - comment passe t on la clef / le token ?
+                        // - comment remplacer un flux mapbox sur une url de service tuilé avec un import local ?
                         if (_glUrl && _glUrl.indexOf("mapbox://") === 0) {
                             var _urlService = this._url; // FIXME si fichier local !?
                             if (_urlService) {
@@ -1121,9 +1121,11 @@ var LayerImport = (function (Control) {
                                 });
                                 // conversion des sprites sur un autre scheme que "mapbox://"
                                 if (_glSprite.indexOf("mapbox://") === 0) {
-                                    var s = _urlService.split("?");
+                                    var s = _urlService.split("?"); // FIXME si fichier local !?
                                     _glStyle.sprite = s[0] + "/sprite" + "?" + s[1];
                                 }
+                            } else {
+                                logger.warn("Not yet implemented, can't use the local import scheme with a 'mapbox://' in the file.!");
                             }
                         }
 
@@ -1281,7 +1283,7 @@ var LayerImport = (function (Control) {
                                     p.layer.setOpacity(opacity);
                                 })
                                 .then(function () {
-                                    // gestion du centre de la cate sur la carte si center renseigné !
+                                    // gestion du centre sur la carte si center renseigné !
                                     var projCode = map.getView().getProjection().getCode();
                                     if (map.getView() && p.styles.center && p.styles.center.length) {
                                         map.getView().setCenter(olTransformProj(p.styles.center, "EPSG:4326", projCode));

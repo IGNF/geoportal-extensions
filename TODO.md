@@ -161,7 +161,7 @@ les fichiers sont suffixés avec le tag *modules*.
 
         cf. https://github.com/openlayers/openlayers/blob/master/changelog/upgrade-notes.md#changes-in-proj4-integration
 
-        - [x] *FIXME* performance sur l'ajout des projection avec ol et proj4 !!!
+        - [x] performance sur l'ajout des projection avec ol et proj4 !!!
 
             cf. test de performance...
 
@@ -175,7 +175,7 @@ les fichiers sont suffixés avec le tag *modules*.
 
         - [x] merge à faire : https://github.com/IGNF/geoportal-extensions/pull/227
 
-        - [ ] *FIXME* bug pour ajouter des projection **geocent** sur le registre IGNF !?
+        - [ ] **FIXME** bug pour ajouter des projection **geocent** sur le registre IGNF !?
 
             ``` text
             Comment peut remplacer ce type de projections ?
@@ -198,7 +198,7 @@ les fichiers sont suffixés avec le tag *modules*.
 
 - [ ] **EVOL** Autoprefixer CSS avec postCSS
 
-- [x] webpack supprime les commentaires ainsi que les copyright sur la minification !?
+- [x] **FAIT** webpack supprime les commentaires ainsi que les copyright sur la minification !?
 
   cf. <https://github.com/webpack-contrib/terser-webpack-plugin#extractcomments>
   cf. <https://github.com/webpack-contrib/uglifyjs-webpack-plugin/issues/222>
@@ -287,3 +287,12 @@ les fichiers sont suffixés avec le tag *modules*.
 
   - Mettre en place un drag&drop sur les layers MapBox (gestion ordre d'empilement/affichage)
   - Prévoir l'edition du mode circle, texte et/ou icone
+
+- Widget LayerImport
+
+  - implementer l'option "defaultStyle"
+  - l'import local d'un fichier de style avec des schemes 'mapbox://' pour le service et les sprites !
+  ``` text
+  dans le SDK, on devrait resoudre ce souci avec la surcharge de l'URL (opts:urlService) ?
+  ```
+  - exemple avec qwant !?

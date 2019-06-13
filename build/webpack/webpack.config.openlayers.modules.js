@@ -396,9 +396,7 @@ module.exports = (env, argv) => {
                     raw : true
                 }),
                 new BannerWebPackPlugin({
-                    banner : header(fs.readFileSync(path.join(ROOT, "build/licences", "licence-es6promise.tmpl"), "utf8"), {
-                        __VERSION__ : pkg.dependencies["es6-promise"],
-                    }),
+                    banner : fs.readFileSync(path.join(ROOT, "build/licences", "licence-es6promise.txt"), "utf8"),
                     raw : true
                 }),
                 new BannerWebPackPlugin({
