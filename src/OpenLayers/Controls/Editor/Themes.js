@@ -22,17 +22,17 @@ var logger = Logger.getLogger("editor-themes");
  *          "radiobutton": true
  *        },
  *        "obj": {
- *          "description": "", // Titre du composant (non graphique !)
- *          "styles": [{
- *             "image": "data/images/layer0.png",
- *             "label": "standard0",
- *             "style": "data/styles/layer0.json",
- *             "desc": ""
+ *          "themesSummary": "", // Titre du composant (non graphique !)
+ *          "themes": [{
+ *             "thumbnail": "data/images/layer0.png",
+ *             "name": "standard0",
+ *             "url": "data/styles/layer0.json",
+ *             "description": ""
  *          },{
- *             "image": "data/images/layer1.png",
- *             "label": "standard1",
- *             "style": "data/styles/layer1.json",
- *             "desc": ""
+ *             "thumbnail": "data/images/layer1.png",
+ *             "name": "standard1",
+ *             "url": "data/styles/layer1.json",
+ *             "description": ""
  *          }]
  *        }
  *   });
@@ -94,8 +94,8 @@ Themes.prototype._initialize = function () {
         !this.options.obj) {
         // vide par defaut ?
         this.options.obj = {
-            description : "",
-            styles : []
+            themesSummary : "",
+            themes : []
         };
     }
 
@@ -144,8 +144,8 @@ Themes.prototype._initContainer = function () {
     var div = document.createElement("div");
     div.className = this.name.container;
 
-    for (var i = 0; i < obj.styles.length; i++) {
-        var _theme = obj.styles[i];
+    for (var i = 0; i < obj.themes.length; i++) {
+        var _theme = obj.themes[i];
 
         // div pour chaque theme
         var divTheme = document.createElement("div");
@@ -154,7 +154,7 @@ Themes.prototype._initContainer = function () {
         divTheme.tabIndex = i;
 
         // url du style est obligatoire !
-        var _url = _theme.style;
+        var _url = _theme.url;
         if (_url && _url !== "") {
             // bouton
             if (this.options.tools.radiobutton) {
@@ -178,12 +178,12 @@ Themes.prototype._initContainer = function () {
             }
             // vignette
             if (this.options.tools.thumbnails) {
-                if (_theme.image) {
+                if (_theme.thumbnail) {
                     var _img = document.createElement("img");
                     _img.className = this.name.image;
-                    _img.src = _theme.image;
-                    _img.alt = _theme.image;
-                    _img.title = _theme.desc || ""; // une description au survol de l'image ou titre...
+                    _img.src = _theme.thumbnail;
+                    _img.alt = _theme.thumbnail;
+                    _img.title = _theme.description || ""; // une description au survol de l'image ou titre...
                     _img.data = _url; // on lie le DOM et la couche, utile lors d'evenement !
                     if (_img.addEventListener) {
                         _img.addEventListener("click", function (e) {
@@ -213,14 +213,14 @@ Themes.prototype._initContainer = function () {
                 }
             }
             // label
-            if (_theme.label) {
+            if (_theme.name) {
                 var _label = document.createElement("label");
                 if (this.options.tools.radiobutton) {
                     _label.htmlFor = _checkbox.id;
                 }
                 _label.className = this.name.label;
-                _label.innerHTML = _theme.label;
-                _label.title = _theme.desc || ""; // une description au survol de l'image ou titre...
+                _label.innerHTML = _theme.name;
+                _label.title = _theme.description || ""; // une description au survol de l'image ou titre...
                 _label.data = _url; // on lie le DOM et la couche, utile lors d'evenement !
                 if (!this.options.tools.radiobutton) {
                     if (_label.addEventListener) {

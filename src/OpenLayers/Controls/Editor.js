@@ -29,15 +29,18 @@ var logger = Logger.getLogger("editor");
  *   var editor = new Editor ({
  *      target : "",
  *      style : "data/styles/layer0.json",
- *      themes: [{
- *          image: "data/images/layer0.png",
- *          label: "standard0",
- *          style: "data/styles/layer0.json",
- *      },{
- *          image: "data/images/layer1.png",
- *          label: "standard1",
- *          style: "data/styles/layer1.json",
- *      }],
+ *      themes: {
+ *          themesSummary : "",
+ *          themes : [{
+ *              image: "data/images/layer0.png",
+ *              label: "standard0",
+ *              style: "data/styles/layer0.json",
+ *          },{
+ *              image: "data/images/layer1.png",
+ *              label: "standard1",
+ *              style: "data/styles/layer1.json",
+ *          }]
+ *      },
  *      scope : this,
  *      events : {
  *          "editor:layer:onclickvisibility" : ...,

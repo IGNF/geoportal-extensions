@@ -30,11 +30,11 @@
             // themes en échec car chemin vide !
             var themes2 = new ol.style.editor.Themes({
                 obj: {
-                    "styles" : [{
-                        "image" : "", // path ?
-                        "label" : "", // name ?
-                        "style" : "", // path ?
-                        "desc"  : ""
+                    "themes" : [{
+                        "thumbnail" : "", // path ?
+                        "name" : "", // name ?
+                        "url" : "", // path ?
+                        "description"  : ""
                     }]
                 },
             });
@@ -44,21 +44,21 @@
             var themes3 = new ol.style.editor.Themes({
                 target: document.getElementById("themes"),
                 obj: {
-                    "styles" : [
+                    "themes" : [
                     {
-                        "label" : "style standard 1",
-                        "style" : "{{ resources }}/data/mapbox/themes/styles/null",
-                        "desc"  : "description 1"
+                        "name" : "style standard 1",
+                        "url" : "{{ resources }}/data/mapbox/themes/styles/null",
+                        "description"  : "description 1"
                     },
                     {
-                        "label" : "style standard 2",
-                        "style" : "{{ resources }}/data/mapbox/themes/styles/null",
-                        "desc"  : "description 2"
+                        "name" : "style standard 2",
+                        "url" : "{{ resources }}/data/mapbox/themes/styles/null",
+                        "description"  : "description 2"
                     },
                     {
-                        "label" : "style standard 3",
-                        "style" : "{{ resources }}/data/mapbox/themes/styles/null",
-                        "desc"  : "description 3"
+                        "name" : "style standard 3",
+                        "url" : "{{ resources }}/data/mapbox/themes/styles/null",
+                        "description"  : "description 3"
                     },
                 ]
                 },
@@ -69,27 +69,27 @@
             var themes4 = new ol.style.editor.Themes({
                 target: document.getElementById("themes"),
                 obj: {
-                    "styles" : [
+                    "themes" : [
                     {
-                        "image" : "{{ resources }}/data/mapbox/themes/images/layer0.png",
-                        "label" : "standard0",
-                        "style" : "{{ resources }}/data/mapbox/themes/styles/style0.json",
-                        "desc"  : "description du 1er theme !"
+                        "thumbnail" : "{{ resources }}/data/mapbox/themes/images/layer0.png",
+                        "name" : "standard0",
+                        "url" : "{{ resources }}/data/mapbox/themes/styles/style0.json",
+                        "description"  : "description du 1er theme !"
                     },
                     {
-                        "image" : "{{ resources }}/data/mapbox/themes/images/layer1.png",
-                        "label" : "standard1",
-                        "style" : "{{ resources }}/data/mapbox/themes/styles/style1.json"
+                        "thumbnail" : "{{ resources }}/data/mapbox/themes/images/layer1.png",
+                        "name" : "standard1",
+                        "url" : "{{ resources }}/data/mapbox/themes/styles/style1.json"
                     },
                     {
-                        "image" : "{{ resources }}/data/mapbox/themes/images/layer2.png",
-                        "label" : "standard2",
-                        "style" : "{{ resources }}/data/mapbox/themes/styles/style2.json"
+                        "thumbnail" : "{{ resources }}/data/mapbox/themes/images/layer2.png",
+                        "name" : "standard2",
+                        "url" : "{{ resources }}/data/mapbox/themes/styles/style2.json"
                     },
                     {
-                        "image" : "{{ resources }}/data/mapbox/themes/images/layer3.png",
-                        "label" : "standard3",
-                        "style" : "{{ resources }}/data/mapbox/themes/styles/style3.json"
+                        "thumbnail" : "{{ resources }}/data/mapbox/themes/images/layer3.png",
+                        "name" : "standard3",
+                        "url" : "{{ resources }}/data/mapbox/themes/styles/style3.json"
                     }
                 ]
                 },
@@ -104,18 +104,18 @@
                     radiobutton: false
                 },
                 obj: {
-                    "styles" : [
+                    "themes" : [
                     {
-                        "image" : "{{ resources }}/data/mapbox/themes/images/layer1.png",
-                        "label" : "style standard 1",
-                        "style" : "{{ resources }}/data/mapbox/themes/styles/null",
-                        "desc"  : "description 1"
+                        "thumbnail" : "{{ resources }}/data/mapbox/themes/images/layer1.png",
+                        "name" : "style standard 1",
+                        "url" : "{{ resources }}/data/mapbox/themes/styles/null",
+                        "description"  : "description 1"
                     },
                     {
-                        "image" : "{{ resources }}/data/mapbox/themes/images/layer2.png",
-                        "label" : "style standard 2",
-                        "style" : "{{ resources }}/data/mapbox/themes/styles/null",
-                        "desc"  : "description 2"
+                        "thumbnail" : "{{ resources }}/data/mapbox/themes/images/layer2.png",
+                        "name" : "style standard 2",
+                        "url" : "{{ resources }}/data/mapbox/themes/styles/null",
+                        "description"  : "description 2"
                     }
                 ]
                 },
