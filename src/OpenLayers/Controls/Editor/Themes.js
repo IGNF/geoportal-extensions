@@ -144,8 +144,9 @@ Themes.prototype._initContainer = function () {
     var div = document.createElement("div");
     div.className = this.name.container;
 
-    for (var i = 0; i < obj.themes.length; i++) {
-        var _theme = obj.themes[i];
+    var _lstThemes = obj.themes;
+    for (var i = 0; i < _lstThemes.length; i++) {
+        var _theme = _lstThemes[i];
 
         // div pour chaque theme
         var divTheme = document.createElement("div");
