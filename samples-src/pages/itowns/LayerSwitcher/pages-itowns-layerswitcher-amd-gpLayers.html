@@ -46,17 +46,20 @@
                     // ajout des couches
                     // Couche MNT Geoportail (WMTS)
                     globeView.addLayer(new Gp.itownsExtended.layer.GeoportalElevation({
-                        layer: "ELEVATION.ELEVATIONGRIDCOVERAGE"
+                        layer: "ELEVATION.ELEVATIONGRIDCOVERAGE",
+                        ssl: true
                     }));
 
                     // Couche WMTS Geoportail
                     globeView.addLayer(new Gp.itownsExtended.layer.GeoportalWMTS({
-                        layer: "ORTHOIMAGERY.ORTHOPHOTOS"
+                        layer: "ORTHOIMAGERY.ORTHOPHOTOS",
+                        ssl: true
                     }));
 
                     // Couche WMS Geoportail 
                     globeView.addLayer(new Gp.itownsExtended.layer.GeoportalWMS({
                         layer: "REGION.2016",
+                        ssl: true,
                         itownsParams: {
                             opacity: 0.5
                         }

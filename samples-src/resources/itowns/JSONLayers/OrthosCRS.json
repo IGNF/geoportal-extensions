@@ -3,7 +3,7 @@
     "id": "OrthoCRS",
     "source": {
         "protocol": "wmts",
-        "url": "http://wxs.ign.fr/ptlp78g6fvz9daz5mg2fztvr/geoportail/wmts",
+        "url": "https://wxs.ign.fr/ptlp78g6fvz9daz5mg2fztvr/geoportail/wmts",
         "fx" :  1.0,
         "updateStrategy": {
             "type": 0,
@@ -20,7 +20,7 @@
         }],
         "format": "image/jpeg",
         "projection" : "EPSG:4326",
-        "tileMatrixSet": "WGS84G",
+        "tileMatrixSet": "WGS84",
         "extent": {
             "west": "-178.187",
             "east": "55.8464",

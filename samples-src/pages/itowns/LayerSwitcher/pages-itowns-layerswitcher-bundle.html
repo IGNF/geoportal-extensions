@@ -43,13 +43,33 @@
 
         // globeView.addLayer(layerOrtho);
 
-        itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/OrthosCRS.json').then(result => globeView.addLayer(result));
-        itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/Ortho.json').then(result => globeView.addLayer(result));
-        itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/ScanEX.json').then(result => globeView.addLayer(result));
-        itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/Region.json').then(result => globeView.addLayer(result));
+        function createWMTSSourceFromConfig(config) {
+            config.source = new itowns.WMTSSource(config.source);
+            return config;
+        };
 
-        itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/IGN_MNT.json').then(result => globeView.addLayer(result));
-        itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/IGN_MNT_HIGHRES.json').then(result => globeView.addLayer(result));
+        function createWMSSourceFromConfig(config) {
+            config.source = new itowns.WMSSource(config.source);
+            return config;
+        };
+    
+        function addColorLayerFromConfig(config) {
+            var layer = new itowns.ColorLayer(config.id, config);
+            globeView.addLayer(layer);
+        };
+    
+        function addElevationLayerFromConfig(config) {
+            var layer = new itowns.ElevationLayer(config.id, config);
+            globeView.addLayer(layer);
+        };
+
+        // itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/OrthosCRS.json').then(createWMTSSourceFromConfig).then(addColorLayerFromConfig);
+        itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/Ortho.json').then(createWMTSSourceFromConfig).then(addColorLayerFromConfig);
+        itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/ScanEX.json').then(createWMTSSourceFromConfig).then(addColorLayerFromConfig);
+        itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/Region.json').then(createWMSSourceFromConfig).then(addColorLayerFromConfig);
+
+        itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/IGN_MNT.json').then(createWMTSSourceFromConfig).then(addElevationLayerFromConfig);
+        itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/IGN_MNT_HIGHRES.json').then(createWMTSSourceFromConfig).then(addElevationLayerFromConfig);
 
         globeView.listen(itowns.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
             // eslint-disable-next-line no-console

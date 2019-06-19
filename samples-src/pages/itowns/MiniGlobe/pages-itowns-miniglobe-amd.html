@@ -1,73 +1,122 @@
-{{#extend "layout-itowns-sample-amd"}}
+{{#extend "layout-itowns-sample-amd"}} {{#content "head"}}
+<title>Sample itowns LayerSwitcher</title>
+{{/content}} {{#content "style"}}
+<style>
+    html {
+        height: 100%;
+    }
 
-{{#content "head"}}
-        <title>Sample itowns MiniGlobe</title>
-{{/content}}
+    body {
+        margin: 0;
+        overflow: hidden;
+        height: 100%;
+    }
 
-    {{#content "style"}}
-            <style>
-                    html {
-                        height: 100%;
-                    }
+    #viewerDiv {
+        margin: auto auto;
+        width: 100%;
+        height: 70%;
+        padding: 0;
+    }
+</style>
+{{/content}} {{#content "body"}}
+<h2>Ajout d'un contrôle de gestion des couches : LayerSwitcher</h2>
+<!-- map -->
+<div id="viewerDiv"></div>
+{{/content}} {{#content "js"}}
+<script type="text/javascript">
+    requirejs([
+        "itowns",
+        "Gp"
+    ],
+        function (
+            itowns,
+            Gp
+        ) {
+            var createMap = function () {
+                /* global itowns,document,GuiTools*/
+                const positionOnGlobe = { longitude: 2.3465, latitude: 48.88, altitude: 250000 };
 
-                    body {
-                        margin: 0;
-                        overflow:hidden;
-                        height:100%;
-                    }
+                // iTowns namespace defined here
+                const viewerDiv = document.getElementById('viewerDiv');
+                const globeView = new Gp.itownsExtended.GlobeViewExtended(viewerDiv, positionOnGlobe);
 
-                    #viewerDiv {
-                        margin : auto auto;
-                        width: 100%;
-                        height: 70%;
-                        padding: 0;
-                    }
-            </style>
-{{/content}}
+                globeView.listen(Gp.itownsExtended.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
 
-{{#content "body"}}
-            <h2>Ajout d'un contrôle d'affichage de la minivue : MiniGlobe</h2>
-            <!-- map -->
-            <div id="viewerDiv"></div>
-{{/content}}
+                    // ajout des couches
+                    // Couche MNT Geoportail (WMTS)
+                    globeView.addLayer(new Gp.itownsExtended.layer.GeoportalElevation({
+                        layer: "ELEVATION.ELEVATIONGRIDCOVERAGE",
+                        ssl: true
+                    }));
 
-{{#content "js"}}
-            <script type="text/javascript">
-                var globeView = null;
-                requirejs([
-                    "itowns",
-                    "Gp"
-                ],
-                function (
-                    itowns,
-                    Gp
-                ) {
-                        const positionOnGlobe = {
-                            longitude : 2.3465,
-                            latitude : 48.88,
-                            altitude : 25000000
-                        };
+                    // Couche WMTS Geoportail
+                    globeView.addLayer(new Gp.itownsExtended.layer.GeoportalWMTS({
+                        layer: "ORTHOIMAGERY.ORTHOPHOTOS",
+                        ssl: true
+                    }));
 
-                        const viewerDiv = document.getElementById("viewerDiv");
-                        globeView = new Gp.itownsExtended.GlobeViewExtended(viewerDiv, positionOnGlobe);
+                    // Couche WMS Geoportail 
+                    globeView.addLayer(new Gp.itownsExtended.layer.GeoportalWMS({
+                        layer: "REGION.2016",
+                        ssl: true,
+                        itownsParams: {
+                            opacity: 0.5
+                        }
+                    }));
 
-                        itowns.Fetcher.json("{{ resources }}/itowns/JSONLayers/Ortho.json").then(result => globeView.addLayer(result));
+                    // ajout du control
+                    var layerSwitcher = new Gp.itownsExtended.control.LayerSwitcher({
+                        options: {
+                            collapsed: true
+                        },
+                        layers: [
+                            {
+                                id: "ORTHOIMAGERY.ORTHOPHOTOS$GEOPORTAIL:OGC:WMTS",
+                                displayed: true,
+                                config: {
+                                    title: "Couche de Photos IGN Orthos",
+                                    description: "Description de ma couche",
+                                    quicklookUrl: "lien/Vers/UnApercuRapide.png",
+                                    legends: [
+                                        {
+                                            url: "lien/Vers/UneLegende.png"
+                                        }
+                                    ],
+                                    metadata: [
+                                        {
+                                            url: "lien/Vers/Une/MetaDonnee.xml"
+                                        }
+                                    ],
+                                    visibility: true
+                                }
+                            }
+                        ]
+                    });
 
-                        itowns.Fetcher.json("{{ resources }}/itowns/JSONLayers/IGN_MNT.json").then(result => globeView.addLayer(result));
-                        itowns.Fetcher.json("{{ resources }}/itowns/JSONLayers/IGN_MNT_HIGHRES.json").then(result => globeView.addLayer(result));
+                    globeView.addWidget(layerSwitcher);
 
-                        globeView.listen(Gp.itownsExtended.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
-                            // eslint-disable-next-line no-console
-                            console.info("Globe initialized");
-                        });
+                    var miniGlobeLayer = new Gp.itownsExtended.layer.GeoportalWMTS({
+                        layer: "ORTHOIMAGERY.ORTHOPHOTOS",
+                        ssl: true
+                    })
 
-                        var miniglobe = new Gp.itownsExtended.control.MiniGlobe({
-                            target : viewerDiv,
-                            position : "absolute"
-                        });
-                        globeView.addWidget( miniglobe );
+                    var miniglobe = new Gp.itownsExtended.control.MiniGlobe({
+                        target : viewerDiv,
+                        position : "absolute",
+                        layer : miniGlobeLayer
+                    });
+                    
+                    globeView.addWidget( miniglobe );
                 });
-            </script>
-{{/content}}
+            }
 
-{{/extend}}
+            Gp.Services.getConfig({
+                // serverUrl : "./../resources/AutoConf.js",
+                // callbackSuffix : '',
+                apiKey: "{{ apikey }}",
+                timeOut: 20000,
+                onSuccess: createMap
+            });
+        });
+</script> {{/content}} {{/extend}}

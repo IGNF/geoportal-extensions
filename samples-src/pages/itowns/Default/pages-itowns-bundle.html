@@ -36,19 +36,39 @@
 
 {{#content "js"}}
     <script type="text/javascript">
-
+    var createMap = function() {
         const positionOnGlobe = { longitude: 2.3465, latitude: 48.88, altitude: 25000000 };
 
         const viewerDiv = document.getElementById('viewerDiv');
         const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
 
-        itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/OrthosCRS.json').then(result => globeView.addLayer(result));
-        itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/Ortho.json').then(result => globeView.addLayer(result));
-        itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/ScanEX.json').then(result => globeView.addLayer(result));
-        itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/Region.json').then(result => globeView.addLayer(result));
+        function createWMTSSourceFromConfig(config) {
+            config.source = new itowns.WMTSSource(config.source);
+            return config;
+        };
 
-        itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/IGN_MNT.json').then(result => globeView.addLayer(result));
-        itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/IGN_MNT_HIGHRES.json').then(result => globeView.addLayer(result));
+        function createWMSSourceFromConfig(config) {
+            config.source = new itowns.WMSSource(config.source);
+            return config;
+        };
+    
+        function addColorLayerFromConfig(config) {
+            var layer = new itowns.ColorLayer(config.id, config);
+            globeView.addLayer(layer);
+        };
+    
+        function addElevationLayerFromConfig(config) {
+            var layer = new itowns.ElevationLayer(config.id, config);
+            globeView.addLayer(layer);
+        };
+
+        // itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/OrthosCRS.json').then(createWMTSSourceFromConfig).then(addColorLayerFromConfig);
+        itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/Ortho.json').then(createWMTSSourceFromConfig).then(addColorLayerFromConfig);
+        itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/ScanEX.json').then(createWMTSSourceFromConfig).then(addColorLayerFromConfig);
+        itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/Region.json').then(createWMSSourceFromConfig).then(addColorLayerFromConfig);
+
+        itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/IGN_MNT.json').then(createWMTSSourceFromConfig).then(addElevationLayerFromConfig);
+        itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/IGN_MNT_HIGHRES.json').then(createWMTSSourceFromConfig).then(addElevationLayerFromConfig);
 
         globeView.listen(itowns.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
             // eslint-disable-next-line no-console
@@ -57,9 +77,14 @@
             globeView.addWidget( attribution );
             var layerSwitcher = new itowns.control.LayerSwitcher({});
             globeView.addWidget( layerSwitcher );
+            var miniGlobeLayer = new Gp.itownsExtended.layer.GeoportalWMTS({
+                layer: "ORTHOIMAGERY.ORTHOPHOTOS",
+                ssl: true
+            })
             var miniglobe = new itowns.control.MiniGlobe({
                 target : "miniGlobeViewerDiv",
-                position : "relative"
+                position : "relative",
+                layer : miniGlobeLayer
             });
             globeView.addWidget( miniglobe );
             var mousePosition = new itowns.control.MousePosition({
@@ -67,6 +92,15 @@
             });
             globeView.addWidget( mousePosition );
         });
+    }
+
+    Gp.Services.getConfig({
+        // serverUrl : "./../resources/AutoConf.js",
+        // callbackSuffix : '',
+        apiKey : "{{ apikey }}",
+        timeOut : 20000,
+        onSuccess : createMap
+    });
     </script>
 {{/content}}
 

@@ -1,76 +1,96 @@
 {{#extend "layout-itowns-sample-amd"}}
 
 {{#content "head"}}
-        <title>Sample itowns Attribution</title>
+<title>Sample itowns Attribution</title>
 {{/content}}
 
-    {{#content "style"}}
-            <style>
-                    html {
-                        height: 100%;
-                    }
+{{#content "style"}}
+<style>
+    html {
+        height: 100%;
+    }
 
-                    body {
-                        margin: 0;
-                        overflow:hidden;
-                        height:100%;
-                    }
+    body {
+        margin: 0;
+        overflow: hidden;
+        height: 100%;
+    }
 
-                    #viewerDiv {
-                        margin : auto auto;
-                        width: 100%;
-                        height: 70%;
-                        padding: 0;
-                    }
-            </style>
+    #viewerDiv {
+        margin: auto auto;
+        width: 100%;
+        height: 70%;
+        padding: 0;
+    }
+</style>
 {{/content}}
 
 {{#content "body"}}
-            <h2>Ajout d'un contrôle d'affichage des attributions : Attribution</h2>
-            <!-- map -->
-            <div id="viewerDiv"></div>
+<h2>Ajout d'un contrôle d'affichage des attributions : Attribution</h2>
+<!-- map -->
+<div id="viewerDiv"></div>
 {{/content}}
 
 {{#content "js"}}
-            <script type="text/javascript">
-                    var globeView = null;
-                    requirejs([
-                            "itowns",
-                            "Gp"
-                        ],
-                        function (
-                            itowns,
-                            Gp
-                        ) {
-                            const positionOnGlobe = {
-                                longitude : 2.3465,
-                                latitude : 48.88,
-                                altitude : 25000000
-                            };
+<script type="text/javascript">
+    var globeView = null;
+    requirejs([
+        "itowns",
+        "Gp"
+    ],
+        function (
+            itowns,
+            Gp
+        ) {
+            const positionOnGlobe = {
+                longitude: 2.3465,
+                latitude: 48.88,
+                altitude: 25000000
+            };
 
-                            const viewerDiv = document.getElementById("viewerDiv");
-                            globeView = new Gp.itownsExtended.GlobeViewExtended(viewerDiv, positionOnGlobe);
+            const viewerDiv = document.getElementById("viewerDiv");
+            globeView = new Gp.itownsExtended.GlobeViewExtended(viewerDiv, positionOnGlobe);
 
-                            itowns.Fetcher.json("{{ resources }}/itowns/JSONLayers/Ortho.json").then(result => globeView.addLayer(result));
-                            itowns.Fetcher.json("{{ resources }}/itowns/JSONLayers/OrthosCRS.json").then(result => globeView.addLayer(result));
-                            itowns.Fetcher.json("{{ resources }}/itowns/JSONLayers/ScanEX.json").then(result => globeView.addLayer(result));
-                            itowns.Fetcher.json("{{ resources }}/itowns/JSONLayers/Region.json").then(result => globeView.addLayer(result));
+            function createWMTSSourceFromConfig(config) {
+                config.source = new itowns.WMTSSource(config.source);
+                return config;
+            };
 
-                            itowns.Fetcher.json("{{ resources }}/itowns/JSONLayers/IGN_MNT.json").then(result => globeView.addLayer(result));
-                            itowns.Fetcher.json("{{ resources }}/itowns/JSONLayers/IGN_MNT_HIGHRES.json").then(result => globeView.addLayer(result));
+            function createWMSSourceFromConfig(config) {
+                config.source = new itowns.WMSSource(config.source);
+                return config;
+            };
 
-                            globeView.listen(Gp.itownsExtended.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
-                                // eslint-disable-next-line no-console
-                                console.info("Globe initialized");
-                                var attribution = new Gp.itownsExtended.control.Attributions({
-                                    options : {
-                                        // collapsed : true
-                                    }
-                                });
-                                globeView.addWidget( attribution );
-                            });
-                    });
-            </script>
+            function addColorLayerFromConfig(config) {
+                var layer = new itowns.ColorLayer(config.id, config);
+                globeView.addLayer(layer);
+            };
+
+            function addElevationLayerFromConfig(config) {
+                var layer = new itowns.ElevationLayer(config.id, config);
+                globeView.addLayer(layer);
+            };
+
+            itowns.Fetcher.json("{{ resources }}/itowns/JSONLayers/Ortho.json").then(createWMTSSourceFromConfig).then(addColorLayerFromConfig);
+            // itowns.Fetcher.json("{{ resources }}/itowns/JSONLayers/OrthosCRS.json").then(createWMTSSourceFromConfig).then(addColorLayerFromConfig);
+            itowns.Fetcher.json("{{ resources }}/itowns/JSONLayers/ScanEX.json").then(createWMTSSourceFromConfig).then(addColorLayerFromConfig);
+            itowns.Fetcher.json("{{ resources }}/itowns/JSONLayers/Region.json").then(createWMSSourceFromConfig).then(addColorLayerFromConfig);
+
+            itowns.Fetcher.json("{{ resources }}/itowns/JSONLayers/IGN_MNT.json").then(createWMTSSourceFromConfig).then(addElevationLayerFromConfig);
+            itowns.Fetcher.json("{{ resources }}/itowns/JSONLayers/IGN_MNT_HIGHRES.json").then(createWMTSSourceFromConfig).then(addElevationLayerFromConfig);
+
+            globeView.listen(Gp.itownsExtended.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
+                // eslint-disable-next-line no-console
+                console.info("Globe initialized");
+                var attribution = new Gp.itownsExtended.control.Attributions({
+                    options: {
+                        // collapsed : true
+                    }
+                });
+                globeView.addWidget(attribution);
+            });
+        });
+</script>
 {{/content}}
 
 {{/extend}}

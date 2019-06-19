@@ -51,10 +51,25 @@
                     const viewerDiv = document.getElementById("viewerDiv");
                     globeView = new Gp.itownsExtended.GlobeViewExtended(viewerDiv, positionOnGlobe);
 
-                    itowns.Fetcher.json("{{ resources }}/itowns/JSONLayers/Ortho.json").then(result => globeView.addLayer(result));
+                    function createWMTSSourceFromConfig(config) {
+                        config.source = new itowns.WMTSSource(config.source);
+                        return config;
+                    };
 
-                    itowns.Fetcher.json("{{ resources }}/itowns/JSONLayers/IGN_MNT.json").then(result => globeView.addLayer(result));
-                    itowns.Fetcher.json("{{ resources }}/itowns/JSONLayers/IGN_MNT_HIGHRES.json").then(result => globeView.addLayer(result));
+                    function addColorLayerFromConfig(config) {
+                        var layer = new itowns.ColorLayer(config.id, config);
+                        globeView.addLayer(layer);
+                    };
+
+                    function addElevationLayerFromConfig(config) {
+                        var layer = new itowns.ElevationLayer(config.id, config);
+                        globeView.addLayer(layer);
+                    };
+
+                    itowns.Fetcher.json("{{ resources }}/itowns/JSONLayers/Ortho.json").then(createWMTSSourceFromConfig).then(addColorLayerFromConfig);
+
+                    itowns.Fetcher.json("{{ resources }}/itowns/JSONLayers/IGN_MNT.json").then(createWMTSSourceFromConfig).then(addElevationLayerFromConfig);
+                    itowns.Fetcher.json("{{ resources }}/itowns/JSONLayers/IGN_MNT_HIGHRES.json").then(createWMTSSourceFromConfig).then(addElevationLayerFromConfig);
 
                     var scalebar = new Gp.itownsExtended.control.Scale({
                         target : viewerDiv,

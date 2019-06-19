@@ -75,7 +75,7 @@
         var itownsGlobal = null;
 
         const urlImageryLayers = [];
-        urlImageryLayers.push('{{ resources }}/itowns/JSONLayers/OrthosCRS.json');
+        // urlImageryLayers.push('{{ resources }}/itowns/JSONLayers/OrthosCRS.json');
         urlImageryLayers.push('{{ resources }}/itowns/JSONLayers/Ortho.json');
         urlImageryLayers.push('{{ resources }}/itowns/JSONLayers/ScanEX.json');
         urlImageryLayers.push('{{ resources }}/itowns/JSONLayers/Region.json');
@@ -150,6 +150,7 @@
                     globeView.listen(Gp.itownsExtended.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
                         // ajout des couches
                         var promises = [];
+                        
                         promises.push( itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/IGN_MNT.json').then(result => globeView.addLayer(result)) );
                         promises.push( itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/IGN_MNT_HIGHRES.json').then(result => globeView.addLayer(result)) );
                         for ( var i = 0 ; i < urlImageryLayers.length ; ++i ) {
