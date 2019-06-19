@@ -2,6 +2,7 @@ import GlobeViewExtended from "../GlobeViewExtended";
 import Utils from "../../Common/Utils";
 import SelectorID from "../../Common/Utils/SelectorID";
 import MiniGlobeDOM from "../../Common/Controls/MiniGlobeDOM";
+import GeoportalWMTS from "../Layer/LayerWMTS";
 import Widget from "./Widget";
 
 /**
@@ -108,7 +109,7 @@ MiniGlobe.prototype.setGlobe = function (globe) {
         /**
          * Add one imagery layer to the miniview (by default, the ortho)
          */
-        var miniGlobeLayer = this._options.layer || this._baseLayer;
+        var miniGlobeLayer = this._options.layer;
         miniView.addLayer(miniGlobeLayer);
         // save as property of the control the globe created for the overview
         this._globeObj = miniView;
@@ -156,141 +157,6 @@ MiniGlobe.prototype._initContainer = function () {
     var container = this._createMainContainerElement();
 
     return container;
-};
-
-MiniGlobe.prototype._baseLayer = {
-    type : "color",
-    id : "Maps",
-    updateStrategy : {
-        type : "0",
-        options : {}
-    },
-    source : {
-        protocol : "wmts",
-        url : "https://wxs.ign.fr/an7nvfzojv5wa96dsga5nk8w/geoportail/wmts",
-        name : "GEOGRAPHICALGRIDSYSTEMS.MAPS",
-        networkOptions : {
-            crossOrigin : "omit"
-        },
-        format : "image/jpeg",
-        tileMatrixSet : "PM",
-        tileMatrixSetLimits : {
-            0 : {
-                minTileRow : "0",
-                maxTileRow : "0",
-                minTileCol : "0",
-                maxTileCol : "1"
-            },
-            1 : {
-                minTileRow : "0",
-                maxTileRow : "1",
-                minTileCol : "0",
-                maxTileCol : "2"
-            },
-            2 : {
-                minTileRow : "0",
-                maxTileRow : "2",
-                minTileCol : "0",
-                maxTileCol : "4"
-            },
-            3 : {
-                minTileRow : "0",
-                maxTileRow : "5",
-                minTileCol : "0",
-                maxTileCol : "8"
-            },
-            4 : {
-                minTileRow : "1",
-                maxTileRow : "11",
-                minTileCol : "0",
-                maxTileCol : "16"
-            },
-            5 : {
-                minTileRow : "3",
-                maxTileRow : "22",
-                minTileCol : "0",
-                maxTileCol : "32"
-            },
-            6 : {
-                minTileRow : "7",
-                maxTileRow : "45",
-                minTileCol : "0",
-                maxTileCol : "64"
-            },
-            7 : {
-                minTileRow : "42",
-                maxTileRow : "97",
-                minTileCol : "0",
-                maxTileCol : "115"
-            },
-            8 : {
-                minTileRow : "84",
-                maxTileRow : "195",
-                minTileCol : "1",
-                maxTileCol : "247"
-            },
-            9 : {
-                minTileRow : "170",
-                maxTileRow : "390",
-                minTileCol : "2",
-                maxTileCol : "495"
-            },
-            10 : {
-                minTileRow : "340",
-                maxTileRow : "780",
-                minTileCol : "5",
-                maxTileCol : "990"
-            },
-            11 : {
-                minTileRow : "681",
-                maxTileRow : "1544",
-                minTileCol : "10",
-                maxTileCol : "1981"
-            },
-            12 : {
-                minTileRow : "1363",
-                maxTileRow : "3088",
-                minTileCol : "20",
-                maxTileCol : "3962"
-            },
-            13 : {
-                minTileRow : "2726",
-                maxTileRow : "6177",
-                minTileCol : "40",
-                maxTileCol : "7924"
-            },
-            14 : {
-                minTileRow : "5452",
-                maxTileRow : "12355",
-                minTileCol : "81",
-                maxTileCol : "15847"
-            },
-            15 : {
-                minTileRow : "10944",
-                maxTileRow : "21176",
-                minTileCol : "163",
-                maxTileCol : "31695"
-            },
-            16 : {
-                minTileRow : "21889",
-                maxTileRow : "42353",
-                minTileCol : "326",
-                maxTileCol : "63382"
-            },
-            17 : {
-                minTileRow : "43776",
-                maxTileRow : "73526",
-                minTileCol : "42528",
-                maxTileCol : "85869"
-            },
-            18 : {
-                minTileRow : "87557",
-                maxTileRow : "147052",
-                minTileCol : "85058",
-                maxTileCol : "171738"
-            }
-        }
-    }
 };
 
 export default MiniGlobe;

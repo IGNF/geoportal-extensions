@@ -968,8 +968,8 @@ MousePosition.prototype.onMouseMove = function (e) {
     }
 
     var coordinate = {
-        lon : position.longitude(),
-        lat : position.latitude()
+        lon : position.x,
+        lat : position.y
     };
 
     this._setCoordinate(coordinate);

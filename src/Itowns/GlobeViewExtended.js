@@ -821,9 +821,9 @@ GlobeViewExtended.prototype._transformCoords = function (coordCarto) {
 */
 GlobeViewExtended.prototype._fromItownsCoords = function (itownsCoord) {
     return {
-        lon : itownsCoord.longitude(),
-        lat : itownsCoord.latitude(),
-        alt : itownsCoord.altitude()
+        lon : itownsCoord.x,
+        lat : itownsCoord.y,
+        alt : itownsCoord.z
     };
 };
 
