@@ -61,7 +61,7 @@ build () {
 
     # construction des binaires
     printTo "> bin..."
-    doCmd "npm run build:${run_lib_target} -- --build-only"
+    doCmd "npm run build:${run_lib_target}"
 
     # binaires
     printTo "> dist/..."
