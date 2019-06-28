@@ -28,10 +28,10 @@ var logger = Logger.getLogger("editor-layer");
  *          clone : false      // TODO afficher l'icone de duplication
  *      },
  *      obj : {
- *          id: "ocs - vegetation", // MANDATORY
- *          type: "fill", // OPTIONAL
- *          source: "pyramide_proto", // OPTIONAL
- *          source-layer: "ocs_vegetation_surf" // OPTIONAL
+ *          "id": "ocs - vegetation", // MANDATORY
+ *          "type": "fill", // OPTIONAL
+ *          "source": "pyramide_proto", // OPTIONAL
+ *          "source-layer": "ocs_vegetation_surf" // OPTIONAL
  *      }
  *   });
  *  layers.addLegend(oLegend);

@@ -33,25 +33,35 @@ build () {
     name=$1
 
     [ ${name} == "openlayers" ] && {
+        run_lib_target="ol"
         main_directory="geoportal-extensions-openlayers"
         src_directory="OpenLayers"
         export _PACKAGE_FIELD_NAME="olExtVersion"
+        export _PACKAGE_LIB_DEPENDANCIES=${run_lib_target}
     }
     [ ${name} == "leaflet" ] && {
+        run_lib_target="leaflet"
         main_directory="geoportal-extensions-leaflet"
         src_directory="Leaflet"
         export _PACKAGE_FIELD_NAME="leafletExtVersion"
+        export _PACKAGE_LIB_DEPENDANCIES=${run_lib_target}
     }
     [ ${name} == "itowns" ] && {
+        run_lib_target="itowns"
         main_directory="geoportal-extensions-itowns"
         src_directory="Itowns"
         export _PACKAGE_FIELD_NAME="itownsExtVersion"
+        export _PACKAGE_LIB_DEPENDANCIES=${run_lib_target}
     }
 
     [ -z ${src_directory} ] && {
         printTo "Oups..."
         exit -1
     }
+
+    # construction des binaires
+    printTo "> bin..."
+    doCmd "npm run build:${run_lib_target} -- --build-only"
 
     # binaires
     printTo "> dist/..."
@@ -84,12 +94,23 @@ build () {
         ')
     printTo "> package.json-date : ${_PACKAGE_DATE}..."
 
+    # - version lib main
+    export _PACKAGE_DEPENDANCIES=$(cat ../../../package.json |
+        perl -MJSON -0ne '
+          my $DS = decode_json $_;
+          my $field = $ENV{_PACKAGE_LIB_DEPENDANCIES};
+          print $DS->{dependencies}->{$field};
+        ')
+    printTo "> package.json-lib-${name} : ${_PACKAGE_DEPENDANCIES}..."
+
     # modification du package.json : version & date de publication
     `cat "package-${name}.json" |
         perl -MJSON -0ne '
         my $DS = decode_json $_;
         $DS->{version} = $ENV{_PACKAGE_VERSION};
         $DS->{date} = $ENV{_PACKAGE_DATE};
+        my $field = $ENV{_PACKAGE_LIB_DEPENDANCIES};
+        $DS->{dependencies}->{$field} = $ENV{_PACKAGE_DEPENDANCIES};
         print to_json($DS, {
           utf8 => 1,
           pretty => 1,

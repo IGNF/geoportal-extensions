@@ -69,7 +69,9 @@ var logger = Logger.getLogger("editor");
  *          group : true,  // grouper les couches (layers)
  *          title : true   // afficher les titres des rubriques,
  *          type : true,   // afficher du type de geometrie (layers)
- *          pin : true     // afficher la puce pour chaque couche (layers)
+ *          pin : true,     // afficher la puce pour chaque couche (layers)
+ *          visibility : true, // afficher l'icone de visibilité (layers),
+ *          editable : true // active l'edition de la legende (legendes)
  *      }
  *   });
  */
@@ -138,7 +140,9 @@ Editor.prototype._initialize = function () {
         group : false,
         title : true,
         type : true,
-        pin : true
+        pin : true,
+        visibility : true,
+        editable : true
     };
 
     if (!this.options.tools) {
@@ -434,7 +438,7 @@ Editor.prototype._initContainer = function () {
                             target : target,
                             position : _idx + "_" + ii, // unique !
                             tools : {
-                                visibility : true,
+                                visibility : this.options.tools.visibility,
                                 type : this.options.tools.type,
                                 pin : this.options.tools.pin
                             },
@@ -455,6 +459,12 @@ Editor.prototype._initContainer = function () {
                     }
                     // Legende
                     if (this.options.tools.legend) {
+                        // gestion de l'edition de la legende :
+                        // l'option "editable" est prioritaire sur le tag "editable" du fichier de style !
+                        var isEditable = this.options.tools.editable;
+                        if (typeof isEditable === "undefined") {
+                            isEditable = data.editable;
+                        }
                         var oLegend = new Legend({
                             id : this.id,
                             target : target,
@@ -462,7 +472,7 @@ Editor.prototype._initContainer = function () {
                                 "id" : data.id,
                                 "source" : data.source,
                                 "title" : data.id,
-                                "editable" : data.editable || false,
+                                "editable" : (typeof isEditable !== "undefined") ? isEditable : false,
                                 "paint" : data.paint,
                                 "layout" : data.layout
                             }

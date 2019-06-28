@@ -12,8 +12,7 @@ Cette branche est clonée sur [feature-layerimport-mapbox] :
         Gestion des groupes dans l'editeur MapBox...
 
 > **INFO**
-Prise en compte des dev sur itowns 2.8.0 (branche itowns_v2.8.0)
-
+Prise en compte des dev sur itowns 2.11.0
 
 Pour la creation des modules et des exemples, on utilise la commande suivante :
 > ./node_modules/.bin/webpack --config build/webpack/webpack.config.openlayers.modules.js
@@ -285,14 +284,16 @@ les fichiers sont suffixés avec le tag *modules*.
 
 - Editeur MapBox
 
-  - Mettre en place un drag&drop sur les layers MapBox (gestion ordre d'empilement/affichage)
+  - Mettre en place un drag&drop sur les layers MapBox
+  (gestion ordre d'empilement/affichage)
   - Prévoir l'edition du mode circle, texte et/ou icone
+  - Gestion des legendes en fonction du niveau de zoom
 
 - Widget LayerImport
 
   - implementer l'option "defaultStyle"
   - l'import local d'un fichier de style avec des schemes 'mapbox://' pour le service et les sprites !
-  ``` text
-  dans le SDK, on devrait resoudre ce souci avec la surcharge de l'URL (opts:urlService) ?
-  ```
-  - exemple avec qwant !?
+    ``` text
+    dans le SDK, on devrait resoudre ce souci avec la surcharge de l'URL (opts:urlService) ?
+    ```
+  - exemple avec qwant ne fonctionne pas !?
