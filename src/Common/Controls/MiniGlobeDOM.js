@@ -19,6 +19,8 @@ var MiniGlobeDOM = {
         var container = document.createElement("div");
         container.id = this._addUID("GPminiglobeContainer");
         container.className = "GPwidget";
+        container.style.width = "100px";
+        container.style.height = "100px";
         return container;
     }
 };
