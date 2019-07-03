@@ -1,13 +1,16 @@
 {
-   "license" : "CECILL-B",
-   "scripts" : {},
+   "date" : "01/02/2019",
+   "keywords" : [
+      "geoportail",
+      "plugin",
+      "javascript",
+      "Itowns"
+   ],
+   "bugs" : {},
+   "main" : "dist/GpPluginItowns-src.js",
    "author" : "IGNF",
-   "module" : "src/Itowns/index.js",
-   "devDependencies" : {},
-   "repository" : {
-      "type" : "git",
-      "url" : "https://github.com/IGNF/geoportal-extensions.git"
-   },
+   "bundleDependencies" : [],
+   "version" : "2.2.0",
    "files" : [
       "dist/",
       "src/",
@@ -15,31 +18,28 @@
       "README.md",
       "package.json"
    ],
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
-   "keywords" : [
-      "geoportail",
-      "plugin",
-      "javascript",
-      "Itowns"
-   ],
-   "bundleDependencies" : [],
-   "main" : "dist/GpPluginItowns-src.js",
    "directories" : {},
-   "dependencies" : {
-      "xmldom" : "^0.1.27",
-      "request" : "^2.83.0",
-      "proj4" : "2.5.0",
-      "three" : "~0.105.2",
-      "three.meshline" : "~1.2.0",
-      "loglevel" : "~1.6.1",
-      "sortablejs" : "1.8.4",
-      "itowns" : "2.11.1",
-      "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/master/geoportal-access-lib-2.1.2.tgz"
-   },
-   "peerDependencies" : {},
-   "date" : "01/02/2019",
-   "bugs" : {},
-   "description" : "French Geoportal Extensions for iTowns",
    "name" : "geoportal-extensions-itowns",
-   "version" : "2.2.0"
+   "scripts" : {},
+   "description" : "French Geoportal Extensions for iTowns",
+   "license" : "CECILL-B",
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
+   "peerDependencies" : {},
+   "repository" : {
+      "type" : "git",
+      "url" : "https://github.com/IGNF/geoportal-extensions.git"
+   },
+   "module" : "src/Itowns/index.js",
+   "devDependencies" : {},
+   "dependencies" : {
+      "request" : "^2.83.0",
+      "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/master/geoportal-access-lib-2.1.2.tgz",
+      "three" : "~0.105.2",
+      "loglevel" : "~1.6.1",
+      "proj4" : "2.5.0",
+      "sortablejs" : "1.8.4",
+      "xmldom" : "^0.1.27",
+      "three.meshline" : "~1.2.0",
+      "itowns" : "2.11.1"
+   }
 }
