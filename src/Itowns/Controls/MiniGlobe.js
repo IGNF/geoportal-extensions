@@ -82,6 +82,7 @@ MiniGlobe.prototype.setGlobe = function (globe) {
             // we're don't need a precise globe model
             // since the mini globe will always be seen from a far point of view (see minDistance above)
             maxSubdivisionLevel : 6,
+            sseSubdivisionThreshold: 3,
             // Don't instance default controls since miniview's camera will be synced
             // on the main view's one (see globeView.onAfterRender)
             noControls : true,
@@ -93,7 +94,7 @@ MiniGlobe.prototype.setGlobe = function (globe) {
         var updateMiniGlobeHandler = function () {
             // clamp distance camera from globe
             var distanceCamera = globe.getGlobeView().camera.camera3D.position.length();
-            var distance = Math.min(Math.max(distanceCamera * 1.5, minDistance), maxDistance);
+            var distance = Math.min(Math.max(distanceCamera, minDistance), maxDistance);
             var camera = miniView.getGlobeView().camera.camera3D;
             var cameraTargetPosition = globe.getGlobeView().controls.getCameraTargetPosition();
             // Update target miniview's camera
