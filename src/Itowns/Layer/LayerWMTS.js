@@ -6,6 +6,9 @@ import {
     WMTSSource as ItWMTSSource,
     ColorLayer as ItColorLayer
 } from "itowns";
+/* import Extent from "itowns/Core/Geographic/Extent";
+import WMTSSource from "itowns/Source/WMTSSource";
+import ColorLayer from "itowns/Layer/ColorLayer"; */
 
 var logger = Logger.getLogger("wmtsLayer");
 

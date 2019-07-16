@@ -7,6 +7,9 @@ import {
     WMTSSource as ItWMTSSource,
     ElevationLayer as ItElevationLayer
 } from "itowns";
+/* import Extent from "itowns/Core/Geographic/Extent";
+import WMTSSource from "itowns/Source/WMTSSource";
+import ElevationLayer from "itowns/Layer/ElevationLayer"; */
 
 var logger = Logger.getLogger("elevationLayer");
 

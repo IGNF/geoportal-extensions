@@ -10,6 +10,14 @@ import {
     VIEW_EVENTS as IT_VIEW_EVENTS
 } from "itowns";
 
+/* import GlobeView, { GLOBE_VIEW_EVENTS } from "itowns/Core/Prefab/GlobeView";
+import Coordinates from "itowns/Core/Geographic/Coordinates";
+import ColorLayersOrdering from "itowns/Renderer/ColorLayersOrdering";
+import FeaturesUtils from "itowns/Utils/FeaturesUtils";
+import { MAIN_LOOP_EVENTS } from "itowns/Core/MainLoop";
+import { CONTROL_EVENTS } from "itowns/Controls/GlobeControls";
+import { VIEW_EVENTS } from "itowns/Core/View"; */
+
 var logger = Logger.getLogger("GlobeViewExtended");
 
 /**

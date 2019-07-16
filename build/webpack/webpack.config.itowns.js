@@ -64,27 +64,52 @@ module.exports = (env, argv) => {
                 // "loglevel",
                 // "es6-promise",
                 // "sortablejs",
+                // "itowns" : path.resolve(ROOT, "node_modules", "itowns", "lib"),
                 "proj4" : path.resolve(ROOT, "node_modules", "proj4", "dist", /* (production) ? "proj4.js" : */ "proj4-src.js")
             }
         },
-        externals : {
-            itowns : {
-                commonjs2 : "itowns",
-                commonjs : "itowns",
-                amd : "itowns",
-                root : "itowns"
-            },
-            request : {
-                commonjs2 : "request",
-                commonjs : "request",
-                amd : "require"
-            },
-            xmldom : {
-                commonjs2 : "xmldom",
-                commonjs : "xmldom",
-                amd : "require"
+        externals : [
+            // function(context, request, callback) {
+            //     if (/^itowns$/.test(request)) {
+            //         console.log("#### OUT : ", request);
+            //         return callback(null, "itowns");
+            //     }
+            //     console.log("#### NULL : ", request);
+            //     callback();
+            // },
+            // {
+            //     "itowns/Core/Prefab/GlobeView" : "itowns.GlobeView",
+            //     "itowns/Core/Prefab/GlobeView.GLOBE_VIEW_EVENTS" : "itowns.GLOBE_VIEW_EVENTS",
+            //     "itowns/Core/Geographic/Coordinates" : "itowns.Coordinates",
+            //     "itowns/Renderer/ColorLayersOrdering" : "itowns.ColorLayersOrdering", 
+            //     "itowns/Utils/FeaturesUtils" : "itowns.FeaturesUtils",
+            //     "itowns/Core/MainLoop.MAIN_LOOP_EVENTS" : "itowns.MAIN_LOOP_EVENTS",
+            //     "itowns/Controls/GlobeControls.CONTROL_EVENTS" : "itowns.CONTROL_EVENTS",
+            //     "itowns/Core/View.VIEW_EVENTS" : "itowns.VIEW_EVENTS",
+            //     "itowns/Core/Geographic/Extent" : "itowns.Extent",
+            //     "itowns/Source/WMTSSource" : "itowns.WMTSSource",
+            //     "itowns/Layer/ColorLayer" : "itowns.ColorLayer",
+            //     "itowns/Layer/ElevationLayer" : "itowns.ElevationLayer"
+            // },
+            {
+                itowns : {
+                    commonjs2 : "itowns",
+                    commonjs : "itowns",
+                    amd : "itowns",
+                    root : "itowns"
+                },
+                request : {
+                    commonjs2 : "request",
+                    commonjs : "request",
+                    amd : "require"
+                },
+                xmldom : {
+                    commonjs2 : "xmldom",
+                    commonjs : "xmldom",
+                    amd : "require"
+                }
             }
-        },
+        ],
         devtool : (devMode) ? "eval-source-map" : false,
         devServer : {
             // proxy: {
