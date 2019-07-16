@@ -63,6 +63,10 @@ function LayerWMTS (options) {
             wmtsParams.extent = new ItExtent("EPSG:4326", wmtsParams.extent.left, wmtsParams.extent.right, wmtsParams.extent.bottom, wmtsParams.extent.top);
         }
 
+        if (Object.entries(wmtsParams.tileMatrixSetLimits).length === 0 && wmtsParams.tileMatrixSetLimits.constructor === Object) {
+            wmtsParams.tileMatrixSetLimits = undefined;
+        }
+        
         // si ssl = false on fait du http
         // par défaut, ssl = true, on fait du https
         var protocol = options.ssl === false ? "http://" : "https://";
