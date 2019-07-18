@@ -1261,7 +1261,7 @@ SearchEngine.prototype.onAutoCompleteSearchText = function (e) {
  */
 SearchEngine.prototype._getGeocodeCoordinatesFromFullText = function (suggestedLocation, i) {
     var context = this;
-    Gp.Services.geocode({
+    context._requestGeocoding({
         apiKey : this.options.apiKey,
         ssl : this.options.ssl,
         location : suggestedLocation.fullText,
