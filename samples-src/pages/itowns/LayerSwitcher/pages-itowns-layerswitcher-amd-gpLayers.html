@@ -45,25 +45,54 @@
 
                     // ajout des couches
                     // Couche MNT Geoportail (WMTS)
-                    globeView.addLayer(new Gp.itownsExtended.layer.GeoportalElevation({
-                        layer: "ELEVATION.ELEVATIONGRIDCOVERAGE",
-                        ssl: true
-                    }));
-
+                    // globeView.addLayer(new Gp.itownsExtended.layer.GeoportalElevation({
+                    //     layer: "ELEVATION.ELEVATIONGRIDCOVERAGE",
+                    //     ssl: true
+                    // }));
+ 
                     // Couche WMTS Geoportail
                     globeView.addLayer(new Gp.itownsExtended.layer.GeoportalWMTS({
                         layer: "ORTHOIMAGERY.ORTHOPHOTOS",
                         ssl: true
                     }));
 
+                    // Couche WMTS Geoportail
+
+                    function createVectorTileLayer(style) {
+                        return new Gp.itownsExtended.layer.VectorTileLayer({
+                            url: "http://rok4server.ide.ign.fr/rok4/1.0.0/PYRAMIDE_ECRAN/${z}/${x}/${y}.pbf",
+                            style: style,
+                            zoom : {
+                                min: 0,
+                                max: 13
+                            }
+                        })
+                    }
+
+                    function addVectorTileLayer(layer) {
+                        globeView.addLayer(layer);
+                    }
+
+                    itowns.Fetcher.json('../../resources/itowns/vectorTile.json').then(createVectorTileLayer).then(addVectorTileLayer);
+                    // var vTileLayer = new Promise(function(resolve, reject) {
+                    //     resolve(new Gp.itownsExtended.layer.VectorTileLayer({
+                    //         url: "https://rok4server.ide.ign.fr/rok4/1.0.0/PYRAMIDE_ECRAN/${z}/${x}/${y}.pbf",
+                    //         style: "../../resources/itowns/vectorTile.json"
+                    //     }));
+                    // });
+// 
+                    // vTileLayer.then(function(layer) {
+                    //     globeView.addLayer(layer);
+                    // });
+
                     // Couche WMS Geoportail 
-                    globeView.addLayer(new Gp.itownsExtended.layer.GeoportalWMS({
-                        layer: "REGION.2016",
-                        ssl: true,
-                        itownsParams: {
-                            opacity: 0.5
-                        }
-                    }));
+                    // globeView.addLayer(new Gp.itownsExtended.layer.GeoportalWMS({
+                    //     layer: "REGION.2016",
+                    //     ssl: true,
+                    //     itownsParams: {
+                    //         opacity: 0.5
+                    //     }
+                    // }));
 
                     // ajout du control
                     var layerSwitcher = new Gp.itownsExtended.control.LayerSwitcher({
@@ -94,7 +123,7 @@
                         ]
                     });
 
-                    globeView.addWidget(layerSwitcher);
+                    //globeView.addWidget(layerSwitcher);
                 });
             }
 
