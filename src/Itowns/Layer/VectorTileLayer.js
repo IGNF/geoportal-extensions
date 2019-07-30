@@ -1,8 +1,7 @@
 import Logger from "../../Common/Utils/LoggerByDefault";
 import {
     TMSSource as ItTMSSource,
-    ColorLayer as ItColorLayer,
-    Fetcher as ItParser
+    ColorLayer as ItColorLayer
 } from "itowns";
 /* import Extent from "itowns/Core/Geographic/Extent";
 import WMSSource from "itowns/Source/WMSSource";
@@ -46,12 +45,12 @@ function VectorTileLayer (options) {
     }
 
     // filter the layers to display
-    filterLayers(options.style.layers, options.filter);
+    var supportedLayers = filterLayers(options.style.layers, options.filter);
+    var backgroundLayer;
 
     function filterLayers(layers, filter) {
         // filter the layers to display
         var supportedLayers = [];
-        var backgroundLayer;
         if (!filter) {
             layers.forEach(function(layer) {
                 supportedLayers.push(layer);
@@ -68,9 +67,9 @@ function VectorTileLayer (options) {
                 //     layer.id.indexOf('admin_sub') < 0) {
                 //     supportedLayers.push(layer);
                 // }
-                return supportedLayers;
             });
         }
+        return supportedLayers;
     }
 
     function inter(z) {
