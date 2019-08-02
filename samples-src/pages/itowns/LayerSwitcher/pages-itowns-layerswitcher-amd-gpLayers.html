@@ -60,6 +60,7 @@
 
                     function createVectorTileLayer(style) {
                         return new Gp.itownsExtended.layer.VectorTileLayer({
+                            id : "MVT",
                             url: "http://rok4server.ide.ign.fr/rok4/1.0.0/PYRAMIDE_ECRAN/${z}/${x}/${y}.pbf",
                             style: style,
                             zoom : {
@@ -123,7 +124,7 @@
                         ]
                     });
 
-                    //globeView.addWidget(layerSwitcher);
+                    globeView.addWidget(layerSwitcher);
                 });
             }
 

@@ -15,9 +15,10 @@ var logger = Logger.getLogger("vectorTileLayer");
  *
  * @constructor
  * @alias itowns.layer.VectorTileLayer
- * @param {Object} options            - options for function call.
- * @param {String} options.style      - Url to the vector Tile json style
- * @param {String} options.url   - Url to the pbf file
+ * @param {Object} options - options for function call.
+ * @param {String} options.id - id to give to the layer
+ * @param {String} options.style - Url to the vector Tile json style
+ * @param {String} options.url - Url to the pbf file
  * @param {Object} [options.filter] - Filter applied to the vector layer style
  * @param {Object} [options.attributions] - Atrtributions of the layer
  * @param {Object} [options.zoom] - Between which zoom levels the layer is displayed (zoom.min and zoom.max)
@@ -94,7 +95,7 @@ function VectorTileLayer (options) {
     })
 
     // Return a styled vector tile layer
-    return new ItColorLayer('MVT', {
+    return new ItColorLayer(options.id, {
         isValidData: isValidData,
         source: mvtSource,
         filter: supportedLayers,
