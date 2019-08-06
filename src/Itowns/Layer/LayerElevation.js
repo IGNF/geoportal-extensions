@@ -59,8 +59,10 @@ function LayerElevation (options) {
         var wmtsParams = Config.getLayerParams(options.layer, "WMTS", options.apiKey);
 
         if (wmtsParams.projection === "EPSG:3857" && wmtsParams.extent) {
+            wmtsParams.projection = "WMTS:PM";
             wmtsParams.extent = new ItExtent("EPSG:4326", wmtsParams.extent.left, wmtsParams.extent.right, wmtsParams.extent.bottom, wmtsParams.extent.top).as("EPSG:3857");
         } else {
+            wmtsParams.projection = "WMTS:WGS84";
             wmtsParams.extent = new ItExtent("EPSG:4326", wmtsParams.extent.left, wmtsParams.extent.right, wmtsParams.extent.bottom, wmtsParams.extent.top);
         }
 
