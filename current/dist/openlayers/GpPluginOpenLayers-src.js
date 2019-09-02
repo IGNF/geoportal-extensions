@@ -85416,8 +85416,7 @@ var MeasureArea = function (Control) {
     var measure;
 
     if (this.options.geodesic) {
-      var sourceProj = map.getView().getProjection();
-      var geom = polygon.clone().transform(sourceProj, "EPSG:4326");
+      var geom = polygon.clone();
       var coordinates = geom.getLinearRing(0).getCoordinates();
       measure = Math.abs(Object(ol_sphere__WEBPACK_IMPORTED_MODULE_2__["getArea"])(new ol_geom__WEBPACK_IMPORTED_MODULE_3__["Polygon"]([coordinates])));
     } else {
