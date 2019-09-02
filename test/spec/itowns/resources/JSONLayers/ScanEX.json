@@ -1,5 +1,6 @@
 {
     "type": "color",
+    "isColorLayer" : true,
     "id": "GEOGRAPHICALGRIDSYSTEMS.MAPS.SCAN-EXPRESS.STANDARD$GEOPORTAIL:OGC:WMTS",
     "source": {
       "protocol": "wmts",

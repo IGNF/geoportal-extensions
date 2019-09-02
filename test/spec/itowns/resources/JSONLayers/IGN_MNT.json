@@ -44,7 +44,7 @@
 		  ]
 		}
 	  ],
-	  "projection": "IGNF:WGS84G",
+	  "projection": "EPSG:4326",
 	  "name": "ELEVATION.ELEVATIONGRIDCOVERAGE",
 	  "format": "image/x-bil;bits=32",
 	  "tileMatrixSet": "WGS84G",

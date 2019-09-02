@@ -47,6 +47,26 @@ class LayerManager {
     }
 
     //
+    createWMTSSourceFromConfig(config) {
+        config.source = new itowns.WMTSSource(config.source);
+        return config;
+    };
+
+    createWMSSourceFromConfig(config) {
+        config.source = new itowns.WMSSource(config.source);
+        return config;
+    };
+
+    addColorLayerFromConfig(config) {
+        var layer = new itowns.ColorLayer(config.id, config);
+        globeViewExtended.addLayer(layer);
+    };
+
+    addElevationLayerFromConfig(config) {
+        var layer = new itowns.ElevationLayer(config.id, config);
+        globeViewExtended.addLayer(layer);
+    };
+
     add(layer) {
         if (layer.type !== 'color' && layer.type !== 'elevation') throw (`unkown layer type '${layer.type}'`);
 
@@ -159,9 +179,11 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
             } else {
                 var eventKey = globeViewExtended.listen(GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, function () {
                     // ordered color layers
-                    window.itowns.Fetcher.json("spec/itowns/resources/JSONLayers/Ortho.json").then(result => layerManager.add(result)).then(() => {
-                        return window.itowns.Fetcher.json("spec/itowns/resources/JSONLayers/Region.json").then(result => layerManager.add(result));
-                    });
+                    window.itowns.Fetcher.json('spec/itowns/resources/JSONLayers/Ortho.json').then(layerManager.createWMTSSourceFromConfig).then(layerManager.addColorLayerFromConfig);
+
+                    // window.itowns.Fetcher.json("spec/itowns/resources/JSONLayers/Ortho.json").then(result => layerManager.add(result)).then(() => {
+                    //     return window.itowns.Fetcher.json("spec/itowns/resources/JSONLayers/Region.json").then(result => layerManager.add(result));
+                    // });
                     layerManager.add({
                         type : 'color',
                         id : 'S_TOP100',
@@ -209,12 +231,11 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
 
         it('should get scene extent', () => {
             var extent = globeViewExtended.getExtent();
-
             assert(extent, "no extent returned");
-            assertIsNumber(extent.east());
-            assertIsNumber(extent.west());
-            assertIsNumber(extent.north());
-            assertIsNumber(extent.south());
+            assertIsNumber(extent.east);
+            assertIsNumber(extent.west);
+            assertIsNumber(extent.north);
+            assertIsNumber(extent.south);
         });
 
         it('should get current scale', (done) => {
@@ -230,8 +251,8 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
             globeViewExtended.setZoom(zoomScale.zoom).then(() => {
                 var coords = globeViewExtended.getCoordinateFromPixel(Math.floor(viewWidth / 2), Math.floor(viewHeight / 2));
                 assert(typeof coords === 'object', 'coords is not an object');
-                assertIsNumber(coords.longitude());
-                assertIsNumber(coords.latitude());
+                assertIsNumber(coords.longitude);
+                assertIsNumber(coords.latitude);
             });
         });
 
@@ -244,8 +265,8 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
                 var coords = globeViewExtended.getCoordinateFromMouseEvent(mouseEvent);
 
                 assert(typeof coords === 'object', 'coords is not an object');
-                assertIsNumber(coords.longitude());
-                assertIsNumber(coords.latitude());
+                assertIsNumber(coords.longitude);
+                assertIsNumber(coords.latitude);
             });
         });
 

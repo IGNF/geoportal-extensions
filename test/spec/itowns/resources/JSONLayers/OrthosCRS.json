@@ -11,7 +11,7 @@
         "type": 0,
         "options": {}
       },
-      "projection": "IGNF:WGS84G",
+      "projection": "EPSG:4326",
       "attribution": [
         {
           "name": "IGN",

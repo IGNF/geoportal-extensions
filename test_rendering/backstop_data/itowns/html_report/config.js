@@ -4,7 +4,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/itowns_backstop_MousePosition__default_0_dividGPmousePosition-_0_desktop.png",
-        "test": "../bitmaps_test/20190408-172835/itowns_backstop_MousePosition__default_0_dividGPmousePosition-_0_desktop.png",
+        "test": "../bitmaps_test/20190830-170057/itowns_backstop_MousePosition__default_0_dividGPmousePosition-_0_desktop.png",
         "selector": "div[id^=GPmousePosition-]",
         "fileName": "itowns_backstop_MousePosition__default_0_dividGPmousePosition-_0_desktop.png",
         "label": "MousePosition : default",
@@ -28,7 +28,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/itowns_backstop_MousePosition__show_settings_0_document_0_desktop.png",
-        "test": "../bitmaps_test/20190408-172835/itowns_backstop_MousePosition__show_settings_0_document_0_desktop.png",
+        "test": "../bitmaps_test/20190830-170057/itowns_backstop_MousePosition__show_settings_0_document_0_desktop.png",
         "selector": "document",
         "fileName": "itowns_backstop_MousePosition__show_settings_0_document_0_desktop.png",
         "label": "MousePosition : show settings",
@@ -42,8 +42,7 @@ report({
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.00",
-          "analysisTime": 36
+          "misMatchPercentage": "0.00"
         }
       },
       "status": "pass"
@@ -51,11 +50,11 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/itowns_backstop_LayerSwitcher__default_0_dividGPlayerSwitcher-_0_desktop.png",
-        "test": "../bitmaps_test/20190408-172835/itowns_backstop_LayerSwitcher__default_0_dividGPlayerSwitcher-_0_desktop.png",
+        "test": "../bitmaps_test/20190830-170057/itowns_backstop_LayerSwitcher__default_0_dividGPlayerSwitcher-_0_desktop.png",
         "selector": "div[id^=GPlayerSwitcher-]",
         "fileName": "itowns_backstop_LayerSwitcher__default_0_dividGPlayerSwitcher-_0_desktop.png",
         "label": "LayerSwitcher : default",
-        "misMatchThreshold": 10,
+        "misMatchThreshold": 30,
         "url": "https://localhost:8087/test_rendering/itowns/layerswitcher.html",
         "expect": 0,
         "viewportLabel": "desktop",
@@ -65,8 +64,7 @@ report({
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "9.39",
-          "analysisTime": 18
+          "misMatchPercentage": "0.00"
         }
       },
       "status": "pass"
@@ -74,7 +72,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/itowns_backstop_LayerSwitcher_interaction__add_a_layer_0_document_0_desktop.png",
-        "test": "../bitmaps_test/20190408-172835/itowns_backstop_LayerSwitcher_interaction__add_a_layer_0_document_0_desktop.png",
+        "test": "../bitmaps_test/20190830-170057/itowns_backstop_LayerSwitcher_interaction__add_a_layer_0_document_0_desktop.png",
         "selector": "document",
         "fileName": "itowns_backstop_LayerSwitcher_interaction__add_a_layer_0_document_0_desktop.png",
         "label": "LayerSwitcher (interaction) : add a layer",
@@ -88,8 +86,7 @@ report({
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "1.48",
-          "analysisTime": 52
+          "misMatchPercentage": "0.00"
         }
       },
       "status": "pass"
@@ -97,7 +94,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/itowns_backstop_LayerSwitcher_interaction__remove_a_layer_0_document_0_desktop.png",
-        "test": "../bitmaps_test/20190408-172835/itowns_backstop_LayerSwitcher_interaction__remove_a_layer_0_document_0_desktop.png",
+        "test": "../bitmaps_test/20190830-170057/itowns_backstop_LayerSwitcher_interaction__remove_a_layer_0_document_0_desktop.png",
         "selector": "document",
         "fileName": "itowns_backstop_LayerSwitcher_interaction__remove_a_layer_0_document_0_desktop.png",
         "label": "LayerSwitcher (interaction) : remove a layer",
@@ -119,7 +116,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/itowns_backstop_MNT_0_document_0_desktop.png",
-        "test": "../bitmaps_test/20190408-172835/itowns_backstop_MNT_0_document_0_desktop.png",
+        "test": "../bitmaps_test/20190830-170057/itowns_backstop_MNT_0_document_0_desktop.png",
         "selector": "document",
         "fileName": "itowns_backstop_MNT_0_document_0_desktop.png",
         "label": "MNT",
@@ -133,8 +130,8 @@ report({
             "width": 0,
             "height": 0
           },
-          "misMatchPercentage": "0.02",
-          "analysisTime": 55
+          "misMatchPercentage": "0.00",
+          "analysisTime": 16
         }
       },
       "status": "pass"
