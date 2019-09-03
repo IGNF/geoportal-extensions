@@ -60,11 +60,13 @@ class LayerManager {
     addColorLayerFromConfig(config) {
         var layer = new itowns.ColorLayer(config.id, config);
         globeViewExtended.addLayer(layer);
+        this._layers.push(layer);      
     };
 
     addElevationLayerFromConfig(config) {
         var layer = new itowns.ElevationLayer(config.id, config);
         globeViewExtended.addLayer(layer);
+        this._layers.push(layer);
     };
 
     add(layer) {
@@ -179,25 +181,31 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
             } else {
                 var eventKey = globeViewExtended.listen(GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, function () {
                     // ordered color layers
-                    window.itowns.Fetcher.json('spec/itowns/resources/JSONLayers/Ortho.json').then(layerManager.createWMTSSourceFromConfig).then(layerManager.addColorLayerFromConfig);
+                    window.itowns.Fetcher.json('spec/itowns/resources/JSONLayers/Ortho.json').then(layerManager.createWMTSSourceFromConfig).then(function(result) {
+                        layerManager.addColorLayerFromConfig(result);
+                    }.bind(this));
 
-                    // window.itowns.Fetcher.json("spec/itowns/resources/JSONLayers/Ortho.json").then(result => layerManager.add(result)).then(() => {
-                    //     return window.itowns.Fetcher.json("spec/itowns/resources/JSONLayers/Region.json").then(result => layerManager.add(result));
+                    // layerManager.add({
+                    //     type : 'color',
+                    //     id : 'S_TOP100',
+                    //     name : 'kml',
+                    //     transparent : true,
+                    //     source : {
+                    //         protocol : 'file',
+                    //         url : 'spec/itowns/resources/KML/S_TOP100.kml',
+                    //         projection : 'EPSG:4326'
+                    //     }
                     // });
-                    layerManager.add({
-                        type : 'color',
-                        id : 'S_TOP100',
-                        name : 'kml',
-                        transparent : true,
-                        source : {
-                            protocol : 'file',
-                            url : 'spec/itowns/resources/KML/S_TOP100.kml',
-                            projection : 'EPSG:4326'
-                        }
-                    });
+
                     // elevation layers
-                    window.itowns.Fetcher.json("spec/itowns/resources/JSONLayers/IGN_MNT.json").then(result => layerManager.add(result));
-                    window.itowns.Fetcher.json("spec/itowns/resources/JSONLayers/IGN_MNT_HIGHRES.json").then(result => layerManager.add(result));
+                    window.itowns.Fetcher.json('spec/itowns/resources/JSONLayers/IGN_MNT.json').then(layerManager.createWMTSSourceFromConfig).then(function(result) {
+                        layerManager.addElevationLayerFromConfig(result);
+                    }.bind(this));
+
+                    window.itowns.Fetcher.json('spec/itowns/resources/JSONLayers/IGN_MNT_HIGHRES.json').then(layerManager.createWMTSSourceFromConfig).then(function(result) {
+                        layerManager.addElevationLayerFromConfig(result);
+                    }.bind(this));
+
                     assert.ok(true);
                     globeViewExtended.forgetByKey(eventKey);
                     done();
@@ -207,7 +215,7 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
     });
 
     describe('#getters', function () {
-
+        this.timeout(4000);
         it('should get zoom', () => {
             assertIsNumber(globeViewExtended.getZoom());
         });
@@ -271,7 +279,7 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
         });
 
         it('should get a layer by his id', () => {
-            var colorLayer = globeViewExtended.getLayerById("ORTHOIMAGERY.ORTHOPHOTOS$GEOPORTAIL:OGC:WMTS");
+            var colorLayer = globeViewExtended.getLayerById("Ortho");
             assert(colorLayer, 'color layer not found');
 
             var vectorLayer = globeViewExtended.getLayerById("S_TOP100");
@@ -282,7 +290,7 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
         });
 
         it('should get a color layer by his id', () => {
-            var colorLayer = globeViewExtended.getColorLayerById("ORTHOIMAGERY.ORTHOPHOTOS$GEOPORTAIL:OGC:WMTS");
+            var colorLayer = globeViewExtended.getColorLayerById("Ortho");
             assert(colorLayer, 'color layer not found');
 
             //vector layer = color layer
@@ -375,7 +383,7 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
                 // la valeur de tilt doit être [4 89.5]
                 var newTilt = (globeViewExtended.getTilt() + 25) % 89.5;
                 if (newTilt < 4) newTilt = 4;
-
+                
                 return globeViewExtended.setTilt(newTilt).then(() => {
                     let tilt = globeViewExtended.getTilt();
                     assertFloatEqual(tilt, newTilt);
@@ -406,7 +414,7 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
 
         it('should change camera position', () => {
             var cameraPos1 = globeViewExtended.getGlobeView().camera.camera3D.position.clone();
-            var target = globeViewExtended.getGlobeView().controls.getCameraTargetGeoPosition().as('EPSG:4978').xyz(); // Geocentric system;
+            var target = globeViewExtended.getGlobeView().controls.getCameraTargetGeoPosition().as('EPSG:4978'); // Geocentric system;
             var newTarget = {
                 x: target.x + 10000,
                 y: target.y + 10000,
@@ -503,21 +511,21 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
     describe('#layers management', function () {
         it('should correctly add a layer', (done) => {
             var nbLayers = globeViewExtended.getColorLayers().length;
-            window.itowns.Fetcher.json(colorLayer.url).then(newLayer => {
-                return layerManager.add(newLayer).then(() => {
-                    assert.equal(globeViewExtended.getColorLayers().length, layerManager.getColorLayers().length);
-                    var layer = globeViewExtended.getLayerById(newLayer.id);
-                    assert(layer, 'layer not found');
-                })
+            window.itowns.Fetcher.json('spec/itowns/resources/JSONLayers/ScanEX.json').then(layerManager.createWMTSSourceFromConfig).then(function(result){
+                    layerManager.addColorLayerFromConfig(result);
+                }.bind(this)).then(() => {
+                assert.equal(globeViewExtended.getColorLayers().length, layerManager.getColorLayers().length);
+                var layer = globeViewExtended.getLayerById("ScanEX");
+                assert(layer, 'layer not found');
             }).then(() => done()).catch(e => done(e));
         });
 
         it('should correctly remove a layer', () => {
-            layerManager.remove(colorLayer.id);
+            layerManager.remove("ScanEX");
 
             assert.equal(globeViewExtended.getColorLayers().length, layerManager.getColorLayers().length);
 
-            var layer = globeViewExtended.getLayerById(colorLayer.id);
+            var layer = globeViewExtended.getLayerById("ScanEX");
             assert(!layer, 'removed layer found');
         });
     });
@@ -622,15 +630,15 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
         });
 
         it('should correctly launch layer added event', function (done) {
-            doubleDone(); //reset operator
-            window.itowns.Fetcher.json(colorLayer.url).then(newLayer => {
-                var eventKey = globeViewExtended.listen(GlobeViewExtended.EVENTS.LAYER_ADDED, () => {
-                    assert.ok(true);
-                    globeViewExtended.forgetByKey(eventKey);
-                    doubleDone(done);
-                });
-                return layerManager.add(newLayer).then(() => doubleDone(done));
-            }).catch(e => done(e));
+            window.itowns.Fetcher.json('spec/itowns/resources/JSONLayers/ScanEX.json').then(layerManager.createWMTSSourceFromConfig).then(function(result){
+                layerManager.addColorLayerFromConfig(result);
+            }.bind(this));
+
+            var eventKey = globeViewExtended.listen(GlobeViewExtended.EVENTS.LAYER_ADDED, () => {
+                assert.ok(true);
+                globeViewExtended.forgetByKey(eventKey);
+                done();
+            });
         });
 
         it('should correctly launch layer removed event', function (done) {
@@ -639,7 +647,7 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
                 globeViewExtended.forgetByKey(eventKey);
                 done();
             });
-            layerManager.remove(colorLayer.id);
+            layerManager.remove("ScanEX");
         });
 
         it('should correctly launch layer order changed event', function (done) {
@@ -695,10 +703,10 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
 
                     try {
                         assert(event.extent, "info 'extent' not fetched");
-                        assertIsNumber(event.extent.east());
-                        assertIsNumber(event.extent.west());
-                        assertIsNumber(event.extent.north());
-                        assertIsNumber(event.extent.south());
+                        assertIsNumber(event.extent.east);
+                        assertIsNumber(event.extent.west);
+                        assertIsNumber(event.extent.north);
+                        assertIsNumber(event.extent.south);
 
                         assert(event.colorLayersId, "info 'color layers id' not fetched");
                         layerManager.getColorLayers().forEach((layerRef) => {

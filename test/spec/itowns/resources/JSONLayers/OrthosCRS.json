@@ -1,393 +1,105 @@
 {
     "type": "color",
-    "id": "ORTHOIMAGERY.ORTHOPHOTOS.CRS84$GEOPORTAIL:OGC:WMTS",
+    "id": "OrthoCRS",
     "source": {
-      "protocol": "wmts",
-      "url": "http://wxs.ign.fr/ptlp78g6fvz9daz5mg2fztvr/geoportail/wmts",
-      "networkOptions": {
-        "crossOrigin": "omit"
-      },
-      "updateStrategy": {
-        "type": 0,
-        "options": {}
-      },
-      "projection": "EPSG:4326",
-      "attribution": [
-        {
-          "name": "IGN",
-          "attribution": "Institut national de l'information géographique et forestière",
-          "logo": "http://wxs.ign.fr/static/logos/IGN/IGN.gif",
-          "url": "http://www.ign.fr",
-          "constraints": [
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": -178.18713,
-                "right": 55.84643,
-                "top": 51.094486,
-                "bottom": -21.401262
-              },
-              "minScaleDenominator": 2133,
-              "maxScaleDenominator": 4367831,
-              "temporalExtent": [
-                "1997-07-12",
-                "2017-04-19"
-              ]
-            }
-          ]
+        "protocol": "wmts",
+        "url": "https://wxs.ign.fr/ptlp78g6fvz9daz5mg2fztvr/geoportail/wmts",
+        "fx" :  1.0,
+        "updateStrategy": {
+            "type": 0,
+            "options": {}
         },
-        {
-          "name": "FEDER",
-          "attribution": "Fonds européen de développement économique et régional",
-          "logo": "http://wxs.ign.fr/static/logos/FEDER/FEDER.gif",
-          "url": "http://www.europe-en-france.gouv.fr/",
-          "constraints": [
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 1.6784439,
-                "right": 4.8729386,
-                "top": 44.978218,
-                "bottom": 42.63972
-              },
-              "minScaleDenominator": 2133,
-              "maxScaleDenominator": 4367831,
-              "temporalExtent": [
-                "1997-07-12",
-                "2017-04-19"
-              ]
-            }
-          ]
+        "networkOptions" : {
+            "crossOrigin" : "omit"
         },
-        {
-          "name": "FEDER2",
-          "attribution": "Fonds européen de développement économique et régional",
-          "logo": "http://wxs.ign.fr/static/logos/FEDER2/FEDER2.gif",
-          "url": "http://www.europe-en-france.gouv.fr/",
-          "constraints": [
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 1.3577043,
-                "right": 4.269964,
-                "top": 50.37648,
-                "bottom": 48.824635
-              },
-              "minScaleDenominator": 2133,
-              "maxScaleDenominator": 4367831,
-              "temporalExtent": [
-                "1997-07-12",
-                "2017-04-19"
-              ]
-            }
-          ]
+        "name": "ORTHOIMAGERY.ORTHOPHOTOS.CRS84",
+        "attribution" :  [{
+            "name" : "IGNCRS",
+            "attribution" : "IGN Grandes Echelles",
+            "url" : "http://www.ign.fr"
+        }],
+        "format": "image/jpeg",
+        "projection" : "EPSG:4326",
+        "tileMatrixSet": "WGS84",
+        "extent": {
+            "west": "-178.187",
+            "east": "55.8464",
+            "south": "-21.4013",
+            "north": "51.0945"
         },
-        {
-          "name": "CRCORSE",
-          "attribution": "CRCORSE",
-          "logo": "http://wxs.ign.fr/static/logos/CRCORSE/CRCORSE.gif",
-          "url": "http://www.corse.fr//",
-          "constraints": [
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 8.428783,
-                "right": 9.688606,
-                "top": 43.08541,
-                "bottom": 41.338627
-              },
-              "minScaleDenominator": 2133,
-              "maxScaleDenominator": 4367831,
-              "temporalExtent": [
-                "1997-07-12",
-                "2017-04-19"
-              ]
+        "tileMatrixSetLimits": {
+            "6" : {
+                "minTileRow" : 13,
+                "maxTileRow" : 39,
+                "minTileCol" : 0,
+                "maxTileCol" : 83
+            },
+            "7" : {
+                "minTileRow" : 27,
+                "maxTileRow" : 79,
+                "minTileCol" : 1,
+                "maxTileCol" : 167
+            },
+            "8" : {
+                "minTileRow" : 55,
+                "maxTileRow" : 158,
+                "minTileCol" : 2,
+                "maxTileCol" : 335
+            },
+            "9" : {
+                "minTileRow" : 110,
+                "maxTileRow" : 316,
+                "minTileCol" : 5,
+                "maxTileCol" : 670
+            },
+            "10" : {
+                "minTileRow" : 221,
+                "maxTileRow" : 633,
+                "minTileCol" : 10,
+                "maxTileCol" : 1341
+            },
+            "11" : {
+                "minTileRow" : 442,
+                "maxTileRow" : 1267,
+                "minTileCol" : 20,
+                "maxTileCol" : 2683
+            },
+            "12" : {
+                "minTileRow" : 885,
+                "maxTileRow" : 2534,
+                "minTileCol" : 41,
+                "maxTileCol" : 5366
+            },
+            "13" : {
+                "minTileRow" : 1770,
+                "maxTileRow" : 5069,
+                "minTileCol" : 82,
+                "maxTileCol" : 10733
+            },
+            "14" : {
+                "minTileRow" : 3541,
+                "maxTileRow" : 10139,
+                "minTileCol" : 165,
+                "maxTileCol" : 21467
+            },
+            "15" : {
+                "minTileRow" : 7082,
+                "maxTileRow" : 20279,
+                "minTileCol" : 330,
+                "maxTileCol" : 42934
+            },
+            "16" : {
+                "minTileRow" : 14165,
+                "maxTileRow" : 40559,
+                "minTileCol" : 660,
+                "maxTileCol" : 85868
+            },
+            "17" : {
+                "minTileRow" : 28330,
+                "maxTileRow" : 81118,
+                "minTileCol" : 1320,
+                "maxTileCol" : 171736
             }
-          ]
-        },
-        {
-          "name": "CNES",
-          "attribution": "Centre national d'études spatiales (CNES)",
-          "logo": "http://wxs.ign.fr/static/logos/CNES/CNES.gif",
-          "url": "http://www.cnes.fr/",
-          "constraints": [
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": -62.952805,
-                "right": 45.30442,
-                "top": 47.149963,
-                "bottom": -13.089187
-              },
-              "minScaleDenominator": 2133,
-              "maxScaleDenominator": 4367831,
-              "temporalExtent": [
-                "1997-07-12",
-                "2017-04-19"
-              ]
-            }
-          ]
-        },
-        {
-          "name": "e-Megalis",
-          "attribution": "Syndicat mixte de coopération territoriale (e-Megalis)",
-          "logo": "http://wxs.ign.fr/static/logos/e-Megalis/e-Megalis.gif",
-          "url": "http://www.e-megalisbretagne.org//",
-          "constraints": [
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": -5.1937118,
-                "right": -0.98568505,
-                "top": 48.980812,
-                "bottom": 47.23789
-              },
-              "minScaleDenominator": 2133,
-              "maxScaleDenominator": 4367831,
-              "temporalExtent": [
-                "1997-07-12",
-                "2017-04-19"
-              ]
-            }
-          ]
-        },
-        {
-          "name": "CRAIG",
-          "attribution": "Centre Régional Auvergnat de l'Information Géographique (CRAIG)",
-          "logo": "http://wxs.ign.fr/static/logos/CRAIG/CRAIG.gif",
-          "url": "http://www.craig.fr",
-          "constraints": [
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 2.0398402,
-                "right": 4.5090737,
-                "top": 46.8038,
-                "bottom": 44.60505
-              },
-              "minScaleDenominator": 2133,
-              "maxScaleDenominator": 4367831,
-              "temporalExtent": [
-                "1997-07-12",
-                "2017-04-19"
-              ]
-            }
-          ]
-        },
-        {
-          "name": "PPIGE",
-          "attribution": "PPIGE",
-          "logo": "http://wxs.ign.fr/static/logos/PPIGE/PPIGE.gif",
-          "url": "http://www.ppige-npdc.fr/",
-          "constraints": [
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 1.5212119,
-                "right": 4.2673664,
-                "top": 51.090965,
-                "bottom": 49.957302
-              },
-              "minScaleDenominator": 2133,
-              "maxScaleDenominator": 4367831,
-              "temporalExtent": [
-                "1997-07-12",
-                "2017-04-19"
-              ]
-            }
-          ]
-        },
-        {
-          "name": "SIGLR",
-          "attribution": "SIGLR",
-          "logo": "http://wxs.ign.fr/static/logos/SIGLR/SIGLR.gif",
-          "url": "http://www.siglr.org//",
-          "constraints": [
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 1.6784439,
-                "right": 4.8729386,
-                "top": 44.978218,
-                "bottom": 42.316307
-              },
-              "minScaleDenominator": 2133,
-              "maxScaleDenominator": 4367831,
-              "temporalExtent": [
-                "1997-07-12",
-                "2017-04-19"
-              ]
-            }
-          ]
-        },
-        {
-          "name": "CG06",
-          "attribution": "Département Alpes Maritimes (06) en partenariat avec : Groupement Orthophoto 06 (NCA, Ville de Cannes, CARF, CASA,CG06, CA de Grasse) ",
-          "logo": "http://wxs.ign.fr/static/logos/CG06/CG06.gif",
-          "url": "http://www.cg06.fr",
-          "constraints": [
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 6.6093955,
-                "right": 7.7436337,
-                "top": 44.377018,
-                "bottom": 43.44647
-              },
-              "minScaleDenominator": 2133,
-              "maxScaleDenominator": 4367831,
-              "temporalExtent": [
-                "1997-07-12",
-                "2017-04-19"
-              ]
-            }
-          ]
-        },
-        {
-          "name": "RGD_SAVOIE",
-          "attribution": "Régie de Gestion de Données des Pays de Savoie (RGD 73-74)",
-          "logo": "http://wxs.ign.fr/static/logos/RGD_SAVOIE/RGD_SAVOIE.gif",
-          "url": "http://www.rgd.fr",
-          "constraints": [
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 5.7759595,
-                "right": 7.0887337,
-                "top": 46.438328,
-                "bottom": 45.65335
-              },
-              "minScaleDenominator": 2133,
-              "maxScaleDenominator": 4367831,
-              "temporalExtent": [
-                "1997-07-12",
-                "2017-04-19"
-              ]
-            }
-          ]
-        },
-        {
-          "name": "CG45",
-          "attribution": "Le conseil général du Loiret",
-          "logo": "http://wxs.ign.fr/static/logos/CG45/CG45.gif",
-          "url": "http://www.loiret.com",
-          "constraints": [
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 1.4883244,
-                "right": 3.1349874,
-                "top": 48.354233,
-                "bottom": 47.471867
-              },
-              "minScaleDenominator": 2133,
-              "maxScaleDenominator": 4367831,
-              "temporalExtent": [
-                "1997-07-12",
-                "2017-04-19"
-              ]
-            }
-          ]
         }
-      ],
-      "name": "ORTHOIMAGERY.ORTHOPHOTOS.CRS84",
-      "format": "image/jpeg",
-      "tileMatrixSet": "WGS84G",
-      "tileMatrixSetLimits": {
-        "6": {
-          "minTileRow": "13",
-          "maxTileRow": "39",
-          "minTileCol": "0",
-          "maxTileCol": "83"
-        },
-        "7": {
-          "minTileRow": "27",
-          "maxTileRow": "79",
-          "minTileCol": "1",
-          "maxTileCol": "167"
-        },
-        "8": {
-          "minTileRow": "55",
-          "maxTileRow": "158",
-          "minTileCol": "2",
-          "maxTileCol": "335"
-        },
-        "9": {
-          "minTileRow": "110",
-          "maxTileRow": "316",
-          "minTileCol": "5",
-          "maxTileCol": "670"
-        },
-        "10": {
-          "minTileRow": "221",
-          "maxTileRow": "633",
-          "minTileCol": "10",
-          "maxTileCol": "1341"
-        },
-        "11": {
-          "minTileRow": "442",
-          "maxTileRow": "1267",
-          "minTileCol": "20",
-          "maxTileCol": "2683"
-        },
-        "12": {
-          "minTileRow": "885",
-          "maxTileRow": "2534",
-          "minTileCol": "41",
-          "maxTileCol": "5366"
-        },
-        "13": {
-          "minTileRow": "1770",
-          "maxTileRow": "5069",
-          "minTileCol": "82",
-          "maxTileCol": "10733"
-        },
-        "14": {
-          "minTileRow": "3541",
-          "maxTileRow": "10139",
-          "minTileCol": "165",
-          "maxTileCol": "21467"
-        },
-        "15": {
-          "minTileRow": "7082",
-          "maxTileRow": "20279",
-          "minTileCol": "330",
-          "maxTileCol": "42934"
-        },
-        "16": {
-          "minTileRow": "14165",
-          "maxTileRow": "40559",
-          "minTileCol": "660",
-          "maxTileCol": "85868"
-        },
-        "17": {
-          "minTileRow": "28330",
-          "maxTileRow": "81118",
-          "minTileCol": "1320",
-          "maxTileCol": "171736"
-        }
-      },
-      "extent": {
-        "west": -178.18713,
-        "east": 55.84643,
-        "south": -21.401262,
-        "north": 51.094486
-      }
-    },
-    "legends": [
-      {
-        "format": "format",
-        "url": "http://wxs.ign.fr/static/legends/ign_bdortho_legende.jpg",
-        "minScaleDenominator": 2133
-      }
-    ],
-    "metadata": [
-      {
-        "format": "xml",
-        "url": "http://wxs.ign.fr/geoportail/csw?service=CSW&version=2.0.2&request=GetRecordById&Id=IGNF_BDORTHOr_2-0.xml"
-      }
-    ],
-    "description": "Orthophotographies",
-    "title": "Photographies arériennes -(CRS84)",
-    "quicklookUrl": "http://wxs.ign.fr/static/pictures/BDORTHO.png"
-  }
+    }
+}

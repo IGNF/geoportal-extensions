@@ -1,148 +1,86 @@
 {
-	"type": "elevation",
-	"id": "ELEVATION.ELEVATIONGRIDCOVERAGE$GEOPORTAIL:OGC:WMTS",
-	"noDataValue": -99999,
-	"updateStrategy": {
-	  "type": 1,
-	  "options": {
-		"groups": [
-		  3,
-		  7,
-		  11,
-		  14
-		]
-	  }
-	},
+    "type": "elevation",
+	"id":         "IGN_MNT",
+	"noDataValue" : -99999,
 	"source": {
-	  "protocol": "wmts",
-	  "url": "http://wxs.ign.fr/ptlp78g6fvz9daz5mg2fztvr/geoportail/wmts",
-	  "networkOptions": {
-		"crossOrigin": "omit"
-	  },
-	  "attribution": [
-		{
-		  "name": "IGN",
-		  "attribution": "Institut national de l'information géographique et forestière",
-		  "logo": "http://wxs.ign.fr/static/logos/IGN/IGN.gif",
-		  "url": "http://www.ign.fr",
-		  "constraints": [
-			{
-			  "crs": "EPSG:4326",
-			  "bbox": {
-				"left": -64,
-				"right": 168,
-				"top": 52,
-				"bottom": -23
-			  },
-			  "minScaleDenominator": 136495,
-			  "maxScaleDenominator": 279541133,
-			  "temporalExtent": [
-				"2012-07-04",
-				"2012-07-04"
-			  ]
+		"protocol":   "wmts",
+		"url":        "https://wxs.ign.fr/ptlp78g6fvz9daz5mg2fztvr/geoportail/wmts",
+		"updateStrategy": {
+			"type": 1,
+			"options": {
+				"groups": [3, 7, 11, 14]
 			}
-		  ]
+		},
+		"networkOptions" : {
+			"crossOrigin" : "omit"
+		},
+		"name": "ELEVATION.ELEVATIONGRIDCOVERAGE",
+        "attribution" :  [{
+            "name" : "IGN",
+            "attribution" : "IGN Grandes Echelles",
+            "url" : "http://www.ign.fr",
+            "constraints" : [{
+                "crs":"EPSG:4326"
+            }]
+        }],
+		"format": "image/x-bil;bits=32",
+		"projection" : "EPSG:4326",
+		"tileMatrixSet": "WGS84G",
+		"tileMatrixSetLimits": {
+			"3": {
+				"minTileRow": 1,
+				"maxTileRow": 5,
+				"minTileCol": 5,
+				"maxTileCol": 15
+			},
+			"4": {
+				"minTileRow": 3,
+				"maxTileRow": 10,
+				"minTileCol": 10,
+				"maxTileCol": 30
+			},
+			"5": {
+				"minTileRow": 6,
+				"maxTileRow": 20,
+				"minTileCol": 20,
+				"maxTileCol": 61
+			},
+			"6": {
+				"minTileRow": 13,
+				"maxTileRow": 40,
+				"minTileCol": 41,
+				"maxTileCol": 123
+			},
+			"7": {
+				"minTileRow": 27,
+				"maxTileRow": 80,
+				"minTileCol": 82,
+				"maxTileCol": 247
+			},
+			"8": {
+				"minTileRow": 54,
+				"maxTileRow": 160,
+				"minTileCol": 164,
+				"maxTileCol": 494
+			},
+			"9": {
+				"minTileRow": 108,
+				"maxTileRow": 321,
+				"minTileCol": 329,
+				"maxTileCol": 989
+			},
+			"10": {
+				"minTileRow": 216,
+				"maxTileRow": 642,
+				"minTileCol": 659,
+				"maxTileCol": 1979
+			},
+			"11": {
+				"minTileRow": 432,
+				"maxTileRow": 1285,
+				"minTileCol": 1319,
+				"maxTileCol": 3959
+			}
 		}
-	  ],
-	  "projection": "EPSG:4326",
-	  "name": "ELEVATION.ELEVATIONGRIDCOVERAGE",
-	  "format": "image/x-bil;bits=32",
-	  "tileMatrixSet": "WGS84G",
-	  "tileMatrixSetLimits": {
-		"0": {
-		  "minTileRow": "0",
-		  "maxTileRow": "0",
-		  "minTileCol": "0",
-		  "maxTileCol": "1"
-		},
-		"1": {
-		  "minTileRow": "0",
-		  "maxTileRow": "1",
-		  "minTileCol": "1",
-		  "maxTileCol": "3"
-		},
-		"2": {
-		  "minTileRow": "0",
-		  "maxTileRow": "2",
-		  "minTileCol": "2",
-		  "maxTileCol": "7"
-		},
-		"3": {
-		  "minTileRow": "1",
-		  "maxTileRow": "5",
-		  "minTileCol": "5",
-		  "maxTileCol": "15"
-		},
-		"4": {
-		  "minTileRow": "3",
-		  "maxTileRow": "10",
-		  "minTileCol": "10",
-		  "maxTileCol": "30"
-		},
-		"5": {
-		  "minTileRow": "6",
-		  "maxTileRow": "20",
-		  "minTileCol": "20",
-		  "maxTileCol": "61"
-		},
-		"6": {
-		  "minTileRow": "13",
-		  "maxTileRow": "40",
-		  "minTileCol": "41",
-		  "maxTileCol": "123"
-		},
-		"7": {
-		  "minTileRow": "27",
-		  "maxTileRow": "80",
-		  "minTileCol": "82",
-		  "maxTileCol": "247"
-		},
-		"8": {
-		  "minTileRow": "54",
-		  "maxTileRow": "160",
-		  "minTileCol": "164",
-		  "maxTileCol": "494"
-		},
-		"9": {
-		  "minTileRow": "108",
-		  "maxTileRow": "321",
-		  "minTileCol": "329",
-		  "maxTileCol": "989"
-		},
-		"10": {
-		  "minTileRow": "216",
-		  "maxTileRow": "642",
-		  "minTileCol": "659",
-		  "maxTileCol": "1979"
-		},
-		"11": {
-		  "minTileRow": "432",
-		  "maxTileRow": "1285",
-		  "minTileCol": "1319",
-		  "maxTileCol": "3959"
-		}
-	  },
-	  "extent": {
-		"west": -64,
-		"east": 168,
-		"south": -23,
-		"north": 52
-	  }
-	},
-	"legends": [
-	  {
-		"format": "format",
-		"url": "http://wxs.ign.fr/static/legends/NOLEGEND.JPG",
-		"minScaleDenominator": 136495
-	  }
-	],
-	"metadata": [
-	  {
-		"format": "xml",
-		"url": "http://wxs.ign.fr/geoportail/csw?service=CSW&version=2.0.2&request=GetRecordById&Id=IGNF_BDALTIr_1-0.xml"
-	  }
-	],
-	"description": "BDAlti V1 au pas de 25m",
-	"title": "MNT BDAlti V1",
-	"quicklookUrl": "http://wxs.ign.fr/static/pictures/ign_altitude.jpg"
-  }
+	}
+}
