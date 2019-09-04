@@ -105,7 +105,7 @@ Il est possible d'étendre la liste via la fonction :
 
 ## Summary
 
-    * Migration d'Itowns en version 2.8.0
+    * Migration d'Itowns en version 2.13.1
     * Migration Webpack en version > 4.0.0
     * Description plus précise de la variable globale **Gp** dans la jsdoc
 
