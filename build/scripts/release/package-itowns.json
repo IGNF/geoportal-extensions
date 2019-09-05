@@ -1,20 +1,27 @@
 {
+   "date" : "04/09/2019",
    "description" : "French Geoportal Extensions for iTowns",
-   "peerDependencies" : {},
-   "directories" : {},
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
-   "scripts" : {},
    "author" : "IGNF",
-   "devDependencies" : {},
-   "license" : "CECILL-B",
-   "module" : "src/Itowns/index.js",
-   "main" : "dist/GpPluginItowns-src.js",
-   "name" : "geoportal-extensions-itowns",
-   "bugs" : {},
    "repository" : {
-      "url" : "https://github.com/IGNF/geoportal-extensions.git",
-      "type" : "git"
+      "type" : "git",
+      "url" : "https://github.com/IGNF/geoportal-extensions.git"
    },
+   "devDependencies" : {},
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
+   "module" : "src/Itowns/index.js",
+   "dependencies" : {
+      "xmldom" : "^0.1.27",
+      "request" : "^2.83.0",
+      "itowns" : "2.13.1",
+      "three.meshline" : "~1.2.0",
+      "three" : "~0.107.0",
+      "proj4" : "2.5.0",
+      "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/master/geoportal-access-lib-2.1.2.tgz",
+      "sortablejs" : "1.8.4",
+      "loglevel" : "~1.6.1"
+   },
+   "main" : "dist/GpPluginItowns-src.js",
+   "bundleDependencies" : [],
    "keywords" : [
       "geoportail",
       "plugin",
@@ -28,18 +35,11 @@
       "README.md",
       "package.json"
    ],
+   "license" : "CECILL-B",
+   "bugs" : {},
    "version" : "2.2.0",
-   "dependencies" : {
-      "sortablejs" : "1.8.4",
-      "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/master/geoportal-access-lib-2.1.2.tgz",
-      "three.meshline" : "~1.2.0",
-      "proj4" : "2.5.0",
-      "loglevel" : "~1.6.1",
-      "xmldom" : "^0.1.27",
-      "three" : "~0.107.0",
-      "request" : "^2.83.0",
-      "itowns" : "2.13.1"
-   },
-   "date" : "01/02/2019",
-   "bundleDependencies" : []
+   "directories" : {},
+   "name" : "geoportal-extensions-itowns",
+   "scripts" : {},
+   "peerDependencies" : {}
 }
