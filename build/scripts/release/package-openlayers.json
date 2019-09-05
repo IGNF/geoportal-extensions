@@ -1,34 +1,33 @@
 {
    "bundleDependencies" : [],
-   "author" : "IGNF",
-   "name" : "geoportal-extensions-openlayers",
-   "description" : "French Geoportal Extensions for OpenLayers",
    "dependencies" : {
-      "loglevel" : "~1.6.1",
       "geoportal-access-lib" : "2.1.3",
-      "sortablejs" : "1.8.4",
+      "proj4" : "2.5.0",
       "ol-mapbox-style" : "^4.2.1",
-      "xmldom" : "^0.1.27",
+      "loglevel" : "~1.6.1",
       "ol" : "^5.3.0",
       "eventbusjs" : "^0.2.0",
-      "proj4" : "2.5.0",
-      "request" : "^2.83.0"
+      "xmldom" : "^0.1.27",
+      "request" : "^2.83.0",
+      "sortablejs" : "1.8.4"
    },
-   "devDependencies" : {},
-   "scripts" : {},
+   "module" : "src/OpenLayers/index.js",
    "keywords" : [
       "geoportail",
       "plugin",
       "javascript",
       "OpenLayers"
    ],
-   "directories" : {},
+   "author" : "IGNF",
    "repository" : {
-      "type" : "git",
-      "url" : "https://github.com/IGNF/geoportal-extensions.git"
+      "url" : "https://github.com/IGNF/geoportal-extensions.git",
+      "type" : "git"
    },
-   "module" : "src/OpenLayers/index.js",
-   "date" : "04/09/2019",
+   "name" : "geoportal-extensions-openlayers",
+   "bugs" : {},
+   "description" : "French Geoportal Extensions for OpenLayers",
+   "devDependencies" : {},
+   "main" : "dist/GpPluginOpenLayers-src.js",
    "files" : [
       "dist/",
       "src/",
@@ -37,9 +36,10 @@
       "package.json"
    ],
    "peerDependencies" : {},
-   "bugs" : {},
-   "license" : "CECILL-B",
    "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
-   "version" : "3.0.0",
-   "main" : "dist/GpPluginOpenLayers-src.js"
+   "version" : "3.0.1",
+   "directories" : {},
+   "license" : "CECILL-B",
+   "date" : "05/09/2019",
+   "scripts" : {}
 }
