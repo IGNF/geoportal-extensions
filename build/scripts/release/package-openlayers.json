@@ -5,7 +5,7 @@
    "description" : "French Geoportal Extensions for OpenLayers",
    "dependencies" : {
       "loglevel" : "~1.6.1",
-      "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/master/geoportal-access-lib-2.1.2.tgz",
+      "geoportal-access-lib" : "2.1.3",
       "sortablejs" : "1.8.4",
       "ol-mapbox-style" : "^4.2.1",
       "xmldom" : "^0.1.27",
