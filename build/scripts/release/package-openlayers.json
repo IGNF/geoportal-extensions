@@ -1,33 +1,36 @@
 {
-   "bundleDependencies" : [],
-   "dependencies" : {
-      "geoportal-access-lib" : "2.1.3",
-      "proj4" : "2.5.0",
-      "ol-mapbox-style" : "^4.2.1",
-      "loglevel" : "~1.6.1",
-      "ol" : "^5.3.0",
-      "eventbusjs" : "^0.2.0",
-      "xmldom" : "^0.1.27",
-      "request" : "^2.83.0",
-      "sortablejs" : "1.8.4"
+   "author" : "IGNF",
+   "repository" : {
+      "type" : "git",
+      "url" : "https://github.com/IGNF/geoportal-extensions.git"
    },
-   "module" : "src/OpenLayers/index.js",
+   "scripts" : {},
+   "devDependencies" : {},
    "keywords" : [
       "geoportail",
       "plugin",
       "javascript",
       "OpenLayers"
    ],
-   "author" : "IGNF",
-   "repository" : {
-      "url" : "https://github.com/IGNF/geoportal-extensions.git",
-      "type" : "git"
-   },
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
+   "bundleDependencies" : [],
+   "date" : "09/09/2019",
+   "peerDependencies" : {},
+   "module" : "src/OpenLayers/index.js",
    "name" : "geoportal-extensions-openlayers",
-   "bugs" : {},
-   "description" : "French Geoportal Extensions for OpenLayers",
-   "devDependencies" : {},
-   "main" : "dist/GpPluginOpenLayers-src.js",
+   "directories" : {},
+   "dependencies" : {
+      "ol-mapbox-style" : "^4.2.1",
+      "ol" : "^5.3.0",
+      "xmldom" : "^0.1.27",
+      "proj4" : "2.5.0",
+      "eventbusjs" : "^0.2.0",
+      "loglevel" : "~1.6.1",
+      "geoportal-access-lib" : "2.1.4",
+      "request" : "^2.83.0",
+      "sortablejs" : "1.8.4"
+   },
+   "version" : "3.0.2",
    "files" : [
       "dist/",
       "src/",
@@ -35,11 +38,8 @@
       "README.md",
       "package.json"
    ],
-   "peerDependencies" : {},
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
-   "version" : "3.0.1",
-   "directories" : {},
    "license" : "CECILL-B",
-   "date" : "05/09/2019",
-   "scripts" : {}
+   "main" : "dist/GpPluginOpenLayers-src.js",
+   "bugs" : {},
+   "description" : "French Geoportal Extensions for OpenLayers"
 }

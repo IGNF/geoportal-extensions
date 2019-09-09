@@ -60,7 +60,7 @@
 *   - eventbus
 */
 
-import Pkg from "../../package";
+import Pkg from "../../package.json";
 
 // ordre des CSS communes puis extensions
 import "../Common/Styles";

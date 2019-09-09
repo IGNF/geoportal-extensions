@@ -81,7 +81,7 @@ module.exports = (env, argv) => {
             //     "itowns/Core/Prefab/GlobeView" : "itowns.GlobeView",
             //     "itowns/Core/Prefab/GlobeView.GLOBE_VIEW_EVENTS" : "itowns.GLOBE_VIEW_EVENTS",
             //     "itowns/Core/Geographic/Coordinates" : "itowns.Coordinates",
-            //     "itowns/Renderer/ColorLayersOrdering" : "itowns.ColorLayersOrdering", 
+            //     "itowns/Renderer/ColorLayersOrdering" : "itowns.ColorLayersOrdering",
             //     "itowns/Utils/FeaturesUtils" : "itowns.FeaturesUtils",
             //     "itowns/Core/MainLoop.MAIN_LOOP_EVENTS" : "itowns.MAIN_LOOP_EVENTS",
             //     "itowns/Controls/GlobeControls.CONTROL_EVENTS" : "itowns.CONTROL_EVENTS",
@@ -247,13 +247,20 @@ module.exports = (env, argv) => {
                         replacement : function () {
                             return pkg.date;
                         }
+                    },
+                    {
+                        partten : /__PRODUCTION__/g,
+                        replacement : function () {
+                            /** replacement de la clef __PRODUCTION__ pour le LOGGER */
+                            return !logMode;
+                        }
                     }
                 ]
             ),
             /** GESTION DU LOGGER */
-            new DefineWebpackPlugin({
-                __PRODUCTION__ : JSON.stringify(!logMode)
-            }),
+            // new DefineWebpackPlugin({
+            //     __PRODUCTION__ : JSON.stringify(!logMode)
+            // }),
             /** GENERATION DE LA JSDOC */
             new JsDocWebPackPlugin({
                 conf : path.join(ROOT, "build/jsdoc/jsdoc-itowns.json")

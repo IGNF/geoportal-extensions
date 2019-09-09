@@ -32,7 +32,7 @@
 *   - L
 */
 
-import Pkg from "../../package";
+import Pkg from "../../package.json";
 
 import L from "leaflet";
 
