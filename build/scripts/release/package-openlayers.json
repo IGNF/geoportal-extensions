@@ -1,36 +1,29 @@
 {
    "author" : "IGNF",
-   "repository" : {
-      "type" : "git",
-      "url" : "https://github.com/IGNF/geoportal-extensions.git"
-   },
-   "scripts" : {},
-   "devDependencies" : {},
+   "peerDependencies" : {},
+   "version" : "3.0.2",
+   "name" : "geoportal-extensions-openlayers",
+   "module" : "src/OpenLayers/index.js",
    "keywords" : [
       "geoportail",
       "plugin",
       "javascript",
       "OpenLayers"
    ],
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
-   "bundleDependencies" : [],
-   "date" : "09/09/2019",
-   "peerDependencies" : {},
-   "module" : "src/OpenLayers/index.js",
-   "name" : "geoportal-extensions-openlayers",
-   "directories" : {},
+   "description" : "French Geoportal Extensions for OpenLayers",
+   "scripts" : {},
    "dependencies" : {
-      "ol-mapbox-style" : "^4.2.1",
-      "ol" : "^5.3.0",
-      "xmldom" : "^0.1.27",
-      "proj4" : "2.5.0",
-      "eventbusjs" : "^0.2.0",
-      "loglevel" : "~1.6.1",
-      "geoportal-access-lib" : "2.1.4",
       "request" : "^2.83.0",
-      "sortablejs" : "1.8.4"
+      "proj4" : "2.5.0",
+      "ol" : "^5.3.0",
+      "geoportal-access-lib" : "2.1.4",
+      "eventbusjs" : "^0.2.0",
+      "sortablejs" : "1.8.4",
+      "ol-mapbox-style" : "^4.2.1",
+      "loglevel" : "~1.6.1",
+      "xmldom" : "^0.1.27"
    },
-   "version" : "3.0.2",
+   "main" : "dist/GpPluginOpenLayers-src.js",
    "files" : [
       "dist/",
       "src/",
@@ -39,7 +32,14 @@
       "package.json"
    ],
    "license" : "CECILL-B",
-   "main" : "dist/GpPluginOpenLayers-src.js",
-   "bugs" : {},
-   "description" : "French Geoportal Extensions for OpenLayers"
+   "directories" : {},
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
+   "bundleDependencies" : [],
+   "date" : "09/09/2019",
+   "repository" : {
+      "url" : "https://github.com/IGNF/geoportal-extensions.git",
+      "type" : "git"
+   },
+   "devDependencies" : {},
+   "bugs" : {}
 }

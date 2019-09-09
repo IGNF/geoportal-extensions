@@ -1,6 +1,6 @@
 # Extension Géoportail pour Leaflet
 
-[![release](https://img.shields.io/badge/release%20-leaflet%202.1.0-brightgreen.svg?style=flat)](https://github.com/IGNF/geoportal-extensions/releases/tag/leaflet-2.1.0)
+[![release](https://img.shields.io/badge/release%20-leaflet%202.1.2-brightgreen.svg?style=flat)](https://github.com/IGNF/geoportal-extensions/releases/tag/leaflet-2.1.2)
 
 <!-- toc -->
 
