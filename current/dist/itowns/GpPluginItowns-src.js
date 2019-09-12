@@ -27320,7 +27320,7 @@ GlobeViewExtended.prototype.getColorLayers = function () {
 
 GlobeViewExtended.prototype.getVectorLayers = function () {
   return this.getGlobeView().getLayers(function (layer) {
-    if (layer.protocol === "rasterizer") {
+    if (layer.source && layer.source.isFileSource) {
       return layer;
     }
   });
@@ -27517,7 +27517,7 @@ GlobeViewExtended.prototype.getFeaturesAtMousePosition = function (mouseEvent) {
         continue;
       }
 
-      var result = itowns__WEBPACK_IMPORTED_MODULE_1__["FeaturesUtils"].filterFeaturesUnderCoordinate(geoCoord, layer.feature, precision); // we add the features to the visible features array
+      var result = itowns__WEBPACK_IMPORTED_MODULE_1__["FeaturesUtils"].filterFeaturesUnderCoordinate(geoCoord, layer.source.parsedData, precision); // we add the features to the visible features array
 
       for (idx = 0; idx < result.length; idx++) {
         visibleFeatures.push(result[idx]);
