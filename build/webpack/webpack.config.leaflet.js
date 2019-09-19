@@ -215,13 +215,13 @@ module.exports = (env, argv) => {
             /** REPLACEMENT DE VALEURS */
             new ReplaceWebpackPlugin(
                 [
-                    {
-                        partten : /__GPLEAFLETEXTVERSION__/g,
-                        /** replacement de la clef __VERSION__ par la version du package */
-                        replacement : function () {
-                            return pkg.leafletExtVersion;
-                        }
-                    },
+                    // {
+                    //     partten : /__GPLEAFLETEXTVERSION__/g,
+                    //     /** replacement de la clef __VERSION__ par la version du package */
+                    //     replacement : function () {
+                    //         return pkg.leafletExtVersion;
+                    //     }
+                    // },
                     {
                         partten : /__DATE__/g,
                         /** replacement de la clef __DATE__ par la date du build */

@@ -18,6 +18,7 @@ import Markers from "./Utils/Markers";
 import RightManagement from "../../Common/Utils/CheckRightManagement";
 import SelectorID from "../../Common/Utils/SelectorID";
 import MathUtils from "../../Common/Utils/MathUtils";
+// import Draggable from "../../Common/Utils/Draggable";
 // import defs proj4 manually (cf. line 110)
 //  import Proj4 from "proj4";
 //  import { register } from "ol/proj/proj4";
@@ -75,40 +76,40 @@ var logger = Logger.getLogger("GeoportalMousePosition");
  *                  Default is 90000 (no data values = [-9999 ; -189999])
  *  @example
  *  var MousePosition = new ol.control.GeoportalMousePosition({
- *      collapsed : false,
- *      displayCoordinates : true,
- *      displayAltitude : true,
- *      altitude : {
- *           triggerDelay : 100,
- *           responseDelay : 500,
- *           noDataValue : -99999,
- *           noDataValueTolerance : 99000,
- *           serviceOptions : {}
+ *      "collapsed" : false,
+ *      "displayCoordinates" : true,
+ *      "displayAltitude" : true,
+ *      "altitude" : {
+ *           "triggerDelay" : 100,
+ *           "responseDelay" : 500,
+ *           "noDataValue" : -99999,
+ *           "noDataValueTolerance" : 99000,
+ *           "serviceOptions" : {}
  *      },
- *      systems : [
+ *      "systems" : [
  *       {
- *          crs : "EPSG:3857",
- *          label : "Web Mercator",
- *          type : "Metric"
+ *          "crs" : "EPSG:3857",
+ *          "label" : "Web Mercator",
+ *          "type" : "Metric"
  *       },
  *       {
- *          crs : "EPSG:4326",
- *          label : "Géographiques",
- *          type : "Geographical"
+ *          "crs" : "EPSG:4326",
+ *          "label" : "Géographiques",
+ *          "type" : "Geographical"
  *       },
  *       {
- *           label : "Lambert 93",
- *           crs : "EPSG:2154",
- *           type : "Metric",
- *           geoBBox : {
- *               left : -9.86,
- *               bottom : 41.15,
- *               right : 10.38,
- *               top : 51.56
+ *           "label" : "Lambert 93",
+ *           "crs" : "EPSG:2154",
+ *           "type" : "Metric",
+ *           "geoBBox" : {
+ *               "left" : -9.86,
+ *               "bottom" : 41.15,
+ *               "right" : 10.38,
+ *               "top" : 51.56
  *           }
  *        }
  *      ],
- *      units : ["DEC", "DMS"]
+ *      "units" : ["DEC", "DMS"]
  * });
  */
 var MousePosition = (function (Control) {
@@ -554,6 +555,7 @@ var MousePosition = (function (Control) {
 
         // {Object} control panel container (DOM Element)
         this._showMousePositionContainer = null;
+        this._panelMousePositionContainer = null;
 
         // gestion de l'affichage du panneau de l'altitude
         if (!this.options.displayAltitude && !this.options.displayCoordinates) {
@@ -823,7 +825,7 @@ var MousePosition = (function (Control) {
         var picto = this._createShowMousePositionPictoElement(this._isDesktop);
         container.appendChild(picto);
 
-        var panel = this._createMousePositionPanelElement(
+        var panel = this._panelMousePositionContainer = this._createMousePositionPanelElement(
             this.options.displayAltitude,
             this.options.displayCoordinates,
             this.options.editCoordinates,

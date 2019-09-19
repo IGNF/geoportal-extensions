@@ -28,7 +28,7 @@ last
 * geoportal-access-lib
 
 last
-└── geoportal-access-lib@2.1.4
+└── geoportal-access-lib@2.1.5
 
 * leaflet
 

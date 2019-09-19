@@ -1,28 +1,10 @@
 {
-   "author" : "IGNF",
-   "peerDependencies" : {},
-   "version" : "3.0.2",
-   "name" : "geoportal-extensions-openlayers",
-   "module" : "src/OpenLayers/index.js",
-   "keywords" : [
-      "geoportail",
-      "plugin",
-      "javascript",
-      "OpenLayers"
-   ],
-   "description" : "French Geoportal Extensions for OpenLayers",
-   "scripts" : {},
-   "dependencies" : {
-      "request" : "^2.83.0",
-      "proj4" : "2.5.0",
-      "ol" : "^5.3.0",
-      "geoportal-access-lib" : "2.1.4",
-      "eventbusjs" : "^0.2.0",
-      "sortablejs" : "1.8.4",
-      "ol-mapbox-style" : "^4.2.1",
-      "loglevel" : "~1.6.1",
-      "xmldom" : "^0.1.27"
+   "repository" : {
+      "type" : "git",
+      "url" : "https://github.com/IGNF/geoportal-extensions.git"
    },
+   "bugs" : {},
+   "author" : "IGNF",
    "main" : "dist/GpPluginOpenLayers-src.js",
    "files" : [
       "dist/",
@@ -31,15 +13,33 @@
       "README.md",
       "package.json"
    ],
-   "license" : "CECILL-B",
-   "directories" : {},
+   "name" : "geoportal-extensions-openlayers",
+   "description" : "French Geoportal Extensions for OpenLayers",
    "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
    "bundleDependencies" : [],
-   "date" : "09/09/2019",
-   "repository" : {
-      "url" : "https://github.com/IGNF/geoportal-extensions.git",
-      "type" : "git"
+   "keywords" : [
+      "geoportail",
+      "plugin",
+      "javascript",
+      "OpenLayers"
+   ],
+   "scripts" : {},
+   "dependencies" : {
+      "ol" : "^5.3.0",
+      "xmldom" : "^0.1.27",
+      "sortablejs" : "1.8.4",
+      "request" : "^2.83.0",
+      "geoportal-access-lib" : "2.1.5",
+      "ol-mapbox-style" : "^4.2.1",
+      "loglevel" : "~1.6.1",
+      "eventbusjs" : "^0.2.0",
+      "proj4" : "2.5.0"
    },
+   "directories" : {},
+   "license" : "CECILL-B",
+   "peerDependencies" : {},
    "devDependencies" : {},
-   "bugs" : {}
+   "module" : "src/OpenLayers/index.js",
+   "version" : "3.0.3",
+   "date" : "12/09/2019"
 }

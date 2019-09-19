@@ -1,9 +1,14 @@
+import Logger from "./LoggerByDefault";
+
+var logger = Logger.getLogger("draggable");
+
 var Draggable = {
     /**
     * A draggable HTML element with JavaScript and CSS.
     *
     * @param {DOMElement} element - element
     * @param {DOMElement} header - header (optional)
+    * @param {DOMElement} container - container (optional)
     * @see https://www.w3schools.com/howto/howto_js_draggable.asp
     * @see https://stackoverflow.com/questions/52231588/how-to-constrain-div-drag-space-no-jquery
     * @example
@@ -20,18 +25,17 @@ var Draggable = {
     *   // JS :
     *       var element = document.getElementById("element");
     *       var header  = document.getElementById("header");
-    *       Draggable.dragElement(element, header);
+    *       Draggable.dragElement(element, header, container);
     */
-    dragElement : function (element, header) {
-        var pos1 = 0;
-        var pos2 = 0;
-        var pos3 = 0;
-        var pos4 = 0;
+    dragElement : function (element, header, container) {
+        var offsetX, offsetY, constraints;
 
-        // var dragoffset = {
-        //     x : 0,
-        //     y : 0
-        // };
+        var isDragReady = false;
+
+        var dragoffset = {
+            x : 0,
+            y : 0
+        };
 
         if (header) {
             header.onmousedown = dragMouseDown;
@@ -39,26 +43,40 @@ var Draggable = {
             element.onmousedown = dragMouseDown;
         }
 
+        if (!container) {
+            constraints = {
+                width : document.body.clientWidth,
+                height : document.body.clientHeight,
+                top : document.body.offsetTop,
+                left : document.body.offsetLeft
+            };
+        } else {
+            constraints = {
+                width : container.clientWidth,
+                height : container.clientHeight,
+                top : container.offsetTop,
+                left : container.offsetLeft
+            };
+        }
+
         function dragMouseDown (e) {
             e = e || window.event;
             e.preventDefault();
 
-            // get the mouse cursor position at startup:
-            pos3 = e.clientX;
-            pos4 = e.clientY;
+            isDragReady = true;
 
-            // var pageX = e.clientX + (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft);
-            // var pageY = e.clientY + (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop);
-            // dragoffset.x = pageX - element.offsetLeft;
-            // dragoffset.y = pageY - element.offsetTop;
+            // get the mouse cursor position at startup:
+            dragoffset.x = e.clientX - element.offsetLeft;
+            dragoffset.y = e.clientY - element.offsetTop;
+            logger.trace("dragoffset", dragoffset.x, dragoffset.y);
 
             document.onmouseup = closeDragElement;
-            // call a function whenever the cursor moves:
             document.onmousemove = elementDrag;
         }
 
         function closeDragElement () {
             /* stop moving when mouse button is released: */
+            isDragReady = false;
             document.onmouseup = null;
             document.onmousemove = null;
         }
@@ -67,45 +85,41 @@ var Draggable = {
             e = e || window.event;
             e.preventDefault();
 
-            var offsetX, offsetY;
-            // calculate the new cursor position:
-            pos1 = pos3 - e.clientX;
-            pos2 = pos4 - e.clientY;
-            pos3 = e.clientX;
-            pos4 = e.clientY;
-
             // cf. https://jsfiddle.net/nbbg08mg/2/
-            // var pageX = e.clientX + (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft);
-            // var pageY = e.clientY + (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop);
-            //
-            // // left/right constraint
-            // if (pageX - dragoffset.x < 0) {
-            //     offsetX = 0;
-            // } else if (pageX - dragoffset.x + 50 > document.body.clientWidth) {
-            //     offsetX = document.body.clientWidth - 50;
-            // } else {
-            //     offsetX = e.clientX - dragoffset.x;
-            // }
-            //
-            // // top/bottom constraint
-            // if (pageY - dragoffset.y < 0) {
-            //     offsetY = 0;
-            // } else if (pageY - dragoffset.y + 50 > document.body.clientHeight) {
-            //     offsetY = document.body.clientHeight - 50;
-            // } else {
-            //     offsetY = pageY - dragoffset.y;
-            // }
-            //
-            // element.style.top = offsetY + "px";
-            // element.style.left = offsetX + "px";
+            if (isDragReady) {
+                // calculate the new cursor position:
+                var parentLeft = container ? element.parentElement.offsetLeft : 0;
+                var parentTop = container ? element.parentElement.offsetTop : 0;
+                logger.trace("parent offset", parentLeft, parentTop);
 
-            console.log(e.clientX, document.body.clientWidth);
-            console.log(e.clientY, document.body.clientHeight);
+                // left/right constraint
+                if (e.clientX - dragoffset.x < -parentLeft) {
+                    logger.trace("minx", e.clientX - dragoffset.x);
+                    offsetX = -parentLeft;
+                } else if (e.clientX - dragoffset.x > constraints.width - constraints.left - element.clientWidth) {
+                    logger.trace("maxx:", e.clientX - dragoffset.x);
+                    offsetX = constraints.width - element.clientWidth - constraints.left;
+                } else {
+                    offsetX = e.clientX - dragoffset.x;
+                }
+                logger.trace("left/right constraint", offsetX);
 
-            // set the element's new position:
-            element.style.top = (element.offsetTop - pos2) + "px";
-            element.style.left = (element.offsetLeft - pos1) + "px";
+                // top/bottom constraint
+                if (e.clientY - dragoffset.y < -parentTop) {
+                    logger.trace("miny:", e.clientY - dragoffset.y);
+                    offsetY = -parentTop;
+                } else if (e.clientY - dragoffset.y > constraints.height - constraints.top - element.clientHeight) {
+                    logger.trace("maxy:", e.clientY - dragoffset.y);
+                    offsetY = constraints.height - element.clientHeight - constraints.top;
+                } else {
+                    offsetY = e.clientY - dragoffset.y;
+                }
+                logger.trace("top/bottom constraint", offsetY);
 
+                // set the element's new position:
+                element.style.top = offsetY + "px";
+                element.style.left = offsetX + "px";
+            }
         }
     }
 };

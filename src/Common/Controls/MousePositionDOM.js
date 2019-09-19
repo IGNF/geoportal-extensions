@@ -1,5 +1,3 @@
-import Draggable from "../Utils/Draggable";
-
 var MousePositionDOM = {
 
     /**
@@ -129,8 +127,6 @@ var MousePositionDOM = {
         // FIXME on decompose la fonction pour les besoins du controle,
         // on ajoutera ces childs à la main...
         // div.appendChild(this._createMousePositionSettingsElement());
-
-        Draggable.dragElement(panel, header);
 
         return panel;
     },

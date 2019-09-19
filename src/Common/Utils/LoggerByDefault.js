@@ -11,7 +11,7 @@ var LoggerByDefault = {
         // Substitute global constants configured at compile time
         // cf. webpack.config.js
         // on masque cette constante afin d'eviter "referenceerror not defined"
-        ("__PRODUCTION__".match(/true/g) ? true : false)
+        ("__PRODUCTION__".match(/true/))
             ? Log.disableAll() : Log.enableAll();
         var logname = name || "default";
         return Log.getLogger(logname);

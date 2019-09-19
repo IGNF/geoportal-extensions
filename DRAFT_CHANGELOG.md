@@ -1,72 +1,69 @@
-# Extension Geoportail OpenLayers, version 3.0.2
+# Extension Geoportail OpenLayers, version 3.0.3
 
-**09/09/2019 : version 3.0.2**
+**12/09/2019 : version 3.0.3**
 > Release Extension Geoportail OpenLayers
 
 ## Summary
 
-* Compatibilité des extensions avec le Front End Angular.
+* Correctif sur le mode Draggable
+* maj dependance
 
 ## Changelog
 
-* [Changed]
-
-    - maj dependance *geoportal-access-lib* en version 2.1.4
-
 * [Added]
 
-* [Deprecated]
+    - option 'draggable' (false par defaut) sur les extensions : Route, Isocurve, LayerImport, Drawing et ReverseGeocode (pas de mode draggable pour MousePosition). 
 
-* [Removed]
+* [Changed]
+
+    - maj dependance *geoportal-access-lib* en version 2.1.5
 
 * [Fixed]
 
-    - [#242](https://github.com/IGNF/geoportal-extensions/issues/242) - Compatibilité
-    des extensions avec le Front End Angular.
+    - Ajout de contraintes sur le mode Draggable sur les fenêtres des extensions
+    - [dev-workflow] correctifs sur les fichiers Webpack
 
 * [Security]
 
 
 ---
 
-# Extension Geoportail Itowns, version 2.2.2
+# Extension Geoportail Itowns, version 2.2.3
 
-**09/09/2019**
+**12/09/2019**
 > Release Extension Geoportail Itowns
 
 ## Summary
 
-* Compatibilité des extensions avec le Front End Angular.
+* maj dependance
 
 ## Changelog
 
 * [Changed]
 
-    - maj dependance *geoportal-access-lib* en version 2.1.4
+    - maj dependance *geoportal-access-lib* en version 2.1.5
 
 * [Fixed]
 
-    - [#242](https://github.com/IGNF/geoportal-extensions/issues/242) - Compatibilité
-    des extensions avec le Front End Angular.
+    - [dev-workflow] correctifs sur les fichiers Webpack
 
 ---
 
-# Extension Geoportail Leaflet, version 2.1.2
+# Extension Geoportail Leaflet, version 2.1.3
 
-**09/09/2019**
+**12/09/2019**
 > Release Extension Geoportail Leaflet
 
 ## Summary
 
-* Compatibilité des extensions avec le Front End Angular.
+* maj dependance
 
 ## Changelog
 
 * [Changed]
 
-    - maj dependance *geoportal-access-lib* en version 2.1.4
+    - maj dependance *geoportal-access-lib* en version 2.1.5
 
 * [Fixed]
 
-    - [#242](https://github.com/IGNF/geoportal-extensions/issues/242) - Compatibilité
-    des extensions avec le Front End Angular.
+    - [dev-workflow] correctifs sur les fichiers Webpack

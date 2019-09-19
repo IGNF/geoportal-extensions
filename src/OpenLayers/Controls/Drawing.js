@@ -55,6 +55,7 @@ var logger = Logger.getLogger("Drawing");
  * @extends {ol.control.Control}
  * @param {Object} options - options for function call.
  * @param {Boolean} [options.collapsed = true] - Specify if Drawing control should be collapsed at startup. Default is true.
+ * @param {Boolean} [options.draggable = false] - Specify if widget is draggable
  * @param {ol.layer.Vector} [options.layer = null] - Openlayers layer that will hosts created features. If none, an empty vector layer will be created.
  * @param {Object} [options.layerDescription = {}] - Layer informations to be displayed in LayerSwitcher widget (only if a LayerSwitcher is also added to the map)
  * @param {String} [options.layerDescription.title = "Croquis"] - Layer title to be displayed in LayerSwitcher
@@ -255,6 +256,15 @@ var Drawing = (function (Control) {
             return;
         }
 
+        // mode "draggable"
+        if (this.draggable) {
+            Draggable.dragElement(
+                this._drawingPanel,
+                this._drawingPanelHeader,
+                map.getTargetElement()
+            );
+        }
+
         // mode "collapsed"
         if (!this.collapsed) {
             var inputShow = document.getElementById(this._addUID("GPshowDrawing"));
@@ -450,6 +460,11 @@ var Drawing = (function (Control) {
         this.options.collapsed = (options.collapsed !== undefined) ? options.collapsed : true;
         /** {Boolean} specify if Drawing control is collapsed (true) or not (false) */
         this.collapsed = this.options.collapsed;
+
+        this.options.draggable = (options.draggable !== undefined) ? options.draggable : false;
+        /** {Boolean} specify if Drawing control is draggable (true) or not (false) */
+        this.draggable = this.options.draggable;
+
         this.options.markersList = options.markersList || [{
             src : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAmCAYAAABpuqMCAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAARfSURBVFiF3ZhfbBRVGMV/d2Z3212tbSkCbuNaqzaRiL6QyAMPjSFoYqgx4oOiRmMFUzQG479o2lQ0QXk1EhYFgmlD2mIRkYhRwqLEaA2GiKWV7rZLQ0sLwbZId7t/Zq4PFK1125m5s/vCedz7nXO+M9/N3jsD1xFEvgXlTkrI8hBQBywFbgEqgEvAMHAayZcYHBYbuZJP77yFkdsoR+ct4GXAb4OSQPARXj4QzzGejx7yEkZuZy2CMLBAgf4nkhfEi3S67UNzQ5YSIXfQhKAdtSAACxDsk2EapXT3cF2FYQdNSN7F/YQFsJkw77gVUcL01mp3o5EDJoK1Yj37VchKjcjdlJEmhvrWmg9jGNwhGhhzSlTbZmnepjBBAMrReF2F6Hgy0+fIKPb+flWRIMtip+eQ88lcPRCtg3gCCVZ3RqhPDbJepqlPDbJ6XwSvP2nDJYCXB522prLN6iwrPIEETw33U/VoLZovBPjQfCGqHqtl3XDUZiBrn1lQCXO3ZcUDLV34Su/JueYrW0btnp8tNSRLnTamEiZoWRF6uHre9dseuT0vPrOgEqbCWtW3xNX6VSy02c+/sk4JwF+WFWZ6xGL9vA2fyzb7+QcqYUYtKwYP9s+7PrA/bsNn/geSA87DSLosa44+fT/p8VM511Jjp4g8u8KGk7XPLKhM5qhlRSbppzV4JwMdEcz0WSCNmT5LrC1CS/AujKliSw1BxGljzm8AH3MjHs4BpU65DjCBn0rxDJNOSI4nM33F2O2U58yEnU6DgOpF02AzcEGJa40LZHlfhagUZvp6vkmFawObVK7/4PLFSoZpBZ50ozEThsne6i2hjZqmFRVJ6U8JUeSVUmQNzQvg0c1MVtNMIUTSl0pNLhsaGu8A4xrfbZhS4CRQ5SoFcCWtja/5NBg+N+GZsu0vhSEkcY8mf+iNx+OuX3llmJVABNCVNUA2fl3xWdvJkriqRBb2uPugAYgNHEey1Y3Gt3/ccNxFEAChm2al6zAAjNAEWF/rc1Ev6+ffOLTwmBt7E0xD02J5CSOayQLrsHMJnYGMITJvHrr588mUMKyr54CUaaHrnfF4fCQ/kwHEBmLAa044rb+WHP4xXnxJ0VJK6CkyjO2xWOx3KMSH8zDtwONWdb2jvt41u4JtChZJKeVveDwnYrHYfw5uj4KYFRpSWbGqyCPL5ypIpMTkKwcWfWVXUEqRRcio1LTuUCjUE4lEsrnq8j4ZgKEP9bpgmfHFHPpyy3fle3f9Uto3n4aUIqNhDghN6zZ1vTcajaasfAsSBmBwq7f11tLM/24Hx2L+n+rbF38zBy2JEP0anPEGAj3d3d1pJ56F2GYAGInM82M+bWW53wxd++3ipH7x1QMLj8ysk5BAyj6Ppp2+d/nyaEdHh/I/W8EmA3Ci2b/iviVT3+tCerMmxkudiz450hcYBSYQIqrDmScGBvqawSxkH3lDV2Pxe6ltItnWcFNLTXX1qpqamkoK/BCvC/wNB+l5MdQKNHsAAAAASUVORK5CYII=",
             anchor : [0.5, 1]
@@ -726,8 +741,14 @@ var Drawing = (function (Control) {
         var picto = this._createShowDrawingPictoElement();
         container.appendChild(picto);
 
-        var panel = this._createDrawingPanelElement();
-        Draggable.dragElement(panel);
+        var panel = this._drawingPanel = this._createDrawingPanelElement();
+        var header = this._drawingPanelHeader = this._createDrawingPanelHeaderElement();
+        panel.appendChild(header);
+
+        var tools = this._createDrawingToolsSections();
+        for (var i = 0; i < tools.length; i++) {
+            panel.appendChild(tools[i]);
+        }
 
         container.appendChild(panel);
 

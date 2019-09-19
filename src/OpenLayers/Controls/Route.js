@@ -43,6 +43,7 @@ var logger = Logger.getLogger("route");
  * @param {String}   [options.apiKey] - API key for services call (route and autocomplete services), mandatory if autoconf service has not been charged in advance
  * @param {Boolean}   [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {Boolean} [options.collapsed = true] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
+ * @param {Boolean} [options.draggable = false] - Specify if widget is draggable
  * @param {Object}  [options.exclusions = {toll : false, tunnel : false, bridge : false}] - list of exclusions with status (true = checked). By default : no exclusions checked.
  * @param {Array}   [options.graphs = ["Voiture", "Pieton"]] - list of resources, by default : ["Voiture", "Pieton"]. The first element is selected.
  * @param {Object} [options.markersOpts] - options to use your own markers. Object properties can be "departure", "stages" or "arrival". Corresponding value is an object with following properties :
@@ -55,29 +56,30 @@ var logger = Logger.getLogger("route");
  * @param {String} [options.layerDescription.description = "Itinéraire basé sur un graphe"] - Layer description to be displayed in LayerSwitcher
  * @example
  *  var route = ol.control.Route({
- *      collapsed : true
- *      exclusions : {
+ *      "collapsed" : true
+ *      "draggable" : true,
+ *      "exclusions" : {
  *         "toll" : true,
  *         "bridge" : false,
  *         "tunnel" : true
  *      },
- *      graphs : ['Pieton', 'Voiture'],
- *      markersOpts : {
- *          departure : {
- *              url : "...",
- *              offset : [0,0]
+ *      "graphs" : ['Pieton', 'Voiture'],
+ *      "markersOpts" : {
+ *          "departure" : {
+ *              "url" : "...",
+ *              "offset" : [0,0]
  *          },
- *          stages : {
- *              url : "...",
- *              offset : [0,0]
+ *          "stages" : {
+ *              "url" : "...",
+ *              "offset" : [0,0]
  *          },
- *          arrival : {
- *              url : "...",
- *              offset : [0,0]
+ *          "arrival" : {
+ *              "url" : "...",
+ *              "offset" : [0,0]
  *          }
  *      }
- *      autocompleteOptions : {},
- *      routeOptions : {}
+ *      "autocompleteOptions" : {},
+ *      "routeOptions" : {}
  *  });
  */
 var Route = (function (Control) {
@@ -179,6 +181,16 @@ var Route = (function (Control) {
         if (map) {
             // enrichissement du DOM du container
             this._container = this._initContainer(map);
+
+            // mode "draggable"
+            if (this.draggable) {
+                Draggable.dragElement(
+                    this._panelRouteContainer,
+                    this._panelHeaderRouteContainer,
+                    map.getTargetElement()
+                );
+            }
+
         }
 
         // on appelle la méthode setMap originale d'OpenLayers
@@ -201,6 +213,7 @@ var Route = (function (Control) {
         // set default options
         this.options = {
             collapsed : true,
+            draggable : false,
             graphs : ["Voiture", "Pieton"],
             exclusions : {
                 toll : false,
@@ -239,9 +252,14 @@ var Route = (function (Control) {
         /** {Boolean} specify if Route control is collapsed (true) or not (false) */
         this.collapsed = this.options.collapsed;
 
+        /** {Boolean} specify if Route control is draggable (true) or not (false) */
+        this.draggable = this.options.draggable;
+
         this._uid = SelectorID.generate();
 
         // containers principaux
+        this._panelRouteContainer = null;
+        this._panelHeaderRouteContainer = null;
         this._waitingContainer = null;
         this._formRouteContainer = null;
         this._resultsRouteContainer = null;
@@ -455,13 +473,11 @@ var Route = (function (Control) {
         var picto = this._createShowRoutePictoElement();
         container.appendChild(picto);
 
-        var routePanel = this._createRoutePanelElement();
+        var routePanel = this._panelRouteContainer = this._createRoutePanelElement();
 
         // header form
-        var routeHeader = this._createRoutePanelHeaderElement();
+        var routeHeader = this._panelHeaderRouteContainer = this._createRoutePanelHeaderElement();
         routePanel.appendChild(routeHeader);
-
-        Draggable.dragElement(routePanel, routeHeader);
 
         // form
         var routeForm = this._formRouteContainer = this._createRoutePanelFormElement();
