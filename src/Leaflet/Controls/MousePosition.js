@@ -156,6 +156,8 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
         /** Container de visualisation du panneau du composant */
         this._showContainer = null;
         this._pictoContainer = null;
+        this._panelContainer = null;
+        this._panelHeaderContainer = null;
 
         // gestion de l'affichage du panneau de l'altitude / coordonnées
         if (!this.options.displayAltitude && !this.options.displayCoordinates) {
@@ -489,17 +491,30 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
         var picto = this._pictoContainer = this._createShowMousePositionPictoElement(this._isDesktop);
         container.appendChild(picto);
 
-        var panel = this._createMousePositionPanelElement(
+        var panel = this._panelContainer = this._createMousePositionPanelElement();
+
+        var header = this._panelHeaderContainer = this._createMousePositionPanelHeaderElement();
+        panel.appendChild(header);
+
+        var basic = this._createMousePositionPanelBasicElement(
             this.options.displayAltitude,
             this.options.displayCoordinates,
             this.options.editCoordinates
         );
+        panel.appendChild(basic);
+
+        var arraySettings = this._createShowMousePositionSettingsElement(this.options.displayCoordinates);
+        for (var j = 0; j < arraySettings.length; j++) {
+            panel.appendChild(arraySettings[j]);
+        }
+
         var settings = this._createMousePositionSettingsElement();
         var systems = this._projectionSystemsContainer = this._createMousePositionSettingsSystemsElement(this._projectionSystems);
         var units = this._projectionUnitsContainer = this._createMousePositionSettingsUnitsElement(this._projectionUnits[this._currentProjectionType]);
         settings.appendChild(systems);
         settings.appendChild(units);
         panel.appendChild(settings);
+
         container.appendChild(panel);
 
         // ce tag n'est pas à placer dans le container du controle,

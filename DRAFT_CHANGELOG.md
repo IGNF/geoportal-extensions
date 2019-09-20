@@ -12,7 +12,7 @@
 
 * [Added]
 
-    - option 'draggable' (false par defaut) sur les extensions : Route, Isocurve, LayerImport, Drawing et ReverseGeocode (pas de mode draggable pour MousePosition). 
+    - option 'draggable' (false par defaut) sur les extensions.
 
 * [Changed]
 
@@ -67,3 +67,4 @@
 * [Fixed]
 
     - [dev-workflow] correctifs sur les fichiers Webpack
+    - **TODO** [#243](https://github.com/IGNF/geoportal-extensions/issues/243) - gestion de l'import CSS du plugin 'leaflet-draw' en mode module ES6 sous Angular

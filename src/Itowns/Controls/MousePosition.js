@@ -643,7 +643,22 @@ MousePosition.prototype._initContainer = function (options) {
     var picto = this._createShowMousePositionPictoElement(this._isDesktop);
     container.appendChild(picto);
 
-    var panel = this._createMousePositionPanelElement(options.displayAltitude, options.displayCoordinates);
+    var panel = this._createMousePositionPanelElement();
+
+    var header = this._createMousePositionPanelHeaderElement();
+    panel.appendChild(header);
+
+    var basic = this._createMousePositionPanelBasicElement(
+        options.displayAltitude,
+        options.displayCoordinates
+    );
+    panel.appendChild(basic);
+
+    var arraySettings = this._createShowMousePositionSettingsElement(options.displayCoordinates);
+    for (var j = 0; j < arraySettings.length; j++) {
+        panel.appendChild(arraySettings[j]);
+    }
+
     var settings = this._createMousePositionSettingsElement(options.displayCoordinates);
     var systems = this._projectionSystemsContainer = this._createMousePositionSettingsSystemsElement(this._projectionSystems);
     var units = this._projectionUnitsContainer = this._createMousePositionSettingsUnitsElement(this._projectionUnits[this._currentProjectionType]);

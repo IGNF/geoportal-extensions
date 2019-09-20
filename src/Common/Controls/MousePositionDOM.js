@@ -105,27 +105,16 @@ var MousePositionDOM = {
      * @returns {DOMElement} DOM element
      */
     _createMousePositionPanelElement : function (displayAltitude, displayCoordinates, editCoordinates, currentProjectionUnits) {
-        // default Values
-        displayAltitude = (typeof displayAltitude === "undefined") ? true : displayAltitude;
-        displayCoordinates = (typeof displayCoordinates === "undefined") ? true : displayCoordinates;
-        editCoordinates = (typeof editCoordinates === "undefined") ? false : editCoordinates;
 
         var panel = document.createElement("div");
         panel.id = this._addUID("GPmousePositionPanel");
         panel.className = "GPpanel";
 
-        var header = this._createMousePositionPanelHeaderElement();
-        panel.appendChild(header);
-        var basic = this._createMousePositionPanelBasicElement(displayAltitude, displayCoordinates, editCoordinates, currentProjectionUnits);
-        panel.appendChild(basic);
-
-        var arraySettings = this._createShowMousePositionSettingsElement(displayCoordinates);
-        for (var j = 0; j < arraySettings.length; j++) {
-            panel.appendChild(arraySettings[j]);
-        }
-
         // FIXME on decompose la fonction pour les besoins du controle,
         // on ajoutera ces childs à la main...
+        // div.appendChild(this._createMousePositionPanelHeaderElement());
+        // div.appendChild(this._createMousePositionPanelBasicElement());
+        // div.appendChild(this._createShowMousePositionSettingsElement());
         // div.appendChild(this._createMousePositionSettingsElement());
 
         return panel;
@@ -195,6 +184,11 @@ var MousePositionDOM = {
      * @returns {DOMElement} DOM element
      */
     _createMousePositionPanelBasicElement : function (displayAltitude, displayCoordinates, editCoordinates, currentProjectionUnits) {
+        // default Values
+        displayAltitude = (typeof displayAltitude === "undefined") ? true : displayAltitude;
+        displayCoordinates = (typeof displayCoordinates === "undefined") ? true : displayCoordinates;
+        editCoordinates = (typeof editCoordinates === "undefined") ? false : editCoordinates;
+        
         var container = document.createElement("div");
         container.id = this._addUID("GPmousePositionBasicPanel");
 
