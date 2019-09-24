@@ -497,7 +497,7 @@ var MousePosition = (function (Control) {
         this.options.draggable = (options.draggable !== undefined) ? options.draggable : false;
         /** {Boolean} specify if MousePosition control is draggable (true) or not (false) */
         this.draggable = this.options.draggable;
-        
+
         // position marker
         this._markerOverlay = null;
         this._markerUrl = null;

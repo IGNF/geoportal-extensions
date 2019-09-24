@@ -169,7 +169,6 @@ var ReverseGeocode = (function (Control) {
                     map.getTargetElement()
                 );
             }
-
         } else {
             var _map = this.getMap();
             // on remet à zéro = on efface les géométries + interactions + valeurs stockées

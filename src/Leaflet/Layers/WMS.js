@@ -15,7 +15,7 @@ var logger = Logger.getLogger("wms");
 
 /**
  * @namespace
- * @alias L.geoportalLayer.WMS
+ * @alias L.geoportalLayers.WMS
  * @classdesc
  *
  * Leaflet Layer Class for Geoportal or INSPIRE WMS Layers.

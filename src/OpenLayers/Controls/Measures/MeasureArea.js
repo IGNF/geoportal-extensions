@@ -259,8 +259,6 @@ var MeasureArea = (function (Control) {
     MeasureArea.prototype.format = function (polygon) {
         logger.trace("call MeasureArea::format()");
 
-        var map = this.getMap();
-
         var measure;
         if (this.options.geodesic) {
             var geom = polygon.clone();

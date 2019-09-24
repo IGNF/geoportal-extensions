@@ -140,9 +140,10 @@ var DrawingDOM = {
 
     /**
      * Creates drawing tools section.
+     *
+     * @returns {DOMElement} DOM element
      */
     _createDrawingToolsSections : function () {
-
         var tools = [];
 
         this.dtOptions = {};

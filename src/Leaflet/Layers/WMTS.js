@@ -14,7 +14,7 @@ var logger = Logger.getLogger("wmts");
 
 /**
  * @namespace
- * @alias L.geoportalLayer.WMTS
+ * @alias L.geoportalLayers.WMTS
  * @classdesc
  *
  * Leaflet Layer Class for Geoportal WMTS Layers.

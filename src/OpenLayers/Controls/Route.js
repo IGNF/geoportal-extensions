@@ -190,7 +190,6 @@ var Route = (function (Control) {
                     map.getTargetElement()
                 );
             }
-
         }
 
         // on appelle la méthode setMap originale d'OpenLayers

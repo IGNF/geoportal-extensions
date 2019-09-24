@@ -57,10 +57,18 @@ describe("-- Test Drawing DOM --", function () {
         expect(DrawingDOM._createShowDrawingPictoElement().outerHTML).to.be.equal('<label id="GPshowDrawingPicto" class="GPshowAdvancedToolPicto" for="GPshowDrawing" title="Annoter la carte"><span id="GPshowDrawingOpen" class="GPshowAdvancedToolOpen"></span></label>');
     });
     it('_createDrawingPanelElement', function () {
-        expect(DrawingDOM._createDrawingPanelElement().outerHTML).to.be.equal('<div id="GPdrawingPanel" class="GPpanel"><div class="GPpanelHeader"><div class="GPpanelTitle">Annoter la carte</div><div id="GPdrawingPanelClose" class="GPpanelClose" title="Fermer le panneau"></div></div><div class="drawing-tool-section"><p class="drawing-tool-section-title">Outils de création</p><ul class="drawing-tools-flex-display"><li class="drawing-tool" id="drawing-tool-point" title="Placer des points"></li><li class="drawing-tool" id="drawing-tool-polygon" title="Dessiner des polygones"></li></ul></div><div class="drawing-tool-section"><p class="drawing-tool-section-title">Outils d\'édition</p><ul class="drawing-tools-flex-display"><li class="drawing-tool" id="drawing-tool-remove" title="Supprimer des objets"></li></ul></div><div class="drawing-tool-section drawing-tools-flex-display"><button title="Exporter en KML" class="tool-form-submit drawing-button" id="drawing-export" type="button">Exporter</button></div></div>');
+        expect(DrawingDOM._createDrawingPanelElement().outerHTML).to.be.equal('<div id="GPdrawingPanel" class="GPpanel"></div>');
     });
     it('_createDrawingPanelHeaderElement', function () {
         expect(DrawingDOM._createDrawingPanelHeaderElement().outerHTML).to.be.equal('<div class="GPpanelHeader"><div class="GPpanelTitle">Annoter la carte</div><div id="GPdrawingPanelClose" class="GPpanelClose" title="Fermer le panneau"></div></div>');
+    });
+    it('_createDrawingToolsSections', function () {
+        var container = document.createElement("div");
+        var tools = DrawingDOM._createDrawingToolsSections();
+        for (var i = 0; i < tools.length; i++) {
+            container.appendChild(tools[i]);
+        }
+        expect(container.outerHTML).to.be.equal('<div><div class="drawing-tool-section"><p class="drawing-tool-section-title">Outils de création</p><ul class="drawing-tools-flex-display"><li class="drawing-tool" id="drawing-tool-point" title="Placer des points"></li><li class="drawing-tool" id="drawing-tool-polygon" title="Dessiner des polygones"></li></ul></div><div class="drawing-tool-section"><p class="drawing-tool-section-title">Outils d\'édition</p><ul class="drawing-tools-flex-display"><li class="drawing-tool" id="drawing-tool-remove" title="Supprimer des objets"></li></ul></div><div class="drawing-tool-section drawing-tools-flex-display"><button title="Exporter en KML" class="tool-form-submit drawing-button" id="drawing-export" type="button">Exporter</button></div></div>');
     });
     it('_createDrawingToolSection', function () {
         var sectionLabel = "Outils de création", panelType = "draw";

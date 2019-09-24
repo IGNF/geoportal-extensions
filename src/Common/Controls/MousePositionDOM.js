@@ -94,18 +94,10 @@ var MousePositionDOM = {
 
     /**
      * mouse position panel
-     * @param {Boolean} [displayAltitude=true] - specifies if the altitude panel must be displayed
-     * @param {Boolean} [displayCoordinates=true] - specifies if the coordinates panel must be displayed
-     * @param {Boolean} [editCoordinates=false] - specifies if the coordinates edition is allowed
-     * @param {Boolean} [currentProjectionUnits] - specifies if the current projection units
-     *
-     * FIXME
-     * don't call this._createMousePositionSettingsElement
      *
      * @returns {DOMElement} DOM element
      */
-    _createMousePositionPanelElement : function (displayAltitude, displayCoordinates, editCoordinates, currentProjectionUnits) {
-
+    _createMousePositionPanelElement : function () {
         var panel = document.createElement("div");
         panel.id = this._addUID("GPmousePositionPanel");
         panel.className = "GPpanel";
@@ -188,7 +180,7 @@ var MousePositionDOM = {
         displayAltitude = (typeof displayAltitude === "undefined") ? true : displayAltitude;
         displayCoordinates = (typeof displayCoordinates === "undefined") ? true : displayCoordinates;
         editCoordinates = (typeof editCoordinates === "undefined") ? false : editCoordinates;
-        
+
         var container = document.createElement("div");
         container.id = this._addUID("GPmousePositionBasicPanel");
 
