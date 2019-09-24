@@ -216,7 +216,12 @@ module.exports = (env, argv) => {
             new ReplaceWebpackPlugin(
                 [
                     {
-                        partten : /__COMPILATION__/g,
+                        /**
+                        * ce flag est utilisé pour masquer l'import des CSS des plugin
+                        * cf. src/Leaflet/Styles.js
+                        * (hack pour Angular)
+                        */
+                        partten : /__FLAG_PLUGIN_CSS__/g,
                         replacement : function () {
                             return true;
                         }

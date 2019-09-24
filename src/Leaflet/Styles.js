@@ -1,5 +1,7 @@
-// en module ES6, on n'a pas besoin de ces CSS..., on utile le CSS géneré avec WebPack,
-// l'utilisation de ces imports est utile lors de la compilation du bundle
+/* global __FLAG_PLUGIN_CSS__ */
+
+// En module ES6, on n'a pas besoin de ces CSS, car on utile le CSS géneré avec WebPack.
+// L'utilisation de ces imports est utile lors de la creation du bundle...
 import "./CSS/GPgeneralWidgetLeaflet.css";
 
 import "./CSS/Controls/ElevationPath/GPelevationPathLeaflet.css";
@@ -11,7 +13,8 @@ import "./CSS/Controls/ReverseGeocoding/GPreverseGeocodingLeaflet.css";
 import "./CSS/Controls/Route/GProuteLeaflet.css";
 import "./CSS/Controls/SearchEngine/GPsearchEngineLeaflet.css";
 
-// plugin leaflet-draw !
-if ("__COMPILATION__".match(/true/)) {
+// ce flag est substitué via le script de publication des sources du package...
+if (__FLAG_PLUGIN_CSS__) {
+    // plugin leaflet-draw !
     require("../../node_modules/leaflet-draw/dist/leaflet.draw-src.css");
 }

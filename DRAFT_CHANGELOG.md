@@ -5,25 +5,21 @@
 
 ## Summary
 
-* Correctif sur le mode Draggable
-* maj dependance
+* ...
 
 ## Changelog
 
 * [Added]
 
-    - option 'draggable' (false par defaut) sur les extensions.
-
 * [Changed]
 
-    - maj dependance *geoportal-access-lib* en version 2.1.5
+* [Deprecated]
+
+* [Removed]
 
 * [Fixed]
 
-    - [dev-workflow] correctifs sur les fichiers Webpack
-
 * [Security]
-
 
 ---
 
@@ -34,36 +30,40 @@
 
 ## Summary
 
-* maj dependance
+* ...
 
 ## Changelog
 
+* [Added]
+
 * [Changed]
 
-    - maj dependance *geoportal-access-lib* en version 2.1.5
+* [Deprecated]
+
+* [Removed]
 
 * [Fixed]
 
-    - [dev-workflow] correctifs sur les fichiers Webpack
+* [Security]
 
 ---
 
-# Extension Geoportail Leaflet, version 2.1.3
+# Extension Geoportail Leaflet, version 2.1.4
 
 **24/09/2019**
 > Release Extension Geoportail Leaflet
 
 ## Summary
 
-* maj dependance
+* correctif sur l'utilisation des extensions dans Angular
+* mise à jour de leaflet : version 1.5.1
+* mise à jour de leaflet-draw : version 1.0.4
 
 ## Changelog
 
-* [Changed]
-
-    - maj dependance *geoportal-access-lib* en version 2.1.5
-
 * [Fixed]
 
+    - [#236](https://github.com/IGNF/geoportal-extensions/issues/236) - Upgrade de leaflet
     - [dev-workflow] correctifs sur les fichiers Webpack
-    - [#243](https://github.com/IGNF/geoportal-extensions/issues/243) - gestion de l'import CSS du plugin 'leaflet-draw' en mode module ES6 sous Angular
+    - [dev-workflow] correctifs sur le script de publication
+    - [#243](https://github.com/IGNF/geoportal-extensions/issues/243) - gestion de l'import CSS en mode module ES6 sous Angular
