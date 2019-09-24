@@ -9,7 +9,7 @@
  * @copyright copyright (c) IGN 
  * @license CeCILL-B
  * @author IGN
- * @version 2.1.3
+ * @version 2.1.4
  * @date 24/09/2019
  *
  */
@@ -27,7 +27,7 @@
  * @copyright Copyright (c) 2012-2017 Jon West, Jacob Toye, and Leaflet
  * @license   Licensed under MIT license
  *            See https://raw.githubusercontent.com/Leaflet/Leaflet.draw/master/MIT-LICENSE.md
- * @version   1.0.2
+ * @version   1.0.4
  */
 
 /*!
@@ -315,7 +315,7 @@ leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.geoportalCRS.EPSG4326 = _CRS_CRS_
 /* 1 */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"name\":\"geoportal-extensions\",\"description\":\"French Geoportal Extensions for OpenLayers, Leaflet and iTowns libraries\",\"version\":\"2.2.3\",\"date\":\"24/09/2019\",\"leafletExtName\":\"French Geoportal Extension for Leaflet\",\"leafletExtVersion\":\"2.1.3\",\"olExtName\":\"French Geoportal Extension for OpenLayers\",\"olExtVersion\":\"3.0.3\",\"itownsExtName\":\"French Geoportal Extension for Itowns\",\"itownsExtVersion\":\"2.2.3\",\"main\":\"dist/leaflet/GpPluginLeaflet.js, dist/openlayers/GpPluginOpenLayers.js, dist/itowns/GpPluginItowns.js\",\"module\":\"src/Leaflet/index.js, src/OpenLayers/index.js, src/Itowns/index.js\",\"directories\":{},\"scripts\":{\"setup\":\"npm install\",\"clean\":\"echo \\\"Warning: target not yet implemented!\\\" && exit 0\",\"test\":\"cd test && mocha-webpack --require setup.js --webpack-config webpack.test.js --glob \\\"test-*.js\\\" spec/Common/*/*\",\"test:serve\":\"cd test && webpack-dev-server --hot --config webpack.test.serve.js\",\"cover\":\"nyc --report-dir build/coverage --clean --reporter=lcov --reporter=text npm run test\",\"sample\":\"npm run sample:serve\",\"sample:serve\":\"npm run sample:ol:serve\",\"sample:itowns:serve\":\"webpack-dev-server --config build/webpack/webpack.config.itowns --https --open-page samples/index-itowns-map.html --content-base . --output-public-path '/dist/itowns/' --port 9001 --open 'google-chrome'\",\"sample:leaflet:serve\":\"webpack-dev-server --config build/webpack/webpack.config.leaflet --https --open-page samples/index-leaflet-map.html --content-base . --output-public-path '/dist/leaflet/' --port 9001 --open 'google-chrome'\",\"sample:ol:serve\":\"webpack-dev-server --config build/webpack/webpack.config.openlayers --https --open-page samples/index-openlayers-map.html --content-base . --output-public-path '/dist/openlayers/' --port 9001 --open 'google-chrome'\",\"doc\":\"npm run doc:serve\",\"doc:serve\":\"npm run doc:ol:serve\",\"doc:itowns:serve\":\"webpack-dev-server --config build/webpack/webpack.config.itowns --content-base jsdoc/itowns --port 9001 --open\",\"doc:leaflet:serve\":\"webpack-dev-server --config build/webpack/webpack.config.leaflet --content-base jsdoc/leaflet --port 9001 --open\",\"doc:ol:serve\":\"webpack-dev-server --config build/webpack/webpack.config.openlayers --content-base jsdoc/openlayers --port 9001 --open\",\"build:dev\":\"npm-run-all --print-label --print-name build:*:dev\",\"build:prod\":\"npm-run-all --print-label --print-name build:*:prod\",\"build:src\":\"npm-run-all --print-label --print-name build:*:src\",\"build\":\"npm-run-all --print-label --print-name build:*:*\",\"build:itowns\":\"npm-run-all --print-label --print-name build:itowns:*\",\"build:itowns:dev\":\"webpack --config build/webpack/webpack.config.itowns --mode=development\",\"build:itowns:prod\":\"webpack --config build/webpack/webpack.config.itowns --mode=production\",\"build:itowns:src\":\"webpack --config build/webpack/webpack.config.itowns --mode=none\",\"build:ol\":\"npm-run-all --print-label --print-name build:ol:*\",\"build:ol:dev\":\"webpack --config build/webpack/webpack.config.openlayers --mode=development\",\"build:ol:prod\":\"webpack --config build/webpack/webpack.config.openlayers --mode=production\",\"build:ol:src\":\"webpack --config build/webpack/webpack.config.openlayers --mode=none\",\"build:leaflet\":\"npm-run-all --print-label --print-name build:leaflet:*\",\"build:leaflet:dev\":\"webpack --config build/webpack/webpack.config.leaflet --mode=development\",\"build:leaflet:prod\":\"webpack --config build/webpack/webpack.config.leaflet --mode=production\",\"build:leaflet:src\":\"webpack --config build/webpack/webpack.config.leaflet --mode=none\"},\"nyc\":{\"include\":[\"src/**/*.js\"],\"instrument\":false,\"sourceMap\":false},\"repository\":{\"type\":\"git\",\"url\":\"https://github.com/IGNF/geoportal-extensions.git\"},\"author\":\"IGNF\",\"keywords\":[\"geoportail\",\"javascript\",\"OpenLayers\",\"Leaflet\",\"Itowns\",\"3D\"],\"license\":\"CECILL-B\",\"bugs\":{\"url\":\"https://github.com/IGNF/geoportal-extensions/issues\"},\"homepage\":\"https://github.com/IGNF/geoportal-extensions#readme\",\"dependencies\":{\"eventbusjs\":\"^0.2.0\",\"geoportal-access-lib\":\"^2.1.5\",\"itowns\":\"2.13.1\",\"leaflet\":\"1.3.1\",\"leaflet-draw\":\"1.0.2\",\"loglevel\":\"~1.6.1\",\"ol\":\"^5.3.0\",\"ol-mapbox-style\":\"^4.2.1\",\"proj4\":\"^2.5.0\",\"proj4leaflet\":\"~1.0.2\",\"sortablejs\":\"1.8.4\",\"three\":\"^0.107.0\",\"three.meshline\":\"~1.2.0\"},\"devDependencies\":{\"@babel/core\":\"^7.4.4\",\"@babel/preset-env\":\"^7.4.4\",\"babel-loader\":\"^8.0.5\",\"chai\":\"^4.2.0\",\"chalk\":\"^2.4.2\",\"clean-webpack-plugin\":\"^2.0.1\",\"copy-webpack-plugin\":\"^5.0.3\",\"css-loader\":\"^2.1.1\",\"eslint\":\"^5.16.0\",\"eslint-config-standard\":\"^12.0.0\",\"eslint-loader\":\"^2.1.2\",\"eslint-plugin-import\":\"^2.17.2\",\"eslint-plugin-node\":\"^8.0.1\",\"eslint-plugin-promise\":\"^4.1.1\",\"eslint-plugin-standard\":\"^4.0.0\",\"exports-loader\":\"^0.7.0\",\"expose-loader\":\"^0.7.5\",\"fs-extra\":\"^8.0.1\",\"handlebars-layouts\":\"^3.1.4\",\"handlebars-webpack-plugin\":\"^1.4.1\",\"html-webpack-plugin\":\"^3.1.0\",\"istanbul-instrumenter-loader\":\"^3.0.1\",\"jsdoc-webpack-plugin\":\"^0.1.0\",\"jsdom\":\"^9.9.1\",\"mini-css-extract-plugin\":\"^0.6.0\",\"mocha\":\"^5.2.0\",\"mocha-loader\":\"^2.0.1\",\"mocha-webpack\":\"^2.0.0-beta.0\",\"npm-run-all\":\"^4.1.5\",\"nyc\":\"^14.1.1\",\"optimize-css-assets-webpack-plugin\":\"^5.0.1\",\"path\":\"^0.12.7\",\"replace-bundle-webpack-plugin\":\"^1.0.0\",\"requirejs\":\"^2.3.6\",\"responsive-loader\":\"^1.2.0\",\"speed-measure-webpack-plugin\":\"^1.3.0\",\"string-template\":\"^1.0.0\",\"style-loader\":\"^0.23.1\",\"terser-webpack-plugin\":\"^1.2.3\",\"uglify-es\":\"github:mishoo/UglifyJS2#harmony\",\"uglifyjs-webpack-plugin\":\"^2.1.2\",\"url-loader\":\"^1.1.2\",\"webpack\":\"^4.30.0\",\"webpack-cli\":\"^3.3.1\",\"webpack-dev-server\":\"^3.3.1\",\"webpack-merge\":\"^4.2.1\",\"webpack-node-externals\":\"^1.7.2\"}}");
+module.exports = JSON.parse("{\"name\":\"geoportal-extensions\",\"description\":\"French Geoportal Extensions for OpenLayers, Leaflet and iTowns libraries\",\"version\":\"2.2.4\",\"date\":\"24/09/2019\",\"leafletExtName\":\"French Geoportal Extension for Leaflet\",\"leafletExtVersion\":\"2.1.4\",\"olExtName\":\"French Geoportal Extension for OpenLayers\",\"olExtVersion\":\"3.0.3\",\"itownsExtName\":\"French Geoportal Extension for Itowns\",\"itownsExtVersion\":\"2.2.3\",\"main\":\"dist/leaflet/GpPluginLeaflet.js, dist/openlayers/GpPluginOpenLayers.js, dist/itowns/GpPluginItowns.js\",\"module\":\"src/Leaflet/index.js, src/OpenLayers/index.js, src/Itowns/index.js\",\"directories\":{},\"scripts\":{\"setup\":\"npm install\",\"clean\":\"echo \\\"Warning: target not yet implemented!\\\" && exit 0\",\"test\":\"cd test && mocha-webpack --require setup.js --webpack-config webpack.test.js --glob \\\"test-*.js\\\" spec/Common/*/*\",\"test:serve\":\"cd test && webpack-dev-server --hot --config webpack.test.serve.js\",\"cover\":\"nyc --report-dir build/coverage --clean --reporter=lcov --reporter=text npm run test\",\"sample\":\"npm run sample:serve\",\"sample:serve\":\"npm run sample:ol:serve\",\"sample:itowns:serve\":\"webpack-dev-server --config build/webpack/webpack.config.itowns --https --open-page samples/index-itowns-map.html --content-base . --output-public-path '/dist/itowns/' --port 9001 --open 'google-chrome'\",\"sample:leaflet:serve\":\"webpack-dev-server --config build/webpack/webpack.config.leaflet --https --open-page samples/index-leaflet-map.html --content-base . --output-public-path '/dist/leaflet/' --port 9001 --open 'google-chrome'\",\"sample:ol:serve\":\"webpack-dev-server --config build/webpack/webpack.config.openlayers --https --open-page samples/index-openlayers-map.html --content-base . --output-public-path '/dist/openlayers/' --port 9001 --open 'google-chrome'\",\"doc\":\"npm run doc:serve\",\"doc:serve\":\"npm run doc:ol:serve\",\"doc:itowns:serve\":\"webpack-dev-server --config build/webpack/webpack.config.itowns --content-base jsdoc/itowns --port 9001 --open\",\"doc:leaflet:serve\":\"webpack-dev-server --config build/webpack/webpack.config.leaflet --content-base jsdoc/leaflet --port 9001 --open\",\"doc:ol:serve\":\"webpack-dev-server --config build/webpack/webpack.config.openlayers --content-base jsdoc/openlayers --port 9001 --open\",\"build:dev\":\"npm-run-all --print-label --print-name build:*:dev\",\"build:prod\":\"npm-run-all --print-label --print-name build:*:prod\",\"build:src\":\"npm-run-all --print-label --print-name build:*:src\",\"build\":\"npm-run-all --print-label --print-name build:*:*\",\"build:itowns\":\"npm-run-all --print-label --print-name build:itowns:*\",\"build:itowns:dev\":\"webpack --config build/webpack/webpack.config.itowns --mode=development\",\"build:itowns:prod\":\"webpack --config build/webpack/webpack.config.itowns --mode=production\",\"build:itowns:src\":\"webpack --config build/webpack/webpack.config.itowns --mode=none\",\"build:ol\":\"npm-run-all --print-label --print-name build:ol:*\",\"build:ol:dev\":\"webpack --config build/webpack/webpack.config.openlayers --mode=development\",\"build:ol:prod\":\"webpack --config build/webpack/webpack.config.openlayers --mode=production\",\"build:ol:src\":\"webpack --config build/webpack/webpack.config.openlayers --mode=none\",\"build:leaflet\":\"npm-run-all --print-label --print-name build:leaflet:*\",\"build:leaflet:dev\":\"webpack --config build/webpack/webpack.config.leaflet --mode=development\",\"build:leaflet:prod\":\"webpack --config build/webpack/webpack.config.leaflet --mode=production\",\"build:leaflet:src\":\"webpack --config build/webpack/webpack.config.leaflet --mode=none\"},\"nyc\":{\"include\":[\"src/**/*.js\"],\"instrument\":false,\"sourceMap\":false},\"repository\":{\"type\":\"git\",\"url\":\"https://github.com/IGNF/geoportal-extensions.git\"},\"author\":\"IGNF\",\"keywords\":[\"geoportail\",\"javascript\",\"OpenLayers\",\"Leaflet\",\"Itowns\",\"3D\"],\"license\":\"CECILL-B\",\"bugs\":{\"url\":\"https://github.com/IGNF/geoportal-extensions/issues\"},\"homepage\":\"https://github.com/IGNF/geoportal-extensions#readme\",\"dependencies\":{\"eventbusjs\":\"^0.2.0\",\"geoportal-access-lib\":\"^2.1.5\",\"itowns\":\"2.13.1\",\"leaflet\":\"1.5.1\",\"leaflet-draw\":\"1.0.4\",\"loglevel\":\"~1.6.1\",\"ol\":\"^5.3.0\",\"ol-mapbox-style\":\"^4.2.1\",\"proj4\":\"^2.5.0\",\"proj4leaflet\":\"~1.0.2\",\"sortablejs\":\"1.8.4\",\"three\":\"^0.107.0\",\"three.meshline\":\"~1.2.0\"},\"devDependencies\":{\"@babel/core\":\"^7.4.4\",\"@babel/preset-env\":\"^7.4.4\",\"babel-loader\":\"^8.0.5\",\"chai\":\"^4.2.0\",\"chalk\":\"^2.4.2\",\"clean-webpack-plugin\":\"^2.0.1\",\"copy-webpack-plugin\":\"^5.0.3\",\"css-loader\":\"^2.1.1\",\"eslint\":\"^5.16.0\",\"eslint-config-standard\":\"^12.0.0\",\"eslint-loader\":\"^2.1.2\",\"eslint-plugin-import\":\"^2.17.2\",\"eslint-plugin-node\":\"^8.0.1\",\"eslint-plugin-promise\":\"^4.1.1\",\"eslint-plugin-standard\":\"^4.0.0\",\"exports-loader\":\"^0.7.0\",\"expose-loader\":\"^0.7.5\",\"fs-extra\":\"^8.0.1\",\"handlebars-layouts\":\"^3.1.4\",\"handlebars-webpack-plugin\":\"^1.4.1\",\"html-webpack-plugin\":\"^3.1.0\",\"istanbul-instrumenter-loader\":\"^3.0.1\",\"jsdoc-webpack-plugin\":\"^0.1.0\",\"jsdom\":\"^9.9.1\",\"mini-css-extract-plugin\":\"^0.6.0\",\"mocha\":\"^5.2.0\",\"mocha-loader\":\"^2.0.1\",\"mocha-webpack\":\"^2.0.0-beta.0\",\"npm-run-all\":\"^4.1.5\",\"nyc\":\"^14.1.1\",\"optimize-css-assets-webpack-plugin\":\"^5.0.1\",\"path\":\"^0.12.7\",\"replace-bundle-webpack-plugin\":\"^1.0.0\",\"requirejs\":\"^2.3.6\",\"responsive-loader\":\"^1.2.0\",\"speed-measure-webpack-plugin\":\"^1.3.0\",\"string-template\":\"^1.0.0\",\"style-loader\":\"^0.23.1\",\"terser-webpack-plugin\":\"^1.2.3\",\"uglify-es\":\"github:mishoo/UglifyJS2#harmony\",\"uglifyjs-webpack-plugin\":\"^2.1.2\",\"url-loader\":\"^1.1.2\",\"webpack\":\"^4.30.0\",\"webpack-cli\":\"^3.3.1\",\"webpack-dev-server\":\"^3.3.1\",\"webpack-merge\":\"^4.2.1\",\"webpack-node-externals\":\"^1.7.2\"}}");
 
 /***/ }),
 /* 2 */
@@ -498,8 +498,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _CSS_Controls_Route_GProuteLeaflet_css__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_CSS_Controls_Route_GProuteLeaflet_css__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _CSS_Controls_SearchEngine_GPsearchEngineLeaflet_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(29);
 /* harmony import */ var _CSS_Controls_SearchEngine_GPsearchEngineLeaflet_css__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_CSS_Controls_SearchEngine_GPsearchEngineLeaflet_css__WEBPACK_IMPORTED_MODULE_8__);
-// en module ES6, on n'a pas besoin de ces CSS..., on utile le CSS géneré avec WebPack,
-// l'utilisation de ces imports est utile lors de la compilation du bundle
+/* global true */
+// En module ES6, on n'a pas besoin de ces CSS, car on utile le CSS géneré avec WebPack.
+// L'utilisation de ces imports est utile lors de la creation du bundle...
 
 
 
@@ -508,9 +509,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
- // plugin leaflet-draw !
+ // ce flag est substitué via le script de publication des sources du package...
 
-if ("true".match(/true/)) {
+if (true) {
+  // plugin leaflet-draw !
   __webpack_require__(30);
 }
 
@@ -39395,7 +39397,7 @@ var ReverseGeocoding = leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.Control.ex
 /***/ (function(module, exports) {
 
 /*
- Leaflet.draw 1.0.2, a plugin that adds drawing and editing tools to Leaflet powered maps.
+ Leaflet.draw 1.0.4, a plugin that adds drawing and editing tools to Leaflet powered maps.
  (c) 2012-2017, Jacob Toye, Jon West, Smartrak, Leaflet
 
  https://github.com/Leaflet/Leaflet.draw
@@ -39404,7 +39406,7 @@ var ReverseGeocoding = leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.Control.ex
 (function (window, document, undefined) {/**
  * Leaflet.draw assumes that you have already included the Leaflet library.
  */
-L.drawVersion = "1.0.2";
+L.drawVersion = "1.0.4";
 /**
  * @class L.Draw
  * @aka Draw
@@ -40081,7 +40083,7 @@ L.Draw.Polyline = L.Draw.Feature.extend({
 	// @method completeShape(): void
 	// Closes the polyline between the first and last points
 	completeShape: function () {
-		if (this._markers.length <= 1) {
+		if (this._markers.length <= 1 || !this._shapeIsValid()) {
 			return;
 		}
 
@@ -40747,9 +40749,9 @@ L.Draw.Rectangle = L.Draw.SimpleShape.extend({
 			fill: true,
 			fillColor: null, //same as color by default
 			fillOpacity: 0.2,
-			showArea: true,
 			clickable: true
 		},
+		showArea: true, //Whether to show the area in the tooltip
 		metric: true // Whether to use the metric measurement system or imperial
 	},
 
@@ -41316,7 +41318,7 @@ L.Edit.PolyVerticesEdit = L.Handler.extend({
 		}
 
 		if (path) {
-			if (poly.options.editing.className) {
+			if (poly.options.editing && poly.options.editing.className) {
 				if (poly.options.original.className) {
 					poly.options.original.className.split(' ').forEach(function (className) {
 						L.DomUtil.removeClass(path, className);
@@ -41348,7 +41350,7 @@ L.Edit.PolyVerticesEdit = L.Handler.extend({
 		var path = poly._path;
 
 		if (path) {
-			if (poly.options.editing.className) {
+			if (poly.options.editing && poly.options.editing.className) {
 				poly.options.editing.className.split(' ').forEach(function (className) {
 					L.DomUtil.removeClass(path, className);
 				});
@@ -41473,32 +41475,17 @@ L.Edit.PolyVerticesEdit = L.Handler.extend({
 		var marker = e.target;
 		var poly = this._poly;
 
+		var oldOrigLatLng = L.LatLngUtil.cloneLatLng(marker._origLatLng);
 		L.extend(marker._origLatLng, marker._latlng);
-
-		if (marker._middleLeft) {
-			marker._middleLeft.setLatLng(this._getMiddleLatLng(marker._prev, marker));
-		}
-		if (marker._middleRight) {
-			marker._middleRight.setLatLng(this._getMiddleLatLng(marker, marker._next));
-		}
-
 		if (poly.options.poly) {
 			var tooltip = poly._map._editTooltip; // Access the tooltip
 
 			// If we don't allow intersections and the polygon intersects
 			if (!poly.options.poly.allowIntersection && poly.intersects()) {
-
+				L.extend(marker._origLatLng, oldOrigLatLng);
+				marker.setLatLng(oldOrigLatLng);
 				var originalColor = poly.options.color;
 				poly.setStyle({color: this.options.drawError.color});
-
-				// Manually trigger 'dragend' behavior on marker we are about to remove
-				// WORKAROUND: introduced in 1.0.0-rc2, may be related to #4484
-				if (L.version.indexOf('0.7') !== 0) {
-					marker.dragging._draggable._onUp(e);
-				}
-				this._onMarkerClick(e); // Remove violating marker
-				// FIXME: Reset the marker to it's original position (instead of remove)
-
 				if (tooltip) {
 					tooltip.updateContent({
 						text: L.drawLocal.draw.handlers.polyline.error
@@ -41517,6 +41504,14 @@ L.Edit.PolyVerticesEdit = L.Handler.extend({
 				}, 1000);
 			}
 		}
+
+		if (marker._middleLeft) {
+			marker._middleLeft.setLatLng(this._getMiddleLatLng(marker._prev, marker));
+		}
+		if (marker._middleRight) {
+			marker._middleRight.setLatLng(this._getMiddleLatLng(marker, marker._next));
+		}
+
 		//refresh the bounds when draging
 		this._poly._bounds._southWest = L.latLng(Infinity, Infinity);
 		this._poly._bounds._northEast = L.latLng(-Infinity, -Infinity);
@@ -42179,18 +42174,6 @@ L.Circle.addInitHook(function () {
 			this.editing.enable();
 		}
 	}
-
-	this.on('add', function () {
-		if (this.editing && this.editing.enabled()) {
-			this.editing.addHooks();
-		}
-	});
-
-	this.on('remove', function () {
-		if (this.editing && this.editing.enabled()) {
-			this.editing.removeHooks();
-		}
-	});
 });
 
 
@@ -42234,17 +42217,17 @@ L.Map.TouchExtend = L.Handler.extend({
 	// @method removeHooks(): void
 	// Removes dom listener events from the map container
 	removeHooks: function () {
-		L.DomEvent.off(this._container, 'touchstart', this._onTouchStart);
-		L.DomEvent.off(this._container, 'touchend', this._onTouchEnd);
-		L.DomEvent.off(this._container, 'touchmove', this._onTouchMove);
+		L.DomEvent.off(this._container, 'touchstart', this._onTouchStart, this);
+		L.DomEvent.off(this._container, 'touchend', this._onTouchEnd, this);
+		L.DomEvent.off(this._container, 'touchmove', this._onTouchMove, this);
 		if (this._detectIE()) {
-			L.DomEvent.off(this._container, 'MSPointerDowm', this._onTouchStart);
-			L.DomEvent.off(this._container, 'MSPointerUp', this._onTouchEnd);
-			L.DomEvent.off(this._container, 'MSPointerMove', this._onTouchMove);
-			L.DomEvent.off(this._container, 'MSPointerCancel', this._onTouchCancel);
+			L.DomEvent.off(this._container, 'MSPointerDown', this._onTouchStart, this);
+			L.DomEvent.off(this._container, 'MSPointerUp', this._onTouchEnd, this);
+			L.DomEvent.off(this._container, 'MSPointerMove', this._onTouchMove, this);
+			L.DomEvent.off(this._container, 'MSPointerCancel', this._onTouchCancel, this);
 		} else {
-			L.DomEvent.off(this._container, 'touchcancel', this._onTouchCancel);
-			L.DomEvent.off(this._container, 'touchleave', this._onTouchLeave);
+			L.DomEvent.off(this._container, 'touchcancel', this._onTouchCancel, this);
+			L.DomEvent.off(this._container, 'touchleave', this._onTouchLeave, this);
 		}
 	},
 
