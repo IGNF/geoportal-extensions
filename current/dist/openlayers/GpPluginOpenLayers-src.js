@@ -9,8 +9,8 @@
  * @copyright copyright (c) IGN 
  * @license CeCILL-B
  * @author IGN
- * @version 3.0.2
- * @date 09/09/2019
+ * @version 3.0.3
+ * @date 24/09/2019
  *
  */
 
@@ -216,7 +216,7 @@ var _package_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpac
 /* harmony import */ var _Controls_Measures_MeasureLength__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(273);
 /* harmony import */ var _Controls_Measures_MeasureArea__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(275);
 /* harmony import */ var _Controls_Measures_MeasureAzimuth__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(277);
-/* harmony import */ var proj4__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(178);
+/* harmony import */ var proj4__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(179);
 /* harmony import */ var proj4__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(proj4__WEBPACK_IMPORTED_MODULE_26__);
 /* harmony import */ var _Controls_Editor_Style__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(256);
 /* harmony import */ var _Controls_Editor_Filter__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(259);
@@ -226,9 +226,9 @@ var _package_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpac
 /* harmony import */ var _Controls_Editor_Group__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(262);
 /* harmony import */ var _Controls_Editor__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(253);
 /* harmony import */ var _Common_Utils_AutoLoadConfig__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(279);
-/* harmony import */ var _CRS_AutoLoadCRS__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(176);
+/* harmony import */ var _CRS_AutoLoadCRS__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(177);
 /* harmony import */ var geoportal_access_lib__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(41);
-/* harmony import */ var _CRS_CRS__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(177);
+/* harmony import */ var _CRS_CRS__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(178);
 /* harmony import */ var _Common_Utils__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(147);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "olUtils", function() { return _Common_Utils__WEBPACK_IMPORTED_MODULE_38__["default"]; });
 
@@ -462,7 +462,7 @@ if (window.ol) {
 /* 1 */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"name\":\"geoportal-extensions\",\"description\":\"French Geoportal Extensions for OpenLayers, Leaflet and iTowns libraries\",\"version\":\"2.2.2\",\"date\":\"09/09/2019\",\"leafletExtName\":\"French Geoportal Extension for Leaflet\",\"leafletExtVersion\":\"2.1.2\",\"olExtName\":\"French Geoportal Extension for OpenLayers\",\"olExtVersion\":\"3.0.2\",\"itownsExtName\":\"French Geoportal Extension for Itowns\",\"itownsExtVersion\":\"2.2.2\",\"main\":\"dist/leaflet/GpPluginLeaflet.js, dist/openlayers/GpPluginOpenLayers.js, dist/itowns/GpPluginItowns.js\",\"module\":\"src/Leaflet/index.js, src/OpenLayers/index.js, src/Itowns/index.js\",\"directories\":{},\"scripts\":{\"setup\":\"npm install\",\"clean\":\"echo \\\"Warning: target not yet implemented!\\\" && exit 0\",\"test\":\"cd test && mocha-webpack --require setup.js --webpack-config webpack.test.js --glob \\\"test-*.js\\\" spec/Common/*/*\",\"test:serve\":\"cd test && webpack-dev-server --hot --config webpack.test.serve.js\",\"cover\":\"nyc --report-dir build/coverage --clean --reporter=lcov --reporter=text npm run test\",\"sample\":\"npm run sample:serve\",\"sample:serve\":\"npm run sample:ol:serve\",\"sample:itowns:serve\":\"webpack-dev-server --config build/webpack/webpack.config.itowns --https --open-page samples/index-itowns-map.html --content-base . --output-public-path '/dist/itowns/' --port 9001 --open 'google-chrome'\",\"sample:leaflet:serve\":\"webpack-dev-server --config build/webpack/webpack.config.leaflet --https --open-page samples/index-leaflet-map.html --content-base . --output-public-path '/dist/leaflet/' --port 9001 --open 'google-chrome'\",\"sample:ol:serve\":\"webpack-dev-server --config build/webpack/webpack.config.openlayers --https --open-page samples/index-openlayers-map.html --content-base . --output-public-path '/dist/openlayers/' --port 9001 --open 'google-chrome'\",\"doc\":\"npm run doc:serve\",\"doc:serve\":\"npm run doc:ol:serve\",\"doc:itowns:serve\":\"webpack-dev-server --config build/webpack/webpack.config.itowns --content-base jsdoc/itowns --port 9001 --open\",\"doc:leaflet:serve\":\"webpack-dev-server --config build/webpack/webpack.config.leaflet --content-base jsdoc/leaflet --port 9001 --open\",\"doc:ol:serve\":\"webpack-dev-server --config build/webpack/webpack.config.openlayers --content-base jsdoc/openlayers --port 9001 --open\",\"build:dev\":\"npm-run-all --print-label --print-name build:*:dev\",\"build:prod\":\"npm-run-all --print-label --print-name build:*:prod\",\"build:src\":\"npm-run-all --print-label --print-name build:*:src\",\"build\":\"npm-run-all --print-label --print-name build:*:*\",\"build:itowns\":\"npm-run-all --print-label --print-name build:itowns:*\",\"build:itowns:dev\":\"webpack --config build/webpack/webpack.config.itowns --mode=development\",\"build:itowns:prod\":\"webpack --config build/webpack/webpack.config.itowns --mode=production\",\"build:itowns:src\":\"webpack --config build/webpack/webpack.config.itowns --mode=none\",\"build:ol\":\"npm-run-all --print-label --print-name build:ol:*\",\"build:ol:dev\":\"webpack --config build/webpack/webpack.config.openlayers --mode=development\",\"build:ol:prod\":\"webpack --config build/webpack/webpack.config.openlayers --mode=production\",\"build:ol:src\":\"webpack --config build/webpack/webpack.config.openlayers --mode=none\",\"build:leaflet\":\"npm-run-all --print-label --print-name build:leaflet:*\",\"build:leaflet:dev\":\"webpack --config build/webpack/webpack.config.leaflet --mode=development\",\"build:leaflet:prod\":\"webpack --config build/webpack/webpack.config.leaflet --mode=production\",\"build:leaflet:src\":\"webpack --config build/webpack/webpack.config.leaflet --mode=none\"},\"nyc\":{\"include\":[\"src/**/*.js\"],\"instrument\":false,\"sourceMap\":false},\"repository\":{\"type\":\"git\",\"url\":\"https://github.com/IGNF/geoportal-extensions.git\"},\"author\":\"IGNF\",\"keywords\":[\"geoportail\",\"javascript\",\"OpenLayers\",\"Leaflet\",\"Itowns\",\"3D\"],\"license\":\"CECILL-B\",\"bugs\":{\"url\":\"https://github.com/IGNF/geoportal-extensions/issues\"},\"homepage\":\"https://github.com/IGNF/geoportal-extensions#readme\",\"dependencies\":{\"eventbusjs\":\"^0.2.0\",\"geoportal-access-lib\":\"2.1.4\",\"itowns\":\"2.13.1\",\"leaflet\":\"1.3.1\",\"leaflet-draw\":\"1.0.2\",\"loglevel\":\"~1.6.1\",\"ol\":\"^5.3.0\",\"ol-mapbox-style\":\"^4.2.1\",\"proj4\":\"^2.5.0\",\"proj4leaflet\":\"~1.0.2\",\"sortablejs\":\"1.8.4\",\"three\":\"^0.107.0\",\"three.meshline\":\"~1.2.0\"},\"devDependencies\":{\"@babel/core\":\"^7.4.4\",\"@babel/preset-env\":\"^7.4.4\",\"babel-loader\":\"^8.0.5\",\"chai\":\"^4.2.0\",\"chalk\":\"^2.4.2\",\"clean-webpack-plugin\":\"^2.0.1\",\"copy-webpack-plugin\":\"^5.0.3\",\"css-loader\":\"^2.1.1\",\"eslint\":\"^5.16.0\",\"eslint-config-standard\":\"^12.0.0\",\"eslint-loader\":\"^2.1.2\",\"eslint-plugin-import\":\"^2.17.2\",\"eslint-plugin-node\":\"^8.0.1\",\"eslint-plugin-promise\":\"^4.1.1\",\"eslint-plugin-standard\":\"^4.0.0\",\"exports-loader\":\"^0.7.0\",\"expose-loader\":\"^0.7.5\",\"fs-extra\":\"^8.0.1\",\"handlebars-layouts\":\"^3.1.4\",\"handlebars-webpack-plugin\":\"^1.4.1\",\"html-webpack-plugin\":\"^3.1.0\",\"istanbul-instrumenter-loader\":\"^3.0.1\",\"jsdoc-webpack-plugin\":\"^0.1.0\",\"jsdom\":\"^9.9.1\",\"mini-css-extract-plugin\":\"^0.6.0\",\"mocha\":\"^5.2.0\",\"mocha-loader\":\"^2.0.1\",\"mocha-webpack\":\"^2.0.0-beta.0\",\"npm-run-all\":\"^4.1.5\",\"nyc\":\"^14.1.1\",\"optimize-css-assets-webpack-plugin\":\"^5.0.1\",\"path\":\"^0.12.7\",\"replace-bundle-webpack-plugin\":\"^1.0.0\",\"requirejs\":\"^2.3.6\",\"responsive-loader\":\"^1.2.0\",\"speed-measure-webpack-plugin\":\"^1.3.0\",\"string-template\":\"^1.0.0\",\"style-loader\":\"^0.23.1\",\"terser-webpack-plugin\":\"^1.2.3\",\"uglify-es\":\"github:mishoo/UglifyJS2#harmony\",\"uglifyjs-webpack-plugin\":\"^2.1.2\",\"url-loader\":\"^1.1.2\",\"webpack\":\"^4.30.0\",\"webpack-cli\":\"^3.3.1\",\"webpack-dev-server\":\"^3.3.1\",\"webpack-merge\":\"^4.2.1\",\"webpack-node-externals\":\"^1.7.2\"}}");
+module.exports = JSON.parse("{\"name\":\"geoportal-extensions\",\"description\":\"French Geoportal Extensions for OpenLayers, Leaflet and iTowns libraries\",\"version\":\"2.2.3\",\"date\":\"24/09/2019\",\"leafletExtName\":\"French Geoportal Extension for Leaflet\",\"leafletExtVersion\":\"2.1.3\",\"olExtName\":\"French Geoportal Extension for OpenLayers\",\"olExtVersion\":\"3.0.3\",\"itownsExtName\":\"French Geoportal Extension for Itowns\",\"itownsExtVersion\":\"2.2.3\",\"main\":\"dist/leaflet/GpPluginLeaflet.js, dist/openlayers/GpPluginOpenLayers.js, dist/itowns/GpPluginItowns.js\",\"module\":\"src/Leaflet/index.js, src/OpenLayers/index.js, src/Itowns/index.js\",\"directories\":{},\"scripts\":{\"setup\":\"npm install\",\"clean\":\"echo \\\"Warning: target not yet implemented!\\\" && exit 0\",\"test\":\"cd test && mocha-webpack --require setup.js --webpack-config webpack.test.js --glob \\\"test-*.js\\\" spec/Common/*/*\",\"test:serve\":\"cd test && webpack-dev-server --hot --config webpack.test.serve.js\",\"cover\":\"nyc --report-dir build/coverage --clean --reporter=lcov --reporter=text npm run test\",\"sample\":\"npm run sample:serve\",\"sample:serve\":\"npm run sample:ol:serve\",\"sample:itowns:serve\":\"webpack-dev-server --config build/webpack/webpack.config.itowns --https --open-page samples/index-itowns-map.html --content-base . --output-public-path '/dist/itowns/' --port 9001 --open 'google-chrome'\",\"sample:leaflet:serve\":\"webpack-dev-server --config build/webpack/webpack.config.leaflet --https --open-page samples/index-leaflet-map.html --content-base . --output-public-path '/dist/leaflet/' --port 9001 --open 'google-chrome'\",\"sample:ol:serve\":\"webpack-dev-server --config build/webpack/webpack.config.openlayers --https --open-page samples/index-openlayers-map.html --content-base . --output-public-path '/dist/openlayers/' --port 9001 --open 'google-chrome'\",\"doc\":\"npm run doc:serve\",\"doc:serve\":\"npm run doc:ol:serve\",\"doc:itowns:serve\":\"webpack-dev-server --config build/webpack/webpack.config.itowns --content-base jsdoc/itowns --port 9001 --open\",\"doc:leaflet:serve\":\"webpack-dev-server --config build/webpack/webpack.config.leaflet --content-base jsdoc/leaflet --port 9001 --open\",\"doc:ol:serve\":\"webpack-dev-server --config build/webpack/webpack.config.openlayers --content-base jsdoc/openlayers --port 9001 --open\",\"build:dev\":\"npm-run-all --print-label --print-name build:*:dev\",\"build:prod\":\"npm-run-all --print-label --print-name build:*:prod\",\"build:src\":\"npm-run-all --print-label --print-name build:*:src\",\"build\":\"npm-run-all --print-label --print-name build:*:*\",\"build:itowns\":\"npm-run-all --print-label --print-name build:itowns:*\",\"build:itowns:dev\":\"webpack --config build/webpack/webpack.config.itowns --mode=development\",\"build:itowns:prod\":\"webpack --config build/webpack/webpack.config.itowns --mode=production\",\"build:itowns:src\":\"webpack --config build/webpack/webpack.config.itowns --mode=none\",\"build:ol\":\"npm-run-all --print-label --print-name build:ol:*\",\"build:ol:dev\":\"webpack --config build/webpack/webpack.config.openlayers --mode=development\",\"build:ol:prod\":\"webpack --config build/webpack/webpack.config.openlayers --mode=production\",\"build:ol:src\":\"webpack --config build/webpack/webpack.config.openlayers --mode=none\",\"build:leaflet\":\"npm-run-all --print-label --print-name build:leaflet:*\",\"build:leaflet:dev\":\"webpack --config build/webpack/webpack.config.leaflet --mode=development\",\"build:leaflet:prod\":\"webpack --config build/webpack/webpack.config.leaflet --mode=production\",\"build:leaflet:src\":\"webpack --config build/webpack/webpack.config.leaflet --mode=none\"},\"nyc\":{\"include\":[\"src/**/*.js\"],\"instrument\":false,\"sourceMap\":false},\"repository\":{\"type\":\"git\",\"url\":\"https://github.com/IGNF/geoportal-extensions.git\"},\"author\":\"IGNF\",\"keywords\":[\"geoportail\",\"javascript\",\"OpenLayers\",\"Leaflet\",\"Itowns\",\"3D\"],\"license\":\"CECILL-B\",\"bugs\":{\"url\":\"https://github.com/IGNF/geoportal-extensions/issues\"},\"homepage\":\"https://github.com/IGNF/geoportal-extensions#readme\",\"dependencies\":{\"eventbusjs\":\"^0.2.0\",\"geoportal-access-lib\":\"^2.1.5\",\"itowns\":\"2.13.1\",\"leaflet\":\"1.3.1\",\"leaflet-draw\":\"1.0.2\",\"loglevel\":\"~1.6.1\",\"ol\":\"^5.3.0\",\"ol-mapbox-style\":\"^4.2.1\",\"proj4\":\"^2.5.0\",\"proj4leaflet\":\"~1.0.2\",\"sortablejs\":\"1.8.4\",\"three\":\"^0.107.0\",\"three.meshline\":\"~1.2.0\"},\"devDependencies\":{\"@babel/core\":\"^7.4.4\",\"@babel/preset-env\":\"^7.4.4\",\"babel-loader\":\"^8.0.5\",\"chai\":\"^4.2.0\",\"chalk\":\"^2.4.2\",\"clean-webpack-plugin\":\"^2.0.1\",\"copy-webpack-plugin\":\"^5.0.3\",\"css-loader\":\"^2.1.1\",\"eslint\":\"^5.16.0\",\"eslint-config-standard\":\"^12.0.0\",\"eslint-loader\":\"^2.1.2\",\"eslint-plugin-import\":\"^2.17.2\",\"eslint-plugin-node\":\"^8.0.1\",\"eslint-plugin-promise\":\"^4.1.1\",\"eslint-plugin-standard\":\"^4.0.0\",\"exports-loader\":\"^0.7.0\",\"expose-loader\":\"^0.7.5\",\"fs-extra\":\"^8.0.1\",\"handlebars-layouts\":\"^3.1.4\",\"handlebars-webpack-plugin\":\"^1.4.1\",\"html-webpack-plugin\":\"^3.1.0\",\"istanbul-instrumenter-loader\":\"^3.0.1\",\"jsdoc-webpack-plugin\":\"^0.1.0\",\"jsdom\":\"^9.9.1\",\"mini-css-extract-plugin\":\"^0.6.0\",\"mocha\":\"^5.2.0\",\"mocha-loader\":\"^2.0.1\",\"mocha-webpack\":\"^2.0.0-beta.0\",\"npm-run-all\":\"^4.1.5\",\"nyc\":\"^14.1.1\",\"optimize-css-assets-webpack-plugin\":\"^5.0.1\",\"path\":\"^0.12.7\",\"replace-bundle-webpack-plugin\":\"^1.0.0\",\"requirejs\":\"^2.3.6\",\"responsive-loader\":\"^1.2.0\",\"speed-measure-webpack-plugin\":\"^1.3.0\",\"string-template\":\"^1.0.0\",\"style-loader\":\"^0.23.1\",\"terser-webpack-plugin\":\"^1.2.3\",\"uglify-es\":\"github:mishoo/UglifyJS2#harmony\",\"uglifyjs-webpack-plugin\":\"^2.1.2\",\"url-loader\":\"^1.1.2\",\"webpack\":\"^4.30.0\",\"webpack-cli\":\"^3.3.1\",\"webpack-dev-server\":\"^3.3.1\",\"webpack-merge\":\"^4.2.1\",\"webpack-node-externals\":\"^1.7.2\"}}");
 
 /***/ }),
 /* 2 */
@@ -2180,7 +2180,8 @@ var LoggerByDefault = {
         // Substitute global constants configured at compile time
         // cf. webpack.config.js
         // FIXME howtodo !? DefineWebpackPlugin ? EnvironmentWebpackPlugin ?
-        ("false".match(/true/g) ? true : false) ? loglevel__WEBPACK_IMPORTED_MODULE_0__["disableAll"]() : loglevel__WEBPACK_IMPORTED_MODULE_0__["enableAll"]();
+        ("false".match(/true/))
+            ? loglevel__WEBPACK_IMPORTED_MODULE_0__["disableAll"]() : loglevel__WEBPACK_IMPORTED_MODULE_0__["enableAll"]();
         var logname = name || "default";
         return loglevel__WEBPACK_IMPORTED_MODULE_0__["getLogger"](logname);
     }
@@ -5729,7 +5730,7 @@ var DefaultUrlService = {
 /* 59 */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"_from\":\"geoportal-access-lib@2.1.4\",\"_id\":\"geoportal-access-lib@2.1.4\",\"_inBundle\":false,\"_integrity\":\"sha512-VcURnXYeHegCQJhfJnRnVm5eO46JZeOYNicmMSsO0AoQKfBODW9hbvJvSopdznRFwVTXUCAW31NMi3+qqP/NvA==\",\"_location\":\"/geoportal-access-lib\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"version\",\"registry\":true,\"raw\":\"geoportal-access-lib@2.1.4\",\"name\":\"geoportal-access-lib\",\"escapedName\":\"geoportal-access-lib\",\"rawSpec\":\"2.1.4\",\"saveSpec\":null,\"fetchSpec\":\"2.1.4\"},\"_requiredBy\":[\"/\"],\"_resolved\":\"https://registry.npmjs.org/geoportal-access-lib/-/geoportal-access-lib-2.1.4.tgz\",\"_shasum\":\"916af0ea715f99bdbddf659a0986895caf1b1fd4\",\"_spec\":\"geoportal-access-lib@2.1.4\",\"_where\":\"/home/travis/build/IGNF/geoportal-extensions\",\"author\":{\"name\":\"IGNF\"},\"bugs\":{\"url\":\"https://github.com/IGNF/geoportal-access-lib/issues\"},\"bundleDependencies\":[],\"date\":\"09/09/2019\",\"dependencies\":{\"es6-promise\":\"^4.2.4\",\"request\":\"^2.87.0\",\"xmldom\":\"^0.1.27\"},\"deprecated\":false,\"description\":\"French Geoportal resources access library\",\"devDependencies\":{\"babel-core\":\"^6.26.3\",\"babel-loader\":\"^7.1.2\",\"babel-preset-env\":\"^1.7.0\",\"chai\":\"^4.1.2\",\"clean-webpack-plugin\":\"^0.1.18\",\"copy-webpack-plugin\":\"^4.5.1\",\"eslint\":\"^4.18.2\",\"eslint-config-standard\":\"^11.0.0\",\"eslint-loader\":\"^2.0.0\",\"eslint-plugin-import\":\"^2.9.0\",\"eslint-plugin-node\":\"^6.0.1\",\"eslint-plugin-promise\":\"^3.7.0\",\"eslint-plugin-standard\":\"^3.0.1\",\"glob\":\"^7.1.2\",\"handlebars-layouts\":\"^3.1.4\",\"handlebars-webpack-plugin\":\"^1.4.1\",\"html-webpack-plugin\":\"^2.30.1\",\"istanbul-instrumenter-loader\":\"^3.0.1\",\"jsdoc-webpack-plugin\":\"0.0.1\",\"loglevel\":\"^1.6.1\",\"mocha\":\"^4.0.0\",\"mocha-loader\":\"^1.1.3\",\"mocha-webpack\":\"^1.0.1\",\"nyc\":\"^12.0.2\",\"path\":\"^0.12.7\",\"replace-bundle-webpack-plugin\":\"^1.0.0\",\"sinon\":\"^4.3.0\",\"sinon-es6\":\"0.0.3\",\"speed-measure-webpack-plugin\":\"^1.2.2\",\"string-template\":\"^1.0.0\",\"webpack\":\"^3.11.0\",\"webpack-dev-server\":\"^2.11.3\",\"webpack-node-externals\":\"^1.6.0\",\"webpack-shell-plugin\":\"^0.5.0\"},\"homepage\":\"https://github.com/IGNF/geoportal-access-lib#readme\",\"keywords\":[\"geoportail\",\"webservice\",\"javascript\",\"es6\"],\"license\":\"CECILL-B\",\"main\":\"dist/GpServices-src.js\",\"module\":\"src/Gp.js\",\"name\":\"geoportal-access-lib\",\"nyc\":{\"include\":[\"src/**/*.js\"],\"instrument\":false,\"sourceMap\":false},\"optionalDependencies\":{},\"peerDependencies\":{},\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/IGNF/geoportal-access-lib.git\"},\"scripts\":{\"build\":\"webpack\",\"build:dev\":\"webpack --env.development\",\"build:prod\":\"webpack --env.production\",\"clean\":\"echo \\\"Warning: no yet implemented!\\\" && exit 0\",\"cover\":\"nyc --reporter=lcov --reporter=text npm run test\",\"doc\":\"npm run doc:serve\",\"doc:serve\":\"webpack-dev-server --content-base jsdoc --port 9001 --open\",\"sample\":\"npm run sample:serve\",\"sample:serve\":\"webpack-dev-server --open-page samples/index-src.html --https --content-base .  --output-public-path '/dist/' --port 9001 --open 'google-chrome'\",\"sample:serve:dev\":\"webpack-dev-server --env.development --open-page samples/index-map.html --content-base . --output-public-path '/dist/' --port 9001 --open 'google-chrome\",\"sample:serve:prod\":\"webpack-dev-server --env.production --open-page samples/index.html --content-base . --output-public-path '/dist/' --port 9001 --open 'google-chrome\",\"setup\":\"npm install\",\"test\":\"mocha-webpack --webpack-config webpack.test.js --glob \\\"test_*.js\\\" test/spec/\",\"test:end-to-end:serve\":\"webpack-dev-server --hot --config webpack.end-to-end.serve.js\",\"test:serve\":\"webpack-dev-server --hot --config webpack.test.serve.js\"},\"version\":\"2.1.4\"}");
+module.exports = JSON.parse("{\"_from\":\"geoportal-access-lib@^2.1.5\",\"_id\":\"geoportal-access-lib@2.1.5\",\"_inBundle\":false,\"_integrity\":\"sha512-98LzVloS37UuxK8T2zqY8U3Z2XUehsIBSYr2WvXD/+HA9JibVAhACP8lte5SX8O4tBL29Kjn2RBygdKq9f7anQ==\",\"_location\":\"/geoportal-access-lib\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"range\",\"registry\":true,\"raw\":\"geoportal-access-lib@^2.1.5\",\"name\":\"geoportal-access-lib\",\"escapedName\":\"geoportal-access-lib\",\"rawSpec\":\"^2.1.5\",\"saveSpec\":null,\"fetchSpec\":\"^2.1.5\"},\"_requiredBy\":[\"/\"],\"_resolved\":\"https://registry.npmjs.org/geoportal-access-lib/-/geoportal-access-lib-2.1.5.tgz\",\"_shasum\":\"5c21216c0d045dc97ddd78196ca0ca1c4f1566b4\",\"_spec\":\"geoportal-access-lib@^2.1.5\",\"_where\":\"/home/travis/build/IGNF/geoportal-extensions\",\"author\":{\"name\":\"IGNF\"},\"bugs\":{\"url\":\"https://github.com/IGNF/geoportal-access-lib/issues\"},\"bundleDependencies\":[],\"date\":\"12/09/2019\",\"dependencies\":{\"es6-promise\":\"^4.2.4\",\"request\":\"^2.87.0\",\"xmldom\":\"^0.1.27\"},\"deprecated\":false,\"description\":\"French Geoportal resources access library\",\"devDependencies\":{\"babel-core\":\"^6.26.3\",\"babel-loader\":\"^7.1.2\",\"babel-preset-env\":\"^1.7.0\",\"chai\":\"^4.1.2\",\"clean-webpack-plugin\":\"^0.1.18\",\"copy-webpack-plugin\":\"^4.5.1\",\"eslint\":\"^4.18.2\",\"eslint-config-standard\":\"^11.0.0\",\"eslint-loader\":\"^2.0.0\",\"eslint-plugin-import\":\"^2.9.0\",\"eslint-plugin-node\":\"^6.0.1\",\"eslint-plugin-promise\":\"^3.7.0\",\"eslint-plugin-standard\":\"^3.0.1\",\"glob\":\"^7.1.2\",\"handlebars-layouts\":\"^3.1.4\",\"handlebars-webpack-plugin\":\"^1.4.1\",\"html-webpack-plugin\":\"^2.30.1\",\"istanbul-instrumenter-loader\":\"^3.0.1\",\"jsdoc-webpack-plugin\":\"0.0.1\",\"loglevel\":\"^1.6.1\",\"mocha\":\"^4.0.0\",\"mocha-loader\":\"^1.1.3\",\"mocha-webpack\":\"^1.0.1\",\"nyc\":\"^12.0.2\",\"path\":\"^0.12.7\",\"replace-bundle-webpack-plugin\":\"^1.0.0\",\"sinon\":\"^4.3.0\",\"sinon-es6\":\"0.0.3\",\"speed-measure-webpack-plugin\":\"^1.2.2\",\"string-template\":\"^1.0.0\",\"webpack\":\"^3.11.0\",\"webpack-dev-server\":\"^2.11.3\",\"webpack-node-externals\":\"^1.6.0\",\"webpack-shell-plugin\":\"^0.5.0\"},\"homepage\":\"https://github.com/IGNF/geoportal-access-lib#readme\",\"keywords\":[\"geoportail\",\"webservice\",\"javascript\",\"es6\"],\"license\":\"CECILL-B\",\"main\":\"dist/GpServices-src.js\",\"module\":\"src/Gp.js\",\"name\":\"geoportal-access-lib\",\"nyc\":{\"include\":[\"src/**/*.js\"],\"instrument\":false,\"sourceMap\":false},\"optionalDependencies\":{},\"peerDependencies\":{},\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/IGNF/geoportal-access-lib.git\"},\"scripts\":{\"build\":\"webpack\",\"build:dev\":\"webpack --env.development\",\"build:prod\":\"webpack --env.production\",\"clean\":\"echo \\\"Warning: no yet implemented!\\\" && exit 0\",\"cover\":\"nyc --reporter=lcov --reporter=text npm run test\",\"doc\":\"npm run doc:serve\",\"doc:serve\":\"webpack-dev-server --content-base jsdoc --port 9001 --open\",\"sample\":\"npm run sample:serve\",\"sample:serve\":\"webpack-dev-server --open-page samples/index-src.html --https --content-base .  --output-public-path '/dist/' --port 9001 --open 'google-chrome'\",\"sample:serve:dev\":\"webpack-dev-server --env.development --open-page samples/index-map.html --content-base . --output-public-path '/dist/' --port 9001 --open 'google-chrome\",\"sample:serve:prod\":\"webpack-dev-server --env.production --open-page samples/index.html --content-base . --output-public-path '/dist/' --port 9001 --open 'google-chrome\",\"setup\":\"npm install\",\"test\":\"mocha-webpack --webpack-config webpack.test.js --glob \\\"test_*.js\\\" test/spec/\",\"test:end-to-end:serve\":\"webpack-dev-server --hot --config webpack.end-to-end.serve.js\",\"test:serve\":\"webpack-dev-server --hot --config webpack.test.serve.js\"},\"version\":\"2.1.5\"}");
 
 /***/ }),
 /* 60 */
@@ -19778,7 +19779,7 @@ var LoggerByDefault = {
     // Substitute global constants configured at compile time
     // cf. webpack.config.js
     // on masque cette constante afin d'eviter "referenceerror not defined"
-    ("false".match(/true/g) ? true : false) ? loglevel__WEBPACK_IMPORTED_MODULE_0__["disableAll"]() : loglevel__WEBPACK_IMPORTED_MODULE_0__["enableAll"]();
+    "false".match(/true/) ? loglevel__WEBPACK_IMPORTED_MODULE_0__["disableAll"]() : loglevel__WEBPACK_IMPORTED_MODULE_0__["enableAll"]();
     var logname = name || "default";
     return loglevel__WEBPACK_IMPORTED_MODULE_0__["getLogger"](logname);
   }
@@ -21239,6 +21240,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(153);
 /* harmony import */ var _Common_Utils_LayerUtils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(154);
 /* harmony import */ var _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(142);
+/* harmony import */ var _package_json__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(1);
+var _package_json__WEBPACK_IMPORTED_MODULE_7___namespace = /*#__PURE__*/__webpack_require__.t(1, 1);
  // import OpenLayers
 
  // import local with ol dependencies
@@ -21247,6 +21250,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+ // package.json (extract version)
 
 
 var logger = _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_6__["default"].getLogger("sourcewmts");
@@ -21309,7 +21314,7 @@ var SourceWMTS = function (WMTSExtended) {
         // tracker extension openlayers
         // FIXME : gp-ext version en mode AMD
         url: geoportal_access_lib__WEBPACK_IMPORTED_MODULE_0__["default"].Helper.normalyzeUrl(wmtsParams.url.replace(/(http|https):\/\//, protocol), {
-          "gp-ol-ext": "3.0.2"
+          "gp-ol-ext": _package_json__WEBPACK_IMPORTED_MODULE_7__.olExtVersion || _package_json__WEBPACK_IMPORTED_MODULE_7__.version
         }, false),
         version: wmtsParams.version,
         style: wmtsParams.styles,
@@ -21978,11 +21983,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Common_Utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(147);
 /* harmony import */ var _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(153);
 /* harmony import */ var _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(142);
+/* harmony import */ var _package_json__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1);
+var _package_json__WEBPACK_IMPORTED_MODULE_5___namespace = /*#__PURE__*/__webpack_require__.t(1, 1);
  // import OpenLayers
 
  // import local
 
 
+
+ // package.json (extract version)
 
 
 var logger = _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_4__["default"].getLogger("sourcewms");
@@ -22040,7 +22049,7 @@ var SourceWMS = function (TileWMSSource) {
         // tracker extension openlayers
         // FIXME : gp-ext version en mode AMD
         url: geoportal_access_lib__WEBPACK_IMPORTED_MODULE_0__["default"].Helper.normalyzeUrl(wmsParams.url.replace(/(http|https):\/\//, protocol), {
-          "gp-ol-ext": "3.0.2"
+          "gp-ol-ext": _package_json__WEBPACK_IMPORTED_MODULE_5__.olExtVersion || _package_json__WEBPACK_IMPORTED_MODULE_5__.version
         }, false),
         params: {
           SERVICE: "WMS",
@@ -30481,8 +30490,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Common_Utils_CheckRightManagement__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(171);
 /* harmony import */ var _Common_Utils_SelectorID__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(164);
 /* harmony import */ var _Common_Utils_MathUtils__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(175);
-/* harmony import */ var _CRS_AutoLoadCRS__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(176);
-/* harmony import */ var _Common_Controls_MousePositionDOM__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(182);
+/* harmony import */ var _Common_Utils_Draggable__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(176);
+/* harmony import */ var _CRS_AutoLoadCRS__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(177);
+/* harmony import */ var _Common_Controls_MousePositionDOM__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(183);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 // import CSS
@@ -30494,6 +30504,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
  // import geoportal library access
 
  // import local
+
 
 
 
@@ -30521,6 +30532,7 @@ var logger = _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_6__["default
  * @param {Object} options - options for function call.
  * @param {Sting}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
  * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
+ * @param {Boolean} [options.draggable = false] - Specify if widget is draggable
  * @param {Boolean} [options.collapsed = true] - Specify if MousePosition control should be collapsed at startup. Default is true.
  * @param {Array}   [options.systems] - list of projection systems, default are Geographical ("EPSG:4326"), Web Mercator ("EPSG:3857"), Lambert 93 ("EPSG:2154") and extended Lambert 2 ("EPSG:27572").
  *      Each array element (=system) is an object with following properties :
@@ -30555,40 +30567,41 @@ var logger = _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_6__["default
  *                  Default is 90000 (no data values = [-9999 ; -189999])
  *  @example
  *  var MousePosition = new ol.control.GeoportalMousePosition({
- *      collapsed : false,
- *      displayCoordinates : true,
- *      displayAltitude : true,
- *      altitude : {
- *           triggerDelay : 100,
- *           responseDelay : 500,
- *           noDataValue : -99999,
- *           noDataValueTolerance : 99000,
- *           serviceOptions : {}
+ *      "collapsed" : false,
+ *      "graggable" : true,
+ *      "displayCoordinates" : true,
+ *      "displayAltitude" : true,
+ *      "altitude" : {
+ *           "triggerDelay" : 100,
+ *           "responseDelay" : 500,
+ *           "noDataValue" : -99999,
+ *           "noDataValueTolerance" : 99000,
+ *           "serviceOptions" : {}
  *      },
- *      systems : [
+ *      "systems" : [
  *       {
- *          crs : "EPSG:3857",
- *          label : "Web Mercator",
- *          type : "Metric"
+ *          "crs" : "EPSG:3857",
+ *          "label" : "Web Mercator",
+ *          "type" : "Metric"
  *       },
  *       {
- *          crs : "EPSG:4326",
- *          label : "Géographiques",
- *          type : "Geographical"
+ *          "crs" : "EPSG:4326",
+ *          "label" : "Géographiques",
+ *          "type" : "Geographical"
  *       },
  *       {
- *           label : "Lambert 93",
- *           crs : "EPSG:2154",
- *           type : "Metric",
- *           geoBBox : {
- *               left : -9.86,
- *               bottom : 41.15,
- *               right : 10.38,
- *               top : 51.56
+ *           "label" : "Lambert 93",
+ *           "crs" : "EPSG:2154",
+ *           "type" : "Metric",
+ *           "geoBBox" : {
+ *               "left" : -9.86,
+ *               "bottom" : 41.15,
+ *               "right" : 10.38,
+ *               "top" : 51.56
  *           }
  *        }
  *      ],
- *      units : ["DEC", "DMS"]
+ *      "units" : ["DEC", "DMS"]
  * });
  */
 
@@ -30629,7 +30642,7 @@ var MousePosition = function (Control) {
 
   MousePosition.prototype = Object.create(Control.prototype, {}); // on récupère les méthodes de la classe commune MousePositionDOM
 
-  _Common_Utils__WEBPACK_IMPORTED_MODULE_7__["default"].assign(MousePosition.prototype, _Common_Controls_MousePositionDOM__WEBPACK_IMPORTED_MODULE_13__["default"]);
+  _Common_Utils__WEBPACK_IMPORTED_MODULE_7__["default"].assign(MousePosition.prototype, _Common_Controls_MousePositionDOM__WEBPACK_IMPORTED_MODULE_14__["default"]);
   /**
    * Constructor (alias)
    *
@@ -30657,6 +30670,11 @@ var MousePosition = function (Control) {
 
       if (!this.collapsed && !this._isDesktop) {
         center.className = "GPmapCenterVisible";
+      } // mode "draggable"
+
+
+      if (this.draggable) {
+        _Common_Utils_Draggable__WEBPACK_IMPORTED_MODULE_12__["default"].dragElement(this._panelMousePositionContainer, this._panelHeaderMousePositionContainer, map.getTargetElement());
       } // on met en place l'evenement sur la carte pour recuperer les coordonnées,
       // on l'active à l'ouverture du panneau uniquement !
 
@@ -31001,7 +31019,11 @@ var MousePosition = function (Control) {
     this.options.collapsed = options.collapsed !== undefined ? options.collapsed : true;
     /** {Boolean} specify if MousePosition control is collapsed (true) or not (false) */
 
-    this.collapsed = this.options.collapsed; // position marker
+    this.collapsed = this.options.collapsed;
+    this.options.draggable = options.draggable !== undefined ? options.draggable : false;
+    /** {Boolean} specify if MousePosition control is draggable (true) or not (false) */
+
+    this.draggable = this.options.draggable; // position marker
 
     this._markerOverlay = null;
     this._markerUrl = null;
@@ -31071,7 +31093,9 @@ var MousePosition = function (Control) {
 
     this._projectionUnitsContainer = null; // {Object} control panel container (DOM Element)
 
-    this._showMousePositionContainer = null; // gestion de l'affichage du panneau de l'altitude
+    this._showMousePositionContainer = null;
+    this._panelMousePositionContainer = null;
+    this._panelHeaderMousePositionContainer = null; // gestion de l'affichage du panneau de l'altitude
 
     if (!this.options.displayAltitude && !this.options.displayCoordinates) {
       // on reactive l'affichage des coordonnées, pour ne pas afficher un panneau vide !
@@ -31348,7 +31372,21 @@ var MousePosition = function (Control) {
 
     container.appendChild(picto);
 
-    var panel = this._createMousePositionPanelElement(this.options.displayAltitude, this.options.displayCoordinates, this.options.editCoordinates, this._currentProjectionUnits);
+    var panel = this._panelMousePositionContainer = this._createMousePositionPanelElement();
+
+    var header = this._panelHeaderMousePositionContainer = this._createMousePositionPanelHeaderElement();
+
+    panel.appendChild(header);
+
+    var basic = this._createMousePositionPanelBasicElement(this.options.displayAltitude, this.options.displayCoordinates, this.options.editCoordinates, this._currentProjectionUnits);
+
+    panel.appendChild(basic);
+
+    var arraySettings = this._createShowMousePositionSettingsElement(this.options.displayCoordinates);
+
+    for (var j = 0; j < arraySettings.length; j++) {
+      panel.appendChild(arraySettings[j]);
+    }
 
     var settings = this._createMousePositionSettingsElement();
 
@@ -32498,7 +32536,123 @@ var MathUtils = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _CRS__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(177);
+/* harmony import */ var _LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(142);
+
+var logger = _LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__["default"].getLogger("draggable");
+var Draggable = {
+  /**
+  * A draggable HTML element with JavaScript and CSS.
+  *
+  * @param {DOMElement} element - element
+  * @param {DOMElement} header - header (optional)
+  * @param {DOMElement} container - container (optional)
+  * @see https://www.w3schools.com/howto/howto_js_draggable.asp
+  * @see https://stackoverflow.com/questions/52231588/how-to-constrain-div-drag-space-no-jquery
+  * @example
+  *   // CSS :
+  *       // #element { position: absolute; }
+  *   // HTML :
+  *       // <div id="container">
+  *       //   <div id="element">
+  *       //     <div id="header"/>
+  *       //      <div/> ...
+  *       //     </div>
+  *       //   </div>
+  *       // </div>
+  *   // JS :
+  *       var element = document.getElementById("element");
+  *       Draggable.dragElement(element, header, container);
+  */
+  dragElement: function dragElement(element, header, container) {
+    var offsetX, offsetY;
+    var isDragReady = false;
+    var dragoffset = {
+      x: 0,
+      y: 0
+    };
+
+    if (header) {
+      header.addEventListener("mousedown", dragMouseDown, true);
+    } else {
+      element.addEventListener("mousedown", dragMouseDown, true);
+    } // TODO mettre en place les contraintes
+    // var constraints = {};
+    // if (container) {
+    //     constraints = {
+    //         width : container.clientWidth,
+    //         height : container.clientHeight,
+    //         top : container.offsetTop,
+    //         left : container.offsetLeft
+    //     };
+    // }
+
+
+    function dragMouseDown(e) {
+      e = e || window.event;
+      e.preventDefault();
+      isDragReady = true; // get the mouse cursor position at startup
+
+      e._pageX = e._pageX || e.clientX + (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft);
+      e._pageY = e._pageY || e.clientY + (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop);
+      dragoffset.x = e._pageX - element.offsetLeft;
+      dragoffset.y = e._pageY - element.offsetTop;
+      document.addEventListener("mouseup", closeDragElement, true);
+      document.addEventListener("mousemove", elementDrag, true);
+    }
+
+    function closeDragElement() {
+      /* stop moving when mouse button is released: */
+      isDragReady = false;
+      document.removeEventListener("mouseup", closeDragElement, true);
+      document.removeEventListener("mousemove", elementDrag, true);
+    }
+
+    function elementDrag(e) {
+      e = e || window.event; // e.preventDefault();
+      // cf. https://jsfiddle.net/nbbg08mg/2/
+
+      if (isDragReady) {
+        e._pageX = e._pageX || e.clientX + (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft);
+        e._pageY = e._pageY || e.clientY + (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop);
+        var parentLeft = element.parentElement.offsetLeft;
+        var parentTop = element.parentElement.offsetTop;
+        logger.trace("parent offset", parentLeft, parentTop); // left/right constraint
+
+        if (e._pageX - dragoffset.x < 0 - parentLeft) {
+          offsetX = 0 - parentLeft;
+        } else if (e._pageX - dragoffset.x + element.clientWidth > document.body.clientWidth) {
+          offsetX = document.body.clientWidth - element.clientWidth;
+        } else {
+          offsetX = e._pageX - dragoffset.x;
+        }
+
+        logger.trace("left/right constraint", offsetX); // top/bottom constraint
+
+        if (e._pageY - dragoffset.y < 0 - parentTop) {
+          offsetY = 0 - parentTop;
+        } else if (e._pageY - dragoffset.y + element.clientHeight > document.body.clientHeight) {
+          offsetY = document.body.clientHeight - element.clientHeight;
+        } else {
+          offsetY = e._pageY - dragoffset.y;
+        }
+
+        logger.trace("top/bottom constraint", offsetY); // set the element's new position:
+
+        element.style.top = offsetY + "px";
+        element.style.left = offsetX + "px";
+      }
+    }
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = (Draggable);
+
+/***/ }),
+/* 177 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _CRS__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(178);
 
 /**
  * Autoload function that loads defs into proj4
@@ -32519,20 +32673,20 @@ __webpack_require__.r(__webpack_exports__);
 })();
 
 /***/ }),
-/* 177 */
+/* 178 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var proj4__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(178);
+/* harmony import */ var proj4__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(179);
 /* harmony import */ var proj4__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(proj4__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var ol_proj_proj4__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(180);
+/* harmony import */ var ol_proj_proj4__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(181);
 /* harmony import */ var ol_proj_proj4__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(ol_proj_proj4__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var ol_proj__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(158);
 /* harmony import */ var ol_proj__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(ol_proj__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var ol_extent__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(150);
 /* harmony import */ var ol_extent__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(ol_extent__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _Common_Utils_Register__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(181);
+/* harmony import */ var _Common_Utils_Register__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(182);
 /* harmony import */ var _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(142);
 // import external
  // import OpenLayers
@@ -32656,14 +32810,14 @@ var CRS = {
 // }
 
 /***/ }),
-/* 178 */
+/* 179 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["proj4"] = __webpack_require__(179);
+/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["proj4"] = __webpack_require__(180);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(54)))
 
 /***/ }),
-/* 179 */
+/* 180 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function (global, factory) {
@@ -39197,13 +39351,13 @@ var CRS = {
 
 
 /***/ }),
-/* 180 */
+/* 181 */
 /***/ (function(module, exports) {
 
 module.exports = ol.proj.proj4;
 
 /***/ }),
-/* 181 */
+/* 182 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -39849,14 +40003,12 @@ var Register = {
 /* harmony default export */ __webpack_exports__["default"] = (Register);
 
 /***/ }),
-/* 182 */
+/* 183 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Utils_Draggable__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(183);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
 
 var MousePositionDOM = {
   /**
@@ -39949,43 +40101,19 @@ var MousePositionDOM = {
 
   /**
    * mouse position panel
-   * @param {Boolean} [displayAltitude=true] - specifies if the altitude panel must be displayed
-   * @param {Boolean} [displayCoordinates=true] - specifies if the coordinates panel must be displayed
-   * @param {Boolean} [editCoordinates=false] - specifies if the coordinates edition is allowed
-   * @param {Boolean} [currentProjectionUnits] - specifies if the current projection units
-   *
-   * FIXME
-   * don't call this._createMousePositionSettingsElement
    *
    * @returns {DOMElement} DOM element
    */
-  _createMousePositionPanelElement: function _createMousePositionPanelElement(displayAltitude, displayCoordinates, editCoordinates, currentProjectionUnits) {
-    // default Values
-    displayAltitude = typeof displayAltitude === "undefined" ? true : displayAltitude;
-    displayCoordinates = typeof displayCoordinates === "undefined" ? true : displayCoordinates;
-    editCoordinates = typeof editCoordinates === "undefined" ? false : editCoordinates;
+  _createMousePositionPanelElement: function _createMousePositionPanelElement() {
     var panel = document.createElement("div");
     panel.id = this._addUID("GPmousePositionPanel");
-    panel.className = "GPpanel";
-
-    var header = this._createMousePositionPanelHeaderElement();
-
-    panel.appendChild(header);
-
-    var basic = this._createMousePositionPanelBasicElement(displayAltitude, displayCoordinates, editCoordinates, currentProjectionUnits);
-
-    panel.appendChild(basic);
-
-    var arraySettings = this._createShowMousePositionSettingsElement(displayCoordinates);
-
-    for (var j = 0; j < arraySettings.length; j++) {
-      panel.appendChild(arraySettings[j]);
-    } // FIXME on decompose la fonction pour les besoins du controle,
+    panel.className = "GPpanel"; // FIXME on decompose la fonction pour les besoins du controle,
     // on ajoutera ces childs à la main...
+    // div.appendChild(this._createMousePositionPanelHeaderElement());
+    // div.appendChild(this._createMousePositionPanelBasicElement());
+    // div.appendChild(this._createShowMousePositionSettingsElement());
     // div.appendChild(this._createMousePositionSettingsElement());
 
-
-    _Utils_Draggable__WEBPACK_IMPORTED_MODULE_0__["default"].dragElement(panel, header);
     return panel;
   },
 
@@ -40049,6 +40177,10 @@ var MousePositionDOM = {
    * @returns {DOMElement} DOM element
    */
   _createMousePositionPanelBasicElement: function _createMousePositionPanelBasicElement(displayAltitude, displayCoordinates, editCoordinates, currentProjectionUnits) {
+    // default Values
+    displayAltitude = typeof displayAltitude === "undefined" ? true : displayAltitude;
+    displayCoordinates = typeof displayCoordinates === "undefined" ? true : displayCoordinates;
+    editCoordinates = typeof editCoordinates === "undefined" ? false : editCoordinates;
     var container = document.createElement("div");
     container.id = this._addUID("GPmousePositionBasicPanel"); // FIXME on devrait decomposer la fonction pour les besoins du controle,
     // on ajoutera ces childs à la main...
@@ -40790,115 +40922,6 @@ var MousePositionDOM = {
 /* harmony default export */ __webpack_exports__["default"] = (MousePositionDOM);
 
 /***/ }),
-/* 183 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-var Draggable = {
-  /**
-  * A draggable HTML element with JavaScript and CSS.
-  *
-  * @param {DOMElement} element - element
-  * @param {DOMElement} header - header (optional)
-  * @see https://www.w3schools.com/howto/howto_js_draggable.asp
-  * @see https://stackoverflow.com/questions/52231588/how-to-constrain-div-drag-space-no-jquery
-  * @example
-  *   // CSS :
-  *       // #element { position: absolute; }
-  *   // HTML :
-  *       // <div id="element">
-  *       //   <div id="header">
-  *       //     <div/>
-  *       //     <div/>
-  *       //     <div/>
-  *       //   <div/>
-  *       // <div/>
-  *   // JS :
-  *       var element = document.getElementById("element");
-  *       var header  = document.getElementById("header");
-  *       Draggable.dragElement(element, header);
-  */
-  dragElement: function dragElement(element, header) {
-    var pos1 = 0;
-    var pos2 = 0;
-    var pos3 = 0;
-    var pos4 = 0; // var dragoffset = {
-    //     x : 0,
-    //     y : 0
-    // };
-
-    if (header) {
-      header.onmousedown = dragMouseDown;
-    } else {
-      element.onmousedown = dragMouseDown;
-    }
-
-    function dragMouseDown(e) {
-      e = e || window.event;
-      e.preventDefault(); // get the mouse cursor position at startup:
-
-      pos3 = e.clientX;
-      pos4 = e.clientY; // var pageX = e.clientX + (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft);
-      // var pageY = e.clientY + (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop);
-      // dragoffset.x = pageX - element.offsetLeft;
-      // dragoffset.y = pageY - element.offsetTop;
-
-      document.onmouseup = closeDragElement; // call a function whenever the cursor moves:
-
-      document.onmousemove = elementDrag;
-    }
-
-    function closeDragElement() {
-      /* stop moving when mouse button is released: */
-      document.onmouseup = null;
-      document.onmousemove = null;
-    }
-
-    function elementDrag(e) {
-      e = e || window.event;
-      e.preventDefault();
-      var offsetX, offsetY; // calculate the new cursor position:
-
-      pos1 = pos3 - e.clientX;
-      pos2 = pos4 - e.clientY;
-      pos3 = e.clientX;
-      pos4 = e.clientY; // cf. https://jsfiddle.net/nbbg08mg/2/
-      // var pageX = e.clientX + (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft);
-      // var pageY = e.clientY + (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop);
-      //
-      // // left/right constraint
-      // if (pageX - dragoffset.x < 0) {
-      //     offsetX = 0;
-      // } else if (pageX - dragoffset.x + 50 > document.body.clientWidth) {
-      //     offsetX = document.body.clientWidth - 50;
-      // } else {
-      //     offsetX = e.clientX - dragoffset.x;
-      // }
-      //
-      // // top/bottom constraint
-      // if (pageY - dragoffset.y < 0) {
-      //     offsetY = 0;
-      // } else if (pageY - dragoffset.y + 50 > document.body.clientHeight) {
-      //     offsetY = document.body.clientHeight - 50;
-      // } else {
-      //     offsetY = pageY - dragoffset.y;
-      // }
-      //
-      // element.style.top = offsetY + "px";
-      // element.style.left = offsetX + "px";
-
-      console.log(e.clientX, document.body.clientWidth);
-      console.log(e.clientY, document.body.clientHeight); // set the element's new position:
-
-      element.style.top = element.offsetTop - pos2 + "px";
-      element.style.left = element.offsetLeft - pos1 + "px";
-    }
-  }
-};
-/* harmony default export */ __webpack_exports__["default"] = (Draggable);
-
-/***/ }),
 /* 184 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -40932,7 +40955,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ol_sphere__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(ol_sphere__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(142);
 /* harmony import */ var _Utils_Interactions__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(191);
-/* harmony import */ var _Common_Utils_Draggable__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(183);
+/* harmony import */ var _Common_Utils_Draggable__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(176);
 /* harmony import */ var _Common_Utils_SelectorID__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(164);
 /* harmony import */ var _Common_Utils_ColorUtils__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(192);
 /* harmony import */ var _Common_Controls_DrawingDOM__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(193);
@@ -40975,6 +40998,7 @@ var logger = _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_13__["defaul
  * @extends {ol.control.Control}
  * @param {Object} options - options for function call.
  * @param {Boolean} [options.collapsed = true] - Specify if Drawing control should be collapsed at startup. Default is true.
+ * @param {Boolean} [options.draggable = false] - Specify if widget is draggable
  * @param {ol.layer.Vector} [options.layer = null] - Openlayers layer that will hosts created features. If none, an empty vector layer will be created.
  * @param {Object} [options.layerDescription = {}] - Layer informations to be displayed in LayerSwitcher widget (only if a LayerSwitcher is also added to the map)
  * @param {String} [options.layerDescription.title = "Croquis"] - Layer title to be displayed in LayerSwitcher
@@ -41177,6 +41201,11 @@ var Drawing = function (Control) {
 
     if (map == null) {
       return;
+    } // mode "draggable"
+
+
+    if (this.draggable) {
+      _Common_Utils_Draggable__WEBPACK_IMPORTED_MODULE_15__["default"].dragElement(this._drawingPanel, this._drawingPanelHeader, map.getTargetElement());
     } // mode "collapsed"
 
 
@@ -41385,6 +41414,10 @@ var Drawing = function (Control) {
     /** {Boolean} specify if Drawing control is collapsed (true) or not (false) */
 
     this.collapsed = this.options.collapsed;
+    this.options.draggable = options.draggable !== undefined ? options.draggable : false;
+    /** {Boolean} specify if Drawing control is draggable (true) or not (false) */
+
+    this.draggable = this.options.draggable;
     this.options.markersList = options.markersList || [{
       src: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAmCAYAAABpuqMCAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAARfSURBVFiF3ZhfbBRVGMV/d2Z3212tbSkCbuNaqzaRiL6QyAMPjSFoYqgx4oOiRmMFUzQG479o2lQ0QXk1EhYFgmlD2mIRkYhRwqLEaA2GiKWV7rZLQ0sLwbZId7t/Zq4PFK1125m5s/vCedz7nXO+M9/N3jsD1xFEvgXlTkrI8hBQBywFbgEqgEvAMHAayZcYHBYbuZJP77yFkdsoR+ct4GXAb4OSQPARXj4QzzGejx7yEkZuZy2CMLBAgf4nkhfEi3S67UNzQ5YSIXfQhKAdtSAACxDsk2EapXT3cF2FYQdNSN7F/YQFsJkw77gVUcL01mp3o5EDJoK1Yj37VchKjcjdlJEmhvrWmg9jGNwhGhhzSlTbZmnepjBBAMrReF2F6Hgy0+fIKPb+flWRIMtip+eQ88lcPRCtg3gCCVZ3RqhPDbJepqlPDbJ6XwSvP2nDJYCXB522prLN6iwrPIEETw33U/VoLZovBPjQfCGqHqtl3XDUZiBrn1lQCXO3ZcUDLV34Su/JueYrW0btnp8tNSRLnTamEiZoWRF6uHre9dseuT0vPrOgEqbCWtW3xNX6VSy02c+/sk4JwF+WFWZ6xGL9vA2fyzb7+QcqYUYtKwYP9s+7PrA/bsNn/geSA87DSLosa44+fT/p8VM511Jjp4g8u8KGk7XPLKhM5qhlRSbppzV4JwMdEcz0WSCNmT5LrC1CS/AujKliSw1BxGljzm8AH3MjHs4BpU65DjCBn0rxDJNOSI4nM33F2O2U58yEnU6DgOpF02AzcEGJa40LZHlfhagUZvp6vkmFawObVK7/4PLFSoZpBZ50ozEThsne6i2hjZqmFRVJ6U8JUeSVUmQNzQvg0c1MVtNMIUTSl0pNLhsaGu8A4xrfbZhS4CRQ5SoFcCWtja/5NBg+N+GZsu0vhSEkcY8mf+iNx+OuX3llmJVABNCVNUA2fl3xWdvJkriqRBb2uPugAYgNHEey1Y3Gt3/ccNxFEAChm2al6zAAjNAEWF/rc1Ev6+ffOLTwmBt7E0xD02J5CSOayQLrsHMJnYGMITJvHrr588mUMKyr54CUaaHrnfF4fCQ/kwHEBmLAa044rb+WHP4xXnxJ0VJK6CkyjO2xWOx3KMSH8zDtwONWdb2jvt41u4JtChZJKeVveDwnYrHYfw5uj4KYFRpSWbGqyCPL5ypIpMTkKwcWfWVXUEqRRcio1LTuUCjUE4lEsrnq8j4ZgKEP9bpgmfHFHPpyy3fle3f9Uto3n4aUIqNhDghN6zZ1vTcajaasfAsSBmBwq7f11tLM/24Hx2L+n+rbF38zBy2JEP0anPEGAj3d3d1pJ56F2GYAGInM82M+bWW53wxd++3ipH7x1QMLj8ysk5BAyj6Ppp2+d/nyaEdHh/I/W8EmA3Ci2b/iviVT3+tCerMmxkudiz450hcYBSYQIqrDmScGBvqawSxkH3lDV2Pxe6ltItnWcFNLTXX1qpqamkoK/BCvC/wNB+l5MdQKNHsAAAAASUVORK5CYII=",
       anchor: [0.5, 1] // FIXME l'impl. sur le KML connait qq souci dont la gestion de
@@ -41658,9 +41691,18 @@ var Drawing = function (Control) {
 
     container.appendChild(picto);
 
-    var panel = this._createDrawingPanelElement();
+    var panel = this._drawingPanel = this._createDrawingPanelElement();
 
-    _Common_Utils_Draggable__WEBPACK_IMPORTED_MODULE_15__["default"].dragElement(panel);
+    var header = this._drawingPanelHeader = this._createDrawingPanelHeaderElement();
+
+    panel.appendChild(header);
+
+    var tools = this._createDrawingToolsSections();
+
+    for (var i = 0; i < tools.length; i++) {
+      panel.appendChild(tools[i]);
+    }
+
     container.appendChild(panel);
     return container;
   }; // ################################################################### //
@@ -42957,7 +42999,57 @@ var DrawingDOM = {
     var div = document.createElement("div");
     div.id = this._addUID("GPdrawingPanel");
     div.className = "GPpanel";
-    div.appendChild(this._createDrawingPanelHeaderElement());
+    return div;
+  },
+  // ################################################################### //
+  // ####################### Panel container ########################### //
+  // ################################################################### //
+
+  /**
+  * Creates drawing Panel header DOM structure
+  * @returns {DOMElement} DOM element
+  */
+  _createDrawingPanelHeaderElement: function _createDrawingPanelHeaderElement() {
+    /*
+     * <div class="GPpanelHeader">
+     *     <div class="GPpanelTitle">Annoter la carte</div>
+     *     <div id="GPdrawingPanelClose" class="GPpanelClose" title="Fermer le panneau"></div>
+     * </div>
+     */
+    var container = document.createElement("div");
+    container.className = "GPpanelHeader";
+    var divTitle = document.createElement("div");
+    divTitle.className = "GPpanelTitle";
+    divTitle.innerHTML = this.options.controlLabel || "Annoter la carte";
+    container.appendChild(divTitle);
+    var divClose = document.createElement("div");
+    divClose.id = this._addUID("GPdrawingPanelClose");
+    divClose.className = "GPpanelClose";
+    divClose.title = "Fermer le panneau"; // Link panel close / visibility checkbox
+
+    var dtObj = this;
+
+    if (divClose.addEventListener) {
+      divClose.addEventListener("click", function () {
+        document.getElementById(dtObj._addUID("GPshowDrawingPicto")).click();
+      }, false);
+    } else if (divClose.attachEvent) {
+      divClose.attachEvent("onclick", function () {
+        document.getElementById(dtObj._addUID("GPshowDrawingPicto")).click();
+      });
+    }
+
+    container.appendChild(divClose);
+    return container;
+  },
+
+  /**
+   * Creates drawing tools section.
+   *
+   * @returns {DOMElement} DOM element
+   */
+  _createDrawingToolsSections: function _createDrawingToolsSections() {
+    var tools = [];
     this.dtOptions = {};
 
     if (this.options.tools.points) {
@@ -43034,61 +43126,20 @@ var DrawingDOM = {
 
 
     if (this.dtOptions.points || this.dtOptions.lines || this.dtOptions.polygons || this.dtOptions.text) {
-      div.appendChild(this._createDrawingToolSection(this.options.labels.creatingTools, "draw"));
+      tools.push(this._createDrawingToolSection(this.options.labels.creatingTools, "draw"));
     } // ajout editing tools
 
 
     if (this.dtOptions.edit || this.dtOptions.display || this.dtOptions.tooltip || this.dtOptions.remove) {
-      div.appendChild(this._createDrawingToolSection(this.options.labels.editingTools, "edit"));
+      tools.push(this._createDrawingToolSection(this.options.labels.editingTools, "edit"));
     } // ajout export tools
 
 
     if (this.options.tools["export"]) {
-      div.appendChild(this._createSavingSection(this.options.labels["export"], this.options.labels.exportTitle));
+      tools.push(this._createSavingSection(this.options.labels["export"], this.options.labels.exportTitle));
     }
 
-    return div;
-  },
-  // ################################################################### //
-  // ####################### Panel container ########################### //
-  // ################################################################### //
-
-  /**
-  * Creates drawing Panel header DOM structure
-  * @returns {DOMElement} DOM element
-  */
-  _createDrawingPanelHeaderElement: function _createDrawingPanelHeaderElement() {
-    /*
-     * <div class="GPpanelHeader">
-     *     <div class="GPpanelTitle">Annoter la carte</div>
-     *     <div id="GPdrawingPanelClose" class="GPpanelClose" title="Fermer le panneau"></div>
-     * </div>
-     */
-    var container = document.createElement("div");
-    container.className = "GPpanelHeader";
-    var divTitle = document.createElement("div");
-    divTitle.className = "GPpanelTitle";
-    divTitle.innerHTML = this.options.controlLabel || "Annoter la carte";
-    container.appendChild(divTitle);
-    var divClose = document.createElement("div");
-    divClose.id = this._addUID("GPdrawingPanelClose");
-    divClose.className = "GPpanelClose";
-    divClose.title = "Fermer le panneau"; // Link panel close / visibility checkbox
-
-    var dtObj = this;
-
-    if (divClose.addEventListener) {
-      divClose.addEventListener("click", function () {
-        document.getElementById(dtObj._addUID("GPshowDrawingPicto")).click();
-      }, false);
-    } else if (divClose.attachEvent) {
-      divClose.attachEvent("onclick", function () {
-        document.getElementById(dtObj._addUID("GPshowDrawingPicto")).click();
-      });
-    }
-
-    container.appendChild(divClose);
-    return container;
+    return tools;
   },
 
   /**
@@ -43584,7 +43635,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Common_Utils_CheckRightManagement__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(171);
 /* harmony import */ var _Common_Utils_SelectorID__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(164);
 /* harmony import */ var _Utils_Markers__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(170);
-/* harmony import */ var _Common_Utils_Draggable__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(183);
+/* harmony import */ var _Common_Utils_Draggable__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(176);
 /* harmony import */ var _LocationSelector__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(196);
 /* harmony import */ var _LayerSwitcher__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(161);
 /* harmony import */ var _Common_Controls_RouteDOM__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(198);
@@ -43630,6 +43681,7 @@ var logger = _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_12__["defaul
  * @param {String}   [options.apiKey] - API key for services call (route and autocomplete services), mandatory if autoconf service has not been charged in advance
  * @param {Boolean}   [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {Boolean} [options.collapsed = true] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
+ * @param {Boolean} [options.draggable = false] - Specify if widget is draggable
  * @param {Object}  [options.exclusions = {toll : false, tunnel : false, bridge : false}] - list of exclusions with status (true = checked). By default : no exclusions checked.
  * @param {Array}   [options.graphs = ["Voiture", "Pieton"]] - list of resources, by default : ["Voiture", "Pieton"]. The first element is selected.
  * @param {Object} [options.markersOpts] - options to use your own markers. Object properties can be "departure", "stages" or "arrival". Corresponding value is an object with following properties :
@@ -43642,29 +43694,30 @@ var logger = _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_12__["defaul
  * @param {String} [options.layerDescription.description = "Itinéraire basé sur un graphe"] - Layer description to be displayed in LayerSwitcher
  * @example
  *  var route = ol.control.Route({
- *      collapsed : true
- *      exclusions : {
+ *      "collapsed" : true
+ *      "draggable" : true,
+ *      "exclusions" : {
  *         "toll" : true,
  *         "bridge" : false,
  *         "tunnel" : true
  *      },
- *      graphs : ['Pieton', 'Voiture'],
- *      markersOpts : {
- *          departure : {
- *              url : "...",
- *              offset : [0,0]
+ *      "graphs" : ['Pieton', 'Voiture'],
+ *      "markersOpts" : {
+ *          "departure" : {
+ *              "url" : "...",
+ *              "offset" : [0,0]
  *          },
- *          stages : {
- *              url : "...",
- *              offset : [0,0]
+ *          "stages" : {
+ *              "url" : "...",
+ *              "offset" : [0,0]
  *          },
- *          arrival : {
- *              url : "...",
- *              offset : [0,0]
+ *          "arrival" : {
+ *              "url" : "...",
+ *              "offset" : [0,0]
  *          }
  *      }
- *      autocompleteOptions : {},
- *      routeOptions : {}
+ *      "autocompleteOptions" : {},
+ *      "routeOptions" : {}
  *  });
  */
 
@@ -43768,7 +43821,11 @@ var Route = function (Control) {
   Route.prototype.setMap = function (map) {
     if (map) {
       // enrichissement du DOM du container
-      this._container = this._initContainer(map);
+      this._container = this._initContainer(map); // mode "draggable"
+
+      if (this.draggable) {
+        _Common_Utils_Draggable__WEBPACK_IMPORTED_MODULE_17__["default"].dragElement(this._panelRouteContainer, this._panelHeaderRouteContainer, map.getTargetElement());
+      }
     } // on appelle la méthode setMap originale d'OpenLayers
 
 
@@ -43791,6 +43848,7 @@ var Route = function (Control) {
 
     this.options = {
       collapsed: true,
+      draggable: false,
       graphs: ["Voiture", "Pieton"],
       exclusions: {
         toll: false,
@@ -43826,8 +43884,13 @@ var Route = function (Control) {
     /** {Boolean} specify if Route control is collapsed (true) or not (false) */
 
     this.collapsed = this.options.collapsed;
+    /** {Boolean} specify if Route control is draggable (true) or not (false) */
+
+    this.draggable = this.options.draggable;
     this._uid = _Common_Utils_SelectorID__WEBPACK_IMPORTED_MODULE_15__["default"].generate(); // containers principaux
 
+    this._panelRouteContainer = null;
+    this._panelHeaderRouteContainer = null;
     this._waitingContainer = null;
     this._formRouteContainer = null;
     this._resultsRouteContainer = null;
@@ -44037,13 +44100,12 @@ var Route = function (Control) {
 
     container.appendChild(picto);
 
-    var routePanel = this._createRoutePanelElement(); // header form
+    var routePanel = this._panelRouteContainer = this._createRoutePanelElement(); // header form
 
 
-    var routeHeader = this._createRoutePanelHeaderElement();
+    var routeHeader = this._panelHeaderRouteContainer = this._createRoutePanelHeaderElement();
 
-    routePanel.appendChild(routeHeader);
-    _Common_Utils_Draggable__WEBPACK_IMPORTED_MODULE_17__["default"].dragElement(routePanel, routeHeader); // form
+    routePanel.appendChild(routeHeader); // form
 
     var routeForm = this._formRouteContainer = this._createRoutePanelFormElement(); // form: menu des points
 
@@ -48181,7 +48243,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Common_Utils_CheckRightManagement__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(171);
 /* harmony import */ var _Common_Utils_SelectorID__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(164);
 /* harmony import */ var _Utils_Markers__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(170);
-/* harmony import */ var _Common_Utils_Draggable__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(183);
+/* harmony import */ var _Common_Utils_Draggable__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(176);
 /* harmony import */ var _LayerSwitcher__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(161);
 /* harmony import */ var _LocationSelector__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(196);
 /* harmony import */ var _Common_Controls_IsoDOM__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(200);
@@ -48223,6 +48285,7 @@ var logger = _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_9__["default
  * @param {String}   [options.apiKey] - API key for services call (isocurve and autocomplete services), mandatory if autoconf service has not been charged in advance
  * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {Boolean} [options.collapsed = true] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
+ * @param {Boolean} [options.draggable = false] - Specify if widget is draggable
  * @param {Object}  [options.exclusions = {toll : false, tunnel : false, bridge : false}] - list of exclusions with status (true = checked). By default : no exclusions checked.
  * @param {Array}   [options.graphs = ["Voiture", "Pieton"]] - list of graph resources to be used for isocurve calculation, by default : ["Voiture", "Pieton"]. Possible values are "Voiture" and "Pieton". The first element is selected.
  * @param {Array}   [options.methods = ["time", "distance"]] - list of methods, by default : ["time", "distance"]. Possible values are "time" and "distance". The first element is selected by default.
@@ -48238,20 +48301,21 @@ var logger = _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_9__["default
  * @param {String} [options.layerDescription.description = "isochrones/isodistance basé sur un graphe"] - Layer description to be displayed in LayerSwitcher
  * @example
  *  var iso = ol.control.Isocurve({
- *      collapsed : false
- *      methods : ["time", "distance"],
- *      exclusions : {
- *         toll : true,
- *         bridge : false,
- *         tunnel : true
+ *      "collapsed" : false,
+ *      "draggable" : true,
+ *      "methods" : ["time", "distance"],
+ *      "exclusions" : {
+ *         "toll" : true,
+ *         "bridge" : false,
+ *         "tunnel" : true
  *      },
- *      graphs : ["Pieton", "Voiture"],
- *      markerOpts : {
- *          url : "...",
- *          offset : [0,0]
+ *      "graphs" : ["Pieton", "Voiture"],
+ *      "markerOpts" : {
+ *          "url" : "...",
+ *          "offset" : [0,0]
  *      }
- *      isocurveOptions : {},
- *      autocompleteOptions : {}
+ *      "isocurveOptions" : {},
+ *      "autocompleteOptions" : {}
  *  });
  */
 
@@ -48358,7 +48422,11 @@ var Isocurve = function (Control) {
   Isocurve.prototype.setMap = function (map) {
     if (map) {
       // enrichissement du DOM du container lors de l'ajout à la carte
-      this._container = this._initContainer(map);
+      this._container = this._initContainer(map); // mode "draggable"
+
+      if (this.draggable) {
+        _Common_Utils_Draggable__WEBPACK_IMPORTED_MODULE_13__["default"].dragElement(this._IsoPanelContainer, this._IsoPanelHeaderContainer, map.getTargetElement());
+      }
     } // on appelle la méthode setMap originale d'OpenLayers
 
 
@@ -48381,6 +48449,7 @@ var Isocurve = function (Control) {
 
     this.options = {
       collapsed: true,
+      draggable: false,
       methods: ["time", "distance"],
       graphs: ["Voiture", "Pieton"],
       exclusions: {
@@ -48404,7 +48473,10 @@ var Isocurve = function (Control) {
     _Common_Utils__WEBPACK_IMPORTED_MODULE_8__["default"].assign(this.options, options);
     /** {Boolean} specify if isocurve control is collapsed (true) or not (false) */
 
-    this.collapsed = this.options.collapsed; // identifiant du contrôle : utile pour suffixer les identifiants CSS (pour gérer le cas où il y en a plusieurs dans la même page)
+    this.collapsed = this.options.collapsed;
+    /** {Boolean} specify if isocurve control is draggable (true) or not (false) */
+
+    this.draggable = this.options.draggable; // identifiant du contrôle : utile pour suffixer les identifiants CSS (pour gérer le cas où il y en a plusieurs dans la même page)
 
     this._uid = _Common_Utils_SelectorID__WEBPACK_IMPORTED_MODULE_11__["default"].generate(); // Options du service paramétrables via l'interface (graph, method, exclusions)
     // Mode de transport selectionné : 'Voiture' ou 'Pieton'
@@ -48433,7 +48505,9 @@ var Isocurve = function (Control) {
 
     this._showIsoContainer = null;
     this._waitingContainer = null;
-    this._formContainer = null; // les résultats du calcul
+    this._formContainer = null;
+    this._IsoPanelContainer = null;
+    this._IsoPanelHeaderContainer = null; // les résultats du calcul
 
     this._currentIsoResults = null; // la géométrie
 
@@ -48798,13 +48872,12 @@ var Isocurve = function (Control) {
 
     container.appendChild(picto); // panneau
 
-    var panel = this._createIsoPanelElement(); // header
+    var panel = this._IsoPanelContainer = this._createIsoPanelElement(); // header
 
 
-    var header = this._createIsoPanelHeaderElement();
+    var header = this._IsoPanelHeaderContainer = this._createIsoPanelHeaderElement();
 
-    panel.appendChild(header);
-    _Common_Utils_Draggable__WEBPACK_IMPORTED_MODULE_13__["default"].dragElement(panel, header); // form
+    panel.appendChild(header); // form
 
     var form = this._formContainer = this._createIsoPanelFormElement(); // form: input de saisie de la localisation (fonction de Isocurve, voir ci-dessous)
 
@@ -50448,7 +50521,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Common_Utils_SelectorID__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(164);
 /* harmony import */ var _Common_Utils_CheckRightManagement__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(171);
 /* harmony import */ var _Utils_Markers__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(170);
-/* harmony import */ var _Common_Utils_Draggable__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(183);
+/* harmony import */ var _Common_Utils_Draggable__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(176);
 /* harmony import */ var _LayerSwitcher__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(161);
 /* harmony import */ var _Common_Controls_ReverseGeocodingDOM__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(203);
 // import CSS
@@ -50491,6 +50564,7 @@ var logger = _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_14__["defaul
  * @param {String}   [options.apiKey] - API key for services call (reverse geocode service), mandatory if autoconf service has not been charged in advance
  * @param {String}   [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {Boolean} [options.collapsed = true] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
+ * @param {Boolean} [options.draggable = false] - Specify if widget is draggable
  * @param {Object}   [options.resources =  ["StreetAddress", "PositionOfInterest", "CadastralParcel"]] - resources for geocoding, by default : ["StreetAddress", "PositionOfInterest", "CadastralParcel"]. Possible values are : "StreetAddress", "PositionOfInterest", "CadastralParcel", "Administratif". Resources will be displayed in the same order in widget list.
  * @param {Object}   [options.delimitations = ["Point", "Circle", "Extent"]] - delimitations for reverse geocoding, by default : ["Point", "Circle", "Extent"]. Possible values are : "Point", "Circle", "Extent". Delimitations will be displayed in the same order in widget list.
  * @param {Object}  [options.reverseGeocodeOptions = {}] - reverse geocode service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~reverseGeocode Gp.Services.reverseGeocode()} to know all reverse geocode options.
@@ -50499,10 +50573,11 @@ var logger = _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_14__["defaul
  * @param {String} [options.layerDescription.description = "Couche de saisie d'une zone de recherche pour la recherche inverse"] - Layer description to be displayed in LayerSwitcher
  * @example
  *  var iso = ol.control.ReverseGeocode({
- *      collapsed : false,
- *      resources : ["StreetAddress", "PositionOfInterest"],
- *      delimitations : ["Point", "Circle"],
- *      reverseGeocodeOptions : {}
+ *      "collapsed" : false,
+ *      "draggable" : true,
+ *      "resources" : ["StreetAddress", "PositionOfInterest"],
+ *      "delimitations" : ["Point", "Circle"],
+ *      "reverseGeocodeOptions" : {}
  *  });
  */
 
@@ -50599,7 +50674,12 @@ var ReverseGeocode = function (Control) {
     if (map) {
       // lors de l'ajout à la map, on active la saisie du point ou de la zone de recherche sur la carte,
       // mais seulement si le widget est ouvert
-      this._activateMapInteraction(map);
+      this._activateMapInteraction(map); // mode "draggable"
+
+
+      if (this.draggable) {
+        _Common_Utils_Draggable__WEBPACK_IMPORTED_MODULE_18__["default"].dragElement(this._panelContainer, this._panelHeaderContainer, map.getTargetElement());
+      }
     } else {
       var _map = this.getMap(); // on remet à zéro = on efface les géométries + interactions + valeurs stockées
       // suppression des résultats précédents
@@ -50646,6 +50726,7 @@ var ReverseGeocode = function (Control) {
 
     this.options = {
       collapsed: true,
+      draggable: false,
       resources: ["StreetAddress", "PositionOfInterest", "CadastralParcel"],
       delimitations: ["Point", "Circle", "Extent"],
       reverseGeocodeOptions: {},
@@ -50658,7 +50739,10 @@ var ReverseGeocode = function (Control) {
     _Common_Utils__WEBPACK_IMPORTED_MODULE_13__["default"].assign(this.options, options);
     /** {Boolean} specify if reverseGeocoding control is collapsed (true) or not (false) */
 
-    this.collapsed = this.options.collapsed; // identifiant du contrôle : utile pour suffixer les identifiants CSS (pour gérer le cas où il y en a plusieurs dans la même page)
+    this.collapsed = this.options.collapsed;
+    /** {Boolean} specify if reverseGeocoding control is draggable (true) or not (false) */
+
+    this.draggable = this.options.draggable; // identifiant du contrôle : utile pour suffixer les identifiants CSS (pour gérer le cas où il y en a plusieurs dans la même page)
 
     this._uid = _Common_Utils_SelectorID__WEBPACK_IMPORTED_MODULE_15__["default"].generate(); // #################################################################### //
     // ################### informations sur les droits #################### //
@@ -50685,8 +50769,9 @@ var ReverseGeocode = function (Control) {
     // containers principaux
 
 
-    this._showReverseGeocodingInput = null; // header panel
+    this._showReverseGeocodingInput = null; // panel
 
+    this._panelContainer = null;
     this._panelHeaderContainer = null;
     this._panelTitleContainer = null;
     this._returnPictoContainer = null; // form
@@ -51007,12 +51092,11 @@ var ReverseGeocode = function (Control) {
 
     container.appendChild(picto); // panel
 
-    var reverseGeocodingPanel = this._createReverseGeocodingPanelElement(); // header
+    var reverseGeocodingPanel = this._panelContainer = this._createReverseGeocodingPanelElement(); // header
 
 
-    var panelHeader = this._panelHeaderContainer = this._createReverseGeocodingPanelHeaderElement();
+    var panelHeader = this._panelHeaderContainer = this._createReverseGeocodingPanelHeaderElement(); // return picto (hidden at start)
 
-    _Common_Utils_Draggable__WEBPACK_IMPORTED_MODULE_18__["default"].dragElement(reverseGeocodingPanel, panelHeader); // return picto (hidden at start)
 
     var returnPicto = this._returnPictoContainer = this._createReverseGeocodingPanelReturnPictoElement();
 
@@ -52796,7 +52880,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var geoportal_access_lib__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(41);
 /* harmony import */ var _Editor__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(253);
 /* harmony import */ var _Utils_Markers__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(170);
-/* harmony import */ var _Common_Utils_Draggable__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(183);
+/* harmony import */ var _Common_Utils_Draggable__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(176);
 /* harmony import */ var _Common_Utils__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(147);
 /* harmony import */ var _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(142);
 /* harmony import */ var _Common_Utils_SelectorID__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(164);
@@ -52861,6 +52945,7 @@ var logger = _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_28__["defaul
  * @extends {ol.control.Control}
  * @param {Object} options - options for function call.
  * @param {Boolean} [options.collapsed = false] - Specify if LayerImport control should be collapsed at startup. Default is true.
+ * @param {Boolean} [options.draggable = false] - Specify if widget is draggable
  * @param {Array} [options.layerTypes = ["KML", "GPX", "GeoJSON", "WMS", "WMTS", "MAPBOX"]] - data types that could be imported : "KML", "GPX", "GeoJSON", "WMS", "WMTS" and "MAPBOX". Values will be displayed in the same order in widget list.
  * @param {Object} [options.webServicesOptions = {}] - Options to import WMS or WMTS layers
  * @param {String} [options.webServicesOptions.proxyUrl] - Proxy URL to avoid cross-domain problems. Mandatory to import WMS and WMTS layer.
@@ -52881,14 +52966,15 @@ var logger = _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_28__["defaul
  * @param {Boolean} [options.vectorStyleOptions.MapBox.tools.filter] - display edit filter menu for every layers By default, no display.
  * @example
  *  var LayerImport = new ol.control.LayerImport({
- *      collapsed : false,
- *      layerTypes : ["KML", "GPX"],
- *      webServicesOptions : {
- *          proxyUrl : "http://localhost/proxy/php/proxy.php?url=",
- *          noProxyDomains : []
+ *      "collapsed" : false,
+ *      "draggable" : true,
+ *      "layerTypes" : ["KML", "GPX"],
+ *      "webServicesOptions" : {
+ *          "proxyUrl" : "http://localhost/proxy/php/proxy.php?url=",
+ *          "noProxyDomains" : []
  *      },
- *      vectorStyleOptions : {
- *          KML : {
+ *      "vectorStyleOptions" : {
+ *          "KML" : {
  *              extractStyles : true,
  *              defaultStyle : new ol.style.Style({
  *                  image : new ol.style.Icon({
@@ -52915,7 +53001,7 @@ var logger = _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_28__["defaul
  *                  })
  *              })
  *          },
- *          GPX : {
+ *          "GPX" : {
  *              defaultStyle : new ol.style.Style({
  *                  image : new ol.style.Icon({
  *                       src : "path/to/my/icon.png",
@@ -53030,7 +53116,14 @@ var LayerImport = function (Control) {
             }
           }
         }
-      }, this);
+      }, this); // mode "draggable"
+
+      if (this.draggable) {
+        _Common_Utils_Draggable__WEBPACK_IMPORTED_MODULE_26__["default"].dragElement(this._importPanel, this._importPanelHeader, map.getTargetElement()); // panneau draggable pour les resultats ?
+
+        _Common_Utils_Draggable__WEBPACK_IMPORTED_MODULE_26__["default"].dragElement(this._getCapPanel, null, map.getTargetElement());
+        _Common_Utils_Draggable__WEBPACK_IMPORTED_MODULE_26__["default"].dragElement(this._mapBoxPanel, null, map.getTargetElement());
+      }
     } // on appelle la méthode setMap originale d'OpenLayers
 
 
@@ -53111,6 +53204,7 @@ var LayerImport = function (Control) {
 
     this.options = {
       collapsed: true,
+      draggable: false,
       layerTypes: ["KML", "GPX", "GeoJSON", "WMS", "WMTS", "MAPBOX"],
       webServicesOptions: {},
       vectorStyleOptions: {
@@ -53213,9 +53307,12 @@ var LayerImport = function (Control) {
 
 
     _Common_Utils__WEBPACK_IMPORTED_MODULE_27__["default"].mergeParams(this.options, options);
-    /** {Boolean} specify if reverseGeocoding control is collapsed (true) or not (false) */
+    /** {Boolean} specify if LayerImport control is collapsed (true) or not (false) */
 
-    this.collapsed = this.options.collapsed; // identifiant du contrôle : utile pour suffixer les identifiants CSS (pour gérer le cas où il y en a plusieurs dans la même page)
+    this.collapsed = this.options.collapsed;
+    /** {Boolean} specify if LayerImport control is draggable (true) or not (false) */
+
+    this.draggable = this.options.draggable; // identifiant du contrôle : utile pour suffixer les identifiants CSS (pour gérer le cas où il y en a plusieurs dans la même page)
 
     this._uid = _Common_Utils_SelectorID__WEBPACK_IMPORTED_MODULE_29__["default"].generate(); // si une requête est en cours ou non
 
@@ -53233,6 +53330,7 @@ var LayerImport = function (Control) {
 
     this._showImportInput = null;
     this._importPanel = null;
+    this._importPanelHeader = null;
     this._formContainer = null;
     this._staticLocalImportInput = null;
     this._staticUrlImportInput = null;
@@ -53401,10 +53499,9 @@ var LayerImport = function (Control) {
     var importPanel = this._importPanel = this._createImportPanelElement(); // header
 
 
-    var panelHeader = this._createImportPanelHeaderElement();
+    var panelHeader = this._importPanelHeader = this._createImportPanelHeaderElement();
 
-    importPanel.appendChild(panelHeader);
-    _Common_Utils_Draggable__WEBPACK_IMPORTED_MODULE_26__["default"].dragElement(importPanel, panelHeader); // form : initialisation du formulaire d'import des couches (types d'import et saisie de l'url / du fichier)
+    importPanel.appendChild(panelHeader); // form : initialisation du formulaire d'import des couches (types d'import et saisie de l'url / du fichier)
 
     var importForm = this._formContainer = this._initInputFormElement();
 
@@ -53420,8 +53517,7 @@ var LayerImport = function (Control) {
     var importGetCapResultsList = this._getCapResultsListContainer = this._createImportGetCapResultsContainer();
 
     getCapPanel.appendChild(importGetCapResultsList);
-    container.appendChild(getCapPanel);
-    _Common_Utils_Draggable__WEBPACK_IMPORTED_MODULE_26__["default"].dragElement(getCapPanel, getCapPanelHeader); // mapbox panel results
+    container.appendChild(getCapPanel); // mapbox panel results
 
     var mapBoxPanel = this._mapBoxPanel = this._createImportMapBoxPanelElement();
 
@@ -53436,8 +53532,7 @@ var LayerImport = function (Control) {
     var loading = this._loadingContainer = this._createLoadingElement();
 
     mapBoxPanel.appendChild(loading);
-    container.appendChild(mapBoxPanel);
-    _Common_Utils_Draggable__WEBPACK_IMPORTED_MODULE_26__["default"].dragElement(mapBoxPanel, mapBoxPanelHeader); // waiting
+    container.appendChild(mapBoxPanel); // waiting
 
     var waiting = this._waitingContainer = this._createImportWaitingElement();
 
@@ -85447,7 +85542,6 @@ var MeasureArea = function (Control) {
 
   MeasureArea.prototype.format = function (polygon) {
     logger.trace("call MeasureArea::format()");
-    var map = this.getMap();
     var measure;
 
     if (this.options.geodesic) {

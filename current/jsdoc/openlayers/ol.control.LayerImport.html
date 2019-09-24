@@ -420,6 +420,8 @@
             
                 <div class="l3 itemMembers"> <a href="ol.control.Drawing.html#collapsed">collapsed</a> </div>
             
+                <div class="l3 itemMembers"> <a href="ol.control.Drawing.html#draggable">draggable</a> </div>
+            
 
 
 <!--
@@ -428,6 +430,8 @@
             <span class="subtitle">Members</span>
             
                 <li data-name="ol.control.Drawing#collapsed"><a href="ol.control.Drawing.html#collapsed">collapsed</a></li>
+            
+                <li data-name="ol.control.Drawing#draggable"><a href="ol.control.Drawing.html#draggable">draggable</a></li>
             
             </ul>
 -->
@@ -666,6 +670,8 @@
             
                 <div class="l3 itemMembers"> <a href="ol.control.GeoportalMousePosition.html#collapsed">collapsed</a> </div>
             
+                <div class="l3 itemMembers"> <a href="ol.control.GeoportalMousePosition.html#draggable">draggable</a> </div>
+            
 
 
 <!--
@@ -674,6 +680,8 @@
             <span class="subtitle">Members</span>
             
                 <li data-name="ol.control.GeoportalMousePosition#collapsed"><a href="ol.control.GeoportalMousePosition.html#collapsed">collapsed</a></li>
+            
+                <li data-name="ol.control.GeoportalMousePosition#draggable"><a href="ol.control.GeoportalMousePosition.html#draggable">draggable</a></li>
             
             </ul>
 -->
@@ -850,6 +858,8 @@
             
                 <div class="l3 itemMembers"> <a href="ol.control.Isocurve.html#collapsed">collapsed</a> </div>
             
+                <div class="l3 itemMembers"> <a href="ol.control.Isocurve.html#draggable">draggable</a> </div>
+            
 
 
 <!--
@@ -858,6 +868,8 @@
             <span class="subtitle">Members</span>
             
                 <li data-name="ol.control.Isocurve#collapsed"><a href="ol.control.Isocurve.html#collapsed">collapsed</a></li>
+            
+                <li data-name="ol.control.Isocurve#draggable"><a href="ol.control.Isocurve.html#draggable">draggable</a></li>
             
             </ul>
 -->
@@ -928,6 +940,8 @@
             
                 <div class="l3 itemMembers"> <a href="ol.control.LayerImport.html#collapsed">collapsed</a> </div>
             
+                <div class="l3 itemMembers"> <a href="ol.control.LayerImport.html#draggable">draggable</a> </div>
+            
 
 
 <!--
@@ -936,6 +950,8 @@
             <span class="subtitle">Members</span>
             
                 <li data-name="ol.control.LayerImport#collapsed"><a href="ol.control.LayerImport.html#collapsed">collapsed</a></li>
+            
+                <li data-name="ol.control.LayerImport#draggable"><a href="ol.control.LayerImport.html#draggable">draggable</a></li>
             
             </ul>
 -->
@@ -1282,6 +1298,8 @@
             
                 <div class="l3 itemMembers"> <a href="ol.control.ReverseGeocode.html#collapsed">collapsed</a> </div>
             
+                <div class="l3 itemMembers"> <a href="ol.control.ReverseGeocode.html#draggable">draggable</a> </div>
+            
 
 
 <!--
@@ -1290,6 +1308,8 @@
             <span class="subtitle">Members</span>
             
                 <li data-name="ol.control.ReverseGeocode#collapsed"><a href="ol.control.ReverseGeocode.html#collapsed">collapsed</a></li>
+            
+                <li data-name="ol.control.ReverseGeocode#draggable"><a href="ol.control.ReverseGeocode.html#draggable">draggable</a></li>
             
             </ul>
 -->
@@ -1356,6 +1376,8 @@
             
                 <div class="l3 itemMembers"> <a href="ol.control.Route.html#collapsed">collapsed</a> </div>
             
+                <div class="l3 itemMembers"> <a href="ol.control.Route.html#draggable">draggable</a> </div>
+            
 
 
 <!--
@@ -1364,6 +1386,8 @@
             <span class="subtitle">Members</span>
             
                 <li data-name="ol.control.Route#collapsed"><a href="ol.control.Route.html#collapsed">collapsed</a></li>
+            
+                <li data-name="ol.control.Route#draggable"><a href="ol.control.Route.html#draggable">draggable</a></li>
             
             </ul>
 -->
@@ -2381,7 +2405,7 @@
     
         
         <div class="tag-source">
-            OpenLayers/Controls/LayerImport.js, line 135
+            OpenLayers/Controls/LayerImport.js, line 137
         </div>
         
     </div>
@@ -2490,6 +2514,42 @@
                     
                 
                 <p>Specify if LayerImport control should be collapsed at startup. Default is true.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name">draggable</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                
+                <p>Specify if widget is draggable</p></td>
         </tr>
 	
 	
@@ -3282,14 +3342,15 @@
 
     
     <pre class="prettyprint"><code>var LayerImport = new ol.control.LayerImport({
-     collapsed : false,
-     layerTypes : ["KML", "GPX"],
-     webServicesOptions : {
-         proxyUrl : "http://localhost/proxy/php/proxy.php?url=",
-         noProxyDomains : []
+     "collapsed" : false,
+     "draggable" : true,
+     "layerTypes" : ["KML", "GPX"],
+     "webServicesOptions" : {
+         "proxyUrl" : "http://localhost/proxy/php/proxy.php?url=",
+         "noProxyDomains" : []
      },
-     vectorStyleOptions : {
-         KML : {
+     "vectorStyleOptions" : {
+         "KML" : {
              extractStyles : true,
              defaultStyle : new ol.style.Style({
                  image : new ol.style.Icon({
@@ -3316,7 +3377,7 @@
                  })
              })
          },
-         GPX : {
+         "GPX" : {
              defaultStyle : new ol.style.Style({
                  image : new ol.style.Icon({
                       src : "path/to/my/icon.png",
@@ -3369,7 +3430,52 @@
 <dd>
     
     <div class="description">
-        <p>{Boolean} specify if reverseGeocoding control is collapsed (true) or not (false)</p>
+        <p>{Boolean} specify if LayerImport control is collapsed (true) or not (false)</p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="draggable">draggable</h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>{Boolean} specify if LayerImport control is draggable (true) or not (false)</p>
     </div>
     
     
@@ -3419,7 +3525,7 @@
     
         
         <div class="tag-source">
-            OpenLayers/Controls/LayerImport.js, line 252
+            OpenLayers/Controls/LayerImport.js, line 276
         </div>
         
     </div>
@@ -3500,7 +3606,7 @@
     
         
         <div class="tag-source">
-            OpenLayers/Controls/LayerImport.js, line 291
+            OpenLayers/Controls/LayerImport.js, line 315
         </div>
         
     </div>
@@ -3581,7 +3687,7 @@
     
         
         <div class="tag-source">
-            OpenLayers/Controls/LayerImport.js, line 282
+            OpenLayers/Controls/LayerImport.js, line 306
         </div>
         
     </div>
@@ -3662,7 +3768,7 @@
     
         
         <div class="tag-source">
-            OpenLayers/Controls/LayerImport.js, line 261
+            OpenLayers/Controls/LayerImport.js, line 285
         </div>
         
     </div>
@@ -3779,7 +3885,7 @@
     
         
         <div class="tag-source">
-            OpenLayers/Controls/LayerImport.js, line 216
+            OpenLayers/Controls/LayerImport.js, line 218
         </div>
         
     </div>
@@ -3907,7 +4013,7 @@
     <footer>
         Geoportail - Copyright (c) IGN, released under the CECILL-B license
         </br>
-        Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Thu Sep 12 2019 14:56:22 GMT+0000 (UTC)
+        Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Tue Sep 24 2019 10:09:57 GMT+0000 (UTC)
     </footer>
 
 

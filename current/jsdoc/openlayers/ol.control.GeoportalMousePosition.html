@@ -420,6 +420,8 @@
             
                 <div class="l3 itemMembers"> <a href="ol.control.Drawing.html#collapsed">collapsed</a> </div>
             
+                <div class="l3 itemMembers"> <a href="ol.control.Drawing.html#draggable">draggable</a> </div>
+            
 
 
 <!--
@@ -428,6 +430,8 @@
             <span class="subtitle">Members</span>
             
                 <li data-name="ol.control.Drawing#collapsed"><a href="ol.control.Drawing.html#collapsed">collapsed</a></li>
+            
+                <li data-name="ol.control.Drawing#draggable"><a href="ol.control.Drawing.html#draggable">draggable</a></li>
             
             </ul>
 -->
@@ -666,6 +670,8 @@
             
                 <div class="l3 itemMembers"> <a href="ol.control.GeoportalMousePosition.html#collapsed">collapsed</a> </div>
             
+                <div class="l3 itemMembers"> <a href="ol.control.GeoportalMousePosition.html#draggable">draggable</a> </div>
+            
 
 
 <!--
@@ -674,6 +680,8 @@
             <span class="subtitle">Members</span>
             
                 <li data-name="ol.control.GeoportalMousePosition#collapsed"><a href="ol.control.GeoportalMousePosition.html#collapsed">collapsed</a></li>
+            
+                <li data-name="ol.control.GeoportalMousePosition#draggable"><a href="ol.control.GeoportalMousePosition.html#draggable">draggable</a></li>
             
             </ul>
 -->
@@ -850,6 +858,8 @@
             
                 <div class="l3 itemMembers"> <a href="ol.control.Isocurve.html#collapsed">collapsed</a> </div>
             
+                <div class="l3 itemMembers"> <a href="ol.control.Isocurve.html#draggable">draggable</a> </div>
+            
 
 
 <!--
@@ -858,6 +868,8 @@
             <span class="subtitle">Members</span>
             
                 <li data-name="ol.control.Isocurve#collapsed"><a href="ol.control.Isocurve.html#collapsed">collapsed</a></li>
+            
+                <li data-name="ol.control.Isocurve#draggable"><a href="ol.control.Isocurve.html#draggable">draggable</a></li>
             
             </ul>
 -->
@@ -928,6 +940,8 @@
             
                 <div class="l3 itemMembers"> <a href="ol.control.LayerImport.html#collapsed">collapsed</a> </div>
             
+                <div class="l3 itemMembers"> <a href="ol.control.LayerImport.html#draggable">draggable</a> </div>
+            
 
 
 <!--
@@ -936,6 +950,8 @@
             <span class="subtitle">Members</span>
             
                 <li data-name="ol.control.LayerImport#collapsed"><a href="ol.control.LayerImport.html#collapsed">collapsed</a></li>
+            
+                <li data-name="ol.control.LayerImport#draggable"><a href="ol.control.LayerImport.html#draggable">draggable</a></li>
             
             </ul>
 -->
@@ -1282,6 +1298,8 @@
             
                 <div class="l3 itemMembers"> <a href="ol.control.ReverseGeocode.html#collapsed">collapsed</a> </div>
             
+                <div class="l3 itemMembers"> <a href="ol.control.ReverseGeocode.html#draggable">draggable</a> </div>
+            
 
 
 <!--
@@ -1290,6 +1308,8 @@
             <span class="subtitle">Members</span>
             
                 <li data-name="ol.control.ReverseGeocode#collapsed"><a href="ol.control.ReverseGeocode.html#collapsed">collapsed</a></li>
+            
+                <li data-name="ol.control.ReverseGeocode#draggable"><a href="ol.control.ReverseGeocode.html#draggable">draggable</a></li>
             
             </ul>
 -->
@@ -1356,6 +1376,8 @@
             
                 <div class="l3 itemMembers"> <a href="ol.control.Route.html#collapsed">collapsed</a> </div>
             
+                <div class="l3 itemMembers"> <a href="ol.control.Route.html#draggable">draggable</a> </div>
+            
 
 
 <!--
@@ -1364,6 +1386,8 @@
             <span class="subtitle">Members</span>
             
                 <li data-name="ol.control.Route#collapsed"><a href="ol.control.Route.html#collapsed">collapsed</a></li>
+            
+                <li data-name="ol.control.Route#draggable"><a href="ol.control.Route.html#draggable">draggable</a></li>
             
             </ul>
 -->
@@ -2381,7 +2405,7 @@
     
         
         <div class="tag-source">
-            OpenLayers/Controls/MousePosition.js, line 114
+            OpenLayers/Controls/MousePosition.js, line 117
         </div>
         
     </div>
@@ -2524,6 +2548,42 @@
                     
                 
                 <p>use of ssl or not (default true, service requested using https protocol)</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name">draggable</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                
+                <p>Specify if widget is draggable</p></td>
         </tr>
 	
 	
@@ -3388,40 +3448,41 @@ Default is 90000 (no data values = [-9999 ; -189999])</p></td>
 
     
     <pre class="prettyprint"><code>var MousePosition = new ol.control.GeoportalMousePosition({
-     collapsed : false,
-     displayCoordinates : true,
-     displayAltitude : true,
-     altitude : {
-          triggerDelay : 100,
-          responseDelay : 500,
-          noDataValue : -99999,
-          noDataValueTolerance : 99000,
-          serviceOptions : {}
+     "collapsed" : false,
+     "graggable" : true,
+     "displayCoordinates" : true,
+     "displayAltitude" : true,
+     "altitude" : {
+          "triggerDelay" : 100,
+          "responseDelay" : 500,
+          "noDataValue" : -99999,
+          "noDataValueTolerance" : 99000,
+          "serviceOptions" : {}
      },
-     systems : [
+     "systems" : [
       {
-         crs : "EPSG:3857",
-         label : "Web Mercator",
-         type : "Metric"
+         "crs" : "EPSG:3857",
+         "label" : "Web Mercator",
+         "type" : "Metric"
       },
       {
-         crs : "EPSG:4326",
-         label : "Géographiques",
-         type : "Geographical"
+         "crs" : "EPSG:4326",
+         "label" : "Géographiques",
+         "type" : "Geographical"
       },
       {
-          label : "Lambert 93",
-          crs : "EPSG:2154",
-          type : "Metric",
-          geoBBox : {
-              left : -9.86,
-              bottom : 41.15,
-              right : 10.38,
-              top : 51.56
+          "label" : "Lambert 93",
+          "crs" : "EPSG:2154",
+          "type" : "Metric",
+          "geoBBox" : {
+              "left" : -9.86,
+              "bottom" : 41.15,
+              "right" : 10.38,
+              "top" : 51.56
           }
        }
      ],
-     units : ["DEC", "DMS"]
+     "units" : ["DEC", "DMS"]
 });</code></pre>
     
 
@@ -3495,6 +3556,51 @@ Default is 90000 (no data values = [-9999 ; -189999])</p></td>
     
 </dd>
 
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="draggable">draggable</h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>{Boolean} specify if MousePosition control is draggable (true) or not (false)</p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
         </dl>
     
     
@@ -3512,7 +3618,7 @@ Default is 90000 (no data values = [-9999 ; -189999])</p></td>
     
         
         <div class="tag-source">
-            OpenLayers/Controls/MousePosition.js, line 300
+            OpenLayers/Controls/MousePosition.js, line 312
         </div>
         
     </div>
@@ -3721,7 +3827,7 @@ Default is 90000 (no data values = [-9999 ; -189999])</p></td>
     
         
         <div class="tag-source">
-            OpenLayers/Controls/MousePosition.js, line 420
+            OpenLayers/Controls/MousePosition.js, line 432
         </div>
         
     </div>
@@ -3838,7 +3944,7 @@ Default is 90000 (no data values = [-9999 ; -189999])</p></td>
     
         
         <div class="tag-source">
-            OpenLayers/Controls/MousePosition.js, line 436
+            OpenLayers/Controls/MousePosition.js, line 448
         </div>
         
     </div>
@@ -3955,7 +4061,7 @@ Default is 90000 (no data values = [-9999 ; -189999])</p></td>
     
         
         <div class="tag-source">
-            OpenLayers/Controls/MousePosition.js, line 318
+            OpenLayers/Controls/MousePosition.js, line 330
         </div>
         
     </div>
@@ -4072,7 +4178,7 @@ Default is 90000 (no data values = [-9999 ; -189999])</p></td>
     
         
         <div class="tag-source">
-            OpenLayers/Controls/MousePosition.js, line 400
+            OpenLayers/Controls/MousePosition.js, line 412
         </div>
         
     </div>
@@ -4302,7 +4408,7 @@ Default is 90000 (no data values = [-9999 ; -189999])</p></td>
     
         
         <div class="tag-source">
-            OpenLayers/Controls/MousePosition.js, line 450
+            OpenLayers/Controls/MousePosition.js, line 462
         </div>
         
     </div>
@@ -4419,7 +4525,7 @@ Default is 90000 (no data values = [-9999 ; -189999])</p></td>
     
         
         <div class="tag-source">
-            OpenLayers/Controls/MousePosition.js, line 168
+            OpenLayers/Controls/MousePosition.js, line 171
         </div>
         
     </div>
@@ -4536,7 +4642,7 @@ Default is 90000 (no data values = [-9999 ; -189999])</p></td>
     
         
         <div class="tag-source">
-            OpenLayers/Controls/MousePosition.js, line 380
+            OpenLayers/Controls/MousePosition.js, line 392
         </div>
         
     </div>
@@ -4666,7 +4772,7 @@ and &quot;M&quot; or &quot;KM&quot; for metric coordinates</p></td>
     <footer>
         Geoportail - Copyright (c) IGN, released under the CECILL-B license
         </br>
-        Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Thu Sep 12 2019 14:56:22 GMT+0000 (UTC)
+        Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Tue Sep 24 2019 10:09:57 GMT+0000 (UTC)
     </footer>
 
 

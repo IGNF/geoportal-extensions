@@ -420,6 +420,8 @@
             
                 <div class="l3 itemMembers"> <a href="ol.control.Drawing.html#collapsed">collapsed</a> </div>
             
+                <div class="l3 itemMembers"> <a href="ol.control.Drawing.html#draggable">draggable</a> </div>
+            
 
 
 <!--
@@ -428,6 +430,8 @@
             <span class="subtitle">Members</span>
             
                 <li data-name="ol.control.Drawing#collapsed"><a href="ol.control.Drawing.html#collapsed">collapsed</a></li>
+            
+                <li data-name="ol.control.Drawing#draggable"><a href="ol.control.Drawing.html#draggable">draggable</a></li>
             
             </ul>
 -->
@@ -666,6 +670,8 @@
             
                 <div class="l3 itemMembers"> <a href="ol.control.GeoportalMousePosition.html#collapsed">collapsed</a> </div>
             
+                <div class="l3 itemMembers"> <a href="ol.control.GeoportalMousePosition.html#draggable">draggable</a> </div>
+            
 
 
 <!--
@@ -674,6 +680,8 @@
             <span class="subtitle">Members</span>
             
                 <li data-name="ol.control.GeoportalMousePosition#collapsed"><a href="ol.control.GeoportalMousePosition.html#collapsed">collapsed</a></li>
+            
+                <li data-name="ol.control.GeoportalMousePosition#draggable"><a href="ol.control.GeoportalMousePosition.html#draggable">draggable</a></li>
             
             </ul>
 -->
@@ -850,6 +858,8 @@
             
                 <div class="l3 itemMembers"> <a href="ol.control.Isocurve.html#collapsed">collapsed</a> </div>
             
+                <div class="l3 itemMembers"> <a href="ol.control.Isocurve.html#draggable">draggable</a> </div>
+            
 
 
 <!--
@@ -858,6 +868,8 @@
             <span class="subtitle">Members</span>
             
                 <li data-name="ol.control.Isocurve#collapsed"><a href="ol.control.Isocurve.html#collapsed">collapsed</a></li>
+            
+                <li data-name="ol.control.Isocurve#draggable"><a href="ol.control.Isocurve.html#draggable">draggable</a></li>
             
             </ul>
 -->
@@ -928,6 +940,8 @@
             
                 <div class="l3 itemMembers"> <a href="ol.control.LayerImport.html#collapsed">collapsed</a> </div>
             
+                <div class="l3 itemMembers"> <a href="ol.control.LayerImport.html#draggable">draggable</a> </div>
+            
 
 
 <!--
@@ -936,6 +950,8 @@
             <span class="subtitle">Members</span>
             
                 <li data-name="ol.control.LayerImport#collapsed"><a href="ol.control.LayerImport.html#collapsed">collapsed</a></li>
+            
+                <li data-name="ol.control.LayerImport#draggable"><a href="ol.control.LayerImport.html#draggable">draggable</a></li>
             
             </ul>
 -->
@@ -1282,6 +1298,8 @@
             
                 <div class="l3 itemMembers"> <a href="ol.control.ReverseGeocode.html#collapsed">collapsed</a> </div>
             
+                <div class="l3 itemMembers"> <a href="ol.control.ReverseGeocode.html#draggable">draggable</a> </div>
+            
 
 
 <!--
@@ -1290,6 +1308,8 @@
             <span class="subtitle">Members</span>
             
                 <li data-name="ol.control.ReverseGeocode#collapsed"><a href="ol.control.ReverseGeocode.html#collapsed">collapsed</a></li>
+            
+                <li data-name="ol.control.ReverseGeocode#draggable"><a href="ol.control.ReverseGeocode.html#draggable">draggable</a></li>
             
             </ul>
 -->
@@ -1356,6 +1376,8 @@
             
                 <div class="l3 itemMembers"> <a href="ol.control.Route.html#collapsed">collapsed</a> </div>
             
+                <div class="l3 itemMembers"> <a href="ol.control.Route.html#draggable">draggable</a> </div>
+            
 
 
 <!--
@@ -1364,6 +1386,8 @@
             <span class="subtitle">Members</span>
             
                 <li data-name="ol.control.Route#collapsed"><a href="ol.control.Route.html#collapsed">collapsed</a></li>
+            
+                <li data-name="ol.control.Route#draggable"><a href="ol.control.Route.html#draggable">draggable</a></li>
             
             </ul>
 -->
@@ -2381,7 +2405,7 @@
     
         
         <div class="tag-source">
-            OpenLayers/Controls/Route.js, line 83
+            OpenLayers/Controls/Route.js, line 85
         </div>
         
     </div>
@@ -2560,6 +2584,42 @@
                     
                 
                 <p>Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name">draggable</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                
+                <p>Specify if widget is draggable</p></td>
         </tr>
 	
 	
@@ -2996,29 +3056,30 @@
 
     
     <pre class="prettyprint"><code>var route = ol.control.Route({
-     collapsed : true
-     exclusions : {
+     "collapsed" : true
+     "draggable" : true,
+     "exclusions" : {
         "toll" : true,
         "bridge" : false,
         "tunnel" : true
      },
-     graphs : ['Pieton', 'Voiture'],
-     markersOpts : {
-         departure : {
-             url : "...",
-             offset : [0,0]
+     "graphs" : ['Pieton', 'Voiture'],
+     "markersOpts" : {
+         "departure" : {
+             "url" : "...",
+             "offset" : [0,0]
          },
-         stages : {
-             url : "...",
-             offset : [0,0]
+         "stages" : {
+             "url" : "...",
+             "offset" : [0,0]
          },
-         arrival : {
-             url : "...",
-             offset : [0,0]
+         "arrival" : {
+             "url" : "...",
+             "offset" : [0,0]
          }
      }
-     autocompleteOptions : {},
-     routeOptions : {}
+     "autocompleteOptions" : {},
+     "routeOptions" : {}
  });</code></pre>
     
 
@@ -3092,6 +3153,51 @@
     
 </dd>
 
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="draggable">draggable</h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>{Boolean} specify if Route control is draggable (true) or not (false)</p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
         </dl>
     
     
@@ -3109,7 +3215,7 @@
     
         
         <div class="tag-source">
-            OpenLayers/Controls/Route.js, line 139
+            OpenLayers/Controls/Route.js, line 141
         </div>
         
     </div>
@@ -3190,7 +3296,7 @@
     
         
         <div class="tag-source">
-            OpenLayers/Controls/Route.js, line 169
+            OpenLayers/Controls/Route.js, line 171
         </div>
         
     </div>
@@ -3271,7 +3377,7 @@
     
         
         <div class="tag-source">
-            OpenLayers/Controls/Route.js, line 148
+            OpenLayers/Controls/Route.js, line 150
         </div>
         
     </div>
@@ -3388,7 +3494,7 @@
     
         
         <div class="tag-source">
-            OpenLayers/Controls/Route.js, line 178
+            OpenLayers/Controls/Route.js, line 180
         </div>
         
     </div>
@@ -3516,7 +3622,7 @@
     <footer>
         Geoportail - Copyright (c) IGN, released under the CECILL-B license
         </br>
-        Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Thu Sep 12 2019 14:56:22 GMT+0000 (UTC)
+        Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Tue Sep 24 2019 10:09:57 GMT+0000 (UTC)
     </footer>
 
 

@@ -9,8 +9,8 @@
  * @copyright copyright (c) IGN 
  * @license CeCILL-B
  * @author IGN
- * @version 3.0.2
- * @date 09/09/2019
+ * @version 3.0.3
+ * @date 24/09/2019
  *
  */
 
@@ -4629,7 +4629,9 @@ span[id^=GPshowMousePositionOpen] {
 
 div[id^=GPmousePositionPanel-] {
     /* on desactive le mode draggable de la fenêtre : */
-    /* position: absolute;  */
+    position: absolute;
+    left: 10px;
+    top: calc(-8px + -118px); /* FIXME !?*/
 }
 
 div[id^=GPmousePositionPanelClose]  {

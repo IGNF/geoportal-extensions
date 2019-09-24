@@ -10,7 +10,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <!-- !meta IGN -->
 
-    <title>Tutorial: leaflet-Iso</title>
+    <title>Namespace: WMTS</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -1147,198 +1147,89 @@
 
     <section class="content">
         <label class="openLeftMenu" for="showLeftMenu" title="Ouvrir le menu latéral"></label>
-        <h1 class="page-title" data-filename="tutorial-leaflet-Iso.html">Tutorial: leaflet-Iso</h1>
-        <section>
-    
-<header>
-    
+        <h1 class="page-title" data-filename="L.geoportalLayers.WMTS.html">Namespace: WMTS</h1>
+        
 
-    <h2>leaflet-Iso</h2>
+
+
+<section>
+ 
+<!--   
+<header>
+-->
+    <h1>
+    <span class="main-title" data-classname=L.geoportalLayers.WMTS> L.geoportalLayers.WMTS </span>
+    </h1>
+    
+    
+        <div class="description"><p>Leaflet Layer Class for Geoportal WMTS Layers.</p>
+<p>Use <a href="module-Layers.html#.WMTS">L.geoportalLayer.WMTS()</a> factory to create instances of that class.</p>
+<p><strong>Extends</strong> Leaflet <a href="http://leafletjs.com/reference.html#tilelayer" target="_blank">L.TileLayer</a> native class.</p></div>
+    
+<!--
 </header>  
+-->
 
 <article>
-    <h1>Usage</h1>
-<p>Include js and css files located in the /dist/leaflet folder in your page :</p>
-<pre class="prettyprint source lang-javascript"><code>&lt;!-- Production -->
-&lt;link rel=&quot;stylesheet&quot; href=&quot;dist/leaflet/GpPluginLeaflet.css&quot; />
-&lt;script src=&quot;dist/leaflet/GpPluginLeaflet.js&quot;>&lt;/script>
-</code></pre>
-<pre class="prettyprint source lang-javascript"><code>&lt;!-- Development -->
-&lt;link rel=&quot;stylesheet&quot; href=&quot;src/leaflet/GpPluginLeaflet-src.css&quot; />
-&lt;script src=&quot;src/leaflet/GpPluginLeaflet-src.js&quot;>&lt;/script>
-</code></pre>
-<p>And create a map in the 'viewer' div, add it to map :</p>
-<pre class="prettyprint source lang-javascript"><code>var map = L.map('viewer').setView([48.845, 2.424], 15);
-var iso = L.geoportalControl.Isocurve(opts);
-map.addControl(iso);
-</code></pre>
-<h1>Options</h1>
-<p>The control inherits options from <a href="http://leafletjs.com/reference.html#control">Leaflet Controls</a>.</p>
-<table>
-<thead>
-<tr>
-<th>Option</th>
-<th>Type</th>
-<th>Opt.</th>
-<th>Default</th>
-<th>Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>collapsed</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>false</td>
-<td>Allows to control to expand the control</td>
-</tr>
-<tr>
-<td>position</td>
-<td>String</td>
-<td>Optional</td>
-<td>'topleft'</td>
-<td>Position of component into the map (<a href="http://leafletjs.com/reference.html#control-positions">see leaflet options</a>)</td>
-</tr>
-<tr>
-<td>apiKey</td>
-<td>String</td>
-<td>Optional</td>
-<td>null</td>
-<td>Key API for the use of services</td>
-</tr>
-<tr>
-<td>graphs</td>
-<td>Array</td>
-<td>Optional</td>
-<td>[Pieton, Voiture]</td>
-<td>List of resources, by default : [&quot;Voiture&quot;, &quot;Pieton&quot;], and the first element is selected.</td>
-</tr>
-<tr>
-<td>exclusions</td>
-<td>Object</td>
-<td>Optional</td>
-<td>{}</td>
-<td>List of exclusions with status</td>
-</tr>
-<tr>
-<td>methods</td>
-<td>Array</td>
-<td>Optional</td>
-<td>[&quot;time&quot;, &quot;distance&quot;]</td>
-<td>List of methods, by default : [&quot;time&quot;, &quot;distance&quot;], and the first element is selected.</td>
-</tr>
-<tr>
-<td>directions</td>
-<td>Array</td>
-<td>Optional</td>
-<td>[&quot;departure&quot;, &quot;arrival&quot;]</td>
-<td>List ofdirections , by default : [&quot;departure&quot;, &quot;arrival&quot;], and the first element is selected.</td>
-</tr>
-<tr>
-<td>disableReverse</td>
-<td>Boolean</td>
-<td>Optional</td>
-<td>false</td>
-<td>Allows to disable the reverse geocoding</td>
-</tr>
-<tr>
-<td>isocurveOptions</td>
-<td>Object</td>
-<td>Optional</td>
-<td>{}</td>
-<td>Options of isocurve service</td>
-</tr>
-<tr>
-<td>autocompleteOptions</td>
-<td>Object</td>
-<td>Optional</td>
-<td>{}</td>
-<td>Options of autocomplete service</td>
-</tr>
-</tbody>
-</table>
-<h2>Configuration of services</h2>
-<p>...</p>
-<h1>Examples</h1>
-<h2>option control</h2>
-<pre class="prettyprint source lang-javascript"><code>var iso = L.geoportalControl.Isocurve({
-  position : &quot;topright&quot;,
-  collapsed : false
-});
-map.addControl(iso);
-</code></pre>
-<h2>option graphs</h2>
-<pre class="prettyprint source lang-javascript"><code>var iso = L.geoportalControl.Isocurve({
-  graphs : [&quot;Voiture&quot;]
-});
-map.addControl(iso);
-</code></pre>
-<h2>option directions</h2>
-<pre class="prettyprint source lang-javascript"><code>var iso = L.geoportalControl.Isocurve({
-  directions : [&quot;departure&quot;]
-});
-map.addControl(iso);
-</code></pre>
-<h2>option methods</h2>
-<pre class="prettyprint source lang-javascript"><code>var iso = L.geoportalControl.Isocurve({
-  methods : [&quot;distance&quot;]
-});
-map.addControl(iso);
-</code></pre>
-<p>## option exclusions</p>
-<pre class="prettyprint source lang-javascript"><code>var iso = L.geoportalControl.Isocurve({
-  exclusions = {
-    tunnel : false,
-    toll : false,
-    bridge : false
-  }
-});
-map.addControl(iso);
-</code></pre>
-<h2>option services</h2>
-<pre class="prettyprint source lang-javascript"><code>var iso = L.geoportalControl.Isocurve({
-  isoCurveOptions = {
-    // options de Gp.Services.isocurve()
-  },
-  autocompleteOptions = {
-    // options de Gp.Services.autocomplete()
-  }
-});
-map.addControl(iso);
-</code></pre>
-<h1>Requirements</h1>
-<p>Leaflet v7.x and tested on version 1.0.0-RC</p>
-<h1>Demo</h1>
-<!-- Library Leaflet -->
-<link rel="stylesheet" href="../lib/leaflet/leaflet.css" />
-<script src="../lib/leaflet/leaflet.js"></script>
-<!-- Plugin leaflet IGN -->
-<link rel="stylesheet" href="../dist/leaflet/GpPluginLeaflet.css" />
-<script src="../dist/leaflet/GpPluginLeaflet.js" data-key="jhyvi0fgmnuxvfv0zjzorvdn"></script>
-<!-- code -->
-<script>
-window.onload = function () {
+    <div class="container-overview">
+    
+    
+    
+        
+        
+        
+<dl class="details">
+    
+        
+    
+    
+    
 
-  var layer = L.geoportalLayer.WMS({
-    layer : "ORTHOIMAGERY.ORTHOPHOTOS"
-  });
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
 
-  var map  = L.map('map', {
-    zoom : 2,
-    center : L.latLng(48, 2)
-  });
-
-  layer.addTo(map);
-
-  var iso = L.geoportalControl.Isocurve();
-
-  map.addControl(iso);
-}
-</script>
-<div id="map" style="height: 400px;"></div>
+        
+        
+    
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 </article>
 
 </section>  
+
+
+
 
 
         
