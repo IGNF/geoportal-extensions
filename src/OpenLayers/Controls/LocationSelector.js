@@ -223,6 +223,22 @@ var LocationSelector = (function (Control) {
     };
 
     /**
+     * set coordinate
+     * @param {Object} coordinate - Coordinate in the projection map
+     */
+    LocationSelector.prototype.setCoordinate = function (coordinate) {
+        var map = this.getMap();
+        var crs = map.getView().getProjection();
+
+        this._setCoordinate(coordinate, crs);
+
+        this._setMarker([
+            coordinate[0],
+            coordinate[1]
+        ], null, false);
+    };
+
+    /**
      * clean input
      */
     LocationSelector.prototype.clear = function () {
