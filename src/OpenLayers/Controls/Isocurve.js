@@ -188,6 +188,73 @@ var Isocurve = (function (Control) {
         Control.prototype.setMap.call(this, map);
     };
 
+    /**
+     * This method is public.
+     * It allows to control the execution of a traitment.
+     *
+     * @param {Object} position - position in the projection map
+     * @param {Object} value - distance in km or hours-minutes
+     * @param {Object} options - options = {...}
+     */
+    Isocurve.prototype.compute = function (position, value, options) {
+        this._clear();
+
+        if (!this._showIsoContainer.checked) {
+            this._pictoIsoContainer.click();
+        }
+
+        var map = this.getMap();
+        if (!map) {
+            return;
+        }
+
+        // Les options par defauts
+        var settings = {
+            direction : "departure",
+            method : "time",
+            transport : "Voiture",
+            exclusions : []
+        };
+
+        // On recupere les options
+        Utils.assign(settings, options);
+
+        this._originPoint.setCoordinate(position);
+        var coordinate = this._originPoint.getCoordinate();
+
+        var input = document.getElementById("GPlocationOrigin_" + 1 + "-" + this._uid);
+        input.value = coordinate[0].toFixed(4) + " / " + coordinate[1].toFixed(4);
+
+        this._currentTransport = settings.transport;
+        if (settings.transport === "Voiture") {
+            document.getElementById("GPisochronTransportCar-" + this._uid).checked = true;
+        } else {
+            document.getElementById("GPisochronTransportPedestrian-" + this._uid).checked = true;
+        }
+
+        this._currentExclusions = settings.exclusions;
+
+        this._currentComputation = settings.method;
+        if (settings.method === "time") {
+            var time = value.split(".");
+            this._currentTimeHour = time[0] || 0;
+            document.getElementById("GPisochronValueChronInput1-" + this._uid).value = this._currentTimeHour;
+            this._currentTimeMinute = time[1] || 0;
+            document.getElementById("GPisochronValueChronInput2-" + this._uid).value = this._currentTimeMinute;
+            document.getElementById("GPisochronChoiceAltChron-" + this._uid).click();
+        } else {
+            this._currentDistance = value;
+            document.getElementById("GPisochronValueDistInput-" + this._uid).value = this._currentDistance;
+            document.getElementById("GPisochronChoiceAltDist-" + this._uid).click();
+        }
+
+        this._currentDirection = settings.direction;
+        (settings.direction === "departure")
+            ? document.getElementById("GPisochronDirectionSelect-" + this._uid).selectedIndex = 0 : document.getElementById("GPisochronDirectionSelect-" + this._uid).selectedIndex = 1;
+
+        this.onIsoComputationSubmit();
+    };
+
     // ################################################################### //
     // ##################### init component ############################## //
     // ################################################################### //
@@ -256,6 +323,7 @@ var Isocurve = (function (Control) {
 
         // // containers principaux
         this._showIsoContainer = null;
+        this._pictoIsoContainer = null;
         this._waitingContainer = null;
         this._formContainer = null;
         this._IsoPanelContainer = null;
@@ -611,7 +679,7 @@ var Isocurve = (function (Control) {
             inputShow.checked = true;
         }
 
-        var picto = this._createShowIsoPictoElement();
+        var picto = this._pictoIsoContainer = this._createShowIsoPictoElement();
         container.appendChild(picto);
 
         // panneau
