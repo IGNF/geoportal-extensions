@@ -192,7 +192,7 @@ var Isocurve = (function (Control) {
      * This method is public.
      * It allows to control the execution of a traitment.
      *
-     * @param {Object} position - position in the projection map
+     * @param {Array} position - position in the projection map [ x, y ]
      * @param {Object} value - distance in km or hours-minutes
      * @param {Object} options - options = {...}
      */
