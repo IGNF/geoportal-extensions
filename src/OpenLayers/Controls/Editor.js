@@ -28,17 +28,20 @@ var logger = Logger.getLogger("editor");
  * @example
  *   var editor = new Editor ({
  *      target : "",
- *      style : "data/styles/layer0.json",
+ *      style : "data/styles/layer.json",
  *      themes: {
  *          themesSummary : "",
  *          themes : [{
- *              image: "data/images/layer0.png",
- *              label: "standard0",
- *              style: "data/styles/layer0.json",
+ *             "thumbnail": "data/images/layer0.png",
+ *             "name": "standard0",
+ *             "url": "data/styles/layer0.json",
+ *             "description": "",
+ *             "selected" : true
  *          },{
- *              image: "data/images/layer1.png",
- *              label: "standard1",
- *              style: "data/styles/layer1.json",
+ *             "thumbnail": "data/images/layer1.png",
+ *             "name": "standard1",
+ *             "url": "data/styles/layer1.json",
+ *             "description": ""
  *          }]
  *      },
  *      scope : this,

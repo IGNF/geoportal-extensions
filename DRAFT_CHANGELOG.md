@@ -1,15 +1,19 @@
-# Extension Geoportail OpenLayers, version 3.0.3
+# Extension Geoportail OpenLayers, version 3.0.4
 
-**24/09/2019 : version 3.0.3**
+**03/10/2019**
 > Release Extension Geoportail OpenLayers
 
 ## Summary
 
-* ...
+* mise à jour *geoportal-access-lib* en version 2.1.6
+* nouvelles fonctionnalités sur le widget Isocurve
 
 ## Changelog
 
 * [Added]
+
+    - [#246](https://github.com/IGNF/geoportal-extensions/issues/246) - nouvelle
+    methode publique (compute) sur le widget Isocurve.
 
 * [Changed]
 
@@ -19,18 +23,20 @@
 
 * [Fixed]
 
+    - correctifs sur l'editeur de styles (mapbox)
+
 * [Security]
 
 ---
 
-# Extension Geoportail Itowns, version 2.2.3
+# Extension Geoportail Itowns, version 2.2.4
 
-**24/09/2019**
+**03/10/2019**
 > Release Extension Geoportail Itowns
 
 ## Summary
 
-* ...
+* mise à jour *geoportal-access-lib* en version 2.1.6
 
 ## Changelog
 
@@ -48,22 +54,27 @@
 
 ---
 
-# Extension Geoportail Leaflet, version 2.1.4
+# Extension Geoportail Leaflet, version 2.1.5
 
-**24/09/2019**
+**03/10/2019**
 > Release Extension Geoportail Leaflet
 
 ## Summary
 
-* correctif sur l'utilisation des extensions dans Angular
-* mise à jour de leaflet : version 1.5.1
-* mise à jour de leaflet-draw : version 1.0.4
+* mise à jour *geoportal-access-lib* en version 2.1.6
 
 ## Changelog
 
+* [Added]
+
+* [Changed]
+
+* [Deprecated]
+
+* [Removed]
+
 * [Fixed]
 
-    - [#236](https://github.com/IGNF/geoportal-extensions/issues/236) - Upgrade de leaflet
-    - [dev-workflow] correctifs sur les fichiers Webpack
-    - [dev-workflow] correctifs sur le script de publication
-    - [#243](https://github.com/IGNF/geoportal-extensions/issues/243) - gestion de l'import CSS en mode module ES6 sous Angular
+    - [#247](https://github.com/IGNF/geoportal-extensions/issues/247) - opacité sur uns couche de type GeoJSON.
+
+* [Security]

@@ -600,6 +600,7 @@ var LayerSwitcher = L.Control.Layers.extend(/** @lends L.geoportalControl.LayerS
         var opacityValue = layer.options.opacity;
         var opacityElement = L.DomUtil.get(this._addUID("GPopacityValue_ID_" + layerIdx)); // FIXME ID !
         opacityElement.innerHTML = parseInt(opacityValue * 100, 10) + "%";
+        opacityElement.value = parseInt(opacityValue * 100, 10);
     },
 
     // ################################################################### //
@@ -679,7 +680,15 @@ var LayerSwitcher = L.Control.Layers.extend(/** @lends L.geoportalControl.LayerS
         opacityId.innerHTML = opacityValue + "%";
 
         if (this._map.hasLayer(layer)) {
-            layer.setOpacity(opacityValue / 100);
+            if (typeof layer.setOpacity !== "undefined") {
+                layer.setOpacity(opacityValue / 100);
+            } else {
+                // Particularité du format GeoJSON
+                layer.setStyle({
+                    fillOpacity : opacityValue / 100,
+                    opacity : opacityValue / 100
+                });
+            }
         }
     },
 
@@ -833,7 +842,16 @@ var LayerSwitcher = L.Control.Layers.extend(/** @lends L.geoportalControl.LayerS
         }
 
         if (this._map.hasLayer(layer)) {
-            layer.setOpacity(opacity);
+            if (typeof layer.setOpacity !== "undefined") {
+                layer.setOpacity(opacity);
+            } else {
+                // Particularité du format GeoJSON pour l'opacité
+                layer.options.opacity = opacity;
+                layer.setStyle({
+                    fillOpacity : opacity,
+                    opacity : opacity
+                });
+            }
             this._updateOpacityDOMLayer(layer);
         }
     },
