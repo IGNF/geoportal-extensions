@@ -9,8 +9,8 @@
  * @copyright copyright (c) IGN 
  * @license CeCILL-B
  * @author IGN
- * @version 3.0.3
- * @date 24/09/2019
+ * @version 3.0.4
+ * @date 03/10/2019
  *
  */
 
@@ -4770,7 +4770,7 @@ input[id^=GProuteResultsShowDetails] + label + label:hover {
 /* Results popup */
 
 .gp-features-content-div {
-  min-width: 230px;
+  /* min-width: 240px; */
 }
 
 /* SEARCH ENGINE */
