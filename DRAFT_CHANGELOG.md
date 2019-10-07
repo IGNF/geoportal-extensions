@@ -1,3 +1,5 @@
+**TODO : PREPARATION POUR PROCHAINE LIVRAISON**
+
 # Extension Geoportail OpenLayers, version 3.0.4
 
 **03/10/2019**
@@ -6,14 +8,10 @@
 ## Summary
 
 * mise à jour *geoportal-access-lib* en version 2.1.6
-* nouvelles fonctionnalités sur le widget Isocurve
 
 ## Changelog
 
 * [Added]
-
-    - [#246](https://github.com/IGNF/geoportal-extensions/issues/246) - nouvelle
-    methode publique (compute) sur le widget Isocurve.
 
 * [Changed]
 
