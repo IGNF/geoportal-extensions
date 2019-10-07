@@ -24,6 +24,7 @@
 * [Fixed]
 
     - correctifs sur l'editeur de styles (mapbox)
+    - [#230](https://github.com/IGNF/geoportal-extensions/issues/230) - largeur des popup d'information sur la recherche inversée.
 
 * [Security]
 
@@ -75,6 +76,6 @@
 
 * [Fixed]
 
-    - [#247](https://github.com/IGNF/geoportal-extensions/issues/247) - opacité sur uns couche de type GeoJSON.
+    - [#247](https://github.com/IGNF/geoportal-extensions/issues/247) - opacité sur une couche de type GeoJSON dans le gestionnaire de couche.
 
 * [Security]

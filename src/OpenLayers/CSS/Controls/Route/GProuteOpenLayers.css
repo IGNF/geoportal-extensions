@@ -74,5 +74,5 @@ input[id^=GProuteResultsShowDetails] + label + label:hover {
 /* Results popup */
 
 .gp-features-content-div {
-  min-width: 230px;
+  /* min-width: 240px; */
 }
