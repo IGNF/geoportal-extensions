@@ -1,0 +1,14 @@
+{
+  "name": "Enseignement",
+  "description": "PAI science et enseignement",
+  "minzoom": 6,
+  "maxzoom": 16,
+  "crs": "EPSG:3857",
+  "center": [2.463684,48.776024],
+  "bounds": [2.307129,48.687334,2.620239,48.864715],
+  "format": "pbf",
+  "tiles":["https://vectortiles.ign.fr/rok4server/1.0.0/Enseignement/{z}/{x}/{y}.pbf"],
+  "vector_layers": [
+      {"id":"Enseignement","geometry":"POINT","maxzoom":"16","minzoom":"6","filedsCount":"10","fields":{"designat_1":{"attribute":"designat_1","count":"62","type":"character varying(80)"},"adresse_po":{"attribute":"adresse_po","count":"61278","type":"character varying(80)"},"nom_d_usag":{"attribute":"nom_d_usag","count":"51253","type":"character varying(200)"},"identifi_1":{"attribute":"identifi_1","count":"78306","type":"character varying(200)"},"ogc_fid":{"attribute":"ogc_fid","count":"100541","type":"integer","min":221885,"max":322425},"insee_comm":{"attribute":"insee_comm","count":"23885","type":"character varying(80)"},"cleabs":{"attribute":"cleabs","count":"100541","type":"character varying(80)"},"nature":{"attribute":"nature","count":"9","type":"character varying(80)","values":["Collège","Autre","Science","Enseignement primaire","Université","Lycée","Enseignement secondaire","Enseignement supérieur"]},"designatio":{"attribute":"designatio","count":"2115","type":"character varying(80)"},"statut":{"attribute":"statut","count":"1","type":"character varying"}}}
+  ]
+}

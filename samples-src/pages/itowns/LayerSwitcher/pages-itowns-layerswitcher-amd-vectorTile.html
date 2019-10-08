@@ -45,10 +45,10 @@
 
                     // ajout des couches
                     // Couche MNT Geoportail (WMTS)
-                    globeView.addLayer(new Gp.itownsExtended.layer.GeoportalElevation({
-                        layer: "ELEVATION.ELEVATIONGRIDCOVERAGE",
-                        ssl: true
-                    }));
+                    // globeView.addLayer(new Gp.itownsExtended.layer.GeoportalElevation({
+                    //     layer: "ELEVATION.ELEVATIONGRIDCOVERAGE",
+                    //     ssl: true
+                    // }));
  
                     // Couche WMTS Geoportail
                     globeView.addLayer(new Gp.itownsExtended.layer.GeoportalWMTS({
@@ -56,14 +56,25 @@
                         ssl: true
                     }));
 
-                    // Couche WMS Geoportail 
-                    globeView.addLayer(new Gp.itownsExtended.layer.GeoportalWMS({
-                        layer: "REGION.2016",
-                        ssl: true,
-                        itownsParams: {
-                            opacity: 0.5
-                        }
-                    }));
+                    // Couche WMTS Geoportail
+
+                    function createVectorTileLayer(style) {
+                        return new Gp.itownsExtended.layer.VectorTileLayer({
+                            id : "MVT",
+                            url: "https://vectortiles.ign.fr/rok4server/1.0.0/PLAN.IGN/${z}/${x}/${y}.pbf",
+                            style: style,
+                            // zoom : {
+                            //     min: 0,
+                            //     max: 13
+                            // }
+                        })
+                    }
+
+                    function addVectorTileLayer(layer) {
+                        globeView.addLayer(layer);
+                    }
+
+                    itowns.Fetcher.json('../../resources/itowns/planign.json').then(createVectorTileLayer).then(addVectorTileLayer);
 
                     // ajout du control
                     var layerSwitcher = new Gp.itownsExtended.control.LayerSwitcher({

@@ -58,7 +58,9 @@ function VectorTileLayer (options) {
             });
         } else {
             layers.forEach(function(layer) {
-                supportedLayers.push(layer);
+                if (layer.type == "fill" || layer.type == "line") {
+                    supportedLayers.push(layer);
+                }
                 // if (layer.type === 'background') {
                 //     backgroundLayer = layer;
                 // } else if (['fill', 'line'].indexOf(layer.type) >= 0 &&
@@ -100,7 +102,7 @@ function VectorTileLayer (options) {
         source: mvtSource,
         filter: supportedLayers,
         backgroundLayer,
-        fx: 2.5,
+        // fx: 2.5,
     });
 };
 
